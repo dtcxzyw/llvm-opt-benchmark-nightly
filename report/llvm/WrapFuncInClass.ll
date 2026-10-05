@@ -204,8 +204,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !97
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_5emitc6FuncOpEvE2idE
+  %5 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5emitc6FuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %5, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_5emitc12_GLOBAL__N_119WrapFuncInClassPass14runOnOperationEvEUlNS4_6FuncOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -242,8 +244,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !97
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_5emitc11GetGlobalOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5emitc11GetGlobalOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %3, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZZNS_5emitc12_GLOBAL__N_119WrapFuncInClassPass14runOnOperationEvENKUlNS4_6FuncOpEE_clES7_EUlNS4_11GetGlobalOpEE_S9_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESJ_E4typeESE_OT1_ENKUlSE_E_clESE_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -273,7 +277,9 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !97
   %i.u = icmp eq ptr %i.t, @_ZN4mlir6detail14TypeIDResolverINS_5emitc8GlobalOpEvE2idE
-  br i1 %i.u, label %bb.d, label %_ZZZN4mlir5emitc12_GLOBAL__N_119WrapFuncInClassPass14runOnOperationEvENKUlNS0_6FuncOpEE_clES3_ENKUlNS0_11GetGlobalOpEE_clES5_.exit.i
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5emitc8GlobalOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i = and i1 %4, %i.u
+  br i1 %spec.select.i.i.i.i.i.i.i.i, label %bb.d, label %_ZZZN4mlir5emitc12_GLOBAL__N_119WrapFuncInClassPass14runOnOperationEvENKUlNS0_6FuncOpEE_clES3_ENKUlNS0_11GetGlobalOpEE_clES5_.exit.i
 
 bb.d:                                             ; preds = %bb.c
   store ptr %i.q, ptr %2, align 8
@@ -676,8 +682,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !97
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_5emitc11GetGlobalOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5emitc11GetGlobalOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.d
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.d
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNK15WrapFuncInClass15matchAndRewriteENS_5emitc6FuncOpERNS_15PatternRewriterEEUlNS5_11GetGlobalOpEE_S9_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESJ_E4typeESE_OT1_ENKUlSE_E_clESE_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

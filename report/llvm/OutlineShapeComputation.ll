@@ -205,8 +205,10 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !77
   %i.j = icmp ne ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %55 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %55, %i.j
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.j
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_127OutlineShapeComputationPass14runOnOperationEvE3$_0NS_4func6FuncOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -609,7 +611,11 @@ _ZN12_GLOBAL__N_118constructShapeFuncERKSt6vectorIN4mlir5shape6WithOpESaIS3_EEPN
   %i.aza = load ptr, ptr %51, align 8, !tbaa !487 ; 2 uses
   %i.azb = load ptr, ptr %i.dq, align 8, !tbaa !487 ; 2 uses
   %.not169.i.i = icmp eq ptr %i.aza, %i.azb
-  br i1 %.not169.i.i, label %._crit_edge172.i.i, label %.lr.ph171.i.i
+  br i1 %.not169.i.i, label %._crit_edge172.i.i, label %.lr.ph173.i.i
+
+.lr.ph173.i.i:                                    ; preds = %_ZN12_GLOBAL__N_118constructShapeFuncERKSt6vectorIN4mlir5shape6WithOpESaIS3_EEPNS1_11MLIRContextERN4llvm8DenseMapINS1_5ValueENSA_11SmallVectorIPNS1_9OperationELj8EEENSA_12DenseMapInfoISC_vEENSA_6detail12DenseMapPairISC_SG_EEEERNS1_11SymbolTableERNSB_ISC_NS2_17ShapeMappingValueESI_NSK_ISC_SQ_EEEENS1_4func6FuncOpERNS2_20ShapeMappingAnalysisE.exit.i.i
+  %56 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape9ValueOfOpEvE2idE
+  br label %.lr.ph171.i.i
 
 ._crit_edge172.i.i:                               ; preds = %._crit_edge.i.i, %_ZN12_GLOBAL__N_118constructShapeFuncERKSt6vectorIN4mlir5shape6WithOpESaIS3_EEPNS1_11MLIRContextERN4llvm8DenseMapINS1_5ValueENSA_11SmallVectorIPNS1_9OperationELj8EEENSA_12DenseMapInfoISC_vEENSA_6detail12DenseMapPairISC_SG_EEEERNS1_11SymbolTableERNSB_ISC_NS2_17ShapeMappingValueESI_NSK_ISC_SQ_EEEENS1_4func6FuncOpERNS2_20ShapeMappingAnalysisE.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #19
@@ -681,8 +687,8 @@ _ZN4mlir21applyPatternsGreedilyEPNS_9OperationERKNS_23FrozenRewritePatternSetENS
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #19
   br i1 %i.azx, label %bb.el, label %bb.em
 
-.lr.ph171.i.i:                                    ; preds = %_ZN12_GLOBAL__N_118constructShapeFuncERKSt6vectorIN4mlir5shape6WithOpESaIS3_EEPNS1_11MLIRContextERN4llvm8DenseMapINS1_5ValueENSA_11SmallVectorIPNS1_9OperationELj8EEENSA_12DenseMapInfoISC_vEENSA_6detail12DenseMapPairISC_SG_EEEERNS1_11SymbolTableERNSB_ISC_NS2_17ShapeMappingValueESI_NSK_ISC_SQ_EEEENS1_4func6FuncOpERNS2_20ShapeMappingAnalysisE.exit.i.i, %._crit_edge.i.i
-  %.sroa.099.0170.i.i = phi ptr [ %i.bai, %._crit_edge.i.i ], [ %i.aza, %_ZN12_GLOBAL__N_118constructShapeFuncERKSt6vectorIN4mlir5shape6WithOpESaIS3_EEPNS1_11MLIRContextERN4llvm8DenseMapINS1_5ValueENSA_11SmallVectorIPNS1_9OperationELj8EEENSA_12DenseMapInfoISC_vEENSA_6detail12DenseMapPairISC_SG_EEEERNS1_11SymbolTableERNSB_ISC_NS2_17ShapeMappingValueESI_NSK_ISC_SQ_EEEENS1_4func6FuncOpERNS2_20ShapeMappingAnalysisE.exit.i.i ] ; 2 uses
+.lr.ph171.i.i:                                    ; preds = %._crit_edge.i.i, %.lr.ph173.i.i
+  %.sroa.099.0170.i.i = phi ptr [ %i.aza, %.lr.ph173.i.i ], [ %i.bai, %._crit_edge.i.i ] ; 2 uses
   %i.azz = load i64, ptr %.sroa.099.0170.i.i, align 8
   %i.baa = inttoptr i64 %i.azz to ptr             ; 2 uses
   %i.bab = getelementptr inbounds nuw i8, ptr %i.baa, i64 72
@@ -697,15 +703,15 @@ _ZN4mlir21applyPatternsGreedilyEPNS_9OperationERKNS_23FrozenRewritePatternSetENS
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph171.i.i
   %i.bah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i60.i.i, i64 8
-  br label %bb.dy
+  br i1 %56, label %._crit_edge.i.i, label %bb.dy
 
-._crit_edge.i.i:                                  ; preds = %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i, %.lr.ph171.i.i
+._crit_edge.i.i:                                  ; preds = %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i, %.lr.ph.i.i, %.lr.ph171.i.i
   %i.bai = getelementptr inbounds nuw i8, ptr %.sroa.099.0170.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bai, %i.azb
   br i1 %.not.i.i, label %._crit_edge172.i.i, label %.lr.ph171.i.i
 
-bb.dy:                                            ; preds = %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i, %.lr.ph.i.i
-  %.sroa.089.0168.i.i = phi ptr [ %i.bag, %.lr.ph.i.i ], [ %i.baj, %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i ] ; 2 uses
+bb.dy:                                            ; preds = %.lr.ph.i.i, %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i
+  %.sroa.089.0168.i.i = phi ptr [ %i.baj, %_ZN4mlir7OpTrait9OneResultINS_5shape9ValueOfOpEE18replaceAllUsesWithENS_5ValueE.exit.i.i ], [ %i.bag, %.lr.ph.i.i ] ; 2 uses
   %i.baj = load ptr, ptr %.sroa.089.0168.i.i, align 8, !tbaa !575 ; 2 uses
   %i.bak = getelementptr inbounds nuw i8, ptr %.sroa.089.0168.i.i, i64 16
   %i.bal = load ptr, ptr %i.bak, align 8, !tbaa !184 ; 5 uses
@@ -1108,8 +1114,10 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !77
   %i.am = icmp ne ptr %i.al, @_ZN4mlir6detail14TypeIDResolverINS_5shape6WithOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape6WithOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %3, %i.am
   %.not54 = icmp eq ptr %1, null
-  %.not = or i1 %.not54, %i.am
+  %.not = or i1 %.not54, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.loopexit
@@ -1512,8 +1520,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !77
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_5shape6WithOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5shape6WithOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZZN12_GLOBAL__N_127OutlineShapeComputationPass14runOnOperationEvENK3$_0clENS_4func6FuncOpEEUlNS_5shape6WithOpEE_SA_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESK_E4typeESF_OT1_ENKUlSF_E_clESF_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

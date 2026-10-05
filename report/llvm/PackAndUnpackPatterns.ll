@@ -204,7 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !79
   %i.m = icmp eq ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
-  br i1 %i.m, label %bb.d, label %bb.c
+  %11 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %11, %i.m
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
@@ -607,7 +609,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !79
   %i.m = icmp eq ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
-  br i1 %i.m, label %bb.c, label %_ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %17, %i.m
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.c, label %_ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread: ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
@@ -1010,7 +1014,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !79
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_6linalg6PackOpEvE2idE
-  br i1 %i.i, label %bb.d, label %bb.c
+  %19 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg6PackOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %19, %i.i
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
@@ -1413,7 +1419,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !79
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11TransposeOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %1, ptr null ; 2 uses
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11TransposeOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %12, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %6, align 8
   %.not14 = icmp eq ptr %spec.select.i.i, null
   br i1 %.not14, label %bb.g, label %bb.b
@@ -1816,7 +1824,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !79
   %i.j = icmp eq ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
-  br i1 %i.j, label %bb.d, label %bb.c
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.j
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
@@ -2219,7 +2229,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !79
   %i.ae = icmp eq ptr %i.ad, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
-  br i1 %i.ae, label %bb.h, label %bb.g
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %8, %i.ae
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
@@ -2441,7 +2453,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !79
   %i.ae = icmp eq ptr %i.ad, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
-  br i1 %i.ae, label %bb.h, label %bb.g
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7EmptyOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %6, %i.ae
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17

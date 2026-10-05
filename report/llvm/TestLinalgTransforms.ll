@@ -204,11 +204,17 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !105  ; 2 uses
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_6linalg6PackOpEvE2idE
-  %6 = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
-  %spec.select.i.i.i.i = or i1 %i.h, %6
-  br i1 %spec.select.i.i.i.i, label %bb.b, label %"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg6PackOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i = and i1 %6, %i.h
+  br i1 %spec.select.i.i.i.i.i.i.i.i, label %bb.b, label %_ZN4llvm3isaIJN4mlir6linalg6PackOpENS2_8UnPackOpEEPNS1_9OperationEEEbRKT0_.exit.i.i.i
 
-bb.b:                                             ; preds = %bb.a
+_ZN4llvm3isaIJN4mlir6linalg6PackOpENS2_8UnPackOpEEPNS1_9OperationEEEbRKT0_.exit.i.i.i: ; preds = %bb.a
+  %7 = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg8UnPackOpEvE2idE
+  %spec.select.i.i.i.i3.i.i.i.i = and i1 %8, %7
+  br i1 %spec.select.i.i.i.i3.i.i.i.i, label %bb.b, label %"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
+
+bb.b:                                             ; preds = %_ZN4llvm3isaIJN4mlir6linalg6PackOpENS2_8UnPackOpEEPNS1_9OperationEEEbRKT0_.exit.i.i.i, %bb.a
   %i.i = call noundef ptr @_ZN4mlir11OpInterfaceINS_15TilingInterfaceENS_6detail30TilingInterfaceInterfaceTraitsEE15getInterfaceForEPNS_9OperationE(ptr noundef %i.b)
   %.not.i.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i, label %"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit", label %bb.c
@@ -250,8 +256,8 @@ _ZN4mlir9Operation9hasOneUseEv.exit.i.i.i:        ; preds = %.lr.ph.i.i.i.i.i.i,
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
 
-"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit": ; preds = %bb.a, %bb.b, %_ZN4mlir9Operation9hasOneUseEv.exit.i.i.i
-  %i.s = phi i1 [ true, %bb.b ], [ true, %bb.a ], [ %i.r, %_ZN4mlir9Operation9hasOneUseEv.exit.i.i.i ]
+"_ZSt10__invoke_rIbRZN12_GLOBAL__N_120TestLinalgTransforms14runOnOperationEvE3$_0JPN4mlir9OpOperandEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit": ; preds = %_ZN4llvm3isaIJN4mlir6linalg6PackOpENS2_8UnPackOpEEPNS1_9OperationEEEbRKT0_.exit.i.i.i, %bb.b, %_ZN4mlir9Operation9hasOneUseEv.exit.i.i.i
+  %i.s = phi i1 [ true, %bb.b ], [ true, %_ZN4llvm3isaIJN4mlir6linalg6PackOpENS2_8UnPackOpEEPNS1_9OperationEEEbRKT0_.exit.i.i.i ], [ %i.r, %_ZN4mlir9Operation9hasOneUseEv.exit.i.i.i ]
   ret i1 %i.s
 }
 

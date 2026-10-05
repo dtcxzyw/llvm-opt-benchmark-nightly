@@ -205,6 +205,7 @@ _ZN4mlir19MutableOperandRangeD2Ev.exit45.i:       ; preds = %bb.ai, %_ZN4llvm9en
   %i.kn = getelementptr inbounds nuw i8, ptr %23, i64 32
   %i.ko = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.kp = getelementptr inbounds nuw i8, ptr %22, i64 32
+  %64 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
   %i.kq = getelementptr inbounds nuw i8, ptr %32, i64 8 ; 2 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %32, i64 24
   br label %bb.ak
@@ -441,8 +442,9 @@ bb.aw:                                            ; preds = %bb.av
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.ow, align 8, !tbaa !68
   %i.ox = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.oy = load ptr, ptr %i.ox, align 8, !tbaa !71
-  %.not30.i.i = icmp eq ptr %i.oy, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
-  br i1 %.not30.i.i, label %bb.ax, label %_ZL17isResultValueDeadN4mlir6linalg9GenericOpENS_8OpResultE.exit.thread.i
+  %65 = icmp ne ptr %i.oy, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
+  %spec.select.i.i.i.i.not.i.i = or i1 %64, %65
+  br i1 %spec.select.i.i.i.i.not.i.i, label %_ZL17isResultValueDeadN4mlir6linalg9GenericOpENS_8OpResultE.exit.thread.i, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   %.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i.i8.i.i = load i64, ptr %i.mg, align 8
@@ -845,6 +847,7 @@ _ZN4mlir6detail32DestinationStyleOpInterfaceTraitINS_6linalg9GenericOpEE11getDps
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %11, i64 32
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
   %i.ae = ptrtoint ptr %10 to i64
   br label %bb.g
 
@@ -990,7 +993,8 @@ bb.m:                                             ; preds = %_ZN4mlir9Operation9
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !71
   %i.ct = icmp eq ptr %i.cs, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
-  br i1 %i.ct, label %bb.n, label %_ZNK4mlir5Value9hasOneUseEv.exit.thread
+  %spec.select.i.i.i.i.i = and i1 %12, %i.ct
+  br i1 %spec.select.i.i.i.i.i, label %bb.n, label %_ZNK4mlir5Value9hasOneUseEv.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cp, i64 72

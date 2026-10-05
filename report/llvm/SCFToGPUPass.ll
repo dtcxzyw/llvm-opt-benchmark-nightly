@@ -202,7 +202,7 @@ bb.a:
   %1 = alloca %"class.mlir::Region::OpIterator", align 8 ; 4 uses
   %.sroa.07 = alloca [40 x i8], align 8           ; 4 uses
   %2 = alloca %"class.llvm::iterator_range.121", align 8 ; 6 uses
-  %3 = alloca %"class.llvm::early_inc_iterator_impl", align 8 ; 5 uses
+  %3 = alloca %"class.llvm::early_inc_iterator_impl", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -243,27 +243,36 @@ _ZN4mlir13InterfacePassINS_19FunctionOpInterfaceEE12getOperationEv.exit: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
   %.sroa.6.24..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %.sroa.6.24.copyload = load ptr, ptr %.sroa.6.24..sroa_idx, align 8 ; 2 uses
+  %.sroa.6.24.copyload = load ptr, ptr %.sroa.6.24..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07, i64 24, i1 false)
-  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !141  ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !141  ; 3 uses
   %.not9 = icmp eq ptr %i.w, %.sroa.6.24.copyload
   br i1 %.not9, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4mlir13InterfacePassINS_19FunctionOpInterfaceEE12getOperationEv.exit
+  %.not10 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 656
-  br label %bb.c
+  br i1 %.not10, label %.lr.ph.split.us, label %bb.c
 
-._crit_edge:                                      ; preds = %bb.f, %_ZN4mlir13InterfacePassINS_19FunctionOpInterfaceEE12getOperationEv.exit
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
+  %4 = phi ptr [ %7, %.lr.ph.split.us ], [ %i.w, %.lr.ph ]
+  %5 = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4mlir6Region10OpIteratorppEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #22, !noalias !142 ; 0 uses
+  %6 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %4) #22 ; 0 uses
+  %7 = load ptr, ptr %i.v, align 8, !tbaa !141    ; 2 uses
+  %.not.us = icmp eq ptr %7, %.sroa.6.24.copyload
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us
+
+._crit_edge:                                      ; preds = %bb.f, %.lr.ph.split.us, %_ZN4mlir13InterfacePassINS_19FunctionOpInterfaceEE12getOperationEv.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07)
   ret void
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
-  %i.z = phi ptr [ %i.w, %.lr.ph ], [ %i.al, %bb.f ]
+  %i.z = phi ptr [ %i.al, %bb.f ], [ %i.w, %.lr.ph ]
   %i.aa = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4mlir6Region10OpIteratorppEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #22, !noalias !142 ; 0 uses
   %i.ab = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %i.z) #22 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 48

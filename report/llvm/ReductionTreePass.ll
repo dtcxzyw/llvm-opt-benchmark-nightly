@@ -204,8 +204,10 @@ _ZN4mlir9Operation11getParentOpEv.exit.thread:    ; preds = %_ZN4mlir9Operation1
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !73
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !75
-  %.not118 = icmp eq ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %.not118, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit, label %bb.b
+  %21 = icmp ne ptr %i.o, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %.not118 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %.not118, %21
+  br i1 %spec.select.i.i.i.i.not, label %bb.b, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit
 
 bb.b:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #22

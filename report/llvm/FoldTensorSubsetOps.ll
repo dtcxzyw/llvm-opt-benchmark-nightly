@@ -204,7 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !88
   %i.m = icmp eq ptr %i.l, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
-  br i1 %i.m, label %bb.e, label %bb.c
+  %37 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %37, %i.m
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #17
@@ -607,7 +609,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_6vector15TransferWriteOpEvE2idE
-  br i1 %i.l, label %bb.e, label %bb.c
+  %38 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector15TransferWriteOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %38, %i.l
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #17
@@ -1010,7 +1014,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
-  br i1 %i.l, label %_ZN4mlir30OffsetSizeAndStrideOpInterfaceCI2NS_6detail9InterfaceIS0_PNS_9OperationENS1_45OffsetSizeAndStrideOpInterfaceInterfaceTraitsENS_2OpIS0_JEEENS_7OpTrait9TraitBaseEEEINS_6tensor14ExtractSliceOpETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S4_S5_S7_S9_E5TraitIT_EESF_EE5valueEvE4typeELPv0EEESF_.exit, label %bb.c
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %13, %i.l
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZN4mlir30OffsetSizeAndStrideOpInterfaceCI2NS_6detail9InterfaceIS0_PNS_9OperationENS1_45OffsetSizeAndStrideOpInterfaceInterfaceTraitsENS_2OpIS0_JEEENS_7OpTrait9TraitBaseEEEINS_6tensor14ExtractSliceOpETnPNSt9enable_ifIXsr3std10is_base_ofINS2_IS0_S4_S5_S7_S9_E5TraitIT_EESF_EE5valueEvE4typeELPv0EEESF_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
@@ -1385,7 +1391,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13InsertSliceOpEvE2idE
-  br i1 %i.l, label %bb.d, label %bb.c
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13InsertSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %18, %i.l
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
@@ -1788,7 +1796,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13InsertSliceOpEvE2idE
-  br i1 %i.l, label %bb.d, label %bb.c
+  %18 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor13InsertSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %18, %i.l
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17

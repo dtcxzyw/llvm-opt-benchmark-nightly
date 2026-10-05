@@ -204,7 +204,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !100
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE
-  %or.cond = or i1 %2, %i.d
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE
+  %spec.select.i.i.i.i.i.not = or i1 %3, %i.d
+  %or.cond = or i1 %2, %spec.select.i.i.i.i.i.not
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -307,10 +309,12 @@ _ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit: ; 
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !100
   %.fr = freeze ptr %i.v
   %i.w = icmp ne ptr %.fr, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %1 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.not = or i1 %1, %i.w
   br label %_ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit.thread
 
 _ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit.thread: ; preds = %_ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit, %bb.e, %_ZN4mlir9Operation11getParentOpEv.exit, %bb.d, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit.thread, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit
-  %.1 = phi i1 [ true, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit ], [ true, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit.thread ], [ true, %bb.d ], [ true, %bb.e ], [ %i.w, %_ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit ], [ true, %_ZN4mlir9Operation11getParentOpEv.exit ]
+  %.1 = phi i1 [ true, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit ], [ true, %_ZN4mlir9Operation14mightHaveTraitINS_7OpTrait12IsTerminatorEEEbv.exit.thread ], [ true, %bb.d ], [ true, %bb.e ], [ %spec.select.i.i.i.i.i.i.i.not, %_ZN4llvm15isa_and_nonnullIJN4mlir4func6FuncOpEEPNS1_9OperationEEEbRKT0_.exit ], [ true, %_ZN4mlir9Operation11getParentOpEv.exit ]
   ret i1 %.1
 }
 

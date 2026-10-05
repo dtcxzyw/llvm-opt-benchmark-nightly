@@ -204,13 +204,29 @@ bb.n:                                             ; preds = %bb.k
   %.val3.i = load i64, ptr %i.v, align 8, !tbaa !39
   %i.w = and i64 %.val3.i, 67108864
   %.not.i88 = icmp eq i64 %i.w, 0
-  br i1 %.not.i88, label %bb.o, label %PyTuple_GET_SIZE.exit
+  br i1 %.not.i88, label %bb.o, label %2
 
 bb.o:                                             ; preds = %bb.n
   tail call void @__assert_fail(ptr noundef nonnull @.str.209, ptr noundef nonnull @.str.210, i32 noundef 24, ptr noundef nonnull @__PRETTY_FUNCTION__.PyTuple_GET_SIZE) #16
   unreachable
 
-PyTuple_GET_SIZE.exit:                            ; preds = %bb.n
+2:                                                ; preds = %bb.n
+  %.not.i.i = icmp eq ptr @PyTuple_Type, @PyLong_Type
+  br i1 %.not.i.i, label %3, label %4
+
+3:                                                ; preds = %2
+  tail call void @__assert_fail(ptr noundef nonnull @.str.213, ptr noundef nonnull @.str.214, i32 noundef 320, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #16
+  unreachable
+
+4:                                                ; preds = %2
+  %.not3.i.i = icmp eq ptr @PyTuple_Type, @PyBool_Type
+  br i1 %.not3.i.i, label %5, label %PyTuple_GET_SIZE.exit
+
+5:                                                ; preds = %4
+  tail call void @__assert_fail(ptr noundef nonnull @.str.215, ptr noundef nonnull @.str.214, i32 noundef 321, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #16
+  unreachable
+
+PyTuple_GET_SIZE.exit:                            ; preds = %4
   %i.x = getelementptr i8, ptr %i.o, i64 16
   %i.y = load i64, ptr %i.x, align 8, !tbaa !54
   %.not41 = icmp eq i64 %i.y, 0

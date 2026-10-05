@@ -202,9 +202,11 @@ bb.a:
   br i1 %.not48, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %30 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11TransposeOpEvE2idE
   %i.l = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %16, i64 32
   %i.n = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
+  %31 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11BroadcastOpEvE2idE
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.q = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
@@ -265,7 +267,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !62
   %i.ai = icmp eq ptr %i.ah, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11TransposeOpEvE2idE
-  br i1 %i.ai, label %bb.e, label %_ZNK4mlir5Value13getDefiningOpINS_6linalg11TransposeOpEEET_v.exit.thread.i
+  %spec.select.i.i.i.i.i.i.i = and i1 %30, %i.ai
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.e, label %_ZNK4mlir5Value13getDefiningOpINS_6linalg11TransposeOpEEET_v.exit.thread.i
 
 _ZNK4mlir5Value13getDefiningOpINS_6linalg11TransposeOpEEET_v.exit.thread.i: ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #16
@@ -401,7 +404,8 @@ bb.n:                                             ; preds = %bb.m
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i23, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !62
   %i.cc = icmp eq ptr %i.cb, @_ZN4mlir6detail14TypeIDResolverINS_6linalg11BroadcastOpEvE2idE
-  br i1 %i.cc, label %bb.o, label %_ZNK4mlir5Value13getDefiningOpINS_6linalg11BroadcastOpEEET_v.exit.thread.i
+  %spec.select.i.i.i.i.i.i.i24 = and i1 %31, %i.cc
+  br i1 %spec.select.i.i.i.i.i.i.i24, label %bb.o, label %_ZNK4mlir5Value13getDefiningOpINS_6linalg11BroadcastOpEEET_v.exit.thread.i
 
 _ZNK4mlir5Value13getDefiningOpINS_6linalg11BroadcastOpEEET_v.exit.thread.i: ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #16

@@ -205,7 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -608,7 +610,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -1011,7 +1015,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -1414,7 +1420,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -1817,7 +1825,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -2220,7 +2230,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !118
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.h, label %bb.e, label %bb.c
+  %27 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %27, %i.h
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr null, ptr %21, align 8
@@ -2623,7 +2635,9 @@ bb.i:                                             ; preds = %_ZN4mlir12matchPatt
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !118
   %i.bf = icmp eq ptr %i.be, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  br i1 %i.bf, label %bb.l, label %bb.j
+  %32 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %32, %i.bf
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #17

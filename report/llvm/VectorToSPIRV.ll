@@ -204,6 +204,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_10ShapedTypeEvE13resolveTypeIDEvE2id = co
 @_ZZN4mlir6detail14TypeIDResolverINS_9FloatTypeEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_9FloatTypeEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.62 = private unnamed_addr constant [66 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::FloatType]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_5arith6MulFOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_10ShapedTypeEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_10ShapedTypeEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
@@ -606,7 +607,9 @@ bb.n:                                             ; preds = %bb.m
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !154
   %i.ca = icmp eq ptr %i.bz, @_ZN4mlir6detail14TypeIDResolverINS_5arith6MulFOpEvE2idE
-  br i1 %i.ca, label %_ZNK4mlir5Value13getDefiningOpINS_5arith6MulFOpEEET_v.exit, label %bb.o
+  %17 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith6MulFOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %17, %i.ca
+  br i1 %spec.select.i.i.i.i.i.i, label %_ZNK4mlir5Value13getDefiningOpINS_5arith6MulFOpEEET_v.exit, label %bb.o
 
 _ZNK4mlir5Value13getDefiningOpINS_5arith6MulFOpEEET_v.exit: ; preds = %bb.n
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bw, i64 72
@@ -1009,7 +1012,9 @@ bb.v:                                             ; preds = %_ZNK4mlir10VectorTy
   %i.db = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !154
   %i.dd = icmp eq ptr %i.dc, @_ZN4mlir6detail14TypeIDResolverINS_5arith6MulIOpEvE2idE
-  br i1 %i.dd, label %bb.x, label %bb.w
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith6MulIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.dd
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %_ZNK4mlir10VectorType10isScalableEv.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #14
@@ -1088,7 +1093,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
-  br i1 %i.i, label %bb.d, label %bb.c
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.i
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
@@ -1325,7 +1332,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
-  br i1 %i.i, label %bb.d, label %bb.c
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.i
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
@@ -1562,7 +1571,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
-  br i1 %i.i, label %bb.d, label %bb.c
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.i
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
@@ -1603,7 +1614,9 @@ bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i28, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !154
   %i.x = icmp eq ptr %i.w, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
-  br i1 %i.x, label %bb.h, label %bb.g
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
+  %spec.select.i.i.i.i.i.i29 = and i1 %16, %i.x
+  br i1 %spec.select.i.i.i.i.i.i29, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
@@ -1799,7 +1812,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !154
   %i.i = icmp eq ptr %i.h, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
-  br i1 %i.i, label %bb.d, label %bb.c
+  %15 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtUIOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %15, %i.i
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
@@ -1840,7 +1855,9 @@ bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i28, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !154
   %i.x = icmp eq ptr %i.w, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
-  br i1 %i.x, label %bb.h, label %bb.g
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith7ExtSIOpEvE2idE
+  %spec.select.i.i.i.i.i.i29 = and i1 %16, %i.x
+  br i1 %spec.select.i.i.i.i.i.i29, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14

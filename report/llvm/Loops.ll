@@ -202,12 +202,15 @@ bb.a:
   br i1 %.not25, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %12 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %13 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_2EERS6_OT_.exit"
@@ -218,8 +221,9 @@ bb.b:                                             ; preds = %.lr.ph, %"_ZN4llvm6
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !123  ; 3 uses
   %i.o = icmp ne ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %12, %i.o
   %.not1.i.i = icmp eq ptr %i.k, null
-  %.not.i.i = or i1 %.not1.i.i, %i.o
+  %.not.i.i = or i1 %.not1.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_0EERS6_OT_.exit", label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -330,8 +334,9 @@ bb.i:                                             ; preds = %_ZN4llvm15SmallVect
   br label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_2EERS6_OT_.exit"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_0EERS6_OT_.exit": ; preds = %bb.b
-  %.not22 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
-  br i1 %.not22, label %bb.j, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_1EERS6_OT_.exit"
+  %15 = icmp ne ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i21 = or i1 %13, %15
+  br i1 %spec.select.i.i.i.i.i.not.i.i21, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_1EERS6_OT_.exit", label %bb.j
 
 bb.j:                                             ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_0EERS6_OT_.exit"
   %i.aq = getelementptr inbounds nuw i8, ptr %i.k, i64 44
@@ -377,6 +382,7 @@ bb.l:                                             ; preds = %bb.j
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_1EERS6_OT_.exit": ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZL35replaceIndexOpsByInductionVariablesRNS3_12RewriterBaseENS3_6linalg8LinalgOpENS_8ArrayRefIS5_EEE3$_0EERS6_OT_.exit"
   %.not23 = icmp eq ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  call void @llvm.assume(i1 %14)
   call void @llvm.assume(i1 %.not23)
   %i.bq = getelementptr inbounds nuw i8, ptr %i.k, i64 44
   %i.br = load i32, ptr %i.bq, align 4            ; 3 uses
@@ -779,7 +785,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !123
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7IndexOpEvE2idE
-  ret i1 %i.d
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7IndexOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  ret i1 %spec.select.i.i.i.i
 }
 
 declare noundef nonnull align 8 dereferenceable(24) ptr @_ZN4mlir6Region10OpIteratorppEv(ptr noundef nonnull align 8 dereferenceable(24)) local_unnamed_addr #6

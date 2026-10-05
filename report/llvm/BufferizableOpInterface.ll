@@ -205,6 +205,7 @@ bb.ao:                                            ; preds = %_ZN4mlir6detail13IR
   %i.gn = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
   %i.go = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %15, i64 12
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5DimOpEvE2idE
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.lr.ph210, %._crit_edge207.thread
@@ -359,7 +360,8 @@ bb.av:                                            ; preds = %.lr.ph206
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !105
   %i.je = icmp eq ptr %i.jd, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5DimOpEvE2idE
-  br i1 %i.je, label %bb.ba, label %bb.aw
+  %spec.select.i.i.i.i.i = and i1 %16, %i.je
+  br i1 %spec.select.i.i.i.i.i, label %bb.ba, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.jf = load ptr, ptr %1, align 8, !tbaa !194
@@ -762,7 +764,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !105
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
-  br i1 %i.f, label %_ZNK4mlir13bufferization13AnalysisState23bufferizesToMemoryWriteERNS_9OpOperandE.exit, label %bb.b
+  %2 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToBufferOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %2, %i.f
+  br i1 %spec.select.i.i.i.i.i, label %_ZNK4mlir13bufferization13AnalysisState23bufferizesToMemoryWriteERNS_9OpOperandE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -821,7 +825,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !105
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
-  br i1 %i.e, label %bb.c, label %bb.d
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization10ToTensorOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %8, %i.e
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 72

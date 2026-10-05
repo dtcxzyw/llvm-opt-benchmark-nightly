@@ -89,6 +89,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11ML
 @_ZZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str = private unnamed_addr constant [88 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::LLVMTranslationDialectInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
 @_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9Extension = linkonce_odr hidden unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN4mlir20DialectExtensionBaseD2Ev, ptr @_ZZN4mlir15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11MLIRContextEDpPT_EEN9ExtensionD0Ev, ptr @_ZNK4mlir16DialectExtensionIZNS_15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9ExtensionJS3_EE5applyES5_N4llvm15MutableArrayRefIPNS_7DialectEEE, ptr @_ZNK4mlir16DialectExtensionIZNS_15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11MLIRContextEDpPT_EE9ExtensionJS3_EE5cloneEv, ptr @_ZZN4mlir15DialectRegistry12addExtensionIJNS_14BuiltinDialectEEEEbPFvPNS_11MLIRContextEDpPT_EENK9Extension5applyES4_PS2_] }, comdat, align 8
@@ -402,7 +403,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !95
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %i.e = zext i1 %i.d to i8
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %4, %i.d
+  %i.e = zext i1 %spec.select.i.i.i.i.i to i8
   ret i8 %i.e
 }
 

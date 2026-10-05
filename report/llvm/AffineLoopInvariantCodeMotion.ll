@@ -202,8 +202,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !29
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %7 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %7, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_123LoopInvariantCodeMotion14runOnOperationEvE3$_0NS_6affine11AffineForOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -280,7 +282,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 32 ; 2 uses
   %.sroa.02.010.i.i.i = load ptr, ptr %i.at, align 8, !tbaa !33 ; 2 uses
   %.not811.i.i.i = icmp eq ptr %.sroa.02.010.i.i.i, %i.au
-  br i1 %.not811.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.a
+  br i1 %.not811.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %bb.d
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineYieldOpEvE2idE
+  br label %.lr.ph.i.i.i.a
 
 ._crit_edge.i.i.i:                                ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i, %bb.d
   %i.av = load ptr, ptr %4, align 8, !tbaa !13    ; 2 uses
@@ -291,8 +297,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.not13.i.i.i = icmp eq i32 %i.aw, 0
   br i1 %.not13.i.i.i, label %._crit_edge17.i.i.i, label %.lr.ph16.i.i.i
 
-.lr.ph.i.i.i.a:                                   ; preds = %bb.d, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i
-  %.sroa.02.012.i.i.i = phi ptr [ %.sroa.02.0.i.i.i, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i ], [ %.sroa.02.010.i.i.i, %bb.d ] ; 2 uses
+.lr.ph.i.i.i.a:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i, %.lr.ph.i.i.i
+  %.sroa.02.012.i.i.i = phi ptr [ %.sroa.02.010.i.i.i, %.lr.ph.i.i.i ], [ %.sroa.02.0.i.i.i, %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i ] ; 2 uses
   %i.az = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.02.012.i.i.i) #15 ; 10 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 36
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !113 ; 2 uses
@@ -351,7 +357,8 @@ _ZN4llvm15SmallPtrSetImplIPN4mlir9OperationEE6insertES3_.exit.i.i.i: ; preds = %
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !29
   %i.bx = icmp eq ptr %i.bw, @_ZN4mlir6detail14TypeIDResolverINS_6affine13AffineYieldOpEvE2idE
-  br i1 %i.bx, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i, label %bb.h
+  %spec.select.i.i.i.i.i.i.i = and i1 %8, %i.bx
+  br i1 %spec.select.i.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseIPN4mlir9OperationELb1EE9push_backES3_.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm15SmallPtrSetImplIPN4mlir9OperationEE6insertES3_.exit.i.i.i
   br i1 %i.aa, label %bb.j, label %bb.i
@@ -499,9 +506,11 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.t, align 8, !tbaa !27
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !29   ; 3 uses
-  %i.w = icmp eq ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE ; 2 uses
-  %spec.select.i.i = select i1 %i.w, ptr %0, ptr null
-  br i1 %i.w, label %bb.b, label %bb.e
+  %i.w = icmp eq ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE
+  %10 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine10AffineIfOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %10, %i.w         ; 2 uses
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %0, ptr null
+  br i1 %spec.select.i.i.i.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
@@ -606,7 +615,9 @@ bb.d:                                             ; preds = %.lr.ph259
 
 bb.e:                                             ; preds = %bb.a
   %i.bd = icmp eq ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
-  br i1 %i.bd, label %bb.f, label %bb.h
+  %11 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine11AffineForOpEvE2idE
+  %spec.select.i.i.i.i85 = and i1 %11, %i.bd
+  br i1 %spec.select.i.i.i.i85, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -660,7 +671,9 @@ bb.g:                                             ; preds = %.lr.ph.i
 
 bb.h:                                             ; preds = %bb.e
   %i.bz = icmp eq ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_6affine16AffineParallelOpEvE2idE
-  br i1 %i.bz, label %bb.i, label %bb.k
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6affine16AffineParallelOpEvE2idE
+  %spec.select.i.i.i.i88 = and i1 %12, %i.bz
+  br i1 %spec.select.i.i.i.i88, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 44

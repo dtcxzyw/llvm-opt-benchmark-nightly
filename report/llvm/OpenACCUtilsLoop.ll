@@ -197,6 +197,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf5ForOpELb1EE15growAndPushBackES3_ =
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @.str = private unnamed_addr constant [28 x i8] c"failed to collapse acc.loop\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3acc7YieldOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.1 = private unnamed_addr constant [14 x i8] c"Building op `\00", align 1
 @.str.2 = private unnamed_addr constant [238 x i8] c"` but it isn't known in this MLIRContext: the dialect may not be loaded or this operation hasn't been added by the dialect. See also https://mlir.llvm.org/getting_started/Faq/#registered-loaded-dependent-whats-up-with-dialects-management\00", align 1
@@ -244,7 +245,9 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir5Bl
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !126
   %i.t = icmp eq ptr %i.s, @_ZN4mlir6detail14TypeIDResolverINS_3acc7YieldOpEvE2idE
-  %spec.select.i.i = select i1 %i.t, ptr %i.p, ptr null ; 2 uses
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc7YieldOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %9, %i.t
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.p, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %7, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %.lr.ph.i53, label %bb.a

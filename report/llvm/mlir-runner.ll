@@ -156,6 +156,7 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @.str.2 = private unnamed_addr constant [29 x i8] c"op must be a 'builtin.module\00", align 1
 @.str.3 = private unnamed_addr constant [50 x i8] c"The module must contain exactly one nested module\00", align 1
 @.str.4 = private unnamed_addr constant [18 x i8] c"LLVMDialectModule\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
 @_ZTVN4llvm2cl6parserIbEE = external unnamed_addr constant { [6 x ptr] }, align 8
@@ -284,7 +285,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !27
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %1, ptr null ; 3 uses
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %13, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 3 uses
   store ptr %spec.select.i.i, ptr %4, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.b, label %bb.f
@@ -687,7 +690,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !27
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  ret i1 %i.d
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  ret i1 %spec.select.i.i.i.i
 }
 
 declare noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef) local_unnamed_addr #4

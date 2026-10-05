@@ -202,8 +202,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !38
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %3, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_130SimpleParametricLoopTilingPass14runOnOperationEvEUlNS_3scf5ForOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -237,15 +239,15 @@ bb.d:                                             ; preds = %bb.c, %_ZN4mlir9Ope
   br i1 %.not.i2.i.i, label %_ZN4mlir6Region15getParentOfTypeINS_3scf5ForOpEEET_v.exit.i.i, label %_ZN4mlir9Operation15getParentRegionEv.exit.i.i, !llvm.loop !199
 
 _ZN4mlir6Region15getParentOfTypeINS_3scf5ForOpEEET_v.exit.i.i: ; preds = %bb.d
-  %i.p = getelementptr inbounds nuw i8, ptr %.val.i, i64 456
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !71   ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.val.i, i64 464
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !72
-  %i.t = ptrtoint ptr %i.s to i64
-  %i.u = ptrtoint ptr %i.q to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %.val.i, i64 464
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !72
+  %i.r = getelementptr inbounds nuw i8, ptr %.val.i, i64 456
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !71   ; 2 uses
+  %i.t = ptrtoint ptr %i.q to i64
+  %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u
   %i.w = ashr exact i64 %i.v, 3
-  call void @_ZN4mlir22extractFixedOuterLoopsENS_3scf5ForOpEN4llvm8ArrayRefIlEE(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.186") align 8 %2, ptr %1, ptr %i.q, i64 %i.w) #16
+  call void @_ZN4mlir22extractFixedOuterLoopsENS_3scf5ForOpEN4llvm8ArrayRefIlEE(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.186") align 8 %2, ptr %1, ptr %i.s, i64 %i.w) #16
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !15   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 96

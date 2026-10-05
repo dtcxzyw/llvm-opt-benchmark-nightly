@@ -204,7 +204,9 @@ bb.j:                                             ; preds = %bb.g
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !158
   %i.aw = icmp eq ptr %i.av, @_ZN4mlir6detail14TypeIDResolverINS_5arith8UIToFPOpEvE2idE
-  br i1 %i.aw, label %bb.k, label %bb.l
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith8UIToFPOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %13, %i.aw
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -607,7 +609,9 @@ bb.k:                                             ; preds = %bb.h
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !158
   %i.ay = icmp eq ptr %i.ax, @_ZN4mlir6detail14TypeIDResolverINS_5arith8FPToUIOpEvE2idE
-  br i1 %i.ay, label %bb.l, label %bb.m
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5arith8FPToUIOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i.i.i.i = and i1 %16, %i.ay
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -635,7 +639,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i27, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !158
   %i.bl = icmp eq ptr %i.bk, @_ZN4mlir6detail14TypeIDResolverINS_5arith8FPToUIOpEvE2idE
-  br i1 %i.bl, label %bb.n, label %bb.o
+  %spec.select.i.i.i.i.i.i.i28 = and i1 %16, %i.bl
+  br i1 %spec.select.i.i.i.i.i.i.i28, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %.sroa.0.0.copyload.i.i28 = load ptr, ptr %i.bd, align 8

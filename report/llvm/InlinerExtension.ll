@@ -104,6 +104,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_4func11FuncDialectEEEEbPFvPNS_11
 @_ZZN4mlir6detail14TypeIDResolverINS_23DialectInlinerInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_23DialectInlinerInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str = private unnamed_addr constant [80 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::DialectInlinerInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -293,7 +294,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !43
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %1, ptr null ; 2 uses
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6CallOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %6, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %4, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -301,7 +304,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i2, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43
   %i.h = icmp eq ptr %i.g, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
-  %spec.select.i.i3 = select i1 %i.h, ptr %2, ptr null ; 2 uses
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i3 = and i1 %7, %i.h
+  %spec.select.i.i3 = select i1 %spec.select.i.i.i.i3, ptr %2, ptr null ; 2 uses
   store ptr %spec.select.i.i3, ptr %5, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %thread-pre-split, label %bb.b
@@ -356,7 +361,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !43
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %1, ptr null ; 2 uses
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %6, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %3, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.d, label %bb.b

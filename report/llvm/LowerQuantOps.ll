@@ -204,7 +204,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !69   ; 2 uses
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_5quant14QuantizeCastOpEvE2idE
-  br i1 %i.e, label %bb.b, label %bb.v
+  %24 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5quant14QuantizeCastOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %24, %i.e
+  br i1 %spec.select.i.i.i.i.i, label %bb.b, label %bb.v
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %23)
@@ -494,6 +496,8 @@ _ZN4mlir5quant12_GLOBAL__N_113quantizeValueERNS_9OpBuilderENS_8LocationENS_5Valu
 
 bb.v:                                             ; preds = %bb.a
   %i.cx = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_5quant16DequantizeCastOpEvE2idE
+  %25 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5quant16DequantizeCastOpEvE2idE
+  tail call void @llvm.assume(i1 %25)
   tail call void @llvm.assume(i1 %i.cx)
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   %i.cy = inttoptr i64 %7 to ptr                  ; 3 uses

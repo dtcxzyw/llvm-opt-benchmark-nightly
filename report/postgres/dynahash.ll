@@ -85,7 +85,6 @@ bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store ptr %i.n, ptr %i.o, align 8
-  %4 = icmp eq ptr %i.n, @string_hash
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.e
@@ -109,7 +108,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.f
-  %5 = phi i1 [ %4, %bb.f ], [ false, %bb.j ], [ false, %bb.i ] ; 3 uses
+  %4 = phi ptr [ %i.n, %bb.f ], [ @tag_hash, %bb.j ], [ @uint32_hash, %bb.i ] ; 2 uses
   %i.u = and i32 %3, 128
   %.not128 = icmp eq i32 %i.u, 0
   br i1 %.not128, label %bb.m, label %bb.l
@@ -122,18 +121,20 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.f
   br i1 %.not128158, label %.thread159, label %bb.l
 
 bb.l:                                             ; preds = %.thread, %bb.k
-  %6 = phi i1 [ true, %.thread ], [ %5, %bb.k ]
+  %5 = phi ptr [ @string_hash, %.thread ], [ %4, %bb.k ]
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.y = load ptr, ptr %i.x, align 8
+  %6 = icmp eq ptr %5, @string_hash
   br label %.thread159
 
 bb.m:                                             ; preds = %bb.k
-  %spec.select = select i1 %5, ptr @string_compare, ptr @memcmp
+  %7 = icmp eq ptr %4, @string_hash               ; 2 uses
+  %spec.select = select i1 %7, ptr @string_compare, ptr @memcmp
   br label %.thread159
 
 .thread159:                                       ; preds = %bb.m, %.thread, %bb.l
   %string_compare.sink = phi ptr [ %i.y, %bb.l ], [ %spec.select, %bb.m ], [ @string_compare, %.thread ]
-  %i.z = phi i1 [ %6, %bb.l ], [ %5, %bb.m ], [ true, %.thread ]
+  %i.z = phi i1 [ %6, %bb.l ], [ %7, %bb.m ], [ true, %.thread ]
   %i.aa = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store ptr %string_compare.sink, ptr %i.aa, align 8
   %i.ab = and i32 %3, 256

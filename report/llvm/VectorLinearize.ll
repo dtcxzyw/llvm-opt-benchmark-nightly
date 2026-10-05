@@ -204,12 +204,16 @@ _ZN4mlir9Operation8hasTraitINS_7OpTrait12VectorizableEEEbv.exit.i.i.i.i: ; preds
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !587
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !129 ; 5 uses
-  %.not.i.i.i.i = icmp eq ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector11ShapeCastOpEvE2idE
-  br i1 %.not.i.i.i.i, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir6vector26populateForVectorLinearizeERNS2_13TypeConverterERNS2_16ConversionTargetEE3$_0JPNS2_9OperationEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit", label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_0EERS6_OT_.exit.i.i.i.i"
+  %8 = icmp ne ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector11ShapeCastOpEvE2idE
+  %.not.i.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector11ShapeCastOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i.i.i.i.i = or i1 %.not.i.i.i.i, %8
+  br i1 %spec.select.i.i.i.i.i.not.i.i.i.i.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_0EERS6_OT_.exit.i.i.i.i", label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir6vector26populateForVectorLinearizeERNS2_13TypeConverterERNS2_16ConversionTargetEE3$_0JPNS2_9OperationEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_0EERS6_OT_.exit.i.i.i.i": ; preds = %.critedge.i.i.i.i
-  %.not111.i.i.i.i = icmp eq ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector21ExtractStridedSliceOpEvE2idE
-  br i1 %.not111.i.i.i.i, label %bb.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_1EERS6_OT_.exit.i.i.i.i"
+  %9 = icmp ne ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector21ExtractStridedSliceOpEvE2idE
+  %.not111.i.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector21ExtractStridedSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i11.i.i.i.i = or i1 %.not111.i.i.i.i, %9
+  br i1 %spec.select.i.i.i.i.i.not.i.i11.i.i.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_1EERS6_OT_.exit.i.i.i.i", label %bb.i
 
 bb.i:                                             ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_0EERS6_OT_.exit.i.i.i.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
@@ -321,8 +325,10 @@ bb.q:                                             ; preds = %._crit_edge._crit_e
   br i1 %.not.i.i.i.i.i.i.i, label %_ZL14isLinearizablePN4mlir9OperationE.exit.thread5.i.i.i, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir6vector26populateForVectorLinearizeERNS2_13TypeConverterERNS2_16ConversionTargetEE3$_0JPNS2_9OperationEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_1EERS6_OT_.exit.i.i.i.i": ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_0EERS6_OT_.exit.i.i.i.i"
-  %.not112.i.i.i.i = icmp eq ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector20InsertStridedSliceOpEvE2idE
-  br i1 %.not112.i.i.i.i, label %bb.r, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_2EERS6_OT_.exit.i.i.i.i"
+  %10 = icmp ne ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector20InsertStridedSliceOpEvE2idE
+  %.not112.i.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector20InsertStridedSliceOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i15.i.i.i.i = or i1 %.not112.i.i.i.i, %10
+  br i1 %spec.select.i.i.i.i.i.not.i.i15.i.i.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_2EERS6_OT_.exit.i.i.i.i", label %bb.r
 
 bb.r:                                             ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_1EERS6_OT_.exit.i.i.i.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
@@ -434,8 +440,10 @@ bb.z:                                             ; preds = %._crit_edge._crit_e
   br i1 %.not.i.i.i24.i.i.i.i, label %_ZL14isLinearizablePN4mlir9OperationE.exit.thread5.i.i.i, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir6vector26populateForVectorLinearizeERNS2_13TypeConverterERNS2_16ConversionTargetEE3$_0JPNS2_9OperationEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_2EERS6_OT_.exit.i.i.i.i": ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_1EERS6_OT_.exit.i.i.i.i"
-  %.not113.i.i.i.i = icmp eq ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector8InsertOpEvE2idE
-  br i1 %.not113.i.i.i.i, label %bb.aa, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_3EERS6_OT_.exit.i.i.i.i"
+  %11 = icmp ne ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector8InsertOpEvE2idE
+  %.not113.i.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector8InsertOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i40.i.i.i.i = or i1 %.not113.i.i.i.i, %11
+  br i1 %spec.select.i.i.i.i.i.not.i.i40.i.i.i.i, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_3EERS6_OT_.exit.i.i.i.i", label %bb.aa
 
 bb.aa:                                            ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_2EERS6_OT_.exit.i.i.i.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
@@ -547,8 +555,10 @@ bb.ai:                                            ; preds = %._crit_edge._crit_e
   br i1 %.not.i.i.i48.i.i.i.i, label %_ZL14isLinearizablePN4mlir9OperationE.exit.thread5.i.i.i, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir6vector26populateForVectorLinearizeERNS2_13TypeConverterERNS2_16ConversionTargetEE3$_0JPNS2_9OperationEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit"
 
 "_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_3EERS6_OT_.exit.i.i.i.i": ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_2EERS6_OT_.exit.i.i.i.i"
-  %.not114.i.i.i.i = icmp eq ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector9ExtractOpEvE2idE
-  br i1 %.not114.i.i.i.i, label %bb.aj, label %_ZL14isLinearizablePN4mlir9OperationE.exit.thread5.i.i.i
+  %12 = icmp ne ptr %i.am, @_ZN4mlir6detail14TypeIDResolverINS_6vector9ExtractOpEvE2idE
+  %.not114.i.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector9ExtractOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i65.i.i.i.i = or i1 %.not114.i.i.i.i, %12
+  br i1 %spec.select.i.i.i.i.i.not.i.i65.i.i.i.i, label %_ZL14isLinearizablePN4mlir9OperationE.exit.thread5.i.i.i, label %bb.aj
 
 bb.aj:                                            ; preds = %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEbEES5_E4CaseIZL14isLinearizableS5_E3$_3EERS6_OT_.exit.i.i.i.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %2)

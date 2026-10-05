@@ -205,6 +205,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_7OpTrait12ConstantLikeIZNS_6TypeID3getIS3
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @_ZN4mlir6detail14TypeIDResolverINS_16RankedTensorTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_6tensor7YieldOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_7OpTrait12ConstantLikeIZNS_6TypeID3getIS3_EES4_vE5EmptyEEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_7OpTrait12ConstantLikeIZNS_6TypeID3getIS3_EES4_vE5EmptyEEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
@@ -607,7 +608,9 @@ bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !186
   %i.v = icmp eq ptr %i.u, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
-  %spec.select.i.i.i.i = select i1 %i.v, ptr %i.r, ptr null
+  %16 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %16, %i.v
+  %spec.select.i.i.i.i = select i1 %spec.select.i.i.i.i.i.i, ptr %i.r, ptr null
   br label %_ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit
 
 _ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit: ; preds = %bb.b, %bb.c
@@ -915,7 +918,9 @@ bb.c:                                             ; preds = %_ZN4mlir13sparse_te
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !186
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
-  br i1 %i.l, label %bb.d, label %_ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor5PadOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %9, %i.l
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.d, label %_ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_6tensor5PadOpEEET_v.exit.thread: ; preds = %bb.c, %_ZN4mlir13sparse_tensor22tryGetSparseTensorTypeENS_5ValueE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -995,7 +1000,9 @@ bb.h:                                             ; preds = %bb.g
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !186
   %i.bb = icmp eq ptr %i.ba, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7YieldOpEvE2idE
-  br i1 %i.bb, label %bb.i, label %.critedge2
+  %10 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor7YieldOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i = and i1 %10, %i.bb
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.i, label %.critedge2
 
 bb.i:                                             ; preds = %bb.h
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
@@ -1102,6 +1109,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
   %i.m = icmp ne ptr %3, null
   %wide.trip.count = and i64 %i.i, 4294967295
   br label %bb.b
@@ -1179,7 +1187,8 @@ _ZN4llvm15isa_and_nonnullIJN4mlir6tensor14ExtractSliceOpEEPNS1_9OperationEEEbRKT
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !186
   %i.ay = icmp eq ptr %i.ax, @_ZN4mlir6detail14TypeIDResolverINS_6tensor14ExtractSliceOpEvE2idE
-  br i1 %i.ay, label %bb.f, label %_ZN4llvm15isa_and_nonnullIJN4mlir6tensor14ExtractSliceOpEEPNS1_9OperationEEEbRKT0_.exit.thread
+  %spec.select.i.i.i.i.i.i.i = and i1 %13, %i.ay
+  br i1 %spec.select.i.i.i.i.i.i.i, label %bb.f, label %_ZN4llvm15isa_and_nonnullIJN4mlir6tensor14ExtractSliceOpEEPNS1_9OperationEEEbRKT0_.exit.thread
 
 bb.f:                                             ; preds = %_ZN4llvm15isa_and_nonnullIJN4mlir6tensor14ExtractSliceOpEEPNS1_9OperationEEEbRKT0_.exit
   %.sroa.050.0.copyload = load ptr, ptr %7, align 8
@@ -1582,7 +1591,9 @@ bb.d:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !186
   %i.al = icmp eq ptr %i.ak, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
-  %spec.select.i.i = select i1 %i.al, ptr %i.ah, ptr null ; 2 uses
+  %12 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf5ForOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %12, %i.al
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.ah, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %8, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.i, label %bb.e
@@ -1985,7 +1996,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !186
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
-  br i1 %i.k, label %bb.c, label %bb.d
+  %6 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %6, %i.k
+  br i1 %spec.select.i.i.i.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -2058,7 +2071,9 @@ bb.g:                                             ; preds = %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i17, i64 16
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !186
   %i.ax = icmp eq ptr %i.aw, @_ZN4mlir6detail14TypeIDResolverINS_3scf7YieldOpEvE2idE
-  br i1 %i.ax, label %bb.h, label %.critedge
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf7YieldOpEvE2idE
+  %spec.select.i.i.i.i.i18 = and i1 %7, %i.ax
+  br i1 %spec.select.i.i.i.i.i18, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
   %i.ay = load ptr, ptr %i.ak, align 8, !tbaa !282
@@ -2080,7 +2095,9 @@ bb.h:                                             ; preds = %bb.g
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i18, i64 16
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !186
   %i.bk = icmp eq ptr %i.bj, @_ZN4mlir6detail14TypeIDResolverINS_3scf7WhileOpEvE2idE
-  br i1 %i.bk, label %bb.i, label %bb.j
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf7WhileOpEvE2idE
+  %spec.select.i.i.i.i.i20 = and i1 %8, %i.bk
+  br i1 %spec.select.i.i.i.i.i20, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.critedge
   tail call void @_ZN4mlir13sparse_tensor11LoopEmitter13exitWhileLoopERNS_9OpBuilderENS_8LocationEN4llvm15MutableArrayRefINS_5ValueEEE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.aj, ptr %2, ptr %3, i64 %4)

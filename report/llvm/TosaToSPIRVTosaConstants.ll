@@ -202,11 +202,17 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !30   ; 2 uses
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  %9 = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
-  %spec.select.i.i = or i1 %i.e, %9
-  br i1 %spec.select.i.i, label %bb.b, label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE ; 3 uses
+  %spec.select.i.i.i.i.i.i = and i1 %9, %i.e
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.b, label %_ZN4llvm3isaIJN4mlir4tosa7ConstOpENS2_12ConstShapeOpEEPNS1_9OperationEEEbRKT0_.exit.i
 
-bb.b:                                             ; preds = %bb.a
+_ZN4llvm3isaIJN4mlir4tosa7ConstOpENS2_12ConstShapeOpEEPNS1_9OperationEEEbRKT0_.exit.i: ; preds = %bb.a
+  %10 = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
+  %11 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
+  %spec.select.i.i.i.i3.i.i = and i1 %11, %10
+  br i1 %spec.select.i.i.i.i3.i.i, label %bb.b, label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit
+
+bb.b:                                             ; preds = %_ZN4llvm3isaIJN4mlir4tosa7ConstOpENS2_12ConstShapeOpEEPNS1_9OperationEEEbRKT0_.exit.i, %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %.not.i.i = icmp ult i32 %i.g, 16777216
@@ -362,7 +368,8 @@ bb.n:                                             ; preds = %bb.m
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !30, !noalias !105 ; 2 uses
   %i.bc = icmp eq ptr %i.bb, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
-  %spec.select.i.i.i.i.i = select i1 %i.bc, ptr %1, ptr null ; 2 uses
+  %spec.select.i.i.i.i.i.i.i = and i1 %9, %i.bc
+  %spec.select.i.i.i.i.i = select i1 %spec.select.i.i.i.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i.i.i.i, ptr %3, align 8, !noalias !105
   %.not.i.i7.i = icmp eq ptr %spec.select.i.i.i.i.i, null
   br i1 %.not.i.i7.i, label %bb.p, label %bb.o
@@ -374,8 +381,10 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15, !noalias !105
-  %.not12.i.i.i = icmp eq ptr %i.bb, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
-  br i1 %.not12.i.i.i, label %bb.q, label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit
+  %12 = icmp ne ptr %i.bb, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
+  %.not12.i.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4tosa12ConstShapeOpEvE2idE
+  %spec.select.i.i.i.i4.not.i.i.i = or i1 %.not12.i.i.i, %12
+  br i1 %spec.select.i.i.i.i4.not.i.i.i, label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.be = load i32, ptr %i.f, align 4, !noalias !105 ; 2 uses
@@ -466,8 +475,9 @@ _ZN4mlir4tosa12_GLOBAL__N_123shouldMarkGraphConstantEPNS_9OperationE.exit.i: ; p
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i1.i.i, i64 16
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !30
   %i.ci = icmp eq ptr %i.ch, @_ZN4mlir6detail14TypeIDResolverINS_4tosa7ConstOpEvE2idE
+  %spec.select.i.i.i.i.i2.i.i = and i1 %9, %i.ci
   %i.cj = call noundef i64 @_ZN4mlir12ElementsAttr14getNumElementsES0_(ptr %.sroa.0.0.ph.i.i, ptr %.sroa.5.0.ph.i.i) #15
-  %i.ck = select i1 %i.ci, i64 16, i64 32
+  %i.ck = select i1 %spec.select.i.i.i.i.i2.i.i, i64 16, i64 32
   %i.cl = icmp sgt i64 %i.cj, %i.ck
   br i1 %i.cl, label %bb.w, label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit
 
@@ -495,8 +505,8 @@ bb.w:                                             ; preds = %_ZN4mlir4tosa12_GLO
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   br label %_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit
 
-_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit: ; preds = %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i, %bb.m, %bb.p, %_ZN4mlir4tosa12_GLOBAL__N_123shouldMarkGraphConstantEPNS_9OperationE.exit.i, %bb.w
-  %.sroa.01.0.i = phi i32 [ 0, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i ], [ 1, %bb.a ], [ 1, %_ZN4mlir4tosa12_GLOBAL__N_123shouldMarkGraphConstantEPNS_9OperationE.exit.i ], [ 1, %bb.w ], [ 1, %bb.m ], [ 1, %bb.p ]
+_ZZN4mlir4tosa12_GLOBAL__N_133TosaToSPIRVTosaMarkGraphConstants14runOnOperationEvENKUlPNS_9OperationEE_clES4_.exit: ; preds = %_ZN4llvm3isaIJN4mlir4tosa7ConstOpENS2_12ConstShapeOpEEPNS1_9OperationEEEbRKT0_.exit.i, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i, %bb.m, %bb.p, %_ZN4mlir4tosa12_GLOBAL__N_123shouldMarkGraphConstantEPNS_9OperationE.exit.i, %bb.w
+  %.sroa.01.0.i = phi i32 [ 0, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i ], [ 1, %_ZN4llvm3isaIJN4mlir4tosa7ConstOpENS2_12ConstShapeOpEEPNS1_9OperationEEEbRKT0_.exit.i ], [ 1, %_ZN4mlir4tosa12_GLOBAL__N_123shouldMarkGraphConstantEPNS_9OperationE.exit.i ], [ 1, %bb.w ], [ 1, %bb.m ], [ 1, %bb.p ]
   ret i32 %.sroa.01.0.i
 }
 

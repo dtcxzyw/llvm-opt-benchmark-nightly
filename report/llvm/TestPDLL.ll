@@ -202,7 +202,9 @@ bb.b:                                             ; preds = %_ZN4llvm16hasSingle
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !63
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.k, label %bb.c, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.thread
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %7, %i.k
+  br i1 %spec.select.i.i.i.i, label %bb.c, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4mlir9Operation6removeEv(ptr noundef nonnull align 8 dereferenceable(64) %i.g) #16
@@ -605,8 +607,10 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.s, align 8, !tbaa !61
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !63
-  %.not.i = icmp eq ptr %i.u, @_ZN4mlir6detail14TypeIDResolverIN4test3OpAEvE2idE
-  br i1 %.not.i, label %_ZN4mlir6detail20pdl_function_builder22ProcessPDLValueBasedOnIN4test3OpAEPNS_9OperationEE11verifyAsArgEN4llvm12function_refIFNS8_13LogicalResultERKNS8_5TwineEEEENS_8PDLValueEm.exit, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNS3_6detail20pdl_function_builder22ProcessDerivedPDLValueIN4test3OpAES5_E11verifyAsArgENS_12function_refIFS6_RKNS_5TwineEEEES5_mEUlSE_E_EERS7_OT_.exit.i.i
+  %11 = icmp ne ptr %i.u, @_ZN4mlir6detail14TypeIDResolverIN4test3OpAEvE2idE
+  %.not.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test3OpAEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i.i.i = or i1 %.not.i, %11
+  br i1 %spec.select.i.i.i.i.i.not.i.i.i.i, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNS3_6detail20pdl_function_builder22ProcessDerivedPDLValueIN4test3OpAES5_E11verifyAsArgENS_12function_refIFS6_RKNS_5TwineEEEES5_mEUlSE_E_EERS7_OT_.exit.i.i, label %_ZN4mlir6detail20pdl_function_builder22ProcessPDLValueBasedOnIN4test3OpAEPNS_9OperationEE11verifyAsArgEN4llvm12function_refIFNS8_13LogicalResultERKNS8_5TwineEEEENS_8PDLValueEm.exit
 
 _ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNS3_6detail20pdl_function_builder22ProcessDerivedPDLValueIN4test3OpAES5_E11verifyAsArgENS_12function_refIFS6_RKNS_5TwineEEEES5_mEUlSE_E_EERS7_OT_.exit.i.i: ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16

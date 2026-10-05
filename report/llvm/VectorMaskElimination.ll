@@ -57,6 +57,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir6vector12CreateMaskOpELb1EE15growAndPus
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -459,8 +460,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !82
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector12CreateMaskOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZNS_6vector20eliminateVectorMasksERNS_10IRRewriterENS_19FunctionOpInterfaceESt8optionalINS4_11VscaleRangeEEE3$_0NS4_12CreateMaskOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESL_E4typeESG_OT1_ENKUlSG_E_clESG_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a

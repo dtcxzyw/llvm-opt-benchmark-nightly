@@ -202,8 +202,10 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !38
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !41
-  %.not.a = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6linalg13BatchMatmulOpEvE2idE
-  br i1 %.not.a, label %bb.b, label %bb.f
+  %30 = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6linalg13BatchMatmulOpEvE2idE
+  %.not.a = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg13BatchMatmulOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i.i.not = or i1 %.not.a, %30
+  br i1 %spec.select.i.i.i.i.i.i.i.i.i.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = call noundef zeroext i1 @_ZN4mlir6linalg13BatchMatmulOp18hasUserDefinedMapsEv(ptr noundef nonnull align 8 dereferenceable(8) %19) #22
@@ -606,7 +608,9 @@ bb.am:                                            ; preds = %bb.ak
   %i.ia = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !41
   %i.ic = icmp eq ptr %i.ib, @_ZN4mlir6detail14TypeIDResolverINS_6linalg9GenericOpEvE2idE
-  %spec.select.i.i61 = select i1 %i.ic, ptr %i.hy, ptr null
+  %31 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg9GenericOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %31, %i.ic
+  %spec.select.i.i61 = select i1 %spec.select.i.i.i.i, ptr %i.hy, ptr null
   store ptr %spec.select.i.i61, ptr %26, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #22
   call void @_ZN4mlir6detail27IndexingMapOpInterfaceTraitINS_6linalg9GenericOpEE20getIndexingMapsArrayEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::SmallVector.115") align 8 %27, ptr noundef nonnull align 1 dereferenceable(1) %26)

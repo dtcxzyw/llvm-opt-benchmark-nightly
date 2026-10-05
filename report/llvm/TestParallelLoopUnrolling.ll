@@ -202,10 +202,12 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !51
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !53
-  %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
-  %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
-  br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_129TestParallelLoopUnrollingPass14runOnOperationEvEUlNS_3scf10ParallelOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
+  %2 = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3scf10ParallelOpEvE2idE
+  %i.e = icmp ne ptr %1, null
+  %4 = and i1 %i.e, %2
+  %.not.not.i = and i1 %3, %4
+  br i1 %.not.not.i, label %bb.b, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_129TestParallelLoopUnrollingPass14runOnOperationEvEUlNS_3scf10ParallelOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %.val, align 8, !tbaa !42
@@ -252,7 +254,7 @@ bb.d:                                             ; preds = %_ZN12_GLOBAL__N_115
   br i1 %.not.i1.i.i, label %bb.f, label %bb.e, !prof !106
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE15growAndPushBackES3_(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr %1)
+  tail call void @_ZN4llvm23SmallVectorTemplateBaseIN4mlir3scf10ParallelOpELb1EE15growAndPushBackES3_(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr nonnull %1)
   br label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_129TestParallelLoopUnrollingPass14runOnOperationEvEUlNS_3scf10ParallelOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit
 
 bb.f:                                             ; preds = %bb.d

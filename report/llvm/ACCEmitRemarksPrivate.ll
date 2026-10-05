@@ -204,8 +204,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !45   ; 4 uses
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc10ParallelOpEvE2idE
+  %14 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc10ParallelOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %14, %i.e
   %.not1.i.i = icmp eq ptr %1, null
-  %.not.i.i = or i1 %.not1.i.i, %i.e
+  %.not.i.i = or i1 %.not1.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc10ParallelOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -272,8 +274,10 @@ _ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc10ParallelOpERZZN12_GLOBA
   br label %_ZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit
 
 _ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc10ParallelOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i: ; preds = %bb.a
-  %.not.i = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
-  br i1 %.not.i, label %bb.e, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc9KernelsOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
+  %15 = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
+  %.not.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc9KernelsOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i5.i = or i1 %.not.i, %15
+  br i1 %spec.select.i.i.i.i.i.not.i5.i, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc9KernelsOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc10ParallelOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
@@ -339,8 +343,10 @@ _ZZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9Operati
   br label %_ZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit
 
 _ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc9KernelsOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i: ; preds = %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc10ParallelOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
-  %.not11.i = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
-  br i1 %.not11.i, label %bb.h, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc8SerialOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
+  %16 = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
+  %.not11.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc8SerialOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i15.i = or i1 %.not11.i, %16
+  br i1 %spec.select.i.i.i.i.i.not.i15.i, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc8SerialOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc9KernelsOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -406,8 +412,10 @@ _ZZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9Operati
   br label %_ZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit
 
 _ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc8SerialOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i: ; preds = %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc9KernelsOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
-  %.not12.i = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc6LoopOpEvE2idE
-  br i1 %.not12.i, label %bb.k, label %_ZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit
+  %17 = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3acc6LoopOpEvE2idE
+  %.not12.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc6LoopOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i25.i = or i1 %.not12.i, %17
+  br i1 %spec.select.i.i.i.i.i.not.i25.i, label %_ZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlPN4mlir9OperationEE_clES3_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3acc8SerialOpERZZN12_GLOBAL__N_121ACCEmitRemarksPrivate14runOnOperationEvENKUlS3_E_clES3_EUlT_E_EERS4_OT0_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)

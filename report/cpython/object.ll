@@ -202,13 +202,21 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq ptr %i.a, @_Py_NoneStruct
-  br i1 %i.c, label %bb.c, label %bb.d
+  br i1 %i.c, label %bb.c, label %2
 
 bb.c:                                             ; preds = %bb.b
   tail call void @__assert_fail(ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.33, i32 noundef 507, ptr noundef nonnull @__PRETTY_FUNCTION__.test_py_is_macros) #6
   unreachable
 
-bb.d:                                             ; preds = %bb.b
+2:                                                ; preds = %bb.b
+  %3 = icmp eq ptr @_Py_FalseStruct, @_Py_TrueStruct
+  br i1 %3, label %4, label %bb.d
+
+4:                                                ; preds = %2
+  tail call void @__assert_fail(ptr noundef nonnull @.str.59, ptr noundef nonnull @.str.33, i32 noundef 507, ptr noundef nonnull @__PRETTY_FUNCTION__.test_py_is_macros) #6
+  unreachable
+
+bb.d:                                             ; preds = %2
   %i.d = icmp eq ptr %i.a, @_Py_TrueStruct
   br i1 %i.d, label %bb.e, label %bb.f
 

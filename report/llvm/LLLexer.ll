@@ -204,6 +204,7 @@ begin_hunk_0
 @.str.569 = private unnamed_addr constant [35 x i8] c"bad payload format for nan literal\00", align 1
 @_ZZN4llvm13hexDigitValueEcE3LUT = linkonce_odr local_unnamed_addr constant [256 x i16] [i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7, i16 8, i16 9, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 10, i16 11, i16 12, i16 13, i16 14, i16 15, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 10, i16 11, i16 12, i16 13, i16 14, i16 15, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1], comdat, align 16
 @_ZN4llvm11APFloatBase13semIEEEdoubleE = external global %"struct.llvm::fltSemantics", align 4
+@_ZN4llvm11APFloatBase18semPPCDoubleDoubleE = external global %"struct.llvm::fltSemantics", align 4
 
 @_ZN4llvm7LLLexerC1ENS_9StringRefERNS_9SourceMgrERNS_12SMDiagnosticERNS_11LLVMContextE = unnamed_addr alias void (ptr, ptr, i64, ptr, ptr, ptr), ptr @_ZN4llvm7LLLexerC2ENS_9StringRefERNS_9SourceMgrERNS_12SMDiagnosticERNS_11LLVMContextE
 
@@ -606,8 +607,8 @@ bb.a:
   %2 = alloca %"class.llvm::Twine", align 8       ; 6 uses
   %3 = alloca %"class.llvm::Twine", align 8       ; 6 uses
   %4 = alloca %"class.llvm::Twine", align 8       ; 6 uses
-  %5 = alloca %"class.llvm::APFloat", align 8     ; 5 uses
-  %6 = alloca %"class.llvm::APInt", align 8       ; 6 uses
+  %5 = alloca %"class.llvm::APFloat", align 8     ; 6 uses
+  %6 = alloca %"class.llvm::APInt", align 8       ; 7 uses
   %i.a = alloca [2 x i64], align 16               ; 10 uses
   %7 = alloca %"class.llvm::APInt", align 8       ; 3 uses
   %8 = alloca %"class.llvm::APInt", align 8       ; 3 uses
@@ -679,12 +680,12 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   %.not17.i = icmp samesign eq i64 %.add, 2
-  br i1 %.not17.i, label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a, label %.critedge.i
+  br i1 %.not17.i, label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit, label %.critedge.i
 
 bb.i:                                             ; preds = %.critedge.i
   %i.r = getelementptr inbounds nuw i8, ptr %.01418.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.r, %.ptr85.le
-  br i1 %.not.i, label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a, label %.critedge.i, !llvm.loop !2
+  br i1 %.not.i, label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit, label %.critedge.i, !llvm.loop !2
 
 .critedge.i:                                      ; preds = %bb.h, %bb.i
   %.01219.i = phi i64 [ %i.z, %bb.i ], [ 0, %bb.h ] ; 2 uses
@@ -709,14 +710,25 @@ bb.j:                                             ; preds = %.critedge.i
   store i8 3, ptr %i.aa, align 8, !tbaa !53
   call void @_ZN4llvm7LLLexer5ErrorENS_5SMLocERKNS_5TwineENS0_13ErrorPriorityE(ptr noundef nonnull align 8 dereferenceable(169) %0, ptr %i.c, ptr noundef nonnull align 8 dereferenceable(34) %4, i32 noundef 2)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
-  br label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a
+  br label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit
 
-_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a:      ; preds = %bb.i, %bb.h, %bb.j
+_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit:        ; preds = %bb.i, %bb.h, %bb.j
   %.2.i = phi i64 [ 0, %bb.j ], [ 0, %bb.h ], [ %i.z, %bb.i ]
   %12 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i32 64, ptr %12, align 8, !tbaa !63
   store i64 %.2.i, ptr %6, align 8, !tbaa !42
+  %.not.i.i = icmp eq ptr @_ZN4llvm11APFloatBase13semIEEEdoubleE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i, label %14, label %13
+
+13:                                               ; preds = %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit
   call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEdoubleE, ptr noundef nonnull align 8 dereferenceable(12) %6) #15
+  br label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a
+
+14:                                               ; preds = %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEdoubleE, ptr noundef nonnull align 8 dereferenceable(12) %6) #15
+  br label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a
+
+_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit.a:      ; preds = %13, %14
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.ad = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvm7APFloat7StorageaSEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %5) #15 ; 0 uses
   call void @_ZN4llvm7APFloat7StorageD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #15
@@ -1118,6 +1130,8 @@ declare void @_ZdaPv(ptr noundef) local_unnamed_addr #8
 declare void @_ZN4llvm5APInt12initSlowCaseERKS0_(ptr noundef nonnull align 8 dereferenceable(12), ptr noundef nonnull align 8 dereferenceable(12)) local_unnamed_addr #2
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #2
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #2
 
 declare noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvm7APFloat7StorageaSEOS1_(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 8 dereferenceable(24)) local_unnamed_addr #2
 

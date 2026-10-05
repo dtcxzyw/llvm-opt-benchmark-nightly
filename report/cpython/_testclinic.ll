@@ -204,7 +204,7 @@ PyBytes_AS_STRING.exit:                           ; preds = %PyBytes_GET_SIZE.ex
 
 bb.i:                                             ; preds = %bb.d
   %.not.i291 = icmp eq ptr %.val254, @PyByteArray_Type
-  br i1 %.not.i291, label %PyByteArray_GET_SIZE.exit, label %PyObject_TypeCheck.exit
+  br i1 %.not.i291, label %bb.k, label %PyObject_TypeCheck.exit
 
 PyObject_TypeCheck.exit:                          ; preds = %bb.i
   %i.m = tail call i32 @PyType_IsSubtype(ptr noundef %.val254, ptr noundef nonnull @PyByteArray_Type) #11
@@ -217,20 +217,25 @@ PyObject_TypeCheck.exit.thread:                   ; preds = %PyObject_TypeCheck.
   %.val.i292.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !16 ; 2 uses
   %i.n = getelementptr i8, ptr %.pre, i64 8
   %.not.i.i293 = icmp eq ptr %.val.i292.pre, @PyByteArray_Type
-  br i1 %.not.i.i293, label %PyByteArray_GET_SIZE.exit, label %PyObject_TypeCheck.exit.i
+  br i1 %.not.i.i293, label %bb.k, label %PyObject_TypeCheck.exit.i
 
 PyObject_TypeCheck.exit.i:                        ; preds = %PyObject_TypeCheck.exit.thread
   %i.o = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i292.pre, ptr noundef nonnull @PyByteArray_Type) #11
   %.not11.i = icmp eq i32 %i.o, 0
-  br i1 %.not11.i, label %bb.j, label %bb.k
+  br i1 %.not11.i, label %bb.j, label %thread-pre-split.i
 
 bb.j:                                             ; preds = %PyObject_TypeCheck.exit.i
   tail call void @__assert_fail(ptr noundef nonnull @.str.153, ptr noundef nonnull @.str.154, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.PyByteArray_GET_SIZE) #12
   unreachable
 
-bb.k:                                             ; preds = %PyObject_TypeCheck.exit.i
-  %.val4.i.pr.i = load ptr, ptr %i.n, align 8, !tbaa !16 ; 2 uses
-  %.not.i3.i = icmp eq ptr %.val4.i.pr.i, @PyLong_Type
+thread-pre-split.i:                               ; preds = %PyObject_TypeCheck.exit.i
+  %.val4.i.pr.i = load ptr, ptr %i.n, align 8, !tbaa !16
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.i, %thread-pre-split.i, %PyObject_TypeCheck.exit.thread
+  %3 = phi ptr [ %.pre, %thread-pre-split.i ], [ %.pre, %PyObject_TypeCheck.exit.thread ], [ %i.d, %bb.i ]
+  %.val4.i.i = phi ptr [ %.val4.i.pr.i, %thread-pre-split.i ], [ @PyByteArray_Type, %PyObject_TypeCheck.exit.thread ], [ @PyByteArray_Type, %bb.i ] ; 2 uses
+  %.not.i3.i = icmp eq ptr %.val4.i.i, @PyLong_Type
   br i1 %.not.i3.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -238,15 +243,14 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %.not3.i.i294 = icmp eq ptr %.val4.i.pr.i, @PyBool_Type
+  %.not3.i.i294 = icmp eq ptr %.val4.i.i, @PyBool_Type
   br i1 %.not3.i.i294, label %bb.n, label %PyByteArray_GET_SIZE.exit
 
 bb.n:                                             ; preds = %bb.m
   tail call void @__assert_fail(ptr noundef nonnull @.str.99, ptr noundef nonnull @.str.98, i32 noundef 321, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #12
   unreachable
 
-PyByteArray_GET_SIZE.exit:                        ; preds = %bb.i, %PyObject_TypeCheck.exit.thread, %bb.m
-  %3 = phi ptr [ %.pre, %bb.m ], [ %.pre, %PyObject_TypeCheck.exit.thread ], [ %i.d, %bb.i ]
+PyByteArray_GET_SIZE.exit:                        ; preds = %bb.m
   %i.p = getelementptr i8, ptr %3, i64 16
   %i.q = load i64, ptr %i.p, align 8, !tbaa !26
   %.not188 = icmp eq i64 %i.q, 1
@@ -258,20 +262,24 @@ bb.o:                                             ; preds = %PyByteArray_GET_SIZ
   %i.t = getelementptr i8, ptr %i.s, i64 8        ; 2 uses
   %.val.i295 = load ptr, ptr %i.t, align 8, !tbaa !16 ; 2 uses
   %.not.i.i296 = icmp eq ptr %.val.i295, @PyByteArray_Type
-  br i1 %.not.i.i296, label %PyByteArray_GET_SIZE.exit302, label %PyObject_TypeCheck.exit.i297
+  br i1 %.not.i.i296, label %bb.q, label %PyObject_TypeCheck.exit.i297
 
 PyObject_TypeCheck.exit.i297:                     ; preds = %bb.o
   %i.u = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i295, ptr noundef nonnull @PyByteArray_Type) #11
   %.not11.i298 = icmp eq i32 %i.u, 0
-  br i1 %.not11.i298, label %bb.p, label %bb.q
+  br i1 %.not11.i298, label %bb.p, label %thread-pre-split.i299
 
 bb.p:                                             ; preds = %PyObject_TypeCheck.exit.i297
   tail call void @__assert_fail(ptr noundef nonnull @.str.153, ptr noundef nonnull @.str.154, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.PyByteArray_GET_SIZE) #12
   unreachable
 
-bb.q:                                             ; preds = %PyObject_TypeCheck.exit.i297
-  %.val4.i.pr.i299 = load ptr, ptr %i.t, align 8, !tbaa !16 ; 2 uses
-  %.not.i3.i300 = icmp eq ptr %.val4.i.pr.i299, @PyLong_Type
+thread-pre-split.i299:                            ; preds = %PyObject_TypeCheck.exit.i297
+  %.val4.i.pr.i300 = load ptr, ptr %i.t, align 8, !tbaa !16
+  br label %bb.q
+
+bb.q:                                             ; preds = %thread-pre-split.i299, %bb.o
+  %.val4.i.i302 = phi ptr [ %.val4.i.pr.i300, %thread-pre-split.i299 ], [ @PyByteArray_Type, %bb.o ] ; 2 uses
+  %.not.i3.i300 = icmp eq ptr %.val4.i.i302, @PyLong_Type
   br i1 %.not.i3.i300, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -279,14 +287,14 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.q
-  %.not3.i.i301 = icmp eq ptr %.val4.i.pr.i299, @PyBool_Type
+  %.not3.i.i301 = icmp eq ptr %.val4.i.i302, @PyBool_Type
   br i1 %.not3.i.i301, label %bb.t, label %PyByteArray_GET_SIZE.exit302
 
 bb.t:                                             ; preds = %bb.s
   tail call void @__assert_fail(ptr noundef nonnull @.str.99, ptr noundef nonnull @.str.98, i32 noundef 321, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #12
   unreachable
 
-PyByteArray_GET_SIZE.exit302:                     ; preds = %bb.o, %bb.s
+PyByteArray_GET_SIZE.exit302:                     ; preds = %bb.s
   %i.v = getelementptr i8, ptr %i.s, i64 16
   %i.w = load i64, ptr %i.v, align 8, !tbaa !26
   %i.x = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.r, ptr noundef nonnull @.str.109, i64 noundef %i.w) #11 ; 0 uses
@@ -367,7 +375,7 @@ PyBytes_AS_STRING.exit321:                        ; preds = %PyBytes_GET_SIZE.ex
 
 bb.ad:                                            ; preds = %bb.y
   %.not.i322 = icmp eq ptr %.val253, @PyByteArray_Type
-  br i1 %.not.i322, label %PyByteArray_GET_SIZE.exit331, label %PyObject_TypeCheck.exit323
+  br i1 %.not.i322, label %bb.af, label %PyObject_TypeCheck.exit323
 
 PyObject_TypeCheck.exit323:                       ; preds = %bb.ad
   %i.ao = tail call i32 @PyType_IsSubtype(ptr noundef %.val253, ptr noundef nonnull @PyByteArray_Type) #11
@@ -380,20 +388,25 @@ PyObject_TypeCheck.exit323.thread:                ; preds = %PyObject_TypeCheck.
   %.val.i324.pre = load ptr, ptr %.phi.trans.insert436, align 8, !tbaa !16 ; 2 uses
   %i.ap = getelementptr i8, ptr %.pre435, i64 8
   %.not.i.i325 = icmp eq ptr %.val.i324.pre, @PyByteArray_Type
-  br i1 %.not.i.i325, label %PyByteArray_GET_SIZE.exit331, label %PyObject_TypeCheck.exit.i326
+  br i1 %.not.i.i325, label %bb.af, label %PyObject_TypeCheck.exit.i326
 
 PyObject_TypeCheck.exit.i326:                     ; preds = %PyObject_TypeCheck.exit323.thread
   %i.aq = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i324.pre, ptr noundef nonnull @PyByteArray_Type) #11
   %.not11.i327 = icmp eq i32 %i.aq, 0
-  br i1 %.not11.i327, label %bb.ae, label %bb.af
+  br i1 %.not11.i327, label %bb.ae, label %thread-pre-split.i332
 
 bb.ae:                                            ; preds = %PyObject_TypeCheck.exit.i326
   tail call void @__assert_fail(ptr noundef nonnull @.str.153, ptr noundef nonnull @.str.154, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.PyByteArray_GET_SIZE) #12
   unreachable
 
-bb.af:                                            ; preds = %PyObject_TypeCheck.exit.i326
-  %.val4.i.pr.i328 = load ptr, ptr %i.ap, align 8, !tbaa !16 ; 2 uses
-  %.not.i3.i329 = icmp eq ptr %.val4.i.pr.i328, @PyLong_Type
+thread-pre-split.i332:                            ; preds = %PyObject_TypeCheck.exit.i326
+  %.val4.i.pr.i333 = load ptr, ptr %i.ap, align 8, !tbaa !16
+  br label %bb.af
+
+bb.af:                                            ; preds = %bb.ad, %thread-pre-split.i332, %PyObject_TypeCheck.exit323.thread
+  %4 = phi ptr [ %.pre435, %thread-pre-split.i332 ], [ %.pre435, %PyObject_TypeCheck.exit323.thread ], [ %i.af, %bb.ad ]
+  %.val4.i.i335 = phi ptr [ %.val4.i.pr.i333, %thread-pre-split.i332 ], [ @PyByteArray_Type, %PyObject_TypeCheck.exit323.thread ], [ @PyByteArray_Type, %bb.ad ] ; 2 uses
+  %.not.i3.i329 = icmp eq ptr %.val4.i.i335, @PyLong_Type
   br i1 %.not.i3.i329, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -401,15 +414,14 @@ bb.ag:                                            ; preds = %bb.af
   unreachable
 
 bb.ah:                                            ; preds = %bb.af
-  %.not3.i.i330 = icmp eq ptr %.val4.i.pr.i328, @PyBool_Type
+  %.not3.i.i330 = icmp eq ptr %.val4.i.i335, @PyBool_Type
   br i1 %.not3.i.i330, label %bb.ai, label %PyByteArray_GET_SIZE.exit331
 
 bb.ai:                                            ; preds = %bb.ah
   tail call void @__assert_fail(ptr noundef nonnull @.str.99, ptr noundef nonnull @.str.98, i32 noundef 321, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #12
   unreachable
 
-PyByteArray_GET_SIZE.exit331:                     ; preds = %bb.ad, %PyObject_TypeCheck.exit323.thread, %bb.ah
-  %4 = phi ptr [ %.pre435, %bb.ah ], [ %.pre435, %PyObject_TypeCheck.exit323.thread ], [ %i.af, %bb.ad ]
+PyByteArray_GET_SIZE.exit331:                     ; preds = %bb.ah
   %i.ar = getelementptr i8, ptr %4, i64 16
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !26
   %.not192 = icmp eq i64 %i.as, 1
@@ -812,20 +824,24 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %.val = load ptr, ptr %i.a, align 8, !tbaa !16  ; 2 uses
   %.not.i = icmp eq ptr %.val, @PyByteArray_Type
-  br i1 %.not.i, label %_Py_SIZE_impl.exit, label %PyObject_TypeCheck.exit
+  br i1 %.not.i, label %bb.c, label %PyObject_TypeCheck.exit
 
 PyObject_TypeCheck.exit:                          ; preds = %bb.a
   %i.b = tail call i32 @PyType_IsSubtype(ptr noundef %.val, ptr noundef nonnull @PyByteArray_Type) #11
   %.not11 = icmp eq i32 %i.b, 0
-  br i1 %.not11, label %bb.b, label %bb.c
+  br i1 %.not11, label %bb.b, label %thread-pre-split
 
 bb.b:                                             ; preds = %PyObject_TypeCheck.exit
   tail call void @__assert_fail(ptr noundef nonnull @.str.153, ptr noundef nonnull @.str.154, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.PyByteArray_GET_SIZE) #12
   unreachable
 
-bb.c:                                             ; preds = %PyObject_TypeCheck.exit
-  %.val4.i.pr = load ptr, ptr %i.a, align 8, !tbaa !16 ; 2 uses
-  %.not.i3 = icmp eq ptr %.val4.i.pr, @PyLong_Type
+thread-pre-split:                                 ; preds = %PyObject_TypeCheck.exit
+  %.val4.i.pr = load ptr, ptr %i.a, align 8, !tbaa !16
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %thread-pre-split
+  %.val4.i = phi ptr [ %.val4.i.pr, %thread-pre-split ], [ @PyByteArray_Type, %bb.a ] ; 2 uses
+  %.not.i3 = icmp eq ptr %.val4.i, @PyLong_Type
   br i1 %.not.i3, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -833,14 +849,14 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %.not3.i = icmp eq ptr %.val4.i.pr, @PyBool_Type
+  %.not3.i = icmp eq ptr %.val4.i, @PyBool_Type
   br i1 %.not3.i, label %bb.f, label %_Py_SIZE_impl.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call void @__assert_fail(ptr noundef nonnull @.str.99, ptr noundef nonnull @.str.98, i32 noundef 321, ptr noundef nonnull @__PRETTY_FUNCTION__._Py_SIZE_impl) #12
   unreachable
 
-_Py_SIZE_impl.exit:                               ; preds = %bb.a, %bb.e
+_Py_SIZE_impl.exit:                               ; preds = %bb.e
   %i.c = getelementptr i8, ptr %0, i64 16
   %i.d = load i64, ptr %i.c, align 8, !tbaa !26
   ret i64 %i.d

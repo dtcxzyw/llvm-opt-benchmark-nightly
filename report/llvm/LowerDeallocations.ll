@@ -204,7 +204,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !61
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.g, label %_ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit.thread, label %_ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i.i = and i1 %13, %i.g
+  br i1 %spec.select.i.i.i.i.i, label %_ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit.thread, label %_ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit
 
 _ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit: ; preds = %bb.a
   %i.h = tail call noundef ptr @_ZN4mlir11OpInterfaceINS_19FunctionOpInterfaceENS_6detail34FunctionOpInterfaceInterfaceTraitsEE15getInterfaceForEPNS_9OperationE(ptr noundef nonnull %i.c)
@@ -260,10 +262,11 @@ _ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.t, align 8, !tbaa !128
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !61
-  %i.w = icmp ne ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %.not1314 = icmp eq i64 %.pre-phi20, 0
-  %.not13 = or i1 %.not1314, %i.w
-  br i1 %.not13, label %bb.g, label %bb.f
+  %14 = icmp eq ptr %i.v, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %i.w = icmp ne i64 %.pre-phi20, 0
+  %15 = and i1 %i.w, %14
+  %.not13.not = and i1 %13, %15
+  br i1 %.not13.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZN4llvm3isaIJN4mlir8ModuleOpENS1_19FunctionOpInterfaceEEPNS1_9OperationEEEbRKT0_.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
@@ -666,8 +669,10 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !61
   %i.f = icmp ne ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization9DeallocOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization9DeallocOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %4, %i.f
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.f
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_122LowerDeallocationsPass14runOnOperationEvEUlNS_13bufferization9DeallocOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

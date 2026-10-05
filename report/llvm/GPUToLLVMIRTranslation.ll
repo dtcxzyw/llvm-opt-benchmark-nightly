@@ -152,6 +152,7 @@ $_ZTVZN4mlir15DialectRegistry12addExtensionIJNS_3gpu10GPUDialectEEEEbPFvPNS_11ML
 @_ZZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_31LLVMTranslationDialectInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str = private unnamed_addr constant [88 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::LLVMTranslationDialectInterface]\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_3gpu38OffloadingLLVMTranslationAttrInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
@@ -517,13 +518,17 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !59   ; 3 uses
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %12 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu11GPUModuleOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %12, %i.d
   %.not2.i.i = icmp eq ptr %1, null
-  %.not.i.i = or i1 %.not2.i.i, %i.d
+  %.not.i.i = or i1 %.not2.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu11GPUModuleOpEE_EERS7_OT_.exit, label %_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE7DefaultIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES3_RNS_13IRBuilderBaseERNS1_4LLVM17ModuleTranslationEEUlS3_E_EES4_OT_.exit
 
 _ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu11GPUModuleOpEE_EERS7_OT_.exit: ; preds = %bb.a
-  %.not = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
-  br i1 %.not, label %bb.b, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu8BinaryOpEE_EERS7_OT_.exit
+  %13 = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
+  %.not = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i.i.not.i.i8 = or i1 %.not, %13
+  br i1 %spec.select.i.i.i.i.i.not.i.i8, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu8BinaryOpEE_EERS7_OT_.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu11GPUModuleOpEE_EERS7_OT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #14
@@ -548,8 +553,10 @@ bb.b:                                             ; preds = %_ZN4llvm6detail14Ty
   br label %_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE7DefaultIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES3_RNS_13IRBuilderBaseERNS1_4LLVM17ModuleTranslationEEUlS3_E_EES4_OT_.exit
 
 _ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu8BinaryOpEE_EERS7_OT_.exit: ; preds = %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu11GPUModuleOpEE_EERS7_OT_.exit
-  %.not31 = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu12LaunchFuncOpEvE2idE
-  br i1 %.not31, label %bb.c, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu12LaunchFuncOpEE_EERS7_OT_.exit
+  %14 = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3gpu12LaunchFuncOpEvE2idE
+  %.not31 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3gpu12LaunchFuncOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i11 = or i1 %.not31, %14
+  br i1 %spec.select.i.i.i.i.i.not.i.i11, label %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu12LaunchFuncOpEE_EERS7_OT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEEES5_E4CaseIZNK12_GLOBAL__N_136GPUDialectLLVMIRTranslationInterface16convertOperationES5_RNS_13IRBuilderBaseERNS3_4LLVM17ModuleTranslationEEUlNS3_3gpu8BinaryOpEE_EERS7_OT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -564,8 +571,9 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.s, align 8, !tbaa !124
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !59
-  %12 = icmp eq ptr %i.u, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
-  br i1 %12, label %_ZN4mlir11SymbolTable23lookupNearestSymbolFromINS_3gpu8BinaryOpEEET_PNS_9OperationENS_10StringAttrE.exit.i.i.i.i, label %bb.e
+  %15 = icmp ne ptr %i.u, @_ZN4mlir6detail14TypeIDResolverINS_3gpu8BinaryOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i.i.i.not = or i1 %15, %.not
+  br i1 %spec.select.i.i.i.i.i.i.i.i.i.i.not, label %bb.e, label %_ZN4mlir11SymbolTable23lookupNearestSymbolFromINS_3gpu8BinaryOpEEET_PNS_9OperationENS_10StringAttrE.exit.i.i.i.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14

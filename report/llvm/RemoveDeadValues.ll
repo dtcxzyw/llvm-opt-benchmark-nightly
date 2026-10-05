@@ -204,7 +204,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !174
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2ub8PoisonOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %1, ptr null ; 2 uses
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2ub8PoisonOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %5, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %4, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -273,8 +275,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !174
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_2ub8PoisonOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_2ub8PoisonOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %3, %i.d
   %.not2 = icmp eq ptr %1, null
-  %.not = or i1 %.not2, %i.d
+  %.not = or i1 %.not2, %spec.select.i.i.i.i.not
   br i1 %.not, label %_ZN4llvm6detail12DenseSetImplIN4mlir2ub8PoisonOpENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_vEENS0_12DenseSetPairIS4_EEEEE5eraseERKS4_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

@@ -204,8 +204,7 @@ bb.a:
   br i1 %exitcond.2.not.i, label %.loopexit171, label %.lr.ph.2.i, !llvm.loop !1
 
 SDL_GetDriverAndJoystickIndex.exit:               ; preds = %.lr.ph.i, %.lr.ph.1.i, %.lr.ph.2.i
-  %2 = phi i8 [ 1, %.lr.ph.2.i ], [ 0, %.lr.ph.1.i ], [ 0, %.lr.ph.i ]
-  %.0156 = phi ptr [ @SDL_VIRTUAL_JoystickDriver, %.lr.ph.2.i ], [ @SDL_LINUX_JoystickDriver, %.lr.ph.1.i ], [ @SDL_HIDAPI_JoystickDriver, %.lr.ph.i ] ; 6 uses
+  %.0156 = phi ptr [ @SDL_VIRTUAL_JoystickDriver, %.lr.ph.2.i ], [ @SDL_LINUX_JoystickDriver, %.lr.ph.1.i ], [ @SDL_HIDAPI_JoystickDriver, %.lr.ph.i ] ; 7 uses
   %.0155 = phi i32 [ %.01724.2.i, %.lr.ph.2.i ], [ %.01724.1.i, %.lr.ph.1.i ], [ %.01724.i, %.lr.ph.i ] ; 4 uses
   %.095178 = load ptr, ptr @SDL_joysticks, align 8 ; 2 uses
   %.not179 = icmp eq ptr %.095178, null
@@ -332,8 +331,10 @@ bb.k:                                             ; preds = %._crit_edge
   store i64 %i.bf, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.au, i64 236
   store i32 -1, ptr %i.bh, align 4
+  %2 = icmp eq ptr %.0156, @SDL_VIRTUAL_JoystickDriver
   %i.bi = getelementptr inbounds nuw i8, ptr %i.au, i64 65
-  store i8 %2, ptr %i.bi, align 1
+  %3 = zext i1 %2 to i8
+  store i8 %3, ptr %i.bi, align 1
   %i.bj = getelementptr inbounds nuw i8, ptr %.0156, i64 88
   %i.bk = load ptr, ptr %i.bj, align 8
   %i.bl = tail call zeroext i1 %i.bk(ptr noundef nonnull %i.au, i32 noundef %.0155) #12
@@ -736,7 +737,7 @@ SDL_UnlockJoysticks_REAL.exit:                    ; preds = %bb.c, %.critedge.i
 declare zeroext i1 @SDL_JoystickDetachVirtualInner(i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef zeroext i1 @SDL_IsJoystickVirtual_REAL(i32 noundef %0) local_unnamed_addr #1 {
+define hidden zeroext i1 @SDL_IsJoystickVirtual_REAL(i32 noundef %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call i32 @SDL_AddAtomicInt_REAL(ptr noundef nonnull @SDL_joystick_lock_pending, i32 noundef 1) #12 ; 0 uses
   %i.b = load ptr, ptr @SDL_joystick_lock, align 8
@@ -807,7 +808,8 @@ bb.a:
   br label %SDL_GetDriverAndJoystickIndex.exit
 
 SDL_GetDriverAndJoystickIndex.exit:               ; preds = %.lr.ph.i, %.lr.ph.1.i, %.lr.ph.2.i, %.loopexit.i
-  %.3.i = phi i1 [ false, %.loopexit.i ], [ true, %.lr.ph.2.i ], [ false, %.lr.ph.1.i ], [ false, %.lr.ph.i ]
+  %.0 = phi ptr [ undef, %.loopexit.i ], [ @SDL_VIRTUAL_JoystickDriver, %.lr.ph.2.i ], [ @SDL_LINUX_JoystickDriver, %.lr.ph.1.i ], [ @SDL_HIDAPI_JoystickDriver, %.lr.ph.i ]
+  %.3.i = phi i1 [ false, %.loopexit.i ], [ true, %.lr.ph.2.i ], [ true, %.lr.ph.1.i ], [ true, %.lr.ph.i ]
   %i.y = load i32, ptr @SDL_joysticks_locked, align 4
   %i.z = add nsw i32 %i.y, -1                     ; 2 uses
   store i32 %i.z, ptr @SDL_joysticks_locked, align 4
@@ -837,7 +839,9 @@ bb.c:                                             ; preds = %bb.b
   br label %SDL_UnlockJoysticks_REAL.exit
 
 SDL_UnlockJoysticks_REAL.exit:                    ; preds = %bb.c, %.critedge.i3
-  ret i1 %.3.i
+  %1 = icmp eq ptr %.0, @SDL_VIRTUAL_JoystickDriver
+  %or.cond = and i1 %.3.i, %1
+  ret i1 %or.cond
 }
 
 ; Function Attrs: nounwind uwtable

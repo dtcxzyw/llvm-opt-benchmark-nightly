@@ -202,7 +202,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !43
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.d, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_0clES1_.exit", label %_ZN4mlir9Operation11getParentOpEv.exit.i
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i.i.i = and i1 %3, %i.d
+  br i1 %spec.select.i.i.i.i.i.i, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_0clES1_.exit", label %_ZN4mlir9Operation11getParentOpEv.exit.i
 
 _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -213,7 +215,8 @@ _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i1.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !43
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.k, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_0clES1_.exit", label %bb.b
+  %spec.select.i.i.i.i.i2.i = and i1 %3, %i.k
+  br i1 %spec.select.i.i.i.i.i2.i, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_0clES1_.exit", label %bb.b
 
 bb.b:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i
   %i.l = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4outsEv() #16 ; 3 uses
@@ -527,7 +530,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !43
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.e, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_1clEPNS_5BlockE.exit", label %_ZN4mlir9Operation11getParentOpEv.exit.i
+  %2 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i.i.i = and i1 %2, %i.e
+  br i1 %spec.select.i.i.i.i.i.i, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_1clEPNS_5BlockE.exit", label %_ZN4mlir9Operation11getParentOpEv.exit.i
 
 _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -538,7 +543,8 @@ _ZN4mlir9Operation11getParentOpEv.exit.i:         ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i6.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !43
   %i.l = icmp eq ptr %i.k, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.l, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_1clEPNS_5BlockE.exit", label %bb.b
+  %spec.select.i.i.i.i.i7.i = and i1 %2, %i.l
+  br i1 %spec.select.i.i.i.i.i7.i, label %"_ZZL24testSkipErasureCallbacksPN4mlir9OperationEENK3$_1clEPNS_5BlockE.exit", label %bb.b
 
 bb.b:                                             ; preds = %_ZN4mlir9Operation11getParentOpEv.exit.i
   %i.m = load ptr, ptr %1, align 8, !tbaa !133

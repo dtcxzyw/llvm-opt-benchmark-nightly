@@ -202,8 +202,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !140
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverIN4test16TestVersionedOpAEvE2idE
+  %9 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test16TestVersionedOpAEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %9, %i.e
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.e
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_125TestBytecodeRoundtripPass18downgradeToVersionEPNS_9OperationERKN4test18TestDialectVersionEEUlNS8_16TestVersionedOpAEE_SC_NS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_S7_PNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_SE_EE5valueESL_E4typeES7_OT1_ENKUlS7_E_clES7_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

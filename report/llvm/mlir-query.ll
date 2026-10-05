@@ -202,23 +202,34 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4mlir5query7matcher13MatcherFnImplINS_6detail32constant_float_predicate_matcherEE5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1) unnamed_addr #3 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.llvm::APFloat", align 8     ; 6 uses
+  %2 = alloca %"class.llvm::APFloat", align 8     ; 7 uses
   %3 = alloca %"struct.mlir::detail::constant_float_value_binder", align 8 ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
+  %.not.i.i.i = icmp eq ptr @_ZN4llvm11APFloatBase8semBogusE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i.i, label %6, label %5
+
+5:                                                ; preds = %bb.a
   call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase8semBogusE) #19
+  br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i
+
+6:                                                ; preds = %bb.a
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase8semBogusE) #19
+  br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i
+
+_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i:   ; preds = %6, %5
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   store ptr %2, ptr %3, align 8, !tbaa !138
-  %4 = call noundef zeroext i1 @_ZN4mlir6detail27constant_float_value_binder5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef %1)
-  br i1 %4, label %bb.b, label %_ZN4mlir6detail32constant_float_predicate_matcher5matchEPNS_9OperationE.exit
+  %7 = call noundef zeroext i1 @_ZN4mlir6detail27constant_float_value_binder5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef %1)
+  br i1 %7, label %bb.b, label %_ZN4mlir6detail32constant_float_predicate_matcher5matchEPNS_9OperationE.exit
 
-bb.b:                                             ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.a = load ptr, ptr %5, align 8, !tbaa !514
+bb.b:                                             ; preds = %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i
+  %i.a = load ptr, ptr %4, align 8, !tbaa !514
   %i.b = call noundef zeroext i1 %i.a(ptr noundef nonnull align 8 dereferenceable(24) %2) #19, !inline_history !512
   br label %_ZN4mlir6detail32constant_float_predicate_matcher5matchEPNS_9OperationE.exit
 
-_ZN4mlir6detail32constant_float_predicate_matcher5matchEPNS_9OperationE.exit: ; preds = %bb.a, %bb.b
-  %i.c = phi i1 [ false, %bb.a ], [ %i.b, %bb.b ]
+_ZN4mlir6detail32constant_float_predicate_matcher5matchEPNS_9OperationE.exit: ; preds = %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i, %bb.b
+  %i.c = phi i1 [ false, %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit.i ], [ %i.b, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   call void @_ZN4llvm7APFloat7StorageD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
@@ -332,6 +343,8 @@ bb.f:                                             ; preds = %_ZN4llvm3isaIJN4mli
 }
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29)) unnamed_addr #2
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29)) unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4mlir6detail18constant_op_binderINS_9AttributeEE5matchEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1) local_unnamed_addr #3 comdat align 2 {

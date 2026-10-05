@@ -204,7 +204,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !148
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %0, ptr null
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %0, ptr null
   ret ptr %spec.select.i.i
 }
 
@@ -607,7 +609,9 @@ bb.b:                                             ; preds = %_ZN4llvm16hasSingle
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !148
   %i.k = icmp eq ptr %i.j, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  br i1 %i.k, label %bb.c, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.thread
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %7, %i.k
+  br i1 %spec.select.i.i.i.i, label %bb.c, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4mlir9Operation6removeEv(ptr noundef nonnull align 8 dereferenceable(64) %i.g) #27

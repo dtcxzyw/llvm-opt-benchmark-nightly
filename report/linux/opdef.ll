@@ -200,7 +200,27 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define dso_local noundef zeroext i1 @io_uring_op_supported(i8 noundef zeroext %0) local_unnamed_addr #2 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp ult i8 %0, 65
-  ret i1 %i.a
+  br i1 %i.a, label %1, label %6
+
+1:                                                ; preds = %bb.a
+  %2 = zext nneg i8 %0 to i64
+  %3 = getelementptr [32 x i8], ptr @io_issue_defs, i64 %2
+  %4 = getelementptr i8, ptr %3, i64 16
+  %5 = load ptr, ptr %4, align 16
+  %.not = icmp eq ptr %5, @io_eopnotsupp_prep
+  br i1 %.not, label %6, label %7
+
+6:                                                ; preds = %1, %bb.a
+  br label %7
+
+7:                                                ; preds = %1, %6
+  %.0 = phi i1 [ false, %6 ], [ true, %1 ]
+  ret i1 %.0
+}
+
+; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none)
+define internal noundef i32 @io_eopnotsupp_prep(ptr nofree readnone captures(none) %0, ptr nofree readnone captures(none) %1) #2 align 16 prefalign(16) {
+  ret i32 -95
 }
 
 ; Function Attrs: cold fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid optsize sspstrong willreturn memory(none)

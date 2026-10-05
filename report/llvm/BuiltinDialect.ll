@@ -205,7 +205,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !82
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.g, ptr %i.c, ptr null
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %5, %i.g
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.c, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %2) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
@@ -227,7 +229,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !82
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %4, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %3) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   ret ptr %spec.select.i.i
@@ -630,7 +634,9 @@ bb.g:                                             ; preds = %bb.f
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i16, i64 16
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !82
   %i.do = icmp eq ptr %i.dn, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.do, label %bb.h, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.thread
+  %11 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %11, %i.do
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.h, label %_ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.thread
 
 _ZNK4mlir5Value13getDefiningOpINS_26UnrealizedConversionCastOpEEET_v.exit.thread: ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
@@ -1033,7 +1039,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !82
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_8ModuleOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %3, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %2) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   ret ptr %spec.select.i.i.i
@@ -1436,7 +1444,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !82
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %8, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   ret ptr %spec.select.i.i
@@ -1457,7 +1467,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !82
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %7 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %7, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %6) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   ret ptr %spec.select.i.i.i
@@ -1593,7 +1605,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !82
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  %spec.select.i.i = select i1 %i.e, ptr %i.a, ptr null
+  %9 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %9, %i.e
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.a, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %8) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   ret ptr %spec.select.i.i
@@ -1614,7 +1628,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !82
   %i.f = icmp eq ptr %i.e, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.f, ptr %i.b, ptr null
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %8, %i.f
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %i.b, ptr null
   call void @_ZN4mlir14OperationStateD1Ev(ptr noundef nonnull align 8 dead_on_return(304) dereferenceable(304) %7) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   ret ptr %spec.select.i.i.i

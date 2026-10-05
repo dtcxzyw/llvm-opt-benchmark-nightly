@@ -202,8 +202,8 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca [2 x i64], align 16               ; 5 uses
-  %5 = alloca %"class.llvm::APFloat", align 8     ; 7 uses
-  %6 = alloca %"class.llvm::APInt", align 8       ; 6 uses
+  %5 = alloca %"class.llvm::APFloat", align 8     ; 8 uses
+  %6 = alloca %"class.llvm::APInt", align 8       ; 7 uses
   %7 = alloca %"class.llvm::SmallVector", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 38 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -332,13 +332,24 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13, !noalias !38
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13, !noalias !38
   call void @_ZN4llvm5APIntC1EjNS_8ArrayRefImEE(ptr noundef nonnull align 8 dereferenceable(12) %6, i32 noundef 80, ptr nonnull %i.d, i64 2) #13, !noalias !38
-  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase20semX87DoubleExtendedE, ptr noundef nonnull align 8 dereferenceable(12) %6) #13, !noalias !38
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %14 = load i32, ptr %13, align 8, !tbaa !40, !noalias !38
-  %15 = icmp ugt i32 %14, 64
-  br i1 %15, label %bb.m, label %_ZN4llvm5APIntD2Ev.exit.i
+  %.not.i.i.i = icmp eq ptr @_ZN4llvm11APFloatBase20semX87DoubleExtendedE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i.i.i, label %14, label %13
 
-bb.m:                                             ; preds = %bb.l
+13:                                               ; preds = %bb.l
+  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase20semX87DoubleExtendedE, ptr noundef nonnull align 8 dereferenceable(12) %6) #13, !noalias !38
+  br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit.i
+
+14:                                               ; preds = %bb.l
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase20semX87DoubleExtendedE, ptr noundef nonnull align 8 dereferenceable(12) %6) #13, !noalias !38
+  br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit.i
+
+_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit.i: ; preds = %14, %13
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %16 = load i32, ptr %15, align 8, !tbaa !40, !noalias !38
+  %17 = icmp ugt i32 %16, 64
+  br i1 %17, label %bb.m, label %_ZN4llvm5APIntD2Ev.exit.i
+
+bb.m:                                             ; preds = %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit.i
   %i.ay = load ptr, ptr %6, align 8, !tbaa !16, !noalias !38 ; 2 uses
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %_ZN4llvm5APIntD2Ev.exit.i, label %bb.n
@@ -347,7 +358,7 @@ bb.n:                                             ; preds = %bb.m
   call void @_ZdaPv(ptr noundef nonnull %i.ay) #14, !noalias !38
   br label %_ZN4llvm5APIntD2Ev.exit.i
 
-_ZN4llvm5APIntD2Ev.exit.i:                        ; preds = %bb.n, %bb.m, %bb.l
+_ZN4llvm5APIntD2Ev.exit.i:                        ; preds = %bb.n, %bb.m, %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13, !noalias !38
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13, !noalias !38
   %i.ba = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
@@ -749,6 +760,8 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
 declare void @_ZN4llvm5APIntC1EjNS_8ArrayRefImEE(ptr noundef nonnull align 8 dereferenceable(12), i32 noundef, ptr, i64) unnamed_addr #4
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #4
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #4
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdaPv(ptr noundef) local_unnamed_addr #6

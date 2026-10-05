@@ -100,10 +100,11 @@ bb.a:
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, i64 16), align 8, !tbaa !15
   tail call void @_ZN6google8protobuf8internal13OnShutdownRunEPFvPKvES3_(ptr noundef nonnull @_ZN6google8protobuf8internal13DestroyStringEPKv, ptr noundef nonnull @_ZN6google8protobuf8internal26fixed_address_empty_stringE)
   tail call void asm sideeffect ".reloc ., BFD_RELOC_NONE, ${0:p}", "^Ws,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @_ZN6google8protobuf8internal18dummy_weak_defaultE) #17, !srcloc !54
-  br label %bb.b
+  %.not8.i = icmp eq ptr @__stop_pb_defaults, @__start_pb_defaults
+  br i1 %.not8.i, label %_ZN6google8protobuf8internalL16InitWeakDefaultsEv.exit, label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %bb.a
-  %.08.i = phi ptr [ @__stop_pb_defaults, %bb.a ], [ %i.e, %bb.b ] ; 3 uses
+bb.b:                                             ; preds = %bb.a, %bb.b
+  %.08.i = phi ptr [ %i.e, %bb.b ], [ @__stop_pb_defaults, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds i8, ptr %.08.i, i64 -16
   %i.b = getelementptr inbounds i8, ptr %.08.i, i64 -8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !58
@@ -114,7 +115,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %.not.i = icmp eq ptr %i.e, @__start_pb_defaults
   br i1 %.not.i, label %_ZN6google8protobuf8internalL16InitWeakDefaultsEv.exit, label %bb.b, !llvm.loop !52
 
-_ZN6google8protobuf8internalL16InitWeakDefaultsEv.exit: ; preds = %bb.b
+_ZN6google8protobuf8internalL16InitWeakDefaultsEv.exit: ; preds = %bb.b, %bb.a
   store atomic i8 1, ptr @_ZN6google8protobuf8internal28init_protobuf_defaults_stateE release, align 1
   ret void
 }

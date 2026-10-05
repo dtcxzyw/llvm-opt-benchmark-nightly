@@ -202,8 +202,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !88
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor18ExtractIterSpaceOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor18ExtractIterSpaceOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_123SparseSpaceCollapsePass14runOnOperationEvEUlNS_13sparse_tensor18ExtractIterSpaceOpEE_S7_vEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESH_E4typeESC_OT1_ENKUlSC_E_clESC_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -258,7 +260,9 @@ bb.c:                                             ; preds = %_ZNK4mlir5Value9has
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !88
   %i.n = icmp eq ptr %i.m, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
-  br i1 %i.n, label %"_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit", label %"_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit.thread"
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %4, %i.n
+  br i1 %spec.select.i.i.i.i.i, label %"_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit", label %"_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit.thread"
 
 "_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit": ; preds = %bb.c
   %i.o = load i32, ptr %i.a, align 8, !tbaa !28   ; 2 uses
@@ -323,7 +327,9 @@ bb.g:                                             ; preds = %_ZNK4mlir5Value9has
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i22, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !88
   %i.as = icmp eq ptr %i.ar, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
-  %spec.select.i.i.i23 = select i1 %i.as, ptr %i.ao, ptr null
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor9IterateOpEvE2idE
+  %spec.select.i.i.i.i.i23 = and i1 %5, %i.as
+  %spec.select.i.i.i23 = select i1 %spec.select.i.i.i.i.i23, ptr %i.ao, ptr null
   br label %"_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit24"
 
 "_ZZN12_GLOBAL__N_115legalToCollapseERN4llvm15SmallVectorImplINS_17CollapseSpaceInfoEEEN4mlir13sparse_tensor18ExtractIterSpaceOpEENK3$_0clES7_.exit24": ; preds = %bb.f, %_ZNK4mlir5Value9hasOneUseEv.exit.i20, %bb.g

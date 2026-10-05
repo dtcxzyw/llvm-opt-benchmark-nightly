@@ -204,8 +204,10 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !81   ; 3 uses
   %i.j = icmp ne ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4math19CountLeadingZerosOpEvE2idE
+  %160 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4math19CountLeadingZerosOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %160, %i.j
   %.not4.i.i = icmp eq ptr %1, null
-  %.not.i.i = or i1 %.not4.i.i, %i.j
+  %.not.i.i = or i1 %.not4.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %bb.am, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -608,8 +610,10 @@ bb.al:                                            ; preds = %_ZL14createCtlzFunc
   br label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZZN12_GLOBAL__N_122ConvertMathToFuncsPass25generateOpImplementationsEvENK3$_0clES5_EUlNS3_4math7FPowIOpEE_EERS6_OT_.exit"
 
 bb.am:                                            ; preds = %bb.a
-  %.not = icmp eq ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4math7IPowIOpEvE2idE
-  br i1 %.not, label %bb.an, label %bb.bm
+  %161 = icmp ne ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4math7IPowIOpEvE2idE
+  %.not = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4math7IPowIOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i7 = or i1 %.not, %161
+  br i1 %spec.select.i.i.i.i.i.not.i.i7, label %bb.bm, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.md = getelementptr inbounds i8, ptr %1, i64 -8
@@ -1012,8 +1016,10 @@ bb.bl:                                            ; preds = %_ZL22createElementI
   br label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZZN12_GLOBAL__N_122ConvertMathToFuncsPass25generateOpImplementationsEvENK3$_0clES5_EUlNS3_4math7FPowIOpEE_EERS6_OT_.exit"
 
 bb.bm:                                            ; preds = %bb.am
-  %.not91 = icmp eq ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4math7FPowIOpEvE2idE
-  br i1 %.not91, label %bb.bn, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZZN12_GLOBAL__N_122ConvertMathToFuncsPass25generateOpImplementationsEvENK3$_0clES5_EUlNS3_4math7FPowIOpEE_EERS6_OT_.exit"
+  %162 = icmp ne ptr %i.i, @_ZN4mlir6detail14TypeIDResolverINS_4math7FPowIOpEvE2idE
+  %.not91 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4math7FPowIOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i44 = or i1 %.not91, %162
+  br i1 %spec.select.i.i.i.i.i.not.i.i44, label %"_ZN4llvm6detail14TypeSwitchBaseINS_10TypeSwitchIPN4mlir9OperationEvEES5_E4CaseIZZN12_GLOBAL__N_122ConvertMathToFuncsPass25generateOpImplementationsEvENK3$_0clES5_EUlNS3_4math7FPowIOpEE_EERS6_OT_.exit", label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #25

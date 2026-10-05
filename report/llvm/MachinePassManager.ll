@@ -202,10 +202,12 @@ define dso_local void @_ZN4llvm39getMachineFunctionPassPreservedAnalysesEv(ptr d
   store i8 1, ptr %i.h, align 8, !tbaa !88
   store i32 1, ptr %i.b, align 4, !tbaa !87, !noalias !468
   store ptr @_ZN4llvm13AllAnalysesOnINS_6ModuleEE6SetKeyE, ptr %.ptr23.ptr, align 8, !tbaa !55, !noalias !468
+  %.not15.i.i.i.i.i17 = icmp eq ptr @_ZN4llvm13AllAnalysesOnINS_6ModuleEE6SetKeyE, @_ZN4llvm17PreservedAnalyses14AllAnalysesKeyE
   %.023.i.i.i.i6.ptr = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.i = load ptr, ptr %.023.i.i.i.i6.ptr, align 8, !tbaa !55, !noalias !469
+  %i.i = load ptr, ptr %.023.i.i.i.i6.ptr, align 8
   %.not15.i.i.i.i7 = icmp eq ptr %i.i, @_ZN4llvm13AllAnalysesOnINS_8FunctionEE6SetKeyE
-  br i1 %.not15.i.i.i.i7, label %_ZN4llvm17PreservedAnalyses11preserveSetINS_13AllAnalysesOnINS_8FunctionEEEEERS0_v.exit, label %._crit_edge.i.i.i.i10
+  %or.cond = select i1 %.not15.i.i.i.i.i17, i1 true, i1 %.not15.i.i.i.i7
+  br i1 %or.cond, label %_ZN4llvm17PreservedAnalyses11preserveSetINS_13AllAnalysesOnINS_8FunctionEEEEERS0_v.exit, label %._crit_edge.i.i.i.i10
 
 ._crit_edge.i.i.i.i10:                            ; preds = %.lr.ph.i.i.i.i.i15.preheader
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32

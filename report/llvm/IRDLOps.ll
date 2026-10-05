@@ -88,6 +88,7 @@ $_ZN4llvm23SmallVectorTemplateBaseIN4mlir18DiagnosticArgumentELb1EE15growAndPush
 @.str.1 = private unnamed_addr constant [30 x i8] c"no registered type with name \00", align 1
 @.str.2 = private unnamed_addr constant [35 x i8] c"no registered attribute with name \00", align 1
 @.str.3 = private unnamed_addr constant [39 x i8] c" does not refer to any existing symbol\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_4irdl11AttributeOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZTVN4mlir4irdl12IsConstraintE = external unnamed_addr constant { [5 x ptr] }, align 8
@@ -166,8 +167,10 @@ _ZNRSt8optionalIN4mlir13SymbolRefAttrEE5valueEv.exit: ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !21
   %i.o = icmp ne ptr %i.n, @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE
+  %23 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %23, %i.o
   %.not154 = icmp eq ptr %i.k, null
-  %.not = or i1 %.not154, %i.o
+  %.not = or i1 %.not154, %spec.select.i.i.i.i.not
   br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %_ZNRSt8optionalIN4mlir13SymbolRefAttrEE5valueEv.exit
@@ -570,9 +573,11 @@ bb.p:                                             ; preds = %_ZL27getConstraintI
   %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.bg, align 8, !tbaa !18
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !21 ; 2 uses
-  %i.bj = icmp eq ptr %i.bi, @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE ; 2 uses
-  %spec.select.i.i = select i1 %i.bj, ptr %i.ag, ptr null
-  br i1 %i.bj, label %bb.q, label %.critedge
+  %i.bj = icmp eq ptr %i.bi, @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE
+  %13 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4irdl6TypeOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %13, %i.bj        ; 2 uses
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %i.ag, ptr null
+  br i1 %spec.select.i.i.i.i, label %bb.q, label %.critedge
 
 bb.q:                                             ; preds = %bb.p
   %i.bk = load ptr, ptr %4, align 8, !tbaa !25, !noalias !180 ; 2 uses
@@ -711,9 +716,11 @@ _ZNSt10unique_ptrIN4mlir4irdl27DynParametricTypeConstraintESt14default_deleteIS2
   br label %bb.ab
 
 .critedge:                                        ; preds = %bb.p
-  %i.dy = icmp eq ptr %i.bi, @_ZN4mlir6detail14TypeIDResolverINS_4irdl11AttributeOpEvE2idE ; 3 uses
-  %spec.select.i.i23 = select i1 %i.dy, ptr %i.ag, ptr null
-  br i1 %i.dy, label %bb.v, label %bb.aa
+  %i.dy = icmp eq ptr %i.bi, @_ZN4mlir6detail14TypeIDResolverINS_4irdl11AttributeOpEvE2idE ; 2 uses
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4irdl11AttributeOpEvE2idE ; 2 uses
+  %spec.select.i.i.i.i23 = and i1 %14, %i.dy      ; 2 uses
+  %spec.select.i.i23 = select i1 %spec.select.i.i.i.i23, ptr %i.ag, ptr null
+  br i1 %spec.select.i.i.i.i23, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %.critedge
   %i.dz = load ptr, ptr %5, align 8, !tbaa !45, !noalias !191 ; 2 uses
@@ -852,6 +859,7 @@ _ZNSt10unique_ptrIN4mlir4irdl27DynParametricAttrConstraintESt14default_deleteIS2
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.critedge, %_ZNSt10unique_ptrIN4mlir4irdl27DynParametricAttrConstraintESt14default_deleteIS2_EED2Ev.exit
+  call void @llvm.assume(i1 %14)
   call void @llvm.assume(i1 %i.dy)
   br label %bb.ab
 

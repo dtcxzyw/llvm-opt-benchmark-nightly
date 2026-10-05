@@ -204,8 +204,10 @@ _ZN4llvm23SmallVectorTemplateBaseImLb1EE9push_backEm.exit.i: ; preds = %bb.ah, %
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !84
   %i.do = icmp ne ptr %i.dn, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %26 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %26, %i.do
   %.not8687.i = icmp eq ptr %4, null
-  %.not86.i = or i1 %.not8687.i, %i.do
+  %.not86.i = or i1 %.not8687.i, %spec.select.i.i.i.i.not.i
   br i1 %.not86.i, label %bb.ai, label %.thread45.i
 
 .thread45.i:                                      ; preds = %._crit_edge93.i
@@ -608,8 +610,10 @@ bb.bq:                                            ; preds = %bb.bp
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.lg, align 8, !tbaa !83
   %i.lh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.li = load ptr, ptr %i.lh, align 8, !tbaa !84 ; 2 uses
-  %.not.i77 = icmp eq ptr %i.li, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM4BrOpEvE2idE
-  br i1 %.not.i77, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.thread.i", label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.i"
+  %27 = icmp ne ptr %i.li, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM4BrOpEvE2idE
+  %.not.i77 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM4BrOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %.not.i77, %27
+  br i1 %spec.select.i.i.i.i.i.not.i.i, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.i", label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.thread.i"
 
 "_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.thread.i": ; preds = %bb.bq
   %i.lj = getelementptr inbounds nuw i8, ptr %4, i64 44
@@ -625,8 +629,10 @@ bb.bq:                                            ; preds = %bb.bp
   br label %_ZL16setProfilingAttrRN4mlir9OpBuilderEPN4llvm6MDNodeEPNS_9OperationERNS_4LLVM12ModuleImportE.exit
 
 "_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.i": ; preds = %bb.bq
-  %.not16.i = icmp eq ptr %i.li, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM8CondBrOpEvE2idE
-  br i1 %.not16.i, label %bb.br, label %_ZL16setProfilingAttrRN4mlir9OpBuilderEPN4llvm6MDNodeEPNS_9OperationERNS_4LLVM12ModuleImportE.exit
+  %28 = icmp ne ptr %i.li, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM8CondBrOpEvE2idE
+  %.not16.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM8CondBrOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i6.i = or i1 %.not16.i, %28
+  br i1 %spec.select.i.i.i.i.i.not.i6.i, label %_ZL16setProfilingAttrRN4mlir9OpBuilderEPN4llvm6MDNodeEPNS_9OperationERNS_4LLVM12ModuleImportE.exit, label %bb.br
 
 bb.br:                                            ; preds = %"_ZN4llvm10TypeSwitchIPN4mlir9OperationENS_13LogicalResultEE4CaseINS1_4LLVM4BrOpERZL11setLoopAttrPKNS_6MDNodeES3_RNS7_12ModuleImportEE3$_0EERS5_OT0_.exit.i"
   %i.lp = getelementptr inbounds nuw i8, ptr %4, i64 44
@@ -1029,8 +1035,10 @@ bb.dv:                                            ; preds = %_ZNK4llvm6MDNode10g
   %i.vu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i159, i64 16
   %i.vv = load ptr, ptr %i.vu, align 8, !tbaa !84
   %i.vw = icmp ne ptr %i.vv, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %29 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i159 = or i1 %29, %i.vw
   %i.vx = icmp eq ptr %4, null
-  %i.vy = or i1 %i.vx, %i.vw
+  %i.vy = or i1 %i.vx, %spec.select.i.i.i.i.not.i159
   br i1 %i.vy, label %_ZL16setProfilingAttrRN4mlir9OpBuilderEPN4llvm6MDNodeEPNS_9OperationERNS_4LLVM12ModuleImportE.exit, label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv
@@ -1169,8 +1177,10 @@ bb.eh:                                            ; preds = %bb.eg
   %i.yj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i167, i64 16
   %i.yk = load ptr, ptr %i.yj, align 8, !tbaa !84
   %i.yl = icmp ne ptr %i.yk, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %30 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i168 = or i1 %30, %i.yl
   %.not3.i = icmp eq ptr %4, null
-  %.not.i168 = or i1 %.not3.i, %i.yl
+  %.not.i168 = or i1 %.not3.i, %spec.select.i.i.i.i.not.i168
   br i1 %.not.i168, label %_ZL16setProfilingAttrRN4mlir9OpBuilderEPN4llvm6MDNodeEPNS_9OperationERNS_4LLVM12ModuleImportE.exit, label %bb.ei
 
 bb.ei:                                            ; preds = %bb.eh
@@ -1573,8 +1583,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !84
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %2, %i.d
   %.not3 = icmp eq ptr %1, null
-  %.not = or i1 %.not3, %i.d
+  %.not = or i1 %.not3, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1609,8 +1621,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !84
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM10LLVMFuncOpEvE2idE
+  %spec.select.i.i.i.i.not = or i1 %3, %i.d
   %.not4 = icmp eq ptr %1, null
-  %.not = or i1 %.not4, %i.d
+  %.not = or i1 %.not4, %spec.select.i.i.i.i.not
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

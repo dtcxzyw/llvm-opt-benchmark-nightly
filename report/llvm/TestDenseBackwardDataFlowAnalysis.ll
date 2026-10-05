@@ -204,7 +204,9 @@ bb.ak:                                            ; preds = %bb.a
   %i.qa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.qb = load ptr, ptr %i.qa, align 8, !tbaa !80
   %i.qc = icmp eq ptr %i.qb, @_ZN4mlir6detail14TypeIDResolverIN4test18TestCallAndStoreOpEvE2idE
-  %spec.select.i.i = select i1 %i.qc, ptr %1, ptr null ; 2 uses
+  %14 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test18TestCallAndStoreOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %14, %i.qc
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %13, align 8
   %.not122 = icmp eq ptr %spec.select.i.i, null
   br i1 %.not122, label %bb.ap, label %bb.al
@@ -264,7 +266,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !80
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverIN4test20TestStoreWithARegionEvE2idE
-  %spec.select.i.i = select i1 %i.d, ptr %1, ptr null ; 2 uses
+  %8 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverIN4test20TestStoreWithARegionEvE2idE
+  %spec.select.i.i.i.i = and i1 %8, %i.d
+  %spec.select.i.i = select i1 %spec.select.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i, ptr %7, align 8
   %.not = icmp eq ptr %spec.select.i.i, null
   br i1 %.not, label %bb.g, label %bb.b

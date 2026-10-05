@@ -205,8 +205,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !130
   %i.d = icmp ne ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %3 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %3, %i.d
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.d
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_127XeGPUSgToLaneDistributePass14runOnOperationEvE3$_0NS_26UnrealizedConversionCastOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESG_E4typeESB_OT1_ENKUlSB_E_clESB_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -609,7 +611,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !130
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu15ConvertLayoutOpEvE2idE
-  br i1 %i.d, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir5xegpu56populateXeGPUSgToLaneDistributeTypeConversionAndLegalityERNS2_13TypeConverterERNS2_17RewritePatternSetERNS2_16ConversionTargetEPNS2_9OperationEE3$_1JSB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %bb.b
+  %3 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_5xegpu15ConvertLayoutOpEvE2idE
+  %spec.select.i.i.i.i.i.i.i.i = and i1 %3, %i.d
+  br i1 %spec.select.i.i.i.i.i.i.i.i, label %"_ZSt10__invoke_rISt8optionalIbERZN4mlir5xegpu56populateXeGPUSgToLaneDistributeTypeConversionAndLegalityERNS2_13TypeConverterERNS2_17RewritePatternSetERNS2_16ConversionTargetEPNS2_9OperationEE3$_1JSB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24

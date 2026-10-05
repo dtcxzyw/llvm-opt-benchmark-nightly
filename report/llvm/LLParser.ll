@@ -205,8 +205,11 @@ bb.ai:                                            ; preds = %_ZNK4llvm4Type17isF
   br i1 %i.du, label %bb.aj, label %bb.ap
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.dv = getelementptr inbounds nuw i8, ptr %2, i64 120
-  %i.dw = tail call noundef zeroext i1 @_ZNK4llvm6detail9IEEEFloat11isSignalingEv(ptr noundef nonnull align 8 dereferenceable(24) %i.dn) #25
+  %.not.i.i = icmp eq ptr @_ZN4llvm11APFloatBase13semIEEEdoubleE, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  %i.dv = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 2 uses
+  %53 = load ptr, ptr %i.dv, align 8
+  %.0.i.i = select i1 %.not.i.i, ptr %53, ptr %i.dn
+  %i.dw = tail call noundef zeroext i1 @_ZNK4llvm6detail9IEEEFloat11isSignalingEv(ptr noundef nonnull align 8 dereferenceable(24) %.0.i.i) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.dx = load i32, ptr %i.b, align 8             ; 2 uses
   %trunc = trunc i32 %i.dx to i8

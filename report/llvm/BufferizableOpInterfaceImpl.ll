@@ -204,14 +204,26 @@ bb.c:                                             ; preds = %_ZN4llvm4castIN4mli
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.p, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !102  ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 40
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !102, !noalias !204 ; 2 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !102, !noalias !204 ; 3 uses
   %.not1.i.i.i.i.i.i = icmp eq ptr %i.y, %i.w
-  br i1 %.not1.i.i.i.i.i.i, label %_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit, label %.lr.ph.i.i.i.i.i.i
+  br i1 %.not1.i.i.i.i.i.i, label %_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit, label %.lr.ph.i.i.i.i.preheader.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.c, %bb.d
-  %.sroa.010.0.i.i = phi ptr [ %i.af, %bb.d ], [ %i.y, %bb.c ] ; 3 uses
+.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %bb.c
+  %.not.i.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization13AllocTensorOpEvE2idE
+  br i1 %.not.i.i, label %.lr.ph.i.i.i.i.us.i.i, label %.lr.ph.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.us.i.i:                            ; preds = %.lr.ph.i.i.i.i.preheader.i.i, %.lr.ph.i.i.i.i.us.i.i
+  %.sroa.010.0.us.i.i = phi ptr [ %10, %.lr.ph.i.i.i.i.us.i.i ], [ %i.y, %.lr.ph.i.i.i.i.preheader.i.i ] ; 2 uses
+  %8 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.010.0.us.i.i) #24, !noalias !204 ; 0 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.010.0.us.i.i, i64 8
+  %10 = load ptr, ptr %9, align 8, !tbaa !102, !noalias !204 ; 2 uses
+  %.not.i.i.i.i.us.i.i = icmp eq ptr %10, %i.w
+  br i1 %.not.i.i.i.i.us.i.i, label %_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit, label %.lr.ph.i.i.i.i.us.i.i, !llvm.loop !203
+
+.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.preheader.i.i, %bb.d
+  %.sroa.010.0.i.i = phi ptr [ %i.af, %bb.d ], [ %i.y, %.lr.ph.i.i.i.i.preheader.i.i ] ; 3 uses
   %i.z = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.010.0.i.i) #24, !noalias !204
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.aa, align 8, !tbaa !91, !noalias !204
@@ -265,8 +277,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit.i:          ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
   br label %_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit
 
-_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit: ; preds = %bb.d, %_ZN4llvm4castIN4mlir13bufferization23BufferizableOpInterfaceENS1_9OperationEEEDcPT0_.exit.i, %bb.c, %_ZN4mlir5Block6getOpsINS_13bufferization13AllocTensorOpEEEN4llvm14iterator_rangeINS_6detail11op_iteratorIT_NS4_14ilist_iteratorINS4_12ilist_detail12node_optionsINS_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEEv.exit.i, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i
-  %.sroa.06.1.i = phi i8 [ 0, %_ZN4llvm4castIN4mlir13bufferization23BufferizableOpInterfaceENS1_9OperationEEEDcPT0_.exit.i ], [ %i.aj, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i ], [ 1, %_ZN4mlir5Block6getOpsINS_13bufferization13AllocTensorOpEEEN4llvm14iterator_rangeINS_6detail11op_iteratorIT_NS4_14ilist_iteratorINS4_12ilist_detail12node_optionsINS_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEEv.exit.i ], [ 1, %bb.c ], [ 1, %bb.d ]
+_ZNK4mlir6vector12_GLOBAL__N_115MaskOpInterface16resolveConflictsEPNS_9OperationERNS_12RewriterBaseERKNS_13bufferization13AnalysisStateERKNS7_18BufferizationStateE.exit: ; preds = %bb.d, %.lr.ph.i.i.i.i.us.i.i, %_ZN4llvm4castIN4mlir13bufferization23BufferizableOpInterfaceENS1_9OperationEEEDcPT0_.exit.i, %bb.c, %_ZN4mlir5Block6getOpsINS_13bufferization13AllocTensorOpEEEN4llvm14iterator_rangeINS_6detail11op_iteratorIT_NS4_14ilist_iteratorINS4_12ilist_detail12node_optionsINS_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEEv.exit.i, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i
+  %.sroa.06.1.i = phi i8 [ 0, %_ZN4llvm4castIN4mlir13bufferization23BufferizableOpInterfaceENS1_9OperationEEEDcPT0_.exit.i ], [ %i.aj, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i ], [ 1, %_ZN4mlir5Block6getOpsINS_13bufferization13AllocTensorOpEEEN4llvm14iterator_rangeINS_6detail11op_iteratorIT_NS4_14ilist_iteratorINS4_12ilist_detail12node_optionsINS_9OperationELb0ELb0EvLb0EvEELb0ELb0EEEEEEEv.exit.i ], [ 1, %.lr.ph.i.i.i.i.us.i.i ], [ 1, %bb.c ], [ 1, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   ret i8 %.sroa.06.1.i
 }
@@ -669,8 +681,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !43
   %i.g = icmp ne ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_6vector6MaskOpEvE2idE
+  %11 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6vector6MaskOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %11, %i.g
   %.not23.i = icmp eq ptr %i.c, null
-  %.not.i = or i1 %.not23.i, %i.g
+  %.not.i = or i1 %.not23.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a

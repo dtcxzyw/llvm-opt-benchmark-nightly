@@ -205,8 +205,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !101
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_6memref7AllocOpEvE2idE
+  %7 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6memref7AllocOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %7, %i.e
   %.not1.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not1.i, %i.e
+  %.not.i = or i1 %.not1.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %"_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_117collectCandidatesENS_19FunctionOpInterfaceERN4llvm13NoopStatisticES8_S8_E3$_0NS_6memref7AllocOpEvEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_vEE5valueESK_E4typeESF_OT1_ENKUlSF_E_clESF_.exit", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -323,8 +325,10 @@ _ZNK4mlir6detail15ShapedTypeTraitINS_10MemRefTypeEE14hasStaticShapeEv.exit.i.i: 
 _ZNK4mlir6detail15ShapedTypeTraitINS_10MemRefTypeEE14hasStaticShapeEv.exit.thread6.i.i: ; preds = %_ZNK4mlir6detail15ShapedTypeTraitINS_10MemRefTypeEE14hasStaticShapeEv.exit.i.i, %bb.l, %._crit_edge.i.i.i.i.i.i.i.i.i
   %i.ak = getelementptr inbounds i8, ptr %1, i64 -16
   %.sroa.011.021.i.i.i = load ptr, ptr %i.ak, align 8, !tbaa !98 ; 2 uses
-  %.not22.i.i.i.a = icmp eq ptr %.sroa.011.021.i.i.i, null
-  br i1 %.not22.i.i.i.a, label %"_ZZN12_GLOBAL__N_117collectCandidatesEN4mlir19FunctionOpInterfaceERN4llvm13NoopStatisticES4_S4_ENK3$_0clENS0_6memref7AllocOpE.exit.i", label %.lr.ph.i.i.i
+  %.not24.i.i.i = icmp eq ptr %.sroa.011.021.i.i.i, null
+  %.not22.i.i.i.a = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6memref9DeallocOpEvE2idE
+  %or.cond.i.i.i = or i1 %.not22.i.i.i.a, %.not24.i.i.i
+  br i1 %or.cond.i.i.i, label %"_ZZN12_GLOBAL__N_117collectCandidatesEN4mlir19FunctionOpInterfaceERN4llvm13NoopStatisticES4_S4_ENK3$_0clENS0_6memref7AllocOpE.exit.i", label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNK4mlir6detail15ShapedTypeTraitINS_10MemRefTypeEE14hasStaticShapeEv.exit.thread6.i.i, %bb.n
   %.sroa.011.024.i.i.i = phi ptr [ %.sroa.011.0.i.i.i, %bb.n ], [ %.sroa.011.021.i.i.i, %_ZNK4mlir6detail15ShapedTypeTraitINS_10MemRefTypeEE14hasStaticShapeEv.exit.thread6.i.i ] ; 2 uses

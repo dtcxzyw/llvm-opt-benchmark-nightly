@@ -85,6 +85,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_9TypedAttrEvE13resolveTypeIDEvE2id = comd
 
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3acc21ReductionAccumulateOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_3acc13ReducibleTypeEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
 @_ZGVZN4mlir6detail14TypeIDResolverINS_3acc13ReducibleTypeEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
@@ -179,8 +180,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !35
   %.sroa.018.029 = load ptr, ptr %.sroa.0.0.copyload.i.i.i.i, align 8, !tbaa !37 ; 2 uses
-  %.not30.a = icmp eq ptr %.sroa.018.029, null
-  br i1 %.not30.a, label %._crit_edge, label %.lr.ph
+  %.not30 = icmp eq ptr %.sroa.018.029, null
+  %.not30.a = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3acc21ReductionAccumulateOpEvE2idE
+  %or.cond = or i1 %.not30, %.not30.a
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.critedge
   %.sroa.018.031 = phi ptr [ %.sroa.018.0, %.critedge ], [ %.sroa.018.029, %bb.a ] ; 2 uses

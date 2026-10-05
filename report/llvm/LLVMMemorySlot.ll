@@ -202,7 +202,7 @@ bb.a:
   %5 = alloca %"class.mlir::ResultRange", align 8 ; 5 uses
   %6 = alloca %"class.mlir::ValueUserIterator", align 8 ; 4 uses
   %7 = alloca %"class.llvm::iterator_range", align 8 ; 6 uses
-  %8 = alloca %"class.mlir::ValueUserIterator", align 8 ; 5 uses
+  %8 = alloca %"class.mlir::ValueUserIterator", align 8 ; 6 uses
   %9 = alloca %"class.mlir::LLVM::DbgDeclareOp", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   %i.a = load ptr, ptr %0, align 8, !tbaa !21     ; 2 uses
@@ -235,19 +235,29 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %8, ptr noundef nonnull align 8 dereferenceable(80) %7, i64 40, i1 false)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 72
-  %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
+  %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !198  ; 2 uses
   %.not11 = icmp eq ptr %i.n, %.sroa.3.0.copyload
-  br i1 %.not11, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not11, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.c, %bb.a
+.lr.ph:                                           ; preds = %bb.a
+  %.not12 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4LLVM12DbgDeclareOpEvE2idE
+  br i1 %.not12, label %.lr.ph.split.us, label %.lr.ph.a
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
+  %10 = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN4mlir11ResultRange11UseIteratorppEv(ptr noundef nonnull align 8 dereferenceable(40) %8) #20 ; 0 uses
+  %11 = load ptr, ptr %i.m, align 8, !tbaa !198
+  %.not.us = icmp eq ptr %11, %.sroa.3.0.copyload
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us
+
+._crit_edge:                                      ; preds = %bb.c, %.lr.ph.split.us, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   ret void
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.c
-  %i.o = phi ptr [ %i.aa, %bb.c ], [ %i.n, %bb.a ]
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.c
+  %i.o = phi ptr [ %i.aa, %bb.c ], [ %i.n, %.lr.ph ]
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !199  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20

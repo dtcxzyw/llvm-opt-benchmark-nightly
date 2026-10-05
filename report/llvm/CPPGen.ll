@@ -109,6 +109,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_4pdll3ast15UserRewriteDeclEvE13resolveTyp
 @.str.4 = private unnamed_addr constant [16 x i8] c"  patterns.add<\00", align 1
 @.str.5 = private unnamed_addr constant [39 x i8] c">(patterns.getContext(), configs...);\0A\00", align 1
 @.str.6 = private unnamed_addr constant [3 x i8] c"}\0A\00", align 1
+@_ZN4mlir6detail14TypeIDResolverIvvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3pdl23ApplyNativeConstraintOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZZN4mlir6detail14TypeIDResolverINS_4pdll3ast18UserConstraintDeclEvE13resolveTypeIDEvE2id = linkonce_odr local_unnamed_addr global %"class.mlir::TypeID" zeroinitializer, comdat, align 8
@@ -511,8 +512,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !85   ; 2 uses
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3pdl23ApplyNativeConstraintOpEvE2idE
+  %4 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3pdl23ApplyNativeConstraintOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i.i = or i1 %4, %i.e
   %.not1.i.i = icmp eq ptr %1, null
-  %.not.i.i = or i1 %.not1.i.i, %i.e
+  %.not.i.i = or i1 %.not1.i.i, %spec.select.i.i.i.i.i.not.i.i
   br i1 %.not.i.i, label %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3pdl23ApplyNativeConstraintOpERZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKNS1_4pdll3ast6ModuleENS1_8ModuleOpERNS_9StringSetINS_15MallocAllocatorEEEENK3$_0clES3_EUlT_E_EERS4_OT0_.exit.i", label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -558,8 +561,10 @@ _ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJE
   br label %"_ZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKN4mlir4pdll3ast6ModuleENS1_8ModuleOpERN4llvm9StringSetINS8_15MallocAllocatorEEEENK3$_0clEPNS1_9OperationE.exit"
 
 "_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3pdl23ApplyNativeConstraintOpERZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKNS1_4pdll3ast6ModuleENS1_8ModuleOpERNS_9StringSetINS_15MallocAllocatorEEEENK3$_0clES3_EUlT_E_EERS4_OT0_.exit.i": ; preds = %bb.a
-  %.not.i = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE
-  br i1 %.not.i, label %bb.e, label %"_ZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKN4mlir4pdll3ast6ModuleENS1_8ModuleOpERN4llvm9StringSetINS8_15MallocAllocatorEEEENK3$_0clEPNS1_9OperationE.exit"
+  %5 = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE
+  %.not.i = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE
+  %spec.select.i.i.i.i.i.not.i3.i = or i1 %.not.i, %5
+  br i1 %spec.select.i.i.i.i.i.not.i3.i, label %"_ZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKN4mlir4pdll3ast6ModuleENS1_8ModuleOpERN4llvm9StringSetINS8_15MallocAllocatorEEEENK3$_0clEPNS1_9OperationE.exit", label %bb.e
 
 bb.e:                                             ; preds = %"_ZN4llvm10TypeSwitchIPN4mlir9OperationEvE4CaseINS1_3pdl23ApplyNativeConstraintOpERZZN12_GLOBAL__N_17CodeGen29generateConstraintAndRewritesERKNS1_4pdll3ast6ModuleENS1_8ModuleOpERNS_9StringSetINS_15MallocAllocatorEEEENK3$_0clES3_EUlT_E_EERS4_OT0_.exit.i"
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
@@ -893,7 +898,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !85
   %i.d = icmp eq ptr %i.c, @_ZN4mlir6detail14TypeIDResolverINS_3pdl9PatternOpEvE2idE
-  ret i1 %i.d
+  %1 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3pdl9PatternOpEvE2idE
+  %spec.select.i.i.i.i = and i1 %1, %i.d
+  ret i1 %spec.select.i.i.i.i
 }
 
 declare noundef nonnull align 8 dereferenceable(24) ptr @_ZN4mlir6Region10OpIteratorppEv(ptr noundef nonnull align 8 dereferenceable(24)) local_unnamed_addr #2
@@ -1179,7 +1186,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !85   ; 2 uses
   %i.e = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3pdl23ApplyNativeConstraintOpEvE2idE
-  %spec.select.i.i.i = select i1 %i.e, ptr %1, ptr null ; 2 uses
+  %4 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3pdl23ApplyNativeConstraintOpEvE2idE
+  %spec.select.i.i.i.i.i = and i1 %4, %i.e
+  %spec.select.i.i.i = select i1 %spec.select.i.i.i.i.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i.i, ptr %2, align 8
   %.not.i = icmp eq ptr %spec.select.i.i.i, null
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -1194,7 +1203,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %i.i = icmp eq ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE
-  %spec.select.i.i6.i = select i1 %i.i, ptr %1, ptr null ; 2 uses
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_3pdl20ApplyNativeRewriteOpEvE2idE
+  %spec.select.i.i.i.i6.i = and i1 %5, %i.i
+  %spec.select.i.i6.i = select i1 %spec.select.i.i.i.i6.i, ptr %1, ptr null ; 2 uses
   store ptr %spec.select.i.i6.i, ptr %3, align 8
   %.not3.i = icmp eq ptr %spec.select.i.i6.i, null
   br i1 %.not3.i, label %bb.e, label %bb.d

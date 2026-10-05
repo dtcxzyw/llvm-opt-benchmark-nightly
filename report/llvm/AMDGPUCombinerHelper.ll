@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPUCombinerHelper?download=true
-inline.NumInlined: 743
-inline.NumDeleted: 379
+inline.NumInlined: 740
+inline.NumDeleted: 378
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -59,6 +59,8 @@ $_ZNK4llvm3LLTeqERKS0_ = comdat any
 $_ZN4llvm14MIPatternMatch22GFCstOrSplatGFCstMatch5matchERKNS_19MachineRegisterInfoENS_8RegisterE = comdat any
 
 $_ZN4llvm7APFloatD2Ev = comdat any
+
+$_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE = comdat any
 
 $_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE = comdat any
 
@@ -271,7 +273,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i32 16, ptr %i.bc, align 8, !tbaa !54
   store i64 12568, ptr %3, align 8, !tbaa !29
-  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF16, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase11semIEEEhalfE, ptr noundef nonnull align 8 dereferenceable(12) %3) #12
+  call void @_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF16, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase11semIEEEhalfE, ptr noundef nonnull align 8 dereferenceable(12) %3)
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !54
   %i.be = icmp ugt i32 %i.bd, 64
   br i1 %i.be, label %bb.m, label %_ZN4llvm5APIntD2Ev.exit.i.i
@@ -306,7 +308,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i32 32, ptr %i.bl, align 8, !tbaa !54
   store i64 1042479491, ptr %4, align 8, !tbaa !29
-  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF32, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEsingleE, ptr noundef nonnull align 8 dereferenceable(12) %4) #12
+  call void @_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF32, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEsingleE, ptr noundef nonnull align 8 dereferenceable(12) %4)
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !54
   %i.bn = icmp ugt i32 %i.bm, 64
   br i1 %i.bn, label %bb.r, label %_ZN4llvm5APIntD2Ev.exit5.i.i
@@ -341,7 +343,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i32 64, ptr %i.bu, align 8, !tbaa !54
   store i64 4594902181429758082, ptr %5, align 8, !tbaa !29
-  call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF64, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEdoubleE, ptr noundef nonnull align 8 dereferenceable(12) %5) #12
+  call void @_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZL8isInv2PiRKN4llvm7APFloatEE4KF64, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase13semIEEEdoubleE, ptr noundef nonnull align 8 dereferenceable(12) %5)
   %i.bv = load i32, ptr %i.bu, align 8, !tbaa !54
   %i.bw = icmp ugt i32 %i.bv, 64
   br i1 %i.bw, label %bb.w, label %_ZN4llvm5APIntD2Ev.exit6.i.i
@@ -744,6 +746,23 @@ declare noundef ptr @_ZNK4llvm12MachineInstr5getMFEv(ptr noundef nonnull align 8
 ; Function Attrs: nofree nounwind
 declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #6
 
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden void @_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %1, ptr noundef nonnull align 8 dereferenceable(12) %2) unnamed_addr #0 comdat align 2 {
+  %.not.i = icmp eq ptr %1, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  br i1 %.not.i, label %5, label %4
+
+4:                                                ; preds = %3
+  tail call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %1, ptr noundef nonnull align 8 dereferenceable(12) %2) #12
+  br label %_ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit
+
+5:                                                ; preds = %3
+  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %1, ptr noundef nonnull align 8 dereferenceable(12) %2) #12
+  br label %_ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit
+
+_ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit: ; preds = %4, %5
+  ret void
+}
+
 ; Function Attrs: nofree nounwind
 declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #6
 
@@ -751,6 +770,8 @@ declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #6
 declare void @__cxa_guard_release(ptr) local_unnamed_addr #6
 
 declare void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #1
+
+declare void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(29), ptr noundef nonnull align 8 dereferenceable(12)) unnamed_addr #1
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdaPv(ptr noundef) local_unnamed_addr #7

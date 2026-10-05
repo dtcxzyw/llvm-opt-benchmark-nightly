@@ -204,6 +204,7 @@ _ZL21getGenericOpLoopRangeRN4mlir9OpBuilderENS_6linalg9GenericOpE.exit.i: ; pred
   br i1 %.not4253.i, label %._crit_edge.i, label %.lr.ph55.i
 
 .lr.ph55.i:                                       ; preds = %_ZL21getGenericOpLoopRangeRN4mlir9OpBuilderENS_6linalg9GenericOpE.exit.i
+  %105 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_6linalg7YieldOpEvE2idE
   %i.lx = getelementptr inbounds nuw i8, ptr %30, i64 16
   %i.ly = getelementptr inbounds nuw i8, ptr %30, i64 32
   %i.lz = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 6 uses
@@ -588,10 +589,10 @@ bb.be:                                            ; preds = %_ZN4llvm11SmallVect
 bb.bf:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir9AffineMapELb1EE9push_backES2_.exit.i, %.lr.ph55.i
   %.sroa.432.054.i = phi i64 [ 0, %.lr.ph55.i ], [ %i.vh, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir9AffineMapELb1EE9push_backES2_.exit.i ] ; 2 uses
   %i.rq = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.lv, i64 noundef %.sroa.432.054.i) #18 ; 3 uses
-  br label %.critedge47.i
+  br i1 %105, label %.loopexit.i, label %.critedge47.i
 
-.critedge47.i:                                    ; preds = %bb.bg, %bb.bf
-  %.sroa.019.0.in.i = phi ptr [ %i.rq, %bb.bf ], [ %.sroa.019.0.i, %bb.bg ]
+.critedge47.i:                                    ; preds = %bb.bf, %bb.bg
+  %.sroa.019.0.in.i = phi ptr [ %.sroa.019.0.i, %bb.bg ], [ %i.rq, %bb.bf ]
   %.sroa.019.0.i = load ptr, ptr %.sroa.019.0.in.i, align 8, !tbaa !56 ; 3 uses
   %.not46.i = icmp eq ptr %.sroa.019.0.i, null
   br i1 %.not46.i, label %.loopexit.i, label %bb.bg
@@ -740,7 +741,7 @@ bb.bq:                                            ; preds = %_ZN4llvm23SmallVect
   store i32 %i.ty, ptr %i.lz, align 8, !tbaa !19
   br label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir9AffineMapELb1EE9push_backES2_.exit.i
 
-.loopexit.i:                                      ; preds = %.critedge47.i, %.critedge.i, %_ZN4mlir9Operation13getOpOperandsEv.exit.i, %bb.bh
+.loopexit.i:                                      ; preds = %.critedge47.i, %.critedge.i, %_ZN4mlir9Operation13getOpOperandsEv.exit.i, %bb.bh, %bb.bf
   %i.tz = load i32, ptr %i.mb, align 8, !tbaa !19
   %i.ua = call ptr @_ZN4mlir7Builder22getMultiDimIdentityMapEj(ptr noundef nonnull align 8 dereferenceable(8) %i.kj, i32 noundef %i.tz) #18 ; 2 uses
   %i.ub = load ptr, ptr %39, align 8, !tbaa !24

@@ -205,7 +205,11 @@ bb.a:
   %.sroa.033.0.in140 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.033.0141 = load ptr, ptr %.sroa.033.0.in140, align 8, !tbaa !41 ; 2 uses
   %.not142 = icmp eq ptr %.sroa.033.0141, %1
-  br i1 %.not142, label %.thread125, label %.lr.ph146.a
+  br i1 %.not142, label %.thread125, label %.lr.ph146
+
+.lr.ph146:                                        ; preds = %bb.a
+  %5 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
+  br label %.lr.ph146.a
 
 .loopexit:                                        ; preds = %.critedge, %.lr.ph146.a
   %.sroa.033.0.in = getelementptr inbounds nuw i8, ptr %.sroa.033.0143, i64 8
@@ -213,8 +217,8 @@ bb.a:
   %.not = icmp eq ptr %.sroa.033.0, %1
   br i1 %.not, label %.thread125, label %.lr.ph146.a
 
-.lr.ph146.a:                                      ; preds = %bb.a, %.loopexit
-  %.sroa.033.0143 = phi ptr [ %.sroa.033.0, %.loopexit ], [ %.sroa.033.0141, %bb.a ] ; 3 uses
+.lr.ph146.a:                                      ; preds = %.lr.ph146, %.loopexit
+  %.sroa.033.0143 = phi ptr [ %.sroa.033.0141, %.lr.ph146 ], [ %.sroa.033.0, %.loopexit ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.sroa.033.0143, i64 40
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.033.0143, i64 32 ; 2 uses
   %.sroa.029.0135 = load ptr, ptr %i.a, align 8, !tbaa !41 ; 2 uses
@@ -229,7 +233,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !117
   %i.g = icmp eq ptr %i.f, @_ZN4mlir6detail14TypeIDResolverINS_26UnrealizedConversionCastOpEvE2idE
-  br i1 %i.g, label %.critedge, label %bb.b
+  %spec.select.i.i.i.i = and i1 %5, %i.g
+  br i1 %spec.select.i.i.i.i, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph139
   %i.h = load ptr, ptr %0, align 8, !tbaa !13

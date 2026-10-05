@@ -204,12 +204,15 @@ _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.k, %bb.j, %bb.i,
 define dso_local i32 @uloc_getDisplayScript_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %6 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %6 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
+  %7 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %8 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %i.c = alloca i32, align 4                      ; 6 uses
-  %7 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
-  %i.d = alloca i32, align 4                      ; 7 uses
+  %9 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %10 = alloca %"class.icu_78::StringPiece", align 8 ; 6 uses
+  %i.d = alloca i32, align 4                      ; 8 uses
   %i.e = load i32, ptr %4, align 4
   %i.f = icmp slt i32 %i.e, 1
   br i1 %i.f, label %bb.b, label %bb.al
@@ -217,6 +220,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   store i32 0, ptr %i.d, align 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.g = icmp slt i32 %3, 0
   br i1 %i.g, label %.thread, label %bb.c
@@ -229,6 +233,7 @@ bb.c:                                             ; preds = %bb.b
 
 .thread:                                          ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %10)
   br label %bb.ak
 
 bb.d:                                             ; preds = %bb.c
@@ -242,9 +247,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.022.i = phi ptr [ %i.k, %bb.e ], [ %0, %bb.d ] ; 2 uses
   store i32 0, ptr %i.c, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #6
   %i.l = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.022.i) #6
-  call void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::CharString") align 8 %7, i64 %i.l, ptr nonnull %.022.i, ptr noundef nonnull align 4 dereferenceable(4) %i.c) #6, !callees !6, !inline_history !0
+  call void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::CharString") align 8 %9, i64 %i.l, ptr nonnull %.022.i, ptr noundef nonnull align 4 dereferenceable(4) %i.c) #6, !callees !6, !inline_history !0
   %i.m = load i32, ptr %i.c, align 4
   %i.n = icmp slt i32 %i.m, 1
   br i1 %i.n, label %bb.h, label %bb.g
@@ -254,41 +259,55 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 56
+  %i.o = getelementptr inbounds nuw i8, ptr %9, i64 56
   %i.p = load i32, ptr %i.o, align 8
   %.not.i = icmp eq i32 %i.p, 0
-  br i1 %.not.i, label %bb.i, label %bb.j
+  br i1 %.not.i, label %11, label %bb.j
 
-bb.i:                                             ; preds = %bb.h
+11:                                               ; preds = %bb.h
+  %12 = icmp eq ptr @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  br i1 %12, label %13, label %bb.i
+
+13:                                               ; preds = %11
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %10, ptr noundef nonnull @.str.2) #6
+  %14 = load ptr, ptr %10, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %16 = load i32, ptr %15, align 8
+  %17 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %9, ptr noundef %14, i32 noundef %16, ptr noundef nonnull align 4 dereferenceable(4) %i.d) #6 ; 0 uses
+  br label %bb.j
+
+bb.i:                                             ; preds = %11
   %i.q = call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef %3, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %i.d) #6
   br label %bb.k
 
-bb.j:                                             ; preds = %bb.h
-  %i.r = load ptr, ptr %7, align 8                ; 2 uses
+bb.j:                                             ; preds = %13, %bb.h
+  %i.r = load ptr, ptr %9, align 8                ; 2 uses
   %i.s = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_119_kScriptsStandAloneE, ptr noundef null, ptr noundef %i.r, ptr noundef %i.r, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %i.d)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g
   %.0.i = phi i32 [ 0, %bb.g ], [ %i.s, %bb.j ], [ %i.q, %bb.i ] ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 12
+  %i.t = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.u = load i8, ptr %i.t, align 4
   %.not.i.i.i.i = icmp eq i8 %i.u, 0
   br i1 %.not.i.i.i.i, label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.v = load ptr, ptr %7, align 8
+  %i.v = load ptr, ptr %9, align 8
   call void @uprv_free_78(ptr noundef %i.v) #6
   br label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit
 
 _ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit: ; preds = %bb.k, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %10)
   %i.w = load i32, ptr %i.d, align 4              ; 3 uses
   %i.x = icmp ne i32 %i.w, 15
   %or.cond.not = select i1 %i.h, i1 true, i1 %i.x
   br i1 %or.cond.not, label %bb.w, label %bb.m
 
 bb.m:                                             ; preds = %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.y = load i32, ptr %4, align 4
   %i.z = icmp slt i32 %i.y, 1
   br i1 %i.z, label %bb.n, label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33
@@ -304,9 +323,9 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.022.i27 = phi ptr [ %i.aa, %bb.o ], [ %0, %bb.n ] ; 2 uses
   store i32 0, ptr %i.b, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
   %i.ab = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.022.i27) #6
-  call void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::CharString") align 8 %6, i64 %i.ab, ptr nonnull %.022.i27, ptr noundef nonnull align 4 dereferenceable(4) %i.b) #6, !callees !6, !inline_history !0
+  call void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::CharString") align 8 %7, i64 %i.ab, ptr nonnull %.022.i27, ptr noundef nonnull align 4 dereferenceable(4) %i.b) #6, !callees !6, !inline_history !0
   %i.ac = load i32, ptr %i.b, align 4
   %i.ad = icmp slt i32 %i.ac, 1
   br i1 %i.ad, label %bb.r, label %bb.q
@@ -316,39 +335,52 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.p
-  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.af = load i32, ptr %i.ae, align 8
   %.not.i32 = icmp eq i32 %i.af, 0
-  br i1 %.not.i32, label %bb.s, label %bb.t
+  br i1 %.not.i32, label %18, label %bb.t
 
-bb.s:                                             ; preds = %bb.r
+18:                                               ; preds = %bb.r
+  %19 = icmp eq ptr @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  br i1 %19, label %20, label %bb.s
+
+20:                                               ; preds = %18
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull @.str.2) #6
+  %21 = load ptr, ptr %8, align 8
+  %22 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %23 = load i32, ptr %22, align 8
+  %24 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %7, ptr noundef %21, i32 noundef %23, ptr noundef nonnull align 4 dereferenceable(4) %4) #6 ; 0 uses
+  br label %bb.t
+
+bb.s:                                             ; preds = %18
   %i.ag = call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef 0, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4) #6
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.r
-  %i.ah = load ptr, ptr %6, align 8               ; 2 uses
+bb.t:                                             ; preds = %20, %bb.r
+  %i.ah = load ptr, ptr %7, align 8               ; 2 uses
   %i.ai = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_19_kScriptsE, ptr noundef null, ptr noundef %i.ah, ptr noundef %i.ah, ptr noundef %2, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.q
   %.0.i28 = phi i32 [ 0, %bb.q ], [ %i.ai, %bb.t ], [ %i.ag, %bb.s ]
-  %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.ak = load i8, ptr %i.aj, align 4
   %.not.i.i.i.i29 = icmp eq i8 %i.ak, 0
   br i1 %.not.i.i.i.i29, label %_ZN6icu_7810CharStringD2Ev.exit.i30, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.al = load ptr, ptr %6, align 8
+  %i.al = load ptr, ptr %7, align 8
   call void @uprv_free_78(ptr noundef %i.al) #6
   br label %_ZN6icu_7810CharStringD2Ev.exit.i30
 
 _ZN6icu_7810CharStringD2Ev.exit.i30:              ; preds = %bb.v, %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33
 
 _ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33: ; preds = %bb.m, %_ZN6icu_7810CharStringD2Ev.exit.i30
   %.2.i25 = phi i32 [ %.0.i28, %_ZN6icu_7810CharStringD2Ev.exit.i30 ], [ 0, %bb.m ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   %i.am = call i32 @llvm.smax.i32(i32 %.2.i25, i32 %.0.i)
   br label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42
 
@@ -357,9 +389,10 @@ bb.w:                                             ; preds = %_ZN12_GLOBAL__N_127
   br i1 %i.an, label %bb.x, label %bb.ak
 
 bb.x:                                             ; preds = %bb.w
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.ao = load i32, ptr %4, align 4
   %i.ap = icmp slt i32 %i.ao, 1
-  br i1 %i.ap, label %bb.y, label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42
+  br i1 %i.ap, label %bb.y, label %bb.aj
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -370,7 +403,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   store i32 1, ptr %4, align 4
-  br label %bb.aj
+  br label %_ZN6icu_7810CharStringD2Ev.exit.i39.a
 
 bb.aa:                                            ; preds = %bb.y
   %i.as = icmp eq ptr %0, null
@@ -398,13 +431,25 @@ bb.ae:                                            ; preds = %bb.ac
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.ay = load i32, ptr %i.ax, align 8
   %.not.i41 = icmp eq i32 %i.ay, 0
-  br i1 %.not.i41, label %bb.af, label %bb.ag
+  br i1 %.not.i41, label %25, label %bb.ag
 
-bb.af:                                            ; preds = %bb.ae
+25:                                               ; preds = %bb.ae
+  %26 = icmp eq ptr @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  br i1 %26, label %27, label %bb.af
+
+27:                                               ; preds = %25
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr noundef nonnull @.str.2) #6
+  %28 = load ptr, ptr %6, align 8
+  %29 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %30 = load i32, ptr %29, align 8
+  %31 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, ptr noundef %28, i32 noundef %30, ptr noundef nonnull align 4 dereferenceable(4) %4) #6 ; 0 uses
+  br label %bb.ag
+
+bb.af:                                            ; preds = %25
   %i.az = call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef %3, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4) #6
   br label %bb.ah
 
-bb.ag:                                            ; preds = %bb.ae
+bb.ag:                                            ; preds = %27, %bb.ae
   %i.ba = load ptr, ptr %5, align 8               ; 2 uses
   %i.bb = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_19_kScriptsE, ptr noundef null, ptr noundef %i.ba, ptr noundef %i.ba, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %bb.ah
@@ -414,20 +459,25 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.bd = load i8, ptr %i.bc, align 4
   %.not.i.i.i.i38 = icmp eq i8 %i.bd, 0
-  br i1 %.not.i.i.i.i38, label %_ZN6icu_7810CharStringD2Ev.exit.i39.a, label %bb.ai
+  br i1 %.not.i.i.i.i38, label %_ZN6icu_7810CharStringD2Ev.exit.i39, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.be = load ptr, ptr %5, align 8
   call void @uprv_free_78(ptr noundef %i.be) #6
+  br label %_ZN6icu_7810CharStringD2Ev.exit.i39
+
+_ZN6icu_7810CharStringD2Ev.exit.i39:              ; preds = %bb.ai, %bb.ah
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
   br label %_ZN6icu_7810CharStringD2Ev.exit.i39.a
 
-_ZN6icu_7810CharStringD2Ev.exit.i39.a:            ; preds = %bb.ai, %bb.ah
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
+_ZN6icu_7810CharStringD2Ev.exit.i39.a:            ; preds = %_ZN6icu_7810CharStringD2Ev.exit.i39, %bb.z
+  %.1.i40 = phi i32 [ 0, %bb.z ], [ %.0.i37, %_ZN6icu_7810CharStringD2Ev.exit.i39 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %bb.aj
 
-bb.aj:                                            ; preds = %_ZN6icu_7810CharStringD2Ev.exit.i39.a, %bb.z
-  %.1.i40.a = phi i32 [ 0, %bb.z ], [ %.0.i37, %_ZN6icu_7810CharStringD2Ev.exit.i39.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+bb.aj:                                            ; preds = %bb.x, %_ZN6icu_7810CharStringD2Ev.exit.i39.a
+  %.1.i40.a = phi i32 [ %.1.i40, %_ZN6icu_7810CharStringD2Ev.exit.i39.a ], [ 0, %bb.x ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42
 
 bb.ak:                                            ; preds = %.thread, %bb.w
@@ -436,8 +486,8 @@ bb.ak:                                            ; preds = %.thread, %bb.w
   store i32 %i.bf, ptr %4, align 4
   br label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42
 
-_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42: ; preds = %bb.aj, %bb.x, %bb.ak, %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33
-  %.0 = phi i32 [ %i.am, %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33 ], [ %.1.i4553, %bb.ak ], [ %.1.i40.a, %bb.aj ], [ 0, %bb.x ]
+_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit42: ; preds = %bb.ak, %bb.aj, %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33
+  %.0 = phi i32 [ %i.am, %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit33 ], [ %.1.i40.a, %bb.aj ], [ %.1.i4553, %bb.ak ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %bb.al
 
@@ -562,7 +612,9 @@ _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.k, %bb.j, %bb.i,
 define dso_local i32 @uloc_getDisplayCountry_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %6 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.b = load i32, ptr %4, align 4
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit
@@ -608,13 +660,25 @@ bb.i:                                             ; preds = %bb.g
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.m = load i32, ptr %i.l, align 8
   %.not.i = icmp eq i32 %i.m, 0
-  br i1 %.not.i, label %bb.j, label %bb.k
+  br i1 %.not.i, label %7, label %bb.k
 
-bb.j:                                             ; preds = %bb.i
+7:                                                ; preds = %bb.i
+  %8 = icmp eq ptr @_Z20ulocimp_getRegion_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  br i1 %8, label %9, label %bb.j
+
+9:                                                ; preds = %7
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr noundef nonnull @.str.2) #6
+  %10 = load ptr, ptr %6, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %12 = load i32, ptr %11, align 8
+  %13 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, ptr noundef %10, i32 noundef %12, ptr noundef nonnull align 4 dereferenceable(4) %4) #6 ; 0 uses
+  br label %bb.k
+
+bb.j:                                             ; preds = %7
   %i.n = call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef %3, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4) #6
   br label %bb.l
 
-bb.k:                                             ; preds = %bb.i
+bb.k:                                             ; preds = %9, %bb.i
   %i.o = load ptr, ptr %5, align 8                ; 2 uses
   %i.p = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str.3, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_111_kCountriesE, ptr noundef null, ptr noundef %i.o, ptr noundef %i.o, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %bb.l
@@ -642,6 +706,7 @@ bb.n:                                             ; preds = %_ZN6icu_7810CharStr
 
 _ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit: ; preds = %bb.a, %bb.n
   %.2.i = phi i32 [ %.1.i, %bb.n ], [ 0, %bb.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   ret i32 %.2.i
 }
 
@@ -761,7 +826,9 @@ _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.k, %bb.j, %bb.i,
 define dso_local i32 @uloc_getDisplayVariant_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %6 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.b = load i32, ptr %4, align 4
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %_ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit
@@ -807,13 +874,25 @@ bb.i:                                             ; preds = %bb.g
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.m = load i32, ptr %i.l, align 8
   %.not.i = icmp eq i32 %i.m, 0
-  br i1 %.not.i, label %bb.j, label %bb.k
+  br i1 %.not.i, label %7, label %bb.k
 
-bb.j:                                             ; preds = %bb.i
+7:                                                ; preds = %bb.i
+  %8 = icmp eq ptr @_Z21ulocimp_getVariant_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  br i1 %8, label %9, label %bb.j
+
+9:                                                ; preds = %7
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr noundef nonnull @.str.2) #6
+  %10 = load ptr, ptr %6, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %12 = load i32, ptr %11, align 8
+  %13 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, ptr noundef %10, i32 noundef %12, ptr noundef nonnull align 4 dereferenceable(4) %4) #6 ; 0 uses
+  br label %bb.k
+
+bb.j:                                             ; preds = %7
   %i.n = call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef %3, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4) #6
   br label %bb.l
 
-bb.k:                                             ; preds = %bb.i
+bb.k:                                             ; preds = %9, %bb.i
   %i.o = load ptr, ptr %5, align 8                ; 2 uses
   %i.p = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_110_kVariantsE, ptr noundef null, ptr noundef %i.o, ptr noundef %i.o, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %bb.l
@@ -841,6 +920,7 @@ bb.n:                                             ; preds = %_ZN6icu_7810CharStr
 
 _ZN12_GLOBAL__N_127_getDisplayNameForComponentEPKcS1_PDsiPFN6icu_7810CharStringESt17basic_string_viewIcSt11char_traitsIcEER10UErrorCodeES1_SA_.exit: ; preds = %bb.a, %bb.n
   %.2.i = phi i32 [ %.1.i, %bb.n ], [ 0, %bb.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   ret i32 %.2.i
 }
 
@@ -961,7 +1041,8 @@ define dso_local i32 @uloc_getDisplayName_78(ptr noundef %0, ptr noundef %1, ptr
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
   %i.b = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.icu_78::CharString", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::CharString", align 8 ; 8 uses
+  %6 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %i.c = alloca i32, align 4                      ; 10 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   %i.e = alloca i32, align 4                      ; 7 uses
@@ -1099,7 +1180,9 @@ bb.p:                                             ; preds = %bb.m
   %.0269422 = ptrtoaddr ptr %.0269 to i64
   %.2234 = zext i1 %.2234.shrunk to i32
   %i.au = icmp eq ptr %0, null
-  %i.av = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %8 = icmp eq ptr @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode, @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode
+  %i.av = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.ax = sub i64 %i.a, %.0269422                 ; 2 uses
   %i.ay = add i64 %i.ax, -1
@@ -1305,14 +1388,14 @@ _ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEED2E
   %.1240367 = phi i8 [ %.3242, %bb.bq ], [ %.0239, %.loopexit346.preheader ] ; 3 uses
   %.1244366 = phi i8 [ %.3246, %bb.bq ], [ %.0243, %.loopexit346.preheader ] ; 3 uses
   %.4266365 = phi i32 [ %.6268, %bb.bq ], [ %.3265, %.loopexit346.preheader ] ; 9 uses
-  %.1273364 = phi i32 [ %.7279, %bb.bq ], [ %.3265, %.loopexit346.preheader ] ; 12 uses
-  %.sroa.0.0363 = phi ptr [ %.sroa.0.3, %bb.bq ], [ null, %.loopexit346.preheader ] ; 10 uses
+  %.1273364 = phi i32 [ %.7279, %bb.bq ], [ %.3265, %.loopexit346.preheader ] ; 11 uses
+  %.sroa.0.0363 = phi ptr [ %.sroa.0.3, %bb.bq ], [ null, %.loopexit346.preheader ] ; 9 uses
   %i.cy = sub nsw i32 %3, %.1273364               ; 2 uses
   %i.cz = icmp sgt i32 %i.cy, 0                   ; 4 uses
   %i.da = sext i32 %.1273364 to i64
   %i.db = getelementptr inbounds [2 x i8], ptr %2, i64 %i.da ; 2 uses
-  %.4223 = select i1 %i.cz, ptr %i.db, ptr %.3222369 ; 21 uses
-  %.0194 = call i32 @llvm.smax.i32(i32 %i.cy, i32 0) ; 16 uses
+  %.4223 = select i1 %i.cz, ptr %i.db, ptr %.3222369 ; 20 uses
+  %.0194 = call i32 @llvm.smax.i32(i32 %i.cy, i32 0) ; 15 uses
   %i.dc = icmp eq i32 %.0200375, %.2234
   br i1 %i.dc, label %bb.u, label %bb.w
 
@@ -1342,9 +1425,10 @@ bb.x:                                             ; preds = %bb.w
   ]
 
 bb.y:                                             ; preds = %bb.x
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.di = load i32, ptr %4, align 4
   %i.dj = icmp slt i32 %i.di, 1
-  br i1 %i.dj, label %bb.z, label %_ZL30uloc_getDisplayScriptInContextPKcS0_PDsiP10UErrorCode.exit
+  br i1 %i.dj, label %bb.z, label %bb.ak
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
@@ -1354,7 +1438,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   store i32 1, ptr %4, align 4
-  br label %bb.ak
+  br label %_ZN6icu_7810CharStringD2Ev.exit.i.i.a
 
 bb.ab:                                            ; preds = %bb.z
   br i1 %i.au, label %bb.ac, label %bb.ad
@@ -1378,15 +1462,25 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.ai
 
 bb.af:                                            ; preds = %bb.ad
-  %i.dp = load i32, ptr %i.av, align 8
+  %i.dp = load i32, ptr %7, align 8
   %.not.i.i = icmp eq i32 %i.dp, 0
-  br i1 %.not.i.i, label %bb.ag, label %bb.ah
+  br i1 %.not.i.i, label %9, label %bb.ah
 
-bb.ag:                                            ; preds = %bb.af
+9:                                                ; preds = %bb.af
+  br i1 %8, label %10, label %bb.ag
+
+10:                                               ; preds = %9
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr noundef nonnull @.str.2) #6
+  %11 = load ptr, ptr %6, align 8
+  %12 = load i32, ptr %i.av, align 8
+  %13 = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, ptr noundef %11, i32 noundef %12, ptr noundef nonnull align 4 dereferenceable(4) %4) #6 ; 0 uses
+  br label %bb.ah
+
+bb.ag:                                            ; preds = %9
   %i.dq = call i32 @u_terminateUChars_78(ptr noundef %.4223, i32 noundef range(i32 0, -2147483648) %.0194, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(4) %4) #6
   br label %bb.ai
 
-bb.ah:                                            ; preds = %bb.af
+bb.ah:                                            ; preds = %10, %bb.af
   %i.dr = load ptr, ptr %5, align 8               ; 2 uses
   %i.ds = call fastcc noundef i32 @_ZN12_GLOBAL__N_119_getStringOrCopyKeyEPKcS1_S1_S1_S1_S1_PDsiR10UErrorCode(ptr noundef nonnull @.str, ptr noundef %1, ptr noundef nonnull @_ZN12_GLOBAL__N_19_kScriptsE, ptr noundef null, ptr noundef %i.dr, ptr noundef %i.dr, ptr noundef %.4223, i32 noundef range(i32 0, -2147483648) %.0194, ptr noundef nonnull align 4 dereferenceable(4) %4)
   br label %bb.ai
@@ -1395,20 +1489,25 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %.0.i.i = phi i32 [ 0, %bb.ae ], [ %i.ds, %bb.ah ], [ %i.dq, %bb.ag ]
   %i.dt = load i8, ptr %i.aw, align 4
   %.not.i.i.i.i.i = icmp eq i8 %i.dt, 0
-  br i1 %.not.i.i.i.i.i, label %_ZN6icu_7810CharStringD2Ev.exit.i.i.a, label %bb.aj
+  br i1 %.not.i.i.i.i.i, label %_ZN6icu_7810CharStringD2Ev.exit.i.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.du = load ptr, ptr %5, align 8
   call void @uprv_free_78(ptr noundef %i.du) #6
+  br label %_ZN6icu_7810CharStringD2Ev.exit.i.i
+
+_ZN6icu_7810CharStringD2Ev.exit.i.i:              ; preds = %bb.aj, %bb.ai
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
   br label %_ZN6icu_7810CharStringD2Ev.exit.i.i.a
 
-_ZN6icu_7810CharStringD2Ev.exit.i.i.a:            ; preds = %bb.aj, %bb.ai
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
+_ZN6icu_7810CharStringD2Ev.exit.i.i.a:            ; preds = %_ZN6icu_7810CharStringD2Ev.exit.i.i, %bb.aa
+  %.1.i.i = phi i32 [ 0, %bb.aa ], [ %.0.i.i, %_ZN6icu_7810CharStringD2Ev.exit.i.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %bb.ak
 
-bb.ak:                                            ; preds = %_ZN6icu_7810CharStringD2Ev.exit.i.i.a, %bb.aa
-  %.1.i.i.a = phi i32 [ 0, %bb.aa ], [ %.0.i.i, %_ZN6icu_7810CharStringD2Ev.exit.i.i.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+bb.ak:                                            ; preds = %bb.y, %_ZN6icu_7810CharStringD2Ev.exit.i.i.a
+  %.1.i.i.a = phi i32 [ %.1.i.i, %_ZN6icu_7810CharStringD2Ev.exit.i.i.a ], [ 0, %bb.y ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %_ZL30uloc_getDisplayScriptInContextPKcS0_PDsiP10UErrorCode.exit
 
 bb.al:                                            ; preds = %bb.x
@@ -1507,13 +1606,13 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.et = add nsw i32 %i.es, %i.eo
   br label %_ZL30uloc_getDisplayScriptInContextPKcS0_PDsiP10UErrorCode.exit
 
-_ZL30uloc_getDisplayScriptInContextPKcS0_PDsiP10UErrorCode.exit: ; preds = %bb.ay, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit, %bb.ak, %bb.y, %bb.am, %bb.al
-  %storemerge.sink = phi i32 [ 0, %bb.y ], [ %i.dw, %bb.am ], [ %i.dv, %bb.al ], [ %.1.i.i.a, %bb.ak ], [ %i.et, %bb.ay ], [ 0, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 4 uses
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0363, %bb.y ], [ %.sroa.0.0363, %bb.am ], [ %.sroa.0.0363, %bb.al ], [ %.sroa.0.0363, %bb.ak ], [ %.sroa.0.1, %bb.ay ], [ %.sroa.0.1, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ]
-  %.8 = phi ptr [ %.4223, %bb.y ], [ %.4223, %bb.am ], [ %.4223, %bb.al ], [ %.4223, %bb.ak ], [ %.6225, %bb.ay ], [ %.4223, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 32 uses
-  %.1203 = phi i32 [ %.1273364, %bb.y ], [ %.0202374, %bb.am ], [ %.0202374, %bb.al ], [ %.1273364, %bb.ak ], [ %.0202374, %bb.ay ], [ %.0202374, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 3 uses
-  %.1196 = phi i1 [ true, %bb.y ], [ true, %bb.am ], [ true, %bb.al ], [ true, %bb.ak ], [ true, %bb.ay ], [ false, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 2 uses
-  %.4 = phi i32 [ %.0194, %bb.y ], [ %.0194, %bb.am ], [ %.0194, %bb.al ], [ %.0194, %bb.ak ], [ %.2, %bb.ay ], [ %.0194, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ]
+_ZL30uloc_getDisplayScriptInContextPKcS0_PDsiP10UErrorCode.exit: ; preds = %bb.ay, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit, %bb.am, %bb.al, %bb.ak
+  %storemerge.sink = phi i32 [ %.1.i.i.a, %bb.ak ], [ %i.dw, %bb.am ], [ %i.dv, %bb.al ], [ %i.et, %bb.ay ], [ 0, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 4 uses
+  %.sroa.0.2 = phi ptr [ %.sroa.0.0363, %bb.ak ], [ %.sroa.0.0363, %bb.am ], [ %.sroa.0.0363, %bb.al ], [ %.sroa.0.1, %bb.ay ], [ %.sroa.0.1, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ]
+  %.8 = phi ptr [ %.4223, %bb.ak ], [ %.4223, %bb.am ], [ %.4223, %bb.al ], [ %.6225, %bb.ay ], [ %.4223, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 32 uses
+  %.1203 = phi i32 [ %.1273364, %bb.ak ], [ %.0202374, %bb.am ], [ %.0202374, %bb.al ], [ %.0202374, %bb.ay ], [ %.0202374, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 3 uses
+  %.1196 = phi i1 [ true, %bb.ak ], [ true, %bb.am ], [ true, %bb.al ], [ true, %bb.ay ], [ false, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ] ; 2 uses
+  %.4 = phi i32 [ %.0194, %bb.ak ], [ %.0194, %bb.am ], [ %.0194, %bb.al ], [ %.2, %bb.ay ], [ %.0194, %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEE12adoptInsteadEPS2_.exit ]
   %.8436 = ptrtoaddr ptr %.8 to i64               ; 3 uses
   store i32 %storemerge.sink, ptr %i.f, align 4
   %i.eu = icmp sgt i32 %storemerge.sink, 0
@@ -1916,13 +2015,13 @@ bb.a:
   ret ptr %2
 }
 
-declare void @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #1
+declare void @_Z22ulocimp_getLanguage_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) #1
 
-declare void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #1
+declare void @_Z20ulocimp_getScript_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) #1
 
-declare void @_Z20ulocimp_getRegion_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #1
+declare void @_Z20ulocimp_getRegion_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) #1
 
-declare void @_Z21ulocimp_getVariant_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #1
+declare void @_Z21ulocimp_getVariant_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) #1
 
 declare ptr @ures_open_78(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 

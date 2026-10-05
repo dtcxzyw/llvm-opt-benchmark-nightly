@@ -205,7 +205,9 @@ _ZL18hasBufferSemanticsPN4mlir9OperationE.exit.thread.i: ; preds = %_ZN4llvm6any
   %i.iy = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 16
   %i.iz = load ptr, ptr %i.iy, align 8, !tbaa !110
   %i.ja = icmp eq ptr %i.iz, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization9DeallocOpEvE2idE
-  br i1 %i.ja, label %bb.ah, label %bb.al
+  %90 = icmp ne ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_13bufferization9DeallocOpEvE2idE
+  %spec.select.i.i.i.i.i.i = and i1 %90, %i.ja
+  br i1 %spec.select.i.i.i.i.i.i, label %bb.ah, label %bb.al
 
 bb.ah:                                            ; preds = %_ZL18hasBufferSemanticsPN4mlir9OperationE.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #23
@@ -608,8 +610,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !110
   %i.e = icmp ne ptr %i.d, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %2 = icmp eq ptr @_ZN4mlir6detail14TypeIDResolverIvvE2idE, @_ZN4mlir6detail14TypeIDResolverINS_4func6FuncOpEvE2idE
+  %spec.select.i.i.i.i.not.i = or i1 %2, %i.e
   %.not2.i = icmp eq ptr %1, null
-  %.not.i = or i1 %.not2.i, %i.e
+  %.not.i = or i1 %.not2.i, %spec.select.i.i.i.i.not.i
   br i1 %.not.i, label %_ZZN4mlir6detail4walkILNS_9WalkOrderE1ENS_15ForwardIteratorEZN12_GLOBAL__N_136OwnershipBasedBufferDeallocationPass14runOnOperationEvEUlNS_4func6FuncOpEE_S7_NS_10WalkResultEEENSt9enable_ifIXaantsr4llvm9is_one_ofIT2_PNS_9OperationEPNS_6RegionEPNS_5BlockEEE5valuesr3std7is_sameIT3_S9_EE5valueESI_E4typeESD_OT1_ENKUlSD_E_clESD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
