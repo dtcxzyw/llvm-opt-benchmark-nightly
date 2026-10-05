@@ -202,12 +202,17 @@ bb.z:                                             ; preds = %.critedge
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !41
   %i.dt = icmp eq ptr %i.ds, %1
-  br i1 %i.dt, label %bb.aa, label %.thread.i
+  br i1 %i.dt, label %bb.aa, label %..thread.i_crit_edge
+
+..thread.i_crit_edge:                             ; preds = %bb.z
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.pre81 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !33
+  br label %.thread.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.dv = getelementptr i8, ptr %1, i64 8
-  %.val.i = load ptr, ptr %i.dv, align 8, !tbaa !33 ; 3 uses
+  %.val.i = load ptr, ptr %i.dv, align 8, !tbaa !33 ; 4 uses
   %i.dw = icmp eq ptr %.val.i, %i.du
   br i1 %i.dw, label %bb.ab, label %bb.ac
 
@@ -222,16 +227,15 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.0.i.i = select i1 %i.dz, ptr null, ptr %.08.i.i ; 2 uses
   %i.ea = icmp eq ptr %.0.i.i, %1
   %spec.store.select.i = select i1 %i.ea, ptr null, ptr %.0.i.i
-  store ptr %spec.store.select.i, ptr %i.dr, align 8
+  store ptr %spec.store.select.i, ptr %i.dr, align 8, !tbaa !41
   br label %.thread.i
 
-.thread.i:                                        ; preds = %bb.ac, %bb.z
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !33       ; 2 uses
+.thread.i:                                        ; preds = %..thread.i_crit_edge, %bb.ac
+  %4 = phi ptr [ %.pre81, %..thread.i_crit_edge ], [ %.val.i, %bb.ac ] ; 2 uses
   %i.eb = load ptr, ptr %1, align 8, !tbaa !32    ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
-  store ptr %5, ptr %i.ec, align 8, !tbaa !33
-  store ptr %i.eb, ptr %5, align 8, !tbaa !32
+  store ptr %4, ptr %i.ec, align 8, !tbaa !33
+  store ptr %i.eb, ptr %4, align 8, !tbaa !32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.ed = load i64, ptr %i.b, align 8
   %i.ee = and i64 %i.ed, -16777217
@@ -634,7 +638,7 @@ list_next.exit:                                   ; preds = %bb.b, %bb.c
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !45
   %i.m = icmp eq ptr %.0.i, %i.l
   %spec.store.select = select i1 %i.m, ptr null, ptr %.0.i
-  store ptr %spec.store.select, ptr %i.a, align 8
+  store ptr %spec.store.select, ptr %i.a, align 8, !tbaa !46
   br label %bb.d
 
 bb.d:                                             ; preds = %list_next.exit, %bb.a

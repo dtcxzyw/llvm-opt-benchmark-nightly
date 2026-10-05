@@ -202,11 +202,12 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %pmi
   %.0224 = select i1 %i.if, ptr %i.ig, ptr %.0228.lcssa
   %i.ih = load ptr, ptr @prte_node_pool, align 8, !tbaa !35 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 128
-  %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 152
   %2 = load i32, ptr %i.ii, align 8, !tbaa !38    ; 2 uses
-  %3 = sext i32 %2 to i64
-  %4 = icmp sgt i32 %2, 0
-  br i1 %4, label %pmix_pointer_array_get_item.exit352.preheader, label %.critedge9
+  %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 152
+  %smax = call i32 @llvm.smax.i32(i32 %2, i32 0)
+  %wide.trip.count516 = zext nneg i32 %smax to i64
+  %exitcond517.not653 = icmp slt i32 %2, 1
+  br i1 %exitcond517.not653, label %.critedge9, label %pmix_pointer_array_get_item.exit352.preheader
 
 pmix_pointer_array_get_item.exit352.preheader:    ; preds = %.critedge.thread
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !39
@@ -234,7 +235,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.it = load i32, ptr %i.is, align 4, !tbaa !42
   %i.iu = add nsw i32 %i.it, %.0237
   %spec.store.select = call i32 @llvm.smax.i32(i32 %i.iu, i32 0)
-  store i32 %spec.store.select, ptr %i.is, align 4
+  store i32 %spec.store.select, ptr %i.is, align 4, !tbaa !42
   br label %.backedge
 
 bb.aq:                                            ; preds = %bb.an
@@ -270,13 +271,13 @@ bb.at:                                            ; preds = %bb.as
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !42
   %i.jf = add nsw i32 %i.je, %.0237
   %spec.store.select300 = call i32 @llvm.smax.i32(i32 %i.jf, i32 0)
-  store i32 %spec.store.select300, ptr %i.jd, align 4
+  store i32 %spec.store.select300, ptr %i.jd, align 4, !tbaa !42
   br label %.backedge
 
 .loopexit403:                                     ; preds = %bb.ar, %.preheader402, %bb.aq, %pmix_pointer_array_get_item.exit352
   %indvars.iv.next514 = add nuw nsw i64 %indvars.iv513651, 1 ; 2 uses
-  %5 = icmp slt i64 %indvars.iv.next514, %3
-  br i1 %5, label %pmix_pointer_array_get_item.exit352, label %.critedge9, !llvm.loop !139
+  %exitcond517.not = icmp eq i64 %indvars.iv.next514, %wide.trip.count516
+  br i1 %exitcond517.not, label %.critedge9, label %pmix_pointer_array_get_item.exit352, !llvm.loop !139
 
 .critedge9:                                       ; preds = %.loopexit403, %.critedge.thread
   %i.jg = load i64, ptr getelementptr inbounds nuw (i8, ptr @prte_node_t_class, i64 56), align 8, !tbaa !75

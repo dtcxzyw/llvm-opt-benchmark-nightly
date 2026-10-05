@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.d = load i64, ptr %i.b, align 8, !tbaa !33   ; 2 uses
-  %i.e = load i64, ptr %i.c, align 8, !tbaa !92
+  %i.e = load i64, ptr %i.c, align 8, !tbaa !92   ; 3 uses
   %i.f = icmp ugt i64 %i.d, %i.e
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
@@ -215,6 +215,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %edata_list_active_concat.exit
+  %.pre1921 = phi i64 [ %i.e, %.lr.ph ], [ %.pre1922, %edata_list_active_concat.exit ] ; 3 uses
+  %4 = phi i64 [ %i.e, %.lr.ph ], [ %5, %edata_list_active_concat.exit ] ; 2 uses
   %i.j = phi i64 [ %i.d, %.lr.ph ], [ %i.at, %edata_list_active_concat.exit ] ; 2 uses
   %i.k = phi ptr [ null, %.lr.ph ], [ %i.au, %edata_list_active_concat.exit ] ; 6 uses
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !27
@@ -225,7 +227,7 @@ bb.b:                                             ; preds = %.lr.ph, %edata_list
   %i.q = load i32, ptr %i.i, align 8, !tbaa !38
   %i.r = icmp eq i32 %i.p, %i.q
   %spec.store.select = select i1 %i.r, i32 0, i32 %i.p
-  store i32 %spec.store.select, ptr %i.h, align 8
+  store i32 %spec.store.select, ptr %i.h, align 8, !tbaa !34
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !53   ; 2 uses
   %.not = icmp eq i64 %i.t, 0
@@ -274,19 +276,22 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
   store ptr %i.ao, ptr %i.ar, align 8, !tbaa !41
   %.pre.pre = load i64, ptr %i.b, align 8, !tbaa !33
+  %.pre19.pre = load i64, ptr %i.c, align 8, !tbaa !92
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.f, %bb.d
+  %.pre19 = phi i64 [ %.pre19.pre, %bb.f ], [ %.pre1921, %bb.d ] ; 2 uses
   %.pre = phi i64 [ %.pre.pre, %bb.f ], [ %i.u, %bb.d ]
   %i.as = phi ptr [ %i.k, %bb.f ], [ %i.x, %bb.d ]
   store ptr null, ptr %i.v, align 8, !tbaa !51
   br label %edata_list_active_concat.exit
 
 edata_list_active_concat.exit:                    ; preds = %.sink.split.i, %bb.e, %bb.b
+  %.pre1922 = phi i64 [ %.pre19, %.sink.split.i ], [ %.pre1921, %bb.e ], [ %.pre1921, %bb.b ]
+  %5 = phi i64 [ %.pre19, %.sink.split.i ], [ %4, %bb.e ], [ %4, %bb.b ] ; 2 uses
   %i.at = phi i64 [ %.pre, %.sink.split.i ], [ %i.u, %bb.e ], [ %i.j, %bb.b ] ; 2 uses
   %i.au = phi ptr [ %i.as, %.sink.split.i ], [ %i.k, %bb.e ], [ %i.k, %bb.b ]
-  %4 = load i64, ptr %i.c, align 8, !tbaa !92
-  %i.av = icmp ugt i64 %i.at, %4
+  %i.av = icmp ugt i64 %i.at, %5
   br i1 %i.av, label %bb.b, label %._crit_edge, !llvm.loop !90
 
 ._crit_edge:                                      ; preds = %edata_list_active_concat.exit, %bb.a

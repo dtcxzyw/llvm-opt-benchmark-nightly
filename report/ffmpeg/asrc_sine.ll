@@ -202,39 +202,43 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 56
+  %1 = load ptr, ptr %i.am, align 8, !tbaa !26    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.f, i64 76
+  %2 = load i32, ptr %i.ao, align 4, !tbaa !43
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 84
+  %3 = load i32, ptr %i.ap, align 4, !tbaa !44
   %i.aq = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.f, i64 88
   %i.as = getelementptr inbounds nuw i8, ptr %i.f, i64 116 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.f, i64 120
+  %4 = load i32, ptr %i.at, align 8, !tbaa !32
   %i.au = getelementptr inbounds nuw i8, ptr %i.f, i64 92 ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   %i.aw = getelementptr inbounds nuw i8, ptr %i.f, i64 104
   %i.ax = getelementptr inbounds nuw i8, ptr %i.f, i64 100 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.f, i64 108
   %i.az = getelementptr inbounds nuw i8, ptr %i.f, i64 112
-  %.promoted.a = load i32, ptr %i.an, align 8, !tbaa !67
-  %.promoted68.a = load i32, ptr %i.aq, align 8, !tbaa !43
+  %.promoted.a = load i32, ptr %i.az, align 8, !tbaa !31
+  %.promoted68.a = load i32, ptr %i.an, align 8, !tbaa !67
+  %.promoted68 = load i32, ptr %i.aq, align 8, !tbaa !45
+  %.pre72 = load i32, ptr %i.as, align 4, !tbaa !68
   %wide.trip.count = zext nneg i32 %.1 to i64
-  %.pre = load ptr, ptr %i.am, align 8, !tbaa !26 ; 2 uses
-  %.pre72 = load i32, ptr %i.ao, align 4, !tbaa !44
-  %.pre73 = load i32, ptr %i.ap, align 4, !tbaa !45
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %sampling_advance.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %sampling_advance.exit ] ; 2 uses
-  %i.ba = phi i32 [ %.promoted68.a, %.lr.ph ], [ %i.bn, %sampling_advance.exit ]
-  %i.bb = phi i32 [ %.promoted.a, %.lr.ph ], [ %i.bo, %sampling_advance.exit ] ; 2 uses
+  %5 = phi i32 [ %.pre72, %.lr.ph ], [ %spec.store.select, %sampling_advance.exit ] ; 2 uses
+  %i.ba = phi i32 [ %.promoted68, %.lr.ph ], [ %i.bn, %sampling_advance.exit ]
+  %i.bb = phi i32 [ %.promoted68.a, %.lr.ph ], [ %i.bo, %sampling_advance.exit ] ; 2 uses
   %i.bc = lshr i32 %i.bb, 17
   %i.bd = zext nneg i32 %i.bc to i64
-  %i.be = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %i.bd
+  %i.be = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.bd
   %i.bf = load i16, ptr %i.be, align 2, !tbaa !29 ; 2 uses
   %i.bg = getelementptr inbounds nuw [2 x i8], ptr %i.ak, i64 %indvars.iv ; 2 uses
   store i16 %i.bf, ptr %i.bg, align 2, !tbaa !29
-  %i.bh = add i32 %.pre72, %i.bb                  ; 2 uses
-  %i.bi = add nsw i32 %i.ba, %.pre73              ; 3 uses
+  %i.bh = add i32 %2, %i.bb                       ; 2 uses
+  %i.bi = add nsw i32 %i.ba, %3                   ; 3 uses
   %i.bj = icmp sgt i32 %i.bi, -1
   br i1 %i.bj, label %bb.j, label %sampling_advance.exit63
 
@@ -247,51 +251,48 @@ bb.j:                                             ; preds = %bb.i
 sampling_advance.exit63:                          ; preds = %bb.i, %bb.j
   %i.bn = phi i32 [ %i.bi, %bb.i ], [ %i.bl, %bb.j ] ; 2 uses
   %i.bo = phi i32 [ %i.bh, %bb.i ], [ %i.bm, %bb.j ] ; 2 uses
-  %1 = load i32, ptr %i.as, align 4, !tbaa !68    ; 2 uses
-  %2 = load i32, ptr %i.at, align 8, !tbaa !32
-  %i.bp = icmp ult i32 %1, %2
+  %i.bp = icmp ult i32 %5, %4
   br i1 %i.bp, label %bb.k, label %sampling_advance.exit
 
 bb.k:                                             ; preds = %sampling_advance.exit63
   %i.bq = load i32, ptr %i.au, align 4, !tbaa !69 ; 2 uses
   %i.br = lshr i32 %i.bq, 17
   %i.bs = zext nneg i32 %i.br to i64
-  %i.bt = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %i.bs
+  %i.bt = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.bs
   %i.bu = load i16, ptr %i.bt, align 2, !tbaa !29
   %i.bv = shl i16 %i.bu, 1
   %i.bw = add i16 %i.bv, %i.bf
   store i16 %i.bw, ptr %i.bg, align 2, !tbaa !29
-  %i.bx = load i32, ptr %i.av, align 8, !tbaa !44
+  %i.bx = load i32, ptr %i.av, align 8, !tbaa !43
   %i.by = add i32 %i.bx, %i.bq                    ; 2 uses
   store i32 %i.by, ptr %i.au, align 4, !tbaa !67
-  %i.bz = load i32, ptr %i.aw, align 8, !tbaa !45
-  %i.ca = load i32, ptr %i.ax, align 4, !tbaa !43
+  %i.bz = load i32, ptr %i.aw, align 8, !tbaa !44
+  %i.ca = load i32, ptr %i.ax, align 4, !tbaa !45
   %i.cb = add nsw i32 %i.ca, %i.bz                ; 3 uses
-  store i32 %i.cb, ptr %i.ax, align 4, !tbaa !43
+  store i32 %i.cb, ptr %i.ax, align 4, !tbaa !45
   %i.cc = icmp sgt i32 %i.cb, -1
   br i1 %i.cc, label %bb.l, label %sampling_advance.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.cd = load i32, ptr %i.ay, align 4, !tbaa !46
   %i.ce = sub nsw i32 %i.cb, %i.cd
-  store i32 %i.ce, ptr %i.ax, align 4, !tbaa !43
+  store i32 %i.ce, ptr %i.ax, align 4, !tbaa !45
   %i.cf = add i32 %i.by, 1
   store i32 %i.cf, ptr %i.au, align 4, !tbaa !67
   br label %sampling_advance.exit
 
 sampling_advance.exit:                            ; preds = %bb.l, %bb.k, %sampling_advance.exit63
-  %i.cg = add i32 %1, 1                           ; 2 uses
-  %3 = load i32, ptr %i.az, align 8, !tbaa !31
-  %i.ch = icmp eq i32 %i.cg, %3
-  %spec.store.select = select i1 %i.ch, i32 0, i32 %i.cg
-  store i32 %spec.store.select, ptr %i.as, align 4
+  %i.cg = add i32 %5, 1                           ; 2 uses
+  %i.ch = icmp eq i32 %i.cg, %.promoted.a
+  %spec.store.select = select i1 %i.ch, i32 0, i32 %i.cg ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !58
 
 ._crit_edge:                                      ; preds = %sampling_advance.exit
   store i32 %i.bo, ptr %i.an, align 8, !tbaa !67
-  store i32 %i.bn, ptr %i.aq, align 8, !tbaa !43
+  store i32 %i.bn, ptr %i.aq, align 8, !tbaa !45
+  store i32 %spec.store.select, ptr %i.as, align 4, !tbaa !68
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge, %bb.h
@@ -354,7 +355,7 @@ bb.a:
   %i.h = fdiv nsz double %i.g, %i.b               ; 2 uses
   %i.i = fptoui double %i.h to i32                ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  store i32 %i.i, ptr %i.j, align 4, !tbaa !44
+  store i32 %i.i, ptr %i.j, align 4, !tbaa !43
   %i.k = mul nsw i32 %i.f, %2                     ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.k, ptr %i.l, align 4, !tbaa !46
@@ -365,21 +366,21 @@ bb.a:
   %i.q = tail call nsz double @llvm.round.f64(double %i.p)
   %i.r = fptosi double %i.q to i32                ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  store i32 %i.r, ptr %i.s, align 4, !tbaa !45
+  store i32 %i.r, ptr %i.s, align 4, !tbaa !44
   %.not = icmp sgt i32 %i.k, %i.r
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.t = add i32 %i.i, 1
-  store i32 %i.t, ptr %i.j, align 4, !tbaa !44
-  store i32 0, ptr %i.s, align 4, !tbaa !45
+  store i32 %i.t, ptr %i.j, align 4, !tbaa !43
+  store i32 0, ptr %i.s, align 4, !tbaa !44
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = xor i32 %i.k, -1
   %i.v = sdiv i32 %i.u, 2
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.v, ptr %i.w, align 4, !tbaa !43
+  store i32 %i.v, ptr %i.w, align 4, !tbaa !45
   ret void
 }
 
@@ -484,9 +485,9 @@ attributes #10 = { nounwind willreturn memory(none) }
 !40 = !{!"AVFilterFormatsConfig", !38, i64 0, !38, i64 8, !39, i64 16, !38, i64 24, !38, i64 32, !38, i64 40}
 !41 = !{!"AVFilterLink", !34, i64 0, !13, i64 8, !34, i64 16, !13, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !6, i64 44, !35, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !36, i64 72, !35, i64 96, !37, i64 104, !6, i64 112, !6, i64 116, !40, i64 120, !40, i64 168}
 !42 = !{!25, !22, i64 48}
-!43 = !{!24, !6, i64 8}
-!44 = !{!24, !6, i64 4}
-!45 = !{!24, !6, i64 12}
+!43 = !{!24, !6, i64 4}
+!44 = !{!24, !6, i64 12}
+!45 = !{!24, !6, i64 8}
 !46 = !{!24, !6, i64 16}
 !47 = distinct !{!47, !30}
 !48 = distinct !{!48, !30}

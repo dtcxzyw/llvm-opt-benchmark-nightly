@@ -63,19 +63,19 @@ bb.d:                                             ; preds = %.thread, %bb.c
   %i.ad = tail call i64 @archive_entry_size(ptr noundef nonnull %0) #5
   %i.ae = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %spec.store.select = tail call i64 @llvm.smax.i64(i64 %i.ad, i64 0)
-  store i64 %spec.store.select, ptr %i.ae, align 8
+  store i64 %spec.store.select, ptr %i.ae, align 8, !tbaa !37
   %i.af = tail call i32 @archive_entry_mode(ptr noundef nonnull %0) #5
   %i.ag = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  store i32 %i.af, ptr %i.ag, align 8, !tbaa !37
+  store i32 %i.af, ptr %i.ag, align 8, !tbaa !38
   %i.ah = tail call i64 @archive_entry_atime_nsec(ptr noundef nonnull %0) #5
   %i.ai = getelementptr inbounds nuw i8, ptr %i.h, i64 80
-  store i64 %i.ah, ptr %i.ai, align 8, !tbaa !38
+  store i64 %i.ah, ptr %i.ai, align 8, !tbaa !39
   %i.aj = tail call i64 @archive_entry_ctime_nsec(ptr noundef nonnull %0) #5
   %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 112
-  store i64 %i.aj, ptr %i.ak, align 8, !tbaa !39
+  store i64 %i.aj, ptr %i.ak, align 8, !tbaa !40
   %i.al = tail call i64 @archive_entry_mtime_nsec(ptr noundef nonnull %0) #5
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 96
-  store i64 %i.al, ptr %i.am, align 8, !tbaa !40
+  store i64 %i.al, ptr %i.am, align 8, !tbaa !41
   store i32 1, ptr %i.i, align 8, !tbaa !25
   br label %bb.e
 
@@ -166,8 +166,9 @@ attributes #5 = { nounwind }
 !34 = !{!27, !11, i64 8}
 !35 = !{!27, !11, i64 16}
 !36 = !{!27, !11, i64 40}
-!37 = !{!27, !6, i64 24}
-!38 = !{!27, !11, i64 80}
-!39 = !{!27, !11, i64 112}
-!40 = !{!27, !11, i64 96}
+!37 = !{!27, !11, i64 48}
+!38 = !{!27, !6, i64 24}
+!39 = !{!27, !11, i64 80}
+!40 = !{!27, !11, i64 112}
+!41 = !{!27, !11, i64 96}
 end_hunk_0

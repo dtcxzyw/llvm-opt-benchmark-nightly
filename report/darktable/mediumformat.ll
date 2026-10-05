@@ -204,7 +204,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   %i.ki = phi float [ %i.kh, %bb.bk ], [ %i.kf, %bb.bj ] ; 2 uses
   %i.kj = fcmp reassoc nsz arcp contract afn ogt float %i.ki, 1.000000e+03
   %spec.store.select = select i1 %i.kj, float 0.000000e+00, float %i.ki
-  store float %spec.store.select, ptr %i.af, align 8
+  store float %spec.store.select, ptr %i.af, align 8, !tbaa !136
   br label %.thread
 
 bb.bm:                                            ; preds = %bb.j
@@ -213,13 +213,13 @@ bb.bm:                                            ; preds = %bb.j
 
 bb.bn:                                            ; preds = %bb.bm
   %i.kl = call reassoc nsz arcp contract afn noundef float @_ZN6LibRaw12int_to_floatEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.di)
-  store float %i.kl, ptr %i.ae, align 4, !tbaa !136
+  store float %i.kl, ptr %i.ae, align 4, !tbaa !137
   br label %.thread
 
 bb.bo:                                            ; preds = %bb.bm
   %i.km = call reassoc nsz arcp contract afn noundef double @_ZN6LibRaw7getrealEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.db)
   %i.kn = fptrunc reassoc nsz arcp contract afn double %i.km to float
-  store float %i.kn, ptr %i.ae, align 4, !tbaa !136
+  store float %i.kn, ptr %i.ae, align 4, !tbaa !137
   br label %.thread
 
 .loopexit150:                                     ; preds = %bb.j
@@ -404,11 +404,11 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz, %.lo
   %.elt = select i1 %i.oq, i64 ptrtoint (ptr @_ZN6LibRaw18phase_one_load_rawEv to i64), i64 ptrtoint (ptr @_ZN6LibRaw20phase_one_load_raw_cEv to i64)
   %.elt.sink = select i1 %i.op, i64 ptrtoint (ptr @_ZN6LibRaw20phase_one_load_raw_sEv to i64), i64 %.elt
   %i.or = getelementptr inbounds nuw i8, ptr %0, i64 768416
-  store i64 %.elt.sink, ptr %i.or, align 8, !tbaa !137
+  store i64 %.elt.sink, ptr %i.or, align 8, !tbaa !138
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 768424
-  store i64 0, ptr %i.os, align 8, !tbaa !137
+  store i64 0, ptr %i.os, align 8, !tbaa !138
   %i.ot = getelementptr inbounds nuw i8, ptr %0, i64 153096
-  store i32 65535, ptr %i.ot, align 8, !tbaa !138
+  store i32 65535, ptr %i.ot, align 8, !tbaa !139
   %i.ou = getelementptr inbounds nuw i8, ptr %0, i64 204
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(10) %i.ou, ptr noundef nonnull align 1 dereferenceable(10) @.str.5, i64 10, i1 false) #7
   %i.ov = getelementptr inbounds nuw i8, ptr %0, i64 268 ; 5 uses
@@ -504,7 +504,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
-  store i32 0, ptr %i.d, align 4, !tbaa !142
+  store i32 0, ptr %i.d, align 4, !tbaa !143
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 22 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !74   ; 2 uses
@@ -672,7 +672,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ch = load ptr, ptr %i.j, align 8, !tbaa !74
   %i.ci = call noundef i32 @_ZN6LibRaw6streadEPcmP26LibRaw_abstract_datastream(ptr noundef nonnull %i.f, i64 noundef %i.cg, ptr noundef %i.ch) ; 0 uses
   %i.cj = call noundef i32 @_ZN6LibRaw8getwordsEPcPS0_ii(ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, i32 noundef 4, i32 noundef 64) ; 0 uses
-  %i.ck = load ptr, ptr %i.g, align 16, !tbaa !143 ; 2 uses
+  %i.ck = load ptr, ptr %i.g, align 16, !tbaa !144 ; 2 uses
   %.not47 = icmp eq ptr %i.ck, null
   br i1 %.not47, label %bb.u, label %bb.t
 
@@ -706,7 +706,7 @@ bb.w:                                             ; preds = %bb.v
   %i.cw = load ptr, ptr %i.j, align 8, !tbaa !74
   %i.cx = call noundef i32 @_ZN6LibRaw6streadEPcmP26LibRaw_abstract_datastream(ptr noundef nonnull %i.h, i64 noundef %i.cv, ptr noundef %i.cw) ; 0 uses
   %i.cy = call noundef i32 @_ZN6LibRaw8getwordsEPcPS0_ii(ptr noundef nonnull %i.h, ptr noundef nonnull %i.i, i32 noundef 4, i32 noundef 64) ; 0 uses
-  %i.cz = load ptr, ptr %i.i, align 16, !tbaa !143 ; 2 uses
+  %i.cz = load ptr, ptr %i.i, align 16, !tbaa !144 ; 2 uses
   %.not50 = icmp eq ptr %i.cz, null
   br i1 %.not50, label %bb.y, label %bb.x
 
@@ -733,8 +733,8 @@ bb.z:                                             ; preds = %bb.y, %bb.v
   br i1 %.not52, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  store i64 %i.bc, ptr %i.ab, align 8, !tbaa !144
-  store i32 %i.ax, ptr %i.ac, align 8, !tbaa !145
+  store i64 %i.bc, ptr %i.ab, align 8, !tbaa !145
+  store i32 %i.ax, ptr %i.ac, align 8, !tbaa !146
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
@@ -750,8 +750,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br i1 %.not54, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  store i64 %i.bc, ptr %i.ad, align 8, !tbaa !146
-  store i32 %i.ax, ptr %i.ae, align 8, !tbaa !147
+  store i64 %i.bc, ptr %i.ad, align 8, !tbaa !147
+  store i32 %i.ax, ptr %i.ae, align 8, !tbaa !148
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
@@ -771,15 +771,15 @@ bb.ae:                                            ; preds = %bb.ad
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !76
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 72
   %i.ed = load ptr, ptr %i.ec, align 8
-  %i.ee = call noundef i32 %i.ed(ptr noundef nonnull align 8 dereferenceable(8) %i.ea, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.ef = load i32, ptr %i.b, align 4, !tbaa !142 ; 2 uses
+  %i.ee = call noundef i32 %i.ed(ptr noundef nonnull align 8 dereferenceable(8) %i.ea, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.ef = load i32, ptr %i.b, align 4, !tbaa !143 ; 2 uses
   %i.eg = icmp ult i32 %i.ef, 39
   br i1 %i.eg, label %sub_0, label %bb.ag
 
 sub_0:                                            ; preds = %bb.ae
   %i.eh = zext nneg i32 %i.ef to i64              ; 2 uses
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr @_ZZN6LibRaw9parse_mosExE3mod, i64 %i.eh
-  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !143
+  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !144
   %i.ek = call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.w, ptr noundef nonnull dereferenceable(1) %i.ej) #7 ; 0 uses
   %i.el = load i8, ptr %i.w, align 4
   %.not91 = icmp eq i8 %i.el, 65
@@ -801,7 +801,7 @@ bb.af:                                            ; preds = %.tail
   br label %.tail.thread
 
 .tail.thread:                                     ; preds = %sub_1, %sub_0, %bb.af, %.tail
-  store i64 %i.eh, ptr %i.ah, align 8, !tbaa !154
+  store i64 %i.eh, ptr %i.ah, align 8, !tbaa !155
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %.tail.thread, %bb.ad
@@ -817,20 +817,20 @@ bb.ag:                                            ; preds = %bb.ae, %.tail.threa
   br i1 %.not59, label %.preheader81, label %bb.aj
 
 .preheader81:                                     ; preds = %bb.ag
-  store i32 0, ptr %i.b, align 4, !tbaa !142
+  store i32 0, ptr %i.b, align 4, !tbaa !143
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.preheader81, %bb.ah
   %i.ex = call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ey = call reassoc nsz arcp contract afn noundef float @_ZN6LibRaw12int_to_floatEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.ex)
-  %i.ez = load i32, ptr %i.b, align 4, !tbaa !142 ; 3 uses
+  %i.ez = load i32, ptr %i.b, align 4, !tbaa !143 ; 3 uses
   %i.fa = sext i32 %i.ez to i64
   %i.fb = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.fa
   store float %i.ey, ptr %i.fb, align 4, !tbaa !93
   %i.fc = add nsw i32 %i.ez, 1
-  store i32 %i.fc, ptr %i.b, align 4, !tbaa !142
+  store i32 %i.fc, ptr %i.b, align 4, !tbaa !143
   %i.fd = icmp slt i32 %i.ez, 8
-  br i1 %i.fd, label %bb.ah, label %bb.ai, !llvm.loop !139
+  br i1 %i.fd, label %bb.ah, label %bb.ai, !llvm.loop !140
 
 bb.ai:                                            ; preds = %bb.ah
   call void @_ZN6LibRaw10romm_coeffEPA3_f(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.e)
@@ -849,7 +849,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ag
   br i1 %.not61, label %.preheader80, label %bb.am
 
 .preheader80:                                     ; preds = %bb.aj
-  store i32 0, ptr %i.b, align 4, !tbaa !142
+  store i32 0, ptr %i.b, align 4, !tbaa !143
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.preheader80, %bb.ak
@@ -860,12 +860,12 @@ bb.ak:                                            ; preds = %.preheader80, %bb.a
   %i.fp = load ptr, ptr %i.fm, align 8, !tbaa !76
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 72
   %i.fr = load ptr, ptr %i.fq, align 8
-  %i.fs = call noundef i32 %i.fr(ptr noundef nonnull align 8 dereferenceable(8) %i.fm, ptr noundef nonnull @.str.58, ptr noundef nonnull %i.fo), !call_target !153 ; 0 uses
-  %i.ft = load i32, ptr %i.b, align 4, !tbaa !142 ; 2 uses
+  %i.fs = call noundef i32 %i.fr(ptr noundef nonnull align 8 dereferenceable(8) %i.fm, ptr noundef nonnull @.str.58, ptr noundef nonnull %i.fo), !call_target !154 ; 0 uses
+  %i.ft = load i32, ptr %i.b, align 4, !tbaa !143 ; 2 uses
   %i.fu = add nsw i32 %i.ft, 1                    ; 2 uses
-  store i32 %i.fu, ptr %i.b, align 4, !tbaa !142
+  store i32 %i.fu, ptr %i.b, align 4, !tbaa !143
   %i.fv = icmp slt i32 %i.ft, 8
-  br i1 %i.fv, label %bb.ak, label %bb.al, !llvm.loop !140
+  br i1 %i.fv, label %bb.ak, label %bb.al, !llvm.loop !141
 
 bb.al:                                            ; preds = %bb.ak
   call void @_ZN6LibRaw10romm_coeffEPA3_f(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.e)
@@ -888,7 +888,7 @@ bb.an:                                            ; preds = %bb.am
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !76
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 72
   %i.gh = load ptr, ptr %i.gg, align 8
-  %i.gi = call noundef i32 %i.gh(ptr noundef nonnull align 8 dereferenceable(8) %i.ge, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.d), !call_target !153 ; 0 uses
+  %i.gi = call noundef i32 %i.gh(ptr noundef nonnull align 8 dereferenceable(8) %i.ge, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.d), !call_target !154 ; 0 uses
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
@@ -908,7 +908,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !76
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 72
   %i.gu = load ptr, ptr %i.gt, align 8
-  %i.gv = call noundef i32 %i.gu(ptr noundef nonnull align 8 dereferenceable(8) %i.gr, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.ai), !call_target !153 ; 0 uses
+  %i.gv = call noundef i32 %i.gu(ptr noundef nonnull align 8 dereferenceable(8) %i.gr, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.ai), !call_target !154 ; 0 uses
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
@@ -929,32 +929,32 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !76
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 72
   %i.hi = load ptr, ptr %i.hh, align 8
-  %i.hj = call noundef i32 %i.hi(ptr noundef nonnull align 8 dereferenceable(8) %i.hf, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.hk = load i32, ptr %i.b, align 4, !tbaa !142
+  %i.hj = call noundef i32 %i.hi(ptr noundef nonnull align 8 dereferenceable(8) %i.hf, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.hk = load i32, ptr %i.b, align 4, !tbaa !143
   %i.hl = icmp eq i32 %i.hk, 1
   %.2 = select i1 %i.hl, i32 0, i32 %.088
   %i.hm = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.hn = load ptr, ptr %i.hm, align 8, !tbaa !76
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 72
   %i.hp = load ptr, ptr %i.ho, align 8
-  %i.hq = call noundef i32 %i.hp(ptr noundef nonnull align 8 dereferenceable(8) %i.hm, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.hr = load i32, ptr %i.b, align 4, !tbaa !142
+  %i.hq = call noundef i32 %i.hp(ptr noundef nonnull align 8 dereferenceable(8) %i.hm, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.hr = load i32, ptr %i.b, align 4, !tbaa !143
   %i.hs = icmp eq i32 %i.hr, 1
   %.2.1 = select i1 %i.hs, i32 1, i32 %.2
   %i.ht = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !76
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 72
   %i.hw = load ptr, ptr %i.hv, align 8
-  %i.hx = call noundef i32 %i.hw(ptr noundef nonnull align 8 dereferenceable(8) %i.ht, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.hy = load i32, ptr %i.b, align 4, !tbaa !142
+  %i.hx = call noundef i32 %i.hw(ptr noundef nonnull align 8 dereferenceable(8) %i.ht, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.hy = load i32, ptr %i.b, align 4, !tbaa !143
   %i.hz = icmp eq i32 %i.hy, 1
   %.2.2 = select i1 %i.hz, i32 3, i32 %.2.1
   %i.ia = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !76
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 72
   %i.id = load ptr, ptr %i.ic, align 8
-  %i.ie = call noundef i32 %i.id(ptr noundef nonnull align 8 dereferenceable(8) %i.ia, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.if = load i32, ptr %i.b, align 4, !tbaa !142
+  %i.ie = call noundef i32 %i.id(ptr noundef nonnull align 8 dereferenceable(8) %i.ia, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.if = load i32, ptr %i.b, align 4, !tbaa !143
   %i.ig = icmp eq i32 %i.if, 1
   %.2.3 = select i1 %i.ig, i32 2, i32 %.2.2
   br label %.loopexit79
@@ -977,8 +977,8 @@ bb.ar:                                            ; preds = %.loopexit79
   %i.iq = load ptr, ptr %i.ip, align 8, !tbaa !76
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 72
   %i.is = load ptr, ptr %i.ir, align 8
-  %i.it = call noundef i32 %i.is(ptr noundef nonnull align 8 dereferenceable(8) %i.ip, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !153 ; 0 uses
-  %i.iu = load i32, ptr %i.b, align 4, !tbaa !142
+  %i.it = call noundef i32 %i.is(ptr noundef nonnull align 8 dereferenceable(8) %i.ip, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.b), !call_target !154 ; 0 uses
+  %i.iu = load i32, ptr %i.b, align 4, !tbaa !143
   %i.iv = load i32, ptr %i.ai, align 8, !tbaa !95
   %i.iw = sub nsw i32 %i.iu, %i.iv
   store i32 %i.iw, ptr %i.ai, align 8, !tbaa !95
@@ -1006,25 +1006,25 @@ bb.at:                                            ; preds = %bb.as
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !76
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 72
   %i.jk = load ptr, ptr %i.jj, align 8
-  %i.jl = call noundef i32 %i.jk(ptr noundef nonnull align 8 dereferenceable(8) %i.jh, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.c), !call_target !153 ; 0 uses
+  %i.jl = call noundef i32 %i.jk(ptr noundef nonnull align 8 dereferenceable(8) %i.jh, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.c), !call_target !154 ; 0 uses
   %i.jm = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.jn = load ptr, ptr %i.jm, align 8, !tbaa !76
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 72
   %i.jp = load ptr, ptr %i.jo, align 8
-  %i.jq = call noundef i32 %i.jp(ptr noundef nonnull align 8 dereferenceable(8) %i.jm, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.al), !call_target !153 ; 0 uses
+  %i.jq = call noundef i32 %i.jp(ptr noundef nonnull align 8 dereferenceable(8) %i.jm, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.al), !call_target !154 ; 0 uses
   %i.jr = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !76
   %i.jt = getelementptr inbounds nuw i8, ptr %i.js, i64 72
   %i.ju = load ptr, ptr %i.jt, align 8
-  %i.jv = call noundef i32 %i.ju(ptr noundef nonnull align 8 dereferenceable(8) %i.jr, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.am), !call_target !153 ; 0 uses
+  %i.jv = call noundef i32 %i.ju(ptr noundef nonnull align 8 dereferenceable(8) %i.jr, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.am), !call_target !154 ; 0 uses
   %i.jw = load ptr, ptr %i.j, align 8, !tbaa !74  ; 2 uses
   %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !76
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 72
   %i.jz = load ptr, ptr %i.jy, align 8
-  %i.ka = call noundef i32 %i.jz(ptr noundef nonnull align 8 dereferenceable(8) %i.jw, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.an), !call_target !153 ; 0 uses
+  %i.ka = call noundef i32 %i.jz(ptr noundef nonnull align 8 dereferenceable(8) %i.jw, ptr noundef nonnull @.str.54, ptr noundef nonnull %i.an), !call_target !154 ; 0 uses
   %i.kb = load i32, ptr %i.c, align 16
   %i.kc = sitofp reassoc nsz arcp contract afn i32 %i.kb to float ; 3 uses
-  %i.kd = load i32, ptr %i.al, align 4, !tbaa !142 ; 2 uses
+  %i.kd = load i32, ptr %i.al, align 4, !tbaa !143 ; 2 uses
   %.not73 = icmp eq i32 %i.kd, 0
   br i1 %.not73, label %bb.av, label %bb.au
 
@@ -1035,7 +1035,7 @@ bb.au:                                            ; preds = %.preheader77.prehea
   br label %bb.av
 
 bb.av:                                            ; preds = %.preheader77.preheader, %bb.au
-  %i.kg = load i32, ptr %i.am, align 8, !tbaa !142 ; 2 uses
+  %i.kg = load i32, ptr %i.am, align 8, !tbaa !143 ; 2 uses
   %.not73.1 = icmp eq i32 %i.kg, 0
   br i1 %.not73.1, label %bb.ax, label %bb.aw
 
@@ -1046,7 +1046,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %i.kj = load i32, ptr %i.an, align 4, !tbaa !142 ; 2 uses
+  %i.kj = load i32, ptr %i.an, align 4, !tbaa !143 ; 2 uses
   %.not73.2 = icmp eq i32 %i.kj, 0
   br i1 %.not73.2, label %.loopexit, label %bb.ay
 
@@ -1071,7 +1071,7 @@ bb.ay:                                            ; preds = %bb.ax
 
 bb.az:                                            ; preds = %.loopexit
   %i.kv = call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
-  store i32 %i.kv, ptr %i.ak, align 4, !tbaa !155
+  store i32 %i.kv, ptr %i.ak, align 4, !tbaa !156
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %.loopexit
@@ -1089,11 +1089,11 @@ bb.ba:                                            ; preds = %bb.az, %.loopexit
   %i.lg = load ptr, ptr %i.lf, align 8
   %i.lh = call noundef i32 %i.lg(ptr noundef nonnull align 8 dereferenceable(8) %i.ld), !call_target !90
   %.not = icmp eq i32 %i.lh, 0
-  br i1 %.not, label %bb.b, label %._crit_edge, !llvm.loop !141
+  br i1 %.not, label %bb.b, label %._crit_edge, !llvm.loop !142
 
 ._crit_edge:                                      ; preds = %bb.ba, %bb.b
   %.0.lcssa.ph = phi i32 [ %.3, %bb.ba ], [ %.088, %bb.b ]
-  %.pre = load i32, ptr %i.d, align 4, !tbaa !142 ; 2 uses
+  %.pre = load i32, ptr %i.d, align 4, !tbaa !143 ; 2 uses
   %.not76 = icmp eq i32 %.pre, 0
   br i1 %.not76, label %._crit_edge.thread, label %bb.bb
 
@@ -1111,7 +1111,7 @@ bb.bb:                                            ; preds = %._crit_edge
   %i.ls = zext i8 %i.lr to i32
   %i.lt = mul nuw i32 %i.lj, %i.ls
   %i.lu = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store i32 %i.lt, ptr %i.lu, align 8, !tbaa !156
+  store i32 %i.lt, ptr %i.lu, align 8, !tbaa !157
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %bb.bb, %._crit_edge
@@ -1287,25 +1287,26 @@ attributes #8 = { nounwind willreturn memory(read) }
 !133 = !{!73, !19, i64 1488}
 !134 = !{!73, !19, i64 1496}
 !135 = !{!73, !19, i64 1500}
-!136 = !{!73, !19, i64 1460}
-!137 = !{!73, !8, i64 768416}
-!138 = !{!73, !9, i64 153096}
-!139 = distinct !{!139, !92}
+!136 = !{!73, !19, i64 1456}
+!137 = !{!73, !19, i64 1460}
+!138 = !{!73, !8, i64 768416}
+!139 = !{!73, !9, i64 153096}
 !140 = distinct !{!140, !92}
 !141 = distinct !{!141, !92}
-!142 = !{!9, !9, i64 0}
-!143 = !{!17, !17, i64 0}
-!144 = !{!73, !22, i64 381632}
-!145 = !{!73, !9, i64 193496}
-!146 = !{!73, !22, i64 381624}
-!147 = !{!73, !9, i64 153872}
-!148 = !DIBasicType(name: "char", size: 8, encoding: DW_ATE_signed_char)
-!149 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !148)
-!150 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !149, size: 64)
-!151 = !{!78, !79, !150, !96}
-!152 = !DISubroutineType(types: !151)
-!153 = !DISubprogram(name: "scanf_one", linkageName: "_ZN26LibRaw_abstract_datastream9scanf_oneEPKcPv", scope: !0, file: !77, line: 107, type: !152, scopeLine: 107, containingType: !0, virtualIndex: 9, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!154 = !{!73, !22, i64 1344}
-!155 = !{!73, !9, i64 381860}
-!156 = !{!73, !9, i64 544}
+!142 = distinct !{!142, !92}
+!143 = !{!9, !9, i64 0}
+!144 = !{!17, !17, i64 0}
+!145 = !{!73, !22, i64 381632}
+!146 = !{!73, !9, i64 193496}
+!147 = !{!73, !22, i64 381624}
+!148 = !{!73, !9, i64 153872}
+!149 = !DIBasicType(name: "char", size: 8, encoding: DW_ATE_signed_char)
+!150 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !149)
+!151 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !150, size: 64)
+!152 = !{!78, !79, !151, !96}
+!153 = !DISubroutineType(types: !152)
+!154 = !DISubprogram(name: "scanf_one", linkageName: "_ZN26LibRaw_abstract_datastream9scanf_oneEPKcPv", scope: !0, file: !77, line: 107, type: !153, scopeLine: 107, containingType: !0, virtualIndex: 9, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!155 = !{!73, !22, i64 1344}
+!156 = !{!73, !9, i64 381860}
+!157 = !{!73, !9, i64 544}
 end_hunk_0

@@ -204,7 +204,7 @@ ctx_refill.exit:                                  ; preds = %ctx_refill.exit.loo
   %i.bg = and i32 %i.be, 8
   %.not3.i = icmp eq i32 %i.bg, 0
   %spec.store.select13 = select i1 %.not3.i, ptr %spec.store.select, ptr @dav1d_msac_decode_symbol_adapt16_avx2
-  store ptr %spec.store.select13, ptr %i.bb, align 8
+  store ptr %spec.store.select13, ptr %i.bb, align 8, !tbaa !31
   ret void
 }
 
@@ -261,4 +261,5 @@ attributes #6 = { nounwind }
 !28 = !{!"llvm.loop.unroll.runtime.disable"}
 !29 = !{!"branch_weights", i32 4, i32 12}
 !30 = !{!6, !6, i64 0}
+!31 = !{!12, !9, i64 40}
 end_hunk_0

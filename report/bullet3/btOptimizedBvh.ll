@@ -205,6 +205,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
+  %5 = phi i32 [ 2, %.lr.ph ], [ %15, %.loopexit ] ; 2 uses
+  %6 = phi i32 [ 2, %.lr.ph ], [ %16, %.loopexit ] ; 2 uses
+  %7 = phi i32 [ 0, %.lr.ph ], [ %17, %.loopexit ] ; 2 uses
+  %8 = phi ptr [ null, %.lr.ph ], [ %18, %.loopexit ] ; 2 uses
   %indvars.iv = phi i64 [ %i.p, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.078148 = phi i32 [ -1, %.lr.ph ], [ %.2, %.loopexit ] ; 5 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
@@ -237,18 +241,22 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8
   call void %i.ae(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %i.g, ptr noundef nonnull align 4 dereferenceable(4) %i.h, i32 noundef %i.w)
+  %.pre = load ptr, ptr %i.e, align 8, !tbaa !77
+  %.pre155 = load i32, ptr %i.f, align 4, !tbaa !37
+  %.pre156 = load i32, ptr %i.h, align 4, !tbaa !79
+  %.pre157 = load i32, ptr %i.c, align 4, !tbaa !79
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %.1.a = phi i32 [ %i.w, %bb.f ], [ %.078148, %bb.c ]
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !77
-  %6 = load i32, ptr %i.f, align 4, !tbaa !37
-  %7 = mul nsw i32 %6, %i.x
-  %8 = sext i32 %7 to i64
-  %9 = getelementptr inbounds i8, ptr %5, i64 %8  ; 18 uses
-  %10 = load i32, ptr %i.h, align 4, !tbaa !79    ; 2 uses
-  %11 = load i32, ptr %i.c, align 4, !tbaa !79
-  %i.af = icmp eq i32 %11, 0
+  %.1.a = phi i32 [ %.pre157, %bb.f ], [ %5, %bb.c ] ; 2 uses
+  %9 = phi i32 [ %.pre156, %bb.f ], [ %6, %bb.c ] ; 3 uses
+  %10 = phi i32 [ %.pre155, %bb.f ], [ %7, %bb.c ] ; 2 uses
+  %11 = phi ptr [ %.pre, %bb.f ], [ %8, %bb.c ]   ; 2 uses
+  %.1 = phi i32 [ %i.w, %bb.f ], [ %.078148, %bb.c ]
+  %12 = mul nsw i32 %10, %i.x
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds i8, ptr %11, i64 %13 ; 18 uses
+  %i.af = icmp eq i32 %.1.a, 0
   %i.ag = load ptr, ptr %i.a, align 8             ; 26 uses
   %i.ah = load i32, ptr %i.d, align 4             ; 14 uses
   %i.ai = load float, ptr %i.i, align 4, !tbaa !45 ; 4 uses
@@ -256,14 +264,14 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 .split.us:                                        ; preds = %bb.g
   %i.aj = load <2 x float>, ptr %i.k, align 4, !tbaa !45 ; 3 uses
-  switch i32 %10, label %bb.h [
+  switch i32 %9, label %bb.h [
     i32 2, label %.thread
     i32 3, label %.thread160
     i32 5, label %.thread162
   ]
 
 .thread162:                                       ; preds = %.split.us
-  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.ak = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !36
   %i.am = zext i8 %i.al to i32
   %i.an = mul nsw i32 %i.ah, %i.am
@@ -271,7 +279,7 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   %i.ap = getelementptr inbounds i8, ptr %i.ag, i64 %i.ao ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 4
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %i.as = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.as = getelementptr inbounds nuw i8, ptr %14, i64 1
   %i.at = load i8, ptr %i.as, align 1, !tbaa !36
   %i.au = zext i8 %i.at to i32
   %i.av = mul nsw i32 %i.ah, %i.au
@@ -279,12 +287,12 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   %i.ax = getelementptr inbounds i8, ptr %i.ag, i64 %i.aw ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  %i.ba = load i8, ptr %9, align 1, !tbaa !36
+  %i.ba = load i8, ptr %14, align 1, !tbaa !36
   %i.bb = zext i8 %i.ba to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
 
 .thread160:                                       ; preds = %.split.us
-  %i.bc = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.bc = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !55
   %i.be = zext i16 %i.bd to i32
   %i.bf = mul nsw i32 %i.ah, %i.be
@@ -292,7 +300,7 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   %i.bh = getelementptr inbounds i8, ptr %i.ag, i64 %i.bg ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 4
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
-  %i.bk = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.bk = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.bl = load i16, ptr %i.bk, align 2, !tbaa !55
   %i.bm = zext i16 %i.bl to i32
   %i.bn = mul nsw i32 %i.ah, %i.bm
@@ -300,26 +308,26 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   %i.bp = getelementptr inbounds i8, ptr %i.ag, i64 %i.bo ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  %i.bs = load i16, ptr %9, align 2, !tbaa !55
+  %i.bs = load i16, ptr %14, align 2, !tbaa !55
   %i.bt = zext i16 %i.bs to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
 
 .thread:                                          ; preds = %.split.us
-  %i.bu = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.bu = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !37
   %i.bw = mul nsw i32 %i.ah, %i.bv
   %i.bx = sext i32 %i.bw to i64
   %i.by = getelementptr inbounds i8, ptr %i.ag, i64 %i.bx ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  %i.cb = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.cb = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !37
   %i.cd = mul nsw i32 %i.ah, %i.cc
   %i.ce = sext i32 %i.cd to i64
   %i.cf = getelementptr inbounds i8, ptr %i.ag, i64 %i.ce ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 4
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  %i.ci = load i32, ptr %9, align 4, !tbaa !37
+  %i.ci = load i32, ptr %14, align 4, !tbaa !37
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
 
 bb.h:                                             ; preds = %.split.us
@@ -365,7 +373,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit:          ; preds = %bb.h, %.thread, %.t
   %i.dd = fpext float %i.ai to double             ; 3 uses
   %i.de = load <2 x float>, ptr %i.k, align 4, !tbaa !45
   %i.df = fpext <2 x float> %i.de to <2 x double> ; 3 uses
-  switch i32 %10, label %bb.i [
+  switch i32 %9, label %bb.i [
     i32 2, label %.thread170
     i32 3, label %.thread172
     i32 5, label %.thread174
@@ -447,25 +455,25 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   br label %.loopexit
 
 .thread170:                                       ; preds = %.split
-  %i.fp = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.fp = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !37
   %i.fr = mul nsw i32 %i.ah, %i.fq
   %i.fs = sext i32 %i.fr to i64
   %i.ft = getelementptr inbounds i8, ptr %i.ag, i64 %i.fs ; 3 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
-  %i.fw = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.fw = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !37
   %i.fy = mul nsw i32 %i.ah, %i.fx
   %i.fz = sext i32 %i.fy to i64
   %i.ga = getelementptr inbounds i8, ptr %i.ag, i64 %i.fz ; 3 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   %i.gc = getelementptr inbounds nuw i8, ptr %i.ga, i64 16
-  %i.gd = load i32, ptr %9, align 4, !tbaa !37
+  %i.gd = load i32, ptr %14, align 4, !tbaa !37
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150
 
 .thread172:                                       ; preds = %.split
-  %i.ge = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.ge = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.gf = load i16, ptr %i.ge, align 2, !tbaa !55
   %i.gg = zext i16 %i.gf to i32
   %i.gh = mul nsw i32 %i.ah, %i.gg
@@ -473,7 +481,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   %i.gj = getelementptr inbounds i8, ptr %i.ag, i64 %i.gi ; 3 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gj, i64 16
-  %i.gm = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.gm = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.gn = load i16, ptr %i.gm, align 2, !tbaa !55
   %i.go = zext i16 %i.gn to i32
   %i.gp = mul nsw i32 %i.ah, %i.go
@@ -481,12 +489,12 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   %i.gr = getelementptr inbounds i8, ptr %i.ag, i64 %i.gq ; 3 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gr, i64 16
-  %i.gu = load i16, ptr %9, align 2, !tbaa !55
+  %i.gu = load i16, ptr %14, align 2, !tbaa !55
   %i.gv = zext i16 %i.gu to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150
 
 .thread174:                                       ; preds = %.split
-  %i.gw = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.gw = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.gx = load i8, ptr %i.gw, align 1, !tbaa !36
   %i.gy = zext i8 %i.gx to i32
   %i.gz = mul nsw i32 %i.ah, %i.gy
@@ -494,7 +502,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   %i.hb = getelementptr inbounds i8, ptr %i.ag, i64 %i.ha ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.hb, i64 8
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hb, i64 16
-  %i.he = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.he = getelementptr inbounds nuw i8, ptr %14, i64 1
   %i.hf = load i8, ptr %i.he, align 1, !tbaa !36
   %i.hg = zext i8 %i.hf to i32
   %i.hh = mul nsw i32 %i.ah, %i.hg
@@ -502,7 +510,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   %i.hj = getelementptr inbounds i8, ptr %i.ag, i64 %i.hi ; 3 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hj, i64 16
-  %i.hm = load i8, ptr %9, align 1, !tbaa !36
+  %i.hm = load i8, ptr %14, align 1, !tbaa !36
   %i.hn = zext i8 %i.hm to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150
 
@@ -568,12 +576,12 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150:       ; preds = %bb.i, %.thread170, 
   store i16 %i.iy, ptr %i.s, align 4, !tbaa !55
   %i.iz = load i16, ptr %i.iu, align 2, !tbaa !55
   %spec.store.select = call i16 @llvm.umin.i16(i16 %i.iy, i16 %i.iz)
-  store i16 %spec.store.select, ptr %i.s, align 4
+  store i16 %spec.store.select, ptr %i.s, align 4, !tbaa !55
   %i.ja = load i16, ptr %i.iv, align 2, !tbaa !55 ; 2 uses
   store i16 %i.ja, ptr %i.iw, align 2, !tbaa !55
   %i.jb = load i16, ptr %i.ix, align 2, !tbaa !55
   %spec.store.select84 = call i16 @llvm.umax.i16(i16 %i.ja, i16 %i.jb)
-  store i16 %spec.store.select84, ptr %i.iw, align 2
+  store i16 %spec.store.select84, ptr %i.iw, align 2, !tbaa !55
   %i.jc = getelementptr inbounds nuw i8, ptr %i.im, i64 2
   %i.jd = load i16, ptr %i.jc, align 2, !tbaa !55 ; 2 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
@@ -581,7 +589,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150:       ; preds = %bb.i, %.thread170, 
   %i.jf = getelementptr inbounds nuw i8, ptr %i.iu, i64 2
   %i.jg = load i16, ptr %i.jf, align 2, !tbaa !55
   %spec.store.select.1 = call i16 @llvm.umin.i16(i16 %i.jd, i16 %i.jg)
-  store i16 %spec.store.select.1, ptr %i.je, align 2
+  store i16 %spec.store.select.1, ptr %i.je, align 2, !tbaa !55
   %i.jh = getelementptr inbounds nuw i8, ptr %i.im, i64 8
   %i.ji = load i16, ptr %i.jh, align 4, !tbaa !55 ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
@@ -589,7 +597,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150:       ; preds = %bb.i, %.thread170, 
   %i.jk = getelementptr inbounds nuw i8, ptr %i.iu, i64 8
   %i.jl = load i16, ptr %i.jk, align 2, !tbaa !55
   %spec.store.select84.1 = call i16 @llvm.umax.i16(i16 %i.ji, i16 %i.jl)
-  store i16 %spec.store.select84.1, ptr %i.jj, align 4
+  store i16 %spec.store.select84.1, ptr %i.jj, align 4, !tbaa !55
   %i.jm = getelementptr inbounds nuw i8, ptr %i.im, i64 4
   %i.jn = load i16, ptr %i.jm, align 4, !tbaa !55 ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
@@ -597,7 +605,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150:       ; preds = %bb.i, %.thread170, 
   %i.jp = getelementptr inbounds nuw i8, ptr %i.iu, i64 4
   %i.jq = load i16, ptr %i.jp, align 2, !tbaa !55
   %spec.store.select.2 = call i16 @llvm.umin.i16(i16 %i.jn, i16 %i.jq)
-  store i16 %spec.store.select.2, ptr %i.jo, align 4
+  store i16 %spec.store.select.2, ptr %i.jo, align 4, !tbaa !55
   %i.jr = getelementptr inbounds nuw i8, ptr %i.im, i64 10
   %i.js = load i16, ptr %i.jr, align 2, !tbaa !55 ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %i.s, i64 10 ; 2 uses
@@ -605,11 +613,15 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit150:       ; preds = %bb.i, %.thread170, 
   %i.ju = getelementptr inbounds nuw i8, ptr %i.iu, i64 10
   %i.jv = load i16, ptr %i.ju, align 2, !tbaa !55
   %spec.store.select84.2 = call i16 @llvm.umax.i16(i16 %i.js, i16 %i.jv)
-  store i16 %spec.store.select84.2, ptr %i.jt, align 2
+  store i16 %spec.store.select84.2, ptr %i.jt, align 2, !tbaa !55
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_Z8btSetMinIfEvRT_RKS0_.exit.i
-  %.2 = phi i32 [ %.1.a, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %.078148, %.loopexit.loopexit ] ; 3 uses
+  %15 = phi i32 [ %.1.a, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %5, %.loopexit.loopexit ]
+  %16 = phi i32 [ %9, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %6, %.loopexit.loopexit ]
+  %17 = phi i32 [ %10, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %7, %.loopexit.loopexit ]
+  %18 = phi ptr [ %11, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %8, %.loopexit.loopexit ]
+  %.2 = phi i32 [ %.1, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %.078148, %.loopexit.loopexit ] ; 3 uses
   %.not.not = icmp sgt i64 %indvars.iv.next, %i.q
   br i1 %.not.not, label %bb.b, label %._crit_edge, !llvm.loop !75
 

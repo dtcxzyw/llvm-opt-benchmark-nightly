@@ -71,39 +71,43 @@ bb.a:
   %i.i = load ptr, ptr %0, align 8, !tbaa !18
   %i.j = tail call i32 @skip_utf8(ptr noundef %i.i, i32 noundef %i.h, i32 noundef %i.d, i32 noundef 3) #3 ; 2 uses
   %i.k = icmp slt i32 %i.j, 0
+  %.pre92 = load ptr, ptr %i.e, align 8, !tbaa !16 ; 2 uses
   br i1 %i.k, label %r_mark_regions.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = load ptr, ptr %i.e, align 8, !tbaa !16
-  store i32 %i.j, ptr %1, align 4, !tbaa !17
+  store i32 %i.j, ptr %.pre92, align 4, !tbaa !17
   store i32 %i.h, ptr %i.a, align 8, !tbaa !14
   %i.l = tail call i32 @out_grouping_U(ptr noundef nonnull %0, ptr noundef nonnull @g_v, i32 noundef 97, i32 noundef 248, i32 noundef 1) #3
   %i.m = icmp slt i32 %i.l, 0
-  br i1 %i.m, label %r_mark_regions.exit, label %bb.c
+  br i1 %i.m, label %.r_mark_regions.exit_crit_edge, label %bb.c
+
+.r_mark_regions.exit_crit_edge:                   ; preds = %bb.b
+  %.pre = load ptr, ptr %i.e, align 8, !tbaa !16
+  br label %r_mark_regions.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.n = tail call i32 @in_grouping_U(ptr noundef nonnull %0, ptr noundef nonnull @g_v, i32 noundef 97, i32 noundef 248, i32 noundef 1) #3 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
+  %.pre93 = load ptr, ptr %i.e, align 8, !tbaa !16 ; 4 uses
   br i1 %i.o, label %r_mark_regions.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.p = load i32, ptr %i.a, align 8, !tbaa !14
   %i.q = add nsw i32 %i.p, %i.n                   ; 2 uses
   store i32 %i.q, ptr %i.a, align 8, !tbaa !14
-  %2 = load ptr, ptr %i.e, align 8, !tbaa !16     ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.s = load i32, ptr %2, align 4, !tbaa !17
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre93, i64 4
+  %i.s = load i32, ptr %.pre93, align 4, !tbaa !17
   %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %i.s)
-  store i32 %spec.store.select.i, ptr %i.r, align 4
+  store i32 %spec.store.select.i, ptr %i.r, align 4, !tbaa !17
   br label %r_mark_regions.exit
 
-r_mark_regions.exit:                              ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+r_mark_regions.exit:                              ; preds = %.r_mark_regions.exit_crit_edge, %bb.a, %bb.c, %bb.d
+  %1 = phi ptr [ %.pre, %.r_mark_regions.exit_crit_edge ], [ %.pre92, %bb.a ], [ %.pre93, %bb.c ], [ %.pre93, %bb.d ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 13 uses
   store i32 %i.b, ptr %i.t, align 8, !tbaa !19
   %i.u = load i32, ptr %i.c, align 4, !tbaa !15   ; 5 uses
   store i32 %i.u, ptr %i.a, align 8, !tbaa !14
-  %3 = load ptr, ptr %i.e, align 8, !tbaa !16
-  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !17   ; 3 uses
   %i.x = icmp slt i32 %i.u, %i.w
   br i1 %i.x, label %bb.m, label %bb.e

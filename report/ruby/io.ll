@@ -206,7 +206,7 @@ bb.bd:                                            ; preds = %rb_io_check_initial
   unreachable
 
 rb_io_check_closed.exit146:                       ; preds = %rb_io_check_initialized.exit.i145
-  %i.hk = load ptr, ptr %i.x, align 8, !tbaa !80
+  %i.hk = load ptr, ptr %i.x, align 8, !tbaa !80  ; 2 uses
   %i.hl = getelementptr i8, ptr %i.hk, i64 48     ; 2 uses
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !322
   %.not113 = icmp eq ptr %i.hm, null
@@ -250,17 +250,18 @@ bb.bi:                                            ; preds = %clear_readconv.exit
 clear_codeconv.exit:                              ; preds = %clear_readconv.exit.i, %bb.bi
   %i.hu = getelementptr i8, ptr %i.he, i64 176
   store i32 0, ptr %i.hu, align 8, !tbaa !55
+  %.pre190 = load ptr, ptr %i.x, align 8, !tbaa !80
   br label %.thread166
 
 bb.bj:                                            ; preds = %rb_io_check_closed.exit146
   %i.hv = getelementptr i8, ptr %i.he, i64 112    ; 2 uses
   %i.hw = load i32, ptr %i.hv, align 8, !tbaa !94
   %i.hx = and i32 %i.hw, -32513
-  store i32 %i.hx, ptr %i.hv, align 8
+  store i32 %i.hx, ptr %i.hv, align 8, !tbaa !94
   br label %.thread166
 
 .thread166:                                       ; preds = %clear_codeconv.exit, %bb.bj
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !80
+  %3 = phi ptr [ %.pre190, %clear_codeconv.exit ], [ %i.hk, %bb.bj ]
   %i.hy = getelementptr i8, ptr %3, i64 81
   store i8 0, ptr %i.hy, align 1, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
@@ -663,7 +664,7 @@ find_encoding.exit28:                             ; preds = %bb.h, %bb.g, %RSTRI
   store ptr %.sink, ptr %i.a, align 8, !tbaa !123
   %i.w = icmp eq ptr %.sink, %i.v
   %spec.store.select = select i1 %i.w, ptr null, ptr %i.v ; 2 uses
-  store ptr %spec.store.select, ptr %i.b, align 8
+  store ptr %spec.store.select, ptr %i.b, align 8, !tbaa !123
   br label %bb.k
 
 bb.i:                                             ; preds = %find_encoding.exit

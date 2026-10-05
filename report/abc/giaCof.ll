@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 312
 inline.NumDeleted: 83
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@Cof_ManPrintFanio:bb.a
 ._crit_edge.thread:                               ; preds = %bb.bk, %._crit_edge
   call void @free(ptr noundef nonnull %i.cm) #28
@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a, %bb.e
 define ptr @Gia_ManDupCofInt(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp sgt i32 %1, 0
-  %i.b = getelementptr i8, ptr %0, i64 24         ; 5 uses
+  %i.b = getelementptr i8, ptr %0, i64 24         ; 4 uses
   %.val129 = load i32, ptr %i.b, align 8, !tbaa !40 ; 3 uses
   %i.c = icmp slt i32 %1, %.val129
   %or.cond = select i1 %i.a, i1 %i.c, i1 false
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 32         ; 8 uses
   %.val132 = load ptr, ptr %i.e, align 8, !tbaa !44
   %i.f = zext nneg i32 %1 to i64
-  %i.g = getelementptr inbounds nuw [12 x i8], ptr %.val132, i64 %i.f ; 5 uses
+  %i.g = getelementptr inbounds nuw [12 x i8], ptr %.val132, i64 %i.f ; 7 uses
   %.val136 = load i64, ptr %i.g, align 4          ; 3 uses
   %i.h = and i64 %.val136, 2147483648
   %.not.i.i = icmp ne i64 %i.h, 0
@@ -272,7 +272,7 @@ Abc_UtilStrsav.exit150:                           ; preds = %Abc_UtilStrsav.exit
   %.val137 = load ptr, ptr %i.e, align 8, !tbaa !44
   %i.ab = getelementptr inbounds nuw i8, ptr %.val137, i64 8
   store i32 0, ptr %i.ab, align 4, !tbaa !46
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !33 ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 4
   %.val126161 = load i32, ptr %i.ae, align 4, !tbaa !34
@@ -298,7 +298,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.ao = icmp eq ptr %i.al, %i.g                 ; 2 uses
   %spec.store.select = select i1 %i.ao, i32 0, i32 %i.am
-  store i32 %spec.store.select, ptr %i.an, align 4
+  store i32 %spec.store.select, ptr %i.an, align 4, !tbaa !46
   %spec.select = select i1 %i.ao, i32 %i.am, i32 %.0163 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ap = load ptr, ptr %i.ac, align 8, !tbaa !33 ; 2 uses
@@ -355,7 +355,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bt = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bu = icmp eq ptr %i.aw, %i.g                 ; 2 uses
   %spec.store.select155 = select i1 %i.bu, i32 0, i32 %i.bs
-  store i32 %spec.store.select155, ptr %i.bt, align 4
+  store i32 %spec.store.select155, ptr %i.bt, align 4, !tbaa !46
   %spec.select156 = select i1 %i.bu, i32 %i.bs, i32 %.2167
   %.pre = load i32, ptr %i.b, align 8, !tbaa !40
   br label %bb.j
@@ -369,12 +369,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.bx, label %.lr.ph168, label %.critedge2, !llvm.loop !100
 
 .critedge2:                                       ; preds = %.lr.ph168, %bb.j, %.critedge
-  %i.by = phi i32 [ %i.at, %.critedge ], [ %i.bv, %bb.j ], [ %i.av, %.lr.ph168 ]
+  %i.by = phi i32 [ %i.at, %.critedge ], [ %i.bv, %bb.j ], [ %i.av, %.lr.ph168 ] ; 2 uses
   %.2.lcssa = phi i32 [ %.0.lcssa, %.critedge ], [ %.3, %bb.j ], [ %.2167, %.lr.ph168 ]
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !38 ; 2 uses
+  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !38 ; 3 uses
   %i.cb = getelementptr i8, ptr %i.ca, i64 4
-  %.val125 = load i32, ptr %i.cb, align 4, !tbaa !34 ; 4 uses
+  %.val125 = load i32, ptr %i.cb, align 4, !tbaa !34 ; 5 uses
   %i.cc = icmp sgt i32 %.val125, 0
   br i1 %i.cc, label %.lr.ph173, label %.critedge4
 
@@ -465,57 +465,89 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph173.sp
 .critedge4:                                       ; preds = %.epil.preheader, %.critedge4.loopexit.unr-lcssa, %.lr.ph173, %.critedge2
   %i.dz = load ptr, ptr %i.ac, align 8, !tbaa !33 ; 2 uses
   %i.ea = getelementptr i8, ptr %i.dz, i64 4
-  %.val124175 = load i32, ptr %i.ea, align 4, !tbaa !34
+  %.val124175 = load i32, ptr %i.ea, align 4, !tbaa !34 ; 4 uses
   %i.eb = icmp sgt i32 %.val124175, 0
   br i1 %i.eb, label %.lr.ph177, label %.critedge6
 
 .lr.ph177:                                        ; preds = %.critedge4
+  %.val140 = load ptr, ptr %i.e, align 8, !tbaa !44 ; 4 uses
+  %.not119 = icmp eq ptr %.val140, null
+  br i1 %.not119, label %.critedge6, label %bb.l
+
+bb.l:                                             ; preds = %.lr.ph177
   %2 = getelementptr i8, ptr %i.m, i64 64
-  br label %bb.l
+  %3 = getelementptr i8, ptr %i.dz, i64 8
+  %.val141.val = load ptr, ptr %3, align 8, !tbaa !36 ; 3 uses
+  %.val139 = load ptr, ptr %2, align 8, !tbaa !33
+  %4 = getelementptr i8, ptr %.val139, i64 8
+  %.val140.a = load ptr, ptr %4, align 8, !tbaa !36 ; 3 uses
+  %wide.trip.count195 = zext nneg i32 %.val124175 to i64 ; 2 uses
+  %xtraiter219 = and i64 %wide.trip.count195, 1
+  %.not119.a = icmp eq i32 %.val124175, 1
+  br i1 %.not119.a, label %.critedge6.loopexit, label %.lr.ph176.split.new
 
-bb.l:                                             ; preds = %.lr.ph177, %bb.m
-  %indvars.iv193 = phi i64 [ 0, %.lr.ph177 ], [ %indvars.iv.next194, %bb.m ] ; 3 uses
-  %3 = phi ptr [ %i.dz, %.lr.ph177 ], [ %8, %bb.m ]
-  %.val140.a = load ptr, ptr %i.e, align 8, !tbaa !44 ; 2 uses
-  %.not119.a = icmp eq ptr %.val140.a, null
-  br i1 %.not119.a, label %.critedge6.loopexit, label %bb.m
+.lr.ph176.split.new:                              ; preds = %bb.l
+  %unroll_iter222 = and i64 %wide.trip.count195, 2147483646
+  br label %bb.m
 
-bb.m:                                             ; preds = %bb.l
-  %4 = getelementptr i8, ptr %3, i64 8
-  %.val141.val = load ptr, ptr %4, align 8, !tbaa !36
-  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %.val141.val, i64 %indvars.iv193
+bb.m:                                             ; preds = %bb.m, %.lr.ph176.split.new
+  %indvars.iv192 = phi i64 [ 0, %.lr.ph176.split.new ], [ %indvars.iv.next193.1, %bb.m ] ; 4 uses
+  %niter223 = phi i64 [ 0, %.lr.ph176.split.new ], [ %niter223.next.1, %bb.m ]
+  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %.val141.val, i64 %indvars.iv192
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !47
   %i.ee = sext i32 %i.ed to i64
-  %i.ef = getelementptr inbounds [12 x i8], ptr %.val140.a, i64 %i.ee ; 2 uses
-  %.val139 = load ptr, ptr %2, align 8, !tbaa !33
-  %i.eg = getelementptr i8, ptr %.val139, i64 8
-  %.val139.val = load ptr, ptr %i.eg, align 8, !tbaa !36
-  %i.eh = getelementptr inbounds nuw [4 x i8], ptr %.val139.val, i64 %indvars.iv193
+  %i.ef = getelementptr inbounds [12 x i8], ptr %.val140, i64 %i.ee ; 2 uses
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %.val140.a, i64 %indvars.iv192
+  %6 = load i32, ptr %5, align 4, !tbaa !47
+  %7 = shl nsw i32 %6, 1
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
+  %8 = icmp eq ptr %i.ef, %i.g
+  %spec.store.select157 = select i1 %8, i32 1, i32 %7
+  store i32 %spec.store.select157, ptr %i.eg, align 4, !tbaa !46
+  %indvars.iv.next193 = or disjoint i64 %indvars.iv192, 1 ; 2 uses
+  %i.eh = getelementptr inbounds nuw [4 x i8], ptr %.val141.val, i64 %indvars.iv.next193
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !47
-  %5 = shl nsw i32 %i.ei, 1
-  %6 = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
-  %7 = icmp eq ptr %i.ef, %i.g
-  %spec.store.select157 = select i1 %7, i32 1, i32 %5
-  store i32 %spec.store.select157, ptr %6, align 4
-  %indvars.iv.next194 = add nuw nsw i64 %indvars.iv193, 1 ; 2 uses
-  %8 = load ptr, ptr %i.ac, align 8, !tbaa !33    ; 2 uses
-  %9 = getelementptr i8, ptr %8, i64 4
-  %.val124 = load i32, ptr %9, align 4, !tbaa !34
-  %10 = sext i32 %.val124 to i64
-  %11 = icmp slt i64 %indvars.iv.next194, %10
-  br i1 %11, label %bb.l, label %.critedge6.loopexit, !llvm.loop !102
+  %9 = sext i32 %i.ei to i64
+  %10 = getelementptr inbounds [12 x i8], ptr %.val140, i64 %9 ; 2 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %.val140.a, i64 %indvars.iv.next193
+  %12 = load i32, ptr %11, align 4, !tbaa !47
+  %13 = shl nsw i32 %12, 1
+  %14 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %15 = icmp eq ptr %10, %i.g
+  %spec.store.select157.1 = select i1 %15, i32 1, i32 %13
+  store i32 %spec.store.select157.1, ptr %14, align 4, !tbaa !46
+  %indvars.iv.next193.1 = add nuw nsw i64 %indvars.iv192, 2 ; 2 uses
+  %niter223.next.1 = add i64 %niter223, 2         ; 2 uses
+  %niter223.ncmp.1 = icmp eq i64 %niter223.next.1, %unroll_iter222
+  br i1 %niter223.ncmp.1, label %.critedge6.loopexit.unr-lcssa, label %bb.m, !llvm.loop !102
 
-.critedge6.loopexit:                              ; preds = %bb.m, %bb.l
-  %.pre203 = load i32, ptr %i.b, align 8, !tbaa !40
+.critedge6.loopexit.unr-lcssa:                    ; preds = %bb.m
+  %lcmp.mod220.not = icmp eq i64 %xtraiter219, 0
+  br i1 %lcmp.mod220.not, label %.critedge6, label %.critedge6.loopexit
+
+.critedge6.loopexit:                              ; preds = %.critedge6.loopexit.unr-lcssa, %bb.l
+  %indvars.iv192.epil.init = phi i64 [ 0, %bb.l ], [ %indvars.iv.next193.1, %.critedge6.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod221 = trunc i32 %.val124175 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod221)
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %.val141.val, i64 %indvars.iv192.epil.init
+  %17 = load i32, ptr %16, align 4, !tbaa !47
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr inbounds [12 x i8], ptr %.val140, i64 %18 ; 2 uses
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %.val140.a, i64 %indvars.iv192.epil.init
+  %.pre203 = load i32, ptr %20, align 4, !tbaa !47
+  %21 = shl nsw i32 %.pre203, 1
+  %22 = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %23 = icmp eq ptr %19, %i.g
+  %spec.store.select157.epil = select i1 %23, i32 1, i32 %21
+  store i32 %spec.store.select157.epil, ptr %22, align 4, !tbaa !46
   br label %.critedge6
 
-.critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge4
-  %12 = phi i32 [ %.pre203, %.critedge6.loopexit ], [ %i.by, %.critedge4 ] ; 2 uses
-  %i.ej = icmp sgt i32 %12, 0
-  br i1 %i.ej, label %.lr.ph180, label %.critedge8.a
+.critedge6:                                       ; preds = %.critedge6.loopexit, %.critedge6.loopexit.unr-lcssa, %.lr.ph177, %.critedge4
+  %i.ej = icmp sgt i32 %i.by, 0
+  br i1 %i.ej, label %.lr.ph180, label %.critedge8
 
 .lr.ph180:                                        ; preds = %.critedge6, %bb.p
-  %i.ek = phi i32 [ %i.fk, %bb.p ], [ %12, %.critedge6 ]
+  %i.ek = phi i32 [ %i.fk, %bb.p ], [ %i.by, %.critedge6 ]
   %indvars.iv196 = phi i64 [ %indvars.iv.next197, %bb.p ], [ 0, %.critedge6 ] ; 2 uses
   %.val130 = load ptr, ptr %i.e, align 8, !tbaa !44 ; 2 uses
   %i.el = getelementptr inbounds nuw [12 x i8], ptr %.val130, i64 %indvars.iv196 ; 5 uses
@@ -554,7 +586,7 @@ bb.o:                                             ; preds = %bb.n
   %i.fi = getelementptr inbounds nuw i8, ptr %i.el, i64 8
   %i.fj = icmp eq ptr %i.el, %i.g
   %spec.store.select158 = select i1 %i.fj, i32 1, i32 %i.fh
-  store i32 %spec.store.select158, ptr %i.fi, align 4
+  store i32 %spec.store.select158, ptr %i.fi, align 4, !tbaa !46
   %.pre204 = load i32, ptr %i.b, align 8, !tbaa !40
   br label %bb.p
 
@@ -565,16 +597,21 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.fm = icmp slt i64 %indvars.iv.next197, %i.fl
   br i1 %i.fm, label %.lr.ph180, label %.critedge8.a, !llvm.loop !103
 
-.critedge8.a:                                     ; preds = %.lr.ph180, %bb.p, %.critedge6
+.critedge8.a:                                     ; preds = %bb.p, %.lr.ph180
   %i.fn = load ptr, ptr %i.bz, align 8, !tbaa !38 ; 2 uses
   %i.fo = getelementptr i8, ptr %i.fn, i64 4
   %.val182 = load i32, ptr %i.fo, align 4, !tbaa !34
-  %13 = icmp sgt i32 %.val182, 0
-  br i1 %13, label %.lr.ph184, label %.critedge10
+  br label %.critedge8
 
-.lr.ph184:                                        ; preds = %.critedge8.a, %bb.s
-  %indvars.iv199 = phi i64 [ %indvars.iv.next200, %bb.s ], [ 0, %.critedge8.a ] ; 2 uses
-  %i.fp = phi ptr [ %i.gk, %bb.s ], [ %i.fn, %.critedge8.a ]
+.critedge8:                                       ; preds = %.critedge8.a, %.critedge6
+  %.val181 = phi i32 [ %.val182, %.critedge8.a ], [ %.val125, %.critedge6 ]
+  %24 = phi ptr [ %i.fn, %.critedge8.a ], [ %i.ca, %.critedge6 ]
+  %25 = icmp sgt i32 %.val181, 0
+  br i1 %25, label %.lr.ph184, label %.critedge10
+
+.lr.ph184:                                        ; preds = %.critedge8, %bb.s
+  %indvars.iv199 = phi i64 [ %indvars.iv.next200, %bb.s ], [ 0, %.critedge8 ] ; 2 uses
+  %i.fp = phi ptr [ %i.gk, %bb.s ], [ %24, %.critedge8 ]
   %.val144 = load ptr, ptr %i.e, align 8, !tbaa !44 ; 2 uses
   %.not121 = icmp eq ptr %.val144, null
   br i1 %.not121, label %.critedge10, label %bb.q
@@ -617,7 +654,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   %i.gn = icmp slt i64 %indvars.iv.next200, %i.gm
   br i1 %i.gn, label %.lr.ph184, label %.critedge10, !llvm.loop !104
 
-.critedge10:                                      ; preds = %.lr.ph184, %bb.s, %.critedge8.a
+.critedge10:                                      ; preds = %.lr.ph184, %bb.s, %.critedge8
   tail call void @Gia_ManHashStop(ptr noundef nonnull %i.m) #28
   %i.go = getelementptr i8, ptr %0, i64 16
   %.val148 = load i32, ptr %i.go, align 8, !tbaa !68

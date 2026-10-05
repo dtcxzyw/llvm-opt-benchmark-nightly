@@ -200,7 +200,7 @@ bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bo, i64 120
   %.not192 = icmp eq ptr %.0160, null
   %spec.store.select194 = select i1 %.not192, ptr %.1, ptr %.0160
-  store ptr %spec.store.select194, ptr %i.cg, align 8
+  store ptr %spec.store.select194, ptr %i.cg, align 8, !tbaa !26
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.f
@@ -284,7 +284,7 @@ attributes #6 = { nounwind allocsize(0) }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = distinct !{!8, !26}
+!8 = distinct !{!8, !27}
 !9 = !{!"double", !4, i64 0}
 !10 = !{!9, !9, i64 0}
 !11 = !{!"long", !4, i64 0}
@@ -302,5 +302,6 @@ attributes #6 = { nounwind allocsize(0) }
 !23 = !{!15, !13, i64 8}
 !24 = !{!15, !13, i64 16}
 !25 = !{!15, !5, i64 128}
-!26 = !{!"llvm.loop.mustprogress"}
+!26 = !{!15, !13, i64 120}
+!27 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

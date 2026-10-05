@@ -161,7 +161,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bu, i64 128
   store i32 3, ptr %i.ci, align 8, !tbaa !25
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bu, i64 120
-  store ptr %i.bp, ptr %i.cj, align 8
+  store ptr %i.bp, ptr %i.cj, align 8, !tbaa !26
   %indvars.iv.next165 = or disjoint i64 %indvars.iv164, 1 ; 4 uses
   %i.ck = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next165 ; 10 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 48
@@ -188,7 +188,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ck, i64 128
   store i32 3, ptr %i.cy, align 8, !tbaa !25
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ck, i64 120
-  store ptr %i.bp, ptr %i.cz, align 8
+  store ptr %i.bp, ptr %i.cz, align 8, !tbaa !26
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
   %niter188.next.1 = add i64 %niter188, 2         ; 2 uses
   %niter188.ncmp.1 = icmp eq i64 %niter188.next.1, %unroll_iter187
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.split
   %i.du = getelementptr inbounds nuw i8, ptr %i.dg, i64 128
   store i32 196611, ptr %i.du, align 8, !tbaa !25
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dg, i64 120
-  store ptr %i.de, ptr %i.dv, align 8
+  store ptr %i.de, ptr %i.dv, align 8, !tbaa !26
   %indvars.iv.next160 = or disjoint i64 %indvars.iv159, 1 ; 4 uses
   %i.dw = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next160 ; 10 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.split
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dw, i64 128
   store i32 196611, ptr %i.ek, align 8, !tbaa !25
   %i.el = getelementptr inbounds nuw i8, ptr %i.dw, i64 120
-  store ptr %i.de, ptr %i.el, align 8
+  store ptr %i.de, ptr %i.el, align 8, !tbaa !26
   %indvars.iv.next160.1 = add nuw nsw i64 %indvars.iv159, 2 ; 2 uses
   %niter182.next.1 = add i64 %niter182, 2         ; 2 uses
   %niter182.ncmp.1 = icmp eq i64 %niter182.next.1, %unroll_iter181
@@ -316,7 +316,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.split
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ep, i64 128
   store i32 65539, ptr %i.fd, align 8, !tbaa !25
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ep, i64 120
-  store ptr %i.en, ptr %i.fe, align 8
+  store ptr %i.en, ptr %i.fe, align 8, !tbaa !26
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 4 uses
   %i.ff = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next ; 10 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 48
@@ -343,7 +343,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.split
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ff, i64 128
   store i32 65539, ptr %i.ft, align 8, !tbaa !25
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ff, i64 120
-  store ptr %i.en, ptr %i.fu, align 8
+  store ptr %i.en, ptr %i.fu, align 8, !tbaa !26
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -388,7 +388,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fw, i64 128
   store i32 3, ptr %i.gk, align 8, !tbaa !25
   %i.gl = getelementptr inbounds nuw i8, ptr %i.fw, i64 120
-  store ptr %i.bp, ptr %i.gl, align 8
+  store ptr %i.bp, ptr %i.gl, align 8, !tbaa !26
   br label %.loopexit
 
 .loopexit.loopexit174.unr-lcssa:                  ; preds = %bb.c
@@ -424,7 +424,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gm, i64 128
   store i32 196611, ptr %i.ha, align 8, !tbaa !25
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gm, i64 120
-  store ptr %i.de, ptr %i.hb, align 8
+  store ptr %i.de, ptr %i.hb, align 8, !tbaa !26
   br label %.loopexit
 
 .loopexit.loopexit175.unr-lcssa:                  ; preds = %bb.e
@@ -460,7 +460,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hc, i64 128
   store i32 65539, ptr %i.hq, align 8, !tbaa !25
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hc, i64 120
-  store ptr %i.en, ptr %i.hr, align 8
+  store ptr %i.en, ptr %i.hr, align 8, !tbaa !26
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit175.unr-lcssa, %.epil.preheader177, %.loopexit.loopexit174.unr-lcssa, %.epil.preheader183, %.loopexit.loopexit.unr-lcssa, %.lr.ph.split
@@ -544,7 +544,7 @@ attributes #7 = { nounwind allocsize(0) }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = distinct !{!8, !26}
+!8 = distinct !{!8, !27}
 !9 = !{!4, !4, i64 0}
 !10 = !{!5, !5, i64 0}
 !11 = !{!"double", !4, i64 0}
@@ -562,5 +562,6 @@ attributes #7 = { nounwind allocsize(0) }
 !23 = !{!17, !13, i64 8}
 !24 = !{!17, !13, i64 16}
 !25 = !{!17, !5, i64 128}
-!26 = !{!"llvm.loop.mustprogress"}
+!26 = !{!17, !13, i64 120}
+!27 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

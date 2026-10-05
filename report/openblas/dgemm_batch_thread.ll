@@ -142,7 +142,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bo = and i32 %i.bk, 196608
   %.not.epil = icmp eq i32 %i.bo, 0
   %spec.store.select.epil = select i1 %.not.epil, ptr %i.bn, ptr @inner_small_matrix_thread
-  store ptr %spec.store.select.epil, ptr %i.bd, align 8
+  store ptr %spec.store.select.epil, ptr %i.bd, align 8, !tbaa !37
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.unr-lcssa, %.preheader87.epil.preheader
@@ -171,7 +171,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cb = and i32 %i.bx, 196608
   %.not = icmp eq i32 %i.cb, 0
   %spec.store.select = select i1 %.not, ptr %i.ca, ptr @inner_small_matrix_thread
-  store ptr %spec.store.select, ptr %i.br, align 8
+  store ptr %spec.store.select, ptr %i.br, align 8, !tbaa !37
   %i.cc = getelementptr inbounds nuw [136 x i8], ptr %0, i64 %indvars.iv.next ; 3 uses
   %i.cd = getelementptr inbounds nuw [168 x i8], ptr %i.az, i64 %indvars.iv.next ; 5 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 24
@@ -191,7 +191,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cn = and i32 %i.cj, 196608
   %.not.1 = icmp eq i32 %i.cn, 0
   %spec.store.select.1 = select i1 %.not.1, ptr %i.cm, ptr @inner_small_matrix_thread
-  store ptr %spec.store.select.1, ptr %i.cd, align 8
+  store ptr %spec.store.select.1, ptr %i.cd, align 8, !tbaa !37
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.unr-lcssa, label %.preheader87, !llvm.loop !27
@@ -202,9 +202,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   %i.cp = tail call i64 @llvm.smin.i64(i64 %i.co, i64 %i.bp) ; 2 uses
   %i.cq = getelementptr inbounds [168 x i8], ptr %i.az, i64 %indvars.iv92 ; 3 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 48
-  store ptr %i.b, ptr %i.cr, align 8, !tbaa !37
+  store ptr %i.b, ptr %i.cr, align 8, !tbaa !38
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cq, i64 56
-  store ptr %i.e, ptr %i.cs, align 8, !tbaa !38
+  store ptr %i.e, ptr %i.cs, align 8, !tbaa !39
   %sext101 = shl i64 %i.cp, 32
   %i.ct = ashr exact i64 %sext101, 32
   %i.cu = getelementptr [168 x i8], ptr %i.az, i64 %indvars.iv92
@@ -379,6 +379,7 @@ attributes #8 = { nounwind allocsize(0) }
 !34 = !{!33, !8, i64 24}
 !35 = !{!33, !32, i64 64}
 !36 = !{!33, !5, i64 160}
-!37 = !{!33, !8, i64 48}
-!38 = !{!33, !8, i64 56}
+!37 = !{!33, !8, i64 0}
+!38 = !{!33, !8, i64 48}
+!39 = !{!33, !8, i64 56}
 end_hunk_0
