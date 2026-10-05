@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %_RINvMNtCs3oUPovFnL
 
 .thread:                                          ; preds = %bb.ar
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !19658
-  br label %_RNvNtCs5cbCQMMIObr_10typst_eval5rules24check_show_par_set_block.exit
+  br label %bb.bs
 
 bb.as:                                            ; preds = %.body.i, %bb.ao, %bb.ak
   %i.el = landingpad { ptr, i32 }
@@ -437,7 +437,7 @@ bb.br:                                            ; preds = %bb.cg, %bb.ar
 _RNvNtCs5cbCQMMIObr_10typst_eval5rules20check_show_page_rule.exit: ; preds = %bb.ai
   br i1 %i.dm, label %bb.bs, label %_RNvNtCs5cbCQMMIObr_10typst_eval5rules24check_show_par_set_block.exit
 
-bb.bs:                                            ; preds = %_RNvNtCs5cbCQMMIObr_10typst_eval5rules20check_show_page_rule.exit
+bb.bs:                                            ; preds = %.thread, %_RNvNtCs5cbCQMMIObr_10typst_eval5rules20check_show_page_rule.exit
   %i.gj = icmp eq ptr %i.do, @_RNvNvXs0_NvNtNtCsdaEETE4DqmE_13typst_library5model3par1__NtB9_7ParElemNtNtNtNtBd_11foundations7content7element13NativeElement4ELEM6VTABLE
   %i.gk = icmp eq i64 %i.df, 2
   %or.cond.i = and i1 %i.gj, %i.gk
@@ -726,7 +726,7 @@ bb.ch:                                            ; preds = %bb.cb, %.body.i151,
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #43, !noalias !19676
   unreachable
 
-_RNvNtCs5cbCQMMIObr_10typst_eval5rules24check_show_par_set_block.exit: ; preds = %.lr.ph.i.i.i75.i.preheader, %.thread, %.noexc159, %bb.bs, %_RNvNtCs5cbCQMMIObr_10typst_eval5rules20check_show_page_rule.exit
+_RNvNtCs5cbCQMMIObr_10typst_eval5rules24check_show_par_set_block.exit: ; preds = %.lr.ph.i.i.i75.i.preheader, %.noexc159, %bb.bs, %_RNvNtCs5cbCQMMIObr_10typst_eval5rules20check_show_page_rule.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %i.y, i64 112, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdaEETE4DqmE_13typst_library11foundations8selector8SelectorEECs5cbCQMMIObr_10typst_eval.exit

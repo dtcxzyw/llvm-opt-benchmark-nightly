@@ -202,9 +202,9 @@ _config_dict_get.exit.thread.i:                   ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
   %i.s = icmp eq ptr %i.q, @_Py_TrueStruct        ; 2 uses
-  %3 = icmp ne ptr %i.q, @_Py_FalseStruct
-  %or.cond.i = xor i1 %i.s, %3
-  br i1 %or.cond.i, label %bb.f, label %bb.i
+  %3 = icmp eq ptr %i.q, @_Py_FalseStruct
+  %or.cond.not.i = or i1 %3, %i.s
+  br i1 %or.cond.not.i, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.t = load i32, ptr %i.q, align 8, !tbaa !13   ; 2 uses
@@ -294,9 +294,9 @@ _config_dict_get.exit.thread.i88:                 ; preds = %bb.p, %bb.o
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   %i.ap = icmp eq ptr %i.an, @_Py_TrueStruct      ; 2 uses
-  %4 = icmp ne ptr %i.an, @_Py_FalseStruct
-  %or.cond.i82 = xor i1 %i.ap, %4
-  br i1 %or.cond.i82, label %bb.r, label %bb.u
+  %4 = icmp eq ptr %i.an, @_Py_FalseStruct
+  %or.cond.not.i82 = or i1 %4, %i.ap
+  br i1 %or.cond.not.i82, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.aq = load i32, ptr %i.an, align 8, !tbaa !13 ; 2 uses
@@ -387,9 +387,9 @@ _config_dict_get.exit.thread.i99:                 ; preds = %bb.ab, %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.bn = icmp eq ptr %i.bl, @_Py_TrueStruct      ; 2 uses
-  %5 = icmp ne ptr %i.bl, @_Py_FalseStruct
-  %or.cond.i93 = xor i1 %i.bn, %5
-  br i1 %or.cond.i93, label %bb.ad, label %bb.ag
+  %5 = icmp eq ptr %i.bl, @_Py_FalseStruct
+  %or.cond.not.i93 = or i1 %5, %i.bn
+  br i1 %or.cond.not.i93, label %bb.ag, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bo = load i32, ptr %i.bl, align 8, !tbaa !13 ; 2 uses
@@ -464,9 +464,9 @@ _config_dict_get.exit.thread.i107:                ; preds = %bb.al, %bb.ak
 bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.ce = icmp eq ptr %i.cc, @_Py_TrueStruct      ; 2 uses
-  %6 = icmp ne ptr %i.cc, @_Py_FalseStruct
-  %or.cond.i101 = xor i1 %i.ce, %6
-  br i1 %or.cond.i101, label %bb.an, label %bb.aq
+  %6 = icmp eq ptr %i.cc, @_Py_FalseStruct
+  %or.cond.not.i101 = or i1 %6, %i.ce
+  br i1 %or.cond.not.i101, label %bb.aq, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.cf = load i32, ptr %i.cc, align 8, !tbaa !13 ; 2 uses
@@ -743,9 +743,9 @@ _config_dict_get.exit.thread:                     ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.f = icmp eq ptr %i.d, @_Py_TrueStruct        ; 2 uses
-  %3 = icmp ne ptr %i.d, @_Py_FalseStruct
-  %or.cond = xor i1 %i.f, %3
-  br i1 %or.cond, label %bb.d, label %bb.g
+  %3 = icmp eq ptr %i.d, @_Py_FalseStruct
+  %or.cond.not = or i1 %3, %i.f
+  br i1 %or.cond.not, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i32, ptr %i.d, align 8, !tbaa !13   ; 2 uses

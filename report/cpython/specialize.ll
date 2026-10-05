@@ -204,13 +204,13 @@ _PyLong_CheckExactAndCompact.exit:                ; preds = %bb.j
   %i.t = getelementptr i8, ptr %i.c, i64 16
   %.val2.i = load i64, ptr %i.t, align 8, !tbaa !154
   %i.u = icmp ult i64 %.val2.i, 16
-  br i1 %i.u, label %_PyLong_CheckExactAndCompact.exit132, label %.thread
+  br i1 %i.u, label %_PyLong_CheckExactAndCompact.exit132, label %bb.l
 
 _PyLong_CheckExactAndCompact.exit132:             ; preds = %_PyLong_CheckExactAndCompact.exit
   %i.v = getelementptr i8, ptr %i.e, i64 16
   %.val2.i131 = load i64, ptr %i.v, align 8, !tbaa !154
   %i.w = icmp ugt i64 %.val2.i131, 15
-  br i1 %i.w, label %.thread, label %bb.k
+  br i1 %i.w, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %_PyLong_CheckExactAndCompact.exit132
   store i8 -126, ptr %2, align 2, !tbaa !29
@@ -218,7 +218,7 @@ bb.k:                                             ; preds = %_PyLong_CheckExactA
   store i16 416, ptr %i.x, align 2, !tbaa !41
   br label %bb.bw
 
-bb.l:                                             ; preds = %bb.j
+bb.l:                                             ; preds = %bb.j, %_PyLong_CheckExactAndCompact.exit132, %_PyLong_CheckExactAndCompact.exit
   %.not188 = icmp eq ptr %.val109, @PyFloat_Type
   br i1 %.not188, label %bb.m, label %.thread
 
@@ -244,13 +244,13 @@ _PyLong_CheckExactAndCompact.exit136:             ; preds = %bb.o
   %i.ab = getelementptr i8, ptr %i.c, i64 16
   %.val2.i135 = load i64, ptr %i.ab, align 8, !tbaa !154
   %i.ac = icmp ult i64 %.val2.i135, 16
-  br i1 %i.ac, label %_PyLong_CheckExactAndCompact.exit140, label %.thread
+  br i1 %i.ac, label %_PyLong_CheckExactAndCompact.exit140, label %bb.q
 
 _PyLong_CheckExactAndCompact.exit140:             ; preds = %_PyLong_CheckExactAndCompact.exit136
   %i.ad = getelementptr i8, ptr %i.e, i64 16
   %.val2.i139 = load i64, ptr %i.ad, align 8, !tbaa !154
   %i.ae = icmp ugt i64 %.val2.i139, 15
-  br i1 %i.ae, label %.thread, label %bb.p
+  br i1 %i.ae, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %_PyLong_CheckExactAndCompact.exit140
   store i8 -122, ptr %2, align 2, !tbaa !29
@@ -258,7 +258,7 @@ bb.p:                                             ; preds = %_PyLong_CheckExactA
   store i16 416, ptr %i.af, align 2, !tbaa !41
   br label %bb.bw
 
-bb.q:                                             ; preds = %bb.o
+bb.q:                                             ; preds = %bb.o, %_PyLong_CheckExactAndCompact.exit140, %_PyLong_CheckExactAndCompact.exit136
   %.not185 = icmp eq ptr %.val108, @PyFloat_Type
   br i1 %.not185, label %bb.r, label %.thread
 
@@ -284,13 +284,13 @@ _PyLong_CheckExactAndCompact.exit144:             ; preds = %bb.t
   %i.aj = getelementptr i8, ptr %i.c, i64 16
   %.val2.i143 = load i64, ptr %i.aj, align 8, !tbaa !154
   %i.ak = icmp ult i64 %.val2.i143, 16
-  br i1 %i.ak, label %_PyLong_CheckExactAndCompact.exit148, label %.thread
+  br i1 %i.ak, label %_PyLong_CheckExactAndCompact.exit148, label %bb.v
 
 _PyLong_CheckExactAndCompact.exit148:             ; preds = %_PyLong_CheckExactAndCompact.exit144
   %i.al = getelementptr i8, ptr %i.e, i64 16
   %.val2.i147 = load i64, ptr %i.al, align 8, !tbaa !154
   %i.am = icmp ugt i64 %.val2.i147, 15
-  br i1 %i.am, label %.thread, label %bb.u
+  br i1 %i.am, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %_PyLong_CheckExactAndCompact.exit148
   store i8 -113, ptr %2, align 2, !tbaa !29
@@ -298,7 +298,7 @@ bb.u:                                             ; preds = %_PyLong_CheckExactA
   store i16 416, ptr %i.an, align 2, !tbaa !41
   br label %bb.bw
 
-bb.v:                                             ; preds = %bb.t
+bb.v:                                             ; preds = %bb.t, %_PyLong_CheckExactAndCompact.exit148, %_PyLong_CheckExactAndCompact.exit144
   %.not183 = icmp eq ptr %.val107, @PyFloat_Type
   br i1 %.not183, label %bb.w, label %.thread
 
@@ -475,7 +475,7 @@ Py_DECREF.exit:                                   ; preds = %.critedge, %bb.at, 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %.thread
 
-.thread:                                          ; preds = %_PyLong_CheckExactAndCompact.exit144, %_PyLong_CheckExactAndCompact.exit148, %_PyLong_CheckExactAndCompact.exit136, %_PyLong_CheckExactAndCompact.exit140, %_PyLong_CheckExactAndCompact.exit, %_PyLong_CheckExactAndCompact.exit132, %.critedge105, %bb.v, %bb.s, %bb.q, %bb.n, %bb.l, %bb.d, %bb.c
+.thread:                                          ; preds = %.critedge105, %bb.v, %bb.s, %bb.q, %bb.n, %bb.l, %bb.d, %bb.c
   %i.cd = load i32, ptr @binaryop_extend_descrs, align 16, !tbaa !192
   %i.ce = icmp eq i32 %i.cd, %3
   br i1 %i.ce, label %bb.av, label %bb.aw

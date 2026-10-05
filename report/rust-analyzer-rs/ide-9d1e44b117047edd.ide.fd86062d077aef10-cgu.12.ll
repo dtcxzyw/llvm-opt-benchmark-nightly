@@ -204,7 +204,7 @@ bb.ec:                                            ; preds = %bb.gl, %bb.gi, %bb.
           cleanup
   br label %bb.eb
 
-bb.ed:                                            ; preds = %bb.ea
+bb.ed:                                            ; preds = %bb.ea, %bb.ef
   %i.tb = icmp eq ptr %i.sy, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols8try_into10SYMBOL_STR
   br i1 %i.tb, label %bb.ei, label %bb.eh
 
@@ -218,13 +218,13 @@ bb.ef:                                            ; preds = %bb.ee
   %i.tf = icmp eq i32 %i.te, %i.sw
   %i.tg = icmp eq i32 %i.td, %i.sv
   %or.cond88.i = select i1 %i.tg, i1 %i.tf, i1 false
-  br i1 %or.cond88.i, label %bb.eg, label %.thread49.i
+  br i1 %or.cond88.i, label %bb.eg, label %bb.ed
 
 bb.eg:                                            ; preds = %bb.ef
   %i.th = invoke { i32, i32 } @_RNvMNtCs6oosyzwIepl_6ide_db11famous_defsNtB2_10FamousDefs17core_convert_From(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.df)
           to label %bb.ft unwind label %bb.ec, !noalias !2432 ; 2 uses
 
-bb.eh:                                            ; preds = %bb.ed
+bb.eh:                                            ; preds = %bb.ed, %bb.ej
   %i.ti = icmp eq ptr %i.sy, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols9to_string10SYMBOL_STR
   br i1 %i.ti, label %bb.el, label %.thread49.i
 
@@ -238,7 +238,7 @@ bb.ej:                                            ; preds = %bb.ei
   %i.tm = icmp eq i32 %i.tl, %i.sw
   %i.tn = icmp eq i32 %i.tk, %i.sv
   %or.cond89.i = select i1 %i.tn, i1 %i.tm, i1 false
-  br i1 %or.cond89.i, label %bb.ek, label %.thread49.i
+  br i1 %or.cond89.i, label %bb.ek, label %bb.eh
 
 bb.ek:                                            ; preds = %bb.ej
   %i.to = invoke { i32, i32 } @_RNvMNtCs6oosyzwIepl_6ide_db11famous_defsNtB2_10FamousDefs20core_convert_TryFrom(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.df)
@@ -550,7 +550,7 @@ bb.ge:                                            ; preds = %bb.gd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq)
   br label %bb.fs
 
-.thread49.i:                                      ; preds = %bb.eh, %bb.ej, %bb.ef, %bb.gj, %bb.gk, %bb.ft, %bb.fc, %bb.eo, %bb.em, %bb.gc, %bb.fx, %bb.fl, %bb.fg, %bb.ex, %bb.es
+.thread49.i:                                      ; preds = %bb.eh, %bb.gj, %bb.gk, %bb.ft, %bb.fc, %bb.eo, %bb.em, %bb.gc, %bb.fx, %bb.fl, %bb.fg, %bb.ex, %bb.es
   %i.uz = ptrtoint ptr %i.sy to i64
   %i.va = and i64 %i.uz, 1
   %.not.i.i.i.i.i = icmp eq i64 %i.va, 0

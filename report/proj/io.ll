@@ -206,7 +206,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.kf = load i64, ptr %i.by, align 8, !tbaa !164 ; 3 uses
   %i.kg = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1XB5cxx11E, i64 8), align 8, !tbaa !164
   %i.kh = icmp eq i64 %i.kf, %i.kg
-  br i1 %i.kh, label %bb.cb, label %.critedge
+  br i1 %i.kh, label %bb.cb, label %bb.cd
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ki = icmp eq i64 %i.kf, 0
@@ -217,7 +217,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit2
   %i.kk = load ptr, ptr %11, align 8, !tbaa !163
   %bcmp.i252 = call i32 @bcmp(ptr %i.kk, ptr %i.kj, i64 %i.kf)
   %i.kl = icmp eq i32 %bcmp.i252, 0
-  br i1 %i.kl, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, label %.critedge
+  br i1 %i.kl, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, label %bb.cd
 
 bb.cc:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit275.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit269.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit265.thread
   %i.km = landingpad { ptr, i32 }
@@ -226,7 +226,7 @@ bb.cc:                                            ; preds = %_ZSteqIcSt11char_tr
   %i.ko = extractvalue { ptr, i32 } %i.km, 1
   br label %bb.gn
 
-bb.cd:                                            ; preds = %bb.bz
+bb.cd:                                            ; preds = %bb.ca, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit253, %bb.bz
   %i.kp = icmp eq ptr %i.kb, @_ZN5osgeo4proj2cs13AxisDirection12GEOCENTRIC_YE
   br i1 %i.kp, label %bb.ce, label %bb.cg
 
@@ -234,7 +234,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.kq = load i64, ptr %i.by, align 8, !tbaa !164 ; 3 uses
   %i.kr = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5osgeo4proj2cs16AxisAbbreviation1YB5cxx11E, i64 8), align 8, !tbaa !164
   %i.ks = icmp eq i64 %i.kq, %i.kr
-  br i1 %i.ks, label %bb.cf, label %.critedge
+  br i1 %i.ks, label %bb.cf, label %bb.cg
 
 bb.cf:                                            ; preds = %bb.ce
   %i.kt = icmp eq i64 %i.kq, 0
@@ -245,9 +245,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit2
   %i.kv = load ptr, ptr %11, align 8, !tbaa !163
   %bcmp.i256 = call i32 @bcmp(ptr %i.kv, ptr %i.ku, i64 %i.kq)
   %i.kw = icmp eq i32 %bcmp.i256, 0
-  br i1 %i.kw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, label %.critedge
+  br i1 %i.kw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, label %bb.cg
 
-bb.cg:                                            ; preds = %bb.cd
+bb.cg:                                            ; preds = %bb.ce, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit257, %bb.cd
   %i.kx = icmp eq ptr %i.kb, @_ZN5osgeo4proj2cs13AxisDirection12GEOCENTRIC_ZE
   br i1 %i.kx, label %bb.ch, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit255
 
@@ -321,7 +321,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit2
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(32) @_ZN5osgeo4proj2cs16AxisAbbreviation1YB5cxx11E)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit267.thread unwind label %bb.cc
 
-.critedge:                                        ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit265.thread395.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit257, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit253, %bb.ca, %bb.ce, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit265.thread395, %bb.ch, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit255, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit269
+.critedge:                                        ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261.thread.invoke, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit265.thread395.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit265.thread395, %bb.ch, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit261, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit255, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit269
   br i1 %5, label %bb.cm, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit273.thread397
 
 bb.cm:                                            ; preds = %.critedge
