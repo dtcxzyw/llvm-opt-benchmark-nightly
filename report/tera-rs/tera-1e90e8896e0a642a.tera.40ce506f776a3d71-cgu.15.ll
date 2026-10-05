@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.i
   %.sroa.026.0.copyload = load i64, ptr %i.d, align 8, !dbg !14575, !noalias !14518 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.o, i64 16, i1 false), !dbg !14575, !noalias !1418
     #dbg_value(i64 %.sroa.026.0.copyload, !14477, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14521)
-    #dbg_value(i64 poison, !14477, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14521)
+    #dbg_value(i64 %i.y, !14477, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14521)
     #dbg_value(i64 poison, !14477, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !14521)
     #dbg_value(i64 %.sroa.026.0.copyload, !14477, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14521)
     #dbg_value(i64 poison, !14477, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !14521)
@@ -607,7 +607,7 @@ bb.j:                                             ; preds = %bb.h
   %.sroa.057.0.copyload = load i64, ptr %i.h, align 8, !dbg !15824, !noalias !15770 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.y, i64 16, i1 false), !dbg !15824
     #dbg_value(i64 %.sroa.057.0.copyload, !15697, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15771)
-    #dbg_value(i64 poison, !15697, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !15771)
+    #dbg_value(i64 %i.ai, !15697, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !15771)
     #dbg_value(i64 poison, !15697, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !15771)
     #dbg_value(i64 %.sroa.057.0.copyload, !15697, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15771)
     #dbg_value(i64 poison, !15697, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !15771)

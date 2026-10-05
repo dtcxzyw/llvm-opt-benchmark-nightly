@@ -205,9 +205,9 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co, %bb.
   %i.aif = fadd fast float %.0315.us.1, %.neg375.us.1
   %i.aig = fadd fast float %i.aif, %.1308.us.1    ; 3 uses
   %i.aih = fsub fast float %i.ahz, %i.ahx         ; 3 uses
-  %i.aii = fadd fast float %i.ahz, %i.ahx         ; 3 uses
-  %i.aij = fadd fast float %i.aie, %i.aic         ; 2 uses
-  %i.aik = fsub fast float %i.aie, %i.aic
+  %i.aii = fadd fast float %i.ahz, %i.ahx
+  %i.aij = fadd fast float %i.aie, %i.aic
+  %i.aik = fsub fast float %i.aie, %i.aic         ; 3 uses
   %i.ail = fmul fast float %.1310.us.1, 2.500000e+00
   %i.aim = fsub fast float %.0306.us.1, %i.ail    ; 3 uses
   %i.ain = getelementptr inbounds [2 x i8], ptr %i.agp, i64 %i.acq ; 7 uses
@@ -230,7 +230,7 @@ bb.cs:                                            ; preds = %bb.cr
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs, %bb.cr
-  %.0313.us.2 = phi nsz float [ %i.aix, %bb.cs ], [ 0.000000e+00, %bb.cr ] ; 4 uses
+  %.0313.us.2 = phi nsz float [ %i.aix, %bb.cs ], [ 0.000000e+00, %bb.cr ] ; 3 uses
   br i1 %i.ael, label %bb.cu, label %bb.cv
 
 bb.cu:                                            ; preds = %bb.ct
@@ -254,7 +254,7 @@ bb.cw:                                            ; preds = %bb.cv
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cv
-  %.0309.us.2 = phi nsz float [ %i.ajh, %bb.cw ], [ 0.000000e+00, %bb.cv ] ; 2 uses
+  %.0309.us.2 = phi nsz float [ %i.ajh, %bb.cw ], [ 0.000000e+00, %bb.cv ] ; 3 uses
   br i1 %i.aep, label %bb.cy, label %bb.cz
 
 bb.cy:                                            ; preds = %bb.cx
@@ -267,6 +267,8 @@ bb.cy:                                            ; preds = %bb.cx
 
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
   %.0307.us.2 = phi nsz float [ %i.ajm, %bb.cy ], [ 0.000000e+00, %bb.cx ] ; 2 uses
+  %7 = insertelement <2 x float> poison, float %.0313.us.2, i64 0
+  %8 = insertelement <2 x float> %7, float %.0309.us.2, i64 1 ; 2 uses
   br i1 %i.aer, label %bb.da, label %bb.db
 
 bb.da:                                            ; preds = %bb.cz
@@ -280,28 +282,30 @@ bb.da:                                            ; preds = %bb.cz
 
 bb.db:                                            ; preds = %bb.da, %bb.cz, %bb.cq
   %.0315.us.2 = phi nsz float [ %i.ais, %bb.da ], [ %i.ais, %bb.cz ], [ 0.000000e+00, %bb.cq ]
-  %.1314.us.2 = phi nsz float [ %.0313.us.2, %bb.da ], [ %.0313.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 2 uses
-  %.1312.us.2 = phi nsz float [ %.0311.us.2, %bb.da ], [ %.0311.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 3 uses
-  %.1310.us.2 = phi nsz float [ %.0309.us.2, %bb.da ], [ %.0309.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 3 uses
-  %.1308.us.2 = phi nsz float [ %.0307.us.2, %bb.da ], [ %.0307.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 3 uses
+  %.1312.us.2 = phi nsz float [ %.0311.us.2, %bb.da ], [ %.0311.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 2 uses
+  %.1310.us.2 = phi nsz float [ %.0309.us.2, %bb.da ], [ %.0309.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ]
+  %.1308.us.2 = phi nsz float [ %.0307.us.2, %bb.da ], [ %.0307.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ] ; 2 uses
   %.0306.us.2 = phi float [ %i.ajs, %bb.da ], [ %.0313.us.2, %bb.cz ], [ 0.000000e+00, %bb.cq ]
-  %7 = fmul fast float %.1314.us.2, f0x3FB504F3
-  %8 = fmul fast float %.1310.us.2, f0x3F3504F3
-  %9 = fsub fast float %7, %8                     ; 2 uses
-  %10 = fmul fast float %.1312.us.2, 2.000000e+00
-  %11 = fsub fast float %.1308.us.2, %10          ; 2 uses
-  %12 = fmul fast float %.1310.us.2, f0x3FB504F3
-  %13 = fmul fast float %.1314.us.2, f0x3F3504F3
-  %14 = fsub fast float %12, %13                  ; 2 uses
-  %15 = fmul fast float %.1312.us.2, 5.000000e-01
-  %16 = fsub fast float %.1308.us.2, %15          ; 2 uses
+  %9 = phi <2 x float> [ %8, %bb.da ], [ %8, %bb.cz ], [ zeroinitializer, %bb.cq ] ; 2 uses
+  %10 = fmul fast <2 x float> %9, splat (float f0x3FB504F3)
+  %11 = fmul fast <2 x float> %9, splat (float f0x3F3504F3)
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %13 = insertelement <2 x float> poison, float %.1312.us.2, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = fmul fast <2 x float> %14, <float 2.000000e+00, float 5.000000e-01>
+  %16 = fsub fast <2 x float> %10, %12            ; 3 uses
+  %17 = insertelement <2 x float> poison, float %.1308.us.2, i64 0
+  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = fsub fast <2 x float> %18, %15            ; 3 uses
   %.neg375.us.2 = fmul fast float %.1312.us.2, -2.500000e+00
   %i.ajt = fadd fast float %.0315.us.2, %.neg375.us.2
   %i.aju = fadd fast float %i.ajt, %.1308.us.2    ; 2 uses
-  %17 = fsub fast float %11, %9                   ; 3 uses
-  %18 = fadd fast float %11, %9                   ; 3 uses
-  %19 = fadd fast float %16, %14                  ; 3 uses
-  %20 = fsub fast float %16, %14                  ; 2 uses
+  %foldExtExtBinop = fsub fast <2 x float> %19, %16
+  %20 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
+  %21 = fadd fast <2 x float> %19, %16            ; 2 uses
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %foldExtExtBinop458 = fsub fast <2 x float> %19, %16
+  %23 = extractelement <2 x float> %foldExtExtBinop458, i64 1 ; 3 uses
   %i.ajv = fmul fast float %.1310.us.2, 2.500000e+00
   %i.ajw = fsub fast float %.0306.us.2, %i.ajv    ; 3 uses
   %i.ajx = getelementptr inbounds [2 x i8], ptr %i.ain, i64 %i.acq ; 7 uses
@@ -393,9 +397,9 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk, %bb.
   %i.aln = fadd fast float %.0315.us.3, %.neg375.us.3
   %i.alo = fadd fast float %i.aln, %.1308.us.3    ; 2 uses
   %i.alp = fsub fast float %i.alh, %i.alf         ; 3 uses
-  %i.alq = fadd fast float %i.alh, %i.alf         ; 3 uses
-  %i.alr = fadd fast float %i.alm, %i.alk         ; 2 uses
-  %i.als = fsub fast float %i.alm, %i.alk
+  %i.alq = fadd fast float %i.alh, %i.alf
+  %i.alr = fadd fast float %i.alm, %i.alk
+  %i.als = fsub fast float %i.alm, %i.alk         ; 3 uses
   %i.alt = fmul fast float %.1310.us.3, 2.500000e+00
   %i.alu = fsub fast float %.0306.us.3, %i.alt    ; 3 uses
   %i.alv = getelementptr inbounds [2 x i8], ptr %i.ajx, i64 %i.acq ; 7 uses
@@ -418,7 +422,7 @@ bb.do:                                            ; preds = %bb.dn
   br label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do, %bb.dn
-  %.0313.us.4 = phi nsz float [ %i.amf, %bb.do ], [ 0.000000e+00, %bb.dn ] ; 4 uses
+  %.0313.us.4 = phi nsz float [ %i.amf, %bb.do ], [ 0.000000e+00, %bb.dn ] ; 3 uses
   br i1 %i.ael, label %bb.dq, label %bb.dr
 
 bb.dq:                                            ; preds = %bb.dp
@@ -442,7 +446,7 @@ bb.ds:                                            ; preds = %bb.dr
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds, %bb.dr
-  %.0309.us.4 = phi nsz float [ %i.amp, %bb.ds ], [ 0.000000e+00, %bb.dr ] ; 2 uses
+  %.0309.us.4 = phi nsz float [ %i.amp, %bb.ds ], [ 0.000000e+00, %bb.dr ] ; 3 uses
   br i1 %i.aep, label %bb.du, label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt
@@ -455,6 +459,8 @@ bb.du:                                            ; preds = %bb.dt
 
 bb.dv:                                            ; preds = %bb.du, %bb.dt
   %.0307.us.4 = phi nsz float [ %i.amu, %bb.du ], [ 0.000000e+00, %bb.dt ] ; 2 uses
+  %24 = insertelement <2 x float> poison, float %.0313.us.4, i64 0
+  %25 = insertelement <2 x float> %24, float %.0309.us.4, i64 1 ; 2 uses
   br i1 %i.aer, label %bb.dw, label %bb.dx
 
 bb.dw:                                            ; preds = %bb.dv
@@ -468,28 +474,30 @@ bb.dw:                                            ; preds = %bb.dv
 
 bb.dx:                                            ; preds = %bb.dw, %bb.dv, %bb.dm
   %.0315.us.4 = phi nsz float [ %i.ama, %bb.dw ], [ %i.ama, %bb.dv ], [ 0.000000e+00, %bb.dm ]
-  %.1314.us.4 = phi nsz float [ %.0313.us.4, %bb.dw ], [ %.0313.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 2 uses
-  %.1312.us.4 = phi nsz float [ %.0311.us.4, %bb.dw ], [ %.0311.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 3 uses
-  %.1310.us.4 = phi nsz float [ %.0309.us.4, %bb.dw ], [ %.0309.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 3 uses
-  %.1308.us.4 = phi nsz float [ %.0307.us.4, %bb.dw ], [ %.0307.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 3 uses
+  %.1312.us.4 = phi nsz float [ %.0311.us.4, %bb.dw ], [ %.0311.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 2 uses
+  %.1310.us.4 = phi nsz float [ %.0309.us.4, %bb.dw ], [ %.0309.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ]
+  %.1308.us.4 = phi nsz float [ %.0307.us.4, %bb.dw ], [ %.0307.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ] ; 2 uses
   %.0306.us.4 = phi float [ %i.ana, %bb.dw ], [ %.0313.us.4, %bb.dv ], [ 0.000000e+00, %bb.dm ]
-  %21 = fmul fast float %.1314.us.4, f0x3FB504F3
-  %22 = fmul fast float %.1310.us.4, f0x3F3504F3
-  %23 = fsub fast float %21, %22                  ; 2 uses
-  %24 = fmul fast float %.1312.us.4, 2.000000e+00
-  %25 = fsub fast float %.1308.us.4, %24          ; 2 uses
-  %26 = fmul fast float %.1310.us.4, f0x3FB504F3
-  %27 = fmul fast float %.1314.us.4, f0x3F3504F3
-  %28 = fsub fast float %26, %27                  ; 2 uses
-  %29 = fmul fast float %.1312.us.4, 5.000000e-01
-  %30 = fsub fast float %.1308.us.4, %29          ; 2 uses
+  %26 = phi <2 x float> [ %25, %bb.dw ], [ %25, %bb.dv ], [ zeroinitializer, %bb.dm ] ; 2 uses
+  %27 = fmul fast <2 x float> %26, splat (float f0x3FB504F3)
+  %28 = fmul fast <2 x float> %26, splat (float f0x3F3504F3)
+  %29 = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %30 = insertelement <2 x float> poison, float %.1312.us.4, i64 0
+  %31 = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> zeroinitializer
+  %32 = fmul fast <2 x float> %31, <float 2.000000e+00, float 5.000000e-01>
+  %33 = fsub fast <2 x float> %27, %29            ; 3 uses
+  %34 = insertelement <2 x float> poison, float %.1308.us.4, i64 0
+  %35 = shufflevector <2 x float> %34, <2 x float> poison, <2 x i32> zeroinitializer
+  %36 = fsub fast <2 x float> %35, %32            ; 3 uses
   %.neg375.us.4 = fmul fast float %.1312.us.4, -2.500000e+00
   %i.anb = fadd fast float %.0315.us.4, %.neg375.us.4
   %i.anc = fadd fast float %i.anb, %.1308.us.4    ; 2 uses
-  %31 = fsub fast float %25, %23                  ; 3 uses
-  %32 = fadd fast float %25, %23                  ; 3 uses
-  %33 = fadd fast float %30, %28                  ; 3 uses
-  %34 = fsub fast float %30, %28                  ; 2 uses
+  %foldExtExtBinop460 = fsub fast <2 x float> %36, %33
+  %37 = extractelement <2 x float> %foldExtExtBinop460, i64 0 ; 3 uses
+  %38 = fadd fast <2 x float> %36, %33            ; 3 uses
+  %39 = shufflevector <2 x float> %38, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %foldExtExtBinop462 = fsub fast <2 x float> %36, %33
+  %40 = extractelement <2 x float> %foldExtExtBinop462, i64 1 ; 3 uses
   %i.and = fmul fast float %.1310.us.4, 2.500000e+00
   %i.ane = fsub fast float %.0306.us.4, %i.and    ; 3 uses
   %i.anf = getelementptr inbounds [2 x i8], ptr %i.alv, i64 %i.acq ; 6 uses
@@ -580,7 +588,7 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg, %bb.
   %i.aov = fmul fast <4 x float> %i.aou, <float 2.000000e+00, float 5.000000e-01, float f0x3F3504F3, float f0x3F3504F3>
   %i.aow = fmul fast float %.1310.us.5, f0x3FB504F3
   %i.aox = insertelement <4 x float> %i.aos, float %i.aju, i64 1
-  %i.aoy = insertelement <4 x float> %i.aox, float %17, i64 3
+  %i.aoy = insertelement <4 x float> %i.aox, float %20, i64 3
   %i.aoz = fmul fast <4 x float> %i.aoy, splat (float -2.500000e+00)
   %i.apa = fmul fast float %.1310.us.5, 2.500000e+00
   %i.apb = fsub fast float %.0306.us.5, %i.apa
@@ -601,13 +609,13 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg, %bb.
   %i.apq = fmul fast float %i.aih, f0x3FB504F3
   %i.apr = fmul fast float %i.alp, f0x3F3504F3
   %i.aps = fsub fast float %i.apq, %i.apr         ; 2 uses
-  %i.apt = fmul fast float %17, 2.000000e+00
-  %i.apu = fsub fast float %31, %i.apt            ; 2 uses
+  %i.apt = fmul fast float %20, 2.000000e+00
+  %i.apu = fsub fast float %37, %i.apt            ; 2 uses
   %i.apv = fmul fast float %i.alp, f0x3FB504F3
   %i.apw = fmul fast float %i.aih, f0x3F3504F3
   %i.apx = fsub fast float %i.apv, %i.apw         ; 2 uses
-  %i.apy = fmul fast float %17, 5.000000e-01
-  %i.apz = fsub fast float %31, %i.apy            ; 2 uses
+  %i.apy = fmul fast float %20, 5.000000e-01
+  %i.apz = fsub fast float %37, %i.apy            ; 2 uses
   %i.aqa = insertelement <4 x float> poison, float %.1308.us.5, i64 0
   %i.aqb = insertelement <4 x float> %i.aqa, float %i.api, i64 2
   %i.aqc = insertelement <4 x float> %i.aqb, float %i.apj, i64 3
@@ -649,7 +657,7 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg, %bb.
   %i.ard = fadd fast float %i.arc, %i.aqt
   store float %i.ard, ptr %i.aph, align 4, !tbaa !53
   %i.are = extractelement <8 x float> %i.aqr, i64 3
-  %i.arf = fadd fast float %i.are, %31
+  %i.arf = fadd fast float %i.are, %37
   store float %i.arf, ptr %i.apk, align 4, !tbaa !53
   %i.arg = fsub fast float %i.apu, %i.aps
   store float %i.arg, ptr %i.apl, align 4, !tbaa !53
@@ -669,140 +677,132 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg, %bb.
   %i.arp = getelementptr inbounds nuw [4 x i8], ptr %i.apn, i64 %i.adb ; 2 uses
   %i.arq = getelementptr inbounds nuw [4 x i8], ptr %i.apo, i64 %i.adb ; 2 uses
   %i.arr = getelementptr inbounds nuw [4 x i8], ptr %i.app, i64 %i.adb ; 2 uses
-  %35 = fmul fast float %i.aii, f0x3FB504F3
-  %36 = fmul fast float %i.alq, f0x3F3504F3
-  %37 = fsub fast float %35, %36                  ; 2 uses
-  %38 = fmul fast float %18, 2.000000e+00
-  %39 = fsub fast float %32, %38                  ; 2 uses
-  %40 = fmul fast float %i.alq, f0x3FB504F3
-  %41 = fmul fast float %i.aii, f0x3F3504F3
-  %42 = fsub fast float %40, %41                  ; 2 uses
-  %43 = fmul fast float %18, 5.000000e-01
-  %44 = fsub fast float %32, %43                  ; 2 uses
-  %.neg.us.2 = fmul fast float %18, -2.500000e+00
-  %45 = fadd fast float %i.agk, %.neg.us.2
-  %46 = fadd fast float %45, %32
-  store float %46, ptr %i.arm, align 4, !tbaa !53
-  %47 = fsub fast float %39, %37
-  store float %47, ptr %i.arn, align 4, !tbaa !53
-  %48 = fadd fast float %39, %37
-  store float %48, ptr %i.aro, align 4, !tbaa !53
-  %49 = fadd fast float %44, %42
-  store float %49, ptr %i.arp, align 4, !tbaa !53
-  %50 = fsub fast float %44, %42
-  store float %50, ptr %i.arq, align 4, !tbaa !53
-  %.neg374.us.2 = fmul fast float %i.alq, -2.500000e+00
-  %51 = fadd fast float %i.aii, %.neg374.us.2
+  %41 = insertelement <4 x float> poison, float %i.alq, i64 0
+  %42 = insertelement <4 x float> %41, float %i.aii, i64 1
+  %43 = insertelement <4 x float> %42, float %i.alr, i64 2 ; 2 uses
+  %44 = insertelement <4 x float> %43, float %i.aij, i64 3 ; 3 uses
+  %45 = fmul fast <4 x float> %44, splat (float f0x3FB504F3)
+  %46 = fmul fast <4 x float> %44, splat (float f0x3F3504F3)
+  %47 = shufflevector <4 x float> %46, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  %48 = fmul fast <4 x float> %22, <float 5.000000e-01, float 2.000000e+00, float 5.000000e-01, float 2.000000e+00>
+  %49 = shufflevector <2 x float> %21, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %50 = shufflevector <4 x float> %43, <4 x float> %49, <4 x i32> <i32 0, i32 4, i32 2, i32 5>
+  %51 = fmul fast <4 x float> %50, splat (float -2.500000e+00)
   %52 = extractelement <8 x float> %i.aqr, i64 4
-  %53 = fadd fast float %51, %52
-  store float %53, ptr %i.arr, align 4, !tbaa !53
-  %54 = getelementptr inbounds nuw [4 x i8], ptr %i.arm, i64 %i.adb ; 2 uses
-  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.arn, i64 %i.adb ; 2 uses
-  %56 = getelementptr inbounds nuw [4 x i8], ptr %i.aro, i64 %i.adb ; 2 uses
-  %57 = getelementptr inbounds nuw [4 x i8], ptr %i.arp, i64 %i.adb ; 2 uses
-  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.arq, i64 %i.adb ; 2 uses
-  %59 = getelementptr inbounds nuw [4 x i8], ptr %i.arr, i64 %i.adb ; 2 uses
-  %60 = fmul fast float %i.aij, f0x3FB504F3
-  %61 = fmul fast float %i.alr, f0x3F3504F3
-  %62 = fsub fast float %60, %61                  ; 2 uses
-  %63 = fmul fast float %19, 2.000000e+00
-  %64 = fsub fast float %33, %63                  ; 2 uses
-  %65 = insertelement <4 x float> poison, float %i.alr, i64 0
-  %66 = insertelement <4 x float> %65, float %i.aik, i64 1
-  %67 = insertelement <4 x float> %66, float %i.als, i64 2 ; 2 uses
-  %68 = insertelement <4 x float> %67, float %i.aim, i64 3 ; 2 uses
-  %69 = fmul fast <4 x float> %68, splat (float f0x3FB504F3)
-  %70 = shufflevector <4 x float> %67, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 1, i32 poison>
-  %71 = insertelement <4 x float> %70, float %i.aij, i64 0 ; 2 uses
-  %72 = insertelement <4 x float> %71, float %i.alu, i64 3
-  %73 = fmul fast <4 x float> %72, splat (float f0x3F3504F3)
-  %74 = insertelement <4 x float> poison, float %19, i64 0
-  %75 = insertelement <4 x float> %74, float %20, i64 1
-  %76 = insertelement <4 x float> %75, float %i.ajw, i64 3
-  %77 = shufflevector <4 x float> %76, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
-  %78 = fmul fast <4 x float> %77, <float 5.000000e-01, float 2.000000e+00, float 5.000000e-01, float 2.000000e+00>
-  %.neg.us.3 = fmul fast float %19, -2.500000e+00
-  %i.ars = fadd fast float %i.agl, %.neg.us.3
-  %79 = fadd fast float %i.ars, %33
+  %53 = getelementptr inbounds nuw [4 x i8], ptr %i.arm, i64 %i.adb ; 2 uses
+  %54 = getelementptr inbounds nuw [4 x i8], ptr %i.arn, i64 %i.adb ; 2 uses
+  %55 = getelementptr inbounds nuw [4 x i8], ptr %i.aro, i64 %i.adb ; 2 uses
+  %56 = getelementptr inbounds nuw [4 x i8], ptr %i.arp, i64 %i.adb ; 2 uses
+  %57 = getelementptr inbounds nuw [4 x i8], ptr %i.arq, i64 %i.adb ; 2 uses
+  %58 = getelementptr inbounds nuw [4 x i8], ptr %i.arr, i64 %i.adb ; 2 uses
+  %59 = fsub fast <4 x float> %45, %47            ; 5 uses
+  %60 = shufflevector <4 x float> %51, <4 x float> %59, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %61 = fsub fast <4 x float> %39, %48            ; 5 uses
+  %62 = shufflevector <4 x float> %44, <4 x float> poison, <8 x i32> <i32 1, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %63 = insertelement <8 x float> %62, float %i.agk, i64 1
+  %64 = insertelement <8 x float> %63, float %i.agl, i64 3
+  %65 = shufflevector <4 x float> %61, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %66 = shufflevector <8 x float> %64, <8 x float> %65, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %67 = fadd fast <8 x float> %66, %60            ; 8 uses
+  %68 = extractelement <8 x float> %67, i64 1
+  %69 = extractelement <2 x float> %38, i64 0
+  %70 = fadd fast float %68, %69
+  store float %70, ptr %i.arm, align 4, !tbaa !53
+  %foldExtExtBinop472 = fsub fast <4 x float> %61, %59
+  %71 = extractelement <4 x float> %foldExtExtBinop472, i64 1
+  store float %71, ptr %i.arn, align 4, !tbaa !53
+  %72 = extractelement <8 x float> %67, i64 5
+  store float %72, ptr %i.aro, align 4, !tbaa !53
+  %73 = extractelement <8 x float> %67, i64 4
+  store float %73, ptr %i.arp, align 4, !tbaa !53
+  %foldExtExtBinop474 = fsub fast <4 x float> %61, %59
+  %74 = extractelement <4 x float> %foldExtExtBinop474, i64 0
+  store float %74, ptr %i.arq, align 4, !tbaa !53
+  %75 = extractelement <8 x float> %67, i64 0
+  %76 = fadd fast float %75, %52
+  store float %76, ptr %i.arr, align 4, !tbaa !53
+  %77 = extractelement <8 x float> %67, i64 3
+  %78 = extractelement <2 x float> %38, i64 1
+  %i.ars = fadd fast float %77, %78
+  store float %i.ars, ptr %53, align 4, !tbaa !53
+  %foldExtExtBinop476 = fsub fast <4 x float> %61, %59
+  %79 = extractelement <4 x float> %foldExtExtBinop476, i64 3
   store float %79, ptr %54, align 4, !tbaa !53
-  %80 = fsub fast float %64, %62
+  %80 = extractelement <8 x float> %67, i64 7
   store float %80, ptr %55, align 4, !tbaa !53
-  %81 = fadd fast float %64, %62
+  %81 = extractelement <8 x float> %67, i64 6
   store float %81, ptr %56, align 4, !tbaa !53
-  %82 = insertelement <4 x float> %68, float %20, i64 1
-  %83 = insertelement <4 x float> %82, float %i.ajw, i64 3
-  %84 = fmul fast <4 x float> %83, splat (float -2.500000e+00)
-  %i.art = extractelement <8 x float> %i.aqr, i64 5
-  %85 = getelementptr inbounds nuw [4 x i8], ptr %54, i64 %i.adb ; 2 uses
-  %86 = getelementptr inbounds nuw [4 x i8], ptr %55, i64 %i.adb ; 2 uses
-  %87 = getelementptr inbounds nuw [4 x i8], ptr %56, i64 %i.adb ; 2 uses
-  %88 = getelementptr inbounds nuw [4 x i8], ptr %57, i64 %i.adb ; 2 uses
-  %89 = getelementptr inbounds nuw [4 x i8], ptr %58, i64 %i.adb ; 2 uses
-  %90 = getelementptr inbounds nuw [4 x i8], ptr %59, i64 %i.adb ; 2 uses
-  %i.aru = getelementptr inbounds nuw [4 x i8], ptr %85, i64 %i.adb
-  %i.arv = getelementptr inbounds nuw [4 x i8], ptr %86, i64 %i.adb
-  %i.arw = getelementptr inbounds nuw [4 x i8], ptr %87, i64 %i.adb
-  %i.arx = getelementptr inbounds nuw [4 x i8], ptr %88, i64 %i.adb
-  %i.ary = getelementptr inbounds nuw [4 x i8], ptr %89, i64 %i.adb
-  %i.arz = getelementptr inbounds nuw [4 x i8], ptr %90, i64 %i.adb
-  %i.asa = fmul fast float %i.alu, f0x3FB504F3
-  %i.asb = fmul fast float %i.aim, f0x3F3504F3
+  %foldExtExtBinop478 = fsub fast <4 x float> %61, %59
+  %i.art = extractelement <4 x float> %foldExtExtBinop478, i64 2
+  store float %i.art, ptr %57, align 4, !tbaa !53
+  %82 = extractelement <8 x float> %i.aqr, i64 5
+  %83 = extractelement <8 x float> %67, i64 2
+  %84 = fadd fast float %83, %82
+  store float %84, ptr %58, align 4, !tbaa !53
+  %i.aru = getelementptr inbounds nuw [4 x i8], ptr %53, i64 %i.adb ; 2 uses
+  %i.arv = getelementptr inbounds nuw [4 x i8], ptr %54, i64 %i.adb ; 2 uses
+  %i.arw = getelementptr inbounds nuw [4 x i8], ptr %55, i64 %i.adb ; 2 uses
+  %i.arx = getelementptr inbounds nuw [4 x i8], ptr %56, i64 %i.adb ; 2 uses
+  %i.ary = getelementptr inbounds nuw [4 x i8], ptr %57, i64 %i.adb ; 2 uses
+  %i.arz = getelementptr inbounds nuw [4 x i8], ptr %58, i64 %i.adb ; 2 uses
+  %i.asa = fmul fast float %i.aik, f0x3FB504F3
+  %i.asb = fmul fast float %i.als, f0x3F3504F3
   %i.asc = fsub fast float %i.asa, %i.asb         ; 2 uses
-  %i.asd = fmul fast float %i.ajw, 5.000000e-01
-  %i.ase = fsub fast float %i.ane, %i.asd         ; 2 uses
-  %91 = fsub fast <4 x float> %69, %73            ; 5 uses
-  %92 = shufflevector <4 x float> %91, <4 x float> %84, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %93 = insertelement <4 x float> poison, float %33, i64 0
-  %94 = insertelement <4 x float> %93, float %34, i64 1
-  %95 = insertelement <4 x float> %94, float %i.ane, i64 3
-  %96 = shufflevector <4 x float> %95, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
-  %97 = fsub fast <4 x float> %96, %78            ; 5 uses
-  %98 = shufflevector <4 x float> %71, <4 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 2, i32 poison>
-  %99 = insertelement <8 x float> %98, float %i.agm, i64 5
-  %100 = insertelement <8 x float> %99, float %i.ago, i64 7
-  %101 = shufflevector <4 x float> %97, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %102 = shufflevector <8 x float> %101, <8 x float> %100, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %103 = fadd fast <8 x float> %102, %92          ; 8 uses
-  %104 = extractelement <8 x float> %103, i64 0
-  store float %104, ptr %57, align 4, !tbaa !53
-  %foldExtExtBinop464 = fsub fast <4 x float> %97, %91
-  %105 = extractelement <4 x float> %foldExtExtBinop464, i64 0
-  store float %105, ptr %58, align 4, !tbaa !53
-  %106 = extractelement <8 x float> %103, i64 4
-  %i.asf = fadd fast float %106, %i.art
-  store float %i.asf, ptr %59, align 4, !tbaa !53
-  %107 = extractelement <8 x float> %103, i64 5
-  %108 = fadd fast float %107, %34
-  store float %108, ptr %85, align 4, !tbaa !53
-  %foldExtExtBinop466 = fsub fast <4 x float> %97, %91
-  %109 = extractelement <4 x float> %foldExtExtBinop466, i64 1
-  store float %109, ptr %86, align 4, !tbaa !53
-  %110 = extractelement <8 x float> %103, i64 1
-  store float %110, ptr %87, align 4, !tbaa !53
-  %111 = extractelement <8 x float> %103, i64 2
-  store float %111, ptr %88, align 4, !tbaa !53
-  %foldExtExtBinop468 = fsub fast <4 x float> %97, %91
-  %112 = extractelement <4 x float> %foldExtExtBinop468, i64 2
-  store float %112, ptr %89, align 4, !tbaa !53
-  %113 = extractelement <8 x float> %103, i64 6
-  %114 = fadd fast float %113, %i.aqv
-  store float %114, ptr %90, align 4, !tbaa !53
-  %115 = extractelement <8 x float> %103, i64 7
-  %i.asg = fadd fast float %115, %i.ane
-  store float %i.asg, ptr %i.aru, align 4, !tbaa !53
-  %foldExtExtBinop470 = fsub fast <4 x float> %97, %91
-  %116 = extractelement <4 x float> %foldExtExtBinop470, i64 3
-  store float %116, ptr %i.arv, align 4, !tbaa !53
-  %117 = extractelement <8 x float> %103, i64 3
-  store float %117, ptr %i.arw, align 4, !tbaa !53
-  %i.ash = fadd fast float %i.ase, %i.asc
-  store float %i.ash, ptr %i.arx, align 4, !tbaa !53
-  %i.asi = fsub fast float %i.ase, %i.asc
-  store float %i.asi, ptr %i.ary, align 4, !tbaa !53
+  %i.asd = fmul fast float %23, 2.000000e+00
+  %i.ase = fsub fast float %40, %i.asd            ; 2 uses
+  %85 = fmul fast float %i.als, f0x3FB504F3
+  %86 = fmul fast float %i.aik, f0x3F3504F3
+  %87 = fsub fast float %85, %86                  ; 2 uses
+  %88 = fmul fast float %23, 5.000000e-01
+  %89 = fsub fast float %40, %88                  ; 2 uses
+  %.neg.us.4 = fmul fast float %23, -2.500000e+00
+  %90 = fadd fast float %i.agm, %.neg.us.4
+  %91 = fadd fast float %90, %40
+  store float %91, ptr %i.aru, align 4, !tbaa !53
+  %92 = fsub fast float %i.ase, %i.asc
+  store float %92, ptr %i.arv, align 4, !tbaa !53
+  %93 = fadd fast float %i.ase, %i.asc
+  store float %93, ptr %i.arw, align 4, !tbaa !53
+  %94 = fadd fast float %89, %87
+  store float %94, ptr %i.arx, align 4, !tbaa !53
+  %95 = fsub fast float %89, %87
+  store float %95, ptr %i.ary, align 4, !tbaa !53
+  %.neg374.us.4 = fmul fast float %i.als, -2.500000e+00
+  %96 = fadd fast float %i.aik, %.neg374.us.4
+  %i.asf = fadd fast float %96, %i.aqv
+  store float %i.asf, ptr %i.arz, align 4, !tbaa !53
+  %97 = getelementptr inbounds nuw [4 x i8], ptr %i.aru, i64 %i.adb
+  %98 = getelementptr inbounds nuw [4 x i8], ptr %i.arv, i64 %i.adb
+  %99 = getelementptr inbounds nuw [4 x i8], ptr %i.arw, i64 %i.adb
+  %100 = getelementptr inbounds nuw [4 x i8], ptr %i.arx, i64 %i.adb
+  %101 = getelementptr inbounds nuw [4 x i8], ptr %i.ary, i64 %i.adb
+  %102 = getelementptr inbounds nuw [4 x i8], ptr %i.arz, i64 %i.adb
+  %103 = fmul fast float %i.aim, f0x3FB504F3
+  %104 = fmul fast float %i.alu, f0x3F3504F3
+  %105 = fsub fast float %103, %104               ; 2 uses
+  %106 = fmul fast float %i.ajw, 2.000000e+00
+  %107 = fsub fast float %i.ane, %106             ; 2 uses
+  %108 = fmul fast float %i.alu, f0x3FB504F3
+  %109 = fmul fast float %i.aim, f0x3F3504F3
+  %110 = fsub fast float %108, %109               ; 2 uses
+  %111 = fmul fast float %i.ajw, 5.000000e-01
+  %112 = fsub fast float %i.ane, %111             ; 2 uses
+  %.neg.us.5 = fmul fast float %i.ajw, -2.500000e+00
+  %i.asg = fadd fast float %i.ago, %.neg.us.5
+  %113 = fadd fast float %i.asg, %i.ane
+  store float %113, ptr %97, align 4, !tbaa !53
+  %114 = fsub fast float %107, %105
+  store float %114, ptr %98, align 4, !tbaa !53
+  %115 = fadd fast float %107, %105
+  store float %115, ptr %99, align 4, !tbaa !53
+  %i.ash = fadd fast float %112, %110
+  store float %i.ash, ptr %100, align 4, !tbaa !53
+  %i.asi = fsub fast float %112, %110
+  store float %i.asi, ptr %101, align 4, !tbaa !53
   %.neg374.us.5 = fmul fast float %i.alu, -2.500000e+00
   %i.asj = fadd fast float %i.aim, %.neg374.us.5
   %i.ask = fadd fast float %i.asj, %i.apb
-  store float %i.ask, ptr %i.arz, align 4, !tbaa !53
+  store float %i.ask, ptr %102, align 4, !tbaa !53
   %indvars.iv.next439 = add nuw nsw i64 %indvars.iv438, 1 ; 2 uses
   %exitcond442.not = icmp eq i64 %indvars.iv.next439, %wide.trip.count441
   br i1 %exitcond442.not, label %._crit_edge.us414, label %_ZN4ncnn3MatD2Ev.exit.us, !llvm.loop !1748

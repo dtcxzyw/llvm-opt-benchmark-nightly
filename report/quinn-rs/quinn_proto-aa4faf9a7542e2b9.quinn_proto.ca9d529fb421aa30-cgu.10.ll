@@ -204,14 +204,14 @@ bb.l:                                             ; preds = %.noexc108
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !19106, !noalias !18914
   %i.bz = load <2 x i64>, ptr %.sroa.6.0..sroa_idx119, align 8, !dbg !19106, !noalias !18913
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !19098, !noalias !18914
-    #dbg_value(i64 poison, !7412, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !18597)
+    #dbg_value(i64 %.sroa.4.0.copyload.i, !7412, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !18597)
     #dbg_value(i64 %.sroa.57.0.copyload.i, !7412, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !18597)
   %i.ca = load i64, ptr %i.ah, align 8, !dbg !19107, !alias.scope !18913, !noalias !18919, !noundef !2081
   %i.cb = sub i64 %i.ca, %.sroa.4.0.copyload.i, !dbg !19107
   store i64 %i.cb, ptr %i.ah, align 8, !dbg !19107, !alias.scope !18913, !noalias !18919
     #dbg_value(ptr %i.bs, !18782, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18786)
     #dbg_value(i64 poison, !18782, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18786)
-    #dbg_value(i64 poison, !18782, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !18786)
+    #dbg_value(i64 %.sroa.4.0.copyload.i, !18782, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !18786)
     #dbg_value(i64 %.sroa.57.0.copyload.i, !18782, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !18786)
   store ptr %i.bs, ptr %i.n, align 8, !dbg !19108
   store <2 x i64> %i.bz, ptr %.sroa.6.0..sroa_idx, align 8, !dbg !19108
@@ -614,14 +614,14 @@ bb.ad:                                            ; preds = %.noexc144
   %i.da = load <2 x i64>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !22244, !noalias !22092
   %.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !22244, !noalias !22092 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22228, !noalias !22092
-    #dbg_value(i64 poison, !7412, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !21637)
+    #dbg_value(i64 %.sroa.4.0.copyload.i.i, !7412, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !21637)
     #dbg_value(i64 poison, !7412, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !21637)
   %i.db = load i64, ptr %i.ar, align 8, !dbg !22245, !alias.scope !22137, !noalias !22138, !noundef !2081
   %i.dc = sub i64 %i.db, %.sroa.4.0.copyload.i.i, !dbg !22245
   store i64 %i.dc, ptr %i.ar, align 8, !dbg !22245, !alias.scope !22137, !noalias !22138
     #dbg_value(ptr %i.ci, !7408, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !21638)
     #dbg_value(i64 %.sroa.7.0.copyload3.i, !7408, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !21638)
-    #dbg_value(i64 poison, !7408, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !21638)
+    #dbg_value(i64 %.sroa.4.0.copyload.i.i, !7408, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !21638)
     #dbg_value(i64 poison, !7408, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !21638)
   store i64 %.sroa.7.0.copyload3.i, ptr %.sroa.2.0..sroa_idx.i, align 8, !dbg !22246, !alias.scope !22089, !noalias !22090
   store <2 x i64> %i.da, ptr %.sroa.3.0..sroa_idx.i, align 8, !dbg !22246, !alias.scope !22089, !noalias !22090

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZNK6embree20DenseG
   br label %_ZN6embree13GregoryPatchTINS_6Vec3faES1_E20computeInnerVerticesEPA4_KS1_PA2_S3_ffRS1_S8_S8_S8_.exit
 
 _ZN6embree13GregoryPatchTINS_6Vec3faES1_E20computeInnerVerticesEPA4_KS1_PA2_S3_ffRS1_S8_S8_S8_.exit: ; preds = %bb.d, %bb.e
-  %.pre-phi353 = phi float [ %.pre352, %bb.d ], [ %i.ld, %bb.e ] ; 2 uses
+  %.pre-phi353 = phi float [ %.pre352, %bb.d ], [ %i.ld, %bb.e ] ; 4 uses
   %.pre-phi = phi float [ %.pre, %bb.d ], [ %i.km, %bb.e ] ; 2 uses
   %.sroa.0102.0 = phi <4 x float> [ %i.ic, %bb.d ], [ %i.mg, %bb.e ]
   %.sroa.0103.0 = phi <4 x float> [ %i.ia, %bb.d ], [ %i.ls, %bb.e ]
@@ -220,15 +220,14 @@ _ZN6embree13GregoryPatchTINS_6Vec3faES1_E20computeInnerVerticesEPA4_KS1_PA2_S3_f
   %i.mn = fmul <4 x float> %i.mm, %i.ml           ; 4 uses
   %i.mo = extractelement <4 x float> %i.mn, i64 2
   %i.mp = fmul float %.pre-phi, %i.mo
-  %4 = insertelement <4 x float> poison, float %.pre-phi353, i64 0
-  %5 = insertelement <4 x float> %4, float %3, i64 1 ; 3 uses
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %7 = shufflevector <4 x float> %5, <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 5, i32 1, i32 1>
-  %8 = fmul <4 x float> %6, %7                    ; 2 uses
-  %9 = shufflevector <4 x float> %5, <4 x float> <float poison, float 3.000000e+00, float 3.000000e+00, float poison>, <4 x i32> <i32 0, i32 5, i32 6, i32 1>
-  %10 = fmul <4 x float> %9, %8                   ; 4 uses
-  %11 = extractelement <4 x float> %10, i64 2
-  %i.mq = fmul float %.pre-phi353, %11
+  %4 = fmul float %.pre-phi353, %.pre-phi353      ; 2 uses
+  %5 = fmul float %.pre-phi353, %4
+  %6 = fmul float %3, 3.000000e+00
+  %7 = fmul float %6, %4
+  %8 = fmul float %3, %3                          ; 2 uses
+  %9 = fmul float %8, 3.000000e+00
+  %10 = fmul float %.pre-phi353, %9
+  %i.mq = fmul float %3, %8
   %i.mr = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ms = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.mt = getelementptr inbounds nuw i8, ptr %1, i64 112
@@ -287,20 +286,21 @@ _ZN6embree13GregoryPatchTINS_6Vec3faES1_E20computeInnerVerticesEPA4_KS1_PA2_S3_f
   %i.ou = load <4 x float>, ptr %i.oi, align 64, !noalias !244
   %i.ov = fmul <4 x float> %i.ni, %i.ou
   %i.ow = fadd <4 x float> %i.ov, %i.ot
-  %12 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %11 = insertelement <4 x float> poison, float %i.mq, i64 0
+  %12 = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ox = fmul <4 x float> %12, %i.ow
-  %i.oy = insertelement <4 x float> poison, float %i.mq, i64 0
+  %i.oy = insertelement <4 x float> poison, float %10, i64 0
   %i.oz = shufflevector <4 x float> %i.oy, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pa = fmul <4 x float> %i.oz, %i.oh
   %i.pb = fadd <4 x float> %i.pa, %i.ox
-  %13 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.pc = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.pd = fmul <4 x float> %13, %i.pc
-  %14 = fmul <4 x float> %i.pd, %i.nw
-  %15 = fadd <4 x float> %14, %i.pb
-  %i.pe = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> zeroinitializer
+  %13 = insertelement <4 x float> poison, float %7, i64 0
+  %i.pc = shufflevector <4 x float> %13, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.pd = fmul <4 x float> %i.pc, %i.nw
+  %14 = fadd <4 x float> %i.pd, %i.pb
+  %15 = insertelement <4 x float> poison, float %5, i64 0
+  %i.pe = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pf = fmul <4 x float> %i.pe, %i.nl
-  %i.pg = fadd <4 x float> %i.pf, %15
+  %i.pg = fadd <4 x float> %i.pf, %14
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
