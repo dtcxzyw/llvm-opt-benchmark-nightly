@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.lr.ph, %.critedge
   %.1126 = phi i64 [ %.067, %.lr.ph ], [ %.2, %.critedge ] ; 3 uses
-  %.068123 = phi i64 [ 0, %.lr.ph ], [ %.371, %.critedge ] ; 15 uses
-  %.072122 = phi i64 [ 0, %.lr.ph ], [ %i.ba, %.critedge ] ; 8 uses
+  %.068123 = phi i64 [ 0, %.lr.ph ], [ %.371, %.critedge ] ; 14 uses
+  %.072122 = phi i64 [ 0, %.lr.ph ], [ %i.ba, %.critedge ] ; 7 uses
   %.074121 = phi i32 [ %4, %.lr.ph ], [ %.175, %.critedge ]
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 %.072122 ; 7 uses
   %.val = load i8, ptr %i.d, align 1              ; 2 uses
@@ -241,8 +241,7 @@ select.unfold.thread:                             ; preds = %bb.e
 
 .thread:                                          ; preds = %bb.d
   %i.q = add nuw i64 %.072122, 1
-  %.not167 = icmp ult i64 %.072122, %3
-  br i1 %.not167, label %utf8_to_unicode.exit, label %.critedge.thread
+  br label %utf8_to_unicode.exit
 
 .thread162:                                       ; preds = %select.unfold.thread
   %i.r = shl nuw nsw i32 %i.e, 6
@@ -645,8 +644,8 @@ unicode_utf8len.exit90.thread.2:                  ; preds = %bb.cv
   %i.px = icmp ult i64 %i.ba, %3
   br i1 %i.px, label %bb.d, label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %.critedge, %select.unfold, %bb.g, %.thread, %select.unfold.thread, %bb.c
-  %.068.lcssa = phi i64 [ 0, %bb.c ], [ %.068123, %select.unfold.thread ], [ %.068123, %.thread ], [ %.068123, %bb.g ], [ %.068123, %select.unfold ], [ %.371, %.critedge ] ; 3 uses
+.critedge.thread:                                 ; preds = %.critedge, %select.unfold, %bb.g, %select.unfold.thread, %bb.c
+  %.068.lcssa = phi i64 [ 0, %bb.c ], [ %.068123, %select.unfold.thread ], [ %.068123, %select.unfold ], [ %.068123, %bb.g ], [ %.371, %.critedge ] ; 3 uses
   %i.py = icmp ult i64 %.068.lcssa, %1
   br i1 %i.py, label %bb.db, label %bb.dc
 

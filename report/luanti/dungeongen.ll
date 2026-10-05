@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.h, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN10DungeonGen8makeRoomEN4core8vector3dIsEES2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(152) %0, i48 %1, i48 %2) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.sroa.091.0.extract.trunc = trunc i48 %1 to i16 ; 8 uses
+  %.sroa.091.0.extract.trunc = trunc i48 %1 to i16 ; 6 uses
   %.sroa.5.0.extract.shift = lshr i48 %1, 16      ; 3 uses
   %.sroa.5.0.extract.trunc = trunc i48 %.sroa.5.0.extract.shift to i16 ; 5 uses
   %.sroa.0339.0.extract.trunc = trunc i48 %2 to i16 ; 7 uses
@@ -375,20 +375,11 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader390:                                    ; preds = %._crit_edge.us
   %i.cn = icmp sgt i16 %.sroa.091.0.extract.trunc, 0
-  br i1 %i.cn, label %.preheader389.lr.ph, label %.preheader388.thread
+  br i1 %i.cn, label %.preheader389.lr.ph, label %.preheader386
 
 .preheader390.thread468:                          ; preds = %.preheader391.lr.ph
   %i.co = icmp sgt i16 %.sroa.091.0.extract.trunc, 0
-  br i1 %i.co, label %.preheader388.thread464.thread, label %.preheader388.thread.thread469
-
-.preheader388.thread464.thread:                   ; preds = %.preheader390.thread468
-  %3 = trunc i48 %1 to i32
-  %4 = and i32 %3, 32767
-  br label %.preheader387.us.preheader
-
-.preheader388.thread.thread469:                   ; preds = %.preheader390.thread468
-  %5 = sext i16 %.sroa.091.0.extract.trunc to i32
-  br label %.preheader386
+  br i1 %i.co, label %.preheader387.us.preheader, label %.preheader386
 
 .preheader390.thread:                             ; preds = %bb.a
   %i.cp = icmp sgt i16 %.sroa.091.0.extract.trunc, 0
@@ -430,15 +421,9 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.p
 
 .preheader388:                                    ; preds = %._crit_edge
-  %6 = sext i16 %.sroa.091.0.extract.trunc to i32
   br i1 %i.e, label %.preheader387.us.preheader, label %._crit_edge408
 
-.preheader388.thread:                             ; preds = %.preheader390
-  %7 = sext i16 %.sroa.091.0.extract.trunc to i32
-  br label %.preheader386
-
-.preheader387.us.preheader:                       ; preds = %.preheader388, %.preheader388.thread464.thread
-  %8 = phi i32 [ %6, %.preheader388 ], [ %4, %.preheader388.thread464.thread ]
+.preheader387.us.preheader:                       ; preds = %.preheader388, %.preheader390.thread468
   %i.de = sext i16 %.sroa.8.0.extract.trunc to i32
   %.sroa.0268.0.insert.ext = zext i16 %i.b to i32 ; 2 uses
   %i.df = add i16 %.sroa.5.0.extract.trunc, -1
@@ -726,20 +711,21 @@ bb.v:                                             ; preds = %bb.u
   %exitcond422.not = icmp eq i32 %indvars.iv.next419, %wide.trip.count421
   br i1 %exitcond422.not, label %._crit_edge, label %bb.p, !llvm.loop !152
 
-.preheader386:                                    ; preds = %._crit_edge401.us, %.preheader388.thread, %.preheader388.thread.thread469
-  %9 = phi i32 [ %7, %.preheader388.thread ], [ %5, %.preheader388.thread.thread469 ], [ %8, %._crit_edge401.us ]
+.preheader386:                                    ; preds = %._crit_edge401.us, %.preheader390, %.preheader390.thread468
   %i.jj = add nsw i32 %i.d, -1
   %i.jk = icmp sgt i32 %i.d, 2
-  br i1 %i.jk, label %.preheader385.lr.ph, label %._crit_edge408
+  %3 = icmp sgt i16 %.sroa.5.0.extract.trunc, 2
+  %or.cond = and i1 %i.jk, %3
+  %4 = icmp sgt i16 %.sroa.091.0.extract.trunc, 2
+  %or.cond486 = and i1 %or.cond, %4
+  br i1 %or.cond486, label %.preheader385.lr.ph, label %._crit_edge408
 
 .preheader385.lr.ph:                              ; preds = %.preheader386
-  %10 = sext i16 %.sroa.5.0.extract.trunc to i32
-  %11 = add nsw i32 %10, -1
-  %12 = icmp sgt i16 %.sroa.5.0.extract.trunc, 2
-  %13 = add nsw i32 %9, -1
-  %14 = icmp sgt i16 %.sroa.091.0.extract.trunc, 2
-  %or.cond = and i1 %12, %14
-  br i1 %or.cond, label %.preheader385.us.us, label %._crit_edge408
+  %narrow = add nsw i16 %.sroa.091.0.extract.trunc, -2
+  %5 = sext i16 %narrow to i32
+  %narrow467 = add nsw i16 %.sroa.5.0.extract.trunc, -2
+  %6 = sext i16 %narrow467 to i32
+  br label %.preheader385.us.us
 
 .preheader385.us.us:                              ; preds = %.preheader385.lr.ph, %._crit_edge406.split.us.us.us
   %.0105407.us.us = phi i16 [ %i.lc, %._crit_edge406.split.us.us.us ], [ 1, %.preheader385.lr.ph ] ; 2 uses
@@ -748,14 +734,16 @@ bb.v:                                             ; preds = %bb.u
   br label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %._crit_edge404.us.us.us, %.preheader385.us.us
-  %.0104405.us.us.us = phi i16 [ 1, %.preheader385.us.us ], [ %18, %._crit_edge404.us.us.us ] ; 2 uses
-  %i.jn = add i16 %.0104405.us.us.us, %.sroa.8.0.extract.trunc ; 3 uses
+  %indvars.iv433 = phi i32 [ %indvars.iv.next434, %._crit_edge404.us.us.us ], [ 1, %.preheader385.us.us ] ; 3 uses
+  %7 = trunc nuw nsw i32 %indvars.iv433 to i16
+  %i.jn = add i16 %7, %.sroa.8.0.extract.trunc    ; 3 uses
   %i.jo = sext i16 %i.jn to i32
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us, %.preheader.us.us.us
-  %.0103403.us.us.us = phi i16 [ 1, %.preheader.us.us.us ], [ %15, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us ] ; 2 uses
-  %i.jp = add i16 %.0103403.us.us.us, %.sroa.0339.0.extract.trunc ; 3 uses
+  %indvars.iv429 = phi i32 [ %indvars.iv.next430, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us ], [ 1, %.preheader.us.us.us ] ; 3 uses
+  %8 = trunc nuw nsw i32 %indvars.iv429 to i16
+  %i.jp = add i16 %8, %.sroa.0339.0.extract.trunc ; 3 uses
   %i.jq = load ptr, ptr %0, align 8, !tbaa !48    ; 9 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jq, i64 8
   %i.js = load i16, ptr %i.jr, align 4, !tbaa !59 ; 2 uses
@@ -817,16 +805,14 @@ bb.y:                                             ; preds = %_ZNK9VoxelArea8cont
   br label %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us
 
 _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us: ; preds = %bb.y, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.us.us.us, %bb.x, %bb.w
-  %15 = add i16 %.0103403.us.us.us, 1             ; 2 uses
-  %16 = sext i16 %15 to i32
-  %17 = icmp sgt i32 %13, %16
-  br i1 %17, label %bb.w, label %._crit_edge404.us.us.us, !llvm.loop !153
+  %indvars.iv.next430 = add nuw nsw i32 %indvars.iv429, 1
+  %exitcond432.not = icmp eq i32 %indvars.iv429, %5
+  br i1 %exitcond432.not, label %._crit_edge404.us.us.us, label %bb.w, !llvm.loop !153
 
 ._crit_edge404.us.us.us:                          ; preds = %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us
-  %18 = add i16 %.0104405.us.us.us, 1             ; 2 uses
-  %19 = sext i16 %18 to i32
-  %20 = icmp sgt i32 %11, %19
-  br i1 %20, label %.preheader.us.us.us, label %._crit_edge406.split.us.us.us, !llvm.loop !154
+  %indvars.iv.next434 = add nuw nsw i32 %indvars.iv433, 1
+  %exitcond436.not = icmp eq i32 %indvars.iv433, %6
+  br i1 %exitcond436.not, label %._crit_edge406.split.us.us.us, label %.preheader.us.us.us, !llvm.loop !154
 
 ._crit_edge406.split.us.us.us:                    ; preds = %._crit_edge404.us.us.us
   %i.lc = add i16 %.0105407.us.us, 1              ; 2 uses
@@ -834,7 +820,7 @@ _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us: ; preds = %
   %i.le = icmp sgt i32 %i.jj, %i.ld
   br i1 %i.le, label %.preheader385.us.us, label %._crit_edge408, !llvm.loop !155
 
-._crit_edge408:                                   ; preds = %._crit_edge406.split.us.us.us, %.preheader389.lr.ph.thread473, %.preheader390.thread, %.preheader388, %.preheader385.lr.ph, %.preheader386
+._crit_edge408:                                   ; preds = %._crit_edge406.split.us.us.us, %.preheader389.lr.ph.thread473, %.preheader390.thread, %.preheader388, %.preheader386
   ret void
 }
 

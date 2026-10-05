@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %.lr.ph, %bb.u
   br i1 %i.dh, label %._crit_edge109, label %.lr.ph108.split
 
 .lr.ph108.split:                                  ; preds = %.lr.ph108, %FindHashSig.exit.thread
-  %i.di = phi ptr [ %6, %FindHashSig.exit.thread ], [ %i.db, %.lr.ph108 ] ; 3 uses
-  %.2106 = phi i16 [ %.3, %FindHashSig.exit.thread ], [ 0, %.lr.ph108 ] ; 4 uses
+  %i.di = phi ptr [ %9, %FindHashSig.exit.thread ], [ %i.db, %.lr.ph108 ] ; 5 uses
+  %.2106 = phi i16 [ %.3, %FindHashSig.exit.thread ], [ 0, %.lr.ph108 ] ; 6 uses
   %.186105 = phi i16 [ %i.eh, %FindHashSig.exit.thread ], [ 0, %.lr.ph108 ] ; 3 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 304 ; 3 uses
   %i.dk = zext i16 %.186105 to i64
@@ -216,17 +216,18 @@ bb.v:                                             ; preds = %.lr.ph, %bb.u
   %i.do = zext i16 %i.dn to i64                   ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.do
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !52
-  %i.dr = load i16, ptr %i.de, align 2, !tbaa !279 ; 2 uses
-  %switch = icmp ult i16 %i.dr, 2
-  br i1 %switch, label %FindHashSig.exit.thread, label %.lr.ph.preheader.i
+  %i.dr = load i16, ptr %i.de, align 2, !tbaa !279 ; 3 uses
+  %3 = icmp eq i16 %i.dr, 0
+  br i1 %3, label %FindHashSig.exit.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph108.split
-  %3 = add i16 %i.dr, -1
-  %4 = zext i16 %3 to i64
-  br label %.lr.ph.i
+  %4 = zext i16 %i.dr to i32
+  %5 = add nsw i32 %4, -1
+  %.not.i = icmp eq i16 %i.dr, 1
+  br i1 %.not.i, label %FindHashSig.exit.thread, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.x, %.lr.ph.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %bb.x
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.df, i64 %indvars.iv ; 2 uses
   %i.dt = load i8, ptr %i.ds, align 2, !tbaa !52
   %i.du = icmp eq i8 %i.dt, %i.dm
@@ -236,14 +237,20 @@ bb.w:                                             ; preds = %.lr.ph.i
   %i.dv = getelementptr inbounds nuw i8, ptr %i.ds, i64 1
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !52
   %i.dx = icmp eq i8 %i.dw, %i.dq
-  br i1 %i.dx, label %FindHashSig.exit.a, label %bb.x
+  br i1 %i.dx, label %FindHashSig.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.lr.ph.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next, %4
-  br i1 %5, label %.lr.ph.i, label %FindHashSig.exit.thread, !llvm.loop !275
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %6 = icmp sgt i32 %5, %indvars
+  br i1 %6, label %.lr.ph.i, label %FindHashSig.exit.thread, !llvm.loop !275
 
-FindHashSig.exit.a:                               ; preds = %bb.w
+FindHashSig.exit:                                 ; preds = %bb.w
+  %7 = and i64 %indvars.iv, 2147483648
+  %8 = icmp eq i64 %7, 0
+  br i1 %8, label %FindHashSig.exit.a, label %FindHashSig.exit.thread
+
+FindHashSig.exit.a:                               ; preds = %FindHashSig.exit
   %i.dy = zext i16 %.2106 to i64                  ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.dy
   store i8 %i.dm, ptr %i.dz, align 1, !tbaa !52
@@ -258,17 +265,17 @@ FindHashSig.exit.a:                               ; preds = %bb.w
   %.pre = load ptr, ptr %i.aa, align 8, !tbaa !154
   br label %FindHashSig.exit.thread
 
-FindHashSig.exit.thread:                          ; preds = %bb.x, %.lr.ph108.split, %FindHashSig.exit.a
-  %6 = phi ptr [ %.pre, %FindHashSig.exit.a ], [ %i.di, %.lr.ph108.split ], [ %i.di, %bb.x ] ; 3 uses
-  %.3 = phi i16 [ %i.eg, %FindHashSig.exit.a ], [ %.2106, %.lr.ph108.split ], [ %.2106, %bb.x ] ; 2 uses
+FindHashSig.exit.thread:                          ; preds = %bb.x, %.lr.ph.preheader.i, %.lr.ph108.split, %FindHashSig.exit, %FindHashSig.exit.a
+  %9 = phi ptr [ %.pre, %FindHashSig.exit.a ], [ %i.di, %FindHashSig.exit ], [ %i.di, %.lr.ph108.split ], [ %i.di, %.lr.ph.preheader.i ], [ %i.di, %bb.x ] ; 3 uses
+  %.3 = phi i16 [ %i.eg, %FindHashSig.exit.a ], [ %.2106, %FindHashSig.exit ], [ %.2106, %.lr.ph108.split ], [ %.2106, %.lr.ph.preheader.i ], [ %.2106, %bb.x ] ; 2 uses
   %i.eh = add i16 %.186105, 2                     ; 2 uses
-  %i.ei = getelementptr inbounds nuw i8, ptr %6, i64 2
+  %i.ei = getelementptr inbounds nuw i8, ptr %9, i64 2
   %i.ej = load i16, ptr %i.ei, align 2, !tbaa !279
   %i.ek = icmp ult i16 %i.eh, %i.ej
   br i1 %i.ek, label %.lr.ph108.split, label %._crit_edge109, !llvm.loop !276
 
 ._crit_edge109:                                   ; preds = %FindHashSig.exit.thread, %.lr.ph108, %._crit_edge
-  %.lcssa104 = phi ptr [ %i.db, %._crit_edge ], [ %i.db, %.lr.ph108 ], [ %6, %FindHashSig.exit.thread ]
+  %.lcssa104 = phi ptr [ %i.db, %._crit_edge ], [ %i.db, %.lr.ph108 ], [ %9, %FindHashSig.exit.thread ]
   %.2.lcssa = phi i16 [ 0, %._crit_edge ], [ 0, %.lr.ph108 ], [ %.3, %FindHashSig.exit.thread ]
   %i.el = getelementptr inbounds nuw i8, ptr %.lcssa104, i64 2
   store i16 %.2.lcssa, ptr %i.el, align 2, !tbaa !279

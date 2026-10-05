@@ -205,6 +205,7 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %.not157.i, label %._crit_edge.thread.i37, label %.lr.ph.i26
 
 .lr.ph.i26:                                       ; preds = %bb.an
+  %wide.trip.count.i27 = zext i8 %i.el to i64     ; 4 uses
   %i.en = load i16, ptr %i.dt, align 2, !tbaa !40
   %i.eo = zext i16 %i.en to i64
   %i.ep = getelementptr inbounds nuw [64 x i8], ptr %.pre.i25, i64 %i.eo
@@ -214,22 +215,20 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %i.es, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.i26
-  %4 = zext i8 %i.el to i64
-  %wide.trip.count = add nsw i64 %4, -1           ; 2 uses
-  %exitcond.not148 = icmp eq i64 %wide.trip.count, 0
+  %exitcond.not148 = icmp eq i8 %i.el, 1
   br i1 %exitcond.not148, label %._crit_edge.i27, label %.lr.ph150, !llvm.loop !101
 
 .lr.ph150:                                        ; preds = %.lr.ph.preheader
   br label %bb.ao, !llvm.loop !101
 
 .lr.ph:                                           ; preds = %bb.ao
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %indvars.iv.next.i29 = add nuw nsw i64 %indvars.iv149, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i29, %wide.trip.count.i27
   br i1 %exitcond.not, label %.lr.ph.._crit_edge.i27_crit_edge, label %bb.ao, !llvm.loop !101
 
 bb.ao:                                            ; preds = %.lr.ph150, %.lr.ph
-  %indvars.iv149 = phi i64 [ 0, %.lr.ph150 ], [ %indvars.iv.next, %.lr.ph ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv149, 1 ; 4 uses
-  %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %indvars.iv.next
+  %indvars.iv149 = phi i64 [ 1, %.lr.ph150 ], [ %indvars.iv.next.i29, %.lr.ph ] ; 3 uses
+  %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %indvars.iv149
   %i.eu = load i16, ptr %i.et, align 2, !tbaa !40
   %i.ev = zext i16 %i.eu to i64
   %i.ew = getelementptr inbounds nuw [64 x i8], ptr %.pre.i25, i64 %i.ev
@@ -239,7 +238,7 @@ bb.ao:                                            ; preds = %.lr.ph150, %.lr.ph
   br i1 %i.ez, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !101
 
 ._crit_edge.loopexit:                             ; preds = %bb.ao
-  %i.fa = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.fa = trunc nuw nsw i64 %indvars.iv149 to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph.i26
@@ -251,8 +250,7 @@ bb.ao:                                            ; preds = %.lr.ph150, %.lr.ph
   br label %._crit_edge.i27, !llvm.loop !101
 
 ._crit_edge.i27:                                  ; preds = %.lr.ph.._crit_edge.i27_crit_edge, %.lr.ph.preheader
-  %5 = zext i8 %i.el to i64                       ; 3 uses
-  %i.fc = shl nuw nsw i64 %5, 6
+  %i.fc = shl nuw nsw i64 %wide.trip.count.i27, 6
   %i.fd = tail call ptr @opj_malloc(i64 noundef %i.fc) #6 ; 8 uses
   %.not.i28 = icmp eq ptr %i.fd, null
   br i1 %.not.i28, label %bb.ap, label %.lr.ph136.i
@@ -333,7 +331,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.go = getelementptr inbounds nuw i8, ptr %i.ga, i64 32
   store i32 %i.gn, ptr %i.go, align 8, !tbaa !50
   %indvars.iv.next.i31 = add nuw nsw i64 %indvars.iv.i30, 1 ; 2 uses
-  %exitcond.not.i32 = icmp eq i64 %indvars.iv.next.i31, %5
+  %exitcond.not.i32 = icmp eq i64 %indvars.iv.next.i31, %wide.trip.count.i27
   br i1 %exitcond.not.i32, label %._crit_edge137.i, label %.lr.ph136.i, !llvm.loop !103
 
 ._crit_edge137.i:                                 ; preds = %bb.as
@@ -528,7 +526,7 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph141.i
 
 .loopexit.i33:                                    ; preds = %.epil.preheader192, %.loopexit.i33.loopexit178.unr-lcssa, %.lr.ph144.i.prol.loopexit, %.lr.ph144.i, %middle.block, %bb.au, %bb.at
   %indvars.iv.next182.i = add nuw nsw i64 %indvars.iv181.i, 1 ; 2 uses
-  %exitcond185.not.i = icmp eq i64 %indvars.iv.next182.i, %5
+  %exitcond185.not.i = icmp eq i64 %indvars.iv.next182.i, %wide.trip.count.i27
   br i1 %exitcond185.not.i, label %._crit_edge148.i, label %.lr.ph147.i, !llvm.loop !108
 
 ._crit_edge148.i:                                 ; preds = %.loopexit.i33, %._crit_edge.thread.i37

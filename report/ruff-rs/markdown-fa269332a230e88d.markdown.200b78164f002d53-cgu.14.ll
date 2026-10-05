@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.j
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %i.an
   %i.av = load i8, ptr %i.au, align 1, !noundef !3
   %i.aw = icmp eq i8 %i.av, 47
-  %i.ax = add nuw i64 %.sroa.0.0131, 2
+  %i.ax = add nuw nsw i64 %.sroa.0.0131, 2
   %spec.select = select i1 %i.aw, i64 %i.ax, i64 %i.an
   br label %bb.l
 
@@ -225,7 +225,7 @@ bb.m:                                             ; preds = %bb.j
 
 .lr.ph288:                                        ; preds = %.lr.ph135.preheader, %.lr.ph135
   %.sroa.020.0133287 = phi i64 [ %i.bd, %.lr.ph135 ], [ %.sroa.010.0, %.lr.ph135.preheader ]
-  %i.bd = add nuw i64 %.sroa.020.0133287, 1       ; 6 uses
+  %i.bd = add nuw nsw i64 %.sroa.020.0133287, 1   ; 6 uses
   %i.be = icmp ult i64 %i.bd, %2                  ; 2 uses
   %i.bf = sub nuw i64 %i.bd, %.sroa.010.0         ; 3 uses
   %i.bg = icmp samesign ult i64 %i.bf, 9
@@ -628,7 +628,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2KzzoC5ewhj_8markdown.exit
-  %.sroa.0.0.ph156 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %i.cc, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2KzzoC5ewhj_8markdown.exit ] ; 10 uses
+  %.sroa.0.0.ph156 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %i.cc, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2KzzoC5ewhj_8markdown.exit ] ; 9 uses
   br label %bb.i
 
 .outer._crit_edge:                                ; preds = %._crit_edge
@@ -712,11 +712,11 @@ bb.h:                                             ; preds = %bb.e, %.noexc56
   ret void
 
 bb.i:                                             ; preds = %.lr.ph, %._crit_edge
-  %.sroa.018.0153 = phi i64 [ %.sroa.0.0.ph156, %.lr.ph ], [ %i.ai, %._crit_edge ] ; 8 uses
+  %.sroa.018.0153 = phi i64 [ %.sroa.0.0.ph156, %.lr.ph ], [ %i.ai, %._crit_edge ] ; 7 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.018.0153
   %i.ag = load i8, ptr %i.af, align 1, !noundef !3
   %i.ah = icmp eq i8 %i.ag, 38
-  %i.ai = add i64 %.sroa.018.0153, 1              ; 6 uses
+  %i.ai = add nuw nsw i64 %.sroa.018.0153, 1      ; 6 uses
   br i1 %i.ah, label %bb.j, label %._crit_edge
 
 bb.j:                                             ; preds = %bb.i
@@ -730,7 +730,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.am, label %bb.l, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util19character_reference10value_test.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.an = add nuw i64 %.sroa.018.0153, 2          ; 4 uses
+  %i.an = add nuw nsw i64 %.sroa.018.0153, 2      ; 4 uses
   %i.ao = icmp ult i64 %i.an, %2
   br i1 %i.ao, label %bb.m, label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util19character_reference10value_test.exit
 
@@ -743,7 +743,7 @@ bb.m:                                             ; preds = %bb.l
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
-  %i.ar = add nuw i64 %.sroa.018.0153, 3
+  %i.ar = add nuw nsw i64 %.sroa.018.0153, 3
   br label %_RNvNtNtCs2KzzoC5ewhj_8markdown4util19character_reference10value_test.exit
 
 _RNvNtNtCs2KzzoC5ewhj_8markdown4util19character_reference10value_test.exit: ; preds = %bb.l, %bb.m, %bb.j, %bb.k, %bb.n
@@ -839,14 +839,10 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
-  %.not.i62 = icmp ugt i64 %.sroa.0.0.ph156, %.sroa.018.0153
-  br i1 %.not.i62, label %bb.ai, label %3
+  %3 = icmp eq i64 %.sroa.0.0.ph156, 0
+  br i1 %3, label %bb.ag, label %bb.ad
 
-3:                                                ; preds = %bb.ac
-  %4 = icmp eq i64 %.sroa.0.0.ph156, 0
-  br i1 %4, label %bb.ag, label %bb.ad
-
-bb.ad:                                            ; preds = %3
+bb.ad:                                            ; preds = %bb.ac
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.ph156
   %i.bi = load i8, ptr %i.bh, align 1, !alias.scope !97, !noundef !3
   %i.bj = icmp sgt i8 %i.bi, -65
@@ -871,7 +867,7 @@ bb.af:                                            ; preds = %.loopexit.split-lp1
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2KzzoC5ewhj_8markdown(ptr noalias noundef align 8 dereferenceable(24) %i.c) #19
           to label %.body unwind label %bb.ao
 
-bb.ag:                                            ; preds = %3, %bb.ad
+bb.ag:                                            ; preds = %bb.ac, %bb.ad
   %i.bk = sub nuw nsw i64 %.sroa.018.0153, %.sroa.0.0.ph156 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.ph156
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs2KzzoC5ewhj_8markdown(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.f, i64 noundef %i.bk)
@@ -891,7 +887,7 @@ bb.ah:                                            ; preds = %.noexc68
   %.pre.i67 = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !98
   br label %bb.aj
 
-bb.ai:                                            ; preds = %bb.ad, %bb.ac
+bb.ai:                                            ; preds = %bb.ad
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.0.0.ph156, i64 noundef %.sroa.018.0153, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @536) #18
           to label %bb.g unwind label %.loopexit.split-lp116
 

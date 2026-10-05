@@ -205,16 +205,19 @@ bb.a:
   %i.g = call fastcc noundef i64 @_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc17compress_fragment30BuildAndStoreLiteralPrefixCodeNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocECskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %..i, ptr noalias nofree noundef nonnull %i.c, ptr noalias nofree noundef nonnull align 2 %i.b, ptr noalias nofree noundef align 8 dereferenceable(8) %15, ptr noalias nofree noundef nonnull %16, i64 noundef %17)
   %i.h = load i64, ptr %12, align 8, !noundef !6  ; 4 uses
   %i.i = icmp ugt i64 %i.h, 7
-  br i1 %i.i, label %.lr.ph, label %._crit_edge
+  br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.not2286 = icmp eq i64 %14, 0
+  br i1 %.not2286, label %bb.di, label %bb.dh
 
 ._crit_edge:                                      ; preds = %bb.dh, %bb.a
   %i.j = lshr i64 %i.h, 3                         ; 3 uses
   %i.k = icmp samesign ult i64 %i.j, %14
   br i1 %i.k, label %bb.b, label %bb.c
 
-.lr.ph:                                           ; preds = %bb.a, %bb.dh
-  %.sroa.026.0778 = phi i64 [ %i.kj, %bb.dh ], [ 0, %bb.a ] ; 2 uses
-  %i.l = lshr exact i64 %.sroa.026.0778, 3        ; 3 uses
+.lr.ph:                                           ; preds = %bb.dh
+  %i.l = lshr exact i64 %i.kj, 3                  ; 2 uses
   %i.m = icmp samesign ult i64 %i.l, %14
   br i1 %i.m, label %bb.dh, label %bb.di
 
@@ -617,18 +620,20 @@ bb.dg:                                            ; preds = %bb.de
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.ka, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #16
   unreachable
 
-bb.dh:                                            ; preds = %.lr.ph
-  %i.kg = getelementptr inbounds nuw i8, ptr %13, i64 %i.l
+bb.dh:                                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %18 = phi i64 [ %i.l, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.sroa.026.07782284 = phi i64 [ %i.kj, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %i.kg = getelementptr inbounds nuw i8, ptr %13, i64 %18
   %i.kh = load i8, ptr %i.kg, align 1, !noundef !6
   %i.ki = zext i8 %i.kh to i64
   call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc26compress_fragment_two_pass15BrotliWriteBits(i64 noundef 8, i64 noundef %i.ki, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %15, ptr noalias nofree noundef nonnull %16, i64 noundef %17)
-  %i.kj = add i64 %.sroa.026.0778, 8              ; 2 uses
+  %i.kj = add nuw i64 %.sroa.026.07782284, 8      ; 3 uses
   %i.kk = or disjoint i64 %i.kj, 7
   %i.kl = icmp ult i64 %i.kk, %i.h
   br i1 %i.kl, label %.lr.ph, label %._crit_edge
 
-bb.di:                                            ; preds = %.lr.ph
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #16
+bb.di:                                            ; preds = %.lr.ph, %.lr.ph.preheader
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %14, i64 noundef %14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #16
   unreachable
 }
 
@@ -1031,7 +1036,7 @@ _RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINt
 
 .lr.ph.i.i:                                       ; preds = %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H2SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H2SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i
   %.sroa.01.021.i.i = phi i64 [ %i.ih, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H2SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i ], [ %.sroa.0.0.i.i.i, %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H2SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i ] ; 3 uses
-  %i.ih = add i64 %.sroa.01.021.i.i, 1            ; 2 uses
+  %i.ih = add nuw i64 %.sroa.01.021.i.i, 1        ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !768)
   %i.ii = and i64 %.sroa.01.021.i.i, %6           ; 3 uses
   %.not.i.i6.i.i = icmp ugt i64 %i.ii, %5
@@ -1434,7 +1439,7 @@ _RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINt
 
 .lr.ph.i.i112:                                    ; preds = %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H3SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H3SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i
   %.sroa.01.021.i.i113 = phi i64 [ %i.rx, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H3SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i ], [ %.sroa.0.0.i.i.i111, %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H3SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i ] ; 4 uses
-  %i.rx = add i64 %.sroa.01.021.i.i113, 1         ; 2 uses
+  %i.rx = add nuw i64 %.sroa.01.021.i.i113, 1     ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !841)
   %i.ry = and i64 %.sroa.01.021.i.i113, %6        ; 3 uses
   %.not.i.i6.i.i114 = icmp ugt i64 %i.ry, %5
@@ -1837,7 +1842,7 @@ _RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINt
 
 .lr.ph.i.i219:                                    ; preds = %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H4SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H4SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i
   %.sroa.01.021.i.i220 = phi i64 [ %i.abt, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H4SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i ], [ %.sroa.0.0.i.i.i218, %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_5H4SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i ] ; 4 uses
-  %i.abt = add i64 %.sroa.01.021.i.i220, 1        ; 2 uses
+  %i.abt = add nuw i64 %.sroa.01.021.i.i220, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !914)
   %i.abu = and i64 %.sroa.01.021.i.i220, %6       ; 3 uses
   %.not.i.i6.i.i221 = icmp ugt i64 %i.abu, %5
@@ -2240,7 +2245,7 @@ _RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINt
 
 .lr.ph.i.i324:                                    ; preds = %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_6H54SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_6H54SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i
   %.sroa.01.021.i.i325 = phi i64 [ %i.alm, %_RNvXs1_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_6H54SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i109.i ], [ %.sroa.0.0.i.i.i323, %_RNvMs0_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_11BasicHasherINtB5_6H54SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEE18StoreRangeOptBasicCskeugdADtBsi_12pingora_core.exit.i.i ] ; 4 uses
-  %i.alm = add i64 %.sroa.01.021.i.i325, 1        ; 2 uses
+  %i.alm = add nuw i64 %.sroa.01.021.i.i325, 1    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !987)
   %i.aln = and i64 %.sroa.01.021.i.i325, %6       ; 3 uses
   %.not.i.i6.i.i326 = icmp ugt i64 %i.aln, %5
@@ -2643,7 +2648,7 @@ bb.na:                                            ; preds = %bb.my
   unreachable
 
 bb.nb:                                            ; preds = %bb.mz
-  %i.bdc = add nuw i64 %i.bcy, 2                  ; 3 uses
+  %i.bdc = add nuw nsw i64 %i.bcy, 2              ; 3 uses
   %i.bdd = icmp ult i64 %i.bdc, %5
   br i1 %i.bdd, label %bb.nd, label %bb.ne
 
@@ -2652,7 +2657,7 @@ bb.nc:                                            ; preds = %bb.mz
   unreachable
 
 bb.nd:                                            ; preds = %bb.nb
-  %i.bde = add nuw i64 %i.bcy, 3                  ; 3 uses
+  %i.bde = add nuw nsw i64 %i.bcy, 3              ; 3 uses
   %i.bdf = icmp ult i64 %i.bde, %5
   br i1 %i.bdf, label %bb.nf, label %bb.ng
 
@@ -2661,7 +2666,7 @@ bb.ne:                                            ; preds = %bb.nb
   unreachable
 
 bb.nf:                                            ; preds = %bb.nd
-  %i.bdg = add nuw i64 %i.bcy, 4                  ; 3 uses
+  %i.bdg = add nuw nsw i64 %i.bcy, 4              ; 3 uses
   %i.bdh = icmp ult i64 %i.bdg, %5
   br i1 %i.bdh, label %bb.nh, label %bb.ni
 
@@ -2670,7 +2675,7 @@ bb.ng:                                            ; preds = %bb.nd
   unreachable
 
 bb.nh:                                            ; preds = %bb.nf
-  %i.bdi = add nuw i64 %i.bcy, 5                  ; 3 uses
+  %i.bdi = add nuw nsw i64 %i.bcy, 5              ; 3 uses
   %i.bdj = icmp ult i64 %i.bdi, %5
   br i1 %i.bdj, label %bb.nj, label %bb.nk
 
@@ -2679,7 +2684,7 @@ bb.ni:                                            ; preds = %bb.nf
   unreachable
 
 bb.nj:                                            ; preds = %bb.nh
-  %i.bdk = add nuw i64 %i.bcy, 6                  ; 3 uses
+  %i.bdk = add nuw nsw i64 %i.bcy, 6              ; 3 uses
   %i.bdl = icmp ult i64 %i.bdk, %5
   br i1 %i.bdl, label %bb.nl, label %bb.nm
 
@@ -2849,7 +2854,7 @@ _RNvMsm_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5
 
 .lr.ph.i.i378:                                    ; preds = %_RNvMsm_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocE18StoreRangeOptBatchCskeugdADtBsi_12pingora_core.exit.i.i, %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i
   %.sroa.01.0149.i.i = phi i64 [ %i.bgq, %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i ], [ %.sroa.0.0.i.i.i377, %_RNvMsm_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocE18StoreRangeOptBatchCskeugdADtBsi_12pingora_core.exit.i.i ] ; 3 uses
-  %i.bgq = add i64 %.sroa.01.0149.i.i, 1          ; 2 uses
+  %i.bgq = add nuw i64 %.sroa.01.0149.i.i, 1      ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1042)
   %i.bgr = and i64 %.sroa.01.0149.i.i, %6         ; 3 uses
   %.not.i.i77.i = icmp ugt i64 %i.bgr, %5
@@ -3252,7 +3257,7 @@ bb.tg:                                            ; preds = %.lr.ph.i.i.i431
   unreachable
 
 bb.th:                                            ; preds = %bb.tf
-  %i.bxt = add nuw i64 %i.bxp, 2                  ; 4 uses
+  %i.bxt = add nuw nsw i64 %i.bxp, 2              ; 4 uses
   %i.bxu = icmp ult i64 %i.bxt, %5
   br i1 %i.bxu, label %bb.tj, label %bb.tk
 
@@ -3261,7 +3266,7 @@ bb.ti:                                            ; preds = %bb.tf
   unreachable
 
 bb.tj:                                            ; preds = %bb.th
-  %i.bxv = add nuw i64 %i.bxp, 3                  ; 4 uses
+  %i.bxv = add nuw nsw i64 %i.bxp, 3              ; 4 uses
   %i.bxw = icmp ult i64 %i.bxv, %5
   br i1 %i.bxw, label %bb.tl, label %bb.tm
 
@@ -3270,7 +3275,7 @@ bb.tk:                                            ; preds = %bb.th
   unreachable
 
 bb.tl:                                            ; preds = %bb.tj
-  %i.bxx = add nuw i64 %i.bxp, 4                  ; 3 uses
+  %i.bxx = add nuw nsw i64 %i.bxp, 4              ; 3 uses
   %i.bxy = icmp ult i64 %i.bxx, %5
   br i1 %i.bxy, label %bb.tn, label %bb.to
 
@@ -3279,7 +3284,7 @@ bb.tm:                                            ; preds = %bb.tj
   unreachable
 
 bb.tn:                                            ; preds = %bb.tl
-  %i.bxz = add nuw i64 %i.bxp, 5                  ; 3 uses
+  %i.bxz = add nuw nsw i64 %i.bxp, 5              ; 3 uses
   %i.bya = icmp ult i64 %i.bxz, %5
   br i1 %i.bya, label %bb.tp, label %bb.tq
 
@@ -3288,7 +3293,7 @@ bb.to:                                            ; preds = %bb.tl
   unreachable
 
 bb.tp:                                            ; preds = %bb.tn
-  %i.byb = add nuw i64 %i.bxp, 6                  ; 3 uses
+  %i.byb = add nuw nsw i64 %i.bxp, 6              ; 3 uses
   %i.byc = icmp ult i64 %i.byb, %5
   br i1 %i.byc, label %bb.tr, label %bb.ts
 
@@ -3412,7 +3417,7 @@ _RNvMsm_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6
 
 .lr.ph.i.i439:                                    ; preds = %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6HQ7SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i, %.lr.ph.i.preheader.i
   %.sroa.01.037.i.i = phi i64 [ %i.cbg, %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6HQ7SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i ], [ %.sroa.0.0.i.i.i434, %.lr.ph.i.preheader.i ] ; 3 uses
-  %i.cbg = add i64 %.sroa.01.037.i.i, 1           ; 2 uses
+  %i.cbg = add nuw i64 %.sroa.01.037.i.i, 1       ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1093)
   %i.cbh = and i64 %.sroa.01.037.i.i, %6          ; 3 uses
   %.not.i.i77.i440 = icmp ugt i64 %i.cbh, %5
@@ -3815,7 +3820,7 @@ bb.yv:                                            ; preds = %.lr.ph.i.i.i507
   unreachable
 
 bb.yw:                                            ; preds = %bb.yu
-  %i.csb = add nuw i64 %i.crx, 2                  ; 4 uses
+  %i.csb = add nuw nsw i64 %i.crx, 2              ; 4 uses
   %i.csc = icmp ult i64 %i.csb, %5
   br i1 %i.csc, label %bb.yy, label %bb.yz
 
@@ -3824,7 +3829,7 @@ bb.yx:                                            ; preds = %bb.yu
   unreachable
 
 bb.yy:                                            ; preds = %bb.yw
-  %i.csd = add nuw i64 %i.crx, 3                  ; 4 uses
+  %i.csd = add nuw nsw i64 %i.crx, 3              ; 4 uses
   %i.cse = icmp ult i64 %i.csd, %5
   br i1 %i.cse, label %bb.za, label %bb.zb
 
@@ -3833,7 +3838,7 @@ bb.yz:                                            ; preds = %bb.yw
   unreachable
 
 bb.za:                                            ; preds = %bb.yy
-  %i.csf = add nuw i64 %i.crx, 4                  ; 3 uses
+  %i.csf = add nuw nsw i64 %i.crx, 4              ; 3 uses
   %i.csg = icmp ult i64 %i.csf, %5
   br i1 %i.csg, label %bb.zc, label %bb.zd
 
@@ -3842,7 +3847,7 @@ bb.zb:                                            ; preds = %bb.yy
   unreachable
 
 bb.zc:                                            ; preds = %bb.za
-  %i.csh = add nuw i64 %i.crx, 5                  ; 3 uses
+  %i.csh = add nuw nsw i64 %i.crx, 5              ; 3 uses
   %i.csi = icmp ult i64 %i.csh, %5
   br i1 %i.csi, label %bb.ze, label %bb.zf
 
@@ -3851,7 +3856,7 @@ bb.zd:                                            ; preds = %bb.za
   unreachable
 
 bb.ze:                                            ; preds = %bb.zc
-  %i.csj = add nuw i64 %i.crx, 6                  ; 3 uses
+  %i.csj = add nuw nsw i64 %i.crx, 6              ; 3 uses
   %i.csk = icmp ult i64 %i.csj, %5
   br i1 %i.csk, label %bb.zg, label %bb.zh
 
@@ -3975,7 +3980,7 @@ _RNvMsm_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6
 
 .lr.ph.i.i521:                                    ; preds = %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6HQ5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i, %.lr.ph.i.preheader.i516
   %.sroa.01.037.i.i522 = phi i64 [ %i.cvo, %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_6HQ5SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i ], [ %.sroa.0.0.i.i.i515, %.lr.ph.i.preheader.i516 ] ; 3 uses
-  %i.cvo = add i64 %.sroa.01.037.i.i522, 1        ; 2 uses
+  %i.cvo = add nuw i64 %.sroa.01.037.i.i522, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1145)
   %i.cvp = and i64 %.sroa.01.037.i.i522, %6       ; 3 uses
   %.not.i.i77.i523 = icmp ugt i64 %i.cvp, %5
@@ -4378,7 +4383,7 @@ bb.aay:                                           ; preds = %_RNvNtNtCsiRgJJXJ4l
 
 .lr.ph.i.i578:                                    ; preds = %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H6SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i, %.lr.ph.i.preheader.i571
   %.sroa.01.03.i.i = phi i64 [ %i.dbj, %_RNvXsn_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_9AdvHasherNtB5_5H6SubNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i ], [ %i.dbb, %.lr.ph.i.preheader.i571 ] ; 3 uses
-  %i.dbj = add i64 %.sroa.01.03.i.i, 1            ; 2 uses
+  %i.dbj = add nuw i64 %.sroa.01.03.i.i, 1        ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1173)
   %i.dbk = and i64 %.sroa.01.03.i.i, %6           ; 3 uses
   %.not.i.i.i579 = icmp ugt i64 %i.dbk, %5
@@ -4781,7 +4786,7 @@ bb.acp:                                           ; preds = %_RNvNtNtCsiRgJJXJ4l
 
 .lr.ph.i.i637:                                    ; preds = %_RNvXsg_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_2H9NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i, %.lr.ph.i.preheader.i632
   %.sroa.0.03.i.i = phi i64 [ %i.dgx, %_RNvXsg_NtNtCsiRgJJXJ4lb7_6brotli3enc19backward_referencesINtB5_2H9NtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocENtB5_9AnyHasher5StoreCskeugdADtBsi_12pingora_core.exit.i ], [ %i.dgt, %.lr.ph.i.preheader.i632 ] ; 3 uses
-  %i.dgx = add i64 %.sroa.0.03.i.i, 1             ; 2 uses
+  %i.dgx = add nuw i64 %.sroa.0.03.i.i, 1         ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1201)
   %i.dgy = and i64 %.sroa.0.03.i.i, %6            ; 3 uses
   %.not.i.i.i638 = icmp ugt i64 %i.dgy, %5

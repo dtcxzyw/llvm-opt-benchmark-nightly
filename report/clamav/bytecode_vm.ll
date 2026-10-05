@@ -204,7 +204,7 @@ bb.bzj:                                           ; preds = %bb.bzf
   %.25365 = load i64, ptr %i.jcp, align 8, !tbaa !76 ; 4 uses
   %i.jcq = lshr i64 %.25365, 32                   ; 2 uses
   %i.jcr = trunc nuw i64 %i.jcq to i32            ; 2 uses
-  %i.jcs = trunc i64 %.25365 to i32               ; 2 uses
+  %i.jcs = trunc i64 %.25365 to i32
   %.not.i11110 = icmp eq i64 %i.jcq, 0
   br i1 %.not.i11110, label %allocate_stack.exit.thread, label %bb.bzk, !prof !105
 
@@ -239,12 +239,9 @@ bb.bzo:                                           ; preds = %bb.bzn
 bb.bzp:                                           ; preds = %bb.bzo, %bb.bzm
   %.0.i11111 = phi ptr [ %i.jcy, %bb.bzm ], [ %i.jdd, %bb.bzo ] ; 2 uses
   %i.jde = getelementptr inbounds nuw i8, ptr %.0.i11111, i64 8
-  %i.jdf = load i32, ptr %i.jde, align 8, !tbaa !14 ; 2 uses
+  %i.jdf = load i32, ptr %i.jde, align 8, !tbaa !14
   %i.jdg = icmp ugt i32 %i.jdf, %i.jcs
-  %7 = add i32 %i.jcs, 1
-  %8 = icmp ule i32 %7, %i.jdf
-  %9 = and i1 %8, %i.jdg
-  br i1 %9, label %bb.bzq, label %allocate_stack.exit.thread, !prof !22
+  br i1 %i.jdg, label %bb.bzq, label %allocate_stack.exit.thread, !prof !22
 
 bb.bzq:                                           ; preds = %bb.bzp
   %i.jdh = load ptr, ptr %.0.i11111, align 8, !tbaa !13 ; 2 uses
@@ -573,7 +570,7 @@ bb.cav:                                           ; preds = %bb.car
   %.25340 = load i64, ptr %i.jhl, align 8, !tbaa !76 ; 4 uses
   %i.jhm = lshr i64 %.25340, 32                   ; 2 uses
   %i.jhn = trunc nuw i64 %i.jhm to i32            ; 2 uses
-  %i.jho = trunc i64 %.25340 to i32               ; 2 uses
+  %i.jho = trunc i64 %.25340 to i32
   %.not.i11112 = icmp eq i64 %i.jhm, 0
   br i1 %.not.i11112, label %allocate_stack.exit.thread, label %bb.caw, !prof !105
 
@@ -608,12 +605,9 @@ bb.cba:                                           ; preds = %bb.caz
 bb.cbb:                                           ; preds = %bb.cba, %bb.cay
   %.0.i11115 = phi ptr [ %i.jhu, %bb.cay ], [ %i.jhz, %bb.cba ] ; 2 uses
   %i.jia = getelementptr inbounds nuw i8, ptr %.0.i11115, i64 8
-  %i.jib = load i32, ptr %i.jia, align 8, !tbaa !14 ; 2 uses
+  %i.jib = load i32, ptr %i.jia, align 8, !tbaa !14
   %i.jic = icmp ugt i32 %i.jib, %i.jho
-  %10 = add i32 %i.jho, 1
-  %11 = icmp ule i32 %10, %i.jib
-  %12 = and i1 %11, %i.jic
-  br i1 %12, label %bb.cbc, label %allocate_stack.exit.thread, !prof !22
+  br i1 %i.jic, label %bb.cbc, label %allocate_stack.exit.thread, !prof !22
 
 bb.cbc:                                           ; preds = %bb.cbb
   %i.jid = load ptr, ptr %.0.i11115, align 8, !tbaa !13 ; 2 uses
@@ -704,7 +698,7 @@ bb.cbm:                                           ; preds = %bb.cbi
   %.25333 = load i64, ptr %i.jjd, align 8, !tbaa !76 ; 4 uses
   %i.jje = lshr i64 %.25333, 32                   ; 2 uses
   %i.jjf = trunc nuw i64 %i.jje to i32            ; 2 uses
-  %i.jjg = trunc i64 %.25333 to i32               ; 2 uses
+  %i.jjg = trunc i64 %.25333 to i32
   %.not.i11119 = icmp eq i64 %i.jje, 0
   br i1 %.not.i11119, label %allocate_stack.exit.thread, label %bb.cbn, !prof !105
 
@@ -739,12 +733,9 @@ bb.cbr:                                           ; preds = %bb.cbq
 bb.cbs:                                           ; preds = %bb.cbr, %bb.cbp
   %.0.i11122 = phi ptr [ %i.jjm, %bb.cbp ], [ %i.jjr, %bb.cbr ] ; 2 uses
   %i.jjs = getelementptr inbounds nuw i8, ptr %.0.i11122, i64 8
-  %i.jjt = load i32, ptr %i.jjs, align 8, !tbaa !14 ; 2 uses
+  %i.jjt = load i32, ptr %i.jjs, align 8, !tbaa !14
   %i.jju = icmp ugt i32 %i.jjt, %i.jjg
-  %13 = add i32 %i.jjg, 1
-  %14 = icmp ule i32 %13, %i.jjt
-  %15 = and i1 %14, %i.jju
-  br i1 %15, label %bb.cbt, label %allocate_stack.exit.thread, !prof !22
+  br i1 %i.jju, label %bb.cbt, label %allocate_stack.exit.thread, !prof !22
 
 bb.cbt:                                           ; preds = %bb.cbs
   %i.jjv = load ptr, ptr %.0.i11122, align 8, !tbaa !13 ; 2 uses

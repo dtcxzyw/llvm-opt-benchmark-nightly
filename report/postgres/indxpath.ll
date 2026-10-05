@@ -202,7 +202,7 @@ declare i32 @bms_subset_compare(ptr noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @get_join_index_paths(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef nonnull readonly captures(none) %3, ptr nofree noundef nonnull readonly captures(none) %4, ptr nofree noundef nonnull readonly captures(none) %5, ptr nofree noundef nonnull captures(none) %6, ptr noundef %7, ptr nofree noundef nonnull captures(none) %8) unnamed_addr #0 {
 bb.a:
-  %9 = alloca %struct.IndexClauseSet, align 8     ; 7 uses
+  %9 = alloca %struct.IndexClauseSet, align 8     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #6
   %i.a = load ptr, ptr %8, align 8
   %i.b = tail call zeroext i1 @list_member(ptr noundef %i.a, ptr noundef %7) #6
@@ -220,13 +220,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.promoted = load i8, ptr %9, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph84, %.critedge70
-  %10 = phi i8 [ %.promoted, %.lr.ph84 ], [ %spec.select, %.critedge70 ]
-  %indvars.iv90 = phi i64 [ 0, %.lr.ph84 ], [ %indvars.iv.next91, %.critedge70 ] ; 7 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv90
+  %indvars.iv91 = phi i64 [ 0, %.lr.ph84 ], [ %indvars.iv.next91, %.critedge70 ] ; 7 uses
+  %10 = phi i8 [ 0, %.lr.ph84 ], [ %spec.select, %.critedge70 ]
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv91
   %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.k, null
@@ -234,7 +233,7 @@ bb.b:                                             ; preds = %.lr.ph84, %.critedg
 
 .lr.ph:                                           ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv90 ; 2 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv91 ; 2 uses
   %i.o = load i32, ptr %i.l, align 4
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %.lr.ph78, label %.critedge
@@ -252,7 +251,7 @@ bb.b:                                             ; preds = %.lr.ph84, %.critedg
   br i1 %i.x, label %bb.c, label %bb.d
 
 .critedge:                                        ; preds = %bb.d, %.lr.ph, %bb.b
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv90
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv91
   %i.z = load ptr, ptr %i.y, align 8              ; 3 uses
   %.not66 = icmp eq ptr %i.z, null
   br i1 %.not66, label %.critedge70, label %.lr.ph80
@@ -297,32 +296,30 @@ bb.e:                                             ; preds = %.critedge72
   br i1 %i.at, label %.split, label %bb.e
 
 .split:                                           ; preds = %.critedge72
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv90 ; 2 uses
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv91 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8
   %i.aw = tail call ptr @lappend(ptr noundef %i.av, ptr noundef nonnull %i.ao) #6
   store ptr %i.aw, ptr %i.au, align 8
   br label %.critedge70
 
 .critedge70:                                      ; preds = %bb.e, %.critedge, %.lr.ph80, %.split
-  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv90 ; 2 uses
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv91 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv90
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv91
   %i.ba = load ptr, ptr %i.az, align 8
   %i.bb = tail call ptr @list_concat(ptr noundef %i.ay, ptr noundef %i.ba) #6 ; 2 uses
   store ptr %i.bb, ptr %i.ax, align 8
   %.not68 = icmp eq ptr %i.bb, null
   %spec.select = select i1 %.not68, i8 %10, i8 1  ; 2 uses
-  %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
+  %indvars.iv.next91 = add nuw nsw i64 %indvars.iv91, 1 ; 2 uses
   %i.bc = load i32, ptr %i.c, align 8
   %i.bd = sext i32 %i.bc to i64
   %i.be = icmp slt i64 %indvars.iv.next91, %i.bd
-  br i1 %i.be, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !26
+  br i1 %i.be, label %bb.b, label %._crit_edge, !llvm.loop !26
 
-._crit_edge.loopexit:                             ; preds = %.critedge70
-  store i8 %spec.select, ptr %9, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader73.preheader
+._crit_edge:                                      ; preds = %.critedge70, %.preheader73.preheader
+  %.lcssa83 = phi i8 [ 0, %.preheader73.preheader ], [ %spec.select, %.critedge70 ]
+  store i8 %.lcssa83, ptr %9, align 8
   call fastcc void @get_index_paths(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, ptr noundef %9, ptr noundef %6)
   %i.bf = load ptr, ptr %8, align 8
   %i.bg = tail call ptr @lappend(ptr noundef %i.bf, ptr noundef %7) #6

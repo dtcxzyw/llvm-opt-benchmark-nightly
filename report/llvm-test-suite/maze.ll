@@ -204,7 +204,7 @@ define dso_local range(i32 0, 2) i32 @ExtendOK(i64 noundef %0, ptr nofree nounde
 bb.a:
   %i.a = tail call i64 @llvm.umin.i64(i64 %2, i64 %4) ; 5 uses
   %i.b = tail call i64 @llvm.umin.i64(i64 %3, i64 %5) ; 11 uses
-  %i.c = tail call i64 @llvm.umax.i64(i64 %2, i64 %4) ; 8 uses
+  %i.c = tail call i64 @llvm.umax.i64(i64 %2, i64 %4) ; 7 uses
   %i.d = load ptr, ptr @FIRST, align 8, !tbaa !23
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %0
   %i.f = load i64, ptr %i.e, align 8, !tbaa !15   ; 2 uses
@@ -258,7 +258,7 @@ bb.f:                                             ; preds = %.preheader148
   br i1 %.not.i, label %SegmentFree.exit, label %.preheader148, !llvm.loop !3
 
 SegmentFree.exit:                                 ; preds = %bb.f, %bb.e
-  %i.x = add i64 %i.i, 1                          ; 3 uses
+  %i.x = add nuw i64 %i.i, 1                      ; 3 uses
   %i.y = icmp eq i64 %i.x, %i.c
   %i.z = mul i64 %i.m, %i.b                       ; 2 uses
   br i1 %i.y, label %bb.g, label %bb.j
@@ -282,14 +282,12 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not45.i64, label %SegmentFree.exit65, label %bb.h, !llvm.loop !2
 
 bb.j:                                             ; preds = %SegmentFree.exit
-  %6 = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %i.c) ; 2 uses
-  %i.af = add i64 %i.z, %6
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.x, i64 %i.c)
+  %i.af = add i64 %i.z, %i.x
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %bb.j
   %.150.i56 = phi i64 [ %i.af, %bb.j ], [ %i.aj, %bb.l ] ; 2 uses
-  %.03949.i57 = phi i64 [ %6, %bb.j ], [ %i.ai, %bb.l ]
+  %.03949.i57 = phi i64 [ %i.x, %bb.j ], [ %i.ai, %bb.l ]
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %.150.i56
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !19
   %.not44.i58 = icmp eq i8 %i.ah, 0
@@ -298,7 +296,7 @@ bb.k:                                             ; preds = %bb.l, %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ai = add i64 %.03949.i57, 1                  ; 2 uses
   %i.aj = add i64 %.150.i56, 1
-  %.not.i60 = icmp ugt i64 %i.ai, %7
+  %.not.i60 = icmp ugt i64 %i.ai, %i.c
   br i1 %.not.i60, label %SegmentFree.exit65, label %bb.k, !llvm.loop !3
 
 bb.m:                                             ; preds = %bb.c
@@ -701,7 +699,7 @@ FindFreeHorzSeg.exit145.i:                        ; preds = %bb.n, %bb.m
   %invariant.op.i = or i1 %.not116.i, %.not114.i
   %i.bn = tail call i64 @llvm.umin.i64(i64 %.0154, i64 %.0106369.i) ; 14 uses
   %i.bo = add i64 %i.bn, %.pre273
-  %i.bp = tail call i64 @llvm.umax.i64(i64 %.0154, i64 %.0106369.i) ; 17 uses
+  %i.bp = tail call i64 @llvm.umax.i64(i64 %.0154, i64 %.0106369.i) ; 16 uses
   %i.bq = add i64 %.0106369.i, %i.au
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.0106369.i
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.0106369.i
@@ -813,20 +811,20 @@ bb.v:                                             ; preds = %.preheader.i
 
 .preheader335.i:                                  ; preds = %bb.u, %bb.w
   %.150.i.i.i = phi i64 [ %i.cz, %bb.w ], [ %i.bu, %bb.u ] ; 2 uses
-  %.03949.i.i.i = phi i64 [ %i.cy, %bb.w ], [ %i.bn, %bb.u ]
+  %.03949.i.i.i = phi i64 [ %i.cy, %bb.w ], [ %i.bn, %bb.u ] ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i.i.i
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !19
   %.not44.i.i.i = icmp eq i8 %i.cx, 0
   br i1 %.not44.i.i.i, label %bb.w, label %SegmentFree.exit.thread.i
 
 bb.w:                                             ; preds = %.preheader335.i
-  %i.cy = add i64 %.03949.i.i.i, 1                ; 2 uses
+  %i.cy = add nuw i64 %.03949.i.i.i, 1
   %i.cz = add i64 %.150.i.i.i, 1
-  %.not.i.i.i = icmp ugt i64 %i.cy, %i.cq
-  br i1 %.not.i.i.i, label %SegmentFree.exit.i.i, label %.preheader335.i, !llvm.loop !3
+  %.not.i.i.not.i = icmp ult i64 %.03949.i.i.i, %i.cq
+  br i1 %.not.i.i.not.i, label %.preheader335.i, label %SegmentFree.exit.i.i, !llvm.loop !3
 
 SegmentFree.exit.i.i:                             ; preds = %bb.w, %bb.v
-  %i.da = add i64 %i.co, 1                        ; 3 uses
+  %i.da = add nuw i64 %i.co, 1                    ; 3 uses
   %i.db = icmp eq i64 %i.da, %i.bp
   br i1 %i.db, label %.preheader382.i, label %bb.y
 
@@ -845,14 +843,12 @@ bb.x:                                             ; preds = %.preheader382.i
   br i1 %.not45.i64.i.i, label %ExtendOK.exit.i.preheader, label %.preheader382.i, !llvm.loop !2
 
 bb.y:                                             ; preds = %SegmentFree.exit.i.i
-  %0 = tail call i64 @llvm.umin.i64(i64 %i.da, i64 %i.bp) ; 2 uses
-  %i.dg = add i64 %0, %i.ac
-  %1 = tail call i64 @llvm.umax.i64(i64 %i.da, i64 %i.bp)
+  %i.dg = add i64 %i.da, %i.ac
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.aa, %bb.y
   %.150.i56.i.i = phi i64 [ %i.dg, %bb.y ], [ %i.dk, %bb.aa ] ; 2 uses
-  %.03949.i57.i.i = phi i64 [ %0, %bb.y ], [ %i.dj, %bb.aa ]
+  %.03949.i57.i.i = phi i64 [ %i.da, %bb.y ], [ %i.dj, %bb.aa ]
   %i.dh = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i56.i.i
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !19
   %.not44.i58.i.i = icmp eq i8 %i.di, 0
@@ -861,7 +857,7 @@ bb.z:                                             ; preds = %bb.aa, %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.dj = add i64 %.03949.i57.i.i, 1              ; 2 uses
   %i.dk = add i64 %.150.i56.i.i, 1
-  %.not.i60.i.i = icmp ugt i64 %i.dj, %1
+  %.not.i60.i.i = icmp ugt i64 %i.dj, %i.bp
   br i1 %.not.i60.i.i, label %ExtendOK.exit.i.preheader, label %bb.z, !llvm.loop !3
 
 bb.ab:                                            ; preds = %bb.t
@@ -883,17 +879,17 @@ bb.ac:                                            ; preds = %.preheader338.i
 
 .preheader341.i:                                  ; preds = %bb.ab, %bb.ad
   %.150.i66.i.i = phi i64 [ %i.ds, %bb.ad ], [ %i.bu, %bb.ab ] ; 2 uses
-  %.03949.i67.i.i = phi i64 [ %i.dr, %bb.ad ], [ %i.bn, %bb.ab ]
+  %.03949.i67.i.i = phi i64 [ %i.dr, %bb.ad ], [ %i.bn, %bb.ab ] ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i66.i.i
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !19
   %.not44.i68.i.i = icmp eq i8 %i.dq, 0
   br i1 %.not44.i68.i.i, label %bb.ad, label %SegmentFree.exit.thread.i
 
 bb.ad:                                            ; preds = %.preheader341.i
-  %i.dr = add i64 %.03949.i67.i.i, 1              ; 2 uses
+  %i.dr = add nuw i64 %.03949.i67.i.i, 1
   %i.ds = add i64 %.150.i66.i.i, 1
-  %.not.i70.i.i = icmp ugt i64 %i.dr, %i.cq
-  br i1 %.not.i70.i.i, label %ExtendOK.exit.i.preheader, label %.preheader341.i, !llvm.loop !3
+  %.not.i70.i.not.i = icmp ult i64 %.03949.i67.i.i, %i.cq
+  br i1 %.not.i70.i.not.i, label %.preheader341.i, label %ExtendOK.exit.i.preheader, !llvm.loop !3
 
 bb.ae:                                            ; preds = %bb.s
   %i.dt = add nuw i64 %i.co, 1                    ; 3 uses
@@ -952,7 +948,7 @@ bb.aj:                                            ; preds = %ExtendOK.exit.i
 SegmentFree.exit175.i:                            ; preds = %bb.aj
   %i.ei = tail call i64 @llvm.umin.i64(i64 %.0154, i64 %.0367.i) ; 14 uses
   %i.ej = add i64 %i.ei, %.pre274
-  %i.ek = tail call i64 @llvm.umax.i64(i64 %.0154, i64 %.0367.i) ; 18 uses
+  %i.ek = tail call i64 @llvm.umax.i64(i64 %.0154, i64 %.0367.i) ; 17 uses
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.al, %SegmentFree.exit175.i
@@ -1044,20 +1040,20 @@ bb.as:                                            ; preds = %.preheader
 
 .preheader34:                                     ; preds = %bb.ar, %bb.at
   %.150.i.i19 = phi i64 [ %i.fp, %bb.at ], [ %i.fh, %bb.ar ] ; 2 uses
-  %.03949.i.i20 = phi i64 [ %i.fo, %bb.at ], [ %i.ei, %bb.ar ]
+  %.03949.i.i20 = phi i64 [ %i.fo, %bb.at ], [ %i.ei, %bb.ar ] ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i.i19
   %i.fn = load i8, ptr %i.fm, align 1, !tbaa !19
   %.not44.i.i21 = icmp eq i8 %i.fn, 0
   br i1 %.not44.i.i21, label %bb.at, label %SegmentFree.exit.thread.i
 
 bb.at:                                            ; preds = %.preheader34
-  %i.fo = add i64 %.03949.i.i20, 1                ; 2 uses
+  %i.fo = add nuw i64 %.03949.i.i20, 1
   %i.fp = add i64 %.150.i.i19, 1
-  %.not.i.i22 = icmp ugt i64 %i.fo, %i.ff
-  br i1 %.not.i.i22, label %SegmentFree.exit.i, label %.preheader34, !llvm.loop !3
+  %.not.i.i22.not = icmp ult i64 %.03949.i.i20, %i.ff
+  br i1 %.not.i.i22.not, label %.preheader34, label %SegmentFree.exit.i, !llvm.loop !3
 
 SegmentFree.exit.i:                               ; preds = %bb.at, %bb.as
-  %i.fq = add i64 %i.fd, 1                        ; 3 uses
+  %i.fq = add nuw i64 %i.fd, 1                    ; 3 uses
   %i.fr = icmp eq i64 %i.fq, %i.ek
   br i1 %i.fr, label %bb.au, label %bb.ax
 
@@ -1080,14 +1076,12 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not45.i64.i, label %ExtendOK.exit, label %bb.av, !llvm.loop !2
 
 bb.ax:                                            ; preds = %SegmentFree.exit.i
-  %2 = tail call i64 @llvm.umin.i64(i64 %i.fq, i64 %i.ek) ; 2 uses
-  %i.fx = add i64 %2, %i.ag
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.fq, i64 %i.ek)
+  %i.fx = add i64 %i.fq, %i.ag
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.az, %bb.ax
   %.150.i56.i = phi i64 [ %i.fx, %bb.ax ], [ %i.gb, %bb.az ] ; 2 uses
-  %.03949.i57.i = phi i64 [ %2, %bb.ax ], [ %i.ga, %bb.az ]
+  %.03949.i57.i = phi i64 [ %i.fq, %bb.ax ], [ %i.ga, %bb.az ]
   %i.fy = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i56.i
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !19
   %.not44.i58.i = icmp eq i8 %i.fz, 0
@@ -1096,7 +1090,7 @@ bb.ay:                                            ; preds = %bb.az, %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.ga = add i64 %.03949.i57.i, 1                ; 2 uses
   %i.gb = add i64 %.150.i56.i, 1
-  %.not.i60.i = icmp ugt i64 %i.ga, %3
+  %.not.i60.i = icmp ugt i64 %i.ga, %i.ek
   br i1 %.not.i60.i, label %ExtendOK.exit, label %bb.ay, !llvm.loop !3
 
 bb.ba:                                            ; preds = %bb.aq
@@ -1118,17 +1112,17 @@ bb.bb:                                            ; preds = %.preheader37
 
 .preheader40:                                     ; preds = %bb.ba, %bb.bc
   %.150.i66.i = phi i64 [ %i.gj, %bb.bc ], [ %i.fh, %bb.ba ] ; 2 uses
-  %.03949.i67.i = phi i64 [ %i.gi, %bb.bc ], [ %i.ei, %bb.ba ]
+  %.03949.i67.i = phi i64 [ %i.gi, %bb.bc ], [ %i.ei, %bb.ba ] ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.c, i64 %.150.i66.i
   %i.gh = load i8, ptr %i.gg, align 1, !tbaa !19
   %.not44.i68.i = icmp eq i8 %i.gh, 0
   br i1 %.not44.i68.i, label %bb.bc, label %SegmentFree.exit.thread.i
 
 bb.bc:                                            ; preds = %.preheader40
-  %i.gi = add i64 %.03949.i67.i, 1                ; 2 uses
+  %i.gi = add nuw i64 %.03949.i67.i, 1
   %i.gj = add i64 %.150.i66.i, 1
-  %.not.i70.i = icmp ugt i64 %i.gi, %i.ff
-  br i1 %.not.i70.i, label %ExtendOK.exit, label %.preheader40, !llvm.loop !3
+  %.not.i70.i.not = icmp ult i64 %.03949.i67.i, %i.ff
+  br i1 %.not.i70.i.not, label %.preheader40, label %ExtendOK.exit, !llvm.loop !3
 
 bb.bd:                                            ; preds = %bb.ap
   %i.gk = add nuw i64 %i.fd, 1                    ; 3 uses

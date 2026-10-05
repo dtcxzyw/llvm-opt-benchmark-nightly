@@ -204,11 +204,14 @@ bb.r:                                             ; preds = %.loopexit566
 
 .preheader:                                       ; preds = %bb.r
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %7 = zext i32 %5 to i64
+  %8 = zext i32 %4 to i64
   br label %bb.s
 
 bb.s:                                             ; preds = %.preheader, %bb.s
-  %.0502 = phi i32 [ %7, %bb.s ], [ %5, %.preheader ] ; 2 uses
-  %i.fp = shl i32 %.0502, 3
+  %indvars.iv597 = phi i64 [ %7, %.preheader ], [ %indvars.iv.next598, %bb.s ] ; 2 uses
+  %9 = trunc nuw i64 %indvars.iv597 to i32
+  %i.fp = shl i32 %9, 3
   %i.fq = add i32 %i.fp, %2
   %i.fr = zext i32 %i.fq to i64
   %.val546 = load ptr, ptr %i.fo, align 8, !tbaa !12
@@ -216,8 +219,8 @@ bb.s:                                             ; preds = %.preheader, %bb.s
   %.0.copyload.i558 = load i64, ptr %i.fs, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i558) #8, !srcloc !33
   %.not527 = icmp ne i64 %.0.copyload.i558, 0
-  %7 = add i32 %.0502, 1                          ; 2 uses
-  %.not528 = icmp eq i32 %4, %7
+  %indvars.iv.next598 = add nuw nsw i64 %indvars.iv597, 1 ; 2 uses
+  %.not528 = icmp eq i64 %indvars.iv.next598, %8
   %or.cond530 = or i1 %.not528, %.not527
   br i1 %or.cond530, label %.loopexit, label %bb.s
 

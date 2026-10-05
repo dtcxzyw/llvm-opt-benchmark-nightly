@@ -202,13 +202,13 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK3nla13factorization4sizeEv.exit.thread
 
 _ZNK3nla13factorization4sizeEv.exit:              ; preds = %.preheader, %bb.d
+  %i.h = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.preheader ] ; 4 uses
   %3 = phi ptr [ %i.x, %bb.d ], [ %i.c, %.preheader ]
-  %i.h = phi i64 [ %6, %bb.d ], [ 0, %.preheader ] ; 2 uses
-  %.019 = phi i32 [ %5, %bb.d ], [ 0, %.preheader ] ; 2 uses
   %i.i = getelementptr inbounds i8, ptr %3, i64 -4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !26
-  %4 = icmp ugt i32 %i.j, %.019
-  br i1 %4, label %bb.c, label %_ZNK3nla13factorization4sizeEv.exit.thread
+  %4 = zext i32 %i.j to i64
+  %5 = icmp samesign ult i64 %i.h, %4
+  br i1 %5, label %bb.c, label %_ZNK3nla13factorization4sizeEv.exit.thread
 
 bb.c:                                             ; preds = %_ZNK3nla13factorization4sizeEv.exit
   %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.21, i64 noundef 1) ; 0 uses
@@ -235,8 +235,7 @@ _ZNK3nla13factorization4sizeEv.exit15:            ; preds = %bb.c
 
 bb.d:                                             ; preds = %_ZNK3nla13factorization4sizeEv.exit15, %.critedge
   %i.x = phi ptr [ %i.p, %_ZNK3nla13factorization4sizeEv.exit15 ], [ %.pre, %.critedge ] ; 2 uses
-  %5 = add nuw i32 %.019, 1                       ; 2 uses
-  %6 = zext i32 %5 to i64
+  %indvars.iv.next = add nuw nsw i64 %i.h, 1
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %_ZNK3nla13factorization4sizeEv.exit.thread, label %_ZNK3nla13factorization4sizeEv.exit, !llvm.loop !360
 

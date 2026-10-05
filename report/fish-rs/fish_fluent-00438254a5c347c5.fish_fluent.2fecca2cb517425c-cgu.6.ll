@@ -8,23 +8,22 @@ target triple = "x86_64-unknown-linux-gnu"
 @0 = private unnamed_addr constant [101 x i8] c"/home/opt-bench/.cargo/git/checkouts/fluent-rs-d2e3265f5591e5e5/cf712bc/fluent-syntax/src/unicode.rs\00", align 1
 @1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00w\00\00\00\1B\00\00\00" }>, align 8
 @2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00]\00\00\00\1F\00\00\00" }>, align 8
-@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00f\00\00\00!\00\00\00" }>, align 8
-@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00h\00\00\00\11\00\00\00" }>, align 8
-@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00i\00\00\005\00\00\00" }>, align 8
-@6 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00m\00\00\00\09\00\00\00" }>, align 8
-@7 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @_RNvXsw_NtCslLGyqsphxMB_10widestring5errorNtB5_16DecodeUtf32ErrorNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt }>, align 8
-@8 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
-@9 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00", ptr @_RNvXsK_NtCs3oUPovFnLWP_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt }>, align 8
-@10 = private unnamed_addr constant [105 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/widestring-1.2.1/src/utfstr/iter.rs\00", align 1
-@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @10, [16 x i8] c"h\00\00\00\00\00\00\00_\00\00\00$\00\00\00" }>, align 8
-@12 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs476pBYQK2Ku_11fish_fluent, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtCs476pBYQK2Ku_11fish_fluent }>, align 8
-@13 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
-@14 = private unnamed_addr constant [76 x i8] c"/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7/library/alloc/src/string.rs\00", align 1
-@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @14, [16 x i8] c"K\00\00\00\00\00\00\00\96\0B\00\00\0E\00\00\00" }>, align 8
-@16 = private unnamed_addr constant [5 x i8] c"Error", align 1
-@17 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRmNtB6_5Debug3fmtCs476pBYQK2Ku_11fish_fluent }>, align 8
-@18 = private unnamed_addr constant [16 x i8] c"DecodeUtf32Error", align 1
-@19 = private unnamed_addr constant [4 x i8] c"code", align 1
+@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00h\00\00\00\11\00\00\00" }>, align 8
+@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00i\00\00\005\00\00\00" }>, align 8
+@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"d\00\00\00\00\00\00\00m\00\00\00\09\00\00\00" }>, align 8
+@6 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @_RNvXsw_NtCslLGyqsphxMB_10widestring5errorNtB5_16DecodeUtf32ErrorNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt }>, align 8
+@7 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
+@8 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00", ptr @_RNvXsK_NtCs3oUPovFnLWP_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt }>, align 8
+@9 = private unnamed_addr constant [105 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/widestring-1.2.1/src/utfstr/iter.rs\00", align 1
+@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c"h\00\00\00\00\00\00\00_\00\00\00$\00\00\00" }>, align 8
+@11 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs476pBYQK2Ku_11fish_fluent, [16 x i8] c"\18\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str, ptr @_RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Write10write_char, ptr @_RNvYNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_fmtCs476pBYQK2Ku_11fish_fluent }>, align 8
+@12 = private unnamed_addr constant [55 x i8] c"a Display implementation returned an error unexpectedly", align 1
+@13 = private unnamed_addr constant [76 x i8] c"/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7/library/alloc/src/string.rs\00", align 1
+@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"K\00\00\00\00\00\00\00\96\0B\00\00\0E\00\00\00" }>, align 8
+@15 = private unnamed_addr constant [5 x i8] c"Error", align 1
+@16 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRmNtB6_5Debug3fmtCs476pBYQK2Ku_11fish_fluent }>, align 8
+@17 = private unnamed_addr constant [16 x i8] c"DecodeUtf32Error", align 1
+@18 = private unnamed_addr constant [4 x i8] c"code", align 1
 
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs476pBYQK2Ku_11fish_fluent(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -427,7 +426,7 @@ _RINvNtCscScUiD58tfT_13fluent_syntax7unicode8unescapeNtNtCs1xwejQucwHj_5alloc6st
   br i1 %i.g, label %_RINvNtCscScUiD58tfT_13fluent_syntax7unicode8unescapeNtNtCs1xwejQucwHj_5alloc6string6StringECs476pBYQK2Ku_11fish_fluent.exit, label %bb.c
 
 bb.b:                                             ; preds = %bb.ac, %.lr.ph.i
-  %.sroa.01.082.i = phi i64 [ %.sroa.01.0.ph87.i, %.lr.ph.i ], [ %i.cj, %bb.ac ] ; 9 uses
+  %.sroa.01.082.i = phi i64 [ %.sroa.01.0.ph87.i, %.lr.ph.i ], [ %i.cj, %bb.ac ] ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.082.i
   %i.i = load i8, ptr %i.h, align 1, !alias.scope !66, !noalias !65, !noundef !5
   %.not44.i = icmp eq i8 %i.i, 92
@@ -494,8 +493,8 @@ _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit48.i: ; preds = %bb.g, %
   store i64 %i.ac, ptr %i.d, align 8, !alias.scope !75, !noalias !76
   br label %bb.h
 
-bb.h:                                             ; preds = %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit48.i, %bb.e
-  %.sroa.01.08293.i = phi i64 [ %.sroa.01.082.i, %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit48.i ], [ %.sroa.01.0.ph87.i, %bb.e ] ; 2 uses
+bb.h:                                             ; preds = %bb.e, %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit48.i
+  %.sroa.01.08293.i = phi i64 [ %.sroa.01.082.i, %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit48.i ], [ %.sroa.01.0.ph87.i, %bb.e ] ; 3 uses
   %i.ad = add nuw i64 %.sroa.01.082.i, 1          ; 4 uses
   %i.ae = icmp ult i64 %i.ad, %2
   br i1 %i.ae, label %bb.i, label %bb.l
@@ -506,8 +505,8 @@ bb.i:                                             ; preds = %bb.h
   switch i8 %i.ag, label %.thread.i [
     i8 92, label %bb.j
     i8 34, label %bb.k
-    i8 117, label %3
-    i8 85, label %3
+    i8 117, label %bb.m
+    i8 85, label %bb.m
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -518,7 +517,7 @@ bb.k:                                             ; preds = %bb.i
 
 .thread.i:                                        ; preds = %bb.k, %bb.j, %bb.i
   %.sroa.016.0.ph.i = phi i32 [ 65533, %bb.i ], [ 34, %bb.k ], [ 92, %bb.j ]
-  %i.ah = add i64 %.sroa.01.08293.i, 2
+  %i.ah = add nuw i64 %.sroa.01.08293.i, 2
   br label %bb.u
 
 bb.l:                                             ; preds = %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread68.i, %bb.h
@@ -528,29 +527,21 @@ bb.l:                                             ; preds = %_RNvNtNtCs3oUPovFnL
   %i.aj = icmp eq i64 %.sroa.01.1.i, -1
   br i1 %i.aj, label %bb.ab, label %bb.u
 
-3:                                                ; preds = %bb.i, %bb.i
-  %4 = add nuw i64 %.sroa.01.08293.i, 2           ; 6 uses
-  %.not115.i = icmp ugt i64 %4, %.sroa.01.082.i
-  br i1 %.not115.i, label %bb.m, label %5
-
-bb.m:                                             ; preds = %3
+bb.m:                                             ; preds = %bb.i, %bb.i
+  %3 = add nuw i64 %.sroa.01.08293.i, 2           ; 5 uses
   %i.ak = icmp eq i8 %i.ag, 117
   %..i = select i1 %i.ak, i64 4, i64 6            ; 3 uses
   %i.al = add i64 %..i, %i.ad                     ; 2 uses
-  %.not116.i = icmp ugt i64 %i.al, %.sroa.01.082.i
+  %.not116.i = icmp ugt i64 %i.al, %.sroa.01.08293.i
   br i1 %.not116.i, label %bb.n, label %bb.o
 
-5:                                                ; preds = %3
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #13
-  unreachable
-
 bb.n:                                             ; preds = %bb.m
-  %i.am = add i64 %..i, %4                        ; 4 uses
-  %i.an = icmp ult i64 %i.am, %4
+  %i.am = add i64 %..i, %3                        ; 4 uses
+  %i.an = icmp ult i64 %i.am, %3
   br i1 %i.an, label %bb.t, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #13
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #13
   unreachable
 
 bb.p:                                             ; preds = %bb.n
@@ -558,7 +549,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.ao, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread68.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ap = icmp eq i64 %4, %2
+  %i.ap = icmp eq i64 %3, %2
   br i1 %i.ap, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread.i, label %bb.s
 
 bb.r:                                             ; preds = %bb.s
@@ -566,13 +557,13 @@ bb.r:                                             ; preds = %bb.s
   br i1 %i.aq, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread.i, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 %4 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 %3 ; 2 uses
   %i.as = load i8, ptr %i.ar, align 1, !alias.scope !77, !noalias !65, !noundef !5
   %i.at = icmp sgt i8 %i.as, -65
   br i1 %i.at, label %bb.r, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread68.i
 
 _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread.i: ; preds = %bb.r, %bb.q
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %3
   br label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread68.i
 
 _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.i: ; preds = %bb.r
@@ -588,7 +579,7 @@ _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread68.i: ; preds = %
   br label %bb.l
 
 bb.t:                                             ; preds = %bb.n
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #13
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #13
   unreachable
 
 bb.u:                                             ; preds = %bb.l, %.thread.i
@@ -669,7 +660,7 @@ _RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Wri
   br i1 %i.ci, label %.lr.ph.i, label %_RINvNtCscScUiD58tfT_13fluent_syntax7unicode8unescapeNtNtCs1xwejQucwHj_5alloc6string6StringECs476pBYQK2Ku_11fish_fluent.exit.thread
 
 bb.ab:                                            ; preds = %bb.l
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #13
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #13
   unreachable
 
 bb.ac:                                            ; preds = %bb.b
@@ -1072,7 +1063,7 @@ bb.a:
   store i64 1610612768, ptr %i.g, align 8, !noalias !183
   store ptr %i.d, ptr %i.c, align 8, !noalias !183
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @12, ptr %i.h, align 8, !noalias !183
+  store ptr @11, ptr %i.h, align 8, !noalias !183
   %.idx = shl nuw nsw i64 %.val1, 2
   %i.i = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx
   %.not.not.not.i.not.not.not.i.not.i10 = icmp eq i64 %.val1, 0
@@ -1097,11 +1088,11 @@ bb.b:                                             ; preds = %.noexc5.i
   br label %.split.i.i.i.invoke.i
 
 .split.i.i.i.invoke.i:                            ; preds = %.noexc5.i, %.split.i.i.i.i
-  %i.p = phi ptr [ @8, %.split.i.i.i.i ], [ @13, %.noexc5.i ]
+  %i.p = phi ptr [ @7, %.split.i.i.i.i ], [ @12, %.noexc5.i ]
   %i.q = phi i64 [ 43, %.split.i.i.i.i ], [ 55, %.noexc5.i ]
   %i.r = phi ptr [ %i.b, %.split.i.i.i.i ], [ %i.a, %.noexc5.i ]
-  %i.s = phi ptr [ @7, %.split.i.i.i.i ], [ @9, %.noexc5.i ]
-  %i.t = phi ptr [ @11, %.split.i.i.i.i ], [ @15, %.noexc5.i ]
+  %i.s = phi ptr [ @6, %.split.i.i.i.i ], [ @8, %.noexc5.i ]
+  %i.t = phi ptr [ @10, %.split.i.i.i.i ], [ @14, %.noexc5.i ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %i.q, ptr noundef nonnull %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.t) #13
           to label %.split.i.i.i.cont.i unwind label %.loopexit.split-lp.i, !noalias !183
 
@@ -1200,7 +1191,7 @@ bb.a:
   store i64 1610612768, ptr %i.g, align 8, !noalias !195
   store ptr %i.d, ptr %i.c, align 8, !noalias !195
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @12, ptr %i.h, align 8, !noalias !195
+  store ptr @11, ptr %i.h, align 8, !noalias !195
   %.idx = shl nuw nsw i64 %.val1, 2
   %i.i = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx
   %.not.not.not.i.not.not.not.i.not.i10 = icmp eq i64 %.val1, 0
@@ -1225,11 +1216,11 @@ bb.b:                                             ; preds = %.noexc5.i
   br label %.split.i.i.i.invoke.i
 
 .split.i.i.i.invoke.i:                            ; preds = %.noexc5.i, %.split.i.i.i.i
-  %i.p = phi ptr [ @8, %.split.i.i.i.i ], [ @13, %.noexc5.i ]
+  %i.p = phi ptr [ @7, %.split.i.i.i.i ], [ @12, %.noexc5.i ]
   %i.q = phi i64 [ 43, %.split.i.i.i.i ], [ 55, %.noexc5.i ]
   %i.r = phi ptr [ %i.b, %.split.i.i.i.i ], [ %i.a, %.noexc5.i ]
-  %i.s = phi ptr [ @7, %.split.i.i.i.i ], [ @9, %.noexc5.i ]
-  %i.t = phi ptr [ @11, %.split.i.i.i.i ], [ @15, %.noexc5.i ]
+  %i.s = phi ptr [ @6, %.split.i.i.i.i ], [ @8, %.noexc5.i ]
+  %i.t = phi ptr [ @10, %.split.i.i.i.i ], [ @14, %.noexc5.i ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %i.q, ptr noundef nonnull %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.t) #13
           to label %.split.i.i.i.cont.i unwind label %.loopexit.split-lp.i, !noalias !195
 
@@ -1281,7 +1272,7 @@ _RNvXsC_NtCs1xwejQucwHj_5alloc6stringNtNtCslLGyqsphxMB_10widestring9utfstring11U
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal noundef zeroext i1 @_RNvXsK_NtCs3oUPovFnLWP_4core3fmtNtB5_5ErrorNtB5_5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 5)
+  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 5)
   ret i1 %i.a
 }
 
@@ -1430,7 +1421,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.q = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.h
   br i1 %i.r, label %.body, label %.lr.ph6
 
@@ -1514,7 +1505,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.q = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.h
   br i1 %i.r, label %.body, label %.lr.ph6
 
@@ -1565,7 +1556,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 16, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @17)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 16, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @16)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }

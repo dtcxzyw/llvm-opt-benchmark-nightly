@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.cf, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.cg = add i64 %.02999.us, 2
+  %i.cg = add nuw i64 %.02999.us, 2
   %i.ch = shl nuw nsw i32 %i.by, 10
   %i.ci = add nsw i32 %i.ch, -56613888
   %i.cj = add nuw nsw i32 %i.ci, %i.cd
@@ -212,11 +212,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %.232.us110 = phi i32 [ %i.by, %bb.o ], [ %i.cj, %bb.q ], [ %i.by, %bb.p ] ; 9 uses
-  %.2.us111 = phi i64 [ %i.bv, %bb.o ], [ %i.cg, %bb.q ], [ %i.bv, %bb.p ] ; 5 uses
-  %2 = icmp ne i64 %.2.us111, 0
+  %.2.us111 = phi i64 [ %i.bv, %bb.o ], [ %i.cg, %bb.q ], [ %i.bv, %bb.p ] ; 4 uses
   %i.ck = icmp eq i32 %.03098.us, 8205
-  %or.cond3.us = select i1 %2, i1 %i.ck, i1 false
-  br i1 %or.cond3.us, label %bb.s, label %.split.us112
+  br i1 %i.ck, label %bb.s, label %.split.us112
 
 bb.s:                                             ; preds = %bb.r
   %i.cl = call signext i8 @u_hasBinaryProperty_78(i32 noundef %.232.us110, i32 noundef 58) #25
@@ -303,7 +301,7 @@ bb.ab:                                            ; preds = %.lr.ph.us115
   br i1 %i.dk, label %bb.ac, label %.split.us.us
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dl = add i64 %.029.ph103.us117, 2
+  %i.dl = add nuw i64 %.029.ph103.us117, 2
   %i.dm = shl nuw nsw i32 %i.dd, 10
   %i.dn = add nsw i32 %i.dm, -56613888
   %i.do = add nuw nsw i32 %i.dn, %i.di
@@ -375,7 +373,7 @@ bb.ai:                                            ; preds = %.lr.ph
   br i1 %i.ek, label %bb.aj, label %.split.us
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.el = add i64 %.029.ph103, 2
+  %i.el = add nuw i64 %.029.ph103, 2
   %i.em = shl nuw nsw i32 %i.ed, 10
   %i.en = add nsw i32 %i.em, -56613888
   %i.eo = add nuw nsw i32 %i.en, %i.ei
