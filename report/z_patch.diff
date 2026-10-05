@@ -1,0 +1,809 @@
+diff --git a/llvm/lib/CodeGen/MachineLateInstrsCleanup.cpp b/llvm/lib/CodeGen/MachineLateInstrsCleanup.cpp
+index 811cc4fe65f3f..7372de52641e9 100644
+--- a/llvm/lib/CodeGen/MachineLateInstrsCleanup.cpp
++++ b/llvm/lib/CodeGen/MachineLateInstrsCleanup.cpp
+@@ -11,6 +11,10 @@
+ // the result of rematerialization, while the addresses are redundant frame
+ // addressing anchor points created during Frame Indices elimination.
+ //
++// Reloads of spill slots are handled as well: these slots do not alias IR
++// values, so an earlier reload can be reused as long as nothing in between may
++// have written to that same slot.
++//
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/CodeGen/MachineLateInstrsCleanup.h"
+@@ -18,10 +22,13 @@
+ #include "llvm/ADT/PostOrderIterator.h"
+ #include "llvm/ADT/Statistic.h"
+ #include "llvm/CodeGen/MachineBasicBlock.h"
++#include "llvm/CodeGen/MachineFrameInfo.h"
+ #include "llvm/CodeGen/MachineFunction.h"
+ #include "llvm/CodeGen/MachineFunctionPass.h"
+ #include "llvm/CodeGen/MachineInstr.h"
++#include "llvm/CodeGen/MachineMemOperand.h"
+ #include "llvm/CodeGen/MachineOperand.h"
++#include "llvm/CodeGen/PseudoSourceValue.h"
+ #include "llvm/CodeGen/TargetInstrInfo.h"
+ #include "llvm/CodeGen/TargetRegisterInfo.h"
+ #include "llvm/CodeGen/TargetSubtargetInfo.h"
+@@ -34,6 +41,8 @@ using namespace llvm;
+ #define DEBUG_TYPE "machine-latecleanup"
+ 
+ STATISTIC(NumRemoved, "Number of redundant instructions removed.");
++STATISTIC(NumSpillSlotReloadsRemoved,
++          "Number of redundant spill-slot reloads removed.");
+ 
+ namespace {
+ 
+@@ -168,15 +177,63 @@ void MachineLateInstrsCleanup::removeRedundantDef(MachineInstr *MI) {
+   ++NumRemoved;
+ }
+ 
++// Return true if MI is a spill-slot reload that does not store and has
++// exactly one memory operand. If FI is non-null and that memory operand names
++// a frame index, *FI is set to it even when the index is not a spill slot.
++static bool isSpillSlotReload(const MachineInstr &MI,
++                              const MachineFrameInfo &MFI, int *FI = nullptr) {
++  if (!MI.mayLoad() || MI.mayStore() || !MI.hasOneMemOperand())
++    return false;
++
++  const MachineMemOperand *MMO = *MI.memoperands_begin();
++  const auto *PSV =
++      dyn_cast_or_null<FixedStackPseudoSourceValue>(MMO->getPseudoValue());
++  if (!PSV)
++    return false;
++  int FrameIndex = PSV->getFrameIndex();
++  if (FI)
++    *FI = FrameIndex;
++  return MFI.isSpillSlotObjectIndex(FrameIndex);
++}
++
++// Return true if MI stores to the spill slot FI. The address of a spill slot
++// never escapes, so only an instruction that describes a store to this very
++// slot can write it. An instruction that writes memory without describing it
++// at all must be assumed to write every slot.
++// TODO: This is copied from MachineLICM::InstructionStoresToFI(). Factor the
++// two copies into one helper.
++static bool instructionStoresToFI(const MachineInstr *MI, int FI) {
++  if (!MI->mayStore())
++    return false;
++  if (MI->memoperands_empty())
++    return true;
++  for (const MachineMemOperand *MMO : MI->memoperands()) {
++    if (!MMO->isStore() || !MMO->getPseudoValue())
++      continue;
++    if (const auto *PSV =
++            dyn_cast<FixedStackPseudoSourceValue>(MMO->getPseudoValue()))
++      if (PSV->getFrameIndex() == FI)
++        return true;
++  }
++  return false;
++}
++
+ // Return true if MI is a potential candidate for reuse/removal and if so
+ // also the register it defines in DefedReg.  A candidate is a simple
+-// instruction that does not touch memory, has only one register definition
+-// and the only reg it may use is FrameReg. Typically this is an immediate
+-// load or a load-address instruction.
++// instruction that has only one register definition and the only reg it may
++// use is FrameReg. Typically this is an immediate load or a load-address
++// instruction. The only memory it may read is invariant memory or a spill slot
++// it reloads, since processBlock() keeps track of stores that may write the
++// slot.
+ static bool isCandidate(const MachineInstr *MI, Register &DefedReg,
+-                        Register FrameReg) {
++                        Register FrameReg, const MachineFrameInfo &MFI) {
+   DefedReg = MCRegister::NoRegister;
+-  bool SawStore = true;
++  // SawStore makes isSafeToMove() reject every load that is not invariant, on
++  // the grounds that a store may have changed what it reads. That is too blunt
++  // for a spill-slot reload, where only a write to the same slot matters and
++  // processBlock() already drops the reload as soon as it sees one. Clear
++  // SawStore for those reloads to defer to that finer check.
++  bool SawStore = !isSpillSlotReload(*MI, MFI);
+   if (!MI->isSafeToMove(SawStore) || MI->isImplicitDef() || MI->isInlineAsm())
+     return false;
+   for (unsigned i = 0, e = MI->getNumOperands(); i != e; ++i) {
+@@ -220,6 +277,7 @@ bool MachineLateInstrsCleanup::processBlock(MachineBasicBlock *MBB) {
+   // Process MBB.
+   MachineFunction *MF = MBB->getParent();
+   const TargetRegisterInfo *TRI = MF->getSubtarget().getRegisterInfo();
++  const MachineFrameInfo &MFI = MF->getFrameInfo();
+   Register FrameReg = TRI->getFrameRegister(*MF);
+   for (MachineInstr &MI : llvm::make_early_inc_range(*MBB)) {
+     // If FrameReg is modified, no previous load-address instructions (using
+@@ -231,21 +289,28 @@ bool MachineLateInstrsCleanup::processBlock(MachineBasicBlock *MBB) {
+     }
+ 
+     Register DefedReg;
+-    bool IsCandidate = isCandidate(&MI, DefedReg, FrameReg);
++    bool IsCandidate = isCandidate(&MI, DefedReg, FrameReg, MFI);
+ 
+     // Check for an earlier identical and reusable instruction.
+     if (IsCandidate && MBBDefs.hasIdentical(DefedReg, &MI)) {
+       LLVM_DEBUG(dbgs() << "Removing redundant instruction in "
+                         << printMBBReference(*MBB) << ":  " << MI);
++      if (isSpillSlotReload(MI, MFI))
++        ++NumSpillSlotReloadsRemoved;
+       removeRedundantDef(&MI);
+       Changed = true;
+       continue;
+     }
+ 
+-    // Clear any entries in map that MI clobbers.
++    // Clear any entries in map that MI clobbers. A register redefinition
++    // invalidates every kind of tracked instruction, and a store that writes a
++    // spill slot invalidates a reload of that slot.
+     MBBDefs.remove_if([&](const auto &Entry) {
+       Register Reg = Entry.first;
+-      if (MI.modifiesRegister(Reg, TRI)) {
++      int FI;
++      if (MI.modifiesRegister(Reg, TRI) ||
++          (isSpillSlotReload(*Entry.second, MFI, &FI) &&
++           instructionStoresToFI(&MI, FI))) {
+         MBBKills.erase(Reg);
+         return true;
+       }
+diff --git a/llvm/test/CodeGen/AArch64/fp-maximumnum-minimumnum.ll b/llvm/test/CodeGen/AArch64/fp-maximumnum-minimumnum.ll
+index a457fe01d309d..79c005c4ab274 100644
+--- a/llvm/test/CodeGen/AArch64/fp-maximumnum-minimumnum.ll
++++ b/llvm/test/CodeGen/AArch64/fp-maximumnum-minimumnum.ll
+@@ -1236,7 +1236,6 @@ define fp128 @max_fp128(fp128 %x, fp128 %y) {
+ ; CHECK-NEXT:  // %bb.3: // %start
+ ; CHECK-NEXT:    mov v1.16b, v0.16b
+ ; CHECK-NEXT:  .LBB32_4: // %start
+-; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+ ; CHECK-NEXT:    str q1, [sp, #16] // 16-byte Spill
+ ; CHECK-NEXT:    bl __gttf2
+ ; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+@@ -1879,7 +1878,6 @@ define fp128 @min_fp128(fp128 %x, fp128 %y) {
+ ; CHECK-NEXT:  // %bb.3: // %start
+ ; CHECK-NEXT:    mov v1.16b, v0.16b
+ ; CHECK-NEXT:  .LBB49_4: // %start
+-; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+ ; CHECK-NEXT:    str q1, [sp, #16] // 16-byte Spill
+ ; CHECK-NEXT:    bl __gttf2
+ ; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+diff --git a/llvm/test/CodeGen/AArch64/vecreduce-fmaximumnum.ll b/llvm/test/CodeGen/AArch64/vecreduce-fmaximumnum.ll
+index 75468cb45a2ad..ab7ed2b9ce89f 100644
+--- a/llvm/test/CodeGen/AArch64/vecreduce-fmaximumnum.ll
++++ b/llvm/test/CodeGen/AArch64/vecreduce-fmaximumnum.ll
+@@ -546,7 +546,6 @@ define fp128 @test_v2f128(<2 x fp128> %a) nounwind {
+ ; CHECK-NEXT:  // %bb.3:
+ ; CHECK-NEXT:    mov v1.16b, v0.16b
+ ; CHECK-NEXT:  .LBB16_4:
+-; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+ ; CHECK-NEXT:    str q1, [sp, #16] // 16-byte Spill
+ ; CHECK-NEXT:    bl __gttf2
+ ; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+diff --git a/llvm/test/CodeGen/AArch64/vecreduce-fminimumnum.ll b/llvm/test/CodeGen/AArch64/vecreduce-fminimumnum.ll
+index bbbefffc06758..6fb6b5ef36b05 100644
+--- a/llvm/test/CodeGen/AArch64/vecreduce-fminimumnum.ll
++++ b/llvm/test/CodeGen/AArch64/vecreduce-fminimumnum.ll
+@@ -546,7 +546,6 @@ define fp128 @test_v2f128(<2 x fp128> %a) nounwind {
+ ; CHECK-NEXT:  // %bb.3:
+ ; CHECK-NEXT:    mov v1.16b, v0.16b
+ ; CHECK-NEXT:  .LBB16_4:
+-; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+ ; CHECK-NEXT:    str q1, [sp, #16] // 16-byte Spill
+ ; CHECK-NEXT:    bl __lttf2
+ ; CHECK-NEXT:    ldr q0, [sp] // 16-byte Reload
+diff --git a/llvm/test/CodeGen/AArch64/wineh1.mir b/llvm/test/CodeGen/AArch64/wineh1.mir
+index 244e05854e74f..01365d00978d3 100644
+--- a/llvm/test/CodeGen/AArch64/wineh1.mir
++++ b/llvm/test/CodeGen/AArch64/wineh1.mir
+@@ -136,7 +136,7 @@ body:             |
+     frame-destroy SEH_SaveReg 21, 48
+     $x0 = COPY $x28
+     frame-destroy SEH_Nop
+-    $x21 = frame-destroy LDRXui $sp, 6 :: (load (s64) from %stack.2)
++    $x22 = frame-destroy LDRXui $sp, 7 :: (load (s64) from %stack.3)
+     frame-destroy SEH_SaveReg 22, 56
+     $x23, $x24 = frame-destroy LDPXi $sp, 4 :: (load (s64) from %stack.4), (load (s64) from %stack.5)
+     frame-destroy SEH_SaveRegP 23, 24, 32
+diff --git a/llvm/test/CodeGen/X86/machine-latecleanup-invariant-loads.mir b/llvm/test/CodeGen/X86/machine-latecleanup-invariant-loads.mir
+new file mode 100644
+index 0000000000000..c2c24adb48097
+--- /dev/null
++++ b/llvm/test/CodeGen/X86/machine-latecleanup-invariant-loads.mir
+@@ -0,0 +1,142 @@
++# RUN: llc -mtriple=i686-unknown-linux-gnu -run-pass=machine-latecleanup %s \
++# RUN:   -o - -verify-machineinstrs | FileCheck %s
++#
++# An invariant load always returns the same value, so the pass can reuse an
++# earlier one even when a store or a call comes in between. That has to keep
++# working now that a spill-slot reload is tracked as well, because the stores
++# which end the reuse of a reload must not end the reuse of an invariant load.
++#
++# These tests use a 32-bit target on purpose. There a constant pool entry is
++# addressed absolutely, while on x86-64 the load goes through $rip. isCandidate()
++# only lets an instruction use the frame register, so the x86-64 form is never
++# tracked and there would be nothing to test.
++
++--- |
++  define void @constant_pool_load_is_reused() #0 {
++    ret void
++  }
++
++  define void @immutable_argument_load_is_reused() #0 {
++    ret void
++  }
++
++  define void @mutable_argument_load_is_not_reused() #0 {
++    ret void
++  }
++
++  define void @constant_pool_load_not_reused_after_clobber() #0 {
++    ret void
++  }
++
++  declare void @sink()
++
++  attributes #0 = { "frame-pointer"="all" }
++...
++---
++# A store cannot change a constant pool entry.
++name:            constant_pool_load_is_reused
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       16
++  maxAlignment:    4
++constants:
++  - id:              0
++    value:           'i32 85'
++    alignment:       4
++stack:
++  - { id: 0, type: spill-slot, offset: -8, size: 4, alignment: 4 }
++body:             |
++  bb.0:
++    liveins: $ebp, $ecx
++
++    ; CHECK-LABEL: name: constant_pool_load_is_reused
++    ; CHECK:      $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    ; CHECK-NEXT: MOV32mr $ebp, 1, $noreg, -8, $noreg, $ecx :: (store (s32) into %stack.0)
++    ; CHECK-NEXT: MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    ; CHECK-NEXT: RET32
++    $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    MOV32mr $ebp, 1, $noreg, -8, $noreg, $ecx :: (store (s32) into %stack.0)
++    $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    RET32
++...
++---
++# An incoming argument slot is immutable, so not even a call can change it.
++# $ebx is callee-saved, so the call's register mask leaves the tracked
++# definition alone and only the memory reasoning is under test.
++name:            immutable_argument_load_is_reused
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       16
++  maxAlignment:    4
++  hasCalls:        true
++fixedStack:
++  - { id: 0, offset: 8, size: 4, alignment: 4, isImmutable: true }
++body:             |
++  bb.0:
++    liveins: $ebp
++
++    ; CHECK-LABEL: name: immutable_argument_load_is_reused
++    ; CHECK:      $ebx = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    ; CHECK-NEXT: CALLpcrel32
++    ; CHECK-NEXT: MOV32mr $ebp, 1, $noreg, -12, $noreg, $ebx
++    ; CHECK-NEXT: RET32
++    $ebx = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    CALLpcrel32 target-flags(x86-plt) @sink, csr_32, implicit $esp, implicit $ssp, implicit-def $esp, implicit-def $ssp
++    $ebx = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    MOV32mr $ebp, 1, $noreg, -12, $noreg, $ebx
++    RET32
++...
++---
++# A mutable frame object is neither invariant nor a spill slot, so the pass has
++# to leave it alone.
++name:            mutable_argument_load_is_not_reused
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       16
++  maxAlignment:    4
++fixedStack:
++  - { id: 0, offset: 8, size: 4, alignment: 4, isImmutable: false }
++body:             |
++  bb.0:
++    liveins: $ebp
++
++    ; CHECK-LABEL: name: mutable_argument_load_is_not_reused
++    ; CHECK:      $eax = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    ; CHECK-NEXT: $ecx = MOV32ri 1
++    ; CHECK-NEXT: $eax = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    ; CHECK-NEXT: MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    ; CHECK-NEXT: RET32
++    $eax = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    $ecx = MOV32ri 1
++    $eax = MOV32rm $ebp, 1, $noreg, 8, $noreg :: (load (s32) from %fixed-stack.0)
++    MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    RET32
++...
++---
++# Redefining the loaded register still ends the reuse.
++name:            constant_pool_load_not_reused_after_clobber
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       16
++  maxAlignment:    4
++constants:
++  - id:              0
++    value:           'i32 85'
++    alignment:       4
++body:             |
++  bb.0:
++    liveins: $ebp
++
++    ; CHECK-LABEL: name: constant_pool_load_not_reused_after_clobber
++    ; CHECK:      $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    ; CHECK-NEXT: $eax = MOV32ri 7
++    ; CHECK-NEXT: $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    ; CHECK-NEXT: MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    ; CHECK-NEXT: RET32
++    $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    $eax = MOV32ri 7
++    $eax = MOV32rm $noreg, 1, $noreg, %const.0, $noreg :: (load (s32) from constant-pool)
++    MOV32mr $ebp, 1, $noreg, -12, $noreg, $eax
++    RET32
++...
+diff --git a/llvm/test/CodeGen/X86/machine-latecleanup-spill-reloads.mir b/llvm/test/CodeGen/X86/machine-latecleanup-spill-reloads.mir
+new file mode 100644
+index 0000000000000..d080539729af6
+--- /dev/null
++++ b/llvm/test/CodeGen/X86/machine-latecleanup-spill-reloads.mir
+@@ -0,0 +1,434 @@
++# RUN: llc -mtriple=x86_64-unknown-linux-gnu -run-pass=machine-latecleanup %s \
++# RUN:   -o - -verify-machineinstrs | FileCheck %s
++
++--- |
++  define void @remove_redundant_spill_reload() {
++    ret void
++  }
++
++  define void @same_spill_slot_store_blocks_reload_reuse() {
++    ret void
++  }
++
++  define void @different_spill_slot_store_keeps_reload_reusable() {
++    ret void
++  }
++
++  define void @non_spill_stack_slot_reload_is_not_reused() {
++    ret void
++  }
++
++  define void @call_keeps_reload_reusable() #0 {
++    ret void
++  }
++
++  define void @reload_reused_from_predecessors() {
++    ret void
++  }
++
++  define void @store_through_ir_pointer_keeps_reload_reusable(ptr %p) {
++    ret void
++  }
++
++  define void @store_to_alloca_keeps_reload_reusable() {
++    %a = alloca i64
++    ret void
++  }
++
++  define void @store_without_pointer_info_keeps_reload_reusable(ptr %p) {
++    ret void
++  }
++
++  define void @store_without_memoperand_blocks_reload_reuse(ptr %p) {
++    ret void
++  }
++
++  define void @store_without_memoperand_keeps_immediate_reusable(ptr %p) {
++    ret void
++  }
++
++  define void @non_spill_slot_reload_is_not_reused_across_ir_store() {
++    %a = alloca i64
++    ret void
++  }
++
++  define void @same_spill_slot_partial_store_blocks_reload_reuse() {
++    ret void
++  }
++
++  define void @same_spill_slot_disjoint_store_blocks_reload_reuse() {
++    ret void
++  }
++
++  declare void @sink()
++
++  attributes #0 = { "frame-pointer"="all" }
++...
++---
++name:            remove_redundant_spill_reload
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    ; CHECK-LABEL: name: remove_redundant_spill_reload
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: $rcx = MOV64ri 1
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    $rcx = MOV64ri 1
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++name:            same_spill_slot_store_blocks_reload_reuse
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rcx
++
++    ; CHECK-LABEL: name: same_spill_slot_store_blocks_reload_reuse
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 32, $noreg, $rcx :: (store (s64) into %stack.0)
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 32, $noreg, $rcx :: (store (s64) into %stack.0)
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++name:            different_spill_slot_store_keeps_reload_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       56
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++  - { id: 2, type: spill-slot, offset: -32, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rcx
++
++    ; CHECK-LABEL: name: different_spill_slot_store_keeps_reload_reusable
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rcx :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 48, $noreg, $rax :: (store (s64) into %stack.2)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rcx :: (store (s64) into %stack.1)
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 48, $noreg, $rax :: (store (s64) into %stack.2)
++    RET64
++...
++---
++name:            non_spill_stack_slot_reload_is_not_reused
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    ; CHECK-LABEL: name: non_spill_stack_slot_reload_is_not_reused
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: $rcx = MOV64ri 1
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    $rcx = MOV64ri 1
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# The reload target is callee-saved and the frame register is $rbp, so neither
++# the call's regmask nor its implicit-def $rsp drops the tracked reload. A call
++# is not a store to the caller's spill slot (mayStore is false), so the second
++# reload is removed.
++name:            call_keeps_reload_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++  hasCalls:        true
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rbp
++
++    ; CHECK-LABEL: name: call_keeps_reload_reusable
++    ; CHECK:      $rbx = MOV64rm $rbp, 1, $noreg, -16, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: CALL64pcrel32
++    ; CHECK-NEXT: MOV64mr $rbp, 1, $noreg, -24, $noreg, $rbx :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rbx = MOV64rm $rbp, 1, $noreg, -16, $noreg :: (load (s64) from %stack.0)
++    CALL64pcrel32 target-flags(x86-plt) @sink, csr_64, implicit $rsp, implicit $ssp, implicit-def $rsp, implicit-def $ssp
++    $rbx = MOV64rm $rbp, 1, $noreg, -16, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rbp, 1, $noreg, -24, $noreg, $rbx :: (store (s64) into %stack.1)
++    RET64
++...
++---
++name:            reload_reused_from_predecessors
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  ; CHECK-LABEL: name: reload_reused_from_predecessors
++  bb.0:
++    successors: %bb.1, %bb.2
++    liveins: $edi
++
++    TEST32rr $edi, $edi, implicit-def $eflags
++    JCC_1 %bb.2, 5, implicit $eflags
++
++  bb.1:
++    successors: %bb.3
++
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    JMP_1 %bb.3
++
++  bb.2:
++    successors: %bb.3
++
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++
++  bb.3:
++    liveins: $rax
++
++    ; CHECK:     bb.3:
++    ; CHECK-NOT:   MOV64rm
++    ; CHECK:       MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT:  RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# A spill slot is created by the register allocator and its address never
++# reaches the IR, so a store that names an IR value cannot write it.
++name:            store_through_ir_pointer_keeps_reload_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rdi, $rdx
++
++    ; CHECK-LABEL: name: store_through_ir_pointer_keeps_reload_reusable
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx :: (store (s64) into %ir.p)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx :: (store (s64) into %ir.p)
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# Same reasoning for an alloca: it is an IR object, so it is not the spill slot.
++name:            store_to_alloca_keeps_reload_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++  - { id: 2, name: a, offset: -32, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rdx
++
++    ; CHECK-LABEL: name: store_to_alloca_keeps_reload_reusable
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 48, $noreg, $rdx :: (store (s64) into %ir.a)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 48, $noreg, $rdx :: (store (s64) into %ir.a)
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# The store describes its access but names no frame index, so it is not a
++# store to the tracked slot and the reload stays reusable.
++name:            store_without_pointer_info_keeps_reload_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rdi, $rdx
++
++    ; CHECK-LABEL: name: store_without_pointer_info_keeps_reload_reusable
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx :: (store (s64))
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx :: (store (s64))
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# An empty memory operand list describes nothing, so the store may reach the slot.
++name:            store_without_memoperand_blocks_reload_reuse
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rdi, $rdx
++
++    ; CHECK-LABEL: name: store_without_memoperand_blocks_reload_reuse
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++# An empty memory operand list is conservative only for a tracked spill-slot
++# reload. An immediate is invalidated solely by modifiesRegister(), so the
++# second copy is still removed.
++name:            store_without_memoperand_keeps_immediate_reusable
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       8
++  maxAlignment:    8
++body:             |
++  bb.0:
++    liveins: $rdi, $rdx
++
++    ; CHECK-LABEL: name: store_without_memoperand_keeps_immediate_reusable
++    ; CHECK:      $rcx = MOV64ri 1
++    ; CHECK-NEXT: MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx
++    ; CHECK-NEXT: RET64
++    $rcx = MOV64ri 1
++    MOV64mr $rdi, 1, $noreg, 0, $noreg, $rdx
++    $rcx = MOV64ri 1
++    RET64
++...
++---
++# The load reads a frame object that is not a spill slot, and the store names
++# that object through its IR value. Reusing the load would return the value
++# from before the store, so isSpillSlotReload() must refuse to track it.
++name:            non_spill_slot_reload_is_not_reused_across_ir_store
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       48
++  maxAlignment:    8
++stack:
++  - { id: 0, name: a, offset: -16, size: 8, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -24, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rdx
++
++    ; CHECK-LABEL: name: non_spill_slot_reload_is_not_reused_across_ir_store
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0.a)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 32, $noreg, $rdx :: (store (s64) into %ir.a)
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0.a)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 32, $noreg, $rdx :: (store (s64) into %ir.a)
++    $rax = MOV64rm $rsp, 1, $noreg, 32, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 40, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++name:            same_spill_slot_partial_store_blocks_reload_reuse
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       64
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -24, size: 16, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -32, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rcx
++
++    ; CHECK-LABEL: name: same_spill_slot_partial_store_blocks_reload_reuse
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV8mr $rsp, 1, $noreg, 44, $noreg, $cl :: (store (s8) into %stack.0 + 4, align 4)
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 56, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    MOV8mr $rsp, 1, $noreg, 44, $noreg, $cl :: (store (s8) into %stack.0 + 4, align 4)
++    $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 56, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
++---
++name:            same_spill_slot_disjoint_store_blocks_reload_reuse
++tracksRegLiveness: true
++frameInfo:
++  stackSize:       64
++  maxAlignment:    8
++stack:
++  - { id: 0, type: spill-slot, offset: -24, size: 16, alignment: 8 }
++  - { id: 1, type: spill-slot, offset: -32, size: 8, alignment: 8 }
++body:             |
++  bb.0:
++    liveins: $rcx
++
++    ; CHECK-LABEL: name: same_spill_slot_disjoint_store_blocks_reload_reuse
++    ; CHECK:      $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV8mr $rsp, 1, $noreg, 52, $noreg, $cl :: (store (s8) into %stack.0 + 12, align 4)
++    ; CHECK-NEXT: $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    ; CHECK-NEXT: MOV64mr $rsp, 1, $noreg, 56, $noreg, $rax :: (store (s64) into %stack.1)
++    ; CHECK-NEXT: RET64
++    $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    MOV8mr $rsp, 1, $noreg, 52, $noreg, $cl :: (store (s8) into %stack.0 + 12, align 4)
++    $rax = MOV64rm $rsp, 1, $noreg, 40, $noreg :: (load (s64) from %stack.0)
++    MOV64mr $rsp, 1, $noreg, 56, $noreg, $rax :: (store (s64) into %stack.1)
++    RET64
++...
+diff --git a/llvm/test/CodeGen/X86/wide-scalar-shift-by-byte-multiple-legalization.ll b/llvm/test/CodeGen/X86/wide-scalar-shift-by-byte-multiple-legalization.ll
+index 5f8db1b1a4a80..fdae4b6f87907 100644
+--- a/llvm/test/CodeGen/X86/wide-scalar-shift-by-byte-multiple-legalization.ll
++++ b/llvm/test/CodeGen/X86/wide-scalar-shift-by-byte-multiple-legalization.ll
+@@ -17625,11 +17625,10 @@ define void @ashr_64bytes(ptr %src.ptr, ptr %byteOff.ptr, ptr %dst) nounwind {
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    orl %esi, %edi
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movl 116(%esp,%edx), %esi
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movl %esi, %eax
+-; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movl %ebx, %ecx
++; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movb %bl, %cl
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    shrl %cl, %eax
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movl 120(%esp,%edx), %edx
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    leal (%edx,%edx), %ebp
+-; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movb {{[-0-9]+}}(%e{{[sb]}}p), %ch # 1-byte Reload
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    movb %ch, %cl
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    shll %cl, %ebp
+ ; X86-NO-SHLD-NO-BMI2-SSE2-NEXT:    orl %eax, %ebp
