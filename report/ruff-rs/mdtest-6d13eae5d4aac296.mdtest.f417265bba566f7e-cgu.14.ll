@@ -66,7 +66,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @55 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1_NtNtCs4NRVxsYgnAr_4core3ptr8metadataINtB5_11DynMetadataDNtNtCs45bxiIjzMqg_5salsa8database8DatabaseEL_ENtNtB9_3fmt5Debug3fmtCskXhPDodhyTq_6mdtest }>, align 8
 @56 = private unnamed_addr constant [8 x i8] c"metadata", align 1
 @switch.table._RNvMs7_NtCskXhPDodhyTq_6mdtest6parserNtB5_12EmbeddedFile9full_path = private unnamed_addr constant [3 x i8] c"\11\12\14", align 8
-@switch.table._RNvMs7_NtCskXhPDodhyTq_6mdtest6parserNtB5_12EmbeddedFile9full_path.22 = private unnamed_addr constant [3 x ptr] [ptr @13, ptr @14, ptr @15], align 8
+@switch.table._RNvMs7_NtCskXhPDodhyTq_6mdtest6parserNtB5_12EmbeddedFile9full_path.23 = private unnamed_addr constant [3 x ptr] [ptr @13, ptr @14, ptr @15], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMs4_NtCsiqiOkcJdymw_7similar4textINtB6_8TextDiffeE10from_linesReB12_eECskXhPDodhyTq_6mdtest(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -469,7 +469,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.h = zext nneg i8 %i.f to i64
-  %switch.gep6 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs7_NtCskXhPDodhyTq_6mdtest6parserNtB5_12EmbeddedFile9full_path.22, i64 %i.h
+  %switch.gep6 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvMs7_NtCskXhPDodhyTq_6mdtest6parserNtB5_12EmbeddedFile9full_path.23, i64 %i.h
   %switch.load7 = load ptr, ptr %switch.gep6, align 8
   br label %bb.c
 
