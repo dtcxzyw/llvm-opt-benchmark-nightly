@@ -205,17 +205,17 @@ begin_hunk_0
 @379 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 5876616940435402675 to ptr), ptr inttoptr (i64 -855828813283841040 to ptr) }>, align 8
 @380 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -8242412143468086250 to ptr), ptr inttoptr (i64 1189166984275757431 to ptr) }>, align 8
 @switch.table._RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix11access_modeNtB5_10AccessModeNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\04\04\05\09", align 8
-@switch.table._RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix11access_modeNtB5_10AccessModeNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.152 = private unnamed_addr constant [4 x ptr] [ptr @96, ptr @97, ptr @98, ptr @99], align 8
+@switch.table._RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix11access_modeNtB5_10AccessModeNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.154 = private unnamed_addr constant [4 x ptr] [ptr @96, ptr @97, ptr @98, ptr @99], align 8
 @switch.table._RNvXs1g_NtCs8Chj7Szqq0n_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCsadSKrpJ73hd_12iox2_service = private unnamed_addr constant [6 x i8] c"\05\0C\0B\0B\04\0E", align 8
-@switch.table._RNvXs1g_NtCs8Chj7Szqq0n_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCsadSKrpJ73hd_12iox2_service.156 = private unnamed_addr constant [6 x ptr] [ptr @183, ptr @305, ptr @306, ptr @307, ptr @308, ptr @309], align 8
+@switch.table._RNvXs1g_NtCs8Chj7Szqq0n_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCsadSKrpJ73hd_12iox2_service.158 = private unnamed_addr constant [6 x ptr] [ptr @183, ptr @305, ptr @306, ptr @307, ptr @308, ptr @309], align 8
 @switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt = private unnamed_addr constant [5 x i8] c"\0A\0C\10\0B\0D", align 8
-@switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.157 = private unnamed_addr constant [5 x ptr] [ptr @151, ptr @152, ptr @153, ptr @154, ptr @155], align 8
+@switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.159 = private unnamed_addr constant [5 x ptr] [ptr @151, ptr @152, ptr @153, ptr @154, ptr @155], align 8
 @switch.table._RNvXsh_NtCs7gufeB8TUC6_12iceoryx2_cal13shm_allocatorNtB5_18AllocationStrategyNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\07\0A\06", align 8
-@switch.table._RNvXsh_NtCs7gufeB8TUC6_12iceoryx2_cal13shm_allocatorNtB5_18AllocationStrategyNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.158 = private unnamed_addr constant [3 x ptr] [ptr @302, ptr @303, ptr @304], align 8
+@switch.table._RNvXsh_NtCs7gufeB8TUC6_12iceoryx2_cal13shm_allocatorNtB5_18AllocationStrategyNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.160 = private unnamed_addr constant [3 x ptr] [ptr @302, ptr @303, ptr @304], align 8
 @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service = private unnamed_addr constant [4 x ptr] [ptr @226, ptr @227, ptr @228, ptr @229], align 8
-@switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.159 = private unnamed_addr constant [4 x i8] c"\10\05\0F\03", align 8
+@switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.161 = private unnamed_addr constant [4 x i8] c"\10\05\0F\03", align 8
 @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service = private unnamed_addr constant [3 x ptr] [ptr @126, ptr @127, ptr @128], align 8
-@switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.160 = private unnamed_addr constant [3 x i8] c"\03\04\04", align 8
+@switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.162 = private unnamed_addr constant [3 x i8] c"\03\04\04", align 8
 
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RINvMNtNtCs5WK5l2q0aFk_12clap_builder4util8flat_mapINtB3_7FlatMapNtNtB5_2id2IdNtNtNtNtB7_6parser7matches11matched_arg10MatchedArgE12remove_entryeECsadSKrpJ73hd_12iox2_service(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([120 x i8]) align 8 captures(none) dereferenceable(120) %0, ptr noalias nofree noundef align 8 dereferenceable(48) %1, ptr noalias nofree noundef nonnull readonly captures(none) %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -618,7 +618,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix11access_modeNtB5_10AccessModeNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.152, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix11access_modeNtB5_10AccessModeNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.154, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs8Chj7Szqq0n_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext) #27
   ret i1 %i.d
@@ -808,7 +808,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i8 %.val.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.159, i64 %i.g
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.161, i64 %i.g
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.7.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -870,7 +870,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i8 %.val.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.160, i64 %i.g
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.162, i64 %i.g
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.7.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -1273,7 +1273,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %i.b to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.157, i64 %i.d
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.159, i64 %i.d
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.e = tail call noundef zeroext i1 @_RNvMsa_NtCs8Chj7Szqq0n_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext) #27, !noalias !673
   ret i1 %i.e
@@ -1357,7 +1357,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs8Chj7Szqq0n_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCsadSKrpJ73hd_12iox2_service.156, i64 %i.c
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCs8Chj7Szqq0n_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCsadSKrpJ73hd_12iox2_service.158, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs8Chj7Szqq0n_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext) #27
   ret i1 %i.d
@@ -1760,7 +1760,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.157, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs4_NtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocatorNtB5_15AllocationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.159, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs8Chj7Szqq0n_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext) #27
   ret i1 %i.d
@@ -2163,7 +2163,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCs7gufeB8TUC6_12iceoryx2_cal13shm_allocatorNtB5_18AllocationStrategyNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.158, i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsh_NtCs7gufeB8TUC6_12iceoryx2_cal13shm_allocatorNtB5_18AllocationStrategyNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt.160, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCs8Chj7Szqq0n_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext) #27
   ret i1 %i.d
@@ -2566,8 +2566,9 @@ _RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bj, label %_RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2K_15EnumValueParserBQ_ENtB2K_16TypedValueParser9parse_refs1_0ECsadSKrpJ73hd_12iox2_service.exit, label %bb.p
 
 _RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2K_15EnumValueParserBQ_ENtB2K_16TypedValueParser9parse_refs1_0ECsadSKrpJ73hd_12iox2_service.exit: ; preds = %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.3, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i
-  %.ptr.lcssa16 = phi ptr [ @225, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i ], [ getelementptr inbounds nuw (i8, ptr @225, i64 1), %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1 ], [ getelementptr inbounds nuw (i8, ptr @225, i64 2), %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2 ], [ getelementptr inbounds nuw (i8, ptr @225, i64 3), %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.3 ]
-  %.val = load i8, ptr %.ptr.lcssa16, align 1, !range !19, !noundef !5
+  %.idx.lcssa16 = phi i64 [ 0, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i ], [ 1, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1 ], [ 2, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2 ], [ 3, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.3 ]
+  %.ptr.le = getelementptr inbounds nuw i8, ptr @225, i64 %.idx.lcssa16
+  %.val = load i8, ptr %.ptr.le, align 1, !range !19, !noundef !5
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.val, ptr %i.bk, align 1
   br label %bb.y
@@ -2912,8 +2913,9 @@ _RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bi, label %_RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2t_15EnumValueParserBQ_ENtB2t_16TypedValueParser9parse_refs1_0ECsadSKrpJ73hd_12iox2_service.exit, label %bb.p
 
 _RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2t_15EnumValueParserBQ_ENtB2t_16TypedValueParser9parse_refs1_0ECsadSKrpJ73hd_12iox2_service.exit: ; preds = %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i
-  %.ptr.lcssa16 = phi ptr [ @125, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i ], [ getelementptr inbounds nuw (i8, ptr @125, i64 1), %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1 ], [ getelementptr inbounds nuw (i8, ptr @125, i64 2), %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2 ]
-  %.val = load i8, ptr %.ptr.lcssa16, align 1, !range !12, !noundef !5
+  %.idx.lcssa16 = phi i64 [ 0, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i ], [ 1, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.1 ], [ 2, %_RNCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENtB7_16TypedValueParser9parse_refs1_0CsadSKrpJ73hd_12iox2_service.exit.i.2 ]
+  %.ptr.le = getelementptr inbounds nuw i8, ptr @125, i64 %.idx.lcssa16
+  %.val = load i8, ptr %.ptr.le, align 1, !range !12, !noundef !5
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.val, ptr %i.bj, align 1
   br label %bb.y
@@ -3316,7 +3318,7 @@ switch.lookup:                                    ; preds = %bb.c
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service, i64 %i.g
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.h = zext nneg i8 %.val.i.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.159, i64 %i.h
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6filter22MessagingPatternFilterENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2E_15EnumValueParserB1u_ENtB2E_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.161, i64 %i.h
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.7.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -3379,7 +3381,7 @@ switch.lookup:                                    ; preds = %bb.c
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service, i64 %i.g
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.h = zext nneg i8 %.val.i.i to i64
-  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.160, i64 %i.h
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCs8Chj7Szqq0n_4core4iter8adapters10filter_map9FilterMapINtNtNtBb_5slice4iter4IterNtNtCshX8c74mBP8L_12iceoryx2_cli6format6FormatENCNvXso_NtNtCs5WK5l2q0aFk_12clap_builder7builder12value_parserINtB2n_15EnumValueParserB1u_ENtB2n_16TypedValueParser15possible_values0ENtNtNtB9_6traits8iterator8Iterator3nthCsadSKrpJ73hd_12iox2_service.162, i64 %i.h
   %switch.load2 = load i8, ptr %switch.gep1, align 1
   %switch.ext = zext i8 %switch.load2 to i64
   %.sroa.7.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64

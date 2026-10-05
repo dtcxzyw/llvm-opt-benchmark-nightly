@@ -24,6 +24,7 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZL13validityTable = internal unnamed_addr constant <{ [113 x i8], [15 x i8] }> <{ [113 x i8] c"\00\F8\FF\FF\80\FF\FF\FF\FF\FF\FF\BE\9E\A0\87\FF\FF\A0\87\FF\FF\FF\FE\FE\FE\FF\FF\FE\FF\FE\FF\FF\FE\FE\FE\FF\FF\FE\FE\FE\FF\81\FF\FE\FE\FE\FF\FF\FF\83\FF\F7\83\F7\FE\BF\FF\FF\00\00\D8\80\FF\FF\FF\FF\FF\BE\AC\A0\87\FF\FF\A0\87\FF\FF\FF\00\00\A0\80\80\80\80\04\14\1A\80\C0\C0\C0\C8\98\C0\98\BE\9E\88\88\80\80\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\C0", [15 x i8] zeroinitializer }>, align 16
 @_ZL6pnjMap = internal unnamed_addr constant <{ [67 x i8], [13 x i8] }> <{ [67 x i8] c"\00\00\00\00\00\02\00\02\00\00\00\00\00\00\00\00\00\00\00\00\00\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\00\03\03\03\03\03\03\03\00\00\00\00\03\03\00\03\03\00\00\00\00\00\02\00\02\02", [13 x i8] zeroinitializer }>, align 16
 @_ZL16fromUnicodeTable = internal unnamed_addr constant [128 x i16] [i16 160, i16 161, i16 162, i16 163, i16 -23328, i16 164, i16 165, i16 166, i16 167, i16 168, i16 169, i16 170, i16 -22807, i16 174, i16 171, i16 172, i16 173, i16 178, i16 175, i16 176, i16 177, i16 179, i16 180, i16 181, i16 182, i16 183, i16 184, i16 185, i16 186, i16 187, i16 188, i16 189, i16 190, i16 191, i16 192, i16 193, i16 194, i16 195, i16 196, i16 197, i16 198, i16 199, i16 200, i16 201, i16 202, i16 203, i16 204, i16 205, i16 207, i16 208, i16 209, i16 210, i16 211, i16 212, i16 213, i16 214, i16 215, i16 216, i16 -1, i16 -1, i16 233, i16 -5399, i16 218, i16 219, i16 220, i16 221, i16 222, i16 223, i16 -8215, i16 227, i16 224, i16 225, i16 226, i16 231, i16 228, i16 229, i16 230, i16 232, i16 236, i16 237, i16 -24087, i16 -1, i16 -3912, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -19479, i16 -19223, i16 -18967, i16 -17687, i16 -16407, i16 -16151, i16 -13847, i16 206, i16 -21783, i16 -22551, i16 -9239, i16 -8983, i16 234, i16 -5398, i16 241, i16 242, i16 243, i16 244, i16 245, i16 246, i16 247, i16 248, i16 249, i16 250, i16 -3905, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1], align 16
+@switch.table._ZL40UConverter_toUnicode_ISCII_OFFSETS_LOGICP23UConverterToUnicodeArgsP10UErrorCode = private unnamed_addr constant [16 x i16] [i16 256, i16 2572, i16 2621, i16 2628, i16 2640, i16 2648, i16 2649, i16 2650, i16 2651, i16 2652, i16 2653, i16 2654, i16 2656, i16 2657, i16 2658, i16 2659], align 2
 
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZL10_ISCIIOpenP10UConverterP18UConverterLoadArgsP10UErrorCode(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) #0 {
@@ -426,10 +427,10 @@ bb.bv:                                            ; preds = %bb.bt, %bb.bq, %bb.
   br label %bb.bw
 
 bb.bw:                                            ; preds = %.preheader840, %.fold.split1136, %.fold.split1135, %.fold.split1134, %.fold.split1133, %.fold.split1132, %.fold.split1131, %.fold.split1130, %.fold.split1129, %.fold.split1128, %.fold.split1127, %.fold.split1126, %.fold.split1125, %.fold.split1124, %.fold.split
-  %.lcssa953 = phi i64 [ 1, %.preheader840 ], [ 14, %.fold.split1135 ], [ 2, %.fold.split ], [ 3, %.fold.split1124 ], [ 4, %.fold.split1125 ], [ 5, %.fold.split1126 ], [ 6, %.fold.split1127 ], [ 7, %.fold.split1128 ], [ 8, %.fold.split1129 ], [ 9, %.fold.split1130 ], [ 10, %.fold.split1131 ], [ 11, %.fold.split1132 ], [ 12, %.fold.split1133 ], [ 13, %.fold.split1134 ], [ 15, %.fold.split1136 ]
+  %.lcssa953 = phi i64 [ 1, %.preheader840 ], [ 14, %.fold.split1135 ], [ 2, %.fold.split ], [ 3, %.fold.split1124 ], [ 4, %.fold.split1125 ], [ 5, %.fold.split1126 ], [ 6, %.fold.split1127 ], [ 7, %.fold.split1128 ], [ 8, %.fold.split1129 ], [ 9, %.fold.split1130 ], [ 10, %.fold.split1131 ], [ 11, %.fold.split1132 ], [ 12, %.fold.split1133 ], [ 13, %.fold.split1134 ], [ 15, %.fold.split1136 ] ; 2 uses
   %i.ob = getelementptr inbounds nuw [4 x i8], ptr @_ZL17nuktaSpecialCases, i64 %.lcssa953
   %i.oc = getelementptr inbounds nuw i8, ptr %i.ob, i64 2
-  %i.od = load i16, ptr %i.oc, align 2, !tbaa !42 ; 7 uses
+  %i.od = load i16, ptr %i.oc, align 2, !tbaa !42
   %i.oe = zext i16 %i.od to i32                   ; 2 uses
   %i.of = and i32 %i.oe, 255
   %i.og = zext nneg i32 %i.of to i64
@@ -496,7 +497,7 @@ bb.cd:                                            ; preds = %bb.ca, %bb.cb, %bb.
   store i32 0, ptr %i.w, align 4, !tbaa !34
   br label %switch.early.test
 
-switch.early.test:                                ; preds = %bb.cd, %bb.by
+switch.early.test:                                ; preds = %bb.by, %bb.cd
   %i.pi = phi i32 [ %i.oz, %bb.cd ], [ %i.gx, %bb.by ] ; 2 uses
   %i.pj = phi ptr [ %i.pa, %bb.cd ], [ %i.bs, %bb.by ]
   %i.pk = phi ptr [ %i.pb, %bb.cd ], [ %i.bt, %bb.by ] ; 2 uses
@@ -507,25 +508,14 @@ switch.early.test:                                ; preds = %bb.cd, %bb.by
   %i.pp = phi ptr [ %i.pg, %bb.cd ], [ %i.gz, %bb.by ]
   %i.pq = phi ptr [ %i.ph, %bb.cd ], [ %i.ha, %bb.by ] ; 2 uses
   %.18 = phi ptr [ %.17624, %bb.cd ], [ %.7614, %bb.by ] ; 4 uses
-  switch i16 %i.od, label %2 [
-    i16 8205, label %4
-    i16 8204, label %4
-    i16 2405, label %4
-    i16 2404, label %4
-  ]
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZL40UConverter_toUnicode_ISCII_OFFSETS_LOGICP23UConverterToUnicodeArgsP10UErrorCode, i64 %.lcssa953
+  %switch.load = load i16, ptr %switch.gep, align 2 ; 2 uses
+  %2 = icmp ult ptr %.18, %i.f
+  br i1 %2, label %bb.ce, label %bb.cg
 
-2:                                                ; preds = %switch.early.test
-  %3 = add i16 %i.od, 256
-  br label %4
-
-4:                                                ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %2
-  %.13 = phi i16 [ %3, %2 ], [ %i.od, %switch.early.test ], [ %i.od, %switch.early.test ], [ %i.od, %switch.early.test ], [ %i.od, %switch.early.test ] ; 2 uses
-  %5 = icmp ult ptr %.18, %i.f
-  br i1 %5, label %bb.ce, label %bb.cg
-
-bb.ce:                                            ; preds = %4
+bb.ce:                                            ; preds = %switch.early.test
   %i.pr = getelementptr inbounds nuw i8, ptr %.18, i64 2 ; 2 uses
-  store i16 %.13, ptr %.18, align 2, !tbaa !41
+  store i16 %switch.load, ptr %.18, align 2, !tbaa !41
   %i.ps = load ptr, ptr %i.x, align 8, !tbaa !58  ; 3 uses
   %.not680 = icmp eq ptr %i.ps, null
   br i1 %.not680, label %.outer.backedge, label %bb.cf
@@ -540,7 +530,7 @@ bb.cf:                                            ; preds = %bb.ce
   store i32 %i.pw, ptr %i.ps, align 4, !tbaa !43
   br label %.outer.backedge
 
-bb.cg:                                            ; preds = %4
+bb.cg:                                            ; preds = %switch.early.test
   %i.py = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.pz = getelementptr inbounds nuw i8, ptr %i.h, i64 93 ; 2 uses
   %i.qa = load i8, ptr %i.pz, align 1, !tbaa !59  ; 2 uses
@@ -548,7 +538,7 @@ bb.cg:                                            ; preds = %4
   store i8 %i.qb, ptr %i.pz, align 1, !tbaa !59
   %i.qc = sext i8 %i.qa to i64
   %i.qd = getelementptr inbounds [2 x i8], ptr %i.py, i64 %i.qc
-  store i16 %.13, ptr %i.qd, align 2, !tbaa !41
+  store i16 %switch.load, ptr %i.qd, align 2, !tbaa !41
   store i32 15, ptr %1, align 4, !tbaa !36
   br label %.loopexit841.thread
 

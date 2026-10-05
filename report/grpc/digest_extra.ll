@@ -57,6 +57,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.34 = private unnamed_addr constant [11 x i8] c"RSA-SHA512\00", align 1
 @.str.35 = private unnamed_addr constant [24 x i8] c"sha512WithRSAEncryption\00", align 1
 @_ZL7kMDOIDs = internal constant [7 x %struct.anon] [%struct.anon { [9 x i8] c"*\86H\86\F7\0D\02\04\00", i8 8, i32 257 }, %struct.anon { [9 x i8] c"*\86H\86\F7\0D\02\05\00", i8 8, i32 4 }, %struct.anon { [9 x i8] c"+\0E\03\02\1A\00\00\00\00", i8 5, i32 64 }, %struct.anon { [9 x i8] c"`\86H\01e\03\04\02\01", i8 9, i32 672 }, %struct.anon { [9 x i8] c"`\86H\01e\03\04\02\02", i8 9, i32 673 }, %struct.anon { [9 x i8] c"`\86H\01e\03\04\02\03", i8 9, i32 674 }, %struct.anon { [9 x i8] c"`\86H\01e\03\04\02\04", i8 9, i32 675 }], align 16
+@switch.table._ZL9cbs_to_mdPK6cbs_st = private unnamed_addr constant [7 x ptr] [ptr @_ZL21nid_to_digest_mapping, ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 32), ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 128), ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 160), ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 192), ptr getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 96)], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @EVP_get_digestbynid(i32 noundef %0) local_unnamed_addr #0 {
@@ -119,7 +120,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define noundef ptr @EVP_get_digestbyobj(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !23
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !22
   switch i32 %i.b, label %EVP_get_digestbynid.exit [
     i32 0, label %bb.c
     i32 114, label %.fold.split22.i
@@ -193,51 +194,13 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit:                  ; preds = %bb.a
   %i.b = icmp ne i64 %i.a, 288808682866116138
   %i.c = zext i1 %i.b to i32
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.1
+  br i1 %i.d, label %bb.b, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.1
 
-_ZL14OPENSSL_memcmpPKvS0_m.exit.thread:           ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.6, %_ZL14OPENSSL_memcmpPKvS0_m.exit.5, %_ZL14OPENSSL_memcmpPKvS0_m.exit.4, %_ZL14OPENSSL_memcmpPKvS0_m.exit.3, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1, %_ZL14OPENSSL_memcmpPKvS0_m.exit
-  %.lcssa = phi ptr [ @_ZL7kMDOIDs, %_ZL14OPENSSL_memcmpPKvS0_m.exit ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 16), %_ZL14OPENSSL_memcmpPKvS0_m.exit.1 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 32), %_ZL14OPENSSL_memcmpPKvS0_m.exit.2 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 48), %_ZL14OPENSSL_memcmpPKvS0_m.exit.3 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 64), %_ZL14OPENSSL_memcmpPKvS0_m.exit.4 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 80), %_ZL14OPENSSL_memcmpPKvS0_m.exit.5 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 96), %_ZL14OPENSSL_memcmpPKvS0_m.exit.6 ]
-  %0 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 12
-  %1 = load i32, ptr %0, align 4, !tbaa !24
-  switch i32 %1, label %EVP_get_digestbynid.exit [
-    i32 114, label %.fold.split22.i
-    i32 257, label %bb.b
-    i32 4, label %.fold.split.i
-    i32 64, label %.fold.split16.i
-    i32 675, label %.fold.split17.i
-    i32 672, label %.fold.split18.i
-    i32 673, label %.fold.split19.i
-    i32 674, label %.fold.split20.i
-    i32 962, label %.fold.split21.i
-  ]
-
-.fold.split.i:                                    ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split16.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split17.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split18.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split19.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split20.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split21.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-.fold.split22.i:                                  ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  br label %bb.b
-
-bb.b:                                             ; preds = %.fold.split22.i, %.fold.split21.i, %.fold.split20.i, %.fold.split19.i, %.fold.split18.i, %.fold.split17.i, %.fold.split16.i, %.fold.split.i, %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  %.lcssa.i = phi ptr [ @_ZL21nid_to_digest_mapping, %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 224), %.fold.split21.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 32), %.fold.split.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 64), %.fold.split16.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 96), %.fold.split17.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 128), %.fold.split18.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 160), %.fold.split19.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 192), %.fold.split20.i ], [ getelementptr inbounds nuw (i8, ptr @_ZL21nid_to_digest_mapping, i64 256), %.fold.split22.i ]
-  %i.e = getelementptr inbounds nuw i8, ptr %.lcssa.i, i64 8
+bb.b:                                             ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.6, %_ZL14OPENSSL_memcmpPKvS0_m.exit.5, %_ZL14OPENSSL_memcmpPKvS0_m.exit.4, %_ZL14OPENSSL_memcmpPKvS0_m.exit.3, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1, %_ZL14OPENSSL_memcmpPKvS0_m.exit
+  %.095.lcssa = phi i64 [ 0, %_ZL14OPENSSL_memcmpPKvS0_m.exit ], [ 1, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1 ], [ 2, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2 ], [ 3, %_ZL14OPENSSL_memcmpPKvS0_m.exit.3 ], [ 4, %_ZL14OPENSSL_memcmpPKvS0_m.exit.4 ], [ 5, %_ZL14OPENSSL_memcmpPKvS0_m.exit.5 ], [ 6, %_ZL14OPENSSL_memcmpPKvS0_m.exit.6 ]
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL9cbs_to_mdPK6cbs_st, i64 %.095.lcssa
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !14
   %i.g = tail call noundef ptr %i.f() #6, !inline_history !15
   br label %EVP_get_digestbynid.exit
@@ -247,7 +210,7 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.1:                ; preds = %_ZL14OPENSSL_memcmp
   %i.i = icmp ne i64 %i.h, 360866276904044074
   %i.j = zext i1 %i.i to i32
   %i.k = icmp eq i32 %i.j, 0
-  br i1 %i.k, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %EVP_get_digestbynid.exit
+  br i1 %i.k, label %bb.b, label %EVP_get_digestbynid.exit
 
 _ZL14OPENSSL_memcmpPKvS0_m.exit.2:                ; preds = %bb.a
   %i.l = load i32, ptr %.0.val, align 1
@@ -260,7 +223,7 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.2:                ; preds = %bb.a
   %i.s = icmp ne i32 %i.r, 0
   %i.t = zext i1 %i.s to i32
   %i.u = icmp eq i32 %i.t, 0
-  br i1 %i.u, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %EVP_get_digestbynid.exit
+  br i1 %i.u, label %bb.b, label %EVP_get_digestbynid.exit
 
 _ZL14OPENSSL_memcmpPKvS0_m.exit.3:                ; preds = %bb.a
   %i.v = load i64, ptr %.0.val, align 1
@@ -273,7 +236,7 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.3:                ; preds = %bb.a
   %i.ac = icmp ne i64 %i.ab, 0
   %i.ad = zext i1 %i.ac to i32
   %i.ae = icmp eq i32 %i.ad, 0
-  br i1 %i.ae, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.4
+  br i1 %i.ae, label %bb.b, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.4
 
 _ZL14OPENSSL_memcmpPKvS0_m.exit.4:                ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.3
   %i.af = load i64, ptr %.0.val, align 1
@@ -286,7 +249,7 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.4:                ; preds = %_ZL14OPENSSL_memcmp
   %i.am = icmp ne i64 %i.al, 0
   %i.an = zext i1 %i.am to i32
   %i.ao = icmp eq i32 %i.an, 0
-  br i1 %i.ao, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.5
+  br i1 %i.ao, label %bb.b, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.5
 
 _ZL14OPENSSL_memcmpPKvS0_m.exit.5:                ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.4
   %i.ap = load i64, ptr %.0.val, align 1
@@ -299,7 +262,7 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.5:                ; preds = %_ZL14OPENSSL_memcmp
   %i.aw = icmp ne i64 %i.av, 0
   %i.ax = zext i1 %i.aw to i32
   %i.ay = icmp eq i32 %i.ax, 0
-  br i1 %i.ay, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.6
+  br i1 %i.ay, label %bb.b, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.6
 
 _ZL14OPENSSL_memcmpPKvS0_m.exit.6:                ; preds = %_ZL14OPENSSL_memcmpPKvS0_m.exit.5
   %i.az = load i64, ptr %.0.val, align 1
@@ -312,11 +275,11 @@ _ZL14OPENSSL_memcmpPKvS0_m.exit.6:                ; preds = %_ZL14OPENSSL_memcmp
   %i.bg = icmp ne i64 %i.bf, 0
   %i.bh = zext i1 %i.bg to i32
   %i.bi = icmp eq i32 %i.bh, 0
-  br i1 %i.bi, label %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread, label %EVP_get_digestbynid.exit
+  br i1 %i.bi, label %bb.b, label %EVP_get_digestbynid.exit
 
-EVP_get_digestbynid.exit:                         ; preds = %bb.a, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1, %_ZL14OPENSSL_memcmpPKvS0_m.exit.6, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2, %bb.b, %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread
-  %2 = phi ptr [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.thread ], [ %i.g, %bb.b ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2 ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.6 ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1 ], [ null, %bb.a ]
-  ret ptr %2
+EVP_get_digestbynid.exit:                         ; preds = %bb.a, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1, %_ZL14OPENSSL_memcmpPKvS0_m.exit.6, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2, %bb.b
+  %0 = phi ptr [ %i.g, %bb.b ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.2 ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.6 ], [ null, %_ZL14OPENSSL_memcmpPKvS0_m.exit.1 ], [ null, %bb.a ]
+  ret ptr %0
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -354,7 +317,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !27
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !25
   %.not7 = icmp eq i64 %i.g, 0
   br i1 %.not7, label %bb.i, label %bb.g
 
@@ -453,7 +416,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %.fold.split44, %.fold.split43, %.fold.split42, %.fold.split41, %.fold.split40, %.fold.split
   %.0.ptr38.lcssa = phi ptr [ @_ZL7kMDOIDs, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 80), %.fold.split43 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 16), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 32), %.fold.split40 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 48), %.fold.split41 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 64), %.fold.split42 ], [ getelementptr inbounds nuw (i8, ptr @_ZL7kMDOIDs, i64 96), %.fold.split44 ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.0.ptr38.lcssa, i64 9
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !28
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !27
   %i.f = zext i8 %i.e to i64
   %i.g = call i32 @CBB_add_bytes(ptr noundef nonnull %4, ptr noundef nonnull %.0.ptr38.lcssa, i64 noundef %i.f) #6
   %.not24.not = icmp eq i32 %i.g, 0
@@ -728,7 +691,7 @@ declare i32 @CBB_flush(ptr noundef) local_unnamed_addr #2
 define internal void @_ZL15blake2b256_initP13env_md_ctx_st(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   tail call void @BLAKE2B256_Init(ptr noundef %i.b) #6
   ret void
 }
@@ -737,7 +700,7 @@ bb.a:
 define internal void @_ZL17blake2b256_updateP13env_md_ctx_stPKvm(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   tail call void @BLAKE2B256_Update(ptr noundef %i.b, ptr noundef %1, i64 noundef %2) #6
   ret void
 }
@@ -746,7 +709,7 @@ bb.a:
 define internal void @_ZL16blake2b256_finalP13env_md_ctx_stPh(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   tail call void @BLAKE2B256_Final(ptr noundef %1, ptr noundef %i.b) #6
   ret void
 }
@@ -761,7 +724,7 @@ declare void @BLAKE2B256_Final(ptr noundef, ptr noundef) local_unnamed_addr #2
 define internal void @_ZL8md4_initP13env_md_ctx_st(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD4_Init(ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -778,7 +741,7 @@ bb.c:                                             ; preds = %bb.a
 define internal void @_ZL10md4_updateP13env_md_ctx_stPKvm(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD4_Update(ptr noundef %i.b, ptr noundef %1, i64 noundef %2) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -795,7 +758,7 @@ bb.c:                                             ; preds = %bb.a
 define internal void @_ZL9md4_finalP13env_md_ctx_stPh(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD4_Final(ptr noundef %1, ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -821,7 +784,7 @@ declare i32 @MD4_Final(ptr noundef, ptr noundef) local_unnamed_addr #2
 define internal void @_ZL8md5_initP13env_md_ctx_st(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD5_Init(ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -838,7 +801,7 @@ bb.c:                                             ; preds = %bb.a
 define internal void @_ZL10md5_updateP13env_md_ctx_stPKvm(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD5_Update(ptr noundef %i.b, ptr noundef %1, i64 noundef %2) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -855,7 +818,7 @@ bb.c:                                             ; preds = %bb.a
 define internal void @_ZL9md5_finalP13env_md_ctx_stPh(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @MD5_Final(ptr noundef %1, ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %bb.c
@@ -878,7 +841,7 @@ declare i32 @MD5_Final(ptr noundef, ptr noundef) local_unnamed_addr #2
 define internal void @_ZL13md5_sha1_initP13env_md_ctx_st(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = tail call i32 @MD5_Init(ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -901,7 +864,7 @@ bb.d:                                             ; preds = %bb.b
 define internal void @_ZL15md5_sha1_updateP13env_md_ctx_stPKvm(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = tail call i32 @MD5_Update(ptr noundef %i.b, ptr noundef %1, i64 noundef %2) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -924,7 +887,7 @@ bb.d:                                             ; preds = %bb.b
 define internal void @_ZL14md5_sha1_finalP13env_md_ctx_stPh(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = tail call i32 @MD5_Final(ptr noundef %1, ptr noundef %i.b) #6
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -980,17 +943,16 @@ attributes #8 = { noreturn nounwind }
 !13 = !{!"_ZTS13nid_to_digest", !8, i64 0, !11, i64 8, !12, i64 16, !12, i64 24}
 !14 = !{!13, !11, i64 8}
 !15 = !{ptr @EVP_get_digestbynid}
-!16 = !{!"_ZTS3$_0", !7, i64 0, !7, i64 9, !8, i64 12}
-!17 = !{!"p1 _ZTS9env_md_st", !11, i64 0}
-!18 = !{!"p1 _ZTS15evp_pkey_ctx_st", !11, i64 0}
-!19 = !{!"p1 _ZTS15evp_md_pctx_ops", !11, i64 0}
-!20 = !{!"_ZTS13env_md_ctx_st", !17, i64 0, !11, i64 8, !18, i64 16, !19, i64 24}
-!21 = !{!20, !11, i64 8}
-!22 = !{!"_ZTS14asn1_object_st", !12, i64 0, !12, i64 8, !8, i64 16, !8, i64 20, !12, i64 24, !8, i64 32}
-!23 = !{!22, !8, i64 16}
-!24 = !{!16, !8, i64 12}
-!25 = !{!"long", !7, i64 0}
-!26 = !{!"_ZTS6cbs_st", !12, i64 0, !25, i64 8}
-!27 = !{!26, !25, i64 8}
-!28 = !{!16, !7, i64 9}
+!16 = !{!"p1 _ZTS9env_md_st", !11, i64 0}
+!17 = !{!"p1 _ZTS15evp_pkey_ctx_st", !11, i64 0}
+!18 = !{!"p1 _ZTS15evp_md_pctx_ops", !11, i64 0}
+!19 = !{!"_ZTS13env_md_ctx_st", !16, i64 0, !11, i64 8, !17, i64 16, !18, i64 24}
+!20 = !{!19, !11, i64 8}
+!21 = !{!"_ZTS14asn1_object_st", !12, i64 0, !12, i64 8, !8, i64 16, !8, i64 20, !12, i64 24, !8, i64 32}
+!22 = !{!21, !8, i64 16}
+!23 = !{!"long", !7, i64 0}
+!24 = !{!"_ZTS6cbs_st", !12, i64 0, !23, i64 8}
+!25 = !{!24, !23, i64 8}
+!26 = !{!"_ZTS3$_0", !7, i64 0, !7, i64 9, !8, i64 12}
+!27 = !{!26, !7, i64 9}
 end_hunk_0
