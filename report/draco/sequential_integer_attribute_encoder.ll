@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %i.dg, label %.lr.ph.i.i.i.i.i.i.i.i63.preheader, label %_ZSt22__uninitialized_copy_aIPKhPccET0_T_S4_S3_RSaIT1_E.exit67
 
 .lr.ph.i.i.i.i.i.i.i.i63.preheader:               ; preds = %bb.t
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 %i.c, i1 false), !tbaa !105
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 range(i64 0, -9223372036854775808) %i.c, i1 false), !tbaa !105
   %i.dh = add i64 %i.a, %i.da
   %i.di = add i64 %i.b, %i.cq
   %i.dj = sub i64 %i.dh, %i.di
@@ -608,7 +608,7 @@ _ZN5draco37PredictionSchemeWrapEncodingTransformIiiE4InitEPKiii.exit: ; preds = 
 .lr.ph95.preheader:                               ; preds = %.preheader
   %i.bu = zext nneg i32 %4 to i64
   %i.bv = shl nuw nsw i64 %i.bu, 2
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.au, i8 0, i64 %i.bv, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.au, i8 0, i64 range(i64 0, 8589934589) %i.bv, i1 false), !tbaa !96
   br label %._crit_edge
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNK5draco37PredictionSchemeWrapEncodingTransformIiiE17ComputeCorrectionEPKiS3_Pi.exit
@@ -1011,7 +1011,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.gg = load ptr, ptr %8, align 16, !tbaa !101
   %i.gh = zext nneg i32 %4 to i64
   %i.gi = shl nuw nsw i64 %i.gh, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %i.gg, i8 0, i64 %i.gi, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr align 4 %i.gg, i8 0, i64 range(i64 0, 8589934589) %i.gi, i1 false), !tbaa !96
   br label %._crit_edge441
 
 bb.y:                                             ; preds = %bb.i, %bb.h
@@ -1414,7 +1414,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.0131425 = phi i32 [ 1, %.lr.ph426 ], [ %i.xx, %_ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit ] ; 5 uses
   %i.qw = add nuw nsw i64 %indvar, 1              ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.b, i8 1, i64 %i.qo, i1 false), !tbaa !239
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 0, i64 %i.qw, i1 false), !tbaa !239
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 0, i64 range(i64 0, 2147483648) %i.qw, i1 false), !tbaa !239
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.0131425, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %.preheader375
@@ -1426,7 +1426,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %.lr.ph419
 
 .lr.ph413.preheader:                              ; preds = %.preheader375
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0351.0, i8 0, i64 %i.fb, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0351.0, i8 0, i64 range(i64 0, 8589934589) %i.fb, i1 false), !tbaa !96
   br label %.lr.ph419.preheader
 
 .preheader373:                                    ; preds = %bb.ba
@@ -1829,7 +1829,7 @@ _ZNK5draco17GeometryAttribute17ConvertTypedValueIalEEbNS_9IndexTypeIjNS_29Attrib
   %i.jr = shl nsw i64 %i.jq, 3
   %i.js = and i64 %i.jr, 34359738360
   %i.jt = add nuw nsw i64 %i.js, 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i151, i8 0, i64 %i.jt, i1 false), !tbaa !128
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i151, i8 0, i64 range(i64 0, 2041) %i.jt, i1 false), !tbaa !128
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIalEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 _ZNK5draco17GeometryAttribute17ConvertTypedValueIalEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit: ; preds = %bb.ag, %.lr.ph41.i125, %bb.ad, %.lr.ph41.i, %bb.aa, %bb.x, %bb.w, %bb.t, %bb.q, %bb.n, %bb.k, %bb.h, %bb.f, %bb.d, %.lr.ph.i141, %.lr.ph.i27, %.lr.ph.i, %_ZNK5draco17GeometryAttribute17ConvertTypedValueIalEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit.sink.split, %.critedge.i148, %.critedge.i134, %.lr.ph.i122, %.critedge.i116, %.lr.ph.i111, %.critedge.i108, %.critedge.i99, %.critedge.i86, %.critedge.i73, %.critedge.i60, %.critedge.i47, %.critedge.i34, %.critedge.i, %bb.b, %bb.a
@@ -2232,7 +2232,7 @@ _ZN5draco37PredictionSchemeWrapEncodingTransformIiiE4InitEPKiii.exit: ; preds = 
 .lr.ph93.preheader:                               ; preds = %.preheader
   %i.bt = zext nneg i32 %4 to i64
   %i.bu = shl nuw nsw i64 %i.bt, 2
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.au, i8 0, i64 %i.bu, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.au, i8 0, i64 range(i64 0, 8589934589) %i.bu, i1 false), !tbaa !96
   br label %._crit_edge
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNK5draco37PredictionSchemeWrapEncodingTransformIiiE17ComputeCorrectionEPKiS3_Pi.exit
@@ -2635,7 +2635,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.gf = load ptr, ptr %8, align 16, !tbaa !101
   %i.gg = zext nneg i32 %4 to i64
   %i.gh = shl nuw nsw i64 %i.gg, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %i.gf, i8 0, i64 %i.gh, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr align 4 %i.gf, i8 0, i64 range(i64 0, 8589934589) %i.gh, i1 false), !tbaa !96
   br label %._crit_edge435
 
 bb.y:                                             ; preds = %bb.i, %bb.h
@@ -3038,7 +3038,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.0131419 = phi i32 [ 1, %.lr.ph420 ], [ %i.wj, %_ZNSt6vectorIiSaIiEE6assignIN9__gnu_cxx17__normal_iteratorIPiS1_EEvEEvT_S7_.exit ] ; 5 uses
   %i.pi = add nuw nsw i64 %indvar, 1              ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.b, i8 1, i64 %i.pa, i1 false), !tbaa !239
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 0, i64 %i.pi, i1 false), !tbaa !239
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 0, i64 range(i64 0, 2147483648) %i.pi, i1 false), !tbaa !239
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.0131419, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %.preheader368
@@ -3050,7 +3050,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %.lr.ph413
 
 .lr.ph.preheader:                                 ; preds = %.preheader368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0344.0, i8 0, i64 %i.fa, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0344.0, i8 0, i64 range(i64 0, 8589934589) %i.fa, i1 false), !tbaa !96
   br label %.lr.ph413.preheader
 
 .preheader366:                                    ; preds = %bb.ba
@@ -3453,7 +3453,7 @@ bb.d:                                             ; preds = %.lr.ph207
   %i.ag = shl nsw i64 %i.af, 2
   %i.ah = and i64 %i.ag, 17179869180
   %i.ai = add nuw nsw i64 %i.ah, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, i8 0, i64 %i.ai, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 1021) %i.ai, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -3514,7 +3514,7 @@ bb.f:                                             ; preds = %.lr.ph204
   %i.bm = shl nsw i64 %i.bl, 2
   %i.bn = and i64 %i.bm, 17179869180
   %i.bo = add nuw nsw i64 %i.bn, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i37, i8 0, i64 %i.bo, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i37, i8 0, i64 range(i64 0, 1021) %i.bo, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.g:                                             ; preds = %bb.b
@@ -3574,7 +3574,7 @@ bb.i:                                             ; preds = %bb.h
   %i.cr = shl nsw i64 %i.cq, 2
   %i.cs = and i64 %i.cr, 17179869180
   %i.ct = add nuw nsw i64 %i.cs, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i50, i8 0, i64 %i.ct, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i50, i8 0, i64 range(i64 0, 1021) %i.ct, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.j:                                             ; preds = %bb.b
@@ -3634,7 +3634,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dw = shl nsw i64 %i.dv, 2
   %i.dx = and i64 %i.dw, 17179869180
   %i.dy = add nuw nsw i64 %i.dx, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i63, i8 0, i64 %i.dy, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i63, i8 0, i64 range(i64 0, 1021) %i.dy, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.m:                                             ; preds = %bb.b
@@ -3693,7 +3693,7 @@ bb.o:                                             ; preds = %bb.n
   %i.fa = shl nsw i64 %i.ez, 2
   %i.fb = and i64 %i.fa, 17179869180
   %i.fc = add nuw nsw i64 %i.fb, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i76, i8 0, i64 %i.fc, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i76, i8 0, i64 range(i64 0, 1021) %i.fc, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.p:                                             ; preds = %bb.b
@@ -3756,7 +3756,7 @@ bb.s:                                             ; preds = %bb.r
   %i.gf = shl nsw i64 %i.ge, 2
   %i.gg = and i64 %i.gf, 17179869180
   %i.gh = add nuw nsw i64 %i.gg, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i84, i8 0, i64 %i.gh, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i84, i8 0, i64 range(i64 0, 1021) %i.gh, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.t:                                             ; preds = %bb.b
@@ -3821,7 +3821,7 @@ bb.w:                                             ; preds = %bb.v
   %i.hl = shl nsw i64 %i.hk, 2
   %i.hm = and i64 %i.hl, 17179869180
   %i.hn = add nuw nsw i64 %i.hm, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i97, i8 0, i64 %i.hn, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i97, i8 0, i64 range(i64 0, 1021) %i.hn, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.x:                                             ; preds = %bb.b
@@ -3885,7 +3885,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ir = shl nsw i64 %i.iq, 2
   %i.is = and i64 %i.ir, 17179869180
   %i.it = add nuw nsw i64 %i.is, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i110, i8 0, i64 %i.it, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i110, i8 0, i64 range(i64 0, 1021) %i.it, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 bb.ab:                                            ; preds = %bb.b
@@ -3958,7 +3958,7 @@ bb.ae:                                            ; preds = %.lr.ph
   %i.kb = shl nsw i64 %i.ka, 2
   %i.kc = and i64 %i.kb, 17179869180
   %i.kd = add nuw nsw i64 %i.kc, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i123, i8 0, i64 %i.kd, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i123, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !96
   br label %_ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit
 
 _ZNK5draco17GeometryAttribute17ConvertTypedValueIaiEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEhPT0_.exit: ; preds = %bb.ae, %bb.z, %bb.y, %bb.v, %bb.u, %bb.r, %bb.q, %bb.n, %bb.k, %bb.h, %bb.f, %bb.d, %.lr.ph.i113, %.lr.ph.i27, %.lr.ph.i, %.lr.ph36.preheader.i122, %.critedge.i120, %.lr.ph38.preheader.i109, %.critedge.i107, %.lr.ph38.preheader.i96, %.critedge.i94, %.lr.ph38.preheader.i, %.critedge.i82, %.lr.ph36.preheader.i75, %.critedge.i73, %.lr.ph36.preheader.i62, %.critedge.i60, %.lr.ph36.preheader.i49, %.critedge.i47, %.lr.ph36.preheader.i36, %.critedge.i34, %.lr.ph36.preheader.i, %.critedge.i, %bb.b, %bb.a, %bb.ac, %bb.ab
@@ -4083,7 +4083,7 @@ bb.f:                                             ; preds = %.lr.ph44
   %i.az = shl nsw i64 %i.ay, 2
   %i.ba = and i64 %i.az, 17179869180
   %i.bb = add nuw nsw i64 %i.ba, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.bb, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 1021) %i.bb, i1 false), !tbaa !96
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %.lr.ph44, %bb.b, %.lr.ph51, %bb.c, %.lr.ph58.preheader, %.lr.ph.split.us, %.lr.ph.split, %.critedge
@@ -4207,7 +4207,7 @@ bb.f:                                             ; preds = %.lr.ph44
   %i.aw = shl nsw i64 %i.av, 2
   %i.ax = and i64 %i.aw, 17179869180
   %i.ay = add nuw nsw i64 %i.ax, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.ay, i1 false), !tbaa !96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 1021) %i.ay, i1 false), !tbaa !96
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %.lr.ph44, %bb.b, %.lr.ph51, %bb.c, %.lr.ph58.preheader, %.lr.ph.split.us, %.lr.ph.split, %.critedge

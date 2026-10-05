@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %do_sqrshl_bhs.exit
   %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add nsw i64 %i.ag, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 range(i64 0, 4294967297) %i.ah, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.g, %.lr.ph.preheader.i
@@ -351,7 +351,7 @@ bb.g:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ah = add nsw i64 %i.ag, %i.ae
   %i.ai = and i64 %i.ah, -8
   %i.aj = add nsw i64 %i.ai, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 %i.aj, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 range(i64 0, 4294967297) %i.aj, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.g, %.lr.ph.preheader.i
@@ -427,7 +427,7 @@ bb.g:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ag = add nsw i64 %i.af, %i.ad
   %i.ah = and i64 %i.ag, -8
   %i.ai = add nsw i64 %i.ah, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 %i.ai, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 range(i64 0, 4294967297) %i.ai, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.g, %.lr.ph.preheader.i
@@ -498,7 +498,7 @@ bb.f:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ac = add nsw i64 %i.ab, %i.z
   %i.ad = and i64 %i.ac, -8
   %i.ae = add nsw i64 %i.ad, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 %i.ae, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 range(i64 0, 4294967297) %i.ae, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -567,7 +567,7 @@ bb.f:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ab = add nsw i64 %i.aa, %i.y
   %i.ac = and i64 %i.ab, -8
   %i.ad = add nsw i64 %i.ac, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 %i.ad, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 range(i64 0, 4294967297) %i.ad, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -638,7 +638,7 @@ bb.f:                                             ; preds = %do_sqrshl_d.exit
   %i.ad = add nsw i64 %i.ac, %i.aa
   %i.ae = and i64 %i.ad, -8
   %i.af = add nsw i64 %i.ae, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 range(i64 0, 4294967297) %i.af, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -707,7 +707,7 @@ bb.f:                                             ; preds = %do_sqrshl_d.exit
   %i.ac = add nsw i64 %i.ab, %i.z
   %i.ad = and i64 %i.ac, -8
   %i.ae = add nsw i64 %i.ad, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 %i.ae, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 range(i64 0, 4294967297) %i.ae, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -964,7 +964,7 @@ bb.f:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ac = add nsw i64 %i.ab, %i.z
   %i.ad = and i64 %i.ac, -8
   %i.ae = add nsw i64 %i.ad, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 %i.ae, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 range(i64 0, 4294967297) %i.ae, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1099,7 +1099,7 @@ bb.f:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ae = add nsw i64 %i.ad, %i.ab
   %i.af = and i64 %i.ae, -8
   %i.ag = add nsw i64 %i.af, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ac, i8 0, i64 %i.ag, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ac, i8 0, i64 range(i64 0, 4294967297) %i.ag, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1170,7 +1170,7 @@ bb.f:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ad = add nsw i64 %i.ac, %i.aa
   %i.ae = and i64 %i.ad, -8
   %i.af = add nsw i64 %i.ae, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 range(i64 0, 4294967297) %i.af, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1240,7 +1240,7 @@ bb.f:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ab = add nsw i64 %i.aa, %i.y
   %i.ac = and i64 %i.ab, -8
   %i.ad = add nsw i64 %i.ac, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 %i.ad, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 range(i64 0, 4294967297) %i.ad, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1308,7 +1308,7 @@ bb.f:                                             ; preds = %do_uqrshl_bhs.exit
   %i.aa = add nsw i64 %i.z, %i.x
   %i.ab = and i64 %i.aa, -8
   %i.ac = add nsw i64 %i.ab, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.y, i8 0, i64 %i.ac, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.y, i8 0, i64 range(i64 0, 4294967297) %i.ac, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1378,7 +1378,7 @@ bb.f:                                             ; preds = %do_uqrshl_d.exit
   %i.ab = add nsw i64 %i.aa, %i.y
   %i.ac = and i64 %i.ab, -8
   %i.ad = add nsw i64 %i.ac, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 %i.ad, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.z, i8 0, i64 range(i64 0, 4294967297) %i.ad, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1446,7 +1446,7 @@ bb.f:                                             ; preds = %do_uqrshl_d.exit
   %i.aa = add nsw i64 %i.z, %i.x
   %i.ab = and i64 %i.aa, -8
   %i.ac = add nsw i64 %i.ab, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.y, i8 0, i64 %i.ac, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.y, i8 0, i64 range(i64 0, 4294967297) %i.ac, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.f, %.lr.ph.preheader.i
@@ -1738,7 +1738,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ad = add nsw i64 %i.ac, %i.aa
   %i.ae = and i64 %i.ad, -8
   %i.af = add nsw i64 %i.ae, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 range(i64 0, 4294967297) %i.af, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -1768,7 +1768,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %do_uqrshl_bhs.exit.preheader
 
 do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 0, i64 %i.i, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 0, i64 range(i64 0, 2049) %i.i, i1 false)
   br label %.split18.us
 
 .split.us:                                        ; preds = %bb.a
@@ -2073,7 +2073,7 @@ do_uqrshl_bhs.exit.us.1:                          ; preds = %bb.i, %do_uqrshl_bh
   %i.dn = add nsw i64 %i.dm, %i.dk
   %i.do = and i64 %i.dn, -8
   %i.dp = add nsw i64 %i.do, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dl, i8 0, i64 %i.dp, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dl, i8 0, i64 range(i64 0, 4294967297) %i.dp, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split18.us, %.lr.ph.preheader.i
@@ -2233,7 +2233,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add nsw i64 %i.ag, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 range(i64 0, 4294967297) %i.ah, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -2264,7 +2264,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %do_uqrshl_bhs.exit.preheader
 
 do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %0, i8 0, i64 %i.i, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %0, i8 0, i64 range(i64 0, 2049) %i.i, i1 false)
   br label %.split17.us
 
 .split.us:                                        ; preds = %bb.a
@@ -2591,7 +2591,7 @@ do_uqrshl_bhs.exit.us.1:                          ; preds = %bb.i, %do_uqrshl_bh
   %i.dt = add nsw i64 %i.ds, %i.dq
   %i.du = and i64 %i.dt, -8
   %i.dv = add nsw i64 %i.du, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dr, i8 0, i64 %i.dv, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dr, i8 0, i64 range(i64 0, 4294967297) %i.dv, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -2672,7 +2672,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ad = add nsw i64 %i.ac, %i.aa
   %i.ae = and i64 %i.ad, -8
   %i.af = add nsw i64 %i.ae, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 range(i64 0, 4294967297) %i.af, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -2703,7 +2703,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %do_uqrshl_bhs.exit.preheader
 
 do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %0, i8 0, i64 %i.i, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %0, i8 0, i64 range(i64 0, 2049) %i.i, i1 false)
   br label %.split17.us
 
 .split.us:                                        ; preds = %bb.a
@@ -3010,7 +3010,7 @@ do_uqrshl_bhs.exit.us.1:                          ; preds = %bb.i, %do_uqrshl_bh
   %i.de = add nsw i64 %i.dd, %i.db
   %i.df = and i64 %i.de, -8
   %i.dg = add nsw i64 %i.df, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dc, i8 0, i64 %i.dg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dc, i8 0, i64 range(i64 0, 4294967297) %i.dg, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -3091,7 +3091,7 @@ bb.i:                                             ; preds = %do_uqrshl_d.exit
   %i.ad = add nsw i64 %i.ac, %i.aa
   %i.ae = and i64 %i.ad, -8
   %i.af = add nsw i64 %i.ae, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 range(i64 0, 4294967297) %i.af, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -3124,7 +3124,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %do_uqrshl_d.exit.preheader
 
 do_uqrshl_d.exit.preheader:                       ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %0, i8 0, i64 %i.i, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %0, i8 0, i64 range(i64 0, 2049) %i.i, i1 false)
   br label %.split17.us
 
 .split.us:                                        ; preds = %bb.a
@@ -3373,7 +3373,7 @@ do_uqrshl_d.exit.us.epil:                         ; preds = %bb.g, %.split.us.sp
   %i.cr = add nsw i64 %i.cq, %i.co
   %i.cs = and i64 %i.cr, -8
   %i.ct = add nsw i64 %i.cs, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 %i.ct, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 range(i64 0, 4294967297) %i.ct, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -3724,7 +3724,7 @@ bb.j:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ag = add nsw i64 %i.af, %i.ad
   %i.ah = and i64 %i.ag, -8
   %i.ai = add nsw i64 %i.ah, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 %i.ai, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 range(i64 0, 4294967297) %i.ai, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.preheader.i
@@ -4127,7 +4127,7 @@ do_sqrshl_bhs.exit:                               ; preds = %do_sqrshl_bhs.exit,
   %i.fd = add nsw i64 %i.fc, %i.fa
   %i.fe = and i64 %i.fd, -8
   %i.ff = add nsw i64 %i.fe, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fb, i8 0, i64 %i.ff, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fb, i8 0, i64 range(i64 0, 4294967297) %i.ff, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split18.us, %.lr.ph.preheader.i
@@ -4310,7 +4310,7 @@ bb.j:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ai = add nsw i64 %i.ah, %i.af
   %i.aj = and i64 %i.ai, -8
   %i.ak = add nsw i64 %i.aj, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 %i.ak, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 range(i64 0, 4294967297) %i.ak, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.preheader.i
@@ -4713,7 +4713,7 @@ do_sqrshl_bhs.exit:                               ; preds = %do_sqrshl_bhs.exit,
   %i.fj = add nsw i64 %i.fi, %i.fg
   %i.fk = and i64 %i.fj, -8
   %i.fl = add nsw i64 %i.fk, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fh, i8 0, i64 %i.fl, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fh, i8 0, i64 range(i64 0, 4294967297) %i.fl, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -4800,7 +4800,7 @@ bb.j:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ag = add nsw i64 %i.af, %i.ad
   %i.ah = and i64 %i.ag, -8
   %i.ai = add nsw i64 %i.ah, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 %i.ai, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ae, i8 0, i64 range(i64 0, 4294967297) %i.ai, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.preheader.i
@@ -5203,7 +5203,7 @@ do_sqrshl_bhs.exit:                               ; preds = %do_sqrshl_bhs.exit.
   %i.fd = add nsw i64 %i.fc, %i.fa
   %i.fe = and i64 %i.fd, -8
   %i.ff = add nsw i64 %i.fe, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fb, i8 0, i64 %i.ff, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fb, i8 0, i64 range(i64 0, 4294967297) %i.ff, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -5290,7 +5290,7 @@ bb.j:                                             ; preds = %do_sqrshl_d.exit
   %i.ah = add nsw i64 %i.ag, %i.ae
   %i.ai = and i64 %i.ah, -8
   %i.aj = add nsw i64 %i.ai, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 %i.aj, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 range(i64 0, 4294967297) %i.aj, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.preheader.i
@@ -5665,7 +5665,7 @@ do_sqrshl_d.exit.epil:                            ; preds = %bb.g, %.split.split
   %i.en = add nsw i64 %i.em, %i.ek
   %i.eo = and i64 %i.en, -8
   %i.ep = add nsw i64 %i.eo, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.el, i8 0, i64 %i.ep, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.el, i8 0, i64 range(i64 0, 4294967297) %i.ep, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -6068,7 +6068,7 @@ do_suqrshl_bhs.exit.1:                            ; preds = %bb.s, %do_suqrshl_b
   %i.ed = add nsw i64 %i.ec, %i.ea
   %i.ee = and i64 %i.ed, -8
   %i.ef = add nsw i64 %i.ee, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.eb, i8 0, i64 %i.ef, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.eb, i8 0, i64 range(i64 0, 4294967297) %i.ef, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split18.us, %.lr.ph.preheader.i
@@ -6471,7 +6471,7 @@ do_suqrshl_bhs.exit.1:                            ; preds = %bb.s, %do_suqrshl_b
   %i.ee = add nsw i64 %i.ed, %i.eb
   %i.ef = and i64 %i.ee, -8
   %i.eg = add nsw i64 %i.ef, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ec, i8 0, i64 %i.eg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ec, i8 0, i64 range(i64 0, 4294967297) %i.eg, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split17.us, %.lr.ph.preheader.i
@@ -6874,7 +6874,7 @@ do_suqrshl_bhs.exit.1:                            ; preds = %bb.s, %do_suqrshl_b
   %i.dp = add nsw i64 %i.do, %i.dm
   %i.dq = and i64 %i.dp, -8
   %i.dr = add nsw i64 %i.dq, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dn, i8 0, i64 %i.dr, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.dn, i8 0, i64 range(i64 0, 4294967297) %i.dr, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split18.us, %.lr.ph.preheader.i
@@ -7236,7 +7236,7 @@ do_suqrshl_d.exit.epil:                           ; preds = %bb.p, %.split.epil.
   %i.cp = add nsw i64 %i.co, %i.cm
   %i.cq = and i64 %i.cp, -8
   %i.cr = add nsw i64 %i.cq, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 %i.cr, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 range(i64 0, 4294967297) %i.cr, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %.split18.us, %.lr.ph.preheader.i
@@ -7479,7 +7479,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add nsw i64 %i.ag, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 range(i64 0, 4294967297) %i.ah, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -7646,7 +7646,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.ah = add nsw i64 %i.ag, %i.ae
   %i.ai = and i64 %i.ah, -8
   %i.aj = add nsw i64 %i.ai, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 %i.aj, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.af, i8 0, i64 range(i64 0, 4294967297) %i.aj, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -7729,7 +7729,7 @@ bb.i:                                             ; preds = %do_uqrshl_bhs.exit
   %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add nsw i64 %i.ag, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 range(i64 0, 4294967297) %i.ah, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -7812,7 +7812,7 @@ bb.i:                                             ; preds = %do_uqrshl_d.exit
   %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add nsw i64 %i.ag, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ad, i8 0, i64 range(i64 0, 4294967297) %i.ah, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -8162,7 +8162,7 @@ bb.i:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ai = add nsw i64 %i.ah, %i.af
   %i.aj = and i64 %i.ai, -8
   %i.ak = add nsw i64 %i.aj, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 %i.ak, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 range(i64 0, 4294967297) %i.ak, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -8342,7 +8342,7 @@ bb.i:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ak = add nsw i64 %i.aj, %i.ah
   %i.al = and i64 %i.ak, -8
   %i.am = add nsw i64 %i.al, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ai, i8 0, i64 %i.am, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ai, i8 0, i64 range(i64 0, 4294967297) %i.am, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -8428,7 +8428,7 @@ bb.i:                                             ; preds = %do_sqrshl_bhs.exit
   %i.ai = add nsw i64 %i.ah, %i.af
   %i.aj = and i64 %i.ai, -8
   %i.ak = add nsw i64 %i.aj, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 %i.ak, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 range(i64 0, 4294967297) %i.ak, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i
@@ -8514,7 +8514,7 @@ bb.i:                                             ; preds = %do_sqrshl_d.exit
   %i.aj = add nsw i64 %i.ai, %i.ag
   %i.ak = and i64 %i.aj, -8
   %i.al = add nsw i64 %i.ak, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ah, i8 0, i64 %i.al, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ah, i8 0, i64 range(i64 0, 4294967297) %i.al, i1 false)
   br label %clear_tail.exit
 
 clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.preheader.i

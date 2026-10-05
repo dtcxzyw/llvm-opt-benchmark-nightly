@@ -206,7 +206,7 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge
   %i.dg = zext i32 %i.df to i64
   %i.dh = shl nuw nsw i64 %i.dg, 2
   %i.di = add nuw nsw i64 %i.dh, 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 -1, i64 %i.di, i1 false), !tbaa !570
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 -1, i64 range(i64 0, 17179869185) %i.di, i1 false), !tbaa !570
   br label %.thread107
 
 .thread107:                                       ; preds = %.lr.ph, %.lr.ph121.preheader, %bb.v, %bb.o, %unixShmSystemLock.exit103, %bb.s, %unixShmSystemLock.exit, %bb.m, %.critedge, %.thread
@@ -609,7 +609,7 @@ bb.y:                                             ; preds = %bb.x
 .lr.ph179.preheader:                              ; preds = %bb.y
   %i.ei = zext nneg i16 %i.eg to i64
   %i.ej = shl nuw nsw i64 %i.ei, 2
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dx, i8 -1, i64 %i.ej, i1 false), !tbaa !570
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dx, i8 -1, i64 range(i64 0, 131069) %i.ej, i1 false), !tbaa !570
   br label %._crit_edge180
 
 ._crit_edge180:                                   ; preds = %.lr.ph179.preheader, %bb.y
@@ -1012,7 +1012,7 @@ bb.t:                                             ; preds = %.lr.ph167
   %scevgep190 = getelementptr i8, ptr %i.bu, i64 %i.eo
   %scevgep192 = getelementptr i8, ptr %scevgep191, i64 %i.eo
   %i.ep = add nuw nsw i64 %i.em, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep190, ptr noundef nonnull align 4 dereferenceable(1) %scevgep192, i64 %i.ep, i1 false), !tbaa !570
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep190, ptr noundef nonnull align 4 dereferenceable(1) %scevgep192, i64 range(i64 0, 17179869185) %i.ep, i1 false), !tbaa !570
   br label %._crit_edge173
 
 ._crit_edge173:                                   ; preds = %.lr.ph172.preheader, %.critedge4
@@ -1415,7 +1415,7 @@ bb.fm:                                            ; preds = %.preheader.i374
   %i.agg = zext i32 %i.agf to i64
   %i.agh = shl nuw nsw i64 %i.agg, 3
   %i.agi = add nuw nsw i64 %i.agh, 8
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep945, i64 %i.agi, i1 false), !tbaa !741
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep945, i64 range(i64 0, 524281) %i.agi, i1 false), !tbaa !741
   br label %.critedge._crit_edge
 
 bb.fn:                                            ; preds = %.preheader.i374
@@ -1818,7 +1818,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bq = zext i32 %i.bp to i64
   %i.br = shl nuw nsw i64 %i.bq, 2
   %i.bs = add nuw nsw i64 %i.br, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, i8 0, i64 %i.bs, i1 false), !tbaa !570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 17179869185) %i.bs, i1 false), !tbaa !570
   br label %fts3DecodeIntArray.exit
 
 bb.p:                                             ; preds = %sqlite3_bind_int.exit
@@ -2221,7 +2221,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 .split272.us.thread.i:                            ; preds = %bb.aw
   %i.et = mul nuw nsw i64 %indvar.i, 24
   %i.eu = add nuw nsw i64 %i.et, 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %5, i8 0, i64 %i.eu, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %5, i8 0, i64 range(i64 0, 97) %i.eu, i1 false)
   br label %.preheader.i
 
 .split.i:                                         ; preds = %bb.aw, %._crit_edge.i

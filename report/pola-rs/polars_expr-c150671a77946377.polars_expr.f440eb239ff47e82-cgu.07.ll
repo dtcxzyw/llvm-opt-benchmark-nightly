@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.e
   %i.ar = shl nuw nsw i64 %i.al, 4, !dbg !155474
   %scevgep.i = getelementptr i8, ptr %i.r, i64 %i.ar, !dbg !155474
   %i.as = shl nuw nsw i64 %i.ao, 4, !dbg !155474
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep.i, i8 0, i64 %i.as, i1 false), !dbg !155475, !noalias !155416
+  call void @llvm.memset.p0.i64(ptr align 16 %scevgep.i, i8 0, i64 range(i64 0, 137438953441) %i.as, i1 false), !dbg !155475, !noalias !155416
   %scevgep15.i = getelementptr i8, ptr %i.u, i64 %i.al, !dbg !155474
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.ao, i1 false), !dbg !155476, !noalias !155416
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.ao, i1 false), !dbg !155476, !noalias !155416
   br label %.loopexit.i.backedge, !dbg !155458
 
 .loopexit.i.backedge:                             ; preds = %.lr.ph.split.us.i, %.lr.ph.split.preheader.i, %bb.g
@@ -610,9 +610,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bf = shl nuw nsw i64 %i.ak, 1, !dbg !155902
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.bf, !dbg !155902
   %i.bg = shl nuw nsw i64 %i.an, 1, !dbg !155902
-  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 %i.bg, i1 false), !dbg !155907, !noalias !155848
+  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 range(i64 0, 17179869181) %i.bg, i1 false), !dbg !155907, !noalias !155848
   %scevgep15.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !155902
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.an, i1 false), !dbg !155908, !noalias !155848
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !155908, !noalias !155848
   br label %.loopexit.i.backedge, !dbg !155888
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
@@ -1015,9 +1015,9 @@ middle.block:                                     ; preds = %vector.body
   %i.az = shl nuw nsw i64 %i.ak, 2, !dbg !156328
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.az, !dbg !156328
   %i.ba = shl nuw nsw i64 %i.an, 2, !dbg !156328
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ba, i1 false), !dbg !156333, !noalias !156274
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 range(i64 0, 34359738361) %i.ba, i1 false), !dbg !156333, !noalias !156274
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !156328
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !156334, !noalias !156274
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !156334, !noalias !156274
   br label %.loopexit.i.backedge, !dbg !156314
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader6, %.lr.ph.split.us.i
@@ -1420,9 +1420,9 @@ bb.f:                                             ; preds = %bb.e
   %i.aq = shl nuw nsw i64 %i.ak, 3, !dbg !156747
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.aq, !dbg !156747
   %i.ar = shl nuw nsw i64 %i.an, 3, !dbg !156747
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 %i.ar, i1 false), !dbg !156748, !noalias !156696
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 range(i64 0, 68719476721) %i.ar, i1 false), !dbg !156748, !noalias !156696
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !156747
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !156749, !noalias !156696
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !156749, !noalias !156696
   br label %.loopexit.i.backedge, !dbg !156733
 
 .loopexit.i.backedge:                             ; preds = %.lr.ph.split.us.i, %.lr.ph.split.preheader.i, %bb.f
@@ -1825,9 +1825,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bf = shl nuw nsw i64 %i.ak, 1, !dbg !157175
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.bf, !dbg !157175
   %i.bg = shl nuw nsw i64 %i.an, 1, !dbg !157175
-  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 %i.bg, i1 false), !dbg !157180, !noalias !157121
+  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 range(i64 0, 17179869181) %i.bg, i1 false), !dbg !157180, !noalias !157121
   %scevgep15.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !157175
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.an, i1 false), !dbg !157181, !noalias !157121
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !157181, !noalias !157121
   br label %.loopexit.i.backedge, !dbg !157161
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
@@ -2230,9 +2230,9 @@ middle.block:                                     ; preds = %vector.body
   %i.az = shl nuw nsw i64 %i.ak, 2, !dbg !157602
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.az, !dbg !157602
   %i.ba = shl nuw nsw i64 %i.an, 2, !dbg !157602
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ba, i1 false), !dbg !157607, !noalias !157548
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 range(i64 0, 34359738361) %i.ba, i1 false), !dbg !157607, !noalias !157548
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !157602
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !157608, !noalias !157548
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !157608, !noalias !157548
   br label %.loopexit.i.backedge, !dbg !157588
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader6, %.lr.ph.split.us.i
@@ -2635,9 +2635,9 @@ bb.f:                                             ; preds = %bb.e
   %i.aq = shl nuw nsw i64 %i.ak, 3, !dbg !158021
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.aq, !dbg !158021
   %i.ar = shl nuw nsw i64 %i.an, 3, !dbg !158021
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 %i.ar, i1 false), !dbg !158022, !noalias !157970
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 range(i64 0, 68719476721) %i.ar, i1 false), !dbg !158022, !noalias !157970
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !158021
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !158023, !noalias !157970
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !158023, !noalias !157970
   br label %.loopexit.i.backedge, !dbg !158007
 
 .loopexit.i.backedge:                             ; preds = %.lr.ph.split.us.i, %.lr.ph.split.preheader.i, %bb.f
@@ -3040,9 +3040,9 @@ bb.g:                                             ; preds = %bb.e
   %i.ar = shl nuw nsw i64 %i.al, 4, !dbg !158462
   %scevgep.i = getelementptr i8, ptr %i.r, i64 %i.ar, !dbg !158462
   %i.as = shl nuw nsw i64 %i.ao, 4, !dbg !158462
-  call void @llvm.memset.p0.i64(ptr align 16 %scevgep.i, i8 0, i64 %i.as, i1 false), !dbg !158463, !noalias !158404
+  call void @llvm.memset.p0.i64(ptr align 16 %scevgep.i, i8 0, i64 range(i64 0, 137438953441) %i.as, i1 false), !dbg !158463, !noalias !158404
   %scevgep15.i = getelementptr i8, ptr %i.u, i64 %i.al, !dbg !158462
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.ao, i1 false), !dbg !158464, !noalias !158404
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.ao, i1 false), !dbg !158464, !noalias !158404
   br label %.loopexit.i.backedge, !dbg !158446
 
 .loopexit.i.backedge:                             ; preds = %.lr.ph.split.us.i, %.lr.ph.split.preheader.i, %bb.g
@@ -3445,9 +3445,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.an, !dbg !158885
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 0, i64 %i.aq, i1 false), !dbg !158891, !noalias !158834
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 0, i64 range(i64 0, 8589934591) %i.aq, i1 false), !dbg !158891, !noalias !158834
   %scevgep15.i = getelementptr i8, ptr %i.u, i64 %i.an, !dbg !158885
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.aq, i1 false), !dbg !158892, !noalias !158834
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.aq, i1 false), !dbg !158892, !noalias !158834
   br label %.loopexit.i.backedge, !dbg !158871
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
@@ -3850,9 +3850,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bf = shl nuw nsw i64 %i.ak, 1, !dbg !159314
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.bf, !dbg !159314
   %i.bg = shl nuw nsw i64 %i.an, 1, !dbg !159314
-  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 %i.bg, i1 false), !dbg !159319, !noalias !159260
+  call void @llvm.memset.p0.i64(ptr align 2 %scevgep.i, i8 0, i64 range(i64 0, 17179869181) %i.bg, i1 false), !dbg !159319, !noalias !159260
   %scevgep15.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !159314
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.an, i1 false), !dbg !159320, !noalias !159260
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !159320, !noalias !159260
   br label %.loopexit.i.backedge, !dbg !159300
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
@@ -4255,9 +4255,9 @@ middle.block:                                     ; preds = %vector.body
   %i.az = shl nuw nsw i64 %i.ak, 2, !dbg !159741
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.az, !dbg !159741
   %i.ba = shl nuw nsw i64 %i.an, 2, !dbg !159741
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ba, i1 false), !dbg !159746, !noalias !159687
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 range(i64 0, 34359738361) %i.ba, i1 false), !dbg !159746, !noalias !159687
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !159741
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !159747, !noalias !159687
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !159747, !noalias !159687
   br label %.loopexit.i.backedge, !dbg !159727
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader6, %.lr.ph.split.us.i
@@ -4660,9 +4660,9 @@ bb.f:                                             ; preds = %bb.e
   %i.aq = shl nuw nsw i64 %i.ak, 3, !dbg !160160
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.aq, !dbg !160160
   %i.ar = shl nuw nsw i64 %i.an, 3, !dbg !160160
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 %i.ar, i1 false), !dbg !160161, !noalias !160109
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 range(i64 0, 68719476721) %i.ar, i1 false), !dbg !160161, !noalias !160109
   %scevgep14.i = getelementptr i8, ptr %i.t, i64 %i.ak, !dbg !160160
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 %i.an, i1 false), !dbg !160162, !noalias !160109
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep14.i, i8 0, i64 range(i64 0, 8589934591) %i.an, i1 false), !dbg !160162, !noalias !160109
   br label %.loopexit.i.backedge, !dbg !160146
 
 .loopexit.i.backedge:                             ; preds = %.lr.ph.split.us.i, %.lr.ph.split.preheader.i, %bb.f
@@ -5065,9 +5065,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
   %scevgep.i = getelementptr i8, ptr %i.q, i64 %i.an, !dbg !160583
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 0, i64 %i.aq, i1 false), !dbg !160589, !noalias !160532
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 0, i64 range(i64 0, 8589934591) %i.aq, i1 false), !dbg !160589, !noalias !160532
   %scevgep15.i = getelementptr i8, ptr %i.u, i64 %i.an, !dbg !160583
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 %i.aq, i1 false), !dbg !160590, !noalias !160532
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep15.i, i8 0, i64 range(i64 0, 8589934591) %i.aq, i1 false), !dbg !160590, !noalias !160532
   br label %.loopexit.i.backedge, !dbg !160569
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.us.i
@@ -5470,7 +5470,7 @@ bb.a:
   %i.d = zext i32 %.val2 to i64, !dbg !161458
   %i.e = load ptr, ptr %.val, align 8, !dbg !161459, !noundef !3509
   %scevgep.i = getelementptr i8, ptr %i.e, i64 %i.d, !dbg !161455
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 %.val1, i64 %i.c, i1 false), !dbg !161460
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 %.val1, i64 range(i64 0, 8589934591) %i.c, i1 false), !dbg !161460
   br label %_RNCNCINvNtNtCskY9G75ZWc4U_11polars_expr11expressions6window11set_numericNtNtCs1LHh8CLbVkQ_11polars_core9datatypes8Int8TypeEs_00Ba_.exit, !dbg !161461
 
 _RNCNCINvNtNtCskY9G75ZWc4U_11polars_expr11expressions6window11set_numericNtNtCs1LHh8CLbVkQ_11polars_core9datatypes8Int8TypeEs_00Ba_.exit: ; preds = %bb.a, %.lr.ph.preheader.i
@@ -5873,7 +5873,7 @@ bb.a:
   %i.d = zext i32 %.val2 to i64, !dbg !161840
   %i.e = load ptr, ptr %.val, align 8, !dbg !161841, !noundef !3509
   %scevgep.i = getelementptr i8, ptr %i.e, i64 %i.d, !dbg !161837
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 %.val1, i64 %i.c, i1 false), !dbg !161842
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 %.val1, i64 range(i64 0, 8589934591) %i.c, i1 false), !dbg !161842
   br label %_RNCNCINvNtNtCskY9G75ZWc4U_11polars_expr11expressions6window11set_numericNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9UInt8TypeEs_00Ba_.exit, !dbg !161843
 
 _RNCNCINvNtNtCskY9G75ZWc4U_11polars_expr11expressions6window11set_numericNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9UInt8TypeEs_00Ba_.exit: ; preds = %bb.a, %.lr.ph.preheader.i

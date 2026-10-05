@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZL9hash_initP4Hashj.exit.i
 
 iter.check:                                       ; preds = %.preheader58.preheader.i.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bn, i8 -1, i64 %i.bm, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bn, i8 -1, i64 range(i64 0, 17179869181) %i.bm, i1 false), !tbaa !29
   %min.iters.check = icmp ult i32 %i.bj, 4
   br i1 %min.iters.check, label %.lr.ph64.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -608,7 +608,7 @@ bb.ay:                                            ; preds = %_ZL31HuffmanTree_ma
 .lr.ph307.i.i:                                    ; preds = %.preheader299.i.i
   %i.nn = load ptr, ptr %i.cz, align 8, !tbaa !64
   %i.no = shl nuw nsw i64 %i.nd, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.nj, ptr align 4 %i.nn, i64 %i.no, i1 false), !tbaa !29
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.nj, ptr align 4 %i.nn, i64 range(i64 0, 1145) %i.no, i1 false), !tbaa !29
   br label %.preheader298.i.i
 
 .preheader298.i.i:                                ; preds = %.lr.ph307.i.i, %.preheader299.i.i
@@ -619,7 +619,7 @@ bb.ay:                                            ; preds = %_ZL31HuffmanTree_ma
   %invariant.gep.i.i = getelementptr [4 x i8], ptr %i.nj, i64 %i.nd
   %i.np = load ptr, ptr %i.dc, align 8, !tbaa !64
   %i.nq = shl nuw nsw i64 %i.ng, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %invariant.gep.i.i, ptr align 4 %i.np, i64 %i.nq, i1 false), !tbaa !29
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %invariant.gep.i.i, ptr align 4 %i.np, i64 range(i64 0, 121) %i.nq, i1 false), !tbaa !29
   br label %.preheader297.i.i
 
 .preheader297.i.i:                                ; preds = %.lr.ph310.i.i, %.preheader298.i.i
@@ -1022,7 +1022,7 @@ _ZL22setBitOfReversedStreamPmPhh.exit.us.i.6:     ; preds = %bb.ac, %bb.ab
   %i.hw = mul nuw nsw i64 %i.hv, %i.hn
   %i.hx = getelementptr inbounds nuw i8, ptr %2, i64 %i.ht
   %i.hy = getelementptr i8, ptr %i.sf, i64 %i.hw
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hy, ptr align 1 %i.hx, i64 %i.hn, i1 false), !tbaa !35
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hy, ptr align 1 %i.hx, i64 range(i64 0, 536870912) %i.hn, i1 false), !tbaa !35
   %i.hz = trunc i64 %indvars.iv131.i to i32
   %i.ia = or disjoint i32 %i.hz, 1                ; 2 uses
   %reass.add.1 = add i32 %i.hp, %i.ia
@@ -1034,7 +1034,7 @@ _ZL22setBitOfReversedStreamPmPhh.exit.us.i.6:     ; preds = %bb.ac, %bb.ab
   %i.if = mul nuw nsw i64 %i.ie, %i.hn
   %i.ig = getelementptr inbounds nuw i8, ptr %2, i64 %i.ic
   %i.ih = getelementptr i8, ptr %i.sf, i64 %i.if
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ih, ptr align 1 %i.ig, i64 %i.hn, i1 false), !tbaa !35
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ih, ptr align 1 %i.ig, i64 range(i64 0, 536870912) %i.hn, i1 false), !tbaa !35
   %indvars.iv.next132.i.1 = add nuw nsw i64 %indvars.iv131.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1437,7 +1437,7 @@ begin_hunk_3_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   %i.rz = mul nuw nsw i64 %i.ry, %i.hn
   %i.sa = getelementptr inbounds nuw i8, ptr %2, i64 %i.rw
   %i.sb = getelementptr i8, ptr %i.sf, i64 %i.rz
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sb, ptr align 1 %i.sa, i64 %i.hn, i1 false), !tbaa !35
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sb, ptr align 1 %i.sa, i64 range(i64 0, 536870912) %i.hn, i1 false), !tbaa !35
   br label %._crit_edge99.us.i
 
 ._crit_edge99.us.i:                               ; preds = %._crit_edge99.us.i.unr-lcssa, %.lr.ph.us104.i.epil.preheader
@@ -1840,8 +1840,8 @@ bb.a:
   br i1 %.not68, label %.preheader65, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader66
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.l, i8 0, i64 %i.j, i1 false), !tbaa !29
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 %i.j, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.l, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !29
   br label %.preheader65
 
 .preheader65:                                     ; preds = %.lr.ph.preheader, %.preheader66

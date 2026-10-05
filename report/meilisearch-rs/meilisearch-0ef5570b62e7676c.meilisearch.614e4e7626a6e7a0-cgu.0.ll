@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
 .lr.ph.preheader.i50:                             ; preds = %bb.al
   %.idx.i51 = shl nuw nsw i64 %i.cv, 1
   %.val15.i52 = load ptr, ptr %i.ck, align 8, !alias.scope !10014, !noalias !10015, !nonnull !45, !align !69, !noundef !45
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %.val15.i52, i8 0, i64 %.idx.i51, i1 false), !noalias !10016
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %.val15.i52, i8 0, i64 range(i64 0, 8589934591) %.idx.i51, i1 false), !noalias !10016
   br label %.loopexit.i53
 
 bb.am:                                            ; preds = %bb.ak
@@ -485,7 +485,7 @@ bb.bp:                                            ; preds = %bb.bo
 .lr.ph.preheader.i86:                             ; preds = %bb.bp
   %.idx.i87 = shl nuw nsw i64 %i.fr, 1
   %.val15.i88 = load ptr, ptr %i.fb, align 8, !alias.scope !10033, !noalias !10034, !nonnull !45, !align !69, !noundef !45
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %.val15.i88, i8 0, i64 %.idx.i87, i1 false), !noalias !10037
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %.val15.i88, i8 0, i64 range(i64 0, 8589934591) %.idx.i87, i1 false), !noalias !10037
   br label %.loopexit.i89
 
 bb.bq:                                            ; preds = %bb.bo
@@ -888,7 +888,7 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph.i.i.i146.preheader.i:                      ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hef58b721ea58c2dfE.exit.i.i.i.i"
   %i.gc = add nsw i64 %i.fy, -32                  ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fz, i8 0, i64 %i.gc, i1 false), !noalias !35111
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fz, i8 0, i64 range(i64 0, 385) %i.gc, i1 false), !noalias !35111
   %scevgep.i = getelementptr i8, ptr %i.fz, i64 %i.gc
   br label %.loopexit114.i
 
@@ -1291,7 +1291,7 @@ bb.at:                                            ; preds = %bb.ar, %bb.aq
 
 "_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17haae1949dc49114a6E.exit.i.i": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i450.i.i
   %i.kh = add nsw i64 %i.jv, -16                  ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jy, i8 0, i64 %i.kh, i1 false), !noalias !35162
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jy, i8 0, i64 range(i64 0, -31) %i.kh, i1 false), !noalias !35162
   %i.ki = getelementptr i8, ptr %i.jy, i64 %i.jv  ; 2 uses
   %scevgep11.i451.i.i = getelementptr i8, ptr %i.jy, i64 %i.kh
   store i32 0, ptr %scevgep11.i451.i.i, align 4, !noalias !35162
@@ -1407,7 +1407,7 @@ bb.ba:                                            ; preds = %bb.ax, %_ZN4core5al
   br i1 %i.kn, label %.preheader.split.i.i, label %.lr.ph587.preheader.i.i
 
 .lr.ph587.preheader.i.i:                          ; preds = %bb.ba
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lf, i8 -1, i64 %i.ka, i1 false), !noalias !35153
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lf, i8 -1, i64 range(i64 0, 9223372036854775805) %i.ka, i1 false), !noalias !35153
   br label %.preheader.split.i.i
 
 .preheader.split.i.i:                             ; preds = %.lr.ph587.preheader.i.i, %bb.ba
@@ -1810,7 +1810,7 @@ bb.dl:                                            ; preds = %bb.fs, %.preheader3
   br i1 %i.xq, label %.lr.ph403.i.preheader.i, label %.split.i175.i
 
 .lr.ph403.i.preheader.i:                          ; preds = %.loopexit358.i.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.fz, i8 0, i64 %i.fy, i1 false), !alias.scope !35209, !noalias !35214
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.fz, i8 0, i64 range(i64 0, 417) %i.fy, i1 false), !alias.scope !35209, !noalias !35214
   %i.xr = mul i64 %i.xg, %i.aq                    ; 4 uses
   %.not124.i.i = icmp ugt i64 %i.xr, %i.ge
   br i1 %.not124.i.i, label %.invoke1108.i, label %bb.dm, !prof !87
@@ -2213,7 +2213,7 @@ bb.gv:                                            ; preds = %bb.gu
 
 .lr.ph.i.i.i148.preheader.i:                      ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hef58b721ea58c2dfE.exit.i.i.i.i74"
   %i.axc = add nsw i64 %i.awy, -32                ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.awz, i8 0, i64 %i.axc, i1 false), !noalias !35251
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.awz, i8 0, i64 range(i64 0, 193) %i.axc, i1 false), !noalias !35251
   %scevgep.i416 = getelementptr i8, ptr %i.awz, i64 %i.axc
   br label %.loopexit108.i
 
@@ -2616,7 +2616,7 @@ bb.hz:                                            ; preds = %bb.hx, %bb.hw
 
 "_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17haae1949dc49114a6E.exit.i.i376": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i450.i.i375
   %i.bbh = add nsw i64 %i.bav, -16                ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bay, i8 0, i64 %i.bbh, i1 false), !noalias !35303
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bay, i8 0, i64 range(i64 0, -31) %i.bbh, i1 false), !noalias !35303
   %i.bbi = getelementptr i8, ptr %i.bay, i64 %i.bav ; 2 uses
   %scevgep11.i451.i.i377 = getelementptr i8, ptr %i.bay, i64 %i.bbh
   store i32 0, ptr %scevgep11.i451.i.i377, align 4, !noalias !35303
@@ -2732,7 +2732,7 @@ bb.ig:                                            ; preds = %bb.id, %_ZN4core5al
   br i1 %i.bbn, label %.preheader.split.i.i318, label %.lr.ph601.preheader.i.i
 
 .lr.ph601.preheader.i.i:                          ; preds = %bb.ig
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bcf, i8 -1, i64 %i.bba, i1 false), !noalias !35294
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bcf, i8 -1, i64 range(i64 0, 9223372036854775805) %i.bba, i1 false), !noalias !35294
   br label %.preheader.split.i.i318
 
 .preheader.split.i.i318:                          ; preds = %.lr.ph601.preheader.i.i, %bb.ig
@@ -3135,7 +3135,7 @@ bb.ku:                                            ; preds = %bb.nb, %.preheader3
   br i1 %i.boy, label %.lr.ph403.i.preheader.i99, label %.split.i177.i
 
 .lr.ph403.i.preheader.i99:                        ; preds = %.loopexit358.i.i98
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.awz, i8 0, i64 %i.awy, i1 false), !alias.scope !35353, !noalias !35358
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.awz, i8 0, i64 range(i64 0, 225) %i.awy, i1 false), !alias.scope !35353, !noalias !35358
   %i.boz = mul i64 %i.boo, %2                     ; 4 uses
   %.not124.i.i100 = icmp ugt i64 %i.boz, %i.axe
   br i1 %.not124.i.i100, label %.invoke1162.i, label %bb.kv, !prof !87
@@ -3538,7 +3538,7 @@ bb.og:                                            ; preds = %bb.of
 
 .lr.ph.i.i.i148.preheader.i988:                   ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hef58b721ea58c2dfE.exit.i.i.i.i487"
   %i.cml = add nsw i64 %i.cmh, -32                ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cmi, i8 0, i64 %i.cml, i1 false), !noalias !35393
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cmi, i8 0, i64 range(i64 0, 193) %i.cml, i1 false), !noalias !35393
   %scevgep.i989 = getelementptr i8, ptr %i.cmi, i64 %i.cml
   br label %.loopexit108.i488
 
@@ -3941,7 +3941,7 @@ bb.pk:                                            ; preds = %bb.pi, %bb.ph
 
 "_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17haae1949dc49114a6E.exit.i.i924": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i450.i.i923
   %i.cqq = add nsw i64 %i.cqe, -16                ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cqh, i8 0, i64 %i.cqq, i1 false), !noalias !35445
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cqh, i8 0, i64 range(i64 0, -31) %i.cqq, i1 false), !noalias !35445
   %i.cqr = getelementptr i8, ptr %i.cqh, i64 %i.cqe ; 2 uses
   %scevgep11.i451.i.i925 = getelementptr i8, ptr %i.cqh, i64 %i.cqq
   store i32 0, ptr %scevgep11.i451.i.i925, align 4, !noalias !35445
@@ -4057,7 +4057,7 @@ bb.pr:                                            ; preds = %bb.po, %_ZN4core5al
   br i1 %i.cqw, label %.preheader.split.i.i811, label %.lr.ph601.preheader.i.i810
 
 .lr.ph601.preheader.i.i810:                       ; preds = %bb.pr
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cro, i8 -1, i64 %i.cqj, i1 false), !noalias !35436
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cro, i8 -1, i64 range(i64 0, 9223372036854775805) %i.cqj, i1 false), !noalias !35436
   br label %.preheader.split.i.i811
 
 .preheader.split.i.i811:                          ; preds = %.lr.ph601.preheader.i.i810, %bb.pr
@@ -4460,7 +4460,7 @@ bb.sg:                                            ; preds = %bb.un, %.preheader3
   br i1 %i.del, label %.lr.ph403.i.preheader.i527, label %.split.i177.i505
 
 .lr.ph403.i.preheader.i527:                       ; preds = %.loopexit358.i.i526
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cmi, i8 0, i64 %i.cmh, i1 false), !alias.scope !35495, !noalias !35500
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cmi, i8 0, i64 range(i64 0, 225) %i.cmh, i1 false), !alias.scope !35495, !noalias !35500
   %i.dem = mul i64 %i.deb, %.sroa.01.1            ; 4 uses
   %.not124.i.i528 = icmp ugt i64 %i.dem, %i.cmn
   br i1 %.not124.i.i528, label %.invoke1162.i973, label %bb.sh, !prof !87
@@ -4863,7 +4863,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 ._crit_edge144:                                   ; preds = %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %4, i8 0, i64 %i.fr, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %4, i8 0, i64 range(i64 0, 705) %i.fr, i1 false)
   %i.g = shl nuw nsw i64 %i.fr, 1                 ; 13 uses
   %i.h = or disjoint i64 %i.g, 1                  ; 20 uses
   %i.i = shl nuw nsw i64 %i.h, 3                  ; 3 uses
@@ -4878,7 +4878,7 @@ bb.d:                                             ; preds = %._crit_edge144
 
 _ZN6brotli3enc14combined_alloc8alloc_if17hd23791371a41120eE.exit: ; preds = %._crit_edge144
   %i.l = add nsw i64 %i.i, -8                     ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.j, i8 0, i64 %i.l, i1 false), !noalias !36284
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.j, i8 0, i64 range(i64 0, 11265) %i.l, i1 false), !noalias !36284
   %scevgep.i.i = getelementptr i8, ptr %i.j, i64 %i.l
   store i64 0, ptr %scevgep.i.i, align 4, !noalias !36284
   %.first_iter = icmp samesign ult i64 %.sroa.010.0137457, %1
@@ -5281,7 +5281,7 @@ bb.az:                                            ; preds = %_ZN4core5alloc6layo
 
 ._crit_edge.thread.i.i.i.i:                       ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17he15aefe39cdda893E.exit.i.i.i.i"
   %i.iw = add nsw i64 %i.gu, -1
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.is, i8 range(i8 0, 4) 0, i64 %i.iw, i1 false), !noalias !38139
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.is, i8 range(i8 0, 4) 0, i64 range(i64 0, -1) %i.iw, i1 false), !noalias !38139
   %i.ix = getelementptr i8, ptr %i.is, i64 %i.gu
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.ix, i64 -1
   br label %.lr.ph457.preheader.i
@@ -5684,7 +5684,7 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i
   %i.uu = add nsw i64 %i.up, -16                  ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.us, i8 0, i64 %i.uu, i1 false), !noalias !38207
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.us, i8 0, i64 range(i64 0, -31) %i.uu, i1 false), !noalias !38207
   %i.uv = getelementptr i8, ptr %i.us, i64 %i.up  ; 2 uses
   %scevgep11.i.i.i.i = getelementptr i8, ptr %i.us, i64 %i.uu
   store i32 0, ptr %scevgep11.i.i.i.i, align 4, !noalias !38207
@@ -6087,7 +6087,7 @@ bb.fl:                                            ; preds = %bb.fk
 
 bb.fm:                                            ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i374.i
   %i.ahn = add nsw i64 %i.ahi, -16                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ahl, i8 0, i64 %i.ahn, i1 false), !noalias !38275
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ahl, i8 0, i64 range(i64 0, -31) %i.ahn, i1 false), !noalias !38275
   %i.aho = getelementptr i8, ptr %i.ahl, i64 %i.ahi ; 2 uses
   %scevgep11.i.i.i375.i = getelementptr i8, ptr %i.ahl, i64 %i.ahn
   store i32 0, ptr %scevgep11.i.i.i375.i, align 4, !noalias !38275
@@ -6490,7 +6490,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i299.i
   br i1 %i.amu, label %.invoke1127.i, label %.lr.ph.i117.i300.i
 
 .lr.ph.i117.i300.i:                               ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i116.i299.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.amt, i8 -1, i64 %i.aer, i1 false), !noalias !38317
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.amt, i8 -1, i64 range(i64 0, 9223372036854775805) %i.aer, i1 false), !noalias !38317
   %i.amv = or disjoint i64 %i.aeq, 1              ; 2 uses
   br label %bb.gn
 

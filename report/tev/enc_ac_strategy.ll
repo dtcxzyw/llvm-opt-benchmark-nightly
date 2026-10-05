@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %.thread
   %i.al = add i64 %4, %.05994
   %i.am = shl i64 %i.al, 5
   %gep112 = getelementptr i8, ptr %invariant.gep111, i64 %i.am
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.an = or disjoint i64 %.05994, 1              ; 2 uses
   %i.ao = add i64 %4, %i.an
   %i.ap = shl i64 %i.ao, 3
@@ -214,8 +214,8 @@ bb.c:                                             ; preds = %.thread
   %i.aq = add i64 %4, %i.an
   %i.ar = shl i64 %i.aq, 5
   %gep112.1 = getelementptr i8, ptr %invariant.gep111, i64 %i.ar
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.as = add nuw nsw i64 %.05994, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -235,8 +235,8 @@ bb.c:                                             ; preds = %.thread
   %i.av = add i64 %4, %.05994.epil.init
   %i.aw = shl i64 %i.av, 5
   %gep112.epil = getelementptr i8, ptr %invariant.gep111, i64 %i.aw
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
@@ -639,22 +639,22 @@ bb.al:                                            ; preds = %bb.ak
   %i.ii = add i64 %.01320.i, %5
   %.idx14.i = shl i64 %i.ii, 5
   %gep.i = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !1030
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !1030
   %i.ij = or disjoint i64 %.01320.i, 1
   %i.ik = add i64 %i.ij, %5
   %.idx14.i.1 = shl i64 %i.ik, 5
   %gep.i.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !1030
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !1030
   %i.il = or disjoint i64 %.01320.i, 2
   %i.im = add i64 %i.il, %5
   %.idx14.i.2 = shl i64 %i.im, 5
   %gep.i.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !1030
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !1030
   %i.in = or disjoint i64 %.01320.i, 3
   %i.io = add i64 %i.in, %5
   %.idx14.i.3 = shl i64 %i.io, 5
   %gep.i.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !1030
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !1030
   %i.ip = add nuw nsw i64 %.01320.i, 4            ; 2 uses
   %niter563.next.3 = add i64 %niter563, 4         ; 2 uses
   %niter563.ncmp.3 = icmp eq i64 %niter563.next.3, %unroll_iter562
@@ -700,22 +700,22 @@ bb.ap:                                            ; preds = %bb.ao
   %i.jd = add i64 %.01320.i332, %5
   %.idx14.i333 = shl i64 %i.jd, 5
   %gep.i334 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !1031
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !1031
   %i.je = or disjoint i64 %.01320.i332, 1
   %i.jf = add i64 %i.je, %5
   %.idx14.i333.1 = shl i64 %i.jf, 5
   %gep.i334.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !1031
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !1031
   %i.jg = or disjoint i64 %.01320.i332, 2
   %i.jh = add i64 %i.jg, %5
   %.idx14.i333.2 = shl i64 %i.jh, 5
   %gep.i334.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !1031
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !1031
   %i.ji = or disjoint i64 %.01320.i332, 3
   %i.jj = add i64 %i.ji, %5
   %.idx14.i333.3 = shl i64 %i.jj, 5
   %gep.i334.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !1031
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !1031
   %i.jk = add nuw nsw i64 %.01320.i332, 4         ; 2 uses
   %niter549.next.3 = add i64 %niter549, 4         ; 2 uses
   %niter549.ncmp.3 = icmp eq i64 %niter549.next.3, %unroll_iter548
@@ -737,7 +737,7 @@ _ZN3jxl6N_SSE4L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit337.unr-lc
   %i.jl = add i64 %.01320.i332.epil, %5
   %.idx14.i333.epil = shl i64 %i.jl, 5
   %gep.i334.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !1031
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !1031
   %i.jm = add nuw nsw i64 %.01320.i332.epil, 1
   %epil.iter545.next = add i64 %epil.iter545, 1   ; 2 uses
   %epil.iter545.cmp.not = icmp eq i64 %epil.iter545.next, %xtraiter544
@@ -788,22 +788,22 @@ bb.as:                                            ; preds = %bb.ar
   %i.kc = add i64 %.01320.i342, %5
   %.idx14.i343 = shl i64 %i.kc, 5
   %gep.i344 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !1032
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !1032
   %i.kd = or disjoint i64 %.01320.i342, 1
   %i.ke = add i64 %i.kd, %5
   %.idx14.i343.1 = shl i64 %i.ke, 5
   %gep.i344.1 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !1032
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !1032
   %i.kf = or disjoint i64 %.01320.i342, 2
   %i.kg = add i64 %i.kf, %5
   %.idx14.i343.2 = shl i64 %i.kg, 5
   %gep.i344.2 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !1032
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !1032
   %i.kh = or disjoint i64 %.01320.i342, 3
   %i.ki = add i64 %i.kh, %5
   %.idx14.i343.3 = shl i64 %i.ki, 5
   %gep.i344.3 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !1032
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !1032
   %i.kj = add nuw nsw i64 %.01320.i342, 4         ; 2 uses
   %niter556.next.3 = add i64 %niter556, 4         ; 2 uses
   %niter556.ncmp.3 = icmp eq i64 %niter556.next.3, %unroll_iter555
@@ -845,22 +845,22 @@ bb.av:                                            ; preds = %bb.au
   %i.kw = add i64 %.01320.i352, %5
   %.idx14.i353 = shl i64 %i.kw, 5
   %gep.i354 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !1033
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !1033
   %i.kx = or disjoint i64 %.01320.i352, 1
   %i.ky = add i64 %i.kx, %5
   %.idx14.i353.1 = shl i64 %i.ky, 5
   %gep.i354.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !1033
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !1033
   %i.kz = or disjoint i64 %.01320.i352, 2
   %i.la = add i64 %i.kz, %5
   %.idx14.i353.2 = shl i64 %i.la, 5
   %gep.i354.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !1033
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !1033
   %i.lb = or disjoint i64 %.01320.i352, 3
   %i.lc = add i64 %i.lb, %5
   %.idx14.i353.3 = shl i64 %i.lc, 5
   %gep.i354.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !1033
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !1033
   %i.ld = add nuw nsw i64 %.01320.i352, 4         ; 2 uses
   %niter535.next.3 = add i64 %niter535, 4         ; 2 uses
   %niter535.ncmp.3 = icmp eq i64 %niter535.next.3, %unroll_iter534
@@ -882,7 +882,7 @@ _ZN3jxl6N_SSE4L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit357.unr-lc
   %i.le = add i64 %.01320.i352.epil, %5
   %.idx14.i353.epil = shl i64 %i.le, 5
   %gep.i354.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !1033
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !1033
   %i.lf = add nuw nsw i64 %.01320.i352.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter531
@@ -932,22 +932,22 @@ bb.ay:                                            ; preds = %bb.ax
   %i.lv = add i64 %.01320.i362, %i.ll
   %.idx14.i363 = shl i64 %i.lv, 5
   %gep.i364 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !1034
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !1034
   %i.lw = or disjoint i64 %.01320.i362, 1
   %i.lx = add i64 %i.lw, %i.ll
   %.idx14.i363.1 = shl i64 %i.lx, 5
   %gep.i364.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !1034
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !1034
   %i.ly = or disjoint i64 %.01320.i362, 2
   %i.lz = add i64 %i.ly, %i.ll
   %.idx14.i363.2 = shl i64 %i.lz, 5
   %gep.i364.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !1034
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !1034
   %i.ma = or disjoint i64 %.01320.i362, 3
   %i.mb = add i64 %i.ma, %i.ll
   %.idx14.i363.3 = shl i64 %i.mb, 5
   %gep.i364.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !1034
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !1034
   %i.mc = add nuw nsw i64 %.01320.i362, 4         ; 2 uses
   %niter542.next.3 = add i64 %niter542, 4         ; 2 uses
   %niter542.ncmp.3 = icmp eq i64 %niter542.next.3, %unroll_iter541
@@ -969,7 +969,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.md = add i64 %.01320.i.epil, %5
   %.idx14.i.epil = shl i64 %i.md, 5
   %gep.i.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !1030
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !1030
   %i.me = add nuw nsw i64 %.01320.i.epil, 1
   %epil.iter559.next = add i64 %epil.iter559, 1   ; 2 uses
   %epil.iter559.cmp.not = icmp eq i64 %epil.iter559.next, %xtraiter558
@@ -991,7 +991,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mf = add i64 %.01320.i342.epil, %5
   %.idx14.i343.epil = shl i64 %i.mf, 5
   %gep.i344.epil = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !1032
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !1032
   %i.mg = add nuw nsw i64 %.01320.i342.epil, 1
   %epil.iter552.next = add i64 %epil.iter552, 1   ; 2 uses
   %epil.iter552.cmp.not = icmp eq i64 %epil.iter552.next, %xtraiter551
@@ -1013,7 +1013,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mh = add i64 %.01320.i362.epil, %i.ll
   %.idx14.i363.epil = shl i64 %i.mh, 5
   %gep.i364.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !1034
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !1034
   %i.mi = add nuw nsw i64 %.01320.i362.epil, 1
   %epil.iter538.next = add i64 %epil.iter538, 1   ; 2 uses
   %epil.iter538.cmp.not = icmp eq i64 %epil.iter538.next, %xtraiter537
@@ -1416,8 +1416,8 @@ bb.c:                                             ; preds = %.thread
   %i.al = add i64 %4, %.05994
   %i.am = shl i64 %i.al, 5
   %gep112 = getelementptr i8, ptr %invariant.gep111, i64 %i.am
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.an = or disjoint i64 %.05994, 1              ; 2 uses
   %i.ao = add i64 %4, %i.an
   %i.ap = shl i64 %i.ao, 3
@@ -1425,8 +1425,8 @@ bb.c:                                             ; preds = %.thread
   %i.aq = add i64 %4, %i.an
   %i.ar = shl i64 %i.aq, 5
   %gep112.1 = getelementptr i8, ptr %invariant.gep111, i64 %i.ar
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.as = add nuw nsw i64 %.05994, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1446,8 +1446,8 @@ bb.c:                                             ; preds = %.thread
   %i.av = add i64 %4, %.05994.epil.init
   %i.aw = shl i64 %i.av, 5
   %gep112.epil = getelementptr i8, ptr %invariant.gep111, i64 %i.aw
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
@@ -1850,22 +1850,22 @@ bb.al:                                            ; preds = %bb.ak
   %i.ii = add i64 %.01320.i, %5
   %.idx14.i = shl i64 %i.ii, 5
   %gep.i = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !2101
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !2101
   %i.ij = or disjoint i64 %.01320.i, 1
   %i.ik = add i64 %i.ij, %5
   %.idx14.i.1 = shl i64 %i.ik, 5
   %gep.i.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !2101
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !2101
   %i.il = or disjoint i64 %.01320.i, 2
   %i.im = add i64 %i.il, %5
   %.idx14.i.2 = shl i64 %i.im, 5
   %gep.i.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !2101
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !2101
   %i.in = or disjoint i64 %.01320.i, 3
   %i.io = add i64 %i.in, %5
   %.idx14.i.3 = shl i64 %i.io, 5
   %gep.i.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !2101
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !2101
   %i.ip = add nuw nsw i64 %.01320.i, 4            ; 2 uses
   %niter563.next.3 = add i64 %niter563, 4         ; 2 uses
   %niter563.ncmp.3 = icmp eq i64 %niter563.next.3, %unroll_iter562
@@ -1911,22 +1911,22 @@ bb.ap:                                            ; preds = %bb.ao
   %i.jd = add i64 %.01320.i332, %5
   %.idx14.i333 = shl i64 %i.jd, 5
   %gep.i334 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !2102
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !2102
   %i.je = or disjoint i64 %.01320.i332, 1
   %i.jf = add i64 %i.je, %5
   %.idx14.i333.1 = shl i64 %i.jf, 5
   %gep.i334.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !2102
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !2102
   %i.jg = or disjoint i64 %.01320.i332, 2
   %i.jh = add i64 %i.jg, %5
   %.idx14.i333.2 = shl i64 %i.jh, 5
   %gep.i334.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !2102
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !2102
   %i.ji = or disjoint i64 %.01320.i332, 3
   %i.jj = add i64 %i.ji, %5
   %.idx14.i333.3 = shl i64 %i.jj, 5
   %gep.i334.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !2102
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !2102
   %i.jk = add nuw nsw i64 %.01320.i332, 4         ; 2 uses
   %niter549.next.3 = add i64 %niter549, 4         ; 2 uses
   %niter549.ncmp.3 = icmp eq i64 %niter549.next.3, %unroll_iter548
@@ -1948,7 +1948,7 @@ _ZN3jxl6N_AVX2L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit337.unr-lc
   %i.jl = add i64 %.01320.i332.epil, %5
   %.idx14.i333.epil = shl i64 %i.jl, 5
   %gep.i334.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !2102
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !2102
   %i.jm = add nuw nsw i64 %.01320.i332.epil, 1
   %epil.iter545.next = add i64 %epil.iter545, 1   ; 2 uses
   %epil.iter545.cmp.not = icmp eq i64 %epil.iter545.next, %xtraiter544
@@ -1999,22 +1999,22 @@ bb.as:                                            ; preds = %bb.ar
   %i.kc = add i64 %.01320.i342, %5
   %.idx14.i343 = shl i64 %i.kc, 5
   %gep.i344 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !2103
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !2103
   %i.kd = or disjoint i64 %.01320.i342, 1
   %i.ke = add i64 %i.kd, %5
   %.idx14.i343.1 = shl i64 %i.ke, 5
   %gep.i344.1 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !2103
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !2103
   %i.kf = or disjoint i64 %.01320.i342, 2
   %i.kg = add i64 %i.kf, %5
   %.idx14.i343.2 = shl i64 %i.kg, 5
   %gep.i344.2 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !2103
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !2103
   %i.kh = or disjoint i64 %.01320.i342, 3
   %i.ki = add i64 %i.kh, %5
   %.idx14.i343.3 = shl i64 %i.ki, 5
   %gep.i344.3 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !2103
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !2103
   %i.kj = add nuw nsw i64 %.01320.i342, 4         ; 2 uses
   %niter556.next.3 = add i64 %niter556, 4         ; 2 uses
   %niter556.ncmp.3 = icmp eq i64 %niter556.next.3, %unroll_iter555
@@ -2056,22 +2056,22 @@ bb.av:                                            ; preds = %bb.au
   %i.kw = add i64 %.01320.i352, %5
   %.idx14.i353 = shl i64 %i.kw, 5
   %gep.i354 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !2104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !2104
   %i.kx = or disjoint i64 %.01320.i352, 1
   %i.ky = add i64 %i.kx, %5
   %.idx14.i353.1 = shl i64 %i.ky, 5
   %gep.i354.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !2104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !2104
   %i.kz = or disjoint i64 %.01320.i352, 2
   %i.la = add i64 %i.kz, %5
   %.idx14.i353.2 = shl i64 %i.la, 5
   %gep.i354.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !2104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !2104
   %i.lb = or disjoint i64 %.01320.i352, 3
   %i.lc = add i64 %i.lb, %5
   %.idx14.i353.3 = shl i64 %i.lc, 5
   %gep.i354.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !2104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !2104
   %i.ld = add nuw nsw i64 %.01320.i352, 4         ; 2 uses
   %niter535.next.3 = add i64 %niter535, 4         ; 2 uses
   %niter535.ncmp.3 = icmp eq i64 %niter535.next.3, %unroll_iter534
@@ -2093,7 +2093,7 @@ _ZN3jxl6N_AVX2L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit357.unr-lc
   %i.le = add i64 %.01320.i352.epil, %5
   %.idx14.i353.epil = shl i64 %i.le, 5
   %gep.i354.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !2104
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !2104
   %i.lf = add nuw nsw i64 %.01320.i352.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter531
@@ -2143,22 +2143,22 @@ bb.ay:                                            ; preds = %bb.ax
   %i.lv = add i64 %.01320.i362, %i.ll
   %.idx14.i363 = shl i64 %i.lv, 5
   %gep.i364 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !2105
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !2105
   %i.lw = or disjoint i64 %.01320.i362, 1
   %i.lx = add i64 %i.lw, %i.ll
   %.idx14.i363.1 = shl i64 %i.lx, 5
   %gep.i364.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !2105
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !2105
   %i.ly = or disjoint i64 %.01320.i362, 2
   %i.lz = add i64 %i.ly, %i.ll
   %.idx14.i363.2 = shl i64 %i.lz, 5
   %gep.i364.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !2105
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !2105
   %i.ma = or disjoint i64 %.01320.i362, 3
   %i.mb = add i64 %i.ma, %i.ll
   %.idx14.i363.3 = shl i64 %i.mb, 5
   %gep.i364.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !2105
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !2105
   %i.mc = add nuw nsw i64 %.01320.i362, 4         ; 2 uses
   %niter542.next.3 = add i64 %niter542, 4         ; 2 uses
   %niter542.ncmp.3 = icmp eq i64 %niter542.next.3, %unroll_iter541
@@ -2180,7 +2180,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.md = add i64 %.01320.i.epil, %5
   %.idx14.i.epil = shl i64 %i.md, 5
   %gep.i.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !2101
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !2101
   %i.me = add nuw nsw i64 %.01320.i.epil, 1
   %epil.iter559.next = add i64 %epil.iter559, 1   ; 2 uses
   %epil.iter559.cmp.not = icmp eq i64 %epil.iter559.next, %xtraiter558
@@ -2202,7 +2202,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mf = add i64 %.01320.i342.epil, %5
   %.idx14.i343.epil = shl i64 %i.mf, 5
   %gep.i344.epil = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !2103
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !2103
   %i.mg = add nuw nsw i64 %.01320.i342.epil, 1
   %epil.iter552.next = add i64 %epil.iter552, 1   ; 2 uses
   %epil.iter552.cmp.not = icmp eq i64 %epil.iter552.next, %xtraiter551
@@ -2224,7 +2224,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mh = add i64 %.01320.i362.epil, %i.ll
   %.idx14.i363.epil = shl i64 %i.mh, 5
   %gep.i364.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !2105
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !2105
   %i.mi = add nuw nsw i64 %.01320.i362.epil, 1
   %epil.iter538.next = add i64 %epil.iter538, 1   ; 2 uses
   %epil.iter538.cmp.not = icmp eq i64 %epil.iter538.next, %xtraiter537
@@ -2627,8 +2627,8 @@ bb.c:                                             ; preds = %.thread
   %i.al = add i64 %4, %.05994
   %i.am = shl i64 %i.al, 5
   %gep112 = getelementptr i8, ptr %invariant.gep111, i64 %i.am
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.an = or disjoint i64 %.05994, 1              ; 2 uses
   %i.ao = add i64 %4, %i.an
   %i.ap = shl i64 %i.ao, 3
@@ -2636,8 +2636,8 @@ bb.c:                                             ; preds = %.thread
   %i.aq = add i64 %4, %i.an
   %i.ar = shl i64 %i.aq, 5
   %gep112.1 = getelementptr i8, ptr %invariant.gep111, i64 %i.ar
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.1, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.1, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   %i.as = add nuw nsw i64 %.05994, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -2657,8 +2657,8 @@ bb.c:                                             ; preds = %.thread
   %i.av = add i64 %4, %.05994.epil.init
   %i.aw = shl i64 %i.av, 5
   %gep112.epil = getelementptr i8, ptr %invariant.gep111, i64 %i.aw
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 %i.ag, i1 false), !tbaa !69
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 %umax101, i1 false), !tbaa !66
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep112.epil, i8 0, i64 range(i64 0, 1021) %i.ag, i1 false), !tbaa !69
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %gep.epil, i8 %9, i64 range(i64 0, 256) %umax101, i1 false), !tbaa !66
   br label %._crit_edge95.split
 
 ._crit_edge95.split:                              ; preds = %._crit_edge95.split.unr-lcssa, %.preheader.epil.preheader
@@ -3061,22 +3061,22 @@ bb.al:                                            ; preds = %bb.ak
   %i.ii = add i64 %.01320.i, %5
   %.idx14.i = shl i64 %i.ii, 5
   %gep.i = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !3566
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !3566
   %i.ij = or disjoint i64 %.01320.i, 1
   %i.ik = add i64 %i.ij, %5
   %.idx14.i.1 = shl i64 %i.ik, 5
   %gep.i.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !3566
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.1, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !3566
   %i.il = or disjoint i64 %.01320.i, 2
   %i.im = add i64 %i.il, %5
   %.idx14.i.2 = shl i64 %i.im, 5
   %gep.i.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !3566
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.2, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !3566
   %i.in = or disjoint i64 %.01320.i, 3
   %i.io = add i64 %i.in, %5
   %.idx14.i.3 = shl i64 %i.io, 5
   %gep.i.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !3566
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.3, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !3566
   %i.ip = add nuw nsw i64 %.01320.i, 4            ; 2 uses
   %niter563.next.3 = add i64 %niter563, 4         ; 2 uses
   %niter563.ncmp.3 = icmp eq i64 %niter563.next.3, %unroll_iter562
@@ -3122,22 +3122,22 @@ bb.ap:                                            ; preds = %bb.ao
   %i.jd = add i64 %.01320.i332, %5
   %.idx14.i333 = shl i64 %i.jd, 5
   %gep.i334 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !3567
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !3567
   %i.je = or disjoint i64 %.01320.i332, 1
   %i.jf = add i64 %i.je, %5
   %.idx14.i333.1 = shl i64 %i.jf, 5
   %gep.i334.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !3567
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.1, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !3567
   %i.jg = or disjoint i64 %.01320.i332, 2
   %i.jh = add i64 %i.jg, %5
   %.idx14.i333.2 = shl i64 %i.jh, 5
   %gep.i334.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !3567
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.2, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !3567
   %i.ji = or disjoint i64 %.01320.i332, 3
   %i.jj = add i64 %i.ji, %5
   %.idx14.i333.3 = shl i64 %i.jj, 5
   %gep.i334.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !3567
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.3, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !3567
   %i.jk = add nuw nsw i64 %.01320.i332, 4         ; 2 uses
   %niter549.next.3 = add i64 %niter549, 4         ; 2 uses
   %niter549.ncmp.3 = icmp eq i64 %niter549.next.3, %unroll_iter548
@@ -3159,7 +3159,7 @@ _ZN3jxl6N_SSE2L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit337.unr-lc
   %i.jl = add i64 %.01320.i332.epil, %5
   %.idx14.i333.epil = shl i64 %i.jl, 5
   %gep.i334.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i333.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 %i.iz, i1 false), !tbaa !69, !alias.scope !3567
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i334.epil, i8 0, i64 range(i64 0, 1021) %i.iz, i1 false), !tbaa !69, !alias.scope !3567
   %i.jm = add nuw nsw i64 %.01320.i332.epil, 1
   %epil.iter545.next = add i64 %epil.iter545, 1   ; 2 uses
   %epil.iter545.cmp.not = icmp eq i64 %epil.iter545.next, %xtraiter544
@@ -3210,22 +3210,22 @@ bb.as:                                            ; preds = %bb.ar
   %i.kc = add i64 %.01320.i342, %5
   %.idx14.i343 = shl i64 %i.kc, 5
   %gep.i344 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !3568
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !3568
   %i.kd = or disjoint i64 %.01320.i342, 1
   %i.ke = add i64 %i.kd, %5
   %.idx14.i343.1 = shl i64 %i.ke, 5
   %gep.i344.1 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !3568
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.1, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !3568
   %i.kf = or disjoint i64 %.01320.i342, 2
   %i.kg = add i64 %i.kf, %5
   %.idx14.i343.2 = shl i64 %i.kg, 5
   %gep.i344.2 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !3568
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.2, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !3568
   %i.kh = or disjoint i64 %.01320.i342, 3
   %i.ki = add i64 %i.kh, %5
   %.idx14.i343.3 = shl i64 %i.ki, 5
   %gep.i344.3 = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !3568
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.3, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !3568
   %i.kj = add nuw nsw i64 %.01320.i342, 4         ; 2 uses
   %niter556.next.3 = add i64 %niter556, 4         ; 2 uses
   %niter556.ncmp.3 = icmp eq i64 %niter556.next.3, %unroll_iter555
@@ -3267,22 +3267,22 @@ bb.av:                                            ; preds = %bb.au
   %i.kw = add i64 %.01320.i352, %5
   %.idx14.i353 = shl i64 %i.kw, 5
   %gep.i354 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !3569
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !3569
   %i.kx = or disjoint i64 %.01320.i352, 1
   %i.ky = add i64 %i.kx, %5
   %.idx14.i353.1 = shl i64 %i.ky, 5
   %gep.i354.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !3569
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.1, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !3569
   %i.kz = or disjoint i64 %.01320.i352, 2
   %i.la = add i64 %i.kz, %5
   %.idx14.i353.2 = shl i64 %i.la, 5
   %gep.i354.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !3569
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.2, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !3569
   %i.lb = or disjoint i64 %.01320.i352, 3
   %i.lc = add i64 %i.lb, %5
   %.idx14.i353.3 = shl i64 %i.lc, 5
   %gep.i354.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !3569
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.3, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !3569
   %i.ld = add nuw nsw i64 %.01320.i352, 4         ; 2 uses
   %niter535.next.3 = add i64 %niter535, 4         ; 2 uses
   %niter535.ncmp.3 = icmp eq i64 %niter535.next.3, %unroll_iter534
@@ -3304,7 +3304,7 @@ _ZN3jxl6N_SSE2L22SetEntropyForTransformEmmNS_14AcStrategyTypeEfPf.exit357.unr-lc
   %i.le = add i64 %.01320.i352.epil, %5
   %.idx14.i353.epil = shl i64 %i.le, 5
   %gep.i354.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i353.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 %i.ks, i1 false), !tbaa !69, !alias.scope !3569
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i354.epil, i8 0, i64 range(i64 0, 1021) %i.ks, i1 false), !tbaa !69, !alias.scope !3569
   %i.lf = add nuw nsw i64 %.01320.i352.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter531
@@ -3354,22 +3354,22 @@ bb.ay:                                            ; preds = %bb.ax
   %i.lv = add i64 %.01320.i362, %i.ll
   %.idx14.i363 = shl i64 %i.lv, 5
   %gep.i364 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !3570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !3570
   %i.lw = or disjoint i64 %.01320.i362, 1
   %i.lx = add i64 %i.lw, %i.ll
   %.idx14.i363.1 = shl i64 %i.lx, 5
   %gep.i364.1 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !3570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.1, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !3570
   %i.ly = or disjoint i64 %.01320.i362, 2
   %i.lz = add i64 %i.ly, %i.ll
   %.idx14.i363.2 = shl i64 %i.lz, 5
   %gep.i364.2 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !3570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.2, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !3570
   %i.ma = or disjoint i64 %.01320.i362, 3
   %i.mb = add i64 %i.ma, %i.ll
   %.idx14.i363.3 = shl i64 %i.mb, 5
   %gep.i364.3 = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !3570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.3, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !3570
   %i.mc = add nuw nsw i64 %.01320.i362, 4         ; 2 uses
   %niter542.next.3 = add i64 %niter542, 4         ; 2 uses
   %niter542.ncmp.3 = icmp eq i64 %niter542.next.3, %unroll_iter541
@@ -3391,7 +3391,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.md = add i64 %.01320.i.epil, %5
   %.idx14.i.epil = shl i64 %i.md, 5
   %gep.i.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 %i.ie, i1 false), !tbaa !69, !alias.scope !3566
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i.epil, i8 0, i64 range(i64 0, 1021) %i.ie, i1 false), !tbaa !69, !alias.scope !3566
   %i.me = add nuw nsw i64 %.01320.i.epil, 1
   %epil.iter559.next = add i64 %epil.iter559, 1   ; 2 uses
   %epil.iter559.cmp.not = icmp eq i64 %epil.iter559.next, %xtraiter558
@@ -3413,7 +3413,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mf = add i64 %.01320.i342.epil, %5
   %.idx14.i343.epil = shl i64 %i.mf, 5
   %gep.i344.epil = getelementptr i8, ptr %invariant.gep.i338, i64 %.idx14.i343.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 %i.jy, i1 false), !tbaa !69, !alias.scope !3568
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i344.epil, i8 0, i64 range(i64 0, 1021) %i.jy, i1 false), !tbaa !69, !alias.scope !3568
   %i.mg = add nuw nsw i64 %.01320.i342.epil, 1
   %epil.iter552.next = add i64 %epil.iter552, 1   ; 2 uses
   %epil.iter552.cmp.not = icmp eq i64 %epil.iter552.next, %xtraiter551
@@ -3435,7 +3435,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.mh = add i64 %.01320.i362.epil, %i.ll
   %.idx14.i363.epil = shl i64 %i.mh, 5
   %gep.i364.epil = getelementptr i8, ptr %invariant.gep, i64 %.idx14.i363.epil
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 %i.lr, i1 false), !tbaa !69, !alias.scope !3570
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %gep.i364.epil, i8 0, i64 range(i64 0, 1021) %i.lr, i1 false), !tbaa !69, !alias.scope !3570
   %i.mi = add nuw nsw i64 %.01320.i362.epil, 1
   %epil.iter538.next = add i64 %epil.iter538, 1   ; 2 uses
   %epil.iter538.cmp.not = icmp eq i64 %epil.iter538.next, %xtraiter537

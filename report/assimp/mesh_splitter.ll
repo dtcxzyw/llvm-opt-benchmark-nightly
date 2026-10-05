@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ej = urem i64 %i.ei, 12
   %i.ek = sub nuw nsw i64 %i.ei, %i.ej
   %i.el = add nsw i64 %i.ek, 12
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.eg, i8 0, i64 %i.el, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.eg, i8 0, i64 range(i64 0, 51539607541) %i.el, i1 false)
   br label %.loopexit322
 
 .loopexit322:                                     ; preds = %.loopexit322.loopexit, %bb.s
@@ -246,7 +246,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ev = urem i64 %i.eu, 12
   %i.ew = sub nuw nsw i64 %i.eu, %i.ev
   %i.ex = add nsw i64 %i.ew, 12
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.es, i8 0, i64 %i.ex, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.es, i8 0, i64 range(i64 0, 51539607541) %i.ex, i1 false)
   br label %.loopexit321
 
 .loopexit321:                                     ; preds = %.loopexit321.loopexit, %bb.v
@@ -288,7 +288,7 @@ bb.y:                                             ; preds = %bb.x
   %i.fi = urem i64 %i.fh, 12
   %i.fj = sub nuw nsw i64 %i.fh, %i.fi
   %i.fk = add nsw i64 %i.fj, 12
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ff, i8 0, i64 %i.fk, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ff, i8 0, i64 range(i64 0, 51539607541) %i.fk, i1 false)
   br label %.loopexit320
 
 .loopexit320:                                     ; preds = %.loopexit320.loopexit, %bb.y
@@ -305,7 +305,7 @@ bb.z:                                             ; preds = %.loopexit320
   %i.fo = urem i64 %i.fn, 12
   %i.fp = sub nuw nsw i64 %i.fn, %i.fo
   %i.fq = add nsw i64 %i.fp, 12
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fm, i8 0, i64 %i.fq, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.fm, i8 0, i64 range(i64 0, 51539607541) %i.fq, i1 false)
   br label %.loopexit319
 
 .loopexit319:                                     ; preds = %.loopexit319.loopexit, %bb.z
@@ -356,7 +356,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.fv, label %.loopexit315, label %.loopexit315.loopexit
 
 .loopexit315.loopexit:                            ; preds = %bb.ac
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.go, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.go, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315
 
 .loopexit315:                                     ; preds = %.loopexit315.loopexit, %bb.ac
@@ -376,7 +376,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.fv, label %.loopexit315.1, label %.loopexit315.loopexit.1
 
 .loopexit315.loopexit.1:                          ; preds = %bb.ae
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.gt, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.gt, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.1
 
 .loopexit315.1:                                   ; preds = %.loopexit315.loopexit.1, %bb.ae
@@ -397,7 +397,7 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.fv, label %.loopexit315.2, label %.loopexit315.loopexit.2
 
 .loopexit315.loopexit.2:                          ; preds = %bb.ag
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.gz, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.gz, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.2
 
 .loopexit315.2:                                   ; preds = %.loopexit315.loopexit.2, %bb.ag
@@ -418,7 +418,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.fv, label %.loopexit315.3, label %.loopexit315.loopexit.3
 
 .loopexit315.loopexit.3:                          ; preds = %bb.ai
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hf, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hf, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.3
 
 .loopexit315.3:                                   ; preds = %.loopexit315.loopexit.3, %bb.ai
@@ -439,7 +439,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.fv, label %.loopexit315.4, label %.loopexit315.loopexit.4
 
 .loopexit315.loopexit.4:                          ; preds = %bb.ak
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hl, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hl, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.4
 
 .loopexit315.4:                                   ; preds = %.loopexit315.loopexit.4, %bb.ak
@@ -460,7 +460,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.fv, label %.loopexit315.5, label %.loopexit315.loopexit.5
 
 .loopexit315.loopexit.5:                          ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hr, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hr, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.5
 
 .loopexit315.5:                                   ; preds = %.loopexit315.loopexit.5, %bb.am
@@ -481,7 +481,7 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.fv, label %.loopexit315.6, label %.loopexit315.loopexit.6
 
 .loopexit315.loopexit.6:                          ; preds = %bb.ao
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hx, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hx, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.6
 
 .loopexit315.6:                                   ; preds = %.loopexit315.loopexit.6, %bb.ao
@@ -502,7 +502,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.fv, label %.loopexit315.7, label %.loopexit315.loopexit.7
 
 .loopexit315.loopexit.7:                          ; preds = %bb.aq
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.id, i8 0, i64 %i.fu, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.id, i8 0, i64 range(i64 0, 68719476721) %i.fu, i1 false)
   br label %.loopexit315.7
 
 .loopexit315.7:                                   ; preds = %.loopexit315.loopexit.7, %bb.aq
@@ -552,7 +552,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit:     ; preds = %bb.at
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ja, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ja, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit
 
 _ZNK6aiMesh15HasVertexColorsEj.exit:              ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit, %bb.at
@@ -575,7 +575,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.1, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.1
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.1:   ; preds = %bb.av
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jh, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jh, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.1
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.1:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.1, %bb.av
@@ -599,7 +599,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.2, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.2
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.2:   ; preds = %bb.ax
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jp, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jp, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.2
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.2:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.2, %bb.ax
@@ -623,7 +623,7 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.3, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.3
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.3:   ; preds = %bb.az
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jx, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jx, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.3
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.3:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.3, %bb.az
@@ -647,7 +647,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.4, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.4
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.4:   ; preds = %bb.bb
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kf, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kf, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.4
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.4:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.4, %bb.bb
@@ -671,7 +671,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.5, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.5
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.5:   ; preds = %bb.bd
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kn, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kn, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.5
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.5:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.5, %bb.bd
@@ -695,7 +695,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.6, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.6
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.6:   ; preds = %bb.bf
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kv, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kv, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.6
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.6:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.6, %bb.bf
@@ -719,7 +719,7 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.gb, label %_ZNK6aiMesh15HasVertexColorsEj.exit.7, label %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.7
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.7:   ; preds = %bb.bh
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ld, i8 0, i64 %i.gj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ld, i8 0, i64 range(i64 0, 51539607541) %i.gj, i1 false)
   br label %_ZNK6aiMesh15HasVertexColorsEj.exit.7
 
 _ZNK6aiMesh15HasVertexColorsEj.exit.7:            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.loopexit.7, %bb.bh
@@ -1122,7 +1122,7 @@ bb.db:                                            ; preds = %bb.da
   br i1 %i.ys, label %.loopexit313, label %.loopexit313.loopexit
 
 .loopexit313.loopexit:                            ; preds = %bb.db
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.yr, i8 0, i64 %i.yq, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.yr, i8 0, i64 range(i64 0, 34359738361) %i.yq, i1 false)
   br label %.loopexit313
 
 .loopexit313:                                     ; preds = %.loopexit313.loopexit, %bb.db
@@ -1525,7 +1525,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = urem i64 %i.j, 24
   %i.l = sub nuw nsw i64 %i.j, %i.k
   %i.m = add nuw nsw i64 %i.l, 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, i8 0, i64 %i.m, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, i8 0, i64 range(i64 0, 103079215081) %i.m, i1 false)
   %i.n = load i32, ptr %i.c, align 8              ; 2 uses
   %.not26 = icmp eq i32 %i.n, 0
   br i1 %.not26, label %.loopexit, label %.lr.ph25

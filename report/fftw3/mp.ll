@@ -205,9 +205,9 @@ bb.w:                                             ; preds = %bb.v
   %i.ga = sub nuw nsw i64 22, %indvars.iv58.i.lcssa
   %scevgep = getelementptr i8, ptr %2, i64 %i.ga
   %i.gb = add nuw nsw i64 %indvars.iv58.i.lcssa, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.gb, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 range(i64 0, 41) %i.gb, i1 false), !tbaa !20
   %i.gc = sub nuw nsw i64 18, %indvars.iv58.i.lcssa
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.fz, i8 0, i64 %i.gc, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.fz, i8 0, i64 range(i64 0, 4294967297) %i.gc, i1 false), !tbaa !20
   br label %pack.exit
 
 pack.exit:                                        ; preds = %bb.w, %.preheader.i, %.lr.ph47.i
@@ -610,9 +610,9 @@ bb.m:                                             ; preds = %bb.l
   %i.fp = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph
   %scevgep = getelementptr i8, ptr %3, i64 %i.fp
   %i.fq = add nuw nsw i64 %indvars.iv58.i.lcssa.ph, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.fq, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 range(i64 0, 21) %i.fq, i1 false), !tbaa !20
   %i.fr = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.fo, i8 0, i64 %i.fr, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.fo, i8 0, i64 range(i64 0, 4294967297) %i.fr, i1 false), !tbaa !20
   br label %pack.exit
 
 pack.exit:                                        ; preds = %bb.m, %.preheader.i, %.lr.ph47.i
@@ -992,9 +992,9 @@ bb.n:                                             ; preds = %bb.m
   %i.ge = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph
   %scevgep = getelementptr i8, ptr %3, i64 %i.ge
   %i.gf = add nuw nsw i64 %indvars.iv58.i.lcssa.ph, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.gf, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 range(i64 0, 23) %i.gf, i1 false), !tbaa !20
   %i.gg = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.gd, i8 0, i64 %i.gg, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.gd, i8 0, i64 range(i64 0, 4294967297) %i.gg, i1 false), !tbaa !20
   br label %pack.exit
 
 pack.exit:                                        ; preds = %bb.n, %.preheader.i, %.lr.ph47.i
@@ -1397,9 +1397,9 @@ bb.ar:                                            ; preds = %bb.aq
   %i.ls = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i140
   %scevgep.i141 = getelementptr i8, ptr %11, i64 %i.ls
   %i.lt = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i140, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i141, ptr noundef nonnull align 16 dereferenceable(1) %i.u, i64 %i.lt, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i141, ptr noundef nonnull align 16 dereferenceable(1) %i.u, i64 range(i64 0, 21) %i.lt, i1 false), !tbaa !20
   %i.lu = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i140
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 %i.lu, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 range(i64 0, 4294967297) %i.lu, i1 false), !tbaa !20
   br label %submag0.exit159
 
 submag0.exit159:                                  ; preds = %bb.ar, %.preheader.i.i136, %.lr.ph47.i.i138
@@ -1714,9 +1714,9 @@ bb.be:                                            ; preds = %bb.bd
   %i.rs = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i102
   %scevgep.i103 = getelementptr i8, ptr %11, i64 %i.rs
   %i.rt = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i102, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i103, ptr noundef nonnull align 16 dereferenceable(1) %i.v, i64 %i.rt, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i103, ptr noundef nonnull align 16 dereferenceable(1) %i.v, i64 range(i64 0, 21) %i.rt, i1 false), !tbaa !20
   %i.ru = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i102
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 %i.ru, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 range(i64 0, 4294967297) %i.ru, i1 false), !tbaa !20
   br label %submag0.exit
 
 submag0.exit:                                     ; preds = %bb.be, %.preheader.i.i98, %.lr.ph47.i.i100
@@ -2066,9 +2066,9 @@ bb.bt:                                            ; preds = %bb.bs
   %i.yf = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i74
   %scevgep.i75 = getelementptr i8, ptr %11, i64 %i.yf
   %i.yg = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i74, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i75, ptr noundef nonnull align 16 dereferenceable(1) %i.w, i64 %i.yg, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i75, ptr noundef nonnull align 16 dereferenceable(1) %i.w, i64 range(i64 0, 23) %i.yg, i1 false), !tbaa !20
   %i.yh = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i74
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 %i.yh, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 range(i64 0, 4294967297) %i.yh, i1 false), !tbaa !20
   br label %addmag0.exit93
 
 addmag0.exit93:                                   ; preds = %bb.bt, %.preheader.i.i67, %.lr.ph47.i.i72
@@ -2417,9 +2417,9 @@ bb.ch:                                            ; preds = %bb.cg
   %i.aev = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i
   %scevgep.i = getelementptr i8, ptr %11, i64 %i.aev
   %i.aew = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 16 dereferenceable(1) %i.x, i64 %i.aew, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 16 dereferenceable(1) %i.x, i64 range(i64 0, 23) %i.aew, i1 false), !tbaa !20
   %i.aex = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 %i.aex, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 range(i64 0, 4294967297) %i.aex, i1 false), !tbaa !20
   br label %addmag0.exit
 
 addmag0.exit:                                     ; preds = %bb.ch, %.preheader.i.i, %.lr.ph47.i.i
@@ -2822,9 +2822,9 @@ bb.dp:                                            ; preds = %bb.do
   %i.anc = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i323
   %scevgep.i324 = getelementptr i8, ptr %12, i64 %i.anc
   %i.and = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i323, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i324, ptr noundef nonnull align 16 dereferenceable(1) %i.q, i64 %i.and, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i324, ptr noundef nonnull align 16 dereferenceable(1) %i.q, i64 range(i64 0, 23) %i.and, i1 false), !tbaa !20
   %i.ane = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i323
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %i.ane, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 range(i64 0, 4294967297) %i.ane, i1 false), !tbaa !20
   br label %addmag0.exit342
 
 addmag0.exit342:                                  ; preds = %bb.dp, %.preheader.i.i316, %.lr.ph47.i.i321
@@ -3171,9 +3171,9 @@ bb.ed:                                            ; preds = %bb.ec
   %i.atq = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i274
   %scevgep.i275 = getelementptr i8, ptr %12, i64 %i.atq
   %i.atr = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i274, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i275, ptr noundef nonnull align 16 dereferenceable(1) %i.r, i64 %i.atr, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i275, ptr noundef nonnull align 16 dereferenceable(1) %i.r, i64 range(i64 0, 23) %i.atr, i1 false), !tbaa !20
   %i.ats = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i274
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %i.ats, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 range(i64 0, 4294967297) %i.ats, i1 false), !tbaa !20
   br label %addmag0.exit293
 
 addmag0.exit293:                                  ; preds = %bb.ed, %.preheader.i.i267, %.lr.ph47.i.i272
@@ -3489,9 +3489,9 @@ bb.er:                                            ; preds = %bb.eq
   %i.azn = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i225
   %scevgep.i226 = getelementptr i8, ptr %12, i64 %i.azn
   %i.azo = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i225, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i226, ptr noundef nonnull align 16 dereferenceable(1) %i.s, i64 %i.azo, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i226, ptr noundef nonnull align 16 dereferenceable(1) %i.s, i64 range(i64 0, 21) %i.azo, i1 false), !tbaa !20
   %i.azp = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i225
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %i.azp, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 range(i64 0, 4294967297) %i.azp, i1 false), !tbaa !20
   br label %submag0.exit244
 
 submag0.exit244:                                  ; preds = %bb.er, %.preheader.i.i221, %.lr.ph47.i.i223
@@ -3804,9 +3804,9 @@ bb.fe:                                            ; preds = %bb.fd
   %i.bfl = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i183
   %scevgep.i184 = getelementptr i8, ptr %12, i64 %i.bfl
   %i.bfm = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i183, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i184, ptr noundef nonnull align 16 dereferenceable(1) %i.t, i64 %i.bfm, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i184, ptr noundef nonnull align 16 dereferenceable(1) %i.t, i64 range(i64 0, 21) %i.bfm, i1 false), !tbaa !20
   %i.bfn = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i183
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %i.bfn, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 range(i64 0, 4294967297) %i.bfn, i1 false), !tbaa !20
   br label %submag0.exit202
 
 submag0.exit202:                                  ; preds = %bb.fe, %.preheader.i.i179, %.lr.ph47.i.i181
@@ -4209,9 +4209,9 @@ bb.gm:                                            ; preds = %bb.gl
   %i.bny = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i509
   %scevgep.i510 = getelementptr i8, ptr %i.ea, i64 %i.bny
   %i.bnz = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i509, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i510, ptr noundef nonnull align 16 dereferenceable(1) %i.m, i64 %i.bnz, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i510, ptr noundef nonnull align 16 dereferenceable(1) %i.m, i64 range(i64 0, 23) %i.bnz, i1 false), !tbaa !20
   %i.boa = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i509
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.bnx, i8 0, i64 %i.boa, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.bnx, i8 0, i64 range(i64 0, 4294967297) %i.boa, i1 false), !tbaa !20
   br label %addmag0.exit528
 
 addmag0.exit528:                                  ; preds = %bb.gm, %.preheader.i.i502, %.lr.ph47.i.i507
@@ -4564,9 +4564,9 @@ bb.ha:                                            ; preds = %bb.gz
   %i.bus = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i460
   %scevgep.i461 = getelementptr i8, ptr %i.ea, i64 %i.bus
   %i.but = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i460, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i461, ptr noundef nonnull align 16 dereferenceable(1) %i.n, i64 %i.but, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i461, ptr noundef nonnull align 16 dereferenceable(1) %i.n, i64 range(i64 0, 23) %i.but, i1 false), !tbaa !20
   %i.buu = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i460
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.bur, i8 0, i64 %i.buu, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.bur, i8 0, i64 range(i64 0, 4294967297) %i.buu, i1 false), !tbaa !20
   br label %addmag0.exit479
 
 addmag0.exit479:                                  ; preds = %bb.ha, %.preheader.i.i453, %.lr.ph47.i.i458
@@ -4888,9 +4888,9 @@ bb.ho:                                            ; preds = %bb.hn
   %i.cav = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i411
   %scevgep.i412 = getelementptr i8, ptr %i.ea, i64 %i.cav
   %i.caw = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i411, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i412, ptr noundef nonnull align 16 dereferenceable(1) %i.o, i64 %i.caw, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i412, ptr noundef nonnull align 16 dereferenceable(1) %i.o, i64 range(i64 0, 21) %i.caw, i1 false), !tbaa !20
   %i.cax = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i411
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cau, i8 0, i64 %i.cax, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cau, i8 0, i64 range(i64 0, 4294967297) %i.cax, i1 false), !tbaa !20
   br label %submag0.exit430
 
 submag0.exit430:                                  ; preds = %bb.ho, %.preheader.i.i407, %.lr.ph47.i.i409
@@ -5209,9 +5209,9 @@ bb.ib:                                            ; preds = %bb.ia
   %i.cgz = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i369
   %scevgep.i370 = getelementptr i8, ptr %i.ea, i64 %i.cgz
   %i.cha = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i369, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i370, ptr noundef nonnull align 16 dereferenceable(1) %i.p, i64 %i.cha, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i370, ptr noundef nonnull align 16 dereferenceable(1) %i.p, i64 range(i64 0, 21) %i.cha, i1 false), !tbaa !20
   %i.chb = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i369
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cgy, i8 0, i64 %i.chb, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cgy, i8 0, i64 range(i64 0, 4294967297) %i.chb, i1 false), !tbaa !20
   br label %submag0.exit388
 
 submag0.exit388:                                  ; preds = %bb.ib, %.preheader.i.i365, %.lr.ph47.i.i367
@@ -5614,9 +5614,9 @@ bb.jj:                                            ; preds = %bb.ji
   %i.cpm = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i695
   %scevgep.i696 = getelementptr i8, ptr %i.ec, i64 %i.cpm
   %i.cpn = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i695, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i696, ptr noundef nonnull align 16 dereferenceable(1) %i.i, i64 %i.cpn, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i696, ptr noundef nonnull align 16 dereferenceable(1) %i.i, i64 range(i64 0, 23) %i.cpn, i1 false), !tbaa !20
   %i.cpo = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i695
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cpl, i8 0, i64 %i.cpo, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cpl, i8 0, i64 range(i64 0, 4294967297) %i.cpo, i1 false), !tbaa !20
   br label %addmag0.exit714
 
 addmag0.exit714:                                  ; preds = %bb.jj, %.preheader.i.i688, %.lr.ph47.i.i693
@@ -5969,9 +5969,9 @@ bb.jx:                                            ; preds = %bb.jw
   %i.cwg = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i646
   %scevgep.i647 = getelementptr i8, ptr %i.ec, i64 %i.cwg
   %i.cwh = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i646, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i647, ptr noundef nonnull align 16 dereferenceable(1) %i.j, i64 %i.cwh, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i647, ptr noundef nonnull align 16 dereferenceable(1) %i.j, i64 range(i64 0, 23) %i.cwh, i1 false), !tbaa !20
   %i.cwi = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i646
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cwf, i8 0, i64 %i.cwi, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.cwf, i8 0, i64 range(i64 0, 4294967297) %i.cwi, i1 false), !tbaa !20
   br label %addmag0.exit665
 
 addmag0.exit665:                                  ; preds = %bb.jx, %.preheader.i.i639, %.lr.ph47.i.i644
@@ -6293,9 +6293,9 @@ bb.kl:                                            ; preds = %bb.kk
   %i.dcj = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i597
   %scevgep.i598 = getelementptr i8, ptr %i.ec, i64 %i.dcj
   %i.dck = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i597, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i598, ptr noundef nonnull align 16 dereferenceable(1) %i.k, i64 %i.dck, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i598, ptr noundef nonnull align 16 dereferenceable(1) %i.k, i64 range(i64 0, 21) %i.dck, i1 false), !tbaa !20
   %i.dcl = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i597
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dci, i8 0, i64 %i.dcl, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dci, i8 0, i64 range(i64 0, 4294967297) %i.dcl, i1 false), !tbaa !20
   br label %submag0.exit616
 
 submag0.exit616:                                  ; preds = %bb.kl, %.preheader.i.i593, %.lr.ph47.i.i595
@@ -6614,9 +6614,9 @@ bb.ky:                                            ; preds = %bb.kx
   %i.din = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i555
   %scevgep.i556 = getelementptr i8, ptr %i.ec, i64 %i.din
   %i.dio = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i555, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i556, ptr noundef nonnull align 16 dereferenceable(1) %i.l, i64 %i.dio, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i556, ptr noundef nonnull align 16 dereferenceable(1) %i.l, i64 range(i64 0, 21) %i.dio, i1 false), !tbaa !20
   %i.dip = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i555
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dim, i8 0, i64 %i.dip, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dim, i8 0, i64 range(i64 0, 4294967297) %i.dip, i1 false), !tbaa !20
   br label %submag0.exit574
 
 submag0.exit574:                                  ; preds = %bb.ky, %.preheader.i.i551, %.lr.ph47.i.i553
@@ -7019,9 +7019,9 @@ bb.mf:                                            ; preds = %bb.me
   %i.dqe = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i881
   %scevgep.i882 = getelementptr i8, ptr %i.eb, i64 %i.dqe
   %i.dqf = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i881, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i882, ptr noundef nonnull align 16 dereferenceable(1) %i.e, i64 %i.dqf, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i882, ptr noundef nonnull align 16 dereferenceable(1) %i.e, i64 range(i64 0, 21) %i.dqf, i1 false), !tbaa !20
   %i.dqg = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i881
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dqd, i8 0, i64 %i.dqg, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dqd, i8 0, i64 range(i64 0, 4294967297) %i.dqg, i1 false), !tbaa !20
   br label %submag0.exit900
 
 submag0.exit900:                                  ; preds = %bb.mf, %.preheader.i.i877, %.lr.ph47.i.i879
@@ -7342,9 +7342,9 @@ bb.ms:                                            ; preds = %bb.mr
   %i.dwk = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i839
   %scevgep.i840 = getelementptr i8, ptr %i.eb, i64 %i.dwk
   %i.dwl = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i839, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i840, ptr noundef nonnull align 16 dereferenceable(1) %i.f, i64 %i.dwl, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i840, ptr noundef nonnull align 16 dereferenceable(1) %i.f, i64 range(i64 0, 21) %i.dwl, i1 false), !tbaa !20
   %i.dwm = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i839
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dwj, i8 0, i64 %i.dwm, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.dwj, i8 0, i64 range(i64 0, 4294967297) %i.dwm, i1 false), !tbaa !20
   br label %submag0.exit858
 
 submag0.exit858:                                  ; preds = %bb.ms, %.preheader.i.i835, %.lr.ph47.i.i837
@@ -7700,9 +7700,9 @@ bb.nh:                                            ; preds = %bb.ng
   %i.edd = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i797
   %scevgep.i798 = getelementptr i8, ptr %i.eb, i64 %i.edd
   %i.ede = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i797, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i798, ptr noundef nonnull align 16 dereferenceable(1) %i.g, i64 %i.ede, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i798, ptr noundef nonnull align 16 dereferenceable(1) %i.g, i64 range(i64 0, 23) %i.ede, i1 false), !tbaa !20
   %i.edf = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i797
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.edc, i8 0, i64 %i.edf, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.edc, i8 0, i64 range(i64 0, 4294967297) %i.edf, i1 false), !tbaa !20
   br label %addmag0.exit816
 
 addmag0.exit816:                                  ; preds = %bb.nh, %.preheader.i.i790, %.lr.ph47.i.i795
@@ -8057,9 +8057,9 @@ bb.nv:                                            ; preds = %bb.nu
   %i.ejz = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i748
   %scevgep.i749 = getelementptr i8, ptr %i.eb, i64 %i.ejz
   %i.eka = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i748, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i749, ptr noundef nonnull align 16 dereferenceable(1) %i.h, i64 %i.eka, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i749, ptr noundef nonnull align 16 dereferenceable(1) %i.h, i64 range(i64 0, 23) %i.eka, i1 false), !tbaa !20
   %i.ekb = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i748
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.ejy, i8 0, i64 %i.ekb, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.ejy, i8 0, i64 range(i64 0, 4294967297) %i.ekb, i1 false), !tbaa !20
   br label %addmag0.exit767
 
 addmag0.exit767:                                  ; preds = %bb.nv, %.preheader.i.i741, %.lr.ph47.i.i746
@@ -8462,9 +8462,9 @@ bb.pc:                                            ; preds = %bb.pb
   %i.erq = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i1067
   %scevgep.i1068 = getelementptr i8, ptr %i.ed, i64 %i.erq
   %i.err = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i1067, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i1068, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.err, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i1068, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 range(i64 0, 21) %i.err, i1 false), !tbaa !20
   %i.ers = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i1067
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.erp, i8 0, i64 %i.ers, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.erp, i8 0, i64 range(i64 0, 4294967297) %i.ers, i1 false), !tbaa !20
   br label %submag0.exit1086
 
 submag0.exit1086:                                 ; preds = %bb.pc, %.preheader.i.i1063, %.lr.ph47.i.i1065
@@ -8785,9 +8785,9 @@ bb.pp:                                            ; preds = %bb.po
   %i.exw = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i1025
   %scevgep.i1026 = getelementptr i8, ptr %i.ed, i64 %i.exw
   %i.exx = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i1025, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i1026, ptr noundef nonnull align 16 dereferenceable(1) %i.b, i64 %i.exx, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i1026, ptr noundef nonnull align 16 dereferenceable(1) %i.b, i64 range(i64 0, 21) %i.exx, i1 false), !tbaa !20
   %i.exy = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i1025
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.exv, i8 0, i64 %i.exy, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.exv, i8 0, i64 range(i64 0, 4294967297) %i.exy, i1 false), !tbaa !20
   br label %submag0.exit1044
 
 submag0.exit1044:                                 ; preds = %bb.pp, %.preheader.i.i1021, %.lr.ph47.i.i1023
@@ -9143,9 +9143,9 @@ bb.qe:                                            ; preds = %bb.qd
   %i.fep = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i983
   %scevgep.i984 = getelementptr i8, ptr %i.ed, i64 %i.fep
   %i.feq = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i983, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i984, ptr noundef nonnull align 16 dereferenceable(1) %i.c, i64 %i.feq, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i984, ptr noundef nonnull align 16 dereferenceable(1) %i.c, i64 range(i64 0, 23) %i.feq, i1 false), !tbaa !20
   %i.fer = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i983
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.feo, i8 0, i64 %i.fer, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.feo, i8 0, i64 range(i64 0, 4294967297) %i.fer, i1 false), !tbaa !20
   br label %addmag0.exit1002
 
 addmag0.exit1002:                                 ; preds = %bb.qe, %.preheader.i.i976, %.lr.ph47.i.i981
@@ -9500,9 +9500,9 @@ bb.qs:                                            ; preds = %bb.qr
   %i.fll = sub nuw nsw i64 22, %indvars.iv58.i.lcssa.ph.i934
   %scevgep.i935 = getelementptr i8, ptr %i.ed, i64 %i.fll
   %i.flm = add nuw nsw i64 %indvars.iv58.i.lcssa.ph.i934, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i935, ptr noundef nonnull align 16 dereferenceable(1) %i.d, i64 %i.flm, i1 false), !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i935, ptr noundef nonnull align 16 dereferenceable(1) %i.d, i64 range(i64 0, 23) %i.flm, i1 false), !tbaa !20
   %i.fln = sub nuw nsw i64 18, %indvars.iv58.i.lcssa.ph.i934
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.flk, i8 0, i64 %i.fln, i1 false), !tbaa !20
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.flk, i8 0, i64 range(i64 0, 4294967297) %i.fln, i1 false), !tbaa !20
   br label %addmag0.exit953
 
 addmag0.exit953:                                  ; preds = %bb.qs, %.preheader.i.i927, %.lr.ph47.i.i932

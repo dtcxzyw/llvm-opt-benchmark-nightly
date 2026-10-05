@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %gepdiff.i.i.i.i.i = sub nsw i64 0, %.sroa.07.012.i.idx.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.07.012.i.ptr.i.i.i.i.i, i64 %gepdiff.i.i.i.i.i, i1 false), !tbaa !198, !noalias !1312
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.07.012.i.ptr.i.i.i.i.i, i64 range(i64 0, 9223372036854775805) %gepdiff.i.i.i.i.i, i1 false), !tbaa !198, !noalias !1312
   store i32 %.val.i.i.i.i.i.i.i, ptr %.ptr50.i.i.i.i.i, align 4, !tbaa !198
   br label %bb.h
 
@@ -333,7 +333,7 @@ bb.j:                                             ; preds = %.lr.ph.i19.i.i.i.i.
   br i1 %i.bg, label %.lr.ph.i.i.i.i.i.preheader.i32.i.i.i.i.i, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i31.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.preheader.i32.i.i.i.i.i:         ; preds = %bb.j
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bc, ptr nonnull align 4 %.sroa.07.012.i20.i.i.i.i.i, i64 %i.bf, i1 false), !tbaa !198, !noalias !1313
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bc, ptr nonnull align 4 %.sroa.07.012.i20.i.i.i.i.i, i64 range(i64 0, 9223372036854775805) %i.bf, i1 false), !tbaa !198, !noalias !1313
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i31.i.i.i.i.i
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i31.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i32.i.i.i.i.i, %bb.j
@@ -736,7 +736,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !7799
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !7799
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -917,7 +917,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !7800
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !7800
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -1320,7 +1320,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !7871
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !7871
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -1501,7 +1501,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !7872
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !7872
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -1904,7 +1904,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !7948
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !7948
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -2307,7 +2307,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !7999
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !7999
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -2710,7 +2710,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8060
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8060
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -2891,7 +2891,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8061
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8061
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -3294,7 +3294,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8132
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8132
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -3475,7 +3475,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8133
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8133
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -3878,7 +3878,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !8209
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !8209
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -4281,7 +4281,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !8260
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !8260
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -4684,7 +4684,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8376
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8376
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -4865,7 +4865,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8377
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8377
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -5268,7 +5268,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8503
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8503
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -5449,7 +5449,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8504
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8504
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -5852,7 +5852,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !8635
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !8635
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -6255,7 +6255,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !8741
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !8741
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -6658,7 +6658,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8867
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8867
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -6839,7 +6839,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8868
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8868
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -7242,7 +7242,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !8919
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !8919
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -7423,7 +7423,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !8920
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !8920
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -7826,7 +7826,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !9056
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !9056
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -8007,7 +8007,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !9057
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !9057
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -8410,7 +8410,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
   %gepdiff = sub nsw i64 0, %.sroa.010.016.i.idx
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 %gepdiff, i1 false), !tbaa !198, !noalias !9108
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.016.i.ptr, i64 range(i64 0, 9223372036854775805) %gepdiff, i1 false), !tbaa !198, !noalias !9108
   store i32 %i.j, ptr %.ptr38, align 4, !tbaa !198
   br label %bb.d
 
@@ -8591,7 +8591,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fj, label %.lr.ph.i.i.i.i.i.preheader.i17, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 .lr.ph.i.i.i.i.i.preheader.i17:                   ; preds = %bb.k
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 %i.fi, i1 false), !tbaa !198, !noalias !9109
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %.sroa.010.016.i11, i64 range(i64 0, 9223372036854775805) %i.fi, i1 false), !tbaa !198, !noalias !9109
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i16: ; preds = %.lr.ph.i.i.i.i.i.preheader.i17, %bb.k
@@ -8994,7 +8994,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !9250
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !9250
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -9397,7 +9397,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !9296
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !9296
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -9800,7 +9800,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !9412
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !9412
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d
@@ -10203,7 +10203,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.aw, label %.lr.ph.i.i.i.i.i.preheader, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 %i.av, i1 false), !tbaa !198, !noalias !9458
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %.sroa.010.016, i64 range(i64 0, 9223372036854775805) %i.av, i1 false), !tbaa !198, !noalias !9458
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d

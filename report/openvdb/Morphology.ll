@@ -205,7 +205,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %switch.select3.i.i
   %i.he = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hd, ptr %i.he, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hc, i8 0, i64 %i.hb, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hc, i8 0, i64 range(i64 0, 249) %i.hb, i1 false), !tbaa !1115
   %i.hf = getelementptr inbounds nuw i8, ptr %i.hc, i64 %i.hb
   %i.hg = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hf, ptr %i.hg, align 8, !tbaa !1116
@@ -608,7 +608,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -1011,7 +1011,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -1414,7 +1414,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %switch.select3.i.i
   %i.he = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hd, ptr %i.he, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hc, i8 0, i64 %i.hb, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hc, i8 0, i64 range(i64 0, 249) %i.hb, i1 false), !tbaa !1115
   %i.hf = getelementptr inbounds nuw i8, ptr %i.hc, i64 %i.hb
   %i.hg = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hf, ptr %i.hg, align 8, !tbaa !1116
@@ -1817,7 +1817,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -2220,7 +2220,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -2623,7 +2623,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -3026,7 +3026,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -3429,7 +3429,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -3832,7 +3832,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -4235,7 +4235,7 @@ _ZN7openvdb5v13_05tools10morphology10MorphologyINS0_4tree4TreeINS4_8RootNodeINS4
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %switch.select3.i.i
   %i.hh = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 3 uses
   store ptr %i.hg, ptr %i.hh, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 %i.he, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hf, i8 0, i64 range(i64 0, 249) %i.he, i1 false), !tbaa !1115
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 %i.he
   %i.hj = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !1116
@@ -4638,7 +4638,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -5041,7 +5041,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -5444,7 +5444,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -5847,7 +5847,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -6250,7 +6250,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -6653,7 +6653,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -7056,7 +7056,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -7459,7 +7459,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -7862,7 +7862,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -8265,7 +8265,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -8668,7 +8668,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -9071,7 +9071,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -9474,7 +9474,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -9877,7 +9877,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -10280,7 +10280,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -10683,7 +10683,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -11086,7 +11086,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -11489,7 +11489,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -11892,7 +11892,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -12295,7 +12295,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %switch.select3.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 %i.ai, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aj, i8 0, i64 range(i64 0, 249) %i.ai, i1 false), !tbaa !1115
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ai
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.am, ptr %i.an, align 8, !tbaa !1116
@@ -12698,7 +12698,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %switch.select3.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 range(i64 0, 249) %i.ah, i1 false), !tbaa !1115
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ah
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1116
@@ -13101,7 +13101,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %switch.select3.i.i
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ae, i8 0, i64 %i.ad, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ae, i8 0, i64 range(i64 0, 249) %i.ad, i1 false), !tbaa !1115
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ad
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !1116
@@ -13504,7 +13504,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -13907,7 +13907,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -14310,7 +14310,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %switch.select3.i.i
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ae, i8 0, i64 %i.ad, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ae, i8 0, i64 range(i64 0, 249) %i.ad, i1 false), !tbaa !1115
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ad
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !1116
@@ -14713,7 +14713,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -15116,7 +15116,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -15519,7 +15519,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -15922,7 +15922,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -16325,7 +16325,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -16728,7 +16728,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116
@@ -17131,7 +17131,7 @@ bb.k:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %switch.select3.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !1113
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !1115
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.af, i8 0, i64 range(i64 0, 249) %i.ae, i1 false), !tbaa !1115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !1116

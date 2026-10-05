@@ -66,12 +66,12 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader156.us.preheader.new ], [ %indvar.next.3, %._crit_edge180.us.3 ] ; 5 uses
   %.0141182.us = phi ptr [ %i.r, %.preheader156.us.preheader.new ], [ %i.ak, %._crit_edge180.us.3 ] ; 2 uses
   %niter255 = phi i64 [ 0, %.preheader156.us.preheader.new ], [ %niter255.next.3, %._crit_edge180.us.3 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0141182.us, i8 %i.q, i64 %i.x, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0141182.us, i8 %i.q, i64 range(i64 0, 2147483633) %i.x, i1 false), !tbaa !11
   br i1 %i.ab, label %.lr.ph179.us.preheader, label %._crit_edge180.us
 
 ._crit_edge180.us:                                ; preds = %.lr.ph179.us.preheader, %.preheader156.us
   %i.ae = getelementptr inbounds nuw i8, ptr %.0141182.us, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ae, i8 %i.q, i64 %i.x, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ae, i8 %i.q, i64 range(i64 0, 2147483633) %i.x, i1 false), !tbaa !11
   br i1 %i.ab, label %.lr.ph179.us.preheader.1, label %._crit_edge180.us.1
 
 .lr.ph179.us.preheader.1:                         ; preds = %._crit_edge180.us
@@ -79,12 +79,12 @@ bb.b:                                             ; preds = %bb.a
   %i.af = mul nuw nsw i64 %indvar.next, %i.u
   %gep.1 = getelementptr i8, ptr %invariant.gep, i64 %i.af
   %scevgep.1 = getelementptr i8, ptr %gep.1, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.1, i8 %i.q, i64 %i.aa, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.1, i8 %i.q, i64 range(i64 0, 4294967297) %i.aa, i1 false), !tbaa !11
   br label %._crit_edge180.us.1
 
 ._crit_edge180.us.1:                              ; preds = %.lr.ph179.us.preheader.1, %._crit_edge180.us
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i8 %i.q, i64 %i.x, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i8 %i.q, i64 range(i64 0, 2147483633) %i.x, i1 false), !tbaa !11
   br i1 %i.ab, label %.lr.ph179.us.preheader.2, label %._crit_edge180.us.2
 
 .lr.ph179.us.preheader.2:                         ; preds = %._crit_edge180.us.1
@@ -92,12 +92,12 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = mul nuw nsw i64 %indvar.next.1, %i.u
   %gep.2 = getelementptr i8, ptr %invariant.gep, i64 %i.ah
   %scevgep.2 = getelementptr i8, ptr %gep.2, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.2, i8 %i.q, i64 %i.aa, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.2, i8 %i.q, i64 range(i64 0, 4294967297) %i.aa, i1 false), !tbaa !11
   br label %._crit_edge180.us.2
 
 ._crit_edge180.us.2:                              ; preds = %.lr.ph179.us.preheader.2, %._crit_edge180.us.1
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, i8 %i.q, i64 %i.x, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, i8 %i.q, i64 range(i64 0, 2147483633) %i.x, i1 false), !tbaa !11
   br i1 %i.ab, label %.lr.ph179.us.preheader.3, label %._crit_edge180.us.3
 
 .lr.ph179.us.preheader.3:                         ; preds = %._crit_edge180.us.2
@@ -105,7 +105,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = mul nuw nsw i64 %indvar.next.2, %i.u
   %gep.3 = getelementptr i8, ptr %invariant.gep, i64 %i.aj
   %scevgep.3 = getelementptr i8, ptr %gep.3, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.3, i8 %i.q, i64 %i.aa, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.3, i8 %i.q, i64 range(i64 0, 4294967297) %i.aa, i1 false), !tbaa !11
   br label %._crit_edge180.us.3
 
 ._crit_edge180.us.3:                              ; preds = %.lr.ph179.us.preheader.3, %._crit_edge180.us.2
@@ -119,7 +119,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = mul nuw nsw i64 %indvar, %i.u
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.al
   %scevgep = getelementptr i8, ptr %gep, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 %i.q, i64 %i.aa, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 %i.q, i64 range(i64 0, 4294967297) %i.aa, i1 false), !tbaa !11
   br label %._crit_edge180.us
 
 .preheader156.lr.ph.split:                        ; preds = %.preheader156.lr.ph
@@ -139,21 +139,21 @@ bb.b:                                             ; preds = %bb.a
 .preheader156:                                    ; preds = %.preheader156, %.preheader156.preheader.new
   %.0141182 = phi ptr [ %i.r, %.preheader156.preheader.new ], [ %i.aw, %.preheader156 ] ; 2 uses
   %niter = phi i32 [ 0, %.preheader156.preheader.new ], [ %niter.next.7, %.preheader156 ]
-  tail call void @llvm.memset.p0.i64(ptr align 1 %.0141182, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %.0141182, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.ap = getelementptr inbounds nuw i8, ptr %.0141182, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ap, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ap, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aq, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aq, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ar, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ar, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.as, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.as, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.at, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.at, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.au, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.au, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.u ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.u ; 2 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
@@ -435,14 +435,14 @@ lv_color_8_8_mix.exit155:                         ; preds = %bb.k, %.sink.split.
   %indvar.epil = phi i64 [ %indvar.epil.init, %.preheader156.us.epil.preheader ], [ %indvar.next.epil, %._crit_edge180.us.epil ] ; 2 uses
   %.0141182.us.epil = phi ptr [ %.0141182.us.epil.init, %.preheader156.us.epil.preheader ], [ %i.em, %._crit_edge180.us.epil ] ; 2 uses
   %epil.iter251 = phi i64 [ 0, %.preheader156.us.epil.preheader ], [ %epil.iter251.next, %._crit_edge180.us.epil ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0141182.us.epil, i8 %i.q, i64 %i.x, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0141182.us.epil, i8 %i.q, i64 range(i64 0, 2147483633) %i.x, i1 false), !tbaa !11
   br i1 %i.ab, label %.lr.ph179.us.preheader.epil, label %._crit_edge180.us.epil
 
 .lr.ph179.us.preheader.epil:                      ; preds = %.preheader156.us.epil
   %i.el = mul nuw nsw i64 %indvar.epil, %i.u
   %gep.epil = getelementptr i8, ptr %invariant.gep, i64 %i.el
   %scevgep.epil = getelementptr i8, ptr %gep.epil, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.epil, i8 %i.q, i64 %i.aa, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.epil, i8 %i.q, i64 range(i64 0, 4294967297) %i.aa, i1 false), !tbaa !11
   br label %._crit_edge180.us.epil
 
 ._crit_edge180.us.epil:                           ; preds = %.lr.ph179.us.preheader.epil, %.preheader156.us.epil
@@ -465,7 +465,7 @@ lv_color_8_8_mix.exit155:                         ; preds = %bb.k, %.sink.split.
 .preheader156.epil:                               ; preds = %.preheader156.epil, %.preheader156.epil.preheader
   %.0141182.epil = phi ptr [ %i.en, %.preheader156.epil ], [ %.0141182.epil.init, %.preheader156.epil.preheader ] ; 2 uses
   %epil.iter = phi i32 [ %epil.iter.next, %.preheader156.epil ], [ 0, %.preheader156.epil.preheader ]
-  tail call void @llvm.memset.p0.i64(ptr align 1 %.0141182.epil, i8 %i.q, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 1 %.0141182.epil, i8 %i.q, i64 range(i64 0, 17) %i.an, i1 false), !tbaa !11
   %i.en = getelementptr inbounds nuw i8, ptr %.0141182.epil, i64 %i.u
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter

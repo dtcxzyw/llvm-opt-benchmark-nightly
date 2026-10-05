@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.g
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 160
   store ptr %i.j, ptr %i.k, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.i, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.i, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.h
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 152
   store ptr %i.l, ptr %i.m, align 8, !tbaa !69
@@ -219,7 +219,7 @@ bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.g
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 184
   store ptr %i.p, ptr %i.q, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.h
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 176
   store ptr %i.r, ptr %i.s, align 8, !tbaa !69
@@ -233,7 +233,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.g
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 208
   store ptr %i.v, ptr %i.w, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.u, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.u, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.h
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 200
   store ptr %i.x, ptr %i.y, align 8, !tbaa !69
@@ -257,7 +257,7 @@ _ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i50: ; preds = %bb.d
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.g
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.z, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.z, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.h
   br label %.loopexit98
 
@@ -333,7 +333,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.g
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !63
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false), !tbaa !44
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 range(i64 0, 17179869181) %i.bf, i1 false), !tbaa !44
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bf
   br label %.loopexit
 
@@ -736,7 +736,7 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.g
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184
   store ptr %i.j, ptr %i.k, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.i, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.i, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.h
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 176
   store ptr %i.l, ptr %i.m, align 8, !tbaa !69
@@ -750,7 +750,7 @@ bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.g
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 208
   store ptr %i.p, ptr %i.q, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.h
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 200
   store ptr %i.r, ptr %i.s, align 8, !tbaa !69
@@ -764,7 +764,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.g
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 232
   store ptr %i.v, ptr %i.w, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.u, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.u, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.h
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 224
   store ptr %i.x, ptr %i.y, align 8, !tbaa !69
@@ -788,7 +788,7 @@ _ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i50: ; preds = %bb.d
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.g
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.z, i8 0, i64 %i.h, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.z, i8 0, i64 range(i64 0, 17179869181) %i.h, i1 false), !tbaa !44
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.h
   br label %.loopexit98
 
@@ -864,7 +864,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.g
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !63
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false), !tbaa !44
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 range(i64 0, 17179869181) %i.bf, i1 false), !tbaa !44
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bf
   br label %.loopexit
 
@@ -1267,7 +1267,7 @@ bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.i
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1976
   store ptr %i.l, ptr %i.m, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 %i.j, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !44
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.j
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1968
   store ptr %i.n, ptr %i.o, align 8, !tbaa !69
@@ -1281,7 +1281,7 @@ bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.i
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2000
   store ptr %i.r, ptr %i.s, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.q, i8 0, i64 %i.j, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.q, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !44
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.j
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1992
   store ptr %i.t, ptr %i.u, align 8, !tbaa !69
@@ -1295,7 +1295,7 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.i
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2024
   store ptr %i.x, ptr %i.y, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.w, i8 0, i64 %i.j, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.w, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !44
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.j
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 2016
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !69
@@ -1319,7 +1319,7 @@ _ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i50: ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.i
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !63
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ab, i8 0, i64 %i.j, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ab, i8 0, i64 range(i64 0, 17179869181) %i.j, i1 false), !tbaa !44
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.j
   br label %.loopexit98
 
@@ -1395,7 +1395,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %i.i
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.bj, ptr %i.bk, align 8, !tbaa !63
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 %i.bh, i1 false), !tbaa !44
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 range(i64 0, 17179869181) %i.bh, i1 false), !tbaa !44
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bh
   br label %.loopexit
 
@@ -1798,7 +1798,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -1836,7 +1836,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -2239,7 +2239,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %i.dg, label %.lr.ph.i.i.i.i.i.i.i.i63.preheader, label %_ZSt22__uninitialized_copy_aIPKhPccET0_T_S4_S3_RSaIT1_E.exit67
 
 .lr.ph.i.i.i.i.i.i.i.i63.preheader:               ; preds = %bb.t
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 %i.c, i1 false), !tbaa !107
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 range(i64 0, -9223372036854775808) %i.c, i1 false), !tbaa !107
   %i.dh = add i64 %i.a, %i.da
   %i.di = add i64 %i.b, %i.cq
   %i.dj = sub i64 %i.dh, %i.di
@@ -2642,7 +2642,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -2680,7 +2680,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -3083,7 +3083,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -3121,7 +3121,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -3524,7 +3524,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -3562,7 +3562,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -3965,7 +3965,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -4003,7 +4003,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -4406,7 +4406,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -4444,7 +4444,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit102
@@ -4847,7 +4847,7 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 %i.d, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.e, i8 0, i64 range(i64 0, 17179869181) %i.d, i1 false), !tbaa !44
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit
@@ -4885,7 +4885,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.b, %_ZNSt6vector
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #18 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 %i.s, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 0, i64 range(i64 0, 17179869181) %i.s, i1 false), !tbaa !44
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.s
   br label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit104

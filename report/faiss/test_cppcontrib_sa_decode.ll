@@ -205,19 +205,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -620,19 +620,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -1035,19 +1035,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -1450,19 +1450,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -1865,19 +1865,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -2280,19 +2280,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -2695,19 +2695,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -3110,19 +3110,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -3525,19 +3525,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -3940,19 +3940,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -4355,19 +4355,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -4770,19 +4770,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -5185,19 +5185,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -5600,19 +5600,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -6015,19 +6015,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -6430,19 +6430,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -6845,19 +6845,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -7260,19 +7260,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -7675,19 +7675,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -8090,19 +8090,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -8505,19 +8505,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -8920,19 +8920,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -9335,19 +9335,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_Z16testIfResi
 .noexc318:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ab = shl nuw nsw i64 %1, 2                   ; 6 uses
   %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %1 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc327 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit571.thread ; 4 uses
 
 .noexc327:                                        ; preds = %.noexc318
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ae, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1 ; 2 uses
   %i.ag = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24
           to label %.noexc337 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit569.thread ; 3 uses
 
 .noexc337:                                        ; preds = %.noexc327
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 %i.ab, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ag, i8 0, i64 range(i64 0, 9223372036854775805) %i.ab, i1 false), !tbaa !75
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %1
   %i.ai = ptrtoint ptr %i.ah to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit338
@@ -9750,19 +9750,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 .noexc331:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.j = shl nuw nsw i64 %1, 2                    ; 6 uses
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %1 ; 3 uses
   %i.m = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24
           to label %.noexc340 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit584.thread ; 4 uses
 
 .noexc340:                                        ; preds = %.noexc331
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.m, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.m, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %1 ; 2 uses
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24
           to label %.noexc350 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit582.thread ; 3 uses
 
 .noexc350:                                        ; preds = %.noexc340
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %1
   %i.q = ptrtoint ptr %i.p to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit351
@@ -10165,19 +10165,19 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 .noexc331:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.j = shl nuw nsw i64 %1, 2                    ; 6 uses
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24 ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.k, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %1 ; 3 uses
   %i.m = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24
           to label %.noexc340 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit584.thread ; 4 uses
 
 .noexc340:                                        ; preds = %.noexc331
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.m, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.m, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %1 ; 2 uses
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #24
           to label %.noexc350 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit582.thread ; 3 uses
 
 .noexc350:                                        ; preds = %.noexc340
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 %i.j, i1 false), !tbaa !75
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.o, i8 0, i64 range(i64 0, 9223372036854775805) %i.j, i1 false), !tbaa !75
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %1
   %i.q = ptrtoint ptr %i.p to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit351
@@ -10580,19 +10580,19 @@ bb.ae:                                            ; preds = %_ZNSt6vectorIfSaIfE
           to label %.noexc381 unwind label %bb.ah ; 5 uses
 
 .noexc381:                                        ; preds = %bb.ae
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ca, i8 0, i64 %i.bz, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ca, i8 0, i64 range(i64 0, 9223372036854775805) %i.bz, i1 false), !tbaa !75
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.ca, i64 %1 ; 3 uses
   %i.cc = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #24
           to label %.noexc390 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit658.thread ; 4 uses
 
 .noexc390:                                        ; preds = %.noexc381
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 %i.bz, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 range(i64 0, 9223372036854775805) %i.bz, i1 false), !tbaa !75
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %1 ; 2 uses
   %i.ce = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #24
           to label %.noexc400 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit656.thread ; 3 uses
 
 .noexc400:                                        ; preds = %.noexc390
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ce, i8 0, i64 %i.bz, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ce, i8 0, i64 range(i64 0, 9223372036854775805) %i.bz, i1 false), !tbaa !75
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %1
   %i.cg = ptrtoint ptr %i.cf to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit401
@@ -10995,19 +10995,19 @@ bb.x:                                             ; preds = %_ZNSt6vectorIfSaIfE
           to label %.noexc391 unwind label %bb.z  ; 5 uses
 
 .noexc391:                                        ; preds = %bb.x
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 %i.bh, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 range(i64 0, 9223372036854775805) %i.bh, i1 false), !tbaa !75
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %1 ; 3 uses
   %i.bk = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #24
           to label %.noexc400 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit669.thread ; 4 uses
 
 .noexc400:                                        ; preds = %.noexc391
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 %i.bh, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 range(i64 0, 9223372036854775805) %i.bh, i1 false), !tbaa !75
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %1 ; 2 uses
   %i.bm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #24
           to label %.noexc410 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit667.thread ; 3 uses
 
 .noexc410:                                        ; preds = %.noexc400
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 %i.bh, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bm, i8 0, i64 range(i64 0, 9223372036854775805) %i.bh, i1 false), !tbaa !75
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %1
   %i.bo = ptrtoint ptr %i.bn to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit411
@@ -11410,19 +11410,19 @@ bb.ae:                                            ; preds = %_ZNSt6vectorIfSaIfE
           to label %.noexc381 unwind label %bb.ah ; 5 uses
 
 .noexc381:                                        ; preds = %bb.ae
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.by, i8 0, i64 %i.bx, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.by, i8 0, i64 range(i64 0, 9223372036854775805) %i.bx, i1 false), !tbaa !75
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %1 ; 3 uses
   %i.ca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bx) #24
           to label %.noexc390 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit644.thread ; 4 uses
 
 .noexc390:                                        ; preds = %.noexc381
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ca, i8 0, i64 %i.bx, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ca, i8 0, i64 range(i64 0, 9223372036854775805) %i.bx, i1 false), !tbaa !75
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.ca, i64 %1 ; 2 uses
   %i.cc = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bx) #24
           to label %.noexc400 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit642.thread ; 3 uses
 
 .noexc400:                                        ; preds = %.noexc390
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 %i.bx, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cc, i8 0, i64 range(i64 0, 9223372036854775805) %i.bx, i1 false), !tbaa !75
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %1
   %i.ce = ptrtoint ptr %i.cd to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit401
@@ -11825,19 +11825,19 @@ bb.x:                                             ; preds = %_ZNSt6vectorIfSaIfE
           to label %.noexc391 unwind label %bb.z  ; 5 uses
 
 .noexc391:                                        ; preds = %bb.x
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 range(i64 0, 9223372036854775805) %i.bf, i1 false), !tbaa !75
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %1 ; 3 uses
   %i.bi = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #24
           to label %.noexc400 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit654.thread ; 4 uses
 
 .noexc400:                                        ; preds = %.noexc391
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 %i.bf, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bi, i8 0, i64 range(i64 0, 9223372036854775805) %i.bf, i1 false), !tbaa !75
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %1 ; 2 uses
   %i.bk = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #24
           to label %.noexc410 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit652.thread ; 3 uses
 
 .noexc410:                                        ; preds = %.noexc400
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 %i.bf, i1 false), !tbaa !75
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bk, i8 0, i64 range(i64 0, 9223372036854775805) %i.bf, i1 false), !tbaa !75
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %1
   %i.bm = ptrtoint ptr %i.bl to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit411

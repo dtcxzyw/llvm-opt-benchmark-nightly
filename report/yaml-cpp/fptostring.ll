@@ -82,7 +82,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = sub nuw nsw i64 %i.l, %i.o
   %scevgep = getelementptr i8, ptr %1, i64 %i.p
   %i.q = add nuw nsw i64 %i.o, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 %i.q, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 range(i64 0, 4294967297) %i.q, i1 false), !tbaa !10
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader32, %.lr.ph
@@ -396,7 +396,7 @@ bb.n:                                             ; preds = %bb.m
   %scevgep235 = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.cs = add nsw i32 %.1174, -1
   %i.ct = zext nneg i32 %i.cs to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cr, ptr nonnull align 1 %scevgep235, i64 %i.ct, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cr, ptr nonnull align 1 %scevgep235, i64 range(i64 0, 2147483647) %i.ct, i1 false), !tbaa !10
   %narrow252 = add nuw i32 %.1174, 1
   %i.cu = zext i32 %narrow252 to i64
   %scevgep238 = getelementptr i8, ptr %.096, i64 %i.cu
@@ -428,7 +428,7 @@ bb.n:                                             ; preds = %bb.m
 _ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread: ; preds = %.preheader.i139, %.loopexit
   %.neg = phi i64 [ 1, %.preheader.i139 ], [ 2, %.loopexit ]
   %scevgep.i144 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i144, i8 48, i64 %.neg, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i144, i8 48, i64 range(i64 0, 4294967297) %.neg, i1 false), !tbaa !10
   %i.dd = getelementptr inbounds nuw i8, ptr %7, i64 18
   %i.de = load i16, ptr %i.dd, align 2
   store i16 %i.de, ptr %7, align 2
@@ -458,7 +458,7 @@ _ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149: ; preds = %.preh
 .lr.ph218.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread
   %.1.lcssa.i142256 = phi i32 [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread ], [ %i.dl, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149 ] ; 2 uses
   %i.do = zext nneg i32 %.1.lcssa.i142256 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cy, ptr nonnull align 2 %7, i64 %i.do, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cy, ptr nonnull align 2 %7, i64 range(i64 0, 2147483648) %i.do, i1 false), !tbaa !10
   %narrow253 = add nuw i32 %.1.lcssa.i142256, 2
   %i.dp = zext i32 %narrow253 to i64
   %scevgep242 = getelementptr i8, ptr %.298, i64 %i.dp
@@ -478,7 +478,7 @@ bb.o:                                             ; preds = %bb.m
 .lr.ph195.preheader:                              ; preds = %.preheader183
   %i.du = call i32 @llvm.umin.i32(i32 %.1174, i32 %i.ck)
   %i.dv = zext nneg i32 %i.du to i64              ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.096, ptr nonnull align 1 %5, i64 %i.dv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.096, ptr nonnull align 1 %5, i64 range(i64 0, 2147483648) %i.dv, i1 false), !tbaa !10
   %scevgep = getelementptr i8, ptr %5, i64 %i.dv
   %scevgep230 = getelementptr i8, ptr %.096, i64 %i.dv
   br label %._crit_edge
@@ -500,7 +500,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph201.preheader:                              ; preds = %._crit_edge
   %i.ef = zext nneg i32 %i.ed to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %.5.lcssa, i8 48, i64 %i.ef, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr align 1 %.5.lcssa, i8 48, i64 range(i64 0, 2147483648) %i.ef, i1 false), !tbaa !10
   %i.eg = zext nneg i32 %i.ed to i64
   %scevgep231 = getelementptr i8, ptr %.5.lcssa, i64 %i.eg
   br label %._crit_edge202
@@ -534,7 +534,7 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph208.preheader:                              ; preds = %bb.r
   %i.ek = sub nsw i32 0, %i.ck
   %i.el = zext nneg i32 %i.ek to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %.8204, i8 48, i64 %i.el, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr align 1 %.8204, i8 48, i64 range(i64 0, 2147483648) %i.el, i1 false), !tbaa !10
   %narrow = sub nsw i32 1, %i.ck
   %i.em = zext nneg i32 %narrow to i64
   %scevgep232 = getelementptr i8, ptr %.7, i64 %i.em
@@ -937,7 +937,7 @@ bb.n:                                             ; preds = %bb.m
   %scevgep230 = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.cu = add nsw i32 %.1169, -1
   %i.cv = zext nneg i32 %i.cu to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ct, ptr nonnull align 1 %scevgep230, i64 %i.cv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ct, ptr nonnull align 1 %scevgep230, i64 range(i64 0, 2147483647) %i.cv, i1 false), !tbaa !10
   %narrow247 = add nuw i32 %.1169, 1
   %i.cw = zext i32 %narrow247 to i64
   %scevgep233 = getelementptr i8, ptr %.090, i64 %i.cw
@@ -969,7 +969,7 @@ bb.n:                                             ; preds = %bb.m
 _ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread: ; preds = %.preheader.i134, %.loopexit
   %.neg = phi i64 [ 1, %.preheader.i134 ], [ 2, %.loopexit ]
   %scevgep.i139 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i139, i8 48, i64 %.neg, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i139, i8 48, i64 range(i64 0, 4294967297) %.neg, i1 false), !tbaa !10
   %i.df = getelementptr inbounds nuw i8, ptr %7, i64 18
   %i.dg = load i16, ptr %i.df, align 2
   store i16 %i.dg, ptr %7, align 2
@@ -999,7 +999,7 @@ _ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144: ; preds = %.preh
 .lr.ph213.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread
   %.1.lcssa.i137251 = phi i32 [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread ], [ %i.dn, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144 ] ; 2 uses
   %i.dq = zext nneg i32 %.1.lcssa.i137251 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.da, ptr nonnull align 2 %7, i64 %i.dq, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.da, ptr nonnull align 2 %7, i64 range(i64 0, 2147483648) %i.dq, i1 false), !tbaa !10
   %narrow248 = add nuw i32 %.1.lcssa.i137251, 2
   %i.dr = zext i32 %narrow248 to i64
   %scevgep237 = getelementptr i8, ptr %.292, i64 %i.dr
@@ -1019,7 +1019,7 @@ bb.o:                                             ; preds = %bb.m
 .lr.ph190.preheader:                              ; preds = %.preheader178
   %i.dw = call i32 @llvm.umin.i32(i32 %.1169, i32 %i.cm)
   %i.dx = zext nneg i32 %i.dw to i64              ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.090, ptr nonnull align 1 %5, i64 %i.dx, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.090, ptr nonnull align 1 %5, i64 range(i64 0, 2147483648) %i.dx, i1 false), !tbaa !10
   %scevgep = getelementptr i8, ptr %5, i64 %i.dx
   %scevgep225 = getelementptr i8, ptr %.090, i64 %i.dx
   br label %._crit_edge
@@ -1041,7 +1041,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph196.preheader:                              ; preds = %._crit_edge
   %i.eh = zext nneg i32 %i.ef to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %.5.lcssa, i8 48, i64 %i.eh, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr align 1 %.5.lcssa, i8 48, i64 range(i64 0, 2147483648) %i.eh, i1 false), !tbaa !10
   %i.ei = zext nneg i32 %i.ef to i64
   %scevgep226 = getelementptr i8, ptr %.5.lcssa, i64 %i.ei
   br label %._crit_edge197
@@ -1075,7 +1075,7 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph203.preheader:                              ; preds = %bb.r
   %i.em = sub nsw i32 0, %i.cm
   %i.en = zext nneg i32 %i.em to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %.8199, i8 48, i64 %i.en, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr align 1 %.8199, i8 48, i64 range(i64 0, 2147483648) %i.en, i1 false), !tbaa !10
   %narrow = sub nsw i32 1, %i.cm
   %i.eo = zext nneg i32 %narrow to i64
   %scevgep227 = getelementptr i8, ptr %.7, i64 %i.eo

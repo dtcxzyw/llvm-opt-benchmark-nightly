@@ -1,0 +1,1120 @@
+diff --git a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+index b3f095f5ba80d..4b1f1315c6a7d 100644
+--- a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+@@ -1092,6 +1092,51 @@ static const SCEV *getNumBytes(const SCEV *BECount, Type *IntPtr,
+                         SCEV::FlagNUW);
+ }
+ 
++/// Add a range to newly formed memset/memmove/memcpy intrinsic with an upper
++/// bound derived from the loop's constant max trip count.
++static void addRangeAttrFromTripCount(CallInst *NewCall, unsigned ArgNo,
++                                      uint64_t ElemsPerIter,
++                                      const SCEV *BECount, Loop *L,
++                                      ScalarEvolution *SE) {
++  Value *Len = NewCall->getArgOperand(ArgNo);
++  if (isa<Constant>(Len))
++    return;
++
++  // Two upper bounds:
++  // (1) constant max backedge-taken count
++  const APInt *Max1;
++  if (!match(SE->getConstantMaxBackedgeTakenCount(L), m_scev_APInt(Max1)))
++    return;
++
++  // (2) loop guards (new call is in preheader, so guards dominate the call)
++  APInt Max2 = SE->getUnsignedRangeMax(SE->applyLoopGuards(BECount, L));
++
++  // Use the tighter bound
++  unsigned MaxWidth = std::max(Max1->getBitWidth(), Max2.getBitWidth());
++  APInt MaxBTC = APIntOps::umin(Max1->zext(MaxWidth), Max2.zext(MaxWidth));
++
++  // The length is in [0, (MaxBTC + 1) * ElemsPerIter]. Bail if that doesn't
++  // fit in the length's type.
++  unsigned BW = Len->getType()->getIntegerBitWidth();
++  if (MaxBTC.getActiveBits() > BW)
++    return;
++  bool Overflow;
++  APInt MaxTripCount = MaxBTC.zextOrTrunc(BW).uadd_ov(APInt(BW, 1), Overflow);
++  if (Overflow)
++    return;
++  APInt MaxLen = MaxTripCount.umul_ov(APInt(BW, ElemsPerIter), Overflow);
++  if (Overflow)
++    return;
++  // ConstantRange's upper end is exclusive, so the range ends at MaxLen + 1.
++  APInt RangeEnd = MaxLen.uadd_ov(APInt(BW, 1), Overflow);
++  if (Overflow)
++    return;
++
++  NewCall->addParamAttr(
++      ArgNo, Attribute::get(NewCall->getContext(), Attribute::Range,
++                            ConstantRange(APInt::getZero(BW), RangeEnd)));
++}
++
+ /// processLoopStridedStore - We see a strided store of some value.  If we can
+ /// transform this into a memset or memset_pattern in the loop preheader, do so.
+ bool LoopIdiomRecognize::processLoopStridedStore(
+@@ -1165,6 +1210,7 @@ bool LoopIdiomRecognize::processLoopStridedStore(
+   // of pattern repetitions if the memset.pattern intrinsic is being used.
+   Value *MemsetArg;
+   std::optional<int64_t> BytesWritten;
++  uint64_t PatternRepsPerTrip = 0;
+ 
+   if (PatternValue && (HasMemsetPattern || ForceMemsetPatternIntrinsic)) {
+     const SCEV *TripCountS =
+@@ -1176,9 +1222,8 @@ bool LoopIdiomRecognize::processLoopStridedStore(
+       return Changed;
+     Value *TripCount = Expander.expandCodeFor(TripCountS, IntIdxTy,
+                                               Preheader->getTerminator());
+-    uint64_t PatternRepsPerTrip =
+-        (ConstStoreSize->getValue()->getZExtValue() * 8) /
+-        DL->getTypeSizeInBits(PatternValue->getType());
++    PatternRepsPerTrip = (ConstStoreSize->getValue()->getZExtValue() * 8) /
++                         DL->getTypeSizeInBits(PatternValue->getType());
+     // If ConstStoreSize is not equal to the width of PatternValue, then
+     // MemsetArg is TripCount * (ConstStoreSize/PatternValueWidth). Else
+     // MemSetArg is just TripCount.
+@@ -1220,6 +1265,11 @@ bool LoopIdiomRecognize::processLoopStridedStore(
+     NewCall = Builder.CreateMemSet(BasePtr, SplatValue, MemsetArg,
+                                    MaybeAlign(StoreAlignment),
+                                    /*isVolatile=*/false, AATags);
++    if (auto *ConstStoreSize = dyn_cast<SCEVConstant>(StoreSizeSCEV)) {
++      addRangeAttrFromTripCount(NewCall, /*ArgNo*/ 2,
++                                ConstStoreSize->getValue()->getZExtValue(),
++                                BECount, CurLoop, SE);
++    }
+   } else if (ForceMemsetPatternIntrinsic ||
+              isLibFuncEmittable(M, TLI, LibFunc_memset_pattern16)) {
+     assert(isa<SCEVConstant>(StoreSizeSCEV) && "Expected constant store size");
+@@ -1232,6 +1282,9 @@ bool LoopIdiomRecognize::processLoopStridedStore(
+     if (StoreAlignment)
+       cast<MemSetPatternInst>(NewCall)->setDestAlignment(*StoreAlignment);
+     NewCall->setAAMetadata(AATags);
++    assert(PatternRepsPerTrip != 0 && "PatternRepsPerTrip must be set");
++    addRangeAttrFromTripCount(NewCall, /*ArgNo*/ 2, PatternRepsPerTrip, BECount,
++                              CurLoop, SE);
+   } else {
+     // Neither a memset, nor memset_pattern16
+     return Changed;
+@@ -1544,6 +1597,8 @@ bool LoopIdiomRecognize::processLoopStoreOfLoopLoad(
+         StoreBasePtr, *StoreAlign, LoadBasePtr, *LoadAlign, NumBytes, StoreSize,
+         AATags);
+   }
++  addRangeAttrFromTripCount(NewCall, /*ArgNo*/ 2, StoreSize, BECount, CurLoop,
++                            SE);
+   NewCall->setDebugLoc(TheStore->getDebugLoc());
+ 
+   if (MSSAU) {
+diff --git a/llvm/test/Transforms/LoopIdiom/X86/memset-size-compute.ll b/llvm/test/Transforms/LoopIdiom/X86/memset-size-compute.ll
+index 0123f15334281..aa8ac8e3096f2 100644
+--- a/llvm/test/Transforms/LoopIdiom/X86/memset-size-compute.ll
++++ b/llvm/test/Transforms/LoopIdiom/X86/memset-size-compute.ll
+@@ -19,7 +19,7 @@ define void @test(ptr %ptr) {
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shl nuw nsw i32 [[UMAX]], 3
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i32 [[TMP2]], -8
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[TMP0]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 8 [[SCEVGEP]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 8 [[SCEVGEP]], i8 0, i64 range(i64 0, 513) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 1, [[FOR_BODY_PREHEADER]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll b/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
+index 09419c13aaeb0..294f057c80d4e 100644
+--- a/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
++++ b/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
+@@ -12,7 +12,7 @@ define void @fold_add_zext_to_sext(ptr %dst, i1 %start) {
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shl nuw nsw i32 [[START_EXT]], 2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 100, [[TMP4]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = zext nneg i32 [[TMP2]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 0, i64 [[TMP3]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 0, i64 range(i64 0, 101) [[TMP3]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START_EXT]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+@@ -64,7 +64,7 @@ define void @test_memset_size_can_use_info_from_guards(i32 %x, ptr %dst) {
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i32 [[SHR]], -1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    [[UMAX:%.*]] = add nuw nsw i64 [[TMP1]], 1
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 0, i64 [[UMAX]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 0, i64 range(i64 0, 2147483648) [[UMAX]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP2:.*]]
+ ; CHECK:       [[LOOP2]]:
+ ; CHECK-NEXT:    [[IV_2:%.*]] = phi i32 [ [[IV_2_NEXT:%.*]], %[[LOOP2]] ], [ 0, %[[LOOP2_PREHEADER]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/basic.ll b/llvm/test/Transforms/LoopIdiom/basic.ll
+index 98a1f2bb40e23..e468baea971e1 100644
+--- a/llvm/test/Transforms/LoopIdiom/basic.ll
++++ b/llvm/test/Transforms/LoopIdiom/basic.ll
+@@ -799,7 +799,7 @@ define noalias ptr @test17(ptr nocapture readonly %a, i32 %c) {
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[A:%.*]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = zext i32 [[C]] to i64
+ ; CHECK-NEXT:    [[TMP7:%.*]] = shl nuw nsw i64 [[TMP6]], 2
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[SCEVGEP]], ptr align 4 [[SCEVGEP1]], i64 [[TMP7]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[SCEVGEP]], ptr align 4 [[SCEVGEP1]], i64 range(i64 0, 17179869181) [[TMP7]], i1 false)
+ ; CHECK-NEXT:    br label [[WHILE_BODY:%.*]]
+ ; CHECK:       while.body:
+ ; CHECK-NEXT:    [[DEC10_IN:%.*]] = phi i32 [ [[DEC10:%.*]], [[WHILE_BODY]] ], [ [[C]], [[WHILE_BODY_PREHEADER]] ]
+@@ -951,7 +951,7 @@ define void @form_memset_narrow_size(ptr %ptr, i32 %size) {
+ ; CHECK:       loop.ph:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[SIZE]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 3
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 8 [[PTR:%.*]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 8 [[PTR:%.*]], i8 0, i64 range(i64 0, 17179869177) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[STOREMERGE4:%.*]] = phi i32 [ 0, [[LOOP_PH]] ], [ [[INC:%.*]], [[LOOP_BODY]] ]
+@@ -996,7 +996,7 @@ define void @form_memcpy_narrow_size(ptr noalias %dst, ptr noalias %src, i32 %si
+ ; CHECK:       loop.ph:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[SIZE]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 3
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 8 [[DST:%.*]], ptr align 8 [[SRC:%.*]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 8 [[DST:%.*]], ptr align 8 [[SRC:%.*]], i64 range(i64 0, 17179869177) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[LOOP_BODY:%.*]]
+ ; CHECK:       loop.body:
+ ; CHECK-NEXT:    [[STOREMERGE4:%.*]] = phi i32 [ 0, [[LOOP_PH]] ], [ [[INC:%.*]], [[LOOP_BODY]] ]
+@@ -1121,7 +1121,7 @@ define void @PR46179_negative_stride(ptr %Src, i64 %Size) {
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[SRC:%.*]], i64 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SRC]], i64 [[SIZE]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SRC]], i64 range(i64 0, -9223372036854775808) [[SIZE]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[STEP:%.*]], [[FOR_BODY]] ], [ [[SIZE]], [[FOR_BODY_PREHEADER]] ]
+@@ -1162,7 +1162,7 @@ define void @loop_with_memcpy_PR46179_negative_stride(ptr %Src, i64 %Size) {
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[SRC:%.*]], i64 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SRC]], i64 [[SIZE]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SRC]], i64 range(i64 0, -9223372036854775808) [[SIZE]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[STEP:%.*]], [[FOR_BODY]] ], [ [[SIZE]], [[FOR_BODY_PREHEADER]] ]
+@@ -1202,7 +1202,7 @@ define void @loop_with_memcpy_stride16(ptr %Src, i64 %Size) {
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[SMAX]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = and i64 [[TMP0]], -16
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add nuw i64 [[TMP2]], 16
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SRC]], ptr align 1 [[SCEVGEP]], i64 [[TMP3]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SRC]], ptr align 1 [[SCEVGEP]], i64 range(i64 0, 9223372036854775793) [[TMP3]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[STEP:%.*]], [[FOR_BODY]] ], [ 0, [[BB_NPH:%.*]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range-32bit-ptr.ll b/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range-32bit-ptr.ll
+new file mode 100644
+index 0000000000000..58c219472116e
+--- /dev/null
++++ b/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range-32bit-ptr.ll
+@@ -0,0 +1,66 @@
++; RUN: opt -passes=loop-idiom -S < %s | FileCheck %s
++
++target datalayout = "e-m:e-p:32:32-i64:64-n32-S64"
++
++; void i64_iv_bounded(int *p, unsigned long long start) {
++;   for (unsigned long long i = start; i < 4; ++i)
++;     p[i] = -1;
++; }
++
++define void @i64_iv_bounded(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @i64_iv_bounded(
++; CHECK:       call void @llvm.memset.p0.i32(ptr align 4 {{%.*}}, i8 -1, i32 range(i32 0, 17) {{%.*}}, i1 false)
++entry:
++  %guard = icmp ult i64 %start, 4
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 -1, ptr %gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 4
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void i64_iv_too_large(char *p, unsigned long long start) {
++;   for (unsigned long long i = start; i < (1ULL << 40); ++i)
++;     p[i] = 0;
++; }
++
++define void @i64_iv_too_large(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @i64_iv_too_large(
++; CHECK:       call void @llvm.memset.p0.i32(ptr align 1 {{%.*}}, i8 0, i32 {{%.*}}, i1 false)
++entry:
++  %guard = icmp ult i64 %start, 1099511627776
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %i
++  store i8 0, ptr %gep, align 1
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 1099511627776
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; An i64 IV runs up to 2^32 with no guard, so the max backedge-taken count,
++; 2^32 - 1, still fits in the i32 length, but the max trip count doesn't.
++
++define void @i64_iv_trip_count_too_large(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @i64_iv_trip_count_too_large(
++; CHECK:       call void @llvm.memset.p0.i32(ptr align 1 {{%.*}}, i8 0, i32 {{%.*}}, i1 false)
++entry:
++  br label %loop
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %i
++  store i8 0, ptr %gep, align 1
++  %i.next = add nuw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 4294967296
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range.ll b/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range.ll
+new file mode 100644
+index 0000000000000..9ca27b65fed5d
+--- /dev/null
++++ b/llvm/test/Transforms/LoopIdiom/mem-intrinsic-length-range.ll
+@@ -0,0 +1,479 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=loop-idiom -S < %s | FileCheck %s
++
++target datalayout = "e-m:o-i64:64-i128:128-n32:64-S128"
++target triple = "arm64-apple-macosx14.0.0"
++
++; void bounded_by_exit_condition(int *p, unsigned long start) {
++;   for (unsigned long i = start; i < 4; ++i)
++;     p[i] = -1;
++; }
++
++define void @bounded_by_exit_condition(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @bounded_by_exit_condition(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp ult i64 [[START]], 4
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[START]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 16, [[TMP0]]
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 -1, i64 range(i64 0, 17) [[TMP1]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ [[START]], %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 4
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp ult i64 %start, 4
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 -1, ptr %gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 4
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void bounded_by_guard(char *p, unsigned long n) {
++;   if (n <= 100 && n != 0)
++;     for (unsigned long i = 0; i < n; ++i)
++;       p[i] = 0;
++; }
++
++define void @bounded_by_guard(ptr %p, i64 %n) {
++; CHECK-LABEL: define void @bounded_by_guard(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SMALL:%.*]] = icmp ule i64 [[N]], 100
++; CHECK-NEXT:    [[NONZERO:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    [[GUARD:%.*]] = and i1 [[SMALL]], [[NONZERO]]
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[P]], i8 0, i64 range(i64 0, 101) [[N]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %small = icmp ule i64 %n, 100
++  %nonzero = icmp ne i64 %n, 0
++  %guard = and i1 %small, %nonzero
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %i
++  store i8 0, ptr %gep, align 1
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, %n
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void bounded_by_assume(char *p, unsigned long n) {
++;   __builtin_assume(n <= 100);
++;   if (n != 0)
++;     for (unsigned long i = 0; i < n; ++i)
++;       p[i] = 0;
++; }
++
++define void @bounded_by_assume(ptr %p, i64 %n) {
++; CHECK-LABEL: define void @bounded_by_assume(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SMALL:%.*]] = icmp ule i64 [[N]], 100
++; CHECK-NEXT:    call void @llvm.assume(i1 [[SMALL]])
++; CHECK-NEXT:    [[NONZERO:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[NONZERO]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[P]], i8 0, i64 range(i64 0, 101) [[N]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %small = icmp ule i64 %n, 100
++  call void @llvm.assume(i1 %small)
++  %nonzero = icmp ne i64 %n, 0
++  br i1 %nonzero, label %loop, label %exit
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %i
++  store i8 0, ptr %gep, align 1
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, %n
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void bounded_by_type(int *p, unsigned n) {
++;   if (n != 0)
++;     for (unsigned i = 0; i < n; ++i)
++;       p[i] = -1;
++; }
++
++define void @bounded_by_type(ptr %p, i32 %n) {
++; CHECK-LABEL: define void @bounded_by_type(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONZERO:%.*]] = icmp ne i32 [[N]], 0
++; CHECK-NEXT:    br i1 [[NONZERO]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
++; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 2
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[P]], i8 -1, i64 range(i64 0, 17179869181) [[TMP1]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[I_WIDE:%.*]] = zext i32 [[I]] to i64
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I_WIDE]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonzero = icmp ne i32 %n, 0
++  br i1 %nonzero, label %loop, label %exit
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
++  %i.wide = zext i32 %i to i64
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i.wide
++  store i32 -1, ptr %gep, align 4
++  %i.next = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %i.next, %n
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void unbounded(int *p, unsigned long n) {
++;   if (n != 0)
++;     for (unsigned long i = 0; i < n; ++i)
++;       p[i] = -1;
++; }
++
++define void @unbounded(ptr %p, i64 %n) {
++; CHECK-LABEL: define void @unbounded(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONZERO:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[NONZERO]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw i64 [[N]], 2
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[P]], i8 -1, i64 [[TMP0]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonzero = icmp ne i64 %n, 0
++  br i1 %nonzero, label %loop, label %exit
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 -1, ptr %gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, %n
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; Byte stores with an unbounded trip count: the max length, 2^64 - 1, fits in
++; the length's type, but the exclusive end of the range doesn't.
++;
++; void unbounded_bytes(char *p, unsigned long n) {
++;   for (unsigned long i = 0; i < n; ++i)
++;     p[i] = 0;
++; }
++
++define void @unbounded_bytes(ptr %p, i64 %n) {
++; CHECK-LABEL: define void @unbounded_bytes(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONZERO:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[NONZERO]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[P]], i8 0, i64 [[N]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonzero = icmp ne i64 %n, 0
++  br i1 %nonzero, label %loop, label %exit
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %i
++  store i8 0, ptr %gep, align 1
++  %i.next = add nuw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, %n
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void constant_trip_count(int *p) {
++;   for (unsigned long i = 0; i < 4; ++i)
++;     p[i] = -1;
++; }
++
++define void @constant_trip_count(ptr %p) {
++; CHECK-LABEL: define void @constant_trip_count(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[P]], i8 -1, i64 16, i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 4
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++loop:
++  %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 -1, ptr %gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 4
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void memcpy_bounded(int *restrict dst, const int *restrict src,
++;                     unsigned long start) {
++;   for (unsigned long i = start; i < 7; ++i)
++;     dst[i] = src[i];
++; }
++
++define void @memcpy_bounded(ptr noalias %dst, ptr noalias %src, i64 %start) {
++; CHECK-LABEL: define void @memcpy_bounded(
++; CHECK-SAME: ptr noalias [[DST:%.*]], ptr noalias [[SRC:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp ult i64 [[START]], 7
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[START]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[DST]], i64 [[TMP0]]
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SRC]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 28, [[TMP0]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[SCEVGEP]], ptr align 4 [[SCEVGEP1]], i64 range(i64 0, 29) [[TMP1]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ [[START]], %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[SRC_GEP:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i64 [[I]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[SRC_GEP]], align 4
++; CHECK-NEXT:    [[DST_GEP:%.*]] = getelementptr inbounds i32, ptr [[DST]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 7
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp ult i64 %start, 7
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %src.gep = getelementptr inbounds i32, ptr %src, i64 %i
++  %val = load i32, ptr %src.gep, align 4
++  %dst.gep = getelementptr inbounds i32, ptr %dst, i64 %i
++  store i32 %val, ptr %dst.gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 7
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void memmove_bounded(int *p, unsigned long start) {
++;   for (unsigned long i = start; i < 5; ++i)
++;     p[i] = p[i + 1];
++; }
++
++define void @memmove_bounded(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @memmove_bounded(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp ult i64 [[START]], 5
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[START]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 4
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 20, [[TMP0]]
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 4 [[SCEVGEP]], ptr align 4 [[SCEVGEP1]], i64 range(i64 0, 21) [[TMP2]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ [[START]], %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[SRC_GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I_NEXT]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[SRC_GEP]], align 4
++; CHECK-NEXT:    [[DST_GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 5
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp ult i64 %start, 5
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %i.next = add nuw nsw i64 %i, 1
++  %src.gep = getelementptr inbounds i32, ptr %p, i64 %i.next
++  %val = load i32, ptr %src.gep, align 4
++  %dst.gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 %val, ptr %dst.gep, align 4
++  %cmp = icmp ult i64 %i.next, 5
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; Without a guard, only the exit condition bounds the trip count. The length,
++; 4 * (umax(start + 1, 4) - start), is at most 20 (start = ULONG_MAX wraps),
++; but range analysis of the expanded IR alone can't see that.
++;
++; void do_while_no_guard(int *p, unsigned long start) {
++;   unsigned long i = start;
++;   do {
++;     p[i] = -1;
++;   } while (++i < 4);
++; }
++
++define void @do_while_no_guard(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @do_while_no_guard(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[START]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[START]], 1
++; CHECK-NEXT:    [[UMAX:%.*]] = call i64 @llvm.umax.i64(i64 [[TMP1]], i64 4)
++; CHECK-NEXT:    [[TMP2:%.*]] = shl i64 [[UMAX]], 2
++; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[TMP2]], [[TMP0]]
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 -1, i64 range(i64 0, 21) [[TMP3]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[START]], %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 4
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 -1, ptr %gep, align 4
++  %i.next = add i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 4
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
++
++; void memset_pattern_bounded(int *p, unsigned long start) {
++;   for (unsigned long i = start; i < 8; ++i)
++;     p[i] = 0x12345678;
++; }
++
++define void @memset_pattern_bounded(ptr %p, i64 %start) {
++; CHECK-LABEL: define void @memset_pattern_bounded(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp ult i64 [[START]], 8
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[START]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 8, [[START]]
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[SCEVGEP]], i32 305419896, i64 range(i64 0, 9) [[TMP1]], i1 false)
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[I_NEXT:%.*]], %[[LOOP]] ], [ [[START]], %[[LOOP_PREHEADER]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i64 [[I]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[I_NEXT]], 8
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp ult i64 %start, 8
++  br i1 %guard, label %loop, label %exit
++loop:
++  %i = phi i64 [ %start, %entry ], [ %i.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %i
++  store i32 305419896, ptr %gep, align 4
++  %i.next = add nuw nsw i64 %i, 1
++  %cmp = icmp ult i64 %i.next, 8
++  br i1 %cmp, label %loop, label %exit
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/LoopIdiom/memcpy-intrinsic.ll b/llvm/test/Transforms/LoopIdiom/memcpy-intrinsic.ll
+index 85561da0ffee7..2f2407fab462e 100644
+--- a/llvm/test/Transforms/LoopIdiom/memcpy-intrinsic.ll
++++ b/llvm/test/Transforms/LoopIdiom/memcpy-intrinsic.ll
+@@ -19,7 +19,7 @@ define dso_local i32 @copy_noalias(ptr noalias nocapture %a, ptr nocapture reado
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[TMP0]], 12
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[A:%.*]], ptr align 4 [[B:%.*]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[A:%.*]], ptr align 4 [[B:%.*]], i64 range(i64 0, 25769803765) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+@@ -130,7 +130,7 @@ define dso_local void @copy_noalias_read(ptr noalias nocapture %x, ptr noalias n
+ ; CHECK-NEXT:    [[S_PROMOTED:%.*]] = load i32, ptr [[S:%.*]], align 4
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[TMP0]], 6
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[X:%.*]], ptr align 1 [[Y:%.*]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[X:%.*]], ptr align 1 [[Y:%.*]], i64 range(i64 0, 12884901883) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.for.cond.cleanup_crit_edge:
+ ; CHECK-NEXT:    [[ADD_LCSSA:%.*]] = phi i32 [ [[ADD:%.*]], [[FOR_BODY]] ]
+@@ -199,7 +199,7 @@ define dso_local i32 @copy_noalias_negative_stride(ptr noalias nocapture %arg, p
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[ARG2]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    [[TMP2:%.*]] = mul nuw nsw i64 [[TMP1]], 12
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[ARG:%.*]], ptr align 4 [[ARG1:%.*]], i64 [[TMP2]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[ARG:%.*]], ptr align 4 [[ARG1:%.*]], i64 range(i64 0, 25769803777) [[TMP2]], i1 false)
+ ; CHECK-NEXT:    br label [[BB6:%.*]]
+ ; CHECK:       bb4:
+ ; CHECK-NEXT:    br label [[BB5]]
+@@ -312,7 +312,7 @@ define dso_local i32 @copy_noalias_packed(ptr noalias nocapture %a, ptr nocaptur
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[TMP0]], 9
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[A:%.*]], ptr align 1 [[B:%.*]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[A:%.*]], ptr align 1 [[B:%.*]], i64 range(i64 0, 19327352824) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+@@ -361,7 +361,7 @@ define dso_local i32 @copy_noalias_aligned(ptr noalias nocapture %a, ptr nocaptu
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 4
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 16 [[A:%.*]], ptr align 16 [[B:%.*]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 16 [[A:%.*]], ptr align 16 [[B:%.*]], i64 range(i64 0, 34359738353) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+diff --git a/llvm/test/Transforms/LoopIdiom/memcpy.ll b/llvm/test/Transforms/LoopIdiom/memcpy.ll
+index 4b99bca0097e5..424a657cdaa2b 100644
+--- a/llvm/test/Transforms/LoopIdiom/memcpy.ll
++++ b/llvm/test/Transforms/LoopIdiom/memcpy.ll
+@@ -109,7 +109,7 @@ define dso_local void @memcpy_loop(ptr noalias nocapture %p, ptr noalias nocaptu
+ ; CHECK-NEXT:    br i1 [[CMP4]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_COND_CLEANUP:%.*]]
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[P:%.*]], ptr align 1 [[Q:%.*]], i64 [[TMP0]], i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[P:%.*]], ptr align 1 [[Q:%.*]], i64 range(i64 0, 2147483648) [[TMP0]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+diff --git a/llvm/test/Transforms/LoopIdiom/memmove-ext.ll b/llvm/test/Transforms/LoopIdiom/memmove-ext.ll
+index 5f3aa8b33b2b6..2d7f9c37ed881 100644
+--- a/llvm/test/Transforms/LoopIdiom/memmove-ext.ll
++++ b/llvm/test/Transforms/LoopIdiom/memmove-ext.ll
+@@ -19,7 +19,7 @@ define void @move_up_dec_loop_zext(i16 %n, ptr %p) {
+ ; CHECK-NEXT:    [[TMP6:%.*]] = sub i64 [[TMP5]], [[TMP3]]
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP6]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = add nuw nsw i64 [[TMP3]], 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SCEVGEP1]], i64 [[TMP7]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SCEVGEP1]], i64 range(i64 0, 32769) [[TMP7]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ [[N]], %[[ENTRY]] ]
+@@ -61,7 +61,7 @@ define void @move_down_inc_loop_zext(i16 %n, ptr %p) {
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i16 @llvm.smax.i16(i16 [[N]], i16 2)
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i16 [[SMAX]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i64 [[TMP0]], -1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[P]], ptr align 1 [[SCEVGEP]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[P]], ptr align 1 [[SCEVGEP]], i64 range(i64 0, 32767) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ 1, %[[ENTRY]] ]
+@@ -111,7 +111,7 @@ define void @move_up_dec_loop_sext(i16 %n, ptr %p) {
+ ; CHECK-NEXT:    [[TMP6:%.*]] = sub i64 [[TMP5]], [[TMP3]]
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP6]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = add nuw nsw i64 [[TMP3]], 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SCEVGEP1]], i64 [[TMP7]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[SCEVGEP]], ptr align 1 [[SCEVGEP1]], i64 range(i64 0, 32769) [[TMP7]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ [[N]], %[[ENTRY]] ]
+@@ -153,7 +153,7 @@ define void @move_down_inc_loop_sext(i16 %n, ptr %p) {
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i16 @llvm.smax.i16(i16 [[N]], i16 2)
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i16 [[SMAX]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i64 [[TMP0]], -1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[P]], ptr align 1 [[SCEVGEP]], i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i64(ptr align 1 [[P]], ptr align 1 [[SCEVGEP]], i64 range(i64 0, 32767) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ 1, %[[ENTRY]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/memset-pr52104.ll b/llvm/test/Transforms/LoopIdiom/memset-pr52104.ll
+index 0cacb74bf01be..81382eff33f7c 100644
+--- a/llvm/test/Transforms/LoopIdiom/memset-pr52104.ll
++++ b/llvm/test/Transforms/LoopIdiom/memset-pr52104.ll
+@@ -11,7 +11,7 @@ define void @f(ptr nocapture nonnull align 4 dereferenceable(20) %0, i32 %1) loc
+ ; CHECK-NEXT:    [[TMP7:%.*]] = zext i2 [[TMP6]] to i64
+ ; CHECK-NEXT:    [[TMP8:%.*]] = shl nuw nsw i64 [[TMP7]], 2
+ ; CHECK-NEXT:    [[TMP9:%.*]] = add nuw nsw i64 [[TMP8]], 4
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 0, i64 [[TMP9]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[SCEVGEP]], i8 0, i64 range(i64 0, 17) [[TMP9]], i1 false)
+ ; CHECK-NEXT:    br label [[TMP10:%.*]]
+ ; CHECK:       10:
+ ; CHECK-NEXT:    [[TMP11:%.*]] = phi i32 [ [[TMP15:%.*]], [[TMP10]] ], [ [[TMP1]], [[TMP2:%.*]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/memset.ll b/llvm/test/Transforms/LoopIdiom/memset.ll
+index 8b4f68b62664e..e2ae7f9d3219d 100644
+--- a/llvm/test/Transforms/LoopIdiom/memset.ll
++++ b/llvm/test/Transforms/LoopIdiom/memset.ll
+@@ -9,9 +9,9 @@ define dso_local void @double_memset(ptr nocapture %p, ptr noalias nocapture %q,
+ ; CHECK-NEXT:    br i1 [[CMP4]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_COND_CLEANUP:%.*]]
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[Q:%.*]], i8 0, i64 [[TMP0]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[Q:%.*]], i8 0, i64 range(i64 0, 2147483648) [[TMP0]], i1 false)
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[N]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[P:%.*]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[P:%.*]], i8 0, i64 range(i64 0, 2147483648) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+diff --git a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+index 5011d21d7a044..bcd974d484573 100644
+--- a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+@@ -249,7 +249,7 @@ define void @expand_truncated_ptrtoaddr(ptr %A, ptr %B) {
+ ; CHECK-NEXT:    [[TMP4:%.*]] = mul i32 [[INDVAR_LCSSA]], -1
+ ; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], [[TMP3]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = zext i32 [[TMP5]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[SCEVGEP]], i8 0, i64 [[TMP6]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[SCEVGEP]], i8 0, i64 range(i64 0, 2147483649) [[TMP6]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP_2:.*]]
+ ; CHECK:       [[LOOP_2]]:
+ ; CHECK-NEXT:    [[P_1:%.*]] = phi ptr [ [[B]], %[[MIDDLE]] ], [ [[P_1_NEXT:%.*]], %[[LOOP_2]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/struct.ll b/llvm/test/Transforms/LoopIdiom/struct.ll
+index 73d569113f898..bd5cfcc643b61 100644
+--- a/llvm/test/Transforms/LoopIdiom/struct.ll
++++ b/llvm/test/Transforms/LoopIdiom/struct.ll
+@@ -22,7 +22,7 @@ define void @bar1(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 3
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 range(i64 0, 34359738361) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -76,7 +76,7 @@ define void @bar2(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 3
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 range(i64 0, 34359738361) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -135,7 +135,7 @@ define void @bar3(ptr nocapture %f, i32 %n) nounwind ssp {
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shl nuw nsw i64 [[TMP3]], 3
+ ; CHECK-NEXT:    [[TMP5:%.*]] = sub i64 [[TMP1]], [[TMP4]]
+ ; CHECK-NEXT:    [[UGLYGEP:%.*]] = getelementptr i8, ptr [[F:%.*]], i64 [[TMP5]]
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[UGLYGEP]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[UGLYGEP]], i8 0, i64 range(i64 0, 34359738361) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -299,7 +299,7 @@ define void @bar6(ptr nocapture %f, i32 %n) nounwind ssp {
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[TMP0]], 3
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 range(i64 0, 34359738361) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/struct_pattern.ll b/llvm/test/Transforms/LoopIdiom/struct_pattern.ll
+index 37a5822bfd59e..7015eee7efc95 100644
+--- a/llvm/test/Transforms/LoopIdiom/struct_pattern.ll
++++ b/llvm/test/Transforms/LoopIdiom/struct_pattern.ll
+@@ -24,7 +24,7 @@ define void @bar1(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[TMP0]], 2
+-; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 range(i64 0, 8589934591) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -78,7 +78,7 @@ define void @bar2(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[TMP0]], 2
+-; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 [[TMP1]], i1 false)
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 range(i64 0, 8589934591) [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -138,7 +138,7 @@ define void @bar3(ptr nocapture %f, i32 %n) nounwind ssp {
+ ; CHECK-NEXT:    [[TMP5:%.*]] = sub i64 [[TMP1]], [[TMP4]]
+ ; CHECK-NEXT:    [[UGLYGEP:%.*]] = getelementptr i8, ptr [[F:%.*]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = mul i64 [[TMP0]], 2
+-; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[UGLYGEP]], i32 2, i64 [[TMP7]], i1 false)
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[UGLYGEP]], i32 2, i64 range(i64 0, 8589934591) [[TMP7]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/unroll-custom-dl.ll b/llvm/test/Transforms/LoopIdiom/unroll-custom-dl.ll
+index 888f44e7226cf..f4bfb0fa16ecc 100644
+--- a/llvm/test/Transforms/LoopIdiom/unroll-custom-dl.ll
++++ b/llvm/test/Transforms/LoopIdiom/unroll-custom-dl.ll
+@@ -80,7 +80,7 @@ define void @test_pattern(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK-NEXT:    [[TMP1:%.*]] = lshr i32 [[TMP0]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add nuw i32 [[TMP1]], 1
+ ; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[TMP2]], 2
+-; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i32(ptr align 4 [[F:%.*]], i32 2, i32 [[TMP3]], i1 false)
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i32(ptr align 4 [[F:%.*]], i32 2, i32 range(i32 0, -1) [[TMP3]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i32 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/LoopIdiom/unroll.ll b/llvm/test/Transforms/LoopIdiom/unroll.ll
+index 695d38dbb7a4e..b8a1cb8bc8e30 100644
+--- a/llvm/test/Transforms/LoopIdiom/unroll.ll
++++ b/llvm/test/Transforms/LoopIdiom/unroll.ll
+@@ -23,7 +23,7 @@ define void @test(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK-NEXT:    [[TMP2:%.*]] = lshr i64 [[TMP1]], 1
+ ; CHECK-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 3
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[TMP3]], 8
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 [[TMP4]], i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 [[F:%.*]], i8 0, i64 range(i64 0, 17179869177) [[TMP4]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+@@ -83,7 +83,7 @@ define void @test_pattern(ptr %f, i32 %n) nounwind ssp {
+ ; CHECK-NEXT:    [[TMP2:%.*]] = lshr i64 [[TMP1]], 1
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add nuw i64 [[TMP2]], 1
+ ; CHECK-NEXT:    [[TMP4:%.*]] = mul i64 [[TMP3]], 2
+-; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 [[TMP4]], i1 false)
++; CHECK-NEXT:    call void @llvm.experimental.memset.pattern.p0.i32.i64(ptr align 4 [[F:%.*]], i32 2, i64 range(i64 0, 4294967295) [[TMP4]], i1 false)
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/memset-bounded-length.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/memset-bounded-length.ll
+new file mode 100644
+index 0000000000000..02dd6988f2434
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/memset-bounded-length.ll
+@@ -0,0 +1,72 @@
++; RUN: opt -passes="default<O3>" -S < %s | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i8:8:32-i16:16:32-i64:64-i128:128-n32:64-S128-Fn32"
++target triple = "aarch64"
++
++; #define MAX_CNT 4
++; void foo(unsigned* src, unsigned* dst, unsigned int n) {
++;   for (unsigned i = 0; i < n; ++i)
++;     dst[i] = src[i];
++;   for (unsigned i = n; i < MAX_CNT; ++i)
++;     dst[i] = -1;
++; }
++
++define void @foo(ptr noundef %src, ptr noundef %dst, i32 noundef %n) {
++; CHECK-LABEL: define void @foo(
++; CHECK:       call void @llvm.memset.p0.i64(ptr align 4 {{%.*}}, i8 -1, i64 range(i64 0, 17) {{%.*}}, i1 false)
++entry:
++  %src.addr = alloca ptr, align 8
++  %dst.addr = alloca ptr, align 8
++  %n.addr = alloca i32, align 4
++  %i = alloca i32, align 4
++  %i3 = alloca i32, align 4
++  store ptr %src, ptr %src.addr, align 8
++  store ptr %dst, ptr %dst.addr, align 8
++  store i32 %n, ptr %n.addr, align 4
++  store i32 0, ptr %i, align 4
++  br label %for.cond
++for.cond:
++  %0 = load i32, ptr %i, align 4
++  %1 = load i32, ptr %n.addr, align 4
++  %cmp = icmp ult i32 %0, %1
++  br i1 %cmp, label %for.body, label %for.end
++for.body:
++  %2 = load ptr, ptr %src.addr, align 8
++  %3 = load i32, ptr %i, align 4
++  %idxprom = zext i32 %3 to i64
++  %arrayidx = getelementptr inbounds nuw i32, ptr %2, i64 %idxprom
++  %4 = load i32, ptr %arrayidx, align 4
++  %5 = load ptr, ptr %dst.addr, align 8
++  %6 = load i32, ptr %i, align 4
++  %idxprom1 = zext i32 %6 to i64
++  %arrayidx2 = getelementptr inbounds nuw i32, ptr %5, i64 %idxprom1
++  store i32 %4, ptr %arrayidx2, align 4
++  br label %for.inc
++for.inc:
++  %7 = load i32, ptr %i, align 4
++  %inc = add i32 %7, 1
++  store i32 %inc, ptr %i, align 4
++  br label %for.cond
++for.end:
++  %8 = load i32, ptr %n.addr, align 4
++  store i32 %8, ptr %i3, align 4
++  br label %for.cond4
++for.cond4:
++  %9 = load i32, ptr %i3, align 4
++  %cmp5 = icmp ult i32 %9, 4
++  br i1 %cmp5, label %for.body6, label %for.end11
++for.body6:
++  %10 = load ptr, ptr %dst.addr, align 8
++  %11 = load i32, ptr %i3, align 4
++  %idxprom7 = zext i32 %11 to i64
++  %arrayidx8 = getelementptr inbounds nuw i32, ptr %10, i64 %idxprom7
++  store i32 -1, ptr %arrayidx8, align 4
++  br label %for.inc9
++for.inc9:
++  %12 = load i32, ptr %i3, align 4
++  %inc10 = add i32 %12, 1
++  store i32 %inc10, ptr %i3, align 4
++  br label %for.cond4
++for.end11:
++  ret void
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/ARM/arm_fill_q7.ll b/llvm/test/Transforms/PhaseOrdering/ARM/arm_fill_q7.ll
+index c1ee91f48c2d9..fc214cb8660c9 100644
+--- a/llvm/test/Transforms/PhaseOrdering/ARM/arm_fill_q7.ll
++++ b/llvm/test/Transforms/PhaseOrdering/ARM/arm_fill_q7.ll
+@@ -15,7 +15,7 @@ define dso_local void @arm_fill_q7(i8 signext %value, ptr %pDst, i32 %blockSize)
+ ; CHECK-NEXT:    br i1 [[CMP_NOT14]], label [[WHILE_END:%.*]], label [[WHILE_BODY_PREHEADER:%.*]]
+ ; CHECK:       while.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = and i32 [[BLOCKSIZE]], -4
+-; CHECK-NEXT:    tail call void @llvm.memset.p0.i32(ptr align 1 [[PDST:%.*]], i8 [[VALUE:%.*]], i32 [[TMP0]], i1 false), !tbaa [[TBAA3:![0-9]+]]
++; CHECK-NEXT:    tail call void @llvm.memset.p0.i32(ptr align 1 [[PDST:%.*]], i8 [[VALUE:%.*]], i32 range(i32 0, -3) [[TMP0]], i1 false), !tbaa [[TBAA3:![0-9]+]]
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[PDST]], i32 [[TMP0]]
+ ; CHECK-NEXT:    br label [[WHILE_END]]
+ ; CHECK:       while.end:
+@@ -24,7 +24,7 @@ define dso_local void @arm_fill_q7(i8 signext %value, ptr %pDst, i32 %blockSize)
+ ; CHECK-NEXT:    [[CMP14_NOT17:%.*]] = icmp eq i32 [[REM]], 0
+ ; CHECK-NEXT:    br i1 [[CMP14_NOT17]], label [[WHILE_END18:%.*]], label [[WHILE_BODY16_PREHEADER:%.*]]
+ ; CHECK:       while.body16.preheader:
+-; CHECK-NEXT:    tail call void @llvm.memset.p0.i32(ptr align 1 [[PDST_ADDR_0_LCSSA]], i8 [[VALUE]], i32 [[REM]], i1 false), !tbaa [[TBAA3]]
++; CHECK-NEXT:    tail call void @llvm.memset.p0.i32(ptr align 1 [[PDST_ADDR_0_LCSSA]], i8 [[VALUE]], i32 range(i32 0, 4) [[REM]], i1 false), !tbaa [[TBAA3]]
+ ; CHECK-NEXT:    br label [[WHILE_END18]]
+ ; CHECK:       while.end18:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/PhaseOrdering/memset-tail.ll b/llvm/test/Transforms/PhaseOrdering/memset-tail.ll
+index 489da5a1ed327..dc10f55ac3bf3 100644
+--- a/llvm/test/Transforms/PhaseOrdering/memset-tail.ll
++++ b/llvm/test/Transforms/PhaseOrdering/memset-tail.ll
+@@ -8,7 +8,7 @@ define void @PR47852(ptr noundef %d, i32 noundef %c) {
+ ; CHECK-NEXT:    br i1 [[CMP_NOT1]], label [[WHILE_END:%.*]], label [[WHILE_BODY_PREHEADER:%.*]]
+ ; CHECK:       while.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[C]] to i64
+-; CHECK-NEXT:    tail call void @llvm.memset.p0.i64(ptr align 1 [[D:%.*]], i8 0, i64 [[TMP0]], i1 false)
++; CHECK-NEXT:    tail call void @llvm.memset.p0.i64(ptr align 1 [[D:%.*]], i8 0, i64 range(i64 0, 4294967296) [[TMP0]], i1 false)
+ ; CHECK-NEXT:    br label [[WHILE_END]]
+ ; CHECK:       while.end:
+ ; CHECK-NEXT:    ret void

@@ -204,7 +204,7 @@ begin_hunk_0_@verblib_initialize:bb.a
   %i.ha = load ptr, ptr %i.d, align 8, !tbaa !15
   %i.hb = zext nneg i32 %i.gy to i64
   %i.hc = shl nuw nsw i64 %i.hb, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ha, i8 0, i64 %i.hc, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ha, i8 0, i64 range(i64 0, 8589934589) %i.hc, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.i
 
 verblib_comb_mute.exit.i:                         ; preds = %.lr.ph.i.i, %.preheader17.i
@@ -216,7 +216,7 @@ verblib_comb_mute.exit.i:                         ; preds = %.lr.ph.i.i, %.prehe
   %i.hf = load ptr, ptr %i.n, align 8, !tbaa !15
   %i.hg = zext nneg i32 %i.hd to i64
   %i.hh = shl nuw nsw i64 %i.hg, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hf, i8 0, i64 %i.hh, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hf, i8 0, i64 range(i64 0, 8589934589) %i.hh, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.i
 
 verblib_comb_mute.exit13.i:                       ; preds = %.lr.ph.i12.i, %verblib_comb_mute.exit.i
@@ -228,7 +228,7 @@ verblib_comb_mute.exit13.i:                       ; preds = %.lr.ph.i12.i, %verb
   %i.hk = load ptr, ptr %i.v, align 8, !tbaa !15
   %i.hl = zext nneg i32 %i.hi to i64
   %i.hm = shl nuw nsw i64 %i.hl, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hk, i8 0, i64 %i.hm, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hk, i8 0, i64 range(i64 0, 8589934589) %i.hm, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.1.i
 
 verblib_comb_mute.exit.1.i:                       ; preds = %.lr.ph.i.1.i, %verblib_comb_mute.exit13.i
@@ -240,7 +240,7 @@ verblib_comb_mute.exit.1.i:                       ; preds = %.lr.ph.i.1.i, %verb
   %i.hp = load ptr, ptr %i.ad, align 8, !tbaa !15
   %i.hq = zext nneg i32 %i.hn to i64
   %i.hr = shl nuw nsw i64 %i.hq, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hp, i8 0, i64 %i.hr, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hp, i8 0, i64 range(i64 0, 8589934589) %i.hr, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.1.i
 
 verblib_comb_mute.exit13.1.i:                     ; preds = %.lr.ph.i12.1.i, %verblib_comb_mute.exit.1.i
@@ -252,7 +252,7 @@ verblib_comb_mute.exit13.1.i:                     ; preds = %.lr.ph.i12.1.i, %ve
   %i.hu = load ptr, ptr %i.al, align 8, !tbaa !15
   %i.hv = zext nneg i32 %i.hs to i64
   %i.hw = shl nuw nsw i64 %i.hv, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hu, i8 0, i64 %i.hw, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hu, i8 0, i64 range(i64 0, 8589934589) %i.hw, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.2.i
 
 verblib_comb_mute.exit.2.i:                       ; preds = %.lr.ph.i.2.i, %verblib_comb_mute.exit13.1.i
@@ -264,7 +264,7 @@ verblib_comb_mute.exit.2.i:                       ; preds = %.lr.ph.i.2.i, %verb
   %i.hz = load ptr, ptr %i.at, align 8, !tbaa !15
   %i.ia = zext nneg i32 %i.hx to i64
   %i.ib = shl nuw nsw i64 %i.ia, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hz, i8 0, i64 %i.ib, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hz, i8 0, i64 range(i64 0, 8589934589) %i.ib, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.2.i
 
 verblib_comb_mute.exit13.2.i:                     ; preds = %.lr.ph.i12.2.i, %verblib_comb_mute.exit.2.i
@@ -276,7 +276,7 @@ verblib_comb_mute.exit13.2.i:                     ; preds = %.lr.ph.i12.2.i, %ve
   %i.ie = load ptr, ptr %i.bb, align 8, !tbaa !15
   %i.if = zext nneg i32 %i.ic to i64
   %i.ig = shl nuw nsw i64 %i.if, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ie, i8 0, i64 %i.ig, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ie, i8 0, i64 range(i64 0, 8589934589) %i.ig, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.3.i
 
 verblib_comb_mute.exit.3.i:                       ; preds = %.lr.ph.i.3.i, %verblib_comb_mute.exit13.2.i
@@ -288,7 +288,7 @@ verblib_comb_mute.exit.3.i:                       ; preds = %.lr.ph.i.3.i, %verb
   %i.ij = load ptr, ptr %i.bj, align 8, !tbaa !15
   %i.ik = zext nneg i32 %i.ih to i64
   %i.il = shl nuw nsw i64 %i.ik, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ij, i8 0, i64 %i.il, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ij, i8 0, i64 range(i64 0, 8589934589) %i.il, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.3.i
 
 verblib_comb_mute.exit13.3.i:                     ; preds = %.lr.ph.i12.3.i, %verblib_comb_mute.exit.3.i
@@ -300,7 +300,7 @@ verblib_comb_mute.exit13.3.i:                     ; preds = %.lr.ph.i12.3.i, %ve
   %i.io = load ptr, ptr %i.br, align 8, !tbaa !15
   %i.ip = zext nneg i32 %i.im to i64
   %i.iq = shl nuw nsw i64 %i.ip, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.io, i8 0, i64 %i.iq, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.io, i8 0, i64 range(i64 0, 8589934589) %i.iq, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.4.i
 
 verblib_comb_mute.exit.4.i:                       ; preds = %.lr.ph.i.4.i, %verblib_comb_mute.exit13.3.i
@@ -312,7 +312,7 @@ verblib_comb_mute.exit.4.i:                       ; preds = %.lr.ph.i.4.i, %verb
   %i.it = load ptr, ptr %i.bz, align 8, !tbaa !15
   %i.iu = zext nneg i32 %i.ir to i64
   %i.iv = shl nuw nsw i64 %i.iu, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.it, i8 0, i64 %i.iv, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.it, i8 0, i64 range(i64 0, 8589934589) %i.iv, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.4.i
 
 verblib_comb_mute.exit13.4.i:                     ; preds = %.lr.ph.i12.4.i, %verblib_comb_mute.exit.4.i
@@ -324,7 +324,7 @@ verblib_comb_mute.exit13.4.i:                     ; preds = %.lr.ph.i12.4.i, %ve
   %i.iy = load ptr, ptr %i.ch, align 8, !tbaa !15
   %i.iz = zext nneg i32 %i.iw to i64
   %i.ja = shl nuw nsw i64 %i.iz, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iy, i8 0, i64 %i.ja, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iy, i8 0, i64 range(i64 0, 8589934589) %i.ja, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.5.i
 
 verblib_comb_mute.exit.5.i:                       ; preds = %.lr.ph.i.5.i, %verblib_comb_mute.exit13.4.i
@@ -336,7 +336,7 @@ verblib_comb_mute.exit.5.i:                       ; preds = %.lr.ph.i.5.i, %verb
   %i.jd = load ptr, ptr %i.cp, align 8, !tbaa !15
   %i.je = zext nneg i32 %i.jb to i64
   %i.jf = shl nuw nsw i64 %i.je, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jd, i8 0, i64 %i.jf, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jd, i8 0, i64 range(i64 0, 8589934589) %i.jf, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.5.i
 
 verblib_comb_mute.exit13.5.i:                     ; preds = %.lr.ph.i12.5.i, %verblib_comb_mute.exit.5.i
@@ -348,7 +348,7 @@ verblib_comb_mute.exit13.5.i:                     ; preds = %.lr.ph.i12.5.i, %ve
   %i.ji = load ptr, ptr %i.cx, align 8, !tbaa !15
   %i.jj = zext nneg i32 %i.jg to i64
   %i.jk = shl nuw nsw i64 %i.jj, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ji, i8 0, i64 %i.jk, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ji, i8 0, i64 range(i64 0, 8589934589) %i.jk, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.6.i
 
 verblib_comb_mute.exit.6.i:                       ; preds = %.lr.ph.i.6.i, %verblib_comb_mute.exit13.5.i
@@ -360,7 +360,7 @@ verblib_comb_mute.exit.6.i:                       ; preds = %.lr.ph.i.6.i, %verb
   %i.jn = load ptr, ptr %i.df, align 8, !tbaa !15
   %i.jo = zext nneg i32 %i.jl to i64
   %i.jp = shl nuw nsw i64 %i.jo, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jn, i8 0, i64 %i.jp, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jn, i8 0, i64 range(i64 0, 8589934589) %i.jp, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.6.i
 
 verblib_comb_mute.exit13.6.i:                     ; preds = %.lr.ph.i12.6.i, %verblib_comb_mute.exit.6.i
@@ -372,7 +372,7 @@ verblib_comb_mute.exit13.6.i:                     ; preds = %.lr.ph.i12.6.i, %ve
   %i.js = load ptr, ptr %i.dn, align 8, !tbaa !15
   %i.jt = zext nneg i32 %i.jq to i64
   %i.ju = shl nuw nsw i64 %i.jt, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.js, i8 0, i64 %i.ju, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.js, i8 0, i64 range(i64 0, 8589934589) %i.ju, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit.7.i
 
 verblib_comb_mute.exit.7.i:                       ; preds = %.lr.ph.i.7.i, %verblib_comb_mute.exit13.6.i
@@ -384,7 +384,7 @@ verblib_comb_mute.exit.7.i:                       ; preds = %.lr.ph.i.7.i, %verb
   %i.jx = load ptr, ptr %i.dv, align 8, !tbaa !15
   %i.jy = zext nneg i32 %i.jv to i64
   %i.jz = shl nuw nsw i64 %i.jy, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jx, i8 0, i64 %i.jz, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jx, i8 0, i64 range(i64 0, 8589934589) %i.jz, i1 false), !tbaa !29
   br label %verblib_comb_mute.exit13.7.i
 
 verblib_comb_mute.exit13.7.i:                     ; preds = %.lr.ph.i12.7.i, %verblib_comb_mute.exit.7.i
@@ -396,7 +396,7 @@ verblib_comb_mute.exit13.7.i:                     ; preds = %.lr.ph.i12.7.i, %ve
   %i.kc = load ptr, ptr %i.ed, align 8, !tbaa !20
   %i.kd = zext nneg i32 %i.ka to i64
   %i.ke = shl nuw nsw i64 %i.kd, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kc, i8 0, i64 %i.ke, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kc, i8 0, i64 range(i64 0, 8589934589) %i.ke, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit.i
 
 verblib_allpass_mute.exit.i:                      ; preds = %.lr.ph.i14.i, %verblib_comb_mute.exit13.7.i
@@ -408,7 +408,7 @@ verblib_allpass_mute.exit.i:                      ; preds = %.lr.ph.i14.i, %verb
   %i.kh = load ptr, ptr %i.ek, align 8, !tbaa !20
   %i.ki = zext nneg i32 %i.kf to i64
   %i.kj = shl nuw nsw i64 %i.ki, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kh, i8 0, i64 %i.kj, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kh, i8 0, i64 range(i64 0, 8589934589) %i.kj, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit16.i
 
 verblib_allpass_mute.exit16.i:                    ; preds = %.lr.ph.i15.i, %verblib_allpass_mute.exit.i
@@ -420,7 +420,7 @@ verblib_allpass_mute.exit16.i:                    ; preds = %.lr.ph.i15.i, %verb
   %i.km = load ptr, ptr %i.er, align 8, !tbaa !20
   %i.kn = zext nneg i32 %i.kk to i64
   %i.ko = shl nuw nsw i64 %i.kn, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.km, i8 0, i64 %i.ko, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.km, i8 0, i64 range(i64 0, 8589934589) %i.ko, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit.1.i
 
 verblib_allpass_mute.exit.1.i:                    ; preds = %.lr.ph.i14.1.i, %verblib_allpass_mute.exit16.i
@@ -432,7 +432,7 @@ verblib_allpass_mute.exit.1.i:                    ; preds = %.lr.ph.i14.1.i, %ve
   %i.kr = load ptr, ptr %i.ey, align 8, !tbaa !20
   %i.ks = zext nneg i32 %i.kp to i64
   %i.kt = shl nuw nsw i64 %i.ks, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kr, i8 0, i64 %i.kt, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kr, i8 0, i64 range(i64 0, 8589934589) %i.kt, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit16.1.i
 
 verblib_allpass_mute.exit16.1.i:                  ; preds = %.lr.ph.i15.1.i, %verblib_allpass_mute.exit.1.i
@@ -444,7 +444,7 @@ verblib_allpass_mute.exit16.1.i:                  ; preds = %.lr.ph.i15.1.i, %ve
   %i.kw = load ptr, ptr %i.ff, align 8, !tbaa !20
   %i.kx = zext nneg i32 %i.ku to i64
   %i.ky = shl nuw nsw i64 %i.kx, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kw, i8 0, i64 %i.ky, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.kw, i8 0, i64 range(i64 0, 8589934589) %i.ky, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit.2.i
 
 verblib_allpass_mute.exit.2.i:                    ; preds = %.lr.ph.i14.2.i, %verblib_allpass_mute.exit16.1.i
@@ -456,7 +456,7 @@ verblib_allpass_mute.exit.2.i:                    ; preds = %.lr.ph.i14.2.i, %ve
   %i.lb = load ptr, ptr %i.fm, align 8, !tbaa !20
   %i.lc = zext nneg i32 %i.kz to i64
   %i.ld = shl nuw nsw i64 %i.lc, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.lb, i8 0, i64 %i.ld, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.lb, i8 0, i64 range(i64 0, 8589934589) %i.ld, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit16.2.i
 
 verblib_allpass_mute.exit16.2.i:                  ; preds = %.lr.ph.i15.2.i, %verblib_allpass_mute.exit.2.i
@@ -468,7 +468,7 @@ verblib_allpass_mute.exit16.2.i:                  ; preds = %.lr.ph.i15.2.i, %ve
   %i.lg = load ptr, ptr %i.ft, align 8, !tbaa !20
   %i.lh = zext nneg i32 %i.le to i64
   %i.li = shl nuw nsw i64 %i.lh, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.lg, i8 0, i64 %i.li, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.lg, i8 0, i64 range(i64 0, 8589934589) %i.li, i1 false), !tbaa !29
   br label %verblib_allpass_mute.exit.3.i
 
 verblib_allpass_mute.exit.3.i:                    ; preds = %.lr.ph.i14.3.i, %verblib_allpass_mute.exit16.2.i
@@ -480,7 +480,7 @@ verblib_allpass_mute.exit.3.i:                    ; preds = %.lr.ph.i14.3.i, %ve
   %i.ll = load ptr, ptr %i.ga, align 8, !tbaa !20
   %i.lm = zext nneg i32 %i.lj to i64
   %i.ln = shl nuw nsw i64 %i.lm, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ll, i8 0, i64 %i.ln, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ll, i8 0, i64 range(i64 0, 8589934589) %i.ln, i1 false), !tbaa !29
   br label %verblib_mute.exit
 
 verblib_mute.exit:                                ; preds = %.lr.ph.i15.3.i, %verblib_allpass_mute.exit.3.i, %bb.b, %bb.a

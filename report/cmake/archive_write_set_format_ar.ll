@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.cb, label %bb.ae, label %.preheader32.preheader.i
 
 .preheader32.preheader.i:                         ; preds = %bb.ad
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bv, i8 57, i64 12, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bv, i8 57, i64 range(i64 0, 16) 12, i1 false), !tbaa !31
   br label %format_decimal.exit
 
 bb.ae:                                            ; preds = %bb.ad
@@ -218,7 +218,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cf = zext nneg i32 %i.bx to i64              ; 2 uses
   %i.cg = sub nsw i64 0, %i.cf
   %i.ch = getelementptr i8, ptr %i.br, i64 %i.cg
-  call void @llvm.memset.p0.i64(ptr align 1 %i.ch, i8 32, i64 %i.cf, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr align 1 %i.ch, i8 32, i64 range(i64 0, 15) %i.cf, i1 false), !tbaa !31
   br label %bb.af
 
 format_decimal.exit:                              ; preds = %bb.aa, %.preheader32.preheader.i
@@ -299,7 +299,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
   br i1 %i.du, label %bb.an, label %.preheader32.preheader.i107
 
 .preheader32.preheader.i107:                      ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.lcssa192, i8 57, i64 6, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.lcssa192, i8 57, i64 range(i64 0, 16) 6, i1 false), !tbaa !31
   br label %format_decimal.exit111
 
 bb.an:                                            ; preds = %bb.am
@@ -309,7 +309,7 @@ bb.an:                                            ; preds = %bb.am
 .lr.ph.preheader.i109:                            ; preds = %bb.an
   %i.dv = sub nsw i64 0, %.lcssa191
   %i.dw = getelementptr i8, ptr %i.ck, i64 %i.dv
-  call void @llvm.memset.p0.i64(ptr align 1 %i.dw, i8 32, i64 %.lcssa191, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr align 1 %i.dw, i8 32, i64 range(i64 0, 15) %.lcssa191, i1 false), !tbaa !31
   br label %bb.ao
 
 format_decimal.exit111:                           ; preds = %bb.af, %.preheader32.preheader.i107
@@ -390,7 +390,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   br i1 %i.fj, label %bb.aw, label %.preheader32.preheader.i115
 
 .preheader32.preheader.i115:                      ; preds = %bb.av
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.lcssa190, i8 57, i64 6, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.lcssa190, i8 57, i64 range(i64 0, 16) 6, i1 false), !tbaa !31
   br label %format_decimal.exit119
 
 bb.aw:                                            ; preds = %bb.av
@@ -400,7 +400,7 @@ bb.aw:                                            ; preds = %bb.av
 .lr.ph.preheader.i117:                            ; preds = %bb.aw
   %i.fk = sub nsw i64 0, %.lcssa189
   %i.fl = getelementptr i8, ptr %i.dz, i64 %i.fk
-  call void @llvm.memset.p0.i64(ptr align 1 %i.fl, i8 32, i64 %.lcssa189, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr align 1 %i.fl, i8 32, i64 range(i64 0, 15) %.lcssa189, i1 false), !tbaa !31
   br label %bb.ax
 
 format_decimal.exit119:                           ; preds = %bb.ao, %.preheader32.preheader.i115
@@ -460,7 +460,7 @@ bb.bd:                                            ; preds = %.preheader
   br i1 %i.gb, label %bb.be, label %.preheader32.preheader.i123
 
 .preheader32.preheader.i123:                      ; preds = %bb.bd
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.fv, i8 57, i64 10, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.fv, i8 57, i64 range(i64 0, 16) 10, i1 false), !tbaa !31
   br label %format_decimal.exit127
 
 bb.be:                                            ; preds = %bb.bd
@@ -474,7 +474,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.gf = zext nneg i32 %i.fx to i64              ; 2 uses
   %i.gg = sub nsw i64 0, %i.gf
   %i.gh = getelementptr i8, ptr %i.n, i64 %i.gg
-  call void @llvm.memset.p0.i64(ptr align 1 %i.gh, i8 32, i64 %i.gf, i1 false), !tbaa !31
+  call void @llvm.memset.p0.i64(ptr align 1 %i.gh, i8 32, i64 range(i64 0, 15) %i.gf, i1 false), !tbaa !31
   br label %bb.bf
 
 format_decimal.exit127:                           ; preds = %bb.bc, %.preheader32.preheader.i123
@@ -692,7 +692,7 @@ bb.a:
   br i1 %i.a, label %.preheader.preheader, label %bb.b
 
 .preheader.preheader:                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %1, i8 48, i64 %i.b, i1 false), !tbaa !31
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %1, i8 48, i64 range(i64 0, 16) %i.b, i1 false), !tbaa !31
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
@@ -720,7 +720,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.m, label %bb.e, label %.preheader32.preheader
 
 .preheader32.preheader:                           ; preds = %bb.d
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.g, i8 57, i64 %i.b, i1 false), !tbaa !31
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.g, i8 57, i64 range(i64 0, 16) %i.b, i1 false), !tbaa !31
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.d
@@ -734,7 +734,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = zext nneg i32 %i.i to i64                ; 2 uses
   %i.r = sub nsw i64 0, %i.q
   %i.s = getelementptr i8, ptr %i.c, i64 %i.r
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.s, i8 32, i64 %i.q, i1 false), !tbaa !31
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.s, i8 32, i64 range(i64 0, 15) %i.q, i1 false), !tbaa !31
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader32.preheader, %.lr.ph.preheader, %.preheader.preheader, %bb.e
@@ -851,7 +851,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.preheader:                                 ; preds = %bb.j
   %i.ap = sub nsw i64 0, %.lcssa3
   %i.aq = getelementptr i8, ptr %i.a, i64 %i.ap
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aq, i8 32, i64 %.lcssa3, i1 false), !tbaa !31
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aq, i8 32, i64 range(i64 0, 8) %.lcssa3, i1 false), !tbaa !31
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %.lr.ph.preheader, %bb.j

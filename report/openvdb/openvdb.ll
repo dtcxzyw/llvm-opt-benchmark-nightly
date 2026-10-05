@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.cq, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.an
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.co, i8 0, i64 %i.cn, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.co, i8 0, i64 range(i64 0, 2049) %i.cn, i1 false), !tbaa !6423
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.ao:                                            ; preds = %.invoke200, %.invoke198, %.invoke197, %.invoke196, %.invoke195
@@ -608,7 +608,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.cx, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 %i.cu, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 range(i64 0, 17179869181) %i.cu, i1 false), !tbaa !6423
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.an:                                            ; preds = %.invoke202, %.invoke200, %.invoke199, %.invoke198, %.invoke197
@@ -1011,7 +1011,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.cx, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 %i.cu, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 range(i64 0, 17179869181) %i.cu, i1 false), !tbaa !6423
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.an:                                            ; preds = %.invoke200, %.invoke198, %.invoke197, %.invoke196, %.invoke195
@@ -1414,7 +1414,7 @@ _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5
   br i1 %or.cond11, label %.preheader.preheader, label %bb.aa
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.thread: ; preds = %bb.w
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 %i.ak, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 range(i64 0, 17179869181) %i.ak, i1 false), !tbaa !6423
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !1126
   %or.cond11148 = icmp ult i8 %i.ao, 3
   br i1 %or.cond11148, label %.preheader.preheader, label %.lr.ph
@@ -1817,7 +1817,7 @@ _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5
   br i1 %or.cond11, label %bb.x, label %bb.aa
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.thread: ; preds = %bb.w
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 %i.ak, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 range(i64 0, 17179869181) %i.ak, i1 false), !tbaa !6423
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !1126
   %or.cond11132 = icmp ult i8 %i.ao, 3
   br i1 %or.cond11132, label %bb.x, label %.lr.ph
@@ -2220,7 +2220,7 @@ _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5
   br i1 %or.cond11, label %bb.x, label %bb.ah
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.thread: ; preds = %bb.w
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 %i.ak, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 range(i64 0, 17179869181) %i.ak, i1 false), !tbaa !6423
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !1126
   %or.cond11145 = icmp ult i8 %i.ao, 3
   br i1 %or.cond11145, label %bb.x, label %.lr.ph
@@ -2623,7 +2623,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.cx, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 %i.cu, i1 false), !tbaa !7038
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 range(i64 0, 17179869181) %i.cu, i1 false), !tbaa !7038
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.an:                                            ; preds = %.invoke202, %.invoke200, %.invoke199, %.invoke198, %.invoke197
@@ -3026,7 +3026,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.cx, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.am
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 %i.cu, i1 false), !tbaa !7038
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cv, i8 0, i64 range(i64 0, 17179869181) %i.cu, i1 false), !tbaa !7038
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.an:                                            ; preds = %.invoke200, %.invoke198, %.invoke197, %.invoke196, %.invoke195
@@ -3429,7 +3429,7 @@ _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5
   br i1 %or.cond11, label %.preheader.preheader, label %bb.aa
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.thread: ; preds = %bb.w
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 %i.ak, i1 false), !tbaa !7038
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 range(i64 0, 17179869181) %i.ak, i1 false), !tbaa !7038
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !1126
   %or.cond11148 = icmp ult i8 %i.ao, 3
   br i1 %or.cond11148, label %.preheader.preheader, label %.lr.ph
@@ -3832,7 +3832,7 @@ _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5
   br i1 %or.cond11, label %bb.x, label %bb.aa
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj1EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.thread: ; preds = %bb.w
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 %i.ak, i1 false), !tbaa !7038
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 0, i64 range(i64 0, 17179869181) %i.ak, i1 false), !tbaa !7038
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !1126
   %or.cond11132 = icmp ult i8 %i.ao, 3
   br i1 %or.cond11132, label %bb.x, label %.lr.ph

@@ -205,8 +205,8 @@ bb.a:
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
   %i.s = lshr exact i64 %i.g, 1                   ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.s, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.s, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 1025) %i.s, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 1025) %i.s, i1 false)
   br label %.split54.us
 
 do_srshr.exit50.us:                               ; preds = %bb.a, %do_srshr.exit50.us
@@ -347,8 +347,8 @@ do_urshr.exit51.us.preheader67:                   ; preds = %vector.memcheck, %d
 
 do_urshr.exit51.preheader:                        ; preds = %bb.a
   %i.ap = lshr exact i64 %i.g, 1                  ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.ap, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.ap, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 1025) %i.ap, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 1025) %i.ap, i1 false)
   br label %.split55.us
 
 do_urshr.exit51.us:                               ; preds = %do_urshr.exit51.us.preheader67, %do_urshr.exit51.us
@@ -425,8 +425,8 @@ bb.a:
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
   %i.s = lshr exact i64 %i.g, 1                   ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.s, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.s, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 1025) %i.s, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 1025) %i.s, i1 false)
   br label %.split54.us
 
 do_srshr.exit50.us:                               ; preds = %bb.a, %do_srshr.exit50.us
@@ -509,11 +509,11 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit86.us, label %do_srshr.exit84.preheader, !prof !54
 
 do_srshr.exit84.preheader:                        ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.h
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 %i.h, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 %i.h, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep91, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep91, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   br label %.split95.us
 
 do_srshr.exit86.us:                               ; preds = %bb.a, %do_srshr.exit86.us
@@ -619,12 +619,12 @@ bb.a:
   br i1 %i.q, label %do_urshr.exit91.us, label %do_urshr.exit91.preheader, !prof !54
 
 do_urshr.exit91.preheader:                        ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.h
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   %scevgep99 = getelementptr i8, ptr %spec.select, i64 %i.s
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep99, i8 0, i64 %i.h, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep99, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   br label %.split97.us
 
 do_urshr.exit91.us:                               ; preds = %bb.a, %do_urshr.exit91.us
@@ -727,11 +727,11 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit86.us, label %do_srshr.exit84.preheader, !prof !54
 
 do_srshr.exit84.preheader:                        ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.h
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 %i.h, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 %i.h, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep91, i8 0, i64 %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %invariant.gep91, i8 0, i64 range(i64 0, 513) %i.h, i1 false)
   br label %.split95.us
 
 do_srshr.exit86.us:                               ; preds = %bb.a, %do_srshr.exit86.us
@@ -839,11 +839,11 @@ bb.a:
 
 do_srshr.exit85.preheader:                        ; preds = %bb.a
   %i.u = lshr exact i64 %i.g, 2                   ; 5 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.u
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 %i.u, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.u, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep92, i8 0, i64 %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep92, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
   br label %.split96.us
 
 do_srshr.exit87.us:                               ; preds = %bb.a, %do_srshr.exit87.us
@@ -1196,12 +1196,12 @@ do_urshr.exit92.us100.preheader292:               ; preds = %vector.memcheck, %d
 
 do_urshr.exit92.preheader:                        ; preds = %.split
   %i.dx = lshr exact i64 %i.g, 2                  ; 5 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.dx, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.dx, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.dx
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 %i.dx, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.dx, i1 false)
   %scevgep120 = getelementptr i8, ptr %spec.select, i64 %.idx
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep120, i8 0, i64 %i.dx, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.dx, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep120, i8 0, i64 range(i64 0, 513) %i.dx, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.dx, i1 false)
   br label %.split99.us
 
 do_urshr.exit92.us100:                            ; preds = %do_urshr.exit92.us100.preheader292, %do_urshr.exit92.us100
@@ -1285,11 +1285,11 @@ bb.a:
 
 do_srshr.exit85.preheader:                        ; preds = %bb.a
   %i.u = lshr exact i64 %i.g, 2                   ; 5 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
   %scevgep = getelementptr i8, ptr %spec.select, i64 %i.u
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 %i.u, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 %i.u, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep92, i8 0, i64 %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %invariant.gep92, i8 0, i64 range(i64 0, 513) %i.u, i1 false)
   br label %.split96.us
 
 do_srshr.exit87.us:                               ; preds = %bb.a, %do_srshr.exit87.us
@@ -1386,7 +1386,7 @@ bb.a:
   br i1 %i.o, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split51.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us
@@ -1522,7 +1522,7 @@ do_urshr.exit49.us.preheader60:                   ; preds = %vector.memcheck, %d
   br label %do_urshr.exit49.us
 
 do_urshr.exit49.preheader:                        ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split54.us
 
 do_urshr.exit49.us:                               ; preds = %do_urshr.exit49.us.preheader60, %do_urshr.exit49.us
@@ -1598,7 +1598,7 @@ bb.a:
   br i1 %i.o, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split51.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us
@@ -1678,7 +1678,7 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split89.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us
@@ -1782,7 +1782,7 @@ bb.a:
   br i1 %i.q, label %do_urshr.exit87.us, label %do_urshr.exit87.preheader, !prof !54
 
 do_urshr.exit87.preheader:                        ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split93.us
 
 do_urshr.exit87.us:                               ; preds = %bb.a, %do_urshr.exit87.us
@@ -1882,7 +1882,7 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split89.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us
@@ -1986,7 +1986,7 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split89.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us
@@ -2137,7 +2137,7 @@ do_urshr.exit87.us:                               ; preds = %bb.a, %do_urshr.exi
   br i1 %i.bf, label %do_urshr.exit87.us95, label %do_urshr.exit87.preheader
 
 do_urshr.exit87.preheader:                        ; preds = %.split
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split94.us
 
 do_urshr.exit87.us95:                             ; preds = %.split, %do_urshr.exit87.us95
@@ -2217,7 +2217,7 @@ bb.a:
   br i1 %i.q, label %do_srshr.exit.us, label %do_srshr.exit.preheader, !prof !54
 
 do_srshr.exit.preheader:                          ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 %i.g, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %spec.select, i8 0, i64 range(i64 0, 2049) %i.g, i1 false)
   br label %.split89.us
 
 do_srshr.exit.us:                                 ; preds = %bb.a, %do_srshr.exit.us

@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.critedge8.i
   %i.cf = udiv i32 %.fr1056, 255
   %i.cg = zext nneg i32 %i.cf to i64              ; 2 uses
   %i.ch = add nuw nsw i64 %i.cg, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bx, i8 -1, i64 %i.ch, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bx, i8 -1, i64 range(i64 0, 16843011) %i.ch, i1 false), !tbaa !15
   %scevgep953 = getelementptr i8, ptr %.0463.i, i64 2
   %scevgep954 = getelementptr i8, ptr %scevgep953, i64 %i.cg
   %i.ci = urem i32 %.fr1056, 255
@@ -381,7 +381,7 @@ bb.aa:                                            ; preds = %LZ4_count.exit348
   %i.ep = shl nuw nsw i32 %i.eo, 2
   %i.eq = zext nneg i32 %i.ep to i64              ; 2 uses
   %i.er = add nuw nsw i64 %i.eq, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep955, i8 -1, i64 %i.er, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep955, i8 -1, i64 range(i64 0, 16843013) %i.er, i1 false), !tbaa !24
   %scevgep957 = getelementptr i8, ptr %scevgep955, i64 %i.eq
   %i.es = urem i32 %i.en, 1020
   br label %._crit_edge752
@@ -467,7 +467,7 @@ bb.af:                                            ; preds = %.thread435
   %i.gf = sub i64 %i.ge, %i.fz                    ; 2 uses
   %i.gg = udiv i64 %i.gf, 255                     ; 3 uses
   %i.gh = add nuw nsw i64 %i.gg, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i755, i8 -1, i64 %i.gh, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i755, i8 -1, i64 range(i64 0, 72340172838076675) %i.gh, i1 false), !tbaa !15
   %.neg1058 = mul i64 %i.gg, -255
   %i.gi = add i64 %.neg1058, %i.gf
   %i.gj = getelementptr i8, ptr %.12.i, i64 %i.gg
@@ -653,7 +653,7 @@ bb.an:                                            ; preds = %.critedge8.i78
   %i.jq = udiv i32 %.fr, 255
   %i.jr = zext nneg i32 %i.jq to i64              ; 2 uses
   %i.js = add nuw nsw i64 %i.jr, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ji, i8 -1, i64 %i.js, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ji, i8 -1, i64 range(i64 0, 16843011) %i.js, i1 false), !tbaa !15
   %scevgep = getelementptr i8, ptr %.0463.i45720, i64 2
   %scevgep948 = getelementptr i8, ptr %scevgep, i64 %i.jr
   %i.jt = urem i32 %.fr, 255
@@ -830,7 +830,7 @@ bb.bb:                                            ; preds = %LZ4_count.exit326
   %i.ma = shl nuw nsw i32 %i.lz, 2
   %i.mb = zext nneg i32 %i.ma to i64              ; 2 uses
   %i.mc = add nuw nsw i64 %i.mb, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep949, i8 -1, i64 %i.mc, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep949, i8 -1, i64 range(i64 0, 16843013) %i.mc, i1 false), !tbaa !24
   %scevgep951 = getelementptr i8, ptr %scevgep949, i64 %i.mb
   %i.md = urem i32 %i.ly, 1020
   br label %._crit_edge714
@@ -925,7 +925,7 @@ bb.bi:                                            ; preds = %.loopexit625
   %i.nr = sub i64 %i.nq, %i.nl                    ; 2 uses
   %i.ns = udiv i64 %i.nr, 255                     ; 3 uses
   %i.nt = add nuw nsw i64 %i.ns, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i77725, i8 -1, i64 %i.nt, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i77725, i8 -1, i64 range(i64 0, 72340172838076675) %i.nt, i1 false), !tbaa !15
   %.neg = mul i64 %i.ns, -255
   %i.nu = add i64 %.neg, %i.nr
   %i.nv = getelementptr i8, ptr %.11474.i63.ph, i64 %i.ns
@@ -1135,7 +1135,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.rj = udiv i32 %.fr1062, 255
   %i.rk = zext nneg i32 %i.rj to i64              ; 2 uses
   %i.rl = add nuw nsw i64 %i.rk, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.qu, i8 -1, i64 %i.rl, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.qu, i8 -1, i64 range(i64 0, 16843011) %i.rl, i1 false), !tbaa !15
   %scevgep965 = getelementptr i8, ptr %.0463.i111, i64 2
   %scevgep966 = getelementptr i8, ptr %scevgep965, i64 %i.rk
   %i.rm = urem i32 %.fr1062, 255
@@ -1325,7 +1325,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.ua = shl nuw nsw i32 %i.tz, 2
   %i.ub = zext nneg i32 %i.ua to i64              ; 2 uses
   %i.uc = add nuw nsw i64 %i.ub, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep967, i8 -1, i64 %i.uc, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep967, i8 -1, i64 range(i64 0, 16843009) %i.uc, i1 false), !tbaa !24
   %scevgep969 = getelementptr i8, ptr %scevgep967, i64 %i.ub
   %i.ud = urem i32 %i.ty, 1020
   br label %._crit_edge828
@@ -1416,7 +1416,7 @@ bb.cs:                                            ; preds = %bb.cr
   %i.vt = sub i64 %i.vs, %i.vh                    ; 2 uses
   %i.vu = udiv i64 %i.vt, 255                     ; 3 uses
   %i.vv = add nuw nsw i64 %i.vu, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i143831, i8 -1, i64 %i.vv, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i143831, i8 -1, i64 range(i64 0, 72340172838076675) %i.vv, i1 false), !tbaa !15
   %.neg1064 = mul i64 %i.vu, -255
   %i.vw = add i64 %.neg1064, %i.vt
   %i.vx = getelementptr i8, ptr %.12.i135, i64 %i.vu
@@ -1615,7 +1615,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.zn = udiv i32 %.fr1059, 255
   %i.zo = zext nneg i32 %i.zn to i64              ; 2 uses
   %i.zp = add nuw nsw i64 %i.zo, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.yy, i8 -1, i64 %i.zp, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.yy, i8 -1, i64 range(i64 0, 16843011) %i.zp, i1 false), !tbaa !15
   %scevgep959 = getelementptr i8, ptr %.0463.i177796, i64 2
   %scevgep960 = getelementptr i8, ptr %scevgep959, i64 %i.zo
   %i.zq = urem i32 %.fr1059, 255
@@ -1805,7 +1805,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.ace = shl nuw nsw i32 %i.acd, 2
   %i.acf = zext nneg i32 %i.ace to i64            ; 2 uses
   %i.acg = add nuw nsw i64 %i.acf, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep961, i8 -1, i64 %i.acg, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep961, i8 -1, i64 range(i64 0, 16843009) %i.acg, i1 false), !tbaa !24
   %scevgep963 = getelementptr i8, ptr %scevgep961, i64 %i.acf
   %i.ach = urem i32 %i.acc, 1020
   br label %._crit_edge790
@@ -1906,7 +1906,7 @@ bb.eb:                                            ; preds = %bb.ea
   %i.ady = sub i64 %i.adx, %i.adm                 ; 2 uses
   %i.adz = udiv i64 %i.ady, 255                   ; 3 uses
   %i.aea = add nuw nsw i64 %i.adz, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i209801, i8 -1, i64 %i.aea, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i209801, i8 -1, i64 range(i64 0, 72340172838076675) %i.aea, i1 false), !tbaa !15
   %.neg1061 = mul i64 %i.adz, -255
   %i.aeb = add i64 %.neg1061, %i.ady
   %i.aec = getelementptr i8, ptr %.11474.i195.ph, i64 %i.adz
@@ -2194,7 +2194,7 @@ bb.o:                                             ; preds = %.critedge8.i
   %i.cr = udiv i32 %.fr1698, 255
   %i.cs = zext nneg i32 %i.cr to i64              ; 2 uses
   %i.ct = add nuw nsw i64 %i.cs, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cj, i8 -1, i64 %i.ct, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cj, i8 -1, i64 range(i64 0, 16843011) %i.ct, i1 false), !tbaa !15
   %scevgep1529 = getelementptr i8, ptr %.0463.i1188, i64 2
   %scevgep1530 = getelementptr i8, ptr %scevgep1529, i64 %i.cs
   %i.cu = urem i32 %.fr1698, 255
@@ -2371,7 +2371,7 @@ bb.ac:                                            ; preds = %LZ4_count.exit594
   %i.fb = shl nuw nsw i32 %i.fa, 2
   %i.fc = zext nneg i32 %i.fb to i64              ; 2 uses
   %i.fd = add nuw nsw i64 %i.fc, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1531, i8 -1, i64 %i.fd, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1531, i8 -1, i64 range(i64 0, 16843013) %i.fd, i1 false), !tbaa !24
   %scevgep1533 = getelementptr i8, ptr %scevgep1531, i64 %i.fc
   %i.fe = urem i32 %i.ez, 1020
   br label %._crit_edge1182
@@ -2467,7 +2467,7 @@ bb.aj:                                            ; preds = %.thread707
   %i.gu = sub i64 %i.gt, %i.go                    ; 2 uses
   %i.gv = udiv i64 %i.gu, 255                     ; 3 uses
   %i.gw = add nuw nsw i64 %i.gv, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1193, i8 -1, i64 %i.gw, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1193, i8 -1, i64 range(i64 0, 72340172838076675) %i.gw, i1 false), !tbaa !15
   %.neg1700 = mul i64 %i.gv, -255
   %i.gx = add i64 %.neg1700, %i.gu
   %i.gy = getelementptr i8, ptr %.12.i, i64 %i.gv
@@ -2648,7 +2648,7 @@ bb.at:                                            ; preds = %.critedge8.i118
   %i.jt = udiv i32 %.fr1701, 255
   %i.ju = zext nneg i32 %i.jt to i64              ; 2 uses
   %i.jv = add nuw nsw i64 %i.ju, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.jl, i8 -1, i64 %i.jv, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.jl, i8 -1, i64 range(i64 0, 16843011) %i.jv, i1 false), !tbaa !15
   %scevgep1535 = getelementptr i8, ptr %.0463.i85, i64 2
   %scevgep1536 = getelementptr i8, ptr %scevgep1535, i64 %i.ju
   %i.jw = urem i32 %.fr1701, 255
@@ -2825,7 +2825,7 @@ bb.bh:                                            ; preds = %LZ4_count.exit572
   %i.md = shl nuw nsw i32 %i.mc, 2
   %i.me = zext nneg i32 %i.md to i64              ; 2 uses
   %i.mf = add nuw nsw i64 %i.me, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1537, i8 -1, i64 %i.mf, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1537, i8 -1, i64 range(i64 0, 16843013) %i.mf, i1 false), !tbaa !24
   %scevgep1539 = getelementptr i8, ptr %scevgep1537, i64 %i.me
   %i.mg = urem i32 %i.mb, 1020
   br label %._crit_edge1220
@@ -2911,7 +2911,7 @@ bb.bm:                                            ; preds = %.thread748
   %i.nt = sub i64 %i.ns, %i.nn                    ; 2 uses
   %i.nu = udiv i64 %i.nt, 255                     ; 3 uses
   %i.nv = add nuw nsw i64 %i.nu, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1171223, i8 -1, i64 %i.nv, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1171223, i8 -1, i64 range(i64 0, 72340172838076675) %i.nv, i1 false), !tbaa !15
   %.neg1703 = mul i64 %i.nu, -255
   %i.nw = add i64 %.neg1703, %i.nt
   %i.nx = getelementptr i8, ptr %.12.i109, i64 %i.nu
@@ -3121,7 +3121,7 @@ bb.bw:                                            ; preds = %.critedge8.i184
   %i.rh = udiv i32 %.fr, 255
   %i.ri = zext nneg i32 %i.rh to i64              ; 2 uses
   %i.rj = add nuw nsw i64 %i.ri, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.qz, i8 -1, i64 %i.rj, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.qz, i8 -1, i64 range(i64 0, 16843011) %i.rj, i1 false), !tbaa !15
   %scevgep = getelementptr i8, ptr %.0463.i1511142, i64 2
   %scevgep1524 = getelementptr i8, ptr %scevgep, i64 %i.ri
   %i.rk = urem i32 %.fr, 255
@@ -3298,7 +3298,7 @@ bb.ck:                                            ; preds = %LZ4_count.exit550
   %i.tr = shl nuw nsw i32 %i.tq, 2
   %i.ts = zext nneg i32 %i.tr to i64              ; 2 uses
   %i.tt = add nuw nsw i64 %i.ts, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1525, i8 -1, i64 %i.tt, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1525, i8 -1, i64 range(i64 0, 16843013) %i.tt, i1 false), !tbaa !24
   %scevgep1527 = getelementptr i8, ptr %scevgep1525, i64 %i.ts
   %i.tu = urem i32 %i.tp, 1020
   br label %._crit_edge1136
@@ -3393,7 +3393,7 @@ bb.cr:                                            ; preds = %.loopexit1014
   %i.vi = sub i64 %i.vh, %i.vc                    ; 2 uses
   %i.vj = udiv i64 %i.vi, 255                     ; 3 uses
   %i.vk = add nuw nsw i64 %i.vj, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1831147, i8 -1, i64 %i.vk, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1831147, i8 -1, i64 range(i64 0, 72340172838076675) %i.vk, i1 false), !tbaa !15
   %.neg = mul i64 %i.vj, -255
   %i.vl = add i64 %.neg, %i.vi
   %i.vm = getelementptr i8, ptr %.11474.i169.ph, i64 %i.vj
@@ -3644,7 +3644,7 @@ bb.dh:                                            ; preds = %bb.dg
   %i.zn = udiv i32 %.fr1707, 255
   %i.zo = zext nneg i32 %i.zn to i64              ; 2 uses
   %i.zp = add nuw nsw i64 %i.zo, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.yy, i8 -1, i64 %i.zp, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.yy, i8 -1, i64 range(i64 0, 16843011) %i.zp, i1 false), !tbaa !15
   %scevgep1547 = getelementptr i8, ptr %.0463.i2181310, i64 2
   %scevgep1548 = getelementptr i8, ptr %scevgep1547, i64 %i.zo
   %i.zq = urem i32 %.fr1707, 255
@@ -3834,7 +3834,7 @@ bb.dy:                                            ; preds = %bb.dx
   %i.ace = shl nuw nsw i32 %i.acd, 2
   %i.acf = zext nneg i32 %i.ace to i64            ; 2 uses
   %i.acg = add nuw nsw i64 %i.acf, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1549, i8 -1, i64 %i.acg, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1549, i8 -1, i64 range(i64 0, 16843009) %i.acg, i1 false), !tbaa !24
   %scevgep1551 = getelementptr i8, ptr %scevgep1549, i64 %i.acf
   %i.ach = urem i32 %i.acc, 1020
   br label %._crit_edge1304
@@ -3936,7 +3936,7 @@ bb.eg:                                            ; preds = %bb.ef
   %i.aea = sub i64 %i.adz, %i.ado                 ; 2 uses
   %i.aeb = udiv i64 %i.aea, 255                   ; 3 uses
   %i.aec = add nuw nsw i64 %i.aeb, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2501315, i8 -1, i64 %i.aec, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2501315, i8 -1, i64 range(i64 0, 72340172838076675) %i.aec, i1 false), !tbaa !15
   %.neg1709 = mul i64 %i.aeb, -255
   %i.aed = add i64 %.neg1709, %i.aea
   %i.aee = getelementptr i8, ptr %.12.i242, i64 %i.aeb
@@ -4133,7 +4133,7 @@ bb.et:                                            ; preds = %bb.es
   %i.ahj = udiv i32 %.fr1710, 255
   %i.ahk = zext nneg i32 %i.ahj to i64            ; 2 uses
   %i.ahl = add nuw nsw i64 %i.ahk, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.agu, i8 -1, i64 %i.ahl, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.agu, i8 -1, i64 range(i64 0, 16843011) %i.ahl, i1 false), !tbaa !15
   %scevgep1553 = getelementptr i8, ptr %.0463.i285, i64 2
   %scevgep1554 = getelementptr i8, ptr %scevgep1553, i64 %i.ahk
   %i.ahm = urem i32 %.fr1710, 255
@@ -4323,7 +4323,7 @@ bb.fk:                                            ; preds = %bb.fj
   %i.aka = shl nuw nsw i32 %i.ajz, 2
   %i.akb = zext nneg i32 %i.aka to i64            ; 2 uses
   %i.akc = add nuw nsw i64 %i.akb, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1555, i8 -1, i64 %i.akc, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1555, i8 -1, i64 range(i64 0, 16843009) %i.akc, i1 false), !tbaa !24
   %scevgep1557 = getelementptr i8, ptr %scevgep1555, i64 %i.akb
   %i.akd = urem i32 %i.ajy, 1020
   br label %._crit_edge1342
@@ -4414,7 +4414,7 @@ bb.fq:                                            ; preds = %bb.fp
   %i.alt = sub i64 %i.als, %i.alh                 ; 2 uses
   %i.alu = udiv i64 %i.alt, 255                   ; 3 uses
   %i.alv = add nuw nsw i64 %i.alu, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3171345, i8 -1, i64 %i.alv, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3171345, i8 -1, i64 range(i64 0, 72340172838076675) %i.alv, i1 false), !tbaa !15
   %.neg1712 = mul i64 %i.alu, -255
   %i.alw = add i64 %.neg1712, %i.alt
   %i.alx = getelementptr i8, ptr %.12.i309, i64 %i.alu
@@ -4637,7 +4637,7 @@ bb.gc:                                            ; preds = %bb.gb
   %i.apq = udiv i32 %.fr1704, 255
   %i.apr = zext nneg i32 %i.apq to i64            ; 2 uses
   %i.aps = add nuw nsw i64 %i.apr, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.apb, i8 -1, i64 %i.aps, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.apb, i8 -1, i64 range(i64 0, 16843011) %i.aps, i1 false), !tbaa !15
   %scevgep1541 = getelementptr i8, ptr %.0463.i3561264, i64 2
   %scevgep1542 = getelementptr i8, ptr %scevgep1541, i64 %i.apr
   %i.apt = urem i32 %.fr1704, 255
@@ -4827,7 +4827,7 @@ bb.gt:                                            ; preds = %bb.gs
   %i.ash = shl nuw nsw i32 %i.asg, 2
   %i.asi = zext nneg i32 %i.ash to i64            ; 2 uses
   %i.asj = add nuw nsw i64 %i.asi, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1543, i8 -1, i64 %i.asj, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep1543, i8 -1, i64 range(i64 0, 16843009) %i.asj, i1 false), !tbaa !24
   %scevgep1545 = getelementptr i8, ptr %scevgep1543, i64 %i.asi
   %i.ask = urem i32 %i.asf, 1020
   br label %._crit_edge1258
@@ -4928,7 +4928,7 @@ bb.hb:                                            ; preds = %bb.ha
   %i.aub = sub i64 %i.aua, %i.atp                 ; 2 uses
   %i.auc = udiv i64 %i.aub, 255                   ; 3 uses
   %i.aud = add nuw nsw i64 %i.auc, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3881269, i8 -1, i64 %i.aud, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3881269, i8 -1, i64 range(i64 0, 72340172838076675) %i.aud, i1 false), !tbaa !15
   %.neg1706 = mul i64 %i.auc, -255
   %i.aue = add i64 %.neg1706, %i.aub
   %i.auf = getelementptr i8, ptr %.11474.i374.ph, i64 %i.auc
@@ -5224,7 +5224,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cu = udiv i32 %.fr499, 255
   %i.cv = zext nneg i32 %i.cu to i64              ; 2 uses
   %i.cw = add nuw nsw i64 %i.cv, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ce, i8 -1, i64 %i.cw, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ce, i8 -1, i64 range(i64 0, 16843011) %i.cw, i1 false), !tbaa !15
   %scevgep450 = getelementptr i8, ptr %.0463.i, i64 2
   %scevgep451 = getelementptr i8, ptr %scevgep450, i64 %i.cv
   %i.cx = urem i32 %.fr499, 255
@@ -5446,7 +5446,7 @@ bb.ah:                                            ; preds = %.loopexit
   %i.gb = shl nuw nsw i32 %i.ga, 2
   %i.gc = zext nneg i32 %i.gb to i64              ; 2 uses
   %i.gd = add nuw nsw i64 %i.gc, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep452, i8 -1, i64 %i.gd, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep452, i8 -1, i64 range(i64 0, 16843009) %i.gd, i1 false), !tbaa !24
   %scevgep454 = getelementptr i8, ptr %scevgep452, i64 %i.gc
   %i.ge = urem i32 %i.fz, 1020
   br label %._crit_edge375
@@ -5549,7 +5549,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ic = add i64 %.0400.i, -270                  ; 2 uses
   %i.id = udiv i64 %i.ic, 255                     ; 3 uses
   %i.ie = add nuw nsw i64 %i.id, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i390, i8 -1, i64 %i.ie, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i390, i8 -1, i64 range(i64 0, 72340172838076673) %i.ie, i1 false), !tbaa !15
   %.neg501 = mul i64 %i.id, -255
   %i.if = add i64 %.neg501, %i.ic
   %i.ig = getelementptr i8, ptr %.12.i, i64 %i.id
@@ -5759,7 +5759,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.md = udiv i32 %.fr, 255
   %i.me = zext nneg i32 %i.md to i64              ; 2 uses
   %i.mf = add nuw nsw i64 %i.me, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ln, i8 -1, i64 %i.mf, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ln, i8 -1, i64 range(i64 0, 16843011) %i.mf, i1 false), !tbaa !15
   %scevgep = getelementptr i8, ptr %.0463.i36342, i64 2
   %scevgep445 = getelementptr i8, ptr %scevgep, i64 %i.me
   %i.mg = urem i32 %.fr, 255
@@ -5980,7 +5980,7 @@ bb.bp:                                            ; preds = %.loopexit273
   %i.pj = shl nuw nsw i32 %i.pi, 2
   %i.pk = zext nneg i32 %i.pj to i64              ; 2 uses
   %i.pl = add nuw nsw i64 %i.pk, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep446, i8 -1, i64 %i.pl, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep446, i8 -1, i64 range(i64 0, 16843009) %i.pl, i1 false), !tbaa !24
   %scevgep448 = getelementptr i8, ptr %scevgep446, i64 %i.pk
   %i.pm = urem i32 %i.ph, 1020
   br label %._crit_edge324
@@ -6092,7 +6092,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.rl = add i64 %.0400.i62, -270                ; 2 uses
   %i.rm = udiv i64 %i.rl, 255                     ; 3 uses
   %i.rn = add nuw nsw i64 %i.rm, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i69347, i8 -1, i64 %i.rn, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i69347, i8 -1, i64 range(i64 0, 72340172838076673) %i.rn, i1 false), !tbaa !15
   %.neg = mul i64 %i.rm, -255
   %i.ro = add i64 %.neg, %i.rl
   %i.rp = getelementptr i8, ptr %.11474.i54.ph, i64 %i.rm
@@ -6495,7 +6495,7 @@ bb.x:                                             ; preds = %bb.w
   %i.et = udiv i32 %.fr2416, 255
   %i.eu = zext nneg i32 %i.et to i64              ; 2 uses
   %i.ev = add nuw nsw i64 %i.eu, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ee, i8 -1, i64 %i.ev, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ee, i8 -1, i64 range(i64 0, 16843011) %i.ev, i1 false), !tbaa !15
   %scevgep2214 = getelementptr i8, ptr %.0463.i1926, i64 2
   %scevgep2215 = getelementptr i8, ptr %scevgep2214, i64 %i.eu
   %i.ew = urem i32 %.fr2416, 255
@@ -6685,7 +6685,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.hk = shl nuw nsw i32 %i.hj, 2
   %i.hl = zext nneg i32 %i.hk to i64              ; 2 uses
   %i.hm = add nuw nsw i64 %i.hl, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2216, i8 -1, i64 %i.hm, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2216, i8 -1, i64 range(i64 0, 16843009) %i.hm, i1 false), !tbaa !24
   %scevgep2218 = getelementptr i8, ptr %scevgep2216, i64 %i.hl
   %i.hn = urem i32 %i.hi, 1020
   br label %._crit_edge1919
@@ -6788,7 +6788,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.je = sub i64 %i.jd, %i.is                    ; 2 uses
   %i.jf = udiv i64 %i.je, 255                     ; 3 uses
   %i.jg = add nuw nsw i64 %i.jf, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1931, i8 -1, i64 %i.jg, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1931, i8 -1, i64 range(i64 0, 72340172838076675) %i.jg, i1 false), !tbaa !15
   %.neg2418 = mul i64 %i.jf, -255
   %i.jh = add i64 %.neg2418, %i.je
   %i.ji = getelementptr i8, ptr %.12.i, i64 %i.jf
@@ -7004,7 +7004,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.nc = udiv i32 %.fr2413, 255
   %i.nd = zext nneg i32 %i.nc to i64              ; 2 uses
   %i.ne = add nuw nsw i64 %i.nd, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.mn, i8 -1, i64 %i.ne, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.mn, i8 -1, i64 range(i64 0, 16843011) %i.ne, i1 false), !tbaa !15
   %scevgep2208 = getelementptr i8, ptr %.0463.i1191879, i64 2
   %scevgep2209 = getelementptr i8, ptr %scevgep2208, i64 %i.nd
   %i.nf = urem i32 %.fr2413, 255
@@ -7194,7 +7194,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.pt = shl nuw nsw i32 %i.ps, 2
   %i.pu = zext nneg i32 %i.pt to i64              ; 2 uses
   %i.pv = add nuw nsw i64 %i.pu, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2210, i8 -1, i64 %i.pv, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2210, i8 -1, i64 range(i64 0, 16843009) %i.pv, i1 false), !tbaa !24
   %scevgep2212 = getelementptr i8, ptr %scevgep2210, i64 %i.pu
   %i.pw = urem i32 %i.pr, 1020
   br label %._crit_edge1873
@@ -7295,7 +7295,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.rn = sub i64 %i.rm, %i.rb                    ; 2 uses
   %i.ro = udiv i64 %i.rn, 255                     ; 3 uses
   %i.rp = add nuw nsw i64 %i.ro, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1511884, i8 -1, i64 %i.rp, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i1511884, i8 -1, i64 range(i64 0, 72340172838076675) %i.rp, i1 false), !tbaa !15
   %.neg2415 = mul i64 %i.ro, -255
   %i.rq = add i64 %.neg2415, %i.rn
   %i.rr = getelementptr i8, ptr %.12.i143, i64 %i.ro
@@ -7513,7 +7513,7 @@ bb.cv:                                            ; preds = %bb.cu
   %i.vu = udiv i32 %.fr2404, 255
   %i.vv = zext nneg i32 %i.vu to i64              ; 2 uses
   %i.vw = add nuw nsw i64 %i.vv, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.vf, i8 -1, i64 %i.vw, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.vf, i8 -1, i64 range(i64 0, 16843011) %i.vw, i1 false), !tbaa !15
   %scevgep2190 = getelementptr i8, ptr %.0463.i1891708, i64 2
   %scevgep2191 = getelementptr i8, ptr %scevgep2190, i64 %i.vv
   %i.vx = urem i32 %.fr2404, 255
@@ -7916,7 +7916,7 @@ bb.eo:                                            ; preds = %bb.en
   %i.abq = shl nuw nsw i32 %i.abp, 2
   %i.abr = zext nneg i32 %i.abq to i64            ; 2 uses
   %i.abs = add nuw nsw i64 %i.abr, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2192, i8 -1, i64 %i.abs, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2192, i8 -1, i64 range(i64 0, 16843009) %i.abs, i1 false), !tbaa !24
   %scevgep2194 = getelementptr i8, ptr %scevgep2192, i64 %i.abr
   %i.abt = urem i32 %i.abo, 1020
   br label %._crit_edge1700
@@ -8024,7 +8024,7 @@ bb.ew:                                            ; preds = %bb.ev
   %i.ado = sub i64 %i.adn, %i.adc                 ; 2 uses
   %i.adp = udiv i64 %i.ado, 255                   ; 3 uses
   %i.adq = add nuw nsw i64 %i.adp, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2211712, i8 -1, i64 %i.adq, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2211712, i8 -1, i64 range(i64 0, 72340172838076675) %i.adq, i1 false), !tbaa !15
   %.neg2406 = mul i64 %i.adp, -255
   %i.adr = add i64 %.neg2406, %i.ado
   %i.ads = getelementptr i8, ptr %.11474.i207.ph, i64 %i.adp
@@ -8267,7 +8267,7 @@ bb.fn:                                            ; preds = %bb.fm
   %i.aif = udiv i32 %.fr, 255
   %i.aig = zext nneg i32 %i.aif to i64            ; 2 uses
   %i.aih = add nuw nsw i64 %i.aig, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ahq, i8 -1, i64 %i.aih, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ahq, i8 -1, i64 range(i64 0, 16843011) %i.aih, i1 false), !tbaa !15
   %scevgep = getelementptr i8, ptr %.0463.i2591644, i64 2
   %scevgep2185 = getelementptr i8, ptr %scevgep, i64 %i.aig
   %i.aii = urem i32 %.fr, 255
@@ -8670,7 +8670,7 @@ bb.hg:                                            ; preds = %bb.hf
   %i.aob = shl nuw nsw i32 %i.aoa, 2
   %i.aoc = zext nneg i32 %i.aob to i64            ; 2 uses
   %i.aod = add nuw nsw i64 %i.aoc, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2186, i8 -1, i64 %i.aod, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2186, i8 -1, i64 range(i64 0, 16843009) %i.aod, i1 false), !tbaa !24
   %scevgep2188 = getelementptr i8, ptr %scevgep2186, i64 %i.aoc
   %i.aoe = urem i32 %i.anz, 1020
   br label %._crit_edge1636
@@ -8793,7 +8793,7 @@ bb.hr:                                            ; preds = %bb.hq
   %i.aqf = sub i64 %i.aqe, %i.apt                 ; 2 uses
   %i.aqg = udiv i64 %i.aqf, 255                   ; 3 uses
   %i.aqh = add nuw nsw i64 %i.aqg, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2951649, i8 -1, i64 %i.aqh, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i2951649, i8 -1, i64 range(i64 0, 72340172838076675) %i.aqh, i1 false), !tbaa !15
   %.neg = mul i64 %i.aqg, -255
   %i.aqi = add i64 %.neg, %i.aqf
   %i.aqj = getelementptr i8, ptr %.12.i287, i64 %i.aqg
@@ -9022,7 +9022,7 @@ bb.ig:                                            ; preds = %bb.if
   %i.aun = udiv i32 %.fr2410, 255
   %i.auo = zext nneg i32 %i.aun to i64            ; 2 uses
   %i.aup = add nuw nsw i64 %i.auo, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aty, i8 -1, i64 %i.aup, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aty, i8 -1, i64 range(i64 0, 16843011) %i.aup, i1 false), !tbaa !15
   %scevgep2202 = getelementptr i8, ptr %.0463.i3391834, i64 2
   %scevgep2203 = getelementptr i8, ptr %scevgep2202, i64 %i.auo
   %i.auq = urem i32 %.fr2410, 255
@@ -9425,7 +9425,7 @@ bb.jz:                                            ; preds = %bb.jy
   %i.baj = shl nuw nsw i32 %i.bai, 2
   %i.bak = zext nneg i32 %i.baj to i64            ; 2 uses
   %i.bal = add nuw nsw i64 %i.bak, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2204, i8 -1, i64 %i.bal, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2204, i8 -1, i64 range(i64 0, 16843009) %i.bal, i1 false), !tbaa !24
   %scevgep2206 = getelementptr i8, ptr %scevgep2204, i64 %i.bak
   %i.bam = urem i32 %i.bah, 1020
   br label %._crit_edge1826
@@ -9535,7 +9535,7 @@ bb.kh:                                            ; preds = %bb.kg
   %i.bch = sub i64 %i.bcg, %i.bbv                 ; 2 uses
   %i.bci = udiv i64 %i.bch, 255                   ; 3 uses
   %i.bcj = add nuw nsw i64 %i.bci, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3761838, i8 -1, i64 %i.bcj, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i3761838, i8 -1, i64 range(i64 0, 72340172838076675) %i.bcj, i1 false), !tbaa !15
   %.neg2412 = mul i64 %i.bci, -255
   %i.bck = add i64 %.neg2412, %i.bch
   %i.bcl = getelementptr i8, ptr %.12.i368, i64 %i.bci
@@ -9754,7 +9754,7 @@ bb.kv:                                            ; preds = %bb.ku
   %i.bgk = udiv i32 %.fr2407, 255
   %i.bgl = zext nneg i32 %i.bgk to i64            ; 2 uses
   %i.bgm = add nuw nsw i64 %i.bgl, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bfv, i8 -1, i64 %i.bgm, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bfv, i8 -1, i64 range(i64 0, 16843011) %i.bgm, i1 false), !tbaa !15
   %scevgep2196 = getelementptr i8, ptr %.0463.i4211771, i64 2
   %scevgep2197 = getelementptr i8, ptr %scevgep2196, i64 %i.bgl
   %i.bgn = urem i32 %.fr2407, 255
@@ -10157,7 +10157,7 @@ bb.mo:                                            ; preds = %bb.mn
   %i.bmg = shl nuw nsw i32 %i.bmf, 2
   %i.bmh = zext nneg i32 %i.bmg to i64            ; 2 uses
   %i.bmi = add nuw nsw i64 %i.bmh, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2198, i8 -1, i64 %i.bmi, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep2198, i8 -1, i64 range(i64 0, 16843009) %i.bmi, i1 false), !tbaa !24
   %scevgep2200 = getelementptr i8, ptr %scevgep2198, i64 %i.bmh
   %i.bmj = urem i32 %i.bme, 1020
   br label %._crit_edge1763
@@ -10265,7 +10265,7 @@ bb.mw:                                            ; preds = %bb.mv
   %i.boe = sub i64 %i.bod, %i.bns                 ; 2 uses
   %i.bof = udiv i64 %i.boe, 255                   ; 3 uses
   %i.bog = add nuw nsw i64 %i.bof, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i4581775, i8 -1, i64 %i.bog, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i4581775, i8 -1, i64 range(i64 0, 72340172838076675) %i.bog, i1 false), !tbaa !15
   %.neg2409 = mul i64 %i.bof, -255
   %i.boh = add i64 %.neg2409, %i.boe
   %i.boi = getelementptr i8, ptr %.12.i450, i64 %i.bof
@@ -10545,7 +10545,7 @@ bb.k:                                             ; preds = %.critedge8.i
   %i.di = udiv i32 %.fr724, 255
   %i.dj = zext nneg i32 %i.di to i64              ; 2 uses
   %i.dk = add nuw nsw i64 %i.dj, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.da, i8 -1, i64 %i.dk, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.da, i8 -1, i64 range(i64 0, 16843011) %i.dk, i1 false), !tbaa !15
   %scevgep653 = getelementptr i8, ptr %.0463.i562, i64 2
   %scevgep654 = getelementptr i8, ptr %scevgep653, i64 %i.dj
   %i.dl = urem i32 %.fr724, 255
@@ -10948,7 +10948,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.iz = shl nuw nsw i32 %i.iy, 2
   %i.ja = zext nneg i32 %i.iz to i64              ; 2 uses
   %i.jb = add nuw nsw i64 %i.ja, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep655, i8 -1, i64 %i.jb, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep655, i8 -1, i64 range(i64 0, 16843009) %i.jb, i1 false), !tbaa !24
   %scevgep657 = getelementptr i8, ptr %scevgep655, i64 %i.ja
   %i.jc = urem i32 %i.ix, 1020
   br label %._crit_edge554
@@ -11049,7 +11049,7 @@ bb.bj:                                            ; preds = %.thread324
   %i.kr = sub i64 %i.kq, %i.kl                    ; 2 uses
   %i.ks = udiv i64 %i.kr, 255                     ; 3 uses
   %i.kt = add nuw nsw i64 %i.ks, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i566, i8 -1, i64 %i.kt, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i566, i8 -1, i64 range(i64 0, 72340172838076675) %i.kt, i1 false), !tbaa !15
   %.neg726 = mul i64 %i.ks, -255
   %i.ku = add i64 %.neg726, %i.kr
   %i.kv = getelementptr i8, ptr %.12.i, i64 %i.ks
@@ -11252,7 +11252,7 @@ bb.bu:                                            ; preds = %.critedge8.i65
   %i.oj = udiv i32 %.fr, 255
   %i.ok = zext nneg i32 %i.oj to i64              ; 2 uses
   %i.ol = add nuw nsw i64 %i.ok, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ob, i8 -1, i64 %i.ol, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ob, i8 -1, i64 range(i64 0, 16843011) %i.ol, i1 false), !tbaa !15
   %scevgep = getelementptr i8, ptr %.0463.i28499, i64 2
   %scevgep648 = getelementptr i8, ptr %scevgep, i64 %i.ok
   %i.om = urem i32 %.fr, 255
@@ -11655,7 +11655,7 @@ bb.dm:                                            ; preds = %bb.dl
   %i.ua = shl nuw nsw i32 %i.tz, 2
   %i.ub = zext nneg i32 %i.ua to i64              ; 2 uses
   %i.uc = add nuw nsw i64 %i.ub, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep649, i8 -1, i64 %i.uc, i1 false), !tbaa !24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep649, i8 -1, i64 range(i64 0, 16843009) %i.uc, i1 false), !tbaa !24
   %scevgep651 = getelementptr i8, ptr %scevgep649, i64 %i.ub
   %i.ud = urem i32 %i.ty, 1020
   br label %._crit_edge491
@@ -11754,7 +11754,7 @@ bb.dt:                                            ; preds = %.thread397
   %i.vs = sub i64 %i.vr, %i.vm                    ; 2 uses
   %i.vt = udiv i64 %i.vs, 255                     ; 3 uses
   %i.vu = add nuw nsw i64 %i.vt, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i64503, i8 -1, i64 %i.vu, i1 false), !tbaa !15
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.13.i64503, i8 -1, i64 range(i64 0, 72340172838076675) %i.vu, i1 false), !tbaa !15
   %.neg = mul i64 %i.vt, -255
   %i.vv = add i64 %.neg, %i.vs
   %i.vw = getelementptr i8, ptr %.12.i56, i64 %i.vt

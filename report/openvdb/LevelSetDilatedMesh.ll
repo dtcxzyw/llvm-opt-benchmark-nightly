@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %._crit_edge192
   %i.gz = urem i64 %i.gy, 12
   %i.ha = sub nuw nsw i64 %i.gy, %i.gz
   %i.hb = add nsw i64 %i.ha, 12
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ga, i8 0, i64 %i.hb, i1 false), !tbaa !741
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ga, i8 0, i64 range(i64 0, 51539607541) %i.hb, i1 false), !tbaa !741
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.aj
