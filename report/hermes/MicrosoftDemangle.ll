@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.l
   %i.bz = shl i64 %i.by, 1
   %spec.store.select.i.i = call i64 @llvm.umax.i64(i64 %i.bz, i64 %i.bx) ; 2 uses
-  store i64 %spec.store.select.i.i, ptr %i.bs, align 8
+  store i64 %spec.store.select.i.i, ptr %i.bs, align 8, !tbaa !45
   %i.ca = call ptr @realloc(ptr noundef %.pre.i16, i64 noundef %spec.store.select.i.i) #24 ; 3 uses
   store ptr %i.ca, ptr %7, align 8, !tbaa !44
   %i.cb = icmp eq ptr %i.ca, null
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = shl i64 %i.f, 1
   %spec.store.select.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.d) ; 2 uses
-  store i64 %spec.store.select.i.i.i, ptr %i.e, align 8
+  store i64 %spec.store.select.i.i.i, ptr %i.e, align 8, !tbaa !45
   %i.h = tail call ptr @realloc(ptr noundef %.pre.i.i, i64 noundef %spec.store.select.i.i.i) #24 ; 3 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !44
   %i.i = icmp eq ptr %i.h, null
@@ -645,7 +645,7 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.e
   %i.t = shl i64 %i.s, 1
   %spec.store.select.i.i.i19 = tail call i64 @llvm.umax.i64(i64 %i.t, i64 %i.q) ; 2 uses
-  store i64 %spec.store.select.i.i.i19, ptr %i.r, align 8
+  store i64 %spec.store.select.i.i.i19, ptr %i.r, align 8, !tbaa !45
   %i.u = tail call ptr @realloc(ptr noundef %.pre.i.i18, i64 noundef %spec.store.select.i.i.i19) #24 ; 3 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !44
   %i.v = icmp eq ptr %i.u, null
@@ -682,7 +682,7 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %bb.h
   %i.ag = shl i64 %i.af, 1
   %spec.store.select.i.i.i26 = tail call i64 @llvm.umax.i64(i64 %i.ag, i64 %i.ad) ; 2 uses
-  store i64 %spec.store.select.i.i.i26, ptr %i.ae, align 8
+  store i64 %spec.store.select.i.i.i26, ptr %i.ae, align 8, !tbaa !45
   %i.ah = tail call ptr @realloc(ptr noundef %.pre.i.i25, i64 noundef %spec.store.select.i.i.i26) #24 ; 3 uses
   store ptr %i.ah, ptr %0, align 8, !tbaa !44
   %i.ai = icmp eq ptr %i.ah, null
@@ -719,7 +719,7 @@ bb.k:                                             ; preds = %bb.a
 bb.l:                                             ; preds = %bb.k
   %i.at = shl i64 %i.as, 1
   %spec.store.select.i.i.i33 = tail call i64 @llvm.umax.i64(i64 %i.at, i64 %i.aq) ; 2 uses
-  store i64 %spec.store.select.i.i.i33, ptr %i.ar, align 8
+  store i64 %spec.store.select.i.i.i33, ptr %i.ar, align 8, !tbaa !45
   %i.au = tail call ptr @realloc(ptr noundef %.pre.i.i32, i64 noundef %spec.store.select.i.i.i33) #24 ; 3 uses
   store ptr %i.au, ptr %0, align 8, !tbaa !44
   %i.av = icmp eq ptr %i.au, null
@@ -756,7 +756,7 @@ bb.n:                                             ; preds = %bb.a
 bb.o:                                             ; preds = %bb.n
   %i.bg = shl i64 %i.bf, 1
   %spec.store.select.i.i.i40 = tail call i64 @llvm.umax.i64(i64 %i.bg, i64 %i.bd) ; 2 uses
-  store i64 %spec.store.select.i.i.i40, ptr %i.be, align 8
+  store i64 %spec.store.select.i.i.i40, ptr %i.be, align 8, !tbaa !45
   %i.bh = tail call ptr @realloc(ptr noundef %.pre.i.i39, i64 noundef %spec.store.select.i.i.i40) #24 ; 3 uses
   store ptr %i.bh, ptr %0, align 8, !tbaa !44
   %i.bi = icmp eq ptr %i.bh, null
@@ -793,7 +793,7 @@ bb.q:                                             ; preds = %bb.a
 bb.r:                                             ; preds = %bb.q
   %i.bt = shl i64 %i.bs, 1
   %spec.store.select.i.i.i47 = tail call i64 @llvm.umax.i64(i64 %i.bt, i64 %i.bq) ; 2 uses
-  store i64 %spec.store.select.i.i.i47, ptr %i.br, align 8
+  store i64 %spec.store.select.i.i.i47, ptr %i.br, align 8, !tbaa !45
   %i.bu = tail call ptr @realloc(ptr noundef %.pre.i.i46, i64 noundef %spec.store.select.i.i.i47) #24 ; 3 uses
   store ptr %i.bu, ptr %0, align 8, !tbaa !44
   %i.bv = icmp eq ptr %i.bu, null
@@ -830,7 +830,7 @@ bb.t:                                             ; preds = %bb.a
 bb.u:                                             ; preds = %bb.t
   %i.cg = shl i64 %i.cf, 1
   %spec.store.select.i.i.i54 = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 %i.cd) ; 2 uses
-  store i64 %spec.store.select.i.i.i54, ptr %i.ce, align 8
+  store i64 %spec.store.select.i.i.i54, ptr %i.ce, align 8, !tbaa !45
   %i.ch = tail call ptr @realloc(ptr noundef %.pre.i.i53, i64 noundef %spec.store.select.i.i.i54) #24 ; 3 uses
   store ptr %i.ch, ptr %0, align 8, !tbaa !44
   %i.ci = icmp eq ptr %i.ch, null
@@ -867,7 +867,7 @@ bb.w:                                             ; preds = %bb.a
 bb.x:                                             ; preds = %bb.w
   %i.ct = shl i64 %i.cs, 1
   %spec.store.select.i.i.i61 = tail call i64 @llvm.umax.i64(i64 %i.ct, i64 %i.cq) ; 2 uses
-  store i64 %spec.store.select.i.i.i61, ptr %i.cr, align 8
+  store i64 %spec.store.select.i.i.i61, ptr %i.cr, align 8, !tbaa !45
   %i.cu = tail call ptr @realloc(ptr noundef %.pre.i.i60, i64 noundef %spec.store.select.i.i.i61) #24 ; 3 uses
   store ptr %i.cu, ptr %0, align 8, !tbaa !44
   %i.cv = icmp eq ptr %i.cu, null
@@ -904,7 +904,7 @@ bb.z:                                             ; preds = %bb.a
 bb.aa:                                            ; preds = %bb.z
   %i.dg = shl i64 %i.df, 1
   %spec.store.select.i.i.i68 = tail call i64 @llvm.umax.i64(i64 %i.dg, i64 %i.dd) ; 2 uses
-  store i64 %spec.store.select.i.i.i68, ptr %i.de, align 8
+  store i64 %spec.store.select.i.i.i68, ptr %i.de, align 8, !tbaa !45
   %i.dh = tail call ptr @realloc(ptr noundef %.pre.i.i67, i64 noundef %spec.store.select.i.i.i68) #24 ; 3 uses
   store ptr %i.dh, ptr %0, align 8, !tbaa !44
   %i.di = icmp eq ptr %i.dh, null
@@ -941,7 +941,7 @@ bb.ac:                                            ; preds = %bb.a
 bb.ad:                                            ; preds = %bb.ac
   %i.dt = shl i64 %i.ds, 1
   %spec.store.select.i.i.i75 = tail call i64 @llvm.umax.i64(i64 %i.dt, i64 %i.dq) ; 2 uses
-  store i64 %spec.store.select.i.i.i75, ptr %i.dr, align 8
+  store i64 %spec.store.select.i.i.i75, ptr %i.dr, align 8, !tbaa !45
   %i.du = tail call ptr @realloc(ptr noundef %.pre.i.i74, i64 noundef %spec.store.select.i.i.i75) #24 ; 3 uses
   store ptr %i.du, ptr %0, align 8, !tbaa !44
   %i.dv = icmp eq ptr %i.du, null
@@ -984,7 +984,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.ei = shl i64 %i.eh, 1
   %spec.store.select.i.i.i82 = tail call i64 @llvm.umax.i64(i64 %i.ei, i64 %i.ef) ; 2 uses
-  store i64 %spec.store.select.i.i.i82, ptr %i.eg, align 8
+  store i64 %spec.store.select.i.i.i82, ptr %i.eg, align 8, !tbaa !45
   %i.ej = tail call ptr @realloc(ptr noundef %.pre.i.i81, i64 noundef %spec.store.select.i.i.i82) #24 ; 3 uses
   store ptr %i.ej, ptr %0, align 8, !tbaa !44
   %i.ek = icmp eq ptr %i.ej, null
@@ -1025,7 +1025,7 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.eu = shl i64 %i.et, 1
   %spec.store.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.eu, i64 %i.er) ; 2 uses
-  store i64 %spec.store.select.i.i.i.i, ptr %i.es, align 8
+  store i64 %spec.store.select.i.i.i.i, ptr %i.es, align 8, !tbaa !45
   %i.ev = tail call ptr @realloc(ptr noundef %.pre.i.i.i, i64 noundef %spec.store.select.i.i.i.i) #24 ; 3 uses
   store ptr %i.ev, ptr %0, align 8, !tbaa !44
   %i.ew = icmp eq ptr %i.ev, null
@@ -1104,7 +1104,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap
   %i.gd = shl i64 %i.gc, 1
   %spec.store.select.i.i.i17.i = tail call i64 @llvm.umax.i64(i64 %i.gd, i64 %i.ga) ; 2 uses
-  store i64 %spec.store.select.i.i.i17.i, ptr %i.gb, align 8
+  store i64 %spec.store.select.i.i.i17.i, ptr %i.gb, align 8, !tbaa !45
   %i.ge = tail call ptr @realloc(ptr noundef %.pre.i.i16.i, i64 noundef %spec.store.select.i.i.i17.i) #24 ; 3 uses
   store ptr %i.ge, ptr %0, align 8, !tbaa !44
   %i.gf = icmp eq ptr %i.ge, null
@@ -1151,7 +1151,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = shl i64 %i.e, 1
   %spec.store.select.i.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %i.c) ; 2 uses
-  store i64 %spec.store.select.i.i, ptr %i.d, align 8
+  store i64 %spec.store.select.i.i, ptr %i.d, align 8, !tbaa !45
   %i.g = tail call ptr @realloc(ptr noundef %.pre.i, i64 noundef %spec.store.select.i.i) #24 ; 3 uses
   store ptr %i.g, ptr %0, align 8, !tbaa !44
   %i.h = icmp eq ptr %i.g, null
@@ -1554,7 +1554,7 @@ _ZN12OutputStreamlsEc.exit.i:                     ; preds = %bb.ag
 bb.ai:                                            ; preds = %_ZN12OutputStreamlsEc.exit.i
   %i.hc = shl i64 %i.hb, 1
   %spec.store.select.i.i.i18.i = call i64 @llvm.umax.i64(i64 %i.hc, i64 %i.ha) ; 2 uses
-  store i64 %spec.store.select.i.i.i18.i, ptr %i.aa, align 8
+  store i64 %spec.store.select.i.i.i18.i, ptr %i.aa, align 8, !tbaa !45
   %i.hd = call ptr @realloc(ptr noundef %.pre.i.i17.i, i64 noundef %spec.store.select.i.i.i18.i) #24, !inline_history !176 ; 3 uses
   store ptr %i.hd, ptr %3, align 8, !tbaa !44
   %i.he = icmp eq ptr %i.hd, null
@@ -1586,7 +1586,7 @@ _ZN12OutputStreamlsEc.exit23.i:                   ; preds = %._ZN12OutputStream4
 bb.ak:                                            ; preds = %_ZN12OutputStreamlsEc.exit23.i
   %i.hl = shl i64 %i.hk, 1
   %spec.store.select.i.i.i26.i = call i64 @llvm.umax.i64(i64 %i.hl, i64 %i.hj) ; 2 uses
-  store i64 %spec.store.select.i.i.i26.i, ptr %i.aa, align 8
+  store i64 %spec.store.select.i.i.i26.i, ptr %i.aa, align 8, !tbaa !45
   %i.hm = call ptr @realloc(ptr noundef %.pre.i.i25.i, i64 noundef %spec.store.select.i.i.i26.i) #24, !inline_history !176 ; 3 uses
   store ptr %i.hm, ptr %3, align 8, !tbaa !44
   %i.hn = icmp eq ptr %i.hm, null
@@ -1619,7 +1619,7 @@ _ZN12OutputStream4growEm.exit.i.i.i:              ; preds = %._ZN12OutputStream4
 bb.am:                                            ; preds = %_ZN12OutputStream4growEm.exit.i.i.i
   %i.hw = shl i64 %i.hv, 1
   %spec.store.select.i.i.i30.i = call i64 @llvm.umax.i64(i64 %i.hw, i64 %i.hu) ; 2 uses
-  store i64 %spec.store.select.i.i.i30.i, ptr %i.aa, align 8
+  store i64 %spec.store.select.i.i.i30.i, ptr %i.aa, align 8, !tbaa !45
   %i.hx = call ptr @realloc(ptr noundef %.pre.i.i29.i, i64 noundef %spec.store.select.i.i.i30.i) #24, !inline_history !176 ; 3 uses
   store ptr %i.hx, ptr %3, align 8, !tbaa !44
   %i.hy = icmp eq ptr %i.hx, null
@@ -1650,7 +1650,7 @@ _ZN12OutputStream4growEm.exit.i.i33.i:            ; preds = %._ZN12OutputStream4
 bb.ao:                                            ; preds = %_ZN12OutputStream4growEm.exit.i.i33.i
   %i.ig = shl i64 %i.if, 1
   %spec.store.select.i.i.i37.i = call i64 @llvm.umax.i64(i64 %i.ig, i64 %i.ie) ; 2 uses
-  store i64 %spec.store.select.i.i.i37.i, ptr %i.aa, align 8
+  store i64 %spec.store.select.i.i.i37.i, ptr %i.aa, align 8, !tbaa !45
   %i.ih = call ptr @realloc(ptr noundef %.pre.i.i36.i, i64 noundef %spec.store.select.i.i.i37.i) #24, !inline_history !176 ; 3 uses
   store ptr %i.ih, ptr %3, align 8, !tbaa !44
   %i.ii = icmp eq ptr %i.ih, null
@@ -2053,7 +2053,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.m = shl i64 %i.l, 1
   %spec.store.select.i.i.i = call i64 @llvm.umax.i64(i64 %i.m, i64 %i.k) ; 2 uses
-  store i64 %spec.store.select.i.i.i, ptr %i.f, align 8
+  store i64 %spec.store.select.i.i.i, ptr %i.f, align 8, !tbaa !45
   %i.n = call ptr @realloc(ptr noundef %.pre.i.i, i64 noundef %spec.store.select.i.i.i) #24 ; 3 uses
   store ptr %i.n, ptr %2, align 8, !tbaa !44
   %i.o = icmp eq ptr %i.n, null
@@ -2456,7 +2456,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = shl i64 %i.g, 1
   %spec.store.select.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.e) ; 2 uses
-  store i64 %spec.store.select.i.i.i, ptr %i.f, align 8
+  store i64 %spec.store.select.i.i.i, ptr %i.f, align 8, !tbaa !45
   %i.i = tail call ptr @realloc(ptr noundef %.pre.i.i, i64 noundef %spec.store.select.i.i.i) #24 ; 3 uses
   store ptr %i.i, ptr %0, align 8, !tbaa !44
   %i.j = icmp eq ptr %i.i, null
@@ -2526,7 +2526,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.x = shl i64 %i.w, 1
   %spec.store.select.i.i.i12 = tail call i64 @llvm.umax.i64(i64 %i.x, i64 %i.u) ; 2 uses
-  store i64 %spec.store.select.i.i.i12, ptr %i.v, align 8
+  store i64 %spec.store.select.i.i.i12, ptr %i.v, align 8, !tbaa !45
   %i.y = tail call ptr @realloc(ptr noundef %.pre.i.i11, i64 noundef %spec.store.select.i.i.i12) #24 ; 3 uses
   store ptr %i.y, ptr %0, align 8, !tbaa !44
   %i.z = icmp eq ptr %i.y, null

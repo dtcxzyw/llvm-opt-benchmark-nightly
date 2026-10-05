@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.preheader.i.i.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !169  ; 2 uses
   %.not12.i.i.i = icmp eq ptr %i.m, null
   %spec.store.select.i.i.i = select i1 %.not12.i.i.i, ptr %storemerge.i.i.i, ptr %i.m
-  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8, !tbaa !426
   br label %_ZNSt8_Rb_treeIPKN7jsonnet8internal10IdentifierESt4pairIKS4_PNS1_12_GLOBAL__N_19HeapThunkEESt10_Select1stISA_ESt4lessIS4_ESaISA_EE13_M_clone_nodeILb0ENSG_20_Reuse_or_alloc_nodeEEEPSt13_Rb_tree_nodeISA_ESL_RT0_.exit
 
 bb.f:                                             ; preds = %bb.c
@@ -295,7 +295,7 @@ bb.o:                                             ; preds = %.preheader.i.i.i40
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !169 ; 2 uses
   %.not12.i.i.i43 = icmp eq ptr %i.ak, null
   %spec.store.select.i.i.i44 = select i1 %.not12.i.i.i43, ptr %storemerge.i.i.i41, ptr %i.ak
-  store ptr %spec.store.select.i.i.i44, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i44, ptr %i.a, align 8, !tbaa !426
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.m

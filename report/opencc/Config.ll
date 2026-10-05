@@ -205,7 +205,7 @@ bb.at:                                            ; preds = %_ZN9rapidjson8inter
 
 .sink.split.i.i:                                  ; preds = %bb.at, %bb.as
   %spec.store.select.sink.i.i = phi i16 [ %spec.store.select.i.i, %bb.as ], [ 182, %bb.at ]
-  store i16 %spec.store.select.sink.i.i, ptr %i.hd, align 2
+  store i16 %spec.store.select.sink.i.i, ptr %i.hd, align 2, !tbaa !60
   br label %.critedge204
 
 bb.au:                                            ; preds = %bb.ap
@@ -242,7 +242,7 @@ _ZN9rapidjson15GenericDocumentINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllo
   %spec.store.select.i.i214 = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i214, i16 %spec.select.i.i213
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hr, i64 14
-  store i16 %storemerge.i.i, ptr %i.hu, align 2
+  store i16 %storemerge.i.i, ptr %i.hu, align 2, !tbaa !60
   br label %.critedge204
 
 bb.aw:                                            ; preds = %bb.ao
@@ -645,7 +645,7 @@ bb.at:                                            ; preds = %_ZN9rapidjson8inter
 
 .sink.split.i.i:                                  ; preds = %bb.at, %bb.as
   %spec.store.select.sink.i.i = phi i16 [ %spec.store.select.i.i, %bb.as ], [ 182, %bb.at ]
-  store i16 %spec.store.select.sink.i.i, ptr %i.hd, align 2
+  store i16 %spec.store.select.sink.i.i, ptr %i.hd, align 2, !tbaa !60
   br label %.critedge204
 
 bb.au:                                            ; preds = %bb.ap
@@ -682,7 +682,7 @@ _ZN9rapidjson15GenericDocumentINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllo
   %spec.store.select.i.i214 = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i214, i16 %spec.select.i.i213
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hr, i64 14
-  store i16 %storemerge.i.i, ptr %i.hu, align 2
+  store i16 %storemerge.i.i, ptr %i.hu, align 2, !tbaa !60
   br label %.critedge204
 
 bb.aw:                                            ; preds = %bb.ao
@@ -1085,7 +1085,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i:                                    ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i = phi i16 [ %spec.store.select.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i, ptr %i.b, align 2
+  store i16 %spec.store.select.sink.i, ptr %i.b, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit: ; preds = %bb.c, %.sink.split.i
@@ -1120,7 +1120,7 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2Em.exit:
   %spec.store.select.i = select i1 %.not5.i, i16 502, i16 470
   %storemerge.i = select i1 %.not4.i, i16 %spec.store.select.i, i16 %spec.select.i
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 14
-  store i16 %storemerge.i, ptr %i.b, align 2
+  store i16 %storemerge.i, ptr %i.b, align 2, !tbaa !60
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef null)
           to label %bb.a unwind label %bb.b
 
@@ -1187,7 +1187,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i:                                    ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i = phi i16 [ %spec.store.select.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i, ptr %i.c, align 2
+  store i16 %spec.store.select.sink.i, ptr %i.c, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit: ; preds = %bb.c, %.sink.split.i
@@ -1224,7 +1224,7 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2Em.exit:
   %spec.store.select.i = select i1 %.not5.i, i16 502, i16 470
   %storemerge.i = select i1 %.not4.i, i16 %spec.store.select.i, i16 %spec.select.i
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 14
-  store i16 %storemerge.i, ptr %i.c, align 2
+  store i16 %storemerge.i, ptr %i.c, align 2, !tbaa !60
   %i.d = select i1 %3, ptr @_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE25GetExclusiveMaximumStringEv, ptr null
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef %i.a, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.d)
           to label %bb.a unwind label %bb.b
@@ -1294,7 +1294,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i:                                    ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i = phi i16 [ %spec.store.select.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i, ptr %i.c, align 2
+  store i16 %spec.store.select.sink.i, ptr %i.c, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit: ; preds = %bb.c, %.sink.split.i
@@ -1331,7 +1331,7 @@ _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2Em.exit:
   %spec.store.select.i = select i1 %.not5.i, i16 502, i16 470
   %storemerge.i = select i1 %.not4.i, i16 %spec.store.select.i, i16 %spec.select.i
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 14
-  store i16 %storemerge.i, ptr %i.c, align 2
+  store i16 %storemerge.i, ptr %i.c, align 2, !tbaa !60
   %i.d = select i1 %3, ptr @_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE25GetExclusiveMinimumStringEv, ptr null
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef %i.a, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.d)
           to label %bb.a unwind label %bb.b
@@ -1734,7 +1734,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i.i:                                  ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i.i = phi i16 [ %spec.store.select.i.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i.i, ptr %i.c, align 2
+  store i16 %spec.store.select.sink.i.i, ptr %i.c, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i: ; preds = %.sink.split.i.i, %bb.c
@@ -1770,7 +1770,7 @@ bb.a:
   %spec.store.select.i.i = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i, i16 %spec.select.i.i
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 14
-  store i16 %storemerge.i.i, ptr %i.c, align 2
+  store i16 %storemerge.i.i, ptr %i.c, align 2, !tbaa !60
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %i.a, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef null)
           to label %_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E13NotMultipleOfEmRKNS2_IS4_S6_EE.exit unwind label %bb.b
 
@@ -1839,7 +1839,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i.i:                                  ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i.i = phi i16 [ %spec.store.select.i.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i.i, ptr %i.d, align 2
+  store i16 %spec.store.select.sink.i.i, ptr %i.d, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i: ; preds = %.sink.split.i.i, %bb.c
@@ -1877,7 +1877,7 @@ bb.a:
   %spec.store.select.i.i = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i, i16 %spec.select.i.i
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 14
-  store i16 %storemerge.i.i, ptr %i.d, align 2
+  store i16 %storemerge.i.i, ptr %i.d, align 2, !tbaa !60
   %i.e = select i1 %3, ptr @_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE25GetExclusiveMaximumStringEv, ptr null
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %i.a, i32 noundef %i.b, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.e)
           to label %_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E12AboveMaximumEmRKNS2_IS4_S6_EEb.exit unwind label %bb.b
@@ -1949,7 +1949,7 @@ bb.c:                                             ; preds = %bb.a
 
 .sink.split.i.i:                                  ; preds = %bb.c, %bb.b
   %spec.store.select.sink.i.i = phi i16 [ %spec.store.select.i.i, %bb.b ], [ 182, %bb.c ]
-  store i16 %spec.store.select.sink.i.i, ptr %i.d, align 2
+  store i16 %spec.store.select.sink.i.i, ptr %i.d, align 2, !tbaa !60
   br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i
 
 _ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEC2El.exit.i: ; preds = %.sink.split.i.i, %bb.c
@@ -1987,7 +1987,7 @@ bb.a:
   %spec.store.select.i.i = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i, i16 %spec.select.i.i
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 14
-  store i16 %storemerge.i.i, ptr %i.d, align 2
+  store i16 %storemerge.i.i, ptr %i.d, align 2, !tbaa !60
   %i.e = select i1 %3, ptr @_ZN9rapidjson8internal6SchemaINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES7_EEE25GetExclusiveMinimumStringEv, ptr null
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E14AddNumberErrorENS_17ValidateErrorCodeERNS2_IS4_S6_EERKSE_PFRKS8_vE(ptr noundef nonnull align 8 dereferenceable(220) %i.a, i32 noundef %i.b, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.e)
           to label %_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E12BelowMinimumEmRKNS2_IS4_S6_EEb.exit unwind label %bb.b
@@ -2390,7 +2390,7 @@ _ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericVal
   %spec.store.select.i.i = select i1 %.not5.i.i, i16 502, i16 470
   %storemerge.i.i = select i1 %.not4.i.i, i16 %spec.store.select.i.i, i16 %spec.select.i.i
   %i.qb = getelementptr inbounds nuw i8, ptr %2, i64 14 ; 2 uses
-  store i16 %storemerge.i.i, ptr %i.qb, align 2
+  store i16 %storemerge.i.i, ptr %i.qb, align 2, !tbaa !60
   %i.qc = load i32, ptr %.032, align 8, !tbaa !60 ; 3 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %.032, i64 4 ; 2 uses
   %i.qe = load i32, ptr %i.qd, align 4, !tbaa !60 ; 5 uses
@@ -2542,7 +2542,7 @@ _ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericVal
   %spec.store.select.i.i117 = select i1 %.not5.i.i116, i16 502, i16 470
   %storemerge.i.i118 = select i1 %.not4.i.i115, i16 %spec.store.select.i.i117, i16 %spec.select.i.i114
   %i.sl = getelementptr inbounds nuw i8, ptr %1, i64 14 ; 2 uses
-  store i16 %storemerge.i.i118, ptr %i.sl, align 2
+  store i16 %storemerge.i.i118, ptr %i.sl, align 2, !tbaa !60
   %i.sm = getelementptr inbounds nuw i8, ptr %.032, i64 4 ; 2 uses
   %i.sn = load i32, ptr %i.sm, align 4, !tbaa !60 ; 5 uses
   %.not.i4.i119 = icmp ult i32 %i.sj, %i.sn

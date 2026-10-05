@@ -203,7 +203,7 @@ split_slab_page_into_freelist.exit:               ; preds = %.lr.ph.i, %split_sl
 define dso_local range(i32 -2147483647, -2147483648) i32 @slabs_pick_any_for_reassign(i32 noundef %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @slabs_lock) #20 ; 0 uses
-  %slabs_pick_any_for_reassign.cur.promoted = load i32, ptr @slabs_pick_any_for_reassign.cur, align 4
+  %slabs_pick_any_for_reassign.cur.promoted = load i32, ptr @slabs_pick_any_for_reassign.cur, align 4, !tbaa !24
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %bb.a
@@ -225,7 +225,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.f, %bb.c
   %spec.store.select.lcssa = phi i32 [ %spec.store.select, %bb.c ], [ %spec.store.select.1, %bb.f ]
-  store i32 %spec.store.select.lcssa, ptr @slabs_pick_any_for_reassign.cur, align 4
+  store i32 %spec.store.select.lcssa, ptr @slabs_pick_any_for_reassign.cur, align 4, !tbaa !24
   %i.j = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @slabs_lock) #20 ; 0 uses
   %i.k = load i32, ptr @slabs_pick_any_for_reassign.cur, align 4, !tbaa !24
   br label %bb.i
@@ -251,7 +251,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not, label %bb.h, label %bb.b, !llvm.loop !68
 
 bb.h:                                             ; preds = %bb.g
-  store i32 %spec.store.select.1, ptr @slabs_pick_any_for_reassign.cur, align 4
+  store i32 %spec.store.select.1, ptr @slabs_pick_any_for_reassign.cur, align 4, !tbaa !24
   %i.u = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @slabs_lock) #20 ; 0 uses
   br label %bb.i
 

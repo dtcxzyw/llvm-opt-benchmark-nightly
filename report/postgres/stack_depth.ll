@@ -52,7 +52,7 @@ bb.a:
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %i.a to i64
   %i.e = sub i64 %i.c, %i.d
-  %spec.select.i = tail call i64 @llvm.abs.i64(i64 %i.e, i1 false)
+  %spec.select.i = call i64 @llvm.abs.i64(i64 %i.e, i1 false)
   %i.f = load i64, ptr @max_stack_depth_bytes, align 8
   %i.g = icmp sgt i64 %spec.select.i, %i.f
   %i.h = icmp ne ptr %i.b, null
@@ -60,12 +60,12 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %0 = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12 ; 0 uses
-  %1 = tail call i32 @errcode(i32 noundef 16777477) #13 ; 0 uses
-  %2 = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str) #13 ; 0 uses
+  %0 = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12 ; 0 uses
+  %1 = call i32 @errcode(i32 noundef 16777477) #13 ; 0 uses
+  %2 = call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str) #13 ; 0 uses
   %i.i = load i32, ptr @max_stack_depth, align 4
-  %3 = tail call i32 (ptr, ...) @errhint(ptr noundef nonnull @.str.1, i32 noundef %i.i) #13 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.2, i32 noundef 105, ptr noundef nonnull @__func__.check_stack_depth) #13
+  %3 = call i32 (ptr, ...) @errhint(ptr noundef nonnull @.str.1, i32 noundef %i.i) #13 ; 0 uses
+  call void @errfinish(ptr noundef nonnull @.str.2, i32 noundef 105, ptr noundef nonnull @__func__.check_stack_depth) #13
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -80,7 +80,7 @@ bb.a:
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %i.a to i64
   %i.e = sub i64 %i.c, %i.d
-  %spec.select = tail call i64 @llvm.abs.i64(i64 %i.e, i1 false)
+  %spec.select = call i64 @llvm.abs.i64(i64 %i.e, i1 false)
   %i.f = load i64, ptr @max_stack_depth_bytes, align 8
   %i.g = icmp sgt i64 %spec.select, %i.f
   %i.h = icmp ne ptr %i.b, null

@@ -202,7 +202,7 @@ bb.a:
   br i1 %narrow.i.not.i, label %_Py_EnterRecursiveCallTstate.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call i32 @_Py_CheckRecursiveCall(ptr noundef nonnull %i.b, ptr noundef %0) #9
+  %1 = call i32 @_Py_CheckRecursiveCall(ptr noundef nonnull %i.b, ptr noundef %0) #9
   %i.i = icmp ne i32 %1, 0
   %i.j = zext i1 %i.i to i32
   br label %_Py_EnterRecursiveCallTstate.exit

@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 80
   %i.r = icmp eq <2 x ptr> %i.n, splat (ptr null)
   %i.s = select <2 x i1> %i.p, <2 x ptr> <ptr @tg3__fs_file_exists, ptr @tg3__fs_read_file>, <2 x ptr> %i.m ; 2 uses
-  store <2 x ptr> %i.s, ptr %i.o, align 8
+  store <2 x ptr> %i.s, ptr %i.o, align 8, !tbaa !48
   %i.t = select <2 x i1> %i.r, <2 x ptr> <ptr @tg3__fs_free_file, ptr @tg3__fs_write_file>, <2 x ptr> %i.n ; 2 uses
-  store <2 x ptr> %i.t, ptr %i.q, align 8
+  store <2 x ptr> %i.t, ptr %i.q, align 8, !tbaa !48
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !467  ; 2 uses
   %i.w = extractelement <2 x ptr> %i.s, i64 1
@@ -610,9 +610,9 @@ tg3__set_default_fs.exit:                         ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.m = icmp eq <2 x ptr> %i.i, splat (ptr null)
   %i.n = select <2 x i1> %i.k, <2 x ptr> <ptr @tg3__fs_file_exists, ptr @tg3__fs_read_file>, <2 x ptr> %i.h
-  store <2 x ptr> %i.n, ptr %i.j, align 8
+  store <2 x ptr> %i.n, ptr %i.j, align 8, !tbaa !48
   %i.o = select <2 x i1> %i.m, <2 x ptr> <ptr @tg3__fs_free_file, ptr @tg3__fs_write_file>, <2 x ptr> %i.i ; 2 uses
-  store <2 x ptr> %i.o, ptr %i.l, align 8
+  store <2 x ptr> %i.o, ptr %i.l, align 8, !tbaa !48
   %i.p = call i32 @tg3_write_to_memory(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %5) ; 2 uses
   %.not14 = icmp eq i32 %i.p, 0
   br i1 %.not14, label %bb.d, label %tg3__error_push.exit

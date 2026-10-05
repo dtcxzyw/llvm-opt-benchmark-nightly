@@ -197,7 +197,7 @@ define noundef i64 @_ZN4lean19get_used_stack_sizeEv() local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call noundef ptr @llvm.frameaddress.p0(i32 0)
   %i.b = ptrtoint ptr %i.a to i64
-  %0 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
+  %0 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
   %i.c = load i64, ptr %0, align 8, !tbaa !15
   %i.d = sub i64 %i.c, %i.b
   ret i64 %i.d
@@ -208,12 +208,12 @@ define noundef i64 @_ZN4lean24get_available_stack_sizeEv() local_unnamed_addr #7
 bb.a:
   %i.a = tail call noundef ptr @llvm.frameaddress.p0(i32 0)
   %i.b = ptrtoint ptr %i.a to i64
-  %0 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
+  %0 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
   %i.c = load i64, ptr %0, align 8, !tbaa !15
   %i.d = sub i64 %i.c, %i.b
-  %1 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_sizeE)
+  %1 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_sizeE)
   %i.e = load i64, ptr %1, align 8, !tbaa !15
-  %.0 = tail call i64 @llvm.usub.sat.i64(i64 %i.e, i64 %i.d)
+  %.0 = call i64 @llvm.usub.sat.i64(i64 %i.e, i64 %i.d)
   ret i64 %.0
 }
 
@@ -269,7 +269,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.a
   %.pre = tail call noundef ptr @llvm.frameaddress.p0(i32 0)
   %.pre1 = ptrtoint ptr %.pre to i64
-  %.pre3 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL17g_stack_thresholdE)
+  %.pre3 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL17g_stack_thresholdE)
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -279,11 +279,11 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.d, ptr %i.e, align 8, !tbaa !15
   %i.f = tail call noundef ptr @llvm.frameaddress.p0(i32 0)
   %i.g = ptrtoint ptr %i.f to i64                 ; 3 uses
-  %1 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
+  %1 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL12g_stack_baseE)
   store i64 %i.g, ptr %1, align 8, !tbaa !15
   %i.h = add i64 %i.g, 131072
-  %spec.select.i = tail call i64 @llvm.usub.sat.i64(i64 %i.h, i64 %i.d)
-  %2 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL17g_stack_thresholdE) ; 2 uses
+  %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %i.h, i64 %i.d)
+  %2 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL17g_stack_thresholdE) ; 2 uses
   store i64 %spec.select.i, ptr %2, align 8, !tbaa !15
   br label %bb.c
 
@@ -295,18 +295,18 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %i.j, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %3 = tail call ptr @__cxa_allocate_exception(i64 72) #13 ; 3 uses
+  %3 = call ptr @__cxa_allocate_exception(i64 72) #13 ; 3 uses
   invoke void @_ZN4lean21stack_space_exceptionC1EPKc(ptr noundef nonnull align 8 dereferenceable(72) %3, ptr noundef %0)
           to label %bb.e unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @__cxa_throw(ptr nonnull %3, ptr nonnull @_ZTIN4lean21stack_space_exceptionE, ptr nonnull @_ZN4lean21stack_space_exceptionD2Ev) #14
+  call void @__cxa_throw(ptr nonnull %3, ptr nonnull @_ZTIN4lean21stack_space_exceptionE, ptr nonnull @_ZN4lean21stack_space_exceptionD2Ev) #14
   unreachable
 
 bb.f:                                             ; preds = %bb.d
   %i.k = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %3) #13
+  call void @__cxa_free_exception(ptr nonnull %3) #13
   resume { ptr, i32 } %i.k
 
 bb.g:                                             ; preds = %bb.c
