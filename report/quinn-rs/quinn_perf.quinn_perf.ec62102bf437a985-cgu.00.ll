@@ -204,8 +204,8 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.525.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !32926
   %.sroa.525.0.copyload.i = load i64, ptr %.sroa.525.0..sroa_idx.i, align 8, !dbg !32926, !noalias !32828 ; 4 uses
   %i.af = load <2 x i64>, ptr %.sroa.3.0..sroa_idx.i, align 8, !dbg !32926, !noalias !32828
-    #dbg_value(i64 poison, !32819, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !32677)
-    #dbg_value(i64 poison, !32805, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !32678)
+    #dbg_value(i64 %.sroa.525.0.copyload.i, !32819, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !32677)
+    #dbg_value(i64 %.sroa.525.0.copyload.i, !32805, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !32678)
   %.sroa.726.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !32926
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.726.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.726.0..sroa_idx.i, i64 32, i1 false), !dbg !32926, !noalias !32828
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !32927, !noalias !32828
@@ -608,6 +608,8 @@ bb.bb:                                            ; preds = %bb.az
     #dbg_value(i64 poison, !16515, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !40094)
   %i.fk = load <2 x i64>, ptr %.sroa.3.0..sroa_idx.i, align 8, !dbg !40631, !noalias !40468
   %.sroa.3.0.copyload.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !dbg !40631, !noalias !40468
+    #dbg_value(i64 %.sroa.3.0.copyload.i, !16530, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !40093)
+    #dbg_value(i64 %.sroa.3.0.copyload.i, !16515, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !40094)
     #dbg_value(i64 poison, !16530, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !40093)
     #dbg_value(i64 poison, !16515, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !40094)
   %.sroa.7188.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24, !dbg !40631

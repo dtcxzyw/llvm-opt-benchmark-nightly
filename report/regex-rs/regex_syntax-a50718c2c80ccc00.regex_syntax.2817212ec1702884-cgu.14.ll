@@ -204,24 +204,28 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %i.bn = icmp samesign ult <4 x i32> %i.bj, %i.ar, !dbg !5475
   %i.bo = select <4 x i1> %i.bk, <4 x i1> %i.bm, <4 x i1> %i.bn, !dbg !5474 ; 4 uses
   %i.bp = extractelement <4 x i1> %i.bo, i64 0, !dbg !5476 ; 2 uses
+    #dbg_value(i1 %i.bp, !5233, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4642)
   %.sroa.01.0.i.i = select i1 %i.bp, ptr %2, ptr %i.ax, !dbg !5476
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.27.130.i, !dbg !5477
   store i64 %i.ay, ptr %i.bq, align 4, !dbg !5463, !alias.scope !5192, !noalias !5285
   %i.br = zext i1 %i.bp to i64, !dbg !5478
   %i.bs = add i64 %.sroa.27.130.i, %i.br, !dbg !5478 ; 2 uses
   %i.bt = extractelement <4 x i1> %i.bo, i64 1, !dbg !5479 ; 2 uses
+    #dbg_value(i1 %i.bt, !5233, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4640)
   %.sroa.01.0.i62.i = select i1 %i.bt, ptr %2, ptr %i.ba, !dbg !5479
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i62.i, i64 %i.bs, !dbg !5480
   store i64 %i.bb, ptr %i.bu, align 4, !dbg !5466, !alias.scope !5192, !noalias !5286
   %i.bv = zext i1 %i.bt to i64, !dbg !5481
   %i.bw = add i64 %i.bs, %i.bv, !dbg !5481        ; 2 uses
   %i.bx = extractelement <4 x i1> %i.bo, i64 2, !dbg !5482 ; 2 uses
+    #dbg_value(i1 %i.bx, !5233, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4638)
   %.sroa.01.0.i63.i = select i1 %i.bx, ptr %2, ptr %i.bd, !dbg !5482
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i63.i, i64 %i.bw, !dbg !5483
   store i64 %i.be, ptr %i.by, align 4, !dbg !5469, !alias.scope !5192, !noalias !5287
   %i.bz = zext i1 %i.bx to i64, !dbg !5484
   %i.ca = add i64 %i.bw, %i.bz, !dbg !5484        ; 2 uses
   %i.cb = extractelement <4 x i1> %i.bo, i64 3, !dbg !5485 ; 2 uses
+    #dbg_value(i1 %i.cb, !5233, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4636)
   %.sroa.01.0.i64.i = select i1 %i.cb, ptr %2, ptr %i.bg, !dbg !5485
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i64.i, i64 %i.ca, !dbg !5486
   store i64 %i.bh, ptr %i.cc, align 4, !dbg !5472, !alias.scope !5192, !noalias !5288

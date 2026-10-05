@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.an, %bb.ad, %bb.
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr noundef nonnull align 8 dereferenceable(128) %0) local_unnamed_addr #6 comdat align 2 {
 .split.us.3.3:
-  %.sroa.0 = alloca [8 x double], align 16        ; 40 uses
+  %.sroa.0 = alloca [9 x double], align 16        ; 42 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !1104
@@ -220,7 +220,9 @@ define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr no
   %.sroa.0.48..sroa_idx171 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
   store <2 x double> %i.g, ptr %.sroa.0.48..sroa_idx171, align 16, !tbaa !1104
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.i = load double, ptr %i.h, align 8, !tbaa !1104
+  %i.i = load double, ptr %i.h, align 8, !tbaa !1104 ; 2 uses
+  %.sroa.0.64..sroa_idx172 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 64
+  store double %i.i, ptr %.sroa.0.64..sroa_idx172, align 16, !tbaa !1104
   %i.j = load double, ptr %0, align 8, !tbaa !1104
   %.sroa.0.0..sroa.0.0.103.a = load double, ptr %.sroa.0, align 16, !tbaa !1104
   %.sroa.0.8..sroa_idx145.a = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
@@ -248,7 +250,9 @@ define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr no
   %i.ab = shufflevector <2 x double> %i.y, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ac = shufflevector <4 x double> %i.ab, <4 x double> %i.aa, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.ae = load double, ptr %i.ad, align 8, !tbaa !1104
+  %i.ae = load double, ptr %i.ad, align 8, !tbaa !1104 ; 2 uses
+  %.sroa.0.64..sroa_idx173 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 64
+  store double %i.ae, ptr %.sroa.0.64..sroa_idx173, align 16, !tbaa !1104
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load double, ptr %i.af, align 8, !tbaa !1104
   %scevgep.283 = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -266,7 +270,9 @@ define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr no
   %i.as = shufflevector <2 x double> %i.ap, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.at = shufflevector <4 x double> %i.ar, <4 x double> %i.as, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.av = load double, ptr %i.au, align 8, !tbaa !1104 ; 2 uses
+  %i.av = load double, ptr %i.au, align 8, !tbaa !1104 ; 3 uses
+  %.sroa.0.64..sroa_idx174 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 64
+  store double %i.av, ptr %.sroa.0.64..sroa_idx174, align 16, !tbaa !1104
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ax = load double, ptr %i.aw, align 8, !tbaa !1104
   %scevgep.3 = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -303,7 +309,9 @@ define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr no
   %i.bl = shufflevector <2 x double> %i.bi, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bm = shufflevector <4 x double> %i.bk, <4 x double> %i.bl, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.bn = load <2 x double>, ptr %i.bc, align 8, !tbaa !1104
-  %i.bo = load double, ptr %i.bd, align 8, !tbaa !1104 ; 2 uses
+  %i.bo = load double, ptr %i.bd, align 8, !tbaa !1104
+  %.sroa.0.64..sroa_idx175 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 64
+  store double %i.bo, ptr %.sroa.0.64..sroa_idx175, align 16, !tbaa !1104
   %i.bp = shufflevector <2 x double> %.sroa.0.0..sroa.0.0., <2 x double> %.sroa.0.24..sroa.0.24.120.a, <2 x i32> <i32 1, i32 3>
   %i.bq = shufflevector <2 x double> %.sroa.0.0..sroa.0.0., <2 x double> %.sroa.0.24..sroa.0.24.120.a, <2 x i32> <i32 0, i32 2>
   %.sroa.0.48..sroa_idx169.a = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
@@ -385,36 +393,35 @@ define linkonce_odr noundef double @_ZNK7openvdb5v13_04math4Mat4IdE3detEv(ptr no
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.dq = load double, ptr %i.dp, align 8, !tbaa !1104
   %i.dr = fneg double %i.dq
-  %.sroa.0.40..sroa_idx165 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 40
-  %.sroa.0.40..sroa.0.40. = load double, ptr %.sroa.0.40..sroa_idx165, align 8, !tbaa !1104 ; 2 uses
-  %.sroa.0.56..sroa_idx174 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 56
-  %.sroa.0.56..sroa.0.56.144 = load double, ptr %.sroa.0.56..sroa_idx174, align 8, !tbaa !1104
-  %.sroa.0.48..sroa_idx170 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
-  %.sroa.0.48..sroa.0.48.140 = load <2 x double>, ptr %.sroa.0.48..sroa_idx170, align 16, !tbaa !1104 ; 2 uses
-  %1 = fneg double %.sroa.0.56..sroa.0.56.144
-  %2 = fmul double %.sroa.0.40..sroa.0.40., %1
-  %.sroa.0.32..sroa_idx164 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
-  %.sroa.0.32..sroa.0.32.132 = load double, ptr %.sroa.0.32..sroa_idx164, align 16, !tbaa !1104
-  %.sroa.0.24..sroa_idx157 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
-  %.sroa.0.24..sroa.0.24.122 = load <2 x double>, ptr %.sroa.0.24..sroa_idx157, align 8, !tbaa !1104 ; 2 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %.sroa.0.32..sroa.0.32.132, double %i.bo, double %2)
-  %4 = shufflevector <2 x double> %.sroa.0.48..sroa.0.48.140, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.ds = insertelement <2 x double> %4, double %i.bo, i64 0
-  %5 = fneg <2 x double> %i.ds
-  %6 = fmul <2 x double> %.sroa.0.24..sroa.0.24.122, %5
-  %7 = shufflevector <2 x double> %.sroa.0.24..sroa.0.24.122, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %8 = insertelement <2 x double> %7, double %.sroa.0.40..sroa.0.40., i64 0
-  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %.sroa.0.48..sroa.0.48.140, <2 x double> %6) ; 2 uses
-  %.sroa.0.0..sroa.0.0.105 = load double, ptr %.sroa.0, align 16, !tbaa !1104
-  %.sroa.0.8..sroa_idx147 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
-  %.sroa.0.8..sroa.0.8.109 = load double, ptr %.sroa.0.8..sroa_idx147, align 8, !tbaa !1104
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fmul double %.sroa.0.8..sroa.0.8.109, %10
-  %12 = tail call double @llvm.fmuladd.f64(double %.sroa.0.0..sroa.0.0.105, double %3, double %11)
-  %.sroa.0.16..sroa_idx154 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
-  %.sroa.0.16..sroa.0.16.118 = load double, ptr %.sroa.0.16..sroa_idx154, align 16, !tbaa !1104
-  %i.dt = extractelement <2 x double> %9, i64 1
-  %i.du = tail call noundef double @llvm.fmuladd.f64(double %.sroa.0.16..sroa.0.16.118, double %i.dt, double %12)
+  %.sroa.0.40..sroa_idx165 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
+  %.sroa.0.40..sroa.0.40. = load double, ptr %.sroa.0.40..sroa_idx165, align 16, !tbaa !1104 ; 2 uses
+  %.sroa.0.56..sroa_idx174 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
+  %.sroa.0.56..sroa.0.56.144 = load double, ptr %.sroa.0.56..sroa_idx174, align 8, !tbaa !1104 ; 2 uses
+  %.sroa.0.48..sroa_idx170 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
+  %.sroa.0.48..sroa.0.48.140 = load <2 x double>, ptr %.sroa.0.48..sroa_idx170, align 16, !tbaa !1104 ; 3 uses
+  %.sroa.0.56..sroa_idx170 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 56
+  %.sroa.0.56..sroa.0.56. = load <2 x double>, ptr %.sroa.0.56..sroa_idx170, align 8, !tbaa !1104 ; 3 uses
+  %1 = fneg <2 x double> %.sroa.0.56..sroa.0.56.
+  %2 = shufflevector <2 x double> %.sroa.0.48..sroa.0.48.140, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %3 = insertelement <2 x double> %2, double %.sroa.0.56..sroa.0.56.144, i64 1
+  %4 = fmul <2 x double> %3, %1
+  %5 = shufflevector <2 x double> %.sroa.0.56..sroa.0.56., <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ds = insertelement <2 x double> %5, double %.sroa.0.40..sroa.0.40., i64 1
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %.sroa.0.48..sroa.0.48.140, <2 x double> %i.ds, <2 x double> %4) ; 2 uses
+  %7 = fneg double %.sroa.0.40..sroa.0.40.
+  %.sroa.0.0..sroa.0.0.103 = load <2 x double>, ptr %.sroa.0, align 16, !tbaa !1104 ; 2 uses
+  %8 = shufflevector <2 x double> %.sroa.0.48..sroa.0.48.140, <2 x double> %6, <2 x i32> <i32 0, i32 3>
+  %9 = insertelement <2 x double> %.sroa.0.0..sroa.0.0.103, double %7, i64 0
+  %10 = fmul <2 x double> %8, %9
+  %11 = shufflevector <2 x double> %.sroa.0.0..sroa.0.0.103, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %12 = insertelement <2 x double> %11, double %.sroa.0.56..sroa.0.56.144, i64 0
+  %13 = shufflevector <2 x double> %.sroa.0.56..sroa.0.56., <2 x double> %6, <2 x i32> <i32 0, i32 2>
+  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %13, <2 x double> %10) ; 2 uses
+  %.sroa.0.16..sroa_idx152 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  %.sroa.0.16..sroa.0.16.116 = load double, ptr %.sroa.0.16..sroa_idx152, align 16, !tbaa !1104
+  %15 = extractelement <2 x double> %14, i64 0
+  %i.dt = extractelement <2 x double> %14, i64 1
+  %i.du = tail call noundef double @llvm.fmuladd.f64(double %.sroa.0.16..sroa.0.16.116, double %15, double %i.dt)
   %i.dv = tail call double @llvm.fmuladd.f64(double %i.dr, double %i.du, double %i.do)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret double %i.dv

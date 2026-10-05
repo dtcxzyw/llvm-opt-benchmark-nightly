@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.t
   %.sroa.041.0.copyload = load i64, ptr %i.f, align 8, !dbg !13874, !noalias !13805 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i64 16, i1 false), !dbg !13874, !noalias !3137
     #dbg_value(i64 %.sroa.041.0.copyload, !13652, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13820)
-    #dbg_value(i64 poison, !13652, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13820)
+    #dbg_value(i64 %i.au, !13652, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13820)
     #dbg_value(i64 poison, !13652, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !13820)
     #dbg_value(i64 %.sroa.041.0.copyload, !13652, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13820)
     #dbg_value(i64 poison, !13652, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !13820)
@@ -608,10 +608,13 @@ bb.h:                                             ; preds = %bb.i, %bb.f
   %i.ar = shufflevector <2 x double> %i.aq, <2 x double> poison, <2 x i32> zeroinitializer, !dbg !30121
   %i.as = fdiv <2 x double> %i.ap, %i.ar, !dbg !30121 ; 2 uses
   %i.at = extractelement <2 x double> %i.as, i64 1, !dbg !30122
+    #dbg_value(double %i.at, !29968, !DIExpression(), !29971)
+    #dbg_value(double %i.at, !29972, !DIExpression(), !29975)
   %i.au = call double @llvm.floor.f64(double %i.at), !dbg !30122
   %i.av = call i32 @llvm.fptosi.sat.i32.f64(double %i.au), !dbg !30121
     #dbg_value(double poison, !29979, !DIExpression(), !29982)
   %i.aw = extractelement <2 x double> %i.as, i64 0, !dbg !30123
+    #dbg_value(double %i.aw, !29979, !DIExpression(), !29982)
   %i.ax = call double @llvm.fabs.f64(double %i.aw), !dbg !30123
     #dbg_value(double %i.ax, !29983, !DIExpression(), !29986)
     #dbg_value(double %i.ax, !29987, !DIExpression(), !29990)
@@ -1014,10 +1017,13 @@ bb.j:                                             ; preds = %bb.k, %bb.h
   %i.bh = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> zeroinitializer, !dbg !30801
   %i.bi = fdiv <2 x double> %i.bf, %i.bh, !dbg !30801 ; 2 uses
   %i.bj = extractelement <2 x double> %i.bi, i64 1, !dbg !30802
+    #dbg_value(double %i.bj, !30562, !DIExpression(), !30565)
+    #dbg_value(double %i.bj, !30566, !DIExpression(), !30569)
   %i.bk = call double @llvm.floor.f64(double %i.bj), !dbg !30802
   %i.bl = call i32 @llvm.fptosi.sat.i32.f64(double %i.bk), !dbg !30801
     #dbg_value(double poison, !30573, !DIExpression(), !30576)
   %i.bm = extractelement <2 x double> %i.bi, i64 0, !dbg !30803
+    #dbg_value(double %i.bm, !30573, !DIExpression(), !30576)
   %i.bn = call double @llvm.fabs.f64(double %i.bm), !dbg !30803
     #dbg_value(double %i.bn, !30577, !DIExpression(), !30580)
     #dbg_value(double %i.bn, !30581, !DIExpression(), !30584)
@@ -1420,6 +1426,7 @@ bb.aq:                                            ; preds = %bb.e
   %i.gn = extractelement <2 x double> %i.gi, i64 0, !dbg !30950 ; 2 uses
   %i.go = fneg double %i.gn, !dbg !30951
   %i.gp = fmul double %i.gk, %i.go, !dbg !30951   ; 2 uses
+    #dbg_value(double %i.gl, !30465, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !30689)
   %i.gq = fneg double %i.gl, !dbg !30948
   %i.gr = fmul double %i.gk, %i.gq, !dbg !30948   ; 2 uses
   %i.gs = fmul double %i.gn, %i.gk, !dbg !30950   ; 2 uses
@@ -1822,7 +1829,33 @@ bb.am:                                            ; preds = %bb.al, %bb.an
   %i.ia = icmp eq i32 %.sroa.4116.0.copyload, %.sroa.0115.0.copyload
   %or.cond2 = and i1 %i.hb, %i.ia, !dbg !32848
   %i.ib = extractelement <2 x double> %i.hz, i64 0 ; 6 uses
+    #dbg_value(double %i.ib, !31880, !DIExpression(), !32588)
+    #dbg_value(double %i.ib, !32555, !DIExpression(), !32590)
+    #dbg_value(double %i.ib, !32559, !DIExpression(), !32592)
+    #dbg_value(double %i.ib, !32542, !DIExpression(), !32594)
+    #dbg_value(double %i.ib, !32546, !DIExpression(), !32597)
+    #dbg_value(double %i.ib, !32555, !DIExpression(), !32599)
+    #dbg_value(double %i.ib, !32559, !DIExpression(), !32602)
+    #dbg_value(double %i.ib, !32555, !DIExpression(), !32604)
+    #dbg_value(double %i.ib, !32559, !DIExpression(), !32607)
+    #dbg_value(double %i.ib, !32542, !DIExpression(), !32609)
+    #dbg_value(double %i.ib, !32546, !DIExpression(), !32612)
+    #dbg_value(double %i.ib, !32555, !DIExpression(), !32614)
+    #dbg_value(double %i.ib, !32559, !DIExpression(), !32617)
   %i.ic = extractelement <2 x double> %i.hz, i64 1 ; 6 uses
+    #dbg_value(double %i.ic, !31879, !DIExpression(), !32541)
+    #dbg_value(double %i.ic, !32542, !DIExpression(), !32545)
+    #dbg_value(double %i.ic, !32546, !DIExpression(), !32549)
+    #dbg_value(double %i.ic, !32542, !DIExpression(), !32551)
+    #dbg_value(double %i.ic, !32546, !DIExpression(), !32554)
+    #dbg_value(double %i.ic, !32555, !DIExpression(), !32558)
+    #dbg_value(double %i.ic, !32559, !DIExpression(), !32563)
+    #dbg_value(double %i.ic, !32542, !DIExpression(), !32565)
+    #dbg_value(double %i.ic, !32546, !DIExpression(), !32568)
+    #dbg_value(double %i.ic, !32555, !DIExpression(), !32570)
+    #dbg_value(double %i.ic, !32559, !DIExpression(), !32573)
+    #dbg_value(double %i.ic, !32542, !DIExpression(), !32575)
+    #dbg_value(double %i.ic, !32546, !DIExpression(), !32578)
   %i.id = fsub double %i.ib, %i.ic
   %i.ie = fcmp ogt double %i.id, 1.000000e+00
   %or.cond4 = select i1 %or.cond2, i1 %i.ie, i1 false, !dbg !32848
@@ -2225,7 +2258,33 @@ bb.am:                                            ; preds = %bb.al, %bb.an
   %i.ij = icmp eq i32 %.sroa.4116.0.copyload, %.sroa.0115.0.copyload
   %or.cond2 = and i1 %i.hk, %i.ij, !dbg !34403
   %i.ik = extractelement <2 x double> %i.ii, i64 0 ; 6 uses
+    #dbg_value(double %i.ik, !33433, !DIExpression(), !34141)
+    #dbg_value(double %i.ik, !34108, !DIExpression(), !34143)
+    #dbg_value(double %i.ik, !34112, !DIExpression(), !34145)
+    #dbg_value(double %i.ik, !34095, !DIExpression(), !34147)
+    #dbg_value(double %i.ik, !34099, !DIExpression(), !34150)
+    #dbg_value(double %i.ik, !34108, !DIExpression(), !34152)
+    #dbg_value(double %i.ik, !34112, !DIExpression(), !34155)
+    #dbg_value(double %i.ik, !34108, !DIExpression(), !34157)
+    #dbg_value(double %i.ik, !34112, !DIExpression(), !34160)
+    #dbg_value(double %i.ik, !34095, !DIExpression(), !34162)
+    #dbg_value(double %i.ik, !34099, !DIExpression(), !34165)
+    #dbg_value(double %i.ik, !34108, !DIExpression(), !34167)
+    #dbg_value(double %i.ik, !34112, !DIExpression(), !34170)
   %i.il = extractelement <2 x double> %i.ii, i64 1 ; 6 uses
+    #dbg_value(double %i.il, !33432, !DIExpression(), !34094)
+    #dbg_value(double %i.il, !34095, !DIExpression(), !34098)
+    #dbg_value(double %i.il, !34099, !DIExpression(), !34102)
+    #dbg_value(double %i.il, !34095, !DIExpression(), !34104)
+    #dbg_value(double %i.il, !34099, !DIExpression(), !34107)
+    #dbg_value(double %i.il, !34108, !DIExpression(), !34111)
+    #dbg_value(double %i.il, !34112, !DIExpression(), !34116)
+    #dbg_value(double %i.il, !34095, !DIExpression(), !34118)
+    #dbg_value(double %i.il, !34099, !DIExpression(), !34121)
+    #dbg_value(double %i.il, !34108, !DIExpression(), !34123)
+    #dbg_value(double %i.il, !34112, !DIExpression(), !34126)
+    #dbg_value(double %i.il, !34095, !DIExpression(), !34128)
+    #dbg_value(double %i.il, !34099, !DIExpression(), !34131)
   %i.im = fsub double %i.ik, %i.il
   %i.in = fcmp ogt double %i.im, 1.000000e+00
   %or.cond4 = select i1 %or.cond2, i1 %i.in, i1 false, !dbg !34403
@@ -2628,6 +2687,7 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtNtCsex
     #dbg_value(i64 %.sroa.0.0.lcssa.i.i, !45428, !DIExpression(), !42940)
     #dbg_value(i64 poison, !45432, !DIExpression(), !42940)
   %i.jg = extractelement <2 x i64> %i.iw, i64 1, !dbg !46815
+    #dbg_value(i64 %i.jg, !45432, !DIExpression(), !42940)
   %i.jh = icmp ule i64 %.sroa.0.0.lcssa.i.i, %i.jg, !dbg !46815
     #dbg_value(i1 true, !45435, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !42943)
   call void @llvm.assume(i1 %i.jh), !dbg !46816
@@ -2752,6 +2812,7 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtNtCsex
     #dbg_value(i64 %.sroa.0.0.lcssa.i.i658, !45428, !DIExpression(), !42987)
     #dbg_value(i64 poison, !45432, !DIExpression(), !42987)
   %i.jv = extractelement <2 x i64> %i.jl, i64 1, !dbg !46830
+    #dbg_value(i64 %i.jv, !45432, !DIExpression(), !42987)
   %i.jw = icmp ule i64 %.sroa.0.0.lcssa.i.i658, %i.jv, !dbg !46830
     #dbg_value(i1 true, !45435, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !42989)
   call void @llvm.assume(i1 %i.jw), !dbg !46831

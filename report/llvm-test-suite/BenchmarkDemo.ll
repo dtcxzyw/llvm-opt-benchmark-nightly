@@ -205,11 +205,8 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !68
   %i.b = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef 72, i32 noundef 16) ; 3 uses
   %i.c = fmul float %3, 1.500000e-01              ; 5 uses
-  %17 = insertelement <4 x float> poison, float %3, i64 0 ; 2 uses
-  %18 = shufflevector <4 x float> %17, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
-  %19 = fmul <4 x float> %18, <float 2.000000e-01, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00> ; 4 uses
-  %20 = extractelement <4 x float> %19, i64 0     ; 2 uses
-  invoke void @_ZN14btCapsuleShapeC1Eff(ptr noundef nonnull align 8 dereferenceable(68) %i.b, float noundef %i.c, float noundef %20)
+  %17 = fmul float %3, 2.000000e-01               ; 5 uses
+  invoke void @_ZN14btCapsuleShapeC1Eff(ptr noundef nonnull align 8 dereferenceable(68) %i.b, float noundef %i.c, float noundef %17)
           to label %bb.b unwind label %bb.m
 
 bb.b:                                             ; preds = %bb.a
@@ -298,8 +295,10 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.131.48.copyload = load float, ptr %.sroa.131.48..sroa_idx, align 4 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.ah = load <2 x float>, ptr %2, align 4       ; 11 uses
-  %i.ai = fmul <4 x float> %18, <float 0.000000e+00, float 0.000000e+00, float -1.800000e-01, float -1.800000e-01> ; 14 uses
-  %i.aj = extractelement <4 x float> %i.ai, i64 0 ; 3 uses
+  %18 = insertelement <4 x float> poison, float %3, i64 0 ; 2 uses
+  %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.ai = fmul <4 x float> %19, <float 0.000000e+00, float 0.000000e+00, float -1.800000e-01, float -1.800000e-01> ; 14 uses
+  %i.aj = extractelement <4 x float> %i.ai, i64 0 ; 5 uses
   %i.ak = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 0, i32 poison> ; 9 uses
   %i.al = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> zeroinitializer ; 11 uses
   store float 1.000000e+00, ptr %4, align 4, !alias.scope !136
@@ -317,7 +316,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 6 uses
   %i.ap = fmul float %3, 1.200000e+00             ; 2 uses
   %i.aq = shufflevector <4 x float> %i.ai, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.ar = shufflevector <4 x float> %17, <4 x float> %i.ai, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
+  %i.ar = shufflevector <4 x float> %18, <4 x float> %i.ai, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
   %i.as = insertelement <4 x float> %i.ar, float %i.ap, i64 2
   %i.at = fmul float %i.ap, 0.000000e+00          ; 2 uses
   %i.au = insertelement <4 x float> %i.as, float %i.at, i64 3
@@ -381,71 +380,69 @@ bb.l:                                             ; preds = %bb.k
   %i.bu = load ptr, ptr %i.k, align 8, !tbaa !39
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.bw = fmul float %3, 6.500000e-01             ; 3 uses
-  %21 = insertelement <4 x float> poison, float %i.bp, i64 0
-  %i.bx = insertelement <4 x float> %21, float %i.bq, i64 1
-  %i.by = insertelement <4 x float> %i.bx, float %i.bw, i64 2
+  %20 = fmul float %i.bw, 0.000000e+00            ; 4 uses
+  %i.bx = insertelement <4 x float> poison, float %i.bp, i64 0
+  %i.by = insertelement <4 x float> %i.bx, float %i.bq, i64 1
+  %21 = insertelement <4 x float> %i.by, float %i.bw, i64 2
+  %22 = insertelement <4 x float> %21, float %20, i64 3
+  %23 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ai, <4 x float> zeroinitializer, <4 x float> %22) ; 4 uses
+  %24 = shufflevector <4 x float> %23, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
+  %25 = shufflevector <4 x float> %i.bs, <4 x float> %23, <2 x i32> <i32 0, i32 4>
+  %26 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %25)
+  %27 = fadd <2 x float> %26, %i.ah
+  %shift = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
+  %foldExtExtBinop = fadd <4 x float> %i.ai, %shift
+  %28 = extractelement <4 x float> %foldExtExtBinop, i64 0
+  %29 = fadd float %28, %.sroa.131.48.copyload
+  %.sroa.3.12.vec.insert.i.i62 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %29, i64 0
+  store <2 x float> %27, ptr %i.bt, align 4, !alias.scope !138
+  store <2 x float> %.sroa.3.12.vec.insert.i.i62, ptr %.sroa.4.0..sroa_idx.i72, align 4, !tbaa !46, !alias.scope !138
+  %30 = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %6, ptr noundef %i.bu)
+  store ptr %30, ptr %i.bv, align 8, !tbaa !70
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
+  %shift956 = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %foldExtExtBinop957 = fadd <4 x float> %i.ai, %shift956
+  %i.bz = extractelement <4 x float> %foldExtExtBinop957, i64 0
+  %31 = fadd float %i.bz, %.sroa.131.48.copyload
+  %i.ca = insertelement <2 x float> <float poison, float 0.000000e+00>, float %31, i64 0
+  store float 1.000000e+00, ptr %7, align 4, !alias.scope !139
   %.sroa.44.0..sroa_idx.i81 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %.sroa.9.16..sroa_idx.i84 = getelementptr inbounds nuw i8, ptr %7, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.44.0..sroa_idx.i81, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %.sroa.9.16..sroa_idx.i84, align 4, !alias.scope !139
   %.sroa.10.16..sroa_idx.i85 = getelementptr inbounds nuw i8, ptr %7, i64 24
   %.sroa.15.32..sroa_idx.i88 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %22 = getelementptr inbounds nuw i8, ptr %7, i64 48
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.10.16..sroa_idx.i85, i8 0, i64 16, i1 false)
+  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i88, align 4, !alias.scope !139
+  %32 = getelementptr inbounds nuw i8, ptr %7, i64 48
   %.sroa.4.0..sroa_idx.i90 = getelementptr inbounds nuw i8, ptr %7, i64 56
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
+  store <2 x float> %i.ca, ptr %.sroa.4.0..sroa_idx.i90, align 4, !tbaa !46, !alias.scope !139
+  %33 = load ptr, ptr %i.o, align 8, !tbaa !39
+  %34 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %.sroa.44.0..sroa_idx.i99 = getelementptr inbounds nuw i8, ptr %8, i64 4
   %.sroa.9.16..sroa_idx.i102 = getelementptr inbounds nuw i8, ptr %8, i64 20
   %.sroa.10.16..sroa_idx.i103 = getelementptr inbounds nuw i8, ptr %8, i64 24
   %.sroa.15.32..sroa_idx.i106 = getelementptr inbounds nuw i8, ptr %8, i64 40
-  %24 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %35 = getelementptr inbounds nuw i8, ptr %8, i64 48
   %.sroa.4.0..sroa_idx.i108 = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %36 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %.sroa.44.0..sroa_idx.i117 = getelementptr inbounds nuw i8, ptr %9, i64 4
   %.sroa.9.16..sroa_idx.i120 = getelementptr inbounds nuw i8, ptr %9, i64 20
   %.sroa.10.16..sroa_idx.i121 = getelementptr inbounds nuw i8, ptr %9, i64 24
   %.sroa.15.32..sroa_idx.i124 = getelementptr inbounds nuw i8, ptr %9, i64 40
-  %26 = getelementptr inbounds nuw i8, ptr %9, i64 48
+  %37 = getelementptr inbounds nuw i8, ptr %9, i64 48
   %.sroa.4.0..sroa_idx.i126 = getelementptr inbounds nuw i8, ptr %9, i64 56
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
-  %i.bz = extractelement <4 x float> %i.ai, i64 2 ; 2 uses
-  %28 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %i.ca = insertelement <2 x float> %28, float %3, i64 1
-  %29 = fmul <2 x float> %i.ca, <float 1.000000e+00, float 1.800000e-01> ; 3 uses
-  %30 = shufflevector <2 x float> %29, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
-  %31 = extractelement <2 x float> %29, i64 1     ; 2 uses
-  %32 = fmul float %i.bw, 0.000000e+00            ; 3 uses
-  %33 = insertelement <4 x float> %i.by, float %32, i64 3
-  %34 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ai, <4 x float> zeroinitializer, <4 x float> %33) ; 3 uses
-  %35 = shufflevector <4 x float> %i.bs, <4 x float> %34, <2 x i32> <i32 0, i32 4>
-  %36 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %35)
-  %37 = fadd <2 x float> %36, %i.ah
-  %38 = shufflevector <4 x float> %i.ai, <4 x float> %30, <4 x i32> <i32 0, i32 0, i32 2, i32 5>
-  %39 = insertelement <4 x float> poison, float %32, i64 0
-  %40 = shufflevector <4 x float> %34, <4 x float> %39, <4 x i32> <i32 1, i32 3, i32 4, i32 4>
-  %41 = fadd <4 x float> %38, %40                 ; 4 uses
-  %42 = extractelement <4 x float> %41, i64 0
-  %43 = fadd float %42, %.sroa.131.48.copyload
-  %.sroa.3.12.vec.insert.i.i62 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %43, i64 0
-  store <2 x float> %37, ptr %i.bt, align 4, !alias.scope !138
-  store <2 x float> %.sroa.3.12.vec.insert.i.i62, ptr %.sroa.4.0..sroa_idx.i72, align 4, !tbaa !46, !alias.scope !138
-  %44 = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %6, ptr noundef %i.bu)
-  store ptr %44, ptr %i.bv, align 8, !tbaa !70
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %45 = extractelement <4 x float> %41, i64 1
-  %46 = fadd float %45, %.sroa.131.48.copyload
-  %.sroa.3.12.vec.insert.i.i80 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %46, i64 0
-  store float 1.000000e+00, ptr %7, align 4, !alias.scope !139
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.44.0..sroa_idx.i81, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %.sroa.9.16..sroa_idx.i84, align 4, !alias.scope !139
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.10.16..sroa_idx.i85, i8 0, i64 16, i1 false)
-  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i88, align 4, !alias.scope !139
-  store <2 x float> %.sroa.3.12.vec.insert.i.i80, ptr %.sroa.4.0..sroa_idx.i90, align 4, !tbaa !46, !alias.scope !139
-  %47 = load ptr, ptr %i.o, align 8, !tbaa !39
-  %48 = shufflevector <4 x float> %41, <4 x float> %34, <2 x i32> <i32 2, i32 6>
-  %i.cb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %48)
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
+  %39 = fmul float %17, 0.000000e+00              ; 4 uses
+  %40 = extractelement <4 x float> %i.ai, i64 2   ; 3 uses
+  %41 = fadd float %40, %20
+  %42 = insertelement <2 x float> %24, float %41, i64 0
+  %i.cb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %42)
   %i.cc = fadd <2 x float> %i.cb, %i.ah
-  store <2 x float> %i.cc, ptr %22, align 4, !alias.scope !139
-  %i.cd = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %7, ptr noundef %47)
-  store ptr %i.cd, ptr %23, align 8, !tbaa !70
+  store <2 x float> %i.cc, ptr %32, align 4, !alias.scope !139
+  %i.cd = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %7, ptr noundef %33)
+  store ptr %i.cd, ptr %34, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   store float 1.000000e+00, ptr %8, align 4, !alias.scope !140
@@ -454,46 +451,37 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.10.16..sroa_idx.i103, i8 0, i64 16, i1 false)
   store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i106, align 4, !alias.scope !140
   %i.ce = load ptr, ptr %i.r, align 8, !tbaa !39
-  %49 = shufflevector <4 x float> %i.ai, <4 x float> %30, <4 x i32> <i32 0, i32 2, i32 0, i32 5>
-  %50 = call float @llvm.fmuladd.f32(float %31, float 0.000000e+00, float %20)
-  %.sroa.44.0..sroa_idx.i135 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %.sroa.9.16..sroa_idx.i138 = getelementptr inbounds nuw i8, ptr %10, i64 20
-  %.sroa.10.16..sroa_idx.i139 = getelementptr inbounds nuw i8, ptr %10, i64 24
-  %.sroa.15.32..sroa_idx.i142 = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %51 = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %.sroa.4.0..sroa_idx.i144 = getelementptr inbounds nuw i8, ptr %10, i64 56
-  %52 = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %53 = getelementptr inbounds nuw i8, ptr %11, i64 16
-  %.sroa.10.16..sroa_idx.i157 = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %.sroa.15.32..sroa_idx.i160 = getelementptr inbounds nuw i8, ptr %11, i64 40
-  %54 = getelementptr inbounds nuw i8, ptr %11, i64 48
-  %.sroa.4.0..sroa_idx.i162 = getelementptr inbounds nuw i8, ptr %11, i64 56
-  %55 = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
-  %56 = fmul <4 x float> %18, <float f0xBF333333, float f0xBF333333, float 3.500000e-01, float 3.500000e-01> ; 3 uses
-  %57 = fmul <4 x float> %19, <float 1.000000e+00, float 1.450000e+00, float 1.450000e+00, float 1.450000e+00> ; 3 uses
-  %58 = fmul <4 x float> %57, zeroinitializer     ; 6 uses
-  %59 = shufflevector <4 x float> %58, <4 x float> %19, <4 x i32> <i32 4, i32 poison, i32 0, i32 poison>
-  %i.cf = insertelement <4 x float> %59, float %i.bw, i64 1
-  %i.cg = insertelement <4 x float> %i.cf, float %32, i64 3
-  %60 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %30, <4 x float> zeroinitializer, <4 x float> %i.cg) ; 3 uses
-  %61 = shufflevector <4 x float> %41, <4 x float> %60, <2 x i32> <i32 3, i32 5>
-  %i.ch = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %61)
+  %43 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %44 = insertelement <2 x float> %43, float %3, i64 1
+  %45 = fmul <2 x float> %44, <float 1.000000e+00, float 1.800000e-01> ; 3 uses
+  %46 = shufflevector <2 x float> %45, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %47 = extractelement <2 x float> %45, i64 1     ; 4 uses
+  %48 = insertelement <4 x float> poison, float %17, i64 0
+  %49 = insertelement <4 x float> %48, float %i.bw, i64 1
+  %50 = insertelement <4 x float> %49, float %39, i64 2
+  %51 = insertelement <4 x float> %50, float %20, i64 3
+  %52 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %46, <4 x float> zeroinitializer, <4 x float> %51) ; 3 uses
+  %53 = shufflevector <4 x float> %46, <4 x float> %i.ai, <4 x i32> <i32 1, i32 4, i32 6, i32 4>
+  %54 = shufflevector <4 x float> %52, <4 x float> poison, <4 x i32> <i32 poison, i32 3, i32 poison, i32 2>
+  %i.cf = insertelement <4 x float> %54, float %20, i64 0
+  %i.cg = insertelement <4 x float> %i.cf, float %39, i64 2
+  %55 = fadd <4 x float> %53, %i.cg               ; 4 uses
+  %56 = shufflevector <4 x float> %55, <4 x float> %52, <2 x i32> <i32 0, i32 5>
+  %i.ch = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %56)
   %i.ci = fadd <2 x float> %i.ch, %i.ah
-  %62 = shufflevector <4 x float> %60, <4 x float> %58, <4 x i32> <i32 3, i32 4, i32 2, i32 4>
-  %63 = fadd <4 x float> %49, %62                 ; 4 uses
-  %i.cj = extractelement <4 x float> %63, i64 0
+  %i.cj = extractelement <4 x float> %55, i64 1
   %i.ck = fadd float %i.cj, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i116 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ck, i64 0
-  %64 = shufflevector <4 x float> %63, <4 x float> %60, <2 x i32> <i32 1, i32 4>
-  %i.cl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %64)
+  %57 = shufflevector <4 x float> %55, <4 x float> %52, <2 x i32> <i32 2, i32 4>
+  %i.cl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %57)
   %i.cm = fadd <2 x float> %i.cl, %i.ah
-  %i.cn = extractelement <4 x float> %63, i64 2
+  %i.cn = extractelement <4 x float> %55, i64 3
   %i.co = fadd float %i.cn, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i98 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.co, i64 0
-  store <2 x float> %i.cm, ptr %24, align 4, !alias.scope !140
+  store <2 x float> %i.cm, ptr %35, align 4, !alias.scope !140
   store <2 x float> %.sroa.3.12.vec.insert.i.i98, ptr %.sroa.4.0..sroa_idx.i108, align 4, !tbaa !46, !alias.scope !140
   %i.cp = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %8, ptr noundef %i.ce)
-  store ptr %i.cp, ptr %25, align 8, !tbaa !70
+  store ptr %i.cp, ptr %36, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
   store float 1.000000e+00, ptr %9, align 4, !alias.scope !141
@@ -501,58 +489,72 @@ bb.l:                                             ; preds = %bb.k
   store float 1.000000e+00, ptr %.sroa.9.16..sroa_idx.i120, align 4, !alias.scope !141
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.10.16..sroa_idx.i121, i8 0, i64 16, i1 false)
   store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i124, align 4, !alias.scope !141
-  store <2 x float> %i.ci, ptr %26, align 4, !alias.scope !141
+  store <2 x float> %i.ci, ptr %37, align 4, !alias.scope !141
   store <2 x float> %.sroa.3.12.vec.insert.i.i116, ptr %.sroa.4.0..sroa_idx.i126, align 4, !tbaa !46, !alias.scope !141
   %i.cq = load ptr, ptr %i.t, align 8, !tbaa !39
   %i.cr = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %9, ptr noundef %i.cq)
-  store ptr %i.cr, ptr %27, align 8, !tbaa !70
+  store ptr %i.cr, ptr %38, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
-  %65 = shufflevector <4 x float> %63, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
-  %i.cs = insertelement <2 x float> %65, float %50, i64 1
+  %58 = fadd float %47, %39
+  %59 = call float @llvm.fmuladd.f32(float %47, float 0.000000e+00, float %17)
+  %60 = insertelement <2 x float> poison, float %58, i64 0
+  %i.cs = insertelement <2 x float> %60, float %59, i64 1
   %i.ct = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %i.cs)
   %i.cu = fadd <2 x float> %i.ct, %i.ah
-  %66 = fmul float %3, -3.500000e-01              ; 3 uses
-  %67 = shufflevector <4 x float> %30, <4 x float> <float poison, float -0.000000e+00, float poison, float -0.000000e+00>, <4 x i32> <i32 1, i32 5, i32 poison, i32 7>
-  %68 = insertelement <4 x float> %67, float %66, i64 2
-  %69 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %68, <4 x float> zeroinitializer, <4 x float> %58)
-  %70 = shufflevector <4 x float> %i.ai, <4 x float> %56, <4 x i32> <i32 0, i32 poison, i32 0, i32 4>
-  %71 = insertelement <4 x float> %70, float %66, i64 1
-  %72 = fadd <4 x float> %71, %69                 ; 4 uses
-  %73 = extractelement <4 x float> %72, i64 0
-  %74 = fadd float %73, %.sroa.131.48.copyload
-  %.sroa.3.12.vec.insert.i.i134 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %74, i64 0
+  %61 = call float @llvm.fmuladd.f32(float %47, float 0.000000e+00, float %39)
+  %62 = fadd float %i.aj, %61
+  %63 = fadd float %62, %.sroa.131.48.copyload
+  %.sroa.3.12.vec.insert.i.i134 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %63, i64 0
   store float 1.000000e+00, ptr %10, align 4, !alias.scope !142
+  %.sroa.44.0..sroa_idx.i135 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %.sroa.9.16..sroa_idx.i138 = getelementptr inbounds nuw i8, ptr %10, i64 20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.44.0..sroa_idx.i135, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %.sroa.9.16..sroa_idx.i138, align 4, !alias.scope !142
+  %.sroa.10.16..sroa_idx.i139 = getelementptr inbounds nuw i8, ptr %10, i64 24
+  %.sroa.15.32..sroa_idx.i142 = getelementptr inbounds nuw i8, ptr %10, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.10.16..sroa_idx.i139, i8 0, i64 16, i1 false)
   store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i142, align 4, !alias.scope !142
-  store <2 x float> %i.cu, ptr %51, align 4, !alias.scope !142
+  %64 = getelementptr inbounds nuw i8, ptr %10, i64 48
+  store <2 x float> %i.cu, ptr %64, align 4, !alias.scope !142
+  %.sroa.4.0..sroa_idx.i144 = getelementptr inbounds nuw i8, ptr %10, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i134, ptr %.sroa.4.0..sroa_idx.i144, align 4, !tbaa !46, !alias.scope !142
   %i.cv = load ptr, ptr %i.v, align 8, !tbaa !39
   %i.cw = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %10, ptr noundef %i.cv)
-  store ptr %i.cw, ptr %52, align 8, !tbaa !70
+  %65 = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
+  store ptr %i.cw, ptr %65, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
+  %66 = fmul float %3, -3.500000e-01              ; 3 uses
+  %67 = fmul float %3, 1.450000e+00               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
-  %75 = extractelement <4 x float> %57, i64 1     ; 2 uses
-  %i.cx = call float @llvm.fmuladd.f32(float %66, float 0.000000e+00, float %75)
-  %76 = shufflevector <4 x float> %72, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.cy = insertelement <2 x float> %76, float %i.cx, i64 1
+  %68 = fmul float %67, 0.000000e+00              ; 6 uses
+  %69 = fadd float %66, %68
+  %i.cx = call float @llvm.fmuladd.f32(float %66, float 0.000000e+00, float %67)
+  %70 = insertelement <2 x float> poison, float %69, i64 0
+  %i.cy = insertelement <2 x float> %70, float %i.cx, i64 1
   %i.cz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %i.cy)
   %i.da = fadd <2 x float> %i.cz, %i.ah
-  %77 = extractelement <4 x float> %72, i64 2
-  %i.db = fadd float %77, %.sroa.131.48.copyload
+  %71 = call float @llvm.fmuladd.f32(float %66, float 0.000000e+00, float %68)
+  %72 = fadd float %i.aj, %71
+  %i.db = fadd float %72, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i152 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.db, i64 0
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %11, align 16, !alias.scope !143
-  store <2 x float> <float 1.000000e+00, float f0xB33BBD2E>, ptr %53, align 16, !alias.scope !143
+  %73 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  store <2 x float> <float 1.000000e+00, float f0xB33BBD2E>, ptr %73, align 16, !alias.scope !143
+  %.sroa.10.16..sroa_idx.i157 = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %.sroa.15.32..sroa_idx.i160 = getelementptr inbounds nuw i8, ptr %11, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.16..sroa_idx.i157, i8 0, i64 16, i1 false)
   store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %.sroa.15.32..sroa_idx.i160, align 8, !alias.scope !143
-  store <2 x float> %i.da, ptr %54, align 16, !alias.scope !143
+  %74 = getelementptr inbounds nuw i8, ptr %11, i64 48
+  store <2 x float> %i.da, ptr %74, align 16, !alias.scope !143
+  %.sroa.4.0..sroa_idx.i162 = getelementptr inbounds nuw i8, ptr %11, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i152, ptr %.sroa.4.0..sroa_idx.i162, align 8, !tbaa !46, !alias.scope !143
   %i.dc = load ptr, ptr %i.y, align 8, !tbaa !39
   %i.dd = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %11, ptr noundef %i.dc)
-  store ptr %i.dd, ptr %55, align 8, !tbaa !70
+  %75 = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
+  store ptr %i.dd, ptr %75, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
+  %76 = fmul <4 x float> %19, <float f0xBF333333, float f0xBF333333, float 3.500000e-01, float 3.500000e-01> ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #21
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %12, align 16, !alias.scope !144
   %i.de = getelementptr inbounds nuw i8, ptr %12, i64 16
@@ -565,53 +567,55 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.4.0..sroa_idx.i180 = getelementptr inbounds nuw i8, ptr %12, i64 56
   %i.dg = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %78 = extractelement <4 x float> %58, i64 1
-  %79 = shufflevector <4 x float> %57, <4 x float> %58, <4 x i32> <i32 1, i32 5, i32 1, i32 5>
-  %80 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %56, <4 x float> zeroinitializer, <4 x float> %79) ; 3 uses
-  %81 = shufflevector <4 x float> %72, <4 x float> %80, <2 x i32> <i32 3, i32 4>
-  %82 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %81)
-  %83 = fadd <2 x float> %82, %i.ah
-  store <2 x float> %83, ptr %i.df, align 16, !alias.scope !144
-  %84 = getelementptr inbounds nuw i8, ptr %13, i64 16
-  %85 = getelementptr inbounds nuw i8, ptr %13, i64 32
-  %86 = getelementptr inbounds nuw i8, ptr %13, i64 48
-  %.sroa.4.0..sroa_idx.i198 = getelementptr inbounds nuw i8, ptr %13, i64 56
-  %87 = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
-  %88 = fmul float %3, f0x3F333333                ; 3 uses
-  %89 = shufflevector <4 x float> %56, <4 x float> %i.ai, <4 x i32> <i32 2, i32 4, i32 4, i32 poison>
-  %90 = insertelement <4 x float> %89, float %88, i64 3
-  %91 = shufflevector <4 x float> %58, <4 x float> %80, <4 x i32> <i32 1, i32 5, i32 7, i32 1>
-  %92 = fadd <4 x float> %90, %91                 ; 4 uses
-  %i.di = extractelement <4 x float> %92, i64 1
+  %77 = insertelement <4 x float> poison, float %67, i64 0
+  %78 = insertelement <4 x float> %77, float %68, i64 1
+  %79 = shufflevector <4 x float> %78, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %80 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %76, <4 x float> zeroinitializer, <4 x float> %79) ; 3 uses
+  %81 = shufflevector <4 x float> %76, <4 x float> %i.ai, <4 x i32> <i32 0, i32 2, i32 4, i32 4>
+  %82 = insertelement <4 x float> poison, float %68, i64 0
+  %83 = shufflevector <4 x float> %82, <4 x float> %80, <4 x i32> <i32 0, i32 0, i32 5, i32 7>
+  %84 = fadd <4 x float> %81, %83                 ; 4 uses
+  %85 = shufflevector <4 x float> %84, <4 x float> %80, <2 x i32> <i32 0, i32 4>
+  %86 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %85)
+  %87 = fadd <2 x float> %86, %i.ah
+  %i.di = extractelement <4 x float> %84, i64 2
   %i.dj = fadd float %i.di, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i170 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.dj, i64 0
+  store <2 x float> %87, ptr %i.df, align 16, !alias.scope !144
   store <2 x float> %.sroa.3.12.vec.insert.i.i170, ptr %.sroa.4.0..sroa_idx.i180, align 8, !tbaa !46, !alias.scope !144
   %i.dk = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %12, ptr noundef %i.dg)
   store ptr %i.dk, ptr %i.dh, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
-  %93 = shufflevector <4 x float> %92, <4 x float> %80, <2 x i32> <i32 0, i32 6>
-  %i.dl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %93)
+  %88 = shufflevector <4 x float> %84, <4 x float> %80, <2 x i32> <i32 1, i32 6>
+  %i.dl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %88)
   %i.dm = fadd <2 x float> %i.dl, %i.ah
-  %i.dn = extractelement <4 x float> %92, i64 2
+  %i.dn = extractelement <4 x float> %84, i64 3
   %i.do = fadd float %i.dn, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i188 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.do, i64 0
   store <4 x float> <float f0xB33BBD2E, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %13, align 16, !alias.scope !145
-  store <4 x float> <float -1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %84, align 16, !alias.scope !145
-  store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %85, align 16, !alias.scope !145
-  store <2 x float> %i.dm, ptr %86, align 16, !alias.scope !145
+  %89 = getelementptr inbounds nuw i8, ptr %13, i64 16
+  store <4 x float> <float -1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %89, align 16, !alias.scope !145
+  %90 = getelementptr inbounds nuw i8, ptr %13, i64 32
+  store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %90, align 16, !alias.scope !145
+  %91 = getelementptr inbounds nuw i8, ptr %13, i64 48
+  store <2 x float> %i.dm, ptr %91, align 16, !alias.scope !145
+  %.sroa.4.0..sroa_idx.i198 = getelementptr inbounds nuw i8, ptr %13, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i188, ptr %.sroa.4.0..sroa_idx.i198, align 8, !tbaa !46, !alias.scope !145
   %i.dp = load ptr, ptr %i.ae, align 8, !tbaa !39
   %i.dq = call noundef ptr @_ZN7RagDoll20localCreateRigidBodyEfRK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 dereferenceable(272) %0, float noundef 1.000000e+00, ptr noundef nonnull align 4 dereferenceable(64) %13, ptr noundef %i.dp)
-  store ptr %i.dq, ptr %87, align 8, !tbaa !70
+  %92 = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
+  store ptr %i.dq, ptr %92, align 8, !tbaa !70
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
+  %93 = fmul float %3, f0x3F333333                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #21
-  %i.dr = call float @llvm.fmuladd.f32(float %88, float 0.000000e+00, float %75)
-  %94 = shufflevector <4 x float> %92, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
-  %i.ds = insertelement <2 x float> %94, float %i.dr, i64 1
+  %94 = fadd float %93, %68
+  %i.dr = call float @llvm.fmuladd.f32(float %93, float 0.000000e+00, float %67)
+  %95 = insertelement <2 x float> poison, float %94, i64 0
+  %i.ds = insertelement <2 x float> %95, float %i.dr, i64 1
   %i.dt = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.al, <2 x float> zeroinitializer, <2 x float> %i.ds)
   %i.du = fadd <2 x float> %i.dt, %i.ah
-  %i.dv = call float @llvm.fmuladd.f32(float %88, float 0.000000e+00, float %78)
+  %i.dv = call float @llvm.fmuladd.f32(float %93, float 0.000000e+00, float %68)
   %i.dw = fadd float %i.aj, %i.dv
   %i.dx = fadd float %i.dw, %.sroa.131.48.copyload
   %.sroa.3.12.vec.insert.i.i206 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.dx, i64 0
@@ -717,8 +721,8 @@ bb.l:                                             ; preds = %bb.k
   %i.gf = getelementptr inbounds nuw i8, ptr %i.gd, i64 504
   store <2 x float> <float 1.600000e+00, float 2.500000e+00>, ptr %i.gf, align 8, !tbaa !33
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.aj, i64 0 ; 20 uses
-  %.sroa.0.0.vec.insert.i.i73 = insertelement <2 x float> poison, float %i.bz, i64 0
-  %.sroa.0.0.vec.insert.i.i109 = insertelement <2 x float> poison, float %31, i64 0
+  %.sroa.0.0.vec.insert.i.i73 = insertelement <2 x float> poison, float %40, i64 0
+  %.sroa.0.0.vec.insert.i.i109 = insertelement <2 x float> poison, float %47, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
   %i.gg = getelementptr inbounds nuw i8, ptr %15, i64 4
@@ -882,7 +886,7 @@ bb.x:                                             ; preds = %_ZN17btHingeConstra
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.ic = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
   %i.id = load ptr, ptr %i.ao, align 8, !tbaa !70
-  %i.ie = load ptr, ptr %23, align 8, !tbaa !70
+  %i.ie = load ptr, ptr %34, align 8, !tbaa !70
   invoke void @_ZN21btConeTwistConstraintC1ER11btRigidBodyS1_RK11btTransformS4_(ptr noundef nonnull align 8 dereferenceable(640) %i.ic, ptr noundef nonnull align 8 dereferenceable(564) %i.id, ptr noundef nonnull align 8 dereferenceable(564) %i.ie, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16)
           to label %bb.y unwind label %bb.ae
 
@@ -917,8 +921,8 @@ bb.y:                                             ; preds = %bb.x
   store <2 x float> %.sroa.0.4.vec.insert.i.i263, ptr %i.gq, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.iq = call noalias noundef nonnull dereferenceable(792) ptr @_Znwm(i64 noundef 792) #20 ; 6 uses
-  %i.ir = load ptr, ptr %23, align 8, !tbaa !70
-  %i.is = load ptr, ptr %25, align 8, !tbaa !70
+  %i.ir = load ptr, ptr %34, align 8, !tbaa !70
+  %i.is = load ptr, ptr %36, align 8, !tbaa !70
   invoke void @_ZN17btHingeConstraintC1ER11btRigidBodyS1_RK11btTransformS4_b(ptr noundef nonnull align 8 dereferenceable(792) %i.iq, ptr noundef nonnull align 8 dereferenceable(564) %i.ir, ptr noundef nonnull align 8 dereferenceable(564) %i.is, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16, i1 noundef zeroext false)
           to label %_ZN17btHingeConstraint8setLimitEfffff.exit270 unwind label %bb.af
 
@@ -947,7 +951,7 @@ _ZN17btHingeConstraint8setLimitEfffff.exit270:    ; preds = %bb.y
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.ja = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
   %i.jb = load ptr, ptr %i.ao, align 8, !tbaa !70
-  %i.jc = load ptr, ptr %27, align 8, !tbaa !70
+  %i.jc = load ptr, ptr %38, align 8, !tbaa !70
   invoke void @_ZN21btConeTwistConstraintC1ER11btRigidBodyS1_RK11btTransformS4_(ptr noundef nonnull align 8 dereferenceable(640) %i.ja, ptr noundef nonnull align 8 dereferenceable(564) %i.jb, ptr noundef nonnull align 8 dereferenceable(564) %i.jc, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16)
           to label %bb.z unwind label %bb.ag
 
@@ -978,8 +982,8 @@ bb.z:                                             ; preds = %_ZN17btHingeConstra
   store <2 x float> %.sroa.0.4.vec.insert.i.i263, ptr %i.gq, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.jm = call noalias noundef nonnull dereferenceable(792) ptr @_Znwm(i64 noundef 792) #20 ; 6 uses
-  %i.jn = load ptr, ptr %27, align 8, !tbaa !70
-  %i.jo = load ptr, ptr %52, align 8, !tbaa !70
+  %i.jn = load ptr, ptr %38, align 8, !tbaa !70
+  %i.jo = load ptr, ptr %65, align 8, !tbaa !70
   invoke void @_ZN17btHingeConstraintC1ER11btRigidBodyS1_RK11btTransformS4_b(ptr noundef nonnull align 8 dereferenceable(792) %i.jm, ptr noundef nonnull align 8 dereferenceable(564) %i.jn, ptr noundef nonnull align 8 dereferenceable(564) %i.jo, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16, i1 noundef zeroext false)
           to label %_ZN17btHingeConstraint8setLimitEfffff.exit294 unwind label %bb.ah
 
@@ -1006,12 +1010,12 @@ _ZN17btHingeConstraint8setLimitEfffff.exit294:    ; preds = %bb.z
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !33
   store <4 x float> <float 1.000000e+00, float f0xB33BBD2E, float 0.000000e+00, float 0.000000e+00>, ptr %i.gn, align 16, !tbaa !33
   store <4 x float> <float -0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.go, align 16, !tbaa !33
-  %.sroa.0.4.vec.insert.i.i301 = insertelement <2 x float> %i.ak, float %i.bz, i64 1 ; 2 uses
+  %.sroa.0.4.vec.insert.i.i301 = insertelement <2 x float> %i.ak, float %40, i64 1 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i301, ptr %i.gq, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.jx = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
   %i.jy = load ptr, ptr %i.bo, align 8, !tbaa !70
-  %i.jz = load ptr, ptr %55, align 8, !tbaa !70
+  %i.jz = load ptr, ptr %75, align 8, !tbaa !70
   invoke void @_ZN21btConeTwistConstraintC1ER11btRigidBodyS1_RK11btTransformS4_(ptr noundef nonnull align 8 dereferenceable(640) %i.jx, ptr noundef nonnull align 8 dereferenceable(564) %i.jy, ptr noundef nonnull align 8 dereferenceable(564) %i.jz, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16)
           to label %bb.aa unwind label %bb.ai
 
@@ -1034,7 +1038,7 @@ bb.aa:                                            ; preds = %_ZN17btHingeConstra
   store <4 x float> <float f0xB33BBD2E, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %15, align 16, !tbaa !33
   store <4 x float> <float -0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.gj, align 16, !tbaa !33
   store <4 x float> <float -1.000000e+00, float -0.000000e+00, float f0xB33BBD2E, float 0.000000e+00>, ptr %i.gk, align 16, !tbaa !33
-  %.sroa.0.4.vec.insert.i.i306 = shufflevector <2 x float> %i.ak, <2 x float> %29, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %.sroa.0.4.vec.insert.i.i306 = shufflevector <2 x float> %i.ak, <2 x float> %45, <2 x i32> <i32 0, i32 3> ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i306, ptr %i.gm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4517.0..sroa_idx, align 8, !tbaa !46
   store <4 x float> <float f0xB33BBD2E, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !33
@@ -1043,7 +1047,7 @@ bb.aa:                                            ; preds = %_ZN17btHingeConstra
   store <2 x float> %.sroa.0.4.vec.insert.i.i243, ptr %i.gq, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.kj = call noalias noundef nonnull dereferenceable(792) ptr @_Znwm(i64 noundef 792) #20 ; 6 uses
-  %i.kk = load ptr, ptr %55, align 8, !tbaa !70
+  %i.kk = load ptr, ptr %75, align 8, !tbaa !70
   %i.kl = load ptr, ptr %i.dh, align 8, !tbaa !70
   invoke void @_ZN17btHingeConstraintC1ER11btRigidBodyS1_RK11btTransformS4_b(ptr noundef nonnull align 8 dereferenceable(792) %i.kj, ptr noundef nonnull align 8 dereferenceable(564) %i.kk, ptr noundef nonnull align 8 dereferenceable(564) %i.kl, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16, i1 noundef zeroext false)
           to label %_ZN17btHingeConstraint8setLimitEfffff.exit318 unwind label %bb.aj
@@ -1065,8 +1069,8 @@ _ZN17btHingeConstraint8setLimitEfffff.exit318:    ; preds = %bb.aa
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float -0.000000e+00>, ptr %i.gh, align 4, !tbaa !33
   store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.gl, align 4, !tbaa !33
   store float 0.000000e+00, ptr %i.gi, align 4, !tbaa !33
-  %95 = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0.4.vec.insert.i.i320 = insertelement <2 x float> %95, float %i.c, i64 1
+  %.sroa.0.0.vec.insert.i.i319 = insertelement <2 x float> poison, float %17, i64 0
+  %.sroa.0.4.vec.insert.i.i320 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i319, float %i.c, i64 1
   store <2 x float> %.sroa.0.4.vec.insert.i.i320, ptr %i.gm, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4517.0..sroa_idx, align 8, !tbaa !46
   store <4 x float> <float f0xB33BBD2E, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %16, align 16, !tbaa !33
@@ -1076,7 +1080,7 @@ _ZN17btHingeConstraint8setLimitEfffff.exit318:    ; preds = %bb.aa
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.kt = call noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #20 ; 8 uses
   %i.ku = load ptr, ptr %i.bo, align 8, !tbaa !70
-  %i.kv = load ptr, ptr %87, align 8, !tbaa !70
+  %i.kv = load ptr, ptr %92, align 8, !tbaa !70
   invoke void @_ZN21btConeTwistConstraintC1ER11btRigidBodyS1_RK11btTransformS4_(ptr noundef nonnull align 8 dereferenceable(640) %i.kt, ptr noundef nonnull align 8 dereferenceable(564) %i.ku, ptr noundef nonnull align 8 dereferenceable(564) %i.kv, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16)
           to label %bb.ab unwind label %bb.ak
 
@@ -1107,7 +1111,7 @@ bb.ab:                                            ; preds = %_ZN17btHingeConstra
   store <2 x float> %.sroa.0.4.vec.insert.i.i243, ptr %i.gq, align 16
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4508.0..sroa_idx, align 8, !tbaa !46
   %i.lf = call noalias noundef nonnull dereferenceable(792) ptr @_Znwm(i64 noundef 792) #20 ; 6 uses
-  %i.lg = load ptr, ptr %87, align 8, !tbaa !70
+  %i.lg = load ptr, ptr %92, align 8, !tbaa !70
   %i.lh = load ptr, ptr %i.ed, align 8, !tbaa !70
   invoke void @_ZN17btHingeConstraintC1ER11btRigidBodyS1_RK11btTransformS4_b(ptr noundef nonnull align 8 dereferenceable(792) %i.lf, ptr noundef nonnull align 8 dereferenceable(564) %i.lg, ptr noundef nonnull align 8 dereferenceable(564) %i.lh, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %16, i1 noundef zeroext false)
           to label %_ZN17btHingeConstraint8setLimitEfffff.exit342 unwind label %bb.al

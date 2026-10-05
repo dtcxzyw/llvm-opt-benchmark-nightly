@@ -202,6 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.z = select i1 %i.s, double 1.000000e-03, double %i.y, !dbg !62698
     #dbg_value(double poison, !62684, !DIExpression(), !62628)
   %i.aa = extractelement <2 x double> %i.x, i64 1, !dbg !62701
+    #dbg_value(double %i.aa, !62684, !DIExpression(), !62628)
   %i.ab = fdiv double %i.aa, %i.z, !dbg !62701
     #dbg_value(i64 1, !62688, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !62630)
     #dbg_value(double %i.ab, !62688, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !62630)
@@ -261,6 +262,7 @@ bb.d:                                             ; preds = %_RNvMs3_NtCsaTqK2fW
   %i.ba = select i1 %i.at, double 1.000000e-03, double %i.az, !dbg !62710
     #dbg_value(double poison, !62684, !DIExpression(), !62638)
   %i.bb = extractelement <2 x double> %i.ay, i64 1, !dbg !62713
+    #dbg_value(double %i.bb, !62684, !DIExpression(), !62638)
   %i.bc = fdiv double %i.bb, %i.ba, !dbg !62713
     #dbg_value(i64 1, !62688, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !62640)
     #dbg_value(double %i.bc, !62688, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !62640)
@@ -311,6 +313,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bw = select i1 %i.bp, double 1.000000e-03, double %i.bv, !dbg !62720
     #dbg_value(double poison, !62684, !DIExpression(), !62647)
   %i.bx = extractelement <2 x double> %i.bu, i64 1, !dbg !62723
+    #dbg_value(double %i.bx, !62684, !DIExpression(), !62647)
   %i.by = fdiv double %i.bx, %i.bw, !dbg !62723
     #dbg_value(i64 1, !62688, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !62649)
     #dbg_value(double %i.by, !62688, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !62649)
@@ -368,6 +371,7 @@ bb.g:                                             ; preds = %_RNvMs3_NtCsaTqK2fW
   %i.cx = select i1 %i.cq, double 1.000000e-03, double %i.cw, !dbg !62732
     #dbg_value(double poison, !62684, !DIExpression(), !62657)
   %i.cy = extractelement <2 x double> %i.cv, i64 1, !dbg !62735
+    #dbg_value(double %i.cy, !62684, !DIExpression(), !62657)
   %i.cz = fdiv double %i.cy, %i.cx, !dbg !62735
     #dbg_value(i64 1, !62688, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !62659)
     #dbg_value(double %i.cz, !62688, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !62659)
@@ -416,6 +420,7 @@ bb.h:                                             ; preds = %_RNvMs3_NtCsaTqK2fW
   %i.dp = select i1 %i.di, double 1.000000e-03, double %i.do, !dbg !62742
     #dbg_value(double poison, !62684, !DIExpression(), !62667)
   %i.dq = extractelement <2 x double> %i.dn, i64 1, !dbg !62745
+    #dbg_value(double %i.dq, !62684, !DIExpression(), !62667)
   %i.dr = fdiv double %i.dq, %i.dp, !dbg !62745
     #dbg_value(i64 1, !62688, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !62669)
     #dbg_value(double %i.dr, !62688, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !62669)

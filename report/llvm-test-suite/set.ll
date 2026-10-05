@@ -204,66 +204,105 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %pbv1.exit
   %.010 = phi i32 [ 0, %.lr.ph ], [ %i.af, %pbv1.exit ] ; 2 uses
-  %.089 = phi ptr [ %i.e, %.lr.ph ], [ %i.ae, %pbv1.exit ] ; 4 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !15   ; 5 uses
+  %.089 = phi ptr [ %i.e, %.lr.ph ], [ %i.ae, %pbv1.exit ] ; 7 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !15   ; 4 uses
   %i.h = icmp sgt i32 %i.g, 0
-  br i1 %i.h, label %.lr.ph.preheader.i.a, label %pbv1.exit
+  br i1 %i.h, label %.lr.ph.preheader.i, label %pbv1.exit
 
-.lr.ph.preheader.i.a:                             ; preds = %bb.b
-  %wide.trip.count.i = zext nneg i32 %i.g to i64  ; 2 uses
-  %xtraiter.a = and i64 %wide.trip.count.i, 1
-  %1 = icmp eq i32 %i.g, 1
-  br i1 %1, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+.lr.ph.preheader.i:                               ; preds = %bb.b
+  %wide.trip.count.i = zext nneg i32 %i.g to i64  ; 7 uses
+  %min.iters.check = icmp ult i32 %i.g, 4
+  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %.lr.ph.preheader.i.a
+
+.lr.ph.preheader.i.a:                             ; preds = %.lr.ph.preheader.i
+  %scevgep = getelementptr i8, ptr @s1, i64 %wide.trip.count.i
+  %scevgep12 = getelementptr i8, ptr %.089, i64 4
+  %scevgep13 = getelementptr i8, ptr %.089, i64 8
+  %1 = add nsw i64 %wide.trip.count.i, -1
+  %2 = lshr i64 %1, 3
+  %xtraiter.a = and i64 %2, 2305843009213693948
+  %scevgep14 = getelementptr i8, ptr %scevgep13, i64 %xtraiter.a
+  %bound0 = icmp ugt ptr %scevgep14, @s1
+  %bound1 = icmp ult ptr %scevgep12, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.i.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i.a
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %unroll_iter = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1.a, %.lr.ph.i.a ] ; 6 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i.a ]
-  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %i.i = lshr i64 %indvars.iv.i, 5
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1.a, %.lr.ph.i.a ] ; 3 uses
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %.lr.ph.preheader.i.new ], [ %vec.ind.next, %.lr.ph.i.a ] ; 2 uses
+  %i.i = lshr i64 %niter, 5
   %i.j = and i64 %i.i, 134217727
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %.089, i64 %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !7
-  %3 = and i32 %2, 30
-  %4 = shl nuw nsw i32 1, %3
-  %5 = and i32 %4, %i.m
-  %.not.i = icmp eq i32 %5, 0
-  %6 = select i1 %.not.i, i8 48, i8 49
-  %7 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.i
-  store i8 %6, ptr %7, align 2, !tbaa !23
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %8 = trunc nuw nsw i64 %indvars.iv.next.i to i32
-  %9 = lshr i64 %indvars.iv.i, 5
-  %10 = and i64 %9, 134217727
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %.089, i64 %10
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %13 = load i32, ptr %12, align 4, !tbaa !7
-  %14 = and i32 %8, 31
-  %15 = shl nuw i32 1, %14
-  %16 = and i32 %15, %13
-  %.not.i.1 = icmp eq i32 %16, 0
-  %17 = select i1 %.not.i.1, i8 48, i8 49
-  %i.n = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.next.i
-  store i8 %17, ptr %i.n, align 1, !tbaa !23
-  %indvars.iv.next.i.1.a = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %pbv1.exit.loopexit.unr-lcssa, label %.lr.ph.i.a
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !7, !alias.scope !79
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.m, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = and <4 x i32> %vec.ind, splat (i32 31)
+  %4 = shl nuw <4 x i32> splat (i32 1), %3
+  %5 = and <4 x i32> %4, %broadcast.splat
+  %6 = icmp eq <4 x i32> %5, zeroinitializer
+  %7 = select <4 x i1> %6, <4 x i8> splat (i8 48), <4 x i8> splat (i8 49)
+  %i.n = getelementptr inbounds nuw i8, ptr @s1, i64 %niter
+  store <4 x i8> %7, ptr %i.n, align 4, !tbaa !23, !alias.scope !80, !noalias !79
+  %indvars.iv.next.i.1.a = add nuw i64 %niter, 4  ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
+  %niter.ncmp.1 = icmp eq i64 %indvars.iv.next.i.1.a, %unroll_iter
+  br i1 %niter.ncmp.1, label %middle.block, label %.lr.ph.i.a, !llvm.loop !77
 
-pbv1.exit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i.a
-  %lcmp.mod.not.a = icmp eq i64 %xtraiter.a, 0
+middle.block:                                     ; preds = %.lr.ph.i.a
+  %cmp.n = icmp eq i64 %unroll_iter, %wide.trip.count.i
+  br i1 %cmp.n, label %pbv1.exit, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i.a, %.lr.ph.preheader.i, %middle.block
+  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ 0, %.lr.ph.preheader.i ], [ %unroll_iter, %middle.block ] ; 6 uses
+  %xtraiter = and i64 %wide.trip.count.i, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %pbv1.exit.loopexit.unr-lcssa, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
+  %8 = trunc nuw nsw i64 %indvars.iv.i.ph to i32
+  %9 = lshr i64 %indvars.iv.i.ph, 5
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.089, i64 %9
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %12 = load i32, ptr %11, align 4, !tbaa !7
+  %13 = and i32 %8, 28
+  %14 = shl nuw nsw i32 1, %13
+  %15 = and i32 %14, %12
+  %.not.i.prol = icmp eq i32 %15, 0
+  %16 = select i1 %.not.i.prol, i8 48, i8 49
+  %17 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.i.ph
+  store i8 %16, ptr %17, align 4, !tbaa !23
+  %indvars.iv.next.i.prol = or disjoint i64 %indvars.iv.i.ph, 1
+  br label %pbv1.exit.loopexit.unr-lcssa
+
+pbv1.exit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
+  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %.lr.ph.i.preheader ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ]
+  %18 = add nsw i64 %wide.trip.count.i, -1
+  %lcmp.mod.not.a = icmp eq i64 %indvars.iv.i.ph, %18
   br i1 %lcmp.mod.not.a, label %pbv1.exit, label %.lr.ph.i.epil.preheader
 
-.lr.ph.i.epil.preheader:                          ; preds = %pbv1.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i.a
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.a ], [ %indvars.iv.next.i.1.a, %pbv1.exit.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod12 = trunc i32 %i.g to i1
-  tail call void @llvm.assume(i1 %lcmp.mod12)
-  %i.o = trunc nuw nsw i64 %indvars.iv.i.epil.init to i32
-  %i.p = lshr i64 %indvars.iv.i.epil.init, 5
+.lr.ph.i.epil.preheader:                          ; preds = %pbv1.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader
+  %indvars.iv.i.epil.init = phi i64 [ %indvars.iv.next.i.1, %.lr.ph.i.epil.preheader ], [ %indvars.iv.i.unr, %pbv1.exit.loopexit.unr-lcssa ] ; 5 uses
+  %19 = trunc nuw nsw i64 %indvars.iv.i.epil.init to i32
+  %20 = lshr i64 %indvars.iv.i.epil.init, 5
+  %21 = and i64 %20, 134217727
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %.089, i64 %21
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 4
+  %24 = load i32, ptr %23, align 4, !tbaa !7
+  %25 = and i32 %19, 31
+  %26 = shl nuw i32 1, %25
+  %27 = and i32 %26, %24
+  %.not.i = icmp eq i32 %27, 0
+  %28 = select i1 %.not.i, i8 48, i8 49
+  %29 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.i.epil.init
+  store i8 %28, ptr %29, align 1, !tbaa !23
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.epil.init, 1 ; 3 uses
+  %i.o = trunc nuw nsw i64 %indvars.iv.next.i to i32
+  %i.p = lshr i64 %indvars.iv.next.i, 5
   %i.q = and i64 %i.p, 134217727
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %.089, i64 %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -273,11 +312,13 @@ pbv1.exit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i.a
   %i.w = and i32 %i.v, %i.t
   %.not.i.epil = icmp eq i32 %i.w, 0
   %i.x = select i1 %.not.i.epil, i8 48, i8 49
-  %i.y = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.i.epil.init
+  %i.y = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.next.i
   store i8 %i.x, ptr %i.y, align 1, !tbaa !23
-  br label %pbv1.exit
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.epil.init, 2 ; 2 uses
+  %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, %wide.trip.count.i
+  br i1 %exitcond.not.i.1, label %pbv1.exit, label %.lr.ph.i.epil.preheader, !llvm.loop !78
 
-pbv1.exit:                                        ; preds = %.lr.ph.i.epil.preheader, %pbv1.exit.loopexit.unr-lcssa, %bb.b
+pbv1.exit:                                        ; preds = %pbv1.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader, %middle.block, %bb.b
   %i.z = sext i32 %i.g to i64
   %i.aa = getelementptr inbounds i8, ptr @s1, i64 %i.z
   store i8 0, ptr %i.aa, align 1, !tbaa !23
@@ -341,7 +382,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.q
-  br i1 %exitcond.not.i, label %set_write.exit.peel.begin.loopexit, label %bb.b, !llvm.loop !74
+  br i1 %exitcond.not.i, label %set_write.exit.peel.begin.loopexit, label %bb.b, !llvm.loop !81
 
 set_write.exit.peel.begin.loopexit:               ; preds = %bb.d
   %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.014, i64 %indvars.iv.next.i
@@ -503,7 +544,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.d
-  br i1 %exitcond.not, label %.peel.begin, label %bb.b, !llvm.loop !75
+  br i1 %exitcond.not, label %.peel.begin, label %bb.b, !llvm.loop !82
 
 .peel.begin:                                      ; preds = %bb.a, %bb.d
   %i.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.d ] ; 3 uses
@@ -754,7 +795,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   store <16 x i8> %reverse53, ptr %i.ad, align 1, !tbaa !23
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !76
+  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !83
 
 middle.block:                                     ; preds = %vector.body
   %ind.escape = add nsw i64 %i.y, -1
@@ -785,7 +826,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %reverse58, ptr %gep74, align 1, !tbaa !23
   %index.next59 = add nuw i64 %index56, 8         ; 2 uses
   %i.aj = icmp eq i64 %index.next59, %n.vec55
-  br i1 %i.aj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !77
+  br i1 %i.aj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !84
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %ind.escape60 = add nsw i64 %i.af, -1
@@ -807,7 +848,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.am = getelementptr inbounds i8, ptr @s1, i64 %indvars.iv44
   store i8 %i.al, ptr %i.am, align 1, !tbaa !23
   %i.an = icmp sgt i64 %indvars.iv42, 1
-  br i1 %i.an, label %.preheader, label %.loopexit64, !llvm.loop !78
+  br i1 %i.an, label %.preheader, label %.loopexit64, !llvm.loop !85
 
 .loopexit64:                                      ; preds = %.preheader, %vec.epilog.middle.block, %middle.block
   %indvars.iv44.lcssa = phi i64 [ %ind.escape60, %vec.epilog.middle.block ], [ %ind.escape, %middle.block ], [ %indvars.iv44, %.preheader ] ; 3 uses
@@ -852,63 +893,102 @@ bb.g:                                             ; preds = %.lr.ph, %.loopexit6
 define dso_local noundef nonnull ptr @pbv1(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #19 {
 bb.a:
   %i.a = icmp sgt i32 %1, 0
-  br i1 %i.a, label %.lr.ph.preheader.a, label %._crit_edge
+  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph.preheader.a:                               ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter.a = and i64 %wide.trip.count, 1
-  %2 = icmp eq i32 %1, 1
-  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 7 uses
+  %min.iters.check = icmp ult i32 %1, 8
+  br i1 %min.iters.check, label %.lr.ph.preheader12, label %.lr.ph.preheader.a
+
+.lr.ph.preheader.a:                               ; preds = %.lr.ph.preheader
+  %2 = getelementptr i8, ptr @s1, i64 %wide.trip.count
+  %3 = getelementptr i8, ptr %0, i64 4
+  %4 = add nsw i64 %wide.trip.count, -1
+  %5 = lshr i64 %4, 3
+  %xtraiter.a = and i64 %5, 2305843009213693948
+  %6 = getelementptr i8, ptr %0, i64 %xtraiter.a
+  %7 = getelementptr i8, ptr %6, i64 8
+  %bound0 = icmp ugt ptr %7, @s1
+  %bound1 = icmp ult ptr %3, %2
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.preheader12, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader.a
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count, 2147483644 ; 3 uses
   br label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %.lr.ph.a, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1.a, %.lr.ph.a ] ; 6 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph.a ]
-  %3 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.b = lshr i64 %indvars.iv, 5
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1.a, %.lr.ph.a ] ; 3 uses
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %.lr.ph.preheader.new ], [ %vec.ind.next, %.lr.ph.a ] ; 2 uses
+  %i.b = lshr i64 %niter, 5
   %i.c = and i64 %i.b, 134217727
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !7
-  %4 = and i32 %3, 30
-  %5 = shl nuw nsw i32 1, %4
-  %6 = and i32 %i.f, %5
-  %.not = icmp eq i32 %6, 0
-  %7 = select i1 %.not, i8 48, i8 49
-  %8 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv
-  store i8 %7, ptr %8, align 2, !tbaa !23
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %9 = trunc nuw nsw i64 %indvars.iv.next to i32
-  %10 = lshr i64 %indvars.iv, 5
-  %11 = and i64 %10, 134217727
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %11
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 4
-  %14 = load i32, ptr %13, align 4, !tbaa !7
-  %15 = and i32 %9, 31
-  %16 = shl nuw i32 1, %15
-  %17 = and i32 %14, %16
-  %.not.1 = icmp eq i32 %17, 0
-  %18 = select i1 %.not.1, i8 48, i8 49
-  %i.g = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.next
-  store i8 %18, ptr %i.g, align 1, !tbaa !23
-  %indvars.iv.next.1.a = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.a
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !7, !alias.scope !91
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.f, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
+  %8 = and <4 x i32> %vec.ind, splat (i32 31)
+  %9 = shl nuw <4 x i32> splat (i32 1), %8
+  %10 = and <4 x i32> %broadcast.splat, %9
+  %11 = icmp eq <4 x i32> %10, zeroinitializer
+  %12 = select <4 x i1> %11, <4 x i8> splat (i8 48), <4 x i8> splat (i8 49)
+  %i.g = getelementptr inbounds nuw i8, ptr @s1, i64 %niter
+  store <4 x i8> %12, ptr %i.g, align 4, !tbaa !23, !alias.scope !92, !noalias !91
+  %indvars.iv.next.1.a = add nuw i64 %niter, 4    ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
+  %niter.ncmp.1 = icmp eq i64 %indvars.iv.next.1.a, %unroll_iter
+  br i1 %niter.ncmp.1, label %middle.block, label %.lr.ph.a, !llvm.loop !89
 
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph.a
-  %lcmp.mod.not.a = icmp eq i64 %xtraiter.a, 0
+middle.block:                                     ; preds = %.lr.ph.a
+  %cmp.n = icmp eq i64 %unroll_iter, %wide.trip.count
+  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader12
+
+.lr.ph.preheader12:                               ; preds = %.lr.ph.preheader.a, %.lr.ph.preheader, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader.a ], [ 0, %.lr.ph.preheader ], [ %unroll_iter, %middle.block ] ; 6 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.prol
+
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader12
+  %13 = trunc nuw nsw i64 %indvars.iv.ph to i32
+  %14 = lshr i64 %indvars.iv.ph, 5
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %14
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %17 = load i32, ptr %16, align 4, !tbaa !7
+  %18 = and i32 %13, 28
+  %19 = shl nuw nsw i32 1, %18
+  %20 = and i32 %17, %19
+  %.not.prol = icmp eq i32 %20, 0
+  %21 = select i1 %.not.prol, i8 48, i8 49
+  %22 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.ph
+  store i8 %21, ptr %22, align 4, !tbaa !23
+  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
+  br label %._crit_edge.loopexit.unr-lcssa
+
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph.prol, %.lr.ph.preheader12
+  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.preheader12 ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
+  %23 = add nsw i64 %wide.trip.count, -1
+  %lcmp.mod.not.a = icmp eq i64 %indvars.iv.ph, %23
   br i1 %lcmp.mod.not.a, label %._crit_edge, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader.a
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader.a ], [ %indvars.iv.next.1.a, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod10 = trunc i32 %1 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod10)
-  %i.h = trunc nuw nsw i64 %indvars.iv.epil.init to i32
-  %i.i = lshr i64 %indvars.iv.epil.init, 5
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader
+  %indvars.iv.epil.init = phi i64 [ %indvars.iv.next.1, %.lr.ph.epil.preheader ], [ %indvars.iv.unr, %._crit_edge.loopexit.unr-lcssa ] ; 5 uses
+  %24 = trunc nuw nsw i64 %indvars.iv.epil.init to i32
+  %25 = lshr i64 %indvars.iv.epil.init, 5
+  %26 = and i64 %25, 134217727
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %26
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 4
+  %29 = load i32, ptr %28, align 4, !tbaa !7
+  %30 = and i32 %24, 31
+  %31 = shl nuw i32 1, %30
+  %32 = and i32 %29, %31
+  %.not = icmp eq i32 %32, 0
+  %33 = select i1 %.not, i8 48, i8 49
+  %34 = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.epil.init
+  store i8 %33, ptr %34, align 1, !tbaa !23
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.epil.init, 1 ; 3 uses
+  %i.h = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.i = lshr i64 %indvars.iv.next, 5
   %i.j = and i64 %i.i, 134217727
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
@@ -918,11 +998,13 @@ bb.a:
   %i.p = and i32 %i.m, %i.o
   %.not.epil = icmp eq i32 %i.p, 0
   %i.q = select i1 %.not.epil, i8 48, i8 49
-  %i.r = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.epil.init
+  %i.r = getelementptr inbounds nuw i8, ptr @s1, i64 %indvars.iv.next
   store i8 %i.q, ptr %i.r, align 1, !tbaa !23
-  br label %._crit_edge
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.epil.init, 2 ; 2 uses
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
+  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.epil.preheader, !llvm.loop !90
 
-._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
+._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader, %middle.block, %bb.a
   %i.s = sext i32 %1 to i64
   %i.t = getelementptr inbounds i8, ptr @s1, i64 %i.s
   store i8 0, ptr %i.t, align 1, !tbaa !23
@@ -1325,7 +1407,7 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %i.ax = getelementptr inbounds [4 x i8], ptr %.03740.epil, i64 %i.an
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !79
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !93
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -1696,10 +1778,24 @@ attributes #26 = { nounwind allocsize(1) }
 !71 = distinct !{!71, !8, !9}
 !72 = distinct !{!72, !8, !9}
 !73 = distinct !{!73, !9, !8}
-!74 = distinct !{!74, !25}
-!75 = distinct !{!75, !25}
-!76 = distinct !{!76, !8, !9}
+!74 = distinct !{!74, i1 false, !"LVerDomain"}
+!75 = distinct !{!75, !74}
+!76 = distinct !{!76, !74}
 !77 = distinct !{!77, !8, !9}
-!78 = distinct !{!78, !9, !8}
-!79 = distinct !{!79, !10}
+!78 = distinct !{!78, !8}
+!79 = !{!75}
+!80 = !{!76}
+!81 = distinct !{!81, !25}
+!82 = distinct !{!82, !25}
+!83 = distinct !{!83, !8, !9}
+!84 = distinct !{!84, !8, !9}
+!85 = distinct !{!85, !9, !8}
+!86 = distinct !{!86, i1 false, !"LVerDomain"}
+!87 = distinct !{!87, !86}
+!88 = distinct !{!88, !86}
+!89 = distinct !{!89, !8, !9}
+!90 = distinct !{!90, !8}
+!91 = !{!87}
+!92 = !{!88}
+!93 = distinct !{!93, !10}
 end_hunk_1
