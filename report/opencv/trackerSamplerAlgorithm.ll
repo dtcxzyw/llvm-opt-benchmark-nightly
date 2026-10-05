@@ -205,10 +205,8 @@ bb.a:
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %6 = lshr i64 %3, 32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.e = load <4 x float>, ptr %i.d, align 4
-  %7 = lshr i64 %2, 32
   %i.f = load <2 x i32>, ptr %i.b, align 8, !tbaa !47 ; 4 uses
   store i32 0, ptr %i.c, align 4, !tbaa !47
   store i32 0, ptr %.sroa.410.0..sroa_idx, align 8, !tbaa !47
@@ -216,24 +214,20 @@ bb.a:
   store i32 %i.g, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !47
   %i.h = extractelement <2 x i32> %i.f, i64 0
   store i32 %i.h, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !47
-  %8 = trunc i64 %3 to i32
-  %9 = trunc nuw i64 %6 to i32
-  %10 = insertelement <2 x i32> poison, i32 %9, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %8, i64 1
-  %12 = trunc i64 %2 to i32
-  %13 = trunc nuw i64 %7 to i32
-  %14 = insertelement <2 x i32> poison, i32 %13, i64 0
-  %15 = insertelement <2 x i32> %14, i32 %12, i64 1
-  %i.i = sitofp <2 x i32> %15 to <2 x float>
-  %16 = sitofp <2 x i32> %11 to <2 x float>       ; 3 uses
-  %i.j = fneg <2 x float> %16
+  %6 = bitcast i64 %3 to <2 x i32>
+  %7 = bitcast i64 %2 to <2 x i32>
+  %8 = sitofp <2 x i32> %7 to <2 x float>
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.i = sitofp <2 x i32> %6 to <2 x float>
+  %10 = shufflevector <2 x float> %i.i, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
+  %i.j = fneg <2 x float> %10
   %i.k = shufflevector <4 x float> %i.e, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.l = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %16, <2 x float> %i.k, <2 x float> %i.j)
+  %i.l = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %i.k, <2 x float> %i.j)
   %i.m = fmul <2 x float> %i.l, splat (float 5.000000e-01)
-  %i.n = fsub <2 x float> %i.i, %i.m
+  %i.n = fsub <2 x float> %9, %i.m
   %i.o = fptosi <2 x float> %i.n to <2 x i32>
   %i.p = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.o, <2 x i32> zeroinitializer) ; 4 uses
-  %i.q = fmul <2 x float> %i.k, %16
+  %i.q = fmul <2 x float> %i.k, %10
   %i.r = fptosi <2 x float> %i.q to <2 x i32>     ; 2 uses
   %i.s = extractelement <2 x i32> %i.p, i64 0
   %.sroa.0.sroa.3.0.insert.ext.i.i = zext nneg i32 %i.s to i64

@@ -63,7 +63,7 @@ bb.a:
   %5 = alloca %"class.cv::_InputOutputArray", align 8 ; 6 uses
   %6 = alloca %"class.cv::_InputOutputArray", align 8 ; 6 uses
   %7 = alloca %"class.cv::_InputOutputArray", align 8 ; 6 uses
-  %.sroa.1052.0.extract.shift = lshr i64 %1, 32   ; 2 uses
+  %.sroa.1052.0.extract.shift = lshr i64 %1, 32
   %.sroa.019.0.extract.trunc = trunc i64 %2 to i32 ; 2 uses
   %.sroa.10.0.extract.shift = lshr i64 %2, 32
   %.sroa.10.0.extract.trunc = trunc nuw i64 %.sroa.10.0.extract.shift to i32 ; 2 uses
@@ -75,13 +75,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %.sroa.042.0.extract.trunc = trunc i64 %1 to i32
   %i.i = trunc i64 %1 to i32
-  %8 = trunc nuw i64 %.sroa.1052.0.extract.shift to i32
-  %9 = insertelement <2 x i32> poison, i32 %8, i64 0
-  %10 = insertelement <2 x i32> %9, i32 %i.i, i64 1
+  %8 = bitcast i64 %1 to <2 x i32>
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   %.sroa.1052.0.extract.trunc = trunc nuw i64 %.sroa.1052.0.extract.shift to i32
-  %i.j = sitofp <2 x i32> %10 to <2 x double>     ; 3 uses
+  %i.j = sitofp <2 x i32> %9 to <2 x double>      ; 3 uses
   %i.k = extractelement <2 x double> %i.j, i64 0
   %i.l = fsub double %i.k, %i.a
   %i.m = extractelement <2 x double> %i.j, i64 1
@@ -89,7 +87,7 @@ bb.a:
   %i.o = tail call double @atan2(double noundef %i.l, double noundef %i.n) #16 ; 4 uses
   %i.p = sub nsw i32 %.sroa.1052.0.extract.trunc, %.sroa.10.0.extract.trunc
   %i.q = sitofp i32 %i.p to double                ; 2 uses
-  %i.r = sub nsw i32 %.sroa.042.0.extract.trunc, %.sroa.019.0.extract.trunc ; 2 uses
+  %i.r = sub nsw i32 %i.i, %.sroa.019.0.extract.trunc ; 2 uses
   %i.s = mul nsw i32 %i.r, %i.r
   %i.t = uitofp nneg i32 %i.s to double
   %i.u = tail call nnan double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.t)

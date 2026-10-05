@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = sub nuw nsw i64 %i.l, %.06595           ; 2 uses
   store i64 %i.ac, ptr %i.b, align 8, !tbaa !164
   %spec.store.select = call i64 @llvm.umin.i64(i64 %i.ac, i64 %i.ab)
-  store i64 %spec.store.select, ptr %i.a, align 8
+  store i64 %spec.store.select, ptr %i.a, align 8, !tbaa !164
   %i.ad = load i64, ptr %i.n, align 8, !tbaa !366
   %i.ae = load i32, ptr %i.o, align 4, !tbaa !231
   %i.af = load i32, ptr %i.p, align 8, !tbaa !232
@@ -608,14 +608,14 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn
   %.not101.not.i = icmp eq i8 %i.kk, 0
   %i.kl = call i64 @llvm.umin.i64(i64 %i.kj, i64 %i.iw)
   %spec.store.select.i = select i1 %.not101.not.i, i64 %i.kj, i64 %i.kl
-  store i64 %spec.store.select.i, ptr %i.j, align 8
+  store i64 %spec.store.select.i, ptr %i.j, align 8, !tbaa !164
   %i.km = sub nuw i64 %.081.i, %.077132.i
   %spec.select.i45 = call i64 @llvm.umin.i64(i64 %i.km, i64 %i.iw) ; 2 uses
   %i.kn = load i8, ptr %i.jl, align 1, !tbaa !582
   %.not102.not.i = icmp eq i8 %i.kn, 0
   %i.ko = call i64 @llvm.umin.i64(i64 %spec.select.i45, i64 %i.jg)
   %spec.store.select111.i = select i1 %.not102.not.i, i64 %spec.select.i45, i64 %i.ko ; 4 uses
-  store i64 %spec.store.select111.i, ptr %i.k, align 8
+  store i64 %spec.store.select111.i, ptr %i.k, align 8, !tbaa !164
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #55
   store i64 0, ptr %i.l, align 8, !tbaa !164
   %i.kp = load ptr, ptr %i.jm, align 8, !tbaa !247 ; 2 uses
@@ -879,14 +879,14 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   %.not105.not.i = icmp eq i8 %i.ot, 0
   %i.ou = call i64 @llvm.umin.i64(i64 %spec.select.i56, i64 %i.np)
   %spec.store.select.i57 = select i1 %.not105.not.i, i64 %spec.select.i56, i64 %i.ou ; 4 uses
-  store i64 %spec.store.select.i57, ptr %i.e, align 8
+  store i64 %spec.store.select.i57, ptr %i.e, align 8, !tbaa !164
   %i.ov = sub i64 %.085.i51, %.081137.i           ; 2 uses
   %i.ow = load i8, ptr %i.nu, align 8, !tbaa !581
   %.not106.not.i = icmp eq i8 %i.ow, 0
   %i.ox = call i64 @llvm.umin.i64(i64 %i.ov, i64 %i.mz)
   %spec.store.select116.i = select i1 %.not106.not.i, i64 %i.ov, i64 %i.ox
   %spec.store.select117.i = call i64 @llvm.umin.i64(i64 %spec.store.select116.i, i64 %i.ne)
-  store i64 %spec.store.select117.i, ptr %i.d, align 8
+  store i64 %spec.store.select117.i, ptr %i.d, align 8, !tbaa !164
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #55
   store i64 0, ptr %i.f, align 8, !tbaa !164
   %i.oy = load ptr, ptr %i.nv, align 8, !tbaa !247 ; 2 uses
@@ -1289,7 +1289,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub i64 %i.d, %i.j
   %i.l = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.k)
   %spec.store.select = select i1 %i.f, i64 %i.l, i64 -1
-  store i64 %spec.store.select, ptr %i.h, align 8
+  store i64 %spec.store.select, ptr %i.h, align 8, !tbaa !360
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -1658,7 +1658,7 @@ ma_copy_pcm_frames.exit:                          ; preds = %ma_copy_pcm_frames.
   %i.bv = add i64 %i.bt, %spec.select             ; 2 uses
   %i.bw = icmp eq i64 %i.bv, %i.bs
   %spec.store.select = select i1 %i.bw, i64 0, i64 %i.bv ; 2 uses
-  store i64 %spec.store.select, ptr %i.d, align 8
+  store i64 %spec.store.select, ptr %i.d, align 8, !tbaa !601
   %i.bx = icmp ult i64 %i.bu, %2
   br i1 %i.bx, label %.preheader.split.split, label %.thread
 
@@ -2061,7 +2061,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bc = sub nuw i64 %2, %i.ba                   ; 2 uses
   store i64 %i.bc, ptr %i.f, align 8, !tbaa !164
   %spec.store.select119 = call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.bb)
-  store i64 %spec.store.select119, ptr %i.e, align 8
+  store i64 %spec.store.select119, ptr %i.e, align 8, !tbaa !164
   %i.bd = load i64, ptr %i.ai, align 8, !tbaa !2506
   %i.be = load i32, ptr %i.ak, align 4, !tbaa !118
   %i.bf = mul i32 %i.be, %i.ae
@@ -2464,7 +2464,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bm = sub i64 %i.bg, %i.bl
   %i.bn = call i64 @llvm.umin.i64(i64 %i.be, i64 %i.bm)
   %spec.store.select.i = select i1 %i.bi, i64 %i.bn, i64 -1
-  store i64 %spec.store.select.i, ptr %i.q, align 8
+  store i64 %spec.store.select.i, ptr %i.q, align 8, !tbaa !360
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %ma_data_source_set_range_in_pcm_frames.exit
@@ -2867,7 +2867,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.eb = sub i64 %i.du, %i.ea
   %i.ec = call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.eb)
   %spec.store.select.i = select i1 %i.dw, i64 %i.ec, i64 -1
-  store i64 %spec.store.select.i, ptr %i.dy, align 8
+  store i64 %spec.store.select.i, ptr %i.dy, align 8, !tbaa !360
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 
 ma_data_source_set_loop_point_in_pcm_frames.exit: ; preds = %ma_data_source_set_range_in_pcm_frames.exit, %bb.ak, %bb.aj, %ma_sound_get_data_source.exit81
@@ -3270,7 +3270,7 @@ bb.a:
   %i.m = alloca [4 x i8], align 1                 ; 10 uses
   %i.n = alloca [8 x i8], align 8                 ; 7 uses
   %6 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 7 uses
-  %7 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 22 uses
+  %7 = alloca %struct.ma_dr_wav_chunk_header, align 8 ; 21 uses
   %i.o = alloca [16 x i8], align 16               ; 22 uses
   %i.p = alloca [2 x i8], align 2                 ; 7 uses
   %i.q = alloca [22 x i8], align 16               ; 9 uses
@@ -3673,8 +3673,7 @@ bb.ad:                                            ; preds = %.thread852, %bb.ac,
   %i.gw = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 7 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
-  %i.gz = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.gz = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %7, i64 11
   %i.hb = getelementptr inbounds nuw i8, ptr %7, i64 15
   %or.cond13 = and i1 %i.gb, %.0410.shrunk854
@@ -3895,21 +3894,19 @@ bb.as:                                            ; preds = %ma_dr_wav_fourcc_eq
   %.pre1486.fr = freeze i8 %.pre1486              ; 2 uses
   %.pre1487.fr = freeze i8 %.pre1487              ; 2 uses
   %.not.i675 = icmp eq i8 %.pr1009, 102
-  %10 = load <4 x i8>, ptr %9, align 4
-  %11 = load <4 x i8>, ptr %i.gz, align 8
+  %9 = load <8 x i8>, ptr %i.gz, align 4
   %i.jv = load <4 x i8>, ptr %i.ha, align 1
   %.fr1832 = freeze <4 x i8> %i.jv                ; 2 uses
   %.pre1500 = load i8, ptr %i.hb, align 1         ; 2 uses
   br i1 %.not.i675, label %bb.at, label %ma_dr_wav_guid_equal.exit.thread
 
 bb.at:                                            ; preds = %bb.as
-  %12 = load <4 x i8>, ptr %i.gz, align 8
-  %13 = load <4 x i8>, ptr %9, align 4
+  %10 = load <8 x i8>, ptr %i.gz, align 4
   %.not.1.i = icmp eq i8 %.pre1486.fr, 109
   %.not.2.i = icmp eq i8 %.pre1487.fr, 116
-  %14 = shufflevector <4 x i8> %13, <4 x i8> %12, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
-  %15 = insertelement <8 x i8> %14, i8 %.pre1488, i64 0
-  %.fr1831 = freeze <8 x i8> %15
+  %11 = insertelement <8 x i8> poison, i8 %.pre1488, i64 0
+  %12 = shufflevector <8 x i8> %11, <8 x i8> %10, <8 x i32> <i32 0, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  %.fr1831 = freeze <8 x i8> %12
   %i.jw = icmp eq <8 x i8> %.fr1831, <i8 32, i8 -13, i8 -84, i8 -45, i8 17, i8 -116, i8 -47, i8 0> ; 2 uses
   %i.jx = icmp eq <4 x i8> %.fr1832, <i8 -64, i8 79, i8 -114, i8 -37>
   %.not.15.i.not = icmp eq i8 %.pre1500, -118
@@ -4225,9 +4222,9 @@ ma_dr_wav_guid_equal.exit.thread:                 ; preds = %bb.at, %bb.as
   %.not.i686 = icmp eq i8 %.pr1009, 100
   %.not.1.i688 = icmp eq i8 %.pre1486.fr, 97
   %.not.2.i689 = icmp eq i8 %.pre1487.fr, 116
-  %16 = shufflevector <4 x i8> %10, <4 x i8> %11, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
-  %17 = insertelement <8 x i8> %16, i8 %.pre1488, i64 0
-  %.fr1833 = freeze <8 x i8> %17
+  %13 = insertelement <8 x i8> poison, i8 %.pre1488, i64 0
+  %14 = shufflevector <8 x i8> %13, <8 x i8> %9, <8 x i32> <i32 0, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  %.fr1833 = freeze <8 x i8> %14
   %i.pe = icmp eq <8 x i8> %.fr1833, <i8 97, i8 -13, i8 -84, i8 -45, i8 17, i8 -116, i8 -47, i8 0> ; 2 uses
   %i.pf = icmp eq <4 x i8> %.fr1832, <i8 -64, i8 79, i8 -114, i8 -37>
   %.not.15.i702.not = icmp eq i8 %.pre1500, -118
@@ -4630,7 +4627,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dc = sub i64 %i.cv, %i.db
   %i.dd = call i64 @llvm.umin.i64(i64 %i.cs, i64 %i.dc)
   %spec.store.select.i = select i1 %i.cx, i64 %i.dd, i64 -1
-  store i64 %spec.store.select.i, ptr %i.cz, align 8
+  store i64 %spec.store.select.i, ptr %i.cz, align 8, !tbaa !360
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 
 ma_data_source_set_loop_point_in_pcm_frames.exit: ; preds = %ma_data_source_set_range_in_pcm_frames.exit, %bb.n, %bb.m
@@ -4851,7 +4848,7 @@ bb.l:                                             ; preds = %bb.k
   %i.by = sub i64 %i.br, %i.bx
   %i.bz = call i64 @llvm.umin.i64(i64 %i.bo, i64 %i.by)
   %spec.store.select.i = select i1 %i.bt, i64 %i.bz, i64 -1
-  store i64 %spec.store.select.i, ptr %i.bv, align 8
+  store i64 %spec.store.select.i, ptr %i.bv, align 8, !tbaa !360
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 
 ma_data_source_set_loop_point_in_pcm_frames.exit: ; preds = %ma_data_source_get_loop_point_in_pcm_frames.exit, %bb.k, %bb.l
@@ -5254,7 +5251,7 @@ switch.lookup:                                    ; preds = %bb.aj
   %i.ia = load i32, ptr %i.hz, align 8, !tbaa !190 ; 2 uses
   %i.ib = icmp eq i32 %i.ia, 0
   %spec.store.select = select i1 %i.ib, i32 2, i32 %i.ia
-  store i32 %spec.store.select, ptr %i.d, align 4
+  store i32 %spec.store.select, ptr %i.d, align 4, !tbaa !118
   %i.ic = load ptr, ptr %0, align 8, !tbaa !219
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 496
   %i.ie = load ptr, ptr %i.id, align 8, !tbaa !119
@@ -5310,7 +5307,7 @@ bb.ar:                                            ; preds = %switch.lookup
   %i.jd = load i32, ptr %i.jc, align 4, !tbaa !191 ; 2 uses
   %i.je = icmp eq i32 %i.jd, 0
   %spec.store.select5 = select i1 %i.je, i32 48000, i32 %i.jd
-  store i32 %spec.store.select5, ptr %i.e, align 4
+  store i32 %spec.store.select5, ptr %i.e, align 4, !tbaa !118
   %i.jf = load ptr, ptr %0, align 8, !tbaa !219
   %i.jg = getelementptr inbounds nuw i8, ptr %i.jf, i64 528
   %i.jh = load ptr, ptr %i.jg, align 8, !tbaa !119

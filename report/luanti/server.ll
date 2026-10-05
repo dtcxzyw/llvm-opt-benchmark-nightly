@@ -204,17 +204,14 @@ _ZNSt13unordered_setIN4core8vector3dIsEESt4hashIS2_ESt8equal_toIS2_ESaIS2_EE7emp
 
 bb.io:                                            ; preds = %_ZNSt13unordered_setIN4core8vector3dIsEESt4hashIS2_ESt8equal_toIS2_ESaIS2_EE7emplaceIJRS2_EEESt4pairINSt8__detail14_Node_iteratorIS2_Lb1ELb1EEEbEDpOT_.exit
   %i.ane = getelementptr inbounds nuw i8, ptr %i.aky, i64 4
-  %.sroa.0.0.copyload = load i48, ptr %i.ane, align 4, !tbaa !491 ; 5 uses
-  %.sroa.2.0.extract.shift.i.i = lshr i48 %.sroa.0.0.copyload, 16
-  %40 = trunc i48 %.sroa.0.0.copyload to i16
-  %41 = insertelement <2 x i16> poison, i16 %40, i64 0
-  %42 = trunc i48 %.sroa.2.0.extract.shift.i.i to i16
-  %43 = insertelement <2 x i16> %41, i16 %42, i64 1
+  %.sroa.0.0.copyload = load i48, ptr %i.ane, align 4, !tbaa !491 ; 4 uses
+  %40 = bitcast i48 %.sroa.0.0.copyload to <3 x i16>
+  %41 = shufflevector <3 x i16> %40, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.anf = bitcast i48 %.sroa.0.0.copyload to <3 x i16>
   %i.ang = shufflevector <3 x i16> %i.anf, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.anh = sext <2 x i16> %i.ang to <2 x i32>     ; 2 uses
   %i.ani = add nsw <2 x i32> %i.anh, splat (i32 -15)
-  %i.anj = icmp slt <2 x i16> %43, zeroinitializer
+  %i.anj = icmp slt <2 x i16> %41, zeroinitializer
   %i.ank = select <2 x i1> %i.anj, <2 x i32> %i.ani, <2 x i32> %i.anh
   %i.anl = sdiv <2 x i32> %i.ank, splat (i32 16)  ; 2 uses
   %i.anm = ashr i48 %.sroa.0.0.copyload, 32
@@ -617,7 +614,7 @@ bb.e:                                             ; preds = %.preheader.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !858  ; 2 uses
   %.not12.i = icmp eq ptr %i.m, null
   %spec.store.select.i = select i1 %.not12.i, ptr %storemerge.i, ptr %i.m
-  store ptr %spec.store.select.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i, ptr %i.a, align 8, !tbaa !865
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.c

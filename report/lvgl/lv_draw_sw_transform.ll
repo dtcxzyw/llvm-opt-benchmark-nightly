@@ -21,7 +21,7 @@ bb.a:
   %i.j = add i16 %i.h, 90
   %i.k = add i16 %i.h, 91
   %i.l = sub nsw i32 10, %i.g                     ; 2 uses
-  %.sroa.97.48.extract.shift = lshr i64 %i.e, 32  ; 2 uses
+  %.sroa.97.48.extract.shift = lshr i64 %i.e, 32
   %i.m = load <2 x i32>, ptr %i.c, align 4, !tbaa !34 ; 2 uses
   %i.n = shufflevector <2 x i32> %i.m, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 6 uses
   %i.o = tail call i32 @lv_trigo_sin(i16 noundef signext %i.h) #4
@@ -38,16 +38,14 @@ bb.a:
   %i.z = sdiv i32 %i.y, 10
   %i.aa = ashr i32 %i.v, 5                        ; 12 uses
   %i.ab = ashr i32 %i.z, 5                        ; 12 uses
-  %.sroa.97.44.extract.trunc = trunc i64 %i.e to i32 ; 4 uses
-  %9 = trunc nuw i64 %.sroa.97.48.extract.shift to i32
-  %10 = insertelement <2 x i32> poison, i32 %9, i64 0
-  %i.ac = trunc i64 %i.e to i32
-  %11 = insertelement <2 x i32> %10, i32 %i.ac, i64 1
+  %i.ac = trunc i64 %i.e to i32                   ; 4 uses
+  %9 = bitcast i64 %i.e to <2 x i32>
   %i.ad = bitcast i64 %i.e to <2 x i32>
   %i.ae = shufflevector <2 x i32> %i.ad, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %.sroa.97.48.extract.trunc = trunc nuw i64 %.sroa.97.48.extract.shift to i32 ; 3 uses
-  %i.af = shl nsw <2 x i32> %11, splat (i32 8)    ; 2 uses
-  %i.ag = shufflevector <2 x i32> %i.af, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
+  %i.af = shl nsw <2 x i32> %9, splat (i32 8)
+  %10 = shufflevector <2 x i32> %i.af, <2 x i32> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.ag = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
   %i.ah = tail call i32 @lv_area_get_width(ptr noundef %0) #4 ; 19 uses
   %i.ai = tail call i32 @lv_area_get_height(ptr noundef %0) #4 ; 6 uses
   switch i32 %7, label %bb.b [
@@ -133,7 +131,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.bs = extractelement <4 x i32> %i.bm, i64 0
-  %i.bt = sub nsw i32 %i.bs, %.sroa.97.44.extract.trunc ; 3 uses
+  %i.bt = sub nsw i32 %i.bs, %i.ac                ; 3 uses
   %i.bu = extractelement <4 x i32> %i.bm, i64 1
   %i.bv = sub nsw i32 %i.bu, %.sroa.97.48.extract.trunc ; 3 uses
   %i.bw = shufflevector <4 x i32> %i.n, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
@@ -144,7 +142,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ca = extractelement <4 x i32> %i.bm, i64 3
   %i.cb = sub nsw i32 %i.ca, %.sroa.97.48.extract.trunc ; 4 uses
   %i.cc = extractelement <4 x i32> %i.bm, i64 2
-  %i.cd = sub nsw i32 %i.cc, %.sroa.97.44.extract.trunc ; 4 uses
+  %i.cd = sub nsw i32 %i.cc, %i.ac                ; 4 uses
   %i.ce = mul nsw i32 %i.bv, %i.ab
   %i.cf = mul nsw i32 %i.bt, %i.aa
   %i.cg = add nsw i32 %i.ce, %i.cf                ; 2 uses
@@ -161,7 +159,7 @@ bb.j:                                             ; preds = %bb.h
   %i.cl = shufflevector <2 x i32> %i.m, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.cm = sdiv <4 x i32> %i.ck, %i.cl
   %i.cn = shufflevector <4 x i32> %i.cm, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
-  %i.co = shufflevector <2 x i32> %i.af, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.co = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.cp = add nsw <4 x i32> %i.cn, %i.co
   br label %transform_point_upscaled.exit251
 
@@ -293,10 +291,10 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond493, label %.thread472, label %bb.u
 
 bb.t:                                             ; preds = %bb.r
-  %i.fj = sub nsw i32 %i.ff, %.sroa.97.44.extract.trunc ; 3 uses
+  %i.fj = sub nsw i32 %i.ff, %i.ac                ; 3 uses
   %i.fk = sub nsw i32 %i.fh, %.sroa.97.48.extract.trunc ; 3 uses
   %i.fl = load i32, ptr %i.es, align 4, !tbaa !37
-  %i.fm = sub nsw i32 %i.fl, %.sroa.97.44.extract.trunc ; 4 uses
+  %i.fm = sub nsw i32 %i.fl, %i.ac                ; 4 uses
   %i.fn = mul nsw i32 %i.fk, %i.ab                ; 3 uses
   %i.fo = mul nsw i32 %i.fj, %i.aa
   %i.fp = add nsw i32 %i.fn, %i.fo                ; 2 uses

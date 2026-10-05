@@ -204,17 +204,14 @@ _ZNK9VoxelArea14hasEmptyExtentEv.exit:            ; preds = %bb.a
   br i1 %.not2.i, label %_ZNK9VoxelArea14hasEmptyExtentEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK9VoxelArea14hasEmptyExtentEv.exit
-  %.sroa.077.0.copyload = load i48, ptr %i.d, align 8, !tbaa !31 ; 5 uses
-  %.sroa.2.0.extract.shift.i.i = lshr i48 %.sroa.077.0.copyload, 16
-  %7 = trunc i48 %.sroa.077.0.copyload to i16
-  %8 = insertelement <2 x i16> poison, i16 %7, i64 0
-  %9 = trunc i48 %.sroa.2.0.extract.shift.i.i to i16
-  %10 = insertelement <2 x i16> %8, i16 %9, i64 1
+  %.sroa.077.0.copyload = load i48, ptr %i.d, align 8, !tbaa !31 ; 4 uses
+  %7 = bitcast i48 %.sroa.077.0.copyload to <3 x i16>
+  %8 = shufflevector <3 x i16> %7, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.k = bitcast i48 %.sroa.077.0.copyload to <3 x i16>
   %i.l = shufflevector <3 x i16> %i.k, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.m = sext <2 x i16> %i.l to <2 x i32>         ; 2 uses
   %i.n = add nsw <2 x i32> %i.m, splat (i32 -15)
-  %i.o = icmp slt <2 x i16> %10, zeroinitializer
+  %i.o = icmp slt <2 x i16> %8, zeroinitializer
   %i.p = select <2 x i1> %i.o, <2 x i32> %i.n, <2 x i32> %i.m
   %i.q = sdiv <2 x i32> %i.p, splat (i32 16)      ; 2 uses
   %i.r = ashr i48 %.sroa.077.0.copyload, 32

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc range(i32 -5, 1) i32 @mlkem512_check_sk(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
-  %i.a = alloca [32 x i8], align 32               ; 9 uses
+  %i.a = alloca [32 x i8], align 32               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 768
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #46
@@ -235,15 +235,13 @@ mlk_sha3_256.exit:                                ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #46
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1568
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %3 = load <4 x i8>, ptr %i.m, align 1, !tbaa !76
-  %4 = load <4 x i8>, ptr %2, align 1
+  %2 = load <8 x i8>, ptr %i.m, align 1
   %i.p = load <8 x i8>, ptr %i.n, align 8, !tbaa !76
   %i.q = load <32 x i8>, ptr %i.l, align 1, !tbaa !76
   %i.r = load <16 x i8>, ptr %i.o, align 16, !tbaa !76
-  %i.s = shufflevector <4 x i8> %3, <4 x i8> %4, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.s = shufflevector <8 x i8> %2, <8 x i8> poison, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.t = insertelement <32 x i8> %i.s, i8 %i.k, i64 0
   %i.u = shufflevector <16 x i8> %i.r, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.v = shufflevector <32 x i8> %i.t, <32 x i8> %i.u, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47>
@@ -385,7 +383,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc range(i32 -5, 1) i32 @mlkem768_check_sk(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
-  %i.a = alloca [32 x i8], align 32               ; 9 uses
+  %i.a = alloca [32 x i8], align 32               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1152
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #46
@@ -415,15 +413,13 @@ mlk_sha3_256.exit:                                ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #46
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 2336
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %3 = load <4 x i8>, ptr %i.m, align 1, !tbaa !76
-  %4 = load <4 x i8>, ptr %2, align 1
+  %2 = load <8 x i8>, ptr %i.m, align 1
   %i.p = load <8 x i8>, ptr %i.n, align 8, !tbaa !76
   %i.q = load <32 x i8>, ptr %i.l, align 1, !tbaa !76
   %i.r = load <16 x i8>, ptr %i.o, align 16, !tbaa !76
-  %i.s = shufflevector <4 x i8> %3, <4 x i8> %4, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.s = shufflevector <8 x i8> %2, <8 x i8> poison, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.t = insertelement <32 x i8> %i.s, i8 %i.k, i64 0
   %i.u = shufflevector <16 x i8> %i.r, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.v = shufflevector <32 x i8> %i.t, <32 x i8> %i.u, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47>
@@ -565,7 +561,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc range(i32 -5, 1) i32 @mlkem1024_check_sk(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
-  %i.a = alloca [32 x i8], align 32               ; 9 uses
+  %i.a = alloca [32 x i8], align 32               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1536
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #46
@@ -595,15 +591,13 @@ mlk_sha3_256.exit:                                ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #46
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3104
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %3 = load <4 x i8>, ptr %i.m, align 1, !tbaa !76
-  %4 = load <4 x i8>, ptr %2, align 1
+  %2 = load <8 x i8>, ptr %i.m, align 1
   %i.p = load <8 x i8>, ptr %i.n, align 8, !tbaa !76
   %i.q = load <32 x i8>, ptr %i.l, align 1, !tbaa !76
   %i.r = load <16 x i8>, ptr %i.o, align 16, !tbaa !76
-  %i.s = shufflevector <4 x i8> %3, <4 x i8> %4, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.s = shufflevector <8 x i8> %2, <8 x i8> poison, <32 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.t = insertelement <32 x i8> %i.s, i8 %i.k, i64 0
   %i.u = shufflevector <16 x i8> %i.r, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.v = shufflevector <32 x i8> %i.t, <32 x i8> %i.u, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47>
@@ -1006,7 +1000,7 @@ bb.f:                                             ; preds = %bb.d
   %i.x = tail call range(i32 0, 2) i32 @aes_nohw_set_encrypt_key(ptr noundef readonly %1, i32 noundef %i.u, ptr noundef %i.b) ; 0 uses
   store ptr @aes_nohw_decrypt, ptr %i.v, align 8, !tbaa !562
   %spec.store.select72 = select i1 %i.g, ptr @aes_nohw_cbc_encrypt, ptr null
-  store ptr %spec.store.select72, ptr %i.l, align 8
+  store ptr %spec.store.select72, ptr %i.l, align 8, !tbaa !76
   br label %.thread
 
 bb.g:                                             ; preds = %bb.a
@@ -1047,13 +1041,13 @@ bb.l:                                             ; preds = %bb.j
   %i.al = tail call i32 @aes_nohw_set_encrypt_key(ptr noundef %1, i32 noundef %i.ah, ptr noundef %i.b) ; 0 uses
   store ptr @aes_nohw_encrypt, ptr %i.ai, align 8, !tbaa !562
   %spec.store.select73 = select i1 %i.g, ptr @aes_nohw_cbc_encrypt, ptr null
-  store ptr %spec.store.select73, ptr %i.l, align 8
+  store ptr %spec.store.select73, ptr %i.l, align 8, !tbaa !76
   br label %.thread
 
 .sink.split:                                      ; preds = %bb.i, %bb.h, %bb.c, %bb.e, %bb.k
   %spec.store.select74.sink = phi ptr [ %spec.store.select74, %bb.k ], [ %spec.store.select71, %bb.e ], [ %spec.store.select, %bb.c ], [ @aes_hw_cbc_encrypt, %bb.h ], [ @aes_hw_ctr32_encrypt_blocks, %bb.i ]
   %.0.ph = phi i32 [ %i.aj, %bb.k ], [ %i.w, %bb.e ], [ %i.p, %bb.c ], [ %i.ab, %bb.h ], [ %i.ab, %bb.i ]
-  store ptr %spec.store.select74.sink, ptr %i.l, align 8
+  store ptr %spec.store.select74.sink, ptr %i.l, align 8, !tbaa !76
   br label %bb.m
 
 bb.m:                                             ; preds = %.sink.split, %bb.i

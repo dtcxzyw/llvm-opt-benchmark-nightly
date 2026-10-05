@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %5 = alloca %class.anon.68, align 8             ; 8 uses
   %6 = alloca %class.anon.63, align 1             ; 3 uses
-  %7 = alloca %"class.pstd::optional", align 16   ; 11 uses
+  %7 = alloca %"class.pstd::optional", align 16   ; 10 uses
   %8 = alloca %"class.pstd::pmr::polymorphic_allocator", align 8 ; 4 uses
   %9 = alloca %"class.pstd::optional.93", align 4 ; 7 uses
   %10 = alloca %"class.pbrt::SurfaceInteraction", align 8 ; 8 uses
@@ -587,13 +587,12 @@ _ZNKSt8functionIFPN4pbrt4BSDFERKNS0_18SurfaceInteractionEN4pstd3pmr21polymorphic
   %.sroa.228.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 28 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 32 ; 3 uses
   %.sroa.212.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 40 ; 3 uses
-  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.cz = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.db = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.dd = getelementptr inbounds nuw i8, ptr %7, i64 44
-  %i.de = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.cz = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.db = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.dd = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.de = getelementptr inbounds nuw i8, ptr %7, i64 44
   %i.df = getelementptr inbounds nuw i8, ptr %7, i64 28
   %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.dh = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -754,17 +753,17 @@ bb.ag:                                            ; preds = %.noexc112.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !306
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !306
   store <2 x float> %i.gx, ptr %3, align 8, !noalias !307
-  store float %i.gw, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !noalias !307
+  store float %i.gw, ptr %i.cz, align 8, !noalias !307
   store <2 x float> %i.gj, ptr %4, align 8, !noalias !307
   store float %.sroa.speculated.i109.i, ptr %i.a, align 4, !tbaa !28, !noalias !307
   store i32 0, ptr %i.b, align 4, !tbaa !54, !noalias !307
   store i32 3, ptr %i.c, align 4, !tbaa !56, !noalias !307
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31, !noalias !307
   store ptr %3, ptr %5, align 8, !tbaa !58, !noalias !307
-  store ptr %i.a, ptr %i.cz, align 8, !tbaa !34, !noalias !307
-  store ptr %4, ptr %i.da, align 8, !tbaa !60, !noalias !307
-  store ptr %i.b, ptr %i.db, align 8, !tbaa !24, !noalias !307
-  store ptr %i.c, ptr %i.dc, align 8, !tbaa !24, !noalias !307
+  store ptr %i.a, ptr %i.da, align 8, !tbaa !34, !noalias !307
+  store ptr %4, ptr %i.db, align 8, !tbaa !60, !noalias !307
+  store ptr %i.b, ptr %i.dc, align 8, !tbaa !24, !noalias !307
+  store ptr %i.c, ptr %i.dd, align 8, !tbaa !24, !noalias !307
   %i.hh = load i64, ptr %i.cv, align 8, !tbaa !52, !noalias !308 ; 2 uses
   %i.hi = and i64 %i.hh, 144115188075855871
   %i.hj = inttoptr i64 %i.hi to ptr
@@ -781,7 +780,7 @@ bb.ag:                                            ; preds = %.noexc112.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !306
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !306
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !306
-  %i.hn = load i8, ptr %i.dd, align 4, !tbaa !41, !range !42, !noalias !306, !noundef !43
+  %i.hn = load i8, ptr %i.de, align 4, !tbaa !41, !range !42, !noalias !306, !noundef !43
   %i.ho = trunc nuw i8 %i.hn to i1
   br i1 %i.ho, label %_ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit.i.i, label %_ZNK4pbrt4BSDF8Sample_fENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsE.exit.i
 
@@ -813,8 +812,7 @@ bb.ah:                                            ; preds = %_ZN4pstd8optionalIN
   %.sroa.228.0.copyload.i.i180.i = load float, ptr %.sroa.228.0..sroa_idx.i.i.i, align 4, !tbaa !28
   %.sroa.011.0.copyload.i.i183.i = load <2 x float>, ptr %i.cy, align 8, !tbaa !28 ; 2 uses
   %.sroa.212.0.copyload.i.i185.i = load float, ptr %.sroa.212.0..sroa_idx.i.i.i, align 8, !tbaa !28
-  %.sroa.02.0.copyload.i = load <2 x float>, ptr %7, align 16
-  %.sroa.7.0.copyload.i = load <2 x float>, ptr %i.de, align 8
+  %27 = load <4 x float>, ptr %7, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31, !noalias !306
   %i.hx = load i8, ptr %i.cl, align 8, !tbaa !129, !range !42, !noundef !43
   %i.hy = trunc nuw i8 %i.hx to i1
@@ -862,7 +860,6 @@ bb.aj:                                            ; preds = %bb.ah
   %i.is = fadd float %i.ip, %i.ir
   %i.it = call noundef float @llvm.fma.f32(float %.sroa.01.0.vec.extract.i.i.i, float %i.in, float %i.is)
   %i.iu = call noundef float @llvm.fabs.f32(float %i.it)
-  %27 = shufflevector <2 x float> %.sroa.02.0.copyload.i, <2 x float> %.sroa.7.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.iv = insertelement <4 x float> poison, float %i.iu, i64 0
   %i.iw = shufflevector <4 x float> %i.iv, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ix = fmul <4 x float> %27, %i.iw
@@ -1265,7 +1262,7 @@ bb.a:
   %3 = alloca %"class.pbrt::SampledSpectrum", align 16 ; 7 uses
   %4 = alloca %"class.pbrt::SampledSpectrum", align 16 ; 8 uses
   %5 = alloca %"class.pbrt::HairBxDF", align 4    ; 5 uses
-  %6 = alloca %"class.pstd::optional", align 8    ; 7 uses
+  %6 = alloca %"class.pstd::optional", align 16   ; 6 uses
   %i.a = alloca float, align 4                    ; 5 uses
   %7 = alloca %"class.testing::AssertionResult", align 8 ; 7 uses
   %i.b = alloca double, align 8                   ; 4 uses
@@ -1273,9 +1270,8 @@ bb.a:
   %9 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #31
   call void @_ZN4pbrt18SampledWavelengths13SampleVisibleEf(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::SampledWavelengths") align 4 %1, float noundef 5.000000e-01)
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 44
-  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 44
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   br label %.preheader
 
@@ -1403,20 +1399,18 @@ bb.f:                                             ; preds = %bb.d, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
   %i.cd = extractelement <2 x float> %i.bj, i64 0
   call void @_ZNK4pbrt8HairBxDF8Sample_fENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsE(ptr dead_on_unwind nonnull writable sret(%"class.pstd::optional") align 4 %6, ptr noundef nonnull align 4 dereferenceable(76) %5, <2 x float> %.sroa.06.4.vec.insert.i, float %i.ac, float noundef %i.cd, <2 x float> %i.cc, i32 noundef 0, i32 noundef 3)
-  %i.ce = load i8, ptr %10, align 4, !tbaa !41, !range !42, !noundef !43
+  %i.ce = load i8, ptr %i.c, align 4, !tbaa !41, !range !42, !noundef !43
   %i.cf = trunc nuw i8 %i.ce to i1
   br i1 %i.cf, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %.sroa.0.0.copyload4.i = load <2 x float>, ptr %6, align 8
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !77
-  %11 = load <2 x float>, ptr %i.c, align 8, !tbaa !28 ; 3 uses
-  %i.cg = insertelement <2 x float> %11, float 6.553600e+04, i64 1
-  %i.ch = fmul <2 x float> %11, %i.cg             ; 2 uses
+  %10 = load <4 x float>, ptr %6, align 16
+  %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !28 ; 3 uses
+  %i.cg = insertelement <2 x float> %.sroa.8.0.copyload.i, float 6.553600e+04, i64 1
+  %i.ch = fmul <2 x float> %.sroa.8.0.copyload.i, %i.cg ; 2 uses
   %i.ci = shufflevector <2 x float> %i.ch, <2 x float> poison, <4 x i32> zeroinitializer
-  %12 = shufflevector <2 x float> %.sroa.0.0.copyload4.i, <2 x float> %.sroa.8.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.cj = fmul <4 x float> %i.ci, %12
-  %i.ck = extractelement <2 x float> %11, i64 0
+  %i.cj = fmul <4 x float> %i.ci, %10
+  %i.ck = extractelement <2 x float> %.sroa.8.0.copyload.i, i64 0
   %i.cl = call noundef float @llvm.fabs.f32(float %i.ck)
   %i.cm = insertelement <4 x float> poison, float %i.cl, i64 0
   %i.cn = shufflevector <4 x float> %i.cm, <4 x float> poison, <4 x i32> zeroinitializer

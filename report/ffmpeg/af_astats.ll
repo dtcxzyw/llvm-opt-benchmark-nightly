@@ -203,15 +203,14 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   store i64 %i.er, ptr %i.ep, align 8, !tbaa !41
   %i.es = add nsw i32 %i.dw, 1                    ; 2 uses
   %i.et = sext i32 %i.es to i64
-  %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.ev = load i64, ptr %i.eu, align 8, !tbaa !33
+  %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.ev = load i64, ptr %i.eu, align 8, !tbaa !33 ; 4 uses
   %.not = icmp ugt i64 %i.ev, %i.et
   %spec.store.select = select i1 %.not, i32 %i.es, i32 0
-  store i32 %spec.store.select, ptr %i.dv, align 8
+  store i32 %spec.store.select, ptr %i.dv, align 8, !tbaa !78
   %i.ew = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
-  %5 = load i64, ptr %i.ew, align 8, !tbaa !31    ; 2 uses
-  %i.ex = load i64, ptr %i.eu, align 8, !tbaa !33 ; 3 uses
-  %.not188 = icmp ult i64 %5, %i.ex
+  %i.ex = load i64, ptr %i.ew, align 8, !tbaa !31 ; 2 uses
+  %.not188 = icmp ult i64 %i.ex, %i.ev
   br i1 %.not188, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
@@ -227,11 +226,11 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.fg = add i64 %5, 1                           ; 2 uses
+  %i.fg = add i64 %i.ex, 1                        ; 2 uses
   store i64 %i.fg, ptr %i.ew, align 8, !tbaa !31
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 280
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !82 ; 8 uses
-  %i.fj = trunc i64 %i.ex to i32                  ; 4 uses
+  %i.fj = trunc i64 %i.ev to i32                  ; 4 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 65832 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 65836 ; 2 uses
   %i.fm = tail call nsz double @llvm.fabs.f64(double %3) ; 4 uses
@@ -331,7 +330,7 @@ calc_noise_floor.exit:                            ; preds = %.lr.ph.i, %.lr.ph88
   %i.gw = load double, ptr %i.gv, align 8, !tbaa !34 ; 4 uses
   store i32 %.4103.i, ptr %i.fk, align 8, !tbaa !94
   store i32 %.156.i, ptr %i.fl, align 4, !tbaa !94
-  %.not189 = icmp ult i64 %i.fg, %i.ex
+  %.not189 = icmp ult i64 %i.fg, %i.ev
   br i1 %.not189, label %bb.ao, label %bb.ai
 
 bb.ai:                                            ; preds = %calc_noise_floor.exit

@@ -205,7 +205,7 @@ bn_in_range_words.exit:                           ; preds = %.lr.ph.i.i.i
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @BCM_rand_bytes_with_additional_data(ptr noundef %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #5 {
 bb.a:
-  %i.a = alloca [32 x i8], align 16               ; 13 uses
+  %i.a = alloca [32 x i8], align 16               ; 12 uses
   %3 = alloca %"struct.(anonymous namespace)::rand_thread_state", align 8 ; 4 uses
   %i.b = alloca [48 x i8], align 16               ; 4 uses
   %i.c = alloca [48 x i8], align 16               ; 4 uses
@@ -244,13 +244,11 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 21
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %5 = load <4 x i8>, ptr %i.s, align 1, !tbaa !80
-  %6 = load <4 x i8>, ptr %4, align 1
+  %4 = load <8 x i8>, ptr %i.s, align 1
   %i.u = load <16 x i8>, ptr %i.q, align 1, !tbaa !80
   %i.v = load <8 x i8>, ptr %i.t, align 8, !tbaa !80
-  %i.w = shufflevector <4 x i8> %5, <4 x i8> %6, <16 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.w = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.x = insertelement <16 x i8> %i.w, i8 %i.m, i64 0
   %i.y = shufflevector <8 x i8> %i.v, <8 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.z = shufflevector <16 x i8> %i.x, <16 x i8> %i.y, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
@@ -653,7 +651,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr @aes_nohw_decrypt, ptr %i.o, align 8, !tbaa !372
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 256
   %spec.store.select70 = select i1 %i.h, ptr @aes_nohw_cbc_encrypt, ptr null
-  store ptr %spec.store.select70, ptr %i.p, align 8
+  store ptr %spec.store.select70, ptr %i.p, align 8, !tbaa !80
   br label %.thread76
 
 .thread:                                          ; preds = %bb.a, %bb.b

@@ -205,9 +205,9 @@ check_marker.exit.i348:                           ; preds = %bb.df, %bb.de
   %i.ym = getelementptr inbounds nuw i8, ptr %i.fm, i64 4
   %i.yn = load i32, ptr %i.ym, align 1, !tbaa !56
   %i.yo = shl i32 %i.yn, 24
-  %i.yp = getelementptr inbounds nuw i8, ptr %i.yl, i64 448 ; 3 uses
+  %i.yp = getelementptr inbounds nuw i8, ptr %i.yl, i64 448 ; 2 uses
   %i.yq = load i32, ptr %i.yp, align 8, !tbaa !179
-  %i.yr = add i32 %i.yq, %i.yo
+  %i.yr = add i32 %i.yq, %i.yo                    ; 2 uses
   store i32 %i.yr, ptr %i.yp, align 8, !tbaa !179
   %i.ys = getelementptr inbounds nuw i8, ptr %i.fm, i64 5 ; 3 uses
   %i.yt = load i8, ptr %i.ys, align 1, !tbaa !56
@@ -218,7 +218,7 @@ check_marker.exit.i348:                           ; preds = %bb.df, %bb.de
   %i.yy = and i32 %i.yx, 524288
   %.not43.i = icmp eq i32 %i.yy, 0
   %spec.store.select.i = select i1 %.not43.i, i32 %i.yv, i32 1
-  store i32 %spec.store.select.i, ptr %i.bg, align 16
+  store i32 %spec.store.select.i, ptr %i.bg, align 16, !tbaa !57
   %i.yz = load i32, ptr %i.ys, align 1, !tbaa !56
   %i.za = lshr i32 %i.yz, 5
   %i.zb = and i32 %i.za, 3
@@ -244,9 +244,8 @@ bb.dg:                                            ; preds = %check_marker.exit.i
   %i.zn = load i32, ptr %i.zm, align 4, !tbaa !110
   %i.zo = load i32, ptr %i.am, align 4, !tbaa !74
   %i.zp = load i32, ptr %i.bc, align 16, !tbaa !52
-  %5 = load i32, ptr %i.yp, align 8, !tbaa !179
   %i.zq = load i64, ptr %i.bf, align 8, !tbaa !178
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %i.yl, i32 noundef 48, ptr noundef nonnull @.str.49, i32 noundef %i.zl, i32 noundef %i.zn, i32 noundef %i.zo, i32 noundef %i.zp, i32 noundef %5, i64 noundef %i.zq) #11
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %i.yl, i32 noundef 48, ptr noundef nonnull @.str.49, i32 noundef %i.zl, i32 noundef %i.zn, i32 noundef %i.zo, i32 noundef %i.zp, i32 noundef %i.yr, i64 noundef %i.zq) #11
   br label %slice_end.exit
 
 bb.dh:                                            ; preds = %bb.db

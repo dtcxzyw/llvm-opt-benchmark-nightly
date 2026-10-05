@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 92 ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 90 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 90 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -254,57 +254,46 @@ bb.c:                                             ; preds = %.lr.ph, %select.unf
   %i.bh = call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.be, ptr noundef nonnull dereferenceable(4) @src_text, i64 noundef 4) #15
   %.not42 = icmp eq i32 %i.bh, 0
   %spec.store.select76 = zext i1 %.not42 to i16
-  store i16 %spec.store.select76, ptr %i.v, align 4
+  store i16 %spec.store.select76, ptr %i.v, align 4, !tbaa !73
   %i.bi = load ptr, ptr %i.x, align 8, !tbaa !74
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !76
   %i.bl = trunc i32 %i.bk to i16
   %i.bm = lshr i16 %i.bl, 3
-  %spec.store.select = and i16 %i.bm, 1           ; 2 uses
-  store i16 %spec.store.select, ptr %i.w, align 2
-  %5 = load i32, ptr %i.bj, align 4, !tbaa !76
-  %6 = and i32 %5, 16
-  %.not45 = icmp eq i32 %6, 0
-  br i1 %.not45, label %9, label %7
-
-7:                                                ; preds = %bb.c
-  %8 = or disjoint i16 %spec.store.select, 2
-  store i16 %8, ptr %i.w, align 2, !tbaa !77
-  br label %9
-
-9:                                                ; preds = %7, %bb.c
-  %10 = load ptr, ptr %i.y, align 8, !tbaa !78
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv
-  %12 = load ptr, ptr %11, align 8, !tbaa !37     ; 2 uses
-  %.not.i.not = icmp eq ptr %12, null
-  %13 = select i1 %.not.i.not, ptr @empty_string, ptr %12 ; 4 uses
-  store ptr %13, ptr %i.aa, align 8, !tbaa !44
+  %spec.store.select = and i16 %i.bm, 3
+  store i16 %spec.store.select, ptr %i.w, align 2, !tbaa !77
+  %5 = load ptr, ptr %i.y, align 8, !tbaa !78
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv
+  %7 = load ptr, ptr %6, align 8, !tbaa !37       ; 2 uses
+  %.not.i.not = icmp eq ptr %7, null
+  %8 = select i1 %.not.i.not, ptr @empty_string, ptr %7 ; 4 uses
+  store ptr %8, ptr %i.aa, align 8, !tbaa !44
   store ptr null, ptr %4, align 8, !tbaa !45
-  %14 = load ptr, ptr %i.ac, align 8, !tbaa !79
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %indvars.iv
-  %16 = load ptr, ptr %15, align 8, !tbaa !37     ; 2 uses
-  %.not.i49.not = icmp eq ptr %16, null
-  %17 = select i1 %.not.i49.not, ptr @empty_string, ptr %16 ; 4 uses
-  store ptr %17, ptr %i.ae, align 8, !tbaa !44
+  %9 = load ptr, ptr %i.ac, align 8, !tbaa !79
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv
+  %11 = load ptr, ptr %10, align 8, !tbaa !37     ; 2 uses
+  %.not.i49.not = icmp eq ptr %11, null
+  %12 = select i1 %.not.i49.not, ptr @empty_string, ptr %11 ; 4 uses
+  store ptr %12, ptr %i.ae, align 8, !tbaa !44
   store ptr null, ptr %i.ab, align 8, !tbaa !45
   store i32 0, ptr %i.ag, align 8, !tbaa !46
   store ptr @empty_string, ptr %i.ah, align 8, !tbaa !44
   store ptr null, ptr %i.af, align 8, !tbaa !45
   store i32 -1, ptr %i.z, align 8, !tbaa !80
   store i32 -1, ptr %i.ad, align 8, !tbaa !81
-  %18 = load ptr, ptr %i.bd, align 8, !tbaa !37
-  %19 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %18, ptr noundef nonnull dereferenceable(5) @.str) #15
-  %.not46 = icmp eq i32 %19, 0
-  br i1 %.not46, label %bb.e, label %bb.d
+  %13 = load ptr, ptr %i.bd, align 8, !tbaa !37
+  %14 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %13, ptr noundef nonnull dereferenceable(5) @.str) #15
+  %.not45 = icmp eq i32 %14, 0
+  br i1 %.not45, label %bb.e, label %bb.d
 
-bb.d:                                             ; preds = %9
-  store ptr %17, ptr %i.aa, align 8, !tbaa !82
-  store ptr %13, ptr %i.ae, align 8, !tbaa !83
+bb.d:                                             ; preds = %bb.c
+  store ptr %12, ptr %i.aa, align 8, !tbaa !82
+  store ptr %8, ptr %i.ae, align 8, !tbaa !83
   br label %bb.e
 
-bb.e:                                             ; preds = %9, %bb.d
-  %i.bn = phi ptr [ %13, %bb.d ], [ %17, %9 ]
-  %i.bo = phi ptr [ %17, %bb.d ], [ %13, %9 ]
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %i.bn = phi ptr [ %8, %bb.d ], [ %12, %bb.c ]
+  %i.bo = phi ptr [ %12, %bb.d ], [ %8, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #14

@@ -205,19 +205,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0142 = phi ptr [ %0, %bb.b ], [ %.1143, %bb.c ] ; 2 uses
-  %.0141 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 6 uses
+  %.0141 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0141) #24, !srcloc !302
-  %3 = load <4 x float>, ptr %.0141, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0141, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0141, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.0141, i64 48
-  %8 = load <4 x float>, ptr %i.h, align 1, !tbaa !24 ; 2 uses
-  %i.i = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.k = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.l = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0141, align 1, !tbaa !24 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.0141, i64 32
+  %4 = load <8 x float>, ptr %i.h, align 1, !tbaa !24 ; 2 uses
+  %i.i = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.k = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.l = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.j, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.i, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.o = shufflevector <4 x float> %i.k, <4 x float> %i.l, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -612,19 +608,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0124 = phi ptr [ %0, %bb.b ], [ %.1125, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !307
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -943,19 +935,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0107 = phi ptr [ %0, %bb.b ], [ %.1108, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !311
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -1358,19 +1346,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0135 = phi ptr [ %0, %bb.b ], [ %.1136, %bb.c ] ; 2 uses
-  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 6 uses
+  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0134) #24, !srcloc !359
-  %3 = load <4 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0134, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0134, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -1710,19 +1694,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0124 = phi ptr [ %0, %bb.b ], [ %.1125, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !363
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -2125,19 +2105,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0135 = phi ptr [ %0, %bb.b ], [ %.1136, %bb.c ] ; 2 uses
-  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 6 uses
+  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0134) #24, !srcloc !406
-  %3 = load <4 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0134, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0134, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -2477,19 +2453,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0124 = phi ptr [ %0, %bb.b ], [ %.1125, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !410
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -2892,19 +2864,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0135 = phi ptr [ %0, %bb.b ], [ %.1136, %bb.c ] ; 2 uses
-  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 6 uses
+  %.0134 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0134) #24, !srcloc !453
-  %3 = load <4 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0134, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0134, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0134, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0134, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -3244,19 +3212,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0124 = phi ptr [ %0, %bb.b ], [ %.1125, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !457
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -3659,19 +3623,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0144 = phi ptr [ %0, %bb.b ], [ %.1145, %bb.c ] ; 2 uses
-  %.0143 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 6 uses
+  %.0143 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]  ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0143) #24, !srcloc !511
-  %3 = load <4 x float>, ptr %.0143, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0143, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0143, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0143, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0143, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0143, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -4074,19 +4034,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.0107 = phi ptr [ %0, %bb.b ], [ %.1108, %bb.c ] ; 2 uses
-  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 6 uses
+  %.0 = phi ptr [ %2, %bb.b ], [ %.1, %bb.c ]     ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr %.0) #24, !srcloc !516
-  %3 = load <4 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %5 = load <4 x float>, ptr %4, align 1, !tbaa !24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %7 = load <4 x float>, ptr %6, align 1, !tbaa !24 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 48
-  %8 = load <4 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
-  %i.h = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.i = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.j = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.k = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = load <8 x float>, ptr %.0, align 1, !tbaa !24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 32
+  %4 = load <8 x float>, ptr %i.g, align 1, !tbaa !24 ; 2 uses
+  %i.h = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.i = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.j = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.k = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.l = shufflevector <4 x float> %i.h, <4 x float> %i.i, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.m = shufflevector <4 x float> %i.i, <4 x float> %i.h, <4 x i32> <i32 6, i32 7, i32 2, i32 3>
   %i.n = shufflevector <4 x float> %i.j, <4 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -4489,7 +4445,7 @@ stbir__encode_scanline.exit:                      ; preds = %bb.c, %bb.d
   %i.am = load i32, ptr %i.al, align 4, !tbaa !102
   %i.an = icmp eq i32 %i.ak, %i.am
   %spec.store.select = select i1 %i.an, i32 0, i32 %i.ak
-  store i32 %spec.store.select, ptr %i.a, align 8
+  store i32 %spec.store.select, ptr %i.a, align 8, !tbaa !100
   ret void
 }
 
@@ -4562,7 +4518,7 @@ stbir__encode_scanline.exit:                      ; preds = %bb.c, %bb.d
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !102
   %i.aq = icmp eq i32 %i.an, %i.ap
   %spec.store.select = select i1 %i.aq, i32 0, i32 %i.an
-  store i32 %spec.store.select, ptr %i.a, align 8
+  store i32 %spec.store.select, ptr %i.a, align 8, !tbaa !100
   ret void
 }
 
@@ -4965,7 +4921,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.cf = sdiv i32 %i.ce, 2
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 100
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.cf, i32 %i.cb) ; 2 uses
-  store i32 %spec.store.select, ptr %i.cg, align 4
+  store i32 %spec.store.select, ptr %i.cg, align 4, !tbaa !43
   br label %bb.r
 
 .critedge:                                        ; preds = %stbir__get_coefficient_width.exit
@@ -5368,7 +5324,7 @@ bb.bk:                                            ; preds = %._crit_edge.i, %.lr
   %.not334 = icmp eq i32 %i.pe, 0
   %i.rw = tail call i32 @llvm.smin.i32(i32 %i.ru, i32 %.0.lcssa.i)
   %spec.store.select = select i1 %.not334, i32 %i.rw, i32 %i.ru
-  store i32 %spec.store.select, ptr %i.rv, align 4
+  store i32 %spec.store.select, ptr %i.rv, align 4, !tbaa !102
   br label %.thread361
 
 .thread359:                                       ; preds = %bb.at

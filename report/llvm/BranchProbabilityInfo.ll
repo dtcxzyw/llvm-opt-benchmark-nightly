@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"class.llvm::SmallPtrSet.372", align 8 ; 10 uses
   %8 = alloca %"class.llvm::SmallVector.375", align 8 ; 10 uses
   %9 = alloca %"class.llvm::SmallPtrSet.334", align 8 ; 14 uses
-  %10 = alloca %"class.llvm::SmallVector.363", align 8 ; 13 uses
+  %10 = alloca %"class.llvm::SmallVector.363", align 8 ; 11 uses
   %11 = alloca %"class.llvm::SmallVector.365", align 8 ; 11 uses
   %12 = alloca %"class.llvm::SmallVector.359", align 8 ; 12 uses
   %13 = alloca %"class.llvm::SmallVector.359", align 8 ; 10 uses
@@ -607,40 +607,39 @@ bb.if:                                            ; preds = %bb.ie
   %i.czt = udiv i64 %i.czh, 4294967295            ; 4 uses
   %i.czu = add nuw nsw i64 %i.czt, 1              ; 3 uses
   %.not197.i = icmp eq i32 %i.czq, 0
-  br i1 %.not197.i, label %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i, label %.lr.ph192.i.preheader
+  br i1 %.not197.i, label %.lr.ph192.i.preheader, label %.lr.ph192.i.preheader.new
 
 .lr.ph192.i.preheader:                            ; preds = %bb.if
-  %xtraiter1313 = and i64 %i.czr, 1
-  %24 = icmp eq i32 %i.czq, 1
-  br i1 %24, label %.lr.ph192.i.epil.preheader, label %.lr.ph192.i.preheader.new
-
-.lr.ph192.i.preheader.new:                        ; preds = %.lr.ph192.i.preheader
-  %unroll_iter1318 = and i64 %i.czr, 4294967294
-  br label %.lr.ph192.i
-
-_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i: ; preds = %bb.if
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   store ptr %i.bos, ptr %11, align 8, !tbaa !25
   store i32 4, ptr %i.bou, align 4, !tbaa !41
   br label %._crit_edge196.thread.i
 
-.lr.ph192.i:                                      ; preds = %.lr.ph192.i, %.lr.ph192.i.preheader.new
-  %indvars.iv.i110 = phi i64 [ 0, %.lr.ph192.i.preheader.new ], [ %indvars.iv.next.i111.1, %.lr.ph192.i ] ; 3 uses
-  %.1189.i = phi i64 [ 0, %.lr.ph192.i.preheader.new ], [ %i.daj, %.lr.ph192.i ]
-  %niter1319 = phi i64 [ 0, %.lr.ph192.i.preheader.new ], [ %niter1319.next.1, %.lr.ph192.i ]
-  %25 = load ptr, ptr %10, align 8, !tbaa !25
-  %i.czv = getelementptr inbounds nuw [4 x i8], ptr %25, i64 %indvars.iv.i110 ; 2 uses
+.lr.ph192.i.preheader.new:                        ; preds = %bb.if
+  %24 = load ptr, ptr %10, align 8, !tbaa !25     ; 3 uses
+  %unroll_iter1318 = and i64 %i.czr, 1
+  %25 = icmp eq i32 %i.czq, 1
+  br i1 %25, label %.lr.ph192.i.epil.preheader, label %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i
+
+_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i: ; preds = %.lr.ph192.i.preheader.new
+  %unroll_iter1319 = and i64 %i.czr, 4294967294
+  br label %.lr.ph192.i
+
+.lr.ph192.i:                                      ; preds = %.lr.ph192.i, %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i
+  %indvars.iv.i110 = phi i64 [ 0, %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i ], [ %indvars.iv.next.i111.1, %.lr.ph192.i ] ; 3 uses
+  %.1189.i = phi i64 [ 0, %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i ], [ %i.daj, %.lr.ph192.i ]
+  %niter1319 = phi i64 [ 0, %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i ], [ %niter1319.next.1, %.lr.ph192.i ]
+  %i.czv = getelementptr inbounds nuw [4 x i8], ptr %24, i64 %indvars.iv.i110 ; 2 uses
   %i.czw = load i32, ptr %i.czv, align 4, !tbaa !78
   %i.czx = zext i32 %i.czw to i64                 ; 2 uses
   %i.czy = udiv i64 %i.czx, %i.czu
   %i.czz = trunc nuw nsw i64 %i.czy to i32
   %.not159.i = icmp samesign ult i64 %i.czt, %i.czx
   %spec.store.select.i = select i1 %.not159.i, i32 %i.czz, i32 1 ; 2 uses
-  store i32 %spec.store.select.i, ptr %i.czv, align 4
+  store i32 %spec.store.select.i, ptr %i.czv, align 4, !tbaa !78
   %i.daa = zext nneg i32 %spec.store.select.i to i64
   %i.dab = add i64 %.1189.i, %i.daa
-  %26 = load ptr, ptr %10, align 8, !tbaa !25
-  %i.dac = getelementptr inbounds nuw [4 x i8], ptr %26, i64 %indvars.iv.i110
+  %i.dac = getelementptr inbounds nuw [4 x i8], ptr %24, i64 %indvars.iv.i110
   %i.dad = getelementptr inbounds nuw i8, ptr %i.dac, i64 4 ; 2 uses
   %i.dae = load i32, ptr %i.dad, align 4, !tbaa !78
   %i.daf = zext i32 %i.dae to i64                 ; 2 uses
@@ -648,32 +647,31 @@ _ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i: ; p
   %i.dah = trunc nuw nsw i64 %i.dag to i32
   %.not159.i.1 = icmp samesign ult i64 %i.czt, %i.daf
   %spec.store.select.i.1 = select i1 %.not159.i.1, i32 %i.dah, i32 1 ; 2 uses
-  store i32 %spec.store.select.i.1, ptr %i.dad, align 4
+  store i32 %spec.store.select.i.1, ptr %i.dad, align 4, !tbaa !78
   %i.dai = zext nneg i32 %spec.store.select.i.1 to i64
   %i.daj = add i64 %i.dab, %i.dai                 ; 3 uses
   %indvars.iv.next.i111.1 = add nuw nsw i64 %indvars.iv.i110, 2 ; 2 uses
   %niter1319.next.1 = add i64 %niter1319, 2       ; 2 uses
-  %niter1319.ncmp.1 = icmp eq i64 %niter1319.next.1, %unroll_iter1318
+  %niter1319.ncmp.1 = icmp eq i64 %niter1319.next.1, %unroll_iter1319
   br i1 %niter1319.ncmp.1, label %.loopexit.i102.loopexit.unr-lcssa, label %.lr.ph192.i, !llvm.loop !634
 
 .loopexit.i102.loopexit.unr-lcssa:                ; preds = %.lr.ph192.i
-  %lcmp.mod1315.not = icmp eq i64 %xtraiter1313, 0
+  %lcmp.mod1315.not = icmp eq i64 %unroll_iter1318, 0
   br i1 %lcmp.mod1315.not, label %.loopexit.i102, label %.lr.ph192.i.epil.preheader
 
-.lr.ph192.i.epil.preheader:                       ; preds = %.loopexit.i102.loopexit.unr-lcssa, %.lr.ph192.i.preheader
-  %indvars.iv.i110.epil.init = phi i64 [ 0, %.lr.ph192.i.preheader ], [ %indvars.iv.next.i111.1, %.loopexit.i102.loopexit.unr-lcssa ]
-  %.1189.i.epil.init = phi i64 [ 0, %.lr.ph192.i.preheader ], [ %i.daj, %.loopexit.i102.loopexit.unr-lcssa ]
+.lr.ph192.i.epil.preheader:                       ; preds = %.loopexit.i102.loopexit.unr-lcssa, %.lr.ph192.i.preheader.new
+  %indvars.iv.i110.epil.init = phi i64 [ 0, %.lr.ph192.i.preheader.new ], [ %indvars.iv.next.i111.1, %.loopexit.i102.loopexit.unr-lcssa ]
+  %.1189.i.epil.init = phi i64 [ 0, %.lr.ph192.i.preheader.new ], [ %i.daj, %.loopexit.i102.loopexit.unr-lcssa ]
   %lcmp.mod1317 = trunc i32 %i.czq to i1
   call void @llvm.assume(i1 %lcmp.mod1317)
-  %27 = load ptr, ptr %10, align 8, !tbaa !25
-  %i.dak = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %indvars.iv.i110.epil.init ; 2 uses
+  %i.dak = getelementptr inbounds nuw [4 x i8], ptr %24, i64 %indvars.iv.i110.epil.init ; 2 uses
   %i.dal = load i32, ptr %i.dak, align 4, !tbaa !78
   %i.dam = zext i32 %i.dal to i64                 ; 2 uses
   %i.dan = udiv i64 %i.dam, %i.czu
   %i.dao = trunc nuw nsw i64 %i.dan to i32
   %.not159.i.epil = icmp samesign ult i64 %i.czt, %i.dam
   %spec.store.select.i.epil = select i1 %.not159.i.epil, i32 %i.dao, i32 1 ; 2 uses
-  store i32 %spec.store.select.i.epil, ptr %i.dak, align 4
+  store i32 %spec.store.select.i.epil, ptr %i.dak, align 4, !tbaa !78
   %i.dap = zext nneg i32 %spec.store.select.i.epil to i64
   %i.daq = add i64 %.1189.i.epil.init, %i.dap
   br label %.loopexit.i102
@@ -696,7 +694,7 @@ _ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.i: ; preds = 
   %.not.i86.i = icmp eq i32 %i.czq, 0
   br i1 %.not.i86.i, label %._crit_edge196.thread.i, label %.lr.ph195.i104
 
-._crit_edge196.thread.i:                          ; preds = %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.i, %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.thread.i
+._crit_edge196.thread.i:                          ; preds = %_ZSt6fill_nIPN4llvm17BranchProbabilityEmS1_ET_S3_T0_RKT1_.exit.i.i.i, %.lr.ph192.i.preheader
   store i32 %i.czq, ptr %i.bot, align 8, !tbaa !40
   %i.dat = load ptr, ptr %0, align 8, !tbaa !732, !nonnull !22, !align !246
   %i.dau = call { ptr, i64 } @_ZN4llvm21BranchProbabilityInfo10allocEdgesEPKNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(140) %i.dat, ptr noundef nonnull readonly %.sroa.4.0442) ; 0 uses

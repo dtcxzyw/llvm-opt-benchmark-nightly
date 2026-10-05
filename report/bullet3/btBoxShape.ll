@@ -204,9 +204,7 @@ bb.b:                                             ; preds = %switch.lookup, %bb.
 define linkonce_odr dso_local void @_ZNK10btBoxShape9getVertexEiR9btVector3(ptr noundef nonnull align 8 dereferenceable(80) %0, i32 noundef %1, ptr noundef nonnull align 4 dereferenceable(16) %2) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.03.0.copyload.i = load <2 x float>, ptr %i.a, align 8
-  %.sroa.67.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.sroa.67.0.copyload.i = load <2 x float>, ptr %.sroa.67.0..sroa_idx.i, align 8, !tbaa !20
+  %3 = load <4 x float>, ptr %i.a, align 8
   %i.b = load ptr, ptr %0, align 8, !tbaa !11
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.d = load ptr, ptr %i.c, align 8
@@ -226,7 +224,6 @@ bb.a:
   %i.r = uitofp nneg i32 %i.q to float
   %i.s = uitofp nneg i32 %i.p to float
   %i.t = fneg float %i.s
-  %3 = shufflevector <2 x float> %.sroa.03.0.copyload.i, <2 x float> %.sroa.67.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
   %i.u = insertelement <4 x float> %3, float 0.000000e+00, i64 3
   %i.v = insertelement <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, float %i.e, i64 0
   %i.w = insertelement <4 x float> %i.v, float %i.i, i64 1

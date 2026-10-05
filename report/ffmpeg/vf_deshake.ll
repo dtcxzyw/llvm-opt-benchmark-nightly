@@ -205,7 +205,7 @@ bb.a:
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 3
   tail call void @av_fast_malloc(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i64 noundef %i.j) #10
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 66600 ; 8 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 66600 ; 7 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !29   ; 3 uses
   %.not176 = icmp slt i32 %i.l, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 66604 ; 3 uses
@@ -258,7 +258,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ._crit_edge178:                                   ; preds = %._crit_edge, %.._crit_edge178_crit_edge
   %i.y = phi i32 [ %i.l, %.._crit_edge178_crit_edge ], [ %i.u, %._crit_edge ] ; 2 uses
   %i.z = phi i32 [ %.pre242, %.._crit_edge178_crit_edge ], [ %i.v, %._crit_edge ] ; 5 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 66604 ; 8 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 66604 ; 7 uses
   %i.ab = load i32, ptr %i.e, align 4, !tbaa !28  ; 2 uses
   %i.ac = shl i32 %i.ab, 1
   %i.ad = add i32 %i.z, %i.ac
@@ -661,9 +661,9 @@ find_block_motion.exit.thread:                    ; preds = %.loopexit.i, %bb.f,
   br label %._crit_edge189
 
 ._crit_edge189:                                   ; preds = %._crit_edge189.loopexit, %bb.c
-  %i.jm = phi i32 [ %i.al, %bb.c ], [ %.pre244, %._crit_edge189.loopexit ] ; 3 uses
+  %i.jm = phi i32 [ %i.al, %bb.c ], [ %.pre244, %._crit_edge189.loopexit ] ; 4 uses
   %i.jn = phi i32 [ %i.am, %bb.c ], [ %.pre243, %._crit_edge189.loopexit ] ; 2 uses
-  %i.jo = phi i32 [ %i.an, %bb.c ], [ %i.ji, %._crit_edge189.loopexit ] ; 2 uses
+  %i.jo = phi i32 [ %i.an, %bb.c ], [ %i.ji, %._crit_edge189.loopexit ] ; 3 uses
   %.sroa.12.1.lcssa = phi i32 [ %.sroa.12.0197, %bb.c ], [ %.sroa.12.2, %._crit_edge189.loopexit ]
   %.sroa.0.1.lcssa = phi i32 [ %.sroa.0.0198, %bb.c ], [ %.sroa.0.2, %._crit_edge189.loopexit ]
   %.1112.lcssa = phi i32 [ %.0111200, %bb.c ], [ %.3114, %._crit_edge189.loopexit ] ; 9 uses
@@ -1001,28 +1001,24 @@ clean_mean.exit:                                  ; preds = %.lr.ph200.i.prol.lo
   %i.nw = sub nsw i32 %.1112.lcssa, %i.nv
   %i.nx = sitofp nsz i32 %i.nw to double
   %i.ny = fdiv nsz double %.0.lcssa.i, %i.nx      ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.nz = fcmp nsz olt double %i.ny, 1.000000e-03
-  %spec.store.select = select i1 %i.nz, double 0.000000e+00, double %i.ny ; 2 uses
-  store double %spec.store.select, ptr %7, align 8
-  %.pre247 = load i32, ptr %i.aa, align 4, !tbaa !36
-  %.pre248.pre = load i32, ptr %i.k, align 8, !tbaa !29
+  %spec.store.select = select i1 %i.nz, double 0.000000e+00, double %i.ny
   br label %._crit_edge205.thread
 
 ._crit_edge205.thread:                            ; preds = %._crit_edge205, %._crit_edge178, %clean_mean.exit
-  %.pre248 = phi i32 [ %.pre248.pre, %clean_mean.exit ], [ %i.jo, %._crit_edge205 ], [ %i.y, %._crit_edge178 ] ; 5 uses
+  %.pre248 = phi i32 [ %i.jm, %clean_mean.exit ], [ %i.jm, %._crit_edge205 ], [ %i.z, %._crit_edge178 ] ; 3 uses
+  %7 = phi i32 [ %i.jo, %clean_mean.exit ], [ %i.jo, %._crit_edge205 ], [ %i.y, %._crit_edge178 ] ; 5 uses
   %8 = phi double [ %spec.store.select, %clean_mean.exit ], [ 0.000000e+00, %._crit_edge205 ], [ 0.000000e+00, %._crit_edge178 ] ; 2 uses
-  %9 = phi i32 [ %.pre247, %clean_mean.exit ], [ %i.jm, %._crit_edge205 ], [ %i.z, %._crit_edge178 ] ; 3 uses
   %.3110 = phi i32 [ %i.mb, %clean_mean.exit ], [ %.1108.lcssa, %._crit_edge205 ], [ 0, %._crit_edge178 ]
   %.3 = phi i32 [ %i.mc, %clean_mean.exit ], [ %.1.lcssa, %._crit_edge205 ], [ 0, %._crit_edge178 ]
-  %i.oa = icmp sgt i32 %9, -1
-  %i.ob = insertelement <2 x i32> poison, i32 %.pre248, i64 0
-  %i.oc = insertelement <2 x i32> %i.ob, i32 %9, i64 1 ; 2 uses
+  %i.oa = icmp sgt i32 %.pre248, -1
+  %i.ob = insertelement <2 x i32> poison, i32 %7, i64 0
+  %i.oc = insertelement <2 x i32> %i.ob, i32 %.pre248, i64 1 ; 2 uses
   %i.od = shl <2 x i32> %i.oc, splat (i32 1)      ; 3 uses
   br i1 %i.oa, label %.preheader.lr.ph, label %._crit_edge217.split
 
 .preheader.lr.ph:                                 ; preds = %._crit_edge205.thread
-  %.not131209 = icmp slt i32 %.pre248, 0
+  %.not131209 = icmp slt i32 %7, 0
   %i.oe = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.of = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   br i1 %.not131209, label %._crit_edge217.split, label %.preheader.preheader
@@ -1041,7 +1037,7 @@ clean_mean.exit:                                  ; preds = %.lr.ph200.i.prol.lo
   %.0115216 = phi i32 [ 0, %.preheader.preheader ], [ %.2117.epil, %._crit_edge213 ] ; 2 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.oe, i64 %indvars.iv238.a ; 3 uses
   %i.ok = trunc nuw i64 %indvars.iv238.a to i32   ; 2 uses
-  %i.ol = sub nsw i32 %i.ok, %9
+  %i.ol = sub nsw i32 %i.ok, %.pre248
   %i.om = sitofp nsz i32 %i.ol to double          ; 3 uses
   br i1 %i.oj, label %.epil.preheader, label %.preheader.new
 
@@ -1056,7 +1052,7 @@ clean_mean.exit:                                  ; preds = %.lr.ph200.i.prol.lo
 
 bb.at:                                            ; preds = %.preheader.new
   %i.op = trunc i64 %indvars.iv235 to i32
-  %i.oq = sub i32 %i.op, %.pre248
+  %i.oq = sub i32 %i.op, %7
   %i.or = sitofp nsz i32 %i.oq to double
   store double %i.or, ptr %6, align 8, !tbaa !93
   store double %i.om, ptr %i.of, align 8, !tbaa !94
@@ -1072,7 +1068,7 @@ bb.au:                                            ; preds = %.preheader.new, %bb
 
 bb.av:                                            ; preds = %bb.au
   %i.ou = trunc i64 %indvars.iv.next236 to i32
-  %i.ov = sub i32 %i.ou, %.pre248
+  %i.ov = sub i32 %i.ou, %7
   %i.ow = sitofp nsz i32 %i.ov to double
   store double %i.ow, ptr %6, align 8, !tbaa !93
   store double %i.om, ptr %i.of, align 8, !tbaa !94
@@ -1095,7 +1091,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 bb.ax:                                            ; preds = %.epil.preheader
   %i.oz = trunc i64 %indvars.iv235.epil.init to i32
-  %i.pa = sub i32 %i.oz, %.pre248
+  %i.pa = sub i32 %i.oz, %7
   %i.pb = sitofp nsz i32 %i.pa to double
   store double %i.pb, ptr %6, align 8, !tbaa !93
   store double %i.om, ptr %i.of, align 8, !tbaa !94

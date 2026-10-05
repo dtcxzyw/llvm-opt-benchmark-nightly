@@ -147,7 +147,7 @@ bb.l:                                             ; preds = %bb.k, %bb.a
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 13 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 7 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 7 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 29 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 28 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 19 uses
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 20 uses
@@ -550,20 +550,18 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq
   %i.nt = call ptr @cli_max_malloc(i64 noundef %i.ns) #30 ; 4 uses
   %i.nu = getelementptr inbounds nuw i8, ptr %i.nt, i64 4 ; 3 uses
   store i32 0, ptr %i.nu, align 4, !tbaa !82
-  %i.nv = load ptr, ptr %i.ap, align 8, !tbaa !30
-  %i.nw = getelementptr inbounds nuw i8, ptr %i.nv, i64 1
+  %i.nv = load ptr, ptr %i.ap, align 8, !tbaa !30 ; 2 uses
+  %i.nw = getelementptr inbounds nuw i8, ptr %i.nv, i64 1 ; 2 uses
   %i.nx = load i8, ptr %i.nw, align 1, !tbaa !32
   %i.ny = icmp eq i8 %i.nx, 105
   %spec.store.select = zext i1 %i.ny to i32       ; 2 uses
-  store i32 %spec.store.select, ptr %i.nu, align 4
-  %3 = load ptr, ptr %i.ap, align 8, !tbaa !30    ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %i.nz = load i8, ptr %4, align 1, !tbaa !32
+  store i32 %spec.store.select, ptr %i.nu, align 4, !tbaa !82
+  %i.nz = load i8, ptr %i.nw, align 1, !tbaa !32
   %i.oa = icmp eq i8 %i.nz, 115
   br i1 %i.oa, label %bb.du, label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds
-  %i.ob = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.nv, i64 2
   %i.oc = load i8, ptr %i.ob, align 1, !tbaa !32
   %i.od = icmp eq i8 %i.oc, 115
   br i1 %i.od, label %bb.du, label %bb.dv

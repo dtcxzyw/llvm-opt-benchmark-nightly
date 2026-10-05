@@ -204,17 +204,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
-  %i.ap = load float, ptr %i.ao, align 4, !tbaa !143
-  %i.aq = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.ap)
+  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %i.ap = load float, ptr %i.ao, align 4, !tbaa !143 ; 2 uses
+  %i.aq = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.ap) ; 2 uses
   %i.ar = fpext reassoc nsz arcp contract afn float %i.aq to double
   %i.as = fcmp reassoc nsz arcp contract afn ult double %i.ar, 1.000000e-04
   %spec.store.select = zext i1 %i.as to i32
-  store i32 %spec.store.select, ptr %i.an, align 4
-  %4 = load float, ptr %i.ao, align 4, !tbaa !143 ; 2 uses
-  %5 = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %4)
-  %or.cond = fcmp reassoc nsz arcp contract afn ugt float %5, 1.000000e+00
-  %storemerge = select i1 %or.cond, float 0.000000e+00, float %4
+  store i32 %spec.store.select, ptr %i.an, align 4, !tbaa !84
+  %or.cond = fcmp reassoc nsz arcp contract afn ugt float %i.aq, 1.000000e+00
+  %storemerge = select i1 %or.cond, float 0.000000e+00, float %i.ap
   store float %storemerge, ptr %i.e, align 4, !tbaa !89
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.au = load float, ptr %i.at, align 4, !tbaa !144 ; 2 uses

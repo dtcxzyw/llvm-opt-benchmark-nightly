@@ -115,7 +115,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 33 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 32 uses
   %i.i = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 7 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
@@ -518,7 +518,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit61.i: ; preds = %_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.al, ptr noundef nonnull align 1 dereferenceable(7) @.str.19, i64 7, i1 false), !noalias !55
   store i64 7, ptr %i.am, align 8, !tbaa !17, !noalias !55
   store i8 0, ptr %i.aq, align 1, !tbaa !16, !noalias !55
-  %i.jg = load ptr, ptr %i.h, align 8, !tbaa !20, !noalias !55 ; 6 uses
+  %i.jg = load ptr, ptr %i.h, align 8, !tbaa !20, !noalias !55 ; 7 uses
   %i.jh = load ptr, ptr %i.i, align 8, !tbaa !21, !noalias !55
   %.not.i.i66.i = icmp eq ptr %i.jg, %i.jh
   br i1 %.not.i.i66.i, label %bb.bi, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit70.thread.i
@@ -529,13 +529,12 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
   %i.jj = load ptr, ptr %7, align 8, !tbaa !15, !noalias !55 ; 2 uses
   %i.jk = icmp eq ptr %i.jj, %i.al
   %spec.store.select.i = select i1 %i.jk, ptr %i.ji, ptr %i.jj
-  store ptr %spec.store.select.i, ptr %i.jg, align 8, !noalias !55
+  store ptr %spec.store.select.i, ptr %i.jg, align 8, !tbaa !13, !noalias !55
   %i.jl = load i64, ptr %i.al, align 8, !noalias !55
   store i64 %i.jl, ptr %i.ji, align 8, !noalias !55
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jg, i64 8
   store i64 7, ptr %i.jm, align 8, !tbaa !17, !noalias !55
-  %28 = load ptr, ptr %i.h, align 8, !tbaa !20, !noalias !55
-  %i.jn = getelementptr inbounds nuw i8, ptr %28, i64 32
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.jg, i64 32
   store ptr %i.jn, ptr %i.h, align 8, !tbaa !20, !noalias !55
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73.i
 

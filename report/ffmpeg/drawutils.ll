@@ -205,19 +205,16 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i32, ptr %2, align 1                ; 4 uses
+  %i.f = load i32, ptr %2, align 1                ; 3 uses
   store i32 %i.f, ptr %1, align 4
-  %3 = lshr i32 %i.f, 8
-  %4 = trunc i32 %i.f to i8
-  %5 = insertelement <2 x i8> poison, i8 %4, i64 0
-  %6 = trunc i32 %3 to i8
-  %7 = insertelement <2 x i8> %5, i8 %6, i64 1
+  %3 = bitcast i32 %i.f to <4 x i8>
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <2 x i32> <i32 0, i32 1>
   %i.g = bitcast i32 %i.f to <4 x i8>
   %i.h = shufflevector <4 x i8> %i.g, <4 x i8> poison, <2 x i32> <i32 2, i32 3>
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge78, %bb.b
-  %i.i = phi <2 x i8> [ %i.d, %._crit_edge78 ], [ %7, %bb.b ]
+  %i.i = phi <2 x i8> [ %i.d, %._crit_edge78 ], [ %4, %bb.b ]
   %i.j = phi <2 x i8> [ %i.e, %._crit_edge78 ], [ %i.h, %bb.b ]
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.k, i8 0, i64 64, i1 false)

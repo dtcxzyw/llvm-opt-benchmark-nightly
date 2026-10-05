@@ -205,7 +205,7 @@ bb.cd:                                            ; preds = %bb.cb
   br label %bb.cg
 
 bb.ce:                                            ; preds = %bb.cg, %bb.cb
-  %storemerge.i = phi i64 [ %.sroa.4.0.i, %bb.cg ], [ %i.ji, %bb.cb ] ; 6 uses
+  %storemerge.i = phi i64 [ %.sroa.4.0.i, %bb.cg ], [ %i.ji, %bb.cb ] ; 5 uses
   %.sroa.8.0.extract.shift.i = lshr i64 %storemerge.i, 32 ; 2 uses
   %.sroa.10.0.extract.shift.i = lshr i64 %storemerge.i, 48
   %i.jj = bitcast i64 %storemerge.i to <4 x i16>
@@ -213,14 +213,11 @@ bb.ce:                                            ; preds = %bb.cg, %bb.cb
   br i1 %i.fm, label %_RNvNtCshxhuDJfZv4T_6fontbe4colr13quantize_bbox.exit.i, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %3 = trunc i64 %storemerge.i to i16
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %.sroa.6.0.extract.shift.i = lshr i64 %storemerge.i, 16
-  %5 = trunc i64 %.sroa.6.0.extract.shift.i to i16
-  %6 = insertelement <2 x i16> %4, i16 %5, i64 1
+  %3 = bitcast i64 %storemerge.i to <4 x i16>
+  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <2 x i32> <i32 0, i32 1>
   %.sroa.8.0.extract.trunc.i = trunc i64 %.sroa.8.0.extract.shift.i to i16
   %i.jl = srem <2 x i16> %i.jk, %i.fq
-  %i.jm = sub nsw <2 x i16> %6, %i.jl
+  %i.jm = sub nsw <2 x i16> %4, %i.jl
   %i.jn = sext i16 %.sroa.8.0.extract.trunc.i to i32
   %i.jo = add nsw i32 %i.fo, %i.jn                ; 2 uses
   %i.jp = srem i32 %i.jo, %i.fn
@@ -623,7 +620,7 @@ bb.dz:                                            ; preds = %bb.eb, %bb.ea
 bb.ea:                                            ; preds = %bb.dy, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167
   %.sink.i.i.i.i.i = phi i64 [ 56, %bb.dy ], [ 48, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i167 ]
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pi, i64 %.sink.i.i.i.i.i
-  %.sroa.5.0.i.i.i.i.i = load i64, ptr %i.pq, align 8, !alias.scope !3077, !noalias !3078 ; 5 uses
+  %.sroa.5.0.i.i.i.i.i = load i64, ptr %i.pq, align 8, !alias.scope !3077, !noalias !3078 ; 4 uses
   %.sroa.6.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 32
   %.sroa.6.0.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.6.0.extract.shift.i.i.i.i.i to i16 ; 2 uses
   %.sroa.7.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 48
@@ -635,15 +632,12 @@ bb.ea:                                            ; preds = %bb.dy, %_RINvNtCsf3
   br i1 %i.pr, label %bb.eb, label %bb.dz
 
 bb.eb:                                            ; preds = %bb.ea
-  %3 = trunc i64 %.sroa.5.0.i.i.i.i.i to i16
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %.sroa.54.0.extract.shift.i.i.i.i.i = lshr i64 %.sroa.5.0.i.i.i.i.i, 16
-  %5 = trunc i64 %.sroa.54.0.extract.shift.i.i.i.i.i to i16
-  %6 = insertelement <2 x i16> %4, i16 %5, i64 1
+  %3 = bitcast i64 %.sroa.5.0.i.i.i.i.i to <4 x i16>
+  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <2 x i32> <i32 0, i32 1>
   %.sroa.8.0.copyload.i.i.i.i.i = load i16, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 2, !alias.scope !3079, !noalias !3080
   %.sroa.712.0.copyload.i.i.i.i.i = load i16, ptr %.sroa.712.0..sroa_idx.i.i.i.i.i, align 4, !alias.scope !3079, !noalias !3080
   %i.pu = load <2 x i16>, ptr %.sroa.510.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !3079, !noalias !3080
-  %i.pv = call <2 x i16> @llvm.smin.v2i16(<2 x i16> %i.pu, <2 x i16> %6)
+  %i.pv = call <2 x i16> @llvm.smin.v2i16(<2 x i16> %i.pu, <2 x i16> %4)
   %i.pw = call i16 @llvm.smax.i16(i16 %.sroa.712.0.copyload.i.i.i.i.i, i16 %.sroa.6.0.extract.trunc.i.i.i.i.i)
   %i.px = call i16 @llvm.smax.i16(i16 %.sroa.8.0.copyload.i.i.i.i.i, i16 %.sroa.7.0.extract.trunc.i.i.i.i.i)
   br label %bb.dz

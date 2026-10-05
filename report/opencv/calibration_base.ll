@@ -205,7 +205,6 @@ define void @_ZN2cv22getUndistortRectanglesERKNS_11_InputArrayES2_S2_S2_NS_5Size
   %8 = alloca %"class.cv::_InputArray", align 8   ; 8 uses
   %9 = alloca %"class.cv::_OutputArray", align 8  ; 7 uses
   %10 = alloca %"class.cv::TermCriteria", align 8 ; 4 uses
-  %.sroa.2.0.extract.shift = lshr i64 %4, 32
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   call void @_ZN2cv3MatC1Eiii(ptr noundef nonnull align 8 dereferenceable(208) %7, i32 noundef 1, i32 noundef 32, i32 noundef 38)
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 24
@@ -228,12 +227,10 @@ define void @_ZN2cv22getUndistortRectanglesERKNS_11_InputArrayES2_S2_S2_NS_5Size
   %.sroa.4133.0..sroa_idx.us.8 = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %.sroa.4133.0..sroa_idx.1163 = getelementptr inbounds nuw i8, ptr %i.b, i64 152
-  %11 = trunc i64 %4 to i32
-  %12 = trunc nuw i64 %.sroa.2.0.extract.shift to i32
-  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
-  %14 = insertelement <2 x i32> %13, i32 %11, i64 1
-  %15 = add nsw <2 x i32> %14, splat (i32 -1)
-  %i.l = sitofp <2 x i32> %15 to <2 x double>
+  %11 = bitcast i64 %4 to <2 x i32>
+  %12 = add nsw <2 x i32> %11, splat (i32 -1)
+  %13 = shufflevector <2 x i32> %12, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %i.l = sitofp <2 x i32> %13 to <2 x double>
   %i.m = fmul nnan <2 x double> %i.l, <double 1.000000e+00, double 1.250000e-01> ; 5 uses
   %i.n = extractelement <2 x double> %i.m, i64 1  ; 17 uses
   %i.o = fmul nnan <2 x double> %i.m, <double 1.250000e-01, double 8.000000e+00> ; 3 uses

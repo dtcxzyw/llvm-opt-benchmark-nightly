@@ -202,7 +202,7 @@ bb.bs:                                            ; preds = %bb.bw, %bb.bm
   %.sroa.7.0 = phi i64 [ -9223372036854775808, %bb.bw ], [ -9223372036854775806, %bb.bm ]
   %i.hc = phi <2 x i64> [ %i.hi, %bb.bw ], [ %i.gs, %bb.bm ]
   %i.hd = phi <2 x i64> [ %i.hj, %bb.bw ], [ %i.gl, %bb.bm ]
-  %i.he = phi <2 x i8> [ %10, %bb.bw ], [ %i.gm, %bb.bm ] ; 2 uses
+  %i.he = phi <2 x i8> [ %8, %bb.bw ], [ %i.gm, %bb.bm ] ; 2 uses
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtCscDfuDmzQoJe_5kurbo7bezpath7BezPathENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.af)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCscDfuDmzQoJe_5kurbo7bezpath7BezPathEECs2zvA5OmMqFb_10ufo2fontir.exit.i unwind label %bb.bt, !noalias !657
 
@@ -223,7 +223,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCsc
           to label %bb.cf unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bv:                                            ; preds = %._crit_edge.i
-  %i.hh = load i64, ptr %i.ac, align 8, !range !5, !noalias !655, !noundef !4 ; 4 uses
+  %i.hh = load i64, ptr %i.ac, align 8, !range !5, !noalias !655, !noundef !4 ; 3 uses
   %.not65.i = icmp eq i64 %i.hh, -1
   %i.hi = load <2 x i64>, ptr %i.ch, align 8, !noalias !655 ; 2 uses
   br i1 %.not65.i, label %bb.bx, label %bb.bw
@@ -234,11 +234,8 @@ bb.bw:                                            ; preds = %bb.bv
   %.sroa.25.sroa.8.0..sroa.25.40..sroa.651.0..sroa_idx.i.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
   %i.hk = load i64, ptr %.sroa.25.sroa.8.0..sroa.25.40..sroa.651.0..sroa_idx.i.sroa_idx.sroa_idx, align 8, !noalias !694
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !655
-  %.sroa.12.sroa.8.0.extract.shift = lshr i64 %i.hh, 8
-  %7 = trunc i64 %i.hh to i8
-  %8 = insertelement <2 x i8> poison, i8 %7, i64 0
-  %9 = trunc i64 %.sroa.12.sroa.8.0.extract.shift to i8
-  %10 = insertelement <2 x i8> %8, i8 %9, i64 1
+  %7 = bitcast i64 %i.hh to <8 x i8>
+  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <2 x i32> <i32 0, i32 1>
   %.sroa.12.sroa.9.0.extract.shift = lshr i64 %i.hh, 16
   br label %bb.bs
 

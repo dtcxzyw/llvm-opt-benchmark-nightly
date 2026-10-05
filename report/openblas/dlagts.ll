@@ -49,7 +49,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = tail call double @dlamch_(ptr noundef nonnull @.str.1) #6 ; 2 uses
   %i.s = tail call double @dlamch_(ptr noundef nonnull @.str.2) #6 ; 13 uses
   %i.t = fdiv double 1.000000e+00, %i.s           ; 18 uses
-  %i.u = load i32, ptr %0, align 4, !tbaa !15     ; 3 uses
+  %i.u = load i32, ptr %0, align 4, !tbaa !15     ; 4 uses
   %i.v = icmp slt i32 %i.u, 0
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -194,13 +194,11 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.do = fmul double %i.r, %i.dn                 ; 2 uses
   %i.dp = fcmp oeq double %i.do, 0.000000e+00
   %spec.store.select = select i1 %i.dp, double %i.r, double %i.do
-  store double %spec.store.select, ptr %8, align 8
-  %.pr418 = load i32, ptr %0, align 4, !tbaa !15
+  store double %spec.store.select, ptr %8, align 8, !tbaa !17
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.e, %bb.d
-  %10 = phi i32 [ %.pr418, %._crit_edge ], [ %i.u, %bb.e ], [ %i.u, %bb.d ] ; 3 uses
-  %i.dq = tail call i32 @llvm.abs.i32(i32 %10, i1 true)
+  %i.dq = tail call i32 @llvm.abs.i32(i32 %i.u, i1 true)
   %i.dr = icmp eq i32 %i.dq, 1
   br i1 %i.dr, label %bb.j, label %bb.ap
 
@@ -332,7 +330,7 @@ bb.q:                                             ; preds = %.lr.ph456.epil.preh
   br label %._crit_edge457
 
 ._crit_edge457:                                   ; preds = %._crit_edge457.loopexit.unr-lcssa, %bb.q, %bb.p, %bb.j
-  %i.ge = icmp eq i32 %10, 1
+  %i.ge = icmp eq i32 %i.u, 1
   %i.gf = icmp sgt i32 %i.ds, 0                   ; 2 uses
   br i1 %i.ge, label %.preheader, label %.preheader421
 
@@ -565,7 +563,7 @@ bb.ao:                                            ; preds = %bb.al
   br i1 %i.kp, label %bb.af, label %.loopexit, !llvm.loop !11
 
 bb.ap:                                            ; preds = %bb.i
-  %i.kq = icmp eq i32 %10, 2
+  %i.kq = icmp eq i32 %i.u, 2
   %i.kr = load i32, ptr %1, align 4, !tbaa !15    ; 5 uses
   %.not412446 = icmp slt i32 %i.kr, 1             ; 2 uses
   br i1 %i.kq, label %bb.aq, label %bb.bm

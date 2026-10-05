@@ -205,14 +205,12 @@ bb.a:
   %.077 = phi i32 [ %i.v, %.lr.ph ], [ 0, %bb.a ]
   %slprdx.acc = phi <16 x i32> [ %slprdx.acc78, %.lr.ph ], [ zeroinitializer, %bb.a ]
   %.07275 = phi ptr [ %i.t, %.lr.ph ], [ %1, %bb.a ] ; 2 uses
-  %.07374 = phi ptr [ %i.u, %.lr.ph ], [ %2, %bb.a ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.07374, i64 8
+  %.07374 = phi ptr [ %i.u, %.lr.ph ], [ %2, %bb.a ] ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.07374, i64 16
   %i.c = load i8, ptr %i.b, align 1, !tbaa !15
-  %6 = load <8 x i8>, ptr %.07374, align 1, !tbaa !15
   %i.d = load i8, ptr %.07374, align 1, !tbaa !15
-  %7 = load <8 x i8>, ptr %5, align 1, !tbaa !15
-  %i.e = shufflevector <8 x i8> %6, <8 x i8> %7, <16 x i32> <i32 1, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %5 = load <16 x i8>, ptr %.07374, align 1, !tbaa !15
+  %i.e = shufflevector <16 x i8> %5, <16 x i8> poison, <16 x i32> <i32 1, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.f = zext <16 x i8> %i.e to <16 x i16>        ; 2 uses
   %i.g = load <16 x i8>, ptr %.07275, align 1, !tbaa !15
   %i.h = zext <16 x i8> %i.g to <16 x i16>

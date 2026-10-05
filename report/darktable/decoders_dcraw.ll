@@ -205,7 +205,7 @@ define void @_ZN6LibRaw18panasonic_load_rawEv(ptr noundef nonnull align 8 derefe
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 7 uses
   %i.b = alloca [2 x i32], align 4                ; 5 uses
-  %i.c = alloca [16 x i32], align 16              ; 14 uses
+  %i.c = alloca [16 x i32], align 16              ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
@@ -240,7 +240,6 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 28
-  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 52
   %.pre = load i16, ptr %i.s, align 2, !tbaa !117
@@ -270,12 +269,11 @@ bb.b:                                             ; preds = %.lr.ph92, %._crit_e
 
 bb.c:                                             ; preds = %.lr.ph89
   %i.aj = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %indvars.iv ; 2 uses
-  %2 = load <8 x i32>, ptr %i.c, align 16, !tbaa !120 ; 2 uses
-  %3 = load <8 x i32>, ptr %1, align 16           ; 2 uses
-  %i.ak = shufflevector <8 x i32> %2, <8 x i32> %3, <8 x i32> <i32 1, i32 2, i32 4, i32 5, i32 7, i32 8, i32 10, i32 11>
+  %1 = load <16 x i32>, ptr %i.c, align 16        ; 2 uses
+  %i.ak = shufflevector <16 x i32> %1, <16 x i32> poison, <8 x i32> <i32 1, i32 2, i32 4, i32 5, i32 7, i32 8, i32 10, i32 11>
   %i.al = shl <8 x i32> %i.ak, <i32 8, i32 4, i32 8, i32 4, i32 8, i32 4, i32 8, i32 4>
   %i.am = and <8 x i32> %i.al, <i32 3840, i32 -1, i32 3840, i32 -1, i32 3840, i32 -1, i32 3840, i32 -1>
-  %i.an = shufflevector <8 x i32> %2, <8 x i32> %3, <8 x i32> <i32 0, i32 1, i32 3, i32 4, i32 6, i32 7, i32 9, i32 10>
+  %i.an = shufflevector <16 x i32> %1, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 3, i32 4, i32 6, i32 7, i32 9, i32 10>
   %i.ao = lshr <8 x i32> %i.an, <i32 0, i32 4, i32 0, i32 4, i32 0, i32 4, i32 0, i32 4>
   %i.ap = add <8 x i32> %i.am, %i.ao
   %i.aq = trunc <8 x i32> %i.ap to <8 x i16>
