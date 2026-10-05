@@ -200,29 +200,25 @@ begin_hunk_0_@n1_11:bb.a
   %i.gd = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eo, <2 x double> <double f0xBFD207E7FD768DBF, double f0x3FDA9628D9C712B6>, <2 x double> %i.gc) ; 3 uses
   %i.ge = insertelement <2 x double> %i.ch, double %i.fn, i64 1 ; 2 uses
   %i.gf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ge, <2 x double> <double f0x3FEAEB8C8764F0BA, double f0x3FEEB42A9BCD5057>, <2 x double> %i.eq) ; 2 uses
-  %shift325 = shufflevector <2 x double> %i.gd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop326 = fadd <2 x double> %shift325, %i.gf
-  %shift328 = shufflevector <2 x double> %i.gf, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop329 = fsub <2 x double> %foldExtExtBinop326, %shift328 ; 2 uses
-  %foldExtExtBinop331 = fsub <2 x double> %foldExtExtBinop329, %i.gd
-  %9 = extractelement <2 x double> %foldExtExtBinop331, i64 0
-  %i.gg = fmul <2 x double> %i.fx, <double f0x3FED1BB48EEE2C13, double f0x3FE82F19BB3A28A1>
-  %i.gh = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.et, <2 x double> <double f0x3FE14CEDF8BB580B, double f0x3FEFAC9E043842EF>, <2 x double> %i.gg) ; 2 uses
-  %10 = shufflevector <2 x double> %i.gd, <2 x double> %i.gh, <2 x i32> <i32 0, i32 2>
-  %11 = shufflevector <2 x double> %foldExtExtBinop329, <2 x double> %i.gh, <2 x i32> <i32 0, i32 3>
-  %i.gi = fadd <2 x double> %10, %11              ; 2 uses
-  %12 = shufflevector <2 x double> %i.gi, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %13 = insertelement <2 x double> %12, double %i.c, i64 1
-  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eu, <2 x double> <double f0x3FD207E7FD768DBF, double f0x3FEAEB8C8764F0BA>, <2 x double> %13) ; 3 uses
-  %15 = fmul <2 x double> %i.ge, <double f0xBFEEB42A9BCD5057, double f0x3FC2375F640F44DB>
-  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ev, <2 x double> <double f0x3FDA9628D9C712B6, double f0x3FE4F49E7F775887>, <2 x double> %15) ; 2 uses
-  %shift333 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop334.a = fadd <2 x double> %shift333, %16
-  %shift336 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop337 = fsub <2 x double> %foldExtExtBinop334.a, %shift336 ; 2 uses
-  %foldExtExtBinop339 = fsub <2 x double> %foldExtExtBinop337, %14
-  %17 = extractelement <2 x double> %foldExtExtBinop339, i64 0
-  %foldExtExtBinop341 = fadd <2 x double> %14, %foldExtExtBinop337
+  %9 = fmul <2 x double> %i.fx, <double f0x3FED1BB48EEE2C13, double f0x3FE82F19BB3A28A1>
+  %10 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.et, <2 x double> <double f0x3FE14CEDF8BB580B, double f0x3FEFAC9E043842EF>, <2 x double> %9) ; 2 uses
+  %shift328 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %11 = fadd <2 x double> %10, %shift328
+  %12 = insertelement <2 x double> %11, double %i.c, i64 1
+  %13 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eu, <2 x double> <double f0x3FD207E7FD768DBF, double f0x3FEAEB8C8764F0BA>, <2 x double> %12) ; 3 uses
+  %i.gg = fmul <2 x double> %i.ge, <double f0xBFEEB42A9BCD5057, double f0x3FC2375F640F44DB>
+  %i.gh = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ev, <2 x double> <double f0x3FDA9628D9C712B6, double f0x3FE4F49E7F775887>, <2 x double> %i.gg) ; 2 uses
+  %14 = shufflevector <2 x double> %i.gd, <2 x double> %13, <2 x i32> <i32 1, i32 3>
+  %15 = shufflevector <2 x double> %i.gf, <2 x double> %i.gh, <2 x i32> <i32 0, i32 2>
+  %i.gi = fadd <2 x double> %14, %15
+  %16 = shufflevector <2 x double> %i.gf, <2 x double> %i.gh, <2 x i32> <i32 1, i32 3>
+  %17 = fsub <2 x double> %i.gi, %16              ; 3 uses
+  %foldExtExtBinop334.a = fadd <2 x double> %i.gd, %17
+  %18 = extractelement <2 x double> %foldExtExtBinop334.a, i64 0
+  %19 = shufflevector <2 x double> %i.gd, <2 x double> %13, <2 x i32> <i32 0, i32 2>
+  %foldExtExtBinop339 = fsub <2 x double> %17, %19 ; 2 uses
+  %shift330 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop341 = fadd <2 x double> %13, %shift330
   %i.gj = extractelement <2 x double> %foldExtExtBinop341, i64 0
   %i.gk = load i64, ptr %i.ez, align 8, !tbaa !11 ; 2 uses
   %i.gl = getelementptr inbounds [8 x i8], ptr %.0299308, i64 %i.gk
@@ -238,6 +234,7 @@ begin_hunk_0_@n1_11:bb.a
   %i.gv = shufflevector <2 x double> %i.da, <2 x double> %i.df, <2 x i32> <i32 1, i32 2>
   %i.gw = fmul <2 x double> %i.gv, <double f0x3FE14CEDF8BB580B, double f0xBFED1BB48EEE2C13>
   %i.gx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ed, <2 x double> <double f0x3FEFAC9E043842EF, double f0x3FE82F19BB3A28A1>, <2 x double> %i.gw) ; 2 uses
+  %20 = shufflevector <2 x double> %i.gp, <2 x double> %i.gx, <2 x i32> <i32 0, i32 2>
   %i.gy = fsub double %i.ab, %i.z                 ; 3 uses
   %i.gz = fadd double %i.al, %i.an                ; 4 uses
   %i.ha = insertelement <2 x double> poison, double %i.gy, i64 0
@@ -251,8 +248,8 @@ begin_hunk_0_@n1_11:bb.a
   %i.hi = fadd <2 x double> %i.hg, %i.hh
   %i.hj = shufflevector <2 x double> %i.gs, <2 x double> %i.ea, <2 x i32> <i32 1, i32 3>
   %i.hk = fsub <2 x double> %i.hi, %i.hj          ; 3 uses
-  %foldExtExtBinop346 = fadd <2 x double> %i.gp, %i.hk
-  %18 = extractelement <2 x double> %foldExtExtBinop346, i64 0
+  %21 = shufflevector <2 x double> %i.hk, <2 x double> %i.gx, <2 x i32> <i32 0, i32 3>
+  %22 = fadd <2 x double> %20, %21                ; 2 uses
   %shift348 = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop349 = fadd <2 x double> %shift348, %i.hc
   %i.hl = extractelement <2 x double> %foldExtExtBinop349, i64 0
@@ -291,19 +288,20 @@ begin_hunk_0_@n1_11:bb.a
   store double %i.ih, ptr %i.ec, align 8, !tbaa !13
   store double %i.hx, ptr %i.ej, align 8, !tbaa !13
   store double %i.hy, ptr %i.em, align 8, !tbaa !13
-  store double %9, ptr %i.er, align 8, !tbaa !13
-  %19 = extractelement <2 x double> %i.gi, i64 0
-  store double %19, ptr %i.es, align 8, !tbaa !13
-  store double %17, ptr %i.ey, align 8, !tbaa !13
+  %23 = extractelement <2 x double> %foldExtExtBinop339, i64 0
+  store double %23, ptr %i.er, align 8, !tbaa !13
+  store double %18, ptr %i.es, align 8, !tbaa !13
+  %24 = extractelement <2 x double> %foldExtExtBinop339, i64 1
+  store double %24, ptr %i.ey, align 8, !tbaa !13
   store double %i.gj, ptr %i.gl, align 8, !tbaa !13
   %i.ii = load i64, ptr %i.gt, align 8, !tbaa !11 ; 2 uses
   %i.ij = getelementptr inbounds [8 x i8], ptr %.0299308, i64 %i.ii
   %i.ik = extractelement <2 x double> %i.hn, i64 0
   %i.il = load i64, ptr %i.gu, align 8, !tbaa !11 ; 2 uses
   %i.im = getelementptr inbounds [8 x i8], ptr %.0299308, i64 %i.il
-  %20 = shufflevector <2 x double> %i.gx, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %21 = fadd <2 x double> %i.gx, %20
-  %i.in = insertelement <2 x double> %21, double %i.d, i64 1
+  %25 = extractelement <2 x double> %22, i64 0
+  %26 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.in = insertelement <2 x double> %26, double %i.d, i64 1
   %i.io = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hb, <2 x double> <double f0xBFD207E7FD768DBF, double f0x3FDA9628D9C712B6>, <2 x double> %i.in) ; 3 uses
   %i.ip = shufflevector <2 x double> %i.dw, <2 x double> %i.dr, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.iq = fmul <2 x double> %i.ip, <double f0xBFE4F49E7F775887, double f0x3FC2375F640F44DB>
@@ -322,7 +320,7 @@ begin_hunk_0_@n1_11:bb.a
   %i.jb = extractelement <2 x double> %i.ja, i64 0
   store double %i.jb, ptr %i.fd, align 8, !tbaa !13
   store double %i.ik, ptr %i.ij, align 8, !tbaa !13
-  store double %18, ptr %i.im, align 8, !tbaa !13
+  store double %25, ptr %i.im, align 8, !tbaa !13
   %shift369 = shufflevector <2 x double> %i.ix, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop370 = fadd <2 x double> %shift369, %i.io
   %i.jc = extractelement <2 x double> %foldExtExtBinop370, i64 0

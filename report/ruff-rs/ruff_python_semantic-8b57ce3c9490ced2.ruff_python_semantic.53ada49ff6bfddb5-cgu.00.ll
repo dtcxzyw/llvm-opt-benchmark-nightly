@@ -204,6 +204,7 @@ bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %i.p
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.u = load i32, ptr %i.t, align 8, !noalias !843, !noundef !4 ; 2 uses
+  store i32 %i.u, ptr %i.j, align 8, !alias.scope !840, !noalias !841
   %i.v = call noundef i64 @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCINvNtNtNtBb_4iter8adapters6filter15filter_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdINtNtNtBb_3num7nonzero7NonZerojEINtNtBb_6option6OptionB2v_ENCNvMs_NtB1I_5modelNtB3z_13SemanticModel21current_statement_idss_0NCNvXs_NvNtNtNtBX_6traits8iterator8Iterator10advance_byINtBT_6FilterINtNtBV_7flatten7FlatMapINtB34_4IterB1E_EINtNtNtBX_7sources10successors10SuccessorsB1E_NCNvMB1G_NtB1G_5Nodes12ancestor_ids0ENCB3u_0EB3s_ENtB4D_13SpecAdvanceBy15spec_advance_by0E0INtB7_5FnMutTB2v_B1E_EE8call_mutB1I_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef %.sroa.01.0.i.i16.i, i32 noundef %i.m), !noalias !844 ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
   br i1 %i.w, label %bb.f, label %bb.b
@@ -213,7 +214,6 @@ _RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompa
   br label %_RINvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB6_13FlattenCompatINtNtB8_3map3MapINtNtBc_6option4IterNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdENCNvMs_NtB1Q_5modelNtB2L_13SemanticModel21current_statement_ids0EINtNtNtBa_7sources10successors10SuccessorsB1M_NCNvMB1O_NtB1O_5Nodes12ancestor_ids0EE13iter_try_foldINtNtNtBc_3num7nonzero7NonZerojENCINvNvXsi_B6_IBS_ppENtNtNtBa_6traits8iterator8Iterator8try_fold7flattenB3H_B5i_INtB1v_6OptionB5i_ENCINvNtB8_6filter15filter_try_foldB1M_B5i_B76_NCB2G_s_0NCNvXs_NvB69_10advance_byINtB7u_6FilterINtB6_7FlatMapB1s_B3H_B2E_EB89_ENtB8p_13SpecAdvanceBy15spec_advance_by0E0E0B76_EB1Q_.exit
 
 bb.f:                                             ; preds = %bb.e
-  store i32 %i.u, ptr %i.j, align 8, !alias.scope !840, !noalias !841
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !838
   br label %bb.g
 

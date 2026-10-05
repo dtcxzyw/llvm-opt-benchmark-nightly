@@ -205,11 +205,16 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
     #dbg_value(double poison, !21761, !DIExpression(), !21833)
   %i.am = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.al), !dbg !21907 ; 2 uses
   %i.an = extractelement <2 x double> %i.am, i64 0, !dbg !21908
+    #dbg_value(double %i.an, !21706, !DIExpression(), !21821)
+    #dbg_value(double %i.an, !21822, !DIExpression(), !21826)
   %i.ao = tail call nsz double @llvm.minimumnum.f64(double %i.an, double %i.m), !dbg !21908 ; 2 uses
     #dbg_value(double poison, !21709, !DIExpression(), !21834)
     #dbg_value(double poison, !21802, !DIExpression(), !21836)
     #dbg_value(double poison, !21806, !DIExpression(), !21839)
   %i.ap = extractelement <2 x double> %i.am, i64 1, !dbg !21909 ; 3 uses
+    #dbg_value(double %i.ap, !21709, !DIExpression(), !21834)
+    #dbg_value(double %i.ap, !21802, !DIExpression(), !21836)
+    #dbg_value(double %i.ap, !21806, !DIExpression(), !21839)
   %i.aq = fcmp ogt double %i.ap, %i.ao, !dbg !21909
   br i1 %i.aq, label %bb.p, label %bb.q, !dbg !21909
 
@@ -512,11 +517,16 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
     #dbg_value(double poison, !22096, !DIExpression(), !22168)
   %i.am = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.al), !dbg !22242 ; 2 uses
   %i.an = extractelement <2 x double> %i.am, i64 0, !dbg !22243
+    #dbg_value(double %i.an, !22041, !DIExpression(), !22156)
+    #dbg_value(double %i.an, !22157, !DIExpression(), !22161)
   %i.ao = tail call nsz double @llvm.minimumnum.f64(double %i.an, double %i.m), !dbg !22243 ; 2 uses
     #dbg_value(double poison, !22044, !DIExpression(), !22169)
     #dbg_value(double poison, !22137, !DIExpression(), !22171)
     #dbg_value(double poison, !22141, !DIExpression(), !22174)
   %i.ap = extractelement <2 x double> %i.am, i64 1, !dbg !22244 ; 3 uses
+    #dbg_value(double %i.ap, !22044, !DIExpression(), !22169)
+    #dbg_value(double %i.ap, !22137, !DIExpression(), !22171)
+    #dbg_value(double %i.ap, !22141, !DIExpression(), !22174)
   %i.aq = fcmp ogt double %i.ap, %i.ao, !dbg !22244
   br i1 %i.aq, label %bb.p, label %bb.q, !dbg !22244
 
@@ -919,11 +929,16 @@ bb.s:                                             ; preds = %.backedge.i.i.i, %.
     #dbg_value(double poison, !37806, !DIExpression(), !36440)
   %i.gt = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.gs), !dbg !38355 ; 2 uses
   %i.gu = extractelement <2 x double> %i.gt, i64 0, !dbg !38356
+    #dbg_value(double %i.gu, !37491, !DIExpression(), !36431)
+    #dbg_value(double %i.gu, !37833, !DIExpression(), !36434)
   %i.gv = call nsz double @llvm.minimumnum.f64(double %i.gu, double %i.gf), !dbg !38356 ; 2 uses
     #dbg_value(double poison, !37494, !DIExpression(), !36441)
     #dbg_value(double poison, !37828, !DIExpression(), !36443)
     #dbg_value(double poison, !37830, !DIExpression(), !36445)
   %i.gw = extractelement <2 x double> %i.gt, i64 1, !dbg !38357 ; 3 uses
+    #dbg_value(double %i.gw, !37494, !DIExpression(), !36441)
+    #dbg_value(double %i.gw, !37828, !DIExpression(), !36443)
+    #dbg_value(double %i.gw, !37830, !DIExpression(), !36445)
   %i.gx = fcmp ogt double %i.gw, %i.gv, !dbg !38357
   br i1 %i.gx, label %bb.af, label %bb.ag, !dbg !38357
 
@@ -1326,11 +1341,16 @@ bb.be:                                            ; preds = %.backedge.i133.i.i,
     #dbg_value(double poison, !37960, !DIExpression(), !36716)
   %i.mg = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.mf), !dbg !38510 ; 2 uses
   %i.mh = extractelement <2 x double> %i.mg, i64 0, !dbg !38511
+    #dbg_value(double %i.mh, !37351, !DIExpression(), !36707)
+    #dbg_value(double %i.mh, !37983, !DIExpression(), !36710)
   %i.mi = call nsz double @llvm.minimumnum.f64(double %i.mh, double %i.ls), !dbg !38511 ; 2 uses
     #dbg_value(double poison, !37354, !DIExpression(), !36717)
     #dbg_value(double poison, !37978, !DIExpression(), !36719)
     #dbg_value(double poison, !37980, !DIExpression(), !36721)
   %i.mj = extractelement <2 x double> %i.mg, i64 1, !dbg !38512 ; 3 uses
+    #dbg_value(double %i.mj, !37354, !DIExpression(), !36717)
+    #dbg_value(double %i.mj, !37978, !DIExpression(), !36719)
+    #dbg_value(double %i.mj, !37980, !DIExpression(), !36721)
   %i.mk = fcmp ogt double %i.mj, %i.mi, !dbg !38512
   br i1 %i.mk, label %bb.br, label %bb.bs, !dbg !38512
 

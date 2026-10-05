@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_ZNK2cv7LINEMODIfE11computeImplIddEENS_3MatERKN
   %i.bc = load i32, ptr %i.b, align 4, !tbaa !53  ; 3 uses
   %i.bd = icmp sgt i32 %i.bc, 11
   %i.be = fpext float %i.al to double             ; 3 uses
-  %i.bf = fpext <2 x float> %i.af to <2 x double> ; 4 uses
+  %i.bf = fpext <2 x float> %i.af to <2 x double> ; 5 uses
   %i.bg = fpext <2 x float> %i.an to <2 x double> ; 4 uses
   br i1 %i.bd, label %.lr.ph120.split.us.preheader, label %._crit_edge121
 
@@ -231,6 +231,8 @@ define linkonce_odr hidden void @_ZNK2cv7LINEMODIfE11computeImplIddEENS_3MatERKN
   %broadcast.splat208 = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %broadcast.splat210 = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %i.bl
+  %7 = extractelement <2 x double> %i.bf, i64 0
+  %8 = extractelement <2 x double> %i.bf, i64 1
   br label %.lr.ph120.split.us
 
 .lr.ph120.split.us:                               ; preds = %.lr.ph120.split.us.preheader, %._crit_edge.us
@@ -633,24 +635,25 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ml = insertelement <2 x double> poison, double %i.ln, i64 0
   %i.mm = insertelement <2 x double> %i.ml, double %i.mf, i64 1
   %i.mn = fptrunc <2 x double> %i.mm to <2 x float>
-  %i.mo = call double @llvm.fmuladd.f64(double %i.lp, double %i.lm, double %i.lr) ; 5 uses
+  %i.mo = call double @llvm.fmuladd.f64(double %i.lp, double %i.lm, double %i.lr) ; 6 uses
   %i.mp = fmul double %i.mo, %i.mg
   %i.mq = fmul double %i.mo, %i.cd
   %i.mr = call double @llvm.fmuladd.f64(double %i.hk, double %i.ls, double %i.mq) ; 2 uses
   %i.ms = insertelement <2 x double> poison, double %i.mr, i64 0
   %i.mt = insertelement <2 x double> %i.ms, double %i.mo, i64 1
-  %i.mu = fmul <2 x double> %i.mt, %i.bg
-  %7 = insertelement <2 x double> poison, double %i.mp, i64 0
-  %8 = insertelement <2 x double> %7, double %i.mr, i64 1
-  %9 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bf, <2 x double> %8, <2 x double> %i.mu) ; 2 uses
-  %i.mv = extractelement <2 x double> %9, i64 0
-  %i.mw = call double @llvm.fmuladd.f64(double %i.be, double %i.mo, double %i.mv) ; 2 uses
-  %i.mx = fptrunc double %i.mw to float
-  %i.my = insertelement <2 x double> poison, double %i.mo, i64 0 ; 2 uses
-  %i.mz = insertelement <2 x double> %i.my, double %i.mw, i64 1
+  %i.mu = fmul <2 x double> %i.mt, %i.bg          ; 2 uses
+  %9 = extractelement <2 x double> %i.mu, i64 0
+  %10 = call double @llvm.fmuladd.f64(double %7, double %i.mp, double %9)
+  %11 = call double @llvm.fmuladd.f64(double %i.be, double %i.mo, double %10) ; 2 uses
+  %i.mv = extractelement <2 x double> %i.mu, i64 1
+  %i.mw = call double @llvm.fmuladd.f64(double %8, double %i.mr, double %i.mv)
+  %i.mx = fptrunc double %11 to float
+  %i.my = insertelement <2 x double> poison, double %i.mo, i64 0
+  %i.mz = insertelement <2 x double> %i.my, double %11, i64 1
   %i.na = fptrunc <2 x double> %i.mz to <2 x float>
-  %10 = shufflevector <2 x double> %9, <2 x double> %i.my, <2 x i32> <i32 1, i32 2>
-  %i.nb = fptrunc <2 x double> %10 to <2 x float> ; 2 uses
+  %12 = insertelement <2 x double> poison, double %i.mw, i64 0
+  %13 = insertelement <2 x double> %12, double %i.mo, i64 1
+  %i.nb = fptrunc <2 x double> %13 to <2 x float> ; 2 uses
   %i.nc = fneg <2 x float> %i.nb
   %i.nd = fmul <2 x float> %i.mn, %i.nc
   %i.ne = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.mj, <2 x float> %i.na, <2 x float> %i.nd) ; 8 uses
@@ -1053,7 +1056,7 @@ define linkonce_odr hidden void @_ZNK2cv7LINEMODIdE11computeImplIddEENS_3MatERKN
   %i.y = call double @llvm.fmuladd.f64(double %i.p, double %i.r, double %i.x)
   %i.z = fdiv double %i.y, %i.t                   ; 2 uses
   %i.aa = shufflevector <2 x double> %i.o, <2 x double> %i.q, <2 x i32> <i32 0, i32 2>
-  %i.ab = fdiv <2 x double> splat (double 1.000000e+00), %i.aa ; 2 uses
+  %i.ab = fdiv <2 x double> splat (double 1.000000e+00), %i.aa ; 3 uses
   %i.ac = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.q, <2 x i32> <i32 0, i32 2>
   %i.ad = fdiv <2 x double> %i.v, %i.ac           ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 448
@@ -1100,6 +1103,8 @@ define linkonce_odr hidden void @_ZNK2cv7LINEMODIdE11computeImplIddEENS_3MatERKN
   %i.be = add nsw i32 %i.bc, -7
   %i.bf = load i64, ptr %i.at, align 8, !tbaa !49 ; 2 uses
   %i.bg = load i64, ptr %i.ba, align 8, !tbaa !49 ; 2 uses
+  %7 = extractelement <2 x double> %i.ab, i64 0
+  %8 = extractelement <2 x double> %i.ab, i64 1
   br label %.lr.ph120.split.us
 
 .lr.ph120.split.us:                               ; preds = %.lr.ph120.split.us.preheader, %._crit_edge.us
@@ -1307,14 +1312,14 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.gv = call double @llvm.fmuladd.f64(double %i.bv, double %i.gd, double %i.gu) ; 2 uses
   %i.gw = insertelement <2 x double> poison, double %i.gv, i64 0
   %i.gx = insertelement <2 x double> %i.gw, double %i.gs, i64 1
-  %i.gy = fmul <2 x double> %i.ad, %i.gx
-  %7 = insertelement <2 x double> poison, double %i.gt, i64 0
-  %8 = insertelement <2 x double> %7, double %i.gv, i64 1
-  %9 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ab, <2 x double> %8, <2 x double> %i.gy) ; 3 uses
-  %i.gz = extractelement <2 x double> %9, i64 0
-  %i.ha = call double @llvm.fmuladd.f64(double %i.z, double %i.gs, double %i.gz) ; 2 uses
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.hb = insertelement <2 x double> %10, double %i.gs, i64 1
+  %i.gy = fmul <2 x double> %i.ad, %i.gx          ; 2 uses
+  %9 = extractelement <2 x double> %i.gy, i64 0
+  %10 = call double @llvm.fmuladd.f64(double %7, double %i.gt, double %9)
+  %11 = call double @llvm.fmuladd.f64(double %i.z, double %i.gs, double %10) ; 2 uses
+  %i.gz = extractelement <2 x double> %i.gy, i64 1
+  %i.ha = call double @llvm.fmuladd.f64(double %8, double %i.gv, double %i.gz) ; 2 uses
+  %12 = insertelement <2 x double> poison, double %i.ha, i64 0
+  %i.hb = insertelement <2 x double> %12, double %i.gs, i64 1
   %i.hc = fneg <2 x double> %i.hb
   %i.hd = insertelement <2 x double> poison, double %i.fy, i64 0
   %i.he = insertelement <2 x double> %i.hd, double %i.gq, i64 1
@@ -1322,13 +1327,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.hg = shufflevector <2 x double> %i.go, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.hh = insertelement <2 x double> %i.hg, double %i.fy, i64 1
   %i.hi = insertelement <2 x double> poison, double %i.gs, i64 0
-  %i.hj = insertelement <2 x double> %i.hi, double %i.ha, i64 1
+  %i.hj = insertelement <2 x double> %i.hi, double %11, i64 1
   %i.hk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hh, <2 x double> %i.hj, <2 x double> %i.hf) ; 8 uses
-  %i.hl = fneg double %i.ha
+  %i.hl = fneg double %11
   %i.hm = extractelement <2 x double> %i.go, i64 1
   %i.hn = fmul double %i.hm, %i.hl
-  %11 = extractelement <2 x double> %9, i64 1
-  %i.ho = call double @llvm.fmuladd.f64(double %i.gq, double %11, double %i.hn) ; 7 uses
+  %i.ho = call double @llvm.fmuladd.f64(double %i.gq, double %i.ha, double %i.hn) ; 7 uses
   %i.hp = fcmp ogt double %i.ho, 0.000000e+00
   br i1 %i.hp, label %bb.k, label %bb.j
 

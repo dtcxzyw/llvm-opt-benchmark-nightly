@@ -205,7 +205,8 @@ bb.fi:                                            ; preds = %_RINvXsS_NtCs3oUPov
   store i64 %i.aql, ptr %i.at, align 8, !alias.scope !15095, !noalias !15086
   %i.aqm = add i64 %i.apk, -7
   %i.aqn = shl nuw nsw i64 %i.apq, 3
-  %i.aqo = lshr i64 %i.apo, %i.aqn
+  %i.aqo = lshr i64 %i.apo, %i.aqn                ; 2 uses
+  store i64 %i.aqo, ptr %.sroa.14.0..sroa_idx.i.i12, align 8, !alias.scope !15095, !noalias !15086
   br label %_RINvXs11_NtNtCs3oUPovFnLWP_4core3ops5rangeINtB7_14RangeInclusiveINtNtBb_6option6OptionINtNtNtBb_3num7nonzero7NonZerojEEENtNtBb_4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i
 
 bb.fj:                                            ; preds = %_RINvXsS_NtCs3oUPovFnLWP_4core6optionINtB6_6OptionINtNtNtB8_3num7nonzero7NonZerojEENtNtB8_4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i
@@ -217,7 +218,7 @@ _RINvXs11_NtNtCs3oUPovFnLWP_4core3ops5rangeINtB7_14RangeInclusiveINtNtBb_6option
   %i.aqr = phi i64 [ %i.apg, %bb.fj ], [ %i.aqj, %bb.fi ]
   %i.aqs = phi i64 [ %i.aph, %bb.fj ], [ %i.aql, %bb.fi ]
   %i.aqt = phi i64 [ %i.api, %bb.fj ], [ %i.aqg, %bb.fi ]
-  %i.aqu = phi i64 [ %i.apu, %bb.fj ], [ %i.aqo, %bb.fi ] ; 3 uses
+  %i.aqu = phi i64 [ %i.apu, %bb.fj ], [ %i.aqo, %bb.fi ] ; 2 uses
   %.sink.i.i.i.i22.i.i.i.i.i.i = phi i64 [ %i.aqp, %bb.fj ], [ %i.aqm, %bb.fi ] ; 3 uses
   %i.aqv = icmp eq ptr %i.akk, %i.akb
   br i1 %i.aqv, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtBa_6option6OptionINtNtNtBa_3num7nonzero7NonZerojEEENtNtBa_4hash4Hash10hash_sliceNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.loopexit.i, label %.lr.ph.i.i.i.i.i.i.i76
@@ -225,7 +226,6 @@ _RINvXs11_NtNtCs3oUPovFnLWP_4core3ops5rangeINtB7_14RangeInclusiveINtNtBb_6option
 _RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtBa_6option6OptionINtNtNtBa_3num7nonzero7NonZerojEEENtNtBa_4hash4Hash10hash_sliceNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.loopexit.i: ; preds = %_RINvXs11_NtNtCs3oUPovFnLWP_4core3ops5rangeINtB7_14RangeInclusiveINtNtBb_6option6OptionINtNtNtBb_3num7nonzero7NonZerojEEENtNtBb_4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i
   store i64 %.sink.i.i.i.i22.i.i.i.i.i.i, ptr %.sroa.15.0..sroa_idx.i.i13, align 8, !alias.scope !15095, !noalias !15086
   store i64 %i.app, ptr %.sroa.12.0..sroa_idx.i.i11, align 8, !alias.scope !15095, !noalias !15086
-  store i64 %i.aqu, ptr %.sroa.14.0..sroa_idx.i.i12, align 8, !alias.scope !15095, !noalias !15086
   br label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtBa_6option6OptionINtNtNtBa_3num7nonzero7NonZerojEEENtNtBa_4hash4Hash10hash_sliceNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i
 
 _RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtBa_6option6OptionINtNtNtBa_3num7nonzero7NonZerojEEENtNtBa_4hash4Hash10hash_sliceNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i: ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusiveINtNtBa_6option6OptionINtNtNtBa_3num7nonzero7NonZerojEEENtNtBa_4hash4Hash10hash_sliceNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.loopexit.i, %_RNvYNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher19write_length_prefixCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i, %_RNvYNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher11write_isizeCsgpMJJHpo27b_12typst_bundle.exit19.i.i.i.i.i.i

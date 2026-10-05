@@ -204,6 +204,7 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 %.sroa.65.0.copyload, !25041, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25092)
   %i.p = load <2 x i64>, ptr %.sroa.65.0..sroa_idx, align 8, !dbg !25220
   %.sroa.65.0.copyload = load i64, ptr %.sroa.65.0..sroa_idx, align 8, !dbg !25220 ; 8 uses
+    #dbg_value(i64 %.sroa.65.0.copyload, !25041, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25092)
     #dbg_value(i64 poison, !25041, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !25092)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25094), !dbg !25221
     #dbg_declare(ptr poison, !25044, !DIExpression(), !24743)

@@ -202,6 +202,8 @@ bb.i:                                             ; preds = %bb.a
     #dbg_value(i64 poison, !10726, !DIExpression(DW_OP_LLVM_fragment, 2176, 64), !10893)
   %i.w = load <2 x i64>, ptr %.sroa.684.0..sroa_idx, align 16, !dbg !10980
   %.sroa.684.0.copyload = load i64, ptr %.sroa.684.0..sroa_idx, align 16, !dbg !10980 ; 2 uses
+    #dbg_value(i64 %.sroa.684.0.copyload, !10664, !DIExpression(DW_OP_LLVM_fragment, 2176, 64), !10892)
+    #dbg_value(i64 %.sroa.684.0.copyload, !10726, !DIExpression(DW_OP_LLVM_fragment, 2176, 64), !10893)
     #dbg_value(i64 poison, !10664, !DIExpression(DW_OP_LLVM_fragment, 2240, 64), !10892)
     #dbg_value(i64 poison, !10726, !DIExpression(DW_OP_LLVM_fragment, 2240, 64), !10893)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.579), !dbg !10981
@@ -211,7 +213,7 @@ bb.i:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %.sroa.579.32..sroa_idx, ptr noundef nonnull align 32 dereferenceable(256) %i.v, i64 256, i1 false), !dbg !10981
     #dbg_value(i64 %.sroa.482.0.copyload, !10702, !DIExpression(DW_OP_LLVM_fragment, 2304, 64), !10897)
     #dbg_value(ptr %.sroa.583.0.copyload, !10702, !DIExpression(DW_OP_LLVM_fragment, 2368, 64), !10897)
-    #dbg_value(i64 poison, !10702, !DIExpression(DW_OP_LLVM_fragment, 2432, 64), !10897)
+    #dbg_value(i64 %.sroa.684.0.copyload, !10702, !DIExpression(DW_OP_LLVM_fragment, 2432, 64), !10897)
     #dbg_value(i64 poison, !10702, !DIExpression(DW_OP_LLVM_fragment, 2496, 64), !10897)
     #dbg_value(i64 32, !4421, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10511)
     #dbg_value(i64 32, !4426, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10513)

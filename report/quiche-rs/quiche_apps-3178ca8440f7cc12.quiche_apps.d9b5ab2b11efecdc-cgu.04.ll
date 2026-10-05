@@ -204,6 +204,8 @@ bb.b:                                             ; preds = %_RNvMs4_NtNtCsexYYU
   store i64 %.sroa.0.0.copyload5, ptr %0, align 8, !dbg !7411
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !7411
   %.sroa.7.sroa.5.0.copyload = load i64, ptr %.sroa.7.sroa.5.0..sroa.7.0..sroa_idx6.sroa_idx, align 8, !dbg !7405, !noalias !7341
+    #dbg_value(i64 %.sroa.7.sroa.5.0.copyload, !7388, !DIExpression(), !7391)
+    #dbg_value(i64 %.sroa.7.sroa.5.0.copyload, !7338, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7386)
   %i.p = load <2 x i64>, ptr %.sroa.7.0..sroa_idx6, align 8, !dbg !7405, !noalias !7341
   %i.q = tail call i64 @llvm.usub.sat.i64(i64 %i.o, i64 %.sroa.7.sroa.5.0.copyload), !dbg !7412
   store i64 %i.q, ptr %i.n, align 8, !dbg !7413

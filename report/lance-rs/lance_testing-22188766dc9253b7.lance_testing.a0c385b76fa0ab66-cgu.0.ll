@@ -205,7 +205,7 @@ bb.a:
   store i64 0, ptr %i.m, align 8
   %.sroa.0.0.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.j, i64 112 ; 3 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 104 ; 2 uses
-  %.sroa.4.0..sroa_idx.i59 = getelementptr inbounds nuw i8, ptr %i.k, i64 104
+  %.sroa.4.0..sroa_idx.i59 = getelementptr inbounds nuw i8, ptr %i.k, i64 104 ; 2 uses
   %.sroa.5.0..sroa_idx.i60 = getelementptr inbounds nuw i8, ptr %i.k, i64 112 ; 5 uses
   %i.n = call fastcc { ptr, i64 } @_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceReEINtNtNtBa_3str4iter5SplitcEENtNtNtB8_6traits8iterator8Iterator4nextCsdNJZa1e9V4g_13lance_testing(ptr noalias noundef nonnull align 8 dereferenceable(96) %i.j) ; 2 uses
   %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 3 uses
@@ -216,8 +216,9 @@ bb.a:
   %.not98 = icmp eq ptr %i.o, null
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2055)
   %i.q = call fastcc { ptr, i64 } @_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceReEINtNtNtBa_3str4iter5SplitcEENtNtNtB8_6traits8iterator8Iterator4nextCsdNJZa1e9V4g_13lance_testing(ptr noalias noundef nonnull align 8 dereferenceable(96) %i.k), !noalias !2055 ; 2 uses
-  %i.r = extractvalue { ptr, i64 } %i.q, 0        ; 3 uses
+  %i.r = extractvalue { ptr, i64 } %i.q, 0        ; 4 uses
   %i.s = extractvalue { ptr, i64 } %i.q, 1
+  store ptr %i.r, ptr %.sroa.4.0..sroa_idx.i59, align 8, !alias.scope !2055, !noalias !2056
   store i64 %i.s, ptr %.sroa.5.0..sroa_idx.i60, align 8, !alias.scope !2055, !noalias !2056
   %.not4699 = icmp eq ptr %i.r, null
   %brmerge100 = select i1 %.not4699, i1 true, i1 %.not98
@@ -239,8 +240,7 @@ _RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lan
 
 _RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lance_testing.exit.thread: ; preds = %_RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lance_testing.exit, %.lr.ph, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_ReEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1i_8PeekableINtNtB1k_5chain5ChainINtNtNtB1m_7sources4once4OnceBM_EINtNtNtB5_3str4iter5SplitcEEE4peek0ECsdNJZa1e9V4g_13lance_testing.exit62, %bb.a
   %.sroa.0.0.lcssa = phi i64 [ 0, %bb.a ], [ %.sroa.0.0101, %_RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lance_testing.exit ], [ %.sroa.0.0101, %.lr.ph ], [ %i.bi, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_ReEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1i_8PeekableINtNtB1k_5chain5ChainINtNtNtB1m_7sources4once4OnceBM_EINtNtNtB5_3str4iter5SplitcEEE4peek0ECsdNJZa1e9V4g_13lance_testing.exit62 ] ; 2 uses
-  %.lcssa = phi ptr [ %i.r, %bb.a ], [ %i.t, %_RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lance_testing.exit ], [ %i.t, %.lr.ph ], [ %i.bn, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_ReEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1i_8PeekableINtNtB1k_5chain5ChainINtNtNtB1m_7sources4once4OnceBM_EINtNtNtB5_3str4iter5SplitcEEE4peek0ECsdNJZa1e9V4g_13lance_testing.exit62 ] ; 3 uses
-  store ptr %.lcssa, ptr %.sroa.4.0..sroa_idx.i59, align 8
+  %.lcssa = phi ptr [ %i.r, %bb.a ], [ %i.t, %_RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsReNtB7_9PartialEq2eqCsdNJZa1e9V4g_13lance_testing.exit ], [ %i.t, %.lr.ph ], [ %i.bn, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_ReEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1i_8PeekableINtNtB1k_5chain5ChainINtNtNtB1m_7sources4once4OnceBM_EINtNtNtB5_3str4iter5SplitcEEE4peek0ECsdNJZa1e9V4g_13lance_testing.exit62 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.i, ptr noundef nonnull align 8 dereferenceable(120) %i.j, i64 120, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 120 ; 3 uses
@@ -409,8 +409,9 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_ReEE18get_or_insert_withNCNvM
   %.not = icmp eq ptr %i.bk, null
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2065)
   %i.bm = call fastcc { ptr, i64 } @_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceReEINtNtNtBa_3str4iter5SplitcEENtNtNtB8_6traits8iterator8Iterator4nextCsdNJZa1e9V4g_13lance_testing(ptr noalias noundef nonnull align 8 dereferenceable(96) %i.k), !noalias !2065 ; 2 uses
-  %i.bn = extractvalue { ptr, i64 } %i.bm, 0      ; 3 uses
+  %i.bn = extractvalue { ptr, i64 } %i.bm, 0      ; 4 uses
   %i.bo = extractvalue { ptr, i64 } %i.bm, 1
+  store ptr %i.bn, ptr %.sroa.4.0..sroa_idx.i59, align 8, !alias.scope !2065, !noalias !2056
   store i64 %i.bo, ptr %.sroa.5.0..sroa_idx.i60, align 8, !alias.scope !2065, !noalias !2056
   %.not46 = icmp eq ptr %i.bn, null
   %brmerge = select i1 %.not46, i1 true, i1 %.not

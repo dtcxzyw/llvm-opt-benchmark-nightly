@@ -205,6 +205,9 @@ bb.gd:                                            ; preds = %bb.gc
   store i64 %i.sr, ptr %0, align 8, !dbg !20579
   %i.ss = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !20579
   %i.st = extractelement <2 x i64> %i.sq, i64 1, !dbg !20579
+    #dbg_value(i64 %i.st, !18989, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19599)
+    #dbg_value(i64 %i.st, !18154, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19596)
+    #dbg_value(i64 %i.st, !19013, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19600)
   store i64 %i.st, ptr %i.ss, align 8, !dbg !20579
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !20580
   br label %bb.fm, !dbg !20581
@@ -607,6 +610,9 @@ bb.hr:                                            ; preds = %bb.hq
   store i64 %i.adn, ptr %i.adm, align 8, !dbg !28159
   %i.ado = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !28159
   %i.adp = extractelement <2 x i64> %i.adl, i64 1, !dbg !28159
+    #dbg_value(i64 %i.adp, !25740, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !26466)
+    #dbg_value(i64 %i.adp, !23869, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !26463)
+    #dbg_value(i64 %i.adp, !25760, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !26467)
   store i64 %i.adp, ptr %i.ado, align 8, !dbg !28159
   store i64 1, ptr %0, align 8, !dbg !28159
   br label %bb.ie, !dbg !28160
@@ -1009,7 +1015,7 @@ bb.mi:                                            ; preds = %.lr.ph2817, %bb.ou
   store ptr %i.ali, ptr %.sroa.5335.0..sroa_idx, align 8, !dbg !28398, !alias.scope !26696, !noalias !26708
   %i.alj = load <2 x i64>, ptr %i.alh, align 8, !dbg !28399, !noalias !26709
   %i.alk = load i64, ptr %i.alh, align 8, !dbg !28399, !noalias !26709, !noundef !2431
-    #dbg_value(i64 poison, !23906, !DIExpression(), !26712)
+    #dbg_value(i64 %i.alk, !23906, !DIExpression(), !26712)
     #dbg_value(i64 poison, !23907, !DIExpression(), !26712)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cv), !dbg !28400
   store <2 x i64> %i.alj, ptr %i.alg, align 8, !dbg !28401
@@ -1120,7 +1126,7 @@ bb.mm:                                            ; preds = %.lr.ph2825, %bb.oi
   %.sroa.91967.8.copyload = load i64, ptr %.sroa.91967.8..sroa_idx, align 8, !dbg !28420, !noalias !26761
   %i.alu = load <2 x i64>, ptr %i.als, align 8, !dbg !28420, !noalias !26761
   %.sroa.61965.8.copyload = load i64, ptr %i.als, align 8, !dbg !28420, !noalias !26761
-    #dbg_value(i64 poison, !23912, !DIExpression(), !26776)
+    #dbg_value(i64 %.sroa.61965.8.copyload, !23912, !DIExpression(), !26776)
     #dbg_value(i64 poison, !23913, !DIExpression(), !26776)
     #dbg_value(i64 %.sroa.91967.8.copyload, !23914, !DIExpression(), !26776)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.co), !dbg !28421
@@ -1231,7 +1237,7 @@ bb.mq:                                            ; preds = %.lr.ph2833, %bb.nw
   store ptr %i.amd, ptr %.sroa.5349.0..sroa_idx, align 8, !dbg !28440, !alias.scope !26791, !noalias !26792
   %i.ame = load <2 x i64>, ptr %i.amc, align 8, !dbg !28441, !noalias !26793
   %i.amf = load i64, ptr %i.amc, align 8, !dbg !28441, !noalias !26793, !noundef !2431
-    #dbg_value(i64 poison, !23919, !DIExpression(), !26794)
+    #dbg_value(i64 %i.amf, !23919, !DIExpression(), !26794)
     #dbg_value(i64 poison, !23920, !DIExpression(), !26794)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ch), !dbg !28442
   store <2 x i64> %i.ame, ptr %i.ama, align 8, !dbg !28443
@@ -1634,6 +1640,7 @@ bb.aq:                                            ; preds = %bb.ao
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 15144, !dbg !40741
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.9.0..sroa_idx.i, i8 0, i64 32, i1 false), !dbg !40741, !noalias !40362
   %i.gz = load i64, ptr %i.fk, align 16, !dbg !40732, !alias.scope !40355, !noalias !40468, !noundef !2431 ; 2 uses
+    #dbg_value(i64 %i.gz, !40567, !DIExpression(), !39911)
   %i.ha = load <2 x i64>, ptr %i.fj, align 8, !dbg !40731, !alias.scope !40355, !noalias !40468
   %i.hb = shufflevector <2 x i64> %i.ha, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>, !dbg !40731
   store <4 x i64> %i.hb, ptr %.sroa.13.0..sroa_idx.i, align 8, !dbg !40741, !noalias !40362
