@@ -205,10 +205,7 @@ bb.qr:                                            ; preds = %bb.qq
 
 bb.qs:                                            ; preds = %bb.qq, %bb.qr, %bb.qo, %bb.qp, %bb.qm, %bb.qn
   %.str.85.sink = phi ptr [ @.str.87, %bb.qo ], [ @.str.85, %bb.qm ], [ @.str.85, %bb.qn ], [ @.str.87, %bb.qp ], [ @.str.89, %bb.qr ], [ @.str.89, %bb.qq ]
-  %.ph = phi i1 [ true, %bb.qo ], [ false, %bb.qm ], [ false, %bb.qn ], [ true, %bb.qp ], [ true, %bb.qr ], [ true, %bb.qq ]
-  %.ph3067 = phi i1 [ false, %bb.qo ], [ true, %bb.qm ], [ true, %bb.qn ], [ false, %bb.qp ], [ true, %bb.qr ], [ true, %bb.qq ] ; 2 uses
-  %.ph3068 = phi i1 [ true, %bb.qo ], [ true, %bb.qm ], [ true, %bb.qn ], [ true, %bb.qp ], [ false, %bb.qr ], [ false, %bb.qq ] ; 3 uses
-  %.02178.ph = phi ptr [ @upx_inflate2d, %bb.qo ], [ @upx_inflate2b, %bb.qm ], [ @upx_inflate2b, %bb.qn ], [ @upx_inflate2d, %bb.qp ], [ @upx_inflate2e, %bb.qr ], [ @upx_inflate2e, %bb.qq ] ; 2 uses
+  %.02178.ph = phi ptr [ @upx_inflate2d, %bb.qo ], [ @upx_inflate2b, %bb.qm ], [ @upx_inflate2b, %bb.qn ], [ @upx_inflate2d, %bb.qp ], [ @upx_inflate2e, %bb.qr ], [ @upx_inflate2e, %bb.qq ] ; 4 uses
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull %.str.85.sink) #22
   %i.bfs = getelementptr inbounds nuw i8, ptr %i.f, i64 2
   %i.bft = load i32, ptr %i.bfs, align 2, !tbaa !39
@@ -268,11 +265,11 @@ bb.qw:                                            ; preds = %bb.qv
 
 bb.qx:                                            ; preds = %bb.qw, %bb.qv
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.92) #22
-  br i1 %.ph, label %.thread3655, label %bb.qz
+  %.not3153 = icmp eq ptr %.02178.ph, @upx_inflate2b
+  br i1 %.not3153, label %bb.qz, label %.thread3655
 
 .thread3655:                                      ; preds = %bb.qr, %bb.qx
-  %3 = phi i1 [ %.ph3067, %bb.qx ], [ true, %bb.qr ]
-  %4 = phi i1 [ %.ph3068, %bb.qx ], [ true, %bb.qr ] ; 2 uses
+  %.0217830713662 = phi ptr [ %.02178.ph, %bb.qx ], [ null, %bb.qr ]
   %i.bhb = load ptr, ptr %2, align 8, !tbaa !29   ; 2 uses
   %i.bhc = getelementptr inbounds nuw [36 x i8], ptr %i.bhb, i64 %i.beh
   %i.bhd = load i32, ptr %i.bhc, align 4, !tbaa !14
@@ -300,13 +297,14 @@ bb.qy:                                            ; preds = %.thread3655
 
 .split:                                           ; preds = %bb.qy
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.93) #22
-  br i1 %3, label %bb.ra, label %bb.rc
+  br label %bb.qz
 
-bb.qz:                                            ; preds = %bb.qx
-  br i1 %.ph3067, label %bb.ra, label %bb.rc
+bb.qz:                                            ; preds = %.split, %bb.qx
+  %.0217830713663 = phi ptr [ %.0217830713662, %.split ], [ @upx_inflate2b, %bb.qx ] ; 2 uses
+  %.not3154 = icmp eq ptr %.0217830713663, @upx_inflate2d
+  br i1 %.not3154, label %bb.rc, label %bb.ra
 
-bb.ra:                                            ; preds = %.split, %bb.qz
-  %5 = phi i1 [ %4, %.split ], [ %.ph3068, %bb.qz ]
+bb.ra:                                            ; preds = %bb.qz
   %i.bhv = load ptr, ptr %2, align 8, !tbaa !29   ; 2 uses
   %i.bhw = getelementptr inbounds nuw [36 x i8], ptr %i.bhv, i64 %i.beh
   %i.bhx = load i32, ptr %i.bhw, align 4, !tbaa !14
@@ -334,13 +332,13 @@ bb.rb:                                            ; preds = %bb.ra
 
 .split3657:                                       ; preds = %bb.rb
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.95) #22
-  br i1 %5, label %bb.rd, label %.thread3089
+  br label %bb.rc
 
-bb.rc:                                            ; preds = %.split, %bb.qz
-  %6 = phi i1 [ %4, %.split ], [ %.ph3068, %bb.qz ]
-  br i1 %6, label %bb.rd, label %.thread3089
+bb.rc:                                            ; preds = %.split3657, %bb.qz
+  %.not3155 = icmp eq ptr %.0217830713663, @upx_inflate2e
+  br i1 %.not3155, label %.thread3089, label %bb.rd
 
-bb.rd:                                            ; preds = %.split3657, %bb.rc
+bb.rd:                                            ; preds = %bb.rc
   %i.bip = load ptr, ptr %2, align 8, !tbaa !29   ; 2 uses
   %i.biq = getelementptr inbounds nuw [36 x i8], ptr %i.bip, i64 %i.beh
   %i.bir = load i32, ptr %i.biq, align 4, !tbaa !14
@@ -375,8 +373,8 @@ bb.rf:                                            ; preds = %bb.re, %bb.rd
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull %.str.91.sink) #22
   br label %.thread3089
 
-.thread3089:                                      ; preds = %.thread3089.sink.split, %.split3657, %bb.rc
-  %.132197 = phi i32 [ 0, %bb.rc ], [ 0, %.split3657 ], [ %.132197.ph, %.thread3089.sink.split ] ; 4 uses
+.thread3089:                                      ; preds = %.thread3089.sink.split, %bb.rc
+  %.132197 = phi i32 [ 0, %bb.rc ], [ %.132197.ph, %.thread3089.sink.split ] ; 4 uses
   %i.bjj = getelementptr inbounds nuw i8, ptr %i.f, i64 47
   %i.bjk = call ptr @cli_memstr(ptr noundef nonnull @.str.99, i64 noundef 20, ptr noundef nonnull %i.bjj, i64 noundef 20) #22
   %.not2678 = icmp eq ptr %i.bjk, null
@@ -779,11 +777,11 @@ declare ptr @cli_max_malloc(i64 noundef) local_unnamed_addr #3
 
 declare i32 @unfsg_133(ptr noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
 
-declare i32 @upx_inflate2b(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
+declare i32 @upx_inflate2b(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #3
 
-declare i32 @upx_inflate2d(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
+declare i32 @upx_inflate2d(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #3
 
-declare i32 @upx_inflate2e(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
+declare i32 @upx_inflate2e(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #3
 
 declare i32 @upx_inflatelzma(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
 

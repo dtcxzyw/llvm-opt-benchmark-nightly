@@ -204,41 +204,30 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !490 ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.ag, @_ZN4llvm36MachineOptimizationRemarkEmitterPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit.thread: ; preds = %bb.d
-  %9 = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %10 = load ptr, ptr %9, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 56
-  %12 = load ptr, ptr %11, align 8, !tbaa !491
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store ptr %12, ptr %13, align 8, !tbaa !316
-  br label %.lr.ph.i.i.i24.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i ], [ %i.ad, %bb.d ] ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.ah, %.lr.ph.i.i.i ], [ %i.ad, %bb.d ]
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.ah, %i.af
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !490
   %.not.i.i.i = icmp eq ptr %i.ai, @_ZN4llvm36MachineOptimizationRemarkEmitterPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.d
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.ad, %bb.d ], [ %i.ah, %.lr.ph.i.i.i ]
+  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !491
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %i.am, ptr %i.an, align 8, !tbaa !316
   %.not.i3.i.i23 = icmp eq ptr %i.ag, @_ZN4llvm26LibcallLoweringInfoWrapper2IDE
-  br i1 %.not.i3.i.i23, label %_ZNK4llvm4Pass11getAnalysisINS_26LibcallLoweringInfoWrapperEEERT_v.exit, label %.lr.ph.i.i.i24.preheader
+  br i1 %.not.i3.i.i23, label %_ZNK4llvm4Pass11getAnalysisINS_26LibcallLoweringInfoWrapperEEERT_v.exit, label %.lr.ph.i.i.i24
 
-.lr.ph.i.i.i24.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit
-  br label %.lr.ph.i.i.i24
-
-.lr.ph.i.i.i24:                                   ; preds = %.lr.ph.i.i.i24.preheader, %.lr.ph.i.i.i24
-  %.sroa.08.015.i4.i.i25 = phi ptr [ %i.ao, %.lr.ph.i.i.i24 ], [ %i.ad, %.lr.ph.i.i.i24.preheader ]
+.lr.ph.i.i.i24:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit, %.lr.ph.i.i.i24
+  %.sroa.08.015.i4.i.i25 = phi ptr [ %i.ao, %.lr.ph.i.i.i24 ], [ %i.ad, %_ZNK4llvm4Pass11getAnalysisINS_36MachineOptimizationRemarkEmitterPassEEERT_v.exit ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i25, i64 16 ; 4 uses
   %.not11.i.i.i26 = icmp ne ptr %i.ao, %i.af
   tail call void @llvm.assume(i1 %.not11.i.i.i26)

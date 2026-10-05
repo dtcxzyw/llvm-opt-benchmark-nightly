@@ -204,36 +204,27 @@ _ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit: ;
   tail call void @llvm.assume(i1 %.not1114.i.i.i26)
   %i.ar = load ptr, ptr %i.ao, align 8, !tbaa !419 ; 2 uses
   %.not.i3.i.i27 = icmp eq ptr %i.ar, @_ZN4llvm31MachineDominatorTreeWrapperPass2IDE
-  br i1 %.not.i3.i.i27, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i28
-
-_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread: ; preds = %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit
-  %5 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %6 = load ptr, ptr %5, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 56
-  br label %.lr.ph.i.i.i35.preheader
+  br i1 %.not.i3.i.i27, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i28
 
 .lr.ph.i.i.i28:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit, %.lr.ph.i.i.i28
-  %.sroa.08.015.i4.i.i29 = phi ptr [ %i.as, %.lr.ph.i.i.i28 ], [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit ] ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i29, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i29 = phi ptr [ %i.as, %.lr.ph.i.i.i28 ], [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit ]
+  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i29, i64 16 ; 4 uses
   %.not11.i.i.i30 = icmp ne ptr %i.as, %i.aq
   tail call void @llvm.assume(i1 %.not11.i.i.i30)
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !419
   %.not.i.i.i31 = icmp eq ptr %i.at, @_ZN4llvm31MachineDominatorTreeWrapperPass2IDE
   br i1 %.not.i.i.i31, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i28
 
-_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i28
-  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i29, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i28, %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit
+  %.sroa.08.015.i.lcssa.i.i32 = phi ptr [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_32GISelValueTrackingAnalysisLegacyEEERT_v.exit ], [ %i.as, %.lr.ph.i.i.i28 ]
+  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i32, i64 8
   %i.av = load ptr, ptr %i.au, align 8
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 56 ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 56
   %.not.i3.i.i34 = icmp eq ptr %i.ar, @_ZN4llvm27GISelCSEAnalysisWrapperPass2IDE
-  br i1 %.not.i3.i.i34, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i35.preheader
+  br i1 %.not.i3.i.i34, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i35
 
-.lr.ph.i.i.i35.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit
-  %8 = phi ptr [ %7, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread ], [ %i.aw, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i35
-
-.lr.ph.i.i.i35:                                   ; preds = %.lr.ph.i.i.i35.preheader, %.lr.ph.i.i.i35
-  %.sroa.08.015.i4.i.i36 = phi ptr [ %i.ax, %.lr.ph.i.i.i35 ], [ %i.ao, %.lr.ph.i.i.i35.preheader ]
+.lr.ph.i.i.i35:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, %.lr.ph.i.i.i35
+  %.sroa.08.015.i4.i.i36 = phi ptr [ %i.ax, %.lr.ph.i.i.i35 ], [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ]
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i36, i64 16 ; 4 uses
   %.not11.i.i.i37 = icmp ne ptr %i.ax, %i.aq
   tail call void @llvm.assume(i1 %.not11.i.i.i37)
@@ -242,7 +233,6 @@ _ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; 
   br i1 %.not.i.i.i38, label %_ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i35
 
 _ZNK4llvm4Pass11getAnalysisINS_27GISelCSEAnalysisWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i35, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit
-  %9 = phi ptr [ %i.aw, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ], [ %8, %.lr.ph.i.i.i35 ]
   %.sroa.08.015.i.lcssa.i.i39 = phi ptr [ %i.ao, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ], [ %i.ax, %.lr.ph.i.i.i35 ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i39, i64 8
   %i.ba = load ptr, ptr %i.az, align 8
@@ -305,7 +295,7 @@ _ZNK4llvm8Function10hasOptSizeEv.exit:            ; preds = %_ZNSt10unique_ptrIN
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !530, !nonnull !45, !align !198
   %i.cd = getelementptr inbounds nuw i8, ptr %4, i64 4240
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !246, !nonnull !45, !align !198
-  call void @_ZN4llvm14CombinerHelperC1ERNS_19GISelChangeObserverERNS_16MachineIRBuilderEbPNS_18GISelValueTrackingEPNS_20MachineDominatorTreeEPKNS_13LegalizerInfoE(ptr noundef nonnull align 8 dereferenceable(80) %i.ca, ptr noundef nonnull align 8 dereferenceable(64) %i.cc, ptr noundef nonnull align 8 dereferenceable(96) %i.ce, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(100) %i.am, ptr noundef nonnull %9, ptr noundef %i.ac) #24
+  call void @_ZN4llvm14CombinerHelperC1ERNS_19GISelChangeObserverERNS_16MachineIRBuilderEbPNS_18GISelValueTrackingEPNS_20MachineDominatorTreeEPKNS_13LegalizerInfoE(ptr noundef nonnull align 8 dereferenceable(80) %i.ca, ptr noundef nonnull align 8 dereferenceable(64) %i.cc, ptr noundef nonnull align 8 dereferenceable(96) %i.ce, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(100) %i.am, ptr noundef nonnull %i.aw, ptr noundef %i.ac) #24
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 4360
   store ptr %i.bz, ptr %i.cf, align 8, !tbaa !531
   %i.cg = getelementptr inbounds nuw i8, ptr %4, i64 4368

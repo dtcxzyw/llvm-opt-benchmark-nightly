@@ -202,34 +202,26 @@ bb.a:
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !423  ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.h, @_ZN4llvm20CycleInfoWrapperPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit.thread: ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %3 = load ptr, ptr %2, align 8
-  br label %.lr.ph.i.i.i9.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.i, %.lr.ph.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.i, %.lr.ph.i.i.i ], [ %i.e, %bb.a ]
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.i, %i.g
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !423
   %.not.i.i.i = icmp eq ptr %i.j, @_ZN4llvm20CycleInfoWrapperPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
-  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
+_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.a
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.e, %bb.a ], [ %i.i, %.lr.ph.i.i.i ]
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
+  %i.l = load ptr, ptr %i.k, align 8
   %.not.i3.i.i8 = icmp eq ptr %i.h, @_ZN4llvm24DominatorTreeWrapperPass2IDE
-  br i1 %.not.i3.i.i8, label %_ZNK4llvm4Pass11getAnalysisINS_24DominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i9.preheader
+  br i1 %.not.i3.i.i8, label %_ZNK4llvm4Pass11getAnalysisINS_24DominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i9
 
-.lr.ph.i.i.i9.preheader:                          ; preds = %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit
-  %4 = phi ptr [ %3, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit.thread ], [ %i.l, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i9
-
-.lr.ph.i.i.i9:                                    ; preds = %.lr.ph.i.i.i9.preheader, %.lr.ph.i.i.i9
-  %.sroa.08.015.i4.i.i10 = phi ptr [ %i.m, %.lr.ph.i.i.i9 ], [ %i.e, %.lr.ph.i.i.i9.preheader ]
+.lr.ph.i.i.i9:                                    ; preds = %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit, %.lr.ph.i.i.i9
+  %.sroa.08.015.i4.i.i10 = phi ptr [ %i.m, %.lr.ph.i.i.i9 ], [ %i.e, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit ]
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i10, i64 16 ; 4 uses
   %.not11.i.i.i11 = icmp ne ptr %i.m, %i.g
   tail call void @llvm.assume(i1 %.not11.i.i.i11)
@@ -238,9 +230,8 @@ _ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit: ; preds = %.l
   br i1 %.not.i.i.i12, label %_ZNK4llvm4Pass11getAnalysisINS_24DominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i9
 
 _ZNK4llvm4Pass11getAnalysisINS_24DominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i9, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit
-  %5 = phi ptr [ %i.l, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit ], [ %4, %.lr.ph.i.i.i9 ]
   %.sroa.08.015.i.lcssa.i.i13 = phi ptr [ %i.e, %_ZNK4llvm4Pass11getAnalysisINS_20CycleInfoWrapperPassEEERT_v.exit ], [ %i.m, %.lr.ph.i.i.i9 ]
-  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %.not = icmp eq ptr %i.c, null
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %spec.select = select i1 %.not, ptr null, ptr %i.p

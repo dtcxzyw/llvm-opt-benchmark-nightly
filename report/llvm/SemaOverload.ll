@@ -205,24 +205,19 @@ _ZNK5clang4Type14isBFloat16TypeEv.exit25.thread:  ; preds = %_ZNK5clang4Type13is
   %i.ar = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK5clang10ASTContext21getFloatTypeSemanticsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.aq, i64 %1) #28 ; 2 uses
   %i.as = load ptr, ptr %i.ap, align 8, !tbaa !1228, !nonnull !87, !align !500
   %i.at = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK5clang10ASTContext21getFloatTypeSemanticsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.as, i64 %2) #28 ; 2 uses
-  %i.au = icmp eq ptr %i.ar, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
-  br i1 %i.au, label %3, label %bb.e
-
-3:                                                ; preds = %_ZNK5clang4Type14isBFloat16TypeEv.exit25.thread
-  %4 = icmp eq ptr %i.at, @_ZN4llvm11APFloatBase11semIEEEquadE
-  br i1 %4, label %bb.f, label %.thread54
+  %3 = icmp eq ptr %i.ar, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  %i.au = icmp eq ptr %i.at, @_ZN4llvm11APFloatBase11semIEEEquadE
+  %or.cond = and i1 %3, %i.au
+  br i1 %or.cond, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK5clang4Type14isBFloat16TypeEv.exit25.thread
-  %5 = icmp eq ptr %i.ar, @_ZN4llvm11APFloatBase11semIEEEquadE
-  %6 = icmp eq ptr %i.at, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
-  %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %bb.f, label %.thread54
-
-.thread54:                                        ; preds = %3, %bb.e
+  %4 = icmp ne ptr %i.ar, @_ZN4llvm11APFloatBase11semIEEEquadE
+  %5 = icmp ne ptr %i.at, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+  %or.cond54.not = or i1 %4, %5
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK5clang4Type13isFloat16TypeEv.exit31, %_ZNK5clang4Type13isFloat16TypeEv.exit31, %_ZNK5clang4Type13isFloat16TypeEv.exit, %_ZNK5clang4Type13isFloat16TypeEv.exit, %bb.e, %.thread54, %3, %bb.a, %bb.b
-  %.1 = phi i1 [ false, %bb.a ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit ], [ false, %bb.b ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit31 ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit31 ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit ], [ true, %.thread54 ], [ false, %bb.e ], [ false, %3 ]
+bb.f:                                             ; preds = %_ZNK5clang4Type13isFloat16TypeEv.exit31, %_ZNK5clang4Type13isFloat16TypeEv.exit31, %_ZNK5clang4Type13isFloat16TypeEv.exit, %_ZNK5clang4Type13isFloat16TypeEv.exit, %bb.e, %_ZNK5clang4Type14isBFloat16TypeEv.exit25.thread, %bb.a, %bb.b
+  %.1 = phi i1 [ false, %bb.a ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit ], [ false, %bb.b ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit31 ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit31 ], [ false, %_ZNK5clang4Type13isFloat16TypeEv.exit ], [ false, %_ZNK5clang4Type14isBFloat16TypeEv.exit25.thread ], [ %or.cond54.not, %bb.e ]
   ret i1 %.1
 }
 

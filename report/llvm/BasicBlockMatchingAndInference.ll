@@ -202,34 +202,26 @@ bb.a:
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !262  ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.g, @_ZN4llvm42BasicBlockSectionsProfileReaderWrapperPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit.thread: ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %7 = load ptr, ptr %6, align 8
-  br label %.lr.ph.i.i.i44.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.h, %.lr.ph.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.h, %.lr.ph.i.i.i ], [ %i.d, %bb.a ]
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.h, %i.f
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !262
   %.not.i.i.i = icmp eq ptr %i.i, @_ZN4llvm42BasicBlockSectionsProfileReaderWrapperPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
-  %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
+_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.a
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.d, %bb.a ], [ %i.h, %.lr.ph.i.i.i ]
+  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
+  %i.k = load ptr, ptr %i.j, align 8
   %.not.i3.i.i43 = icmp eq ptr %i.g, @_ZN4llvm20MachineBlockHashInfo2IDE
-  br i1 %.not.i3.i.i43, label %_ZNK4llvm4Pass11getAnalysisINS_20MachineBlockHashInfoEEERT_v.exit, label %.lr.ph.i.i.i44.preheader
+  br i1 %.not.i3.i.i43, label %_ZNK4llvm4Pass11getAnalysisINS_20MachineBlockHashInfoEEERT_v.exit, label %.lr.ph.i.i.i44
 
-.lr.ph.i.i.i44.preheader:                         ; preds = %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit
-  %8 = phi ptr [ %7, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit.thread ], [ %i.k, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i44
-
-.lr.ph.i.i.i44:                                   ; preds = %.lr.ph.i.i.i44.preheader, %.lr.ph.i.i.i44
-  %.sroa.08.015.i4.i.i45 = phi ptr [ %i.l, %.lr.ph.i.i.i44 ], [ %i.d, %.lr.ph.i.i.i44.preheader ]
+.lr.ph.i.i.i44:                                   ; preds = %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit, %.lr.ph.i.i.i44
+  %.sroa.08.015.i4.i.i45 = phi ptr [ %i.l, %.lr.ph.i.i.i44 ], [ %i.d, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit ]
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i45, i64 16 ; 4 uses
   %.not11.i.i.i46 = icmp ne ptr %i.l, %i.f
   tail call void @llvm.assume(i1 %.not11.i.i.i46)
@@ -238,7 +230,6 @@ _ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT
   br i1 %.not.i.i.i47, label %_ZNK4llvm4Pass11getAnalysisINS_20MachineBlockHashInfoEEERT_v.exit, label %.lr.ph.i.i.i44
 
 _ZNK4llvm4Pass11getAnalysisINS_20MachineBlockHashInfoEEERT_v.exit: ; preds = %.lr.ph.i.i.i44, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit
-  %9 = phi ptr [ %i.k, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit ], [ %8, %.lr.ph.i.i.i44 ]
   %.sroa.08.015.i.lcssa.i.i48 = phi ptr [ %i.d, %_ZNK4llvm4Pass11getAnalysisINS_42BasicBlockSectionsProfileReaderWrapperPassEEERT_v.exit ], [ %i.l, %.lr.ph.i.i.i44 ]
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i48, i64 8
   %i.o = load ptr, ptr %i.n, align 8
@@ -263,7 +254,7 @@ _ZNK4llvm4Pass11getAnalysisINS_20MachineBlockHashInfoEEERT_v.exit: ; preds = %.l
   %i.v = call { ptr, i64 } @_ZNK4llvm15MachineFunction7getNameEv(ptr noundef nonnull align 8 dereferenceable(1065) %2) #18 ; 2 uses
   %i.w = extractvalue { ptr, i64 } %i.v, 0
   %i.x = extractvalue { ptr, i64 } %i.v, 1
-  %i.y = call noundef ptr @_ZNK4llvm42BasicBlockSectionsProfileReaderWrapperPass21getFunctionCFGProfileENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(176) %9, ptr %i.w, i64 %i.x) #18 ; 15 uses
+  %i.y = call noundef ptr @_ZNK4llvm42BasicBlockSectionsProfileReaderWrapperPass21getFunctionCFGProfileENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(176) %i.k, ptr %i.w, i64 %i.x) #18 ; 15 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %.loopexit, label %bb.l
 

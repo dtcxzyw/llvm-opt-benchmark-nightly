@@ -202,23 +202,22 @@ bb.c:                                             ; preds = %bb.b
 _ZN4llvm12APFixedPoint21promoteFloatSemanticsEPKNS_12fltSemanticsE.exit: ; preds = %.lr.ph, %bb.b, %bb.c
   %.0.i = phi ptr [ %spec.select.i, %bb.c ], [ @_ZN4llvm11APFloatBase13semIEEEdoubleE, %.lr.ph ], [ @_ZN4llvm11APFloatBase13semIEEEsingleE, %bb.b ] ; 3 uses
   %i.g = tail call noundef zeroext i1 @_ZNK4llvm19FixedPointSemantics20fitsInFloatSemanticsERKNS_12fltSemanticsE(ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(29) %.0.i)
-  br i1 %i.g, label %._crit_edge.thread, label %.lr.ph, !llvm.loop !296
+  br i1 %i.g, label %._crit_edge, label %.lr.ph, !llvm.loop !296
 
-._crit_edge:                                      ; preds = %bb.a
-  %.not.i.i = icmp eq ptr %2, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
+._crit_edge:                                      ; preds = %_ZN4llvm12APFixedPoint21promoteFloatSemanticsEPKNS_12fltSemanticsE.exit, %bb.a
+  %.0.lcssa = phi ptr [ %2, %bb.a ], [ %.0.i, %_ZN4llvm12APFixedPoint21promoteFloatSemanticsEPKNS_12fltSemanticsE.exit ] ; 5 uses
+  %.not.i.i = icmp eq ptr %.0.lcssa, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
   br i1 %.not.i.i, label %bb.d, label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %_ZN4llvm12APFixedPoint21promoteFloatSemanticsEPKNS_12fltSemanticsE.exit, %._crit_edge
-  %.0.lcssa22 = phi ptr [ %2, %._crit_edge ], [ %.0.i, %_ZN4llvm12APFixedPoint21promoteFloatSemanticsEPKNS_12fltSemanticsE.exit ] ; 2 uses
-  tail call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %.0.lcssa22) #15
+._crit_edge.thread:                               ; preds = %._crit_edge
+  tail call void @_ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %.0.lcssa) #15
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit
 
 bb.d:                                             ; preds = %._crit_edge
-  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %2) #15
+  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %.0.lcssa) #15
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsE.exit:     ; preds = %._crit_edge.thread, %bb.d
-  %.0.lcssa21 = phi ptr [ %.0.lcssa22, %._crit_edge.thread ], [ @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, %bb.d ] ; 2 uses
   %i.h = load i32, ptr %i.b, align 8
   %i.i = and i32 %i.h, 536870912
   %i.j = icmp ne i32 %i.i, 0                      ; 2 uses
@@ -246,7 +245,7 @@ _ZN4llvm7APFloat16convertFromAPIntERKNS_5APIntEbNS_12RoundingModeE.exit: ; preds
   call void @_ZN4llvm6detail9IEEEFloatD1Ev(ptr noundef nonnull align 8 dead_on_return(21) dereferenceable(24) %3) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  %i.q = call noundef i32 @_ZN4llvm7APFloat7convertERKNS_12fltSemanticsENS_12RoundingModeEPb(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dereferenceable(29) %.0.lcssa21, i8 noundef signext 0, ptr noundef nonnull %i.a) #15 ; 0 uses
+  %i.q = call noundef i32 @_ZN4llvm7APFloat7convertERKNS_12fltSemanticsENS_12RoundingModeEPb(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dereferenceable(29) %.0.lcssa, i8 noundef signext 0, ptr noundef nonnull %i.a) #15 ; 0 uses
   %i.r = load ptr, ptr %0, align 8, !tbaa !16
   %.not.i15 = icmp eq ptr %i.r, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
   br i1 %.not.i15, label %bb.h, label %bb.g
@@ -260,7 +259,7 @@ bb.h:                                             ; preds = %_ZN4llvm7APFloat16c
   br label %_ZN4llvm7APFloat8multiplyERKS0_NS_12RoundingModeE.exit
 
 _ZN4llvm7APFloat8multiplyERKS0_NS_12RoundingModeE.exit: ; preds = %bb.g, %bb.h
-  %.not = icmp eq ptr %.0.lcssa21, %2
+  %.not = icmp eq ptr %.0.lcssa, %2
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_ZN4llvm7APFloat8multiplyERKS0_NS_12RoundingModeE.exit

@@ -204,9 +204,9 @@ unicode_format_getnextarg.exit.i27.i:             ; preds = %bb.du, %bb.dt
 
 bb.dv:                                            ; preds = %unicode_format_getnextarg.exit.i27.i
   switch i32 %.0.i69.i, label %bb.go [
-    i32 115, label %4
-    i32 114, label %4
-    i32 97, label %4
+    i32 115, label %bb.dw
+    i32 114, label %bb.dw
+    i32 97, label %bb.dw
     i32 105, label %bb.ee
     i32 100, label %bb.ee
     i32 117, label %bb.ee
@@ -222,17 +222,15 @@ bb.dv:                                            ; preds = %unicode_format_getn
     i32 99, label %bb.fg
   ]
 
-4:                                                ; preds = %bb.dv, %bb.dv, %bb.dv
-  %5 = getelementptr i8, ptr %.0.i.i28.i, i64 8
-  %.val93.i.i = load ptr, ptr %5, align 8, !tbaa !25 ; 2 uses
+bb.dw:                                            ; preds = %bb.dv, %bb.dv, %bb.dv
+  %4 = getelementptr i8, ptr %.0.i.i28.i, i64 8
+  %.val93.i.i = load ptr, ptr %4, align 8, !tbaa !25 ; 2 uses
   %.not112.i.i = icmp eq ptr %.val93.i.i, @PyLong_Type
-  br i1 %.not112.i.i, label %bb.dw, label %bb.dy
-
-bb.dw:                                            ; preds = %4
   %i.nw = icmp eq i64 %i.jf, -1
+  %or.cond.i = select i1 %.not112.i.i, i1 %i.nw, i1 false
   %i.nx = icmp eq i32 %i.ms, -1
-  %or.cond.i.a = select i1 %i.nw, i1 %i.nx, i1 false
-  br i1 %or.cond.i.a, label %bb.dx, label %.thread.i32.i
+  %or.cond.i.a = select i1 %or.cond.i, i1 %i.nx, i1 false
+  br i1 %or.cond.i.a, label %bb.dx, label %bb.dy
 
 bb.dx:                                            ; preds = %bb.dw
   %i.ny = and i32 %i.jg, 8
@@ -240,7 +238,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.oa = icmp eq i32 %i.nz, -1
   br i1 %i.oa, label %unicode_format_arg_parse.exit.thread.i, label %unicode_format_arg_format.exit.thread94.i
 
-bb.dy:                                            ; preds = %4
+bb.dy:                                            ; preds = %bb.dw
   %i.ob = icmp eq ptr %.val93.i.i, @PyUnicode_Type
   %i.oc = icmp eq i32 %.0.i69.i, 115
   %or.cond111.i.i = and i1 %i.oc, %i.ob
@@ -260,7 +258,7 @@ unicode_format_arg_format.exit.thread100.thread.i: ; preds = %bb.ea, %bb.dz
   store ptr %.0.i.i28.i, ptr %i.b, align 8, !tbaa !13
   br label %unicode_format_arg_format.exit.thread100.i
 
-.thread.i32.i:                                    ; preds = %bb.dy, %bb.dw
+.thread.i32.i:                                    ; preds = %bb.dy
   switch i32 %.0.i69.i, label %bb.ed [
     i32 115, label %bb.eb
     i32 114, label %bb.ec

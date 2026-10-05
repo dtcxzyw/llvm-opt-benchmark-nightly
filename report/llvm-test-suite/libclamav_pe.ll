@@ -204,10 +204,7 @@ bb.tx:                                            ; preds = %bb.tw
 
 bb.ty:                                            ; preds = %bb.tw, %bb.tx, %bb.tu, %bb.tv, %bb.ts, %bb.tt
   %.str.180.sink = phi ptr [ @.str.182, %bb.tu ], [ @.str.180, %bb.ts ], [ @.str.180, %bb.tt ], [ @.str.182, %bb.tv ], [ @.str.184, %bb.tx ], [ @.str.184, %bb.tw ]
-  %.ph = phi i1 [ true, %bb.tu ], [ false, %bb.ts ], [ false, %bb.tt ], [ true, %bb.tv ], [ true, %bb.tx ], [ true, %bb.tw ]
-  %.ph3257 = phi i1 [ false, %bb.tu ], [ true, %bb.ts ], [ true, %bb.tt ], [ false, %bb.tv ], [ true, %bb.tx ], [ true, %bb.tw ] ; 2 uses
-  %.ph3258 = phi i1 [ true, %bb.tu ], [ true, %bb.ts ], [ true, %bb.tt ], [ true, %bb.tv ], [ false, %bb.tx ], [ false, %bb.tw ] ; 3 uses
-  %.02370.ph = phi ptr [ @upx_inflate2d, %bb.tu ], [ @upx_inflate2b, %bb.ts ], [ @upx_inflate2b, %bb.tt ], [ @upx_inflate2d, %bb.tv ], [ @upx_inflate2e, %bb.tx ], [ @upx_inflate2e, %bb.tw ] ; 3 uses
+  %.02370.ph = phi ptr [ @upx_inflate2d, %bb.tu ], [ @upx_inflate2b, %bb.ts ], [ @upx_inflate2b, %bb.tt ], [ @upx_inflate2d, %bb.tv ], [ @upx_inflate2e, %bb.tx ], [ @upx_inflate2e, %bb.tw ] ; 5 uses
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull %.str.180.sink) #13
   %i.axu = getelementptr inbounds nuw i8, ptr %i.f, i64 2
   %.val3074 = load i32, ptr %i.axu, align 2
@@ -254,11 +251,11 @@ bb.ub:                                            ; preds = %bb.ua
 
 bb.uc:                                            ; preds = %bb.tz, %bb.ub
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.187) #13
-  br i1 %.ph, label %.thread3844, label %bb.uf
+  %.not3328 = icmp eq ptr %.02370.ph, @upx_inflate2b
+  br i1 %.not3328, label %bb.uf, label %.thread3844
 
 .thread3844:                                      ; preds = %bb.tx, %bb.uc
-  %5 = phi i1 [ %.ph3257, %bb.uc ], [ true, %bb.tx ]
-  %6 = phi i1 [ %.ph3258, %bb.uc ], [ true, %bb.tx ] ; 2 uses
+  %.0237032613851 = phi ptr [ %.02370.ph, %bb.uc ], [ null, %bb.tx ]
   %i.ayt = load i32, ptr %i.awj, align 4, !tbaa !26
   %i.ayu = load i32, ptr %i.awf, align 4, !tbaa !26
   %i.ayv = call i32 @upx_inflate2b(ptr noundef nonnull %i.axd, i32 noundef %i.awh, ptr noundef nonnull %i.axi, ptr noundef nonnull %i.h, i32 noundef %i.ayt, i32 noundef %i.ayu, i32 noundef %i.cj) #13
@@ -277,17 +274,18 @@ bb.ud:                                            ; preds = %.thread3844
 
 .split:                                           ; preds = %bb.ud
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.188) #13
-  br i1 %5, label %bb.ug, label %bb.uj
+  br label %bb.uf
 
 bb.ue:                                            ; preds = %bb.ud, %.thread3844
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.189) #13
   br label %.thread3279
 
-bb.uf:                                            ; preds = %bb.uc
-  br i1 %.ph3257, label %bb.ug, label %bb.uj
+bb.uf:                                            ; preds = %.split, %bb.uc
+  %.0237032613852 = phi ptr [ %.0237032613851, %.split ], [ @upx_inflate2b, %bb.uc ] ; 2 uses
+  %.not3329 = icmp eq ptr %.0237032613852, @upx_inflate2d
+  br i1 %.not3329, label %bb.uj, label %bb.ug
 
-bb.ug:                                            ; preds = %.split, %bb.uf
-  %7 = phi i1 [ %6, %.split ], [ %.ph3258, %bb.uf ]
+bb.ug:                                            ; preds = %bb.uf
   %i.aze = load i32, ptr %i.awj, align 4, !tbaa !26
   %i.azf = load i32, ptr %i.awf, align 4, !tbaa !26
   %i.azg = call i32 @upx_inflate2d(ptr noundef nonnull %i.axd, i32 noundef %i.awh, ptr noundef nonnull %i.axi, ptr noundef nonnull %i.h, i32 noundef %i.aze, i32 noundef %i.azf, i32 noundef %i.cj) #13
@@ -306,17 +304,17 @@ bb.uh:                                            ; preds = %bb.ug
 
 .split3846:                                       ; preds = %bb.uh
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.190) #13
-  br i1 %7, label %bb.uk, label %bb.uo
+  br label %bb.uj
 
 bb.ui:                                            ; preds = %bb.uh, %bb.ug
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.191) #13
   br label %.thread3279
 
-bb.uj:                                            ; preds = %.split, %bb.uf
-  %8 = phi i1 [ %6, %.split ], [ %.ph3258, %bb.uf ]
-  br i1 %8, label %bb.uk, label %bb.uo
+bb.uj:                                            ; preds = %.split3846, %bb.uf
+  %.not3330 = icmp eq ptr %.0237032613852, @upx_inflate2e
+  br i1 %.not3330, label %bb.uo, label %bb.uk
 
-bb.uk:                                            ; preds = %.split3846, %bb.uj
+bb.uk:                                            ; preds = %bb.uj
   %i.azp = load i32, ptr %i.awj, align 4, !tbaa !26
   %i.azq = load i32, ptr %i.awf, align 4, !tbaa !26
   %i.azr = call i32 @upx_inflate2e(ptr noundef nonnull %i.axd, i32 noundef %i.awh, ptr noundef nonnull %i.axi, ptr noundef nonnull %i.h, i32 noundef %i.azp, i32 noundef %i.azq, i32 noundef %i.cj) #13
@@ -341,7 +339,7 @@ bb.un:                                            ; preds = %bb.ul, %bb.uk
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.193) #13
   br label %.thread3279
 
-bb.uo:                                            ; preds = %.split3846, %bb.um, %bb.uj
+bb.uo:                                            ; preds = %bb.um, %bb.uj
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.194) #13
   call void @free(ptr noundef nonnull %i.axd) #13
   call void @free(ptr noundef nonnull %i.axi) #13
@@ -744,11 +742,11 @@ declare i32 @unfsg_200(ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 n
 
 declare i32 @unfsg_133(ptr noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
-declare i32 @upx_inflate2b(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
+declare i32 @upx_inflate2b(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #2
 
-declare i32 @upx_inflate2d(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
+declare i32 @upx_inflate2d(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #2
 
-declare i32 @upx_inflate2e(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
+declare i32 @upx_inflate2e(ptr noundef, i32 noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef) #2
 
 ; Function Attrs: nofree
 declare noundef i64 @write(i32 noundef, ptr noundef readonly captures(none), i64 noundef) local_unnamed_addr #8

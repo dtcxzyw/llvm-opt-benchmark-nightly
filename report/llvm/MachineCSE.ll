@@ -204,36 +204,27 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.assume(i1 %.not1114.i.i.i)
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !544  ; 2 uses
   %.not.i3.i.i = icmp eq ptr %i.h, @_ZN4llvm31MachineDominatorTreeWrapperPass2IDE
-  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread, label %.lr.ph.i.i.i
-
-_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread: ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %4 = load ptr, ptr %3, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  br label %.lr.ph.i.i.i8.preheader
+  br i1 %.not.i3.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b, %.lr.ph.i.i.i
-  %.sroa.08.015.i4.i.i = phi ptr [ %i.i, %.lr.ph.i.i.i ], [ %i.e, %bb.b ] ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 3 uses
+  %.sroa.08.015.i4.i.i = phi ptr [ %i.i, %.lr.ph.i.i.i ], [ %i.e, %bb.b ]
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 16 ; 4 uses
   %.not11.i.i.i = icmp ne ptr %i.i, %i.g
   tail call void @llvm.assume(i1 %.not11.i.i.i)
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !544
   %.not.i.i.i = icmp eq ptr %i.j, @_ZN4llvm31MachineDominatorTreeWrapperPass2IDE
   br i1 %.not.i.i.i, label %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i
 
-_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i, i64 24
+_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i, %bb.b
+  %.sroa.08.015.i.lcssa.i.i = phi ptr [ %i.e, %bb.b ], [ %i.i, %.lr.ph.i.i.i ]
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56
   %.not.i3.i.i7 = icmp eq ptr %i.h, @_ZN4llvm36MachineBlockFrequencyInfoWrapperPass2IDE
-  br i1 %.not.i3.i.i7, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineBlockFrequencyInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i8.preheader
+  br i1 %.not.i3.i.i7, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineBlockFrequencyInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i8
 
-.lr.ph.i.i.i8.preheader:                          ; preds = %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit
-  %6 = phi ptr [ %5, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit.thread ], [ %i.m, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ]
-  br label %.lr.ph.i.i.i8
-
-.lr.ph.i.i.i8:                                    ; preds = %.lr.ph.i.i.i8.preheader, %.lr.ph.i.i.i8
-  %.sroa.08.015.i4.i.i9 = phi ptr [ %i.n, %.lr.ph.i.i.i8 ], [ %i.e, %.lr.ph.i.i.i8.preheader ]
+.lr.ph.i.i.i8:                                    ; preds = %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit, %.lr.ph.i.i.i8
+  %.sroa.08.015.i4.i.i9 = phi ptr [ %i.n, %.lr.ph.i.i.i8 ], [ %i.e, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ]
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i4.i.i9, i64 16 ; 4 uses
   %.not11.i.i.i10 = icmp ne ptr %i.n, %i.g
   tail call void @llvm.assume(i1 %.not11.i.i.i10)
@@ -242,7 +233,6 @@ _ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit: ; 
   br i1 %.not.i.i.i11, label %_ZNK4llvm4Pass11getAnalysisINS_36MachineBlockFrequencyInfoWrapperPassEEERT_v.exit, label %.lr.ph.i.i.i8
 
 _ZNK4llvm4Pass11getAnalysisINS_36MachineBlockFrequencyInfoWrapperPassEEERT_v.exit: ; preds = %.lr.ph.i.i.i8, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit
-  %7 = phi ptr [ %i.m, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ], [ %6, %.lr.ph.i.i.i8 ]
   %.sroa.08.015.i.lcssa.i.i12 = phi ptr [ %i.e, %_ZNK4llvm4Pass11getAnalysisINS_31MachineDominatorTreeWrapperPassEEERT_v.exit ], [ %i.n, %.lr.ph.i.i.i8 ]
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.08.015.i.lcssa.i.i12, i64 8
   %i.q = load ptr, ptr %i.p, align 8
@@ -250,7 +240,7 @@ _ZNK4llvm4Pass11getAnalysisINS_36MachineBlockFrequencyInfoWrapperPassEEERT_v.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(748) %2, i8 0, i64 16, i1 false)
-  store ptr %7, ptr %i.s, align 8, !tbaa !72
+  store ptr %i.m, ptr %i.s, align 8, !tbaa !72
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr null, ptr %i.t, align 8, !tbaa !73
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 32

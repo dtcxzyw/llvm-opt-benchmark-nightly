@@ -204,17 +204,13 @@ bb.j:                                             ; preds = %bb.i
   %i.x = load i64, ptr %i.c, align 8
   %i.y = icmp ult i64 %i.x, 2
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 10664 ; 2 uses
-  br i1 %i.y, label %..thread_crit_edge, label %bb.k
-
-..thread_crit_edge:                               ; preds = %bb.j
-  %.pre = load i8, ptr @_ZN4absl18container_internal11kSooControlE, align 1
-  br label %.thread
+  br i1 %i.y, label %.loopexit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.z, align 8, !nonnull !8, !noundef !8 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 10672
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.aa, align 8 ; 2 uses
-  %i.ab = load i8, ptr %.sroa.0.0.copyload.i.i.i.i, align 1 ; 2 uses
+  %i.ab = load i8, ptr %.sroa.0.0.copyload.i.i.i.i, align 1
   %i.ac = icmp slt i8 %i.ab, -1
   br i1 %i.ac, label %.lr.ph.i.i, label %.loopexit
 
@@ -223,26 +219,24 @@ bb.k:                                             ; preds = %bb.j
   %i.ae = phi ptr [ %i.af, %.lr.ph.i.i ], [ %.sroa.0.0.copyload.i.i.i.i, %bb.k ]
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 2 uses
-  %i.ah = load i8, ptr %i.af, align 1             ; 2 uses
+  %i.ah = load i8, ptr %i.af, align 1
   %i.ai = icmp slt i8 %i.ah, -1
   br i1 %i.ai, label %.lr.ph.i.i, label %.loopexit, !llvm.loop !47
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %bb.k
-  %2 = phi i8 [ %i.ab, %bb.k ], [ %i.ah, %.lr.ph.i.i ]
-  %.sroa.6.0.i = phi ptr [ %.sroa.0.0.copyload.i.i.i, %bb.k ], [ %i.ag, %.lr.ph.i.i ]
-  %.sroa.0.0.i = phi ptr [ %.sroa.0.0.copyload.i.i.i.i, %bb.k ], [ %i.af, %.lr.ph.i.i ]
+.loopexit:                                        ; preds = %.lr.ph.i.i, %bb.k, %bb.j
+  %.sroa.6.0.i = phi ptr [ %.sroa.0.0.copyload.i.i.i, %bb.k ], [ %i.z, %bb.j ], [ %i.ag, %.lr.ph.i.i ]
+  %.sroa.0.0.i = phi ptr [ %.sroa.0.0.copyload.i.i.i.i, %bb.k ], [ @_ZN4absl18container_internal11kSooControlE, %bb.j ], [ %i.af, %.lr.ph.i.i ] ; 2 uses
   %i.aj = icmp eq ptr %.sroa.0.0.i, @_ZN4absl18container_internal19kDefaultIterControlE
-  br i1 %i.aj, label %bb.l, label %.thread, !prof !48
+  br i1 %i.aj, label %bb.l, label %.thread, !prof !6
 
 bb.l:                                             ; preds = %.loopexit
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.15, i64 61), i32 noundef 1255, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.21) #16
   call void @llvm.trap()
   unreachable
 
-.thread:                                          ; preds = %..thread_crit_edge, %.loopexit
-  %3 = phi i8 [ %2, %.loopexit ], [ %.pre, %..thread_crit_edge ]
-  %.sroa.6.0.i9 = phi ptr [ %.sroa.6.0.i, %.loopexit ], [ %i.z, %..thread_crit_edge ]
-  %i.ak = icmp sgt i8 %3, -1
+.thread:                                          ; preds = %.loopexit
+  %2 = load i8, ptr %.sroa.0.0.i, align 1
+  %i.ak = icmp sgt i8 %2, -1
   br i1 %i.ak, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal7IsolateEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE8iteratordeEv.exit, label %bb.m, !prof !5
 
 bb.m:                                             ; preds = %.thread
@@ -251,7 +245,7 @@ bb.m:                                             ; preds = %.thread
   unreachable
 
 _ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal7IsolateEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE8iteratordeEv.exit: ; preds = %.thread
-  %i.al = load ptr, ptr %.sroa.6.0.i9, align 8
+  %i.al = load ptr, ptr %.sroa.6.0.i, align 8
   br label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.sink.split
 
 _ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.sink.split: ; preds = %bb.i, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal7IsolateEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE8iteratordeEv.exit
@@ -358,7 +352,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i
 bb.g:                                             ; preds = %._crit_edge.i.i
   %i.as = add i64 %.sroa.13.0.i.i, 16             ; 2 uses
   %i.at = add i64 %i.as, %.sroa.6.0.i.i
-  br label %bb.e, !llvm.loop !49
+  br label %bb.e, !llvm.loop !48
 
 _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal7IsolateEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE10find_largeIS6_EENSD_8iteratorERKT_m.exit.i: ; preds = %._crit_edge.i.i, %.thread33.i.i
   %.sroa.0.4.ph.i.i = phi ptr [ %i.an, %.thread33.i.i ], [ null, %._crit_edge.i.i ]
@@ -577,7 +571,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.j = load i8, ptr %i.i, align 8, !range !7, !noundef !8
   %i.k = trunc nuw i8 %i.j to i1
-  tail call void %i.b(ptr noundef %i.d, ptr noundef %i.f, i64 noundef %i.h, i1 noundef zeroext %i.k) #16, !inline_history !50
+  tail call void %i.b(ptr noundef %i.d, ptr noundef %i.f, i64 noundef %i.h, i1 noundef zeroext %i.k) #16, !inline_history !49
   ret void
 }
 
@@ -700,7 +694,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
 ._crit_edge:                                      ; preds = %bb.j, %bb.c
   %i.p = add nuw i64 %.04962, 16                  ; 2 uses
   %i.q = icmp ult i64 %i.p, %i.b
-  br i1 %i.q, label %bb.c, label %bb.b, !llvm.loop !51
+  br i1 %i.q, label %bb.c, label %bb.b, !llvm.loop !50
 
 .lr.ph:                                           ; preds = %bb.c, %bb.j
   %.sroa.052.061 = phi i16 [ %i.bc, %bb.j ], [ %i.o, %bb.c ] ; 3 uses
@@ -782,7 +776,7 @@ declare void @_ZSt17__throw_bad_allocv() local_unnamed_addr #4
 define linkonce_odr hidden noundef i64 @_ZN4absl19functional_internal12InvokeObjectINS_18container_internal7HashKeyINS2_6HashEqIPN2v88internal7IsolateEvE4HashES8_Lb0EEEmJmEEET0_NS0_7VoidPtrEDpNS0_8ForwardTIT1_E4typeE(ptr %0, i64 noundef %1) #0 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !nonnull !8, !align !52
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !8, !align !51
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = xor i64 %i.d, ptrtoint (ptr @_ZN4absl13hash_internal15MixingHashState5kSeedE to i64)
@@ -931,9 +925,8 @@ attributes #19 = { noreturn nounwind }
 !45 = !{!34, !32, !30, !28, !26, !24}
 !46 = !{!42}
 !47 = distinct !{!47, !9}
-!48 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
-!49 = distinct !{!49, !9}
-!50 = distinct !{null, null, null}
-!51 = distinct !{!51, !9}
-!52 = !{i64 8}
+!48 = distinct !{!48, !9}
+!49 = distinct !{null, null, null}
+!50 = distinct !{!50, !9}
+!51 = !{i64 8}
 end_hunk_0
