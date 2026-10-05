@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %range_compare.exit,
   %i.au = getelementptr i8, ptr %i.at, i64 8
   %.val59 = load i64, ptr %i.au, align 8          ; 3 uses
   %.not.i.i.i102 = icmp ule i64 %.val58, %.val59  ; 2 uses
-  %i.av = add i64 %.val59, 1                      ; 3 uses
+  %i.av = add i64 %.val59, 1                      ; 2 uses
   %i.aw = icmp eq i64 %.val58, %i.av
   %or.cond.i.i.i103 = or i1 %.not.i.i.i102, %i.aw
   br i1 %or.cond.i.i.i103, label %range_is_empty.exit.i104, label %bb.r
@@ -227,19 +227,11 @@ range_upb.exit109:                                ; preds = %range_upb.exit105
   store i64 %i.av, ptr %i.ay, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   store i64 %3, ptr %i.az, align 8
-  %.not.i.i.i.i110.not = icmp ugt i64 %i.av, %3
-  br i1 %.not.i.i.i.i110.not, label %4, label %append_new_range.exit113
-
-4:                                                ; preds = %range_upb.exit109
-  tail call void @__assert_fail(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, i32 noundef 43, ptr noundef nonnull @__PRETTY_FUNCTION__.range_invariant) #5
-  unreachable
-
-append_new_range.exit113:                         ; preds = %range_upb.exit109
-  %5 = tail call ptr @g_list_append(ptr noundef %.148.lcssa, ptr noundef nonnull %i.ay) #6
+  %4 = tail call ptr @g_list_append(ptr noundef %.148.lcssa, ptr noundef nonnull %i.ay) #6
   br label %.loopexit
 
-.loopexit:                                        ; preds = %range_lob.exit86, %range_upb.exit105, %append_new_range.exit113, %append_new_range.exit
-  %.3 = phi ptr [ %i.m, %append_new_range.exit ], [ %5, %append_new_range.exit113 ], [ %.148.lcssa, %range_upb.exit105 ], [ %.148139, %range_lob.exit86 ]
+.loopexit:                                        ; preds = %range_lob.exit86, %range_upb.exit105, %range_upb.exit109, %append_new_range.exit
+  %.3 = phi ptr [ %i.m, %append_new_range.exit ], [ %4, %range_upb.exit109 ], [ %.148.lcssa, %range_upb.exit105 ], [ %.148139, %range_lob.exit86 ]
   store ptr %.3, ptr %1, align 8
   ret void
 }

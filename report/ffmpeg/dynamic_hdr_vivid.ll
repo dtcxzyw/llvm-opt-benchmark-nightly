@@ -21,7 +21,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq ptr %1, null
   %or.cond3.i.i.not = or i1 %i.c, %or.cond.i.i    ; 2 uses
   %.013.i.i = select i1 %or.cond3.i.i.not, i32 0, i32 %i.b ; 11 uses
-  %i.d = add nuw nsw i32 %.013.i.i, 8             ; 34 uses
+  %i.d = add nuw nsw i32 %.013.i.i, 8             ; 31 uses
   %i.e = icmp eq i32 %.013.i.i, 0
   %or.cond324 = or i1 %or.cond3.i.i.not, %i.e
   br i1 %or.cond324, label %.thread321, label %bb.c
@@ -137,7 +137,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bm = shl i32 %i.bk, %i.bl                    ; 2 uses
   %i.bn = lshr i32 %i.bm, 31
   %i.bo = add nuw i32 %i.bf, 1
-  %i.bp = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.bo) ; 5 uses
+  %i.bp = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.bo) ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i32 %i.bn, ptr %i.bq, align 4, !tbaa !20
   %.not174 = icmp sgt i32 %i.bm, -1
@@ -157,21 +157,20 @@ bb.i:                                             ; preds = %bb.h
   %i.by = and i32 %i.bp, 7
   %i.bz = shl i32 %i.bx, %i.by
   %i.ca = lshr i32 %i.bz, 18
-  %i.cb = add nuw i32 %i.bp, 14
-  %3 = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.cb) ; 3 uses
+  %i.cb = add nuw nsw i32 %i.bp, 14               ; 2 uses
   store i32 %i.ca, ptr %i.bs, align 4, !tbaa !14
   %.sroa.239.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store i32 16383, ptr %.sroa.239.0..sroa_idx, align 4, !tbaa !14
   %i.cc = getelementptr inbounds nuw i8, ptr %i.au, i64 20
-  %i.cd = lshr i32 %3, 3
+  %i.cd = lshr i32 %i.cb, 3
   %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 %i.ce
   %i.cg = load i32, ptr %i.cf, align 1, !tbaa !10
   %i.ch = tail call i32 @llvm.bswap.i32(i32 %i.cg)
-  %i.ci = and i32 %3, 7
+  %i.ci = and i32 %i.cb, 7
   %i.cj = shl i32 %i.ch, %i.ci
   %i.ck = lshr i32 %i.cj, 26
-  %i.cl = add nuw i32 %3, 6
+  %i.cl = add nuw i32 %i.bp, 20
   %i.cm = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.cl) ; 3 uses
   store i32 %i.ck, ptr %i.cc, align 4, !tbaa !14
   %.sroa.237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 24
@@ -355,15 +354,14 @@ bb.n:                                             ; preds = %bb.m
   %i.hp = and i32 %i.hh, 7
   %i.hq = shl i32 %i.ho, %i.hp
   %i.hr = lshr i32 %i.hq, 24
-  %i.hs = add nuw i32 %i.hh, 8
-  %4 = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.hs)
+  %i.hs = add nuw nsw i32 %i.hh, 8
   store i32 %i.hr, ptr %i.hj, align 4, !tbaa !14
   %.sroa.217.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.au, i64 92
   store i32 255, ptr %.sroa.217.0..sroa_idx.peel, align 4, !tbaa !14
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph
-  %.sroa.33.5.peel = phi i32 [ %i.hh, %.lr.ph ], [ %4, %bb.n ] ; 3 uses
+  %.sroa.33.5.peel = phi i32 [ %i.hh, %.lr.ph ], [ %i.hs, %bb.n ] ; 3 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.au, i64 96
   %i.hu = lshr i32 %.sroa.33.5.peel, 3
   %i.hv = zext nneg i32 %i.hu to i64
@@ -437,8 +435,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph
   %i.jv = zext nneg i32 %i.ju to i64
   %i.jw = getelementptr inbounds nuw i8, ptr %1, i64 %i.jv
   %i.jx = and i32 %i.jr, 7
-  %i.jy = add nuw i32 %i.jr, 8
-  %5 = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %i.jy)
+  %i.jy = add nuw nsw i32 %i.jr, 8
   %.sroa.217.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 136
   %i.jz = getelementptr inbounds nuw i8, ptr %i.au, i64 140
   %.sroa.215.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 144
@@ -471,7 +468,7 @@ bb.q:                                             ; preds = %bb.p
   br label %.loopexit.loopexit.loopexit
 
 .loopexit.loopexit.loopexit:                      ; preds = %.lr.ph.peel.newph, %bb.q
-  %.sroa.33.5 = phi i32 [ %i.jr, %.lr.ph.peel.newph ], [ %5, %bb.q ] ; 3 uses
+  %.sroa.33.5 = phi i32 [ %i.jr, %.lr.ph.peel.newph ], [ %i.jy, %bb.q ] ; 3 uses
   %i.kl = lshr i32 %.sroa.33.5, 3
   %i.km = zext nneg i32 %i.kl to i64
   %i.kn = getelementptr inbounds nuw i8, ptr %1, i64 %i.km

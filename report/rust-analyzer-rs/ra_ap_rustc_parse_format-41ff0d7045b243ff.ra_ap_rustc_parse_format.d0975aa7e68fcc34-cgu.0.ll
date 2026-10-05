@@ -202,7 +202,7 @@ bb.a:
   %i.k = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.l = trunc nuw i64 %3 to i1                   ; 2 uses
-  %i.m = add i64 %4, 2                            ; 10 uses
+  %i.m = add i64 %4, 2                            ; 8 uses
   %spec.select.i = select i1 %i.l, i64 %i.m, i64 1
   store i64 %spec.select.i, ptr %i.k, align 8
   %i.n = load i64, ptr %5, align 8, !range !4, !noundef !5
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !5, !noundef !5 ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.u = load i64, ptr %i.t, align 8, !noundef !5 ; 19 uses
+  %i.u = load i64, ptr %i.t, align 8, !noundef !5 ; 18 uses
   %i.v = icmp sgt i64 %i.u, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = sub nuw nsw i64 %i.u, %i.q               ; 6 uses
@@ -343,21 +343,15 @@ bb.p:                                             ; preds = %.lr.ph179
 
 ._crit_edge180:                                   ; preds = %bb.p, %bb.o
   %i.az = icmp ugt i64 %i.m, %i.w
-  br i1 %i.az, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.invoke, label %8, !prof !13
+  br i1 %i.az, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.invoke, label %bb.q, !prof !13
 
-8:                                                ; preds = %._crit_edge180
-  %9 = icmp eq i64 %i.m, %i.u
-  %10 = icmp eq i64 %i.m, 0
-  %or.cond156 = or i1 %10, %9
-  br i1 %or.cond156, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread, label %bb.q
-
-bb.q:                                             ; preds = %8
+bb.q:                                             ; preds = %._crit_edge180
   %i.ba = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.m
   %i.bb = load i8, ptr %i.ba, align 1, !alias.scope !50, !noundef !5
   %i.bc = icmp sgt i8 %i.bb, -65
   br i1 %i.bc, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.invoke, !prof !14
 
-_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread: ; preds = %bb.q, %8
+_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread: ; preds = %bb.q
   %i.bd = sub nuw nsw i64 %i.w, %i.m              ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.m
   br i1 %6, label %bb.r, label %bb.u

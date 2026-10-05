@@ -204,8 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.ce
   %i.ja = ptrtoint ptr %.sroa.0745.2 to i64       ; 2 uses
   %i.jb = sub i64 %i.iz, %i.ja
   %i.jc = ashr exact i64 %i.jb, 4
-  %46 = call i64 @llvm.umax.i64(i64 %i.iy, i64 %i.jc)
-  %.sroa.speculated = call i64 @llvm.umax.i64(i64 %46, i64 1)
+  %.sroa.speculated = call i64 @llvm.umax.i64(i64 %i.iy, i64 %i.jc)
   %i.jd = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   %i.je = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 5 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 6 uses
@@ -608,8 +607,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274: ; preds = %bb
 
 ._crit_edge885:                                   ; preds = %bb.qc, %.critedge.split
   %i.ov = add nuw i64 %.058886, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ov, %.sroa.speculated
-  br i1 %exitcond.not, label %.split.us.loopexit887, label %.critedge.split, !llvm.loop !518
+  %46 = icmp ugt i64 %.sroa.speculated, %i.ov
+  br i1 %46, label %.critedge.split, label %.split.us.loopexit887, !llvm.loop !518
 
 bb.dk:                                            ; preds = %.lr.ph884, %bb.qc
   %.sroa.0739.0882 = phi ptr [ %i.op, %.lr.ph884 ], [ %i.azc, %bb.qc ] ; 6 uses

@@ -205,7 +205,7 @@ _ZN8psort_nwIN3smt9theory_pb10psort_exprEE10add_clauseEjPKN3sat7literalE.exit: ;
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.gl = zext i32 %4 to i64                      ; 2 uses
+  %i.gl = zext i32 %4 to i64                      ; 3 uses
   %i.gm = zext i32 %2 to i64                      ; 2 uses
   %wide.trip.count336 = zext i32 %1 to i64
   %.not314 = icmp eq i32 %2, 0
@@ -382,14 +382,12 @@ bb.bm:                                            ; preds = %_ZN8psort_nwIN3smt9
 
 .lr.ph306.preheader:                              ; preds = %bb.bm
   %wide.trip.count331 = zext i32 %umin to i64
-  %28 = trunc nuw i64 %indvars.iv333 to i32
   br label %.lr.ph306
 
 .lr.ph306:                                        ; preds = %.lr.ph306.preheader, %bb.dp
   %indvars.iv326 = phi i64 [ 0, %.lr.ph306.preheader ], [ %indvars.iv.next327, %bb.dp ] ; 3 uses
-  %29 = trunc nuw i64 %indvars.iv326 to i32
-  %30 = sub i32 %28, %29                          ; 2 uses
-  %i.hs = icmp ult i32 %30, %4
+  %28 = sub nuw nsw i64 %indvars.iv333, %indvars.iv326 ; 2 uses
+  %i.hs = icmp samesign ult i64 %28, %i.gl
   br i1 %i.hs, label %bb.bn, label %bb.dp
 
 bb.bn:                                            ; preds = %.lr.ph306
@@ -534,8 +532,7 @@ bb.bz:                                            ; preds = %bb.bo, %.noexc120
   store i32 %i.jn, ptr %i.jm, align 4, !tbaa !38
   %i.jo = add i32 %i.ji, 1                        ; 6 uses
   store i32 %i.jo, ptr %i.jk, align 4, !tbaa !38
-  %31 = zext i32 %30 to i64
-  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %31
+  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %28
   %i.jq = getelementptr inbounds i8, ptr %i.jj, i64 -8 ; 2 uses
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !38
   %i.js = icmp eq i32 %i.jo, %i.jr

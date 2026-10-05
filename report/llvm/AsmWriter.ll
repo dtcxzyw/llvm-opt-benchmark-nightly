@@ -205,17 +205,17 @@ _ZN4llvm11raw_ostreamlsEPKc.exit710:              ; preds = %bb.dd, %bb.de
   %i.ou = getelementptr inbounds nuw i8, ptr %i.ot, i64 1
   %i.ov = load i8, ptr %i.ou, align 1
   %i.ow = icmp slt i8 %i.ov, 0
-  %spec.select = select i1 %i.ow, i32 2, i32 3
   %i.ox = getelementptr inbounds i8, ptr %1, i64 -64
   %i.oy = load ptr, ptr %i.ox, align 8, !tbaa !194
   %i.oz = load i8, ptr %i.oy, align 8, !tbaa !190
   %i.pa = icmp eq i8 %i.oz, 9
-  %.1229 = select i1 %i.pa, i32 %spec.select, i32 4
   %i.pb = getelementptr inbounds i8, ptr %1, i64 -32
   %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !194
   %i.pd = load i8, ptr %i.pc, align 8, !tbaa !190
   %i.pe = icmp eq i8 %i.pd, 9
-  %.2230 = select i1 %i.pe, i32 %.1229, i32 5
+  %11 = select i1 %i.ow, i64 2, i64 3
+  %12 = select i1 %i.pa, i64 %11, i64 4
+  %13 = select i1 %i.pe, i64 %12, i64 5
   %i.pf = load ptr, ptr %i.or, align 8, !tbaa !194
   tail call fastcc void @_ZL22writeAsOperandInternalRN4llvm11raw_ostreamEPKNS_5ValueERN12_GLOBAL__N_116AsmWriterContextEb(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.pf, ptr noundef nonnull align 8 dereferenceable(32) %2, i1 noundef zeroext true)
   br label %_ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit
@@ -262,8 +262,7 @@ _ZN4llvm11raw_ostreamlsENS_9StringRefE.exit:      ; preds = %bb.dh, %bb.di
   %i.pu = load ptr, ptr %i.pt, align 8, !tbaa !194
   tail call fastcc void @_ZL22writeAsOperandInternalRN4llvm11raw_ostreamEPKNS_5ValueERN12_GLOBAL__N_116AsmWriterContextEb(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.pu, ptr noundef nonnull align 8 dereferenceable(32) %2, i1 noundef zeroext true)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %.2230, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %13
   br i1 %exitcond, label %.loopexit, label %_ZN4llvm13ListSeparatorcvNS_9StringRefEEv.exit, !llvm.loop !1076
 
 bb.dj:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit290

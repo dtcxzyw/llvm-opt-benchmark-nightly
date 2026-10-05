@@ -205,49 +205,43 @@ scalar.ph138:                                     ; preds = %scalar.ph138, %scal
 
 _ZNK8DecGraph10TruthTable6nWordsEv.exit43:        ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit
   %i.bn = lshr exact i64 %i.ay, 3
-  %4 = trunc i64 %i.bn to i32                     ; 4 uses
-  %.not95102 = icmp ult i32 %4, 2
-  br i1 %.not95102, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104.preheader
+  %4 = and i64 %i.bn, 4294967295                  ; 2 uses
+  %5 = add nsw i64 %4, -1                         ; 3 uses
+  %.not95102 = icmp ult i64 %5, 4
+  br i1 %.not95102, label %.lr.ph104.preheader181, label %vector.ph154
 
-.lr.ph104.preheader:                              ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43
-  %5 = add i32 %4, -1                             ; 2 uses
-  %min.iters.check153 = icmp ult i32 %4, 5
-  br i1 %min.iters.check153, label %.lr.ph104.preheader181, label %vector.ph154
-
-vector.ph154:                                     ; preds = %.lr.ph104.preheader
-  %n.vec155 = and i32 %5, -4                      ; 3 uses
-  %6 = or disjoint i32 %n.vec155, 1
+vector.ph154:                                     ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43
+  %n.vec159 = and i64 %5, -4                      ; 3 uses
+  %6 = or disjoint i64 %n.vec159, 1
   %broadcast.splatinsert156 = insertelement <2 x i64> poison, i64 %.lcssa, i64 0
   %broadcast.splat157 = shufflevector <2 x i64> %broadcast.splatinsert156, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body158
 
 vector.body158:                                   ; preds = %vector.body158, %vector.ph154
-  %index159 = phi i32 [ 0, %vector.ph154 ], [ %index.next160, %vector.body158 ] ; 2 uses
-  %7 = or disjoint i32 %index159, 1
-  %8 = zext i32 %7 to i64
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %8 ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %9, i64 16
-  store <2 x i64> %broadcast.splat157, ptr %9, align 8, !tbaa !50
+  %index163 = phi i64 [ 0, %vector.ph154 ], [ %index.next164, %vector.body158 ] ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %index163 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 24
+  store <2 x i64> %broadcast.splat157, ptr %8, align 8, !tbaa !50
   store <2 x i64> %broadcast.splat157, ptr %i.bo, align 8, !tbaa !50
-  %index.next160 = add nuw i32 %index159, 4       ; 2 uses
-  %i.bp = icmp eq i32 %index.next160, %n.vec155
+  %index.next164 = add nuw i64 %index163, 4       ; 2 uses
+  %i.bp = icmp eq i64 %index.next164, %n.vec159
   br i1 %i.bp, label %middle.block161, label %vector.body158, !llvm.loop !243
 
 middle.block161:                                  ; preds = %vector.body158
-  %cmp.n162 = icmp eq i32 %5, %n.vec155
+  %cmp.n162 = icmp eq i64 %5, %n.vec159
   br i1 %cmp.n162, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104.preheader181
 
-.lr.ph104.preheader181:                           ; preds = %.lr.ph104.preheader, %middle.block161
-  %.sroa.077.0103.ph = phi i32 [ 1, %.lr.ph104.preheader ], [ %6, %middle.block161 ]
+.lr.ph104.preheader181:                           ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43, %middle.block161
+  %indvars.iv111.ph = phi i64 [ 1, %_ZNK8DecGraph10TruthTable6nWordsEv.exit43 ], [ %6, %middle.block161 ]
   br label %.lr.ph104
 
 .lr.ph104:                                        ; preds = %.lr.ph104.preheader181, %.lr.ph104
-  %.sroa.077.0103 = phi i32 [ %11, %.lr.ph104 ], [ %.sroa.077.0103.ph, %.lr.ph104.preheader181 ] ; 2 uses
-  %10 = zext i32 %.sroa.077.0103 to i64
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %10
+  %indvars.iv111 = phi i64 [ %indvars.iv.next112, %.lr.ph104 ], [ %indvars.iv111.ph, %.lr.ph104.preheader181 ] ; 2 uses
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %indvars.iv111
   store i64 %.lcssa, ptr %i.bq, align 8, !tbaa !50
-  %11 = add i32 %.sroa.077.0103, 1                ; 2 uses
-  %.not95 = icmp eq i32 %11, %4
+  %indvars.iv.next112 = add nuw nsw i64 %indvars.iv111, 1 ; 2 uses
+  %.not95 = icmp eq i64 %indvars.iv.next112, %4
   br i1 %.not95, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104, !llvm.loop !244
 
 bb.f:                                             ; preds = %_ZNK8DecGraph10TruthTable4dataEv.exit39
@@ -361,7 +355,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not92.3 = icmp eq i64 %indvars.iv.next.3, %i.cb
   br i1 %.not92.3, label %._crit_edge, label %scalar.ph, !llvm.loop !247
 
-_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread:   ; preds = %._crit_edge, %.lr.ph104, %middle.block161, %bb.f, %_ZNK8DecGraph10TruthTable6nWordsEv.exit47, %_ZNK8DecGraph10TruthTable6nWordsEv.exit43, %.loopexit, %_ZNK8DecGraph10TruthTable6nWordsEv.exit
+_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread:   ; preds = %._crit_edge, %.lr.ph104, %middle.block161, %bb.f, %_ZNK8DecGraph10TruthTable6nWordsEv.exit47, %.loopexit, %_ZNK8DecGraph10TruthTable6nWordsEv.exit
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !66 ; 2 uses
   %i.dg = load ptr, ptr %2, align 8, !tbaa !67    ; 2 uses
@@ -606,7 +600,7 @@ _ZN8DecGraph10TruthTableD2Ev.exit:                ; preds = %bb.p, %_ZN8DecGraph
   %i.go = load i32, ptr %i.gn, align 4, !tbaa !46
   %i.gp = trunc i32 %i.go to i8
   call void @_ZN8DecGraph10TruthTable6moveToEjhb(ptr noundef nonnull align 8 dereferenceable(32) %3, i32 noundef %i.gl, i8 noundef zeroext %i.gp, i1 noundef zeroext false)
-  %i.gq = add i64 %.sroa.060.0106, 1              ; 2 uses
+  %i.gq = add nuw i64 %.sroa.060.0106, 1          ; 2 uses
   %.not96 = icmp eq i64 %i.gq, %i.dk
   br i1 %.not96, label %._crit_edge108, label %.lr.ph107
 
@@ -1009,7 +1003,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bl = fadd double %i.bd, %i.bk
   %i.bm = fptrunc double %i.bl to float
   store float %i.bm, ptr %i.bi, align 4, !tbaa !84
-  %i.bn = add i64 %.sroa.022.047, 2               ; 2 uses
+  %i.bn = add nuw i64 %.sroa.022.047, 2           ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph54.preheader.unr-lcssa, label %bb.b
@@ -1100,7 +1094,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %bb.c, %_ZNSt6vector
   %.sroa.17.2 = phi ptr [ %i.cs, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %.sroa.17.151, %bb.c ] ; 2 uses
   %.sroa.029.2 = phi ptr [ %i.cp, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %.sroa.029.152, %bb.c ] ; 2 uses
   %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
-  %i.ct = add i64 %.sroa.017.053, 1               ; 2 uses
+  %i.ct = add nuw i64 %.sroa.017.053, 1           ; 2 uses
   %.not40 = icmp eq i64 %i.ct, %i.aj
   br i1 %.not40, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.loopexit, label %.lr.ph54
 }
@@ -1247,7 +1241,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph129, %middle.
   %i.bj = fadd double %i.bb, %i.bi
   %i.bk = fptrunc double %i.bj to float
   store float %i.bk, ptr %i.bg, align 4, !tbaa !84
-  %i.bl = add i64 %.sroa.074.0108, 2              ; 2 uses
+  %i.bl = add nuw i64 %.sroa.074.0108, 2          ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph115.preheader.unr-lcssa, label %.lr.ph
@@ -1338,7 +1332,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %bb.a, %_ZNSt6vector
   %.pn = phi ptr [ %i.co, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %.sroa.11.1112, %bb.a ]
   %.sroa.17.2 = phi ptr [ %i.cq, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %.sroa.17.1113, %bb.a ] ; 2 uses
   %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
-  %i.cr = add i64 %.sroa.068.0114, 1              ; 2 uses
+  %i.cr = add nuw i64 %.sroa.068.0114, 1          ; 2 uses
   %.not100 = icmp eq i64 %i.cr, %i.ai
   br i1 %.not100, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.loopexit, label %.lr.ph115
 
@@ -1741,7 +1735,7 @@ _ZNSt6vectorIS_IiSaIiEESaIS1_EEC2EmRKS2_.exit:    ; preds = %_ZNSt6vectorIS_IiSa
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %i.bf = add i64 %.sroa.074.094, 1               ; 2 uses
+  %i.bf = add nuw i64 %.sroa.074.094, 1           ; 2 uses
   %.not = icmp eq i64 %i.bf, %i.ak
   br i1 %.not, label %._crit_edge96.split, label %.lr.ph
 
@@ -2144,7 +2138,7 @@ _ZN8DecGraph10TruthTableD2Ev.exit:                ; preds = %_ZN8DecGraph10Truth
   %i.hv = trunc i64 %i.hu to i32
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %.sroa.0584.0727.epil
   store i32 %i.hv, ptr %i.hw, align 4, !tbaa !46
-  %i.hx = add i64 %.sroa.0584.0727.epil, 1
+  %i.hx = add nuw i64 %.sroa.0584.0727.epil, 1
   %epil.iter1240.next = add i64 %epil.iter1240, 1 ; 2 uses
   %epil.iter1240.cmp.not = icmp eq i64 %epil.iter1240.next, %xtraiter1239
   br i1 %epil.iter1240.cmp.not, label %._crit_edge729, label %.lr.ph728.epil, !llvm.loop !416
@@ -2209,7 +2203,7 @@ _ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEET_S7_S7_.
   %i.je = trunc i64 %i.jd to i32
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.ja
   store i32 %i.je, ptr %i.jf, align 4, !tbaa !46
-  %i.jg = add i64 %.sroa.0584.0727, 4             ; 2 uses
+  %i.jg = add nuw i64 %.sroa.0584.0727, 4         ; 2 uses
   %niter1244.next.3 = add i64 %niter1244, 4       ; 2 uses
   %niter1244.ncmp.3 = icmp eq i64 %niter1244.next.3, %unroll_iter1243
   br i1 %niter1244.ncmp.3, label %._crit_edge729.loopexit.unr-lcssa, label %.lr.ph728
@@ -2399,7 +2393,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.0566.1 = phi ptr [ %.sroa.0566.0734, %.lr.ph739 ], [ %.sroa.0566.0734, %bb.ag ], [ %i.kz, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 10 uses
   %.sroa.7569.1 = phi ptr [ %.sroa.7569.0735, %.lr.ph739 ], [ %i.ko, %bb.ag ], [ %i.ld, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 4 uses
   %.sroa.11571.1 = phi ptr [ %.sroa.11571.0736, %.lr.ph739 ], [ %.sroa.11571.0736, %bb.ag ], [ %i.le, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
-  %i.lf = add i64 %.sroa.0561.0737, 1             ; 2 uses
+  %i.lf = add nuw i64 %.sroa.0561.0737, 1         ; 2 uses
   %.not650 = icmp eq i64 %i.lf, %i.jh
   br i1 %.not650, label %._crit_edge740, label %.lr.ph739
 
@@ -2802,7 +2796,7 @@ bb.e:                                             ; preds = %bb.c
 .lr.ph240:                                        ; preds = %._crit_edge236, %.lr.ph240
   %.sroa.0191.0238 = phi i64 [ %i.bb, %.lr.ph240 ], [ 0, %._crit_edge236 ] ; 2 uses
   %i.ba = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.f, ptr noundef nonnull @.str.24, i64 noundef %.sroa.0191.0238) #36 ; 0 uses
-  %i.bb = add i64 %.sroa.0191.0238, 1             ; 2 uses
+  %i.bb = add nuw i64 %.sroa.0191.0238, 1         ; 2 uses
   %.not217 = icmp eq i64 %i.bb, %i.ar
   br i1 %.not217, label %._crit_edge241, label %.lr.ph240
 
@@ -3136,7 +3130,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit177: ; preds = %bb
   %.not158 = icmp eq i32 %i.fu, 0
   %i.fv = select i1 %.not158, ptr @.str.1, ptr @.str.15
   %i.fw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.f, ptr noundef nonnull @.str.37, i64 noundef %.sroa.0178.0253, ptr noundef nonnull %i.fv, i32 noundef %i.ft) #36 ; 0 uses
-  %i.fx = add i64 %.sroa.0178.0253, 1             ; 2 uses
+  %i.fx = add nuw i64 %.sroa.0178.0253, 1         ; 2 uses
   %.not220 = icmp eq i64 %i.fx, %i.bn
   br i1 %.not220, label %._crit_edge256, label %.lr.ph255
 
@@ -3539,7 +3533,7 @@ bb.ag:                                            ; preds = %_ZL11Vec_IntPushP10
   br label %_ZL15Gia_ManAppendCoP10Gia_Man_t_i.exit
 
 _ZL15Gia_ManAppendCoP10Gia_Man_t_i.exit:          ; preds = %_ZL11Vec_IntPushP10Vec_Int_t_i.exit.i, %bb.ag
-  %i.jm = add i64 %.sroa.0145.0177, 1             ; 2 uses
+  %i.jm = add nuw i64 %.sroa.0145.0177, 1         ; 2 uses
   %.not173 = icmp eq i64 %i.jm, %i.af
   br i1 %.not173, label %._crit_edge180, label %bb.w
 

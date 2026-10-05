@@ -41,9 +41,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %.val86 = load i64, ptr %1, align 8             ; 7 uses
-  %.val87 = load i64, ptr %i.a, align 8           ; 7 uses
+  %.val87 = load i64, ptr %i.a, align 8           ; 6 uses
   %.not.i.i.i = icmp ule i64 %.val86, %.val87     ; 5 uses
-  %i.h = add i64 %.val87, 1                       ; 7 uses
+  %i.h = add i64 %.val87, 1                       ; 6 uses
   %i.i = icmp eq i64 %.val86, %i.h
   %or.cond.i.i.i = or i1 %.not.i.i.i, %i.i
   br i1 %or.cond.i.i.i, label %range_is_empty.exit.i, label %bb.e
@@ -55,7 +55,7 @@ bb.e:                                             ; preds = %bb.d
 range_is_empty.exit.i:                            ; preds = %bb.d
   %.val.pre = load i64, ptr %i.b, align 8         ; 11 uses
   %i.j = getelementptr i8, ptr %i.b, i64 8
-  %.val7.i = load i64, ptr %i.j, align 8          ; 12 uses
+  %.val7.i = load i64, ptr %i.j, align 8          ; 10 uses
   br i1 %.not.i.i.i, label %bb.f, label %range_is_empty.exit.i.range_contains_range.exit.thread_crit_edge
 
 range_is_empty.exit.i.range_contains_range.exit.thread_crit_edge: ; preds = %range_is_empty.exit.i
@@ -117,45 +117,28 @@ range_lob.exit142:                                ; preds = %range_contains_rang
 
 range_upb.exit149:                                ; preds = %range_lob.exit142
   store i64 %i.h, ptr %i.b, align 8
-  %.not.i.i.i150 = icmp ule i64 %i.h, %.val7.i    ; 2 uses
-  %2 = icmp eq i64 %.val87, %.val7.i
-  %or.cond.i.i.i151 = or i1 %.not.i.i.i150, %2
-  br i1 %or.cond.i.i.i151, label %range_is_empty.exit.i152, label %3
+  %.not.i.i.i150.not = icmp ugt i64 %i.h, %.val7.i
+  br i1 %.not.i.i.i150.not, label %bb.j, label %range_set_bounds.exit
 
-3:                                                ; preds = %range_upb.exit149
-  tail call void @__assert_fail(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 43, ptr noundef nonnull @__PRETTY_FUNCTION__.range_invariant) #5
-  unreachable
-
-range_is_empty.exit.i152:                         ; preds = %range_upb.exit149
-  br i1 %.not.i.i.i150, label %range_set_bounds.exit, label %bb.j
-
-bb.j:                                             ; preds = %range_is_empty.exit.i152
+bb.j:                                             ; preds = %range_upb.exit149
   tail call void @__assert_fail(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.1, i32 noundef 79, ptr noundef nonnull @__PRETTY_FUNCTION__.range_set_bounds) #5
   unreachable
 
-range_set_bounds.exit:                            ; preds = %range_is_empty.exit.i152
+range_set_bounds.exit:                            ; preds = %range_upb.exit149
   %i.x = tail call ptr @g_list_insert_before(ptr noundef %.081325, ptr noundef nonnull %.080326, ptr noundef nonnull %1) #4
   br label %bb.t
 
 range_upb.exit160:                                ; preds = %range_lob.exit142
   %i.y = icmp eq i64 %.val7.i, %.val87
-  br i1 %i.y, label %range_lob.exit168, label %range_upb.exit184
+  br i1 %i.y, label %range_lob.exit168, label %range_set_bounds.exit188
 
 range_lob.exit168:                                ; preds = %range_upb.exit160
   %i.z = add i64 %.val86, -1
   store i64 %i.z, ptr %i.s, align 8
   br label %.sink.split
 
-range_upb.exit184:                                ; preds = %range_upb.exit160
+range_set_bounds.exit188:                         ; preds = %range_upb.exit160
   store i64 %i.h, ptr %i.b, align 8
-  %.not.i.i.i185.not = icmp ugt i64 %i.h, %.val7.i
-  br i1 %.not.i.i.i185.not, label %4, label %range_set_bounds.exit188
-
-4:                                                ; preds = %range_upb.exit184
-  tail call void @__assert_fail(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 43, ptr noundef nonnull @__PRETTY_FUNCTION__.range_invariant) #5
-  unreachable
-
-range_set_bounds.exit188:                         ; preds = %range_upb.exit184
   %i.aa = tail call noalias dereferenceable_or_null(24) ptr @g_malloc0(i64 noundef 24) #6 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ac = load i32, ptr %i.ab, align 8
