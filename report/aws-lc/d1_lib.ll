@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %_ZN4bssl22dtls1_is_timer_expiredEP6ssl_st.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !79   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 312
   %i.f = load i64, ptr %i.e, align 8, !tbaa !80
@@ -290,7 +290,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
-  %i.am = load ptr, ptr %i.c, align 8, !tbaa !79  ; 2 uses
+  %i.am = load ptr, ptr %i.c, align 8, !tbaa !79  ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 308
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !85
   %i.ap = icmp ult i32 %i.ao, 13
@@ -301,19 +301,18 @@ _ZN4bssl23dtls1_check_timeout_numEP6ssl_st.exit:  ; preds = %bb.m
   br label %_ZN4bssl22dtls1_is_timer_expiredEP6ssl_st.exit.thread
 
 bb.n:                                             ; preds = %bb.m
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 328 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 328 ; 3 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !28
   %i.as = shl i32 %i.ar, 1
   %spec.store.select.i = call i32 @llvm.umin.i32(i32 %i.as, i32 60000)
-  store i32 %spec.store.select.i, ptr %i.aq, align 8
-  %2 = load ptr, ptr %i.c, align 8, !tbaa !79     ; 3 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 312 ; 2 uses
+  store i32 %spec.store.select.i, ptr %i.aq, align 8, !tbaa !28
+  %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 312 ; 2 uses
   %i.au = load i64, ptr %i.at, align 8, !tbaa !80
   %i.av = icmp eq i64 %i.au, 0
   br i1 %i.av, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 320
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.am, i64 320
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !81
   %i.ay = icmp eq i32 %i.ax, 0
   br i1 %i.ay, label %bb.p, label %bb.q
@@ -321,8 +320,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !82
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 328
-  store i32 %i.ba, ptr %3, align 8, !tbaa !28
+  store i32 %i.ba, ptr %i.aq, align 8, !tbaa !28
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n

@@ -204,7 +204,6 @@ bb.a:
   store i32 50397184, ptr %8, align 8, !tbaa !22
   store ptr %0, ptr %i.a, align 8, !tbaa !23
   call void @_ZN2cv4lineERKNS_17_InputOutputArrayENS_6Point_IiEES4_RKNS_7Scalar_IdEEiii(ptr noundef nonnull align 8 dereferenceable(24) %8, i64 %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(32) %3, i32 noundef %5, i32 noundef %6, i32 noundef %7)
-  %.sroa.7.0.extract.shift = lshr i64 %2, 32
   %.sroa.042.0.extract.trunc = trunc i64 %1 to i32
   %.sroa.749.0.extract.shift = lshr i64 %1, 32
   %.sroa.749.0.extract.trunc = trunc nuw i64 %.sroa.749.0.extract.shift to i32
@@ -214,11 +213,9 @@ bb.a:
   %i.e = sitofp i32 %4 to double
   %i.f = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %11 = trunc i64 %2 to i32
-  %12 = trunc nuw i64 %.sroa.7.0.extract.shift to i32
-  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
-  %14 = insertelement <2 x i32> %13, i32 %11, i64 1
-  %i.h = sitofp <2 x i32> %14 to <2 x double>     ; 4 uses
+  %11 = bitcast i64 %2 to <2 x i32>
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %i.h = sitofp <2 x i32> %12 to <2 x double>     ; 4 uses
   %i.i = extractelement <2 x double> %i.h, i64 0
   %i.j = fsub double %i.c, %i.i
   %i.k = extractelement <2 x double> %i.h, i64 1

@@ -205,9 +205,9 @@ _ZN5ImGuiL22UpdateTexturesNewFrameEv.exit:        ; preds = %.lr.ph28.i, %._crit
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ju, i64 3520
   %i.kk = load i8, ptr %i.kj, align 8, !tbaa !1367, !range !100, !noundef !236
   %spec.store.select.i = zext nneg i8 %i.kk to i32 ; 4 uses
-  store i32 %spec.store.select.i, ptr %i.ki, align 4
+  store i32 %spec.store.select.i, ptr %i.ki, align 4, !tbaa !1368
   %i.kl = getelementptr inbounds nuw i8, ptr %i.ju, i64 3521
-  %i.km = load i8, ptr %i.kl, align 1, !tbaa !1368, !range !100, !noundef !236
+  %i.km = load i8, ptr %i.kl, align 1, !tbaa !1369, !range !100, !noundef !236
   %i.kn = trunc nuw i8 %i.km to i1
   br i1 %i.kn, label %bb.aq, label %bb.as
 
@@ -218,7 +218,7 @@ _ZN6ImRect3AddERKS_.exit.i:                       ; preds = %_ZN5ImGuiL22UpdateT
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
   %i.kq = load float, ptr %i.kp, align 8, !tbaa !433 ; 3 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %i.ko, i64 12
-  %i.ks = load float, ptr %i.kr, align 4, !tbaa !1369 ; 3 uses
+  %i.ks = load float, ptr %i.kr, align 4, !tbaa !1370 ; 3 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ko, i64 16
   %i.ku = load float, ptr %i.kt, align 8, !tbaa !745
   %i.kv = fadd float %i.kq, %i.ku                 ; 2 uses
@@ -248,14 +248,14 @@ _ZN6ImRect3AddERKS_.exit.i:                       ; preds = %_ZN5ImGuiL22UpdateT
 bb.aq:                                            ; preds = %._crit_edge.i318
   %i.le = getelementptr inbounds nuw i8, ptr %i.ju, i64 96
   %i.lf = load ptr, ptr %i.le, align 8, !tbaa !455
-  %i.lg = load i32, ptr %i.lf, align 8, !tbaa !1370
+  %i.lg = load i32, ptr %i.lf, align 8, !tbaa !1371
   %i.lh = and i32 %i.lg, 4
   %.not24.i = icmp eq i32 %i.lh, 0
   br i1 %.not24.i, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
   %i.li = or disjoint i32 %spec.store.select.i, 2 ; 2 uses
-  store i32 %i.li, ptr %i.ki, align 4, !tbaa !1371
+  store i32 %i.li, ptr %i.ki, align 4, !tbaa !1368
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %._crit_edge.i318
@@ -267,7 +267,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq, %._c
 
 bb.at:                                            ; preds = %bb.as
   %i.ln = or i32 %i.lj, 4                         ; 2 uses
-  store i32 %i.ln, ptr %i.ki, align 4, !tbaa !1371
+  store i32 %i.ln, ptr %i.ki, align 4, !tbaa !1368
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
@@ -280,7 +280,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 
 bb.av:                                            ; preds = %bb.au
   %i.ls = or i32 %i.lo, 8
-  store i32 %i.ls, ptr %i.ki, align 4, !tbaa !1371
+  store i32 %i.ls, ptr %i.ki, align 4, !tbaa !1368
   br label %_ZL23SetupDrawListSharedDatav.exit
 
 _ZL23SetupDrawListSharedDatav.exit:               ; preds = %bb.au, %bb.av
@@ -683,7 +683,7 @@ bb.q:                                             ; preds = %.thread148, %bb.f
   %i.bz = phi i32 [ %i.ac, %.thread148 ], [ %i.ah, %bb.f ]
   %i.ca = phi ptr [ %i.z, %.thread148 ], [ %i.ae, %bb.f ]
   %.0150 = phi ptr [ %.0.ph, %.thread148 ], [ %i.ad, %bb.f ] ; 3 uses
-  %i.cb = phi ptr [ %.ph147, %.thread148 ], [ %i.i, %bb.f ] ; 7 uses
+  %i.cb = phi ptr [ %.ph147, %.thread148 ], [ %i.i, %bb.f ] ; 6 uses
   %i.cc = phi i32 [ %.ph146, %.thread148 ], [ %i.j, %bb.f ]
   %i.cd = and i32 %i.cc, 32
   %.not113 = icmp eq i32 %i.cd, 0
@@ -940,8 +940,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.gt = getelementptr inbounds nuw [16 x i8], ptr %i.gs, i64 %i.ge
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.gk, i64 16, i1 false), !tbaa.struct !386
   %i.gu = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 9 uses
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 8224 ; 2 uses
-  %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !370
+  %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 8224
+  %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !370 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 984
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !371
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 1048
@@ -1005,7 +1005,7 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.thread153, %bb.av, %bb.au
-  %i.ig = phi i32 [ %.pre164, %.thread153 ], [ %i.if, %bb.av ], [ %i.hh, %bb.au ] ; 3 uses
+  %i.ig = phi i32 [ %.pre164, %.thread153 ], [ %i.if, %bb.av ], [ %i.hh, %bb.au ] ; 4 uses
   %i.ih = and i32 %i.ig, 4096
   %.not127 = icmp eq i32 %i.ih, 0
   br i1 %.not127, label %bb.az, label %bb.ax
@@ -1017,7 +1017,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ik = getelementptr inbounds nuw i8, ptr %i.a, i64 8300 ; 2 uses
   %i.il = lshr i32 %i.ig, 4
   %spec.store.select = and i32 %i.il, 32          ; 2 uses
-  store i32 %spec.store.select, ptr %i.ik, align 4
+  store i32 %spec.store.select, ptr %i.ik, align 4, !tbaa !819
   %i.im = and i32 %i.ig, 1024
   %.not129 = icmp eq i32 %i.im, 0
   br i1 %.not129, label %bb.az, label %bb.ay
@@ -1028,24 +1028,18 @@ bb.ay:                                            ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ax, %bb.ay, %bb.aw
-  %3 = load i32, ptr %i.cb, align 4, !tbaa !375
-  %i.io = and i32 %3, 16384
+  %i.io = and i32 %i.ig, 16384
   %i.ip = icmp eq i32 %i.io, 0
-  br i1 %i.ip, label %4, label %bb.be
+  br i1 %i.ip, label %bb.ba, label %bb.be
 
-4:                                                ; preds = %bb.az
-  %5 = load ptr, ptr %i.gv, align 8, !tbaa !370   ; 2 uses
-  %.not.i136 = icmp eq ptr %5, null
-  br i1 %.not.i136, label %bb.bb, label %bb.ba
-
-bb.ba:                                            ; preds = %4
-  %i.iq = getelementptr inbounds nuw i8, ptr %5, i64 20
+bb.ba:                                            ; preds = %bb.az
+  %i.iq = getelementptr inbounds nuw i8, ptr %i.gw, i64 20
   %i.ir = load i32, ptr %i.iq, align 4, !tbaa !614
   %i.is = and i32 %i.ir, 65536
   %.not13.i137 = icmp eq i32 %i.is, 0
   br i1 %.not13.i137, label %bb.bb, label %.sink.split.i138
 
-bb.bb:                                            ; preds = %bb.ba, %4
+bb.bb:                                            ; preds = %bb.ba
   %i.it = getelementptr inbounds nuw i8, ptr %i.gu, i64 8304
   %i.iu = load i32, ptr %i.it, align 8, !tbaa !551
   switch i32 %i.iu, label %.thread.i140 [
@@ -1448,10 +1442,10 @@ begin_hunk_2_@llvm.fabs.v2f32
 !1365 = !{!220, !74, i64 4632}
 !1366 = !{!220, !74, i64 3528}
 !1367 = !{!220, !78, i64 3520}
-!1368 = !{!220, !78, i64 3521}
-!1369 = !{!432, !74, i64 12}
-!1370 = !{!467, !71, i64 0}
-!1371 = !{!220, !71, i64 4644}
+!1368 = !{!220, !71, i64 4644}
+!1369 = !{!220, !78, i64 3521}
+!1370 = !{!432, !74, i64 12}
+!1371 = !{!467, !71, i64 0}
 !1372 = !{!220, !78, i64 3522}
 !1373 = !{!220, !74, i64 4640}
 !1374 = !{!220, !74, i64 4532}

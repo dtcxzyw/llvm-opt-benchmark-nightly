@@ -205,6 +205,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
+  %5 = phi i32 [ 2, %.lr.ph ], [ %16, %.loopexit ] ; 2 uses
+  %6 = phi i32 [ 2, %.lr.ph ], [ %17, %.loopexit ] ; 2 uses
+  %7 = phi i32 [ 0, %.lr.ph ], [ %18, %.loopexit ] ; 2 uses
+  %8 = phi ptr [ null, %.lr.ph ], [ %19, %.loopexit ] ; 2 uses
   %indvars.iv = phi i64 [ %i.p, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.076145 = phi i32 [ -1, %.lr.ph ], [ %.2, %.loopexit ] ; 5 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
@@ -237,19 +241,23 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8
   call void %i.ae(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %i.g, ptr noundef nonnull align 4 dereferenceable(4) %i.h, i32 noundef %i.w)
+  %.pre = load ptr, ptr %i.e, align 8, !tbaa !67
+  %.pre152 = load i32, ptr %i.f, align 4, !tbaa !7
+  %.pre153 = load i32, ptr %i.h, align 4, !tbaa !69
+  %.pre154 = load i32, ptr %i.c, align 4, !tbaa !69
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %.1.a = phi i32 [ %i.w, %bb.f ], [ %.076145, %bb.c ]
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !67
-  %6 = load i32, ptr %i.f, align 4, !tbaa !7
-  %7 = mul nsw i32 %6, %i.x
-  %8 = sext i32 %7 to i64
-  %9 = getelementptr inbounds i8, ptr %5, i64 %8  ; 12 uses
-  %10 = load i32, ptr %i.h, align 4, !tbaa !69
-  %11 = icmp eq i32 %10, 3                        ; 6 uses
-  %12 = load i32, ptr %i.c, align 4, !tbaa !69
-  %i.af = icmp eq i32 %12, 0
+  %.1.a = phi i32 [ %.pre154, %bb.f ], [ %5, %bb.c ] ; 2 uses
+  %9 = phi i32 [ %.pre153, %bb.f ], [ %6, %bb.c ] ; 2 uses
+  %10 = phi i32 [ %.pre152, %bb.f ], [ %7, %bb.c ] ; 2 uses
+  %11 = phi ptr [ %.pre, %bb.f ], [ %8, %bb.c ]   ; 2 uses
+  %.1 = phi i32 [ %i.w, %bb.f ], [ %.076145, %bb.c ]
+  %12 = mul nsw i32 %10, %i.x
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds i8, ptr %11, i64 %13 ; 12 uses
+  %15 = icmp eq i32 %9, 3                         ; 6 uses
+  %i.af = icmp eq i32 %.1.a, 0
   %i.ag = load ptr, ptr %i.a, align 8             ; 6 uses
   %i.ah = load i32, ptr %i.d, align 4             ; 6 uses
   %i.ai = load float, ptr %i.i, align 4, !tbaa !40 ; 4 uses
@@ -257,15 +265,15 @@ bb.g:                                             ; preds = %bb.f, %bb.c
 
 .split.us:                                        ; preds = %bb.g
   %i.aj = load <2 x float>, ptr %i.k, align 4, !tbaa !40 ; 3 uses
-  br i1 %11, label %bb.i, label %bb.h
+  br i1 %15, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.split.us
-  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !7
   br label %bb.j
 
 bb.i:                                             ; preds = %.split.us
-  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.am = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.an = load i16, ptr %i.am, align 2, !tbaa !50
   %i.ao = zext i16 %i.an to i32
   br label %bb.j
@@ -280,15 +288,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 4
   %i.aw = load <2 x float>, ptr %i.av, align 4, !tbaa !40
   %i.ax = fmul <2 x float> %i.aw, %i.aj
-  br i1 %11, label %bb.l, label %bb.k
+  br i1 %15, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.ay = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !7
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %i.ba = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.ba = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.bb = load i16, ptr %i.ba, align 2, !tbaa !50
   %i.bc = zext i16 %i.bb to i32
   br label %bb.m
@@ -303,14 +311,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
   %i.bk = load <2 x float>, ptr %i.bj, align 4, !tbaa !40
   %i.bl = fmul <2 x float> %i.bk, %i.aj
-  br i1 %11, label %bb.o, label %bb.n
+  br i1 %15, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bm = load i32, ptr %9, align 4, !tbaa !7
+  %i.bm = load i32, ptr %14, align 4, !tbaa !7
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
 
 bb.o:                                             ; preds = %bb.m
-  %i.bn = load i16, ptr %9, align 2, !tbaa !50
+  %i.bn = load i16, ptr %14, align 2, !tbaa !50
   %i.bo = zext i16 %i.bn to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
 
@@ -330,7 +338,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit:          ; preds = %bb.o, %bb.n
   %i.by = fpext float %i.ai to double             ; 3 uses
   %i.bz = load <2 x float>, ptr %i.k, align 4, !tbaa !40
   %i.ca = fpext <2 x float> %i.bz to <2 x double> ; 3 uses
-  br i1 %11, label %bb.p, label %bb.q
+  br i1 %15, label %bb.p, label %bb.q
 
 _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147, %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit
   %.sroa.24.0 = phi float [ %i.au, %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit ], [ %i.ev, %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147 ] ; 3 uses
@@ -408,13 +416,13 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_Z8btSetMinIfEvRT_R
   br label %.loopexit
 
 bb.p:                                             ; preds = %.split
-  %i.ek = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.ek = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.el = load i16, ptr %i.ek, align 2, !tbaa !50
   %i.em = zext i16 %i.el to i32
   br label %bb.r
 
 bb.q:                                             ; preds = %.split
-  %i.en = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.en = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !7
   br label %bb.r
 
@@ -430,15 +438,15 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.ex = load <2 x double>, ptr %i.ew, align 8, !tbaa !71
   %i.ey = fmul <2 x double> %i.ex, %i.ca
   %i.ez = fptrunc <2 x double> %i.ey to <2 x float>
-  br i1 %11, label %bb.t, label %bb.s
+  br i1 %15, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.fa = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.fa = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !7
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r
-  %i.fc = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.fc = getelementptr inbounds nuw i8, ptr %14, i64 2
   %i.fd = load i16, ptr %i.fc, align 2, !tbaa !50
   %i.fe = zext i16 %i.fd to i32
   br label %bb.u
@@ -455,14 +463,14 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.fn = load <2 x double>, ptr %i.fm, align 8, !tbaa !71
   %i.fo = fmul <2 x double> %i.fn, %i.ca
   %i.fp = fptrunc <2 x double> %i.fo to <2 x float>
-  br i1 %11, label %bb.w, label %bb.v
+  br i1 %15, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.fq = load i32, ptr %9, align 4, !tbaa !7
+  %i.fq = load i32, ptr %14, align 4, !tbaa !7
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147
 
 bb.w:                                             ; preds = %bb.u
-  %i.fr = load i16, ptr %9, align 2, !tbaa !50
+  %i.fr = load i16, ptr %14, align 2, !tbaa !50
   %i.fs = zext i16 %i.fr to i32
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147
 
@@ -497,12 +505,12 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   store i16 %i.gq, ptr %i.s, align 4, !tbaa !50
   %i.gr = load i16, ptr %i.gm, align 2, !tbaa !50
   %spec.store.select = call i16 @llvm.umin.i16(i16 %i.gq, i16 %i.gr)
-  store i16 %spec.store.select, ptr %i.s, align 4
+  store i16 %spec.store.select, ptr %i.s, align 4, !tbaa !50
   %i.gs = load i16, ptr %i.gn, align 2, !tbaa !50 ; 2 uses
   store i16 %i.gs, ptr %i.go, align 2, !tbaa !50
   %i.gt = load i16, ptr %i.gp, align 2, !tbaa !50
   %spec.store.select81 = call i16 @llvm.umax.i16(i16 %i.gs, i16 %i.gt)
-  store i16 %spec.store.select81, ptr %i.go, align 2
+  store i16 %spec.store.select81, ptr %i.go, align 2, !tbaa !50
   %i.gu = getelementptr inbounds nuw i8, ptr %i.ge, i64 2
   %i.gv = load i16, ptr %i.gu, align 2, !tbaa !50 ; 2 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 2 uses
@@ -510,7 +518,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gm, i64 2
   %i.gy = load i16, ptr %i.gx, align 2, !tbaa !50
   %spec.store.select.1 = call i16 @llvm.umin.i16(i16 %i.gv, i16 %i.gy)
-  store i16 %spec.store.select.1, ptr %i.gw, align 2
+  store i16 %spec.store.select.1, ptr %i.gw, align 2, !tbaa !50
   %i.gz = getelementptr inbounds nuw i8, ptr %i.ge, i64 8
   %i.ha = load i16, ptr %i.gz, align 4, !tbaa !50 ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
@@ -518,7 +526,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gm, i64 8
   %i.hd = load i16, ptr %i.hc, align 2, !tbaa !50
   %spec.store.select81.1 = call i16 @llvm.umax.i16(i16 %i.ha, i16 %i.hd)
-  store i16 %spec.store.select81.1, ptr %i.hb, align 4
+  store i16 %spec.store.select81.1, ptr %i.hb, align 4, !tbaa !50
   %i.he = getelementptr inbounds nuw i8, ptr %i.ge, i64 4
   %i.hf = load i16, ptr %i.he, align 4, !tbaa !50 ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
@@ -526,7 +534,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   %i.hh = getelementptr inbounds nuw i8, ptr %i.gm, i64 4
   %i.hi = load i16, ptr %i.hh, align 2, !tbaa !50
   %spec.store.select.2 = call i16 @llvm.umin.i16(i16 %i.hf, i16 %i.hi)
-  store i16 %spec.store.select.2, ptr %i.hg, align 4
+  store i16 %spec.store.select.2, ptr %i.hg, align 4, !tbaa !50
   %i.hj = getelementptr inbounds nuw i8, ptr %i.ge, i64 10
   %i.hk = load i16, ptr %i.hj, align 2, !tbaa !50 ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.s, i64 10 ; 2 uses
@@ -534,11 +542,15 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gm, i64 10
   %i.hn = load i16, ptr %i.hm, align 2, !tbaa !50
   %spec.store.select81.2 = call i16 @llvm.umax.i16(i16 %i.hk, i16 %i.hn)
-  store i16 %spec.store.select81.2, ptr %i.hl, align 2
+  store i16 %spec.store.select81.2, ptr %i.hl, align 2, !tbaa !50
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_Z8btSetMinIfEvRT_RKS0_.exit.i
-  %.2 = phi i32 [ %.1.a, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %.076145, %.loopexit.loopexit ] ; 3 uses
+  %16 = phi i32 [ %.1.a, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %5, %.loopexit.loopexit ]
+  %17 = phi i32 [ %9, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %6, %.loopexit.loopexit ]
+  %18 = phi i32 [ %10, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %7, %.loopexit.loopexit ]
+  %19 = phi ptr [ %11, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %8, %.loopexit.loopexit ]
+  %.2 = phi i32 [ %.1, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %.076145, %.loopexit.loopexit ] ; 3 uses
   %.not.not = icmp sgt i64 %indvars.iv.next, %i.q
   br i1 %.not.not, label %bb.b, label %._crit_edge
 

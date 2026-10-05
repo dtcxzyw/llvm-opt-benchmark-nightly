@@ -205,9 +205,9 @@ bb.x:                                             ; preds = %bb.e
   %i.ee = load ptr, ptr %i.i, align 16, !tbaa !44 ; 34 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.eg = load ptr, ptr %i.ef, align 16, !tbaa !60 ; 2 uses
-  %i.eh = load ptr, ptr %i.w, align 8, !tbaa !126 ; 28 uses
+  %i.eh = load ptr, ptr %i.w, align 8, !tbaa !126 ; 30 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 112 ; 2 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.ee, i64 104 ; 3 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.ee, i64 104 ; 4 uses
   store i32 0, ptr %i.ej, align 8, !tbaa !129
   %i.ek = getelementptr i8, ptr %i.eh, i64 680
   %.val.val.i39 = load i32, ptr %i.ek, align 8, !tbaa !159 ; 3 uses
@@ -559,7 +559,9 @@ bb.av:                                            ; preds = %_ZL20_get_autoscale
   %i.kh = getelementptr inbounds nuw i8, ptr %i.ee, i64 236
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ee, i64 428
   %i.kj = call fastcc noundef i32 @_ZL18_init_coeffs_md_v1PK10dt_image_tPK20dt_iop_lens_params_tfPfS5_PA16_fS5_(ptr noundef nonnull %i.ei, ptr noundef nonnull readonly %.0, float noundef %i.ke, ptr noundef nonnull %i.kf, ptr noundef nonnull %i.kg, ptr noundef nonnull %i.kh, ptr noundef nonnull %i.ki)
-  br label %.sink.split.i41
+  store i32 %i.kj, ptr %i.ej, align 8, !tbaa !129
+  %.pre149.i = load ptr, ptr %i.w, align 8, !tbaa !126
+  br label %bb.co
 
 bb.aw:                                            ; preds = %bb.y
   %i.kk = getelementptr i8, ptr %i.ee, i64 108    ; 18 uses
@@ -962,7 +964,7 @@ bb.ce:                                            ; preds = %.critedge399.i.i
   br i1 %exitcond.not.i56.i, label %.loopexit.i.i, label %scalar.ph, !llvm.loop !389
 
 .loopexit.i.i:                                    ; preds = %.critedge400.i.i, %bb.by, %.critedge392.sink.split.i.i, %vector.body, %middle.block466, %bb.bg, %bb.ax, %bb.aw
-  %.0327.i.i = phi i32 [ 0, %bb.aw ], [ 16, %bb.bg ], [ %i.kz, %bb.ax ], [ 16, %vector.body ], [ %i.kz, %middle.block466 ], [ 16, %bb.by ], [ %i.kz, %.critedge392.sink.split.i.i ], [ 16, %.critedge400.i.i ] ; 8 uses
+  %.0327.i.i = phi i32 [ 0, %bb.aw ], [ 16, %bb.bg ], [ %i.kz, %bb.ax ], [ 16, %vector.body ], [ %i.kz, %middle.block466 ], [ 16, %bb.by ], [ %i.kz, %.critedge392.sink.split.i.i ], [ 16, %.critedge400.i.i ] ; 6 uses
   %i.abt = getelementptr inbounds nuw i8, ptr %i.eh, i64 1508
   %i.abu = load <2 x i32>, ptr %i.abt, align 4, !tbaa !24
   %i.abv = sitofp <2 x i32> %i.abu to <2 x float>
@@ -1231,12 +1233,12 @@ middle.block479:                                  ; preds = %vector.body473
   %exitcond593.not.i.i = icmp eq i64 %indvars.iv.next590.i.i, %wide.trip.count.i425.i.i
   br i1 %exitcond593.not.i.i, label %.sink.split.i41, label %.lr.ph499.i.i, !llvm.loop !392
 
-.sink.split.i41:                                  ; preds = %.lr.ph499.i.i, %middle.block479, %.preheader.i60.i, %bb.av
-  %.0327.i.sink.i = phi i32 [ %i.kj, %bb.av ], [ %.0327.i.i, %.preheader.i60.i ], [ %.0327.i.i, %middle.block479 ], [ %.0327.i.i, %.lr.ph499.i.i ]
-  store i32 %.0327.i.sink.i, ptr %i.ej, align 8, !tbaa !129
+.sink.split.i41:                                  ; preds = %.lr.ph499.i.i, %middle.block479, %.preheader.i60.i
+  store i32 %.0327.i.i, ptr %i.ej, align 8, !tbaa !129
   br label %bb.co
 
-bb.co:                                            ; preds = %.sink.split.i41, %bb.y
+bb.co:                                            ; preds = %.sink.split.i41, %bb.av, %bb.y
+  %5 = phi ptr [ %i.eh, %bb.y ], [ %i.eh, %.sink.split.i41 ], [ %.pre149.i, %bb.av ]
   %i.agt = getelementptr inbounds nuw i8, ptr %.0, i64 328
   %i.agu = load float, ptr %i.agt, align 4, !tbaa !184 ; 3 uses
   %i.agv = getelementptr inbounds nuw i8, ptr %i.ee, i64 96
@@ -1244,8 +1246,7 @@ bb.co:                                            ; preds = %.sink.split.i41, %b
   %i.agx = fcmp reassoc nsz arcp contract afn ogt float %i.agu, 2.000000e+00
   %or.cond53.i = or i1 %i.agw, %i.agx
   %spec.store.select.i = select i1 %or.cond53.i, float 1.000000e+00, float %i.agu
-  store float %spec.store.select.i, ptr %i.agv, align 8
-  %5 = load ptr, ptr %i.w, align 8, !tbaa !126
+  store float %spec.store.select.i, ptr %i.agv, align 8, !tbaa !131
   %i.agy = load i32, ptr %5, align 16, !tbaa !402
   %i.agz = icmp ne i32 %i.agy, 0
   %i.aha = icmp ne ptr %i.eg, null

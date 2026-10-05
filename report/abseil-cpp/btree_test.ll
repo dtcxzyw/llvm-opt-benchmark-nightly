@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.preheader.i.i.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i.i.i = icmp eq ptr %i.m, null
   %spec.store.select.i.i.i = select i1 %.not12.i.i.i, ptr %storemerge.i.i.i, ptr %i.m
-  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8, !tbaa !906
   br label %_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE13_M_clone_nodeILb0ENS5_20_Reuse_or_alloc_nodeEEEPSt13_Rb_tree_nodeIiESA_RT0_.exit
 
 bb.f:                                             ; preds = %bb.c
@@ -297,7 +297,7 @@ bb.o:                                             ; preds = %.preheader.i.i.i38
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !899 ; 2 uses
   %.not12.i.i.i41 = icmp eq ptr %i.al, null
   %spec.store.select.i.i.i42 = select i1 %.not12.i.i.i41, ptr %storemerge.i.i.i39, ptr %i.al
-  store ptr %spec.store.select.i.i.i42, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i42, ptr %i.a, align 8, !tbaa !906
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.m
@@ -700,7 +700,7 @@ bb.e:                                             ; preds = %.preheader.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i = icmp eq ptr %i.m, null
   %spec.store.select.i = select i1 %.not12.i, ptr %storemerge.i, ptr %i.m
-  store ptr %spec.store.select.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i, ptr %i.a, align 8, !tbaa !946
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.c
@@ -1103,7 +1103,7 @@ bb.e:                                             ; preds = %.preheader.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i = icmp eq ptr %i.m, null
   %spec.store.select.i = select i1 %.not12.i, ptr %storemerge.i, ptr %i.m
-  store ptr %spec.store.select.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i, ptr %i.a, align 8, !tbaa !993
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.c
@@ -1506,7 +1506,7 @@ bb.e:                                             ; preds = %.preheader.i.i.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i.i.i = icmp eq ptr %i.m, null
   %spec.store.select.i.i.i = select i1 %.not12.i.i.i, ptr %storemerge.i.i.i, ptr %i.m
-  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i, ptr %i.a, align 8, !tbaa !1038
   br label %_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE13_M_clone_nodeILb0ENS8_20_Reuse_or_alloc_nodeEEEPSt13_Rb_tree_nodeIS2_ESD_RT0_.exit
 
 bb.f:                                             ; preds = %bb.c
@@ -1598,7 +1598,7 @@ bb.o:                                             ; preds = %.preheader.i.i.i38
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !899 ; 2 uses
   %.not12.i.i.i41 = icmp eq ptr %i.al, null
   %spec.store.select.i.i.i42 = select i1 %.not12.i.i.i41, ptr %storemerge.i.i.i39, ptr %i.al
-  store ptr %spec.store.select.i.i.i42, ptr %i.a, align 8
+  store ptr %spec.store.select.i.i.i42, ptr %i.a, align 8, !tbaa !1038
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.m
@@ -2001,7 +2001,7 @@ bb.e:                                             ; preds = %.preheader.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i = icmp eq ptr %i.m, null
   %spec.store.select.i = select i1 %.not12.i, ptr %storemerge.i, ptr %i.m
-  store ptr %spec.store.select.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i, ptr %i.a, align 8, !tbaa !1081
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.c
@@ -2404,7 +2404,7 @@ bb.e:                                             ; preds = %.preheader.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !899  ; 2 uses
   %.not12.i = icmp eq ptr %i.m, null
   %spec.store.select.i = select i1 %.not12.i, ptr %storemerge.i, ptr %i.m
-  store ptr %spec.store.select.i, ptr %i.a, align 8
+  store ptr %spec.store.select.i, ptr %i.a, align 8, !tbaa !1124
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.c

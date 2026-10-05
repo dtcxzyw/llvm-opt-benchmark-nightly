@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ac = icmp eq <2 x ptr> %wide.load35, splat (ptr null)
   %i.ad = select <2 x i1> %i.ab, <2 x ptr> <ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE>, <2 x ptr> %wide.load
   %i.ae = select <2 x i1> %i.ac, <2 x ptr> <ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE>, <2 x ptr> %wide.load35
-  store <2 x ptr> %i.ad, ptr %i.z, align 8
-  store <2 x ptr> %i.ae, ptr %i.aa, align 8
+  store <2 x ptr> %i.ad, ptr %i.z, align 8, !tbaa !111
+  store <2 x ptr> %i.ae, ptr %i.aa, align 8, !tbaa !111
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.af = icmp eq i64 %index.next, %n.vec
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !504
@@ -270,7 +270,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !111 ; 2 uses
   %i.bc = icmp eq ptr %i.bb, null
   %spec.store.select = select i1 %i.bc, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr %i.bb
-  store ptr %spec.store.select, ptr %i.ba, align 8
+  store ptr %spec.store.select, ptr %i.ba, align 8, !tbaa !111
   %indvars.iv.next31 = add nuw nsw i64 %indvars.iv30, 1 ; 2 uses
   %exitcond34.not = icmp eq i64 %indvars.iv.next31, %wide.trip.count33
   br i1 %exitcond34.not, label %._crit_edge, label %.lr.ph28, !llvm.loop !505
@@ -373,8 +373,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.al = icmp eq <2 x ptr> %wide.load26, splat (ptr null)
   %i.am = select <2 x i1> %i.ak, <2 x ptr> <ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE>, <2 x ptr> %wide.load
   %i.an = select <2 x i1> %i.al, <2 x ptr> <ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE>, <2 x ptr> %wide.load26
-  store <2 x ptr> %i.am, ptr %i.ai, align 8
-  store <2 x ptr> %i.an, ptr %i.aj, align 8
+  store <2 x ptr> %i.am, ptr %i.ai, align 8, !tbaa !111
+  store <2 x ptr> %i.an, ptr %i.aj, align 8, !tbaa !111
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ao = icmp eq i64 %index.next, %n.vec
   br i1 %i.ao, label %middle.block, label %vector.body, !llvm.loop !506
@@ -435,7 +435,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !111 ; 2 uses
   %i.bl = icmp eq ptr %i.bk, null
   %spec.store.select.i = select i1 %i.bl, ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE, ptr %i.bk
-  store ptr %spec.store.select.i, ptr %i.bj, align 8
+  store ptr %spec.store.select.i, ptr %i.bj, align 8, !tbaa !111
   %indvars.iv.next31.i = add nuw nsw i64 %indvars.iv30.i, 1 ; 2 uses
   %exitcond34.not.i = icmp eq i64 %indvars.iv.next31.i, %i.n
   br i1 %exitcond34.not.i, label %_ZN6google8protobuf8internal18MakeDenseEnumCacheB5cxx11EPKNS0_14EnumDescriptorEii.exit, label %.lr.ph28.i, !llvm.loop !507

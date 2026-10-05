@@ -205,13 +205,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define hidden void @phar_entry_delref(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !94   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !94   ; 8 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 146
-  %i.d = load i16, ptr %i.c, align 2
+  %i.d = load i16, ptr %i.c, align 2              ; 5 uses
   %i.e = and i16 %i.d, 256
   %.not18 = icmp eq i16 %i.e, 0
   br i1 %.not18, label %bb.c, label %bb.j
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load i32, ptr %i.f, align 8, !tbaa !95
   %i.h = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1)
   %spec.store.select = add nsw i32 %i.h, -1
-  store i32 %spec.store.select, ptr %i.f, align 8
+  store i32 %spec.store.select, ptr %i.f, align 8, !tbaa !95
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !96   ; 5 uses
   %.not19 = icmp eq ptr %i.j, null
@@ -248,18 +248,20 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.r = tail call i32 @_php_stream_free(ptr noundef nonnull %i.j, i32 noundef 3) #23 ; 0 uses
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !94  ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 146
+  %.pre24 = load i16, ptr %.phi.trans.insert, align 2
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !94     ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 146
-  %3 = load i16, ptr %2, align 2
-  %i.s = and i16 %3, 32
+  %1 = phi i16 [ %.pre24, %bb.g ], [ %i.d, %bb.f ], [ %i.d, %bb.e ], [ %i.d, %bb.d ], [ %i.d, %bb.c ]
+  %2 = phi ptr [ %.pre, %bb.g ], [ %i.b, %bb.f ], [ %i.b, %bb.e ], [ %i.b, %bb.d ], [ %i.b, %bb.c ]
+  %i.s = and i16 %1, 32
   %.not23 = icmp eq i16 %i.s, 0
   br i1 %.not23, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @destroy_phar_manifest_entry_int(ptr noundef nonnull %1)
+  tail call void @destroy_phar_manifest_entry_int(ptr noundef nonnull %2)
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !94
   tail call void @_efree(ptr noundef %i.t) #23
   br label %bb.j

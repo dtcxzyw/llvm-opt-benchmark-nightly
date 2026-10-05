@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k, %bb.i, %bb.g
   %i.dn = load ptr, ptr %.lcssa363.sroa.phi, align 8, !tbaa !112 ; 3 uses
   %i.do = fcmp ogt double %.lcssa362, 0.000000e+00 ; 3 uses
   %spec.store.select = select i1 %i.do, ptr %.1145307, ptr %i.dn
-  store ptr %spec.store.select, ptr %.lcssa363.sroa.phi, align 8
+  store ptr %spec.store.select, ptr %.lcssa363.sroa.phi, align 8, !tbaa !112
   %spec.select = select i1 %i.do, ptr %.1141308, ptr %.1145307 ; 2 uses
   %spec.select154 = select i1 %i.do, ptr %.1145307, ptr %.1141308 ; 2 uses
   %.not152 = icmp eq ptr %i.dn, null
@@ -608,7 +608,7 @@ _ZN10tetgenmesh9makepointEPPdNS_8verttypeE.exit:  ; preds = %bb.u, %bb.v, %bb.w,
   %i.ge = load i32, ptr %i.gd, align 4, !tbaa !143 ; 2 uses
   %.not46 = icmp eq i32 %i.ge, 0
   %spec.store.select = select i1 %.not46, i32 0, i32 4
-  store i32 %spec.store.select, ptr %i.gb, align 8
+  store i32 %spec.store.select, ptr %i.gb, align 8, !tbaa !323
   %i.gf = getelementptr inbounds nuw i8, ptr %9, i64 28
   store i32 %5, ptr %i.gf, align 4, !tbaa !348
   %i.gg = getelementptr inbounds nuw i8, ptr %9, i64 40
@@ -1011,7 +1011,7 @@ _ZN10tetgenmesh7stpivotERNS_4faceERNS_7trifaceE.exit: ; preds = %bb.af, %bb.ag
   %i.ri = load i32, ptr %i.rh, align 4, !tbaa !143 ; 2 uses
   %.not134 = icmp eq i32 %i.ri, 0
   %spec.store.select = select i1 %.not134, i32 1, i32 5
-  store i32 %spec.store.select, ptr %i.rf, align 8
+  store i32 %spec.store.select, ptr %i.rf, align 8, !tbaa !323
   %i.rj = and i32 %6, -2                          ; 2 uses
   %i.rk = getelementptr inbounds nuw i8, ptr %10, i64 28
   store i32 %i.rj, ptr %i.rk, align 4, !tbaa !348
@@ -1414,7 +1414,7 @@ bb.a:
   %i.g = load i64, ptr %i.f, align 8, !tbaa !400
   %i.h = add nsw i64 %i.g, 1                      ; 3 uses
   store i64 %i.h, ptr %i.f, align 8, !tbaa !400
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !218  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 148
   %i.l = load i32, ptr %i.k, align 4, !tbaa !183
@@ -1611,10 +1611,10 @@ bb.k:                                             ; preds = %_ZN10tetgenmesh9mak
   %i.ds = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.dt = load ptr, ptr %i.i, align 8, !tbaa !218
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 44
-  %i.dv = load i32, ptr %i.du, align 4, !tbaa !143
+  %i.dv = load i32, ptr %i.du, align 4, !tbaa !143 ; 2 uses
   %.not216 = icmp eq i32 %i.dv, 0
   %spec.store.select = select i1 %.not216, i32 3, i32 7
-  store i32 %spec.store.select, ptr %i.ds, align 8
+  store i32 %spec.store.select, ptr %i.ds, align 8, !tbaa !323
   %i.dw = and i32 %4, -4                          ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %5, i64 28
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !348
@@ -1625,11 +1625,8 @@ bb.k:                                             ; preds = %_ZN10tetgenmesh9mak
   store <4 x i32> <i32 3, i32 2, i32 0, i32 1>, ptr %i.dr, align 4, !tbaa !59
   %i.ea = getelementptr inbounds nuw i8, ptr %5, i64 20
   store i32 1, ptr %i.ea, align 4, !tbaa !334
-  %8 = load ptr, ptr %i.i, align 8, !tbaa !218
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 44
-  %10 = load i32, ptr %9, align 4, !tbaa !143
   %i.eb = getelementptr inbounds nuw i8, ptr %5, i64 36
-  store i32 %10, ptr %i.eb, align 4, !tbaa !326
+  store i32 %i.dv, ptr %i.eb, align 4, !tbaa !326
   %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 60
   store i32 1, ptr %i.ec, align 4, !tbaa !329
   %i.ed = getelementptr inbounds nuw i8, ptr %5, i64 64

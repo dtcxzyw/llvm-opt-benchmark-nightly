@@ -205,7 +205,7 @@ _RINvXs2J_NtNtCslwFuT2d6ECx_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits
   %i.yw = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %i.xm ; 2 uses
   %i.yx = load i64, ptr %i.yw, align 8, !noalias !150416, !noundef !67
   %.not28.i = icmp ne i64 %.sroa.0.0.i77.i, %i.yx
-  store i64 %.sroa.0.0.i77.i, ptr %i.yw, align 8
+  store i64 %.sroa.0.0.i77.i, ptr %i.yw, align 8, !noalias !150416
   %spec.select = select i1 %.not28.i, i1 true, i1 %.sroa.01.1259.i ; 2 uses
   %.not.i84 = icmp ne i64 %i.xm, 0                ; 3 uses
   %brmerge = select i1 %.not.i84, i1 true, i1 %spec.select

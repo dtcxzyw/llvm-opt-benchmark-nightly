@@ -204,17 +204,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMs3_NtCs5zeGauAcNNa_10wasmi_core4simdNtNtB8_5value4V1289widen_nxmslECsefoF4u9kbII_5wasmi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.2.0.extract.shift.i = lshr i64 %1, 16
   %.sroa.3.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.3.0.extract.trunc.i = trunc i64 %.sroa.3.0.extract.shift.i to i16
   %i.a = sext i16 %.sroa.3.0.extract.trunc.i to i32
   %i.b = ashr i64 %1, 48
   %i.c = trunc nsw i64 %i.b to i32
-  %2 = trunc i64 %1 to i16
-  %3 = insertelement <2 x i16> poison, i16 %2, i64 0
-  %4 = trunc i64 %.sroa.2.0.extract.shift.i to i16
-  %5 = insertelement <2 x i16> %3, i16 %4, i64 1
-  %i.d = sext <2 x i16> %5 to <2 x i32>
+  %2 = bitcast i64 %1 to <4 x i16>
+  %3 = shufflevector <4 x i16> %2, <4 x i16> poison, <2 x i32> <i32 0, i32 1>
+  %i.d = sext <2 x i16> %3 to <2 x i32>
   store <2 x i32> %i.d, ptr %0, align 1, !alias.scope !70
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.a, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !70

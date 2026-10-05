@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = and i64 %.0..0..0..0..0..0..i, -16
   %i.i = add i64 %i.h, -16384
   %i.j = inttoptr i64 %i.i to ptr
-  %1 = tail call ptr @GC_clear_stack_inner(ptr noundef %0, ptr noundef %i.j) ; 0 uses
+  %1 = call ptr @GC_clear_stack_inner(ptr noundef %0, ptr noundef %i.j) ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -608,7 +608,7 @@ min_bytes_allocd.exit:                            ; preds = %bb.i, %bb.j
   %i.ap = zext i1 %.not.i to i64
   %spec.select.i = lshr i64 %i.an, %i.ap
   %i.aq = load i64, ptr @min_bytes_allocd_minimum, align 8
-  %1 = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.aq) ; 2 uses
+  %1 = call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.aq) ; 2 uses
   %i.ar = add i64 %1, 33554432                    ; 2 uses
   %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 16), align 8 ; 2 uses
   %i.at = icmp eq ptr %i.as, null                 ; 2 uses
@@ -629,7 +629,7 @@ bb.k:                                             ; preds = %min_bytes_allocd.ex
 bb.l:                                             ; preds = %bb.k
   %i.az = load ptr, ptr @GC_greatest_plausible_heap_addr, align 8
   %i.ba = ptrtoint ptr %i.az to i64
-  %2 = tail call noundef i64 @llvm.umax.i64(i64 %i.ba, i64 %i.ax)
+  %2 = call noundef i64 @llvm.umax.i64(i64 %i.ba, i64 %i.ax)
   br label %.sink.split
 
 bb.m:                                             ; preds = %min_bytes_allocd.exit
@@ -640,7 +640,7 @@ bb.m:                                             ; preds = %min_bytes_allocd.ex
 bb.n:                                             ; preds = %bb.m
   %i.bd = load ptr, ptr @GC_least_plausible_heap_addr, align 8
   %i.be = ptrtoint ptr %i.bd to i64
-  %3 = tail call noundef i64 @llvm.umin.i64(i64 %i.be, i64 %i.bb)
+  %3 = call noundef i64 @llvm.umin.i64(i64 %i.be, i64 %i.bb)
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.l, %bb.n
@@ -652,17 +652,17 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %.sink.split, %bb.m, %bb.k
   store ptr %i.o, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 16), align 8
-  tail call fastcc void @GC_add_to_heap(ptr noundef nonnull %i.o, i64 noundef %i.i)
+  call fastcc void @GC_add_to_heap(ptr noundef nonnull %i.o, i64 noundef %i.i)
   %i.bg = load i64, ptr @GC_arrays, align 8       ; 2 uses
   %i.bh = add i64 %1, 16777216
-  %spec.store.select1 = tail call i64 @llvm.uadd.sat.i64(i64 %i.bg, i64 %i.bh)
+  %spec.store.select1 = call i64 @llvm.uadd.sat.i64(i64 %i.bg, i64 %i.bh)
   store i64 %spec.store.select1, ptr @GC_collect_at_heapsize, align 8
   %i.bi = load ptr, ptr @GC_on_heap_resize, align 8 ; 2 uses
   %.not40 = icmp eq ptr %i.bi, null
   br i1 %.not40, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  tail call void %i.bi(i64 noundef %i.bg) #45
+  call void %i.bi(i64 noundef %i.bg) #45
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %bb.b, %bb.c, %bb.e
@@ -1065,7 +1065,7 @@ bb.o:                                             ; preds = %.thread
   %i.af = and i64 %.0..0..0..0..0..0..0..0..i.i, -16
   %i.ag = add i64 %i.af, -16384
   %i.ah = inttoptr i64 %i.ag to ptr
-  %2 = tail call ptr @GC_clear_stack_inner(ptr noundef %i.y, ptr noundef %i.ah) ; 0 uses
+  %2 = call ptr @GC_clear_stack_inner(ptr noundef %i.y, ptr noundef %i.ah) ; 0 uses
   br label %GC_clear_stack.exit
 
 GC_clear_stack.exit:                              ; preds = %bb.o, %.thread, %bb.l, %bb.k
@@ -1468,7 +1468,7 @@ bb.af:                                            ; preds = %GC_release_mark_loc
   %i.cu = and i64 %.0..0..0..0..0..0..0..0..i.i, -16
   %i.cv = add i64 %i.cu, -16384
   %i.cw = inttoptr i64 %i.cv to ptr
-  %3 = tail call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.cw) ; 0 uses
+  %3 = call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.cw) ; 0 uses
   br label %GC_clear_stack.exit149
 
 bb.ag:                                            ; preds = %GC_release_mark_lock.exit
@@ -1734,7 +1734,7 @@ bb.bk:                                            ; preds = %GC_release_mark_loc
   %i.gi = and i64 %.0..0..0..0..0..0..0..0..i.i146, -16
   %i.gj = add i64 %i.gi, -16384
   %i.gk = inttoptr i64 %i.gj to ptr
-  %4 = tail call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.gk) ; 0 uses
+  %4 = call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.gk) ; 0 uses
   br label %GC_clear_stack.exit149
 
 GC_clear_stack.exit147:                           ; preds = %bb.bc
@@ -1787,7 +1787,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.hc = and i64 %.0..0..0..0..0..0..0..0..i.i148, -16
   %i.hd = add i64 %i.hc, -16384
   %i.he = inttoptr i64 %i.hd to ptr
-  %5 = tail call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.he) ; 0 uses
+  %5 = call ptr @GC_clear_stack_inner(ptr noundef null, ptr noundef %i.he) ; 0 uses
   br label %GC_clear_stack.exit149
 
 GC_clear_stack.exit149:                           ; preds = %bb.bk, %GC_release_mark_lock.exit145, %GC_release_mark_lock.exit131, %bb.af, %bb.bq, %bb.bp, %bb.d, %GC_is_heap_ptr.exit, %bb.g
@@ -2190,7 +2190,7 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call ptr @GC_clear_stack_inner(ptr noundef %0, ptr noundef %1) ; 0 uses
+  %2 = call ptr @GC_clear_stack_inner(ptr noundef %0, ptr noundef %1) ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -2593,13 +2593,13 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %3 = tail call ptr @getenv(ptr noundef nonnull @.str.321) #45 ; 2 uses
+  %3 = call ptr @getenv(ptr noundef nonnull @.str.321) #45 ; 2 uses
   store i32 -1, ptr @GC_nprocs, align 4
   %.not27 = icmp eq ptr %3, null
   br i1 %.not27, label %.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %4 = tail call i64 @__isoc23_strtol(ptr noundef nonnull %3, ptr noundef null, i32 noundef 10) #45, !inline_history !0
+  %4 = call i64 @__isoc23_strtol(ptr noundef nonnull %3, ptr noundef null, i32 noundef 10) #45, !inline_history !0
   %i.as = trunc i64 %4 to i32                     ; 3 uses
   store i32 %i.as, ptr @GC_nprocs, align 4
   %i.at = icmp slt i32 %i.as, 1
@@ -2607,13 +2607,13 @@ bb.o:                                             ; preds = %bb.n
 
 .thread:                                          ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #45
-  %5 = tail call i32 (ptr, i32, ...) @open(ptr noundef nonnull @.str.327, i32 noundef 0) #45 ; 4 uses
+  %5 = call i32 (ptr, i32, ...) @open(ptr noundef nonnull @.str.327, i32 noundef 0) #45 ; 4 uses
   %i.au = icmp slt i32 %5, 0
   br i1 %i.au, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.thread
   %i.av = load ptr, ptr @GC_current_warn_proc, align 8
-  tail call void %i.av(ptr noundef nonnull @.str.328, i64 noundef 0) #45, !inline_history !173
+  call void %i.av(ptr noundef nonnull @.str.328, i64 noundef 0) #45, !inline_history !173
   br label %.thread41.sink.split
 
 bb.q:                                             ; preds = %.thread
@@ -2627,15 +2627,15 @@ bb.r:                                             ; preds = %bb.q
   %i.ba = tail call ptr @__errno_location() #51
   %i.bb = load i32, ptr %i.ba, align 4
   %i.bc = sext i32 %i.bb to i64
-  tail call void %i.az(ptr noundef nonnull @.str.329, i64 noundef %i.bc) #45, !inline_history !173
-  %6 = tail call i32 @close(i32 noundef %5) #45   ; 0 uses
+  call void %i.az(ptr noundef nonnull @.str.329, i64 noundef %i.bc) #45, !inline_history !173
+  %6 = call i32 @close(i32 noundef %5) #45        ; 0 uses
   br label %.thread41.sink.split
 
 bb.s:                                             ; preds = %bb.q
   %i.bd = and i64 %i.aw, 2147483647
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bd
   store i8 0, ptr %i.be, align 1
-  %7 = tail call i32 @close(i32 noundef %5) #45   ; 0 uses
+  %7 = call i32 @close(i32 noundef %5) #45        ; 0 uses
   %i.bf = icmp samesign ugt i32 %i.ax, 4
   br i1 %i.bf, label %.lr.ph.preheader.i, label %.thread41.sink.split
 
@@ -3038,20 +3038,20 @@ GC_lookup_thread.exit:                            ; preds = %.lr.ph.i, %bb.g, %G
   br i1 %.b13, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %GC_lookup_thread.exit
-  %2 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
+  %2 = call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %GC_lookup_thread.exit
   %i.w = load ptr, ptr %0, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8
-  %3 = tail call ptr %i.w(ptr noundef %i.y) #45
+  %3 = call ptr %i.w(ptr noundef %i.y) #45
   store ptr %3, ptr %i.x, align 8
   %.b12 = load i1, ptr @GC_need_to_lock, align 4
   br i1 %.b12, label %bb.j, label %GC_lock.exit20
 
 bb.j:                                             ; preds = %bb.i
-  %4 = tail call i32 @pthread_mutex_trylock(ptr noundef nonnull @GC_allocate_ml) #45
+  %4 = call i32 @pthread_mutex_trylock(ptr noundef nonnull @GC_allocate_ml) #45
   %.not15 = icmp eq i32 %4, 0
   br i1 %.not15, label %GC_lock.exit20, label %bb.k
 
@@ -3066,11 +3066,11 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i19, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %5 = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
+  %5 = call i32 @pthread_mutex_lock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
   br label %GC_lock.exit20
 
 bb.n:                                             ; preds = %bb.l
-  tail call fastcc void @GC_generic_lock(ptr noundef nonnull @GC_allocate_ml)
+  call fastcc void @GC_generic_lock(ptr noundef nonnull @GC_allocate_ml)
   br label %GC_lock.exit20
 
 GC_lock.exit20:                                   ; preds = %bb.n, %bb.m, %bb.j, %bb.i
@@ -3086,21 +3086,21 @@ GC_lock.exit20:                                   ; preds = %bb.n, %bb.m, %bb.j,
   br i1 %.b11, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph
-  %6 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
+  %6 = call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %.lr.ph
-  tail call fastcc void @GC_suspend_self_inner(ptr noundef nonnull %.0.lcssa.i, i64 noundef %i.af)
+  call fastcc void @GC_suspend_self_inner(ptr noundef nonnull %.0.lcssa.i, i64 noundef %i.af)
   %.b10 = load i1, ptr @GC_need_to_lock, align 4
   br i1 %.b10, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %7 = tail call i32 @pthread_mutex_trylock(ptr noundef nonnull @GC_allocate_ml) #45
+  %7 = call i32 @pthread_mutex_trylock(ptr noundef nonnull @GC_allocate_ml) #45
   %.not17 = icmp eq i32 %7, 0
   br i1 %.not17, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  tail call fastcc void @GC_lock()
+  call fastcc void @GC_lock()
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r, %bb.p
@@ -3115,7 +3115,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r, %bb.p
   br i1 %.b, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %._crit_edge
-  %8 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
+  %8 = call i32 @pthread_mutex_unlock(ptr noundef nonnull @GC_allocate_ml) #45 ; 0 uses
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge
@@ -3518,7 +3518,7 @@ bb.a:
   %.0..0..0..0..0..0..i = load volatile i64, ptr %i.a, align 8
   %i.d = inttoptr i64 %.0..0..0..0..0..0..i to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  tail call void @GC_push_all_eager(ptr noundef %i.d, ptr noundef %0)
+  call void @GC_push_all_eager(ptr noundef %i.d, ptr noundef %0)
   ret void
 }
 
@@ -3921,7 +3921,7 @@ min_bytes_allocd.exit:                            ; preds = %bb.c, %bb.d
   %i.s = zext i1 %.not.i to i64
   %spec.select.i = lshr i64 %i.q, %i.s
   %i.t = load i64, ptr @min_bytes_allocd_minimum, align 8
-  %0 = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.t)
+  %0 = call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.t)
   store i64 %0, ptr @GC_should_collect.last_min_bytes_allocd, align 8
   store i64 %i.c, ptr @GC_should_collect.last_gc_no, align 8
   br label %bb.e
@@ -3951,11 +3951,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ad = add i64 %i.ac, %i.y
   %.neg.i = sub i64 %i.ad, %i.z
   %i.ae = add i64 %.neg.i, %i.aa
-  %spec.select.i2 = tail call i64 @llvm.smin.i64(i64 %i.ae, i64 %i.x)
+  %spec.select.i2 = call i64 @llvm.smin.i64(i64 %i.ae, i64 %i.x)
   %i.af = load i64, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 80), align 8
   %i.ag = add i64 %spec.select.i2, %i.af
   %i.ah = lshr i64 %i.x, 3
-  %.06.i = tail call range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.ag, i64 %i.ah)
+  %.06.i = call range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.ag, i64 %i.ah)
   %i.ai = load i64, ptr @GC_should_collect.last_min_bytes_allocd, align 8
   %i.aj = icmp uge i64 %.06.i, %i.ai
   %i.ak = load i64, ptr @GC_arrays, align 8

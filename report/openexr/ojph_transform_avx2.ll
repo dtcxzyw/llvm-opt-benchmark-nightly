@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !11   ; 4 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !11   ; 3 uses
   %.pn228.i = select i1 %5, ptr %2, ptr %1
   %.in227.i = getelementptr inbounds nuw i8, ptr %.pn228.i, i64 16
   %i.h = load ptr, ptr %.in227.i, align 8, !tbaa !11 ; 3 uses
@@ -217,11 +217,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.prol, label %.lr.ph.i.i.prol.loopexit
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.i.preheader.i
-  %6 = load <8 x float>, ptr %i.g, align 32, !tbaa !11 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  %8 = load <8 x float>, ptr %7, align 32, !tbaa !11 ; 2 uses
-  %i.l = shufflevector <8 x float> %6, <8 x float> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %i.m = shufflevector <8 x float> %6, <8 x float> %8, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %6 = load <16 x float>, ptr %i.g, align 32, !tbaa !11 ; 2 uses
+  %i.l = shufflevector <16 x float> %6, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %i.m = shufflevector <16 x float> %6, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.n = shufflevector <8 x float> %i.l, <8 x float> %i.m, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
   %i.o = shufflevector <8 x float> %i.l, <8 x float> %i.m, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
   store <8 x float> %i.n, ptr %i.i, align 32, !tbaa !11
@@ -243,29 +241,25 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
   %.024.i.i = phi ptr [ %i.ah, %.lr.ph.i.i ], [ %.024.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 3 uses
   %.01823.i.i = phi ptr [ %i.ai, %.lr.ph.i.i ], [ %.01823.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 3 uses
-  %.01922.i.i = phi ptr [ %i.ag, %.lr.ph.i.i ], [ %.01922.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 5 uses
+  %.01922.i.i = phi ptr [ %i.ag, %.lr.ph.i.i ], [ %.01922.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 3 uses
   %.02021.i.i = phi i32 [ %i.af, %.lr.ph.i.i ], [ %.02021.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
-  %9 = load <8 x float>, ptr %.01922.i.i, align 32, !tbaa !11 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 32
-  %11 = load <8 x float>, ptr %10, align 32, !tbaa !11 ; 2 uses
-  %i.u = shufflevector <8 x float> %9, <8 x float> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %i.v = shufflevector <8 x float> %9, <8 x float> %11, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %7 = load <16 x float>, ptr %.01922.i.i, align 32, !tbaa !11 ; 2 uses
+  %i.u = shufflevector <16 x float> %7, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %i.v = shufflevector <16 x float> %7, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.w = shufflevector <8 x float> %i.u, <8 x float> %i.v, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
   %i.x = shufflevector <8 x float> %i.u, <8 x float> %i.v, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
   store <8 x float> %i.w, ptr %.024.i.i, align 32, !tbaa !11
   store <8 x float> %i.x, ptr %.01823.i.i, align 32, !tbaa !11
-  %12 = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 64
-  %i.y = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 32
-  %i.z = getelementptr inbounds nuw i8, ptr %.01823.i.i, i64 32
-  %13 = load <8 x float>, ptr %12, align 32, !tbaa !11 ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 96
-  %14 = load <8 x float>, ptr %i.aa, align 32, !tbaa !11 ; 2 uses
-  %i.ab = shufflevector <8 x float> %13, <8 x float> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %i.ac = shufflevector <8 x float> %13, <8 x float> %14, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 64
+  %i.z = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 32
+  %i.aa = getelementptr inbounds nuw i8, ptr %.01823.i.i, i64 32
+  %8 = load <16 x float>, ptr %i.y, align 32, !tbaa !11 ; 2 uses
+  %i.ab = shufflevector <16 x float> %8, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %i.ac = shufflevector <16 x float> %8, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.ad = shufflevector <8 x float> %i.ab, <8 x float> %i.ac, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
   %i.ae = shufflevector <8 x float> %i.ab, <8 x float> %i.ac, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %i.ad, ptr %i.y, align 32, !tbaa !11
-  store <8 x float> %i.ae, ptr %i.z, align 32, !tbaa !11
+  store <8 x float> %i.ad, ptr %i.z, align 32, !tbaa !11
+  store <8 x float> %i.ae, ptr %i.aa, align 32, !tbaa !11
   %i.af = add nsw i32 %.02021.i.i, -32
   %i.ag = getelementptr inbounds nuw i8, ptr %.01922.i.i, i64 128
   %i.ah = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 64
@@ -566,7 +560,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.i.preheader.i26:                           ; preds = %bb.n
   %i.gb = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !11 ; 4 uses
+  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !11 ; 3 uses
   %.pn217.i = select i1 %5, ptr %2, ptr %1
   %.in216.i = getelementptr inbounds nuw i8, ptr %.pn217.i, i64 16
   %i.gd = load ptr, ptr %.in216.i, align 8, !tbaa !11 ; 3 uses
@@ -579,11 +573,9 @@ bb.n:                                             ; preds = %bb.m
   br i1 %lcmp.mod184.not.not, label %.lr.ph.i.i29.prol, label %.lr.ph.i.i29.prol.loopexit
 
 .lr.ph.i.i29.prol:                                ; preds = %.lr.ph.i.preheader.i26
-  %15 = load <4 x double>, ptr %i.gc, align 32, !tbaa !11 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %i.gc, i64 32
-  %17 = load <4 x double>, ptr %16, align 32, !tbaa !11 ; 2 uses
-  %i.gh = shufflevector <4 x double> %15, <4 x double> %17, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %i.gi = shufflevector <4 x double> %15, <4 x double> %17, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %9 = load <8 x double>, ptr %i.gc, align 32, !tbaa !11 ; 2 uses
+  %i.gh = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %i.gi = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
   %i.gj = shufflevector <4 x double> %i.gh, <4 x double> %i.gi, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.gk = shufflevector <4 x double> %i.gh, <4 x double> %i.gi, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
   store <4 x double> %i.gj, ptr %i.ge, align 32, !tbaa !11
@@ -605,29 +597,25 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph.i.i29:                                     ; preds = %.lr.ph.i.i29.prol.loopexit, %.lr.ph.i.i29
   %.024.i.i30 = phi ptr [ %i.hd, %.lr.ph.i.i29 ], [ %.024.i.i30.unr, %.lr.ph.i.i29.prol.loopexit ] ; 3 uses
   %.01823.i.i31 = phi ptr [ %i.he, %.lr.ph.i.i29 ], [ %.01823.i.i31.unr, %.lr.ph.i.i29.prol.loopexit ] ; 3 uses
-  %.01922.i.i32 = phi ptr [ %i.hc, %.lr.ph.i.i29 ], [ %.01922.i.i32.unr, %.lr.ph.i.i29.prol.loopexit ] ; 5 uses
+  %.01922.i.i32 = phi ptr [ %i.hc, %.lr.ph.i.i29 ], [ %.01922.i.i32.unr, %.lr.ph.i.i29.prol.loopexit ] ; 3 uses
   %.02021.i.i33 = phi i32 [ %i.hb, %.lr.ph.i.i29 ], [ %.02021.i.i33.unr, %.lr.ph.i.i29.prol.loopexit ] ; 2 uses
-  %18 = load <4 x double>, ptr %.01922.i.i32, align 32, !tbaa !11 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %.01922.i.i32, i64 32
-  %20 = load <4 x double>, ptr %19, align 32, !tbaa !11 ; 2 uses
-  %i.gq = shufflevector <4 x double> %18, <4 x double> %20, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %i.gr = shufflevector <4 x double> %18, <4 x double> %20, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %10 = load <8 x double>, ptr %.01922.i.i32, align 32, !tbaa !11 ; 2 uses
+  %i.gq = shufflevector <8 x double> %10, <8 x double> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %i.gr = shufflevector <8 x double> %10, <8 x double> poison, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
   %i.gs = shufflevector <4 x double> %i.gq, <4 x double> %i.gr, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.gt = shufflevector <4 x double> %i.gq, <4 x double> %i.gr, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
   store <4 x double> %i.gs, ptr %.024.i.i30, align 32, !tbaa !11
   store <4 x double> %i.gt, ptr %.01823.i.i31, align 32, !tbaa !11
-  %21 = getelementptr inbounds nuw i8, ptr %.01922.i.i32, i64 64
-  %i.gu = getelementptr inbounds nuw i8, ptr %.024.i.i30, i64 32
-  %i.gv = getelementptr inbounds nuw i8, ptr %.01823.i.i31, i64 32
-  %22 = load <4 x double>, ptr %21, align 32, !tbaa !11 ; 2 uses
-  %i.gw = getelementptr inbounds nuw i8, ptr %.01922.i.i32, i64 96
-  %23 = load <4 x double>, ptr %i.gw, align 32, !tbaa !11 ; 2 uses
-  %i.gx = shufflevector <4 x double> %22, <4 x double> %23, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %i.gy = shufflevector <4 x double> %22, <4 x double> %23, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
+  %i.gu = getelementptr inbounds nuw i8, ptr %.01922.i.i32, i64 64
+  %i.gv = getelementptr inbounds nuw i8, ptr %.024.i.i30, i64 32
+  %i.gw = getelementptr inbounds nuw i8, ptr %.01823.i.i31, i64 32
+  %11 = load <8 x double>, ptr %i.gu, align 32, !tbaa !11 ; 2 uses
+  %i.gx = shufflevector <8 x double> %11, <8 x double> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %i.gy = shufflevector <8 x double> %11, <8 x double> poison, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
   %i.gz = shufflevector <4 x double> %i.gx, <4 x double> %i.gy, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.ha = shufflevector <4 x double> %i.gx, <4 x double> %i.gy, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
-  store <4 x double> %i.gz, ptr %i.gu, align 32, !tbaa !11
-  store <4 x double> %i.ha, ptr %i.gv, align 32, !tbaa !11
+  store <4 x double> %i.gz, ptr %i.gv, align 32, !tbaa !11
+  store <4 x double> %i.ha, ptr %i.gw, align 32, !tbaa !11
   %i.hb = add nsw i32 %.02021.i.i33, -16
   %i.hc = getelementptr inbounds nuw i8, ptr %.01922.i.i32, i64 128
   %i.hd = getelementptr inbounds nuw i8, ptr %.024.i.i30, i64 64

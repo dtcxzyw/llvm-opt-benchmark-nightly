@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %.0, i64 176 ; 2 uses
   %i.ae = getelementptr i8, ptr %.0, i64 232      ; 5 uses
   store ptr %0, ptr %i.ae, align 8, !tbaa !472
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !65 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !65 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 176
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !148 ; 9 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 60
@@ -268,7 +268,7 @@ bb.k:                                             ; preds = %cf2_getScaleAndHint
   store i8 %i.f, ptr %i.bn, align 4, !tbaa !232
   %i.bo = getelementptr inbounds nuw i8, ptr %.0, i64 16 ; 3 uses
   %spec.store.select = zext i1 %.not.i to i32     ; 2 uses
-  store i32 %spec.store.select, ptr %i.bo, align 8
+  store i32 %spec.store.select, ptr %i.bo, align 8, !tbaa !483
   %.not79 = icmp eq i8 %i.bb, 0                   ; 2 uses
   br i1 %.not79, label %bb.o, label %bb.l
 
@@ -320,8 +320,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !24
   %i.cp = getelementptr inbounds nuw i8, ptr %.0, i64 288
   store i32 %i.co, ptr %i.cp, align 8, !tbaa !24
-  %.val = load ptr, ptr %i.af, align 8, !tbaa !233
-  %i.cq = getelementptr i8, ptr %.val, i64 136
+  %i.cq = getelementptr i8, ptr %i.ag, i64 136
   %.val.val = load i16, ptr %i.cq, align 8, !tbaa !484 ; 2 uses
   %i.cr = zext i16 %.val.val to i32               ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0, i64 160 ; 2 uses
@@ -724,7 +723,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.po = sub i32 39322, %i.pn
   %i.pp = getelementptr inbounds nuw i8, ptr %.0, i64 336
   %spec.store.select.i.i.i = call i32 @llvm.smin.i32(i32 %i.po, i32 32767)
-  store i32 %spec.store.select.i.i.i, ptr %i.pp, align 8
+  store i32 %spec.store.select.i.i.i, ptr %i.pp, align 8, !tbaa !528
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo

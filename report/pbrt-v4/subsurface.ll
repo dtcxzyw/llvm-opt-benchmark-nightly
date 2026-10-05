@@ -204,7 +204,7 @@ bb.a:
   %15 = alloca %"class.pstd::optional.75", align 16 ; 13 uses
   %16 = alloca %"class.pbrt::Ray", align 8        ; 8 uses
   %17 = alloca %"struct.pbrt::ShadowRayWorkItem", align 8 ; 13 uses
-  %18 = alloca %"struct.pbrt::SubsurfaceScatterWorkItem", align 8 ; 27 uses
+  %18 = alloca %"struct.pbrt::SubsurfaceScatterWorkItem", align 8 ; 26 uses
   %.val = load ptr, ptr %0, align 8, !tbaa !441   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val2 = load ptr, ptr %i.c, align 8, !tbaa !442
@@ -382,12 +382,9 @@ _ZNK4pbrt3SOAINS_10RaySamplesEE16GetSetIndirectorcvS1_Ev.exit.i.i.i.i: ; preds =
   %i.cr = shufflevector <2 x float> %i.cq, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.cs = fdiv <2 x float> %i.co, %i.cr           ; 2 uses
   %i.ct = fdiv <2 x float> %i.cp, %i.cr           ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 168
-  %.sroa.0.0.copyload4.i199.i.i.i.i = load <2 x float>, ptr %19, align 8
-  %.sroa.8.0..sroa_idx.i200.i.i.i.i = getelementptr inbounds nuw i8, ptr %18, i64 176
-  %.sroa.8.0.copyload.i201.i.i.i.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i200.i.i.i.i, align 8, !tbaa !92
-  %20 = shufflevector <2 x float> %.sroa.0.0.copyload4.i199.i.i.i.i, <2 x float> %.sroa.8.0.copyload.i201.i.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.cu = fmul <4 x float> %.fr32, %20
+  %.sroa.8.0..sroa_idx.i200.i.i.i.i = getelementptr inbounds nuw i8, ptr %18, i64 168
+  %19 = load <4 x float>, ptr %.sroa.8.0..sroa_idx.i200.i.i.i.i, align 8
+  %i.cu = fmul <4 x float> %.fr32, %19
   %i.cv = shufflevector <2 x float> %i.bv, <2 x float> poison, <4 x i32> zeroinitializer
   %i.cw = fdiv <4 x float> %i.cu, %i.cv           ; 7 uses
   %i.cx = shufflevector <4 x float> %i.cw, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 3 uses
@@ -790,10 +787,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.r
-  %.sroa.0.0.copyload = load <2 x float>, ptr %i.e, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.2.0.copyload = load <2 x float>, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !92
-  %3 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.2.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
+  %3 = load <4 x float>, ptr %i.e, align 8        ; 2 uses
   %i.k = fmul <4 x float> %3, %3
   %i.l = load <4 x float>, ptr %2, align 16, !tbaa !96
   %i.m = fmul <4 x float> %i.k, %i.l              ; 2 uses

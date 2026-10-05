@@ -205,23 +205,23 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.new
   br i1 %.not60.i, label %find_unique_prefixes.exit, label %.lr.ph59.i
 
 .lr.ph59.i:                                       ; preds = %._crit_edge.i
+  %4 = load ptr, ptr %i.p, align 8, !tbaa !159
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %extend_prefix_length.exit55.i, %.lr.ph59.i
   %.157.i = phi i64 [ 0, %.lr.ph59.i ], [ %i.br, %extend_prefix_length.exit55.i ] ; 3 uses
-  %4 = load ptr, ptr %i.p, align 8, !tbaa !159
   %i.at = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.157.i ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !32 ; 4 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8 ; 3 uses
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !32 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !32 ; 7 uses
   store i64 0, ptr %i.ax, align 8, !tbaa !93
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %i.ay = phi i64 [ %i.bc, %bb.k ], [ 0, %bb.i ]  ; 3 uses
+  %i.ay = phi i64 [ %i.bc, %bb.k ], [ 0, %bb.i ]  ; 8 uses
   %i.az = load i64, ptr %i.ar, align 8, !tbaa !161
   %i.ba = icmp ult i64 %i.ay, %i.az
   br i1 %i.ba, label %bb.k, label %bb.l
@@ -234,10 +234,10 @@ bb.k:                                             ; preds = %bb.j
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !76
   %or.cond.i = icmp sgt i8 %i.be, 0               ; 2 uses
   %spec.store.select.i = select i1 %or.cond.i, i64 %i.bc, i64 0
-  store i64 %spec.store.select.i, ptr %i.ax, align 8
-  br i1 %or.cond.i, label %bb.j, label %bb.l
+  store i64 %spec.store.select.i, ptr %i.ax, align 8, !tbaa !93
+  br i1 %or.cond.i, label %bb.j, label %extend_prefix_length.exit.i
 
-bb.l:                                             ; preds = %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.j
   %.not47.i = icmp eq i64 %.157.i, 0
   br i1 %.not47.i, label %extend_prefix_length.exit.i, label %bb.m
 
@@ -245,34 +245,32 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = getelementptr inbounds i8, ptr %i.at, i64 -16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !75 ; 2 uses
   %i.bh = load i64, ptr %i.as, align 8, !tbaa !162
-  %5 = load ptr, ptr %i.aw, align 8, !tbaa !32    ; 3 uses
-  %6 = load i64, ptr %5, align 8, !tbaa !93       ; 3 uses
-  %.not.i.i = icmp eq i64 %6, 0
+  %.not.i.i = icmp eq i64 %i.ay, 0
   br i1 %.not.i.i, label %extend_prefix_length.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bi = load ptr, ptr %i.av, align 8, !tbaa !75 ; 2 uses
-  %bcmp.i.i = tail call i32 @bcmp(ptr %i.bi, ptr readonly %i.bg, i64 %6)
+  %bcmp.i.i = tail call i32 @bcmp(ptr %i.bi, ptr readonly %i.bg, i64 %i.ay)
   %.not17.i.i = icmp eq i32 %bcmp.i.i, 0
   br i1 %.not17.i.i, label %.preheader.i.i, label %extend_prefix_length.exit.i
 
 .preheader.i.i:                                   ; preds = %bb.n, %bb.q
-  %i.bj = phi i64 [ %i.bm, %bb.q ], [ %6, %bb.n ] ; 3 uses
+  %i.bj = phi i64 [ %i.bm, %bb.q ], [ %i.ay, %bb.n ] ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bj
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !76  ; 3 uses
   %.not18.i.i = icmp eq i8 %i.bl, 0
   br i1 %.not18.i.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.preheader.i.i
-  %i.bm = add i64 %i.bj, 1                        ; 3 uses
-  store i64 %i.bm, ptr %5, align 8, !tbaa !93
+  %i.bm = add i64 %i.bj, 1                        ; 4 uses
+  store i64 %i.bm, ptr %i.ax, align 8, !tbaa !93
   %i.bn = icmp ule i64 %i.bm, %i.bh
   %i.bo = icmp sgt i8 %i.bl, -1
   %or.cond.i.i = and i1 %i.bn, %i.bo
   br i1 %or.cond.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %.preheader.i.i
-  store i64 0, ptr %5, align 8, !tbaa !93
+  store i64 0, ptr %i.ax, align 8, !tbaa !93
   br label %extend_prefix_length.exit.i
 
 bb.q:                                             ; preds = %bb.o
@@ -281,7 +279,8 @@ bb.q:                                             ; preds = %bb.o
   %.not19.i.i = icmp eq i8 %i.bl, %i.bq
   br i1 %.not19.i.i, label %.preheader.i.i, label %extend_prefix_length.exit.i
 
-extend_prefix_length.exit.i:                      ; preds = %bb.q, %bb.p, %bb.n, %bb.m, %bb.l
+extend_prefix_length.exit.i:                      ; preds = %bb.k, %bb.q, %bb.p, %bb.n, %bb.m, %bb.l
+  %5 = phi i64 [ %i.ay, %bb.l ], [ 0, %bb.p ], [ %i.ay, %bb.n ], [ 0, %bb.m ], [ %i.bm, %bb.q ], [ 0, %bb.k ] ; 3 uses
   %i.br = add nuw i64 %.157.i, 1                  ; 3 uses
   %i.bs = load i64, ptr %i.q, align 8, !tbaa !158
   %i.bt = icmp ult i64 %i.br, %i.bs
@@ -291,19 +290,17 @@ bb.r:                                             ; preds = %extend_prefix_lengt
   %i.bu = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !75 ; 2 uses
   %i.bw = load i64, ptr %i.as, align 8, !tbaa !162
-  %7 = load ptr, ptr %i.aw, align 8, !tbaa !32    ; 3 uses
-  %8 = load i64, ptr %7, align 8, !tbaa !93       ; 3 uses
-  %.not.i48.i = icmp eq i64 %8, 0
+  %.not.i48.i = icmp eq i64 %5, 0
   br i1 %.not.i48.i, label %extend_prefix_length.exit55.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bx = load ptr, ptr %i.av, align 8, !tbaa !75 ; 2 uses
-  %bcmp.i49.i = tail call i32 @bcmp(ptr %i.bx, ptr readonly %i.bv, i64 %8)
+  %bcmp.i49.i = tail call i32 @bcmp(ptr %i.bx, ptr readonly %i.bv, i64 %5)
   %.not17.i50.i = icmp eq i32 %bcmp.i49.i, 0
   br i1 %.not17.i50.i, label %.preheader.i51.i, label %extend_prefix_length.exit55.i
 
 .preheader.i51.i:                                 ; preds = %bb.s, %bb.v
-  %i.by = phi i64 [ %i.cb, %bb.v ], [ %8, %bb.s ] ; 3 uses
+  %i.by = phi i64 [ %i.cb, %bb.v ], [ %5, %bb.s ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.by
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !76  ; 3 uses
   %.not18.i52.i = icmp eq i8 %i.ca, 0
@@ -311,14 +308,14 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %.preheader.i51.i
   %i.cb = add i64 %i.by, 1                        ; 3 uses
-  store i64 %i.cb, ptr %7, align 8, !tbaa !93
+  store i64 %i.cb, ptr %i.ax, align 8, !tbaa !93
   %i.cc = icmp ule i64 %i.cb, %i.bw
   %i.cd = icmp sgt i8 %i.ca, -1
   %or.cond.i53.i = and i1 %i.cc, %i.cd
   br i1 %or.cond.i53.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.preheader.i51.i
-  store i64 0, ptr %7, align 8, !tbaa !93
+  store i64 0, ptr %i.ax, align 8, !tbaa !93
   br label %extend_prefix_length.exit55.i
 
 bb.v:                                             ; preds = %bb.t
@@ -344,17 +341,18 @@ find_unique_prefixes.exit:                        ; preds = %extend_prefix_lengt
   br label %.tail149.thread.outer
 
 .tail149.thread.outer:                            ; preds = %.tail149.thread.outer.backedge, %find_unique_prefixes.exit
+  %.ph = phi ptr [ @strbuf_slopbuf, %find_unique_prefixes.exit ], [ %i.gt, %.tail149.thread.outer.backedge ]
   %.092.ph = phi i64 [ %i.h, %find_unique_prefixes.exit ], [ %.5.ph, %.tail149.thread.outer.backedge ] ; 3 uses
   br label %.tail149.thread
 
 .tail149.thread:                                  ; preds = %.tail149.thread.outer, %bb.ab
+  %6 = phi ptr [ %.pre.pre, %bb.ab ], [ %.ph, %.tail149.thread.outer ] ; 2 uses
   store i64 0, ptr %i.ci, align 8, !tbaa !92
-  %9 = load ptr, ptr %i.cj, align 8, !tbaa !41    ; 2 uses
-  %.not9.i = icmp eq ptr %9, @strbuf_slopbuf
+  %.not9.i = icmp eq ptr %6, @strbuf_slopbuf
   br i1 %.not9.i, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.tail149.thread
-  store i8 0, ptr %9, align 1, !tbaa !76
+  store i8 0, ptr %6, align 1, !tbaa !76
   br label %strbuf_setlen.exit
 
 bb.x:                                             ; preds = %.tail149.thread
@@ -409,6 +407,7 @@ sub_0:                                            ; preds = %bb.aa
 bb.ab:                                            ; preds = %.tail
   %i.dj = load ptr, ptr %i.cp, align 8, !tbaa !28
   call void %i.dj(ptr noundef nonnull %0) #17
+  %.pre.pre = load ptr, ptr %i.cj, align 8, !tbaa !41
   br label %.tail149.thread
 
 .preheader:                                       ; preds = %.preheader.outer, %bb.ac
@@ -713,7 +712,7 @@ select.unfold:                                    ; preds = %bb.ac, %bb.bb, %_.e
   br i1 %or.cond3, label %select.unfold140, label %sub_0150
 
 sub_0150:                                         ; preds = %select.unfold
-  %i.gt = load ptr, ptr %i.cj, align 8, !tbaa !41 ; 2 uses
+  %i.gt = load ptr, ptr %i.cj, align 8, !tbaa !41 ; 3 uses
   %i.gu = load i8, ptr %i.gt, align 1
   %.not169 = icmp eq i8 %i.gu, 42
   br i1 %.not169, label %.tail149, label %.tail149.thread.outer.backedge

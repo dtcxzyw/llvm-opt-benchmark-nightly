@@ -202,7 +202,7 @@ opal_pointer_array_get_item.exit.i:               ; preds = %bb.d, %bb.c, %.thre
   %i.t = and i32 %i.s, 1024
   %i.u = icmp eq i32 %i.t, 0                      ; 2 uses
   %spec.store.select.i = select i1 %i.u, ptr %.0.i.i, ptr null
-  store ptr %spec.store.select.i, ptr %1, align 8
+  store ptr %spec.store.select.i, ptr %1, align 8, !tbaa !77
   %spec.select.i = select i1 %i.u, i32 0, i32 -18
   br label %mca_base_pvar_get_internal.exit
 
@@ -345,7 +345,7 @@ mca_base_pvar_get_internal.exit:                  ; preds = %opal_pointer_array_
 
 bb.e:                                             ; preds = %mca_base_pvar_get_internal.exit
   %i.y = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 136
-  %i.z = load volatile ptr, ptr %i.y, align 8, !tbaa !78 ; 3 uses
+  %i.z = load volatile ptr, ptr %i.y, align 8, !tbaa !79 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ab = load volatile ptr, ptr %i.aa, align 8, !tbaa !64
   %i.ac = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 120 ; 2 uses
@@ -369,7 +369,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %.024, i64 16
   %i.ai = load volatile ptr, ptr %i.ah, align 8, !tbaa !64
   %.not14 = icmp eq ptr %.024, %i.ac
-  br i1 %.not14, label %mca_base_pvar_get_internal.exit.thread, label %.lr.ph, !llvm.loop !77
+  br i1 %.not14, label %mca_base_pvar_get_internal.exit.thread, label %.lr.ph, !llvm.loop !78
 
 mca_base_pvar_get_internal.exit.thread:           ; preds = %bb.g, %bb.e, %bb.a, %opal_pointer_array_get_item.exit.i, %mca_base_pvar_get_internal.exit
   %.012 = phi i32 [ 0, %mca_base_pvar_get_internal.exit ], [ -18, %bb.a ], [ -18, %opal_pointer_array_get_item.exit.i ], [ 0, %bb.e ], [ 0, %bb.g ]
@@ -487,31 +487,31 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.e
   %i.bb = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv124
-  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !82
+  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !83
   %i.be = load ptr, ptr %i.ab, align 8, !tbaa !68
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv124
-  %i.bg = load i64, ptr %i.bf, align 8, !tbaa !82
+  %i.bg = load i64, ptr %i.bf, align 8, !tbaa !83
   %i.bh = sub i64 %i.bd, %i.bg
   %i.bi = load ptr, ptr %i.ac, align 8, !tbaa !69
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv124 ; 2 uses
-  %i.bk = load i64, ptr %i.bj, align 8, !tbaa !82
+  %i.bk = load i64, ptr %i.bj, align 8, !tbaa !83
   %i.bl = add i64 %i.bh, %i.bk
-  store i64 %i.bl, ptr %i.bj, align 8, !tbaa !82
+  store i64 %i.bl, ptr %i.bj, align 8, !tbaa !83
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
   %i.bm = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv124
-  %i.bo = load double, ptr %i.bn, align 8, !tbaa !84
+  %i.bo = load double, ptr %i.bn, align 8, !tbaa !85
   %i.bp = load ptr, ptr %i.ab, align 8, !tbaa !68
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %indvars.iv124
-  %i.br = load double, ptr %i.bq, align 8, !tbaa !84
+  %i.br = load double, ptr %i.bq, align 8, !tbaa !85
   %i.bs = fsub double %i.bo, %i.br
   %i.bt = load ptr, ptr %i.ac, align 8, !tbaa !69
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv124 ; 2 uses
-  %i.bv = load double, ptr %i.bu, align 8, !tbaa !84
+  %i.bv = load double, ptr %i.bu, align 8, !tbaa !85
   %i.bw = fadd double %i.bs, %i.bv
-  store double %i.bw, ptr %i.bu, align 8, !tbaa !84
+  store double %i.bw, ptr %i.bu, align 8, !tbaa !85
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.f, %bb.g, %bb.h, %bb.i, %bb.e
@@ -519,7 +519,7 @@ bb.j:                                             ; preds = %bb.f, %bb.g, %bb.h,
   %indvars.iv.next125 = add nuw nsw i64 %indvars.iv124, 1 ; 2 uses
   %i.by = sext i32 %i.bx to i64
   %i.bz = icmp slt i64 %indvars.iv.next125, %i.by
-  br i1 %i.bz, label %bb.e, label %._crit_edge, !llvm.loop !79
+  br i1 %i.bz, label %bb.e, label %._crit_edge, !llvm.loop !80
 
 ._crit_edge:                                      ; preds = %bb.j, %.preheader
   %i.ca = load ptr, ptr %i.o, align 8, !tbaa !66
@@ -569,24 +569,24 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.l
   %i.cu = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv
-  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !82
+  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !83
   %i.cx = load ptr, ptr %i.z, align 8, !tbaa !69
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %indvars.iv ; 2 uses
-  %i.cz = load i64, ptr %i.cy, align 8, !tbaa !82
+  %i.cz = load i64, ptr %i.cy, align 8, !tbaa !83
   %i.da = tail call noundef i64 @llvm.smin.i64(i64 %i.cw, i64 %i.cz)
-  store i64 %i.da, ptr %i.cy, align 8, !tbaa !82
+  store i64 %i.da, ptr %i.cy, align 8, !tbaa !83
   br label %bb.v
 
 bb.p:                                             ; preds = %bb.l
   %i.db = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv
-  %i.dd = load double, ptr %i.dc, align 8, !tbaa !84 ; 2 uses
+  %i.dd = load double, ptr %i.dc, align 8, !tbaa !85 ; 2 uses
   %i.de = load ptr, ptr %i.z, align 8, !tbaa !69
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %indvars.iv ; 2 uses
-  %i.dg = load double, ptr %i.df, align 8, !tbaa !84 ; 2 uses
+  %i.dg = load double, ptr %i.df, align 8, !tbaa !85 ; 2 uses
   %i.dh = fcmp olt double %i.dd, %i.dg
   %i.di = select i1 %i.dh, double %i.dd, double %i.dg
-  store double %i.di, ptr %i.df, align 8, !tbaa !84
+  store double %i.di, ptr %i.df, align 8, !tbaa !85
   br label %bb.v
 
 bb.q:                                             ; preds = %bb.k
@@ -622,24 +622,24 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.q
   %i.dx = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.dx, i64 %indvars.iv
-  %i.dz = load i64, ptr %i.dy, align 8, !tbaa !82
+  %i.dz = load i64, ptr %i.dy, align 8, !tbaa !83
   %i.ea = load ptr, ptr %i.z, align 8, !tbaa !69
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %indvars.iv ; 2 uses
-  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !82
+  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !83
   %i.ed = tail call noundef i64 @llvm.smax.i64(i64 %i.dz, i64 %i.ec)
-  store i64 %i.ed, ptr %i.eb, align 8, !tbaa !82
+  store i64 %i.ed, ptr %i.eb, align 8, !tbaa !83
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.q
   %i.ee = load ptr, ptr %i.o, align 8, !tbaa !66
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %indvars.iv
-  %i.eg = load double, ptr %i.ef, align 8, !tbaa !84 ; 2 uses
+  %i.eg = load double, ptr %i.ef, align 8, !tbaa !85 ; 2 uses
   %i.eh = load ptr, ptr %i.z, align 8, !tbaa !69
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %indvars.iv ; 2 uses
-  %i.ej = load double, ptr %i.ei, align 8, !tbaa !84 ; 2 uses
+  %i.ej = load double, ptr %i.ei, align 8, !tbaa !85 ; 2 uses
   %i.ek = fcmp ogt double %i.eg, %i.ej
   %i.el = select i1 %i.ek, double %i.eg, double %i.ej
-  store double %i.el, ptr %i.ei, align 8, !tbaa !84
+  store double %i.el, ptr %i.ei, align 8, !tbaa !85
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.l, %bb.p, %bb.o, %bb.n, %bb.m, %bb.q, %bb.u, %bb.t, %bb.s, %bb.r
@@ -647,7 +647,7 @@ bb.v:                                             ; preds = %bb.l, %bb.p, %bb.o,
   %i.em = load i32, ptr %i.v, align 8, !tbaa !67
   %i.en = sext i32 %i.em to i64
   %i.eo = icmp slt i64 %indvars.iv.next, %i.en
-  br i1 %i.eo, label %bb.k, label %.loopexit, !llvm.loop !80
+  br i1 %i.eo, label %bb.k, label %.loopexit, !llvm.loop !81
 
 bb.w:                                             ; preds = %mca_base_pvar_handle_is_running.exit.thread
   br i1 %i.i, label %.loopexit, label %bb.x
@@ -776,7 +776,7 @@ bb.k:                                             ; preds = %.loopexit, %bb.j
   store ptr %i.al, ptr %i.am, align 8, !tbaa !62
   %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 88
   store ptr %.0.i.i, ptr %i.an, align 8, !tbaa !61
-  store ptr %i.aa, ptr %3, align 8, !tbaa !86
+  store ptr %i.aa, ptr %3, align 8, !tbaa !87
   %.val.i = load i32, ptr %i.r, align 4, !tbaa !44
   %i.ao = and i32 %.val.i, 1024
   %.not.i66 = icmp eq i32 %i.ao, 0
@@ -1179,11 +1179,11 @@ mca_base_pvar_get.exit:                           ; preds = %opal_pointer_array_
   br i1 %.not51, label %bb.e, label %mca_base_pvar_get.exit.thread
 
 bb.e:                                             ; preds = %mca_base_pvar_get.exit
-  %i.ae = load ptr, ptr %i.a, align 8, !tbaa !89  ; 2 uses
+  %i.ae = load ptr, ptr %i.a, align 8, !tbaa !90  ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !92
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !93
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !93 ; 2 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !94 ; 2 uses
   %.not52 = icmp eq ptr %i.ai, null
   %spec.select = select i1 %.not52, ptr @.str, ptr %i.ai
   %i.aj = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 24
@@ -1195,7 +1195,7 @@ bb.e:                                             ; preds = %mca_base_pvar_get.e
 
 bb.f:                                             ; preds = %bb.e
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 32
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !96
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !97
   %i.ap = call i32 %i.ao(ptr noundef nonnull %i.am, ptr noundef nonnull %i.b) #15 ; 0 uses
   br label %bb.g
 
@@ -1213,13 +1213,13 @@ bb.h:                                             ; preds = %bb.g
   %i.aw = add i32 %i.av, %i.at
   %i.ax = sext i32 %i.aw to i64
   %i.ay = call noalias ptr @calloc(i64 noundef %i.ax, i64 noundef 8) #18 ; 2 uses
-  store ptr %i.ay, ptr %1, align 8, !tbaa !98
+  store ptr %i.ay, ptr %1, align 8, !tbaa !99
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %mca_base_pvar_get.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ba = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.1, ptr noundef %i.ag, ptr noundef nonnull %spec.select, ptr noundef %i.ak) #15 ; 0 uses
-  %i.bb = load ptr, ptr %1, align 8, !tbaa !98
+  %i.bb = load ptr, ptr %1, align 8, !tbaa !99
   %i.bc = load ptr, ptr %i.c, align 8, !tbaa !28
   %i.bd = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 48
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !45
@@ -1227,7 +1227,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds [8 x i8], ptr @pvar_class_names, i64 %i.bf
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !28
   %i.bi = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef %i.bb, ptr noundef nonnull @.str.2, ptr noundef %i.bc, ptr noundef %i.bh) #15 ; 0 uses
-  %i.bj = load ptr, ptr %1, align 8, !tbaa !98
+  %i.bj = load ptr, ptr %1, align 8, !tbaa !99
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bl = load ptr, ptr %i.c, align 8, !tbaa !28
   %.val60 = load i32, ptr %i.x, align 4, !tbaa !44
@@ -1235,7 +1235,7 @@ bb.i:                                             ; preds = %bb.h
   %.not = icmp eq i32 %i.bm, 0
   %i.bn = select i1 %.not, ptr @.str.5, ptr @.str.4
   %i.bo = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.bk, ptr noundef nonnull @.str.3, ptr noundef %i.bl, ptr noundef nonnull %i.bn) #15 ; 0 uses
-  %i.bp = load ptr, ptr %1, align 8, !tbaa !98
+  %i.bp = load ptr, ptr %1, align 8, !tbaa !99
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.br = load ptr, ptr %i.c, align 8, !tbaa !28
   %.val = load i32, ptr %i.x, align 4, !tbaa !44
@@ -1243,7 +1243,7 @@ bb.i:                                             ; preds = %bb.h
   %.not80 = icmp eq i32 %i.bs, 0
   %i.bt = select i1 %.not80, ptr @.str.5, ptr @.str.4
   %i.bu = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.bq, ptr noundef nonnull @.str.6, ptr noundef %i.br, ptr noundef nonnull %i.bt) #15 ; 0 uses
-  %i.bv = load ptr, ptr %1, align 8, !tbaa !98
+  %i.bv = load ptr, ptr %1, align 8, !tbaa !99
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
   %i.bx = load ptr, ptr %i.c, align 8, !tbaa !28
   %.val61 = load i32, ptr %i.x, align 4, !tbaa !44
@@ -1256,7 +1256,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not57, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.cc = load ptr, ptr %1, align 8, !tbaa !98
+  %i.cc = load ptr, ptr %1, align 8, !tbaa !99
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
   %i.ce = load ptr, ptr %i.c, align 8, !tbaa !28
   %i.cf = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.cd, ptr noundef nonnull @.str.8, ptr noundef %i.ce, ptr noundef nonnull %i.cb) #15 ; 0 uses
@@ -1279,13 +1279,13 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   %i.cj = load ptr, ptr %i.al, align 8, !tbaa !46 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 40
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !99
+  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !100
   %i.cm = call i32 %i.cl(ptr noundef %i.cj, i32 noundef %.083, ptr noundef nonnull %i.e, ptr noundef nonnull %i.d) #15
   %.not59 = icmp eq i32 %i.cm, 0
   br i1 %.not59, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.cn = load ptr, ptr %1, align 8, !tbaa !98
+  %i.cn = load ptr, ptr %1, align 8, !tbaa !99
   %i.co = add nsw i32 %.182, 1
   %i.cp = sext i32 %.182 to i64
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.cn, i64 %i.cp
@@ -1302,11 +1302,11 @@ bb.m:                                             ; preds = %.lr.ph, %bb.l
   %i.cv = add nuw nsw i32 %.083, 1                ; 2 uses
   %i.cw = load i32, ptr %i.b, align 4, !tbaa !13
   %i.cx = icmp slt i32 %i.cv, %i.cw
-  br i1 %i.cx, label %.lr.ph, label %.loopexit, !llvm.loop !87
+  br i1 %i.cx, label %.lr.ph, label %.loopexit, !llvm.loop !88
 
 .loopexit:                                        ; preds = %bb.m, %bb.k
   %.3 = phi i32 [ %.041, %bb.k ], [ %.2, %bb.m ]
-  %i.cy = load ptr, ptr %1, align 8, !tbaa !98
+  %i.cy = load ptr, ptr %1, align 8, !tbaa !99
   %i.cz = sext i32 %.3 to i64
   %i.da = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.cz
   %i.db = load ptr, ptr %i.c, align 8, !tbaa !28
@@ -1322,7 +1322,7 @@ bb.m:                                             ; preds = %.lr.ph, %bb.l
 
 bb.n:                                             ; preds = %bb.g
   %i.dj = call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 3, i64 noundef 8) #18 ; 3 uses
-  store ptr %i.dj, ptr %1, align 8, !tbaa !98
+  store ptr %i.dj, ptr %1, align 8, !tbaa !99
   %i.dk = icmp eq ptr %i.dj, null
   br i1 %i.dk, label %mca_base_pvar_get.exit.thread, label %bb.o
 
@@ -1344,7 +1344,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not54, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.dy = load ptr, ptr %1, align 8, !tbaa !98
+  %i.dy = load ptr, ptr %1, align 8, !tbaa !99
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
   %i.ea = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.dz, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.dx) #15 ; 0 uses
   br label %bb.q
@@ -1358,7 +1358,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 64
-  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !100
+  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !101
   %i.ee = icmp eq i32 %2, 3
   %i.ef = zext i1 %i.ee to i32
   %i.eg = call i32 %i.ed(ptr noundef nonnull %i.eb, ptr noundef nonnull %i.f, i32 noundef %i.ef) #15
@@ -1366,7 +1366,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.eh, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %i.ei = load ptr, ptr %1, align 8, !tbaa !98
+  %i.ei = load ptr, ptr %1, align 8, !tbaa !99
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %.4
   %i.ek = load ptr, ptr %i.f, align 8, !tbaa !28
   %i.el = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.ej, ptr noundef nonnull @.str.13, ptr noundef %i.ek) #15 ; 0 uses
@@ -1568,7 +1568,7 @@ define internal void @opal_mpi_pvar_session_destructor(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load volatile ptr, ptr %i.b, align 8, !tbaa !103 ; 3 uses
+  %i.c = load volatile ptr, ptr %i.b, align 8, !tbaa !104 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load volatile ptr, ptr %i.d, align 8, !tbaa !64
   %.not14 = icmp eq ptr %i.c, %i.a
@@ -1597,7 +1597,7 @@ opal_obj_run_destructors.exit:                    ; preds = %.lr.ph.i, %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %.016, i64 16
   %i.n = load volatile ptr, ptr %i.m, align 8, !tbaa !64
   %.not = icmp eq ptr %.016, %i.a
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !101
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !102
 
 ._crit_edge:                                      ; preds = %opal_obj_run_destructors.exit, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1891,10 +1891,10 @@ attributes #18 = { nounwind allocsize(0,1) }
 !55 = !{!43, !14, i64 80}
 !56 = !{!43, !14, i64 96}
 !57 = !{!18, !18, i64 0}
-!58 = !{!"p1 _ZTS23mca_base_pvar_session_t", !14, i64 0}
-!59 = !{!"p1 _ZTS15mca_base_pvar_t", !14, i64 0}
-!60 = !{!"mca_base_pvar_handle_t", !41, i64 0, !41, i64 40, !58, i64 80, !59, i64 88, !14, i64 96, !10, i64 104, !14, i64 112, !14, i64 120, !14, i64 128, !29, i64 136}
-!61 = !{!60, !59, i64 88}
+!58 = !{!"p1 _ZTS15mca_base_pvar_t", !14, i64 0}
+!59 = !{!"p1 _ZTS23mca_base_pvar_session_t", !14, i64 0}
+!60 = !{!"mca_base_pvar_handle_t", !41, i64 0, !41, i64 40, !59, i64 80, !58, i64 88, !14, i64 96, !10, i64 104, !14, i64 112, !14, i64 120, !14, i64 128, !29, i64 136}
+!61 = !{!60, !58, i64 88}
 !62 = !{!60, !14, i64 96}
 !63 = !{!42, !18, i64 56}
 !64 = !{!41, !40, i64 16}
@@ -1904,37 +1904,38 @@ attributes #18 = { nounwind allocsize(0,1) }
 !68 = !{!60, !14, i64 112}
 !69 = !{!60, !14, i64 120}
 !70 = !{ptr @mca_base_pvar_notify}
-!71 = !{!60, !58, i64 80}
+!71 = !{!60, !59, i64 80}
 !72 = !{!41, !40, i64 24}
 !73 = distinct !{!73, !26}
 !74 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !75 = !{!43, !10, i64 16}
 !76 = !{!43, !10, i64 44}
-!77 = distinct !{!77, !26}
-!78 = !{!43, !40, i64 136}
-!79 = distinct !{!79, !26}
+!77 = !{!58, !58, i64 0}
+!78 = distinct !{!78, !26}
+!79 = !{!43, !40, i64 136}
 !80 = distinct !{!80, !26}
-!81 = !{!"long long", !9, i64 0}
-!82 = !{!81, !81, i64 0}
-!83 = !{!"double", !9, i64 0}
-!84 = !{!83, !83, i64 0}
-!85 = !{!"p1 _ZTS22mca_base_pvar_handle_t", !14, i64 0}
-!86 = !{!85, !85, i64 0}
-!87 = distinct !{!87, !26}
-!88 = !{!"p1 _ZTS20mca_base_var_group_t", !14, i64 0}
-!89 = !{!88, !88, i64 0}
-!90 = !{!"opal_value_array_t", !21, i64 0, !15, i64 16, !18, i64 24, !18, i64 32, !18, i64 40}
-!91 = !{!"mca_base_var_group_t", !41, i64 0, !10, i64 40, !29, i64 44, !15, i64 48, !15, i64 56, !15, i64 64, !15, i64 72, !15, i64 80, !90, i64 88, !90, i64 136, !90, i64 184, !90, i64 232}
-!92 = !{!91, !15, i64 64}
-!93 = !{!91, !15, i64 72}
-!94 = !{!"p1 _ZTS25mca_base_var_enum_value_t", !14, i64 0}
-!95 = !{!"mca_base_var_enum_t", !21, i64 0, !29, i64 16, !15, i64 24, !14, i64 32, !14, i64 40, !14, i64 48, !14, i64 56, !14, i64 64, !10, i64 72, !94, i64 80}
-!96 = !{!95, !14, i64 32}
-!97 = !{!"p2 omnipotent char", !17, i64 0}
-!98 = !{!97, !97, i64 0}
-!99 = !{!95, !14, i64 40}
-!100 = !{!95, !14, i64 64}
-!101 = distinct !{!101, !26}
-!102 = !{!"mca_base_pvar_session_t", !21, i64 0, !42, i64 16}
-!103 = !{!102, !40, i64 48}
+!81 = distinct !{!81, !26}
+!82 = !{!"long long", !9, i64 0}
+!83 = !{!82, !82, i64 0}
+!84 = !{!"double", !9, i64 0}
+!85 = !{!84, !84, i64 0}
+!86 = !{!"p1 _ZTS22mca_base_pvar_handle_t", !14, i64 0}
+!87 = !{!86, !86, i64 0}
+!88 = distinct !{!88, !26}
+!89 = !{!"p1 _ZTS20mca_base_var_group_t", !14, i64 0}
+!90 = !{!89, !89, i64 0}
+!91 = !{!"opal_value_array_t", !21, i64 0, !15, i64 16, !18, i64 24, !18, i64 32, !18, i64 40}
+!92 = !{!"mca_base_var_group_t", !41, i64 0, !10, i64 40, !29, i64 44, !15, i64 48, !15, i64 56, !15, i64 64, !15, i64 72, !15, i64 80, !91, i64 88, !91, i64 136, !91, i64 184, !91, i64 232}
+!93 = !{!92, !15, i64 64}
+!94 = !{!92, !15, i64 72}
+!95 = !{!"p1 _ZTS25mca_base_var_enum_value_t", !14, i64 0}
+!96 = !{!"mca_base_var_enum_t", !21, i64 0, !29, i64 16, !15, i64 24, !14, i64 32, !14, i64 40, !14, i64 48, !14, i64 56, !14, i64 64, !10, i64 72, !95, i64 80}
+!97 = !{!96, !14, i64 32}
+!98 = !{!"p2 omnipotent char", !17, i64 0}
+!99 = !{!98, !98, i64 0}
+!100 = !{!96, !14, i64 40}
+!101 = !{!96, !14, i64 64}
+!102 = distinct !{!102, !26}
+!103 = !{!"mca_base_pvar_session_t", !21, i64 0, !42, i64 16}
+!104 = !{!103, !40, i64 48}
 end_hunk_1

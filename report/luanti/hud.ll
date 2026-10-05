@@ -205,17 +205,14 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.a, ptr noundef nonnull align 2 dereferenceable(6) %2, i64 6, i1 false), !tbaa.struct !364
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 240
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.b, ptr noundef nonnull align 4 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !365
-  %.sroa.05.0.copyload = load i48, ptr %2, align 2, !tbaa !110 ; 3 uses
-  %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.05.0.copyload, 16
+  %.sroa.05.0.copyload = load i48, ptr %2, align 2, !tbaa !110 ; 2 uses
   %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.05.0.copyload, 32
   %.sroa.3.0.extract.trunc.i = trunc nuw i48 %.sroa.3.0.extract.shift.i to i16
   %i.c = sitofp nsz i16 %.sroa.3.0.extract.trunc.i to float
   %i.d = fmul nnan nsz float %i.c, 1.000000e+01
-  %3 = trunc i48 %.sroa.05.0.copyload to i16
-  %4 = insertelement <2 x i16> poison, i16 %3, i64 0
-  %5 = trunc i48 %.sroa.2.0.extract.shift.i to i16
-  %6 = insertelement <2 x i16> %4, i16 %5, i64 1
-  %i.e = sitofp <2 x i16> %6 to <2 x float>
+  %3 = bitcast i48 %.sroa.05.0.copyload to <3 x i16>
+  %4 = shufflevector <3 x i16> %3, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
+  %i.e = sitofp <2 x i16> %4 to <2 x float>
   %i.f = fmul nnan nsz <2 x float> %i.e, splat (float 1.000000e+01)
   %i.g = load <2 x float>, ptr %1, align 4, !tbaa !58
   %i.h = fsub nsz <2 x float> %i.g, %i.f

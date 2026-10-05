@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.as, label %ft_var_load_gvar.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   %i.au = load i16, ptr %i.at, align 8, !tbaa !734
   %i.av = zext i16 %i.au to i64
   %i.aw = add nuw nsw i64 %i.av, 1
@@ -253,8 +253,8 @@ bb.p:                                             ; preds = %bb.o
   %i.bw = ptrtoint ptr %i.bu to i64
   %i.bx = ptrtoint ptr %i.bv to i64
   %i.by = sub i64 %i.bw, %i.bx                    ; 2 uses
-  %i.bz = load i16, ptr %i.at, align 8, !tbaa !734 ; 3 uses
-  %i.ca = zext i16 %i.bz to i64                   ; 6 uses
+  %i.bz = load i16, ptr %i.at, align 8, !tbaa !734 ; 5 uses
+  %i.ca = zext i16 %i.bz to i64                   ; 2 uses
   br i1 %.not122.i, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -263,12 +263,15 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cc, label %bb.r, label %.preheader142.i.preheader
 
 .preheader142.i.preheader:                        ; preds = %bb.q
-  %5 = add nuw nsw i64 %i.ca, 1                   ; 2 uses
+  %5 = zext i16 %i.bz to i32                      ; 3 uses
+  %6 = add nuw nsw i32 %5, 1                      ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %6 to i64    ; 2 uses
+  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.cd = icmp eq i16 %i.bz, 0
   br i1 %i.cd, label %.preheader142.i.epil.preheader, label %.preheader142.i.preheader.new
 
 .preheader142.i.preheader.new:                    ; preds = %.preheader142.i.preheader
-  %unroll_iter = and i64 %5, 131070
+  %unroll_iter = and i64 %wide.trip.count.i, 131070
   br label %.preheader142.i
 
 .preheader142.i:                                  ; preds = %.preheader142.i, %.preheader142.i.preheader.new
@@ -284,7 +287,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv.i
   %spec.store.select.i = call i64 @llvm.umax.i64(i64 %.0100146.i, i64 %i.ci) ; 2 uses
   %spec.store.select138.i = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select.i)
-  store i64 %spec.store.select138.i, ptr %i.cj, align 8
+  store i64 %spec.store.select138.i, ptr %i.cj, align 8, !tbaa !185
   %i.ck = getelementptr inbounds nuw i8, ptr %.0102145.i, i64 8 ; 2 uses
   %i.cl = load i32, ptr %i.ce, align 1
   %i.cm = call i32 @llvm.bswap.i32(i32 %i.cl)
@@ -294,7 +297,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %spec.store.select.i.1 = call i64 @llvm.umax.i64(i64 %spec.store.select.i, i64 %i.co) ; 3 uses
   %spec.store.select138.i.1 = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select.i.1)
-  store i64 %spec.store.select138.i.1, ptr %i.cq, align 8
+  store i64 %spec.store.select138.i.1, ptr %i.cq, align 8, !tbaa !185
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -310,12 +313,15 @@ bb.s:                                             ; preds = %bb.p
   br i1 %i.cs, label %bb.t, label %.preheader141.i.preheader
 
 .preheader141.i.preheader:                        ; preds = %bb.s
-  %6 = add nuw nsw i64 %i.ca, 1                   ; 2 uses
+  %7 = zext i16 %i.bz to i32                      ; 3 uses
+  %8 = add nuw nsw i32 %7, 1                      ; 2 uses
+  %wide.trip.count163.i = zext nneg i32 %8 to i64 ; 2 uses
+  %xtraiter355 = and i64 %wide.trip.count163.i, 1
   %i.ct = icmp eq i16 %i.bz, 0
   br i1 %i.ct, label %.preheader141.i.epil.preheader, label %.preheader141.i.preheader.new
 
 .preheader141.i.preheader.new:                    ; preds = %.preheader141.i.preheader
-  %unroll_iter356 = and i64 %6, 131070
+  %unroll_iter356 = and i64 %wide.trip.count163.i, 131070
   br label %.preheader141.i
 
 .preheader141.i:                                  ; preds = %.preheader141.i, %.preheader141.i.preheader.new
@@ -336,7 +342,7 @@ bb.s:                                             ; preds = %bb.p
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv160.i
   %spec.store.select136.i = call i64 @llvm.umax.i64(i64 %.0149.i, i64 %i.dd) ; 2 uses
   %spec.store.select139.i = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select136.i)
-  store i64 %spec.store.select139.i, ptr %i.de, align 8
+  store i64 %spec.store.select139.i, ptr %i.de, align 8, !tbaa !185
   %i.df = getelementptr inbounds nuw i8, ptr %.1103148.i, i64 4 ; 2 uses
   %i.dg = load i8, ptr %i.cu, align 1, !tbaa !186
   %i.dh = zext i8 %i.dg to i64
@@ -351,7 +357,7 @@ bb.s:                                             ; preds = %bb.p
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
   %spec.store.select136.i.1 = call i64 @llvm.umax.i64(i64 %spec.store.select136.i, i64 %i.do) ; 3 uses
   %spec.store.select139.i.1 = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select136.i.1)
-  store i64 %spec.store.select139.i.1, ptr %i.dq, align 8
+  store i64 %spec.store.select139.i.1, ptr %i.dq, align 8, !tbaa !185
   %indvars.iv.next161.i.1 = add nuw nsw i64 %indvars.iv160.i, 2 ; 2 uses
   %niter357.next.1 = add i64 %niter357, 2         ; 2 uses
   %niter357.ncmp.1 = icmp eq i64 %niter357.next.1, %unroll_iter356
@@ -362,15 +368,14 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.z
 
 .thread.i.loopexit.unr-lcssa:                     ; preds = %.preheader141.i
-  %7 = and i64 %i.ca, 1
-  %lcmp.mod354.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod354.not.not, label %.preheader141.i.epil.preheader, label %.thread.i
+  %lcmp.mod354.not.not = icmp eq i64 %xtraiter355, 0
+  br i1 %lcmp.mod354.not.not, label %.thread.i, label %.preheader141.i.epil.preheader
 
 .preheader141.i.epil.preheader:                   ; preds = %.thread.i.loopexit.unr-lcssa, %.preheader141.i.preheader
   %indvars.iv160.i.epil.init = phi i64 [ 0, %.preheader141.i.preheader ], [ %indvars.iv.next161.i.1, %.thread.i.loopexit.unr-lcssa ]
   %.0149.i.epil.init = phi i64 [ 0, %.preheader141.i.preheader ], [ %spec.store.select136.i.1, %.thread.i.loopexit.unr-lcssa ]
   %.1103148.i.epil.init = phi ptr [ %i.bj, %.preheader141.i.preheader ], [ %i.df, %.thread.i.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod355 = trunc i64 %6 to i1
+  %lcmp.mod355 = trunc i32 %8 to i1
   call void @llvm.assume(i1 %lcmp.mod355)
   %i.dr = load i8, ptr %.1103148.i.epil.init, align 1, !tbaa !186
   %i.ds = zext i8 %i.dr to i64
@@ -384,19 +389,18 @@ bb.t:                                             ; preds = %bb.s
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv160.i.epil.init
   %spec.store.select136.i.epil = call i64 @llvm.umax.i64(i64 %.0149.i.epil.init, i64 %i.dz)
   %spec.store.select139.i.epil = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select136.i.epil)
-  store i64 %spec.store.select139.i.epil, ptr %i.ea, align 8
+  store i64 %spec.store.select139.i.epil, ptr %i.ea, align 8, !tbaa !185
   br label %.thread.i
 
 .thread.i.loopexit350.unr-lcssa:                  ; preds = %.preheader142.i
-  %8 = and i64 %i.ca, 1
-  %lcmp.mod.not.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod.not.not, label %.preheader142.i.epil.preheader, label %.thread.i
+  %lcmp.mod.not.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not.not, label %.thread.i, label %.preheader142.i.epil.preheader
 
 .preheader142.i.epil.preheader:                   ; preds = %.thread.i.loopexit350.unr-lcssa, %.preheader142.i.preheader
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader142.i.preheader ], [ %indvars.iv.next.i.1, %.thread.i.loopexit350.unr-lcssa ]
   %.0100146.i.epil.init = phi i64 [ 0, %.preheader142.i.preheader ], [ %spec.store.select.i.1, %.thread.i.loopexit350.unr-lcssa ]
   %.0102145.i.epil.init = phi ptr [ %i.bj, %.preheader142.i.preheader ], [ %i.ck, %.thread.i.loopexit350.unr-lcssa ]
-  %lcmp.mod352 = trunc i64 %5 to i1
+  %lcmp.mod352 = trunc i32 %6 to i1
   call void @llvm.assume(i1 %lcmp.mod352)
   %i.eb = load i32, ptr %.0102145.i.epil.init, align 1
   %i.ec = call i32 @llvm.bswap.i32(i32 %i.eb)
@@ -405,14 +409,13 @@ bb.t:                                             ; preds = %bb.s
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv.i.epil.init
   %spec.store.select.i.epil = call i64 @llvm.umax.i64(i64 %.0100146.i.epil.init, i64 %i.ee)
   %spec.store.select138.i.epil = call i64 @llvm.umin.i64(i64 %i.bs, i64 %spec.store.select.i.epil)
-  store i64 %spec.store.select138.i.epil, ptr %i.ef, align 8
+  store i64 %spec.store.select138.i.epil, ptr %i.ef, align 8, !tbaa !185
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.preheader142.i.epil.preheader, %.thread.i.loopexit350.unr-lcssa, %.preheader141.i.epil.preheader, %.thread.i.loopexit.unr-lcssa
-  %9 = load i16, ptr %i.at, align 8, !tbaa !734
-  %10 = zext i16 %9 to i32
+  %.pre-phi.i = phi i32 [ %7, %.preheader141.i.epil.preheader ], [ %7, %.thread.i.loopexit.unr-lcssa ], [ %5, %.thread.i.loopexit350.unr-lcssa ], [ %5, %.preheader142.i.epil.preheader ]
   %i.eg = getelementptr inbounds nuw i8, ptr %i.l, i64 128
-  store i32 %10, ptr %i.eg, align 8, !tbaa !385
+  store i32 %.pre-phi.i, ptr %i.eg, align 8, !tbaa !385
   call void @FT_Stream_ExitFrame(ptr noundef nonnull %i.x) #21
   %i.eh = load i16, ptr %i.al, align 2, !tbaa !733
   %.not127.i = icmp eq i16 %i.eh, 0
@@ -815,7 +818,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !457
   %i.ae = mul i64 %i.ad, 100                      ; 2 uses
   %spec.store.select = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.ae)
-  store i64 %spec.store.select, ptr %i.aa, align 8
+  store i64 %spec.store.select, ptr %i.aa, align 8, !tbaa !285
   %spec.select58 = tail call i64 @llvm.umin.i64(i64 %.sink, i64 %i.ae)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 984
   store i64 %spec.select58, ptr %i.af, align 8, !tbaa !272

@@ -204,7 +204,7 @@ bb.a:
   %10 = alloca %"struct.ojph::local::vlc_struct_avx2", align 8 ; 12 uses
   %i.d = alloca [65 x <4 x i64>], align 32        ; 6 uses
   %i.e = alloca [65 x <4 x i64>], align 32        ; 8 uses
-  %i.f = alloca [4 x <4 x i64>], align 32         ; 9 uses
+  %i.f = alloca [4 x <4 x i64>], align 32         ; 10 uses
   %i.g = alloca [16 x i32], align 16              ; 9 uses
   %i.h = alloca <4 x i64>, align 32               ; 7 uses
   %i.i = alloca <4 x i64>, align 32               ; 4 uses
@@ -275,7 +275,7 @@ bb.a:
   %i.am = shl nuw nsw i32 %i.al, 2
   %i.an = zext nneg i32 %i.am to i64              ; 2 uses
   %i.ao = zext i32 %5 to i64                      ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 64 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 64 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.f, i64 96 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -465,9 +465,9 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %i.fd = select <8 x i1> %.not.3.i.us, <8 x i32> %i.fb, <8 x i32> zeroinitializer ; 2 uses
   %i.fe = shufflevector <8 x i32> %i.cu, <8 x i32> %i.ei, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14> ; 2 uses
   %i.ff = shufflevector <8 x i32> %i.cu, <8 x i32> %i.ei, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15> ; 2 uses
-  %i.fg = shufflevector <8 x i32> %i.cv, <8 x i32> %i.ej, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14> ; 3 uses
+  %i.fg = shufflevector <8 x i32> %i.cv, <8 x i32> %i.ej, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   store <8 x i32> %i.fg, ptr %i.f, align 32, !tbaa !23
-  %i.fh = shufflevector <8 x i32> %i.cv, <8 x i32> %i.ej, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15> ; 3 uses
+  %i.fh = shufflevector <8 x i32> %i.cv, <8 x i32> %i.ej, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
   store <8 x i32> %i.fh, ptr %i.ap, align 32, !tbaa !23
   %i.fi = shufflevector <8 x i1> %.not.i118.us, <8 x i1> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 1, i32 3, i32 5, i32 7>
   %i.fj = zext <8 x i1> %i.fi to <8 x i32>        ; 2 uses
@@ -477,9 +477,9 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %i.fn = shufflevector <8 x i32> %i.fj, <8 x i32> %i.fl, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.fo = shufflevector <8 x i32> %i.do, <8 x i32> %i.fc, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14> ; 3 uses
   %i.fp = shufflevector <8 x i32> %i.do, <8 x i32> %i.fc, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15> ; 4 uses
-  %i.fq = shufflevector <8 x i32> %i.dp, <8 x i32> %i.fd, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14> ; 3 uses
+  %i.fq = shufflevector <8 x i32> %i.dp, <8 x i32> %i.fd, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   store <8 x i32> %i.fq, ptr %i.aq, align 32, !tbaa !23
-  %i.fr = shufflevector <8 x i32> %i.dp, <8 x i32> %i.fd, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15> ; 3 uses
+  %i.fr = shufflevector <8 x i32> %i.dp, <8 x i32> %i.fd, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
   store <8 x i32> %i.fr, ptr %i.ar, align 32, !tbaa !23
   %i.fs = shufflevector <8 x i1> %.not.1.i.us, <8 x i1> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 1, i32 3, i32 5, i32 7>
   %i.ft = zext <8 x i1> %i.fs to <8 x i32>        ; 2 uses
@@ -594,10 +594,12 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %i.jg = shufflevector <8 x i32> %i.jb, <8 x i32> %i.jc, <8 x i32> <i32 4, i32 5, i32 12, i32 13, i32 6, i32 7, i32 14, i32 15>
   store <8 x i32> %i.jg, ptr %i.au, align 32, !tbaa !23
   store <8 x i32> %i.jf, ptr %i.as, align 32, !tbaa !23
-  %i.jh = shufflevector <8 x i32> %i.fg, <8 x i32> %i.fq, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13> ; 2 uses
-  %i.ji = shufflevector <8 x i32> %i.fh, <8 x i32> %i.fr, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13> ; 2 uses
-  %i.jj = shufflevector <8 x i32> %i.fg, <8 x i32> %i.fq, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15> ; 2 uses
-  %i.jk = shufflevector <8 x i32> %i.fh, <8 x i32> %i.fr, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15> ; 2 uses
+  %11 = load <16 x i32>, ptr %i.f, align 32, !tbaa !23 ; 2 uses
+  %i.jh = shufflevector <16 x i32> %11, <16 x i32> poison, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13> ; 2 uses
+  %12 = load <16 x i32>, ptr %i.ap, align 32, !tbaa !23 ; 2 uses
+  %i.ji = shufflevector <16 x i32> %12, <16 x i32> poison, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13> ; 2 uses
+  %i.jj = shufflevector <16 x i32> %11, <16 x i32> poison, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15> ; 2 uses
+  %i.jk = shufflevector <16 x i32> %12, <16 x i32> poison, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15> ; 2 uses
   %i.jl = shufflevector <8 x i32> %i.jh, <8 x i32> %i.ji, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 2, i32 3, i32 10, i32 11>
   %i.jm = shufflevector <8 x i32> %i.jh, <8 x i32> %i.ji, <8 x i32> <i32 4, i32 5, i32 12, i32 13, i32 6, i32 7, i32 14, i32 15>
   store <8 x i32> %i.jm, ptr %i.ap, align 32, !tbaa !23

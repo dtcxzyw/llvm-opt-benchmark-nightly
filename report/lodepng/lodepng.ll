@@ -205,7 +205,7 @@ bb.a:
   %i.e = load i32, ptr %0, align 4, !tbaa !29
   %i.f = icmp eq i32 %i.e, 0
   %spec.store.select = select i1 %i.f, i32 0, i32 %i.d ; 2 uses
-  store i32 %spec.store.select, ptr %1, align 4
+  store i32 %spec.store.select, ptr %1, align 4, !tbaa !29
   %i.g = icmp eq i32 %spec.store.select, 0
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.l = load i32, ptr %i.j, align 4, !tbaa !29
   %i.m = icmp eq i32 %i.l, 0
   %spec.store.select.1 = select i1 %i.m, i32 0, i32 %i.d ; 2 uses
-  store i32 %spec.store.select.1, ptr %i.k, align 4
+  store i32 %spec.store.select.1, ptr %i.k, align 4, !tbaa !29
   %i.n = icmp eq i32 %spec.store.select.1, 0
   br i1 %i.n, label %bb.d, label %bb.e
 
@@ -243,7 +243,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.u = load i32, ptr %i.q, align 4, !tbaa !29
   %i.v = icmp eq i32 %i.u, 0
   %spec.store.select.2 = select i1 %i.v, i32 0, i32 %i.s ; 2 uses
-  store i32 %spec.store.select.2, ptr %i.t, align 4
+  store i32 %spec.store.select.2, ptr %i.t, align 4, !tbaa !29
   %i.w = icmp eq i32 %spec.store.select.2, 0
   br i1 %i.w, label %bb.f, label %bb.g
 
@@ -263,7 +263,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ad = load i32, ptr %i.z, align 4, !tbaa !29
   %i.ae = icmp eq i32 %i.ad, 0
   %spec.store.select.3 = select i1 %i.ae, i32 0, i32 %i.ab ; 2 uses
-  store i32 %spec.store.select.3, ptr %i.ac, align 4
+  store i32 %spec.store.select.3, ptr %i.ac, align 4, !tbaa !29
   %i.af = icmp eq i32 %spec.store.select.3, 0
   br i1 %i.af, label %bb.h, label %bb.i
 
@@ -283,7 +283,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.am = load i32, ptr %i.ai, align 4, !tbaa !29
   %i.an = icmp eq i32 %i.am, 0
   %spec.store.select.4 = select i1 %i.an, i32 0, i32 %i.ak ; 2 uses
-  store i32 %spec.store.select.4, ptr %i.al, align 4
+  store i32 %spec.store.select.4, ptr %i.al, align 4, !tbaa !29
   %i.ao = icmp eq i32 %spec.store.select.4, 0
   br i1 %i.ao, label %bb.j, label %bb.k
 
@@ -302,7 +302,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.au = load i32, ptr %i.aq, align 4, !tbaa !29
   %i.av = icmp eq i32 %i.au, 0
   %spec.store.select.5 = select i1 %i.av, i32 0, i32 %i.as ; 2 uses
-  store i32 %spec.store.select.5, ptr %i.at, align 4
+  store i32 %spec.store.select.5, ptr %i.at, align 4, !tbaa !29
   %i.aw = icmp eq i32 %spec.store.select.5, 0
   br i1 %i.aw, label %bb.l, label %bb.m
 
@@ -319,7 +319,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ba = load i32, ptr %i.ax, align 4, !tbaa !29
   %i.bb = icmp eq i32 %i.ba, 0
   %spec.store.select.6 = select i1 %i.bb, i32 0, i32 %i.ay ; 2 uses
-  store i32 %spec.store.select.6, ptr %i.az, align 4
+  store i32 %spec.store.select.6, ptr %i.az, align 4, !tbaa !29
   %i.bc = icmp eq i32 %spec.store.select.6, 0
   br i1 %i.bc, label %bb.n, label %bb.o
 

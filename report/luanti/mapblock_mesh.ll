@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %.loopexit.i
   %i.by = load i8, ptr %i.h, align 1, !tbaa !59, !range !68, !noundef !69
   %i.bz = trunc nuw i8 %i.by to i1
   %spec.store.select.i = select i1 %i.bz, i16 255, i16 %.sink.i ; 2 uses
-  store i16 %spec.store.select.i, ptr %i.f, align 2
+  store i16 %spec.store.select.i, ptr %i.f, align 2, !tbaa !42
   %i.ca = load i8, ptr %i.e, align 1, !tbaa !49
   %spec.store.select.i.i = call i8 @llvm.umin.i8(i8 %i.ca, i8 15)
   %i.cb = load ptr, ptr @light_decode_table, align 8, !tbaa !55
@@ -608,8 +608,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fq, label %.preheader363, label %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread, !llvm.loop !375
 
 _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1, %bb.d, %bb.m, %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit
-  %.sroa.045.0.copyload = load i48, ptr %i.bs, align 8 ; 4 uses
-  %.sroa.2.0.extract.shift.i140 = lshr i48 %.sroa.045.0.copyload, 16
+  %.sroa.045.0.copyload = load i48, ptr %i.bs, align 8 ; 3 uses
   %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.045.0.copyload, 32
   %.sroa.3.0.extract.trunc.i = trunc nuw i48 %.sroa.3.0.extract.shift.i to i16 ; 3 uses
   %i.fr = add nsw i32 %i.bu, -1                   ; 2 uses
@@ -624,10 +623,8 @@ _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN
   %i.fz = sub i16 %.sroa.3.0.extract.trunc.i, %i.fy
   %i.ga = shl i16 %i.fz, 4
   %i.gb = sitofp nsz i16 %i.ga to float
-  %11 = trunc i48 %.sroa.045.0.copyload to i16
-  %12 = insertelement <2 x i16> poison, i16 %11, i64 0
-  %13 = trunc i48 %.sroa.2.0.extract.shift.i140 to i16
-  %14 = insertelement <2 x i16> %12, i16 %13, i64 1
+  %11 = bitcast i48 %.sroa.045.0.copyload to <3 x i16>
+  %12 = shufflevector <3 x i16> %11, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
   %i.gc = bitcast i48 %.sroa.045.0.copyload to <3 x i16>
   %i.gd = shufflevector <3 x i16> %i.gc, <3 x i16> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   %i.ge = sext <2 x i16> %i.gd to <2 x i32>
@@ -644,7 +641,7 @@ _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN
   %i.gp = insertelement <2 x i16> poison, i16 %i.br, i64 0
   %i.gq = shufflevector <2 x i16> %i.gp, <2 x i16> poison, <2 x i32> zeroinitializer
   %i.gr = mul <2 x i16> %i.gq, %i.go
-  %i.gs = sub <2 x i16> %14, %i.gr
+  %i.gs = sub <2 x i16> %12, %i.gr
   %i.gt = shl <2 x i16> %i.gs, splat (i16 4)
   %i.gu = sitofp <2 x i16> %i.gt to <2 x float>
   %i.gv = fmul nnan nsz <2 x float> %i.gu, splat (float 1.000000e+01)

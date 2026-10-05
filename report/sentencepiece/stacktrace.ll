@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.s, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %7 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.k)
+  %7 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.k)
   br i1 %7, label %bb.e, label %_ZL14NextStackFrameILb0ELb0EEPPvS1_PKvmm.exit.us
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -274,7 +274,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.aq, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.ai)
+  %8 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.ai)
   br i1 %8, label %bb.n, label %_ZL14NextStackFrameILb0ELb0EEPPvS1_PKvmm.exit.us79
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -341,7 +341,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.br, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %9 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.bj)
+  %9 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.bj)
   br i1 %9, label %bb.u, label %_ZL14NextStackFrameILb0ELb0EEPPvS1_PKvmm.exit
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -433,7 +433,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.cw, label %_ZL14NextStackFrameILb0ELb0EEPPvS1_PKvmm.exit58, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %10 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.co)
+  %10 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.co)
   %i.cx = icmp samesign ult i32 %.098, 999
   %or.cond = select i1 %10, i1 %i.cx, i1 false
   br i1 %or.cond, label %.backedge, label %._crit_edge100
@@ -495,7 +495,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.s, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %7 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.k)
+  %7 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.k)
   br i1 %7, label %bb.e, label %_ZL14NextStackFrameILb0ELb1EEPPvS1_PKvmm.exit.us
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -567,7 +567,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.aq, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.ai)
+  %8 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.ai)
   br i1 %8, label %bb.n, label %_ZL14NextStackFrameILb0ELb1EEPPvS1_PKvmm.exit.us79
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -634,7 +634,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.br, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %9 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.bj)
+  %9 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.bj)
   br i1 %9, label %bb.u, label %_ZL14NextStackFrameILb0ELb1EEPPvS1_PKvmm.exit
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -726,7 +726,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.cw, label %_ZL14NextStackFrameILb0ELb1EEPPvS1_PKvmm.exit58, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %10 = tail call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.co)
+  %10 = call noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internal17AddressIsReadableEPKv(ptr noundef nonnull %i.co)
   %i.cx = icmp samesign ult i32 %.098, 999
   %or.cond = select i1 %10, i1 %i.cx, i1 false
   br i1 %or.cond, label %.backedge, label %._crit_edge100

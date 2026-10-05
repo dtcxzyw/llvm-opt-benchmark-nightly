@@ -205,9 +205,9 @@ _ZN5ImGuiL22UpdateTexturesNewFrameEv.exit:        ; preds = %_ZN5ImGuiL22UpdateT
   %i.gm = getelementptr inbounds nuw i8, ptr %i.fx, i64 3400
   %i.gn = load i8, ptr %i.gm, align 8, !tbaa !1342, !range !120, !noundef !254
   %spec.store.select.i = zext nneg i8 %i.gn to i32 ; 4 uses
-  store i32 %spec.store.select.i, ptr %i.gl, align 4
+  store i32 %spec.store.select.i, ptr %i.gl, align 4, !tbaa !1343
   %i.go = getelementptr inbounds nuw i8, ptr %i.fx, i64 3401
-  %i.gp = load i8, ptr %i.go, align 1, !tbaa !1343, !range !120, !noundef !254
+  %i.gp = load i8, ptr %i.go, align 1, !tbaa !1344, !range !120, !noundef !254
   %i.gq = trunc nuw i8 %i.gp to i1
   br i1 %i.gq, label %bb.ad, label %bb.af
 
@@ -218,7 +218,7 @@ _ZN6ImRect3AddERKS_.exit.i:                       ; preds = %_ZN5ImGuiL22UpdateT
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
   %i.gt = load float, ptr %i.gs, align 8, !tbaa !448 ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gr, i64 12
-  %i.gv = load float, ptr %i.gu, align 4, !tbaa !1344 ; 3 uses
+  %i.gv = load float, ptr %i.gu, align 4, !tbaa !1345 ; 3 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gr, i64 16
   %i.gx = load float, ptr %i.gw, align 8, !tbaa !754
   %i.gy = fadd float %i.gt, %i.gx                 ; 2 uses
@@ -248,14 +248,14 @@ _ZN6ImRect3AddERKS_.exit.i:                       ; preds = %_ZN5ImGuiL22UpdateT
 bb.ad:                                            ; preds = %._crit_edge.i
   %i.hh = getelementptr inbounds nuw i8, ptr %i.fx, i64 64
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !469
-  %i.hj = load i32, ptr %i.hi, align 8, !tbaa !1345
+  %i.hj = load i32, ptr %i.hi, align 8, !tbaa !1346
   %i.hk = and i32 %i.hj, 4
   %.not24.i = icmp eq i32 %i.hk, 0
   br i1 %.not24.i, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.hl = or disjoint i32 %spec.store.select.i, 2 ; 2 uses
-  store i32 %i.hl, ptr %i.gl, align 4, !tbaa !1346
+  store i32 %i.hl, ptr %i.gl, align 4, !tbaa !1343
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %._crit_edge.i
@@ -267,7 +267,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %._c
 
 bb.ag:                                            ; preds = %bb.af
   %i.hq = or i32 %i.hm, 4                         ; 2 uses
-  store i32 %i.hq, ptr %i.gl, align 4, !tbaa !1346
+  store i32 %i.hq, ptr %i.gl, align 4, !tbaa !1343
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
@@ -280,7 +280,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 
 bb.ai:                                            ; preds = %bb.ah
   %i.hv = or i32 %i.hr, 8
-  store i32 %i.hv, ptr %i.gl, align 4, !tbaa !1346
+  store i32 %i.hv, ptr %i.gl, align 4, !tbaa !1343
   br label %_ZL23SetupDrawListSharedDatav.exit
 
 _ZL23SetupDrawListSharedDatav.exit:               ; preds = %bb.ah, %bb.ai
@@ -683,7 +683,7 @@ bb.n:                                             ; preds = %.thread140, %bb.f
   %i.bk = phi i32 [ %i.ac, %.thread140 ], [ %i.ah, %bb.f ]
   %i.bl = phi ptr [ %i.z, %.thread140 ], [ %i.ae, %bb.f ]
   %.0142 = phi ptr [ %.0.ph, %.thread140 ], [ %i.ad, %bb.f ] ; 3 uses
-  %i.bm = phi ptr [ %.ph139, %.thread140 ], [ %i.i, %bb.f ] ; 7 uses
+  %i.bm = phi ptr [ %.ph139, %.thread140 ], [ %i.i, %bb.f ] ; 6 uses
   %i.bn = phi i32 [ %.ph138, %.thread140 ], [ %i.j, %bb.f ]
   %i.bo = and i32 %i.bn, 32
   %.not111 = icmp eq i32 %i.bo, 0
@@ -1018,13 +1018,11 @@ bb.au:                                            ; preds = %bb.at
   %i.hw = and i32 %i.hr, 1024
   %.not126 = icmp eq i32 %i.hw, 0
   %spec.store.select = select i1 %.not126, i32 0, i32 13
-  store i32 %spec.store.select, ptr %i.hv, align 4
-  %.pre157 = load i32, ptr %i.bm, align 4, !tbaa !390
+  store i32 %spec.store.select, ptr %i.hv, align 4, !tbaa !824
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  %3 = phi i32 [ %.pre157, %bb.au ], [ %i.hr, %bb.at ]
-  %i.hx = and i32 %3, 16384
+  %i.hx = and i32 %i.hr, 16384
   %i.hy = icmp eq i32 %i.hx, 0
   br i1 %i.hy, label %bb.aw, label %bb.ay
 
@@ -1427,10 +1425,10 @@ begin_hunk_2_@llvm.fabs.v2f32
 !1340 = !{!238, !85, i64 4464}
 !1341 = !{!238, !85, i64 3408}
 !1342 = !{!238, !89, i64 3400}
-!1343 = !{!238, !89, i64 3401}
-!1344 = !{!447, !85, i64 12}
-!1345 = !{!481, !82, i64 0}
-!1346 = !{!238, !82, i64 4476}
+!1343 = !{!238, !82, i64 4476}
+!1344 = !{!238, !89, i64 3401}
+!1345 = !{!447, !85, i64 12}
+!1346 = !{!481, !82, i64 0}
 !1347 = !{!238, !89, i64 3402}
 !1348 = !{!238, !85, i64 4472}
 !1349 = !{!238, !85, i64 4364}

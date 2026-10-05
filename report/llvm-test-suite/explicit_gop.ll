@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %i.bg = load i32, ptr %i.bf, align 8, !tbaa !15
   %i.bh = icmp eq i32 %i.bg, 3
   %spec.store.select = select i1 %i.bh, double 1.000000e+00, double %i.bd ; 3 uses
-  store double %spec.store.select, ptr %i.be, align 8
+  store double %spec.store.select, ptr %i.be, align 8, !tbaa !70
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ad, i64 1560
-  %i.bj = load i32, ptr %i.bi, align 8, !tbaa !70 ; 2 uses
+  %i.bj = load i32, ptr %i.bi, align 8, !tbaa !71 ; 2 uses
   %.not16 = icmp eq i32 %i.bj, 0
   br i1 %.not16, label %._crit_edge33, label %bb.k
 
@@ -217,7 +217,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ad, i64 1568
-  %i.bl = load i32, ptr %i.bk, align 8, !tbaa !71
+  %i.bl = load i32, ptr %i.bk, align 8, !tbaa !72
   %.not17 = icmp eq i32 %i.bl, 0
   %.pre35 = load i32, ptr %i.af, align 8, !tbaa !61 ; 3 uses
   %.pre37 = load i32, ptr @start_frame_no_in_this_IGOP, align 4, !tbaa !7 ; 3 uses
@@ -250,7 +250,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.cc = add nsw i32 %i.bv, %i.cb                ; 2 uses
   %i.cd = shl nsw i32 %i.cc, 1                    ; 4 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.af, i64 15316
-  store i32 %i.cd, ptr %i.ce, align 4, !tbaa !72
+  store i32 %i.cd, ptr %i.ce, align 4, !tbaa !73
   %i.cf = icmp eq i32 %i.ae, 1
   %i.cg = load i32, ptr @start_tr_in_this_IGOP, align 4, !tbaa !7 ; 2 uses
   br i1 %i.cf, label %bb.o, label %bb.p
@@ -283,13 +283,13 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.cx = getelementptr inbounds nuw i8, ptr %i.af, i64 15304
   store i32 %.sink29, ptr %i.cx, align 8, !tbaa !7
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ad, i64 4704
-  %i.cz = load i32, ptr %i.cy, align 8, !tbaa !73
+  %i.cz = load i32, ptr %i.cy, align 8, !tbaa !74
   %i.da = icmp eq i32 %i.cz, 0
   br i1 %i.da, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.db = getelementptr inbounds nuw i8, ptr %i.ad, i64 4708
-  %i.dc = load i32, ptr %i.db, align 4, !tbaa !74
+  %i.dc = load i32, ptr %i.db, align 4, !tbaa !75
   %i.dd = icmp eq i32 %i.dc, 0
   br i1 %i.dd, label %bb.t, label %bb.s
 
@@ -300,15 +300,15 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.r, %bb.s
   %.sink = phi i32 [ %i.de, %bb.s ], [ %i.cd, %bb.r ]
   %i.df = getelementptr inbounds nuw i8, ptr %i.af, i64 15320
-  store i32 %.sink, ptr %i.df, align 8, !tbaa !75
+  store i32 %.sink, ptr %i.df, align 8, !tbaa !76
   %i.dg = getelementptr inbounds nuw i8, ptr %i.af, i64 15324
-  store i32 %i.cd, ptr %i.dg, align 4, !tbaa !76
+  store i32 %i.cd, ptr %i.dg, align 4, !tbaa !77
   %i.dh = getelementptr inbounds nuw i8, ptr %i.af, i64 15308
   store i32 0, ptr %i.dh, align 4, !tbaa !7
   %i.di = tail call i32 @encode_one_frame() #13   ; 0 uses
   %i.dj = load ptr, ptr @input, align 8, !tbaa !9 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 5104
-  %i.dl = load i32, ptr %i.dk, align 8, !tbaa !77
+  %i.dl = load i32, ptr %i.dk, align 8, !tbaa !78
   %.not18 = icmp eq i32 %i.dl, 0
   br i1 %.not18, label %bb.v, label %bb.u
 
@@ -404,9 +404,9 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph26
   %i.fh = load i32, ptr %i.fg, align 8, !tbaa !15
   %i.fi = icmp eq i32 %i.fh, 3
   %spec.store.select20 = select i1 %i.fi, double 1.000000e+00, double %i.fe ; 2 uses
-  store double %spec.store.select20, ptr %i.ff, align 8
+  store double %spec.store.select20, ptr %i.ff, align 8, !tbaa !70
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ek, i64 1560
-  %i.fk = load i32, ptr %i.fj, align 8, !tbaa !70 ; 2 uses
+  %i.fk = load i32, ptr %i.fj, align 8, !tbaa !71 ; 2 uses
   %.not9 = icmp eq i32 %i.fk, 0
   br i1 %.not9, label %._crit_edge42, label %bb.z
 
@@ -417,7 +417,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph26
 
 bb.z:                                             ; preds = %bb.y
   %i.fl = getelementptr inbounds nuw i8, ptr %i.ek, i64 1568
-  %i.fm = load i32, ptr %i.fl, align 8, !tbaa !71
+  %i.fm = load i32, ptr %i.fl, align 8, !tbaa !72
   %.not10 = icmp eq i32 %i.fm, 0
   %.pre44 = load i32, ptr %i.em, align 8, !tbaa !61 ; 2 uses
   %.pre46 = load i32, ptr @start_frame_no_in_this_IGOP, align 4, !tbaa !7 ; 2 uses
@@ -445,15 +445,15 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.fy = add nsw i32 %i.fu, %i.fx
   %i.fz = shl nsw i32 %i.fy, 1                    ; 4 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.em, i64 15316
-  store i32 %i.fz, ptr %i.ga, align 4, !tbaa !72
+  store i32 %i.fz, ptr %i.ga, align 4, !tbaa !73
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ek, i64 4704
-  %i.gc = load i32, ptr %i.gb, align 8, !tbaa !73
+  %i.gc = load i32, ptr %i.gb, align 8, !tbaa !74
   %i.gd = icmp eq i32 %i.gc, 0
   br i1 %i.gd, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ge = getelementptr inbounds nuw i8, ptr %i.ek, i64 4708
-  %i.gf = load i32, ptr %i.ge, align 4, !tbaa !74
+  %i.gf = load i32, ptr %i.ge, align 4, !tbaa !75
   %i.gg = icmp eq i32 %i.gf, 0
   br i1 %i.gg, label %bb.af, label %bb.ae
 
@@ -464,9 +464,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 bb.af:                                            ; preds = %bb.ad, %bb.ae
   %.sink89 = phi i32 [ %i.gh, %bb.ae ], [ %i.fz, %bb.ad ]
   %i.gi = getelementptr inbounds nuw i8, ptr %i.em, i64 15320
-  store i32 %.sink89, ptr %i.gi, align 8, !tbaa !75
+  store i32 %.sink89, ptr %i.gi, align 8, !tbaa !76
   %i.gj = getelementptr inbounds nuw i8, ptr %i.em, i64 15324
-  store i32 %i.fz, ptr %i.gj, align 4, !tbaa !76
+  store i32 %i.fz, ptr %i.gj, align 4, !tbaa !77
   %i.gk = shl i32 %i.el, 1
   %i.gl = add i32 %i.gk, -2
   %.sink30 = select i1 %i.eq, i32 -2, i32 %i.gl
@@ -504,7 +504,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.af
   %i.hg = getelementptr inbounds nuw i8, ptr %i.gp, i64 5104
-  %i.hh = load i32, ptr %i.hg, align 8, !tbaa !77
+  %i.hh = load i32, ptr %i.hg, align 8, !tbaa !78
   %.not13 = icmp eq i32 %i.hh, 0
   br i1 %.not13, label %bb.ak, label %bb.aj
 
@@ -541,24 +541,24 @@ define dso_local void @poc_based_ref_management(i32 noundef %0) local_unnamed_ad
 bb.a:
   %i.a = load ptr, ptr @img, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 15376
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !79
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !80
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.b, label %bb.l
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !83
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 36), align 4, !tbaa !84
+  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !84
+  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 36), align 4, !tbaa !85
   %i.f = sub i32 0, %i.e
   %i.g = icmp eq i32 %i.d, %i.f
   br i1 %i.g, label %bb.l, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !85 ; 2 uses
+  %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !86 ; 2 uses
   %.not24 = icmp eq i32 %i.h, 0
   br i1 %.not24, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.i = load ptr, ptr @dpb, align 8, !tbaa !86
+  %i.i = load ptr, ptr @dpb, align 8, !tbaa !87
   %wide.trip.count = zext i32 %i.h to i64
   br label %bb.c
 
@@ -567,31 +567,31 @@ bb.c:                                             ; preds = %.lr.ph, %bb.g
   %.023 = phi i32 [ 2147483647, %.lr.ph ], [ %.1, %bb.g ] ; 4 uses
   %.01622 = phi i32 [ 0, %.lr.ph ], [ %.117, %bb.g ] ; 3 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !87   ; 4 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !88   ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !90
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !91
   %.not19 = icmp eq i32 %i.m, 0
   br i1 %.not19, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !91
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !92
   %.not20 = icmp eq i32 %i.o, 0
   br i1 %.not20, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 36
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !92
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !93
   %i.r = icmp slt i32 %i.q, %.023
   br i1 %i.r, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !93   ; 2 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !94   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !101
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !102
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 6364
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !102
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !103
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f
@@ -599,7 +599,7 @@ bb.g:                                             ; preds = %bb.c, %bb.d, %bb.e,
   %.1 = phi i32 [ %.023, %bb.d ], [ %i.v, %bb.f ], [ %.023, %bb.e ], [ %.023, %bb.c ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.c, !llvm.loop !78
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.c, !llvm.loop !79
 
 ._crit_edge.loopexit:                             ; preds = %bb.g
   %i.y = xor i32 %.117, -1
@@ -626,14 +626,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  store ptr %i.z, ptr %i.ad, align 8, !tbaa !104
-  store i32 1, ptr %i.ab, align 8, !tbaa !105
+  store ptr %i.z, ptr %i.ad, align 8, !tbaa !105
+  store i32 1, ptr %i.ab, align 8, !tbaa !106
   %i.ae = add i32 %0, %.016.lcssa
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  store i32 %i.ae, ptr %i.af, align 4, !tbaa !106
+  store i32 %i.ae, ptr %i.af, align 4, !tbaa !107
   %i.ag = load ptr, ptr @img, align 8, !tbaa !9
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 15376
-  store ptr %i.ab, ptr %i.ah, align 8, !tbaa !79
+  store ptr %i.ab, ptr %i.ah, align 8, !tbaa !80
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.b, %bb.a, %bb.k
@@ -740,41 +740,42 @@ attributes #15 = { nounwind willreturn memory(none) }
 !67 = !{!38, !6, i64 15360}
 !68 = !{!38, !6, i64 15332}
 !69 = !{!38, !6, i64 14364}
-!70 = !{!13, !6, i64 1560}
-!71 = !{!13, !6, i64 1568}
-!72 = !{!38, !6, i64 15316}
-!73 = !{!13, !6, i64 4704}
-!74 = !{!13, !6, i64 4708}
-!75 = !{!38, !6, i64 15320}
-!76 = !{!38, !6, i64 15324}
-!77 = !{!13, !6, i64 5104}
-!78 = distinct !{!78, !22}
-!79 = !{!38, !34, i64 15376}
-!80 = !{!"p2 _ZTS11frame_store", !24, i64 0}
-!81 = !{!"p1 _ZTS11frame_store", !8, i64 0}
-!82 = !{!"decoded_picture_buffer", !80, i64 0, !80, i64 8, !80, i64 16, !6, i64 24, !6, i64 28, !6, i64 32, !6, i64 36, !6, i64 40, !6, i64 44, !6, i64 48, !81, i64 56}
-!83 = !{!82, !6, i64 32}
-!84 = !{!82, !6, i64 36}
-!85 = !{!82, !6, i64 28}
-!86 = !{!82, !80, i64 0}
-!87 = !{!81, !81, i64 0}
-!88 = !{!"p1 _ZTS16storable_picture", !8, i64 0}
-!89 = !{!"frame_store", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !6, i64 20, !6, i64 24, !6, i64 28, !6, i64 32, !6, i64 36, !88, i64 40, !88, i64 48, !88, i64 56}
-!90 = !{!89, !6, i64 4}
-!91 = !{!89, !6, i64 8}
-!92 = !{!89, !6, i64 36}
-!93 = !{!89, !88, i64 40}
-!94 = !{!"p2 short", !24, i64 0}
-!95 = !{!"p4 short", !28, i64 0}
-!96 = !{!"p5 short", !31, i64 0}
-!97 = !{!"p3 short", !26, i64 0}
-!98 = !{!"p3 omnipotent char", !26, i64 0}
-!99 = !{!"p3 long long", !26, i64 0}
-!100 = !{!"storable_picture", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !6, i64 20, !5, i64 24, !5, i64 1608, !5, i64 3192, !5, i64 4776, !6, i64 6360, !6, i64 6364, !6, i64 6368, !6, i64 6372, !6, i64 6376, !6, i64 6380, !6, i64 6384, !6, i64 6388, !6, i64 6392, !6, i64 6396, !6, i64 6400, !6, i64 6404, !6, i64 6408, !6, i64 6412, !6, i64 6416, !6, i64 6420, !6, i64 6424, !6, i64 6428, !6, i64 6432, !94, i64 6440, !95, i64 6448, !95, i64 6456, !96, i64 6464, !97, i64 6472, !12, i64 6480, !98, i64 6488, !99, i64 6496, !99, i64 6504, !95, i64 6512, !25, i64 6520, !25, i64 6528, !88, i64 6536, !88, i64 6544, !88, i64 6552, !6, i64 6560, !6, i64 6564, !6, i64 6568, !6, i64 6572, !6, i64 6576, !6, i64 6580, !6, i64 6584}
-!101 = !{!100, !6, i64 4}
-!102 = !{!100, !6, i64 6364}
-!103 = !{!"DecRefPicMarking_s", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !34, i64 24}
-!104 = !{!103, !34, i64 24}
-!105 = !{!103, !6, i64 0}
-!106 = !{!103, !6, i64 4}
+!70 = !{!38, !10, i64 14352}
+!71 = !{!13, !6, i64 1560}
+!72 = !{!13, !6, i64 1568}
+!73 = !{!38, !6, i64 15316}
+!74 = !{!13, !6, i64 4704}
+!75 = !{!13, !6, i64 4708}
+!76 = !{!38, !6, i64 15320}
+!77 = !{!38, !6, i64 15324}
+!78 = !{!13, !6, i64 5104}
+!79 = distinct !{!79, !22}
+!80 = !{!38, !34, i64 15376}
+!81 = !{!"p2 _ZTS11frame_store", !24, i64 0}
+!82 = !{!"p1 _ZTS11frame_store", !8, i64 0}
+!83 = !{!"decoded_picture_buffer", !81, i64 0, !81, i64 8, !81, i64 16, !6, i64 24, !6, i64 28, !6, i64 32, !6, i64 36, !6, i64 40, !6, i64 44, !6, i64 48, !82, i64 56}
+!84 = !{!83, !6, i64 32}
+!85 = !{!83, !6, i64 36}
+!86 = !{!83, !6, i64 28}
+!87 = !{!83, !81, i64 0}
+!88 = !{!82, !82, i64 0}
+!89 = !{!"p1 _ZTS16storable_picture", !8, i64 0}
+!90 = !{!"frame_store", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !6, i64 20, !6, i64 24, !6, i64 28, !6, i64 32, !6, i64 36, !89, i64 40, !89, i64 48, !89, i64 56}
+!91 = !{!90, !6, i64 4}
+!92 = !{!90, !6, i64 8}
+!93 = !{!90, !6, i64 36}
+!94 = !{!90, !89, i64 40}
+!95 = !{!"p2 short", !24, i64 0}
+!96 = !{!"p4 short", !28, i64 0}
+!97 = !{!"p5 short", !31, i64 0}
+!98 = !{!"p3 short", !26, i64 0}
+!99 = !{!"p3 omnipotent char", !26, i64 0}
+!100 = !{!"p3 long long", !26, i64 0}
+!101 = !{!"storable_picture", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !6, i64 20, !5, i64 24, !5, i64 1608, !5, i64 3192, !5, i64 4776, !6, i64 6360, !6, i64 6364, !6, i64 6368, !6, i64 6372, !6, i64 6376, !6, i64 6380, !6, i64 6384, !6, i64 6388, !6, i64 6392, !6, i64 6396, !6, i64 6400, !6, i64 6404, !6, i64 6408, !6, i64 6412, !6, i64 6416, !6, i64 6420, !6, i64 6424, !6, i64 6428, !6, i64 6432, !95, i64 6440, !96, i64 6448, !96, i64 6456, !97, i64 6464, !98, i64 6472, !12, i64 6480, !99, i64 6488, !100, i64 6496, !100, i64 6504, !96, i64 6512, !25, i64 6520, !25, i64 6528, !89, i64 6536, !89, i64 6544, !89, i64 6552, !6, i64 6560, !6, i64 6564, !6, i64 6568, !6, i64 6572, !6, i64 6576, !6, i64 6580, !6, i64 6584}
+!102 = !{!101, !6, i64 4}
+!103 = !{!101, !6, i64 6364}
+!104 = !{!"DecRefPicMarking_s", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12, !6, i64 16, !34, i64 24}
+!105 = !{!104, !34, i64 24}
+!106 = !{!104, !6, i64 0}
+!107 = !{!104, !6, i64 4}
 end_hunk_0

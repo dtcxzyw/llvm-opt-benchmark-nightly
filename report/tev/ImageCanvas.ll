@@ -205,13 +205,10 @@ _ZN7nanogui7inverseERKNS_6MatrixIfLm3EEE.exit:    ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local i64 @_ZN3tev11ImageCanvas22getDisplayWindowCoordsEPKNS_5ImageEN7nanogui5ArrayIiLm2EEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(504) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 %2) local_unnamed_addr #6 align 2 {
 bb.a:
-  %i.a = tail call i64 @_ZN3tev11ImageCanvas14getImageCoordsEPKNS_5ImageEN7nanogui5ArrayIiLm2EEE(ptr noundef nonnull align 8 dereferenceable(504) %0, ptr noundef %1, i64 %2) ; 2 uses
-  %.sroa.417.0.extract.shift = lshr i64 %i.a, 32
-  %3 = trunc nuw i64 %.sroa.417.0.extract.shift to i32
-  %4 = insertelement <2 x i32> poison, i32 %3, i64 0
-  %5 = trunc i64 %i.a to i32
-  %6 = insertelement <2 x i32> %4, i32 %5, i64 1
-  %7 = sitofp <2 x i32> %6 to <2 x float>         ; 2 uses
+  %i.a = tail call i64 @_ZN3tev11ImageCanvas14getImageCoordsEPKNS_5ImageEN7nanogui5ArrayIiLm2EEE(ptr noundef nonnull align 8 dereferenceable(504) %0, ptr noundef %1, i64 %2)
+  %3 = bitcast i64 %i.a to <2 x i32>
+  %4 = sitofp <2 x i32> %3 to <2 x float>
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -230,11 +227,11 @@ bb.b:                                             ; preds = %bb.a
   %i.f = insertelement <2 x i32> poison, i32 %i.e, i64 0
   %i.g = insertelement <2 x i32> %i.f, i32 %.sroa.013.0.extract.trunc, i64 1
   %i.h = sitofp <2 x i32> %i.g to <2 x float>
-  %i.i = fadd <2 x float> %7, %i.h
+  %i.i = fadd <2 x float> %5, %i.h
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.j = phi <2 x float> [ %7, %bb.a ], [ %i.i, %bb.b ]
+  %i.j = phi <2 x float> [ %5, %bb.a ], [ %i.i, %bb.b ]
   %i.k = fptosi <2 x float> %i.j to <2 x i32>     ; 2 uses
   %i.l = extractelement <2 x i32> %i.k, i64 0
   %i.m = zext i32 %i.l to i64

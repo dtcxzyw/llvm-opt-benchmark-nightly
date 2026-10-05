@@ -205,12 +205,13 @@ bb.aq:                                            ; preds = %bb.af, %bb.ae
   store <2 x double> %i.hk, ptr %i.hj, align 8, !tbaa !75
   %i.hn = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 3 uses
   %i.ho = load i32, ptr %i.hn, align 8, !tbaa !99 ; 2 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %i.fg, i64 4 ; 2 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %i.fg, i64 4
   %i.hq = load i32, ptr %i.hp, align 4, !tbaa !82 ; 3 uses
-  %2 = icmp ne i32 %i.hq, 0                       ; 3 uses
+  %2 = icmp eq i32 %i.hq, 0                       ; 4 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 1388
   %i.hs = load i32, ptr %i.hr, align 4, !tbaa !65 ; 5 uses
-  %i.ht = zext i1 %2 to i32
+  %not. = xor i1 %2, true
+  %i.ht = zext i1 %not. to i32
   %.0 = ashr i32 %i.hs, %i.ht                     ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 1368 ; 4 uses
   %i.hv = load i32, ptr %i.hu, align 8, !tbaa !102 ; 5 uses
@@ -227,12 +228,12 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.ar
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hx, i64 4708
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !87
-  %.not.i106 = icmp eq i32 %i.ic, 0
-  %brmerge = or i1 %2, %.not.i106
-  br i1 %brmerge, label %bb.ax, label %bb.au
+  %.not.i106 = icmp ne i32 %i.ic, 0
+  %brmerge.not = and i1 %2, %.not.i106
+  br i1 %brmerge.not, label %bb.au, label %bb.ax
 
 bb.at:                                            ; preds = %bb.ar
-  br i1 %2, label %bb.ax, label %bb.au
+  br i1 %2, label %bb.au, label %bb.ax
 
 bb.au:                                            ; preds = %bb.as, %bb.at
   %i.id = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
@@ -286,26 +287,22 @@ bb.ay:                                            ; preds = %bb.ax
   %i.iz = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.ja = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.jb = load i32, ptr %i.ja, align 8, !tbaa !50
-  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.iy, i32 %i.jb) ; 4 uses
-  store i32 %spec.store.select.i, ptr %i.iz, align 8
-  %.not26.i107 = icmp eq i32 %1, 0
-  br i1 %.not26.i107, label %3, label %.sink.split31.i
+  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.iy, i32 %i.jb) ; 3 uses
+  store i32 %spec.store.select.i, ptr %i.iz, align 8, !tbaa !45
+  %.not26.i107 = icmp ne i32 %1, 0
+  %brmerge110 = or i1 %.not26.i107, %2
+  br i1 %brmerge110, label %.sink.split31.i, label %updateFirstBU.exit
 
-3:                                                ; preds = %bb.ay
-  %4 = load i32, ptr %i.hp, align 4, !tbaa !82
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %.sink.split31.i, label %updateFirstBU.exit
-
-.sink.split31.i:                                  ; preds = %3, %bb.ay, %bb.ax
-  %.sink35.i = phi i64 [ 1504, %bb.ay ], [ 1504, %3 ], [ 1344, %bb.ax ]
-  %.sink33.i = phi i32 [ 1, %bb.ay ], [ 1, %3 ], [ %i.ix, %bb.ax ]
-  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.ay ], [ %spec.store.select.i, %3 ], [ %i.ix, %bb.ax ]
+.sink.split31.i:                                  ; preds = %bb.ay, %bb.ax
+  %.sink35.i = phi i64 [ 1504, %bb.ay ], [ 1344, %bb.ax ]
+  %.sink33.i = phi i32 [ 1, %bb.ay ], [ %i.ix, %bb.ax ]
+  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.ay ], [ %i.ix, %bb.ax ]
   %i.jc = getelementptr inbounds nuw i8, ptr %0, i64 %.sink35.i
   store i32 %.sink33.i, ptr %i.jc, align 8, !tbaa !9
   br label %updateFirstBU.exit
 
-updateFirstBU.exit:                               ; preds = %3, %.sink.split31.i
-  %i.jd = phi i32 [ %spec.store.select.i, %3 ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
+updateFirstBU.exit:                               ; preds = %bb.ay, %.sink.split31.i
+  %i.jd = phi i32 [ %spec.store.select.i, %bb.ay ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
   %i.je = getelementptr inbounds nuw i8, ptr %0, i64 1364 ; 2 uses
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !105
   %i.jg = add nsw i32 %i.jf, %i.jd
@@ -708,12 +705,13 @@ bb.bg:                                            ; preds = %bb.bc, %bb.bb
   store <2 x double> %i.lf, ptr %i.le, align 8, !tbaa !75
   %i.lg = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 3 uses
   %i.lh = load i32, ptr %i.lg, align 8, !tbaa !99 ; 2 uses
-  %i.li = getelementptr inbounds nuw i8, ptr %i.kn, i64 4 ; 2 uses
+  %i.li = getelementptr inbounds nuw i8, ptr %i.kn, i64 4
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !82
-  %2 = icmp ne i32 %i.lj, 0                       ; 3 uses
+  %2 = icmp eq i32 %i.lj, 0                       ; 4 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %0, i64 1388
   %i.ll = load i32, ptr %i.lk, align 4, !tbaa !65
-  %i.lm = zext i1 %2 to i32
+  %not. = xor i1 %2, true
+  %i.lm = zext i1 %not. to i32
   %.0 = ashr i32 %i.ll, %i.lm                     ; 2 uses
   %i.ln = getelementptr inbounds nuw i8, ptr %0, i64 1368 ; 4 uses
   %i.lo = load i32, ptr %i.ln, align 8, !tbaa !102
@@ -730,12 +728,12 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lq, i64 4708
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !87
-  %.not.i168 = icmp eq i32 %i.lv, 0
-  %brmerge = or i1 %2, %.not.i168
-  br i1 %brmerge, label %bb.bn, label %bb.bk
+  %.not.i168 = icmp ne i32 %i.lv, 0
+  %brmerge.not = and i1 %2, %.not.i168
+  br i1 %brmerge.not, label %bb.bk, label %bb.bn
 
 bb.bj:                                            ; preds = %bb.bh
-  br i1 %2, label %bb.bn, label %bb.bk
+  br i1 %2, label %bb.bk, label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bi, %bb.bj
   %i.lw = getelementptr inbounds nuw i8, ptr %i.kn, i64 8
@@ -789,26 +787,22 @@ bb.bo:                                            ; preds = %bb.bn
   %i.ms = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.mt = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.mu = load i32, ptr %i.mt, align 8, !tbaa !50
-  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.mr, i32 %i.mu) ; 4 uses
-  store i32 %spec.store.select.i, ptr %i.ms, align 8
-  %.not26.i = icmp eq i32 %1, 0
-  br i1 %.not26.i, label %3, label %.sink.split31.i
+  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.mr, i32 %i.mu) ; 3 uses
+  store i32 %spec.store.select.i, ptr %i.ms, align 8, !tbaa !45
+  %.not26.i = icmp ne i32 %1, 0
+  %brmerge173 = or i1 %.not26.i, %2
+  br i1 %brmerge173, label %.sink.split31.i, label %updateFirstBU.exit
 
-3:                                                ; preds = %bb.bo
-  %4 = load i32, ptr %i.li, align 4, !tbaa !82
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %.sink.split31.i, label %updateFirstBU.exit
-
-.sink.split31.i:                                  ; preds = %3, %bb.bo, %bb.bn
-  %.sink35.i = phi i64 [ 1504, %bb.bo ], [ 1504, %3 ], [ 1344, %bb.bn ]
-  %.sink33.i = phi i32 [ 1, %bb.bo ], [ 1, %3 ], [ %i.mq, %bb.bn ]
-  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.bo ], [ %spec.store.select.i, %3 ], [ %i.mq, %bb.bn ]
+.sink.split31.i:                                  ; preds = %bb.bo, %bb.bn
+  %.sink35.i = phi i64 [ 1504, %bb.bo ], [ 1344, %bb.bn ]
+  %.sink33.i = phi i32 [ 1, %bb.bo ], [ %i.mq, %bb.bn ]
+  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.bo ], [ %i.mq, %bb.bn ]
   %i.mv = getelementptr inbounds nuw i8, ptr %0, i64 %.sink35.i
   store i32 %.sink33.i, ptr %i.mv, align 8, !tbaa !9
   br label %updateFirstBU.exit
 
-updateFirstBU.exit:                               ; preds = %3, %.sink.split31.i
-  %i.mw = phi i32 [ %spec.store.select.i, %3 ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
+updateFirstBU.exit:                               ; preds = %bb.bo, %.sink.split31.i
+  %i.mw = phi i32 [ %spec.store.select.i, %bb.bo ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %0, i64 1364 ; 2 uses
   %i.my = load i32, ptr %i.mx, align 4, !tbaa !105
   %i.mz = add nsw i32 %i.my, %i.mw
@@ -1211,12 +1205,13 @@ bb.ax:                                            ; preds = %bb.at, %bb.as
   store <2 x double> %i.hy, ptr %i.hx, align 8, !tbaa !75
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 3 uses
   %i.ic = load i32, ptr %i.ib, align 8, !tbaa !99 ; 2 uses
-  %i.id = getelementptr inbounds nuw i8, ptr %i.hg, i64 4 ; 2 uses
+  %i.id = getelementptr inbounds nuw i8, ptr %i.hg, i64 4
   %i.ie = load i32, ptr %i.id, align 4, !tbaa !82 ; 3 uses
-  %2 = icmp ne i32 %i.ie, 0                       ; 3 uses
+  %2 = icmp eq i32 %i.ie, 0                       ; 4 uses
   %i.if = getelementptr inbounds nuw i8, ptr %0, i64 1388
   %i.ig = load i32, ptr %i.if, align 4, !tbaa !65 ; 5 uses
-  %i.ih = zext i1 %2 to i32
+  %not. = xor i1 %2, true
+  %i.ih = zext i1 %not. to i32
   %.0112 = ashr i32 %i.ig, %i.ih                  ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 1368 ; 4 uses
   %i.ij = load i32, ptr %i.ii, align 8, !tbaa !102 ; 5 uses
@@ -1233,12 +1228,12 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.ip = getelementptr inbounds nuw i8, ptr %i.il, i64 4708
   %i.iq = load i32, ptr %i.ip, align 4, !tbaa !87
-  %.not.i132 = icmp eq i32 %i.iq, 0
-  %brmerge136 = or i1 %2, %.not.i132
-  br i1 %brmerge136, label %bb.be, label %bb.bb
+  %.not.i132 = icmp ne i32 %i.iq, 0
+  %brmerge136.not = and i1 %2, %.not.i132
+  br i1 %brmerge136.not, label %bb.bb, label %bb.be
 
 bb.ba:                                            ; preds = %bb.ay
-  br i1 %2, label %bb.be, label %bb.bb
+  br i1 %2, label %bb.bb, label %bb.be
 
 bb.bb:                                            ; preds = %bb.az, %bb.ba
   %i.ir = getelementptr inbounds nuw i8, ptr %i.hg, i64 8
@@ -1292,26 +1287,22 @@ bb.bf:                                            ; preds = %bb.be
   %i.jn = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.jo = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.jp = load i32, ptr %i.jo, align 8, !tbaa !50
-  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.jm, i32 %i.jp) ; 4 uses
-  store i32 %spec.store.select.i, ptr %i.jn, align 8
-  %.not26.i = icmp eq i32 %1, 0
-  br i1 %.not26.i, label %3, label %.sink.split31.i
+  %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %i.jm, i32 %i.jp) ; 3 uses
+  store i32 %spec.store.select.i, ptr %i.jn, align 8, !tbaa !45
+  %.not26.i = icmp ne i32 %1, 0
+  %brmerge137 = or i1 %.not26.i, %2
+  br i1 %brmerge137, label %.sink.split31.i, label %updateFirstBU.exit
 
-3:                                                ; preds = %bb.bf
-  %4 = load i32, ptr %i.id, align 4, !tbaa !82
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %.sink.split31.i, label %updateFirstBU.exit
-
-.sink.split31.i:                                  ; preds = %3, %bb.bf, %bb.be
-  %.sink35.i = phi i64 [ 1504, %bb.bf ], [ 1504, %3 ], [ 1344, %bb.be ]
-  %.sink33.i = phi i32 [ 1, %bb.bf ], [ 1, %3 ], [ %i.jl, %bb.be ]
-  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.bf ], [ %spec.store.select.i, %3 ], [ %i.jl, %bb.be ]
+.sink.split31.i:                                  ; preds = %bb.bf, %bb.be
+  %.sink35.i = phi i64 [ 1504, %bb.bf ], [ 1344, %bb.be ]
+  %.sink33.i = phi i32 [ 1, %bb.bf ], [ %i.jl, %bb.be ]
+  %.ph32.i = phi i32 [ %spec.store.select.i, %bb.bf ], [ %i.jl, %bb.be ]
   %i.jq = getelementptr inbounds nuw i8, ptr %0, i64 %.sink35.i
   store i32 %.sink33.i, ptr %i.jq, align 8, !tbaa !9
   br label %updateFirstBU.exit
 
-updateFirstBU.exit:                               ; preds = %3, %.sink.split31.i
-  %i.jr = phi i32 [ %spec.store.select.i, %3 ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
+updateFirstBU.exit:                               ; preds = %bb.bf, %.sink.split31.i
+  %i.jr = phi i32 [ %spec.store.select.i, %bb.bf ], [ %.ph32.i, %.sink.split31.i ] ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 1364 ; 2 uses
   %i.jt = load i32, ptr %i.js, align 4, !tbaa !105
   %i.ju = add nsw i32 %i.jt, %i.jr
@@ -1714,7 +1705,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !50
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.af, i32 %i.ai) ; 4 uses
-  store i32 %spec.store.select, ptr %i.ag, align 8
+  store i32 %spec.store.select, ptr %i.ag, align 8, !tbaa !45
   %.not26 = icmp eq i32 %1, 0
   br i1 %.not26, label %bb.i, label %.sink.split31
 

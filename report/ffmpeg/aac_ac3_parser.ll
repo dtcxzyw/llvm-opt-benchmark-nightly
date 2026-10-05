@@ -200,9 +200,9 @@ bb.w:                                             ; preds = %bb.s, %bb.v, %bb.u,
   %i.df = icmp ugt i8 %i.de, 1
   %or.cond = select i1 %i.dc, i1 %i.df, i1 false
   %spec.store.select = select i1 %or.cond, i32 8, i32 %i.da
-  store i32 %spec.store.select, ptr %i.db, align 4
+  store i32 %spec.store.select, ptr %i.db, align 4, !tbaa !63
   %i.dg = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %i.dh = load i32, ptr %i.dg, align 8, !tbaa !63
+  %i.dh = load i32, ptr %i.dg, align 8, !tbaa !64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
   br label %bb.ac
@@ -219,16 +219,16 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 688 ; 2 uses
-  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !64
+  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !65
   %i.dn = icmp eq i32 %i.dm, -99
   br i1 %i.dn, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   %i.do = getelementptr inbounds nuw i8, ptr %7, i64 13
-  %i.dp = load i8, ptr %i.do, align 1, !tbaa !66
+  %i.dp = load i8, ptr %i.do, align 1, !tbaa !67
   %i.dq = zext i8 %i.dp to i32
   %i.dr = add nsw i32 %i.dq, -1
-  store i32 %i.dr, ptr %i.dl, align 8, !tbaa !64
+  store i32 %i.dr, ptr %i.dl, align 8, !tbaa !65
   br label %bb.ab
 
 .thread143:                                       ; preds = %bb.y, %bb.x
@@ -238,16 +238,16 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z, %bb.aa
   store i32 1, ptr %i.f, align 8, !tbaa !18
   %i.ds = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.dt = load i32, ptr %i.ds, align 4, !tbaa !67
+  %i.dt = load i32, ptr %i.ds, align 4, !tbaa !68
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.w
   %.2 = phi i32 [ %i.dh, %bb.w ], [ %i.dt, %bb.ab ]
   %i.du = getelementptr inbounds nuw i8, ptr %i.e, i64 92 ; 2 uses
-  %i.dv = load i32, ptr %i.du, align 4, !tbaa !68
+  %i.dv = load i32, ptr %i.du, align 4, !tbaa !69
   %i.dw = add nsw i32 %i.dv, 1                    ; 2 uses
-  store i32 %i.dw, ptr %i.du, align 4, !tbaa !68
+  store i32 %i.dw, ptr %i.du, align 4, !tbaa !69
   %i.dx = load i32, ptr %i.ay, align 8, !tbaa !46
   %.not117 = icmp eq i32 %i.dx, 86056
   br i1 %.not117, label %.thread148, label %bb.ad
@@ -255,12 +255,12 @@ bb.ac:                                            ; preds = %bb.ab, %bb.w
 bb.ad:                                            ; preds = %bb.ac
   %i.dy = sext i32 %.2 to i64
   %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %i.ea = load i64, ptr %i.dz, align 8, !tbaa !69 ; 2 uses
+  %i.ea = load i64, ptr %i.dz, align 8, !tbaa !70 ; 2 uses
   %i.eb = sub nsw i64 %i.dy, %i.ea
   %i.ec = sext i32 %i.dw to i64
   %i.ed = sdiv i64 %i.eb, %i.ec
   %i.ee = add nsw i64 %i.ed, %i.ea
-  store i64 %i.ee, ptr %i.dz, align 8, !tbaa !69
+  store i64 %i.ee, ptr %i.dz, align 8, !tbaa !70
   br label %.thread148
 
 .thread148:                                       ; preds = %bb.ac, %bb.ad, %bb.m, %.thread138, %.thread143, %bb.l
@@ -368,11 +368,12 @@ attributes #6 = { nounwind willreturn memory(read) }
 !60 = !{!50, !6, i64 28}
 !61 = !{!16, !6, i64 296}
 !62 = !{!50, !5, i64 6}
-!63 = !{!50, !6, i64 40}
-!64 = !{!45, !6, i64 688}
-!65 = !{!"AACADTSHeaderInfo", !6, i64 0, !6, i64 4, !6, i64 8, !5, i64 12, !5, i64 13, !5, i64 14, !5, i64 15, !5, i64 16, !6, i64 20}
-!66 = !{!65, !5, i64 13}
-!67 = !{!65, !6, i64 8}
-!68 = !{!22, !6, i64 92}
-!69 = !{!45, !15, i64 56}
+!63 = !{!45, !6, i64 388}
+!64 = !{!50, !6, i64 40}
+!65 = !{!45, !6, i64 688}
+!66 = !{!"AACADTSHeaderInfo", !6, i64 0, !6, i64 4, !6, i64 8, !5, i64 12, !5, i64 13, !5, i64 14, !5, i64 15, !5, i64 16, !6, i64 20}
+!67 = !{!66, !5, i64 13}
+!68 = !{!66, !6, i64 8}
+!69 = !{!22, !6, i64 92}
+!70 = !{!45, !15, i64 56}
 end_hunk_0

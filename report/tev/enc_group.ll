@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bx = extractelement <2 x float> %i.bs, i64 1 ; 2 uses
   %i.by = fcmp olt float %i.bw, %i.bx
   %spec.store.select220.us = select i1 %i.by, float %i.bx, float %i.bw
-  store float %spec.store.select220.us, ptr %i.bv, align 4
+  store float %spec.store.select220.us, ptr %i.bv, align 4, !tbaa !56
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -429,8 +429,7 @@ bb.y:                                             ; preds = %bb.x
   %i.gg = sitofp i32 %i.fp to float
   %i.gh = fadd float %i.gf, %i.gg
   %i.gi = fptosi float %i.gh to i32
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.gi, i32 255) ; 2 uses
-  store i32 %spec.store.select, ptr %8, align 4
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.gi, i32 255)
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
@@ -443,7 +442,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 .thread:                                          ; preds = %bb.z
   %i.gm = tail call i32 @llvm.smin.i32(i32 %i.gj, i32 254)
   %spec.store.select201 = add nsw i32 %i.gm, 1
-  br label %.sink.split
+  br label %bb.ad
 
 bb.aa:                                            ; preds = %bb.z
   %i.gn = icmp ugt i32 %3, 3
@@ -484,15 +483,10 @@ bb.ac:                                            ; preds = %bb.ab
   %i.hk = tail call i32 @llvm.umin.i32(i32 %i.hj, i32 2)
   %i.hl = add nsw i32 %i.gj, %i.hk
   %spec.store.select202 = tail call i32 @llvm.smin.i32(i32 %i.hl, i32 255)
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.ac, %.thread
-  %spec.store.select201.sink = phi i32 [ %spec.store.select201, %.thread ], [ %spec.store.select202, %bb.ac ] ; 2 uses
-  store i32 %spec.store.select201.sink, ptr %8, align 4
   br label %bb.ad
 
-bb.ad:                                            ; preds = %.sink.split, %bb.ab, %bb.aa
-  %9 = phi i32 [ %i.gj, %bb.aa ], [ %i.gj, %bb.ab ], [ %spec.store.select201.sink, %.sink.split ] ; 2 uses
+bb.ad:                                            ; preds = %.thread, %bb.ac, %bb.ab, %bb.aa
+  %9 = phi i32 [ %spec.store.select202, %bb.ac ], [ %i.gj, %bb.ab ], [ %i.gj, %bb.aa ], [ %spec.store.select201, %.thread ] ; 2 uses
   %i.hm = mul i64 %5, %4
   %i.hn = trunc i64 %i.hm to i32                  ; 5 uses
   %i.ho = fptosi float %i.fq to i32
@@ -895,7 +889,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bx = extractelement <2 x float> %i.bs, i64 1 ; 2 uses
   %i.by = fcmp olt float %i.bw, %i.bx
   %spec.store.select220.us = select i1 %i.by, float %i.bx, float %i.bw
-  store float %spec.store.select220.us, ptr %i.bv, align 4
+  store float %spec.store.select220.us, ptr %i.bv, align 4, !tbaa !56
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -1119,8 +1113,7 @@ bb.y:                                             ; preds = %bb.x
   %i.gg = sitofp i32 %i.fp to float
   %i.gh = fadd float %i.gf, %i.gg
   %i.gi = fptosi float %i.gh to i32
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.gi, i32 255) ; 2 uses
-  store i32 %spec.store.select, ptr %8, align 4
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.gi, i32 255)
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
@@ -1133,7 +1126,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 .thread:                                          ; preds = %bb.z
   %i.gm = tail call i32 @llvm.smin.i32(i32 %i.gj, i32 254)
   %spec.store.select201 = add nsw i32 %i.gm, 1
-  br label %.sink.split
+  br label %bb.ad
 
 bb.aa:                                            ; preds = %bb.z
   %i.gn = icmp ugt i32 %3, 3
@@ -1174,15 +1167,10 @@ bb.ac:                                            ; preds = %bb.ab
   %i.hk = tail call i32 @llvm.umin.i32(i32 %i.hj, i32 2)
   %i.hl = add nsw i32 %i.gj, %i.hk
   %spec.store.select202 = tail call i32 @llvm.smin.i32(i32 %i.hl, i32 255)
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.ac, %.thread
-  %spec.store.select201.sink = phi i32 [ %spec.store.select201, %.thread ], [ %spec.store.select202, %bb.ac ] ; 2 uses
-  store i32 %spec.store.select201.sink, ptr %8, align 4
   br label %bb.ad
 
-bb.ad:                                            ; preds = %.sink.split, %bb.ab, %bb.aa
-  %9 = phi i32 [ %i.gj, %bb.aa ], [ %i.gj, %bb.ab ], [ %spec.store.select201.sink, %.sink.split ] ; 2 uses
+bb.ad:                                            ; preds = %.thread, %bb.ac, %bb.ab, %bb.aa
+  %9 = phi i32 [ %spec.store.select202, %bb.ac ], [ %i.gj, %bb.ab ], [ %i.gj, %bb.aa ], [ %spec.store.select201, %.thread ] ; 2 uses
   %i.hm = mul i64 %5, %4
   %i.hn = trunc i64 %i.hm to i32                  ; 5 uses
   %i.ho = fptosi float %i.fq to i32
@@ -1585,7 +1573,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bx = extractelement <2 x float> %i.bs, i64 1 ; 2 uses
   %i.by = fcmp olt float %i.bw, %i.bx
   %spec.store.select219.us = select i1 %i.by, float %i.bx, float %i.bw
-  store float %spec.store.select219.us, ptr %i.bv, align 4
+  store float %spec.store.select219.us, ptr %i.bv, align 4, !tbaa !56
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -1809,8 +1797,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fy = sitofp i32 %i.fp to float
   %i.fz = fadd float %i.fx, %i.fy
   %i.ga = fptosi float %i.fz to i32
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.ga, i32 255) ; 2 uses
-  store i32 %spec.store.select, ptr %8, align 4
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.ga, i32 255)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
@@ -1823,7 +1810,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 .thread:                                          ; preds = %bb.aa
   %i.ge = tail call i32 @llvm.smin.i32(i32 %i.gb, i32 254)
   %spec.store.select201 = add nsw i32 %i.ge, 1
-  br label %.sink.split
+  br label %bb.ae
 
 bb.ab:                                            ; preds = %bb.aa
   %i.gf = icmp ugt i32 %3, 3
@@ -1864,15 +1851,10 @@ bb.ad:                                            ; preds = %bb.ac
   %i.hc = tail call i32 @llvm.umin.i32(i32 %i.hb, i32 2)
   %i.hd = add nsw i32 %i.gb, %i.hc
   %spec.store.select202 = tail call i32 @llvm.smin.i32(i32 %i.hd, i32 255)
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.ad, %.thread
-  %spec.store.select201.sink = phi i32 [ %spec.store.select201, %.thread ], [ %spec.store.select202, %bb.ad ] ; 2 uses
-  store i32 %spec.store.select201.sink, ptr %8, align 4
   br label %bb.ae
 
-bb.ae:                                            ; preds = %.sink.split, %bb.ac, %bb.ab
-  %9 = phi i32 [ %i.gb, %bb.ab ], [ %i.gb, %bb.ac ], [ %spec.store.select201.sink, %.sink.split ] ; 2 uses
+bb.ae:                                            ; preds = %.thread, %bb.ad, %bb.ac, %bb.ab
+  %9 = phi i32 [ %spec.store.select202, %bb.ad ], [ %i.gb, %bb.ac ], [ %i.gb, %bb.ab ], [ %spec.store.select201, %.thread ] ; 2 uses
   %i.he = mul i64 %5, %4
   %i.hf = trunc i64 %i.he to i32                  ; 5 uses
   %i.hg = fptosi <4 x float> %i.fq to <4 x i32>

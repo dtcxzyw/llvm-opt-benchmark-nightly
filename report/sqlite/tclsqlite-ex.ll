@@ -206,7 +206,7 @@ default.unreachable:                              ; preds = %bb.em
   %i.uq = getelementptr inbounds nuw [24 x i8], ptr %i.sc, i64 %.0273396.i ; 2 uses
   %i.ur = icmp eq ptr %i.up, null
   %spec.store.select359.i = select i1 %i.ur, ptr @.str.6, ptr %i.up
-  store ptr %spec.store.select359.i, ptr %i.uq, align 8
+  store ptr %spec.store.select359.i, ptr %i.uq, align 8, !tbaa !277
   %i.us = getelementptr inbounds i8, ptr %i.sd, i64 %i.un
   %i.ut = load i8, ptr %i.us, align 1, !tbaa !29
   %i.uu = getelementptr inbounds nuw i8, ptr %i.uq, i64 18
@@ -218,7 +218,7 @@ default.unreachable:                              ; preds = %bb.em
   %i.uz = getelementptr inbounds nuw [24 x i8], ptr %i.sc, i64 %i.uv ; 2 uses
   %i.va = icmp eq ptr %i.uy, null
   %spec.store.select359.i.1 = select i1 %i.va, ptr @.str.6, ptr %i.uy
-  store ptr %spec.store.select359.i.1, ptr %i.uz, align 8
+  store ptr %spec.store.select359.i.1, ptr %i.uz, align 8, !tbaa !277
   %i.vb = getelementptr inbounds i8, ptr %i.sd, i64 %i.uw
   %i.vc = load i8, ptr %i.vb, align 1, !tbaa !29
   %i.vd = getelementptr inbounds nuw i8, ptr %i.uz, i64 18
@@ -240,7 +240,7 @@ default.unreachable:                              ; preds = %bb.em
   %i.vi = getelementptr inbounds nuw [24 x i8], ptr %i.sc, i64 %.0273396.i.epil.init ; 2 uses
   %i.vj = icmp eq ptr %i.vh, null
   %spec.store.select359.i.epil = select i1 %i.vj, ptr @.str.6, ptr %i.vh
-  store ptr %spec.store.select359.i.epil, ptr %i.vi, align 8
+  store ptr %spec.store.select359.i.epil, ptr %i.vi, align 8, !tbaa !277
   %i.vk = getelementptr inbounds i8, ptr %i.sd, i64 %i.vf
   %i.vl = load i8, ptr %i.vk, align 1, !tbaa !29
   %i.vm = getelementptr inbounds nuw i8, ptr %i.vi, i64 18

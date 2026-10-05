@@ -205,7 +205,7 @@ bb.a:
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !252, !range !156, !noundef !157
   %i.am = trunc nuw i8 %i.al to i1
   %spec.store.select = select i1 %i.am, i32 0, i32 2 ; 3 uses
-  store i32 %spec.store.select, ptr %i.l, align 8
+  store i32 %spec.store.select, ptr %i.l, align 8, !tbaa !154
   %i.an = getelementptr inbounds nuw i8, ptr %i.ab, i64 297
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !253, !range !156, !noundef !157
   %i.ap = trunc nuw i8 %i.ao to i1
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %_ZN4llvm8SmallSetIN
 
 _ZN4llvm8SmallSetINS_5MachO12PlatformTypeELj3ESt4lessIS2_EED2Ev.exit: ; preds = %_ZN4llvm8SmallSetINS_5MachO12PlatformTypeELj3ESt4lessIS2_EEaSEOS5_.exit, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
-  %i.by = load ptr, ptr %2, align 8, !tbaa !61    ; 12 uses
+  %i.by = load ptr, ptr %2, align 8, !tbaa !61    ; 13 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 256
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !49
   %i.cb = getelementptr inbounds nuw i8, ptr %i.by, i64 264
@@ -632,7 +632,7 @@ _ZN4llvm8SmallSetINS_5MachO12PlatformTypeELj3ESt4lessIS2_EED2Ev.exit: ; preds = 
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !252, !range !156, !noundef !157
   %i.cl = trunc nuw i8 %i.ck to i1
   %spec.store.select = select i1 %i.cl, i32 0, i32 2 ; 2 uses
-  store i32 %spec.store.select, ptr %i.ad, align 8
+  store i32 %spec.store.select, ptr %i.ad, align 8, !tbaa !154
   %i.cm = getelementptr inbounds nuw i8, ptr %i.by, i64 297
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !253, !range !156, !noundef !157
   %i.co = trunc nuw i8 %i.cn to i1
@@ -680,8 +680,12 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.not12451415 = icmp eq ptr %i.df, %i.dh
   br i1 %.not12451415, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNSt3setIN4llvm5MachO15ArchitectureSetESt4lessIS2_ESaIS2_EE6insertEOS2_.exit, %bb.h
-  %30 = load ptr, ptr %2, align 8, !tbaa !61      ; 3 uses
+._crit_edge.loopexit:                             ; preds = %_ZNSt3setIN4llvm5MachO15ArchitectureSetESt4lessIS2_ESaIS2_EE6insertEOS2_.exit
+  %.pre = load ptr, ptr %2, align 8, !tbaa !61
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
+  %30 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.by, %bb.h ] ; 3 uses
   %i.di = getelementptr inbounds nuw i8, ptr %30, i64 360
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !257 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %30, i64 368
@@ -758,7 +762,7 @@ _ZNSt8_Rb_treeIN4llvm5MachO15ArchitectureSetES2_St9_IdentityIS2_ESt4lessIS2_ESaI
 _ZNSt3setIN4llvm5MachO15ArchitectureSetESt4lessIS2_ESaIS2_EE6insertEOS2_.exit: ; preds = %bb.j, %_ZNSt8_Rb_treeIN4llvm5MachO15ArchitectureSetES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE10_M_insert_IS2_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS2_EPSt18_Rb_tree_node_baseSE_OT_RT0_.exit.i.i
   %i.ej = getelementptr inbounds nuw i8, ptr %.sroa.01238.01416, i64 168 ; 2 uses
   %.not1245 = icmp eq ptr %i.ej, %i.dh
-  br i1 %.not1245, label %._crit_edge, label %.lr.ph
+  br i1 %.not1245, label %._crit_edge.loopexit, label %.lr.ph
 
 ._crit_edge1421.loopexit:                         ; preds = %_ZNSt3setIN4llvm5MachO15ArchitectureSetESt4lessIS2_ESaIS2_EE6insertEOS2_.exit115
   %.pre.a = load ptr, ptr %2, align 8, !tbaa !61
