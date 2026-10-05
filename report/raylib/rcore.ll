@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader62.i
 
 .preheader62.i:                                   ; preds = %._crit_edge.i, %.preheader62.preheader.i
-  %.05283.i = phi i32 [ 5552, %._crit_edge.i ], [ %i.g, %.preheader62.preheader.i ] ; 7 uses
+  %.05283.i = phi i32 [ 5552, %._crit_edge.i ], [ %i.g, %.preheader62.preheader.i ] ; 8 uses
   %.05382.i = phi i32 [ %i.ce, %._crit_edge.i ], [ 0, %.preheader62.preheader.i ] ; 2 uses
   %.05581.i = phi i32 [ %i.cd, %._crit_edge.i ], [ 1, %.preheader62.preheader.i ] ; 2 uses
   %.05880.i = phi i32 [ %i.cf, %._crit_edge.i ], [ %i.f, %.preheader62.preheader.i ]
@@ -213,17 +213,20 @@ bb.b:                                             ; preds = %bb.a
   %i.h = icmp ugt i32 %.05283.i, 7
   br i1 %i.h, label %.lr.ph.i, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.lr.ph.i, %.preheader62.i
-  %.160.lcssa.i = phi ptr [ %.05979.i, %.preheader62.i ], [ %i.be, %.lr.ph.i ] ; 3 uses
-  %.156.lcssa.i = phi i32 [ %.05581.i, %.preheader62.i ], [ %i.bc, %.lr.ph.i ] ; 3 uses
-  %.154.lcssa.i = phi i32 [ %.05382.i, %.preheader62.i ], [ %i.bd, %.lr.ph.i ] ; 3 uses
-  %.0.lcssa.i = phi i32 [ 0, %.preheader62.i ], [ %i.bf, %.lr.ph.i ] ; 5 uses
+.preheader.loopexit.i:                            ; preds = %.lr.ph.i
+  %4 = and i32 %.05283.i, -8
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.loopexit.i, %.preheader62.i
+  %.160.lcssa.i = phi ptr [ %.05979.i, %.preheader62.i ], [ %i.be, %.preheader.loopexit.i ] ; 3 uses
+  %.156.lcssa.i = phi i32 [ %.05581.i, %.preheader62.i ], [ %i.bc, %.preheader.loopexit.i ] ; 3 uses
+  %.154.lcssa.i = phi i32 [ %.05382.i, %.preheader62.i ], [ %i.bd, %.preheader.loopexit.i ] ; 3 uses
+  %.0.lcssa.i = phi i32 [ 0, %.preheader62.i ], [ %4, %.preheader.loopexit.i ] ; 4 uses
   %i.i = icmp ult i32 %.0.lcssa.i, %.05283.i
   br i1 %i.i, label %.lr.ph74.i.preheader, label %._crit_edge.i
 
 .lr.ph74.i.preheader:                             ; preds = %.preheader.i
-  %4 = sub nuw i32 %.05283.i, %.0.lcssa.i
-  %xtraiter = and i32 %4, 3                       ; 2 uses
+  %xtraiter = and i32 %.05283.i, 3                ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph74.i.prol.loopexit, label %.lr.ph74.i.prol
 
@@ -251,7 +254,7 @@ bb.b:                                             ; preds = %bb.a
   %.272.i.unr = phi i32 [ %.154.lcssa.i, %.lr.ph74.i.preheader ], [ %i.n, %.lr.ph74.i.prol ]
   %.25771.i.unr = phi i32 [ %.156.lcssa.i, %.lr.ph74.i.preheader ], [ %i.m, %.lr.ph74.i.prol ]
   %.26170.i.unr = phi ptr [ %.160.lcssa.i, %.lr.ph74.i.preheader ], [ %i.j, %.lr.ph74.i.prol ]
-  %i.p = sub i32 %.0.lcssa.i, %.05283.i
+  %i.p = sub nsw i32 %.0.lcssa.i, %.05283.i
   %i.q = icmp ugt i32 %i.p, -4
   br i1 %i.q, label %._crit_edge.i, label %.lr.ph74.i
 
@@ -300,10 +303,10 @@ bb.b:                                             ; preds = %bb.a
   %i.bc = add i32 %i.ax, %i.bb                    ; 3 uses
   %i.bd = add i32 %i.ay, %i.bc                    ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.16063.i, i64 8 ; 2 uses
-  %i.bf = add i32 %.066.i, 8                      ; 3 uses
+  %i.bf = add nuw i32 %.066.i, 8                  ; 2 uses
   %i.bg = or disjoint i32 %i.bf, 7
   %i.bh = icmp ult i32 %i.bg, %.05283.i
-  br i1 %i.bh, label %.lr.ph.i, label %.preheader.i
+  br i1 %i.bh, label %.lr.ph.i, label %.preheader.loopexit.i
 
 .lr.ph74.i:                                       ; preds = %.lr.ph74.i.prol.loopexit, %.lr.ph74.i
   %.173.i = phi i32 [ %i.cc, %.lr.ph74.i ], [ %.173.i.unr, %.lr.ph74.i.prol.loopexit ]
@@ -706,7 +709,7 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   br label %.preheader62.i
 
 .preheader62.i:                                   ; preds = %._crit_edge.i, %.preheader62.preheader.i
-  %.05283.i = phi i32 [ 5552, %._crit_edge.i ], [ %i.x, %.preheader62.preheader.i ] ; 7 uses
+  %.05283.i = phi i32 [ 5552, %._crit_edge.i ], [ %i.x, %.preheader62.preheader.i ] ; 8 uses
   %.05382.i = phi i32 [ %i.cv, %._crit_edge.i ], [ 0, %.preheader62.preheader.i ] ; 2 uses
   %.05581.i = phi i32 [ %i.cu, %._crit_edge.i ], [ 1, %.preheader62.preheader.i ] ; 2 uses
   %.05880.i = phi i32 [ %i.cw, %._crit_edge.i ], [ %3, %.preheader62.preheader.i ]
@@ -714,17 +717,20 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   %i.y = icmp ugt i32 %.05283.i, 7
   br i1 %i.y, label %.lr.ph.i22, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.lr.ph.i22, %.preheader62.i
-  %.160.lcssa.i = phi ptr [ %.05979.i, %.preheader62.i ], [ %i.bv, %.lr.ph.i22 ] ; 3 uses
-  %.156.lcssa.i = phi i32 [ %.05581.i, %.preheader62.i ], [ %i.bt, %.lr.ph.i22 ] ; 3 uses
-  %.154.lcssa.i = phi i32 [ %.05382.i, %.preheader62.i ], [ %i.bu, %.lr.ph.i22 ] ; 3 uses
-  %.0.lcssa.i = phi i32 [ 0, %.preheader62.i ], [ %i.bw, %.lr.ph.i22 ] ; 5 uses
+.preheader.loopexit.i:                            ; preds = %.lr.ph.i22
+  %5 = and i32 %.05283.i, -8
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.loopexit.i, %.preheader62.i
+  %.160.lcssa.i = phi ptr [ %.05979.i, %.preheader62.i ], [ %i.bv, %.preheader.loopexit.i ] ; 3 uses
+  %.156.lcssa.i = phi i32 [ %.05581.i, %.preheader62.i ], [ %i.bt, %.preheader.loopexit.i ] ; 3 uses
+  %.154.lcssa.i = phi i32 [ %.05382.i, %.preheader62.i ], [ %i.bu, %.preheader.loopexit.i ] ; 3 uses
+  %.0.lcssa.i = phi i32 [ 0, %.preheader62.i ], [ %5, %.preheader.loopexit.i ] ; 4 uses
   %i.z = icmp ult i32 %.0.lcssa.i, %.05283.i
   br i1 %i.z, label %.lr.ph74.i.preheader, label %._crit_edge.i
 
 .lr.ph74.i.preheader:                             ; preds = %.preheader.i
-  %5 = sub nuw i32 %.05283.i, %.0.lcssa.i
-  %xtraiter = and i32 %5, 3                       ; 2 uses
+  %xtraiter = and i32 %.05283.i, 3                ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph74.i.prol.loopexit, label %.lr.ph74.i.prol
 
@@ -752,7 +758,7 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   %.272.i.unr = phi i32 [ %.154.lcssa.i, %.lr.ph74.i.preheader ], [ %i.ae, %.lr.ph74.i.prol ]
   %.25771.i.unr = phi i32 [ %.156.lcssa.i, %.lr.ph74.i.preheader ], [ %i.ad, %.lr.ph74.i.prol ]
   %.26170.i.unr = phi ptr [ %.160.lcssa.i, %.lr.ph74.i.preheader ], [ %i.aa, %.lr.ph74.i.prol ]
-  %i.ag = sub i32 %.0.lcssa.i, %.05283.i
+  %i.ag = sub nsw i32 %.0.lcssa.i, %.05283.i
   %i.ah = icmp ugt i32 %i.ag, -4
   br i1 %i.ah, label %._crit_edge.i, label %.lr.ph74.i
 
@@ -801,10 +807,10 @@ sdefl_put.exit21:                                 ; preds = %.lr.ph.i19, %sdefl_
   %i.bt = add i32 %i.bo, %i.bs                    ; 3 uses
   %i.bu = add i32 %i.bp, %i.bt                    ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.16063.i, i64 8 ; 2 uses
-  %i.bw = add i32 %.066.i, 8                      ; 3 uses
+  %i.bw = add nuw i32 %.066.i, 8                  ; 2 uses
   %i.bx = or disjoint i32 %i.bw, 7
   %i.by = icmp ult i32 %i.bx, %.05283.i
-  br i1 %i.by, label %.lr.ph.i22, label %.preheader.i
+  br i1 %i.by, label %.lr.ph.i22, label %.preheader.loopexit.i
 
 .lr.ph74.i:                                       ; preds = %.lr.ph74.i.prol.loopexit, %.lr.ph74.i
   %.173.i = phi i32 [ %i.ct, %.lr.ph74.i ], [ %.173.i.unr, %.lr.ph74.i.prol.loopexit ]

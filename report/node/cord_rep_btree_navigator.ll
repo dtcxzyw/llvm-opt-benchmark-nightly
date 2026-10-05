@@ -156,7 +156,7 @@ _ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit55: ; preds = %bb.h
 
 .loopexit:                                        ; preds = %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57
   %.245.lcssa = phi i64 [ %.144120, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ], [ %i.bh, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ] ; 2 uses
-  %.3.lcssa = phi i64 [ %i.bd, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ], [ %i.bg, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ] ; 2 uses
+  %.3.lcssa = phi i64 [ %i.bd, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ], [ %3, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ] ; 2 uses
   %.2.lcssa = phi ptr [ %.2204, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ], [ %.2, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ] ; 2 uses
   %i.aq = icmp sgt i64 %indvars.iv152, 1
   br i1 %i.aq, label %.lr.ph124, label %._crit_edge125, !llvm.loop !8
@@ -186,7 +186,7 @@ bb.k:                                             ; preds = %.lr.ph124
   %i.ay = load i8, ptr %i.ax, align 2             ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.1123, i64 15
   %i.ba = load i8, ptr %i.az, align 1             ; 2 uses
-  %i.bb = zext i8 %i.ba to i64
+  %i.bb = zext i8 %i.ba to i64                    ; 2 uses
   %i.bc = icmp ult i8 %i.ay, %i.ba
   br i1 %i.bc, label %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57, label %bb.l
 
@@ -201,23 +201,28 @@ _ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57: ; preds = %bb.k
   %.2204 = load ptr, ptr %.2.in203, align 8       ; 2 uses
   %i.bf = load i64, ptr %.2204, align 8           ; 2 uses
   %.not51205 = icmp ult i64 %.144120, %i.bf
-  br i1 %.not51205, label %.loopexit, label %.lr.ph208
+  br i1 %.not51205, label %.loopexit, label %.lr.ph125.preheader
 
-.lr.ph208:                                        ; preds = %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59
-  %2 = phi i64 [ %i.bi, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ], [ %i.bf, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ]
-  %.3207 = phi i64 [ %i.bg, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ], [ %i.bd, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ]
-  %.245206 = phi i64 [ %i.bh, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59 ], [ %.144120, %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57 ]
-  %i.bg = add nuw nsw i64 %.3207, 1               ; 4 uses
+.lr.ph125.preheader:                              ; preds = %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit57
+  %2 = add nuw nsw i64 %i.bd, 1                   ; 2 uses
+  %.not52213 = icmp eq i64 %2, %i.bb
+  br i1 %.not52213, label %bb.m, label %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59
+
+.lr.ph208:                                        ; preds = %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59
+  %i.bg = add nuw nsw i64 %3, 1                   ; 2 uses
   %.not52 = icmp eq i64 %i.bg, %i.bb
   br i1 %.not52, label %bb.m, label %_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59
 
-bb.m:                                             ; preds = %.lr.ph208
+bb.m:                                             ; preds = %.lr.ph125.preheader, %.lr.ph208
   tail call void @__assert_fail(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 100, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl13cord_internal21CordRepBtreeNavigator4SkipEm) #7
   unreachable
 
-_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59: ; preds = %.lr.ph208
-  %i.bh = sub nuw i64 %.245206, %2                ; 3 uses
-  %.2.in = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.bg
+_ZNK4absl13cord_internal12CordRepBtree4EdgeEm.exit59: ; preds = %.lr.ph125.preheader, %.lr.ph208
+  %3 = phi i64 [ %i.bg, %.lr.ph208 ], [ %2, %.lr.ph125.preheader ] ; 3 uses
+  %.245123214 = phi i64 [ %i.bh, %.lr.ph208 ], [ %.144120, %.lr.ph125.preheader ]
+  %4 = phi i64 [ %i.bi, %.lr.ph208 ], [ %i.bf, %.lr.ph125.preheader ]
+  %i.bh = sub nuw i64 %.245123214, %4             ; 3 uses
+  %.2.in = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %3
   %.2 = load ptr, ptr %.2.in, align 8             ; 2 uses
   %i.bi = load i64, ptr %.2, align 8              ; 2 uses
   %.not51 = icmp ult i64 %i.bh, %i.bi
