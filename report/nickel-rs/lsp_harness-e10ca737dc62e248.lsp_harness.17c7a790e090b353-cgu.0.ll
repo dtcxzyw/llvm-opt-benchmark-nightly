@@ -205,9 +205,9 @@ bb.qu:                                            ; preds = %.noexc18.i.i.i.i.i3
   %i.bey = icmp sgt <16 x i8> %.val3.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, splat (i8 -1)
   %i.bez = bitcast <16 x i1> %i.bey to i16
   %i.bfa = getelementptr inbounds nuw i8, ptr %i.bex, i64 16
+  %2 = load ptr, ptr %i.ex, align 8, !alias.scope !13853, !noalias !13854, !nonnull !28, !align !35, !noundef !28 ; 4 uses
   %.promoted25.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ber, align 8, !alias.scope !13853, !noalias !13854
   %i.bfb = icmp eq i8 %.promoted25.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  %2 = load ptr, ptr %i.ex, align 8, !alias.scope !13853, !noalias !13854, !nonnull !28, !align !35, !noundef !28 ; 4 uses
   br label %bb.qv
 
 bb.qv:                                            ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -288,6 +288,7 @@ bb.qx:                                            ; preds = %bb.qw
 
 "_ZN88_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeMap$GT$13serialize_key17haec57e87a3692354E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %._crit_edge20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %._crit_edge20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.val10.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ]
+  store i8 2, ptr %i.ber, align 8, !alias.scope !13853, !noalias !13854
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
   invoke fastcc void @"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_str17hf58c26c162f17e29E"(ptr nonnull %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
           to label %.noexc22.i.i.i.i.i276 unwind label %.loopexit.i.i.i.i.i
@@ -547,13 +548,9 @@ bb.rl:                                            ; preds = %_ZN10serde_json3ser
 
 "_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.rl, %"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_i3217h726c845337975a7aE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$14serialize_bool17h774529df6e53759aE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.bjx = icmp eq i64 %i.bfq, 0
-  br i1 %i.bjx, label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.qv
+  br i1 %i.bjx, label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.qv
 
-_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
-  store i8 2, ptr %i.ber, align 8, !noalias !13831
-  br label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-
-_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.noexc20.i.i.i.i.i275
+_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %.noexc20.i.i.i.i.i275
   %i.bjy = getelementptr inbounds nuw i8, ptr %i.fl, i64 164
   %i.bjz = load i8, ptr %i.bjy, align 4, !range !42, !alias.scope !13844, !noalias !13845, !noundef !28 ; 2 uses
   %.not23.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i8 %i.bjz, 2
