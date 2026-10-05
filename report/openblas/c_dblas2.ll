@@ -202,7 +202,7 @@ vec.epilog.scalar.ph223:                          ; preds = %vec.epilog.scalar.p
   %i.ce = add nuw nsw i64 %i.cd, 8
   %i.cf = shl nsw i64 %.2114, 3
   %scevgep168 = getelementptr i8, ptr %i.m, i64 %i.cf
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169, i64 %i.ce, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169, i64 range(i64 0, 17179869177) %i.ce, i1 false), !tbaa !10
   %i.cg = zext i32 %indvars.iv176 to i64
   %i.ch = add nsw i64 %.2114, 1
   %i.ci = add nsw i64 %i.ch, %i.cg                ; 2 uses
@@ -220,7 +220,7 @@ vec.epilog.scalar.ph223:                          ; preds = %vec.epilog.scalar.p
   %i.cr = add nuw nsw i64 %i.cq, 8
   %i.cs = shl nsw i64 %i.ci, 3
   %scevgep168.1 = getelementptr i8, ptr %i.m, i64 %i.cs
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169.1, i64 %i.cr, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169.1, i64 range(i64 0, 17179869177) %i.cr, i1 false), !tbaa !10
   %i.ct = zext i32 %indvars.iv.next177 to i64
   %i.cu = add nsw i64 %i.ci, 1
   %i.cv = add nsw i64 %i.cu, %i.ct                ; 2 uses
@@ -424,7 +424,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fg = or disjoint i64 %i.ff, 8
   %i.fh = shl nsw i64 %.6105, 3
   %scevgep = getelementptr i8, ptr %i.m, i64 %i.fh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129, i64 %i.fg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129, i64 range(i64 0, 17179869177) %i.fg, i1 false), !tbaa !10
   %i.fi = add i64 %indvars.iv134, %.6105          ; 2 uses
   %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1
@@ -434,7 +434,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fl = add nuw nsw i64 %i.fk, 8
   %i.fm = shl nsw i64 %i.fi, 3
   %scevgep.1 = getelementptr i8, ptr %i.m, i64 %i.fm
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.1, i64 %i.fl, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.1, i64 range(i64 0, 17179869177) %i.fl, i1 false), !tbaa !10
   %i.fn = add i64 %indvars.iv.next135, %i.fi      ; 2 uses
   %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
   %indvars.iv.next135.1 = add nuw nsw i64 %indvars.iv134, 2
@@ -444,7 +444,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fq = or disjoint i64 %i.fp, 8
   %i.fr = shl nsw i64 %i.fn, 3
   %scevgep.2 = getelementptr i8, ptr %i.m, i64 %i.fr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.2, i64 %i.fq, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.2, i64 range(i64 0, 17179869177) %i.fq, i1 false), !tbaa !10
   %i.fs = add i64 %indvars.iv.next135.1, %i.fn    ; 2 uses
   %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
   %indvars.iv.next135.2 = add nuw nsw i64 %indvars.iv134, 3
@@ -454,7 +454,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fv = add nuw nsw i64 %i.fu, 8
   %i.fw = shl nsw i64 %i.fs, 3
   %scevgep.3 = getelementptr i8, ptr %i.m, i64 %i.fw
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.3, i64 %i.fv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.3, i64 range(i64 0, 17179869177) %i.fv, i1 false), !tbaa !10
   %i.fx = add i64 %indvars.iv.next135.2, %i.fs    ; 2 uses
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
   %indvars.iv.next135.3 = add nuw nsw i64 %indvars.iv134, 4 ; 2 uses
@@ -483,7 +483,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gg = add nuw nsw i64 %i.gf, 8
   %i.gh = shl nsw i64 %.2114.epil.init, 3
   %scevgep168.epil = getelementptr i8, ptr %i.m, i64 %i.gh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169.epil, i64 %i.gg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep168.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep169.epil, i64 range(i64 0, 17179869177) %i.gg, i1 false), !tbaa !10
   br label %.loopexit
 
 .loopexit.loopexit240.unr-lcssa:                  ; preds = %.preheader92
@@ -509,7 +509,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gk = add nuw nsw i64 %i.gj, 8
   %i.gl = shl nsw i64 %.6105.epil, 3
   %scevgep.epil = getelementptr i8, ptr %i.m, i64 %i.gl
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.epil, i64 %i.gk, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep129.epil, i64 range(i64 0, 17179869177) %i.gk, i1 false), !tbaa !10
   %i.gm = add i64 %indvars.iv134.epil, %.6105.epil
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %indvars.iv.next135.epil = add nuw nsw i64 %indvars.iv134.epil, 1
@@ -792,7 +792,7 @@ vec.epilog.scalar.ph217:                          ; preds = %vec.epilog.scalar.p
   %i.cg = add nuw nsw i64 %i.cf, 8
   %i.ch = shl nsw i64 %.2108, 3
   %scevgep162 = getelementptr i8, ptr %i.o, i64 %i.ch
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163, i64 %i.cg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !10
   %i.ci = zext i32 %indvars.iv170 to i64
   %i.cj = add nsw i64 %.2108, 1
   %i.ck = add nsw i64 %i.cj, %i.ci                ; 2 uses
@@ -810,7 +810,7 @@ vec.epilog.scalar.ph217:                          ; preds = %vec.epilog.scalar.p
   %i.ct = add nuw nsw i64 %i.cs, 8
   %i.cu = shl nsw i64 %i.ck, 3
   %scevgep162.1 = getelementptr i8, ptr %i.o, i64 %i.cu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.1, i64 %i.ct, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.1, i64 range(i64 0, 17179869177) %i.ct, i1 false), !tbaa !10
   %i.cv = zext i32 %indvars.iv.next171 to i64
   %i.cw = add nsw i64 %i.ck, 1
   %i.cx = add nsw i64 %i.cw, %i.cv                ; 2 uses
@@ -1014,7 +1014,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fi = or disjoint i64 %i.fh, 8
   %i.fj = shl nsw i64 %.699, 3
   %scevgep = getelementptr i8, ptr %i.o, i64 %i.fj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123, i64 %i.fi, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123, i64 range(i64 0, 17179869177) %i.fi, i1 false), !tbaa !10
   %i.fk = add i64 %indvars.iv128, %.699           ; 2 uses
   %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
   %indvars.iv.next129 = add nuw nsw i64 %indvars.iv128, 1
@@ -1024,7 +1024,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fn = add nuw nsw i64 %i.fm, 8
   %i.fo = shl nsw i64 %i.fk, 3
   %scevgep.1 = getelementptr i8, ptr %i.o, i64 %i.fo
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.1, i64 %i.fn, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.1, i64 range(i64 0, 17179869177) %i.fn, i1 false), !tbaa !10
   %i.fp = add i64 %indvars.iv.next129, %i.fk      ; 2 uses
   %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
   %indvars.iv.next129.1 = add nuw nsw i64 %indvars.iv128, 2
@@ -1034,7 +1034,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fs = or disjoint i64 %i.fr, 8
   %i.ft = shl nsw i64 %i.fp, 3
   %scevgep.2 = getelementptr i8, ptr %i.o, i64 %i.ft
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.2, i64 %i.fs, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.2, i64 range(i64 0, 17179869177) %i.fs, i1 false), !tbaa !10
   %i.fu = add i64 %indvars.iv.next129.1, %i.fp    ; 2 uses
   %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
   %indvars.iv.next129.2 = add nuw nsw i64 %indvars.iv128, 3
@@ -1044,7 +1044,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fx = add nuw nsw i64 %i.fw, 8
   %i.fy = shl nsw i64 %i.fu, 3
   %scevgep.3 = getelementptr i8, ptr %i.o, i64 %i.fy
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.3, i64 %i.fx, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.3, i64 range(i64 0, 17179869177) %i.fx, i1 false), !tbaa !10
   %i.fz = add i64 %indvars.iv.next129.2, %i.fu    ; 2 uses
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
   %indvars.iv.next129.3 = add nuw nsw i64 %indvars.iv128, 4 ; 2 uses
@@ -1073,7 +1073,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gi = add nuw nsw i64 %i.gh, 8
   %i.gj = shl nsw i64 %.2108.epil.init, 3
   %scevgep162.epil = getelementptr i8, ptr %i.o, i64 %i.gj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.epil, i64 %i.gi, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.epil, i64 range(i64 0, 17179869177) %i.gi, i1 false), !tbaa !10
   br label %.loopexit
 
 .loopexit.loopexit234.unr-lcssa:                  ; preds = %.preheader86
@@ -1099,7 +1099,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gm = add nuw nsw i64 %i.gl, 8
   %i.gn = shl nsw i64 %.699.epil, 3
   %scevgep.epil = getelementptr i8, ptr %i.o, i64 %i.gn
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.epil, i64 %i.gm, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.epil, i64 range(i64 0, 17179869177) %i.gm, i1 false), !tbaa !10
   %i.go = add i64 %indvars.iv128.epil, %.699.epil
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %indvars.iv.next129.epil = add nuw nsw i64 %indvars.iv128.epil, 1
@@ -1382,7 +1382,7 @@ vec.epilog.scalar.ph217:                          ; preds = %vec.epilog.scalar.p
   %i.cg = add nuw nsw i64 %i.cf, 8
   %i.ch = shl nsw i64 %.2108, 3
   %scevgep162 = getelementptr i8, ptr %i.o, i64 %i.ch
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163, i64 %i.cg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !10
   %i.ci = zext i32 %indvars.iv170 to i64
   %i.cj = add nsw i64 %.2108, 1
   %i.ck = add nsw i64 %i.cj, %i.ci                ; 2 uses
@@ -1400,7 +1400,7 @@ vec.epilog.scalar.ph217:                          ; preds = %vec.epilog.scalar.p
   %i.ct = add nuw nsw i64 %i.cs, 8
   %i.cu = shl nsw i64 %i.ck, 3
   %scevgep162.1 = getelementptr i8, ptr %i.o, i64 %i.cu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.1, i64 %i.ct, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.1, i64 range(i64 0, 17179869177) %i.ct, i1 false), !tbaa !10
   %i.cv = zext i32 %indvars.iv.next171 to i64
   %i.cw = add nsw i64 %i.ck, 1
   %i.cx = add nsw i64 %i.cw, %i.cv                ; 2 uses
@@ -1604,7 +1604,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fi = or disjoint i64 %i.fh, 8
   %i.fj = shl nsw i64 %.699, 3
   %scevgep = getelementptr i8, ptr %i.o, i64 %i.fj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123, i64 %i.fi, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123, i64 range(i64 0, 17179869177) %i.fi, i1 false), !tbaa !10
   %i.fk = add i64 %indvars.iv128, %.699           ; 2 uses
   %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
   %indvars.iv.next129 = add nuw nsw i64 %indvars.iv128, 1
@@ -1614,7 +1614,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fn = add nuw nsw i64 %i.fm, 8
   %i.fo = shl nsw i64 %i.fk, 3
   %scevgep.1 = getelementptr i8, ptr %i.o, i64 %i.fo
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.1, i64 %i.fn, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.1, i64 range(i64 0, 17179869177) %i.fn, i1 false), !tbaa !10
   %i.fp = add i64 %indvars.iv.next129, %i.fk      ; 2 uses
   %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
   %indvars.iv.next129.1 = add nuw nsw i64 %indvars.iv128, 2
@@ -1624,7 +1624,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fs = or disjoint i64 %i.fr, 8
   %i.ft = shl nsw i64 %i.fp, 3
   %scevgep.2 = getelementptr i8, ptr %i.o, i64 %i.ft
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.2, i64 %i.fs, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.2, i64 range(i64 0, 17179869177) %i.fs, i1 false), !tbaa !10
   %i.fu = add i64 %indvars.iv.next129.1, %i.fp    ; 2 uses
   %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
   %indvars.iv.next129.2 = add nuw nsw i64 %indvars.iv128, 3
@@ -1634,7 +1634,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fx = add nuw nsw i64 %i.fw, 8
   %i.fy = shl nsw i64 %i.fu, 3
   %scevgep.3 = getelementptr i8, ptr %i.o, i64 %i.fy
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.3, i64 %i.fx, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.3, i64 range(i64 0, 17179869177) %i.fx, i1 false), !tbaa !10
   %i.fz = add i64 %indvars.iv.next129.2, %i.fu    ; 2 uses
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
   %indvars.iv.next129.3 = add nuw nsw i64 %indvars.iv128, 4 ; 2 uses
@@ -1663,7 +1663,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gi = add nuw nsw i64 %i.gh, 8
   %i.gj = shl nsw i64 %.2108.epil.init, 3
   %scevgep162.epil = getelementptr i8, ptr %i.o, i64 %i.gj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.epil, i64 %i.gi, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep162.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep163.epil, i64 range(i64 0, 17179869177) %i.gi, i1 false), !tbaa !10
   br label %.loopexit
 
 .loopexit.loopexit234.unr-lcssa:                  ; preds = %.preheader86
@@ -1689,7 +1689,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gm = add nuw nsw i64 %i.gl, 8
   %i.gn = shl nsw i64 %.699.epil, 3
   %scevgep.epil = getelementptr i8, ptr %i.o, i64 %i.gn
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.epil, i64 %i.gm, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep123.epil, i64 range(i64 0, 17179869177) %i.gm, i1 false), !tbaa !10
   %i.go = add i64 %indvars.iv128.epil, %.699.epil
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %indvars.iv.next129.epil = add nuw nsw i64 %indvars.iv128.epil, 1
@@ -1966,7 +1966,7 @@ vec.epilog.scalar.ph402:                          ; preds = %vec.epilog.scalar.p
   %i.ce = add nuw nsw i64 %i.cd, 8
   %i.cf = shl nsw i64 %.2186, 3
   %scevgep263 = getelementptr i8, ptr %i.m, i64 %i.cf
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264, i64 %i.ce, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264, i64 range(i64 0, 17179869177) %i.ce, i1 false), !tbaa !10
   %i.cg = zext i32 %indvars.iv271 to i64
   %i.ch = add nsw i64 %.2186, 1
   %i.ci = add nsw i64 %i.ch, %i.cg                ; 2 uses
@@ -1984,7 +1984,7 @@ vec.epilog.scalar.ph402:                          ; preds = %vec.epilog.scalar.p
   %i.cr = add nuw nsw i64 %i.cq, 8
   %i.cs = shl nsw i64 %i.ci, 3
   %scevgep263.1 = getelementptr i8, ptr %i.m, i64 %i.cs
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264.1, i64 %i.cr, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264.1, i64 range(i64 0, 17179869177) %i.cr, i1 false), !tbaa !10
   %i.ct = zext i32 %indvars.iv.next272 to i64
   %i.cu = add nsw i64 %i.ci, 1
   %i.cv = add nsw i64 %i.cu, %i.ct                ; 2 uses
@@ -2188,7 +2188,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fg = or disjoint i64 %i.ff, 8
   %i.fh = shl nsw i64 %.6177, 3
   %scevgep = getelementptr i8, ptr %i.m, i64 %i.fh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224, i64 %i.fg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224, i64 range(i64 0, 17179869177) %i.fg, i1 false), !tbaa !10
   %i.fi = add i64 %indvars.iv229, %.6177          ; 2 uses
   %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
   %indvars.iv.next230 = add nuw nsw i64 %indvars.iv229, 1
@@ -2198,7 +2198,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fl = add nuw nsw i64 %i.fk, 8
   %i.fm = shl nsw i64 %i.fi, 3
   %scevgep.1 = getelementptr i8, ptr %i.m, i64 %i.fm
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.1, i64 %i.fl, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.1, i64 range(i64 0, 17179869177) %i.fl, i1 false), !tbaa !10
   %i.fn = add i64 %indvars.iv.next230, %i.fi      ; 2 uses
   %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
   %indvars.iv.next230.1 = add nuw nsw i64 %indvars.iv229, 2
@@ -2208,7 +2208,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fq = or disjoint i64 %i.fp, 8
   %i.fr = shl nsw i64 %i.fn, 3
   %scevgep.2 = getelementptr i8, ptr %i.m, i64 %i.fr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.2, i64 %i.fq, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.2, i64 range(i64 0, 17179869177) %i.fq, i1 false), !tbaa !10
   %i.fs = add i64 %indvars.iv.next230.1, %i.fn    ; 2 uses
   %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
   %indvars.iv.next230.2 = add nuw nsw i64 %indvars.iv229, 3
@@ -2218,7 +2218,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fv = add nuw nsw i64 %i.fu, 8
   %i.fw = shl nsw i64 %i.fs, 3
   %scevgep.3 = getelementptr i8, ptr %i.m, i64 %i.fw
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.3, i64 %i.fv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.3, i64 range(i64 0, 17179869177) %i.fv, i1 false), !tbaa !10
   %i.fx = add i64 %indvars.iv.next230.2, %i.fs    ; 2 uses
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
   %indvars.iv.next230.3 = add nuw nsw i64 %indvars.iv229, 4 ; 2 uses
@@ -2247,7 +2247,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gg = add nuw nsw i64 %i.gf, 8
   %i.gh = shl nsw i64 %.2186.epil.init, 3
   %scevgep263.epil = getelementptr i8, ptr %i.m, i64 %i.gh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264.epil, i64 %i.gg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep263.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep264.epil, i64 range(i64 0, 17179869177) %i.gg, i1 false), !tbaa !10
   br label %.loopexit159
 
 .loopexit159.loopexit489.unr-lcssa:               ; preds = %.preheader162
@@ -2273,7 +2273,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gk = add nuw nsw i64 %i.gj, 8
   %i.gl = shl nsw i64 %.6177.epil, 3
   %scevgep.epil = getelementptr i8, ptr %i.m, i64 %i.gl
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.epil, i64 %i.gk, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep224.epil, i64 range(i64 0, 17179869177) %i.gk, i1 false), !tbaa !10
   %i.gm = add i64 %indvars.iv229.epil, %.6177.epil
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %indvars.iv.next230.epil = add nuw nsw i64 %indvars.iv229.epil, 1
@@ -2336,7 +2336,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.hf = add nuw nsw i64 %i.he, 8
   %i.hg = shl nsw i64 %.8199, 3
   %scevgep318 = getelementptr i8, ptr %i.m, i64 %i.hg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318, i64 %i.hf, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318, i64 range(i64 0, 17179869177) %i.hf, i1 false), !tbaa !10
   %i.hh = zext i32 %indvars.iv325 to i64
   %i.hi = add nsw i64 %.8199, 1
   %i.hj = add nsw i64 %i.hi, %i.hh                ; 2 uses
@@ -2354,7 +2354,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.hs = add nuw nsw i64 %i.hr, 8
   %i.ht = shl nsw i64 %i.hj, 3
   %scevgep318.1 = getelementptr i8, ptr %i.m, i64 %i.ht
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318.1, i64 %i.hs, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318.1, i64 range(i64 0, 17179869177) %i.hs, i1 false), !tbaa !10
   %i.hu = zext i32 %indvars.iv.next326 to i64
   %i.hv = add nsw i64 %i.hj, 1
   %i.hw = add nsw i64 %i.hv, %i.hu                ; 2 uses
@@ -2385,7 +2385,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.if = add nuw nsw i64 %i.ie, 8
   %i.ig = shl nsw i64 %.8199.epil.init, 3
   %scevgep318.epil = getelementptr i8, ptr %i.m, i64 %i.ig
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318.epil, i64 %i.if, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep317.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep318.epil, i64 range(i64 0, 17179869177) %i.if, i1 false), !tbaa !10
   br label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.preheader.unr-lcssa, %.preheader150.epil.preheader
@@ -2575,7 +2575,7 @@ vec.epilog.scalar.ph465:                          ; preds = %vec.epilog.scalar.p
   %i.kl = or disjoint i64 %i.kk, 8
   %i.km = shl nsw i64 %.12190, 3
   %scevgep284 = getelementptr i8, ptr %i.m, i64 %i.km
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284, i64 %i.kl, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284, i64 range(i64 0, 17179869177) %i.kl, i1 false), !tbaa !10
   %i.kn = add i64 %indvars.iv289, %.12190         ; 2 uses
   %indvar.next282 = or disjoint i64 %indvar281, 1 ; 2 uses
   %indvars.iv.next290 = add nuw nsw i64 %indvars.iv289, 1
@@ -2585,7 +2585,7 @@ vec.epilog.scalar.ph465:                          ; preds = %vec.epilog.scalar.p
   %i.kq = add nuw nsw i64 %i.kp, 8
   %i.kr = shl nsw i64 %i.kn, 3
   %scevgep284.1 = getelementptr i8, ptr %i.m, i64 %i.kr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.1, i64 %i.kq, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.1, i64 range(i64 0, 17179869177) %i.kq, i1 false), !tbaa !10
   %i.ks = add i64 %indvars.iv.next290, %i.kn      ; 2 uses
   %indvar.next282.1 = or disjoint i64 %indvar281, 2 ; 2 uses
   %indvars.iv.next290.1 = add nuw nsw i64 %indvars.iv289, 2
@@ -2595,7 +2595,7 @@ vec.epilog.scalar.ph465:                          ; preds = %vec.epilog.scalar.p
   %i.kv = or disjoint i64 %i.ku, 8
   %i.kw = shl nsw i64 %i.ks, 3
   %scevgep284.2 = getelementptr i8, ptr %i.m, i64 %i.kw
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.2, i64 %i.kv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.2, i64 range(i64 0, 17179869177) %i.kv, i1 false), !tbaa !10
   %i.kx = add i64 %indvars.iv.next290.1, %i.ks    ; 2 uses
   %indvar.next282.2 = or disjoint i64 %indvar281, 3 ; 2 uses
   %indvars.iv.next290.2 = add nuw nsw i64 %indvars.iv289, 3
@@ -2605,7 +2605,7 @@ vec.epilog.scalar.ph465:                          ; preds = %vec.epilog.scalar.p
   %i.la = add nuw nsw i64 %i.kz, 8
   %i.lb = shl nsw i64 %i.kx, 3
   %scevgep284.3 = getelementptr i8, ptr %i.m, i64 %i.lb
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.3, i64 %i.la, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.3, i64 range(i64 0, 17179869177) %i.la, i1 false), !tbaa !10
   %i.lc = add i64 %indvars.iv.next290.2, %i.kx    ; 2 uses
   %indvar.next282.3 = add nuw nsw i64 %indvar281, 4 ; 2 uses
   %indvars.iv.next290.3 = add nuw nsw i64 %indvars.iv289, 4 ; 2 uses
@@ -2636,7 +2636,7 @@ vec.epilog.scalar.ph465:                          ; preds = %vec.epilog.scalar.p
   %i.lf = add nuw nsw i64 %i.le, 8
   %i.lg = shl nsw i64 %.12190.epil, 3
   %scevgep284.epil = getelementptr i8, ptr %i.m, i64 %i.lg
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.epil, i64 %i.lf, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep283.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep284.epil, i64 range(i64 0, 17179869177) %i.lf, i1 false), !tbaa !10
   %i.lh = add i64 %indvars.iv289.epil, %.12190.epil
   %indvar.next282.epil = add nuw nsw i64 %indvar281.epil, 1
   %indvars.iv.next290.epil = add nuw nsw i64 %indvars.iv289.epil, 1
@@ -3039,7 +3039,7 @@ vec.epilog.scalar.ph406:                          ; preds = %vec.epilog.scalar.p
   %i.ce = add nuw nsw i64 %i.cd, 8
   %i.cf = shl nsw i64 %.2190, 3
   %scevgep267 = getelementptr i8, ptr %i.m, i64 %i.cf
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268, i64 %i.ce, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268, i64 range(i64 0, 17179869177) %i.ce, i1 false), !tbaa !10
   %i.cg = zext i32 %indvars.iv275 to i64
   %i.ch = add nsw i64 %.2190, 1
   %i.ci = add nsw i64 %i.ch, %i.cg                ; 2 uses
@@ -3057,7 +3057,7 @@ vec.epilog.scalar.ph406:                          ; preds = %vec.epilog.scalar.p
   %i.cr = add nuw nsw i64 %i.cq, 8
   %i.cs = shl nsw i64 %i.ci, 3
   %scevgep267.1 = getelementptr i8, ptr %i.m, i64 %i.cs
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268.1, i64 %i.cr, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268.1, i64 range(i64 0, 17179869177) %i.cr, i1 false), !tbaa !10
   %i.ct = zext i32 %indvars.iv.next276 to i64
   %i.cu = add nsw i64 %i.ci, 1
   %i.cv = add nsw i64 %i.cu, %i.ct                ; 2 uses
@@ -3261,7 +3261,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fg = or disjoint i64 %i.ff, 8
   %i.fh = shl nsw i64 %.6181, 3
   %scevgep = getelementptr i8, ptr %i.m, i64 %i.fh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228, i64 %i.fg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228, i64 range(i64 0, 17179869177) %i.fg, i1 false), !tbaa !10
   %i.fi = add i64 %indvars.iv233, %.6181          ; 2 uses
   %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
   %indvars.iv.next234 = add nuw nsw i64 %indvars.iv233, 1
@@ -3271,7 +3271,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fl = add nuw nsw i64 %i.fk, 8
   %i.fm = shl nsw i64 %i.fi, 3
   %scevgep.1 = getelementptr i8, ptr %i.m, i64 %i.fm
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.1, i64 %i.fl, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.1, i64 range(i64 0, 17179869177) %i.fl, i1 false), !tbaa !10
   %i.fn = add i64 %indvars.iv.next234, %i.fi      ; 2 uses
   %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
   %indvars.iv.next234.1 = add nuw nsw i64 %indvars.iv233, 2
@@ -3281,7 +3281,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fq = or disjoint i64 %i.fp, 8
   %i.fr = shl nsw i64 %i.fn, 3
   %scevgep.2 = getelementptr i8, ptr %i.m, i64 %i.fr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.2, i64 %i.fq, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.2, i64 range(i64 0, 17179869177) %i.fq, i1 false), !tbaa !10
   %i.fs = add i64 %indvars.iv.next234.1, %i.fn    ; 2 uses
   %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
   %indvars.iv.next234.2 = add nuw nsw i64 %indvars.iv233, 3
@@ -3291,7 +3291,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fv = add nuw nsw i64 %i.fu, 8
   %i.fw = shl nsw i64 %i.fs, 3
   %scevgep.3 = getelementptr i8, ptr %i.m, i64 %i.fw
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.3, i64 %i.fv, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.3, i64 range(i64 0, 17179869177) %i.fv, i1 false), !tbaa !10
   %i.fx = add i64 %indvars.iv.next234.2, %i.fs    ; 2 uses
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
   %indvars.iv.next234.3 = add nuw nsw i64 %indvars.iv233, 4 ; 2 uses
@@ -3320,7 +3320,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gg = add nuw nsw i64 %i.gf, 8
   %i.gh = shl nsw i64 %.2190.epil.init, 3
   %scevgep267.epil = getelementptr i8, ptr %i.m, i64 %i.gh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268.epil, i64 %i.gg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep267.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep268.epil, i64 range(i64 0, 17179869177) %i.gg, i1 false), !tbaa !10
   br label %.loopexit163
 
 .loopexit163.loopexit493.unr-lcssa:               ; preds = %.preheader166
@@ -3346,7 +3346,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gk = add nuw nsw i64 %i.gj, 8
   %i.gl = shl nsw i64 %.6181.epil, 3
   %scevgep.epil = getelementptr i8, ptr %i.m, i64 %i.gl
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.epil, i64 %i.gk, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep228.epil, i64 range(i64 0, 17179869177) %i.gk, i1 false), !tbaa !10
   %i.gm = add i64 %indvars.iv233.epil, %.6181.epil
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %indvars.iv.next234.epil = add nuw nsw i64 %indvars.iv233.epil, 1
@@ -3410,7 +3410,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.hg = add nuw nsw i64 %i.hf, 8
   %i.hh = shl nsw i64 %.8203, 3
   %scevgep322 = getelementptr i8, ptr %i.m, i64 %i.hh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322, i64 %i.hg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322, i64 range(i64 0, 17179869177) %i.hg, i1 false), !tbaa !10
   %i.hi = zext i32 %indvars.iv329 to i64
   %i.hj = add nsw i64 %.8203, 1
   %i.hk = add nsw i64 %i.hj, %i.hi                ; 2 uses
@@ -3428,7 +3428,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ht = add nuw nsw i64 %i.hs, 8
   %i.hu = shl nsw i64 %i.hk, 3
   %scevgep322.1 = getelementptr i8, ptr %i.m, i64 %i.hu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322.1, i64 %i.ht, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322.1, i64 range(i64 0, 17179869177) %i.ht, i1 false), !tbaa !10
   %i.hv = zext i32 %indvars.iv.next330 to i64
   %i.hw = add nsw i64 %i.hk, 1
   %i.hx = add nsw i64 %i.hw, %i.hv                ; 2 uses
@@ -3459,7 +3459,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ig = add nuw nsw i64 %i.if, 8
   %i.ih = shl nsw i64 %.8203.epil.init, 3
   %scevgep322.epil = getelementptr i8, ptr %i.m, i64 %i.ih
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322.epil, i64 %i.ig, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep321.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep322.epil, i64 range(i64 0, 17179869177) %i.ig, i1 false), !tbaa !10
   br label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.preheader.unr-lcssa, %.preheader154.epil.preheader
@@ -3649,7 +3649,7 @@ vec.epilog.scalar.ph469:                          ; preds = %vec.epilog.scalar.p
   %i.km = or disjoint i64 %i.kl, 8
   %i.kn = shl nsw i64 %.12194, 3
   %scevgep288 = getelementptr i8, ptr %i.m, i64 %i.kn
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288, i64 %i.km, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288, i64 range(i64 0, 17179869177) %i.km, i1 false), !tbaa !10
   %i.ko = add i64 %indvars.iv293, %.12194         ; 2 uses
   %indvar.next286 = or disjoint i64 %indvar285, 1 ; 2 uses
   %indvars.iv.next294 = add nuw nsw i64 %indvars.iv293, 1
@@ -3659,7 +3659,7 @@ vec.epilog.scalar.ph469:                          ; preds = %vec.epilog.scalar.p
   %i.kr = add nuw nsw i64 %i.kq, 8
   %i.ks = shl nsw i64 %i.ko, 3
   %scevgep288.1 = getelementptr i8, ptr %i.m, i64 %i.ks
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.1, i64 %i.kr, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.1, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.1, i64 range(i64 0, 17179869177) %i.kr, i1 false), !tbaa !10
   %i.kt = add i64 %indvars.iv.next294, %i.ko      ; 2 uses
   %indvar.next286.1 = or disjoint i64 %indvar285, 2 ; 2 uses
   %indvars.iv.next294.1 = add nuw nsw i64 %indvars.iv293, 2
@@ -3669,7 +3669,7 @@ vec.epilog.scalar.ph469:                          ; preds = %vec.epilog.scalar.p
   %i.kw = or disjoint i64 %i.kv, 8
   %i.kx = shl nsw i64 %i.kt, 3
   %scevgep288.2 = getelementptr i8, ptr %i.m, i64 %i.kx
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.2, i64 %i.kw, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.2, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.2, i64 range(i64 0, 17179869177) %i.kw, i1 false), !tbaa !10
   %i.ky = add i64 %indvars.iv.next294.1, %i.kt    ; 2 uses
   %indvar.next286.2 = or disjoint i64 %indvar285, 3 ; 2 uses
   %indvars.iv.next294.2 = add nuw nsw i64 %indvars.iv293, 3
@@ -3679,7 +3679,7 @@ vec.epilog.scalar.ph469:                          ; preds = %vec.epilog.scalar.p
   %i.lb = add nuw nsw i64 %i.la, 8
   %i.lc = shl nsw i64 %i.ky, 3
   %scevgep288.3 = getelementptr i8, ptr %i.m, i64 %i.lc
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.3, i64 %i.lb, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.3, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.3, i64 range(i64 0, 17179869177) %i.lb, i1 false), !tbaa !10
   %i.ld = add i64 %indvars.iv.next294.2, %i.ky    ; 2 uses
   %indvar.next286.3 = add nuw nsw i64 %indvar285, 4 ; 2 uses
   %indvars.iv.next294.3 = add nuw nsw i64 %indvars.iv293, 4 ; 2 uses
@@ -3710,7 +3710,7 @@ vec.epilog.scalar.ph469:                          ; preds = %vec.epilog.scalar.p
   %i.lg = add nuw nsw i64 %i.lf, 8
   %i.lh = shl nsw i64 %.12194.epil, 3
   %scevgep288.epil = getelementptr i8, ptr %i.m, i64 %i.lh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.epil, i64 %i.lg, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep287.epil, ptr noundef nonnull align 8 dereferenceable(1) %scevgep288.epil, i64 range(i64 0, 17179869177) %i.lg, i1 false), !tbaa !10
   %i.li = add i64 %indvars.iv293.epil, %.12194.epil
   %indvar.next286.epil = add nuw nsw i64 %indvar285.epil, 1
   %indvars.iv.next294.epil = add nuw nsw i64 %indvars.iv293.epil, 1

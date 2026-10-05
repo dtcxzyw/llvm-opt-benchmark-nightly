@@ -205,7 +205,7 @@ bigint_mul_pow2.exit1556.sink.split:              ; preds = %._crit_edge5918, %.
   %i.bgx = zext i32 %i.bgw to i64
   %i.bgy = shl nuw nsw i64 %i.bgx, 3
   %i.bgz = add nuw nsw i64 %i.bgy, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9036, i8 0, i64 %i.bgz, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9036, i8 0, i64 range(i64 0, 34359738369) %i.bgz, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit1556
 
 bigint_mul_pow2.exit1556:                         ; preds = %bigint_mul_pow2.exit1556.sink.split, %._crit_edge5918, %._crit_edge5926, %._crit_edge5935
@@ -608,7 +608,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge5692, %.
   %i.ggb = zext i32 %i.gga to i64
   %i.ggc = shl nuw nsw i64 %i.ggb, 3
   %i.ggd = add nuw nsw i64 %i.ggc, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9077, i8 0, i64 %i.ggd, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9077, i8 0, i64 range(i64 0, 34359738369) %i.ggd, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit
 
 bigint_mul_pow2.exit:                             ; preds = %bigint_mul_pow2.exit.sink.split, %._crit_edge5692, %._crit_edge5700, %._crit_edge5709
@@ -1011,7 +1011,7 @@ bigint_mul_pow2.exit1592.sink.split:              ; preds = %._crit_edge6396, %.
   %i.iuq = zext i32 %i.iup to i64
   %i.iur = shl nuw nsw i64 %i.iuq, 3
   %i.ius = add nuw nsw i64 %i.iur, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9128, i8 0, i64 %i.ius, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9128, i8 0, i64 range(i64 0, 34359738369) %i.ius, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit1592
 
 bigint_mul_pow2.exit1592:                         ; preds = %bigint_mul_pow2.exit1592.sink.split, %._crit_edge6396, %._crit_edge6404, %._crit_edge6413
@@ -1414,7 +1414,7 @@ bigint_mul_pow2.exit1574.sink.split:              ; preds = %._crit_edge6198, %.
   %i.nrl = zext i32 %i.nrk to i64
   %i.nrm = shl nuw nsw i64 %i.nrl, 3
   %i.nrn = add nuw nsw i64 %i.nrm, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9170, i8 0, i64 %i.nrn, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9170, i8 0, i64 range(i64 0, 34359738369) %i.nrn, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit1574
 
 bigint_mul_pow2.exit1574:                         ; preds = %bigint_mul_pow2.exit1574.sink.split, %._crit_edge6198, %._crit_edge6206, %._crit_edge6215
@@ -1817,7 +1817,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge878, %._
   %i.azt = zext i32 %i.azs to i64
   %i.azu = shl nuw nsw i64 %i.azt, 3
   %i.azv = add nuw nsw i64 %i.azu, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink1360, i8 0, i64 %i.azv, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink1360, i8 0, i64 range(i64 0, 34359738369) %i.azv, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit
 
 bigint_mul_pow2.exit:                             ; preds = %bigint_mul_pow2.exit.sink.split, %._crit_edge878, %._crit_edge886, %._crit_edge895
@@ -2220,7 +2220,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge312, %._
   %i.azg = zext i32 %i.azf to i64
   %i.azh = shl nuw nsw i64 %i.azg, 3
   %i.azi = add nuw nsw i64 %i.azh, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink611, i8 0, i64 %i.azi, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink611, i8 0, i64 range(i64 0, 34359738369) %i.azi, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit
 
 bigint_mul_pow2.exit:                             ; preds = %bigint_mul_pow2.exit.sink.split, %._crit_edge312, %._crit_edge320, %._crit_edge329
@@ -2623,7 +2623,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge4344, %.
   %i.bco = zext i32 %i.bcn to i64
   %i.bcp = shl nuw nsw i64 %i.bco, 3
   %i.bcq = add nuw nsw i64 %i.bcp, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5672, i8 0, i64 %i.bcq, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5672, i8 0, i64 range(i64 0, 34359738369) %i.bcq, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit
 
 bigint_mul_pow2.exit:                             ; preds = %bigint_mul_pow2.exit.sink.split, %._crit_edge4344, %._crit_edge4352, %._crit_edge4361
@@ -3026,7 +3026,7 @@ bigint_mul_pow2.exit1540.sink.split:              ; preds = %._crit_edge4145, %.
   %i.eas = zext i32 %i.ear to i64
   %i.eat = shl nuw nsw i64 %i.eas, 3
   %i.eau = add nuw nsw i64 %i.eat, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5685, i8 0, i64 %i.eau, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5685, i8 0, i64 range(i64 0, 34359738369) %i.eau, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit1540
 
 bigint_mul_pow2.exit1540:                         ; preds = %bigint_mul_pow2.exit1540.sink.split, %._crit_edge4145, %._crit_edge4153, %._crit_edge4162
@@ -3429,7 +3429,7 @@ bigint_mul_pow2.exit1558.sink.split:              ; preds = %._crit_edge3931, %.
   %i.iry = zext i32 %i.irx to i64
   %i.irz = shl nuw nsw i64 %i.iry, 3
   %i.isa = add nuw nsw i64 %i.irz, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5736, i8 0, i64 %i.isa, i1 false), !tbaa !106
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5736, i8 0, i64 range(i64 0, 34359738369) %i.isa, i1 false), !tbaa !106
   br label %bigint_mul_pow2.exit1558
 
 bigint_mul_pow2.exit1558:                         ; preds = %bigint_mul_pow2.exit1558.sink.split, %._crit_edge3931, %._crit_edge3939, %._crit_edge3948

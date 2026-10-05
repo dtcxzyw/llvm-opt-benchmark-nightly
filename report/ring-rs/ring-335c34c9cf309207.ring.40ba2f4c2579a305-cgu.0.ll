@@ -205,7 +205,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_12clmul_x86_643KeyE3ne
   %i.ah = select i1 %i.af, i64 0, i64 %i.ag
   %i.ai = getelementptr i8, ptr %i.k, i64 %..i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.ai, i8 0, i64 %i.ah, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.033.063, i64 %..i.i, i1 false), !alias.scope !536, !noalias !537
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.033.063, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !536, !noalias !537
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !535
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 1 dereferenceable(16) %i.k, i64 16, i1 false), !noalias !535
   %i.aj = load ptr, ptr %i.l, align 8, !noalias !535, !nonnull !15, !align !17, !noundef !15
@@ -301,7 +301,7 @@ _RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5in
 
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBlockhKj10_E18overwrite_at_startB8_.exit.i: ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.g, i8 0, i64 16, i1 false), !noalias !545
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %.lcssa, i64 %.lcssa106, i1 false), !noalias !545
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %.lcssa, i64 range(i64 0, 129) %.lcssa106, i1 false), !noalias !545
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !545
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.i, ptr noundef nonnull align 1 dereferenceable(16) %i.g, i64 16, i1 false), !noalias !545
   %i.bg = load ptr, ptr %i.m, align 8, !alias.scope !544, !noalias !546, !nonnull !15, !align !17, !noundef !15
@@ -429,7 +429,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = sub nuw nsw i64 %.sroa.555.089, %..i.i   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.058)
   store i128 0, ptr %.sroa.058, align 16, !noalias !650
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.058, ptr nonnull readonly align 1 %.sroa.054.090, i64 %..i.i, i1 false), !alias.scope !651, !noalias !652
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.058, ptr nonnull readonly align 1 %.sroa.054.090, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !651, !noalias !652
   %.sroa.058.0..sroa.058.0..sroa.058.0..sroa.058.0..sroa.057.0.copyload = load i128, ptr %.sroa.058, align 16, !noalias !650
   %.sroa.544.sroa.6.0.insert.ext50 = zext i64 %.sroa.544.sroa.6.091 to i128
   %.sroa.544.sroa.6.0.insert.shift51 = shl nuw i128 %.sroa.544.sroa.6.0.insert.ext50, 64
@@ -572,7 +572,7 @@ _RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5in
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBlockhKj10_E18overwrite_at_startB8_.exit.i: ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i)
   store i128 0, ptr %.sroa.05.i, align 16, !noalias !658
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.05.i, ptr nonnull readonly align 1 %.lcssa, i64 %.lcssa133, i1 false), !alias.scope !659, !noalias !660
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.05.i, ptr nonnull readonly align 1 %.lcssa, i64 range(i64 0, 129) %.lcssa133, i1 false), !alias.scope !659, !noalias !660
   %.sroa.05.i.0..sroa.05.i.0..sroa.05.i.0..sroa.05.0..sroa.05.0..sroa.05.0..sroa.0.0.copyload.i = load i128, ptr %.sroa.05.i, align 16, !noalias !658 ; 2 uses
   %i.cr = xor i128 %.sroa.05.i.0..sroa.05.i.0..sroa.05.i.0..sroa.05.0..sroa.05.0..sroa.05.0..sroa.0.0.copyload.i, %.sroa.434.0.copyload ; 2 uses
   %i.cs = load i64, ptr %.sroa.033.0.copyload, align 8, !alias.scope !661, !noalias !662, !noundef !15 ; 2 uses
@@ -801,7 +801,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = sub nuw nsw i64 %.sroa.555.089, %..i.i  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.058)
   store i128 0, ptr %.sroa.058, align 16, !noalias !743
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.058, ptr nonnull readonly align 1 %.sroa.054.090, i64 %..i.i, i1 false), !alias.scope !744, !noalias !745
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.058, ptr nonnull readonly align 1 %.sroa.054.090, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !744, !noalias !745
   %.sroa.058.0..sroa.058.0..sroa.058.0..sroa.058.0..sroa.057.0.copyload = load i128, ptr %.sroa.058, align 16, !noalias !743
   %.sroa.544.sroa.6.0.insert.ext50 = zext i64 %.sroa.544.sroa.6.091 to i128
   %.sroa.544.sroa.6.0.insert.shift51 = shl nuw i128 %.sroa.544.sroa.6.0.insert.ext50, 64
@@ -944,7 +944,7 @@ _RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5in
 _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBlockhKj10_E18overwrite_at_startB8_.exit.i: ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit9._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i)
   store i128 0, ptr %.sroa.05.i, align 16, !noalias !749
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.05.i, ptr nonnull readonly align 1 %.lcssa, i64 %.lcssa134, i1 false), !alias.scope !750, !noalias !751
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.05.i, ptr nonnull readonly align 1 %.lcssa, i64 range(i64 0, 129) %.lcssa134, i1 false), !alias.scope !750, !noalias !751
   %.sroa.05.i.0..sroa.05.i.0..sroa.05.i.0..sroa.05.0..sroa.05.0..sroa.05.0..sroa.0.0.copyload.i = load i128, ptr %.sroa.05.i, align 16, !noalias !749 ; 2 uses
   %i.cp = xor i128 %.sroa.05.i.0..sroa.05.i.0..sroa.05.i.0..sroa.05.0..sroa.05.0..sroa.05.0..sroa.0.0.copyload.i, %.sroa.434.0.copyload ; 2 uses
   %i.cq = load i64, ptr %.sroa.033.0.copyload, align 8, !alias.scope !752, !noalias !753, !noundef !15 ; 2 uses
@@ -1187,7 +1187,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_12clmul_x86_643KeyE3ne
   %i.ab = select i1 %i.z, i64 0, i64 %i.aa
   %i.ac = getelementptr i8, ptr %i.k, i64 %..i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.ac, i8 0, i64 %i.ab, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.039.058, i64 %..i.i, i1 false), !alias.scope !824, !noalias !825
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.039.058, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !824, !noalias !825
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !823
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 1 dereferenceable(16) %i.k, i64 16, i1 false), !noalias !823
   %i.ad = load ptr, ptr %i.l, align 8, !noalias !823, !nonnull !15, !align !17, !noundef !15
@@ -1266,7 +1266,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.aw = sub nuw nsw i64 16, %i.aj
   %i.ax = getelementptr i8, ptr %i.i, i64 %i.aj
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ax, i8 0, i64 %i.aw, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.ai, i64 %i.aj, i1 false), !noalias !831
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.ai, i64 range(i64 0, 129) %i.aj, i1 false), !noalias !831
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !832
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !831
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !832
@@ -1370,7 +1370,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nuw nsw i64 %.sroa.559.083, %..i.i   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.062)
   store i128 0, ptr %.sroa.062, align 16, !noalias !913
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.062, ptr nonnull readonly align 1 %.sroa.058.084, i64 %..i.i, i1 false), !alias.scope !914, !noalias !915
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.062, ptr nonnull readonly align 1 %.sroa.058.084, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !914, !noalias !915
   %.sroa.062.0..sroa.062.0..sroa.062.0..sroa.062.0..sroa.061.0.copyload = load i128, ptr %.sroa.062, align 16, !noalias !913
   %.sroa.548.sroa.6.0.insert.ext54 = zext i64 %.sroa.548.sroa.6.085 to i128
   %.sroa.548.sroa.6.0.insert.shift55 = shl nuw i128 %.sroa.548.sroa.6.0.insert.ext54, 64
@@ -1501,7 +1501,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.ch = sub nuw nsw i64 16, %i.bv
   %i.ci = getelementptr i8, ptr %i.f, i64 %i.bv
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ci, i8 0, i64 %i.ch, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr nonnull readonly align 1 %i.bu, i64 %i.bv, i1 false), !noalias !919
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr nonnull readonly align 1 %i.bu, i64 range(i64 0, 129) %i.bv, i1 false), !noalias !919
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !920
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.f, i64 16, i1 false), !noalias !919
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !920
@@ -1707,7 +1707,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = sub nuw nsw i64 %.sroa.556.080, %..i.i   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.059)
   store i128 0, ptr %.sroa.059, align 16, !noalias !978
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.059, ptr nonnull readonly align 1 %.sroa.055.081, i64 %..i.i, i1 false), !alias.scope !979, !noalias !980
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.059, ptr nonnull readonly align 1 %.sroa.055.081, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !979, !noalias !980
   %.sroa.059.0..sroa.059.0..sroa.059.0..sroa.059.0..sroa.058.0.copyload = load i128, ptr %.sroa.059, align 16, !noalias !978
   %.sroa.545.sroa.6.0.insert.ext51 = zext i64 %.sroa.545.sroa.6.082 to i128
   %.sroa.545.sroa.6.0.insert.shift52 = shl nuw i128 %.sroa.545.sroa.6.0.insert.ext51, 64
@@ -1838,7 +1838,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.ci = sub nuw nsw i64 16, %i.by
   %i.cj = getelementptr i8, ptr %i.h, i64 %i.by
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cj, i8 0, i64 %i.ci, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull readonly align 1 %i.bx, i64 %i.by, i1 false), !noalias !981
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull readonly align 1 %i.bx, i64 range(i64 0, 129) %i.by, i1 false), !noalias !981
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !982
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.c, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.h, i64 16, i1 false), !noalias !981
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !982
@@ -2241,7 +2241,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i.
   %i.ar = sub nuw nsw i64 16, %i.an
   %i.as = getelementptr i8, ptr %i.c, i64 %i.an
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.as, i8 0, i64 %i.ar, i1 false), !noalias !1667
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr nonnull readonly align 1 %i.aq, i64 %i.an, i1 false), !noalias !1668
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr nonnull readonly align 1 %i.aq, i64 range(i64 0, 129) %i.an, i1 false), !noalias !1668
   call fastcc void @_RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead8poly1305NtB4_7Context15update_internal(ptr noalias nofree noundef nonnull align 64 dereferenceable(128) %i.h, ptr noalias nofree noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(16) %i.c, i64 noundef 16), !noalias !1669
   br label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit8.i.i.i.i.i
 
@@ -2259,7 +2259,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i9
   %i.ax = sub nuw nsw i64 16, %i.at
   %i.ay = getelementptr i8, ptr %i.b, i64 %i.at
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ay, i8 0, i64 %i.ax, i1 false), !noalias !1671
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.b, ptr nonnull readonly align 1 %i.aw, i64 %i.at, i1 false), !noalias !1672
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.b, ptr nonnull readonly align 1 %i.aw, i64 range(i64 0, 129) %i.at, i1 false), !noalias !1672
   call fastcc void @_RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead8poly1305NtB4_7Context15update_internal(ptr noalias nofree noundef nonnull align 64 dereferenceable(128) %i.h, ptr noalias nofree noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(16) %i.b, i64 noundef 16), !noalias !1673
   br label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit12.i.i.i.i.i
 
@@ -2511,7 +2511,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i.
   %i.ah = sub nuw nsw i64 16, %i.ad
   %i.ai = getelementptr i8, ptr %i.b, i64 %i.ad
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ai, i8 0, i64 %i.ah, i1 false), !noalias !1770
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.b, ptr nonnull readonly align 1 %i.ag, i64 %i.ad, i1 false), !noalias !1771
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.b, ptr nonnull readonly align 1 %i.ag, i64 range(i64 0, 129) %i.ad, i1 false), !noalias !1771
   call fastcc void @_RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead8poly1305NtB4_7Context15update_internal(ptr noalias nofree noundef nonnull align 64 dereferenceable(128) %i.f, ptr noalias nofree noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(16) %i.b, i64 noundef 16), !noalias !1772
   br label %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit.i
 
@@ -2562,7 +2562,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i2
   %i.as = sub nuw nsw i64 16, %i.ao
   %i.at = getelementptr i8, ptr %i.a, i64 %i.ao
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.at, i8 0, i64 %i.as, i1 false), !noalias !1778
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.a, ptr nonnull readonly align 1 %i.ar, i64 %i.ao, i1 false), !noalias !1779
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.a, ptr nonnull readonly align 1 %i.ar, i64 range(i64 0, 129) %i.ao, i1 false), !noalias !1779
   call fastcc void @_RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead8poly1305NtB4_7Context15update_internal(ptr noalias nofree noundef nonnull align 64 dereferenceable(128) %i.f, ptr noalias nofree noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(16) %i.a, i64 noundef 16), !noalias !1777
   br label %_RNvNtNtCs5yxAJGbRKSL_4ring4aead17chacha20_poly130525poly1305_update_padded_16.exit24.i
 
@@ -2965,7 +2965,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_10vclmulavx23KeyE3newB
   %i.au = select i1 %i.as, i64 0, i64 %i.at
   %i.av = getelementptr i8, ptr %i.n, i64 %..i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 0, i64 %i.au, i1 false), !noalias !2018
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.011.026.i.i.i.i.i, i64 %..i.i.i.i.i.i.i, i1 false), !alias.scope !2019, !noalias !2020
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.011.026.i.i.i.i.i, i64 range(i64 0, 129) %..i.i.i.i.i.i.i, i1 false), !alias.scope !2019, !noalias !2020
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !2017
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.m, ptr noundef nonnull align 1 dereferenceable(16) %i.n, i64 16, i1 false), !noalias !2017
   %i.aw = load ptr, ptr %i.o, align 8, !noalias !2017, !nonnull !15, !align !17, !noundef !15
@@ -3068,7 +3068,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.bb ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.ab
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.h, i8 0, i64 16, i1 false), !noalias !2035
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull readonly align 1 %i.bn, i64 %i.bk, i1 false), !noalias !2036
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull readonly align 1 %i.bn, i64 range(i64 0, 129) %i.bk, i1 false), !noalias !2036
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !2035
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 1 dereferenceable(16) %i.h, i64 16, i1 false), !noalias !2035
   %i.bo = load ptr, ptr %i.l, align 8, !alias.scope !2033, !noalias !2037, !nonnull !15, !align !17, !noundef !15
@@ -3452,7 +3452,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_10vclmulavx23KeyE3newB
   %i.ao = select i1 %i.am, i64 0, i64 %i.an
   %i.ap = getelementptr i8, ptr %i.k, i64 %..i.i.i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.ap, i8 0, i64 %i.ao, i1 false), !noalias !2174
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.030.044.i.i, i64 %..i.i.i.i, i1 false), !alias.scope !2176, !noalias !2177
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.030.044.i.i, i64 range(i64 0, 129) %..i.i.i.i, i1 false), !alias.scope !2176, !noalias !2177
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !2175
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 1 dereferenceable(16) %i.k, i64 16, i1 false), !noalias !2175
   %i.aq = load ptr, ptr %i.l, align 8, !noalias !2175, !nonnull !15, !align !17, !noundef !15
@@ -3515,7 +3515,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.az = sub nuw nsw i64 16, %i.aw               ; 2 uses
   %i.ba = getelementptr i8, ptr %i.i, i64 %i.aw
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ba, i8 0, i64 %i.az, i1 false), !noalias !2174
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.av, i64 %i.aw, i1 false), !noalias !2185
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.av, i64 range(i64 0, 129) %i.aw, i1 false), !noalias !2185
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2186
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !2187
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2186
@@ -3918,14 +3918,14 @@ bb.o:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not.i.i.i.i.i.i24.i.2, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2
 
 _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.2: ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dm, ptr nonnull readonly align 1 %i.dk, i64 range(i64 0, -9223372036854775808) %i.dj, i1 false), !alias.scope !2853, !noalias !2854
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dm, ptr nonnull readonly align 1 %i.dk, i64 range(i64 0, 129) %i.dj, i1 false), !alias.scope !2853, !noalias !2854
   %.sroa.0.0.copyload.pre.i.i.i.i.i.2 = load i64, ptr %i.b, align 8, !noalias !2852
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2852
   %i.ep = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.2)
   store i64 %i.ep, ptr %i.cl, align 16, !alias.scope !2855, !noalias !2856
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2852
   store i64 0, ptr %i.b, align 8, !noalias !2852
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dr, ptr nonnull readonly align 1 %i.dp, i64 range(i64 0, -9223372036854775808) %i.do, i1 false), !alias.scope !2853, !noalias !2854
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dr, ptr nonnull readonly align 1 %i.dp, i64 range(i64 0, 129) %i.do, i1 false), !alias.scope !2853, !noalias !2854
   %.sroa.0.0.copyload.pre.i.i.i.i.i.3 = load i64, ptr %i.b, align 8, !noalias !2852
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2852
   %i.eq = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.3)
@@ -3938,7 +3938,7 @@ bb.p:                                             ; preds = %_RNvMsb_NtNtCs5yxAJ
   br i1 %i.db, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.thread.i
 
 _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i.i.4: ; preds = %bb.p
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dw, ptr nonnull readonly align 1 %i.du, i64 range(i64 0, -9223372036854775808) %i.dt, i1 false), !alias.scope !2853, !noalias !2854
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dw, ptr nonnull readonly align 1 %i.du, i64 range(i64 0, 129) %i.dt, i1 false), !alias.scope !2853, !noalias !2854
   %.sroa.0.0.copyload.pre.i.i.i.i.i.4 = load i64, ptr %i.b, align 8, !noalias !2852
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2852
   br i1 %i.ef, label %.lr.ph.i.i.i.i.i.i.i.i.4, label %.loopexit39.i
@@ -3948,7 +3948,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   store i64 %i.er, ptr %i.cn, align 16, !alias.scope !2855, !noalias !2856
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2852
   store i64 0, ptr %i.b, align 8, !noalias !2852
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eb, ptr nonnull readonly align 1 %i.dz, i64 range(i64 0, -9223372036854775808) %i.dy, i1 false), !alias.scope !2853, !noalias !2854
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eb, ptr nonnull readonly align 1 %i.dz, i64 range(i64 0, 129) %i.dy, i1 false), !alias.scope !2853, !noalias !2854
   %.sroa.0.0.copyload.pre.i.i.i.i.i.5 = load i64, ptr %i.b, align 8, !noalias !2852
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2852
   %i.es = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i.i.i.5)
@@ -4351,7 +4351,7 @@ _RNCINvNtCs5yxAJGbRKSL_4ring4limb18fold_5_bit_windowsQSyNCINvNtNtNtB6_10arithmet
   store i64 1, ptr %i.ab, align 8, !alias.scope !3476, !noalias !3477
   %.idx.i.i.i.i.i = add nsw i64 %i.dz, -8
   %i.hi = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hi, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !alias.scope !3478, !noalias !3479
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hi, i8 0, i64 range(i64 0, 1017) %.idx.i.i.i.i.i, i1 false), !alias.scope !3478, !noalias !3479
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !3480
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !3480
   store ptr %i.t, ptr %i.l, align 8, !noalias !3480
@@ -4754,7 +4754,7 @@ _RNCINvNtCs5yxAJGbRKSL_4ring4limb18fold_5_bit_windowsQSyNCINvNtNtNtB6_10arithmet
   call void @llvm.experimental.noalias.scope.decl(metadata !3532)
   store i64 1, ptr %i.ab, align 8, !alias.scope !3533, !noalias !3534
   %.idx.i.i.i.i137.i = add nsw i64 %i.iw, -8
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hi, i8 0, i64 %.idx.i.i.i.i137.i, i1 false), !alias.scope !3535, !noalias !3536
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hi, i8 0, i64 range(i64 0, 1017) %.idx.i.i.i.i137.i, i1 false), !alias.scope !3535, !noalias !3536
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !3537
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !3537
   store ptr %i.s, ptr %i.f, align 8, !noalias !3537
@@ -5157,7 +5157,7 @@ bb.d:                                             ; preds = %_RNvNtNtNtCs5yxAJGb
 
 _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i: ; preds = %bb.d
   %..i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %i.z, i64 range(i64 0, 129) %i.n)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(128) %0, ptr nonnull readonly align 1 %i.x, i64 %..i.i.i.i.i, i1 false), !alias.scope !3811, !noalias !3812
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(128) %0, ptr nonnull readonly align 1 %i.x, i64 range(i64 0, 129) %..i.i.i.i.i, i1 false), !alias.scope !3811, !noalias !3812
   %i.ad = icmp ugt i64 %i.z, 127
   br i1 %i.ad, label %bb.j, label %_RNCNvMs_NtCs5yxAJGbRKSL_4ring6digestNtB6_7Context6update0B8_.exit, !prof !48
 
@@ -5169,7 +5169,7 @@ bb.e:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader.i15.i:                         ; preds = %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.af, ptr nonnull readonly align 1 %1, i64 %..i.i.i.i13.i, i1 false), !alias.scope !3813, !noalias !3814
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.af, ptr nonnull readonly align 1 %1, i64 range(i64 0, 129) %..i.i.i.i13.i, i1 false), !alias.scope !3813, !noalias !3814
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit16.i
 
 _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit16.i: ; preds = %.lr.ph.i.preheader.i15.i, %bb.e
@@ -5572,7 +5572,7 @@ bb.c:                                             ; preds = %_RINvXs2J_NtNtCs3oU
   %i.eu = sub nuw nsw i64 16, %i.d
   %i.ev = getelementptr i8, ptr %i.a, i64 %i.d    ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ev, i8 0, i64 %i.eu, i1 false), !noalias !3979
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr nonnull readonly align 1 %i.c, i64 %i.d, i1 false), !alias.scope !3980, !noalias !3981
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr nonnull readonly align 1 %i.c, i64 range(i64 0, 129) %i.d, i1 false), !alias.scope !3980, !noalias !3981
   store i8 1, ptr %i.ev, align 1, !noalias !3979
   %.sroa.0.0.copyload.i = load i32, ptr %i.a, align 4, !noalias !3979 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -5975,7 +5975,7 @@ bb.i:                                             ; preds = %bb.m, %_RNvNtNtNtCs
 
 _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit.i.i: ; preds = %bb.i
   %..i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %i.bd, i64 range(i64 0, 129) %i.at)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(288) %i.h, ptr nonnull readonly align 1 %i.bc, i64 %..i.i.i.i.i.i, i1 false), !alias.scope !4123, !noalias !4124
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(288) %i.h, ptr nonnull readonly align 1 %i.bc, i64 range(i64 0, 129) %..i.i.i.i.i.i, i1 false), !alias.scope !4123, !noalias !4124
   %i.bg = icmp ugt i64 %i.bd, 127
   br i1 %i.bg, label %bb.o, label %_RNvMs_NtCs5yxAJGbRKSL_4ring6digestNtB4_7Context6update.exit, !prof !48
 
@@ -5987,7 +5987,7 @@ bb.j:                                             ; preds = %bb.h
 
 .lr.ph.i.preheader.i15.i.i:                       ; preds = %bb.j
   %i.bi = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ar
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bi, ptr nonnull readonly align 1 %i.aj, i64 %..i.i.i.i13.i.i, i1 false), !alias.scope !4125, !noalias !4126
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bi, ptr nonnull readonly align 1 %i.aj, i64 range(i64 0, 129) %..i.i.i.i13.i.i, i1 false), !alias.scope !4125, !noalias !4126
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit16.i.i
 
 _RINvNtNtCs5yxAJGbRKSL_4ring8polyfill9sliceutil18overwrite_at_starthEB6_.exit16.i.i: ; preds = %.lr.ph.i.preheader.i15.i.i, %bb.j
@@ -6390,7 +6390,7 @@ bb.f:                                             ; preds = %.lr.ph.i, %_RNCINvN
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.r
   %i.u = sub nuw nsw i64 8, %i.s
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.u
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull readonly align 1 %i.t, i64 range(i64 0, -9223372036854775808) %i.s, i1 false), !alias.scope !4292, !noalias !4293
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull readonly align 1 %i.t, i64 range(i64 0, 129) %i.s, i1 false), !alias.scope !4292, !noalias !4293
   %.sroa.0.0.copyload.pre.i.i.i = load i64, ptr %i.a, align 8, !noalias !4291
   %i.w = tail call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.pre.i.i.i)
   br label %_RNCNvNtCs5yxAJGbRKSL_4ring4limb26limbs_from_be_bytes_padded0B5_.exit.i.i
@@ -6793,7 +6793,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_13clmulavxmovbe3KeyE3n
   %i.al = select i1 %i.aj, i64 0, i64 %i.ak
   %i.am = getelementptr i8, ptr %i.m, i64 %..i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.am, i8 0, i64 %i.al, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.025.042, i64 %..i.i, i1 false), !alias.scope !5545, !noalias !5546
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.025.042, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !5545, !noalias !5546
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !5544
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.l, ptr noundef nonnull align 1 dereferenceable(16) %i.m, i64 16, i1 false), !noalias !5544
   %i.an = load ptr, ptr %i.n, align 8, !noalias !5544, !nonnull !15, !align !17, !noundef !15
@@ -6950,7 +6950,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.012.0, i64 %i.bb ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.u
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.g, i8 0, i64 16, i1 false), !noalias !5567
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %i.bu, i64 %i.br, i1 false), !noalias !5568
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %i.bu, i64 range(i64 0, 129) %i.br, i1 false), !noalias !5568
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !5567
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.i, ptr noundef nonnull align 1 dereferenceable(16) %i.g, i64 16, i1 false), !noalias !5567
   %i.bv = load ptr, ptr %i.k, align 8, !alias.scope !5565, !noalias !5569, !nonnull !15, !align !17, !noundef !15
@@ -7074,7 +7074,7 @@ _RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_13clmulavxmovbe3KeyE3n
   %i.aa = select i1 %i.y, i64 0, i64 %i.z
   %i.ab = getelementptr i8, ptr %i.k, i64 %..i.i
   call void @llvm.memset.p0.i64(ptr align 1 %i.ab, i8 0, i64 %i.aa, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.042.057, i64 %..i.i, i1 false), !alias.scope !5642, !noalias !5643
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(1) %.sroa.042.057, i64 range(i64 0, 129) %..i.i, i1 false), !alias.scope !5642, !noalias !5643
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !5641
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 1 dereferenceable(16) %i.k, i64 16, i1 false), !noalias !5641
   %i.ac = load ptr, ptr %i.l, align 8, !noalias !5641, !nonnull !15, !align !17, !noundef !15
@@ -7155,7 +7155,7 @@ _RNvMNtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping13partial_blockINtB2_12PartialBl
   %i.au = sub nuw nsw i64 16, %i.aj
   %i.av = getelementptr i8, ptr %i.i, i64 %i.aj
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.av, i8 0, i64 %i.au, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.ai, i64 %i.aj, i1 false), !noalias !5649
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %i.ai, i64 range(i64 0, 129) %i.aj, i1 false), !noalias !5649
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !5650
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !5649
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5650

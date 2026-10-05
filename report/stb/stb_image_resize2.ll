@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ag = add i32 %i.c, %i.af
   %i.ah = zext i32 %i.ag to i64
   %i.ai = shl nuw nsw i64 %i.ah, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.ai, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 range(i64 0, 8589934585) %i.ai, i1 false), !tbaa !58
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -267,7 +267,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bd = zext i32 %i.bc to i64
   %i.be = shl nuw nsw i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73, i8 0, i64 %i.bf, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73, i8 0, i64 range(i64 0, 17179869185) %i.bf, i1 false), !tbaa !58
   br label %._crit_edge68
 
 ._crit_edge68:                                    ; preds = %.lr.ph67.preheader, %bb.i
@@ -670,7 +670,7 @@ middle.block527:                                  ; preds = %vector.body522
   %i.hb = add i32 %i.fy, %i.ha
   %i.hc = zext i32 %i.hb to i64
   %i.hd = shl nuw nsw i64 %i.hc, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.hd, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 range(i64 0, 8589934585) %i.hd, i1 false), !tbaa !58
   br label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
@@ -732,7 +732,7 @@ bb.x:                                             ; preds = %bb.w
   %i.hy = zext i32 %i.hx to i64
   %i.hz = shl nuw nsw i64 %i.hy, 2
   %i.ia = add nuw nsw i64 %i.hz, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i, i8 0, i64 %i.ia, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i, i8 0, i64 range(i64 0, 17179869185) %i.ia, i1 false), !tbaa !58
   br label %._crit_edge68.i
 
 ._crit_edge68.i:                                  ; preds = %.lr.ph67.preheader.i, %bb.x
@@ -876,7 +876,7 @@ middle.block513:                                  ; preds = %vector.body508
   %i.js = add i32 %i.ip, %i.jr
   %i.jt = zext i32 %i.js to i64
   %i.ju = shl nuw nsw i64 %i.jt, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i242, i8 0, i64 %i.ju, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i242, i8 0, i64 range(i64 0, 8589934585) %i.ju, i1 false), !tbaa !58
   br label %._crit_edge.i240
 
 .lr.ph.i245:                                      ; preds = %.lr.ph.i245.prol.loopexit, %.lr.ph.i245
@@ -938,7 +938,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.kp = zext i32 %i.ko to i64
   %i.kq = shl nuw nsw i64 %i.kp, 2
   %i.kr = add nuw nsw i64 %i.kq, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i254, i8 0, i64 %i.kr, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i254, i8 0, i64 range(i64 0, 17179869185) %i.kr, i1 false), !tbaa !58
   br label %._crit_edge68.i252
 
 ._crit_edge68.i252:                               ; preds = %.lr.ph67.preheader.i253, %bb.ag
@@ -1161,7 +1161,7 @@ middle.block485:                                  ; preds = %vector.body480
   %i.nn = add i32 %i.mk, %i.nm
   %i.no = zext i32 %i.nn to i64
   %i.np = shl nuw nsw i64 %i.no, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i261, i8 0, i64 %i.np, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i261, i8 0, i64 range(i64 0, 8589934585) %i.np, i1 false), !tbaa !58
   br label %._crit_edge.i259
 
 .lr.ph.i264:                                      ; preds = %.lr.ph.i264.prol.loopexit, %.lr.ph.i264
@@ -1223,7 +1223,7 @@ bb.am:                                            ; preds = %bb.al
   %i.ok = zext i32 %i.oj to i64
   %i.ol = shl nuw nsw i64 %i.ok, 2
   %i.om = add nuw nsw i64 %i.ol, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i273, i8 0, i64 %i.om, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i273, i8 0, i64 range(i64 0, 17179869185) %i.om, i1 false), !tbaa !58
   br label %._crit_edge68.i271
 
 ._crit_edge68.i271:                               ; preds = %.lr.ph67.preheader.i272, %bb.am
@@ -1301,7 +1301,7 @@ bb.aq:                                            ; preds = %.critedge.thread, %
   %i.pj = zext i32 %i.pi to i64
   %i.pk = shl nuw nsw i64 %i.pj, 2
   %i.pl = add nuw nsw i64 %i.pk, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.pl, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 17179869185) %i.pl, i1 false), !tbaa !58
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph322.preheader, %bb.aq, %stbir__insert_coeff.exit274
@@ -1704,7 +1704,7 @@ middle.block219:                                  ; preds = %vector.body215
   %i.ja = add i32 %i.hj, %i.ha
   %i.jb = zext i32 %i.ja to i64
   %i.jc = shl nuw nsw i64 %i.jb, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.jc, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 range(i64 0, 8589934585) %i.jc, i1 false), !tbaa !58
   br label %._crit_edge.i163
 
 .lr.ph.i164:                                      ; preds = %.lr.ph.i164.prol.loopexit, %.lr.ph.i164
@@ -1765,7 +1765,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.jw = zext i32 %i.jv to i64
   %i.jx = shl nuw nsw i64 %i.jw, 2
   %i.jy = add nuw nsw i64 %i.jx, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i, i8 0, i64 %i.jy, i1 false), !tbaa !58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i, i8 0, i64 range(i64 0, 17179869185) %i.jy, i1 false), !tbaa !58
   br label %._crit_edge68.i
 
 ._crit_edge68.i:                                  ; preds = %.lr.ph67.preheader.i, %bb.aj

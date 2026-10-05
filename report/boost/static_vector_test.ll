@@ -205,7 +205,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8val
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %i.h = shl nuw nsw i64 %i.f, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %6, ptr nonnull align 8 %2, i64 %i.h, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %6, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.h, i1 false), !tbaa !41
   br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit
 
 bb.d:                                             ; preds = %bb.a, %bb.i
@@ -412,7 +412,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8val
 
 .lr.ph.i.i.i37.preheader:                         ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i35
   %i.bf = shl nuw nsw i64 %i.bc, 2                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 %i.bf, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.bf, i1 false), !tbaa !41
   br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit43
 
 _ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit43: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i35, %.lr.ph.i.i.i37.preheader
@@ -815,7 +815,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %i.i = shl nuw nsw i64 %i.f, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %6, ptr nonnull align 8 %2, i64 %i.i, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %6, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.i, i1 false), !tbaa !82
   %i.j = trunc nuw nsw i64 %i.f to i32
   %i.k = add i32 %i.ae, %i.j
   store i32 %i.k, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -1184,7 +1184,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 .lr.ph.i.preheader.i.i47:                         ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i45
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i48 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.cu = shl nuw nsw i64 %i.cr, 2                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 %i.cu, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.cu, i1 false), !tbaa !82
   %i.cv = trunc nuw nsw i64 %i.cr to i32
   %i.cw = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i48, %i.cv
   store i32 %i.cw, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -1587,7 +1587,7 @@ _ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit.thread: ; preds
   %.065152 = phi i64 [ 0, %.preheader146 ], [ %i.di, %._crit_edge151 ] ; 7 uses
   %umax = call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %7, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 20, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %7, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 range(i64 0, 41) 20, i1 false), !tbaa !41
   %.idx138 = shl nuw nsw i64 %.065152, 2          ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %7, i64 %.idx138 ; 2 uses
   %.not.i.i.i91 = icmp eq i64 %.065152, 5         ; 2 uses
@@ -1731,7 +1731,7 @@ bb.ab:                                            ; preds = %.preheader143, %._c
   %umax174 = call i64 @llvm.umax.i64(i64 %indvars.iv172, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store i64 5, ptr %i.bz, align 8, !tbaa !118
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %8, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 20, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %8, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 range(i64 0, 41) 20, i1 false), !tbaa !41
   %.idx135 = shl nuw nsw i64 %.062163, 2          ; 5 uses
   %.ptr209 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx135 ; 6 uses
   %i.dv = icmp eq i64 %.062163, 5                 ; 2 uses
@@ -2134,7 +2134,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.ew = shl nuw nsw i64 %i.eu, 2                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %7, ptr nonnull align 8 %2, i64 %i.ew, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %7, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.ew, i1 false), !tbaa !82
   %i.ex = trunc nuw nsw i64 %i.eu to i32
   %i.ey = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %i.ex
   store i32 %i.ey, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -2487,7 +2487,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 _ZN5boost9container13static_vectorINS0_4test24movable_and_copyable_intELm10EvEC2ERKS4_.exit114: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i103
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i106 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.is = shl nuw nsw i64 %i.iq, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 %i.is, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 8 %2, i64 range(i64 0, 41) %i.is, i1 false), !tbaa !82
   %i.it = trunc nuw nsw i64 %i.iq to i32
   %i.iu = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i106, %i.it
   store i32 %i.iu, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -2890,7 +2890,7 @@ bb.bb:                                            ; preds = %.sink.split186, %bb
   %umin168 = call i64 @llvm.umin.i64(i64 %i.dc, i64 4) ; 2 uses
   %i.dd = shl nuw nsw i64 %umin168, 2
   %i.de = add nuw nsw i64 %i.dd, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.de, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.de, i1 false), !tbaa !41
   %i.df = sub nuw nsw i64 4, %umin168
   %i.dg = icmp ugt i64 %i.db, 12
   br i1 %i.dg, label %bb.bc, label %.critedge.i.i.thread
@@ -2983,7 +2983,7 @@ bb.bm:                                            ; preds = %.sink.split187, %bb
   %umin170 = call i64 @llvm.umin.i64(i64 %i.dw, i64 4) ; 2 uses
   %i.dx = shl nuw nsw i64 %umin170, 2
   %i.dy = add nuw nsw i64 %i.dx, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.dy, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.dy, i1 false), !tbaa !41
   %i.dz = sub nuw nsw i64 4, %umin170
   %i.ea = icmp ugt i64 %i.dv, 12
   br i1 %i.ea, label %bb.bn, label %.critedge.i.i100.thread
@@ -3386,7 +3386,7 @@ bb.ax:                                            ; preds = %.sink.split191, %bb
   %umin174 = call i64 @llvm.umin.i64(i64 %i.ci, i64 4) ; 2 uses
   %i.cj = shl nuw nsw i64 %umin174, 2
   %i.ck = add nuw nsw i64 %i.cj, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.ck, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.ck, i1 false), !tbaa !41
   %i.cl = sub nuw nsw i64 4, %umin174
   %i.cm = icmp ugt i64 %i.ch, 12
   br i1 %i.cm, label %bb.ay, label %.critedge.i.i.thread
@@ -3479,7 +3479,7 @@ bb.bi:                                            ; preds = %.sink.split192, %bb
   %umin177 = call i64 @llvm.umin.i64(i64 %i.dc, i64 4) ; 2 uses
   %i.dd = shl nuw nsw i64 %umin177, 2
   %i.de = add nuw nsw i64 %i.dd, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.de, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.de, i1 false), !tbaa !41
   %i.df = sub nuw nsw i64 4, %umin177
   %i.dg = icmp ugt i64 %i.db, 12
   br i1 %i.dg, label %bb.bj, label %.critedge.i.i105.thread
@@ -3882,7 +3882,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bx, %bb.
   %umin = call i64 @llvm.umin.i64(i64 %i.ge, i64 4) ; 2 uses
   %i.gf = shl nuw nsw i64 %umin, 3
   %i.gg = add nuw nsw i64 %i.gf, 8                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.gg, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 41) %i.gg, i1 false), !tbaa !41
   %i.gh = sub nuw nsw i64 4, %umin
   %i.gi = icmp ugt i64 %i.gd, 24
   br i1 %i.gi, label %bb.bt, label %.critedge.i.i.thread
@@ -4005,7 +4005,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.cl, %bb.
   %umin211 = call i64 @llvm.umin.i64(i64 %i.hi, i64 4) ; 2 uses
   %i.hj = shl nuw nsw i64 %umin211, 3
   %i.hk = add nuw nsw i64 %i.hj, 8                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.hk, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 41) %i.hk, i1 false), !tbaa !41
   %i.hl = sub nuw nsw i64 4, %umin211
   %i.hm = icmp ugt i64 %i.hh, 24
   br i1 %i.hm, label %bb.ch, label %.critedge.i.i104.thread
@@ -4408,7 +4408,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bw, %bb.
   %umin261 = call i64 @llvm.umin.i64(i64 %i.ec, i64 4) ; 2 uses
   %i.ed = shl nuw nsw i64 %umin261, 2
   %i.ee = add nuw nsw i64 %i.ed, 4                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.ee, i1 false), !tbaa !82
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.ee, i1 false), !tbaa !82
   %i.ef = sub nuw nsw i64 4, %umin261
   %i.eg = icmp ugt i64 %i.eb, 12
   br i1 %i.eg, label %bb.bs, label %.critedge.i.i.thread
@@ -4575,7 +4575,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.ck, %bb.
   %umin264 = call i64 @llvm.umin.i64(i64 %i.fs, i64 4) ; 2 uses
   %i.ft = shl nuw nsw i64 %umin264, 2
   %i.fu = add nuw nsw i64 %i.ft, 4                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.fu, i1 false), !tbaa !82
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 21) %i.fu, i1 false), !tbaa !82
   %i.fv = sub nuw nsw i64 4, %umin264
   %i.fw = icmp ugt i64 %i.fr, 12
   br i1 %i.fw, label %bb.cg, label %.critedge.i.i107.thread
@@ -4978,7 +4978,7 @@ bb.bd:                                            ; preds = %.sink.split175, %bb
   %umin157 = call i64 @llvm.umin.i64(i64 %i.db, i64 9) ; 2 uses
   %i.dc = shl nuw nsw i64 %umin157, 2
   %i.dd = add nuw nsw i64 %i.dc, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.dd, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 41) %i.dd, i1 false), !tbaa !41
   %i.de = sub nuw nsw i64 9, %umin157
   %i.df = icmp ugt i64 %i.da, 32
   br i1 %i.df, label %bb.be, label %.critedge.i.i.thread
@@ -5381,7 +5381,7 @@ bb.az:                                            ; preds = %.sink.split189, %bb
   %umin171 = call i64 @llvm.umin.i64(i64 %i.ch, i64 9) ; 2 uses
   %i.ci = shl nuw nsw i64 %umin171, 2
   %i.cj = add nuw nsw i64 %i.ci, 4                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.cj, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 41) %i.cj, i1 false), !tbaa !41
   %i.ck = sub nuw nsw i64 9, %umin171
   %i.cl = icmp ugt i64 %i.cg, 32
   br i1 %i.cl, label %bb.ba, label %.critedge.i.i.thread
@@ -5784,7 +5784,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bx, %bb.
   %umin = call i64 @llvm.umin.i64(i64 %i.gf, i64 9) ; 2 uses
   %i.gg = shl nuw nsw i64 %umin, 3
   %i.gh = add nuw nsw i64 %i.gg, 8                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.gh, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 81) %i.gh, i1 false), !tbaa !41
   %i.gi = sub nuw nsw i64 9, %umin
   %i.gj = icmp ugt i64 %i.ge, 64
   br i1 %i.gj, label %bb.bt, label %.critedge.i.i.thread
@@ -6187,7 +6187,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bw, %bb.
   %umin255 = call i64 @llvm.umin.i64(i64 %i.ec, i64 9) ; 2 uses
   %i.ed = shl nuw nsw i64 %umin255, 2
   %i.ee = add nuw nsw i64 %i.ed, 4                ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 %i.ee, i1 false), !tbaa !82
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, i8 0, i64 range(i64 0, 41) %i.ee, i1 false), !tbaa !82
   %i.ef = sub nuw nsw i64 9, %umin255
   %i.eg = icmp ugt i64 %i.eb, 32
   br i1 %i.eg, label %bb.bs, label %.critedge.i.i.thread
@@ -6590,7 +6590,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.ca
   %i.ib = getelementptr [4 x i8], ptr %6, i64 %i.ia
   %i.ic = shl nuw nsw i64 %i.ia, 2
   %i.id = sub nuw nsw i64 40, %i.ic
-  call void @llvm.memset.p0.i64(ptr align 4 %i.ib, i8 0, i64 %i.id, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr align 4 %i.ib, i8 0, i64 range(i64 0, 41) %i.id, i1 false), !tbaa !41
   br label %.loopexit240
 
 .loopexit240:                                     ; preds = %.lr.ph.preheader.i.i.i.i, %bb.by
@@ -6993,7 +6993,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.ch
   %i.ii = getelementptr [4 x i8], ptr %6, i64 %i.ih
   %i.ij = shl nuw nsw i64 %i.ih, 2
   %i.ik = sub nuw nsw i64 40, %i.ij
-  call void @llvm.memset.p0.i64(ptr align 4 %i.ii, i8 0, i64 %i.ik, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr align 4 %i.ii, i8 0, i64 range(i64 0, 41) %i.ik, i1 false), !tbaa !41
   br label %.loopexit293
 
 .loopexit293:                                     ; preds = %.lr.ph.preheader.i.i.i.i, %bb.cf
@@ -7396,7 +7396,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %bb.b
   %i.d = shl nuw nsw i64 %i.b, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.d, i1 false), !tbaa !41, !noalias !1543
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.d, i1 false), !tbaa !41, !noalias !1543
   br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2INS0_12vec_iteratorIPS2_Lb1EEEEET_S8_.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -7504,7 +7504,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %bb.b
   %i.e = shl nuw nsw i64 %i.c, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr align 4 %i.a, i64 %i.e, i1 false), !tbaa !41, !noalias !1589
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr align 4 %i.a, i64 range(i64 0, 41) %i.e, i1 false), !tbaa !41, !noalias !1589
   br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2INS0_12vec_iteratorIPS2_Lb1EEEEET_S8_.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -7907,7 +7907,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i.i.i.i.preheader.i.i:               ; preds = %bb.b
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41, !noalias !1884
   %i.d = shl nuw nsw i64 %i.b, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.d, i1 false), !tbaa !82, !noalias !1884
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.d, i1 false), !tbaa !82, !noalias !1884
   %i.e = trunc nuw nsw i64 %i.b to i32
   %i.f = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %i.e
   store i32 %i.f, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41, !noalias !1884
@@ -8310,7 +8310,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8val
 
 .loopexit58:                                      ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %i.f = shl nuw nsw i64 %i.e, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 %i.f, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.f, i1 false), !tbaa !41
   %.not.i.i = icmp samesign ugt i64 %i.e, 7
   br i1 %.not.i.i, label %.noexc, label %.loopexit58.thread, !prof !149
 
@@ -8425,7 +8425,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS1_24static_storage_allocatorI8valu
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.g, ptr nonnull align 8 %1, i64 %gepdiff, i1 false), !noalias !2167
   %i.ay = getelementptr i8, ptr %1, i64 %gepdiff
   %i.az = sub nuw nsw i64 12, %gepdiff
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.h, ptr align 4 %i.ay, i64 %i.az, i1 false), !tbaa !41, !noalias !2168
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.h, ptr align 4 %i.ay, i64 range(i64 0, 13) %i.az, i1 false), !tbaa !41, !noalias !2168
   br label %.loopexit
 
 .noexc:                                           ; preds = %.loopexit58
@@ -8526,7 +8526,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8val
 
 .loopexit59:                                      ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %i.f = shl nuw nsw i64 %i.e, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 %i.f, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.f, i1 false), !tbaa !41
   %.not.i.i = icmp samesign ugt i64 %i.e, 7
   br i1 %.not.i.i, label %.noexc, label %.loopexit59.thread, !prof !149
 
@@ -8757,7 +8757,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8val
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %i.g = shl nuw nsw i64 %i.f, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 %i.g, i1 false), !tbaa !41
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.g, i1 false), !tbaa !41
   br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit
 
 _ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit: ; preds = %.lr.ph.i.i.i.preheader, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
@@ -9160,7 +9160,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 bb.e:                                             ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.d = shl nuw nsw i64 %i.b, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 %i.d, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.d, i1 false), !tbaa !82
   %i.e = trunc nuw nsw i64 %i.b to i32
   %i.f = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %i.e
   store i32 %i.f, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -9355,7 +9355,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.g, ptr nonnull align 8 %1, i64 %gepdiff, i1 false), !tbaa !82, !noalias !2314
   %scevgep = getelementptr i8, ptr %1, i64 %gepdiff
   %i.by = sub i64 12, %gepdiff
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.h, ptr align 4 %scevgep, i64 %i.by, i1 false), !tbaa !82, !noalias !2315
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.h, ptr align 4 %scevgep, i64 range(i64 0, 13) %i.by, i1 false), !tbaa !82, !noalias !2315
   %i.bz = add i32 %.lcssa, 4
   %i.ca = trunc nuw nsw i64 %i.k to i32
   %i.cb = sub i32 %i.bz, %i.ca
@@ -9634,7 +9634,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 bb.e:                                             ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.d = shl nuw nsw i64 %i.b, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 %i.d, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.d, i1 false), !tbaa !82
   %i.e = trunc nuw nsw i64 %i.b to i32
   %i.f = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %i.e
   store i32 %i.f, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
@@ -10037,7 +10037,7 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.f = shl nuw nsw i64 %i.d, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %3, ptr nonnull align 8 %0, i64 %i.f, i1 false), !tbaa !82
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %3, ptr nonnull align 8 %0, i64 range(i64 0, 41) %i.f, i1 false), !tbaa !82
   %i.g = trunc nuw nsw i64 %i.d to i32
   %i.h = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %i.g
   store i32 %i.h, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.dv, label %.lr.ph215.split.i.us.epil.preheader, label %.lr.ph215.split.i.us
 
 .preheader199.i.us:                               ; preds = %._crit_edge.i.us.thread, %._crit_edge.i.us
-  tail call void @llvm.memset.p0.i64(ptr align 4 %.1191216.i.us, i8 0, i64 %i.ds, i1 false), !tbaa !22
+  tail call void @llvm.memset.p0.i64(ptr align 4 %.1191216.i.us, i8 0, i64 range(i64 0, 8589934589) %i.ds, i1 false), !tbaa !22
   br label %.loopexit198.i.us
 
 .lr.ph215.split.i.us:                             ; preds = %.lr.ph215.split.i.us.preheader, %.lr.ph215.split.i.us
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %i.dz, label %.lr.ph215.split.i.us.epil.preheader, label %.lr.ph215.split.i.us
 
 .preheader199.i.us:                               ; preds = %._crit_edge.i.us.thread, %._crit_edge.i.us
-  tail call void @llvm.memset.p0.i64(ptr align 8 %.1191216.i.us, i8 0, i64 %i.dy, i1 false), !tbaa !29
+  tail call void @llvm.memset.p0.i64(ptr align 8 %.1191216.i.us, i8 0, i64 range(i64 0, 17179869177) %i.dy, i1 false), !tbaa !29
   br label %.loopexit198.i.us
 
 .lr.ph215.split.i.us:                             ; preds = %.lr.ph215.split.i.us.preheader, %.lr.ph215.split.i.us
@@ -1011,7 +1011,7 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %i.qr, label %.preheader468.i, label %.loopexit465.i
 
 .preheader468.i:                                  ; preds = %.loopexit470.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.qo, i8 0, i64 %i.qu, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.qo, i8 0, i64 range(i64 0, 17179869177) %i.qu, i1 false), !tbaa !29
   br i1 %brmerge579.i, label %._crit_edge500.split.thread710.i, label %.lr.ph496.i
 
 .lr.ph496.i:                                      ; preds = %.preheader468.i, %._crit_edge.i
@@ -1414,21 +1414,21 @@ begin_hunk_3_@_ZN2cv12cpu_baselineL16GEMMBlockMul_32fEPKfmS2_mPdmNS_5Size_IiEES5
 .lr.ph217.us.us.us249.us.i:                       ; preds = %.lr.ph217.us.us.us249.us.i, %.lr.ph217.us.us.us249.us.i.preheader.new
   %.0178222.us.us.us243.us.i = phi ptr [ %4, %.lr.ph217.us.us.us249.us.i.preheader.new ], [ %i.cm, %.lr.ph217.us.us.us249.us.i ] ; 2 uses
   %niter170 = phi i32 [ 0, %.lr.ph217.us.us.us249.us.i.preheader.new ], [ %niter170.next.7, %.lr.ph217.us.us.us249.us.i ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.us.i, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cf, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cf, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cg, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cg, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ch, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ch, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ci, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ci, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cj, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cj, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cl, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cl, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %i.f ; 2 uses
   %niter170.next.7 = add i32 %niter170, 8         ; 2 uses
   %niter170.ncmp.7 = icmp eq i32 %niter170.next.7, %unroll_iter169
@@ -1437,21 +1437,21 @@ begin_hunk_3_@_ZN2cv12cpu_baselineL16GEMMBlockMul_32fEPKfmS2_mPdmNS_5Size_IiEES5
 .preheader198.us.us.us244.i:                      ; preds = %.preheader198.us.us.us244.i, %.preheader198.us.us.us244.i.preheader.new
   %.0178222.us.us.us243.i = phi ptr [ %4, %.preheader198.us.us.us244.i.preheader.new ], [ %i.cu, %.preheader198.us.us.us244.i ] ; 2 uses
   %niter164 = phi i32 [ 0, %.preheader198.us.us.us244.i.preheader.new ], [ %niter164.next.7, %.preheader198.us.us.us244.i ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.i, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.co, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.co, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cq, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cq, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cr, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cr, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ct, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ct, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %i.f ; 2 uses
   %niter164.next.7 = add i32 %niter164, 8         ; 2 uses
   %niter164.ncmp.7 = icmp eq i32 %niter164.next.7, %unroll_iter163
@@ -1854,7 +1854,7 @@ bb.i:                                             ; preds = %.lr.ph287.split.us.
   br i1 %.not184.i, label %.lr.ph287.split.split.us.preheader.i, label %.preheader.i
 
 .lr.ph287.split.split.us.preheader.i:             ; preds = %.lr.ph287.split.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.1179309.i, i8 0, i64 %i.hc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.1179309.i, i8 0, i64 range(i64 0, 17179869185) %i.hc, i1 false), !tbaa !29
   br label %.preheader.i
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge.us289.i
@@ -1949,7 +1949,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
   %i.mt = zext i32 %i.ms to i64
   %i.mu = shl nuw nsw i64 %i.mt, 3
   %i.mv = add nuw nsw i64 %i.mu, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 %i.mv, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 34359738369) %i.mv, i1 false), !tbaa !29
   br label %._crit_edge305.i
 
 ._crit_edge305.i:                                 ; preds = %._crit_edge.us306.i, %.lr.ph304.split.split.us.preheader.i, %.lr.ph304.split.i, %.preheader.i
@@ -1972,7 +1972,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
 .lr.ph217.us.us.us249.us.i.epil:                  ; preds = %.lr.ph217.us.us.us249.us.i.epil, %.lr.ph217.us.us.us249.us.i.epil.preheader
   %.0178222.us.us.us243.us.i.epil = phi ptr [ %i.mz, %.lr.ph217.us.us.us249.us.i.epil ], [ %.0178222.us.us.us243.us.i.epil.init, %.lr.ph217.us.us.us249.us.i.epil.preheader ] ; 2 uses
   %epil.iter166 = phi i32 [ %epil.iter166.next, %.lr.ph217.us.us.us249.us.i.epil ], [ 0, %.lr.ph217.us.us.us249.us.i.epil.preheader ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i.epil, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i.epil, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.mz = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.us.i.epil, i64 %i.f
   %epil.iter166.next = add i32 %epil.iter166, 1   ; 2 uses
   %epil.iter166.cmp.not = icmp eq i32 %epil.iter166.next, %xtraiter165
@@ -1991,7 +1991,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
 .preheader198.us.us.us244.i.epil:                 ; preds = %.preheader198.us.us.us244.i.epil, %.preheader198.us.us.us244.i.epil.preheader
   %.0178222.us.us.us243.i.epil = phi ptr [ %i.na, %.preheader198.us.us.us244.i.epil ], [ %.0178222.us.us.us243.i.epil.init, %.preheader198.us.us.us244.i.epil.preheader ] ; 2 uses
   %epil.iter = phi i32 [ %epil.iter.next, %.preheader198.us.us.us244.i.epil ], [ 0, %.preheader198.us.us.us244.i.epil.preheader ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i.epil, i8 0, i64 %i.cc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i.epil, i8 0, i64 range(i64 0, 17179869177) %i.cc, i1 false), !tbaa !29
   %i.na = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.i.epil, i64 %i.f
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter160
@@ -2394,7 +2394,7 @@ bb.ax:                                            ; preds = %bb.av
   br i1 %i.pz, label %.preheader470.i, label %.loopexit467.i
 
 .preheader470.i:                                  ; preds = %.loopexit472.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.pw, i8 0, i64 %i.qc, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.pw, i8 0, i64 range(i64 0, 17179869177) %i.qc, i1 false), !tbaa !29
   br i1 %brmerge582.i, label %._crit_edge502.split.thread720.i, label %.lr.ph498.i
 
 .lr.ph498.i:                                      ; preds = %.preheader470.i, %._crit_edge.i
@@ -2797,21 +2797,21 @@ begin_hunk_6_@_ZN2cv12cpu_baselineL16GEMMBlockMul_64fEPKdmS2_mPdmNS_5Size_IiEES5
 .lr.ph217.us.us.us249.us.i:                       ; preds = %.lr.ph217.us.us.us249.us.i, %.lr.ph217.us.us.us249.us.i.preheader.new
   %.0178222.us.us.us243.us.i = phi ptr [ %4, %.lr.ph217.us.us.us249.us.i.preheader.new ], [ %i.cq, %.lr.ph217.us.us.us249.us.i ] ; 2 uses
   %niter194 = phi i32 [ 0, %.lr.ph217.us.us.us249.us.i.preheader.new ], [ %niter194.next.7, %.lr.ph217.us.us.us249.us.i ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.us.i, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cj, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cj, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cl, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cl, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cm, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cm, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cn, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.co, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.co, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cp, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %i.f ; 2 uses
   %niter194.next.7 = add i32 %niter194, 8         ; 2 uses
   %niter194.ncmp.7 = icmp eq i32 %niter194.next.7, %unroll_iter193
@@ -2820,21 +2820,21 @@ begin_hunk_6_@_ZN2cv12cpu_baselineL16GEMMBlockMul_64fEPKdmS2_mPdmNS_5Size_IiEES5
 .preheader198.us.us.us244.i:                      ; preds = %.preheader198.us.us.us244.i, %.preheader198.us.us.us244.i.preheader.new
   %.0178222.us.us.us243.i = phi ptr [ %4, %.preheader198.us.us.us244.i.preheader.new ], [ %i.cy, %.preheader198.us.us.us244.i ] ; 2 uses
   %niter188 = phi i32 [ 0, %.preheader198.us.us.us244.i.preheader.new ], [ %niter188.next.7, %.preheader198.us.us.us244.i ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.i, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cr, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cr, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ct, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.ct, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cu, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cu, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cv, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cv, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cw, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cw, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.f ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cx, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %i.cx, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.f ; 2 uses
   %niter188.next.7 = add i32 %niter188, 8         ; 2 uses
   %niter188.ncmp.7 = icmp eq i32 %niter188.next.7, %unroll_iter187
@@ -3237,7 +3237,7 @@ bb.i:                                             ; preds = %.lr.ph287.split.us.
   br i1 %.not184.i, label %.lr.ph287.split.split.us.preheader.i, label %.preheader.i
 
 .lr.ph287.split.split.us.preheader.i:             ; preds = %.lr.ph287.split.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.1179309.i, i8 0, i64 %i.ix, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.1179309.i, i8 0, i64 range(i64 0, 17179869185) %i.ix, i1 false), !tbaa !29
   br label %.preheader.i
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge.us289.i
@@ -3349,7 +3349,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
   %i.om = zext i32 %i.ol to i64
   %i.on = shl nuw nsw i64 %i.om, 3
   %i.oo = add nuw nsw i64 %i.on, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 %i.oo, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 34359738369) %i.oo, i1 false), !tbaa !29
   br label %._crit_edge305.i
 
 ._crit_edge305.i:                                 ; preds = %._crit_edge.us306.i, %.lr.ph304.split.split.us.preheader.i, %.lr.ph304.split.i, %.preheader.i
@@ -3372,7 +3372,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
 .lr.ph217.us.us.us249.us.i.epil:                  ; preds = %.lr.ph217.us.us.us249.us.i.epil, %.lr.ph217.us.us.us249.us.i.epil.preheader
   %.0178222.us.us.us243.us.i.epil = phi ptr [ %i.os, %.lr.ph217.us.us.us249.us.i.epil ], [ %.0178222.us.us.us243.us.i.epil.init, %.lr.ph217.us.us.us249.us.i.epil.preheader ] ; 2 uses
   %epil.iter190 = phi i32 [ %epil.iter190.next, %.lr.ph217.us.us.us249.us.i.epil ], [ 0, %.lr.ph217.us.us.us249.us.i.epil.preheader ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i.epil, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.us.i.epil, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.os = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.us.i.epil, i64 %i.f
   %epil.iter190.next = add i32 %epil.iter190, 1   ; 2 uses
   %epil.iter190.cmp.not = icmp eq i32 %epil.iter190.next, %xtraiter189
@@ -3391,7 +3391,7 @@ bb.j:                                             ; preds = %.lr.ph304.split.us.
 .preheader198.us.us.us244.i.epil:                 ; preds = %.preheader198.us.us.us244.i.epil, %.preheader198.us.us.us244.i.epil.preheader
   %.0178222.us.us.us243.i.epil = phi ptr [ %i.ot, %.preheader198.us.us.us244.i.epil ], [ %.0178222.us.us.us243.i.epil.init, %.preheader198.us.us.us244.i.epil.preheader ] ; 2 uses
   %epil.iter184 = phi i32 [ %epil.iter184.next, %.preheader198.us.us.us244.i.epil ], [ 0, %.preheader198.us.us.us244.i.epil.preheader ]
-  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i.epil, i8 0, i64 %i.cg, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr align 8 %.0178222.us.us.us243.i.epil, i8 0, i64 range(i64 0, 17179869177) %i.cg, i1 false), !tbaa !29
   %i.ot = getelementptr inbounds nuw [8 x i8], ptr %.0178222.us.us.us243.i.epil, i64 %i.f
   %epil.iter184.next = add i32 %epil.iter184, 1   ; 2 uses
   %epil.iter184.cmp.not = icmp eq i32 %epil.iter184.next, %xtraiter183
@@ -3794,7 +3794,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %i.sx, label %.preheader979.i, label %.loopexit976.i
 
 .preheader979.i:                                  ; preds = %.loopexit981.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.su, i8 0, i64 %i.ta, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.su, i8 0, i64 range(i64 0, 34359738353) %i.ta, i1 false), !tbaa !29
   br i1 %brmerge1104.i, label %._crit_edge1014.split.thread1226.i, label %.lr.ph1009.i
 
 .lr.ph1009.i:                                     ; preds = %.preheader979.i, %._crit_edge1010.i
@@ -4197,7 +4197,7 @@ bb.i:                                             ; preds = %.lr.ph428.split.us.
   %i.in = zext i32 %i.im to i64
   %i.io = shl nuw nsw i64 %i.in, 4
   %i.ip = add nuw nsw i64 %i.io, 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 %i.ip, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 34359738353) %i.ip, i1 false), !tbaa !29
   br label %._crit_edge429.i
 
 .lr.ph416.i:                                      ; preds = %.loopexit.i, %._crit_edge.i
@@ -4600,7 +4600,7 @@ bb.aq:                                            ; preds = %bb.ao
   br i1 %i.mc, label %.preheader874.i, label %.loopexit871.i
 
 .preheader874.i:                                  ; preds = %.loopexit876.i
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %.pre.i, i8 0, i64 %i.mf, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %.pre.i, i8 0, i64 range(i64 0, 34359738353) %i.mf, i1 false), !tbaa !29
   br i1 %brmerge999.i, label %._crit_edge909.split.thread1122.i, label %.lr.ph904.i
 
 .lr.ph904.i:                                      ; preds = %.preheader874.i, %._crit_edge905.i
@@ -5003,7 +5003,7 @@ bb.i:                                             ; preds = %.lr.ph388.split.us.
   %i.el = zext i32 %i.ek to i64
   %i.em = shl nuw nsw i64 %i.el, 4
   %i.en = add nuw nsw i64 %i.em, 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 %i.en, i1 false), !tbaa !29
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 range(i64 0, 34359738353) %i.en, i1 false), !tbaa !29
   br label %._crit_edge389.i
 
 .lr.ph376.i:                                      ; preds = %.loopexit.i, %._crit_edge.i

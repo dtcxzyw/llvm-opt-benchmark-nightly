@@ -205,7 +205,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ai ; 2 uses
   %i.aj = xor i64 %umin.i.i.i.i, -1
   %i.ak = add i64 %i.af, %i.aj
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ak, i1 false), !tbaa !83, !noalias !3475
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.ak, i1 false), !tbaa !83, !noalias !3475
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -321,7 +321,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.cj ; 2 uses
   %i.ck = xor i64 %umin.i29.i.i.i, -1
   %i.cl = add i64 %i.cg, %i.ck
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.cl, i1 false), !tbaa !83, !noalias !3476
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.cl, i1 false), !tbaa !83, !noalias !3476
   %scevgep29.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -429,7 +429,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i45.i.i.i: ; preds
   %scevgep.i52.i.i.i = getelementptr i8, ptr %3, i64 %i.ef ; 2 uses
   %i.eg = xor i64 %umin.i51.i.i.i, -1
   %i.eh = add i64 %i.ec, %i.eg
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 %i.eh, i1 false), !tbaa !83, !noalias !3477
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 range(i64 0, -9) %i.eh, i1 false), !tbaa !83, !noalias !3477
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i52.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -832,7 +832,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ah ; 2 uses
   %i.ai = xor i64 %umin.i.i.i.i, -1
   %i.aj = add i64 %i.ae, %i.ai
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.aj, i1 false), !tbaa !83, !noalias !3502
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.aj, i1 false), !tbaa !83, !noalias !3502
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -949,7 +949,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.ck ; 2 uses
   %i.cl = xor i64 %umin.i29.i.i.i, -1
   %i.cm = add i64 %i.ch, %i.cl
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.cm, i1 false), !tbaa !83, !noalias !3503
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.cm, i1 false), !tbaa !83, !noalias !3503
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -1066,7 +1066,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i46.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %3, i64 %i.en ; 2 uses
   %i.eo = xor i64 %umin.i52.i.i.i, -1
   %i.ep = add i64 %i.ek, %i.eo
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.ep, i1 false), !tbaa !83, !noalias !3504
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -9) %i.ep, i1 false), !tbaa !83, !noalias !3504
   %scevgep28.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -1469,7 +1469,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ap ; 2 uses
   %i.aq = xor i64 %umin.i.i.i.i, -1
   %i.ar = add i64 %i.am, %i.aq
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ar, i1 false), !tbaa !83, !noalias !3529
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -22) %i.ar, i1 false), !tbaa !83, !noalias !3529
   %scevgep65.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -1709,7 +1709,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %.0.i24.i.i.i, i64 %i.fo ; 2 uses
   %i.fp = xor i64 %umin.i52.i.i.i, -1
   %i.fq = add i64 %i.fl, %i.fp
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.fq, i1 false), !tbaa !83, !noalias !3530
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -22) %i.fq, i1 false), !tbaa !83, !noalias !3530
   %scevgep65.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -1940,7 +1940,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i79.i.i.i: ; preds
   %scevgep.i97.i.i.i = getelementptr i8, ptr %.0.i69.i.i.i, i64 %i.km ; 2 uses
   %i.kn = xor i64 %umin.i96.i.i.i, -1
   %i.ko = add i64 %i.kj, %i.kn
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 %i.ko, i1 false), !tbaa !83, !noalias !3531
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 range(i64 0, -22) %i.ko, i1 false), !tbaa !83, !noalias !3531
   %scevgep65.i98.i.i.i = getelementptr i8, ptr %scevgep.i97.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -2343,7 +2343,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ai ; 2 uses
   %i.aj = xor i64 %umin.i.i.i.i, -1
   %i.ak = add i64 %i.af, %i.aj
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ak, i1 false), !tbaa !83, !noalias !5657
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.ak, i1 false), !tbaa !83, !noalias !5657
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -2458,7 +2458,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.ci ; 2 uses
   %i.cj = xor i64 %umin.i29.i.i.i, -1
   %i.ck = add i64 %i.cf, %i.cj
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.ck, i1 false), !tbaa !83, !noalias !5658
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.ck, i1 false), !tbaa !83, !noalias !5658
   %scevgep29.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -2565,7 +2565,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i45.i.i.i: ; preds
   %scevgep.i52.i.i.i = getelementptr i8, ptr %3, i64 %i.ed ; 2 uses
   %i.ee = xor i64 %umin.i51.i.i.i, -1
   %i.ef = add i64 %i.ea, %i.ee
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 %i.ef, i1 false), !tbaa !83, !noalias !5659
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 range(i64 0, -9) %i.ef, i1 false), !tbaa !83, !noalias !5659
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i52.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -2968,7 +2968,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ah ; 2 uses
   %i.ai = xor i64 %umin.i.i.i.i, -1
   %i.aj = add i64 %i.ae, %i.ai
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.aj, i1 false), !tbaa !83, !noalias !5684
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.aj, i1 false), !tbaa !83, !noalias !5684
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -3084,7 +3084,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.cj ; 2 uses
   %i.ck = xor i64 %umin.i29.i.i.i, -1
   %i.cl = add i64 %i.cg, %i.ck
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.cl, i1 false), !tbaa !83, !noalias !5685
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.cl, i1 false), !tbaa !83, !noalias !5685
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -3200,7 +3200,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i46.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %3, i64 %i.el ; 2 uses
   %i.em = xor i64 %umin.i52.i.i.i, -1
   %i.en = add i64 %i.ei, %i.em
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.en, i1 false), !tbaa !83, !noalias !5686
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -9) %i.en, i1 false), !tbaa !83, !noalias !5686
   %scevgep28.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -3603,7 +3603,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ap ; 2 uses
   %i.aq = xor i64 %umin.i.i.i.i, -1
   %i.ar = add i64 %i.am, %i.aq
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ar, i1 false), !tbaa !83, !noalias !5711
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -22) %i.ar, i1 false), !tbaa !83, !noalias !5711
   %scevgep65.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -3842,7 +3842,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %.0.i24.i.i.i, i64 %i.fn ; 2 uses
   %i.fo = xor i64 %umin.i52.i.i.i, -1
   %i.fp = add i64 %i.fk, %i.fo
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.fp, i1 false), !tbaa !83, !noalias !5712
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -22) %i.fp, i1 false), !tbaa !83, !noalias !5712
   %scevgep65.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -4072,7 +4072,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i79.i.i.i: ; preds
   %scevgep.i97.i.i.i = getelementptr i8, ptr %.0.i69.i.i.i, i64 %i.kk ; 2 uses
   %i.kl = xor i64 %umin.i96.i.i.i, -1
   %i.km = add i64 %i.kh, %i.kl
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 %i.km, i1 false), !tbaa !83, !noalias !5713
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 range(i64 0, -22) %i.km, i1 false), !tbaa !83, !noalias !5713
   %scevgep65.i98.i.i.i = getelementptr i8, ptr %scevgep.i97.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -4475,7 +4475,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ai ; 2 uses
   %i.aj = xor i64 %umin.i.i.i.i, -1
   %i.ak = add i64 %i.af, %i.aj
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ak, i1 false), !tbaa !83, !noalias !7578
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.ak, i1 false), !tbaa !83, !noalias !7578
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -4590,7 +4590,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.ci ; 2 uses
   %i.cj = xor i64 %umin.i29.i.i.i, -1
   %i.ck = add i64 %i.cf, %i.cj
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.ck, i1 false), !tbaa !83, !noalias !7579
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.ck, i1 false), !tbaa !83, !noalias !7579
   %scevgep29.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -4697,7 +4697,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i45.i.i.i: ; preds
   %scevgep.i52.i.i.i = getelementptr i8, ptr %3, i64 %i.ed ; 2 uses
   %i.ee = xor i64 %umin.i51.i.i.i, -1
   %i.ef = add i64 %i.ea, %i.ee
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 %i.ef, i1 false), !tbaa !83, !noalias !7580
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i52.i.i.i, i8 48, i64 range(i64 0, -9) %i.ef, i1 false), !tbaa !83, !noalias !7580
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i52.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -5100,7 +5100,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %5, i64 %i.ah ; 2 uses
   %i.ai = xor i64 %umin.i.i.i.i, -1
   %i.aj = add i64 %i.ae, %i.ai
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.aj, i1 false), !tbaa !83, !noalias !7605
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -9) %i.aj, i1 false), !tbaa !83, !noalias !7605
   %scevgep31.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -5216,7 +5216,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i23.i.i.i: ; preds
   %scevgep.i30.i.i.i = getelementptr i8, ptr %4, i64 %i.cj ; 2 uses
   %i.ck = xor i64 %umin.i29.i.i.i, -1
   %i.cl = add i64 %i.cg, %i.ck
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 %i.cl, i1 false), !tbaa !83, !noalias !7606
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i30.i.i.i, i8 48, i64 range(i64 0, -9) %i.cl, i1 false), !tbaa !83, !noalias !7606
   %scevgep28.i.i.i.i = getelementptr i8, ptr %scevgep.i30.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -5332,7 +5332,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i46.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %3, i64 %i.el ; 2 uses
   %i.em = xor i64 %umin.i52.i.i.i, -1
   %i.en = add i64 %i.ei, %i.em
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.en, i1 false), !tbaa !83, !noalias !7607
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -9) %i.en, i1 false), !tbaa !83, !noalias !7607
   %scevgep28.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -5735,7 +5735,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i: ; preds =
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ap ; 2 uses
   %i.aq = xor i64 %umin.i.i.i.i, -1
   %i.ar = add i64 %i.am, %i.aq
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 %i.ar, i1 false), !tbaa !83, !noalias !7632
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i.i, i8 48, i64 range(i64 0, -22) %i.ar, i1 false), !tbaa !83, !noalias !7632
   %scevgep65.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -5974,7 +5974,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i34.i.i.i: ; preds
   %scevgep.i53.i.i.i = getelementptr i8, ptr %.0.i24.i.i.i, i64 %i.fn ; 2 uses
   %i.fo = xor i64 %umin.i52.i.i.i, -1
   %i.fp = add i64 %i.fk, %i.fo
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 %i.fp, i1 false), !tbaa !83, !noalias !7633
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i53.i.i.i, i8 48, i64 range(i64 0, -22) %i.fp, i1 false), !tbaa !83, !noalias !7633
   %scevgep65.i54.i.i.i = getelementptr i8, ptr %scevgep.i53.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 
@@ -6204,7 +6204,7 @@ _ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i79.i.i.i: ; preds
   %scevgep.i97.i.i.i = getelementptr i8, ptr %.0.i69.i.i.i, i64 %i.kk ; 2 uses
   %i.kl = xor i64 %umin.i96.i.i.i, -1
   %i.km = add i64 %i.kh, %i.kl
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 %i.km, i1 false), !tbaa !83, !noalias !7634
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i97.i.i.i, i8 48, i64 range(i64 0, -22) %i.km, i1 false), !tbaa !83, !noalias !7634
   %scevgep65.i98.i.i.i = getelementptr i8, ptr %scevgep.i97.i.i.i, i64 1
   br label %_ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEEvN14arrow_vendored4date8hh_mm_ssIT_EEPPc.exit.i.i.i.i
 

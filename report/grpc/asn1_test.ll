@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i895: ; preds = %_ZNSt12_Vec
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 5 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 24
   store ptr %i.y, ptr %i.z, align 8, !tbaa !74, !alias.scope !857
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.x, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.u, i64 5, i1 false), !tbaa !53, !noalias !857
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.x, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.u, i64 range(i64 0, -9223372036854775808) 5, i1 false), !tbaa !53, !noalias !857
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.y, ptr %i.aa, align 16, !tbaa !75, !alias.scope !857
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -241,7 +241,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i911: ; preds = %_ZNSt12_Vec
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 5 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 104
   store ptr %i.an, ptr %i.ao, align 8, !tbaa !74, !alias.scope !860
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.am, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.aj, i64 5, i1 false), !tbaa !53, !noalias !860
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.am, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.aj, i64 range(i64 0, -9223372036854775808) 5, i1 false), !tbaa !53, !noalias !860
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 96
   store ptr %i.an, ptr %i.ap, align 16, !tbaa !75, !alias.scope !860
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 112
@@ -277,7 +277,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i911: ; preds = %_ZNSt12_Vec
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 5 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 184
   store ptr %i.bc, ptr %i.bd, align 8, !tbaa !74, !alias.scope !861
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.bb, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.ay, i64 5, i1 false), !tbaa !53, !noalias !861
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.bb, ptr noundef nonnull readonly align 8 dereferenceable(5) %i.ay, i64 range(i64 0, -9223372036854775808) 5, i1 false), !tbaa !53, !noalias !861
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 176
   store ptr %i.bc, ptr %i.be, align 16, !tbaa !75, !alias.scope !861
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 192
@@ -680,7 +680,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1010: ; preds = %_ZNSt12_Ve
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 3 ; 2 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %1, i64 824
   store ptr %i.iz, ptr %i.ja, align 8, !tbaa !74, !alias.scope !865
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.iy, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.iv, i64 3, i1 false), !tbaa !53, !noalias !865
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.iy, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.iv, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !865
   %i.jb = getelementptr inbounds nuw i8, ptr %1, i64 816
   store ptr %i.iz, ptr %i.jb, align 16, !tbaa !75, !alias.scope !865
   %i.jc = getelementptr inbounds nuw i8, ptr %1, i64 832
@@ -716,7 +716,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1026: ; preds = %_ZNSt12_Ve
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 3 ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %1, i64 904
   store ptr %i.jo, ptr %i.jp, align 8, !tbaa !74, !alias.scope !866
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.jn, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.jk, i64 3, i1 false), !tbaa !53, !noalias !866
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.jn, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.jk, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !866
   %i.jq = getelementptr inbounds nuw i8, ptr %1, i64 896
   store ptr %i.jo, ptr %i.jq, align 16, !tbaa !75, !alias.scope !866
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 912
@@ -752,7 +752,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1042: ; preds = %_ZNSt12_Ve
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 3 ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %1, i64 984
   store ptr %i.kd, ptr %i.ke, align 8, !tbaa !74, !alias.scope !867
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.kc, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.jz, i64 3, i1 false), !tbaa !53, !noalias !867
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.kc, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.jz, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !867
   %i.kf = getelementptr inbounds nuw i8, ptr %1, i64 976
   store ptr %i.kd, ptr %i.kf, align 16, !tbaa !75, !alias.scope !867
   %i.kg = getelementptr inbounds nuw i8, ptr %1, i64 992
@@ -788,7 +788,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1058: ; preds = %_ZNSt12_Ve
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kr, i64 3 ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %1, i64 1064
   store ptr %i.ks, ptr %i.kt, align 8, !tbaa !74, !alias.scope !868
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.kr, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.ko, i64 3, i1 false), !tbaa !53, !noalias !868
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.kr, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.ko, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !868
   %i.ku = getelementptr inbounds nuw i8, ptr %1, i64 1056
   store ptr %i.ks, ptr %i.ku, align 16, !tbaa !75, !alias.scope !868
   %i.kv = getelementptr inbounds nuw i8, ptr %1, i64 1072
@@ -824,7 +824,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1074: ; preds = %_ZNSt12_Ve
   %i.lh = getelementptr inbounds nuw i8, ptr %i.lg, i64 3 ; 2 uses
   %i.li = getelementptr inbounds nuw i8, ptr %1, i64 1144
   store ptr %i.lh, ptr %i.li, align 8, !tbaa !74, !alias.scope !869
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.lg, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.ld, i64 3, i1 false), !tbaa !53, !noalias !869
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.lg, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.ld, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !869
   %i.lj = getelementptr inbounds nuw i8, ptr %1, i64 1136
   store ptr %i.lh, ptr %i.lj, align 16, !tbaa !75, !alias.scope !869
   %i.lk = getelementptr inbounds nuw i8, ptr %1, i64 1152
@@ -860,7 +860,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1074: ; preds = %_ZNSt12_Ve
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 9 ; 2 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %1, i64 1224
   store ptr %i.lw, ptr %i.lx, align 8, !tbaa !74, !alias.scope !870
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.lv, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.ls, i64 9, i1 false), !tbaa !53, !noalias !870
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.lv, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.ls, i64 range(i64 0, -9223372036854775808) 9, i1 false), !tbaa !53, !noalias !870
   %i.ly = getelementptr inbounds nuw i8, ptr %1, i64 1216
   store ptr %i.lw, ptr %i.ly, align 16, !tbaa !75, !alias.scope !870
   %i.lz = getelementptr inbounds nuw i8, ptr %1, i64 1232
@@ -1082,7 +1082,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1140: ; preds = %_ZNSt12_Ve
   %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 9 ; 2 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %1, i64 1624
   store ptr %i.pj, ptr %i.pk, align 8, !tbaa !74, !alias.scope !873
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.pi, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.pf, i64 9, i1 false), !tbaa !53, !noalias !873
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.pi, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.pf, i64 range(i64 0, -9223372036854775808) 9, i1 false), !tbaa !53, !noalias !873
   %i.pl = getelementptr inbounds nuw i8, ptr %1, i64 1616
   store ptr %i.pj, ptr %i.pl, align 16, !tbaa !75, !alias.scope !873
   %i.pm = getelementptr inbounds nuw i8, ptr %1, i64 1632
@@ -1304,7 +1304,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1206: ; preds = %_ZNSt12_Ve
   %i.sw = getelementptr inbounds nuw i8, ptr %i.sv, i64 9 ; 2 uses
   %i.sx = getelementptr inbounds nuw i8, ptr %1, i64 2024
   store ptr %i.sw, ptr %i.sx, align 8, !tbaa !74, !alias.scope !876
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.sv, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.ss, i64 9, i1 false), !tbaa !53, !noalias !876
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.sv, ptr noundef nonnull readonly align 8 dereferenceable(9) %i.ss, i64 range(i64 0, -9223372036854775808) 9, i1 false), !tbaa !53, !noalias !876
   %i.sy = getelementptr inbounds nuw i8, ptr %1, i64 2016
   store ptr %i.sw, ptr %i.sy, align 16, !tbaa !75, !alias.scope !876
   %i.sz = getelementptr inbounds nuw i8, ptr %1, i64 2032
@@ -1707,7 +1707,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1364: ; preds = %_ZNSt12_Ve
   %i.adr = getelementptr inbounds nuw i8, ptr %i.adq, i64 3 ; 2 uses
   %i.ads = getelementptr inbounds nuw i8, ptr %1, i64 3224
   store ptr %i.adr, ptr %i.ads, align 8, !tbaa !74, !alias.scope !877
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.adq, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.adn, i64 3, i1 false), !tbaa !53, !noalias !877
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.adq, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.adn, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !877
   %i.adt = getelementptr inbounds nuw i8, ptr %1, i64 3216
   store ptr %i.adr, ptr %i.adt, align 16, !tbaa !75, !alias.scope !877
   %i.adu = getelementptr inbounds nuw i8, ptr %1, i64 3232
@@ -1743,7 +1743,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1380: ; preds = %_ZNSt12_Ve
   %i.aeg = getelementptr inbounds nuw i8, ptr %i.aef, i64 3 ; 2 uses
   %i.aeh = getelementptr inbounds nuw i8, ptr %1, i64 3304
   store ptr %i.aeg, ptr %i.aeh, align 8, !tbaa !74, !alias.scope !878
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.aef, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.aec, i64 3, i1 false), !tbaa !53, !noalias !878
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.aef, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.aec, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !878
   %i.aei = getelementptr inbounds nuw i8, ptr %1, i64 3296
   store ptr %i.aeg, ptr %i.aei, align 16, !tbaa !75, !alias.scope !878
   %i.aej = getelementptr inbounds nuw i8, ptr %1, i64 3312
@@ -1779,7 +1779,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1396: ; preds = %_ZNSt12_Ve
   %i.aev = getelementptr inbounds nuw i8, ptr %i.aeu, i64 3 ; 2 uses
   %i.aew = getelementptr inbounds nuw i8, ptr %1, i64 3384
   store ptr %i.aev, ptr %i.aew, align 8, !tbaa !74, !alias.scope !879
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.aeu, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.aer, i64 3, i1 false), !tbaa !53, !noalias !879
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.aeu, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.aer, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !879
   %i.aex = getelementptr inbounds nuw i8, ptr %1, i64 3376
   store ptr %i.aev, ptr %i.aex, align 16, !tbaa !75, !alias.scope !879
   %i.aey = getelementptr inbounds nuw i8, ptr %1, i64 3392
@@ -1815,7 +1815,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1412: ; preds = %_ZNSt12_Ve
   %i.afk = getelementptr inbounds nuw i8, ptr %i.afj, i64 3 ; 2 uses
   %i.afl = getelementptr inbounds nuw i8, ptr %1, i64 3464
   store ptr %i.afk, ptr %i.afl, align 8, !tbaa !74, !alias.scope !880
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.afj, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.afg, i64 3, i1 false), !tbaa !53, !noalias !880
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.afj, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.afg, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !880
   %i.afm = getelementptr inbounds nuw i8, ptr %1, i64 3456
   store ptr %i.afk, ptr %i.afm, align 16, !tbaa !75, !alias.scope !880
   %i.afn = getelementptr inbounds nuw i8, ptr %1, i64 3472
@@ -1851,7 +1851,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1428: ; preds = %_ZNSt12_Ve
   %i.afz = getelementptr inbounds nuw i8, ptr %i.afy, i64 3 ; 2 uses
   %i.aga = getelementptr inbounds nuw i8, ptr %1, i64 3544
   store ptr %i.afz, ptr %i.aga, align 8, !tbaa !74, !alias.scope !881
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.afy, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.afv, i64 3, i1 false), !tbaa !53, !noalias !881
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.afy, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.afv, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !881
   %i.agb = getelementptr inbounds nuw i8, ptr %1, i64 3536
   store ptr %i.afz, ptr %i.agb, align 16, !tbaa !75, !alias.scope !881
   %i.agc = getelementptr inbounds nuw i8, ptr %1, i64 3552
@@ -1887,7 +1887,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i1428: ; preds = %_ZNSt12_Ve
   %i.ago = getelementptr inbounds nuw i8, ptr %i.agn, i64 3 ; 2 uses
   %i.agp = getelementptr inbounds nuw i8, ptr %1, i64 3624
   store ptr %i.ago, ptr %i.agp, align 8, !tbaa !74, !alias.scope !882
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.agn, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.agk, i64 3, i1 false), !tbaa !53, !noalias !882
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.agn, ptr noundef nonnull readonly align 8 dereferenceable(3) %i.agk, i64 range(i64 0, -9223372036854775808) 3, i1 false), !tbaa !53, !noalias !882
   %i.agq = getelementptr inbounds nuw i8, ptr %1, i64 3616
   store ptr %i.ago, ptr %i.agq, align 16, !tbaa !75, !alias.scope !882
   %i.agr = getelementptr inbounds nuw i8, ptr %1, i64 3632

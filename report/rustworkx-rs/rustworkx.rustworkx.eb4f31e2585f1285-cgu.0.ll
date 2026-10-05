@@ -205,7 +205,7 @@ _RNvXsw_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraph
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %_RNvXsw_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_ENtNtB9_5visit9Visitable9visit_mapCskcxRuJ53GpR_9rustworkx.exit.i.i
   %.val.i.i.i = load ptr, ptr %i.u, align 8, !alias.scope !12187, !noalias !12182, !nonnull !67, !noundef !67
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i, i8 0, i64 %i.aa, i1 false), !noalias !12188
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.aa, i1 false), !noalias !12188
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i, %_RNvXsw_NtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graphINtB5_11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1k_5types3any5PyAnyEB1f_ENtNtB9_5visit9Visitable9visit_mapCskcxRuJ53GpR_9rustworkx.exit.i.i
@@ -448,7 +448,7 @@ _RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph
 
 .lr.ph.preheader.i.i.i49.i:                       ; preds = %_RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexECskcxRuJ53GpR_9rustworkx.exit.i
   %.val.i.i50.i = load ptr, ptr %i.u, align 8, !alias.scope !12201, !noalias !12182, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i50.i, i8 0, i64 %i.cf, i1 false), !noalias !12202
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i50.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.cf, i1 false), !noalias !12202
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i51.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i51.i: ; preds = %.lr.ph.preheader.i.i.i49.i, %_RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexECskcxRuJ53GpR_9rustworkx.exit.i
@@ -851,7 +851,7 @@ bb.o:                                             ; preds = %.backedge184.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i.i:                   ; preds = %bb.o
   %.val.i.i.i.i55.i.i = load ptr, ptr %i.bs, align 8, !alias.scope !30042, !noalias !30030, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i55.i.i, i8 0, i64 %i.bw, i1 false), !noalias !30043
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i55.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.bw, i1 false), !noalias !30043
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %bb.o
@@ -1254,7 +1254,7 @@ bb.r:                                             ; preds = %.backedge178.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.r
   %.val.i.i51.i = load ptr, ptr %i.cq, align 8, !alias.scope !31449, !noalias !31436, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51.i, i8 0, i64 %i.cu, i1 false), !noalias !31450
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.cu, i1 false), !noalias !31450
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i, %bb.r
@@ -1657,7 +1657,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecbE7reserveCskcxRuJ53GpR_9rustworkx.ex
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecbE7reserveCskcxRuJ53GpR_9rustworkx.exit.i.i
   %i.g = add nsw i64 %4, -1
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.e, i8 1, i64 %i.g, i1 false), !noalias !35514
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.e, i8 1, i64 range(i64 0, -1) %i.g, i1 false), !noalias !35514
   %i.h = getelementptr i8, ptr %i.e, i64 %4
   %scevgep.i.i = getelementptr i8, ptr %i.h, i64 -1
   br label %_RINvXs_NtNtCs87CvPiUlf0m_5alloc3vec14spec_from_elembNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECskcxRuJ53GpR_9rustworkx.exit.thread
@@ -2060,7 +2060,7 @@ bb.j:                                             ; preds = %.backedge178
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.j
   %.val.i.i51 = load ptr, ptr %i.bb, align 8, !alias.scope !36945, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51, i8 0, i64 %i.bf, i1 false), !noalias !36945
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51, i8 0, i64 range(i64 0, 2305843009213693953) %i.bf, i1 false), !noalias !36945
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i: ; preds = %.lr.ph.preheader.i.i.i, %bb.j
@@ -2463,7 +2463,7 @@ bb.j:                                             ; preds = %.backedge178
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.j
   %.val.i.i51 = load ptr, ptr %i.bh, align 8, !alias.scope !37088, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51, i8 0, i64 %i.bl, i1 false), !noalias !37088
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i51, i8 0, i64 range(i64 0, 2305843009213693953) %i.bl, i1 false), !noalias !37088
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i: ; preds = %.lr.ph.preheader.i.i.i, %bb.j
@@ -2866,7 +2866,7 @@ _RINvXs2J_NtNtCslwFuT2d6ECx_4core5slice4iterINtB7_4IterNtNtNtCsiCakYNGl26C_11fix
 
 .lr.ph.preheader.i:                               ; preds = %_RINvXs2J_NtNtCslwFuT2d6ECx_4core5slice4iterINtB7_4IterNtNtNtCsiCakYNGl26C_11fixedbitset5block4sse25BlockENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs0_BW_NtBW_11FixedBitSet8is_clear0ECskcxRuJ53GpR_9rustworkx.exit
   %.val = load ptr, ptr %i.d, align 16, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val, i8 0, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val, i8 0, i64 range(i64 0, 2305843009213693953) %i.ar, i1 false)
   %.val15.pre = load i64, ptr %i.k, align 16
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit
 
@@ -3269,7 +3269,7 @@ _RINvXs2J_NtNtCslwFuT2d6ECx_4core5slice4iterINtB7_4IterNtNtNtCsiCakYNGl26C_11fix
 
 .lr.ph.preheader.i:                               ; preds = %_RINvXs2J_NtNtCslwFuT2d6ECx_4core5slice4iterINtB7_4IterNtNtNtCsiCakYNGl26C_11fixedbitset5block4sse25BlockENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs0_BW_NtBW_11FixedBitSet8is_clear0ECskcxRuJ53GpR_9rustworkx.exit
   %.val = load ptr, ptr %i.d, align 16, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val, i8 0, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val, i8 0, i64 range(i64 0, 2305843009213693953) %i.ar, i1 false)
   %.val15.pre = load i64, ptr %i.k, align 16
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit
 
@@ -3672,7 +3672,7 @@ bb.r:                                             ; preds = %_RNvMs3_NtNtCs68Jln
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %.loopexit61
   %.val.i.i.i.i = load ptr, ptr %i.bt, align 8, !alias.scope !59287, !noalias !59288, !nonnull !67, !noundef !67
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i, i8 0, i64 %i.bx, i1 false), !noalias !59289
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.bx, i1 false), !noalias !59289
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i, %.loopexit61
@@ -4075,7 +4075,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecbE7reserveCskcxRuJ53GpR_9rustworkx.ex
 
 ._crit_edge.thread.i.i.i.i:                       ; preds = %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecbE7reserveCskcxRuJ53GpR_9rustworkx.exit.i.i.i.i
   %i.vm = add nsw i64 %.sroa.1360.0.copyload.i, -1
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.vk, i8 1, i64 %i.vm, i1 false), !noalias !61908
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.vk, i8 1, i64 range(i64 0, -1) %i.vm, i1 false), !noalias !61908
   %i.vn = getelementptr i8, ptr %i.vk, i64 %.sroa.1360.0.copyload.i
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.vn, i64 -1
   br label %_RINvXs_NtNtCs87CvPiUlf0m_5alloc3vec14spec_from_elembNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECskcxRuJ53GpR_9rustworkx.exit.thread.i.i
@@ -4478,7 +4478,7 @@ bb.ab:                                            ; preds = %.backedge166.i.i.i,
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %._crit_edge.i.i86.i
   %.val.i.i48.i.i.i = load ptr, ptr %i.dr, align 8, !alias.scope !110376, !noalias !110369, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i48.i.i.i, i8 0, i64 %i.dv, i1 false), !noalias !110377
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i48.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.dv, i1 false), !noalias !110377
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i, %._crit_edge.i.i86.i
@@ -4881,7 +4881,7 @@ bb.dd:                                            ; preds = %_RNvXs1_NtCs87CvPiU
 
 .lr.ph.preheader.i.i.i.i.i.i.i:                   ; preds = %.noexc.i92.i
   %.val.i.i.i.i.i.i = load ptr, ptr %i.rg, align 8, !alias.scope !110482, !noalias !110483, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i.i.i, i8 0, i64 %i.rk, i1 false), !noalias !110484
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i.i.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.rk, i1 false), !noalias !110484
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %.noexc.i92.i
@@ -5054,7 +5054,7 @@ _RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph
 
 .lr.ph.preheader.i.i.i42.i.i.i.i:                 ; preds = %_RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexECskcxRuJ53GpR_9rustworkx.exit.i.i.i.i
   %.val.i.i43.i.i.i.i = load ptr, ptr %i.rg, align 8, !alias.scope !110493, !noalias !110483, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i43.i.i.i.i, i8 0, i64 %i.sv, i1 false), !noalias !110494
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i43.i.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.sv, i1 false), !noalias !110494
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i44.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i44.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i42.i.i.i.i, %_RINvNvMNtCslwFuT2d6ECx_4core5sliceSp7reverse7revswapNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexECskcxRuJ53GpR_9rustworkx.exit.i.i.i.i
@@ -5457,7 +5457,7 @@ bb.cl:                                            ; preds = %.backedge166.i.i.i,
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %._crit_edge.i.i.i
   %.val.i.i48.i.i.i = load ptr, ptr %i.li, align 8, !alias.scope !113237, !noalias !113226, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i48.i.i.i, i8 0, i64 %i.lm, i1 false), !noalias !113238
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val.i.i48.i.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.lm, i1 false), !noalias !113238
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i
 
 _RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i, %._crit_edge.i.i.i
@@ -5860,7 +5860,7 @@ bb.ck:                                            ; preds = %bb.cd
 
 .lr.ph.preheader.i.i:                             ; preds = %.thread423.i
   %.val63.i = load ptr, ptr %i.y, align 8, !noalias !128015, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i, i8 0, i64 %i.qp, i1 false), !noalias !128015
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.qp, i1 false), !noalias !128015
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i
 
 bb.cl:                                            ; preds = %bb.cm, %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i
@@ -6263,7 +6263,7 @@ bb.gk:                                            ; preds = %bb.gd
 
 .lr.ph.preheader.i.i267:                          ; preds = %.thread425.i
   %.val63.i268 = load ptr, ptr %i.j, align 8, !noalias !128119, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i268, i8 0, i64 %i.aki, i1 false), !noalias !128119
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i268, i8 0, i64 range(i64 0, 2305843009213693953) %i.aki, i1 false), !noalias !128119
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i269
 
 bb.gl:                                            ; preds = %bb.gm, %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i269
@@ -6666,7 +6666,7 @@ bb.cv:                                            ; preds = %bb.co
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.thread425.i.i
   %.val63.i.i = load ptr, ptr %i.j, align 8, !noalias !130207, !nonnull !67, !noundef !67
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i.i, i8 0, i64 %i.sa, i1 false), !noalias !130207
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %.val63.i.i, i8 0, i64 range(i64 0, 2305843009213693953) %i.sa, i1 false), !noalias !130207
   br label %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i
 
 bb.cw:                                            ; preds = %bb.cx, %_RNvMs0_CsiCakYNGl26C_11fixedbitsetNtB5_11FixedBitSet5clear.exit.i.i

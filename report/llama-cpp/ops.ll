@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
   %i.bx = mul i64 %indvar.i.us.us, %i.ad
   %i.by = getelementptr i8, ptr %i.bt, i64 %i.bx  ; 2 uses
   %i.bz = shl nuw nsw i64 %indvar.i.us.us, 2      ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.by, i8 0, i64 %i.bz, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.by, i8 0, i64 range(i64 0, 8589934589) %i.bz, i1 false), !tbaa !43
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvar.i.us.us
   %i.cb = load float, ptr %i.ca, align 4, !tbaa !43
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvar.i.us.us
@@ -225,7 +225,7 @@ bb.n:                                             ; preds = %bb.l
   %i.cg = mul i64 %indvar.next.i.us.us, %i.ad
   %i.ch = getelementptr i8, ptr %i.bt, i64 %i.cg  ; 2 uses
   %i.ci = shl nuw nsw i64 %indvar.next.i.us.us, 2 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ch, i8 0, i64 %i.ci, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ch, i8 0, i64 range(i64 0, 8589934589) %i.ci, i1 false), !tbaa !43
   %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvar.next.i.us.us
   %i.ck = load float, ptr %i.cj, align 4, !tbaa !43
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %indvar.next.i.us.us
@@ -255,7 +255,7 @@ bb.n:                                             ; preds = %bb.l
   %i.cp = mul i64 %indvar.i.us.us.epil.init, %i.ad
   %i.cq = getelementptr i8, ptr %i.bt, i64 %i.cp  ; 2 uses
   %i.cr = shl nuw nsw i64 %indvar.i.us.us.epil.init, 2 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cq, i8 0, i64 %i.cr, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cq, i8 0, i64 range(i64 0, 8589934589) %i.cr, i1 false), !tbaa !43
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvar.i.us.us.epil.init
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !43
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %indvar.i.us.us.epil.init
@@ -658,7 +658,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.split
   br i1 %exitcond.not.i, label %._crit_edge.us239.us.us.us.us.us.us.us.i, label %.lr.ph.split.split.us233.us.us.us.us.us.us.us.i, !llvm.loop !1013
 
 ._crit_edge.us239.us.us.us.us.us.us.us.sink.split.i: ; preds = %.lr.ph.split.us228.us.us.us.us.us.us.us.i, %.preheader.us226.us.us.us.us.us.us.us.i
-  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep341.i, i8 0, i64 %i.cd, i1 false), !tbaa !41
+  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep341.i, i8 0, i64 range(i64 0, -1) %i.cd, i1 false), !tbaa !41
   br label %._crit_edge.us239.us.us.us.us.us.us.us.i
 
 ._crit_edge.us239.us.us.us.us.us.us.us.i:         ; preds = %bb.k, %middle.block174, %._crit_edge.us239.us.us.us.us.us.us.us.sink.split.i
@@ -850,7 +850,7 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph.split
   br i1 %exitcond344.not.i.3, label %._crit_edge.us.us.us.us.us.us.us.us.us.i, label %.lr.ph.split.split.us215.us.us.us.us.us.us.us.us.i, !llvm.loop !1021
 
 ._crit_edge.us.us.us.us.us.us.us.us.us.sink.split.i: ; preds = %.lr.ph.split.us214.us.us.us.us.us.us.us.us.i, %.preheader.us.us.us.us.us.us.us.us.us.i
-  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep345.i, i8 0, i64 %i.cd, i1 false), !tbaa !41
+  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep345.i, i8 0, i64 range(i64 0, -1) %i.cd, i1 false), !tbaa !41
   br label %._crit_edge.us.us.us.us.us.us.us.us.us.i
 
 ._crit_edge.us.us.us.us.us.us.us.us.us.i:         ; preds = %.lr.ph.split.split.us215.us.us.us.us.us.us.us.us.i.prol.loopexit, %bb.r, %middle.block122, %vec.epilog.middle.block145, %._crit_edge.us.us.us.us.us.us.us.us.us.sink.split.i
@@ -1253,7 +1253,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.split
   br i1 %exitcond.not.i, label %._crit_edge.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i, label %.lr.ph.split.split.split.us233.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i, !llvm.loop !1057
 
 ._crit_edge.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.sink.split.i: ; preds = %.lr.ph.split.split.us232.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i, %.preheader.us230.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i
-  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep310.i, i8 0, i64 %i.ct, i1 false), !tbaa !41
+  tail call void @llvm.memset.p0.i64(ptr align 2 %scevgep310.i, i8 0, i64 range(i64 0, -1) %i.ct, i1 false), !tbaa !41
   br label %._crit_edge.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i
 
 ._crit_edge.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i: ; preds = %bb.i, %middle.block114, %._crit_edge.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.sink.split.i
@@ -1656,7 +1656,7 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %epil.iter = phi i64 [ 0, %.preheader.lr.ph.i.epil.preheader ], [ %epil.iter.next, %.preheader.lr.ph.i.epil ]
   %i.dh = mul i64 %indvars.iv.i.epil, %i.bo
   %gep8.i.epil = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dh
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.epil, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.epil, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1672,35 +1672,35 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %niter = phi i64 [ %niter.next.7, %.preheader.lr.ph.i ], [ 0, %.preheader1.i ]
   %i.di = mul i64 %indvars.iv.i, %i.bo
   %gep8.i = getelementptr i8, ptr %invariant.gep7.i, i64 %i.di
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
   %i.dj = mul i64 %indvars.iv.next.i, %i.bo
   %gep8.i.1 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dj
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.1, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.1, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.1 = or disjoint i64 %indvars.iv.i, 2
   %i.dk = mul i64 %indvars.iv.next.i.1, %i.bo
   %gep8.i.2 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dk
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.2, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.2, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.2 = or disjoint i64 %indvars.iv.i, 3
   %i.dl = mul i64 %indvars.iv.next.i.2, %i.bo
   %gep8.i.3 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dl
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.3, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.3, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.3 = or disjoint i64 %indvars.iv.i, 4
   %i.dm = mul i64 %indvars.iv.next.i.3, %i.bo
   %gep8.i.4 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dm
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.4, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.4, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.4 = or disjoint i64 %indvars.iv.i, 5
   %i.dn = mul i64 %indvars.iv.next.i.4, %i.bo
   %gep8.i.5 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dn
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.5, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.5, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.5 = or disjoint i64 %indvars.iv.i, 6
   %i.do = mul i64 %indvars.iv.next.i.5, %i.bo
   %gep8.i.6 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.do
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.6, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.6, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.6 = or disjoint i64 %indvars.iv.i, 7
   %i.dp = mul i64 %indvars.iv.next.i.6, %i.bo
   %gep8.i.7 = getelementptr i8, ptr %invariant.gep7.i, i64 %i.dp
-  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.7, i8 0, i64 %i.br, i1 false), !tbaa !43
+  tail call void @llvm.memset.p0.i64(ptr align 4 %gep8.i.7, i8 0, i64 range(i64 0, 8589934589) %i.br, i1 false), !tbaa !43
   %indvars.iv.next.i.7 = add nuw nsw i64 %indvars.iv.i, 8 ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter

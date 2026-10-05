@@ -205,7 +205,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i
   %i.da = add nsw i64 %i.ch, -1                   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.cz, i8 %i.cs, i64 %i.da, i1 false), !noalias !2209
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.cz, i8 %i.cs, i64 range(i64 0, -1) %i.da, i1 false), !noalias !2209
   %i.db = add nuw i64 %i.cx, %i.da                ; 2 uses
   %scevgep.i.i = getelementptr i8, ptr %i.cw, i64 %i.db
   br label %bb.ag
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %.thread.i
 .lr.ph.i.preheader:                               ; preds = %bb.h
   %scevgep = getelementptr i8, ptr %0, i64 8
   %i.aj = shl nuw nsw i64 %i.ai, 3                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 1 %scevgep, i64 %i.aj, i1 false), !alias.scope !3885, !noalias !75
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 1 %scevgep, i64 range(i64 0, 2041) %i.aj, i1 false), !alias.scope !3885, !noalias !75
   %i.ak = add nuw nsw i64 %i.aj, 8
   br label %.lr.ph11.preheader.i
 
@@ -783,7 +783,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i26.i.i:                     ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i22.i.i
   %i.bs = add nsw i64 %i.bj, -1                   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 %i.bs, i1 false), !noalias !3913
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 range(i64 0, -1) %i.bs, i1 false), !noalias !3913
   %i.bt = add nuw i64 %i.bo, %i.bs                ; 2 uses
   %scevgep.i.i27.i.i = getelementptr i8, ptr %i.bn, i64 %i.bt
   br label %._crit_edge.i.i23.i.i
@@ -1186,7 +1186,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i:                         ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i
   %i.ix = add nsw i64 %i.in, -1                   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.iv, i8 0, i64 %i.ix, i1 false), !noalias !3929
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.iv, i8 0, i64 range(i64 0, -1) %i.ix, i1 false), !noalias !3929
   %i.iy = add nuw i64 %i.ir, %i.ix                ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.it, i64 %i.iy
   br label %_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE6resizeCsjjpCCFGI3ul_14lance_encoding.exit.i
@@ -1582,7 +1582,7 @@ bb.h:                                             ; preds = %.thread.i
 .lr.ph.i.preheader:                               ; preds = %bb.h
   %scevgep = getelementptr i8, ptr %0, i64 8
   %i.aj = shl nuw nsw i64 %i.ai, 3                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 1 %scevgep, i64 %i.aj, i1 false), !alias.scope !3995, !noalias !75
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr align 1 %scevgep, i64 range(i64 0, 2041) %i.aj, i1 false), !alias.scope !3995, !noalias !75
   %i.ak = add nuw nsw i64 %i.aj, 8
   br label %.lr.ph11.preheader.i
 
@@ -1757,7 +1757,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i32.i.i:                     ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i28.i.i
   %i.bs = add nsw i64 %i.bj, -1                   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 %i.bs, i1 false), !noalias !4023
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.bq, i8 0, i64 range(i64 0, -1) %i.bs, i1 false), !noalias !4023
   %i.bt = add nuw i64 %i.bo, %i.bs                ; 2 uses
   %scevgep.i.i33.i.i = getelementptr i8, ptr %i.bn, i64 %i.bt
   br label %._crit_edge.i.i29.i.i
@@ -2160,7 +2160,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i:                         ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i
   %i.iu = add nsw i64 %i.ik, -1                   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.is, i8 0, i64 %i.iu, i1 false), !noalias !4038
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.is, i8 0, i64 range(i64 0, -1) %i.iu, i1 false), !noalias !4038
   %i.iv = add nuw i64 %i.io, %i.iu                ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.iq, i64 %i.iv
   br label %_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE6resizeCsjjpCCFGI3ul_14lance_encoding.exit.i
@@ -2563,7 +2563,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i:                         ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i
   %i.bfm = add nsw i64 %i.bfd, -1                 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bfk, i8 0, i64 %i.bfm, i1 false), !noalias !4632
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bfk, i8 0, i64 range(i64 0, -1) %i.bfm, i1 false), !noalias !4632
   %i.bfn = add nuw i64 %i.bfh, %i.bfm             ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.bfi, i64 %i.bfn
   br label %_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE6resizeCsjjpCCFGI3ul_14lance_encoding.exit.i
@@ -2634,7 +2634,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i.i:                       ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i17.i
   %i.bgh = add nsw i64 %i.bfy, -1                 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bgf, i8 0, i64 %i.bgh, i1 false), !noalias !4645
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bgf, i8 0, i64 range(i64 0, -1) %i.bgh, i1 false), !noalias !4645
   %i.bgi = add nuw i64 %i.bgd, %i.bgh             ; 2 uses
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.bgc, i64 %i.bgi
   br label %._crit_edge.i.i.i18.i
@@ -3037,7 +3037,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i.i:                       ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i.i
   %i.acc = xor i64 %i.fn, -1                      ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.aca, i8 0, i64 %i.acc, i1 false), !noalias !33188
+  call void @llvm.memset.p0.i64(ptr align 1 %i.aca, i8 0, i64 range(i64 0, -1) %i.acc, i1 false), !noalias !33188
   %i.acd = add nuw i64 %i.abx, %i.acc             ; 2 uses
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.aby, i64 %i.acd
   br label %_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE6resizeCsjjpCCFGI3ul_14lance_encoding.exit.i.i
@@ -3107,7 +3107,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i.i.i:                     ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i17.i.i
   %i.acx = add nsw i64 %i.aco, -1                 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.acv, i8 0, i64 %i.acx, i1 false), !noalias !33201
+  call void @llvm.memset.p0.i64(ptr align 1 %i.acv, i8 0, i64 range(i64 0, -1) %i.acx, i1 false), !noalias !33201
   %i.acy = add nuw i64 %i.act, %i.acx             ; 2 uses
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.acs, i64 %i.acy
   br label %._crit_edge.i.i.i18.i.i
@@ -3510,7 +3510,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i
   %i.o = add i64 %i.e, -1                         ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 %i.o, i1 false), !noalias !35213
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 range(i64 0, -1) %i.o, i1 false), !noalias !35213
   %i.p = add i64 %i.o, %i.i                       ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p
   br label %._crit_edge.i
@@ -3913,7 +3913,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i
   %i.r = add nsw i64 %i.f, -1                     ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.q, i8 0, i64 %i.r, i1 false), !noalias !61392
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.q, i8 0, i64 range(i64 0, -1) %i.r, i1 false), !noalias !61392
   %i.s = add nuw i64 %i.m, %i.r                   ; 2 uses
   %scevgep.i.i = getelementptr i8, ptr %i.o, i64 %i.s
   br label %_RNvMs1_NtCs40k4W9msRzi_5alloc3vecINtB5_3VechE6resizeCsjjpCCFGI3ul_14lance_encoding.exit
@@ -4083,7 +4083,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i
   %i.y = add i64 %i.o, -1                         ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.w, i8 0, i64 %i.y, i1 false), !noalias !61410
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.w, i8 0, i64 range(i64 0, -1) %i.y, i1 false), !noalias !61410
   %i.z = add i64 %i.s, %i.y                       ; 2 uses
   %scevgep.i.i = getelementptr i8, ptr %i.u, i64 %i.z
   br label %._crit_edge.i.i
@@ -4486,7 +4486,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i.i:                         ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i
   %i.ad = add i64 %.sroa.0.0.copyload1.i, -1      ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ab, i8 0, i64 %i.ad, i1 false), !noalias !64021
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ab, i8 0, i64 range(i64 0, -1) %i.ad, i1 false), !noalias !64021
   %i.ae = add i64 %i.x, %i.ad                     ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.z, i64 %i.ae
   br label %._crit_edge.i.i.i
@@ -4889,7 +4889,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encod
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i
   %i.ag = add i64 %i.u, -1                        ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ae, i8 0, i64 %i.ag, i1 false), !noalias !64130
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ae, i8 0, i64 range(i64 0, -1) %i.ag, i1 false), !noalias !64130
   %i.ah = add i64 %i.ac, %i.ag                    ; 2 uses
   %scevgep.i.i = getelementptr i8, ptr %i.ab, i64 %i.ah
   br label %._crit_edge.i.i

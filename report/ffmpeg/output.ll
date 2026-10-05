@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bh = shl nuw i32 %4, 1
   %i.bi = zext i32 %i.bh to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bi, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bi, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us42.i, %bb.a, %._crit_edge37.sink.split.i
@@ -331,7 +331,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bg = shl nuw i32 %4, 1
   %i.bh = zext i32 %i.bg to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bh, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bh, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge37.sink.split.i
@@ -460,7 +460,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bo = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bo, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bo, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us14.i, %bb.a, %._crit_edge8.sink.split.i
@@ -587,7 +587,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bm = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bm, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bm, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge8.sink.split.i
@@ -921,7 +921,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bh = shl nuw i32 %4, 1
   %i.bi = zext i32 %i.bh to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bi, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bi, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us42.i, %bb.a, %._crit_edge37.sink.split.i
@@ -1048,7 +1048,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bg = shl nuw i32 %4, 1
   %i.bh = zext i32 %i.bg to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bh, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bh, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge37.sink.split.i
@@ -1177,7 +1177,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bo = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bo, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bo, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us14.i, %bb.a, %._crit_edge8.sink.split.i
@@ -1304,7 +1304,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bm = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bm, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bm, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge8.sink.split.i
@@ -1634,7 +1634,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bh = shl nuw i32 %4, 1
   %i.bi = zext i32 %i.bh to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bi, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bi, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us42.i, %bb.a, %._crit_edge37.sink.split.i
@@ -1760,7 +1760,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge37.sink.split.i:                       ; preds = %.lr.ph36.i
   %i.bg = shl nuw i32 %4, 1
   %i.bh = zext i32 %i.bg to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.bh, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.bh, i1 false), !tbaa !108
   br label %yuv2p01xlX_c.exit
 
 yuv2p01xlX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge37.sink.split.i
@@ -1887,7 +1887,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bo = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bo, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bo, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us14.i, %bb.a, %._crit_edge8.sink.split.i
@@ -2012,7 +2012,7 @@ bb.a:
 
 ._crit_edge8.sink.split.i:                        ; preds = %.lr.ph7.i
   %i.bm = shl nuw nsw i64 %wide.trip.count43.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.bm, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.bm, i1 false), !tbaa !108
   br label %yuv2p01xcX_c.exit
 
 yuv2p01xcX_c.exit:                                ; preds = %._crit_edge.us.us.i, %bb.a, %._crit_edge8.sink.split.i
@@ -2032,7 +2032,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_16_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2155,7 +2155,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_16_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2496,7 +2496,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw nsw i64 %wide.trip.count18, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.c, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.c, i1 false), !tbaa !108
   br label %yuv2nv12cX_16_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2619,7 +2619,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw nsw i64 %wide.trip.count18, 2
-  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 %i.c, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %6, i8 0, i64 range(i64 0, 8589934589) %i.c, i1 false), !tbaa !108
   br label %yuv2nv12cX_16_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2740,7 +2740,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2msbplaneX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -2868,7 +2868,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2msbplaneX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -3201,7 +3201,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2msbplaneX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -3329,7 +3329,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2msbplaneX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -3662,7 +3662,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -3789,7 +3789,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -4113,7 +4113,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -4240,7 +4240,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -4564,7 +4564,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -4691,7 +4691,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -5015,7 +5015,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -5142,7 +5142,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw i32 %4, 1
   %i.d = zext i32 %i.c to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %i.d, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 range(i64 0, 4294967295) %i.d, i1 false), !tbaa !108
   br label %yuv2planeX_10_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -5466,7 +5466,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw nsw i64 %wide.trip.count13, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 0, i64 %i.c, i1 false), !tbaa !114
+  tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 0, i64 range(i64 0, 8589934589) %i.c, i1 false), !tbaa !114
   br label %yuv2planeX_float_bswap_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -5661,7 +5661,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.c = shl nuw nsw i64 %wide.trip.count13, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 0, i64 %i.c, i1 false), !tbaa !116
+  tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 0, i64 range(i64 0, 8589934589) %i.c, i1 false), !tbaa !116
   br label %yuv2planeX_float_c_template.exit
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
@@ -6064,7 +6064,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
 .preheader48.preheader:                           ; preds = %.preheader48.lr.ph.split
   %i.bv = shl nuw i32 %10, 1
   %i.bw = zext i32 %i.bv to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %9, i8 0, i64 %i.bw, i1 false), !tbaa !108
+  tail call void @llvm.memset.p0.i64(ptr align 1 %9, i8 0, i64 range(i64 0, 4294967295) %i.bw, i1 false), !tbaa !108
   br label %._crit_edge58
 
 .preheader48.us59.preheader:                      ; preds = %.preheader48.lr.ph.split

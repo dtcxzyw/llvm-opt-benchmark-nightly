@@ -205,7 +205,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test11movable_intESaIS5
   store ptr %i.d, ptr %i.a, align 8, !tbaa !351, !noalias !992
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !992
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !992
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !355, !noalias !992
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !992
   %i.f = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !992
   store ptr %i.a, ptr %0, align 8, !tbaa !358, !alias.scope !992
@@ -339,7 +339,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !351, !noalias !995
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !995
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i41 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !995
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !355, !noalias !995
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !995
   %i.am = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i41, 100
   store i32 %i.am, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !995
   store ptr %i.ah, ptr %1, align 8, !tbaa !358, !alias.scope !995
@@ -495,7 +495,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i85 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !999
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 400, i1 false), !tbaa !355, !noalias !999
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !999
   %i.ca = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i85, 100 ; 3 uses
   store i32 %i.ca, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !999
   %i.cb = load i64, ptr %i.bw, align 8, !tbaa !352, !noalias !1000 ; 9 uses
@@ -726,7 +726,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i132 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !1002
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 400, i1 false), !tbaa !355, !noalias !1002
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !1002
   %i.em = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i132, 100 ; 3 uses
   store i32 %i.em, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !1002
   %i.en = load i64, ptr %i.ei, align 8, !tbaa !352, !noalias !1003 ; 9 uses
@@ -974,7 +974,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test24movable_and_copya
   store ptr %i.d, ptr %i.a, align 8, !tbaa !363, !noalias !1036
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !1036
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1036
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !367, !noalias !1036
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !1036
   %i.f = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1036
   store ptr %i.a, ptr %0, align 8, !tbaa !370, !alias.scope !1036
@@ -1108,7 +1108,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !363, !noalias !1039
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !1039
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i41 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1039
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !367, !noalias !1039
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !1039
   %i.am = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i41, 100
   store i32 %i.am, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1039
   store ptr %i.ah, ptr %1, align 8, !tbaa !370, !alias.scope !1039
@@ -1264,7 +1264,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i85 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1043
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 400, i1 false), !tbaa !367, !noalias !1043
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !1043
   %i.ca = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i85, 100 ; 3 uses
   store i32 %i.ca, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1043
   %i.cb = load i64, ptr %i.bw, align 8, !tbaa !364, !noalias !1044 ; 9 uses
@@ -1495,7 +1495,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i132 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1046
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 400, i1 false), !tbaa !367, !noalias !1046
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !1046
   %i.em = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i132, 100 ; 3 uses
   store i32 %i.em, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !1046
   %i.en = load i64, ptr %i.ei, align 8, !tbaa !364, !noalias !1047 ; 9 uses
@@ -1743,7 +1743,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test12copyable_intESaIS
   store ptr %i.d, ptr %i.a, align 8, !tbaa !374, !noalias !1080
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !1080
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1080
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !318, !noalias !1080
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !1080
   %i.f = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1080
   store ptr %i.a, ptr %0, align 8, !tbaa !379, !alias.scope !1080
@@ -1877,7 +1877,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !374, !noalias !1083
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !1083
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i41 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1083
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !318, !noalias !1083
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !1083
   %i.am = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i41, 100
   store i32 %i.am, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1083
   store ptr %i.ah, ptr %1, align 8, !tbaa !379, !alias.scope !1083
@@ -2033,7 +2033,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i85 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1087
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 400, i1 false), !tbaa !318, !noalias !1087
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !1087
   %i.ca = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i85, 100 ; 3 uses
   store i32 %i.ca, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1087
   %i.cb = load i64, ptr %i.bw, align 8, !tbaa !375, !noalias !1088 ; 9 uses
@@ -2264,7 +2264,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i132 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1090
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 400, i1 false), !tbaa !318, !noalias !1090
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !1090
   %i.em = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i132, 100 ; 3 uses
   store i32 %i.em, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !1090
   %i.en = load i64, ptr %i.ei, align 8, !tbaa !375, !noalias !1091 ; 9 uses
@@ -2512,7 +2512,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test17moveconstruct_int
   store ptr %i.d, ptr %i.a, align 8, !tbaa !384, !noalias !1122
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !1122
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1122
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !388, !noalias !1122
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !1122
   %i.f = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1122
   store ptr %i.a, ptr %0, align 8, !tbaa !1123, !alias.scope !1122
@@ -2646,7 +2646,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !384, !noalias !1126
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !1126
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i41 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1126
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !388, !noalias !1126
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !1126
   %i.am = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i41, 100
   store i32 %i.am, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1126
   store ptr %i.ah, ptr %1, align 8, !tbaa !1123, !alias.scope !1126
@@ -2802,7 +2802,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i85 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1130
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 400, i1 false), !tbaa !388, !noalias !1130
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.by, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !1130
   %i.ca = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i85, 100 ; 3 uses
   store i32 %i.ca, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1130
   %i.cb = load i64, ptr %i.bw, align 8, !tbaa !385, !noalias !1131 ; 9 uses
@@ -3033,7 +3033,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i132 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1133
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 400, i1 false), !tbaa !388, !noalias !1133
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ek, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !1133
   %i.em = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i132, 100 ; 2 uses
   store i32 %i.em, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !1133
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eh, i8 0, i64 24, i1 false), !noalias !1134
@@ -3436,7 +3436,7 @@ _ZN5boost9container6vectorINS0_4test11movable_intESaIS3_EvEaSEOS5_.exit: ; preds
   store ptr %i.j, ptr %i.g, align 8, !tbaa !351, !noalias !2021
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !2021
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !2021
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !355, !noalias !2021
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !2021
   %i.l = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !2021
   %i.m = load i64, ptr %i.h, align 8, !tbaa !352  ; 7 uses
@@ -3749,7 +3749,7 @@ _ZN5boost9container6vectorINS0_4test11movable_intESaIS3_EvEaSEOS5_.exit: ; preds
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !351, !noalias !2123
   store i64 100, ptr %i.z, align 8, !tbaa !261, !noalias !2123
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !2123
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 400, i1 false), !tbaa !355, !noalias !2123
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !2123
   %i.ac = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.ac, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !2123
   %i.ad = load i64, ptr %i.y, align 8, !tbaa !352 ; 7 uses
@@ -4152,7 +4152,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.g, ptr %i.a, align 8, !tbaa !363
   store i64 %i.c, ptr %i.e, align 8, !tbaa !261
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 %i.f, i1 false), !tbaa !367
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 range(i64 0, 9223372036854775805) %i.f, i1 false), !tbaa !367
   %i.h = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i, %i.b
   store i32 %i.h, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247
   br label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvEC2Em.exit
@@ -4341,7 +4341,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvEaSEOS5_.
   store ptr %i.j, ptr %i.g, align 8, !tbaa !363, !noalias !2474
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !2474
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !2474
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !367, !noalias !2474
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !2474
   %i.l = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !2474
   %i.m = load i64, ptr %i.h, align 8, !tbaa !364  ; 7 uses
@@ -4654,7 +4654,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvEaSEOS5_.
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !363, !noalias !2576
   store i64 100, ptr %i.z, align 8, !tbaa !261, !noalias !2576
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !2576
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 400, i1 false), !tbaa !367, !noalias !2576
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !2576
   %i.ac = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.ac, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !2576
   %i.ad = load i64, ptr %i.y, align 8, !tbaa !364 ; 7 uses
@@ -5057,7 +5057,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.g, ptr %i.a, align 8, !tbaa !374
   store i64 %i.c, ptr %i.e, align 8, !tbaa !261
   %_ZN5boost9container4test12copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 %i.f, i1 false), !tbaa !318
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 range(i64 0, 9223372036854775805) %i.f, i1 false), !tbaa !318
   %i.h = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i, %i.b
   store i32 %i.h, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247
   br label %_ZN5boost9container6vectorINS0_4test12copyable_intESaIS3_EvEC2Em.exit
@@ -5246,7 +5246,7 @@ _ZN5boost9container6vectorINS0_4test12copyable_intESaIS3_EvEaSEOS5_.exit: ; pred
   store ptr %i.j, ptr %i.g, align 8, !tbaa !374, !noalias !3192
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !3192
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !3192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !318, !noalias !3192
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !3192
   %i.l = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !3192
   %i.m = load i64, ptr %i.h, align 8, !tbaa !375  ; 7 uses
@@ -5561,7 +5561,7 @@ _ZN5boost9container6vectorINS0_4test12copyable_intESaIS3_EvEaSEOS5_.exit: ; pred
   store ptr %i.ac, ptr %i.z, align 8, !tbaa !374, !noalias !3284
   store i64 100, ptr %i.ab, align 8, !tbaa !261, !noalias !3284
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !3284
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ac, i8 0, i64 400, i1 false), !tbaa !318, !noalias !3284
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !3284
   %i.ae = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.ae, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !3284
   %i.af = load i64, ptr %i.aa, align 8, !tbaa !375 ; 7 uses
@@ -5964,7 +5964,7 @@ _ZN5boost9container6vectorINS0_4test17moveconstruct_intESaIS3_EvEaSEOS5_.exit: ;
   store ptr %i.j, ptr %i.g, align 8, !tbaa !384, !noalias !4082
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !4082
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !4082
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !388, !noalias !4082
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !4082
   %i.l = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !4082
   %i.m = load i64, ptr %i.h, align 8, !tbaa !385  ; 7 uses
@@ -6367,7 +6367,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test11movable_intENS2_1
   store ptr %i.d, ptr %i.a, align 8, !tbaa !527, !noalias !9594
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !9594
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9594
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !355, !noalias !9594
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !9594
   %i.f = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9594
   store ptr %i.a, ptr %0, align 8, !tbaa !532, !alias.scope !9594
@@ -6498,7 +6498,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test11movable_intENS2_1
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !527, !noalias !9597
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !9597
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i39 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9597
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !355, !noalias !9597
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !9597
   %i.am = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i39, 100
   store i32 %i.am, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9597
   store ptr %i.ah, ptr %1, align 8, !tbaa !532, !alias.scope !9597
@@ -6650,7 +6650,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i80 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9601
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 400, i1 false), !tbaa !355, !noalias !9601
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !9601
   %i.bz = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i80, 100 ; 3 uses
   store i32 %i.bz, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9601
   %i.ca = load i64, ptr %i.bv, align 8, !tbaa !528, !noalias !9602 ; 9 uses
@@ -6876,7 +6876,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i127 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9604
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 400, i1 false), !tbaa !355, !noalias !9604
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !9604
   %i.el = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i127, 100 ; 3 uses
   store i32 %i.el, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !9604
   %i.em = load i64, ptr %i.eh, align 8, !tbaa !528, !noalias !9605 ; 9 uses
@@ -7124,7 +7124,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test24movable_and_copya
   store ptr %i.d, ptr %i.a, align 8, !tbaa !536, !noalias !9638
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !9638
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9638
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !367, !noalias !9638
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !9638
   %i.f = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9638
   store ptr %i.a, ptr %0, align 8, !tbaa !541, !alias.scope !9638
@@ -7255,7 +7255,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test24movable_and_copya
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !536, !noalias !9641
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !9641
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i39 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9641
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !367, !noalias !9641
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !9641
   %i.am = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i39, 100
   store i32 %i.am, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9641
   store ptr %i.ah, ptr %1, align 8, !tbaa !541, !alias.scope !9641
@@ -7407,7 +7407,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i80 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9645
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 400, i1 false), !tbaa !367, !noalias !9645
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !9645
   %i.bz = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i80, 100 ; 3 uses
   store i32 %i.bz, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9645
   %i.ca = load i64, ptr %i.bv, align 8, !tbaa !537, !noalias !9646 ; 9 uses
@@ -7633,7 +7633,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i127 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9648
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 400, i1 false), !tbaa !367, !noalias !9648
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !9648
   %i.el = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i127, 100 ; 3 uses
   store i32 %i.el, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !9648
   %i.em = load i64, ptr %i.eh, align 8, !tbaa !537, !noalias !9649 ; 9 uses
@@ -7881,7 +7881,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test12copyable_intENS2_
   store ptr %i.d, ptr %i.a, align 8, !tbaa !545, !noalias !9682
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !9682
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9682
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !318, !noalias !9682
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !9682
   %i.f = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9682
   store ptr %i.a, ptr %0, align 8, !tbaa !550, !alias.scope !9682
@@ -8012,7 +8012,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test12copyable_intENS2_
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !545, !noalias !9685
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !9685
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i39 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9685
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !318, !noalias !9685
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !9685
   %i.am = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i39, 100
   store i32 %i.am, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9685
   store ptr %i.ah, ptr %1, align 8, !tbaa !550, !alias.scope !9685
@@ -8164,7 +8164,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i80 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9689
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 400, i1 false), !tbaa !318, !noalias !9689
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !9689
   %i.bz = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i80, 100 ; 3 uses
   store i32 %i.bz, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9689
   %i.ca = load i64, ptr %i.bv, align 8, !tbaa !546, !noalias !9690 ; 9 uses
@@ -8390,7 +8390,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i127 = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9692
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 400, i1 false), !tbaa !318, !noalias !9692
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !9692
   %i.el = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i127, 100 ; 3 uses
   store i32 %i.el, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !9692
   %i.em = load i64, ptr %i.eh, align 8, !tbaa !546, !noalias !9693 ; 9 uses
@@ -8638,7 +8638,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test17moveconstruct_int
   store ptr %i.d, ptr %i.a, align 8, !tbaa !554, !noalias !9724
   store i64 100, ptr %i.c, align 8, !tbaa !261, !noalias !9724
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9724
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 400, i1 false), !tbaa !388, !noalias !9724
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.d, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !9724
   %i.f = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i, 100
   store i32 %i.f, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9724
   store ptr %i.a, ptr %0, align 8, !tbaa !9725, !alias.scope !9724
@@ -8769,7 +8769,7 @@ _ZN5boost7movelib11make_uniqueINS_9container6vectorINS2_4test17moveconstruct_int
   store ptr %i.ak, ptr %i.ah, align 8, !tbaa !554, !noalias !9728
   store i64 100, ptr %i.aj, align 8, !tbaa !261, !noalias !9728
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i39 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9728
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 400, i1 false), !tbaa !388, !noalias !9728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ak, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !9728
   %i.am = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i39, 100
   store i32 %i.am, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9728
   store ptr %i.ah, ptr %1, align 8, !tbaa !9725, !alias.scope !9728
@@ -8921,7 +8921,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i80 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9732
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 400, i1 false), !tbaa !388, !noalias !9732
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.bx, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !9732
   %i.bz = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i80, 100 ; 3 uses
   store i32 %i.bz, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9732
   %i.ca = load i64, ptr %i.bv, align 8, !tbaa !555, !noalias !9733 ; 9 uses
@@ -9147,7 +9147,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i127 = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9735
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 400, i1 false), !tbaa !388, !noalias !9735
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ej, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !9735
   %i.el = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i127, 100 ; 2 uses
   store i32 %i.el, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !9735
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eg, i8 0, i64 24, i1 false), !noalias !9736
@@ -9550,7 +9550,7 @@ _ZN5boost9container6vectorINS0_4test11movable_intENS0_13new_allocatorIS3_EEvEaSE
   store ptr %i.j, ptr %i.g, align 8, !tbaa !527, !noalias !10301
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !10301
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !10301
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !355, !noalias !10301
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !10301
   %i.l = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !10301
   %i.m = load i64, ptr %i.h, align 8, !tbaa !528  ; 7 uses
@@ -9863,7 +9863,7 @@ _ZN5boost9container6vectorINS0_4test11movable_intENS0_13new_allocatorIS3_EEvEaSE
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !527, !noalias !10403
   store i64 100, ptr %i.z, align 8, !tbaa !261, !noalias !10403
   %_ZN5boost9container4test11movable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !10403
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 400, i1 false), !tbaa !355, !noalias !10403
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !355, !noalias !10403
   %i.ac = add i32 %_ZN5boost9container4test11movable_int5countE.promoted.i.i, 100
   store i32 %i.ac, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !247, !noalias !10403
   %i.ad = load i64, ptr %i.y, align 8, !tbaa !528 ; 7 uses
@@ -10266,7 +10266,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.g, ptr %i.a, align 8, !tbaa !536
   store i64 %i.c, ptr %i.e, align 8, !tbaa !261
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 %i.f, i1 false), !tbaa !367
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 range(i64 0, 9223372036854775805) %i.f, i1 false), !tbaa !367
   %i.h = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i, %i.b
   store i32 %i.h, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247
   br label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EEvEC2Em.exit
@@ -10455,7 +10455,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_13new_allocat
   store ptr %i.j, ptr %i.g, align 8, !tbaa !536, !noalias !10754
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !10754
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !10754
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !367, !noalias !10754
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !10754
   %i.l = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !10754
   %i.m = load i64, ptr %i.h, align 8, !tbaa !537  ; 7 uses
@@ -10768,7 +10768,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_13new_allocat
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !536, !noalias !10856
   store i64 100, ptr %i.z, align 8, !tbaa !261, !noalias !10856
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !10856
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 400, i1 false), !tbaa !367, !noalias !10856
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.aa, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !367, !noalias !10856
   %i.ac = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, 100
   store i32 %i.ac, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !247, !noalias !10856
   %i.ad = load i64, ptr %i.y, align 8, !tbaa !537 ; 7 uses
@@ -11171,7 +11171,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.g, ptr %i.a, align 8, !tbaa !545
   store i64 %i.c, ptr %i.e, align 8, !tbaa !261
   %_ZN5boost9container4test12copyable_int5countE.promoted.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 %i.f, i1 false), !tbaa !318
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 range(i64 0, 9223372036854775805) %i.f, i1 false), !tbaa !318
   %i.h = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i, %i.b
   store i32 %i.h, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247
   br label %_ZN5boost9container6vectorINS0_4test12copyable_intENS0_13new_allocatorIS3_EEvEC2Em.exit
@@ -11360,7 +11360,7 @@ _ZN5boost9container6vectorINS0_4test12copyable_intENS0_13new_allocatorIS3_EEvEaS
   store ptr %i.j, ptr %i.g, align 8, !tbaa !545, !noalias !11472
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !11472
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !11472
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !318, !noalias !11472
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !11472
   %i.l = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !11472
   %i.m = load i64, ptr %i.h, align 8, !tbaa !546  ; 7 uses
@@ -11675,7 +11675,7 @@ _ZN5boost9container6vectorINS0_4test12copyable_intENS0_13new_allocatorIS3_EEvEaS
   store ptr %i.ac, ptr %i.z, align 8, !tbaa !545, !noalias !11564
   store i64 100, ptr %i.ab, align 8, !tbaa !261, !noalias !11564
   %_ZN5boost9container4test12copyable_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !11564
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ac, i8 0, i64 400, i1 false), !tbaa !318, !noalias !11564
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.ac, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !318, !noalias !11564
   %i.ae = add i32 %_ZN5boost9container4test12copyable_int5countE.promoted.i.i, 100
   store i32 %i.ae, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !247, !noalias !11564
   %i.af = load i64, ptr %i.aa, align 8, !tbaa !546 ; 7 uses
@@ -12078,7 +12078,7 @@ _ZN5boost9container6vectorINS0_4test17moveconstruct_intENS0_13new_allocatorIS3_E
   store ptr %i.j, ptr %i.g, align 8, !tbaa !554, !noalias !12362
   store i64 100, ptr %i.i, align 8, !tbaa !261, !noalias !12362
   %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i = load i32, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !12362
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 400, i1 false), !tbaa !388, !noalias !12362
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %i.j, i8 0, i64 range(i64 0, 9223372036854775805) 400, i1 false), !tbaa !388, !noalias !12362
   %i.l = add i32 %_ZN5boost9container4test17moveconstruct_int5countE.promoted.i.i, 100
   store i32 %i.l, ptr @_ZN5boost9container4test17moveconstruct_int5countE, align 4, !tbaa !247, !noalias !12362
   %i.m = load i64, ptr %i.h, align 8, !tbaa !555  ; 7 uses

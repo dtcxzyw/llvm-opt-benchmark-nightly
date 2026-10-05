@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.hk = urem i64 %i.hj, 12
   %i.hl = sub nuw nsw i64 %i.hj, %i.hk
   %i.hm = add nsw i64 %i.hl, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hh, i8 0, i64 %i.hm, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hh, i8 0, i64 range(i64 0, 51539607541) %i.hm, i1 false)
   br label %.loopexit602
 
 .loopexit602:                                     ; preds = %.loopexit602.loopexit, %bb.as
@@ -256,7 +256,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.hx = urem i64 %i.hw, 12
   %i.hy = sub nuw nsw i64 %i.hw, %i.hx
   %i.hz = add nsw i64 %i.hy, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hu, i8 0, i64 %i.hz, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.hu, i8 0, i64 range(i64 0, 51539607541) %i.hz, i1 false)
   br label %.loopexit601
 
 .loopexit601:                                     ; preds = %.loopexit601.loopexit, %bb.ax
@@ -286,7 +286,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.ii = urem i64 %i.ih, 12
   %i.ij = sub nuw nsw i64 %i.ih, %i.ii
   %i.ik = add nsw i64 %i.ij, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.if, i8 0, i64 %i.ik, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.if, i8 0, i64 range(i64 0, 51539607541) %i.ik, i1 false)
   br label %.loopexit600
 
 .loopexit600:                                     ; preds = %.loopexit600.loopexit, %bb.ba
@@ -307,7 +307,7 @@ bb.bb:                                            ; preds = %.loopexit600
   %i.is = urem i64 %i.ir, 12
   %i.it = sub nuw nsw i64 %i.ir, %i.is
   %i.iu = add nsw i64 %i.it, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ip, i8 0, i64 %i.iu, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ip, i8 0, i64 range(i64 0, 51539607541) %i.iu, i1 false)
   br label %.loopexit599
 
 .loopexit599:                                     ; preds = %.loopexit599.loopexit, %bb.bb
@@ -340,7 +340,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.jf = urem i64 %i.je, 12
   %i.jg = sub nuw nsw i64 %i.je, %i.jf
   %i.jh = add nsw i64 %i.jg, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jc, i8 0, i64 %i.jh, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jc, i8 0, i64 range(i64 0, 51539607541) %i.jh, i1 false)
   br label %.loopexit594
 
 .loopexit594:                                     ; preds = %.loopexit594.loopexit, %bb.be
@@ -376,7 +376,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.jr = urem i64 %i.jq, 12
   %i.js = sub nuw nsw i64 %i.jq, %i.jr
   %i.jt = add nsw i64 %i.js, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jo, i8 0, i64 %i.jt, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.jo, i8 0, i64 range(i64 0, 51539607541) %i.jt, i1 false)
   br label %.loopexit594.1
 
 .loopexit594.1:                                   ; preds = %.loopexit594.loopexit.1, %bb.bi
@@ -409,7 +409,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.ke = urem i64 %i.kd, 12
   %i.kf = sub nuw nsw i64 %i.kd, %i.ke
   %i.kg = add nsw i64 %i.kf, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kb, i8 0, i64 %i.kg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.kb, i8 0, i64 range(i64 0, 51539607541) %i.kg, i1 false)
   br label %.loopexit594.2
 
 .loopexit594.2:                                   ; preds = %.loopexit594.loopexit.2, %bb.bl
@@ -442,7 +442,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.kr = urem i64 %i.kq, 12
   %i.ks = sub nuw nsw i64 %i.kq, %i.kr
   %i.kt = add nsw i64 %i.ks, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ko, i8 0, i64 %i.kt, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ko, i8 0, i64 range(i64 0, 51539607541) %i.kt, i1 false)
   br label %.loopexit594.3
 
 .loopexit594.3:                                   ; preds = %.loopexit594.loopexit.3, %bb.bo
@@ -475,7 +475,7 @@ bb.br:                                            ; preds = %bb.bq
   %i.le = urem i64 %i.ld, 12
   %i.lf = sub nuw nsw i64 %i.ld, %i.le
   %i.lg = add nsw i64 %i.lf, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lb, i8 0, i64 %i.lg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lb, i8 0, i64 range(i64 0, 51539607541) %i.lg, i1 false)
   br label %.loopexit594.4
 
 .loopexit594.4:                                   ; preds = %.loopexit594.loopexit.4, %bb.br
@@ -508,7 +508,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.lr = urem i64 %i.lq, 12
   %i.ls = sub nuw nsw i64 %i.lq, %i.lr
   %i.lt = add nsw i64 %i.ls, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lo, i8 0, i64 %i.lt, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lo, i8 0, i64 range(i64 0, 51539607541) %i.lt, i1 false)
   br label %.loopexit594.5
 
 .loopexit594.5:                                   ; preds = %.loopexit594.loopexit.5, %bb.bu
@@ -541,7 +541,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.me = urem i64 %i.md, 12
   %i.mf = sub nuw nsw i64 %i.md, %i.me
   %i.mg = add nsw i64 %i.mf, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.mb, i8 0, i64 %i.mg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.mb, i8 0, i64 range(i64 0, 51539607541) %i.mg, i1 false)
   br label %.loopexit594.6
 
 .loopexit594.6:                                   ; preds = %.loopexit594.loopexit.6, %bb.bx
@@ -574,7 +574,7 @@ bb.ca:                                            ; preds = %bb.bz
   %i.mr = urem i64 %i.mq, 12
   %i.ms = sub nuw nsw i64 %i.mq, %i.mr
   %i.mt = add nsw i64 %i.ms, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.mo, i8 0, i64 %i.mt, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.mo, i8 0, i64 range(i64 0, 51539607541) %i.mt, i1 false)
   br label %.loopexit594.7
 
 .loopexit594.7:                                   ; preds = %.loopexit594.loopexit.7, %bb.ca
@@ -604,7 +604,7 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.nd, label %.loopexit593, label %.loopexit593.loopexit
 
 .loopexit593.loopexit:                            ; preds = %bb.cc
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nc, i8 0, i64 %i.nb, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nc, i8 0, i64 range(i64 0, 68719476721) %i.nb, i1 false)
   br label %.loopexit593
 
 .loopexit593:                                     ; preds = %.loopexit593.loopexit, %bb.cc
@@ -634,7 +634,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.nk, label %.loopexit593.1, label %.loopexit593.loopexit.1
 
 .loopexit593.loopexit.1:                          ; preds = %bb.cg
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nj, i8 0, i64 %i.ni, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nj, i8 0, i64 range(i64 0, 68719476721) %i.ni, i1 false)
   br label %.loopexit593.1
 
 .loopexit593.1:                                   ; preds = %.loopexit593.loopexit.1, %bb.cg
@@ -660,7 +660,7 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.nr, label %.loopexit593.2, label %.loopexit593.loopexit.2
 
 .loopexit593.loopexit.2:                          ; preds = %bb.cj
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nq, i8 0, i64 %i.np, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nq, i8 0, i64 range(i64 0, 68719476721) %i.np, i1 false)
   br label %.loopexit593.2
 
 .loopexit593.2:                                   ; preds = %.loopexit593.loopexit.2, %bb.cj
@@ -686,7 +686,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %i.ny, label %.loopexit593.3, label %.loopexit593.loopexit.3
 
 .loopexit593.loopexit.3:                          ; preds = %bb.cm
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nx, i8 0, i64 %i.nw, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.nx, i8 0, i64 range(i64 0, 68719476721) %i.nw, i1 false)
   br label %.loopexit593.3
 
 .loopexit593.3:                                   ; preds = %.loopexit593.loopexit.3, %bb.cm
@@ -712,7 +712,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %i.of, label %.loopexit593.4, label %.loopexit593.loopexit.4
 
 .loopexit593.loopexit.4:                          ; preds = %bb.cp
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.oe, i8 0, i64 %i.od, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.oe, i8 0, i64 range(i64 0, 68719476721) %i.od, i1 false)
   br label %.loopexit593.4
 
 .loopexit593.4:                                   ; preds = %.loopexit593.loopexit.4, %bb.cp
@@ -738,7 +738,7 @@ bb.cs:                                            ; preds = %bb.cr
   br i1 %i.om, label %.loopexit593.5, label %.loopexit593.loopexit.5
 
 .loopexit593.loopexit.5:                          ; preds = %bb.cs
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ol, i8 0, i64 %i.ok, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ol, i8 0, i64 range(i64 0, 68719476721) %i.ok, i1 false)
   br label %.loopexit593.5
 
 .loopexit593.5:                                   ; preds = %.loopexit593.loopexit.5, %bb.cs
@@ -764,7 +764,7 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %i.ot, label %.loopexit593.6, label %.loopexit593.loopexit.6
 
 .loopexit593.loopexit.6:                          ; preds = %bb.cv
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.os, i8 0, i64 %i.or, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.os, i8 0, i64 range(i64 0, 68719476721) %i.or, i1 false)
   br label %.loopexit593.6
 
 .loopexit593.6:                                   ; preds = %.loopexit593.loopexit.6, %bb.cv
@@ -790,7 +790,7 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %i.pa, label %.loopexit593.7, label %.loopexit593.loopexit.7
 
 .loopexit593.loopexit.7:                          ; preds = %bb.cy
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.oz, i8 0, i64 %i.oy, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.oz, i8 0, i64 range(i64 0, 68719476721) %i.oy, i1 false)
   br label %.loopexit593.7
 
 .loopexit593.7:                                   ; preds = %.loopexit593.loopexit.7, %bb.cy
@@ -877,7 +877,7 @@ bb.dg:                                            ; preds = %bb.df
   %i.qf = urem i64 %i.qe, 12
   %i.qg = sub nuw nsw i64 %i.qe, %i.qf
   %i.qh = add nsw i64 %i.qg, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qc, i8 0, i64 %i.qh, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qc, i8 0, i64 range(i64 0, 51539607541) %i.qh, i1 false)
   br label %.loopexit592
 
 bb.dh:                                            ; preds = %bb.dm, %bb.dk, %bb.di, %bb.df, %bb.dd
@@ -909,7 +909,7 @@ bb.dj:                                            ; preds = %bb.di
   %i.qr = urem i64 %i.qq, 12
   %i.qs = sub nuw nsw i64 %i.qq, %i.qr
   %i.qt = add nsw i64 %i.qs, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qo, i8 0, i64 %i.qt, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.qo, i8 0, i64 range(i64 0, 51539607541) %i.qt, i1 false)
   br label %.loopexit591
 
 .loopexit591:                                     ; preds = %.loopexit592, %bb.dj, %.loopexit591.loopexit
@@ -937,7 +937,7 @@ bb.dl:                                            ; preds = %bb.dk
   %i.rd = urem i64 %i.rc, 12
   %i.re = sub nuw nsw i64 %i.rc, %i.rd
   %i.rf = add nsw i64 %i.re, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ra, i8 0, i64 %i.rf, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ra, i8 0, i64 range(i64 0, 51539607541) %i.rf, i1 false)
   br label %.loopexit590
 
 .loopexit590:                                     ; preds = %.loopexit591, %bb.dl, %.loopexit590.loopexit
@@ -965,7 +965,7 @@ bb.dn:                                            ; preds = %bb.dm
   %i.rp = urem i64 %i.ro, 12
   %i.rq = sub nuw nsw i64 %i.ro, %i.rp
   %i.rr = add nsw i64 %i.rq, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.rm, i8 0, i64 %i.rr, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.rm, i8 0, i64 range(i64 0, 51539607541) %i.rr, i1 false)
   br label %.loopexit589
 
 .loopexit589:                                     ; preds = %.loopexit590, %bb.dn, %.loopexit589.loopexit
@@ -990,7 +990,7 @@ bb.dp:                                            ; preds = %bb.do
   br i1 %i.sa, label %.loopexit586, label %.loopexit586.loopexit
 
 .loopexit586.loopexit:                            ; preds = %bb.dp
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.rz, i8 0, i64 %i.ry, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.rz, i8 0, i64 range(i64 0, 68719476721) %i.ry, i1 false)
   br label %.loopexit586
 
 bb.dq:                                            ; preds = %bb.ed, %bb.eb, %bb.dz, %bb.dx, %bb.dv, %bb.dt, %bb.dr, %bb.do
@@ -1018,7 +1018,7 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %i.si, label %.loopexit586.1, label %.loopexit586.loopexit.1
 
 .loopexit586.loopexit.1:                          ; preds = %bb.ds
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sh, i8 0, i64 %i.sg, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sh, i8 0, i64 range(i64 0, 68719476721) %i.sg, i1 false)
   br label %.loopexit586.1
 
 .loopexit586.1:                                   ; preds = %.loopexit586, %bb.ds, %.loopexit586.loopexit.1
@@ -1042,7 +1042,7 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %i.sq, label %.loopexit586.2, label %.loopexit586.loopexit.2
 
 .loopexit586.loopexit.2:                          ; preds = %bb.du
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sp, i8 0, i64 %i.so, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sp, i8 0, i64 range(i64 0, 68719476721) %i.so, i1 false)
   br label %.loopexit586.2
 
 .loopexit586.2:                                   ; preds = %.loopexit586.1, %bb.du, %.loopexit586.loopexit.2
@@ -1066,7 +1066,7 @@ bb.dw:                                            ; preds = %bb.dv
   br i1 %i.sy, label %.loopexit586.3, label %.loopexit586.loopexit.3
 
 .loopexit586.loopexit.3:                          ; preds = %bb.dw
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sx, i8 0, i64 %i.sw, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.sx, i8 0, i64 range(i64 0, 68719476721) %i.sw, i1 false)
   br label %.loopexit586.3
 
 .loopexit586.3:                                   ; preds = %.loopexit586.2, %bb.dw, %.loopexit586.loopexit.3
@@ -1090,7 +1090,7 @@ bb.dy:                                            ; preds = %bb.dx
   br i1 %i.tg, label %.loopexit586.4, label %.loopexit586.loopexit.4
 
 .loopexit586.loopexit.4:                          ; preds = %bb.dy
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tf, i8 0, i64 %i.te, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tf, i8 0, i64 range(i64 0, 68719476721) %i.te, i1 false)
   br label %.loopexit586.4
 
 .loopexit586.4:                                   ; preds = %.loopexit586.3, %bb.dy, %.loopexit586.loopexit.4
@@ -1114,7 +1114,7 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %i.to, label %.loopexit586.5, label %.loopexit586.loopexit.5
 
 .loopexit586.loopexit.5:                          ; preds = %bb.ea
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tn, i8 0, i64 %i.tm, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tn, i8 0, i64 range(i64 0, 68719476721) %i.tm, i1 false)
   br label %.loopexit586.5
 
 .loopexit586.5:                                   ; preds = %.loopexit586.4, %bb.ea, %.loopexit586.loopexit.5
@@ -1138,7 +1138,7 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %i.tw, label %.loopexit586.6, label %.loopexit586.loopexit.6
 
 .loopexit586.loopexit.6:                          ; preds = %bb.ec
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tv, i8 0, i64 %i.tu, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tv, i8 0, i64 range(i64 0, 68719476721) %i.tu, i1 false)
   br label %.loopexit586.6
 
 .loopexit586.6:                                   ; preds = %.loopexit586.5, %bb.ec, %.loopexit586.loopexit.6
@@ -1162,7 +1162,7 @@ bb.ee:                                            ; preds = %bb.ed
   br i1 %i.ue, label %.preheader588, label %.loopexit586.loopexit.7
 
 .loopexit586.loopexit.7:                          ; preds = %bb.ee
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ud, i8 0, i64 %i.uc, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ud, i8 0, i64 range(i64 0, 68719476721) %i.uc, i1 false)
   br label %.preheader588
 
 .preheader588:                                    ; preds = %.loopexit586.6, %bb.ee, %.loopexit586.loopexit.7
@@ -1191,7 +1191,7 @@ bb.eg:                                            ; preds = %bb.ef
   %i.up = urem i64 %i.uo, 12
   %i.uq = sub nuw nsw i64 %i.uo, %i.up
   %i.ur = add nsw i64 %i.uq, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.um, i8 0, i64 %i.ur, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.um, i8 0, i64 range(i64 0, 51539607541) %i.ur, i1 false)
   br label %.loopexit585
 
 bb.eh:                                            ; preds = %bb.eu, %bb.es, %bb.eq, %bb.eo, %bb.em, %bb.ek, %bb.ei, %bb.ef
@@ -1223,7 +1223,7 @@ bb.ej:                                            ; preds = %bb.ei
   %i.vb = urem i64 %i.va, 12
   %i.vc = sub nuw nsw i64 %i.va, %i.vb
   %i.vd = add nsw i64 %i.vc, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.uy, i8 0, i64 %i.vd, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.uy, i8 0, i64 range(i64 0, 51539607541) %i.vd, i1 false)
   br label %.loopexit585.1
 
 .loopexit585.1:                                   ; preds = %.loopexit585, %bb.ej, %.loopexit585.loopexit.1
@@ -1251,7 +1251,7 @@ bb.el:                                            ; preds = %bb.ek
   %i.vn = urem i64 %i.vm, 12
   %i.vo = sub nuw nsw i64 %i.vm, %i.vn
   %i.vp = add nsw i64 %i.vo, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.vk, i8 0, i64 %i.vp, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.vk, i8 0, i64 range(i64 0, 51539607541) %i.vp, i1 false)
   br label %.loopexit585.2
 
 .loopexit585.2:                                   ; preds = %.loopexit585.1, %bb.el, %.loopexit585.loopexit.2
@@ -1279,7 +1279,7 @@ bb.en:                                            ; preds = %bb.em
   %i.vz = urem i64 %i.vy, 12
   %i.wa = sub nuw nsw i64 %i.vy, %i.vz
   %i.wb = add nsw i64 %i.wa, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.vw, i8 0, i64 %i.wb, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.vw, i8 0, i64 range(i64 0, 51539607541) %i.wb, i1 false)
   br label %.loopexit585.3
 
 .loopexit585.3:                                   ; preds = %.loopexit585.2, %bb.en, %.loopexit585.loopexit.3
@@ -1307,7 +1307,7 @@ bb.ep:                                            ; preds = %bb.eo
   %i.wl = urem i64 %i.wk, 12
   %i.wm = sub nuw nsw i64 %i.wk, %i.wl
   %i.wn = add nsw i64 %i.wm, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.wi, i8 0, i64 %i.wn, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.wi, i8 0, i64 range(i64 0, 51539607541) %i.wn, i1 false)
   br label %.loopexit585.4
 
 .loopexit585.4:                                   ; preds = %.loopexit585.3, %bb.ep, %.loopexit585.loopexit.4
@@ -1335,7 +1335,7 @@ bb.er:                                            ; preds = %bb.eq
   %i.wx = urem i64 %i.ww, 12
   %i.wy = sub nuw nsw i64 %i.ww, %i.wx
   %i.wz = add nsw i64 %i.wy, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.wu, i8 0, i64 %i.wz, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.wu, i8 0, i64 range(i64 0, 51539607541) %i.wz, i1 false)
   br label %.loopexit585.5
 
 .loopexit585.5:                                   ; preds = %.loopexit585.4, %bb.er, %.loopexit585.loopexit.5
@@ -1363,7 +1363,7 @@ bb.et:                                            ; preds = %bb.es
   %i.xj = urem i64 %i.xi, 12
   %i.xk = sub nuw nsw i64 %i.xi, %i.xj
   %i.xl = add nsw i64 %i.xk, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.xg, i8 0, i64 %i.xl, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.xg, i8 0, i64 range(i64 0, 51539607541) %i.xl, i1 false)
   br label %.loopexit585.6
 
 .loopexit585.6:                                   ; preds = %.loopexit585.5, %bb.et, %.loopexit585.loopexit.6
@@ -1391,7 +1391,7 @@ bb.ev:                                            ; preds = %bb.eu
   %i.xv = urem i64 %i.xu, 12
   %i.xw = sub nuw nsw i64 %i.xu, %i.xv
   %i.xx = add nsw i64 %i.xw, 12
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.xs, i8 0, i64 %i.xx, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.xs, i8 0, i64 range(i64 0, 51539607541) %i.xx, i1 false)
   br label %.loopexit585.7
 
 .loopexit585.7:                                   ; preds = %.loopexit585.6, %bb.ev, %.loopexit585.loopexit.7
@@ -1794,7 +1794,7 @@ bb.id:                                            ; preds = %_ZN8aiStringaSERKS_
   br i1 %i.amd, label %.loopexit587, label %.loopexit587.loopexit
 
 .loopexit587.loopexit:                            ; preds = %bb.id
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.amc, i8 0, i64 %i.amb, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.amc, i8 0, i64 range(i64 0, 34359738361) %i.amb, i1 false)
   br label %.loopexit587
 
 .loopexit587:                                     ; preds = %.loopexit587.loopexit, %bb.id

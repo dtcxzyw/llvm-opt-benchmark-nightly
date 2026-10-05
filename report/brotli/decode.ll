@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   store i8 %i.y, ptr %i.u, align 1, !tbaa !53
   store i8 %i.y, ptr %i.s, align 1, !tbaa !53
   %i.z = add nuw nsw i64 %i.w, 1
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 %i.z, i1 false), !tbaa !53
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 range(i64 0, 257) %i.z, i1 false), !tbaa !53
   %i.aa = or i64 %.03539, %i.w
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %.138
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1 ; 2 uses
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   store i8 %i.ag, ptr %i.ac, align 1, !tbaa !53
   store i8 %i.ag, ptr %i.s, align 1, !tbaa !53
   %i.ah = add nuw nsw i64 %i.ae, 1
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 %i.ah, i1 false), !tbaa !53
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 range(i64 0, 257) %i.ah, i1 false), !tbaa !53
   %i.ai = or i64 %i.aa, %i.ae                     ; 3 uses
   %i.aj = add nuw i64 %.138, 2                    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
@@ -240,7 +240,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   store i8 %i.ao, ptr %i.ak, align 1, !tbaa !53
   store i8 %i.ao, ptr %i.s, align 1, !tbaa !53
   %i.ap = add nuw nsw i64 %i.am, 1
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 %i.ap, i1 false), !tbaa !53
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.c, ptr noundef nonnull align 1 dereferenceable(1) %i.s, i64 range(i64 0, 257) %i.ap, i1 false), !tbaa !53
   %i.aq = or i64 %.03539.epil.init, %i.am
   br label %._crit_edge.loopexit
 

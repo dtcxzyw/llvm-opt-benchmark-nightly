@@ -205,35 +205,35 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %niter = phi i64 [ 0, %.lr.ph103.preheader.i.new ], [ %niter.next.7, %.lr.ph103.i ]
   %i.eq = mul nuw nsw i64 %.0105.i, %i.d
   %i.er = getelementptr [4 x i8], ptr %1, i64 %i.eq
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.er, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.er, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.es = or disjoint i64 %.0105.i, 1
   %i.et = mul nuw nsw i64 %i.es, %i.d
   %i.eu = getelementptr [4 x i8], ptr %1, i64 %i.et
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.eu, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.eu, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.ev = or disjoint i64 %.0105.i, 2
   %i.ew = mul nuw nsw i64 %i.ev, %i.d
   %i.ex = getelementptr [4 x i8], ptr %1, i64 %i.ew
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ex, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ex, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.ey = or disjoint i64 %.0105.i, 3
   %i.ez = mul nuw nsw i64 %i.ey, %i.d
   %i.fa = getelementptr [4 x i8], ptr %1, i64 %i.ez
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fa, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fa, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fb = or disjoint i64 %.0105.i, 4
   %i.fc = mul nuw nsw i64 %i.fb, %i.d
   %i.fd = getelementptr [4 x i8], ptr %1, i64 %i.fc
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fd, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fd, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fe = or disjoint i64 %.0105.i, 5
   %i.ff = mul nuw nsw i64 %i.fe, %i.d
   %i.fg = getelementptr [4 x i8], ptr %1, i64 %i.ff
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fg, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fg, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fh = or disjoint i64 %.0105.i, 6
   %i.fi = mul nuw nsw i64 %i.fh, %i.d
   %i.fj = getelementptr [4 x i8], ptr %1, i64 %i.fi
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fj, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fj, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fk = or disjoint i64 %.0105.i, 7
   %i.fl = mul nuw nsw i64 %i.fk, %i.d
   %i.fm = getelementptr [4 x i8], ptr %1, i64 %i.fl
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fm, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fm, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fn = add nuw nsw i64 %.0105.i, 8             ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -256,7 +256,7 @@ _ZL28gemv_q4_b32_8x8_q8_0_lut_avxI5blockILi4ELi8EEEviPfmPKvS4_iiDv4_x.exit.loope
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph103.i.epil ], [ 0, %.lr.ph103.i.epil.preheader ]
   %i.fq = mul nuw nsw i64 %.0105.i.epil, %i.d
   %i.fr = getelementptr [4 x i8], ptr %1, i64 %i.fq
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fr, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fr, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !38, !noalias !44
   %i.fs = add nuw nsw i64 %.0105.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -621,7 +621,7 @@ bb.d:                                             ; preds = %bb.c
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph233.epil ], [ 0, %.lr.ph233.epil.preheader ]
   %i.jq = mul nuw nsw i64 %.0235.epil, %i.d
   %i.jr = getelementptr [4 x i8], ptr %1, i64 %i.jq
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.jr, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.jr, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.js = add nuw nsw i64 %.0235.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -635,35 +635,35 @@ bb.d:                                             ; preds = %bb.c
   %niter = phi i64 [ 0, %.lr.ph233.preheader.new ], [ %niter.next.7, %.lr.ph233 ]
   %i.jt = mul nuw nsw i64 %.0235, %i.d
   %i.ju = getelementptr [4 x i8], ptr %1, i64 %i.jt
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ju, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ju, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.jv = or disjoint i64 %.0235, 1
   %i.jw = mul nuw nsw i64 %i.jv, %i.d
   %i.jx = getelementptr [4 x i8], ptr %1, i64 %i.jw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.jx, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.jx, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.jy = or disjoint i64 %.0235, 2
   %i.jz = mul nuw nsw i64 %i.jy, %i.d
   %i.ka = getelementptr [4 x i8], ptr %1, i64 %i.jz
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ka, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ka, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.kb = or disjoint i64 %.0235, 3
   %i.kc = mul nuw nsw i64 %i.kb, %i.d
   %i.kd = getelementptr [4 x i8], ptr %1, i64 %i.kc
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kd, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kd, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.ke = or disjoint i64 %.0235, 4
   %i.kf = mul nuw nsw i64 %i.ke, %i.d
   %i.kg = getelementptr [4 x i8], ptr %1, i64 %i.kf
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kg, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kg, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.kh = or disjoint i64 %.0235, 5
   %i.ki = mul nuw nsw i64 %i.kh, %i.d
   %i.kj = getelementptr [4 x i8], ptr %1, i64 %i.ki
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kj, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kj, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.kk = or disjoint i64 %.0235, 6
   %i.kl = mul nuw nsw i64 %i.kk, %i.d
   %i.km = getelementptr [4 x i8], ptr %1, i64 %i.kl
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.km, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.km, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.kn = or disjoint i64 %.0235, 7
   %i.ko = mul nuw nsw i64 %i.kn, %i.d
   %i.kp = getelementptr [4 x i8], ptr %1, i64 %i.ko
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kp, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.kp, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.kq = add nuw nsw i64 %.0235, 8               ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -873,35 +873,35 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %niter = phi i64 [ 0, %.lr.ph103.preheader.i.new ], [ %niter.next.7, %.lr.ph103.i ]
   %i.eq = mul nuw nsw i64 %.0105.i, %i.d
   %i.er = getelementptr [4 x i8], ptr %1, i64 %i.eq
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.er, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.er, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.es = or disjoint i64 %.0105.i, 1
   %i.et = mul nuw nsw i64 %i.es, %i.d
   %i.eu = getelementptr [4 x i8], ptr %1, i64 %i.et
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.eu, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.eu, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.ev = or disjoint i64 %.0105.i, 2
   %i.ew = mul nuw nsw i64 %i.ev, %i.d
   %i.ex = getelementptr [4 x i8], ptr %1, i64 %i.ew
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ex, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ex, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.ey = or disjoint i64 %.0105.i, 3
   %i.ez = mul nuw nsw i64 %i.ey, %i.d
   %i.fa = getelementptr [4 x i8], ptr %1, i64 %i.ez
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fa, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fa, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fb = or disjoint i64 %.0105.i, 4
   %i.fc = mul nuw nsw i64 %i.fb, %i.d
   %i.fd = getelementptr [4 x i8], ptr %1, i64 %i.fc
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fd, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fd, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fe = or disjoint i64 %.0105.i, 5
   %i.ff = mul nuw nsw i64 %i.fe, %i.d
   %i.fg = getelementptr [4 x i8], ptr %1, i64 %i.ff
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fg, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fg, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fh = or disjoint i64 %.0105.i, 6
   %i.fi = mul nuw nsw i64 %i.fh, %i.d
   %i.fj = getelementptr [4 x i8], ptr %1, i64 %i.fi
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fj, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fj, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fk = or disjoint i64 %.0105.i, 7
   %i.fl = mul nuw nsw i64 %i.fk, %i.d
   %i.fm = getelementptr [4 x i8], ptr %1, i64 %i.fl
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fm, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fm, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fn = add nuw nsw i64 %.0105.i, 8             ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -924,7 +924,7 @@ _ZL28gemv_q4_b32_8x8_q8_0_lut_avxI14block_iq4_nlx8EviPfmPKvS3_iiDv4_x.exit.loope
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph103.i.epil ], [ 0, %.lr.ph103.i.epil.preheader ]
   %i.fq = mul nuw nsw i64 %.0105.i.epil, %i.d
   %i.fr = getelementptr [4 x i8], ptr %1, i64 %i.fq
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fr, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fr, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !58, !noalias !64
   %i.fs = add nuw nsw i64 %.0105.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1133,35 +1133,35 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %niter = phi i64 [ 0, %.lr.ph117.preheader.i.new ], [ %niter.next.7, %.lr.ph117.i ]
   %i.es = mul nuw nsw i64 %.0119.i, %i.d
   %i.et = getelementptr [4 x i8], ptr %1, i64 %i.es
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.et, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.et, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.eu = or disjoint i64 %.0119.i, 1
   %i.ev = mul nuw nsw i64 %i.eu, %i.d
   %i.ew = getelementptr [4 x i8], ptr %1, i64 %i.ev
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ew, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ew, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.ex = or disjoint i64 %.0119.i, 2
   %i.ey = mul nuw nsw i64 %i.ex, %i.d
   %i.ez = getelementptr [4 x i8], ptr %1, i64 %i.ey
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ez, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ez, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fa = or disjoint i64 %.0119.i, 3
   %i.fb = mul nuw nsw i64 %i.fa, %i.d
   %i.fc = getelementptr [4 x i8], ptr %1, i64 %i.fb
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fc, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fc, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fd = or disjoint i64 %.0119.i, 4
   %i.fe = mul nuw nsw i64 %i.fd, %i.d
   %i.ff = getelementptr [4 x i8], ptr %1, i64 %i.fe
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ff, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ff, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fg = or disjoint i64 %.0119.i, 5
   %i.fh = mul nuw nsw i64 %i.fg, %i.d
   %i.fi = getelementptr [4 x i8], ptr %1, i64 %i.fh
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fi, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fi, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fj = or disjoint i64 %.0119.i, 6
   %i.fk = mul nuw nsw i64 %i.fj, %i.d
   %i.fl = getelementptr [4 x i8], ptr %1, i64 %i.fk
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fl, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fl, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fm = or disjoint i64 %.0119.i, 7
   %i.fn = mul nuw nsw i64 %i.fm, %i.d
   %i.fo = getelementptr [4 x i8], ptr %1, i64 %i.fn
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fo, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fo, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fp = add nuw nsw i64 %.0119.i, 8             ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -1184,7 +1184,7 @@ _ZL28gemv_q4_b32_8x8_q8_0_lut_avxI13block_mxfp4x8EviPfmPKvS3_iiDv4_x.exit.loopex
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph117.i.epil ], [ 0, %.lr.ph117.i.epil.preheader ]
   %i.fs = mul nuw nsw i64 %.0119.i.epil, %i.d
   %i.ft = getelementptr [4 x i8], ptr %1, i64 %i.fs
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ft, i8 0, i64 %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ft, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9, !alias.scope !73, !noalias !79
   %i.fu = add nuw nsw i64 %.0119.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1587,7 +1587,7 @@ bb.d:                                             ; preds = %bb.c
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph365.epil ], [ 0, %.lr.ph365.epil.preheader ]
   %i.rj = mul nuw nsw i64 %.0367.epil, %i.d
   %i.rk = getelementptr [4 x i8], ptr %1, i64 %i.rj
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rk, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rk, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.rl = add nuw nsw i64 %.0367.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1601,35 +1601,35 @@ bb.d:                                             ; preds = %bb.c
   %niter = phi i64 [ 0, %.lr.ph365.preheader.new ], [ %niter.next.7, %.lr.ph365 ]
   %i.rm = mul nuw nsw i64 %.0367, %i.d
   %i.rn = getelementptr [4 x i8], ptr %1, i64 %i.rm
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rn, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rn, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.ro = or disjoint i64 %.0367, 1
   %i.rp = mul nuw nsw i64 %i.ro, %i.d
   %i.rq = getelementptr [4 x i8], ptr %1, i64 %i.rp
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rq, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rq, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.rr = or disjoint i64 %.0367, 2
   %i.rs = mul nuw nsw i64 %i.rr, %i.d
   %i.rt = getelementptr [4 x i8], ptr %1, i64 %i.rs
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rt, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rt, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.ru = or disjoint i64 %.0367, 3
   %i.rv = mul nuw nsw i64 %i.ru, %i.d
   %i.rw = getelementptr [4 x i8], ptr %1, i64 %i.rv
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rw, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rw, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.rx = or disjoint i64 %.0367, 4
   %i.ry = mul nuw nsw i64 %i.rx, %i.d
   %i.rz = getelementptr [4 x i8], ptr %1, i64 %i.ry
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rz, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.rz, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.sa = or disjoint i64 %.0367, 5
   %i.sb = mul nuw nsw i64 %i.sa, %i.d
   %i.sc = getelementptr [4 x i8], ptr %1, i64 %i.sb
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.sc, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.sc, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.sd = or disjoint i64 %.0367, 6
   %i.se = mul nuw nsw i64 %i.sd, %i.d
   %i.sf = getelementptr [4 x i8], ptr %1, i64 %i.se
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.sf, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.sf, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.sg = or disjoint i64 %.0367, 7
   %i.sh = mul nuw nsw i64 %i.sg, %i.d
   %i.si = getelementptr [4 x i8], ptr %1, i64 %i.sh
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.si, i8 0, i64 %i.j, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.si, i8 0, i64 range(i64 0, 8589934561) %i.j, i1 false), !tbaa !9
   %i.sj = add nuw nsw i64 %.0367, 8               ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -1798,22 +1798,22 @@ bb.a:
   %scevgep52 = getelementptr i8, ptr %i.bi, i64 %i.cw
   %scevgep53 = getelementptr i8, ptr %i.bj, i64 %i.cw
   %scevgep54 = getelementptr i8, ptr %i.bk, i64 %i.cw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   br label %._crit_edge.us.i
 
 .preheader1021.us.i.us:                           ; preds = %.lr.ph1033.split.us.i, %.preheader1020.us.loopexit.i.us
@@ -2216,40 +2216,40 @@ begin_hunk_2_@ggml_gemm_q4_0_8x8_q8_0:bb.a
   %scevgep60 = getelementptr i8, ptr %i.od, i64 %i.yu
   %scevgep59 = getelementptr i8, ptr %i.oe, i64 %i.yu
   %scevgep58 = getelementptr i8, ptr %i.of, i64 %i.yu
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   %indvar.next57 = or disjoint i64 %indvar56, 1
   %i.yv = mul i64 %i.nn, %indvar.next57           ; 4 uses
   %scevgep61.1 = getelementptr i8, ptr %i.oc, i64 %i.yv
   %scevgep60.1 = getelementptr i8, ptr %i.od, i64 %i.yv
   %scevgep59.1 = getelementptr i8, ptr %i.oe, i64 %i.yv
   %scevgep58.1 = getelementptr i8, ptr %i.of, i64 %i.yv
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   %indvar.next57.1 = or disjoint i64 %indvar56, 2
   %i.yw = mul i64 %i.nn, %indvar.next57.1         ; 4 uses
   %scevgep61.2 = getelementptr i8, ptr %i.oc, i64 %i.yw
   %scevgep60.2 = getelementptr i8, ptr %i.od, i64 %i.yw
   %scevgep59.2 = getelementptr i8, ptr %i.oe, i64 %i.yw
   %scevgep58.2 = getelementptr i8, ptr %i.of, i64 %i.yw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   %indvar.next57.2 = or disjoint i64 %indvar56, 3
   %i.yx = mul i64 %i.nn, %indvar.next57.2         ; 4 uses
   %scevgep61.3 = getelementptr i8, ptr %i.oc, i64 %i.yx
   %scevgep60.3 = getelementptr i8, ptr %i.od, i64 %i.yx
   %scevgep59.3 = getelementptr i8, ptr %i.oe, i64 %i.yx
   %scevgep58.3 = getelementptr i8, ptr %i.of, i64 %i.yx
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   %indvar.next57.3 = add nuw i64 %indvar56, 4     ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -2273,10 +2273,10 @@ begin_hunk_2_@ggml_gemm_q4_0_8x8_q8_0:bb.a
   %scevgep60.epil = getelementptr i8, ptr %i.od, i64 %i.yy
   %scevgep59.epil = getelementptr i8, ptr %i.oe, i64 %i.yy
   %scevgep58.epil = getelementptr i8, ptr %i.of, i64 %i.yy
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !105, !noalias !109
   %indvar.next57.epil = add nuw i64 %indvar56.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -2679,22 +2679,22 @@ bb.a:
   %scevgep52 = getelementptr i8, ptr %i.bi, i64 %i.cw
   %scevgep53 = getelementptr i8, ptr %i.bj, i64 %i.cw
   %scevgep54 = getelementptr i8, ptr %i.bk, i64 %i.cw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   br label %._crit_edge.us.i
 
 .preheader1021.us.i.us:                           ; preds = %.lr.ph1033.split.us.i, %.preheader1020.us.loopexit.i.us
@@ -3097,40 +3097,40 @@ begin_hunk_4_@ggml_gemm_iq4_nl_8x8_q8_0:bb.a
   %scevgep60 = getelementptr i8, ptr %i.od, i64 %i.yu
   %scevgep59 = getelementptr i8, ptr %i.oe, i64 %i.yu
   %scevgep58 = getelementptr i8, ptr %i.of, i64 %i.yu
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   %indvar.next57 = or disjoint i64 %indvar56, 1
   %i.yv = mul i64 %i.nn, %indvar.next57           ; 4 uses
   %scevgep61.1 = getelementptr i8, ptr %i.oc, i64 %i.yv
   %scevgep60.1 = getelementptr i8, ptr %i.od, i64 %i.yv
   %scevgep59.1 = getelementptr i8, ptr %i.oe, i64 %i.yv
   %scevgep58.1 = getelementptr i8, ptr %i.of, i64 %i.yv
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   %indvar.next57.1 = or disjoint i64 %indvar56, 2
   %i.yw = mul i64 %i.nn, %indvar.next57.1         ; 4 uses
   %scevgep61.2 = getelementptr i8, ptr %i.oc, i64 %i.yw
   %scevgep60.2 = getelementptr i8, ptr %i.od, i64 %i.yw
   %scevgep59.2 = getelementptr i8, ptr %i.oe, i64 %i.yw
   %scevgep58.2 = getelementptr i8, ptr %i.of, i64 %i.yw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   %indvar.next57.2 = or disjoint i64 %indvar56, 3
   %i.yx = mul i64 %i.nn, %indvar.next57.2         ; 4 uses
   %scevgep61.3 = getelementptr i8, ptr %i.oc, i64 %i.yx
   %scevgep60.3 = getelementptr i8, ptr %i.od, i64 %i.yx
   %scevgep59.3 = getelementptr i8, ptr %i.oe, i64 %i.yx
   %scevgep58.3 = getelementptr i8, ptr %i.of, i64 %i.yx
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   %indvar.next57.3 = add nuw i64 %indvar56, 4     ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -3154,10 +3154,10 @@ begin_hunk_4_@ggml_gemm_iq4_nl_8x8_q8_0:bb.a
   %scevgep60.epil = getelementptr i8, ptr %i.od, i64 %i.yy
   %scevgep59.epil = getelementptr i8, ptr %i.oe, i64 %i.yy
   %scevgep58.epil = getelementptr i8, ptr %i.of, i64 %i.yy
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 range(i64 0, 8589934593) %i.nr, i1 false), !tbaa !9, !alias.scope !152, !noalias !156
   %indvar.next57.epil = add nuw i64 %indvar56.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -3560,22 +3560,22 @@ bb.a:
   %scevgep52 = getelementptr i8, ptr %i.bi, i64 %i.cw
   %scevgep53 = getelementptr i8, ptr %i.bj, i64 %i.cw
   %scevgep54 = getelementptr i8, ptr %i.bk, i64 %i.cw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep40, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep41, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep42, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep43, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep44, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep45, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep46, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep47, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep48, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep49, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep50, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep51, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep52, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep54, i8 0, i64 range(i64 0, 8589934593) %i.ae, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   br label %._crit_edge.us.i
 
 .preheader1105.us.i.us:                           ; preds = %.lr.ph1117.split.us.i, %.preheader1104.us.loopexit.i.us
@@ -3978,40 +3978,40 @@ begin_hunk_6_@ggml_gemm_mxfp4_8x8_q8_0:bb.a
   %scevgep60 = getelementptr i8, ptr %i.oe, i64 %i.yw
   %scevgep59 = getelementptr i8, ptr %i.of, i64 %i.yw
   %scevgep58 = getelementptr i8, ptr %i.og, i64 %i.yw
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   %indvar.next57 = or disjoint i64 %indvar56, 1
   %i.yx = mul i64 %i.no, %indvar.next57           ; 4 uses
   %scevgep61.1 = getelementptr i8, ptr %i.od, i64 %i.yx
   %scevgep60.1 = getelementptr i8, ptr %i.oe, i64 %i.yx
   %scevgep59.1 = getelementptr i8, ptr %i.of, i64 %i.yx
   %scevgep58.1 = getelementptr i8, ptr %i.og, i64 %i.yx
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.1, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.1, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.1, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.1, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   %indvar.next57.1 = or disjoint i64 %indvar56, 2
   %i.yy = mul i64 %i.no, %indvar.next57.1         ; 4 uses
   %scevgep61.2 = getelementptr i8, ptr %i.od, i64 %i.yy
   %scevgep60.2 = getelementptr i8, ptr %i.oe, i64 %i.yy
   %scevgep59.2 = getelementptr i8, ptr %i.of, i64 %i.yy
   %scevgep58.2 = getelementptr i8, ptr %i.og, i64 %i.yy
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.2, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.2, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.2, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.2, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   %indvar.next57.2 = or disjoint i64 %indvar56, 3
   %i.yz = mul i64 %i.no, %indvar.next57.2         ; 4 uses
   %scevgep61.3 = getelementptr i8, ptr %i.od, i64 %i.yz
   %scevgep60.3 = getelementptr i8, ptr %i.oe, i64 %i.yz
   %scevgep59.3 = getelementptr i8, ptr %i.of, i64 %i.yz
   %scevgep58.3 = getelementptr i8, ptr %i.og, i64 %i.yz
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.3, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.3, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.3, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.3, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   %indvar.next57.3 = add nuw i64 %indvar56, 4     ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -4035,10 +4035,10 @@ begin_hunk_6_@ggml_gemm_mxfp4_8x8_q8_0:bb.a
   %scevgep60.epil = getelementptr i8, ptr %i.oe, i64 %i.za
   %scevgep59.epil = getelementptr i8, ptr %i.of, i64 %i.za
   %scevgep58.epil = getelementptr i8, ptr %i.og, i64 %i.za
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep58.epil, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep59.epil, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep60.epil, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep61.epil, i8 0, i64 range(i64 0, 8589934593) %i.ns, i1 false), !tbaa !9, !alias.scope !179, !noalias !183
   %indvar.next57.epil = add nuw i64 %indvar56.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter

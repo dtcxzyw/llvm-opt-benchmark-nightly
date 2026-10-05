@@ -206,7 +206,7 @@ bb.jn:                                            ; preds = %bb.jm
 
 ._crit_edge.thread.i.i.i.i.i:                     ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hf41cf182ecbbe496E.exit.i.i.i.i.i"
   %i.aao = add i64 %i.aaf, -1                     ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.aam, i8 0, i64 %i.aao, i1 false), !noalias !10054
+  call void @llvm.memset.p0.i64(ptr align 1 %i.aam, i8 0, i64 range(i64 0, -1) %i.aao, i1 false), !noalias !10054
   %i.aap = add i64 %i.aaj, %i.aao                 ; 2 uses
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.aak, i64 %i.aap
   br label %._crit_edge.i.i.i.i.i
@@ -609,7 +609,7 @@ bb.jn:                                            ; preds = %bb.jm
 
 ._crit_edge.thread.i.i.i.i.i:                     ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hf41cf182ecbbe496E.exit.i.i.i.i.i"
   %i.aao = add i64 %i.aaf, -1                     ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.aam, i8 0, i64 %i.aao, i1 false), !noalias !10845
+  call void @llvm.memset.p0.i64(ptr align 1 %i.aam, i8 0, i64 range(i64 0, -1) %i.aao, i1 false), !noalias !10845
   %i.aap = add i64 %i.aaj, %i.aao                 ; 2 uses
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.aak, i64 %i.aap
   br label %._crit_edge.i.i.i.i.i
@@ -1012,7 +1012,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 ._crit_edge.thread.i.i.i:                         ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hf41cf182ecbbe496E.exit.i.i.i"
   %i.fx = add i64 %i.fo, -1                       ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.fv, i8 0, i64 %i.fx, i1 false), !noalias !45544
+  call void @llvm.memset.p0.i64(ptr align 1 %i.fv, i8 0, i64 range(i64 0, -1) %i.fx, i1 false), !noalias !45544
   %i.fy = add i64 %i.ft, %i.fx                    ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.fs, i64 %i.fy
   br label %._crit_edge.i.i.i
@@ -1415,7 +1415,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 ._crit_edge.thread.i.i.i:                         ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hf41cf182ecbbe496E.exit.i.i.i"
   %i.fx = add i64 %i.fo, -1                       ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.fv, i8 0, i64 %i.fx, i1 false), !noalias !45624
+  call void @llvm.memset.p0.i64(ptr align 1 %i.fv, i8 0, i64 range(i64 0, -1) %i.fx, i1 false), !noalias !45624
   %i.fy = add i64 %i.ft, %i.fx                    ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.fs, i64 %i.fy
   br label %._crit_edge.i.i.i
@@ -1818,7 +1818,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge.thread.i.i.i.i.i:                     ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hf41cf182ecbbe496E.exit.i.i.i.i.i"
   %i.au = add nsw i64 %i.ak, -1                   ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %i.as, i8 0, i64 %i.au, i1 false), !noalias !80876
+  call void @llvm.memset.p0.i64(ptr align 1 %i.as, i8 0, i64 range(i64 0, -1) %i.au, i1 false), !noalias !80876
   %i.av = add nuw i64 %i.ao, %i.au                ; 2 uses
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.aq, i64 %i.av
   br label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$6resize17hce7e7173d6d761bcE.exit.i.i.i"

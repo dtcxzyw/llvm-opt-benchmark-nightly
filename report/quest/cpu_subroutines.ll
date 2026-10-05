@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -454,7 +454,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -700,7 +700,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -946,7 +946,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -1192,7 +1192,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -1438,7 +1438,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -1704,7 +1704,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -1965,7 +1965,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -2229,7 +2229,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -2493,7 +2493,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -2757,7 +2757,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -3021,7 +3021,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -3285,7 +3285,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -3569,7 +3569,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.s, i1 false), !tbaa !71
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 34359738369) %i.s, i1 false), !tbaa !71
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b

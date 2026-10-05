@@ -205,7 +205,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %scevgep20 = getelementptr i8, ptr %i.n, i64 %i.aa
   %i.ab = sub nsw i64 %i.y, %i.z
   %i.ac = shl nsw i64 %i.ab, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20, i8 0, i64 %i.ac, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20, i8 0, i64 range(i64 0, 34359738361) %i.ac, i1 false), !tbaa !384
   br label %._crit_edge.us
 
 ._crit_edge.us:                                   ; preds = %.lr.ph.us.preheader, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us
@@ -222,7 +222,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %scevgep20.1 = getelementptr i8, ptr %i.n, i64 %i.aj
   %i.ak = sub nsw i64 %i.ah, %i.ai
   %i.al = shl nsw i64 %i.ak, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20.1, i8 0, i64 %i.al, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20.1, i8 0, i64 range(i64 0, 34359738361) %i.al, i1 false), !tbaa !384
   br label %._crit_edge.us.1
 
 ._crit_edge.us.1:                                 ; preds = %.lr.ph.us.preheader.1, %._crit_edge.us
@@ -253,7 +253,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.au = shl nsw i64 %i.at, 3
   %scevgep = getelementptr i8, ptr %i.n, i64 %i.au
   %i.av = shl nuw nsw i64 %i.aq, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.av, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 range(i64 0, 51539607537) %i.av, i1 false), !tbaa !384
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
@@ -271,7 +271,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.bd = shl nsw i64 %i.bc, 3
   %scevgep.1 = getelementptr i8, ptr %i.n, i64 %i.bd
   %i.be = shl nuw nsw i64 %i.az, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.1, i8 0, i64 %i.be, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.1, i8 0, i64 range(i64 0, 51539607537) %i.be, i1 false), !tbaa !384
   br label %._crit_edge.1
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.preheader.1, %._crit_edge
@@ -302,7 +302,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %scevgep20.epil = getelementptr i8, ptr %i.n, i64 %i.bm
   %i.bn = sub nsw i64 %i.bk, %i.bl
   %i.bo = shl nsw i64 %i.bn, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20.epil, i8 0, i64 %i.bo, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep20.epil, i8 0, i64 range(i64 0, 34359738361) %i.bo, i1 false), !tbaa !384
   br label %._crit_edge17
 
 ._crit_edge17.loopexit31.unr-lcssa:               ; preds = %._crit_edge.1
@@ -326,7 +326,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.bw = shl nsw i64 %i.bv, 3
   %scevgep.epil = getelementptr i8, ptr %i.n, i64 %i.bw
   %i.bx = shl nuw nsw i64 %i.bs, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.epil, i8 0, i64 %i.bx, i1 false), !tbaa !384
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep.epil, i8 0, i64 range(i64 0, 51539607537) %i.bx, i1 false), !tbaa !384
   br label %._crit_edge17
 
 ._crit_edge17:                                    ; preds = %._crit_edge17.loopexit31.unr-lcssa, %.lr.ph.preheader.epil, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.epil.preheader, %._crit_edge17.loopexit.unr-lcssa, %.lr.ph.us.preheader.epil, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us.epil.preheader, %bb.e
@@ -729,7 +729,7 @@ bb.bw:                                            ; preds = %bb.bv, %._crit_edge
 .lr.ph913.preheader:                              ; preds = %.preheader762
   %i.ys = zext nneg i32 %i.cy to i64
   %i.yt = shl nuw nsw i64 %i.ys, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %i.ei, i8 -1, i64 %i.yt, i1 false), !tbaa !97
+  call void @llvm.memset.p0.i64(ptr align 4 %i.ei, i8 -1, i64 range(i64 0, 8589934593) %i.yt, i1 false), !tbaa !97
   br label %.preheader761
 
 .lr.ph910:                                        ; preds = %.lr.ph910.preheader1337, %.lr.ph910
