@@ -205,8 +205,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.qo, label %.preheader226.preheader.i, label %.preheader227.i
 
 .preheader226.preheader.i:                        ; preds = %bb.ak
-  %.mask.i = and i16 %.val205.i, 255
-  %i.rd = zext nneg i16 %.mask.i to i32
+  %i.rd = zext i16 %.val205.i to i32
   br label %.preheader226.i
 
 .preheader227.i:                                  ; preds = %bb.ak, %.preheader227.i

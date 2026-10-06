@@ -204,9 +204,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %2 = and i32 %i.i, 128
-  %3 = icmp eq i32 %2, 0
-  br i1 %3, label %.preheader.preheader, label %.critedge
+  %2 = icmp samesign ult i32 %i.i, 128
+  br i1 %2, label %.preheader.preheader, label %.critedge
 
 .preheader.preheader:                             ; preds = %.preheader42, %._crit_edge
   %.023.lcssa68 = phi i64 [ %i.j, %._crit_edge ], [ %i.c, %.preheader42 ] ; 3 uses
@@ -247,12 +246,11 @@ bb.a:
   br i1 %.not40, label %._crit_edge57.loopexit.loopexit, label %.lr.ph56, !llvm.loop !28
 
 ._crit_edge57.loopexit.loopexit:                  ; preds = %.lr.ph56
-  %4 = and i32 %i.w, 128
-  %5 = icmp eq i32 %4, 0
+  %3 = icmp samesign ult i32 %i.w, 128
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph81, %.loopexit, %._crit_edge57.loopexit.loopexit, %._crit_edge
-  %.435 = phi i1 [ %5, %._crit_edge57.loopexit.loopexit ], [ false, %._crit_edge ], [ true, %.loopexit ], [ false, %.lr.ph81 ]
+  %.435 = phi i1 [ %3, %._crit_edge57.loopexit.loopexit ], [ false, %._crit_edge ], [ true, %.loopexit ], [ false, %.lr.ph81 ]
   ret i1 %.435
 }
 

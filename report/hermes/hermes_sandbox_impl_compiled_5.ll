@@ -204,8 +204,7 @@ bb.n:                                             ; preds = %bb.i
   br i1 %.not422, label %bb.r, label %bb.q
 
 bb.o:                                             ; preds = %bb.i
-  %4 = and i32 %.0408, 64
-  %.not426 = icmp eq i32 %4, 0
+  %.not426 = icmp samesign ult i32 %.0408, 64
   br i1 %.not426, label %bb.r, label %bb.q
 
 bb.p:                                             ; preds = %bb.i
