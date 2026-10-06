@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/evp_enc?download=true
 inline.NumInlined: 64
 inline.NumDeleted: 30
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@EVP_EncryptFinal_ex:bb.a
   tail call void @ERR_new() #8
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 1105, ptr noundef nonnull @__func__.EVP_EncryptFinal_ex) #8
@@ -204,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 9 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 8 uses
   %i.au = zext nneg i32 %i.ah to i64
   %i.av = getelementptr i8, ptr %i.at, i64 %i.au
   %i.aw = getelementptr i8, ptr %i.av, i64 -1
@@ -243,73 +244,61 @@ bb.ad:                                            ; preds = %.preheader
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.bg = sub nuw nsw i32 %i.ah, %i.ay            ; 5 uses
+  %i.bg = sub nuw nsw i32 %i.ah, %i.ay            ; 4 uses
   %i.bh = icmp sgt i32 %i.bg, 0
   br i1 %i.bh, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.ae
-  %wide.trip.count = zext nneg i32 %i.bg to i64   ; 8 uses
-  %min.iters.check = icmp ult i32 %i.bg, 4
+  %wide.trip.count = zext nneg i32 %i.bg to i64   ; 5 uses
+  %min.iters.check = icmp ult i32 %i.bg, 12
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.bi = sub i64 %i.b, %i.a
   %i.bj = add i64 %i.bi, -137
-  %diff.check = icmp ult i64 %i.bj, 31
-  br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
+  %diff.check = icmp ult i64 %i.bj, 7
+  br i1 %diff.check, label %.lr.ph.preheader, label %vector.ph
 
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check89 = icmp ult i32 %i.bg, 32
-  br i1 %min.iters.check89, label %vec.epilog.ph, label %vector.ph
+vector.ph:                                        ; preds = %vector.memcheck
+  %i.bk = and i64 %wide.trip.count, 56            ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 140
+  %wide.load = load <4 x i8>, ptr %i.at, align 8, !tbaa !59
+  %wide.load89 = load <4 x i8>, ptr %3, align 4, !tbaa !59
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  store <4 x i8> %wide.load, ptr %1, align 1, !tbaa !59
+  store <4 x i8> %wide.load89, ptr %4, align 1, !tbaa !59
+  %5 = icmp eq i64 %i.bk, 8
+  br i1 %5, label %vec.epilog.middle.block, label %vector.body
 
-vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.bk = and i64 %wide.trip.count, 28
-  %n.vec = and i64 %wide.trip.count, 32           ; 4 uses
-  br label %vector.body
+vector.body:                                      ; preds = %vector.ph
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 148
+  %wide.load.1 = load <4 x i8>, ptr %i.bl, align 8, !tbaa !59
+  %wide.load89.1 = load <4 x i8>, ptr %i.bm, align 4, !tbaa !59
+  %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 12
+  store <4 x i8> %wide.load.1, ptr %i.bn, align 1, !tbaa !59
+  store <4 x i8> %wide.load89.1, ptr %i.bo, align 1, !tbaa !59
+  %i.bp = icmp eq i64 %i.bk, 16
+  br i1 %i.bp, label %vec.epilog.middle.block, label %vec.epilog.vector.body
 
-vector.body:                                      ; preds = %vector.ph, %vector.body
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.at, i64 %index ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
-  %wide.load = load <16 x i8>, ptr %i.bl, align 1, !tbaa !59
-  %wide.load90 = load <16 x i8>, ptr %i.bm, align 1, !tbaa !59
-  %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 %index ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
-  store <16 x i8> %wide.load, ptr %i.bn, align 1, !tbaa !59
-  store <16 x i8> %wide.load90, ptr %i.bo, align 1, !tbaa !59
-  %index.next = add nuw i64 %index, 32            ; 2 uses
-  %i.bp = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bp, label %middle.block, label %vector.body, !llvm.loop !85
+vec.epilog.vector.body:                           ; preds = %vector.body
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 156
+  %wide.load.2 = load <4 x i8>, ptr %6, align 8, !tbaa !59
+  %wide.load93 = load <4 x i8>, ptr %i.bq, align 4, !tbaa !59
+  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  store <4 x i8> %wide.load.2, ptr %i.br, align 1, !tbaa !59
+  store <4 x i8> %wide.load93, ptr %7, align 1, !tbaa !59
+  br label %vec.epilog.middle.block
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
-
-vec.epilog.iter.check:                            ; preds = %middle.block
-  %min.epilog.iters.check = icmp eq i64 %i.bk, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !91
-
-vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
-  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec91 = and i64 %wide.trip.count, 60         ; 3 uses
-  br label %vec.epilog.vector.body
-
-vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index92 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next94, %vec.epilog.vector.body ] ; 3 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.at, i64 %index92
-  %wide.load93 = load <4 x i8>, ptr %i.bq, align 1, !tbaa !59
-  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 %index92
-  store <4 x i8> %wide.load93, ptr %i.br, align 1, !tbaa !59
-  %index.next94 = add nuw i64 %index92, 4         ; 2 uses
-  %3 = icmp eq i64 %index.next94, %n.vec91
-  br i1 %3, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !86
-
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n95 = icmp eq i64 %n.vec91, %wide.trip.count
+vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body, %vector.body, %vector.ph
+  %cmp.n95 = icmp eq i64 %i.bk, %wide.trip.count
   br i1 %cmp.n95, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec91, %vec.epilog.middle.block ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %i.bk, %vec.epilog.middle.block ] ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -324,7 +313,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !87
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !85
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
@@ -355,9 +344,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.ch, ptr %i.ci, align 1, !tbaa !59
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond77.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond77.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !88
+  br i1 %exitcond77.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !86
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.ae
+._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %vec.epilog.middle.block, %bb.ae
   store i32 %i.bg, ptr %2, align 4, !tbaa !34
   br label %bb.af
 
@@ -462,7 +451,7 @@ bb.h:                                             ; preds = %bb.g
   %i.m = add nuw i64 %.019, 1                     ; 2 uses
   %i.n = load i64, ptr %i.j, align 8, !tbaa !53   ; 2 uses
   %i.o = icmp ult i64 %i.m, %i.n
-  br i1 %i.o, label %.lr.ph, label %._crit_edge, !llvm.loop !93
+  br i1 %i.o, label %.lr.ph, label %._crit_edge, !llvm.loop !89
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.lcssa = phi i64 [ 0, %.preheader ], [ %i.n, %.lr.ph ]
@@ -857,7 +846,7 @@ bb.e:                                             ; preds = %bb.d
   %i.j = tail call ptr @EVP_CIPHER_get0_provider(ptr noundef nonnull %i.g) #8
   %i.k = tail call ptr @ossl_provider_ctx(ptr noundef %i.j) #8
   %i.l = load ptr, ptr %i.h, align 8, !tbaa !60
-  %i.m = tail call ptr %i.l(ptr noundef null, ptr noundef %i.k) #8, !inline_history !94
+  %i.m = tail call ptr %i.l(ptr noundef null, ptr noundef %i.k) #8, !inline_history !90
   br label %EVP_CIPHER_settable_ctx_params.exit
 
 EVP_CIPHER_settable_ctx_params.exit:              ; preds = %bb.c, %bb.d, %bb.e
@@ -1157,7 +1146,7 @@ bb.ab:                                            ; preds = %bb.e
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @OSSL_PARAM_construct_size_t(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %5, ptr noundef nonnull @.str.14, ptr noundef nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %5, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %5, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   %i.af = load ptr, ptr %0, align 8, !tbaa !15
   %i.ag = load ptr, ptr %i.ab, align 8, !tbaa !21
@@ -1190,12 +1179,12 @@ bb.ag:                                            ; preds = %bb.e
 bb.ah:                                            ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
   call void @OSSL_PARAM_construct_size_t(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %6, ptr noundef nonnull @.str.17, ptr noundef nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %6, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %6, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
   call void @OSSL_PARAM_construct_end(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %7) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.aq, ptr noundef nonnull align 8 dereferenceable(40) %7, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.aq, ptr noundef nonnull align 8 dereferenceable(40) %7, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
   %i.ar = load ptr, ptr %0, align 8, !tbaa !15
   %i.as = load ptr, ptr %i.am, align 8, !tbaa !21
@@ -1214,15 +1203,15 @@ bb.aj:                                            ; preds = %bb.e
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !97
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !93
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !98
+  %i.bb = load i64, ptr %i.ba, align 8, !tbaa !94
   call void @OSSL_PARAM_construct_octet_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %4, ptr noundef nonnull @.str.18, ptr noundef %i.az, i64 noundef %i.bb) #8
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   call void @OSSL_PARAM_construct_uint(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %8, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.bd) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bc, ptr noundef nonnull align 8 dereferenceable(40) %8, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bc, ptr noundef nonnull align 8 dereferenceable(40) %8, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #8
   %i.be = load ptr, ptr %0, align 8, !tbaa !15
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
@@ -1234,16 +1223,16 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #8
   call void @OSSL_PARAM_construct_size_t(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %9, ptr noundef nonnull @.str.20, ptr noundef nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %9, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %9, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #8
   call void @OSSL_PARAM_construct_uint(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %10, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.bd) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bc, ptr noundef nonnull align 8 dereferenceable(40) %10, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bc, ptr noundef nonnull align 8 dereferenceable(40) %10, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #8
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 80
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #8
   call void @OSSL_PARAM_construct_end(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %11) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.bj, ptr noundef nonnull align 8 dereferenceable(40) %11, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.bj, ptr noundef nonnull align 8 dereferenceable(40) %11, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #8
   %i.bk = load ptr, ptr %0, align 8, !tbaa !15
   %i.bl = load ptr, ptr %i.bf, align 8, !tbaa !21
@@ -1257,23 +1246,23 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.ax
 
 bb.an:                                            ; preds = %bb.e
-  %i.bq = load ptr, ptr %3, align 8, !tbaa !99
+  %i.bq = load ptr, ptr %3, align 8, !tbaa !95
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.bs = load i64, ptr %i.br, align 8, !tbaa !98
+  %i.bs = load i64, ptr %i.br, align 8, !tbaa !94
   call void @OSSL_PARAM_construct_octet_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %4, ptr noundef nonnull @.str.21, ptr noundef %i.bq, i64 noundef %i.bs) #8
   %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #8
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !97
-  %i.bw = load i64, ptr %i.br, align 8, !tbaa !98
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !93
+  %i.bw = load i64, ptr %i.br, align 8, !tbaa !94
   call void @OSSL_PARAM_construct_octet_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %12, ptr noundef nonnull @.str.22, ptr noundef %i.bv, i64 noundef %i.bw) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, ptr noundef nonnull align 8 dereferenceable(40) %12, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, ptr noundef nonnull align 8 dereferenceable(40) %12, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #8
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 80
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #8
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 24
   call void @OSSL_PARAM_construct_uint(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %13, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.by) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.bx, ptr noundef nonnull align 8 dereferenceable(40) %13, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.bx, ptr noundef nonnull align 8 dereferenceable(40) %13, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #8
   %i.bz = load ptr, ptr %0, align 8, !tbaa !15
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
@@ -1285,11 +1274,11 @@ bb.an:                                            ; preds = %bb.e
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #8
   call void @OSSL_PARAM_construct_size_t(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %14, ptr noundef nonnull @.str.23, ptr noundef nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %14, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %14, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #8
   call void @OSSL_PARAM_construct_end(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %15) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, ptr noundef nonnull align 8 dereferenceable(40) %15, i64 40, i1 false), !tbaa.struct !95
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, ptr noundef nonnull align 8 dereferenceable(40) %15, i64 40, i1 false), !tbaa.struct !91
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #8
   %i.ce = load ptr, ptr %0, align 8, !tbaa !15
   %i.cf = load ptr, ptr %i.ca, align 8, !tbaa !21
@@ -1692,7 +1681,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.j = tail call i32 @EVP_CIPHER_CTX_reset(ptr noundef %0) ; 0 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(192) %1, i64 192, i1 false), !tbaa.struct !102
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(192) %1, i64 192, i1 false), !tbaa.struct !98
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   store ptr null, ptr %i.k, align 8, !tbaa !21
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -1858,7 +1847,7 @@ declare ptr @evp_generic_fetch(ptr noundef, i32 noundef, ptr noundef, ptr nounde
 define internal ptr @evp_cipher_from_algorithm(i32 noundef %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !106
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !102
   %i.c = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 296, ptr noundef nonnull @.str, i32 noundef 1837) #8 ; 35 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -1884,7 +1873,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 96
-  store i32 %0, ptr %i.h, align 8, !tbaa !107
+  store i32 %0, ptr %i.h, align 8, !tbaa !103
   %i.i = tail call ptr @ossl_algorithm_get1_first_name(ptr noundef nonnull %1) #8 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 104
   store ptr %i.i, ptr %i.j, align 8, !tbaa !25
@@ -1893,9 +1882,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !108
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !104
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 112
-  store ptr %i.m, ptr %i.n, align 8, !tbaa !109
+  store ptr %i.m, ptr %i.n, align 8, !tbaa !105
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 272 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 264 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 256 ; 2 uses
@@ -1925,7 +1914,7 @@ bb.g:                                             ; preds = %bb.av, %bb.f
   %.0114 = phi i32 [ 0, %bb.f ], [ %.1115, %bb.av ] ; 40 uses
   %.0112 = phi i32 [ 0, %bb.f ], [ %.1113, %bb.av ] ; 44 uses
   %.0 = phi i32 [ 0, %bb.f ], [ %.1, %bb.av ]     ; 43 uses
-  %i.ai = load i32, ptr %.0120, align 8, !tbaa !111
+  %i.ai = load i32, ptr %.0120, align 8, !tbaa !107
   switch i32 %i.ai, label %bb.av [
     i32 0, label %bb.aw
     i32 1, label %bb.h
@@ -1957,7 +1946,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val = load ptr, ptr %i.ak, align 8, !tbaa !112
+  %.0120.val = load ptr, ptr %i.ak, align 8, !tbaa !108
   store ptr %.0120.val, ptr %i.ah, align 8, !tbaa !33
   %i.al = add nsw i32 %.0, 1
   br label %bb.av
@@ -1969,7 +1958,7 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.j
   %i.an = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val150 = load ptr, ptr %i.an, align 8, !tbaa !112
+  %.0120.val150 = load ptr, ptr %i.an, align 8, !tbaa !108
   store ptr %.0120.val150, ptr %i.ag, align 8, !tbaa !38
   br label %bb.av
 
@@ -1980,7 +1969,7 @@ bb.l:                                             ; preds = %bb.g
 
 bb.m:                                             ; preds = %bb.l
   %i.ap = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val151 = load ptr, ptr %i.ap, align 8, !tbaa !112
+  %.0120.val151 = load ptr, ptr %i.ap, align 8, !tbaa !108
   store ptr %.0120.val151, ptr %i.af, align 8, !tbaa !40
   br label %bb.av
 
@@ -1991,7 +1980,7 @@ bb.n:                                             ; preds = %bb.g
 
 bb.o:                                             ; preds = %bb.n
   %i.ar = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val152 = load ptr, ptr %i.ar, align 8, !tbaa !112
+  %.0120.val152 = load ptr, ptr %i.ar, align 8, !tbaa !108
   store ptr %.0120.val152, ptr %i.ae, align 8, !tbaa !35
   br label %bb.av
 
@@ -2002,7 +1991,7 @@ bb.p:                                             ; preds = %bb.g
 
 bb.q:                                             ; preds = %bb.p
   %i.at = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val153 = load ptr, ptr %i.at, align 8, !tbaa !112
+  %.0120.val153 = load ptr, ptr %i.at, align 8, !tbaa !108
   store ptr %.0120.val153, ptr %i.ad, align 8, !tbaa !39
   br label %bb.av
 
@@ -2013,7 +2002,7 @@ bb.r:                                             ; preds = %bb.g
 
 bb.s:                                             ; preds = %bb.r
   %i.av = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val154 = load ptr, ptr %i.av, align 8, !tbaa !112
+  %.0120.val154 = load ptr, ptr %i.av, align 8, !tbaa !108
   store ptr %.0120.val154, ptr %i.ac, align 8, !tbaa !55
   %i.aw = add nsw i32 %.0118, 1
   br label %bb.av
@@ -2025,20 +2014,20 @@ bb.t:                                             ; preds = %bb.g
 
 bb.u:                                             ; preds = %bb.t
   %i.ay = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val155 = load ptr, ptr %i.ay, align 8, !tbaa !112
+  %.0120.val155 = load ptr, ptr %i.ay, align 8, !tbaa !108
   store ptr %.0120.val155, ptr %i.ab, align 8, !tbaa !58
   %i.az = add nsw i32 %.0118, 1
   br label %bb.av
 
 bb.v:                                             ; preds = %bb.g
-  %i.ba = load ptr, ptr %i.aa, align 8, !tbaa !113
+  %i.ba = load ptr, ptr %i.aa, align 8, !tbaa !109
   %.not142 = icmp eq ptr %i.ba, null
   br i1 %.not142, label %bb.w, label %bb.av
 
 bb.w:                                             ; preds = %bb.v
   %i.bb = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val156 = load ptr, ptr %i.bb, align 8, !tbaa !112
-  store ptr %.0120.val156, ptr %i.aa, align 8, !tbaa !113
+  %.0120.val156 = load ptr, ptr %i.bb, align 8, !tbaa !108
+  store ptr %.0120.val156, ptr %i.aa, align 8, !tbaa !109
   br label %bb.av
 
 bb.x:                                             ; preds = %bb.g
@@ -2048,7 +2037,7 @@ bb.x:                                             ; preds = %bb.g
 
 bb.y:                                             ; preds = %bb.x
   %i.bd = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val157 = load ptr, ptr %i.bd, align 8, !tbaa !112
+  %.0120.val157 = load ptr, ptr %i.bd, align 8, !tbaa !108
   store ptr %.0120.val157, ptr %i.z, align 8, !tbaa !42
   %i.be = add nsw i32 %.0112, 1
   br label %bb.av
@@ -2060,7 +2049,7 @@ bb.z:                                             ; preds = %bb.g
 
 bb.aa:                                            ; preds = %bb.z
   %i.bg = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val158 = load ptr, ptr %i.bg, align 8, !tbaa !112
+  %.0120.val158 = load ptr, ptr %i.bg, align 8, !tbaa !108
   store ptr %.0120.val158, ptr %i.y, align 8, !tbaa !43
   %i.bh = add nsw i32 %.0112, 1
   br label %bb.av
@@ -2072,7 +2061,7 @@ bb.ab:                                            ; preds = %bb.g
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bj = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val159 = load ptr, ptr %i.bj, align 8, !tbaa !112
+  %.0120.val159 = load ptr, ptr %i.bj, align 8, !tbaa !108
   store ptr %.0120.val159, ptr %i.x, align 8, !tbaa !44
   %i.bk = add nsw i32 %.0112, 1
   br label %bb.av
@@ -2084,7 +2073,7 @@ bb.ad:                                            ; preds = %bb.g
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bm = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val160 = load ptr, ptr %i.bm, align 8, !tbaa !112
+  %.0120.val160 = load ptr, ptr %i.bm, align 8, !tbaa !108
   store ptr %.0120.val160, ptr %i.w, align 8, !tbaa !45
   %i.bn = add nsw i32 %.0112, 1
   br label %bb.av
@@ -2096,7 +2085,7 @@ bb.af:                                            ; preds = %bb.g
 
 bb.ag:                                            ; preds = %bb.af
   %i.bp = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val161 = load ptr, ptr %i.bp, align 8, !tbaa !112
+  %.0120.val161 = load ptr, ptr %i.bp, align 8, !tbaa !108
   store ptr %.0120.val161, ptr %i.v, align 8, !tbaa !22
   %i.bq = add nsw i32 %.0, 1
   br label %bb.av
@@ -2108,7 +2097,7 @@ bb.ah:                                            ; preds = %bb.g
 
 bb.ai:                                            ; preds = %bb.ah
   %i.bs = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val162 = load ptr, ptr %i.bs, align 8, !tbaa !112
+  %.0120.val162 = load ptr, ptr %i.bs, align 8, !tbaa !108
   store ptr %.0120.val162, ptr %i.u, align 8, !tbaa !67
   br label %bb.av
 
@@ -2119,7 +2108,7 @@ bb.aj:                                            ; preds = %bb.g
 
 bb.ak:                                            ; preds = %bb.aj
   %i.bu = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val163 = load ptr, ptr %i.bu, align 8, !tbaa !112
+  %.0120.val163 = load ptr, ptr %i.bu, align 8, !tbaa !108
   store ptr %.0120.val163, ptr %i.t, align 8, !tbaa !63
   br label %bb.av
 
@@ -2130,7 +2119,7 @@ bb.al:                                            ; preds = %bb.g
 
 bb.am:                                            ; preds = %bb.al
   %i.bw = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val164 = load ptr, ptr %i.bw, align 8, !tbaa !112
+  %.0120.val164 = load ptr, ptr %i.bw, align 8, !tbaa !108
   store ptr %.0120.val164, ptr %i.s, align 8, !tbaa !64
   br label %bb.av
 
@@ -2141,7 +2130,7 @@ bb.an:                                            ; preds = %bb.g
 
 bb.ao:                                            ; preds = %bb.an
   %i.by = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val165 = load ptr, ptr %i.by, align 8, !tbaa !112
+  %.0120.val165 = load ptr, ptr %i.by, align 8, !tbaa !108
   store ptr %.0120.val165, ptr %i.r, align 8, !tbaa !46
   br label %bb.av
 
@@ -2152,7 +2141,7 @@ bb.ap:                                            ; preds = %bb.g
 
 bb.aq:                                            ; preds = %bb.ap
   %i.ca = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val166 = load ptr, ptr %i.ca, align 8, !tbaa !112
+  %.0120.val166 = load ptr, ptr %i.ca, align 8, !tbaa !108
   store ptr %.0120.val166, ptr %i.q, align 8, !tbaa !65
   br label %bb.av
 
@@ -2163,7 +2152,7 @@ bb.ar:                                            ; preds = %bb.g
 
 bb.as:                                            ; preds = %bb.ar
   %i.cc = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val167 = load ptr, ptr %i.cc, align 8, !tbaa !112
+  %.0120.val167 = load ptr, ptr %i.cc, align 8, !tbaa !108
   store ptr %.0120.val167, ptr %i.p, align 8, !tbaa !66
   br label %bb.av
 
@@ -2174,7 +2163,7 @@ bb.at:                                            ; preds = %bb.g
 
 bb.au:                                            ; preds = %bb.at
   %i.ce = getelementptr i8, ptr %.0120, i64 8
-  %.0120.val168 = load ptr, ptr %i.ce, align 8, !tbaa !112
+  %.0120.val168 = load ptr, ptr %i.ce, align 8, !tbaa !108
   store ptr %.0120.val168, ptr %i.o, align 8, !tbaa !60
   br label %bb.av
 
@@ -2185,7 +2174,7 @@ bb.av:                                            ; preds = %bb.g, %bb.i, %bb.k,
   %.1113 = phi i32 [ %.0112, %bb.g ], [ %.0112, %bb.h ], [ %.0112, %bb.i ], [ %.0112, %bb.j ], [ %.0112, %bb.k ], [ %.0112, %bb.l ], [ %.0112, %bb.m ], [ %.0112, %bb.n ], [ %.0112, %bb.o ], [ %.0112, %bb.p ], [ %.0112, %bb.q ], [ %.0112, %bb.r ], [ %.0112, %bb.s ], [ %.0112, %bb.t ], [ %.0112, %bb.u ], [ %.0112, %bb.v ], [ %.0112, %bb.w ], [ %.0112, %bb.x ], [ %i.be, %bb.y ], [ %.0112, %bb.z ], [ %i.bh, %bb.aa ], [ %.0112, %bb.ab ], [ %i.bk, %bb.ac ], [ %.0112, %bb.ad ], [ %i.bn, %bb.ae ], [ %.0112, %bb.af ], [ %.0112, %bb.ag ], [ %.0112, %bb.ah ], [ %.0112, %bb.ai ], [ %.0112, %bb.aj ], [ %.0112, %bb.ak ], [ %.0112, %bb.al ], [ %.0112, %bb.am ], [ %.0112, %bb.an ], [ %.0112, %bb.ao ], [ %.0112, %bb.ap ], [ %.0112, %bb.aq ], [ %.0112, %bb.ar ], [ %.0112, %bb.as ], [ %.0112, %bb.at ], [ %.0112, %bb.au ]
   %.1 = phi i32 [ %.0, %bb.g ], [ %.0, %bb.h ], [ %i.al, %bb.i ], [ %.0, %bb.j ], [ %.0, %bb.k ], [ %.0, %bb.l ], [ %.0, %bb.m ], [ %.0, %bb.n ], [ %.0, %bb.o ], [ %.0, %bb.p ], [ %.0, %bb.q ], [ %.0, %bb.r ], [ %.0, %bb.s ], [ %.0, %bb.t ], [ %.0, %bb.u ], [ %.0, %bb.v ], [ %.0, %bb.w ], [ %.0, %bb.x ], [ %.0, %bb.y ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %.0, %bb.ab ], [ %.0, %bb.ac ], [ %.0, %bb.ad ], [ %.0, %bb.ae ], [ %.0, %bb.af ], [ %i.bq, %bb.ag ], [ %.0, %bb.ah ], [ %.0, %bb.ai ], [ %.0, %bb.aj ], [ %.0, %bb.ak ], [ %.0, %bb.al ], [ %.0, %bb.am ], [ %.0, %bb.an ], [ %.0, %bb.ao ], [ %.0, %bb.ap ], [ %.0, %bb.aq ], [ %.0, %bb.ar ], [ %.0, %bb.as ], [ %.0, %bb.at ], [ %.0, %bb.au ]
   %i.cf = getelementptr inbounds nuw i8, ptr %.0120, i64 16
-  br label %bb.g, !llvm.loop !103
+  br label %bb.g, !llvm.loop !99
 
 bb.aw:                                            ; preds = %bb.g
   %i.cg = add i32 %.0116, %.0118
@@ -2197,7 +2186,7 @@ bb.aw:                                            ; preds = %bb.g
   ]
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.ci = load ptr, ptr %i.aa, align 8, !tbaa !113
+  %i.ci = load ptr, ptr %i.aa, align 8, !tbaa !109
   %i.cj = icmp eq ptr %i.ci, null
   %i.ck = icmp eq i32 %.0112, 0
   %or.cond5 = select i1 %i.cj, i1 %i.ck, i1 false
@@ -2569,33 +2558,29 @@ attributes #9 = { noreturn nounwind }
 !82 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !83 = distinct !{!83, !57}
 !84 = distinct !{!84, !57}
-!85 = distinct !{!85, !57, !89, !90}
-!86 = distinct !{!86, !57, !89, !90}
-!87 = distinct !{!87, !92}
-!88 = distinct !{!88, !57, !89}
-!89 = !{!"llvm.loop.isvectorized", i32 1}
-!90 = !{!"llvm.loop.unroll.runtime.disable"}
-!91 = !{!"branch_weights", i32 4, i32 28}
-!92 = !{!"llvm.loop.unroll.disable"}
-!93 = distinct !{!93, !57}
-!94 = !{ptr @EVP_CIPHER_settable_ctx_params}
-!95 = !{i64 0, i64 8, !36, i64 8, i64 4, !34, i64 16, i64 8, !61, i64 24, i64 8, !37, i64 32, i64 8, !37}
-!96 = !{!"", !16, i64 0, !16, i64 8, !13, i64 16, !7, i64 24}
-!97 = !{!96, !16, i64 8}
-!98 = !{!96, !13, i64 16}
-!99 = !{!96, !16, i64 0}
-!100 = !{!11, !11, i64 0}
-!101 = !{!12, !12, i64 0}
-!102 = !{i64 0, i64 8, !100, i64 8, i64 8, !101, i64 16, i64 4, !34, i64 20, i64 4, !34, i64 24, i64 16, !59, i64 40, i64 16, !59, i64 56, i64 32, !59, i64 88, i64 4, !34, i64 96, i64 8, !61, i64 104, i64 4, !34, i64 108, i64 4, !34, i64 112, i64 8, !37, i64 120, i64 8, !61, i64 128, i64 4, !34, i64 132, i64 4, !34, i64 136, i64 32, !59, i64 168, i64 8, !37, i64 176, i64 8, !61, i64 184, i64 8, !100}
-!103 = distinct !{!103, !57}
-!104 = !{!"p1 _ZTS16ossl_dispatch_st", !10, i64 0}
-!105 = !{!"ossl_algorithm_st", !16, i64 0, !16, i64 8, !104, i64 16, !16, i64 24}
-!106 = !{!105, !104, i64 16}
-!107 = !{!19, !7, i64 96}
-!108 = !{!105, !16, i64 24}
-!109 = !{!19, !16, i64 112}
-!110 = !{!"ossl_dispatch_st", !7, i64 0, !10, i64 8}
-!111 = !{!110, !7, i64 0}
-!112 = !{!110, !10, i64 8}
-!113 = !{!19, !10, i64 176}
+!85 = distinct !{!85, !87}
+!86 = distinct !{!86, !57, !88}
+!87 = !{!"llvm.loop.unroll.disable"}
+!88 = !{!"llvm.loop.isvectorized", i32 1}
+!89 = distinct !{!89, !57}
+!90 = !{ptr @EVP_CIPHER_settable_ctx_params}
+!91 = !{i64 0, i64 8, !36, i64 8, i64 4, !34, i64 16, i64 8, !61, i64 24, i64 8, !37, i64 32, i64 8, !37}
+!92 = !{!"", !16, i64 0, !16, i64 8, !13, i64 16, !7, i64 24}
+!93 = !{!92, !16, i64 8}
+!94 = !{!92, !13, i64 16}
+!95 = !{!92, !16, i64 0}
+!96 = !{!11, !11, i64 0}
+!97 = !{!12, !12, i64 0}
+!98 = !{i64 0, i64 8, !96, i64 8, i64 8, !97, i64 16, i64 4, !34, i64 20, i64 4, !34, i64 24, i64 16, !59, i64 40, i64 16, !59, i64 56, i64 32, !59, i64 88, i64 4, !34, i64 96, i64 8, !61, i64 104, i64 4, !34, i64 108, i64 4, !34, i64 112, i64 8, !37, i64 120, i64 8, !61, i64 128, i64 4, !34, i64 132, i64 4, !34, i64 136, i64 32, !59, i64 168, i64 8, !37, i64 176, i64 8, !61, i64 184, i64 8, !96}
+!99 = distinct !{!99, !57}
+!100 = !{!"p1 _ZTS16ossl_dispatch_st", !10, i64 0}
+!101 = !{!"ossl_algorithm_st", !16, i64 0, !16, i64 8, !100, i64 16, !16, i64 24}
+!102 = !{!101, !100, i64 16}
+!103 = !{!19, !7, i64 96}
+!104 = !{!101, !16, i64 24}
+!105 = !{!19, !16, i64 112}
+!106 = !{!"ossl_dispatch_st", !7, i64 0, !10, i64 8}
+!107 = !{!106, !7, i64 0}
+!108 = !{!106, !10, i64 8}
+!109 = !{!19, !10, i64 176}
 end_hunk_1

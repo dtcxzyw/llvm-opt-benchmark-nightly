@@ -204,7 +204,11 @@ pack_geometry_weight.exit70:                      ; preds = %pack_geometry_weigh
   %.pre-phi = phi i64 [ 0, %.split.us.preheader ], [ %indvars.iv226, %pack_geometry_weight.exit74 ], [ 0, %.split.preheader ], [ 0, %.split.us ], [ 0, %.split ] ; 2 uses
   %.050.lcssa = phi i64 [ 0, %.split.us.preheader ], [ %i.bc, %pack_geometry_weight.exit74 ], [ 0, %.split.preheader ], [ 0, %.split.us ], [ 0, %.split ]
   %i.aq = icmp samesign ugt i64 %1, %.pre-phi
-  br i1 %i.aq, label %.lr.ph118.a, label %.loopexit
+  br i1 %i.aq, label %.lr.ph118, label %.loopexit
+
+.lr.ph118:                                        ; preds = %.preheader
+  %3 = trunc nuw i64 %1 to i32
+  br label %.lr.ph118.a
 
 .lr.ph:                                           ; preds = %.split106.us, %pack_geometry_weight.exit74
   %indvars.iv152 = phi i64 [ 0, %.split106.us ], [ %indvars.iv.next153, %pack_geometry_weight.exit74 ] ; 2 uses
@@ -241,10 +245,10 @@ pack_geometry_weight.exit74:                      ; preds = %pack_geometry_weigh
   %exitcond.not = icmp eq i64 %indvars.iv.next153, %indvars.iv226
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !97
 
-.lr.ph118.a:                                      ; preds = %.preheader, %bb.o
-  %i.bd = phi i64 [ %i.cc, %bb.o ], [ %.pre-phi, %.preheader ]
-  %.151117 = phi i64 [ %i.cb, %bb.o ], [ %.050.lcssa, %.preheader ] ; 3 uses
-  %.153116 = phi i32 [ %i.by, %bb.o ], [ %.us-phi161, %.preheader ] ; 2 uses
+.lr.ph118.a:                                      ; preds = %.lr.ph118, %bb.o
+  %i.bd = phi i64 [ %.pre-phi, %.lr.ph118 ], [ %i.cc, %bb.o ]
+  %.151117 = phi i64 [ %.050.lcssa, %.lr.ph118 ], [ %i.cb, %bb.o ] ; 3 uses
+  %.153116 = phi i32 [ %.us-phi161, %.lr.ph118 ], [ %i.by, %bb.o ] ; 2 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bd
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !56 ; 8 uses
   br i1 %.not64, label %bb.j, label %bb.h
@@ -302,13 +306,13 @@ bb.n:                                             ; preds = %pack_geometry_weigh
   unreachable
 
 bb.o:                                             ; preds = %pack_geometry_weight.exit78
-  %i.by = add nuw i32 %.153116, 1                 ; 3 uses
+  %i.by = add nuw i32 %.153116, 1                 ; 4 uses
   %i.bz = load i32, ptr %i.bn, align 8, !tbaa !57
   %i.ca = zext i32 %i.bz to i64
   %i.cb = add nuw nsw i64 %.151117, %i.ca
-  %i.cc = zext i32 %i.by to i64                   ; 2 uses
-  %3 = icmp samesign ugt i64 %1, %i.cc
-  br i1 %3, label %.lr.ph118.a, label %.loopexit, !llvm.loop !98
+  %i.cc = zext i32 %i.by to i64
+  %4 = icmp ult i32 %i.by, %3
+  br i1 %4, label %.lr.ph118.a, label %.loopexit, !llvm.loop !98
 
 .loopexit:                                        ; preds = %bb.o, %pack_geometry_weight.exit76, %.preheader, %bb.a
   %.058 = phi i32 [ 0, %bb.a ], [ %.us-phi161, %.preheader ], [ %i.by, %bb.o ], [ %.153116, %pack_geometry_weight.exit76 ]

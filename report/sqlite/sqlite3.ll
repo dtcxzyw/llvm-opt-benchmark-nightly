@@ -206,20 +206,20 @@ rtreeNodeOfFirstSearchPoint.exit.thread:          ; preds = %bb.d, %rtreeNodeOfF
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 2
   %.val = load i8, ptr %i.as, align 1, !tbaa !733
   %i.at = getelementptr i8, ptr %i.ar, i64 3
-  %.val87 = load i8, ptr %i.at, align 1, !tbaa !733
+  %.val87 = load i8, ptr %i.at, align 1, !tbaa !733 ; 2 uses
   %i.au = zext i8 %.val to i32
   %i.av = shl nuw nsw i32 %i.au, 8
   %i.aw = zext i8 %.val87 to i32
-  %i.ax = or disjoint i32 %i.av, %i.aw            ; 5 uses
+  %i.ax = or disjoint i32 %i.av, %i.aw            ; 4 uses
   %i.ay = icmp samesign ugt i32 %i.ax, 51
   br i1 %i.ay, label %.thread169, label %bb.g
 
 bb.g:                                             ; preds = %rtreeNodeOfFirstSearchPoint.exit.thread
   %i.az = getelementptr inbounds nuw i8, ptr %i.ac, i64 18 ; 5 uses
-  %i.ba = load i8, ptr %i.az, align 2, !tbaa !2919 ; 3 uses
+  %i.ba = load i8, ptr %i.az, align 2, !tbaa !2919 ; 4 uses
   %i.bb = zext i8 %i.ba to i32
   %i.bc = icmp samesign ugt i32 %i.ax, %i.bb
-  br i1 %i.bc, label %.preheader.lr.ph, label %.loopexit185.thread
+  br i1 %i.bc, label %.preheader.lr.ph, label %.loopexit185
 
 .preheader.lr.ph:                                 ; preds = %bb.g
   %i.bd = zext i8 %i.ba to i64
@@ -622,34 +622,37 @@ bb.at:                                            ; preds = %bb.as, %.loopexit
   %.4101 = select i1 %i.ue, double 0.000000e+00, double %.097.lcssa
   %i.uf = call fastcc ptr @rtreeSearchPointNew(ptr noundef nonnull %0, double noundef %.4101, i8 noundef zeroext %i.si) ; 4 uses
   %i.ug = icmp eq ptr %i.uf, null
-  br i1 %i.ug, label %.thread169, label %.loopexit185
+  br i1 %i.ug, label %.thread169, label %.thread162
+
+.thread162:                                       ; preds = %bb.at
+  %1 = getelementptr inbounds nuw i8, ptr %i.uf, i64 17
+  store i8 %.0112.lcssa, ptr %1, align 1, !tbaa !2915
+  %2 = getelementptr inbounds nuw i8, ptr %i.uf, i64 8
+  store i64 %.sroa.2.0, ptr %2, align 8, !tbaa !2914
+  %3 = getelementptr inbounds nuw i8, ptr %i.uf, i64 18
+  store i8 %.sroa.913.0, ptr %3, align 2, !tbaa !2919
+  br label %.loopexit185
 
 rtreeLeafConstraint.exit.thread:                  ; preds = %bb.aj, %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %rtreeLeafConstraint.exit
   %i.uh = load i8, ptr %i.az, align 2, !tbaa !2919
-  %i.ui = add i8 %i.uh, 1                         ; 2 uses
+  %i.ui = add i8 %i.uh, 1                         ; 3 uses
   store i8 %i.ui, ptr %i.az, align 2, !tbaa !2919
   %i.uj = load i8, ptr %i.n, align 1, !tbaa !2918
   %i.uk = zext i8 %i.uj to i64
   %i.ul = getelementptr inbounds nuw i8, ptr %.062205, i64 %i.uk
-  %1 = zext i8 %i.ui to i32
-  %i.um = icmp samesign ugt i32 %i.ax, %1
-  br i1 %i.um, label %.preheader, label %.loopexit185.thread
+  %i.um = icmp ugt i8 %.val87, %i.ui
+  br i1 %i.um, label %.preheader, label %.loopexit185
 
-.loopexit185:                                     ; preds = %bb.at
-  %2 = getelementptr inbounds nuw i8, ptr %i.uf, i64 17
-  store i8 %.0112.lcssa, ptr %2, align 1, !tbaa !2915
-  %3 = getelementptr inbounds nuw i8, ptr %i.uf, i64 8
-  store i64 %.sroa.2.0, ptr %3, align 8, !tbaa !2914
-  %4 = getelementptr inbounds nuw i8, ptr %i.uf, i64 18
-  store i8 %.sroa.913.0, ptr %4, align 2, !tbaa !2919
-  %.pre218 = zext i8 %.sroa.913.0 to i32
+.loopexit185:                                     ; preds = %rtreeLeafConstraint.exit.thread, %bb.g, %.thread162
+  %4 = phi i8 [ %.sroa.913.0, %.thread162 ], [ %i.ba, %bb.g ], [ %i.ui, %rtreeLeafConstraint.exit.thread ]
+  %.pre218 = zext i8 %4 to i32
   %i.un = icmp samesign ugt i32 %i.ax, %.pre218
   br i1 %i.un, label %.backedge, label %.loopexit185.thread
 
 .backedge:                                        ; preds = %.loopexit185, %.loopexit185.thread
   br label %bb.b, !llvm.loop !6634
 
-.loopexit185.thread:                              ; preds = %rtreeLeafConstraint.exit.thread, %bb.g, %.loopexit185
+.loopexit185.thread:                              ; preds = %.loopexit185
   call fastcc void @rtreeSearchPointPop(ptr noundef nonnull %0)
   br label %.backedge
 

@@ -204,7 +204,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdsTQ
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !90
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 24 ; 2 uses
-  %i.aa = add nuw i64 %storemerge30.i.us, 1
+  %i.aa = add nuw nsw i64 %storemerge30.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.y, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -254,7 +254,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdsTQ
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 16
   store i64 %.val15.i, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !90
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 24 ; 2 uses
-  %i.aj = add nuw i64 %storemerge30.i, 1
+  %i.aj = add nuw nsw i64 %storemerge30.i, 1
   %exitcond.not.i = icmp eq i64 %i.ah, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 
@@ -404,7 +404,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdsTQ
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !103
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.us, i64 24 ; 2 uses
-  %i.ab = add nuw i64 %storemerge28.i.us, 1
+  %i.ab = add nuw nsw i64 %storemerge28.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.z, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -455,7 +455,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdsTQ
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 16
   store i64 %i.u, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !103
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i, i64 24 ; 2 uses
-  %i.ak = add nuw i64 %storemerge28.i, 1
+  %i.ak = add nuw nsw i64 %storemerge28.i, 1
   %exitcond.not.i = icmp eq i64 %i.ai, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 

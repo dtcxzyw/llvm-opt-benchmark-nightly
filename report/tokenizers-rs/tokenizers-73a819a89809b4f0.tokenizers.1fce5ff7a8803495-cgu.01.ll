@@ -205,7 +205,7 @@ _RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtB7_2rc2RcINtNtCs4NRVxsYgnAr_4cor
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.i, i64 16
   store i64 %i.u, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !575
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.033.i, i64 24 ; 2 uses
-  %i.ao = add nuw i64 %storemerge31.i, 1
+  %i.ao = add nuw nsw i64 %storemerge31.i, 1
   %exitcond.not.i = icmp eq i64 %i.am, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %bb.c
 
@@ -333,7 +333,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOg
   %.sroa.5.0..sroa.0.0.sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 16
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i.us, align 8, !noalias !592
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i.us, i64 24 ; 2 uses
-  %i.aa = add nuw i64 %storemerge30.i.us, 1
+  %i.aa = add nuw nsw i64 %storemerge30.i.us, 1
   %exitcond.not.i.us = icmp eq i64 %i.y, %2
   br i1 %exitcond.not.i.us, label %._crit_edge.thread.i, label %.lr.ph.i.split.us
 
@@ -383,7 +383,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOg
   %.sroa.5.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 16
   store i64 %.val15.i, ptr %.sroa.5.0..sroa.0.0.sroa_idx.i, align 8, !noalias !592
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 24 ; 2 uses
-  %i.aj = add nuw i64 %storemerge30.i, 1
+  %i.aj = add nuw nsw i64 %storemerge30.i, 1
   %exitcond.not.i = icmp eq i64 %i.ah, %2
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.i.split
 
@@ -786,7 +786,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtCs4NRVxsYgnAr_4core6option6Option
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.fq, i64 %i.fv
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 24
   store i32 0, ptr %i.gc, align 4, !noalias !2673
-  %i.gd = add nuw i64 %i.fv, 4                    ; 3 uses
+  %i.gd = add nuw nsw i64 %i.fv, 4                ; 3 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i
@@ -806,7 +806,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtCs4NRVxsYgnAr_4core6option6Option
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i.i.i.i.i.i.i.i.epil ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.epil.preheader ]
   %i.gf = getelementptr inbounds nuw [8 x i8], ptr %i.fq, i64 %i.ge
   store i32 0, ptr %i.gf, align 4, !noalias !2673
-  %i.gg = add nuw i64 %i.ge, 1                    ; 2 uses
+  %i.gg = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.epil, !llvm.loop !2585

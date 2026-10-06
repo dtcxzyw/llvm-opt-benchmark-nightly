@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %2, i64 %i.l, i1 false)
   %i.m = load i32, ptr %i.f, align 4
   %i.n = lshr i32 %i.m, 1                         ; 2 uses
+  %3 = trunc i32 %i.n to i16
   %i.o = load i32, ptr %i.j, align 4
   %i.p = lshr i32 %i.o, 1
   %i.q = trunc i32 %i.p to i16
@@ -230,7 +231,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not38.i, label %.preheader.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.preheader31.i
-  %3 = trunc i32 %i.n to i16
   %i.ac = trunc nuw i32 %i.aa to i16
   br label %.lr.ph.i
 
@@ -256,8 +256,8 @@ bb.b:                                             ; preds = %bb.a
   %unroll_iter = and i64 %wide.trip.count.i, 4294967288
   br label %bb.c
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.02732.i = phi i16 [ %i.am, %.lr.ph.i ], [ %3, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader
+  %.02732.i = phi i16 [ %3, %.lr.ph.i.preheader ], [ %i.am, %.lr.ph.i ] ; 3 uses
   %i.aj = zext i16 %.02732.i to i64
   %i.ak = getelementptr [2 x i8], ptr %i.e, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2

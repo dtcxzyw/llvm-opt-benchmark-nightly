@@ -116,19 +116,15 @@ bb.b:                                             ; preds = %bb.a
   %spec.select.lcssa = phi i32 [ %spec.select.1, %._crit_edge.unr-lcssa ], [ %spec.select.epil, %.lr.ph.epil.preheader ] ; 4 uses
   %.1122.lcssa = phi i32 [ %.1122.1, %._crit_edge.unr-lcssa ], [ %.1122.epil, %.lr.ph.epil.preheader ] ; 3 uses
   %i.av = icmp sgt i32 %.lcssa229, %3
-  br i1 %i.av, label %.lr.ph147, label %._crit_edge.thread
+  br i1 %i.av, label %vector.ph, label %._crit_edge.thread
 
-.lr.ph147:                                        ; preds = %._crit_edge
+vector.ph:                                        ; preds = %._crit_edge
   %5 = uitofp nneg i32 %spec.select.lcssa to double ; 2 uses
   %6 = sub nsw i32 %.1122.lcssa, %spec.select.lcssa
   %7 = sitofp i32 %6 to double                    ; 2 uses
   %8 = add nsw i32 %3, -1                         ; 7 uses
   %9 = uitofp nneg i32 %8 to double               ; 2 uses
   %wide.trip.count = zext nneg i32 %3 to i64      ; 3 uses
-  %min.iters.check = icmp ult i32 %3, 2
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph147
   %n.vec = and i64 %wide.trip.count, 510          ; 3 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %5, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
@@ -154,14 +150,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge148, label %scalar.ph.preheader
+  br i1 %cmp.n, label %._crit_edge148, label %scalar.ph
 
-scalar.ph.preheader:                              ; preds = %.lr.ph147, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph147 ], [ %n.vec, %middle.block ]
-  br label %scalar.ph
-
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
+scalar.ph:                                        ; preds = %middle.block, %scalar.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %n.vec, %middle.block ] ; 3 uses
   %i.bc = trunc nuw nsw i64 %indvars.iv to i32
   %i.bd = uitofp nneg i32 %i.bc to double
   %i.be = fmul nnan double %7, %i.bd

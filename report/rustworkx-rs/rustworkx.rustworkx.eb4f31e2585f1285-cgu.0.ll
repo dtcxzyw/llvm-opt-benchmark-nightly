@@ -205,7 +205,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecIBv_jEE7reserveCskcxRuJ53GpR_9rustwor
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.3, align 8, !noalias !15392
   %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.ex, i64 88
   store i64 0, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i.i.3, align 8, !noalias !15392
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i509
 
@@ -608,7 +608,7 @@ _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecTjjEE7reserveCskcxRuJ53GpR_9rustworkx
   %i.bt = zext <2 x i32> %i.bs to <2 x i64>
   store <2 x i64> %i.bt, ptr %i.br, align 8, !noalias !110726
   %i.bu = add nuw i64 %i.ba, 4                    ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RNvXs_NtNtCs87CvPiUlf0m_5alloc3vec21spec_from_iter_nestedINtB6_3VecTjjEEINtB4_18SpecFromIterNestedB13_INtNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map3MapINtNtNtB1L_5slice4iter4IterTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB2S_EENCNvNtCskcxRuJ53GpR_9rustworkx12connectivity18digraph_find_cycle0EE9from_iterB3R_.exit.i.loopexit.unr-lcssa, label %.preheader.i.i.i.i
 
@@ -1011,7 +1011,7 @@ bb.at:                                            ; preds = %bb.as, %.preheader.
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.fv
   store ptr %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.1, ptr %i.gb, align 8, !noalias !146242
   %i.gc = add nuw i64 %i.fo, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs87CvPiUlf0m_5alloc3vec21spec_from_iter_nestedINtB6_3VecINtNtCslwFuT2d6ECx_4core6option6OptionRINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB1L_5types3any5PyAnyEEEINtB4_18SpecFromIterNestedB13_INtNtNtNtB18_4iter8adapters3map3MapINtNtNtB18_5slice4iter4IterNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexENCNvNtCskcxRuJ53GpR_9rustworkx8dag_algo6layerss0_0EE9from_iterB57_.exit.i.loopexit.unr-lcssa, label %.preheader.i
 

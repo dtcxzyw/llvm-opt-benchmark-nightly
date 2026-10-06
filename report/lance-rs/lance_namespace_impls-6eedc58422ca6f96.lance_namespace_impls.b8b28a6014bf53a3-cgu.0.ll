@@ -205,7 +205,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecRDNtNtCs4ytUTZt2Gw9_11arrow_array5arr
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   store ptr %i.cw, ptr %i.de, align 8, !noalias !144872
   %i.df = add nuw i64 %i.cf, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i.i.i.i.i.i
 
