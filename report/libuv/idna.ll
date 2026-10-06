@@ -202,9 +202,11 @@ uv__utf8_decode1.exit184.thread:                  ; preds = %bb.bh, %bb.bk, %bb.
   %i.hb = tail call i32 @llvm.umin.i32(i32 %i.ha, i32 26)
   %.0114228 = select i1 %i.gz, i32 %i.hb, i32 1   ; 2 uses
   %i.hc = icmp ult i32 %.2108, %.0114228
+  %.pre263 = load ptr, ptr %2, align 8            ; 2 uses
   br i1 %i.hc, label %._crit_edge233, label %.lr.ph232
 
 .lr.ph232:                                        ; preds = %.preheader, %bb.bo
+  %4 = phi ptr [ %5, %bb.bo ], [ %.pre263, %.preheader ] ; 4 uses
   %.0114231 = phi i32 [ %.0114, %bb.bo ], [ %.0114228, %.preheader ] ; 3 uses
   %.0115230 = phi i32 [ %i.hf, %bb.bo ], [ %.2108, %.preheader ]
   %.0119229 = phi i32 [ %i.hn, %bb.bo ], [ 36, %.preheader ]
@@ -212,7 +214,6 @@ uv__utf8_decode1.exit184.thread:                  ; preds = %bb.bh, %bb.bk, %bb.
   %i.he = sub nuw nsw i32 36, %.0114231           ; 2 uses
   %i.hf = udiv i32 %i.hd, %i.he                   ; 3 uses
   %i.hg = urem i32 %i.hd, %i.he
-  %4 = load ptr, ptr %2, align 8                  ; 3 uses
   %i.hh = icmp ult ptr %4, %3
   br i1 %i.hh, label %bb.bn, label %bb.bo
 
@@ -224,9 +225,11 @@ bb.bn:                                            ; preds = %.lr.ph232
   %i.hm = getelementptr inbounds nuw i8, ptr %4, i64 1
   store ptr %i.hm, ptr %2, align 8
   store i8 %i.hl, ptr %4, align 1
+  %.pre261 = load ptr, ptr %2, align 8
   br label %bb.bo
 
 bb.bo:                                            ; preds = %.lr.ph232, %bb.bn
+  %5 = phi ptr [ %4, %.lr.ph232 ], [ %.pre261, %bb.bn ] ; 2 uses
   %i.hn = add i32 %.0119229, 36                   ; 3 uses
   %i.ho = icmp ugt i32 %i.hn, %.1111.ph
   %i.hp = sub nuw i32 %i.hn, %.1111.ph
@@ -236,18 +239,18 @@ bb.bo:                                            ; preds = %.lr.ph232, %bb.bn
   br i1 %i.hr, label %._crit_edge233, label %.lr.ph232
 
 ._crit_edge233:                                   ; preds = %bb.bo, %.preheader
+  %6 = phi ptr [ %.pre263, %.preheader ], [ %5, %bb.bo ] ; 3 uses
   %.0115.lcssa = phi i32 [ %.2108, %.preheader ], [ %i.hf, %bb.bo ]
-  %5 = load ptr, ptr %2, align 8                  ; 3 uses
-  %i.hs = icmp ult ptr %5, %3
+  %i.hs = icmp ult ptr %6, %3
   br i1 %i.hs, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %._crit_edge233
   %i.ht = zext nneg i32 %.0115.lcssa to i64
   %i.hu = getelementptr inbounds nuw i8, ptr @uv__idna_toascii_label.alphabet, i64 %i.ht
   %i.hv = load i8, ptr %i.hu, align 1
-  %i.hw = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.hw = getelementptr inbounds nuw i8, ptr %6, i64 1
   store ptr %i.hw, ptr %2, align 8
-  store i8 %i.hv, ptr %5, align 1
+  store i8 %i.hv, ptr %6, align 1
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %._crit_edge233

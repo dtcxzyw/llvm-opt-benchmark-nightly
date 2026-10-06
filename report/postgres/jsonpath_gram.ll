@@ -202,8 +202,7 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %i.ak = and i32 %i.ag, 1
   %.not.i49 = icmp eq i32 %i.ak, 0
   %spec.select.i = select i1 %.not.i49, i32 3, i32 11 ; 2 uses
-  %6 = and i32 %i.ag, 16
-  %.not16.i = icmp eq i32 %6, 0
+  %.not16.i = icmp samesign ult i32 %i.ag, 16
   br i1 %.not16.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
@@ -216,8 +215,7 @@ bb.e:                                             ; preds = %.critedge
   %i.ao = and i32 %i.an, 192
   %i.ap = or disjoint i32 %spec.select.i, %i.ao
   %.2.i = xor i32 %i.ap, 64
-  %7 = and i32 %i.ag, 8
-  %.not19.i = icmp eq i32 %7, 0
+  %.not19.i = icmp samesign ult i32 %i.ag, 8
   br i1 %.not19.i, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bfs_dequeue.exit139
   %i.eh = icmp eq ptr %.112390.i, %.1291.i
   %spec.select52.i = select i1 %i.eh, ptr null, ptr %.1291.i ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 8 ; 2 uses
-  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !51
+  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !51 ; 2 uses
   %.not103.i = icmp eq ptr %i.ej, null
   br i1 %.not103.i, label %.backedge.i, label %.preheader53.i
 
@@ -216,10 +216,10 @@ bb.ag:                                            ; preds = %bfs_dequeue.exit139
   br i1 %.not.i137.i, label %ac_maketrans.exit, label %bfs_dequeue.exit139.i
 
 .preheader53.i:                                   ; preds = %bb.ag, %bfs_enqueue.exit143.thread.i
+  %1 = phi ptr [ %2, %bfs_enqueue.exit143.thread.i ], [ %i.ej, %bb.ag ] ; 4 uses
   %indvars.iv104.i = phi i64 [ %indvars.iv.next105.i, %bfs_enqueue.exit143.thread.i ], [ 0, %bb.ag ] ; 3 uses
-  %.1587.i = phi ptr [ %.17.i, %bfs_enqueue.exit143.thread.i ], [ %spec.select52.i, %bb.ag ] ; 4 uses
-  %.132586.i.a = phi ptr [ %.1527.i, %bfs_enqueue.exit143.thread.i ], [ %i.ef, %bb.ag ] ; 3 uses
-  %1 = load ptr, ptr %i.ei, align 8, !tbaa !51
+  %.132586.i.a = phi ptr [ %.17.i, %bfs_enqueue.exit143.thread.i ], [ %spec.select52.i, %bb.ag ] ; 4 uses
+  %.132586.i = phi ptr [ %.1527.i, %bfs_enqueue.exit143.thread.i ], [ %i.ef, %bb.ag ] ; 3 uses
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv104.i ; 2 uses
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !60 ; 5 uses
   %.not104.i = icmp eq ptr %i.el, null
@@ -281,6 +281,7 @@ bb.am:                                            ; preds = %.preheader.i
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !51
   store ptr %i.fb, ptr %i.en, align 8, !tbaa !51
+  %.pre108.i = load ptr, ptr %i.ei, align 8, !tbaa !51
   br label %bfs_enqueue.exit143.thread.i
 
 .thread.i:                                        ; preds = %bb.al, %bb.ai
@@ -292,17 +293,18 @@ bb.an:                                            ; preds = %.thread.i
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 8
   store ptr null, ptr %i.fd, align 8, !tbaa !137
   store ptr %i.el, ptr %i.fc, align 8, !tbaa !138
-  %.not14.i141.i = icmp eq ptr %.1587.i, null
+  %.not14.i141.i = icmp eq ptr %.132586.i.a, null
   br i1 %.not14.i141.i, label %bfs_enqueue.exit143.thread.i, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.fe = getelementptr inbounds nuw i8, ptr %.1587.i, i64 8
+  %i.fe = getelementptr inbounds nuw i8, ptr %.132586.i.a, i64 8
   store ptr %i.fc, ptr %i.fe, align 8, !tbaa !137
   br label %bfs_enqueue.exit143.thread.i
 
 bfs_enqueue.exit143.thread.i:                     ; preds = %bb.ao, %bb.an, %bb.am, %bb.ak
-  %.1527.i = phi ptr [ %.132586.i.a, %bb.ak ], [ %.132586.i.a, %bb.am ], [ %i.fc, %bb.an ], [ %.132586.i.a, %bb.ao ] ; 2 uses
-  %.17.i = phi ptr [ %.1587.i, %bb.ak ], [ %.1587.i, %bb.am ], [ %i.fc, %bb.an ], [ %i.fc, %bb.ao ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.ak ], [ %.pre108.i, %bb.am ], [ %1, %bb.an ], [ %1, %bb.ao ]
+  %.1527.i = phi ptr [ %.132586.i, %bb.ak ], [ %.132586.i, %bb.am ], [ %i.fc, %bb.an ], [ %.132586.i, %bb.ao ] ; 2 uses
+  %.17.i = phi ptr [ %.132586.i.a, %bb.ak ], [ %.132586.i.a, %bb.am ], [ %i.fc, %bb.an ], [ %i.fc, %bb.ao ] ; 2 uses
   %indvars.iv.next105.i = add nuw nsw i64 %indvars.iv104.i, 1 ; 2 uses
   %exitcond107.not.i = icmp eq i64 %indvars.iv.next105.i, 256
   br i1 %exitcond107.not.i, label %.backedge.i, label %.preheader53.i

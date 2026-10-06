@@ -205,34 +205,37 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cp = call ptr @archive_strncat(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ay, i64 noundef %i.ax) #16 ; 0 uses
   %i.cq = load i64, ptr %i.ab, align 8, !tbaa !53 ; 2 uses
   %.not284 = icmp eq i64 %i.cq, 0
+  %.pre295 = load ptr, ptr %i.aa, align 8, !tbaa !65 ; 2 uses
   br i1 %.not284, label %._crit_edge278, label %.lr.ph277
 
 .lr.ph277:                                        ; preds = %bb.ad, %bb.af
   %i.cr = phi i64 [ %i.cv, %bb.af ], [ %i.cq, %bb.ad ]
-  %7 = phi i64 [ %i.cx, %bb.af ], [ 0, %bb.ad ]
+  %7 = phi ptr [ %9, %bb.af ], [ %.pre295, %bb.ad ] ; 2 uses
+  %8 = phi i64 [ %i.cx, %bb.af ], [ 0, %bb.ad ]
   %.0203275 = phi i32 [ %i.cw, %bb.af ], [ 0, %bb.ad ]
-  %8 = load ptr, ptr %i.aa, align 8, !tbaa !65
-  %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 %7 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %7, i64 %8 ; 2 uses
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !10
   %i.cu = icmp eq i8 %i.ct, -1
   br i1 %i.cu, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %.lr.ph277
   store i8 47, ptr %i.cs, align 1, !tbaa !10
+  %.pre = load ptr, ptr %i.aa, align 8, !tbaa !65
   %.pre.a = load i64, ptr %i.ab, align 8, !tbaa !53
   br label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph277, %bb.ae
   %i.cv = phi i64 [ %i.cr, %.lr.ph277 ], [ %.pre.a, %bb.ae ] ; 3 uses
+  %9 = phi ptr [ %7, %.lr.ph277 ], [ %.pre, %bb.ae ] ; 2 uses
   %i.cw = add i32 %.0203275, 1                    ; 2 uses
   %i.cx = zext i32 %i.cw to i64                   ; 2 uses
   %i.cy = icmp ugt i64 %i.cv, %i.cx
   br i1 %i.cy, label %.lr.ph277, label %._crit_edge278, !llvm.loop !171
 
 ._crit_edge278:                                   ; preds = %bb.af, %bb.ad
+  %10 = phi ptr [ %.pre295, %bb.ad ], [ %9, %bb.af ]
   %.lcssa266 = phi i64 [ 0, %bb.ad ], [ %i.cv, %bb.af ]
-  %9 = load ptr, ptr %i.aa, align 8, !tbaa !65
-  %i.cz = getelementptr i8, ptr %9, i64 %.lcssa266
+  %i.cz = getelementptr i8, ptr %10, i64 %.lcssa266
   %i.da = getelementptr i8, ptr %i.cz, i64 -1
   %i.db = load i8, ptr %i.da, align 1, !tbaa !10
   %.not226 = icmp eq i8 %i.db, 47

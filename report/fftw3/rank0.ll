@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.j, %.lr.ph.i.i
-  %indvars.iv.i.i.a = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.j ] ; 3 uses
-  %4 = load i64, ptr %i.h, align 8, !tbaa !23
-  %i.n = icmp eq i64 %4, 1
+  %indvars.iv.i.i.a = phi i64 [ 1, %.lr.ph.i.i ], [ %4, %bb.j ]
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.j ] ; 3 uses
+  %i.n = icmp eq i64 %indvars.iv.i.i.a, 1
   br i1 %i.n, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %indvars.iv.i.i.a ; 3 uses
+  %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %indvars.iv.i.i ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load i64, ptr %i.p, align 8, !tbaa !32
   %i.r = icmp eq i64 %i.q, 1
@@ -224,7 +224,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.u, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = load i64, ptr %i.o, align 8, !tbaa !31
+  %i.v = load i64, ptr %i.o, align 8, !tbaa !31   ; 2 uses
   store i64 %i.v, ptr %i.h, align 8, !tbaa !23
   br label %bb.j
 
@@ -238,12 +238,14 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.y, ptr %i.i, align 8, !tbaa !29
   %i.z = sext i32 %i.w to i64
   %i.aa = getelementptr inbounds [24 x i8], ptr %i.l, i64 %i.z
-  %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %indvars.iv.i.i.a
+  %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %indvars.iv.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aa, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ab, i64 24, i1 false), !tbaa.struct !43
+  %.pre.i.i = load i64, ptr %i.h, align 8, !tbaa !23
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.g
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i.a, 1 ; 2 uses
+  %4 = phi i64 [ %i.v, %bb.g ], [ %.pre.i.i, %bb.i ]
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next.i.i, %i.m
   br i1 %exitcond.not, label %applicable.exit, label %bb.d, !llvm.loop !36
 
@@ -279,13 +281,13 @@ bb.k:                                             ; preds = %applicable.exit
 
 bb.l:                                             ; preds = %bb.r, %.lr.ph.i
   %i.ao = phi i32 [ %i.ak, %.lr.ph.i ], [ %i.be, %bb.r ]
-  %indvars.iv.i.a = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.r ] ; 3 uses
-  %5 = load i64, ptr %i.ai, align 8, !tbaa !23
-  %i.ap = icmp eq i64 %5, 1
+  %indvars.iv.i.a = phi i64 [ 1, %.lr.ph.i ], [ %5, %bb.r ]
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.r ] ; 3 uses
+  %i.ap = icmp eq i64 %indvars.iv.i.a, 1
   br i1 %i.ap, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
-  %i.aq = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %indvars.iv.i.a ; 3 uses
+  %i.aq = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %indvars.iv.i ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !32
   %i.at = icmp eq i64 %i.as, 1
@@ -298,7 +300,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aw, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ax = load i64, ptr %i.aq, align 8, !tbaa !31
+  %i.ax = load i64, ptr %i.aq, align 8, !tbaa !31 ; 2 uses
   store i64 %i.ax, ptr %i.ai, align 8, !tbaa !23
   br label %bb.r
 
@@ -312,14 +314,16 @@ bb.q:                                             ; preds = %bb.p
   store i32 %i.ba, ptr %i.aj, align 8, !tbaa !29
   %i.bb = sext i32 %i.ay to i64
   %i.bc = getelementptr inbounds [24 x i8], ptr %i.an, i64 %i.bb
-  %i.bd = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %indvars.iv.i.a
+  %i.bd = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %indvars.iv.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bc, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.bd, i64 24, i1 false), !tbaa.struct !43
+  %.pre.i = load i64, ptr %i.ai, align 8, !tbaa !23
   %.pre.i.a = load i32, ptr %.val, align 8, !tbaa !40
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.o
   %i.be = phi i32 [ %i.ao, %bb.o ], [ %.pre.i.a, %bb.q ] ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %5 = phi i64 [ %i.ax, %bb.o ], [ %.pre.i, %bb.q ]
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bf = sext i32 %i.be to i64
   %i.bg = icmp slt i64 %indvars.iv.next.i, %i.bf
   br i1 %i.bg, label %bb.l, label %fill_iodim.exit.loopexit, !llvm.loop !36

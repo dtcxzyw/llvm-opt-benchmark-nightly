@@ -205,39 +205,42 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.m, i64 noundef %i.n, ptr noundef nonnull @.str.15, i64 noundef %i.p, i64 noundef %i.r, double noundef %i.ae, double noundef %i.af) #21
   %i.ah = sext i32 %i.ag to i64
   %i.ai = add nsw i64 %i.ah, %i.l
-  %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
+  %.pre54 = load ptr, ptr %i.aj, align 8, !tbaa !69
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.h
-  %.053 = phi i64 [ 0, %bb.d ], [ %i.ay, %bb.h ]  ; 3 uses
-  %.04652.a = phi i64 [ %i.ai, %bb.d ], [ %.1, %bb.h ] ; 5 uses
-  %4 = load ptr, ptr %i.aj, align 8, !tbaa !69
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.053
+  %4 = phi ptr [ %.pre54, %bb.d ], [ %5, %bb.h ]  ; 2 uses
+  %.04652.a = phi i64 [ 0, %bb.d ], [ %i.ay, %bb.h ] ; 3 uses
+  %.04652 = phi i64 [ %i.ai, %bb.d ], [ %.1, %bb.h ] ; 5 uses
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.04652.a
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !27 ; 3 uses
   %i.am = icmp eq i64 %i.al, 0
   br i1 %i.am, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %.not51 = icmp ult i64 %.04652.a, %1
+  %.not51 = icmp ult i64 %.04652, %1
   br i1 %.not51, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 %.04652.a
-  %i.ao = sub nuw i64 %1, %.04652.a
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 %.04652
+  %i.ao = sub nuw i64 %1, %.04652
   %i.ap = uitofp i64 %i.al to float
   %i.aq = load i64, ptr %i.i, align 8, !tbaa !74
   %i.ar = uitofp i64 %i.aq to float
   %i.as = fdiv float %i.ap, %i.ar
   %i.at = fmul float %i.as, 1.000000e+02
   %i.au = fpext float %i.at to double
-  %i.av = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.an, i64 noundef %i.ao, ptr noundef nonnull @.str.16, i64 noundef %.053, i64 noundef %i.al, double noundef %i.au) #21
+  %i.av = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.an, i64 noundef %i.ao, ptr noundef nonnull @.str.16, i64 noundef %.04652.a, i64 noundef %i.al, double noundef %i.au) #21
   %i.aw = sext i32 %i.av to i64
-  %i.ax = add i64 %.04652.a, %i.aw
+  %i.ax = add i64 %.04652, %i.aw
+  %.pre = load ptr, ptr %i.aj, align 8, !tbaa !69
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.g
-  %.1 = phi i64 [ %.04652.a, %bb.e ], [ %i.ax, %bb.g ]
-  %i.ay = add nuw nsw i64 %.053, 1                ; 2 uses
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre, %bb.g ]
+  %.1 = phi i64 [ %.04652, %bb.e ], [ %i.ax, %bb.g ]
+  %i.ay = add nuw nsw i64 %.04652.a, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ay, 49
   br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !125
 

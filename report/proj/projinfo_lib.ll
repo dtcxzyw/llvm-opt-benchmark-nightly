@@ -205,7 +205,11 @@ bb.v:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !112 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %.not605649 = icmp eq ptr %i.cz, %i.da
-  br i1 %.not605649, label %._crit_edge654, label %.lr.ph653
+  br i1 %.not605649, label %._crit_edge654, label %.lr.ph653.preheader
+
+.lr.ph653.preheader:                              ; preds = %bb.v
+  %.pre714 = load ptr, ptr %0, align 8, !tbaa !60
+  br label %.lr.ph653
 
 ._crit_edge654:                                   ; preds = %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread, %bb.v
   %.1169.lcssa = phi i8 [ 1, %bb.v ], [ %.2170, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ]
@@ -303,11 +307,11 @@ bb.ae:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj2io15DatabaseContextEEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #31
   br label %bb.ai
 
-.lr.ph653:                                        ; preds = %bb.v, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread
-  %.1169651 = phi i8 [ %.2170, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ], [ 1, %bb.v ] ; 3 uses
-  %.sroa.0571.0650 = phi ptr [ %i.eo, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ], [ %i.cz, %bb.v ] ; 3 uses
+.lr.ph653:                                        ; preds = %.lr.ph653.preheader, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread
+  %54 = phi ptr [ %55, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ], [ %.pre714, %.lr.ph653.preheader ] ; 4 uses
+  %.1169651 = phi i8 [ %.2170, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ], [ 1, %.lr.ph653.preheader ] ; 3 uses
+  %.sroa.0571.0650 = phi ptr [ %i.eo, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread ], [ %i.cz, %.lr.ph653.preheader ] ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.0571.0650, i64 32 ; 2 uses
-  %54 = load ptr, ptr %0, align 8, !tbaa !60      ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %.sroa.0571.0650, i64 40
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !67
   %i.ef = getelementptr inbounds nuw i8, ptr %54, i64 8
@@ -334,9 +338,11 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.em = phi ptr [ %.pre.a, %bb.ag ], [ %i.ei, %bb.af ]
   %i.en = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.193, ptr noundef %i.em) ; 0 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !60
   br label %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread
 
 _ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit.thread: ; preds = %.lr.ph653, %bb.ah, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit
+  %55 = phi ptr [ %.pre, %bb.ah ], [ %54, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit ], [ %54, %.lr.ph653 ]
   %.2170 = phi i8 [ 0, %bb.ah ], [ %.1169651, %_ZN5osgeo4proj8internal11starts_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_.exit ], [ %.1169651, %.lr.ph653 ] ; 2 uses
   %i.eo = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0571.0650) #33 ; 2 uses
   %.not605 = icmp eq ptr %i.eo, %i.da

@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [88 x i8], align 8                ; 13 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 7 uses
+  %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 8 uses
   %i.i = icmp ult i64 %i.h, 104811045873349726
   tail call void @llvm.assume(i1 %i.i)
   %i.j = icmp eq i64 %i.h, 0
@@ -263,11 +263,11 @@ _RINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtNtCs6u1mgJOKDyY_13rust_analyzer7tracing5h
   br i1 %i.ab, label %.loopexit, label %.lr.ph95
 
 bb.f:                                             ; preds = %.lr.ph, %bb.o
+  %1 = phi i64 [ %i.h, %.lr.ph ], [ %2, %bb.o ]   ; 4 uses
   %i.ac = phi ptr [ %i.l, %.lr.ph ], [ %i.aw, %bb.o ] ; 4 uses
   %.sroa.0.092 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.1, %bb.o ] ; 9 uses
   %.sroa.012.091 = phi i64 [ 1, %.lr.ph ], [ %i.ad, %bb.o ] ; 5 uses
   %i.ad = add nuw nsw i64 %.sroa.012.091, 1       ; 2 uses
-  %1 = load i64, ptr %i.g, align 8, !noundef !4   ; 4 uses
   %i.ae = icmp ult i64 %.sroa.0.092, %1
   br i1 %i.ae, label %bb.g, label %bb.h
 
@@ -328,9 +328,11 @@ bb.n:                                             ; preds = %bb.l
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.av, ptr noundef nonnull align 8 dereferenceable(88) %i.aj, i64 88, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.aj, ptr noundef nonnull align 8 dereferenceable(88) %i.c, i64 88, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  %.pre = load i64, ptr %i.g, align 8
   br label %bb.o
 
 bb.o:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit, %bb.n
+  %2 = phi i64 [ %i.ax, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit ], [ %.pre, %bb.n ]
   %i.aw = phi ptr [ %i.az, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit ], [ %i.ac, %bb.n ]
   %.sroa.0.1 = phi i64 [ %.sroa.0.092, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit ], [ %i.au, %bb.n ] ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.h
@@ -352,7 +354,7 @@ bb.p:                                             ; preds = %bb.k
   store i64 0, ptr %i.am, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aj, i64 80
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 8
-  %i.ax = load i64, ptr %i.g, align 8, !noundef !4 ; 2 uses
+  %i.ax = load i64, ptr %i.g, align 8, !noundef !4 ; 3 uses
   %i.ay = icmp ult i64 %.sroa.0.092, %i.ax
   br i1 %i.ay, label %bb.q, label %bb.u
 

@@ -205,10 +205,11 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .lr.ph58:                                         ; preds = %.preheader
   %i.av = shl nuw i32 1, %i.d
-  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.ax = icmp sgt i32 %i.d, 0
   %smax78 = tail call i32 @llvm.smax.i32(i32 %i.av, i32 1)
   %wide.trip.count79 = zext nneg i32 %smax78 to i64 ; 2 uses
+  %.pre83 = load ptr, ptr %i.aw, align 8, !tbaa !31 ; 2 uses
   br i1 %i.ax, label %.lr.ph58.split.us.preheader, label %.lr.ph58.split
 
 .lr.ph58.split.us.preheader:                      ; preds = %.lr.ph58
@@ -224,8 +225,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %.lr.ph58.split.us
 
 .lr.ph58.split.us:                                ; preds = %.lr.ph58.split.us.preheader, %bb.c
+  %3 = phi ptr [ %.pre83, %.lr.ph58.split.us.preheader ], [ %4, %bb.c ] ; 2 uses
   %indvars.iv75 = phi i64 [ 0, %.lr.ph58.split.us.preheader ], [ %indvars.iv.next76, %bb.c ] ; 2 uses
-  %3 = load ptr, ptr %i.aw, align 8, !tbaa !31
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv75
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !37 ; 4 uses
   %.not50.us = icmp eq ptr %i.bb, null
@@ -310,12 +311,14 @@ scalar.ph103:                                     ; preds = %scalar.ph103.prol.l
   br i1 %exitcond74.not.1, label %._crit_edge.us59, label %scalar.ph103, !llvm.loop !122
 
 bb.c:                                             ; preds = %._crit_edge.us59, %.lr.ph58.split.us
+  %4 = phi ptr [ %.pre82, %._crit_edge.us59 ], [ %3, %.lr.ph58.split.us ]
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
   %exitcond80.not = icmp eq i64 %indvars.iv.next76, %wide.trip.count79
   br i1 %exitcond80.not, label %.loopexit, label %.lr.ph58.split.us, !llvm.loop !123
 
 ._crit_edge.us59:                                 ; preds = %scalar.ph103.prol.loopexit, %scalar.ph103, %middle.block116
   tail call fastcc void @QuadTree_repulsive_force_accumulate(ptr noundef nonnull %i.bb, ptr noundef %1, ptr noundef %2)
+  %.pre82 = load ptr, ptr %i.aw, align 8, !tbaa !31
   br label %bb.c
 
 .preheader52.split:                               ; preds = %.preheader52, %get_or_assign_node_force.exit
@@ -341,9 +344,9 @@ get_or_assign_node_force.exit:                    ; preds = %.preheader52.split,
   br i1 %.not51, label %.loopexit, label %.preheader52.split, !llvm.loop !117
 
 .lr.ph58.split:                                   ; preds = %.lr.ph58, %bb.f
+  %5 = phi ptr [ %6, %bb.f ], [ %.pre83, %.lr.ph58 ] ; 2 uses
   %indvars.iv65 = phi i64 [ %indvars.iv.next66, %bb.f ], [ 0, %.lr.ph58 ] ; 2 uses
-  %4 = load ptr, ptr %i.aw, align 8, !tbaa !31
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv65
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv65
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !37 ; 3 uses
   %.not50 = icmp eq ptr %i.cn, null
   br i1 %.not50, label %bb.f, label %bb.e
@@ -351,9 +354,11 @@ get_or_assign_node_force.exit:                    ; preds = %.preheader52.split,
 bb.e:                                             ; preds = %.lr.ph58.split
   %i.co = tail call fastcc ptr @get_or_alloc_force_qt(ptr noundef nonnull %i.cn, i32 noundef %i.d) ; 0 uses
   tail call fastcc void @QuadTree_repulsive_force_accumulate(ptr noundef nonnull %i.cn, ptr noundef %1, ptr noundef %2)
+  %.pre = load ptr, ptr %i.aw, align 8, !tbaa !31
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph58.split, %bb.e
+  %6 = phi ptr [ %5, %.lr.ph58.split ], [ %.pre, %bb.e ]
   %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 2 uses
   %exitcond69.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count79
   br i1 %exitcond69.not, label %.loopexit, label %.lr.ph58.split, !llvm.loop !123

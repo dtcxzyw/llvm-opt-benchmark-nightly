@@ -205,7 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 10 uses
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 7 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 20 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 21 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 9 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
@@ -608,10 +608,14 @@ bb.az:                                            ; preds = %.lr.ph.i255.i.i
 .preheader375.i.i:                                ; preds = %.split.i.i, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #12
   %.not238411.i.i = icmp sgt i8 %i.fg, -1
-  br i1 %.not238411.i.i, label %._crit_edge413.i.i, label %.lr.ph412.i.i
+  br i1 %.not238411.i.i, label %._crit_edge413.i.i, label %.lr.ph412.preheader.i.i
 
-.lr.ph412.i.i:                                    ; preds = %.preheader375.i.i, %bb.bl
-  %9 = load i64, ptr %i.ag, align 8, !tbaa !58    ; 2 uses
+.lr.ph412.preheader.i.i:                          ; preds = %.preheader375.i.i
+  %.pre472.i.i = load i64, ptr %i.ag, align 8, !tbaa !58
+  br label %.lr.ph412.i.i
+
+.lr.ph412.i.i:                                    ; preds = %bb.bl, %.lr.ph412.preheader.i.i
+  %9 = phi i64 [ %.pre472.i.i, %.lr.ph412.preheader.i.i ], [ %11, %bb.bl ] ; 2 uses
   %i.ix = icmp eq i64 %9, 0
   br i1 %i.ix, label %SzReadPackInfo.exit.thread, label %bb.ba
 
@@ -628,7 +632,7 @@ bb.ba:                                            ; preds = %.lr.ph412.i.i
   br i1 %i.je, label %SzReadPackInfo.exit.thread, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.jf = sub nuw i64 %i.iy, %i.jd
+  %i.jf = sub nuw i64 %i.iy, %i.jd                ; 2 uses
   store i64 %i.jf, ptr %i.ag, align 8, !tbaa !58
   %i.jg = getelementptr inbounds nuw i8, ptr %i.ja, i64 %i.jd
   store ptr %i.jg, ptr %0, align 8, !tbaa !57
@@ -657,6 +661,7 @@ bb.be:                                            ; preds = %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #12
   %i.jl = call fastcc i32 @SzReadNumber(ptr noundef nonnull %0, ptr noundef nonnull %i.j) ; 2 uses
   %.not.i266.i.i = icmp eq i32 %i.jl, 0
+  %.pre.i.i = load i64, ptr %i.ag, align 8, !tbaa !58
   br i1 %.not.i266.i.i, label %bb.bf, label %.thread335.i.i
 
 bb.bf:                                            ; preds = %bb.be
@@ -674,6 +679,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bb
+  %10 = phi i64 [ %.pre.i.i, %bb.bg ], [ %i.jf, %bb.bb ]
   %i.jo = and i8 %i.jb, 32
   %.not244.i.i = icmp eq i8 %i.jo, 0
   br i1 %.not244.i.i, label %bb.bl, label %bb.bi
@@ -696,7 +702,7 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %i.js, label %bb.bk, label %.thread342.i.i
 
 .thread342.i.i:                                   ; preds = %bb.bj
-  %i.jt = sub nuw i64 %i.jr, %i.jq
+  %i.jt = sub nuw i64 %i.jr, %i.jq                ; 2 uses
   store i64 %i.jt, ptr %i.ag, align 8, !tbaa !58
   %i.ju = load ptr, ptr %0, align 8, !tbaa !57
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 %i.jq
@@ -709,6 +715,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %SzReadPackInfo.exit.thread
 
 bb.bl:                                            ; preds = %.thread342.i.i, %bb.bh
+  %11 = phi i64 [ %i.jt, %.thread342.i.i ], [ %10, %bb.bh ]
   %.not238.i.i = icmp sgt i8 %i.jb, -1
   br i1 %.not238.i.i, label %._crit_edge413.i.i, label %.lr.ph412.i.i
 

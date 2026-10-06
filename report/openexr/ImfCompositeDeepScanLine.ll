@@ -204,10 +204,11 @@ bb.z:                                             ; preds = %.lr.ph314, %._crit_
   store i32 0, ptr %i.gn, align 4, !tbaa !64
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.gb, i64 %.0119312 ; 3 uses
   store i32 0, ptr %i.go, align 4, !tbaa !64
+  %.pre388 = load i32, ptr %i.gn, align 4, !tbaa !64 ; 2 uses
   br i1 %.not.i.i.i.i, label %._crit_edge310, label %.lr.ph309
 
 ._crit_edge310:                                   ; preds = %bb.ag, %bb.z
-  %11 = load i32, ptr %i.gn, align 4, !tbaa !64
+  %11 = phi i32 [ %.pre388, %bb.z ], [ %13, %bb.ag ]
   %i.gp = zext i32 %11 to i64
   %i.gq = add nuw nsw i64 %.0120311, %i.gp        ; 2 uses
   %i.gr = add nuw i64 %.0119312, 1                ; 2 uses
@@ -215,8 +216,8 @@ bb.z:                                             ; preds = %.lr.ph314, %._crit_
   br i1 %exitcond371.not, label %._crit_edge315, label %bb.z, !llvm.loop !187
 
 .lr.ph309:                                        ; preds = %bb.z, %bb.ag
+  %12 = phi i32 [ %13, %bb.ag ], [ %.pre388, %bb.z ] ; 2 uses
   %.0118307 = phi i64 [ %i.hf, %bb.ag ], [ 0, %bb.z ] ; 2 uses
-  %12 = load i32, ptr %i.gn, align 4, !tbaa !64   ; 2 uses
   %i.gs = getelementptr inbounds nuw [24 x i8], ptr %i.au, i64 %.0118307
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !113
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %.0119312 ; 2 uses
@@ -246,7 +247,7 @@ bb.ad:                                            ; preds = %bb.ab
   br label %bb.cn
 
 bb.ae:                                            ; preds = %.lr.ph309
-  %i.hb = add i32 %i.gv, %12
+  %i.hb = add i32 %i.gv, %12                      ; 2 uses
   store i32 %i.hb, ptr %i.gn, align 4, !tbaa !64
   %i.hc = load i32, ptr %i.gu, align 4, !tbaa !64
   %.not159 = icmp eq i32 %i.hc, 0
@@ -256,9 +257,11 @@ bb.af:                                            ; preds = %bb.ae
   %i.hd = load i32, ptr %i.go, align 4, !tbaa !64
   %i.he = add i32 %i.hd, 1
   store i32 %i.he, ptr %i.go, align 4, !tbaa !64
+  %.pre386 = load i32, ptr %i.gn, align 4, !tbaa !64
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
+  %13 = phi i32 [ %i.hb, %bb.ae ], [ %.pre386, %bb.af ] ; 2 uses
   %i.hf = add nuw i64 %.0118307, 1                ; 2 uses
   %exitcond370.not = icmp eq i64 %i.hf, %.fr357
   br i1 %exitcond370.not, label %._crit_edge310, label %.lr.ph309, !llvm.loop !188

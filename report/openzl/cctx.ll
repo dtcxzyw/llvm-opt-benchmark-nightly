@@ -204,17 +204,18 @@ bb.w:                                             ; preds = %CCTX_writeChunkHead
   br i1 %.not228309.not, label %._crit_edge313, label %.lr.ph312
 
 .lr.ph312:                                        ; preds = %.thread245
-  %i.fn = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %i.fn = getelementptr inbounds nuw i8, ptr %7, i64 80 ; 2 uses
+  %.pre332 = load ptr, ptr %i.fn, align 8, !tbaa !99
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph312, %bb.aa
-  %.0185311 = phi i64 [ %i.fk, %.lr.ph312 ], [ %i.ga, %bb.aa ] ; 3 uses
-  %.0202310.a = phi i64 [ 0, %.lr.ph312 ], [ %i.gb, %bb.aa ] ; 2 uses
-  %8 = load ptr, ptr %i.fn, align 8, !tbaa !99
-  %i.fo = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %.0202310.a ; 2 uses
+  %8 = phi ptr [ %.pre332, %.lr.ph312 ], [ %9, %bb.aa ] ; 2 uses
+  %.0202310.a = phi i64 [ %i.fk, %.lr.ph312 ], [ %i.ga, %bb.aa ] ; 3 uses
+  %.0202310 = phi i64 [ 0, %.lr.ph312 ], [ %i.gb, %bb.aa ] ; 2 uses
+  %i.fo = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %.0202310 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !147 ; 5 uses
-  %i.fr = sub i64 %i.q, %.0185311                 ; 2 uses
+  %i.fr = sub i64 %i.q, %.0202310.a               ; 2 uses
   %.not226.not = icmp ugt i64 %i.fq, %i.fr
   br i1 %.not226.not, label %.thread268, label %bb.y, !prof !42
 
@@ -233,14 +234,16 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not227, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.fy = getelementptr inbounds nuw i8, ptr %i.o, i64 %.0185311
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.o, i64 %.0202310.a
   %i.fz = load ptr, ptr %i.fo, align 8, !tbaa !149
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fy, ptr align 1 %i.fz, i64 %i.fq, i1 false)
+  %.pre = load ptr, ptr %i.fn, align 8, !tbaa !99
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.ga = add i64 %i.fq, %.0185311                ; 2 uses
-  %i.gb = add nuw i64 %.0202310.a, 1              ; 2 uses
+  %9 = phi ptr [ %.pre, %bb.z ], [ %8, %bb.y ]
+  %i.ga = add i64 %i.fq, %.0202310.a              ; 2 uses
+  %i.gb = add nuw i64 %.0202310, 1                ; 2 uses
   %exitcond331.not = icmp eq i64 %i.gb, %i.fm
   br i1 %exitcond331.not, label %._crit_edge313, label %bb.x, !llvm.loop !141
 

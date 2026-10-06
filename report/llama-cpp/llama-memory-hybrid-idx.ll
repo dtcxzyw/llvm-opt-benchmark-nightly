@@ -205,16 +205,17 @@ bb.ar:                                            ; preds = %bb.aq
   %i.hm = getelementptr inbounds nuw i8, ptr %i.fh, i64 56 ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.fh, i64 80 ; 3 uses
   %scevgep.i.i = getelementptr i8, ptr %.sroa.0.1.lcssa, i64 4
+  %.pre10.i.i = load ptr, ptr %i.hm, align 8, !tbaa !83
   br label %bb.as
 
 bb.as:                                            ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i, %bb.ar
+  %18 = phi ptr [ %.pre10.i.i, %bb.ar ], [ %19, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i ] ; 7 uses
   %.sroa.0.024.i.idx.i.i = phi i64 [ 4, %bb.ar ], [ %.sroa.0.024.i.add.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i ] ; 4 uses
   %.pn23.i.i.i = phi ptr [ %.sroa.0.1.lcssa, %bb.ar ], [ %.sroa.0.024.i.ptr.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i ]
   %.sroa.0.024.i.ptr.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.lcssa, i64 %.sroa.0.024.i.idx.i.i ; 3 uses
   %i.ho = load i32, ptr %.sroa.0.024.i.ptr.i.i, align 4, !tbaa !18 ; 2 uses
   %i.hp = load i32, ptr %.sroa.0.1.lcssa, align 4, !tbaa !18 ; 2 uses
   %i.hq = zext i32 %i.ho to i64                   ; 3 uses
-  %18 = load ptr, ptr %i.hm, align 8, !tbaa !83   ; 3 uses
   %i.hr = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %i.hq ; 2 uses
   %i.hs = load i32, ptr %i.hr, align 4, !tbaa !18 ; 3 uses
   %i.ht = zext i32 %i.hp to i64                   ; 2 uses
@@ -257,6 +258,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESG_EEbT_T0_.exit.thread.i.i.i"
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.1.lcssa, i64 %.sroa.0.024.i.idx.i.i, i1 false)
+  %.pre.i.i = load ptr, ptr %i.hm, align 8, !tbaa !83
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i
 
 bb.aw:                                            ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESG_EEbT_T0_.exit.thread.i.i.i"
@@ -306,6 +308,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESG_EEbT_T0_.exit.thread19.i.i.i", !llvm.loop !276
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i: ; preds = %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRT_T0_.exit.i.i.i.i", %bb.ay, %.split.i.i.i.i, %bb.aw, %bb.av
+  %19 = phi ptr [ %18, %bb.aw ], [ %.pre.i.i, %bb.av ], [ %18, %.split.i.i.i.i ], [ %18, %bb.ay ], [ %18, %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRT_T0_.exit.i.i.i.i" ] ; 3 uses
   %.sink.i.i.i = phi ptr [ %.sroa.0.1.lcssa, %bb.aw ], [ %.sroa.0.1.lcssa, %bb.av ], [ %.sroa.06.0.i.i.i.i, %.split.i.i.i.i ], [ %.sroa.06.0.i.i.i.i, %bb.ay ], [ %.sroa.06.0.i.i.i.i, %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS4_S4_S4_PK12llama_ubatchjbE3$_1EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRT_T0_.exit.i.i.i.i" ]
   store i32 %i.ho, ptr %.sink.i.i.i, align 4, !tbaa !18
   %.sroa.0.024.i.add.i.i = add nuw nsw i64 %.sroa.0.024.i.idx.i.i, 4 ; 2 uses
@@ -315,14 +318,10 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T
 "_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_SH_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i.i.i
   %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.0.1.lcssa, i64 64 ; 2 uses
   %.not7.i.i.i.i = icmp eq ptr %i.jd, %.sroa.16.1.lcssa
-  br i1 %.not7.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS9_S9_S9_PK12llama_ubatchjbE3$_1EvT_SE_T0_.exitthread-pre-split", label %.lr.ph.i.i.i.i
+  br i1 %.not7.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorS9_S9_S9_PK12llama_ubatchjbE3$_1EvT_SE_T0_.exitthread-pre-split", label %bb.az
 
-.lr.ph.i.i.i.i:                                   ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_SH_T0_.exit.i.i"
-  %19 = load ptr, ptr %i.hm, align 8, !tbaa !83   ; 2 uses
-  br label %bb.az
-
-bb.az:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_T0_.exit.i.i.i.i", %.lr.ph.i.i.i.i
-  %.sroa.0.08.i.i.i.i = phi ptr [ %i.jd, %.lr.ph.i.i.i.i ], [ %i.jz, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_T0_.exit.i.i.i.i" ] ; 3 uses
+bb.az:                                            ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_SH_T0_.exit.i.i", %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_T0_.exit.i.i.i.i"
+  %.sroa.0.08.i.i.i.i = phi ptr [ %i.jz, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_T0_.exit.i.i.i.i" ], [ %i.jd, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK23llama_memory_hybrid_idx13set_input_qsaEP11ggml_tensorSB_SB_SB_PK12llama_ubatchjbE3$_1EEEvT_SH_T0_.exit.i.i" ] ; 3 uses
   %i.je = load i32, ptr %.sroa.0.08.i.i.i.i, align 4, !tbaa !18 ; 2 uses
   %i.jf = zext i32 %i.je to i64                   ; 2 uses
   %i.jg = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %i.jf

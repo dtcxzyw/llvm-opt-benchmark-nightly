@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #27
   store i8 1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 10 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 11 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   store i8 0, ptr %i.a, align 1, !tbaa !51
   %i.c = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 6)
           to label %.noexc.i unwind label %bb.c
@@ -458,16 +458,20 @@ _ZN5boost9containereqIcSt11char_traitsIcEvvEEbRKNS0_12basic_stringIT_T0_T1_T2_EE
   %i.eh = select i1 %i.ec, i64 %i.ee, i64 %i.eg
   %.not.i23 = icmp eq i64 %i.eh, 0
   %i.ei = trunc i64 %i.ef to i8                   ; 2 uses
-  br i1 %.not.i23, label %._crit_edge, label %.lr.ph
+  br i1 %.not.i23, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10
-  %i.ej = phi i64 [ %i.fn, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10 ], [ %i.ef, %.preheader ] ; 3 uses
-  %i.ek = phi i8 [ %i.fm, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10 ], [ %i.ei, %.preheader ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %.pre35 = load ptr, ptr %i.b, align 8
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10
+  %i.ej = phi i64 [ %i.ef, %.lr.ph.preheader ], [ %i.fn, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10 ] ; 3 uses
+  %1 = phi ptr [ %.pre35, %.lr.ph.preheader ], [ %2, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10 ] ; 3 uses
+  %i.ek = phi i8 [ %i.ei, %.lr.ph.preheader ], [ %i.fm, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE8pop_backEv.exit10 ] ; 2 uses
   %i.el = trunc i8 %i.ek to i1                    ; 2 uses
   %i.em = lshr i8 %i.ek, 1
   %i.en = zext nneg i8 %i.em to i64
   %i.eo = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.en ; 2 uses
-  %1 = load ptr, ptr %i.b, align 8                ; 2 uses
   %i.ep = lshr i64 %i.ej, 1                       ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 %i.ep ; 2 uses
   %.sroa.sel22.v.sroa.sel.v.sroa.sel.v = select i1 %i.el, ptr %i.eo, ptr %i.eq
@@ -488,9 +492,11 @@ bb.p:                                             ; preds = %.lr.ph
   %.sroa.sel22.v = select i1 %i.el, ptr %i.eo, ptr %i.eq
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.sroa.sel22.v.sroa.sel.v.sroa.sel, ptr nonnull align 1 %.sroa.sel22.v, i64 %i.ey, i1 false)
   %.pre.i.i8 = load i8, ptr %0, align 8, !tbaa !51
+  %.pre34 = load ptr, ptr %i.b, align 8
   br label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i.i9
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit.i.i9:      ; preds = %bb.p, %.lr.ph
+  %2 = phi ptr [ %1, %.lr.ph ], [ %.pre34, %bb.p ]
   %i.fa = phi i8 [ %i.er, %.lr.ph ], [ %.pre.i.i8, %bb.p ]
   %i.fb = add nsw i64 %i.eu, -1                   ; 2 uses
   %i.fc = trunc i8 %i.fa to i1

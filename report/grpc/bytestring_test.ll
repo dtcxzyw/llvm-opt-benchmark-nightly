@@ -204,16 +204,17 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
   %i.d = phi i8 [ %i.a, %.preheader.lr.ph ], [ %i.u, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ] ; 2 uses
-  %.promoted.a = phi ptr [ null, %.preheader.lr.ph ], [ %.promoted26, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ] ; 4 uses
-  %.018.a = phi ptr [ %1, %.preheader.lr.ph ], [ %i.t, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ]
-  %.promoted16 = load ptr, ptr %i.c, align 8, !tbaa !84
-  %.not.i.i = icmp eq ptr %.promoted.a, %.promoted16
+  %.promoted.a = phi ptr [ null, %.preheader.lr.ph ], [ %.promoted1629, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ] ; 2 uses
+  %.018.a = phi ptr [ null, %.preheader.lr.ph ], [ %.promoted26, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ] ; 3 uses
+  %.018 = phi ptr [ %1, %.preheader.lr.ph ], [ %i.t, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ]
+  %.not.i.i = icmp eq ptr %.018.a, %.promoted.a
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
-  store i8 %i.d, ptr %.promoted.a, align 1, !tbaa !62
-  %i.e = getelementptr inbounds nuw i8, ptr %.promoted.a, i64 1 ; 2 uses
+  store i8 %i.d, ptr %.018.a, align 1, !tbaa !62
+  %i.e = getelementptr inbounds nuw i8, ptr %.018.a, i64 1 ; 2 uses
   store ptr %i.e, ptr %i.b, align 8, !tbaa !85
+  %.promoted16.pre = load ptr, ptr %i.c, align 8, !tbaa !84
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
 
 bb.c:                                             ; preds = %.preheader
@@ -264,13 +265,14 @@ bb.f:                                             ; preds = %_ZNSt6vectorIhSaIhE
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i: ; preds = %bb.f, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
   store ptr %i.o, ptr %0, align 8, !tbaa !83
   store ptr %i.r, ptr %i.b, align 8, !tbaa !85
-  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.n
+  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.n ; 2 uses
   store ptr %i.s, ptr %i.c, align 8, !tbaa !84
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i, %bb.b
+  %.promoted1629 = phi ptr [ %i.s, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.promoted16.pre, %bb.b ]
   %.promoted26 = phi ptr [ %i.r, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %i.e, %bb.b ]
-  %i.t = getelementptr inbounds nuw i8, ptr %.018.a, i64 1 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.018, i64 1 ; 2 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !62    ; 2 uses
   %.not = icmp eq i8 %i.u, 0
   br i1 %.not, label %._crit_edge, label %.preheader, !llvm.loop !635

@@ -205,12 +205,14 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.val9 = load ptr, ptr %i.e, align 8, !nonnull !16, !align !23, !noundef !16
+  %.val9 = load ptr, ptr %i.e, align 8, !nonnull !16, !align !23, !noundef !16 ; 2 uses
   %.val = load ptr, ptr %3, align 8
+  %.val.i.pre14 = load ptr, ptr %.val9, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit
-  %i.f = phi ptr [ %i.c, %.lr.ph ], [ %i.s, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit ] ; 2 uses
+  %4 = phi ptr [ %i.c, %.lr.ph ], [ %5, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit ] ; 2 uses
+  %i.f = phi ptr [ %.val.i.pre14, %.lr.ph ], [ %i.s, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit ] ; 3 uses
   %i.g = phi ptr [ %i.d, %.lr.ph ], [ %i.r, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit ] ; 3 uses
   %storemerge13 = phi ptr [ %2, %.lr.ph ], [ %.pn3.i.i, %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit ] ; 5 uses
   %i.h = load i64, ptr %i.g, align 8, !noundef !16 ; 3 uses
@@ -218,8 +220,7 @@ bb.b:                                             ; preds = %.lr.ph, %_RNCINvNtN
   %i.j = load i64, ptr %i.i, align 8, !noundef !16
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 3 uses
   store ptr %i.k, ptr %i.b, align 8
-  %.val.i = load ptr, ptr %.val9, align 8, !nonnull !16, !align !23, !noundef !16
-  %i.l = load i64, ptr %.val.i, align 8, !noundef !16
+  %i.l = load i64, ptr %i.f, align 8, !noundef !16
   %..i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.l, i64 %i.j) ; 2 uses
   %i.m = icmp ult i64 %i.h, %..i.i.i
   br i1 %i.m, label %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit
@@ -235,15 +236,17 @@ bb.c:                                             ; preds = %_RNCINvNtNtCsiAynQA
   %i.p = getelementptr inbounds nuw i8, ptr %storemerge13, i64 8
   store i64 %..i.i.i, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %storemerge13, i64 16
+  %.val.i.pre = load ptr, ptr %.val9, align 8
   %.pre = load ptr, ptr %i.a, align 8
   %.pre14 = load ptr, ptr %i.b, align 8
   br label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit
 
 _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit: ; preds = %bb.b, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i, %bb.c
   %i.r = phi ptr [ %.pre14, %bb.c ], [ %i.k, %bb.b ], [ %i.k, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i ] ; 2 uses
-  %i.s = phi ptr [ %.pre, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i ] ; 2 uses
+  %5 = phi ptr [ %.pre, %bb.c ], [ %4, %bb.b ], [ %4, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i ] ; 2 uses
+  %i.s = phi ptr [ %.val.i.pre, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i ]
   %.pn3.i.i = phi ptr [ %i.q, %bb.c ], [ %storemerge13, %bb.b ], [ %storemerge13, %_RNCINvNtNtCsiAynQAjgDuT_10xet_client10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEEs_0B8_.exit.i.i ] ; 2 uses
-  %.not = icmp eq ptr %i.r, %i.s
+  %.not = icmp eq ptr %i.r, %5
   br i1 %.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtCsiAynQAjgDuT_10xet_client9cas_types5RangeyNtB12_2__FEBZ_INtNtNtCsexYYUdYSQU6_5alloc3vec13in_place_drop11InPlaceDropBZ_EINtNtBa_6result6ResultB1Z_zENCINvNtNtB14_10cas_client20chunk_window_builder32build_file_chunk_hashes_responseINtB24_3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashyEEE0NCINvNtB6_6filter15filter_try_foldBZ_B1Z_B30_NCB3u_s_0NCINvNtB24_16in_place_collect24write_in_place_with_dropBZ_E0E0E0B14_.exit, %bb.a

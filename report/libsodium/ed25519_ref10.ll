@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.e = load i8, ptr %i.d, align 1
   %i.f = zext i8 %i.e to i32                      ; 2 uses
   %i.g = sub nsw i32 %i.c, %i.f
-  %1 = ashr i32 %i.g, 8
+  %1 = lshr i32 %i.g, 8
   %i.h = and i32 %1, %.011
   %i.i = or i32 %i.h, %.012
   %i.j = xor i32 %i.f, %i.c
-  %i.k = add nsw i32 %i.j, -1
-  %2 = ashr i32 %i.k, 8
+  %i.k = add nuw nsw i32 %i.j, 511
+  %2 = lshr i32 %i.k, 8
   %i.l = and i32 %2, %.011                        ; 2 uses
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 4 uses
   %i.m = getelementptr i8, ptr %0, i64 %indvars.iv.next.1
@@ -219,20 +219,18 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.q = load i8, ptr %i.p, align 2
   %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = sub nsw i32 %i.o, %i.r
-  %3 = ashr i32 %i.s, 8
+  %3 = lshr i32 %i.s, 8
   %i.t = and i32 %3, %i.l
   %i.u = or i32 %i.t, %i.i                        ; 2 uses
   %i.v = xor i32 %i.r, %i.o
-  %i.w = add nsw i32 %i.v, -1
-  %4 = ashr i32 %i.w, 8
+  %i.w = add nuw nsw i32 %i.v, 511
+  %4 = lshr i32 %i.w, 8
   %i.x = and i32 %4, %i.l
   %.not.1 = icmp eq i64 %indvars.iv.next.1, 0
   br i1 %.not.1, label %bb.c, label %bb.b, !llvm.loop !35
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp ne i32 %i.u, 0
-  %6 = zext i1 %5 to i32
-  ret i32 %6
+  ret i32 %i.u
 }
 
 ; Function Attrs: nounwind ssp uwtable

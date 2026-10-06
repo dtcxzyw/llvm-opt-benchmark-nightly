@@ -204,7 +204,7 @@ infuse.exit:                                      ; preds = %bb.b, %bb.c
   br i1 %.not125141, label %._crit_edge143, label %.preheader132
 
 .preheader132:                                    ; preds = %infuse.exit, %.critedge
-  %.098142 = phi ptr [ %i.cb, %.critedge ], [ %i.af, %infuse.exit ] ; 4 uses
+  %.098142 = phi ptr [ %i.cb, %.critedge ], [ %i.af, %infuse.exit ] ; 5 uses
   br label %bb.d
 
 ._crit_edge143:                                   ; preds = %.critedge, %infuse.exit
@@ -219,10 +219,15 @@ bb.d:                                             ; preds = %.preheader132, %bb.
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 232
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !102 ; 2 uses
   %.not126 = icmp eq ptr %i.ak, null
-  br i1 %.not126, label %.preheader131, label %bb.d, !llvm.loop !94
+  br i1 %.not126, label %.preheader131.preheader, label %bb.d, !llvm.loop !94
 
-.preheader131:                                    ; preds = %bb.d, %infuse.exit130
-  %.1140 = phi ptr [ %i.ca, %infuse.exit130 ], [ %.099, %bb.d ] ; 5 uses
+.preheader131.preheader:                          ; preds = %bb.d
+  %.pre181 = load i32, ptr %.098142, align 8
+  br label %.preheader131
+
+.preheader131:                                    ; preds = %.preheader131.preheader, %infuse.exit130
+  %1 = phi i32 [ %2, %infuse.exit130 ], [ %.pre181, %.preheader131.preheader ] ; 2 uses
+  %.1140 = phi ptr [ %i.ca, %infuse.exit130 ], [ %.099, %.preheader131.preheader ] ; 5 uses
   %i.al = load i32, ptr %.1140, align 8
   %i.am = and i32 %i.al, 3                        ; 2 uses
   %i.an = icmp eq i32 %i.am, 2
@@ -233,9 +238,8 @@ bb.d:                                             ; preds = %.preheader132, %bb.
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !13 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 360
-  %1 = load i32, ptr %i.au, align 8, !tbaa !63    ; 2 uses
-  %i.av = load i32, ptr %.098142, align 8
-  %i.aw = and i32 %i.av, 3
+  %i.av = load i32, ptr %i.au, align 8, !tbaa !63 ; 2 uses
+  %i.aw = and i32 %1, 3
   %i.ax = icmp eq i32 %i.aw, 2
   %i.ay = select i1 %i.ax, i64 56, i64 -8
   %i.az = getelementptr inbounds i8, ptr %.098142, i64 %i.ay
@@ -244,14 +248,14 @@ bb.d:                                             ; preds = %.preheader132, %bb.
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !13
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 360
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !63
-  %i.bf = icmp slt i32 %1, %i.be
+  %i.bf = icmp slt i32 %i.av, %i.be
   br i1 %i.bf, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.preheader131
   %.val = load ptr, ptr %i.a, align 8, !tbaa !13
   %i.bg = getelementptr i8, ptr %.val, i64 384
   %.val.val = load ptr, ptr %i.bg, align 8, !tbaa !101
-  %i.bh = sext i32 %1 to i64
+  %i.bh = sext i32 %i.av to i64
   %i.bi = getelementptr inbounds [8 x i8], ptr %.val.val, i64 %i.bh ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !43 ; 2 uses
   %i.bk = icmp eq ptr %i.bj, null
@@ -269,12 +273,14 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   store ptr %i.ar, ptr %i.bi, align 8, !tbaa !43
+  %.pre = load i32, ptr %.098142, align 8
   %.pre.a = load i32, ptr %.1140, align 8
   %.pre181.a = and i32 %.pre.a, 3
   br label %infuse.exit130
 
 infuse.exit130:                                   ; preds = %bb.f, %bb.g
   %.pre-phi = phi i32 [ %i.am, %bb.f ], [ %.pre181.a, %bb.g ]
+  %2 = phi i32 [ %1, %bb.f ], [ %.pre, %bb.g ]
   %i.bs = icmp eq i32 %.pre-phi, 2
   %i.bt = select i1 %i.bs, ptr %.1140, ptr %i.ao
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 56

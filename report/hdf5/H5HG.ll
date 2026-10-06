@@ -204,25 +204,28 @@ bb.r:                                             ; preds = %bb.p
 .lr.ph:                                           ; preds = %bb.r
   %i.bt = load i64, ptr %i.o, align 8, !tbaa !43
   %i.bu = getelementptr inbounds nuw [24 x i8], ptr %.pre.a, i64 %i.bt
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 2 uses
   %i.bw = sub i64 0, %i.br
+  %.pre157 = load ptr, ptr %i.bv, align 8, !tbaa !35
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph, %bb.u
+  %2 = phi ptr [ %.pre157, %.lr.ph ], [ %3, %bb.u ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.u ] ; 2 uses
   %i.bx = getelementptr inbounds nuw [24 x i8], ptr %.pre.a, i64 %indvars.iv
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16 ; 2 uses
-  %2 = load ptr, ptr %i.by, align 8, !tbaa !35    ; 2 uses
-  %i.bz = load ptr, ptr %i.bv, align 8, !tbaa !35
-  %i.ca = icmp ugt ptr %2, %i.bz
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !35 ; 2 uses
+  %i.ca = icmp ugt ptr %i.bz, %2
   br i1 %i.ca, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.cb = getelementptr inbounds i8, ptr %2, i64 %i.bw
+  %i.cb = getelementptr inbounds i8, ptr %i.bz, i64 %i.bw
   store ptr %i.cb, ptr %i.by, align 8, !tbaa !35
+  %.pre = load ptr, ptr %i.bv, align 8, !tbaa !35
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t
+  %3 = phi ptr [ %2, %bb.s ], [ %.pre, %bb.t ]
   %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
   %i.cc = and i64 %indvars.iv.next, 4294967295
   %i.cd = icmp ugt i64 %i.bs, %i.cc

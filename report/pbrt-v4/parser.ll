@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; pre
   %.pre.pre = load ptr, ptr %i.u, align 8, !tbaa !176
   store ptr %i.al, ptr %3, align 8, !tbaa !213
   store ptr %i.al, ptr %i.am, align 8, !tbaa !212
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.ah
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.ah ; 2 uses
   store ptr %i.an, ptr %i.aj, align 8, !tbaa !214
   %.pre12 = ptrtoint ptr %.pre.pre to i64
   %.pre13 = ptrtoint ptr %.pre9.pre to i64
@@ -214,6 +214,7 @@ _ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; pre
 
 _ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE7reserveEm.exit: ; preds = %bb.l, %_ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i
   %.pre-phi16 = phi i64 [ %i.af, %bb.l ], [ %.pre15, %_ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i ]
+  %.pre11 = phi ptr [ null, %bb.l ], [ %i.an, %_ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i ]
   %i.ao = phi ptr [ null, %bb.l ], [ %i.al, %_ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i ]
   %i.ap = phi ptr [ %i.t, %bb.l ], [ %.pre9.pre, %_ZNSt12_Vector_baseIN4pbrt6Point2IfEESaIS2_EE13_M_deallocateEPS2_m.exit.i ]
   %.not = icmp ult i64 %.pre-phi16, 5
@@ -266,13 +267,13 @@ bb.o:                                             ; preds = %_ZNSt12_Vector_base
   br label %bb.ac
 
 bb.p:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit
-  %i.ba = phi ptr [ %i.ao, %.lr.ph ], [ %i.cv, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit ] ; 5 uses
+  %5 = phi ptr [ %.pre11, %.lr.ph ], [ %6, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit ] ; 4 uses
+  %i.ba = phi ptr [ %i.ao, %.lr.ph ], [ %i.cv, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
   %i.bb = phi ptr [ %i.ap, %.lr.ph ], [ %i.cy, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit ]
   %.08 = phi i64 [ 0, %.lr.ph ], [ %i.cw, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
   %.idx = shl nuw i64 %.08, 3
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx
   %i.bd = load <2 x float>, ptr %i.bc, align 4, !tbaa !33 ; 2 uses
-  %5 = load ptr, ptr %i.aj, align 8, !tbaa !214
   %.not.i.i = icmp eq ptr %i.ba, %5
   br i1 %.not.i.i, label %bb.r, label %bb.q
 
@@ -281,11 +282,12 @@ bb.q:                                             ; preds = %bb.p
   %i.be = load ptr, ptr %i.aq, align 8, !tbaa !212
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 8 ; 2 uses
   store ptr %i.bf, ptr %i.aq, align 8, !tbaa !212
+  %.pre10 = load ptr, ptr %i.aj, align 8, !tbaa !214
   br label %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit
 
 bb.r:                                             ; preds = %bb.p
   %i.bg = load ptr, ptr %3, align 8, !tbaa !213   ; 9 uses
-  %i.bh = ptrtoint ptr %i.ba to i64               ; 2 uses
+  %i.bh = ptrtoint ptr %5 to i64                  ; 2 uses
   %i.bi = ptrtoint ptr %i.bg to i64               ; 3 uses
   %i.bj = sub i64 %i.bh, %i.bi                    ; 4 uses
   %i.bk = icmp eq i64 %i.bj, 9223372036854775800
@@ -314,7 +316,7 @@ _ZNKSt6vectorIN4pbrt6Point2IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds =
 .noexc32:                                         ; preds = %_ZNKSt6vectorIN4pbrt6Point2IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bj
   store <2 x float> %i.bd, ptr %i.bs, align 4
-  %.not10.i.i.i.i.i.i = icmp eq ptr %i.bg, %i.ba
+  %.not10.i.i.i.i.i.i = icmp eq ptr %i.bg, %5
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc32
@@ -413,7 +415,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i64 %i.cq, ptr %.012.i.i.i.i.i.i, align 4, !alias.scope !1538, !noalias !1539
   %i.cr = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i = icmp eq ptr %i.cr, %i.ba
+  %.not.i.i.i.i.i.i = icmp eq ptr %i.cr, %5
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !1536
 
 _ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %.noexc32
@@ -429,11 +431,12 @@ bb.t:                                             ; preds = %_ZNSt6vectorIN4pbrt
 _ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.t, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
   store ptr %i.br, ptr %3, align 8, !tbaa !213
   store ptr %i.ct, ptr %i.aq, align 8, !tbaa !212
-  %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.bp
+  %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.bp ; 2 uses
   store ptr %i.cu, ptr %i.aj, align 8, !tbaa !214
   br label %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE9push_backEOS2_.exit: ; preds = %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.q
+  %6 = phi ptr [ %i.cu, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.pre10, %bb.q ]
   %i.cv = phi ptr [ %i.ct, %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.bf, %bb.q ]
   %i.cw = add nuw nsw i64 %.08, 1                 ; 2 uses
   %i.cx = load ptr, ptr %i.u, align 8, !tbaa !176

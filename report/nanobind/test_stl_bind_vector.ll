@@ -204,6 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ae = phi i64 [ %i.w, %bb.e ], [ %i.aa, %bb.d ] ; 2 uses
   %i.af = phi i64 [ %i.ac, %bb.e ], [ %i.y, %bb.d ] ; 2 uses
   %i.ag = icmp eq i64 %i.af, 1
+  %6 = load ptr, ptr %i.j, align 8, !tbaa !64     ; 3 uses
   br i1 %i.ag, label %bb.g, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
@@ -211,7 +212,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %.lr.ph.i
 
 bb.g:                                             ; preds = %bb.f
-  %6 = load ptr, ptr %i.j, align 8, !tbaa !64     ; 2 uses
   %i.ah = getelementptr inbounds [4 x i8], ptr %6, i64 %i.ad
   %i.ai = getelementptr inbounds [4 x i8], ptr %6, i64 %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
@@ -223,8 +223,8 @@ bb.g:                                             ; preds = %bb.f
   %i.am = phi i64 [ %i.az, %_ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i ], [ %i.af, %.lr.ph.preheader.i ] ; 3 uses
   %i.an = phi ptr [ %i.bb, %_ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i ], [ %.pre.i.a, %.lr.ph.preheader.i ] ; 5 uses
   %i.ao = phi i64 [ %i.bc, %_ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i ], [ %i.ae, %.lr.ph.preheader.i ] ; 4 uses
+  %7 = phi ptr [ %8, %_ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i ], [ %6, %.lr.ph.preheader.i ] ; 4 uses
   %.037.i = phi i64 [ %i.bd, %_ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i ], [ 0, %.lr.ph.preheader.i ]
-  %7 = load ptr, ptr %i.j, align 8, !tbaa !64
   %i.ap = getelementptr inbounds [4 x i8], ptr %7, i64 %i.ao ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 4 ; 4 uses
   %.not.i.i.i = icmp eq ptr %i.aq, %i.an
@@ -240,6 +240,7 @@ bb.h:                                             ; preds = %.lr.ph.i
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ap, ptr nonnull align 4 %i.aq, i64 %i.at, i1 false)
   %.pre.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !68
+  %.pre.i = load ptr, ptr %i.j, align 8, !tbaa !64
   %.pre38.i = load i64, ptr %i.t, align 8, !tbaa !81
   %.pre39.i = load i64, ptr %i.s, align 8, !tbaa !81
   %.pre40.i = load i64, ptr %4, align 8, !tbaa !81
@@ -258,6 +259,7 @@ _ZNSt6vectorIjSaIjEE5eraseEN9__gnu_cxx17__normal_iteratorIPKjS1_EE.exit.i: ; pre
   %i.ax = phi i64 [ %i.al, %bb.k ], [ %i.al, %bb.j ], [ %.pre40.i, %bb.i ], [ %i.al, %.lr.ph.i ] ; 2 uses
   %i.ay = phi i64 [ %i.ao, %bb.k ], [ %i.ao, %bb.j ], [ %.pre39.i, %bb.i ], [ %i.ao, %.lr.ph.i ]
   %i.az = phi i64 [ %i.am, %bb.k ], [ %i.am, %bb.j ], [ %.pre38.i, %bb.i ], [ %i.am, %.lr.ph.i ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.k ], [ %7, %bb.j ], [ %.pre.i, %bb.i ], [ %7, %.lr.ph.i ]
   %i.ba = phi ptr [ %i.an, %bb.k ], [ %i.an, %bb.j ], [ %.pre.i.i.i, %bb.i ], [ %i.an, %.lr.ph.i ]
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -4 ; 2 uses
   store ptr %i.bb, ptr %i.k, align 8, !tbaa !68
@@ -660,6 +662,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ab = phi i64 [ %i.t, %bb.e ], [ %i.x, %bb.d ] ; 2 uses
   %i.ac = phi i64 [ %i.z, %bb.e ], [ %i.v, %bb.d ] ; 2 uses
   %i.ad = icmp eq i64 %i.ac, 1
+  %.val31.i = load ptr, ptr %.val, align 8, !tbaa !120 ; 3 uses
   br i1 %i.ad, label %bb.g, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
@@ -667,7 +670,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %.lr.ph.i
 
 bb.g:                                             ; preds = %bb.f
-  %.val31.i = load ptr, ptr %.val, align 8, !tbaa !120 ; 2 uses
   %.idx.i = shl nsw i64 %i.aa, 2                  ; 2 uses
   %i.ae = getelementptr inbounds i8, ptr %.val31.i, i64 %.idx.i ; 3 uses
   %.idx10.i = shl nsw i64 %i.ab, 2
@@ -720,8 +722,8 @@ _ZSt8_DestroyIPZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_
   %i.ap = phi i64 [ %i.ba, %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit.i ], [ %i.ac, %.lr.ph.preheader.i ] ; 3 uses
   %.val9.i.i.i = phi ptr [ %i.bc, %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit.i ], [ %.val9.i.i.pre.i, %.lr.ph.preheader.i ] ; 5 uses
   %i.aq = phi i64 [ %i.bd, %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit.i ], [ %i.ab, %.lr.ph.preheader.i ] ; 4 uses
+  %.val29.i = phi ptr [ %.val2913.i, %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit.i ], [ %.val31.i, %.lr.ph.preheader.i ] ; 4 uses
   %.011.i = phi i64 [ %i.be, %_ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit.i ], [ 0, %.lr.ph.preheader.i ]
-  %.val29.i = load ptr, ptr %.val, align 8, !tbaa !120
   %i.ar = getelementptr inbounds [4 x i8], ptr %.val29.i, i64 %i.aq ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 4 ; 4 uses
   %.not.i.i40.i = icmp eq ptr %i.as, %.val9.i.i.i
@@ -737,6 +739,7 @@ bb.m:                                             ; preds = %.lr.ph.i
 bb.n:                                             ; preds = %bb.m
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ar, ptr nonnull align 4 %i.as, i64 %i.av, i1 false)
   %.pre.i.i.i = load ptr, ptr %i.j, align 8, !tbaa !124
+  %.val29.pre.i = load ptr, ptr %.val, align 8, !tbaa !120
   %.pre.i = load i64, ptr %i.q, align 8, !tbaa !81
   %.pre13.i = load i64, ptr %i.p, align 8, !tbaa !81
   %.pre14.i = load i64, ptr %4, align 8, !tbaa !81
@@ -755,6 +758,7 @@ _ZNSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE
   %i.ay = phi i64 [ %i.ao, %bb.p ], [ %i.ao, %bb.o ], [ %.pre14.i, %bb.n ], [ %i.ao, %.lr.ph.i ] ; 2 uses
   %i.az = phi i64 [ %i.aq, %bb.p ], [ %i.aq, %bb.o ], [ %.pre13.i, %bb.n ], [ %i.aq, %.lr.ph.i ]
   %i.ba = phi i64 [ %i.ap, %bb.p ], [ %i.ap, %bb.o ], [ %.pre.i, %bb.n ], [ %i.ap, %.lr.ph.i ] ; 2 uses
+  %.val2913.i = phi ptr [ %.val29.i, %bb.p ], [ %.val29.i, %bb.o ], [ %.val29.pre.i, %bb.n ], [ %.val29.i, %.lr.ph.i ]
   %i.bb = phi ptr [ %.val9.i.i.i, %bb.p ], [ %.val9.i.i.i, %bb.o ], [ %.pre.i.i.i, %bb.n ], [ %.val9.i.i.i, %.lr.ph.i ]
   %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 -4 ; 2 uses
   store ptr %i.bc, ptr %i.j, align 8, !tbaa !124

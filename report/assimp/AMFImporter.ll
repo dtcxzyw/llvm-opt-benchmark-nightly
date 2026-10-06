@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIhSaIhE
   unreachable
 
 bb.g:                                             ; preds = %_ZNSt6vectorIhSaIhEE5clearEv.exit
-  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 15 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 16 uses
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = ptrtoint ptr %i.o to i64
@@ -596,14 +596,15 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIP
 
 .lr.ph94.preheader:                               ; preds = %.preheader
   %.pre103 = load ptr, ptr %i.p, align 8
+  %.pre105 = load ptr, ptr %i.v, align 8
   br label %.lr.ph94
 
 .lr.ph94:                                         ; preds = %.lr.ph94.preheader, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67
-  %i.gb = phi ptr [ %i.gz, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre103, %.lr.ph94.preheader ] ; 3 uses
+  %4 = phi ptr [ %5, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre105, %.lr.ph94.preheader ] ; 2 uses
+  %i.gb = phi ptr [ %i.gz, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre103, %.lr.ph94.preheader ] ; 2 uses
   %.093 = phi i8 [ %i.ha, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ 0, %.lr.ph94.preheader ] ; 2 uses
   %i.gc = zext i8 %.093 to i64
   %i.gd = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.gc ; 2 uses
-  %4 = load ptr, ptr %i.v, align 8
   %.not.i58 = icmp eq ptr %i.gb, %4
   br i1 %.not.i58, label %bb.aa, label %bb.z
 
@@ -613,11 +614,12 @@ bb.z:                                             ; preds = %.lr.ph94
   %i.gf = load ptr, ptr %i.p, align 8
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 1 ; 2 uses
   store ptr %i.gg, ptr %i.p, align 8
+  %.pre104 = load ptr, ptr %i.v, align 8
   br label %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67
 
 bb.aa:                                            ; preds = %.lr.ph94
   %i.gh = load ptr, ptr %2, align 8               ; 4 uses
-  %i.gi = ptrtoint ptr %i.gb to i64
+  %i.gi = ptrtoint ptr %4 to i64
   %i.gj = ptrtoint ptr %i.gh to i64               ; 2 uses
   %i.gk = sub i64 %i.gi, %i.gj                    ; 7 uses
   %i.gl = icmp eq i64 %i.gk, 9223372036854775807
@@ -667,11 +669,12 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIhSaIhE
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64: ; preds = %bb.ad, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i62
   store ptr %i.gq, ptr %2, align 8
   store ptr %i.gu, ptr %i.p, align 8
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.gq, i64 %i.gp
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.gq, i64 %i.gp ; 2 uses
   store ptr %i.gy, ptr %i.v, align 8
   br label %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67
 
 _ZNSt6vectorIhSaIhEE9push_backERKh.exit67:        ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64, %bb.z
+  %5 = phi ptr [ %i.gy, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64 ], [ %.pre104, %bb.z ]
   %i.gz = phi ptr [ %i.gu, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64 ], [ %i.gg, %bb.z ]
   %i.ha = add nuw i8 %.093, 1                     ; 2 uses
   %i.hb = zext i8 %i.ha to i32

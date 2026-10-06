@@ -205,6 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.pre11 = load i16, ptr %0, align 2, !tbaa !41
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.a
@@ -334,11 +335,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %exitcond10.not.3, label %.loopexit, label %.lr.ph7, !llvm.loop !294
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
+  %2 = phi i16 [ %.pre11, %.lr.ph ], [ %3, %bb.f ] ; 4 uses
   %.14 = phi ptr [ %.24.val, %.lr.ph ], [ %i.cb, %bb.f ] ; 5 uses
   %.1233 = phi i32 [ 0, %.lr.ph ], [ %i.cc, %bb.f ]
-  %2 = load i16, ptr %.14, align 2, !tbaa !41
-  %i.bq = load i16, ptr %0, align 2, !tbaa !41
-  %i.br = icmp eq i16 %2, %i.bq
+  %i.bq = load i16, ptr %.14, align 2, !tbaa !41
+  %i.br = icmp eq i16 %i.bq, %2
   br i1 %i.br, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -358,9 +359,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ca = getelementptr inbounds nuw i8, ptr %.14, i64 6
   store i16 0, ptr %i.ca, align 2, !tbaa !41
+  %.pre = load i16, ptr %0, align 2, !tbaa !41
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
+  %3 = phi i16 [ %.pre, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ], [ %2, %bb.b ]
   %i.cb = getelementptr inbounds nuw i8, ptr %.14, i64 8
   %i.cc = add nuw i32 %.1233, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.cc, %i.a
@@ -384,6 +387,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %.pre11 = load i8, ptr %0, align 1, !tbaa !35
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.a
@@ -434,11 +438,11 @@ bb.a:
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph7, !llvm.loop !298
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
+  %2 = phi i8 [ %.pre11, %.lr.ph ], [ %3, %bb.f ] ; 4 uses
   %.14 = phi ptr [ %.24.val, %.lr.ph ], [ %i.ao, %bb.f ] ; 5 uses
   %.1233 = phi i32 [ 0, %.lr.ph ], [ %i.ap, %bb.f ]
-  %2 = load i8, ptr %.14, align 1, !tbaa !35
-  %i.ad = load i8, ptr %0, align 1, !tbaa !35
-  %i.ae = icmp eq i8 %2, %i.ad
+  %i.ad = load i8, ptr %.14, align 1, !tbaa !35
+  %i.ae = icmp eq i8 %i.ad, %2
   br i1 %i.ae, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -458,9 +462,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %.14, i64 3
   store i8 0, ptr %i.an, align 1, !tbaa !35
+  %.pre = load i8, ptr %0, align 1, !tbaa !35
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
+  %3 = phi i8 [ %.pre, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ], [ %2, %bb.b ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.14, i64 4
   %i.ap = add nuw i32 %.1233, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.ap, %i.a

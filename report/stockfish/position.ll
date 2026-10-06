@@ -205,11 +205,12 @@ bb.a:
   br i1 %.not18, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.ca = getelementptr inbounds nuw i8, ptr %.pre.a, i64 64 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.pre.a, i64 64 ; 3 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.pre.a, i64 24
   %i.cc = getelementptr inbounds nuw i8, ptr %.pre.a, i64 40
   %i.cd = getelementptr inbounds nuw i8, ptr %.pre.a, i64 16 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.pre.a, i64 8 ; 2 uses
+  %.pre20 = load i64, ptr %i.ca, align 8, !tbaa !72
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
@@ -219,6 +220,7 @@ bb.a:
   br i1 %.not15, label %bb.i, label %bb.h
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
+  %1 = phi i64 [ %.pre20, %.lr.ph ], [ %2, %bb.g ]
   %.019 = phi i64 [ %i.bz, %.lr.ph ], [ %i.cj, %bb.g ] ; 3 uses
   %i.ch = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.019, i1 true) ; 2 uses
   %i.ci = add i64 %.019, -1
@@ -228,9 +230,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.cm = zext i8 %i.cl to i64                    ; 2 uses
   %i.cn = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish7Zobrist3psqE, i64 %i.cm
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %i.ch ; 3 uses
-  %1 = load i64, ptr %i.co, align 8, !tbaa !13
-  %i.cp = load i64, ptr %i.ca, align 8, !tbaa !72
-  %i.cq = xor i64 %i.cp, %1
+  %i.cp = load i64, ptr %i.co, align 8, !tbaa !13
+  %i.cq = xor i64 %1, %i.cp                       ; 2 uses
   store i64 %i.cq, ptr %i.ca, align 8, !tbaa !72
   %i.cr = and i8 %i.cl, 7                         ; 3 uses
   %i.cs = icmp eq i8 %i.cr, 1
@@ -251,6 +252,7 @@ bb.d:                                             ; preds = %bb.b
   %i.da = xor i64 %i.cz, %i.ct
   store i64 %i.da, ptr %i.cy, align 8, !tbaa !13
   %.not16 = icmp eq i8 %i.cr, 6
+  %.pre = load i64, ptr %i.ca, align 8, !tbaa !72 ; 3 uses
   br i1 %.not16, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -271,6 +273,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.d, %bb.f, %bb.e, %bb.c
+  %2 = phi i64 [ %.pre, %bb.d ], [ %.pre, %bb.f ], [ %.pre, %bb.e ], [ %i.cq, %bb.c ]
   %.not = icmp eq i64 %i.cj, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !147
 

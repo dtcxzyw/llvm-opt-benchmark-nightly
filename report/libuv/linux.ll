@@ -204,13 +204,14 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %.pre15 = load ptr, ptr %i.h, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.i = phi i32 [ %i.f, %.lr.ph ], [ %i.n, %bb.d ]
+  %3 = phi ptr [ %.pre15, %.lr.ph ], [ %4, %bb.d ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  %3 = load ptr, ptr %i.h, align 8
   %i.j = getelementptr inbounds nuw [12 x i8], ptr %3, i64 %indvars.iv
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 2 uses
   %i.l = load i32, ptr %i.k, align 1
@@ -219,11 +220,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   store i32 -1, ptr %i.k, align 1
+  %.pre = load ptr, ptr %i.h, align 8
   %.pre.a = load i32, ptr %i.e, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.n = phi i32 [ %i.i, %bb.b ], [ %.pre.a, %bb.c ] ; 2 uses
+  %4 = phi ptr [ %3, %bb.b ], [ %.pre, %bb.c ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.o = sext i32 %i.n to i64
   %i.p = icmp slt i64 %indvars.iv.next, %i.o
@@ -626,14 +629,15 @@ bb.r:                                             ; preds = %uv__ifaddr_exclude.
 
 .lr.ph108:                                        ; preds = %bb.r
   %i.bm = load ptr, ptr %0, align 8
-  %i.bn = getelementptr inbounds nuw i8, ptr %.2111, i64 8
+  %i.bn = getelementptr inbounds nuw i8, ptr %.2111, i64 8 ; 2 uses
+  %.pre115 = load ptr, ptr %i.bn, align 8
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph108, %bb.v
   %i.bo = phi i32 [ %i.bk, %.lr.ph108 ], [ %i.by, %bb.v ] ; 2 uses
+  %2 = phi ptr [ %.pre115, %.lr.ph108 ], [ %3, %bb.v ] ; 4 uses
   %.0106 = phi i32 [ 0, %.lr.ph108 ], [ %i.ca, %bb.v ]
   %.265105 = phi ptr [ %i.bm, %.lr.ph108 ], [ %i.bz, %bb.v ] ; 3 uses
-  %2 = load ptr, ptr %i.bn, align 8               ; 2 uses
   %i.bp = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #16 ; 2 uses
   %i.bq = load ptr, ptr %.265105, align 8         ; 2 uses
   %i.br = call i32 @strncmp(ptr noundef %i.bq, ptr noundef nonnull %2, i64 noundef %i.bp) #16
@@ -653,11 +657,13 @@ bb.u:                                             ; preds = %bb.t, %bb.t
   %i.bw = getelementptr inbounds nuw i8, ptr %.265105, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.bw, ptr noundef nonnull align 4 dereferenceable(6) %i.bx, i64 6, i1 false)
+  %.pre = load ptr, ptr %i.bn, align 8
   %.pre.a = load i32, ptr %1, align 4
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u, %bb.s
   %i.by = phi i32 [ %i.bo, %bb.t ], [ %.pre.a, %bb.u ], [ %i.bo, %bb.s ] ; 2 uses
+  %3 = phi ptr [ %2, %bb.t ], [ %.pre, %bb.u ], [ %2, %bb.s ]
   %i.bz = getelementptr inbounds nuw i8, ptr %.265105, i64 80
   %i.ca = add nuw nsw i32 %.0106, 1               ; 2 uses
   %i.cb = icmp slt i32 %i.ca, %i.by

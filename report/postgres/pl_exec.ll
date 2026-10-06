@@ -202,13 +202,14 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 56
   %wide.trip.count = zext nneg i32 %i.c to i64
+  %.pre36 = load i32, ptr %2, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %select.unfold
+  %3 = phi i32 [ %.pre36, %.lr.ph ], [ %4, %select.unfold ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %select.unfold ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  %3 = load i32, ptr %2, align 8
   %i.t = sext i32 %3 to i64
   %i.u = shl nsw i64 %i.t, 3
   %i.v = getelementptr i8, ptr %2, i64 %i.u
@@ -221,6 +222,7 @@ bb.c:                                             ; preds = %.lr.ph, %select.unf
 bb.d:                                             ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv
   store i8 1, ptr %i.aa, align 1
+  %.pre = load i32, ptr %2, align 8
   br label %select.unfold
 
 bb.e:                                             ; preds = %bb.c
@@ -235,7 +237,7 @@ bb.e:                                             ; preds = %bb.c
   %i.aj = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv
   call void @exec_eval_datum(ptr noundef %0, ptr noundef %i.ah, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef %i.ai, ptr noundef %i.aj)
   %i.ak = load i32, ptr %i.a, align 4
-  %i.al = load i32, ptr %2, align 8
+  %i.al = load i32, ptr %2, align 8               ; 2 uses
   %i.am = sext i32 %i.al to i64
   %i.an = shl nsw i64 %i.am, 3
   %i.ao = getelementptr i8, ptr %2, i64 %i.an
@@ -251,6 +253,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 select.unfold:                                    ; preds = %bb.e, %bb.d
+  %4 = phi i32 [ %i.al, %bb.e ], [ %.pre, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

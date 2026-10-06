@@ -204,11 +204,13 @@ bb.a:
   br i1 %.not12, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.val.i.a = load ptr, ptr %3, align 8, !nonnull !8, !align !13, !noundef !8
+  %.val.i.pre14 = load ptr, ptr %3, align 8
+  %.val.i.a = load ptr, ptr %3, align 8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit
-  %i.e = phi ptr [ %i.s, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit ], [ %i.c, %.lr.ph.preheader ]
+  %5 = phi ptr [ %6, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit ], [ %i.c, %.lr.ph.preheader ]
+  %i.e = phi ptr [ %i.s, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit ], [ %.val.i.pre14, %.lr.ph.preheader ] ; 2 uses
   %i.f = phi ptr [ %i.r, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit ], [ %i.d, %.lr.ph.preheader ] ; 2 uses
   %.sroa.4.013 = phi ptr [ %.pn2.i, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit ], [ %2, %.lr.ph.preheader ] ; 3 uses
   %i.g = load i16, ptr %i.f, align 2, !range !33, !noundef !8 ; 3 uses
@@ -219,7 +221,7 @@ bb.a:
   %i.k = shl nuw i64 1, %i.j
   %i.l = lshr i16 %i.g, 6
   %i.m = zext nneg i16 %i.l to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %.val.i.a, i64 %i.m
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.m
   %i.o = load i64, ptr %i.n, align 8, !noundef !8
   %i.p = and i64 %i.o, %i.k
   %.not.i = icmp eq i64 %i.p, 0
@@ -234,9 +236,10 @@ bb.b:                                             ; preds = %.lr.ph
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit: ; preds = %.lr.ph, %bb.b
   %i.r = phi ptr [ %.pre14, %bb.b ], [ %i.h, %.lr.ph ] ; 2 uses
-  %i.s = phi ptr [ %.pre, %bb.b ], [ %i.e, %.lr.ph ] ; 2 uses
+  %6 = phi ptr [ %.pre, %bb.b ], [ %5, %.lr.ph ]  ; 2 uses
+  %i.s = phi ptr [ %.val.i.a, %bb.b ], [ %i.e, %.lr.ph ]
   %.pn2.i = phi ptr [ %i.q, %bb.b ], [ %.sroa.4.013, %.lr.ph ] ; 2 uses
-  %.not = icmp eq ptr %i.r, %i.s
+  %.not = icmp eq ptr %i.r, %6
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1K_zENCNCNvNtCshFZivb7RUAJ_8ruff_dev22generate_default_rules8generate00NCINvNtB1P_16in_place_collect24write_in_place_with_dropB15_E0E0B3l_.exit, %bb.a

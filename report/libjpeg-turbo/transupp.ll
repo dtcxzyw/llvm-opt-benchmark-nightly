@@ -205,33 +205,31 @@ begin_hunk_0_@do_reflect:bb.a
   %.not176 = icmp eq i32 %i.jh, 0
   br i1 %.not176, label %.lr.ph.split.us.split.us.split.us133, label %._crit_edge.split.us.us
 
-.lr.ph.split.us.split.us.split.us133thread-pre-split: ; preds = %.loopexit95.us.us.us135
-  %.pr = load i32, ptr %i.q, align 4, !tbaa !102
-  br label %.lr.ph.split.us.split.us.split.us133
-
-.lr.ph.split.us.split.us.split.us133:             ; preds = %.lr.ph.split.us.split.us.us, %.lr.ph.split.us.split.us.split.us133thread-pre-split
-  %i.ji = phi i32 [ %.pr, %.lr.ph.split.us.split.us.split.us133thread-pre-split ], [ 0, %.lr.ph.split.us.split.us.us ]
-  %i.jj = phi i32 [ %i.jm, %.lr.ph.split.us.split.us.split.us133thread-pre-split ], [ %i.z, %.lr.ph.split.us.split.us.us ]
-  %indvars.iv159 = phi i64 [ %indvars.iv.next160, %.lr.ph.split.us.split.us.split.us133thread-pre-split ], [ 0, %.lr.ph.split.us.split.us.us ] ; 2 uses
-  %.not177 = icmp eq i32 %i.ji, 0
+.lr.ph.split.us.split.us.split.us133:             ; preds = %.lr.ph.split.us.split.us.us, %.loopexit95.us.us.us135
+  %i.ji = phi i32 [ %6, %.loopexit95.us.us.us135 ], [ %i.z, %.lr.ph.split.us.split.us.us ]
+  %i.jj = phi i32 [ %i.jm, %.loopexit95.us.us.us135 ], [ 0, %.lr.ph.split.us.split.us.us ] ; 2 uses
+  %indvars.iv159 = phi i64 [ %indvars.iv.next160, %.loopexit95.us.us.us135 ], [ 0, %.lr.ph.split.us.split.us.us ] ; 2 uses
+  %.not177 = icmp eq i32 %i.jj, 0
   br i1 %.not177, label %bb.d, label %.loopexit95.us.us.us135
 
 bb.d:                                             ; preds = %.lr.ph.split.us.split.us.split.us133
   %i.jk = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv159
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !20
   tail call void @llvm.memset.p0.i64(ptr align 2 %i.jl, i8 0, i64 %i.s, i1 false)
+  %.pre = load i32, ptr %i.q, align 4, !tbaa !102
   %.pre.a = load i32, ptr %i.l, align 4, !tbaa !75
   br label %.loopexit95.us.us.us135
 
 .loopexit95.us.us.us135:                          ; preds = %.lr.ph.split.us.split.us.split.us133, %bb.d
-  %i.jm = phi i32 [ %i.jj, %.lr.ph.split.us.split.us.split.us133 ], [ %.pre.a, %bb.d ] ; 3 uses
+  %6 = phi i32 [ %i.ji, %.lr.ph.split.us.split.us.split.us133 ], [ %.pre.a, %bb.d ] ; 3 uses
+  %i.jm = phi i32 [ %i.jj, %.lr.ph.split.us.split.us.split.us133 ], [ %.pre, %bb.d ]
   %indvars.iv.next160 = add nuw nsw i64 %indvars.iv159, 1 ; 2 uses
-  %i.jn = sext i32 %i.jm to i64
+  %i.jn = sext i32 %6 to i64
   %i.jo = icmp slt i64 %indvars.iv.next160, %i.jn
-  br i1 %i.jo, label %.lr.ph.split.us.split.us.split.us133thread-pre-split, label %._crit_edge.split.us.us, !llvm.loop !245
+  br i1 %i.jo, label %.lr.ph.split.us.split.us.split.us133, label %._crit_edge.split.us.us, !llvm.loop !245
 
 ._crit_edge.split.us.us:                          ; preds = %..loopexit95_crit_edge.us.us, %.loopexit95.us.us.us135, %.lr.ph.split.us.split.us.us, %.lr.ph127.split.us
-  %i.jp = phi i32 [ %i.z, %.lr.ph127.split.us ], [ %i.z, %.lr.ph.split.us.split.us.us ], [ %i.jm, %.loopexit95.us.us.us135 ], [ %i.je, %..loopexit95_crit_edge.us.us ] ; 2 uses
+  %i.jp = phi i32 [ %i.z, %.lr.ph127.split.us ], [ %i.z, %.lr.ph.split.us.split.us.us ], [ %6, %.loopexit95.us.us.us135 ], [ %i.je, %..loopexit95_crit_edge.us.us ] ; 2 uses
   %i.jq = add i32 %i.jp, %.088125.us              ; 2 uses
   %i.jr = icmp ult i32 %i.jq, %i.n
   br i1 %i.jr, label %.lr.ph127.split.us, label %._crit_edge128, !llvm.loop !246

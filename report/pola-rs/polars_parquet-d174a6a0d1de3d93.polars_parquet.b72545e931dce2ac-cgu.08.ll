@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42334), !dbg !42372
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42335), !dbg !42373
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !42374 ; 8 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !42374 ; 7 uses
   %i.d = load i64, ptr %i.c, align 8, !dbg !42374, !alias.scope !42336, !noalias !42337, !noundef !859 ; 3 uses
   %.not.i.i = icmp eq i64 %i.d, 0, !dbg !42375
   br i1 %.not.i.i, label %bb.h, label %bb.b, !dbg !42375
@@ -330,19 +330,15 @@ _RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet
 bb.j:                                             ; preds = %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol11skip_binaryBa_.exit
   %i.z = add nuw nsw i32 %.sroa.024.061, 1, !dbg !42417 ; 2 uses
   %exitcond.not = icmp eq i32 %i.z, %.sroa.022.0.i, !dbg !42407
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.splitthread-pre-split, !dbg !42352, !llvm.loop !42317
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !dbg !42352, !llvm.loop !42317
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.i
   store i8 9, ptr %0, align 8, !dbg !42418
   br label %bb.m, !dbg !42419
 
-.lr.ph.splitthread-pre-split:                     ; preds = %bb.j
-  %.pr = load i64, ptr %i.c, align 8, !dbg !42408, !alias.scope !42353, !noalias !42354
-  br label %.lr.ph.split, !dbg !42410
-
-.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
-  %i.aa = phi i64 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.w, %.lr.ph ], !dbg !42408 ; 2 uses
-  %.sroa.024.061 = phi i32 [ %i.z, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ]
+.lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
+  %i.aa = phi i64 [ %3, %bb.j ], [ %i.w, %.lr.ph ], !dbg !42408 ; 2 uses
+  %.sroa.024.061 = phi i32 [ %i.z, %bb.j ], [ 0, %.lr.ph ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42355), !dbg !42410
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !42411, !noalias !42356
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42357), !dbg !42412
@@ -368,27 +364,28 @@ _RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet
   call void @_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol13read_vlq_slowBa_(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(16) %1, i8 noundef %i.ac) #39, !dbg !42427, !noalias !42367
   %.pr.i29 = load i8, ptr %i.a, align 8, !dbg !42428, !noalias !42356 ; 2 uses
   %.not.i = icmp eq i8 %.pr.i29, 9, !dbg !42428
+  %.pre = load i64, ptr %i.c, align 8, !dbg !42408, !alias.scope !42353, !noalias !42354 ; 2 uses
   br i1 %.not.i, label %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30, label %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i, !dbg !42426
 
 _RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30: ; preds = %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.i28
   %.pre.i32 = load i64, ptr %.phi.trans.insert.i31, align 8, !dbg !42429, !noalias !42356
-  %.pre17.i = load i64, ptr %i.c, align 8, !dbg !42430, !alias.scope !42368, !noalias !42369
   br label %bb.l, !dbg !42426
 
 _RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i: ; preds = %.lr.ph.split, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.i28
+  %2 = phi i64 [ %.pre, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.i28 ], [ 0, %.lr.ph.split ]
   %i.ah = phi i8 [ %.pr.i29, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.i28 ], [ 0, %.lr.ph.split ]
   %.sroa.039.1.copyload = load i56, ptr %.sroa.59.0..sroa_idx.i, align 1, !dbg !42414, !noalias !42355
   %.sroa.039.1.insert.ext = zext i56 %.sroa.039.1.copyload to i64, !dbg !42414
   %.sroa.039.1.insert.shift = shl nuw i64 %.sroa.039.1.insert.ext, 8, !dbg !42414
   %.sroa.610.0.copyload.i = load i64, ptr %.phi.trans.insert.i31, align 8, !dbg !42414, !noalias !42356
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !42415, !noalias !42356
-  %.sroa.039.0.insert.ext = zext i8 %i.ah to i64, !dbg !42431
-  %.sroa.039.0.insert.insert = or disjoint i64 %.sroa.039.1.insert.shift, %.sroa.039.0.insert.ext, !dbg !42431
-  %i.ai = inttoptr i64 %.sroa.039.0.insert.insert to ptr, !dbg !42431
-  br label %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol11skip_binaryBa_.exit, !dbg !42432
+  %.sroa.039.0.insert.ext = zext i8 %i.ah to i64, !dbg !42430
+  %.sroa.039.0.insert.insert = or disjoint i64 %.sroa.039.1.insert.shift, %.sroa.039.0.insert.ext, !dbg !42430
+  %i.ai = inttoptr i64 %.sroa.039.0.insert.insert to ptr, !dbg !42430
+  br label %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol11skip_binaryBa_.exit, !dbg !42431
 
 bb.l:                                             ; preds = %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread.i34
-  %i.aj = phi i64 [ %.pre17.i, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30 ], [ %i.ad, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread.i34 ], !dbg !42430 ; 2 uses
+  %i.aj = phi i64 [ %.pre, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30 ], [ %i.ad, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread.i34 ], !dbg !42432 ; 3 uses
   %i.ak = phi i64 [ %.pre.i32, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit._crit_edge.i30 ], [ %i.ag, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread.i34 ], !dbg !42429 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !42415, !noalias !42356
   %.not.i.i33 = icmp ugt i64 %i.ak, %i.aj
@@ -396,13 +393,14 @@ bb.l:                                             ; preds = %_RNvYNtNtNtNtCsfISx
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorEBO_.exit.i.i: ; preds = %bb.l
   %i.al = load ptr, ptr %1, align 8, !dbg !42434, !alias.scope !42368, !noalias !42369, !nonnull !859, !noundef !859
-  %i.am = sub nuw i64 %i.aj, %i.ak, !dbg !42435
+  %i.am = sub nuw i64 %i.aj, %i.ak, !dbg !42435   ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ak, !dbg !42436
   store ptr %i.an, ptr %1, align 8, !dbg !42437, !alias.scope !42368, !noalias !42369
   store i64 %i.am, ptr %i.c, align 8, !dbg !42437, !alias.scope !42368, !noalias !42369
   br label %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol11skip_binaryBa_.exit, !dbg !42438
 
 _RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol11skip_binaryBa_.exit: ; preds = %bb.l, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorEBO_.exit.i.i
+  %3 = phi i64 [ %2, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i ], [ %i.am, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorEBO_.exit.i.i ], [ %i.aj, %bb.l ]
   %.sroa.039.0 = phi ptr [ %i.ai, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i ], [ inttoptr (i64 9 to ptr), %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorEBO_.exit.i.i ], [ null, %bb.l ], !dbg !42439 ; 2 uses
   %.sroa.9.0 = phi i64 [ %.sroa.610.0.copyload.i, %_RNvYNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift24ThriftSliceInputProtocolNtB4_26ThriftCompactInputProtocol8read_vlqBa_.exit.thread15.i ], [ undef, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorEBO_.exit.i.i ], [ undef, %bb.l ], !dbg !42440
   %i.ao = ptrtoint ptr %.sroa.039.0 to i64, !dbg !42441
@@ -805,16 +803,16 @@ begin_hunk_1_@llvm.smax.i32
 !42318 = distinct !DILocation(line: 605, column: 29, scope: !781, inlinedAt: !42305)
 !42319 = distinct !DILocation(line: 19, column: 15, scope: !780, inlinedAt: !42318)
 !42320 = distinct !DILocation(line: 574, column: 15, scope: !784, inlinedAt: !42319)
-!42321 = distinct !{!42321, i1 false, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes"}
-!42322 = distinct !{!42322, !42321, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes: argument 1"}
-!42323 = distinct !{!42323, !42321, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes: argument 0"}
-!42324 = distinct !DILocation(line: 488, column: 14, scope: !805, inlinedAt: !42303)
-!42325 = distinct !DILocation(line: 487, column: 19, scope: !1379, inlinedAt: !42303)
-!42326 = distinct !DILocation(line: 622, column: 18, scope: !804, inlinedAt: !42324)
-!42327 = distinct !DILocation(line: 576, column: 15, scope: !813, inlinedAt: !42326)
-!42328 = distinct !DILocation(line: 507, column: 23, scope: !812, inlinedAt: !42327)
-!42329 = distinct !DILocation(line: 368, column: 32, scope: !811, inlinedAt: !42328)
-!42330 = distinct !DILocation(line: 623, column: 29, scope: !804, inlinedAt: !42324)
+!42321 = distinct !DILocation(line: 487, column: 19, scope: !1379, inlinedAt: !42303)
+!42322 = distinct !DILocation(line: 488, column: 14, scope: !805, inlinedAt: !42303)
+!42323 = distinct !DILocation(line: 622, column: 18, scope: !804, inlinedAt: !42322)
+!42324 = distinct !DILocation(line: 576, column: 15, scope: !813, inlinedAt: !42323)
+!42325 = distinct !DILocation(line: 507, column: 23, scope: !812, inlinedAt: !42324)
+!42326 = distinct !DILocation(line: 368, column: 32, scope: !811, inlinedAt: !42325)
+!42327 = distinct !{!42327, i1 false, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes"}
+!42328 = distinct !{!42328, !42327, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes: argument 1"}
+!42329 = distinct !{!42329, !42327, !"_RNvXsa_NtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thriftNtB5_24ThriftSliceInputProtocolNtB5_26ThriftCompactInputProtocol10skip_bytes: argument 0"}
+!42330 = distinct !DILocation(line: 623, column: 29, scope: !804, inlinedAt: !42322)
 !42331 = distinct !DILocation(line: 19, column: 15, scope: !819, inlinedAt: !42330)
 !42332 = distinct !DILocation(line: 574, column: 15, scope: !822, inlinedAt: !42331)
 !42333 = distinct !DISubprogram(name: "branch<(), polars_parquet::parquet::handwritten_thrift::parquet_thrift::ThriftProtocolError>", linkageName: "_RNvXsp_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultuNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift14parquet_thrift19ThriftProtocolErrorENtNtNtB7_3ops9try_trait3Try6branchBT_", scope: !1148, file: !1146, line: 2172, type: !860, scopeLine: 2172, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !859)
@@ -852,8 +850,8 @@ begin_hunk_1_@llvm.smax.i32
 !42365 = !{!"llvm.loop.unswitch.partial.disable"}
 !42366 = !{!42302, !42299, !42301, !42297, !42300, !42295}
 !42367 = !{!42300}
-!42368 = !{!42322, !42295}
-!42369 = !{!42323, !42300}
+!42368 = !{!42328, !42295}
+!42369 = !{!42329, !42300}
 !42370 = !DILocation(line: 510, column: 13, scope: !42291)
 !42371 = !DILexicalBlockFile(scope: !42284, file: !1006, discriminator: 0)
 !42372 = !DILocation(line: 508, column: 25, scope: !42258)
@@ -914,15 +912,15 @@ begin_hunk_1_@llvm.smax.i32
 !42427 = !DILocation(line: 310, column: 14, scope: !785, inlinedAt: !42304)
 !42428 = !DILocation(line: 2173, column: 15, scope: !803, inlinedAt: !42307)
 !42429 = !DILocation(line: 2174, column: 16, scope: !803, inlinedAt: !42307)
-!42430 = !DILocation(line: 622, column: 9, scope: !804, inlinedAt: !42324)
-!42431 = !DILocation(line: 2189, column: 23, scope: !807, inlinedAt: !42325)
-!42432 = !DILocation(line: 489, column: 6, scope: !802, inlinedAt: !42303)
-!42433 = !DILocation(line: 977, column: 16, scope: !810, inlinedAt: !42329)
-!42434 = !DILocation(line: 623, column: 21, scope: !804, inlinedAt: !42324)
+!42430 = !DILocation(line: 2189, column: 23, scope: !807, inlinedAt: !42321)
+!42431 = !DILocation(line: 489, column: 6, scope: !802, inlinedAt: !42303)
+!42432 = !DILocation(line: 622, column: 9, scope: !804, inlinedAt: !42322)
+!42433 = !DILocation(line: 977, column: 16, scope: !810, inlinedAt: !42326)
+!42434 = !DILocation(line: 623, column: 21, scope: !804, inlinedAt: !42322)
 !42435 = !DILocation(line: 573, column: 27, scope: !818, inlinedAt: !42331)
 !42436 = !DILocation(line: 89, column: 24, scope: !821, inlinedAt: !42332)
-!42437 = !DILocation(line: 623, column: 9, scope: !804, inlinedAt: !42324)
-!42438 = !DILocation(line: 625, column: 6, scope: !804, inlinedAt: !42324)
+!42437 = !DILocation(line: 623, column: 9, scope: !804, inlinedAt: !42322)
+!42438 = !DILocation(line: 625, column: 6, scope: !804, inlinedAt: !42322)
 !42439 = !DILocation(line: 0, scope: !802, inlinedAt: !42303)
 !42440 = !DILocation(line: 510, scope: !42291)
 !42441 = !DILocation(line: 2173, column: 15, scope: !42333, inlinedAt: !42370)

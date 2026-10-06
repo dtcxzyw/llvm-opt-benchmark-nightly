@@ -205,19 +205,21 @@ bb.bj:                                            ; preds = %bb.bi, %.lr.ph190.i
 
 .preheader169.lr.ph.i.i:                          ; preds = %.preheader170.i.i
   %.not211.i.i = icmp eq i32 %.0144.lcssa.i.i, 0
-  %i.oz = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %i.oz = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   br i1 %.not211.i.i, label %loop_unroll.exit, label %.preheader169.us.preheader.i.i
 
 .preheader169.us.preheader.i.i:                   ; preds = %.preheader169.lr.ph.i.i
+  %.pre246.pre.i.i = load ptr, ptr %i.oz, align 8, !tbaa !47 ; 2 uses
   %wide.trip.count238.i.i = zext i32 %.0144.lcssa.i.i to i64
   br label %.preheader169.us.i.i
 
 .preheader169.us.i.i:                             ; preds = %.preheader169.us.i.i.backedge, %.preheader169.us.preheader.i.i
+  %.pre246249.i.i = phi ptr [ %.pre246.pre.i.i, %.preheader169.us.preheader.i.i ], [ %.pre246248.i.i, %.preheader169.us.i.i.backedge ] ; 2 uses
+  %3 = phi ptr [ %.pre246.pre.i.i, %.preheader169.us.preheader.i.i ], [ %.be, %.preheader169.us.i.i.backedge ] ; 4 uses
   %indvars.iv234.i.i = phi i64 [ 0, %.preheader169.us.preheader.i.i ], [ %indvars.iv234.i.i.be, %.preheader169.us.i.i.backedge ] ; 2 uses
   %.3142201.us.i.i = phi i32 [ 0, %.preheader169.us.preheader.i.i ], [ %.3142201.us.i.i.be, %.preheader169.us.i.i.backedge ] ; 2 uses
   %i.pa = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv234.i.i
   %i.pb = load i16, ptr %i.pa, align 2, !tbaa !78
-  %3 = load ptr, ptr %i.oz, align 8, !tbaa !47    ; 2 uses
   %i.pc = zext i16 %i.pb to i64                   ; 2 uses
   %i.pd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.pc
   %i.pe = getelementptr inbounds nuw i8, ptr %i.pd, i64 4
@@ -240,15 +242,19 @@ bb.bk:                                            ; preds = %.preheader169.us.i.
 bb.bl:                                            ; preds = %bb.bk
   %i.po = and i8 %i.pm, -33
   store i8 %i.po, ptr %i.pl, align 4, !tbaa !38
+  %.pre.i.i = load ptr, ptr %i.oz, align 8, !tbaa !47 ; 2 uses
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk, %.preheader169.us.i.i
+  %.pre246248.i.i = phi ptr [ %.pre246249.i.i, %.preheader169.us.i.i ], [ %.pre.i.i, %bb.bl ], [ %.pre246249.i.i, %bb.bk ] ; 2 uses
+  %4 = phi ptr [ %3, %.preheader169.us.i.i ], [ %.pre.i.i, %bb.bl ], [ %3, %bb.bk ]
   %.5.us.i.i = phi i32 [ %.3142201.us.i.i, %.preheader169.us.i.i ], [ 1, %bb.bl ], [ %.3142201.us.i.i, %bb.bk ] ; 2 uses
   %indvars.iv.next235.i.i = add nuw nsw i64 %indvars.iv234.i.i, 1 ; 2 uses
   %exitcond239.not.i.i = icmp eq i64 %indvars.iv.next235.i.i, %wide.trip.count238.i.i
   br i1 %exitcond239.not.i.i, label %..loopexit_crit_edge.us.i.i, label %.preheader169.us.i.i.backedge
 
 .preheader169.us.i.i.backedge:                    ; preds = %bb.bm, %..loopexit_crit_edge.us.i.i
+  %.be = phi ptr [ %4, %bb.bm ], [ %.pre246248.i.i, %..loopexit_crit_edge.us.i.i ]
   %indvars.iv234.i.i.be = phi i64 [ %indvars.iv.next235.i.i, %bb.bm ], [ 0, %..loopexit_crit_edge.us.i.i ]
   %.3142201.us.i.i.be = phi i32 [ %.5.us.i.i, %bb.bm ], [ 0, %..loopexit_crit_edge.us.i.i ]
   br label %.preheader169.us.i.i, !llvm.loop !75

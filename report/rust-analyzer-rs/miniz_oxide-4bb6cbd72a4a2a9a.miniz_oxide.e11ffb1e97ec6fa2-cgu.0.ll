@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %middle.block, %scal
 _RNvXs8_NtNtCshzWfHUSfYae_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexSlE5indexCsjkkKzr5dxZe_11miniz_oxide.exit.i: ; preds = %scalar.ph, %middle.block
   %.lcssa281 = phi i32 [ %i.hj, %middle.block ], [ %i.hl, %scalar.ph ]
   %i.ho = load i32, ptr %i.gv, align 4, !alias.scope !71, !noundef !4
-  %i.hp = add i32 %i.ho, %.lcssa281
+  %i.hp = add i32 %i.ho, %.lcssa281               ; 2 uses
   store i32 %i.hp, ptr %i.gv, align 4, !alias.scope !71
   %.idx.i74 = shl nuw nsw i64 %3, 2               ; 2 uses
   %.add.i = add nuw nsw i64 %.idx.i74, 4          ; 2 uses
@@ -288,10 +288,10 @@ _RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12doubl
   br i1 %i.io, label %.lr.ph.i75, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit
 
 .lr.ph.i75:                                       ; preds = %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i, %.loopexit.i76
-  %.sroa.0.026.i.a = phi i32 [ %5, %.loopexit.i76 ], [ %i.in, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i ]
-  %5 = add i32 %.sroa.0.026.i.a, 1                ; 2 uses
-  %6 = load i32, ptr %i.gv, align 4, !alias.scope !71, !noundef !4
-  %i.ip = add i32 %6, -1
+  %.sroa.0.026.i.a = phi i32 [ %6, %.loopexit.i76 ], [ %i.hp, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i ]
+  %.sroa.0.026.i = phi i32 [ %5, %.loopexit.i76 ], [ %i.in, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i ]
+  %5 = add i32 %.sroa.0.026.i, 1                  ; 2 uses
+  %i.ip = add i32 %.sroa.0.026.i.a, -1            ; 2 uses
   store i32 %i.ip, ptr %i.gv, align 4, !alias.scope !71
   br label %bb.ai
 
@@ -300,6 +300,7 @@ bb.ah:                                            ; preds = %bb.ai
   br i1 %i.iq, label %bb.ai, label %.loopexit.i76
 
 .loopexit.i76:                                    ; preds = %bb.ah, %bb.aj
+  %6 = phi i32 [ %.pre.i, %bb.aj ], [ %i.ip, %bb.ah ]
   %exitcond.not.i77 = icmp eq i32 %5, %.lcssa314
   br i1 %exitcond.not.i77, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit, label %.lr.ph.i75
 
@@ -319,6 +320,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iy = load i32, ptr %i.ix, align 4, !alias.scope !71, !noundef !4
   %i.iz = add i32 %i.iy, 2
   store i32 %i.iz, ptr %i.ix, align 4, !alias.scope !71
+  %.pre.i = load i32, ptr %i.gv, align 4, !alias.scope !71
   br label %.loopexit.i76
 
 _RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit: ; preds = %.loopexit.i76, %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide18radix_sort_symbols.exit, %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide28calculate_minimum_redundancy.exit, %._crit_edge, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i

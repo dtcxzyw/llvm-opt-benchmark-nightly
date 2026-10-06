@@ -204,7 +204,7 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
   br i1 %.not.i, label %bb.fs, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
-  %i.qt = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 10 uses
+  %i.qt = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
   %i.qu = load i32, ptr %i.qt, align 8, !tbaa !18 ; 3 uses
   %i.qv = icmp eq i32 %i.qu, 0
   br i1 %i.qv, label %bb.fm, label %bb.fl
@@ -607,6 +607,7 @@ bb.ib:                                            ; preds = %bb.ia
 
 .lr.ph.i:                                         ; preds = %bb.ib
   %i.aan = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %.pre83.i = load i32, ptr %i.qt, align 8, !tbaa !18
   br label %bb.ic
 
 .preheader65.i:                                   ; preds = %bb.if, %bb.ib
@@ -621,25 +622,27 @@ bb.ib:                                            ; preds = %bb.ia
   br label %bb.ig
 
 bb.ic:                                            ; preds = %bb.if, %.lr.ph.i
+  %11 = phi i32 [ %.pre83.i, %.lr.ph.i ], [ %12, %bb.if ]
   %.05469.i = phi ptr [ %i.zv, %.lr.ph.i ], [ %i.aaz, %bb.if ] ; 2 uses
   %.05668.i = phi i32 [ 0, %.lr.ph.i ], [ %i.aba, %bb.if ]
-  %11 = load i32, ptr %i.qt, align 8, !tbaa !18
   %i.aas = sext i32 %11 to i64
   %i.aat = call i64 @fwrite(ptr noundef %.05469.i, i64 noundef %i.aas, i64 noundef 1, ptr noundef nonnull %i.aad)
   %.not63.i = icmp eq i64 %i.aat, 1
   br i1 %.not63.i, label %bb.id, label %DumpPicture.exit.thread925
 
 bb.id:                                            ; preds = %bb.ic
-  %i.aau = load i32, ptr %i.qt, align 8, !tbaa !18
+  %i.aau = load i32, ptr %i.qt, align 8, !tbaa !18 ; 2 uses
   %i.aav = and i32 %i.aau, 1
   %.not64.i = icmp eq i32 %i.aav, 0
   br i1 %.not64.i, label %bb.if, label %bb.ie
 
 bb.ie:                                            ; preds = %bb.id
   %i.aaw = call i32 @fputc(i32 noundef 0, ptr noundef nonnull %i.aad) ; 0 uses
+  %.pre82.i = load i32, ptr %i.qt, align 8, !tbaa !18
   br label %bb.if
 
 bb.if:                                            ; preds = %bb.ie, %bb.id
+  %12 = phi i32 [ %.pre82.i, %bb.ie ], [ %i.aau, %bb.id ]
   %i.aax = load i32, ptr %i.aan, align 8, !tbaa !79
   %i.aay = sext i32 %i.aax to i64
   %i.aaz = getelementptr inbounds i8, ptr %.05469.i, i64 %i.aay
@@ -654,6 +657,7 @@ bb.if:                                            ; preds = %bb.ie, %bb.id
 
 .lr.ph76.i:                                       ; preds = %.preheader.i
   %i.abe = getelementptr inbounds nuw i8, ptr %2, i64 56
+  %.pre85.i = load i32, ptr %i.qt, align 8, !tbaa !18
   br label %bb.ij
 
 bb.ig:                                            ; preds = %bb.ii, %.lr.ph73.i
@@ -679,25 +683,27 @@ bb.ii:                                            ; preds = %bb.ih
   br i1 %exitcond.not.i, label %.preheader.i, label %bb.ig, !llvm.loop !41
 
 bb.ij:                                            ; preds = %bb.im, %.lr.ph76.i
+  %13 = phi i32 [ %.pre85.i, %.lr.ph76.i ], [ %14, %bb.im ]
   %.075.i = phi ptr [ %i.aab, %.lr.ph76.i ], [ %i.abt, %bb.im ] ; 2 uses
   %.274.i = phi i32 [ 0, %.lr.ph76.i ], [ %i.abu, %bb.im ]
-  %12 = load i32, ptr %i.qt, align 8, !tbaa !18
-  %i.abm = sext i32 %12 to i64
+  %i.abm = sext i32 %13 to i64
   %i.abn = call i64 @fwrite(ptr noundef %.075.i, i64 noundef %i.abm, i64 noundef 1, ptr noundef nonnull %i.aad)
   %.not59.i = icmp eq i64 %i.abn, 1
   br i1 %.not59.i, label %bb.ik, label %DumpPicture.exit.thread925
 
 bb.ik:                                            ; preds = %bb.ij
-  %i.abo = load i32, ptr %i.qt, align 8, !tbaa !18
+  %i.abo = load i32, ptr %i.qt, align 8, !tbaa !18 ; 2 uses
   %i.abp = and i32 %i.abo, 1
   %.not60.i = icmp eq i32 %i.abp, 0
   br i1 %.not60.i, label %bb.im, label %bb.il
 
 bb.il:                                            ; preds = %bb.ik
   %i.abq = call i32 @fputc(i32 noundef 0, ptr noundef nonnull %i.aad) ; 0 uses
+  %.pre84.i = load i32, ptr %i.qt, align 8, !tbaa !18
   br label %bb.im
 
 bb.im:                                            ; preds = %bb.il, %bb.ik
+  %14 = phi i32 [ %.pre84.i, %bb.il ], [ %i.abo, %bb.ik ]
   %i.abr = load i32, ptr %i.abe, align 8, !tbaa !93
   %i.abs = sext i32 %i.abr to i64
   %i.abt = getelementptr inbounds i8, ptr %.075.i, i64 %i.abs

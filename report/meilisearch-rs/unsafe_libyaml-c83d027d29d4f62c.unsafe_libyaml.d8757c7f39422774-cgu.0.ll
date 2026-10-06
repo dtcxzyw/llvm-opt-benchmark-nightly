@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %"_ZN53_$LT$u64$u20$
   %i.bk = load i32, ptr %i.bj, align 4, !noundef !6
   %i.bl = add i32 %i.bk, 1
   store i32 %i.bl, ptr %i.bj, align 4
-  %i.bm = load ptr, ptr %i.am, align 8, !noundef !6 ; 2 uses
+  %i.bm = load ptr, ptr %i.am, align 8, !noundef !6 ; 3 uses
   %i.bn = load i32, ptr %i.bm, align 4, !noundef !6
   switch i32 %i.bn, label %_ZN14unsafe_libyaml6dumper24yaml_emitter_anchor_node17he922d79992a470a6E.exit [
     i32 1, label %bb.w
@@ -244,16 +244,16 @@ bb.y:                                             ; preds = %bb.w
   br label %bb.ac
 
 bb.z:                                             ; preds = %bb.ab, %.lr.ph18.i
-  %.sroa.0.017.i.a = phi ptr [ %i.bq, %.lr.ph18.i ], [ %i.cn, %bb.ab ] ; 2 uses
-  %2 = load i32, ptr %.sroa.0.017.i.a, align 4, !noundef !6
-  %3 = load ptr, ptr %i.am, align 8, !noundef !6
+  %.sroa.0.017.i.a = phi ptr [ %i.bm, %.lr.ph18.i ], [ %3, %bb.ab ]
+  %.sroa.0.017.i = phi ptr [ %i.bq, %.lr.ph18.i ], [ %i.cn, %bb.ab ] ; 2 uses
+  %2 = load i32, ptr %.sroa.0.017.i, align 4, !noundef !6
   %i.cb = add i32 %2, -1
   %i.cc = sext i32 %i.cb to i64                   ; 2 uses
-  %i.cd = getelementptr inbounds [12 x i8], ptr %3, i64 %i.cc ; 2 uses
+  %i.cd = getelementptr inbounds [12 x i8], ptr %.sroa.0.017.i.a, i64 %i.cc ; 2 uses
   %i.ce = load i32, ptr %i.cd, align 4, !noundef !6
   %i.cf = add i32 %i.ce, 1
   store i32 %i.cf, ptr %i.cd, align 4
-  %i.cg = load ptr, ptr %i.am, align 8, !noundef !6
+  %i.cg = load ptr, ptr %i.am, align 8, !noundef !6 ; 2 uses
   %i.ch = getelementptr inbounds [12 x i8], ptr %i.cg, i64 %i.cc ; 2 uses
   %i.ci = load i32, ptr %i.ch, align 4, !noundef !6
   %i.cj = icmp eq i32 %i.ci, 2
@@ -265,10 +265,12 @@ bb.aa:                                            ; preds = %bb.z
   store i32 %i.cl, ptr %i.bu, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
   store i32 %i.cl, ptr %i.cm, align 4
+  %.pre20.i = load ptr, ptr %i.am, align 8
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  %i.cn = getelementptr i8, ptr %.sroa.0.017.i.a, i64 4 ; 2 uses
+  %3 = phi ptr [ %i.cg, %bb.z ], [ %.pre20.i, %bb.aa ]
+  %i.cn = getelementptr i8, ptr %.sroa.0.017.i, i64 4 ; 2 uses
   %i.co = load ptr, ptr %i.br, align 8, !noundef !6
   %i.cp = icmp ult ptr %i.cn, %i.co
   br i1 %i.cp, label %bb.z, label %_ZN14unsafe_libyaml6dumper24yaml_emitter_anchor_node17he922d79992a470a6E.exit

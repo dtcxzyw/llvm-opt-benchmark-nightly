@@ -205,6 +205,7 @@ _ZN5faiss12heap_reorderINS_4CMaxIfiEEEEmmPNT_1TEPNS3_2TIE.exit: ; preds = %.lr.p
   br i1 %.not132, label %._crit_edge121, label %.lr.ph120.preheader
 
 .lr.ph120.preheader:                              ; preds = %_ZN5faiss12heap_reorderINS_4CMaxIfiEEEEmmPNT_1TEPNS3_2TIE.exit
+  %.pre139 = load i64, ptr %4, align 8, !tbaa !14
   %.pre138.a = load i64, ptr %6, align 8, !tbaa !14
   br label %.lr.ph120
 
@@ -247,34 +248,36 @@ _ZNSt6vectorIfSaIfEED2Ev.exit88:                  ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not61.not, label %.lr.ph125, label %.loopexit109, !llvm.loop !156
 
 .lr.ph120:                                        ; preds = %.lr.ph120.preheader, %bb.aa
-  %i.nt = phi i64 [ %i.of, %bb.aa ], [ %i.nj, %.lr.ph120.preheader ]
-  %i.nu = phi i64 [ %i.og, %bb.aa ], [ %.pre138.a, %.lr.ph120.preheader ] ; 3 uses
+  %18 = phi i64 [ %i.of, %bb.aa ], [ %i.nj, %.lr.ph120.preheader ]
+  %i.nt = phi i64 [ %i.og, %bb.aa ], [ %.pre138.a, %.lr.ph120.preheader ] ; 3 uses
+  %i.nu = phi i64 [ %19, %bb.aa ], [ %.pre139, %.lr.ph120.preheader ] ; 3 uses
   %.0119 = phi i64 [ %i.oj, %bb.aa ], [ 0, %.lr.ph120.preheader ] ; 2 uses
   %.056118 = phi ptr [ %i.oi, %bb.aa ], [ %i.hm, %.lr.ph120.preheader ] ; 2 uses
   %i.nv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.089.0, i64 %.0119
   %i.nw = load i32, ptr %i.nv, align 4, !tbaa !45, !llvm.access.group !133
-  %18 = load i64, ptr %4, align 8, !tbaa !14, !llvm.access.group !133 ; 2 uses
   %i.nx = sext i32 %i.nw to i64                   ; 2 uses
-  %i.ny = urem i64 %i.nx, %18
-  %i.nz = udiv i64 %i.nx, %18
+  %i.ny = urem i64 %i.nx, %i.nu
+  %i.nz = udiv i64 %i.nx, %i.nu
   %i.oa = trunc i64 %i.ny to i32
-  %.not62 = icmp eq i64 %i.nu, 0
+  %.not62 = icmp eq i64 %i.nt, 0
   br i1 %.not62, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph120
   %sext = shl i64 %i.nz, 32
   %i.ob = ashr exact i64 %sext, 32
-  %i.oc = mul i64 %i.ob, %i.nu
+  %i.oc = mul i64 %i.ob, %i.nt
   %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %i.oc
-  %i.oe = shl i64 %i.nu, 2
+  %i.oe = shl i64 %i.nt, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %.056118, ptr align 4 %i.od, i64 %i.oe, i1 false), !llvm.access.group !133
+  %.pre138 = load i64, ptr %4, align 8, !tbaa !14, !llvm.access.group !133
   %.pre139.a = load i64, ptr %6, align 8, !tbaa !14, !llvm.access.group !133
   %.pre140 = load i64, ptr %15, align 8, !tbaa !14, !llvm.access.group !133
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %.lr.ph120
-  %i.of = phi i64 [ %.pre140, %bb.z ], [ %i.nt, %.lr.ph120 ] ; 2 uses
+  %i.of = phi i64 [ %.pre140, %bb.z ], [ %18, %.lr.ph120 ] ; 2 uses
   %i.og = phi i64 [ %.pre139.a, %bb.z ], [ 0, %.lr.ph120 ] ; 2 uses
+  %19 = phi i64 [ %.pre138, %bb.z ], [ %i.nu, %.lr.ph120 ]
   %i.oh = getelementptr inbounds nuw [4 x i8], ptr %.056118, i64 %i.og ; 2 uses
   store i32 %i.oa, ptr %i.oh, align 4, !tbaa !45, !llvm.access.group !133
   %i.oi = getelementptr i8, ptr %i.oh, i64 4

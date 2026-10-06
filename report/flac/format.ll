@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.b, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !11
   %i.e = zext i32 %i.a to i64
   tail call void @qsort(ptr noundef %i.d, i64 noundef %i.e, i64 noundef 24, ptr noundef nonnull @seekpoint_compare_) #16
@@ -215,7 +215,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %.pre = load i32, ptr %0, align 8, !tbaa !10    ; 3 uses
   %i.g = icmp ugt i32 %.pre, 1
-  br i1 %i.g, label %.lr.ph, label %.preheader
+  br i1 %i.g, label %.lr.ph.peel.next, label %.preheader
+
+.lr.ph.peel.next:                                 ; preds = %bb.c
+  %.pre48 = load ptr, ptr %i.c, align 8, !tbaa !11
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.f, %bb.c
   %.029.lcssa = phi i32 [ 1, %bb.c ], [ %.130, %bb.f ] ; 5 uses
@@ -252,11 +256,11 @@ bb.c:                                             ; preds = %bb.b
   %i.p = icmp ugt i64 %i.o, -4
   br i1 %i.p, label %.loopexit, label %.lr.ph40.new
 
-.lr.ph:                                           ; preds = %bb.c, %bb.f
-  %i.q = phi i32 [ %i.ac, %bb.f ], [ %.pre, %bb.c ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ 1, %bb.c ] ; 2 uses
-  %.02937 = phi i32 [ %.130, %bb.f ], [ 1, %bb.c ] ; 4 uses
-  %1 = load ptr, ptr %i.c, align 8, !tbaa !11     ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.peel.next, %bb.f
+  %i.q = phi i32 [ %.pre, %.lr.ph.peel.next ], [ %i.ac, %bb.f ]
+  %1 = phi ptr [ %.pre48, %.lr.ph.peel.next ], [ %2, %bb.f ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.peel.next ], [ %indvars.iv.next, %bb.f ] ; 2 uses
+  %.02937 = phi i32 [ 1, %.lr.ph.peel.next ], [ %.130, %bb.f ] ; 4 uses
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !14   ; 2 uses
   %i.t = icmp eq i64 %i.s, -1
@@ -275,11 +279,13 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.aa = zext i32 %.02937 to i64
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %i.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false), !tbaa.struct !33
+  %.pre47 = load ptr, ptr %i.c, align 8, !tbaa !11
   %.pre47.a = load i32, ptr %0, align 8, !tbaa !10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.ac = phi i32 [ %.pre47.a, %bb.e ], [ %i.q, %bb.d ] ; 3 uses
+  %2 = phi ptr [ %.pre47, %bb.e ], [ %1, %bb.d ]
   %.130 = phi i32 [ %i.z, %bb.e ], [ %.02937, %bb.d ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ad = zext i32 %i.ac to i64

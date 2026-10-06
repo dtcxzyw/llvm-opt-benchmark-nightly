@@ -204,7 +204,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.a, align 8, !alias.scope !1225
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i = load i64, ptr %i.b, align 8, !alias.scope !1225
-  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !1225, !nonnull !3, !align !10, !noundef !3 ; 9 uses
+  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !1225, !nonnull !3, !align !10, !noundef !3 ; 10 uses
   %.0.val.fr.i.i = freeze ptr %.val.i             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8 ; 4 uses
   %i.d = load i64, ptr %i.c, align 8, !noalias !1225, !noundef !3 ; 3 uses
@@ -214,13 +214,17 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a
   %.not.i.i = icmp eq ptr %.0.val.fr.i.i, null
   %i.e = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24 ; 4 uses
-  br i1 %.not.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.i.i
 
-.lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %bb.c
-  %.sroa.04.03.us.i.i = phi i64 [ %1, %bb.c ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %1 = add nuw i64 %.sroa.04.03.us.i.i, 1
-  %2 = load ptr, ptr %.val2.i, align 8, !noalias !1225, !nonnull !3, !noundef !3
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.04.03.us.i.i ; 2 uses
+.lr.ph.split.us.preheader.i.i:                    ; preds = %.lr.ph.i.i
+  %.pre7.i.i = load ptr, ptr %.val2.i, align 8, !noalias !1225
+  br label %.lr.ph.split.us.i.i
+
+.lr.ph.split.us.i.i:                              ; preds = %bb.c, %.lr.ph.split.us.preheader.i.i
+  %1 = phi ptr [ %3, %bb.c ], [ %.pre7.i.i, %.lr.ph.split.us.preheader.i.i ] ; 2 uses
+  %.sroa.04.03.us.i.i = phi i64 [ %2, %bb.c ], [ 0, %.lr.ph.split.us.preheader.i.i ] ; 4 uses
+  %2 = add nuw i64 %.sroa.04.03.us.i.i, 1
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.04.03.us.i.i ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !noalias !1225, !noundef !3
   %i.h = icmp eq i8 %i.g, -128
   br i1 %i.h, label %bb.b, label %bb.c
@@ -237,9 +241,11 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i.i
   %i.o = load i64, ptr %i.e, align 8, !noalias !1225, !noundef !3
   %i.p = add i64 %i.o, -1
   store i64 %i.p, ptr %i.e, align 8, !noalias !1225
+  %.pre.i.i = load ptr, ptr %.val2.i, align 8, !noalias !1225
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.i.i
+  %3 = phi ptr [ %.pre.i.i, %bb.b ], [ %1, %.lr.ph.split.us.i.i ]
   %exitcond6.not.i.i = icmp eq i64 %.sroa.04.03.us.i.i, %i.d
   br i1 %exitcond6.not.i.i, label %_RNvXs1_NtCsgMW4BsFgQdt_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsC8CapfvpQ1_5salsa.exit, label %.lr.ph.split.us.i.i
 
@@ -345,7 +351,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.a, align 8, !alias.scope !1232
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i = load i64, ptr %i.b, align 8, !alias.scope !1232
-  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !1232, !nonnull !3, !align !10, !noundef !3 ; 9 uses
+  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !1232, !nonnull !3, !align !10, !noundef !3 ; 10 uses
   %.0.val.fr.i.i = freeze ptr %.val.i             ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8 ; 4 uses
   %i.d = load i64, ptr %i.c, align 8, !noalias !1232, !noundef !3 ; 3 uses
@@ -355,13 +361,17 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a
   %.not.i.i = icmp eq ptr %.0.val.fr.i.i, null
   %i.e = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24 ; 4 uses
-  br i1 %.not.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.i.i
 
-.lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %bb.c
-  %.sroa.0.03.us.i.i = phi i64 [ %1, %bb.c ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %1 = add nuw i64 %.sroa.0.03.us.i.i, 1
-  %2 = load ptr, ptr %.val2.i, align 8, !noalias !1232, !nonnull !3, !noundef !3
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.0.03.us.i.i ; 2 uses
+.lr.ph.split.us.preheader.i.i:                    ; preds = %.lr.ph.i.i
+  %.pre7.i.i = load ptr, ptr %.val2.i, align 8, !noalias !1232
+  br label %.lr.ph.split.us.i.i
+
+.lr.ph.split.us.i.i:                              ; preds = %bb.c, %.lr.ph.split.us.preheader.i.i
+  %1 = phi ptr [ %3, %bb.c ], [ %.pre7.i.i, %.lr.ph.split.us.preheader.i.i ] ; 2 uses
+  %.sroa.0.03.us.i.i = phi i64 [ %2, %bb.c ], [ 0, %.lr.ph.split.us.preheader.i.i ] ; 4 uses
+  %2 = add nuw i64 %.sroa.0.03.us.i.i, 1
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.03.us.i.i ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !noalias !1232, !noundef !3
   %i.h = icmp eq i8 %i.g, -128
   br i1 %i.h, label %bb.b, label %bb.c
@@ -378,9 +388,11 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i.i
   %i.o = load i64, ptr %i.e, align 8, !noalias !1232, !noundef !3
   %i.p = add i64 %i.o, -1
   store i64 %i.p, ptr %i.e, align 8, !noalias !1232
+  %.pre.i.i = load ptr, ptr %.val2.i, align 8, !noalias !1232
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.i.i
+  %3 = phi ptr [ %.pre.i.i, %bb.b ], [ %1, %.lr.ph.split.us.i.i ]
   %exitcond6.not.i.i = icmp eq i64 %.sroa.0.03.us.i.i, %i.d
   br i1 %exitcond6.not.i.i, label %_RNvXs1_NtCsgQfI1edjipl_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsC8CapfvpQ1_5salsa.exit, label %.lr.ph.split.us.i.i
 

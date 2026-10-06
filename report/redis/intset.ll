@@ -80,57 +80,60 @@ bb.d:                                             ; preds = %bb.c
   %i.n = select i1 %or.cond.i, i64 3, i64 %i.m
   %i.o = shl nuw nsw i64 %i.l, %i.n
   %i.p = add nuw nsw i64 %i.o, 8
-  %i.q = tail call ptr @zrealloc(ptr noundef nonnull %0, i64 noundef %i.p) #14 ; 14 uses
+  %i.q = tail call ptr @zrealloc(ptr noundef nonnull %0, i64 noundef %i.p) #14 ; 15 uses
   %.not27.i = icmp eq i32 %i.i, 0
   br i1 %.not27.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 8 uses
   %i.s = sext i32 %i.i to i64                     ; 2 uses
+  %.pre48.i = load i32, ptr %i.q, align 4, !tbaa !12 ; 2 uses
   %cond = icmp eq i32 %i.f, 4
   br i1 %cond, label %_intsetGetEncoded.exit.us31.i, label %_intsetGetEncoded.exit.i
 
 _intsetGetEncoded.exit.us31.i:                    ; preds = %.lr.ph.i, %_intsetSet.exit.us33.i
+  %3 = phi i32 [ %4, %_intsetSet.exit.us33.i ], [ %.pre48.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_intsetSet.exit.us33.i ], [ %i.s, %.lr.ph.i ]
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 4 uses
   %i.t = add nsw i64 %indvars.iv.next.i, %.lobit.i ; 3 uses
   %i.u = getelementptr inbounds [4 x i8], ptr %i.r, i64 %indvars.iv.next.i
-  %.0.copyload1.i.us.i = load i32, ptr %i.u, align 4 ; 3 uses
-  %i.v = load i32, ptr %i.q, align 4, !tbaa !12
-  switch i32 %i.v, label %bb.g [
+  %i.v = load i32, ptr %i.u, align 4              ; 3 uses
+  switch i32 %3, label %bb.g [
     i32 8, label %bb.f
     i32 4, label %bb.e
   ]
 
 bb.e:                                             ; preds = %_intsetGetEncoded.exit.us31.i
   %i.w = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.t
-  store i32 %.0.copyload1.i.us.i, ptr %i.w, align 4, !tbaa !12
+  store i32 %i.v, ptr %i.w, align 4, !tbaa !12
+  %.pre.i = load i32, ptr %i.q, align 4, !tbaa !12
   br label %_intsetSet.exit.us33.i
 
 bb.f:                                             ; preds = %_intsetGetEncoded.exit.us31.i
-  %i.x = sext i32 %.0.copyload1.i.us.i to i64
+  %i.x = sext i32 %i.v to i64
   %i.y = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.t
   store i64 %i.x, ptr %i.y, align 4, !tbaa !14
   br label %_intsetSet.exit.us33.i
 
 bb.g:                                             ; preds = %_intsetGetEncoded.exit.us31.i
-  %i.z = trunc i32 %.0.copyload1.i.us.i to i16
+  %i.z = trunc i32 %i.v to i16
   %i.aa = getelementptr inbounds [2 x i8], ptr %i.r, i64 %i.t
   store i16 %i.z, ptr %i.aa, align 2, !tbaa !19
   br label %_intsetSet.exit.us33.i
 
 _intsetSet.exit.us33.i:                           ; preds = %bb.g, %bb.f, %bb.e
+  %4 = phi i32 [ %3, %bb.g ], [ 8, %bb.f ], [ %.pre.i, %bb.e ]
   %.not.us34.i = icmp eq i64 %indvars.iv.next.i, 0
   br i1 %.not.us34.i, label %._crit_edge.i, label %_intsetGetEncoded.exit.us31.i, !llvm.loop !16
 
 _intsetGetEncoded.exit.i:                         ; preds = %.lr.ph.i, %_intsetSet.exit.i
+  %5 = phi i32 [ %6, %_intsetSet.exit.i ], [ %.pre48.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv41.i = phi i64 [ %indvars.iv.next42.i, %_intsetSet.exit.i ], [ %i.s, %.lr.ph.i ]
   %indvars.iv.next42.i = add nsw i64 %indvars.iv41.i, -1 ; 4 uses
   %i.ab = add nsw i64 %indvars.iv.next42.i, %.lobit.i ; 3 uses
   %i.ac = getelementptr inbounds [2 x i8], ptr %i.r, i64 %indvars.iv.next42.i
   %.0.copyload.i.i = load i16, ptr %i.ac, align 2 ; 3 uses
-  %3 = load i32, ptr %i.q, align 4, !tbaa !12
-  switch i32 %3, label %bb.j [
+  switch i32 %5, label %bb.j [
     i32 8, label %bb.h
     i32 4, label %bb.i
   ]
@@ -145,6 +148,7 @@ bb.i:                                             ; preds = %_intsetGetEncoded.e
   %i.af = sext i16 %.0.copyload.i.i to i32
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.ab
   store i32 %i.af, ptr %i.ag, align 4, !tbaa !12
+  %.pre47.i = load i32, ptr %i.q, align 4, !tbaa !12
   br label %_intsetSet.exit.i
 
 bb.j:                                             ; preds = %_intsetGetEncoded.exit.i
@@ -153,6 +157,7 @@ bb.j:                                             ; preds = %_intsetGetEncoded.e
   br label %_intsetSet.exit.i
 
 _intsetSet.exit.i:                                ; preds = %bb.j, %bb.i, %bb.h
+  %6 = phi i32 [ 8, %bb.h ], [ %.pre47.i, %bb.i ], [ %5, %bb.j ]
   %.not.i = icmp eq i64 %indvars.iv.next42.i, 0
   br i1 %.not.i, label %._crit_edge.i, label %_intsetGetEncoded.exit.i, !llvm.loop !16
 

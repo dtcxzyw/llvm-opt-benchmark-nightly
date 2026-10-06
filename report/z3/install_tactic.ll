@@ -205,7 +205,7 @@ _ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE8capacityEPPN1
   %i.af = add i64 %i.ae, 8
   %i.ag = tail call noundef ptr @_ZN22small_object_allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(520) %i.ad, i64 noundef %i.af) ; 2 uses
   store i64 %i.ab, ptr %i.ag, align 8, !tbaa !245
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 2 uses
   store ptr %i.ah, ptr %2, align 8, !tbaa !253
   %.not.i17 = icmp eq i32 %i.v, 0
   br i1 %.not.i17, label %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE11copy_valuesEPPN18dependency_managerINS0_22expr_dependency_configEE10dependencyEjRS8_.exit, label %.lr.ph.preheader.i
@@ -215,25 +215,27 @@ _ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE8capacityEPPN1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i, %.lr.ph.preheader.i
+  %3 = phi ptr [ %i.ah, %.lr.ph.preheader.i ], [ %5, %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i ] ; 2 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i ] ; 3 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv.i
-  %4 = load ptr, ptr %3, align 8, !tbaa !205      ; 4 uses
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !253
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv.i
-  store ptr %4, ptr %i.aj, align 8, !tbaa !205
-  %.not.i.i.i = icmp eq ptr %4, null
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv.i
+  %i.ai = load ptr, ptr %4, align 8, !tbaa !205   ; 4 uses
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.i
+  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !205
+  %.not.i.i.i = icmp eq ptr %i.ai, null
   br i1 %.not.i.i.i, label %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i, label %_ZN18dependency_managerIN11ast_manager22expr_dependency_configEE7inc_refEPNS2_10dependencyE.exit.i.i.i
 
 _ZN18dependency_managerIN11ast_manager22expr_dependency_configEE7inc_refEPNS2_10dependencyE.exit.i.i.i: ; preds = %.lr.ph.i
-  %i.ak = load i32, ptr %4, align 4               ; 2 uses
+  %i.ak = load i32, ptr %i.ai, align 4            ; 2 uses
   %i.al = add i32 %i.ak, 1
   %i.am = and i32 %i.al, 1073741823
   %i.an = and i32 %i.ak, -1073741824
   %i.ao = or disjoint i32 %i.am, %i.an
-  store i32 %i.ao, ptr %4, align 4
+  store i32 %i.ao, ptr %i.ai, align 4
+  %.pre.i18 = load ptr, ptr %2, align 8, !tbaa !253
   br label %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i
 
 _ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE7inc_refERKPN18dependency_managerINS0_22expr_dependency_configEE10dependencyE.exit.i: ; preds = %_ZN18dependency_managerIN11ast_manager22expr_dependency_configEE7inc_refEPNS2_10dependencyE.exit.i.i.i, %.lr.ph.i
+  %5 = phi ptr [ %3, %.lr.ph.i ], [ %.pre.i18, %_ZN18dependency_managerIN11ast_manager22expr_dependency_configEE7inc_refEPNS2_10dependencyE.exit.i.i.i ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN14parray_managerIN11ast_manager28expr_dependency_array_configEE11copy_valuesEPPN18dependency_managerINS0_22expr_dependency_configEE10dependencyEjRS8_.exit, label %.lr.ph.i, !llvm.loop !617

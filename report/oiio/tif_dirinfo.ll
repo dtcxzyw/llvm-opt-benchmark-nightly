@@ -202,7 +202,7 @@ declare void @_TIFFfreeExt(ptr noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define noundef i32 @_TIFFMergeFields(ptr noundef initializes((1248, 1256)) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1248 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1248 ; 5 uses
   store ptr null, ptr %i.a, align 8, !tbaa !36
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1232 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !26   ; 2 uses
@@ -239,6 +239,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph:                                           ; preds = %.preheader
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1240 ; 2 uses
   %wide.trip.count = zext i32 %2 to i64
+  %.pre44 = load ptr, ptr %i.a, align 8, !tbaa !36
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -246,10 +247,10 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.g:                                             ; preds = %.lr.ph, %TIFFFindField.exit.thread
+  %3 = phi ptr [ %.pre44, %.lr.ph ], [ %4, %TIFFFindField.exit.thread ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %TIFFFindField.exit.thread ] ; 2 uses
   %i.l = getelementptr inbounds nuw [40 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !37   ; 3 uses
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !36     ; 2 uses
   %.not.i = icmp eq ptr %3, null
   br i1 %.not.i, label %bb.i, label %bb.h
 
@@ -270,7 +271,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.r = lshr i64 %i.q, 1                         ; 3 uses
   %i.s = shl i64 %i.r, 3
   %i.t = getelementptr inbounds nuw i8, ptr %storemerge, i64 %i.s
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !28   ; 2 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !28   ; 3 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !37   ; 2 uses
   %.not.i20.us.i = icmp eq i32 %i.m, %i.v
   br i1 %.not.i20.us.i, label %TIFFFindField.exit, label %tagCompare.exit.us.i
@@ -293,9 +294,11 @@ TIFFFindField.exit:                               ; preds = %.lr.ph.i.us.i
   store ptr %i.l, ptr %i.z, align 8, !tbaa !28
   %i.aa = add i64 %i.p, 1
   store i64 %i.aa, ptr %i.k, align 8, !tbaa !27
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !36
   br label %TIFFFindField.exit.thread
 
 TIFFFindField.exit.thread:                        ; preds = %bb.h, %TIFFFindField.exit, %.loopexit
+  %4 = phi ptr [ %3, %bb.h ], [ %i.u, %TIFFFindField.exit ], [ %.pre, %.loopexit ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.g

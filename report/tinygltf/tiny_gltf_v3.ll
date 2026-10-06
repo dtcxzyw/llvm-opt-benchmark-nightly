@@ -205,19 +205,20 @@ tg3json_array_size.exit:                          ; preds = %tg3__json_is_array.
   br i1 %.not37, label %tg3__json_is_array.exit.thread, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %tg3json_array_size.exit
-  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %.pre40 = load i64, ptr %i.t, align 8, !tbaa !34
   br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %tg3json_array_get.exit.thread
-  %.036.a = phi i64 [ %i.ae, %tg3json_array_get.exit.thread ], [ 0, %.lr.ph.split.preheader ] ; 4 uses
-  %4 = load i64, ptr %i.t, align 8, !tbaa !34
-  %.not9.i = icmp ult i64 %.036.a, %4
+  %.036.a = phi i64 [ %4, %tg3json_array_get.exit.thread ], [ %.pre40, %.lr.ph.split.preheader ] ; 3 uses
+  %.036 = phi i64 [ %i.ae, %tg3json_array_get.exit.thread ], [ 0, %.lr.ph.split.preheader ] ; 4 uses
+  %.not9.i = icmp ult i64 %.036, %.036.a
   br i1 %.not9.i, label %tg3json_array_get.exit, label %tg3json_array_get.exit.thread
 
 tg3json_array_get.exit:                           ; preds = %.lr.ph.split
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !34   ; 2 uses
-  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %.036.a ; 3 uses
+  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %.036 ; 3 uses
   %.not19 = icmp eq ptr %i.v, null
   br i1 %.not19, label %tg3json_array_get.exit.thread, label %bb.g
 
@@ -241,12 +242,14 @@ bb.i:                                             ; preds = %bb.g
 
 tg3__json_number_to_double.exit:                  ; preds = %bb.g, %bb.h, %bb.i
   %.0.i24 = phi double [ %i.aa, %bb.h ], [ %i.ac, %bb.i ], [ 0.000000e+00, %bb.g ]
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.036.a
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.036
   store double %.0.i24, ptr %i.ad, align 8, !tbaa !58
+  %.pre = load i64, ptr %i.t, align 8, !tbaa !34
   br label %tg3json_array_get.exit.thread
 
 tg3json_array_get.exit.thread:                    ; preds = %.lr.ph.split, %tg3json_array_get.exit, %tg3__json_number_to_double.exit
-  %i.ae = add nuw nsw i64 %.036.a, 1              ; 2 uses
+  %4 = phi i64 [ %.036.a, %.lr.ph.split ], [ %.036.a, %tg3json_array_get.exit ], [ %.pre, %tg3__json_number_to_double.exit ]
+  %i.ae = add nuw nsw i64 %.036, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ae, %spec.select
   br i1 %exitcond.not, label %tg3__json_is_array.exit.thread, label %.lr.ph.split, !llvm.loop !589
 

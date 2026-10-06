@@ -40,6 +40,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
+  %4 = phi i64 [ 0, %.lr.ph.i ], [ %5, %bb.d ]
   %.014.i = phi i32 [ 0, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 2 uses
   %.0813.i = phi i64 [ %2, %.lr.ph.i ], [ %i.j, %bb.d ]
   %.0912.i = phi ptr [ %1, %.lr.ph.i ], [ %i.d, %bb.d ] ; 2 uses
@@ -49,8 +50,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.g = zext nneg i32 %.014.i to i64
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
   store i8 %i.e, ptr %i.h, align 1, !tbaa !13
-  %4 = load i64, ptr %i.b, align 16, !tbaa !12
-  %i.i = add i64 %4, 1
+  %i.i = add i64 %4, 1                            ; 2 uses
   store i64 %i.i, ptr %i.b, align 16, !tbaa !12
   %i.j = add i64 %.0813.i, -1                     ; 2 uses
   %i.k = icmp eq i32 %i.f, 64
@@ -58,9 +58,11 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   call fastcc void @sha256_write_byte_block(ptr noundef nonnull %3)
+  %.pre.i = load i64, ptr %i.b, align 16, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %5 = phi i64 [ %.pre.i, %bb.c ], [ %i.i, %bb.b ]
   %.1.i = phi i32 [ 0, %bb.c ], [ %i.f, %bb.b ]
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %sha256_update.exit, label %bb.b, !llvm.loop !0
@@ -82,13 +84,14 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !12
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !12   ; 2 uses
   %i.c = trunc i64 %i.b to i32
   %i.d = and i32 %i.c, 63
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
+  %3 = phi i64 [ %i.b, %.lr.ph ], [ %4, %bb.d ]
   %.014 = phi i32 [ %i.d, %.lr.ph ], [ %.1, %bb.d ] ; 2 uses
   %.0813 = phi i64 [ %2, %.lr.ph ], [ %i.l, %bb.d ]
   %.0912 = phi ptr [ %1, %.lr.ph ], [ %i.f, %bb.d ] ; 2 uses
@@ -98,8 +101,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.i = zext nneg i32 %.014 to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.i
   store i8 %i.g, ptr %i.j, align 1, !tbaa !13
-  %3 = load i64, ptr %i.a, align 8, !tbaa !12
-  %i.k = add i64 %3, 1
+  %i.k = add i64 %3, 1                            ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !tbaa !12
   %i.l = add i64 %.0813, -1                       ; 2 uses
   %i.m = icmp eq i32 %i.h, 64
@@ -107,9 +109,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call fastcc void @sha256_write_byte_block(ptr noundef nonnull %0)
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %4 = phi i64 [ %.pre, %bb.c ], [ %i.k, %bb.b ]
   %.1 = phi i32 [ 0, %bb.c ], [ %i.h, %bb.b ]
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !0
