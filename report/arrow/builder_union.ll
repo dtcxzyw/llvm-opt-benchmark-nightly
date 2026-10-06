@@ -205,7 +205,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.j, i8 0, i64 64, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow17BasicUnionBuilderE, i64 16), ptr %0, align 8, !tbaa !63
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !51   ; 2 uses
   %i.n = load ptr, ptr %3, align 8, !tbaa !52     ; 2 uses
@@ -225,11 +225,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq ptr %i.m, %i.n
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 16, i1 false)
-  br label %bb.c
+  br i1 %.not.i.i.i.i, label %bb.c, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.s = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #18
@@ -241,8 +237,8 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.s, i8 0, i64 %i.q, i1 false)
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i, %.noexc33
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i ], [ %i.t, %.noexc33 ] ; 2 uses
+bb.c:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.noexc33
+  %.sink.i = phi ptr [ %i.t, %.noexc33 ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 160
   store ptr %.sink.i, ptr %i.v, align 8, !tbaa !111
@@ -645,9 +641,9 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.ex
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #18 ; 4 uses
-  store ptr %i.k, ptr %2, align 8, !tbaa !110
   %9 = getelementptr i8, ptr %i.k, i64 %i.g       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %i.g, i1 false)
+  store ptr %i.k, ptr %2, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   store ptr %9, ptr %i.m, align 8, !tbaa !111

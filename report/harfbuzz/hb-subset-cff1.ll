@@ -205,7 +205,6 @@ bb.k:                                             ; preds = %_ZN22hb_serialize_c
 
 .lr.ph182:                                        ; preds = %bb.k
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = load i8, ptr @_hb_NullPool, align 16
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   br label %bb.m
 
@@ -249,11 +248,7 @@ bb.m:                                             ; preds = %.lr.ph182, %bb.l
   %i.bb = load i8, ptr %i.af, align 1, !tbaa !180
   %i.bc = zext i8 %i.bb to i32
   %.not.i105 = icmp ult i32 %.1173, %i.bc
-  br i1 %.not.i105, label %bb.n, label %7, !prof !82
-
-7:                                                ; preds = %.lr.ph176
-  store i8 %6, ptr @_hb_CrapPool, align 16
-  br label %_ZN2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit
+  br i1 %.not.i105, label %bb.n, label %_ZN2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit, !prof !82
 
 bb.n:                                             ; preds = %.lr.ph176
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !181
@@ -261,8 +256,8 @@ bb.n:                                             ; preds = %.lr.ph176
   %i.be = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bd
   br label %_ZN2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit
 
-_ZN2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit: ; preds = %7, %bb.n
-  %.0.i106 = phi ptr [ @_hb_CrapPool, %7 ], [ %i.be, %bb.n ]
+_ZN2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit: ; preds = %.lr.ph176, %bb.n
+  %.0.i106 = phi ptr [ %i.be, %bb.n ], [ @_hb_CrapPool, %.lr.ph176 ]
   store i8 %i.az, ptr %.0.i106, align 1, !tbaa !97
   %exitcond.not = icmp eq i32 %i.ba, %i.av
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph176, !llvm.loop !497
@@ -665,10 +660,8 @@ bb.q:                                             ; preds = %bb.p
   %i.db = add i32 %.pre.i.i, 1
   store i32 %i.db, ptr %i.da, align 4, !tbaa !262
   %i.dc = zext i32 %.pre.i.i to i64
-  %i.dd = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %i.dc ; 4 uses
+  %i.dd = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %i.dc ; 3 uses
   store ptr null, ptr %i.dd, align 8
-  %.sroa.5150.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store i32 65535, ptr %.sroa.5150.0..sroa_idx, align 8
   %.sroa.6151.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dd, i64 12
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6151.0..sroa_idx, i8 0, i64 12, i1 false)
   br label %_ZN3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6add_opEjRKNS_14byte_str_ref_tERKS1_.exit
@@ -716,10 +709,8 @@ bb.u:                                             ; preds = %bb.t
   %i.dr = add i32 %i.do, 1
   store i32 %i.dr, ptr %i.dj, align 4, !tbaa !262
   %i.ds = zext i32 %i.do to i64
-  %i.dt = getelementptr inbounds nuw [24 x i8], ptr %i.dq, i64 %i.ds ; 4 uses
+  %i.dt = getelementptr inbounds nuw [24 x i8], ptr %i.dq, i64 %i.ds ; 3 uses
   store ptr null, ptr %i.dt, align 8
-  %.sroa.5143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
-  store i32 65535, ptr %.sroa.5143.0..sroa_idx, align 8
   %.sroa.6144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dt, i64 12
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6144.0..sroa_idx, i8 0, i64 12, i1 false)
   br label %_ZN3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6add_opEjRKNS_14byte_str_ref_tERKS1_.exit100
@@ -876,19 +867,15 @@ bb.ai:                                            ; preds = %.lr.ph, %_ZNK14hb_i
   %i.ge = load i32, ptr %i.fw, align 4, !tbaa !118
   %i.gf = zext i32 %i.ge to i64
   %.not.i = icmp samesign ult i64 %indvars.iv, %i.gf
-  br i1 %.not.i, label %bb.aj, label %5, !prof !82
-
-5:                                                ; preds = %bb.ai
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) @_hb_CrapPool, ptr noundef nonnull align 16 dereferenceable(16) @_hb_NullPool, i64 16, i1 false)
-  br label %_ZN11hb_vector_tIS_IS_IhLb0EELb0EELb0EEixEi.exit
+  br i1 %.not.i, label %bb.aj, label %_ZN11hb_vector_tIS_IS_IhLb0EELb0EELb0EEixEi.exit, !prof !82
 
 bb.aj:                                            ; preds = %bb.ai
   %i.gg = load ptr, ptr %i.fx, align 8, !tbaa !119
   %i.gh = getelementptr inbounds nuw [16 x i8], ptr %i.gg, i64 %indvars.iv
   br label %_ZN11hb_vector_tIS_IS_IhLb0EELb0EELb0EEixEi.exit
 
-_ZN11hb_vector_tIS_IS_IhLb0EELb0EELb0EEixEi.exit: ; preds = %5, %bb.aj
-  %.0.i = phi ptr [ @_hb_CrapPool, %5 ], [ %i.gh, %bb.aj ]
+_ZN11hb_vector_tIS_IS_IhLb0EELb0EELb0EEixEi.exit: ; preds = %bb.ai, %bb.aj
+  %.0.i = phi ptr [ %i.gh, %bb.aj ], [ @_hb_CrapPool, %bb.ai ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0.i, i8 0, i64 16, i1 false)
   %i.gi = load ptr, ptr %i.fy, align 8, !tbaa !114 ; 3 uses
   %.not.i.i103 = icmp eq ptr %i.gi, null
@@ -1291,7 +1278,6 @@ bb.s:                                             ; preds = %bb.r
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.cx = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.cy = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %5 = load i64, ptr @_hb_NullPool, align 16
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 228 ; 8 uses
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 9 uses
@@ -1486,11 +1472,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %.not.i82 = icmp ult i32 %.sroa.0.0.copyload, %i.gl
-  br i1 %.not.i82, label %bb.ae, label %6, !prof !82
-
-6:                                                ; preds = %bb.ad
-  store i64 %5, ptr @_hb_CrapPool, align 16
-  br label %_ZN11hb_vector_tIPKN3CFF15parsed_cs_str_tELb0EEixEi.exit
+  br i1 %.not.i82, label %bb.ae, label %_ZN11hb_vector_tIPKN3CFF15parsed_cs_str_tELb0EEixEi.exit, !prof !82
 
 bb.ae:                                            ; preds = %bb.ad
   %i.gq = load ptr, ptr %i.cz, align 8, !tbaa !373
@@ -1498,8 +1480,8 @@ bb.ae:                                            ; preds = %bb.ad
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.gq, i64 %i.gr
   br label %_ZN11hb_vector_tIPKN3CFF15parsed_cs_str_tELb0EEixEi.exit
 
-_ZN11hb_vector_tIPKN3CFF15parsed_cs_str_tELb0EEixEi.exit: ; preds = %6, %bb.ae
-  %.0.i83 = phi ptr [ @_hb_CrapPool, %6 ], [ %i.gs, %bb.ae ]
+_ZN11hb_vector_tIPKN3CFF15parsed_cs_str_tELb0EEixEi.exit: ; preds = %bb.ad, %bb.ae
+  %.0.i83 = phi ptr [ %i.gs, %bb.ae ], [ @_hb_CrapPool, %bb.ad ]
   store ptr %.0.i85, ptr %.0.i83, align 8, !tbaa !380
   br label %.thread
 
@@ -1902,8 +1884,6 @@ bb.s:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.t:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit.i
   store i8 1, ptr %i.bs, align 8, !tbaa !367
-  %37 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %37, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i
 
 _ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i: ; preds = %bb.t, %bb.s
@@ -2306,8 +2286,6 @@ bb.g:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.h:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit20
   store i8 1, ptr %i.a, align 8, !tbaa !367
-  %2 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %2, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit: ; preds = %bb.g, %bb.h
@@ -2363,8 +2341,6 @@ bb.l:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.m:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit23
   store i8 1, ptr %i.af, align 8, !tbaa !367
-  %3 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %3, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit25
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit25: ; preds = %bb.l, %bb.m
@@ -2420,8 +2396,6 @@ bb.q:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.r:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit28
   store i8 1, ptr %i.bd, align 8, !tbaa !367
-  %4 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %4, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit30
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit30: ; preds = %bb.q, %bb.r
@@ -2455,8 +2429,6 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 1, ptr %i.cm, align 8, !tbaa !367
-  %5 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %5, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit32
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit32: ; preds = %bb.u, %bb.v
@@ -2859,10 +2831,8 @@ bb.e:                                             ; preds = %bb.d
   %i.n = add i32 %i.k, 1
   store i32 %i.n, ptr %i.f, align 4, !tbaa !387
   %i.o = zext i32 %i.k to i64
-  %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %i.o ; 6 uses
+  %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %i.o ; 5 uses
   store ptr null, ptr %i.p, align 8
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  store i32 65535, ptr %.sroa.4.0..sroa_idx.i, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 12
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 4
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 13
@@ -3048,10 +3018,8 @@ bb.s:                                             ; preds = %bb.r
   %i.cp = add i32 %i.cm, 1
   store i32 %i.cp, ptr %i.ch, align 4, !tbaa !387
   %i.cq = zext i32 %i.cm to i64
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %i.cq ; 6 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %i.cq ; 5 uses
   store ptr null, ptr %i.cr, align 8
-  %.sroa.4.0..sroa_idx.i39 = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  store i32 65535, ptr %.sroa.4.0..sroa_idx.i39, align 8
   %.sroa.5.0..sroa_idx.i40 = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   store i8 0, ptr %.sroa.5.0..sroa_idx.i40, align 4
   %.sroa.6.0..sroa_idx.i41 = getelementptr inbounds nuw i8, ptr %i.cr, i64 13
@@ -3184,10 +3152,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.eq = add i32 %i.en, 1
   store i32 %i.eq, ptr %i.ei, align 4, !tbaa !387
   %i.er = zext i32 %i.en to i64
-  %i.es = getelementptr inbounds nuw [16 x i8], ptr %i.ep, i64 %i.er ; 6 uses
+  %i.es = getelementptr inbounds nuw [16 x i8], ptr %i.ep, i64 %i.er ; 5 uses
   store ptr null, ptr %i.es, align 8
-  %.sroa.4.0..sroa_idx.i55 = getelementptr inbounds nuw i8, ptr %i.es, i64 8
-  store i32 65535, ptr %.sroa.4.0..sroa_idx.i55, align 8
   %.sroa.5.0..sroa_idx.i56 = getelementptr inbounds nuw i8, ptr %i.es, i64 12
   store i8 0, ptr %.sroa.5.0..sroa_idx.i56, align 4
   %.sroa.6.0..sroa_idx.i57 = getelementptr inbounds nuw i8, ptr %i.es, i64 13
@@ -3280,10 +3246,8 @@ bb.e:                                             ; preds = %bb.d
   %i.t = add i32 %i.q, 1
   store i32 %i.t, ptr %i.i, align 4, !tbaa !387
   %i.u = zext i32 %i.q to i64
-  %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %i.u ; 6 uses
+  %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %i.u ; 5 uses
   store ptr null, ptr %i.v, align 8
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  store i32 65535, ptr %.sroa.4.0..sroa_idx.i, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 12
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 4
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 13
@@ -3566,8 +3530,6 @@ bb.m:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.n:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit.i
   store i8 1, ptr %i.ab, align 8, !tbaa !367
-  %3 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %3, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i
 
 _ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i: ; preds = %bb.n, %bb.m

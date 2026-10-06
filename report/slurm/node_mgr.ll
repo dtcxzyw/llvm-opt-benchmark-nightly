@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.c
 
 bb.l:                                             ; preds = %_validate_nodes_vs_nodeset.exit.thread, %bb.j, %bb.k
   %.048 = phi ptr [ %i.af, %bb.j ], [ %i.af, %_validate_nodes_vs_nodeset.exit.thread ], [ %i.ak, %bb.k ] ; 3 uses
-  %.047 = phi i32 [ %i.aj, %bb.j ], [ 0, %_validate_nodes_vs_nodeset.exit.thread ], [ 0, %bb.k ] ; 4 uses
+  %.047 = phi i32 [ %i.aj, %bb.j ], [ 0, %_validate_nodes_vs_nodeset.exit.thread ], [ 0, %bb.k ] ; 3 uses
   %.0 = phi ptr [ %i.k, %bb.j ], [ %i.k, %_validate_nodes_vs_nodeset.exit.thread ], [ null, %bb.k ] ; 3 uses
   %i.bj = load i32, ptr @node_record_count, align 4
   %i.bk = sext i32 %i.bj to i64
@@ -396,9 +396,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
   %i.ew = load ptr, ptr %i.b, align 8
   call fastcc void @_make_node_down(ptr noundef %i.ew, i64 noundef %i.es)
-  %i.ex = load ptr, ptr %i.b, align 8             ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.ex, i64 328
-  store i32 %.047, ptr %1, align 8
+  %i.ex = load ptr, ptr %i.b, align 8
   br label %bb.af
 
 bb.ae:                                            ; preds = %_queue_consolidate_config_list.exit

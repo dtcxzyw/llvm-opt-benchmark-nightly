@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !45 ; 2 uses
   %.phi.trans.insert211 = getelementptr inbounds nuw i8, ptr %7, i64 16
   %.pre212 = load ptr, ptr %.phi.trans.insert211, align 8, !tbaa !46 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %.not.i.i = icmp eq ptr %.pre, %.pre212
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -213,8 +213,7 @@ bb.e:                                             ; preds = %bb.d
   %i.p = ptrtoint ptr %i.m to i64
   store i64 %i.p, ptr %.pre, align 8
   %i.q = load ptr, ptr %i.n, align 8, !tbaa !45
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
-  store ptr %i.r, ptr %i.n, align 8, !tbaa !45
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   br label %_ZNSt6vectorISt17reference_wrapperIKN4bzla4NodeEESaIS4_EE9push_backEOS4_.exit
 
 bb.f:                                             ; preds = %.thread253, %bb.d

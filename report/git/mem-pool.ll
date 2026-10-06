@@ -136,11 +136,9 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 mem_pool_alloc_block.exit:                        ; preds = %bb.c
-  %i.s = tail call ptr @xmalloc(i64 noundef %i.p) #16 ; 6 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store ptr %2, ptr %i.t, align 8, !tbaa !19
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %i.b
+  %i.s = tail call ptr @xmalloc(i64 noundef %i.p) #16 ; 5 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.b
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store ptr %i.u, ptr %i.v, align 8, !tbaa !19
   %..i = select i1 %.not, ptr %0, ptr %i.c        ; 2 uses
@@ -161,11 +159,9 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 mem_pool_alloc_block.exit23:                      ; preds = %bb.e
-  %i.aa = tail call ptr @xmalloc(i64 noundef %i.x) #16 ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 3 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store ptr %3, ptr %i.ab, align 8, !tbaa !19
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 %i.l
+  %i.aa = tail call ptr @xmalloc(i64 noundef %i.x) #16 ; 5 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.l
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !19
   %i.ae = load ptr, ptr %0, align 8, !tbaa !20
@@ -174,7 +170,7 @@ mem_pool_alloc_block.exit23:                      ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %mem_pool_alloc_block.exit, %mem_pool_alloc_block.exit23
-  %i.af = phi ptr [ %3, %mem_pool_alloc_block.exit23 ], [ %2, %mem_pool_alloc_block.exit ], [ %i.g, %bb.b ] ; 2 uses
+  %i.af = phi ptr [ %i.ab, %mem_pool_alloc_block.exit23 ], [ %i.t, %mem_pool_alloc_block.exit ], [ %i.g, %bb.b ] ; 2 uses
   %.1 = phi ptr [ %i.aa, %mem_pool_alloc_block.exit23 ], [ %i.s, %mem_pool_alloc_block.exit ], [ %i.c, %bb.b ]
   %i.ag = getelementptr inbounds nuw i8, ptr %.1, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.b

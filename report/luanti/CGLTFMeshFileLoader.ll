@@ -205,11 +205,10 @@ _ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.h
 .noexc12.i:                                       ; preds = %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.ad = shl nuw nsw i64 %i.k, 1
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #32
-          to label %.noexc92 unwind label %bb.p   ; 7 uses
+          to label %.noexc92 unwind label %bb.p   ; 6 uses
 
 .noexc92:                                         ; preds = %.noexc12.i
   %i.af = getelementptr inbounds nuw [2 x i8], ptr %i.ae, i64 %i.k
-  store i16 0, ptr %i.ae, align 2, !tbaa !242, !noalias !872
   %i.ag = getelementptr i8, ptr %i.ae, i64 2      ; 3 uses
   %i.ah = add nsw i64 %i.k, -1                    ; 2 uses
   %i.ai = icmp eq i64 %i.ah, 0
@@ -612,7 +611,7 @@ _ZNSt6vectorIfSaIfEEC2ERKS1_.exit:                ; preds = %bb.x, %bb.w, %bb.v,
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hs = getelementptr inbounds i8, ptr null, i64 %i.hq ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.hs, ptr %i.ht, align 8, !tbaa !492
   br label %bb.ao
 
@@ -1015,7 +1014,7 @@ _ZNSt6vectorISt5arrayIfLm2EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.y, %bb.x, %bb.w
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gu = getelementptr inbounds i8, ptr null, i64 %i.gs ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.gu, ptr %i.gv, align 8, !tbaa !526
   br label %bb.ap
 
@@ -1418,7 +1417,7 @@ _ZNSt6vectorISt5arrayIhLm4EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.y, %bb.x, %bb.w
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gz = getelementptr inbounds i8, ptr null, i64 %i.gx ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.gz, ptr %i.ha, align 8, !tbaa !321
   br label %bb.ap
 
@@ -1821,7 +1820,7 @@ _ZNSt6vectorISt5arrayItLm4EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.y, %bb.x, %bb.w
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gd = getelementptr inbounds i8, ptr null, i64 %i.gb ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.gd, ptr %i.ge, align 8, !tbaa !329
   br label %bb.ap
 
@@ -2224,7 +2223,7 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIhSaIhE
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.fx = getelementptr inbounds i8, ptr null, i64 %i.fp ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.fx, ptr %i.fy, align 8, !tbaa !358
   br label %bb.ap
 
@@ -2627,7 +2626,7 @@ _ZNSt6vectorItSaItEEC2ERKS1_.exit:                ; preds = %bb.x, %bb.w, %bb.v,
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hv = getelementptr inbounds i8, ptr null, i64 %i.ht ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.hv, ptr %i.hw, align 8, !tbaa !240
   br label %bb.ao
 
@@ -3030,7 +3029,7 @@ _ZNSt6vectorIjSaIjEEC2ERKS1_.exit:                ; preds = %bb.x, %bb.w, %bb.v,
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hs = getelementptr inbounds i8, ptr null, i64 %i.hq ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.hs, ptr %i.ht, align 8, !tbaa !291
   br label %bb.ao
 
@@ -3433,7 +3432,7 @@ _ZNSt6vectorISt5arrayIfLm4EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.y, %bb.x, %bb.w
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gb = getelementptr inbounds i8, ptr null, i64 %i.fz ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.gb, ptr %i.gc, align 8, !tbaa !400
   br label %bb.ap
 
@@ -3836,7 +3835,7 @@ _ZNSt6vectorISt5arrayIhLm2EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.x, %bb.w, %bb.v
   %i.hk = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hl = getelementptr inbounds i8, ptr null, i64 %i.hj ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.hl, ptr %i.hm, align 8, !tbaa !542
   br label %bb.ao
 
@@ -4239,7 +4238,7 @@ _ZNSt6vectorISt5arrayItLm2EESaIS1_EEC2ERKS3_.exit: ; preds = %bb.y, %bb.x, %bb.w
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gz = getelementptr inbounds i8, ptr null, i64 %i.gx ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.gz, ptr %i.ha, align 8, !tbaa !558
   br label %bb.ap
 

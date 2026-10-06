@@ -205,9 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %.0..0..0..0..0..0..0..0..i.i71 = load volatile ptr, ptr %i.b, align 8, !tbaa !58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ai = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..0..0..i.i71, i64 noundef %i.ae, i64 noundef 5, i32 noundef 0, i64 noundef %spec.store.select.i.i) #28 ; 2 uses
-  %i.aj = inttoptr i64 %i.ai to ptr               ; 4 uses
-  %2 = getelementptr i8, ptr %i.aj, i64 16
-  store i64 0, ptr %2, align 8, !tbaa !38
+  %i.aj = inttoptr i64 %i.ai to ptr               ; 3 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 24     ; 3 uses
   store i8 0, ptr %i.ak, align 8, !tbaa !43
   %i.al = load i64, ptr %i.aj, align 8, !tbaa !36

@@ -204,7 +204,7 @@ _ZNK4absl12lts_202605264Cord4sizeEv.exit:         ; preds = %bb.a
 
 _ZNK4absl12lts_202605264Cord4sizeEv.exit.thread:  ; preds = %bb.a
   %i.f = sext i8 %i.a to i64                      ; 2 uses
-  %i.g = lshr exact i64 %i.f, 1                   ; 10 uses
+  %i.g = lshr exact i64 %i.f, 1                   ; 9 uses
   %.not33 = icmp ugt i64 %i.g, %2
   br i1 %.not33, label %_ZNK4absl12lts_202605264Cord10ChunkRange5beginEv.exit.thread, label %_ZNK4absl12lts_202605264Cord5emptyEv.exit.i
 
@@ -462,8 +462,7 @@ _ZNK4absl12lts_202605264Cord10ChunkRange5beginEv.exit.thread: ; preds = %_ZNK4ab
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.df, i8 0, i64 32, i1 false), !alias.scope !192
   store i32 -1, ptr %i.de, align 8, !tbaa !73, !alias.scope !192
   %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  store i64 %i.g, ptr %i.dh, align 8, !tbaa !77, !alias.scope !191
+  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 1
   br label %.lr.ph.sink.split
 

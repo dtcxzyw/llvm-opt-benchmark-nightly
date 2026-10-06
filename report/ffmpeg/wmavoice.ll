@@ -205,7 +205,7 @@ bb.a:
   %i.g = alloca [16 x double], align 16           ; 12 uses
   %i.h = ptrtoaddr ptr %i.g to i64
   %i.i = alloca [16 x float], align 16            ; 7 uses
-  %4 = alloca %struct.GetBitContext, align 8      ; 7 uses
+  %4 = alloca %struct.GetBitContext, align 8      ; 6 uses
   %i.j = alloca [3 x [16 x double]], align 16     ; 51 uses
   %i.k = alloca [908 x float], align 16           ; 5 uses
   %i.l = alloca [496 x float], align 16           ; 5 uses
@@ -259,10 +259,8 @@ bb.b:                                             ; preds = %bb.a
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %.013.i, ptr %i.am, align 4, !tbaa !50
   %i.an = add nuw nsw i32 %.013.i, 8              ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %i.an, ptr %5, align 8, !tbaa !51
-  %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 0, ptr %i.ao, align 8, !tbaa !52
+  %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 %i.an, ptr %i.ao, align 8, !tbaa !51
   store i32 0, ptr %i.ai, align 8, !tbaa !65
   br label %bb.c
 

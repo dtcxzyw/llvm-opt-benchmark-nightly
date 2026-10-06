@@ -205,7 +205,7 @@ define linkonce_odr noundef double @_ZN7xgboost6metric7EvalAMS4EvalERKNS_16HostD
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %3 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
-  %4 = alloca %"class.std::vector.63", align 8    ; 14 uses
+  %4 = alloca %"class.std::vector.63", align 8    ; 13 uses
   %5 = alloca %class.anon.76, align 8             ; 6 uses
   %6 = alloca %"class.xgboost::ConsoleLogger", align 8 ; 8 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -255,11 +255,7 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
   %i.l = and i64 %i.j, 4294967295                 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i64 %i.l, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i: ; preds = %bb.e
-  store i64 0, ptr %4, align 8
-  br label %bb.f
+  br i1 %.not.i.i.i.i, label %bb.f, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.e
   %i.m = shl nuw nsw i64 %i.l, 3                  ; 3 uses
@@ -273,9 +269,9 @@ _ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i: ; preds = %bb.e
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.n, i64 %i.m
   br label %bb.f
 
-bb.f:                                             ; preds = %.noexc, %_ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.o, %.noexc ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt4pairIfjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc ]
+bb.f:                                             ; preds = %bb.e, %.noexc
+  %.sink.i = phi ptr [ %i.o, %.noexc ], [ null, %bb.e ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc ], [ null, %bb.e ]
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   store ptr %.sink.i, ptr %i.q, align 8, !tbaa !448

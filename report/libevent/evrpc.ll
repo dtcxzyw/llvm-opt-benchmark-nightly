@@ -202,12 +202,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.r, label %bb.f, label %evrpc_hook_associate_meta_.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.s = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 6 uses
+  %i.s = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 5 uses
   store ptr null, ptr %i.s, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store ptr %i.s, ptr %2, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store ptr null, ptr %i.t, align 8
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  store ptr %i.s, ptr %i.t, align 8
   store ptr %i.s, ptr %i.g, align 8
   br label %evrpc_hook_associate_meta_.exit
 
@@ -461,12 +459,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.x, label %bb.e, label %evrpc_hook_associate_meta_.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.y = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 6 uses
+  %i.y = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 5 uses
   store ptr null, ptr %i.y, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store ptr %i.y, ptr %1, align 8
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  store ptr null, ptr %i.z, align 8
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  store ptr %i.y, ptr %i.z, align 8
   store ptr %i.y, ptr %0, align 8
   br label %evrpc_hook_associate_meta_.exit
 
@@ -869,12 +865,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.d, label %evrpc_hook_associate_meta_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 6 uses
+  %i.q = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 5 uses
   store ptr null, ptr %i.q, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store ptr %i.q, ptr %3, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  store ptr null, ptr %i.r, align 8
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  store ptr %i.q, ptr %i.r, align 8
   store ptr %i.q, ptr %1, align 8
   br label %evrpc_hook_associate_meta_.exit
 
@@ -1277,12 +1271,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %bb.e, label %evrpc_hook_associate_meta_.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 6 uses
+  %i.l = tail call ptr @event_mm_malloc_(i64 noundef 24) #11 ; 5 uses
   store ptr null, ptr %i.l, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store ptr %i.l, ptr %2, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  store ptr null, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  store ptr %i.l, ptr %i.m, align 8
   store ptr %i.l, ptr %1, align 8
   br label %evrpc_hook_associate_meta_.exit
 

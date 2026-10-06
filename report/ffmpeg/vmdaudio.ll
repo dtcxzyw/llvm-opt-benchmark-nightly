@@ -204,10 +204,9 @@ bb.v:                                             ; preds = %.lr.ph35.i
   %i.dn = load i16, ptr %i.dm, align 2, !tbaa !54
   %i.do = zext i16 %i.dn to i32
   %i.dp = sext i32 %.134.i to i64                 ; 2 uses
-  %i.dq = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dp ; 2 uses
+  %i.dq = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dp
   %i.dr = load i32, ptr %i.dq, align 4, !tbaa !45
-  %i.ds = sub nsw i32 %i.dr, %i.do                ; 2 uses
-  store i32 %i.ds, ptr %i.dq, align 4, !tbaa !45
+  %i.ds = sub nsw i32 %i.dr, %i.do
   br label %bb.x
 
 bb.w:                                             ; preds = %.lr.ph35.i
@@ -216,10 +215,9 @@ bb.w:                                             ; preds = %.lr.ph35.i
   %i.dv = load i16, ptr %i.du, align 2, !tbaa !54
   %i.dw = zext i16 %i.dv to i32
   %i.dx = sext i32 %.134.i to i64                 ; 2 uses
-  %i.dy = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dx ; 2 uses
+  %i.dy = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dx
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !45
-  %i.ea = add nsw i32 %i.dz, %i.dw                ; 2 uses
-  store i32 %i.ea, ptr %i.dy, align 4, !tbaa !45
+  %i.ea = add nsw i32 %i.dz, %i.dw
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v

@@ -204,7 +204,7 @@ bb.cj:                                            ; preds = %bb.ci
 
 lean_dec.exit159:                                 ; preds = %bb.cj, %bb.ci, %bb.ch
   tail call void @lean_inc_heartbeat() #10
-  %i.ej = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #10 ; 8 uses
+  %i.ej = tail call noalias ptr @mi_malloc_small(i64 noundef 40) #10 ; 7 uses
   %i.ek = icmp eq ptr %i.ej, null
   br i1 %i.ek, label %bb.ck, label %.thread
 
@@ -214,7 +214,6 @@ bb.ck:                                            ; preds = %lean_dec.exit159
 
 .thread:                                          ; preds = %lean_dec.exit159
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 4
-  store i32 1, ptr %i.ej, align 4, !tbaa !11
   store i32 262184, ptr %i.el, align 4
   %i.em = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   store ptr %.0137, ptr %i.em, align 8, !tbaa !15

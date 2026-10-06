@@ -123,7 +123,8 @@ bb.c:                                             ; preds = %rev_fwd_reversible_
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 8 ; 2 uses
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !26
   %i.cf = add i64 %i.ce, %i.cc                    ; 2 uses
-  %i.cg = add i64 %i.cb, 2                        ; 2 uses
+  %i.cg = add i64 %i.cb, 2                        ; 3 uses
+  store i64 %i.cg, ptr %i.ca, align 8, !tbaa !25
   %i.ch = icmp ugt i64 %i.cg, 63
   br i1 %i.ch, label %bb.d, label %stream_write_bits.exit.i
 
@@ -147,8 +148,7 @@ stream_write_bits.exit.i:                         ; preds = %bb.d, %bb.c
   %i.cr = zext nneg i32 %i.bc to i64              ; 2 uses
   %i.cs = shl i64 %i.cr, %i.co
   %i.ct = add i64 %i.cq, %i.cs                    ; 2 uses
-  %i.cu = add i64 %i.co, 11                       ; 3 uses
-  store i64 %i.cu, ptr %i.ca, align 8, !tbaa !25
+  %i.cu = add i64 %i.co, 11                       ; 2 uses
   %i.cv = icmp ugt i64 %i.cu, 63
   br i1 %i.cv, label %bb.e, label %stream_write_bit.exit.i
 
@@ -209,14 +209,13 @@ rev_fwd_reinterpret_double.exit.i:                ; preds = %rev_fwd_reversible_
   %i.dz = xor i64 %i.ab, 9223372036854775807
   %.sroa.21.2.i = select i1 %i.dy, i64 %i.dz, i64 %i.ab
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !23 ; 7 uses
+  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !23 ; 6 uses
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !25 ; 3 uses
   %i.ed = shl i64 3, %i.ec
   %i.ee = getelementptr inbounds nuw i8, ptr %i.eb, i64 8 ; 2 uses
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !26
   %i.eg = add i64 %i.ef, %i.ed                    ; 2 uses
-  %i.eh = add i64 %i.ec, 2                        ; 3 uses
-  store i64 %i.eh, ptr %i.eb, align 8, !tbaa !25
+  %i.eh = add i64 %i.ec, 2                        ; 2 uses
   %i.ei = icmp ugt i64 %i.eh, 63
   br i1 %i.ei, label %bb.h, label %stream_write_bits.exit44.i
 

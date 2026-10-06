@@ -205,9 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %.val14.pre = load ptr, ptr %1, align 8         ; 2 uses
-  %.val.i.pre = load ptr, ptr %.val14.pre, align 8, !noalias !140392
-  %.phi.trans.insert = getelementptr i8, ptr %.val14.pre, i64 8
-  %.val1.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !noalias !140392
+  %.val1.i.pre = load ptr, ptr %.val14.pre, align 8, !noalias !140392
   br label %bb.m
 
 bb.d:                                             ; preds = %bb.b
@@ -217,9 +215,9 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 4 uses
-  %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 5 uses
+  %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 4 uses
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #68
-  %i.o = tail call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef range(i64 1, -9223372036854775807) 8) #68 ; 4 uses
+  %i.o = tail call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef range(i64 1, -9223372036854775807) 8) #68 ; 5 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.f, label %bb.i, !prof !448
 
@@ -269,12 +267,14 @@ bb.l:                                             ; preds = %bb.m
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs5E8EBwPtAkp_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_EECsfR8GmIBoxTX_21lance_namespace_impls.exit unwind label %bb.ak
 
 bb.m:                                             ; preds = %bb.c, %bb.i
-  %.val1.i.a = phi ptr [ %.val1.i.pre, %bb.c ], [ %i.n, %bb.i ]
-  %.val.i = phi ptr [ %.val.i.pre, %bb.c ], [ %i.m, %bb.i ]
+  %.val1.i.a = phi ptr [ %.val1.i.pre, %bb.c ], [ %i.m, %bb.i ]
+  %.val.i = phi ptr [ %.val14.pre, %bb.c ], [ %i.o, %bb.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.u = getelementptr inbounds nuw i8, ptr %.val1.i.a, i64 24
+  %3 = getelementptr i8, ptr %.val.i, i64 8
+  %.val1.i = load ptr, ptr %3, align 8, !noalias !140392, !nonnull !416, !align !417, !noundef !416
+  %i.u = getelementptr inbounds nuw i8, ptr %.val1.i, i64 24
   %i.v = load ptr, ptr %i.u, align 8, !invariant.load !416, !noalias !140393, !nonnull !416
-  invoke void %i.v(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.e, ptr noundef nonnull %.val.i, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
+  invoke void %i.v(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.e, ptr noundef nonnull %.val1.i.a, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
           to label %_RNvXs_NtNtCscI6d9CVNmLh_4core6future6futureINtNtB8_3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxIBG_IBW_DNtB4_6Futurep6OutputINtNtB8_6result6ResultINtNtB10_4sync3ArcDNtNtCs5E8EBwPtAkp_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCs63DIHKhvmTb_10lance_core5error5ErrorENtNtB8_6marker4SendEL_EEEEB1D_4pollCsfR8GmIBoxTX_21lance_namespace_impls.exit unwind label %bb.l, !inline_history !140368
 
 _RNvXs_NtNtCscI6d9CVNmLh_4core6future6futureINtNtB8_3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxIBG_IBW_DNtB4_6Futurep6OutputINtNtB8_6result6ResultINtNtB10_4sync3ArcDNtNtCs5E8EBwPtAkp_24datafusion_physical_plan14execution_plan13ExecutionPlanEL_ENtNtCs63DIHKhvmTb_10lance_core5error5ErrorENtNtB8_6marker4SendEL_EEEEB1D_4pollCsfR8GmIBoxTX_21lance_namespace_impls.exit: ; preds = %bb.m
@@ -677,8 +677,7 @@ bb.g:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store ptr %i.i, ptr %i.o, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.p, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.j

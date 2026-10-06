@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 .thread301:                                       ; preds = %bb.a, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  br label %.thread305
+  br label %.thread310
 
 bb.c:                                             ; preds = %bb.b
   %i.j = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 256, ptr noundef %i.a, i32 noundef 2)
@@ -210,12 +210,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 22 uses
   store i8 -1, ptr %i.k, align 2, !tbaa !9
   %.not276 = icmp eq i32 %i.j, 0
-  br i1 %.not276, label %.thread305, label %bb.d
-
-.thread305:                                       ; preds = %bb.c, %.thread301
-  %.ph = phi ptr [ %i.i, %.thread301 ], [ %i.k, %bb.c ] ; 2 uses
-  store i8 0, ptr %.ph, align 1, !tbaa !9
-  br label %.thread310
+  br i1 %.not276, label %.thread310, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 65535, ptr noundef %i.a, i32 noundef 3)
@@ -225,25 +220,18 @@ bb.d:                                             ; preds = %bb.c
   %.not277 = icmp eq i32 %i.l, 0
   br i1 %.not277, label %.thread310, label %bb.e
 
-.thread310:                                       ; preds = %bb.d, %.thread305
-  %.ph309 = phi ptr [ %.ph, %.thread305 ], [ %i.k, %bb.d ] ; 2 uses
+.thread310:                                       ; preds = %.thread301, %bb.c, %bb.d
+  %.ph309 = phi ptr [ %i.k, %bb.d ], [ %i.i, %.thread301 ], [ %i.k, %bb.c ] ; 2 uses
   store i8 -1, ptr %.ph309, align 1, !tbaa !9
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  br label %.thread316
+  br label %.thread322
 
 bb.e:                                             ; preds = %bb.d
   %i.n = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 65536, ptr noundef %i.a, i32 noundef 3)
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 14 uses
   store <4 x i8> <i8 0, i8 -1, i8 -1, i8 -1>, ptr %i.a, align 4, !tbaa !9
   %.not278 = icmp eq i32 %i.n, 0
-  br i1 %.not278, label %.thread316, label %bb.f
-
-.thread316:                                       ; preds = %bb.e, %.thread310
-  %.ph314 = phi ptr [ %i.m, %.thread310 ], [ %i.o, %bb.e ] ; 2 uses
-  %.ph315 = phi ptr [ %.ph309, %.thread310 ], [ %i.k, %bb.e ] ; 2 uses
-  store i8 0, ptr %.ph315, align 1, !tbaa !9
-  store i8 0, ptr %.ph314, align 1, !tbaa !9
-  br label %.thread322
+  br i1 %.not278, label %.thread322, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.p = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 16777215, ptr noundef %i.a, i32 noundef 4)
@@ -251,10 +239,9 @@ bb.f:                                             ; preds = %bb.e
   %.not279 = icmp eq i32 %i.p, 0
   br i1 %.not279, label %.thread322, label %bb.g
 
-.thread322:                                       ; preds = %bb.f, %.thread316
-  %.ph320 = phi ptr [ %.ph315, %.thread316 ], [ %i.k, %bb.f ] ; 2 uses
-  %.ph321 = phi ptr [ %.ph314, %.thread316 ], [ %i.o, %bb.f ] ; 2 uses
-  store i8 -1, ptr %.ph320, align 1, !tbaa !9
+.thread322:                                       ; preds = %.thread310, %bb.e, %bb.f
+  %.ph320 = phi ptr [ %i.k, %bb.f ], [ %.ph309, %.thread310 ], [ %i.k, %bb.e ]
+  %.ph321 = phi ptr [ %i.o, %bb.f ], [ %i.m, %.thread310 ], [ %i.o, %bb.e ] ; 2 uses
   store i8 -1, ptr %.ph321, align 1, !tbaa !9
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   br label %.thread350
@@ -292,7 +279,7 @@ bb.j:                                             ; preds = %bb.i
   %.ph348 = phi ptr [ %i.o, %bb.j ], [ %i.o, %bb.i ], [ %i.o, %bb.h ], [ %.ph321, %.thread322 ], [ %i.o, %bb.g ]
   %.ph349 = phi ptr [ %i.s, %bb.j ], [ %i.s, %bb.i ], [ %i.s, %bb.h ], [ %i.q, %.thread322 ], [ %i.s, %bb.g ]
   store i8 0, ptr %.ph347, align 1, !tbaa !9
-  br label %.thread357
+  br label %.thread371
 
 bb.k:                                             ; preds = %bb.j
   %i.w = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 32767, ptr noundef %i.a, i32 noundef 2)
@@ -300,14 +287,7 @@ bb.k:                                             ; preds = %bb.j
   store i8 -128, ptr %i.g, align 1, !tbaa !9
   store i8 0, ptr %i.k, align 2, !tbaa !9
   %.not284 = icmp eq i32 %i.w, 0
-  br i1 %.not284, label %.thread357, label %bb.l
-
-.thread357:                                       ; preds = %bb.k, %.thread350
-  %.ph354 = phi ptr [ %.ph349, %.thread350 ], [ %i.s, %bb.k ]
-  %.ph355 = phi ptr [ %.ph348, %.thread350 ], [ %i.o, %bb.k ]
-  %.ph356 = phi ptr [ %.ph347, %.thread350 ], [ %i.k, %bb.k ] ; 2 uses
-  store i8 -1, ptr %.ph356, align 1, !tbaa !9
-  br label %.thread364
+  br i1 %.not284, label %.thread371, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.x = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 32768, ptr noundef %i.a, i32 noundef 3)
@@ -315,15 +295,7 @@ bb.l:                                             ; preds = %bb.k
   store i8 -1, ptr %i.g, align 1, !tbaa !9
   store i8 -1, ptr %i.k, align 2, !tbaa !9
   %.not285 = icmp eq i32 %i.x, 0
-  br i1 %.not285, label %.thread364, label %bb.m
-
-.thread364:                                       ; preds = %bb.l, %.thread357
-  %.ph361 = phi ptr [ %.ph356, %.thread357 ], [ %i.k, %bb.l ] ; 2 uses
-  %.ph362 = phi ptr [ %.ph355, %.thread357 ], [ %i.o, %bb.l ] ; 2 uses
-  %.ph363 = phi ptr [ %.ph354, %.thread357 ], [ %i.s, %bb.l ]
-  store i8 0, ptr %.ph361, align 1, !tbaa !9
-  store i8 0, ptr %.ph362, align 1, !tbaa !9
-  br label %.thread371
+  br i1 %.not285, label %.thread371, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.y = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 8388607, ptr noundef %i.a, i32 noundef 3)
@@ -331,11 +303,10 @@ bb.m:                                             ; preds = %bb.l
   %.not286 = icmp eq i32 %i.y, 0
   br i1 %.not286, label %.thread371, label %bb.n
 
-.thread371:                                       ; preds = %bb.m, %.thread364
-  %.ph368 = phi ptr [ %.ph363, %.thread364 ], [ %i.s, %bb.m ]
-  %.ph369 = phi ptr [ %.ph362, %.thread364 ], [ %i.o, %bb.m ] ; 2 uses
-  %.ph370 = phi ptr [ %.ph361, %.thread364 ], [ %i.k, %bb.m ] ; 2 uses
-  store i8 -1, ptr %.ph370, align 1, !tbaa !9
+.thread371:                                       ; preds = %bb.l, %bb.k, %.thread350, %bb.m
+  %.ph368 = phi ptr [ %i.s, %bb.m ], [ %i.s, %bb.l ], [ %.ph349, %.thread350 ], [ %i.s, %bb.k ]
+  %.ph369 = phi ptr [ %i.o, %bb.m ], [ %i.o, %bb.l ], [ %.ph348, %.thread350 ], [ %i.o, %bb.k ] ; 2 uses
+  %.ph370 = phi ptr [ %i.k, %bb.m ], [ %i.k, %bb.l ], [ %.ph347, %.thread350 ], [ %i.k, %bb.k ]
   store i8 -1, ptr %.ph369, align 1, !tbaa !9
   br label %.thread378
 
@@ -347,11 +318,9 @@ bb.n:                                             ; preds = %bb.m
 
 .thread378:                                       ; preds = %bb.n, %.thread371
   %.ph375 = phi ptr [ %.ph370, %.thread371 ], [ %i.k, %bb.n ] ; 2 uses
-  %.ph376 = phi ptr [ %.ph369, %.thread371 ], [ %i.o, %bb.n ] ; 2 uses
-  %.ph377 = phi ptr [ %.ph368, %.thread371 ], [ %i.s, %bb.n ] ; 2 uses
+  %.ph376 = phi ptr [ %.ph369, %.thread371 ], [ %i.o, %bb.n ]
+  %.ph377 = phi ptr [ %.ph368, %.thread371 ], [ %i.s, %bb.n ]
   store i8 0, ptr %.ph375, align 1, !tbaa !9
-  store i8 0, ptr %.ph376, align 1, !tbaa !9
-  store i8 0, ptr %.ph377, align 1, !tbaa !9
   br label %.thread392
 
 bb.o:                                             ; preds = %bb.n
@@ -368,12 +337,11 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not289, label %.thread392, label %bb.q
 
 .thread392:                                       ; preds = %.thread378, %bb.o, %bb.p
-  %.ph389 = phi ptr [ %i.k, %bb.p ], [ %.ph375, %.thread378 ], [ %i.k, %bb.o ] ; 2 uses
+  %.ph389 = phi ptr [ %i.k, %bb.p ], [ %.ph375, %.thread378 ], [ %i.k, %bb.o ]
   %.ph390 = phi ptr [ %i.o, %bb.p ], [ %.ph376, %.thread378 ], [ %i.o, %bb.o ]
   %.ph391 = phi ptr [ %i.s, %bb.p ], [ %.ph377, %.thread378 ], [ %i.s, %bb.o ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  store i8 -128, ptr %.ph389, align 1, !tbaa !9
   br label %.thread396.critedge
 
 bb.q:                                             ; preds = %bb.p

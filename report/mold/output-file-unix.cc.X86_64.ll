@@ -205,13 +205,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
   br i1 %i.eu, label %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_.exit.thread, label %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_.exit
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_.exit.thread: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
-  %i.ev = load i64, ptr %i.ee, align 8, !tbaa !18, !noalias !376 ; 4 uses
+  %i.ev = load i64, ptr %i.ee, align 8, !tbaa !18, !noalias !376 ; 3 uses
   %i.ew = icmp ult i64 %i.ev, 16
   call void @llvm.assume(i1 %i.ew)
   %i.ex = add nuw nsw i64 %i.ev, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.es, ptr noundef nonnull align 8 dereferenceable(1) %i.dv, i64 %i.ex, i1 false)
-  %i.ey = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
-  store i64 %i.ev, ptr %i.ey, align 8, !tbaa !18, !alias.scope !376
+  %i.ey = getelementptr inbounds nuw i8, ptr %15, i64 8
   store ptr %i.dv, ptr %16, align 8, !tbaa !20, !noalias !376
   store i64 0, ptr %i.ee, align 8, !tbaa !18, !noalias !376
   store i8 0, ptr %i.dv, align 8, !tbaa !19, !noalias !376

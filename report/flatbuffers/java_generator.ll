@@ -204,7 +204,7 @@ define internal fastcc void @_ZN19grpc_java_generator12_GLOBAL__N_112PrintServic
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %10 = alloca %"class.std::vector.29", align 8   ; 10 uses
+  %10 = alloca %"class.std::vector.29", align 8   ; 9 uses
   %11 = alloca %"class.std::unique_ptr.12", align 8 ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -607,27 +607,26 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144: ; preds = %bb
   unreachable
 
 _ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144
-  store i64 0, ptr %10, align 8
   %.not.i.i.i.i.i = icmp eq i32 %i.aoo, 0
   br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EEC2EmRKS7_.exit.thread.i.i, label %.lr.ph.preheader.i.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i
   %i.aor = shl nuw nsw i64 %i.aop, 3              ; 3 uses
-  %i.aos = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aor) #23 ; 5 uses
-  store ptr %i.aos, ptr %10, align 8, !tbaa !59
+  %i.aos = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aor) #23 ; 4 uses
   %i.aot = getelementptr inbounds nuw [8 x i8], ptr %i.aos, i64 %i.aop
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.aos, i8 0, i64 %i.aor, i1 false), !tbaa !161
   %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.aos, i64 %i.aor
   br label %_ZNSt12_Vector_baseISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EEC2EmRKS7_.exit.thread.i.i
 
 _ZNSt12_Vector_baseISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EEC2EmRKS7_.exit.thread.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i, %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i
-  %i.aou = phi ptr [ %i.aos, %.lr.ph.preheader.i.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i ] ; 4 uses
+  %i.aou = phi ptr [ %i.aos, %.lr.ph.preheader.i.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i ] ; 5 uses
   %.sink.i.i = phi ptr [ %i.aot, %.lr.ph.preheader.i.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i ]
   %i.aov = phi ptr [ %scevgep.i.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i.i ] ; 3 uses
+  store ptr %i.aou, ptr %10, align 8
   %i.aow = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
   %i.aox = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
-  store ptr %.sink.i.i, ptr %i.aox, align 8, !tbaa !60
-  store ptr %i.aov, ptr %i.aow, align 8, !tbaa !61
+  store ptr %.sink.i.i, ptr %i.aox, align 8, !tbaa !59
+  store ptr %i.aov, ptr %i.aow, align 8, !tbaa !60
   br label %bb.gf
 
 bb.gf:                                            ; preds = %_ZNSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS2_EED2Ev.exit.i173, %_ZNSt12_Vector_baseISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EEC2EmRKS7_.exit.thread.i.i
@@ -971,8 +970,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit186.i: ; preds = %
 
 _ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS5_EESt6vectorIS8_SaIS8_EEEEPFbRKS8_SF_EEvT_SI_T0_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit186.i
   %i.ast = add nuw i64 %.069597.i, 1              ; 2 uses
-  %i.asu = load ptr, ptr %i.aow, align 8, !tbaa !61
-  %i.asv = load ptr, ptr %10, align 8, !tbaa !59  ; 2 uses
+  %i.asu = load ptr, ptr %i.aow, align 8, !tbaa !60
+  %i.asv = load ptr, ptr %10, align 8, !tbaa !61  ; 2 uses
   %i.asw = ptrtoint ptr %i.asu to i64
   %i.asx = ptrtoint ptr %i.asv to i64
   %i.asy = sub i64 %i.asw, %i.asx
@@ -1375,8 +1374,8 @@ bb.mt:                                            ; preds = %bb.ms
           to label %bb.mu unwind label %bb.gm
 
 bb.mu:                                            ; preds = %bb.mt
-  %i.bsl = load ptr, ptr %10, align 8, !tbaa !59  ; 5 uses
-  %i.bsm = load ptr, ptr %i.aow, align 8, !tbaa !61 ; 2 uses
+  %i.bsl = load ptr, ptr %10, align 8, !tbaa !61  ; 5 uses
+  %i.bsm = load ptr, ptr %i.aow, align 8, !tbaa !60 ; 2 uses
   %.not4.i.i.i.i = icmp eq ptr %i.bsl, %i.bsm
   br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i
 
@@ -1403,7 +1402,7 @@ _ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EE
   br i1 %.not.i.i1.i.i, label %_ZN19grpc_java_generator12_GLOBAL__N_123PrintMethodHandlerClassEPN14grpc_generator7PrinterERSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_St4lessISA_ESaISt4pairIKSA_SA_EEEPKNS1_7ServiceE.exit, label %bb.mv
 
 bb.mv:                                            ; preds = %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i.i
-  %i.bss = load ptr, ptr %i.aox, align 8, !tbaa !60
+  %i.bss = load ptr, ptr %i.aox, align 8, !tbaa !59
   %i.bst = ptrtoint ptr %i.bss to i64
   %i.bsu = ptrtoint ptr %i.bsl to i64
   %i.bsv = sub i64 %i.bst, %i.bsu
@@ -1806,9 +1805,9 @@ bb.e:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !59     ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !61     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !61   ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !60   ; 2 uses
   %.not4.i.i = icmp eq ptr %i.a, %i.c
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit, label %.lr.ph.i.i
 
@@ -1831,7 +1830,7 @@ _ZSt8_DestroyISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EEE
   br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !1
 
 _ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split: ; preds = %_ZSt8_DestroyISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EEEvPT_.exit.i.i
-  %.pr = load ptr, ptr %0, align 8, !tbaa !59
+  %.pr = load ptr, ptr %0, align 8, !tbaa !61
   br label %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit
 
 _ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split, %bb.a
@@ -1841,7 +1840,7 @@ _ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EE
 
 bb.b:                                             ; preds = %_ZSt8_DestroyIPSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !60
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !59
   %i.l = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %i.i to i64
   %i.n = sub i64 %i.l, %i.m
@@ -2244,9 +2243,9 @@ attributes #25 = { nounwind allocsize(0) memory(inaccessiblemem: readwrite, errn
 !56 = !{!55, !55, i64 0}
 !57 = !{!"p1 _ZTSSt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS2_EE", !29, i64 0}
 !58 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIKN14grpc_generator6MethodESt14default_deleteIS3_EESaIS6_EE17_Vector_impl_dataE", !57, i64 0, !57, i64 8, !57, i64 16}
-!59 = !{!58, !57, i64 0}
-!60 = !{!58, !57, i64 16}
-!61 = !{!58, !57, i64 8}
+!59 = !{!58, !57, i64 16}
+!60 = !{!58, !57, i64 8}
+!61 = !{!58, !57, i64 0}
 !62 = !{!"_ZTSNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_Vector_impl_dataE", !53, i64 0, !53, i64 8, !53, i64 16}
 !63 = !{!62, !53, i64 0}
 !64 = !{!62, !53, i64 8}

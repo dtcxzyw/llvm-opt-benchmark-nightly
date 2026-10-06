@@ -205,11 +205,9 @@ bb.bd:                                            ; preds = %bb.bw, %bb.bb
   br i1 %.not.i.i39.i.i.i.i.i, label %_ZN5boost8weak_ptrINS_5beast9websocket6streamINS1_12basic_streamINS_4asio2ip3tcpENS5_15any_io_executorENS1_21unlimited_rate_policyEEELb1EE9impl_typeEED2Ev.exit.i.i.i.i.i30, label %bb.bx
 
 .thread.i.i.i.i:                                  ; preds = %bb.aw
-  %i.jo = getelementptr inbounds nuw i8, ptr %8, i64 237 ; 3 uses
-  %i.jp = load i8, ptr %i.jo, align 1             ; 2 uses
-  %26 = and i8 %i.jp, -5
-  %i.jq = and i8 %i.jp, -29
-  store i8 %i.jq, ptr %i.jo, align 1
+  %i.jo = getelementptr inbounds nuw i8, ptr %8, i64 237 ; 2 uses
+  %i.jp = load i8, ptr %i.jo, align 1
+  %i.jq = and i8 %i.jp, -5
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.hh, i64 2248
   %.pre.i.i.i = load i8, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !850, !range !510
   br label %bb.bg
@@ -236,7 +234,7 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %.thread.i.i.i.i
   %i.kc = phi i8 [ %i.js, %bb.bf ], [ %i.js, %bb.be ], [ %.pre.i.i.i, %.thread.i.i.i.i ]
   %i.kd = phi ptr [ %i.jt, %bb.bf ], [ %i.jt, %bb.be ], [ %i.jo, %.thread.i.i.i.i ]
-  %i.ke = phi i8 [ %i.jx, %bb.bf ], [ %i.jx, %bb.be ], [ %26, %.thread.i.i.i.i ]
+  %i.ke = phi i8 [ %i.jx, %bb.bf ], [ %i.jx, %bb.be ], [ %i.jq, %.thread.i.i.i.i ]
   %i.kf = phi i8 [ %i.kb, %bb.bf ], [ 0, %bb.be ], [ 0, %.thread.i.i.i.i ]
   %i.kg = getelementptr inbounds nuw i8, ptr %8, i64 236
   store i8 %i.kf, ptr %i.kg, align 4, !tbaa !855

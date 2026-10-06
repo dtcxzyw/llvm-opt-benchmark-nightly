@@ -205,8 +205,7 @@ _ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLi3ELi3ELi0ELi3ELi3EEELi1ELi3E
   %gep.1294 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ci = load float, ptr %gep.1294, align 4, !tbaa !29
   %i.cj = fneg float %i.ch
-  %i.ck = tail call float @llvm.fmuladd.f32(float %i.cj, float %i.ci, float %i.cf) ; 2 uses
-  store float %i.ck, ptr %0, align 4, !tbaa !29
+  %i.ck = tail call float @llvm.fmuladd.f32(float %i.cj, float %i.ci, float %i.cf)
   br label %bb.c
 
 .split:                                           ; preds = %.preheader.1
@@ -223,15 +222,14 @@ bb.c:                                             ; preds = %.preheader.1, %.spl
   %i.cq = phi float [ %i.cp, %.split ], [ %i.ck, %.split.thread ], [ %i.cd, %.preheader.1 ]
   %invariant.gep269277289 = phi ptr [ %invariant.gep259, %.split ], [ %1, %.split.thread ], [ %invariant.gep259, %.preheader.1 ]
   %.idx.i.i.i247266279287 = phi i64 [ %.idx.i.i.i247258, %.split ], [ 0, %.split.thread ], [ %.idx.i.i.i247258, %.preheader.1 ]
-  %i.cr = phi ptr [ %i.bz, %.split ], [ %0, %.split.thread ], [ %i.bz, %.preheader.1 ] ; 2 uses
+  %i.cr = phi ptr [ %i.bz, %.split ], [ %0, %.split.thread ], [ %i.bz, %.preheader.1 ]
   %.0105264281285 = phi i64 [ %.0105.ph, %.split ], [ 0, %.split.thread ], [ %.0105.ph, %.preheader.1 ]
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !29
   %gep.2 = getelementptr i8, ptr %invariant.gep269277289, i64 8
   %i.cu = load float, ptr %gep.2, align 4, !tbaa !29
   %i.cv = fneg float %i.ct
-  %i.cw = tail call float @llvm.fmuladd.f32(float %i.cv, float %i.cu, float %i.cq) ; 2 uses
-  store float %i.cw, ptr %i.cr, align 4, !tbaa !29
+  %i.cw = tail call float @llvm.fmuladd.f32(float %i.cv, float %i.cu, float %i.cq)
   br label %bb.d
 
 bb.d:                                             ; preds = %.split, %bb.c

@@ -205,8 +205,7 @@ _ZN7xgboost10JsonReader10SkipSpacesEv.exit.i:     ; preds = %bb.b, %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   store ptr %i.n, ptr %2, align 8, !tbaa !126
   store i8 -1, ptr %i.n, align 8, !tbaa !54
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store i64 1, ptr %i.o, align 8, !tbaa !129
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread
 
 .loopexit:                                        ; preds = %_ZN7xgboost10JsonReader10SkipSpacesEv.exit.i
@@ -234,8 +233,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread:
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 17
   store i8 -1, ptr %i.z, align 1, !tbaa !54
   store i64 2, ptr %.ph47, align 8, !tbaa !129
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 2 uses
-  store i8 0, ptr %i.aa, align 2, !tbaa !54
+  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 18
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.1.thread
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i: ; preds = %.loopexit
@@ -258,8 +256,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.1.threa
   %.ph52 = phi ptr [ %.ph47, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread ], [ %i.v, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ] ; 2 uses
   store i8 -1, ptr %.ph50, align 1, !tbaa !54
   store i64 3, ptr %.ph52, align 8, !tbaa !129
-  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 19 ; 2 uses
-  store i8 0, ptr %i.ai, align 1, !tbaa !54
+  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 19
   br label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.1: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i

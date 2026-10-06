@@ -202,7 +202,7 @@ bb.a:
   %3 = alloca %"class.std::vector.14", align 8    ; 10 uses
   %4 = alloca %"class.std::vector.37", align 8    ; 15 uses
   %5 = alloca %struct.DispatchingInvertedLists, align 8 ; 9 uses
-  %6 = alloca %"class.std::vector.24", align 8    ; 13 uses
+  %6 = alloca %"class.std::vector.24", align 8    ; 12 uses
   %7 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %8 = alloca %"class.testing::Message", align 8  ; 7 uses
   %9 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -605,11 +605,7 @@ bb.ar:                                            ; preds = %bb.aq
 _ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125: ; preds = %bb.aq
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %.not.i.i.i.i126 = icmp eq i32 %i.fc, 0
-  br i1 %.not.i.i.i.i126, label %_ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131, label %.lr.ph.preheader.i.i.i.i.i127
-
-_ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131: ; preds = %_ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125
-  store i64 0, ptr %6, align 8
-  br label %bb.as
+  br i1 %.not.i.i.i.i126, label %bb.as, label %.lr.ph.preheader.i.i.i.i.i127
 
 .lr.ph.preheader.i.i.i.i.i127:                    ; preds = %_ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125
   %i.ff = mul nuw nsw i64 %i.fd, 24               ; 3 uses
@@ -623,9 +619,9 @@ _ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131: ; preds
   %scevgep.i.i.i.i.i128 = getelementptr i8, ptr %i.fg, i64 %i.ff
   br label %bb.as
 
-bb.as:                                            ; preds = %.noexc133, %_ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131
-  %.sink.i129 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131 ], [ %i.fh, %.noexc133 ]
-  %.0.lcssa.i.i.i.i.i130 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIlSaIlEESaIS2_EEC2EmRKS3_.exit.thread.i131 ], [ %scevgep.i.i.i.i.i128, %.noexc133 ]
+bb.as:                                            ; preds = %_ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125, %.noexc133
+  %.sink.i129 = phi ptr [ %i.fh, %.noexc133 ], [ null, %_ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125 ]
+  %.0.lcssa.i.i.i.i.i130 = phi ptr [ %scevgep.i.i.i.i.i128, %.noexc133 ], [ null, %_ZNSt6vectorIS_IlSaIlEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i125 ]
   %i.fi = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   store ptr %.sink.i129, ptr %i.fj, align 8, !tbaa !34

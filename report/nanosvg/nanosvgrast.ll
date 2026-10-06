@@ -205,7 +205,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @nsvgParse(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, float noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [6 x float], align 16             ; 13 uses
+  %i.a = alloca [6 x float], align 16             ; 12 uses
   %i.b = alloca [6 x float], align 16             ; 4 uses
   %i.c = alloca [4 x float], align 16             ; 4 uses
   %i.d = alloca [6 x float], align 16             ; 4 uses
@@ -249,11 +249,7 @@ bb.c:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.027.i = load ptr, ptr %i.u, align 8, !tbaa !41 ; 2 uses
   %.not28.i = icmp eq ptr %.027.i, null
-  br i1 %.not28.i, label %nsvg__createGradients.exit.thread, label %.lr.ph.i
-
-nsvg__createGradients.exit.thread:                ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
-  br label %nsvg__imageBounds.exit.i
+  br i1 %.not28.i, label %nsvg__createGradients.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.i
   %.029.i = phi ptr [ %.0.i14, %bb.i ], [ %.027.i, %bb.c ] ; 11 uses
@@ -322,20 +318,24 @@ bb.i:                                             ; preds = %.thread31.i, %bb.h,
   %i.an = getelementptr inbounds nuw i8, ptr %.029.i, i64 328
   %.0.i14 = load ptr, ptr %i.an, align 8, !tbaa !41 ; 2 uses
   %.not.i = icmp eq ptr %.0.i14, null
-  br i1 %.not.i, label %nsvg__createGradients.exit, label %.lr.ph.i, !llvm.loop !166
+  br i1 %.not.i, label %nsvg__createGradients.exit.loopexit, label %.lr.ph.i, !llvm.loop !166
 
-nsvg__createGradients.exit:                       ; preds = %bb.i
-  %.val.i.pre = load ptr, ptr %i.f, align 8, !tbaa !30 ; 4 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.val.i.pre, i64 8
-  %.val.val.i.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !47 ; 5 uses
+nsvg__createGradients.exit.loopexit:              ; preds = %bb.i
+  %.val.i.pre = load ptr, ptr %i.f, align 8, !tbaa !30
+  br label %nsvg__createGradients.exit
+
+nsvg__createGradients.exit:                       ; preds = %nsvg__createGradients.exit.loopexit, %bb.c
+  %.val.i = phi ptr [ %.val.i.pre, %nsvg__createGradients.exit.loopexit ], [ %i.t, %bb.c ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
-  %i.ao = icmp eq ptr %.val.val.i.pre, null
+  %3 = getelementptr i8, ptr %.val.i, i64 8
+  %.val.val.i = load ptr, ptr %3, align 8, !tbaa !47 ; 4 uses
+  %i.ao = icmp eq ptr %.val.val.i, null           ; 2 uses
   br i1 %i.ao, label %nsvg__imageBounds.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %nsvg__createGradients.exit
-  %i.ap = getelementptr inbounds nuw i8, ptr %.val.val.i.pre, i64 152
+  %i.ap = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 152
   %i.aq = load <4 x float>, ptr %i.ap, align 8, !tbaa !31 ; 2 uses
-  %.0.in1.i.i = getelementptr inbounds nuw i8, ptr %.val.val.i.pre, i64 328
+  %.0.in1.i.i = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 328
   %.02.i.i = load ptr, ptr %.0.in1.i.i, align 8, !tbaa !48 ; 2 uses
   %.not3.i.i = icmp eq ptr %.02.i.i, null
   br i1 %.not3.i.i, label %nsvg__imageBounds.exit.i, label %.lr.ph.i.i
@@ -354,18 +354,15 @@ bb.j:                                             ; preds = %nsvg__createGradien
   %.not.i.i = icmp eq ptr %.0.i.i, null
   br i1 %.not.i.i, label %nsvg__imageBounds.exit.i, label %.lr.ph.i.i, !llvm.loop !167
 
-nsvg__imageBounds.exit.i:                         ; preds = %.lr.ph.i.i, %nsvg__createGradients.exit.thread, %bb.j, %nsvg__createGradients.exit
-  %3 = phi i1 [ true, %nsvg__createGradients.exit ], [ false, %bb.j ], [ true, %nsvg__createGradients.exit.thread ], [ false, %.lr.ph.i.i ]
-  %.val.i45 = phi ptr [ %.val.i.pre, %nsvg__createGradients.exit ], [ %.val.i.pre, %bb.j ], [ %i.t, %nsvg__createGradients.exit.thread ], [ %.val.i.pre, %.lr.ph.i.i ] ; 6 uses
-  %.val.val.i44 = phi ptr [ null, %nsvg__createGradients.exit ], [ %.val.val.i.pre, %bb.j ], [ null, %nsvg__createGradients.exit.thread ], [ %.val.val.i.pre, %.lr.ph.i.i ]
-  %4 = phi <4 x float> [ zeroinitializer, %nsvg__createGradients.exit ], [ %i.aq, %bb.j ], [ zeroinitializer, %nsvg__createGradients.exit.thread ], [ %i.ax, %.lr.ph.i.i ] ; 5 uses
+nsvg__imageBounds.exit.i:                         ; preds = %.lr.ph.i.i, %bb.j, %nsvg__createGradients.exit
+  %4 = phi <4 x float> [ zeroinitializer, %nsvg__createGradients.exit ], [ %i.aq, %bb.j ], [ %i.ax, %.lr.ph.i.i ] ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %calloc33.i, i64 40008 ; 2 uses
   %i.az = load float, ptr %i.ay, align 8, !tbaa !49 ; 2 uses
   %i.ba = fcmp oeq float %i.az, 0.000000e+00
   br i1 %i.ba, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %nsvg__imageBounds.exit.i
-  %i.bb = load float, ptr %.val.i45, align 8, !tbaa !50 ; 2 uses
+  %i.bb = load float, ptr %.val.i, align 8, !tbaa !50 ; 2 uses
   %i.bc = fcmp ogt float %i.bb, 0.000000e+00
   br i1 %i.bc, label %.sink.split.i, label %bb.l
 
@@ -391,7 +388,7 @@ bb.m:                                             ; preds = %.sink.split.i, %nsv
   br i1 %i.bj, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr inbounds nuw i8, ptr %.val.i45, i64 4
+  %i.bk = getelementptr inbounds nuw i8, ptr %.val.i, i64 4
   %i.bl = load float, ptr %i.bk, align 4, !tbaa !53 ; 2 uses
   %i.bm = fcmp ogt float %i.bl, 0.000000e+00
   br i1 %i.bm, label %.sink.split261.i, label %bb.o
@@ -411,17 +408,17 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.sink.split261.i, %bb.m
   %i.br = phi float [ %i.bi, %bb.m ], [ %.sink263.i, %.sink.split261.i ] ; 5 uses
-  %i.bs = load float, ptr %.val.i45, align 8, !tbaa !50 ; 2 uses
+  %i.bs = load float, ptr %.val.i, align 8, !tbaa !50 ; 2 uses
   %i.bt = fcmp oeq float %i.bs, 0.000000e+00
   br i1 %i.bt, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  store float %i.bg, ptr %.val.i45, align 8, !tbaa !50
+  store float %i.bg, ptr %.val.i, align 8, !tbaa !50
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.bu = phi float [ %i.bg, %bb.q ], [ %i.bs, %bb.p ] ; 5 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %.val.i45, i64 4 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.val.i, i64 4 ; 2 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !53 ; 2 uses
   %i.bx = fcmp oeq float %i.bw, 0.000000e+00
   br i1 %i.bx, label %bb.s, label %bb.t
@@ -662,7 +659,7 @@ bb.ak:                                            ; preds = %nsvg__viewAlign.exi
   %foldExtExtBinop74 = fadd <2 x float> %i.ga, %shift73
   %i.gb = extractelement <2 x float> %foldExtExtBinop74, i64 0
   %i.gc = fmul float %i.gb, 5.000000e-01          ; 3 uses
-  br i1 %3, label %nsvg__scaleToViewbox.exit, label %.lr.ph238.i
+  br i1 %i.ao, label %nsvg__scaleToViewbox.exit, label %.lr.ph238.i
 
 .lr.ph238.i:                                      ; preds = %bb.ak
   %i.gd = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
@@ -690,7 +687,7 @@ bb.ak:                                            ; preds = %nsvg__viewAlign.exi
   br label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge233.i, %.lr.ph238.i
-  %.0236.i = phi ptr [ %.val.val.i44, %.lr.ph238.i ], [ %.0.i15, %._crit_edge233.i ] ; 10 uses
+  %.0236.i = phi ptr [ %.val.val.i, %.lr.ph238.i ], [ %.0.i15, %._crit_edge233.i ] ; 10 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %.0236.i, i64 152 ; 2 uses
   %i.gu = load <4 x float>, ptr %i.gt, align 8, !tbaa !31
   %i.gv = fadd <4 x float> %i.go, %i.gu
@@ -1082,7 +1079,7 @@ nsvg__deleteParser.exit:                          ; preds = %.lr.ph.i9.i, %nsvg_
   br label %nsvg__createParser.exit.thread.sink.split
 
 nsvg__createParser.exit.thread.sink.split:        ; preds = %bb.b, %nsvg__deleteParser.exit
-  %.0.ph = phi ptr [ %.val.i45, %nsvg__deleteParser.exit ], [ null, %bb.b ]
+  %.0.ph = phi ptr [ %.val.i, %nsvg__deleteParser.exit ], [ null, %bb.b ]
   tail call void @free(ptr noundef nonnull %calloc33.i) #30
   br label %nsvg__createParser.exit.thread
 

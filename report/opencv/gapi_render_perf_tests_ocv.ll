@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
 
 .noexc2.thread:                                   ; preds = %bb.c
   %i.o = ptrtoint ptr %i.k to i64
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   br label %.loopexit
 
@@ -235,12 +234,10 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 _ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.d
   %i.w = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #27
-          to label %.noexc2 unwind label %bb.f    ; 5 uses
+          to label %.noexc2 unwind label %bb.f    ; 4 uses
 
 .noexc2:                                          ; preds = %_ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i
   store ptr %i.w, ptr %0, align 8, !tbaa !250
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr %i.w, ptr %3, align 8, !tbaa !252
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.u
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.x, ptr %i.y, align 8, !tbaa !251
@@ -253,10 +250,10 @@ _ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = 
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.noexc2, %.noexc2.thread
-  %4 = phi ptr [ %2, %.noexc2.thread ], [ %3, %.noexc2 ]
   %i.ad = phi i64 [ %i.o, %.noexc2.thread ], [ %i.t, %.noexc2 ]
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %.noexc2.thread ], [ %scevgep, %.noexc2 ]
-  store ptr %.0.lcssa.i.i.i.i.i.i, ptr %4, align 8, !tbaa !252
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %.0.lcssa.i.i.i.i.i.i, ptr %2, align 8, !tbaa !252
   %.not.i.i.i = icmp eq ptr %i.k, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit, label %bb.e
 

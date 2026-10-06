@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %evbuffer_incref_.ex
 
 .lr.ph.i.i.i:                                     ; preds = %evbuffer_incref_.exit.i, %.critedge2.i.i.i
   %.0.i.i.i = phi ptr [ %i.cb, %.critedge2.i.i.i ], [ %i.bu, %evbuffer_incref_.exit.i ] ; 6 uses
-  %.021.i.i.i = phi ptr [ %.0.i.i.i, %.critedge2.i.i.i ], [ %i.bt, %evbuffer_incref_.exit.i ] ; 2 uses
+  %.021.i.i.i = phi ptr [ %.0.i.i.i, %.critedge2.i.i.i ], [ %i.bt, %evbuffer_incref_.exit.i ]
   %i.bw = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 24
   %i.bx = load i64, ptr %i.bw, align 8
   %.not13.i.i.i = icmp eq i64 %i.bx, 0
@@ -227,14 +227,10 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i
   %i.cc = load ptr, ptr %.05.i.i.i.i, align 8     ; 2 uses
   tail call fastcc void @evbuffer_chain_free(ptr noundef nonnull %.05.i.i.i.i)
   %.not.i.i.i.i = icmp eq ptr %i.cc, null
-  br i1 %.not.i.i.i.i, label %evbuffer_free_all_chains.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !5
+  br i1 %.not.i.i.i.i, label %evbuffer_free_trailing_empty_chains.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !5
 
-evbuffer_free_all_chains.exit.i.i.i:              ; preds = %.lr.ph.i.i.i.i
-  store ptr null, ptr %.021.i.i.i, align 8
-  br label %evbuffer_free_trailing_empty_chains.exit.i.i
-
-evbuffer_free_trailing_empty_chains.exit.i.i:     ; preds = %.critedge2.i.i.i, %evbuffer_free_all_chains.exit.i.i.i
-  %.018.i.i.i = phi ptr [ %.021.i.i.i, %evbuffer_free_all_chains.exit.i.i.i ], [ %.0.i.i.i, %.critedge2.i.i.i ] ; 2 uses
+evbuffer_free_trailing_empty_chains.exit.i.i:     ; preds = %.critedge2.i.i.i, %.lr.ph.i.i.i.i
+  %.018.i.i.i = phi ptr [ %.021.i.i.i, %.lr.ph.i.i.i.i ], [ %.0.i.i.i, %.critedge2.i.i.i ] ; 2 uses
   store ptr %i.am, ptr %.018.i.i.i, align 8
   %i.cd = load i64, ptr %i.bn, align 8
   %.not.i34.i = icmp eq i64 %i.cd, 0

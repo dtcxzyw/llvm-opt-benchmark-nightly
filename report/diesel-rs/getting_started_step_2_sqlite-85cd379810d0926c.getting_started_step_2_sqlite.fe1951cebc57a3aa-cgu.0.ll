@@ -202,8 +202,7 @@ bb.s:                                             ; preds = %bb.n
 
 .thread109:                                       ; preds = %bb.s
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  store i8 0, ptr %i.ab, align 1
+  %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !4, !noundef !4
   br label %bb.q
 
 bb.t:                                             ; preds = %bb.p

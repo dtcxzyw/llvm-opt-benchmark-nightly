@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n, %bb.k
   br i1 %i.az, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %i.ba = tail call noalias dereferenceable_or_null(72) ptr @malloc(i64 noundef 72) #22 ; 5 uses
+  %i.ba = tail call noalias dereferenceable_or_null(72) ptr @malloc(i64 noundef 72) #22 ; 4 uses
   store ptr %i.ba, ptr %i.ax, align 8, !tbaa !110
   %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %bb.q, label %.thread
@@ -215,15 +215,13 @@ bb.q:                                             ; preds = %bb.p
   br label %.critedge
 
 .thread:                                          ; preds = %bb.p
-  %6 = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
-  store i32 0, ptr %6, align 4, !tbaa !158
-  store i32 15, ptr %i.ba, align 4, !tbaa !159
+  store i32 15, ptr %i.ba, align 4, !tbaa !158
   br label %bb.v
 
 bb.r:                                             ; preds = %bb.o
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !158 ; 2 uses
-  %.pre146 = load i32, ptr %i.ay, align 4, !tbaa !159 ; 2 uses
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !159 ; 2 uses
+  %.pre146 = load i32, ptr %i.ay, align 4, !tbaa !158 ; 2 uses
   %i.bc = icmp ugt i32 %.pre, %.pre146
   br i1 %i.bc, label %bb.s, label %bb.v
 
@@ -241,12 +239,12 @@ bb.t:                                             ; preds = %bb.s
   br label %.critedge
 
 bb.u:                                             ; preds = %bb.s
-  %i.bi = load i32, ptr %i.bg, align 4, !tbaa !159
+  %i.bi = load i32, ptr %i.bg, align 4, !tbaa !158
   %i.bj = shl i32 %i.bi, 1
   %i.bk = add i32 %i.bj, 15
-  store i32 %i.bk, ptr %i.bg, align 4, !tbaa !159
+  store i32 %i.bk, ptr %i.bg, align 4, !tbaa !158
   %.phi.trans.insert147 = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
-  %.pre148 = load i32, ptr %.phi.trans.insert147, align 4, !tbaa !158
+  %.pre148 = load i32, ptr %.phi.trans.insert147, align 4, !tbaa !159
   br label %bb.v
 
 bb.v:                                             ; preds = %.thread, %bb.u, %bb.r
@@ -258,7 +256,7 @@ bb.v:                                             ; preds = %.thread, %bb.u, %bb
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.bo
   store i32 %4, ptr %i.bp, align 4, !tbaa !59
   %i.bq = add i32 %i.bl, 1
-  store i32 %i.bq, ptr %i.bn, align 4, !tbaa !158
+  store i32 %i.bq, ptr %i.bn, align 4, !tbaa !159
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.j, %bb.a
@@ -661,8 +659,8 @@ attributes #26 = { nounwind willreturn memory(read) }
 !155 = !{!154, !5, i64 8}
 !156 = !{!154, !5, i64 68}
 !157 = !{!"cli_subsig_matches", !5, i64 0, !5, i64 4, !4, i64 8}
-!158 = !{!157, !5, i64 4}
-!159 = !{!157, !5, i64 0}
+!158 = !{!157, !5, i64 0}
+!159 = !{!157, !5, i64 4}
 !160 = !{!114, !5, i64 36}
 !161 = distinct !{!161, !65}
 !162 = !{!28, !5, i64 232}

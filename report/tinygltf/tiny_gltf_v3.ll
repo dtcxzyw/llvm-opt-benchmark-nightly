@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !153
   %i.hr = getelementptr inbounds nuw i8, ptr %i.gp, i64 72
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !154
-  %i.ht = call ptr %i.hq(i64 noundef %i.hk, ptr noundef %i.hs) #28, !inline_history !337 ; 9 uses
+  %i.ht = call ptr %i.hq(i64 noundef %i.hk, ptr noundef %i.hs) #28, !inline_history !337 ; 8 uses
   %.not37.i.i.i = icmp eq ptr %i.ht, null
   br i1 %.not37.i.i.i, label %tg3__arena_alloc.exit.i, label %tg3__arena_new_block.exit.i.i
 
@@ -214,8 +214,6 @@ tg3__arena_new_block.exit.i.i:                    ; preds = %bb.ar
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 32 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
   store ptr %i.hu, ptr %i.hv, align 8, !tbaa !156
-  %6 = getelementptr inbounds nuw i8, ptr %i.ht, i64 16
-  store i64 0, ptr %6, align 8, !tbaa !150
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ht, i64 24
   store i64 %spec.select.i.i.i, ptr %i.hw, align 8, !tbaa !151
   %i.hx = load i64, ptr %i.hi, align 8, !tbaa !152
@@ -618,7 +616,7 @@ bb.ii:                                            ; preds = %bb.ih
   %i.avb = load ptr, ptr %i.ava, align 8, !tbaa !153
   %i.avc = getelementptr inbounds nuw i8, ptr %i.aub, i64 72
   %i.avd = load ptr, ptr %i.avc, align 8, !tbaa !154
-  %i.ave = call ptr %i.avb(i64 noundef %i.auv, ptr noundef %i.avd) #28, !inline_history !352 ; 9 uses
+  %i.ave = call ptr %i.avb(i64 noundef %i.auv, ptr noundef %i.avd) #28, !inline_history !352 ; 8 uses
   %.not37.i.i158.i.i = icmp eq ptr %i.ave, null
   br i1 %.not37.i.i158.i.i, label %tg3__arena_alloc.exit162.i.i, label %tg3__arena_new_block.exit.i159.i.i
 
@@ -627,8 +625,6 @@ tg3__arena_new_block.exit.i159.i.i:               ; preds = %bb.ii
   %i.avf = getelementptr inbounds nuw i8, ptr %i.ave, i64 32 ; 2 uses
   %i.avg = getelementptr inbounds nuw i8, ptr %i.ave, i64 8
   store ptr %i.avf, ptr %i.avg, align 8, !tbaa !156
-  %7 = getelementptr inbounds nuw i8, ptr %i.ave, i64 16
-  store i64 0, ptr %7, align 8, !tbaa !150
   %i.avh = getelementptr inbounds nuw i8, ptr %i.ave, i64 24
   store i64 %spec.select.i.i156.i.i, ptr %i.avh, align 8, !tbaa !151
   %i.avi = load i64, ptr %i.aut, align 8, !tbaa !152
@@ -713,7 +709,7 @@ bb.ip:                                            ; preds = %bb.io
   %i.aws = load ptr, ptr %i.awr, align 8, !tbaa !153
   %i.awt = getelementptr inbounds nuw i8, ptr %i.avq, i64 72
   %i.awu = load ptr, ptr %i.awt, align 8, !tbaa !154
-  %i.awv = call ptr %i.aws(i64 noundef %i.awm, ptr noundef %i.awu) #28, !inline_history !352 ; 9 uses
+  %i.awv = call ptr %i.aws(i64 noundef %i.awm, ptr noundef %i.awu) #28, !inline_history !352 ; 8 uses
   %.not37.i.i174.i.i = icmp eq ptr %i.awv, null
   br i1 %.not37.i.i174.i.i, label %tg3__parse_primitive.exit.i, label %tg3__arena_new_block.exit.i175.i.i
 
@@ -722,8 +718,6 @@ tg3__arena_new_block.exit.i175.i.i:               ; preds = %bb.ip
   %i.aww = getelementptr inbounds nuw i8, ptr %i.awv, i64 32 ; 2 uses
   %i.awx = getelementptr inbounds nuw i8, ptr %i.awv, i64 8
   store ptr %i.aww, ptr %i.awx, align 8, !tbaa !156
-  %8 = getelementptr inbounds nuw i8, ptr %i.awv, i64 16
-  store i64 0, ptr %8, align 8, !tbaa !150
   %i.awy = getelementptr inbounds nuw i8, ptr %i.awv, i64 24
   store i64 %spec.select.i.i172.i.i, ptr %i.awy, align 8, !tbaa !151
   %i.awz = load i64, ptr %i.awk, align 8, !tbaa !152

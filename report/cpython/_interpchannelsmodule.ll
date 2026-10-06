@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i.i.i
 
 .loopexit41.i.i.i:                                ; preds = %bb.j, %bb.i
   %.09.lcssa.i.ph.i.i.i = phi ptr [ null, %bb.i ], [ %.014.i.i.i.i, %bb.j ] ; 2 uses
-  %i.ar = call ptr @PyMem_RawMalloc(i64 noundef 24) #7 ; 7 uses
+  %i.ar = call ptr @PyMem_RawMalloc(i64 noundef 24) #7 ; 6 uses
   %i.as = icmp eq ptr %i.ar, null
   br i1 %i.as, label %_channelends_add.exit.thread.i.i.i, label %bb.k
 
@@ -214,8 +214,6 @@ bb.k:                                             ; preds = %.loopexit41.i.i.i
   store ptr null, ptr %i.ar, align 8, !tbaa !75
   %i.au = getelementptr i8, ptr %i.ar, i64 8
   store i64 %i.o, ptr %i.au, align 8, !tbaa !74
-  %4 = getelementptr i8, ptr %i.ar, i64 16
-  store i32 1, ptr %4, align 8, !tbaa !76
   %i.av = icmp eq ptr %.09.lcssa.i.ph.i.i.i, null
   br i1 %i.av, label %bb.l, label %bb.m
 
@@ -265,7 +263,7 @@ bb.n:                                             ; preds = %.lr.ph.i24.i.i.i
 
 .loopexit.i.i.i:                                  ; preds = %bb.n, %.thread.i.i.i
   %.09.lcssa.i28.ph.i.i.i = phi ptr [ null, %.thread.i.i.i ], [ %.014.i25.i.i.i, %bb.n ] ; 2 uses
-  %i.bh = call ptr @PyMem_RawMalloc(i64 noundef 24) #7 ; 7 uses
+  %i.bh = call ptr @PyMem_RawMalloc(i64 noundef 24) #7 ; 6 uses
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %_channelends_add.exit32.thread.i.i.i, label %bb.o
 
@@ -277,8 +275,6 @@ bb.o:                                             ; preds = %.loopexit.i.i.i
   store ptr null, ptr %i.bh, align 8, !tbaa !75
   %i.bk = getelementptr i8, ptr %i.bh, i64 8
   store i64 %i.o, ptr %i.bk, align 8, !tbaa !74
-  %5 = getelementptr i8, ptr %i.bh, i64 16
-  store i32 1, ptr %5, align 8, !tbaa !76
   %i.bl = icmp eq ptr %.09.lcssa.i28.ph.i.i.i, null
   br i1 %i.bl, label %bb.p, label %bb.q
 

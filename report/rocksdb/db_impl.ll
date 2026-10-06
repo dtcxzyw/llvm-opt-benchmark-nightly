@@ -205,7 +205,7 @@ bb.a:
   %8 = alloca %"struct.rocksdb::ReadOptions", align 8 ; 22 uses
   %9 = alloca %"struct.rocksdb::WriteOptions", align 8 ; 10 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %11 = alloca %"class.std::vector.1647", align 8 ; 13 uses
+  %11 = alloca %"class.std::vector.1647", align 8 ; 12 uses
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 6 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 6 uses
   %14 = alloca %"class.rocksdb::ImportColumnFamilyJob", align 8 ; 11 uses
@@ -362,11 +362,7 @@ bb.j:                                             ; preds = %bb.i
 _ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i: ; preds = %bb.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq ptr %i.aj, %i.ak
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i: ; preds = %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  store i64 0, ptr %11, align 8
-  br label %bb.k
+  br i1 %.not.i.i.i.i, label %bb.k, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
   %i.aq = mul nuw nsw i64 %i.ao, 24               ; 3 uses
@@ -382,11 +378,11 @@ _ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmR
   %.pre268 = load ptr, ptr %5, align 8, !tbaa !2034
   br label %bb.k
 
-bb.k:                                             ; preds = %.noexc105, %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i
-  %i.at = phi ptr [ %i.ak, %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %.pre268, %.noexc105 ] ; 2 uses
-  %i.au = phi ptr [ %i.aj, %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %.pre, %.noexc105 ] ; 2 uses
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.as, %.noexc105 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIPN7rocksdb16LiveFileMetaDataESaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc105 ]
+bb.k:                                             ; preds = %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i, %.noexc105
+  %i.at = phi ptr [ %.pre268, %.noexc105 ], [ %i.ak, %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ] ; 2 uses
+  %i.au = phi ptr [ %.pre, %.noexc105 ], [ %i.aj, %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ] ; 2 uses
+  %.sink.i = phi ptr [ %i.as, %.noexc105 ], [ null, %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc105 ], [ null, %_ZNSt6vectorIS_IPN7rocksdb16LiveFileMetaDataESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ]
   %i.av = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.aw, align 8, !tbaa !2038
@@ -789,8 +785,7 @@ bb.bj:                                            ; preds = %bb.bg, %bb.bf
   %i.ij = trunc nuw i8 %i.ii to i1                ; 2 uses
   %spec.select269 = select i1 %i.ij, ptr %i.g, ptr null
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #44
-  %i.ik = getelementptr inbounds nuw i8, ptr %20, i64 40 ; 2 uses
-  store i8 0, ptr %i.ik, align 8, !tbaa !1634
+  %i.ik = getelementptr inbounds nuw i8, ptr %20, i64 40
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
@@ -1193,7 +1188,7 @@ _ZNSt12_Vector_baseIN7rocksdb13PinnableSliceESaIS1_EEC2EmRKS2_.exit.i.thread: ; 
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.j = getelementptr inbounds nuw [96 x i8], ptr null, i64 %i.g
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
+  store i64 0, ptr %7, align 8
   store ptr %i.j, ptr %i.k, align 8, !tbaa !2073
   br label %.loopexit
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr null, i64 %i.s
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  store i64 0, ptr %5, align 8
   store ptr %i.u, ptr %i.v, align 8, !tbaa !29
   br label %.loopexit
 
@@ -221,12 +221,11 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.c
   %i.x = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #15
-          to label %.noexc32 unwind label %bb.o   ; 5 uses
+          to label %.noexc32 unwind label %bb.o   ; 4 uses
 
 .noexc32:                                         ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i
   store ptr %i.x, ptr %5, align 8, !tbaa !27
-  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store ptr %i.x, ptr %i.y, align 8, !tbaa !26
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.s
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !29

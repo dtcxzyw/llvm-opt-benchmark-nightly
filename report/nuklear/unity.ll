@@ -205,49 +205,47 @@ middle.block172:                                  ; preds = %vector.body166
   br i1 %i.gq, label %.lr.ph111.us.preheader.i, label %._crit_edge112.split.us.us.i
 
 .lr.ph111.us.preheader.i:                         ; preds = %.lr.ph117.split.us.i
-  %i.gr = add nsw i32 %i.go, -1                   ; 2 uses
-  %.phi.trans.insert150.i = zext nneg i32 %i.gr to i64
-  %.phi.trans.insert151.i = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %.phi.trans.insert150.i
-  %.phi.trans.insert152.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert151.i, i64 4
-  %.pre153.i = load float, ptr %.phi.trans.insert152.i, align 4, !tbaa !292
+  %i.gr = add nsw i32 %i.go, -1
   br label %.lr.ph111.us.i
 
 .lr.ph111.us.i:                                   ; preds = %.lr.ph111.us._crit_edge.i, %.lr.ph111.us.preheader.i
   %i.gs = phi i32 [ %i.go, %.lr.ph111.us.preheader.i ], [ %i.hk, %.lr.ph111.us._crit_edge.i ]
-  %12 = phi float [ %.pre153.i, %.lr.ph111.us.preheader.i ], [ %i.gv, %.lr.ph111.us._crit_edge.i ] ; 2 uses
   %indvars.iv139.i = phi i64 [ 0, %.lr.ph111.us.preheader.i ], [ %indvars.iv.next140.i, %.lr.ph111.us._crit_edge.i ] ; 5 uses
-  %.087108.us.us.i.a = phi i32 [ %i.gr, %.lr.ph111.us.preheader.i ], [ %.pre-phi.i, %.lr.ph111.us._crit_edge.i ]
-  %.2107.us.us.i = phi i32 [ %.190114.us.i, %.lr.ph111.us.preheader.i ], [ %.3.us.us.i, %.lr.ph111.us._crit_edge.i ] ; 3 uses
+  %.087108.us.us.i = phi i32 [ %i.gr, %.lr.ph111.us.preheader.i ], [ %.pre-phi.i, %.lr.ph111.us._crit_edge.i ]
+  %.087108.us.us.i.a = phi i32 [ %.190114.us.i, %.lr.ph111.us.preheader.i ], [ %.3.us.us.i, %.lr.ph111.us._crit_edge.i ] ; 3 uses
+  %12 = sext i32 %.087108.us.us.i to i64          ; 3 uses
+  %13 = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %12
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %15 = load float, ptr %14, align 4, !tbaa !292  ; 2 uses
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %indvars.iv139.i
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 4
-  %i.gv = load float, ptr %i.gu, align 4, !tbaa !292 ; 3 uses
-  %i.gw = fcmp oeq float %12, %i.gv
+  %i.gv = load float, ptr %i.gu, align 4, !tbaa !292 ; 2 uses
+  %i.gw = fcmp oeq float %15, %i.gv
   br i1 %i.gw, label %.lr.ph111.us._crit_edge.i, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph111.us.i
-  %i.gx = sext i32 %.2107.us.us.i to i64
+  %i.gx = sext i32 %.087108.us.us.i.a to i64
   %i.gy = getelementptr inbounds [20 x i8], ptr %i.fx, i64 %i.gx ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 16
-  %i.ha = fcmp olt float %12, %i.gv               ; 3 uses
+  %i.ha = fcmp olt float %15, %i.gv               ; 3 uses
   %spec.store.select.i = zext i1 %i.ha to i32
   store i32 %spec.store.select.i, ptr %i.gz, align 4, !tbaa !850
-  %13 = sext i32 %.087108.us.us.i.a to i64        ; 2 uses
-  %i.hb = select i1 %i.ha, i64 %13, i64 %indvars.iv139.i
+  %i.hb = select i1 %i.ha, i64 %12, i64 %indvars.iv139.i
   %i.hc = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.hb
-  %i.hd = select i1 %i.ha, i64 %indvars.iv139.i, i64 %13
+  %i.hd = select i1 %i.ha, i64 %indvars.iv139.i, i64 %12
   %i.he = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.hd
   %i.hf = load <2 x float>, ptr %i.hc, align 4, !tbaa !54
   %i.hg = load <2 x float>, ptr %i.he, align 4, !tbaa !54
   %i.hh = shufflevector <2 x float> %i.hf, <2 x float> %i.hg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.hi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.hh, <4 x float> %i.gh, <4 x float> %i.gk)
   store <4 x float> %i.hi, ptr %i.gy, align 4, !tbaa !54
-  %i.hj = add nsw i32 %.2107.us.us.i, 1
+  %i.hj = add nsw i32 %.087108.us.us.i.a, 1
   %.pre154.i = load i32, ptr %i.gn, align 4, !tbaa !55
   br label %.lr.ph111.us._crit_edge.i
 
 .lr.ph111.us._crit_edge.i:                        ; preds = %bb.r, %.lr.ph111.us.i
   %i.hk = phi i32 [ %.pre154.i, %bb.r ], [ %i.gs, %.lr.ph111.us.i ] ; 2 uses
-  %.3.us.us.i = phi i32 [ %i.hj, %bb.r ], [ %.2107.us.us.i, %.lr.ph111.us.i ] ; 2 uses
+  %.3.us.us.i = phi i32 [ %i.hj, %bb.r ], [ %.087108.us.us.i.a, %.lr.ph111.us.i ] ; 2 uses
   %.pre-phi.i = trunc i64 %indvars.iv139.i to i32
   %indvars.iv.next140.i = add nuw nsw i64 %indvars.iv139.i, 1 ; 2 uses
   %i.hl = sext i32 %i.hk to i64
@@ -273,49 +271,47 @@ bb.r:                                             ; preds = %.lr.ph111.us.i
   br i1 %i.hs, label %.lr.ph111.preheader.i, label %._crit_edge112.split.i
 
 .lr.ph111.preheader.i:                            ; preds = %.lr.ph117.split.i
-  %i.ht = add nsw i32 %i.hq, -1                   ; 2 uses
-  %.phi.trans.insert.i = zext nneg i32 %i.ht to i64
-  %.phi.trans.insert147.i = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %.phi.trans.insert.i
-  %.phi.trans.insert148.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert147.i, i64 4
-  %.pre.i = load float, ptr %.phi.trans.insert148.i, align 4, !tbaa !292
+  %i.ht = add nsw i32 %i.hq, -1
   br label %.lr.ph111.i
 
 .lr.ph111.i:                                      ; preds = %.lr.ph111._crit_edge.i, %.lr.ph111.preheader.i
   %i.hu = phi i32 [ %i.hq, %.lr.ph111.preheader.i ], [ %i.im, %.lr.ph111._crit_edge.i ]
-  %14 = phi float [ %.pre.i, %.lr.ph111.preheader.i ], [ %i.hx, %.lr.ph111._crit_edge.i ] ; 2 uses
   %indvars.iv131.i = phi i64 [ 0, %.lr.ph111.preheader.i ], [ %indvars.iv.next132.i, %.lr.ph111._crit_edge.i ] ; 5 uses
-  %.087108.i.a = phi i32 [ %i.ht, %.lr.ph111.preheader.i ], [ %.pre-phi157.i, %.lr.ph111._crit_edge.i ]
-  %.2107.i = phi i32 [ %.190114.i, %.lr.ph111.preheader.i ], [ %.3.i, %.lr.ph111._crit_edge.i ] ; 3 uses
+  %.087108.i = phi i32 [ %i.ht, %.lr.ph111.preheader.i ], [ %.pre-phi157.i, %.lr.ph111._crit_edge.i ]
+  %.087108.i.a = phi i32 [ %.190114.i, %.lr.ph111.preheader.i ], [ %.3.i, %.lr.ph111._crit_edge.i ] ; 3 uses
+  %16 = sext i32 %.087108.i to i64                ; 3 uses
+  %17 = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %16
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %19 = load float, ptr %18, align 4, !tbaa !292  ; 2 uses
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.ho, i64 %indvars.iv131.i
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 4
-  %i.hx = load float, ptr %i.hw, align 4, !tbaa !292 ; 3 uses
-  %i.hy = fcmp oeq float %14, %i.hx
+  %i.hx = load float, ptr %i.hw, align 4, !tbaa !292 ; 2 uses
+  %i.hy = fcmp oeq float %19, %i.hx
   br i1 %i.hy, label %.lr.ph111._crit_edge.i, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph111.i
-  %i.hz = sext i32 %.2107.i to i64
+  %i.hz = sext i32 %.087108.i.a to i64
   %i.ia = getelementptr inbounds [20 x i8], ptr %i.fx, i64 %i.hz ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 16
-  %i.ic = fcmp ogt float %14, %i.hx               ; 3 uses
+  %i.ic = fcmp ogt float %19, %i.hx               ; 3 uses
   %spec.store.select122.i = zext i1 %i.ic to i32
   store i32 %spec.store.select122.i, ptr %i.ib, align 4, !tbaa !850
-  %15 = sext i32 %.087108.i.a to i64              ; 2 uses
-  %i.id = select i1 %i.ic, i64 %15, i64 %indvars.iv131.i
+  %i.id = select i1 %i.ic, i64 %16, i64 %indvars.iv131.i
   %i.ie = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %i.id
-  %i.if = select i1 %i.ic, i64 %indvars.iv131.i, i64 %15
+  %i.if = select i1 %i.ic, i64 %indvars.iv131.i, i64 %16
   %i.ig = getelementptr inbounds [8 x i8], ptr %i.ho, i64 %i.if
   %i.ih = load <2 x float>, ptr %i.ie, align 4, !tbaa !54
   %i.ii = load <2 x float>, ptr %i.ig, align 4, !tbaa !54
   %i.ij = shufflevector <2 x float> %i.ih, <2 x float> %i.ii, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ik = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ij, <4 x float> %i.gb, <4 x float> %i.ge)
   store <4 x float> %i.ik, ptr %i.ia, align 4, !tbaa !54
-  %i.il = add nsw i32 %.2107.i, 1
+  %i.il = add nsw i32 %.087108.i.a, 1
   %.pre149.i = load i32, ptr %i.hp, align 4, !tbaa !55
   br label %.lr.ph111._crit_edge.i
 
 .lr.ph111._crit_edge.i:                           ; preds = %bb.s, %.lr.ph111.i
   %i.im = phi i32 [ %.pre149.i, %bb.s ], [ %i.hu, %.lr.ph111.i ] ; 2 uses
-  %.3.i = phi i32 [ %i.il, %bb.s ], [ %.2107.i, %.lr.ph111.i ] ; 2 uses
+  %.3.i = phi i32 [ %i.il, %bb.s ], [ %.087108.i.a, %.lr.ph111.i ] ; 2 uses
   %.pre-phi157.i = trunc i64 %indvars.iv131.i to i32
   %indvars.iv.next132.i = add nuw nsw i64 %indvars.iv131.i, 1 ; 2 uses
   %i.in = sext i32 %i.im to i64
@@ -718,12 +714,11 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.ji = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !484
   %i.jk = load ptr, ptr %i.it, align 8
-  %i.jl = tail call ptr %i.jj(ptr %i.jk, ptr noundef null, i64 noundef %i.jh) #50, !inline_history !37 ; 4 uses
+  %i.jl = tail call ptr %i.jj(ptr %i.jk, ptr noundef null, i64 noundef %i.jh) #50, !inline_history !37 ; 3 uses
   %i.jm = load ptr, ptr %i.iu, align 8, !tbaa !456
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jl, i64 8
   store ptr %i.jm, ptr %i.jn, align 8, !tbaa !459
   store ptr %i.jl, ptr %i.iu, align 8, !tbaa !456
-  store i32 0, ptr %i.jl, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i.i
 
 nk_pool_alloc.exit.i.i:                           ; preds = %.thread.i.i.i, %bb.bm
@@ -837,12 +832,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !484
   %i.x = load ptr, ptr %i.g, align 8
-  %i.y = tail call ptr %i.w(ptr %i.x, ptr noundef null, i64 noundef %i.u) #50, !inline_history !1036 ; 4 uses
+  %i.y = tail call ptr %i.w(ptr %i.x, ptr noundef null, i64 noundef %i.u) #50, !inline_history !1036 ; 3 uses
   %i.z = load ptr, ptr %i.h, align 8, !tbaa !456
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !459
   store ptr %i.y, ptr %i.h, align 8, !tbaa !456
-  store i32 0, ptr %i.y, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i
 
 nk_pool_alloc.exit.i:                             ; preds = %.thread.i.i, %bb.e
@@ -1032,7 +1026,8 @@ bb.e:                                             ; preds = %nk_zero.exit
   br i1 %.not.i.i391, label %.loopexit46.i.i394.thread, label %.loopexit46.i.i394
 
 .loopexit46.i.i394.thread:                        ; preds = %bb.e
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(464) %i.o, i8 0, i64 464, i1 false), !tbaa !55
+  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(460) %4, i8 0, i64 460, i1 false), !tbaa !55
   br label %nk_zero.exit400
 
 .loopexit46.i.i394:                               ; preds = %bb.e
@@ -1435,12 +1430,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !484
   %i.bc = load ptr, ptr %i.al, align 8
-  %i.bd = tail call ptr %i.bb(ptr %i.bc, ptr noundef null, i64 noundef %i.az) #50, !inline_history !37 ; 4 uses
+  %i.bd = tail call ptr %i.bb(ptr %i.bc, ptr noundef null, i64 noundef %i.az) #50, !inline_history !37 ; 3 uses
   %i.be = load ptr, ptr %i.am, align 8, !tbaa !456
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !459
   store ptr %i.bd, ptr %i.am, align 8, !tbaa !456
-  store i32 0, ptr %i.bd, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i.i
 
 nk_pool_alloc.exit.i.i:                           ; preds = %.thread.i.i.i, %bb.m
@@ -1843,7 +1837,7 @@ bb.v:                                             ; preds = %bb.g, %bb.t, %bb.u,
 define internal fastcc noundef zeroext i1 @nk_nonblock_begin(ptr noundef nonnull %0, i32 noundef range(i32 32, 1) %1, <2 x float> %2, <2 x float> %3, <2 x float> %4, <2 x float> %5, i32 noundef range(i32 16, 65) %6) unnamed_addr #20 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 18560 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !415  ; 17 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !415  ; 16 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -1860,9 +1854,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not74, label %.thread, label %bb.d
 
 .thread:                                          ; preds = %bb.c
-  %i.g = tail call fastcc ptr @nk_create_window(ptr noundef %0) ; 8 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.g, i64 544
-  store ptr %i.b, ptr %7, align 8, !tbaa !506
+  %i.g = tail call fastcc ptr @nk_create_window(ptr noundef %0) ; 7 uses
   store ptr %i.g, ptr %i.e, align 8, !tbaa !464
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 368
   store i32 %6, ptr %i.h, align 8, !tbaa !528
@@ -2024,12 +2016,11 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !484
   %i.bs = load ptr, ptr %i.bb, align 8
-  %i.bt = tail call ptr %i.br(ptr %i.bs, ptr noundef null, i64 noundef %i.bp) #50, !inline_history !37 ; 4 uses
+  %i.bt = tail call ptr %i.br(ptr %i.bs, ptr noundef null, i64 noundef %i.bp) #50, !inline_history !37 ; 3 uses
   %i.bu = load ptr, ptr %i.bc, align 8, !tbaa !456
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store ptr %i.bu, ptr %i.bv, align 8, !tbaa !459
   store ptr %i.bt, ptr %i.bc, align 8, !tbaa !456
-  store i32 0, ptr %i.bt, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i.i
 
 nk_pool_alloc.exit.i.i:                           ; preds = %.thread.i.i.i, %bb.p
@@ -2432,12 +2423,11 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !484
   %i.bk = load ptr, ptr %i.at, align 8
-  %i.bl = tail call ptr %i.bj(ptr %i.bk, ptr noundef null, i64 noundef %i.bh) #50, !inline_history !37 ; 4 uses
+  %i.bl = tail call ptr %i.bj(ptr %i.bk, ptr noundef null, i64 noundef %i.bh) #50, !inline_history !37 ; 3 uses
   %i.bm = load ptr, ptr %i.au, align 8, !tbaa !456
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   store ptr %i.bm, ptr %i.bn, align 8, !tbaa !459
   store ptr %i.bl, ptr %i.au, align 8, !tbaa !456
-  store i32 0, ptr %i.bl, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i.i
 
 nk_pool_alloc.exit.i.i:                           ; preds = %.thread.i.i.i, %bb.i
@@ -2840,12 +2830,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 18472
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !484
   %i.ae = load ptr, ptr %i.n, align 8
-  %i.af = tail call ptr %i.ad(ptr %i.ae, ptr noundef null, i64 noundef %i.ab) #50, !inline_history !1076 ; 4 uses
+  %i.af = tail call ptr %i.ad(ptr %i.ae, ptr noundef null, i64 noundef %i.ab) #50, !inline_history !1076 ; 3 uses
   %i.ag = load ptr, ptr %i.o, align 8, !tbaa !456
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !459
   store ptr %i.af, ptr %i.o, align 8, !tbaa !456
-  store i32 0, ptr %i.af, align 8, !tbaa !483
   br label %nk_pool_alloc.exit.i.i
 
 nk_pool_alloc.exit.i.i:                           ; preds = %.thread.i.i.i, %bb.h
@@ -2865,7 +2854,7 @@ bb.j:                                             ; preds = %bb.f
   br i1 %.not19.i.i, label %nk_push_table.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %nk_pool_alloc.exit.i.i, %bb.e
-  %.0.i.i = phi ptr [ %i.i, %bb.e ], [ %i.an, %nk_pool_alloc.exit.i.i ], [ %i.ap, %bb.j ] ; 14 uses
+  %.0.i.i = phi ptr [ %i.i, %bb.e ], [ %i.an, %nk_pool_alloc.exit.i.i ], [ %i.ap, %bb.j ] ; 13 uses
   %i.aq = ptrtoint ptr %.0.i.i to i64
   %i.ar = and i64 %i.aq, 3                        ; 3 uses
   %.not.i.i.i.i = icmp eq i64 %i.ar, 0
@@ -2911,8 +2900,6 @@ bb.n:                                             ; preds = %bb.l
   store ptr %i.au, ptr %i.az, align 8, !tbaa !467
   %i.ba = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 568
   store ptr null, ptr %i.ba, align 8, !tbaa !469
-  %3 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4
-  store i32 0, ptr %3, align 4, !tbaa !556
   store ptr %.0.i.i, ptr %i.c, align 8, !tbaa !465
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 520 ; 2 uses
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !1077
@@ -3189,18 +3176,13 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i43
   br i1 %.not.i, label %.loopexit, label %.lr.ph29.i
 
 .loopexit:                                        ; preds = %._crit_edge.i, %nk_strlen.exit
-  %i.s = tail call fastcc ptr @nk_add_value(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.j) ; 3 uses
+  %i.s = tail call fastcc ptr @nk_add_value(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.j) ; 2 uses
   %i.t = add i32 %i.j, 1
-  %i.u = tail call fastcc ptr @nk_add_value(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.t) ; 3 uses
+  %i.u = tail call fastcc ptr @nk_add_value(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.t) ; 2 uses
   %i.v = icmp ne ptr %i.s, null
   %i.w = icmp ne ptr %i.u, null
   %or.cond3 = and i1 %i.v, %i.w
-  br i1 %or.cond3, label %4, label %nk_find_value.exit59.thread
-
-4:                                                ; preds = %.loopexit
-  store i32 0, ptr %i.u, align 4, !tbaa !55
-  store i32 0, ptr %i.s, align 4, !tbaa !55
-  br label %bb.i
+  br i1 %or.cond3, label %bb.i, label %nk_find_value.exit59.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.x = load i32, ptr %i.b, align 8, !tbaa !236  ; 2 uses
@@ -3246,9 +3228,9 @@ nk_find_value.exit59:                             ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %indvars.iv.i51
   br label %bb.i
 
-bb.i:                                             ; preds = %nk_find_value.exit59, %4
-  %.032 = phi ptr [ %i.z, %nk_find_value.exit59 ], [ %i.s, %4 ]
-  %.0 = phi ptr [ %i.aj, %nk_find_value.exit59 ], [ %i.u, %4 ]
+bb.i:                                             ; preds = %.loopexit, %nk_find_value.exit59
+  %.032 = phi ptr [ %i.z, %nk_find_value.exit59 ], [ %i.s, %.loopexit ]
+  %.0 = phi ptr [ %i.aj, %nk_find_value.exit59 ], [ %i.u, %.loopexit ]
   store i32 %2, ptr %.032, align 4, !tbaa !55
   store i32 %3, ptr %.0, align 4, !tbaa !55
   br label %nk_find_value.exit59.thread

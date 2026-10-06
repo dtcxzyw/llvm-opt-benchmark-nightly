@@ -202,10 +202,9 @@ bb.e:                                             ; preds = %mark_fsmonitor_inva
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !68
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.l
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !70 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 56
   %i.af = load i32, ptr %i.ae, align 8, !tbaa !12
-  %i.ag = or i32 %i.af, %1                        ; 2 uses
-  store i32 %i.ag, ptr %i.ae, align 8, !tbaa !12
+  %i.ag = or i32 %i.af, %1
   br label %bb.g
 
 bb.f:                                             ; preds = %mark_fsmonitor_invalid.exit
@@ -216,10 +215,9 @@ bb.f:                                             ; preds = %mark_fsmonitor_inva
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !68
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.l
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !70 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 56 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 56
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !12
-  %i.aq = and i32 %i.ap, %i.ah                    ; 2 uses
-  store i32 %i.aq, ptr %i.ao, align 8, !tbaa !12
+  %i.aq = and i32 %i.ap, %i.ah
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e

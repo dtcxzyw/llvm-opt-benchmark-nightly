@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %5 = alloca %"class.rocksdb::Status", align 8   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
   %i.c = sext i32 %1 to i64                       ; 5 uses
   %i.d = icmp slt i32 %1, 0
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %0, i8 0, i64 312, i1 false)
@@ -221,11 +221,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i32 %1, 0               ; 2 uses
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 16, i1 false)
-  br label %bb.c
+  br i1 %.not.i.i.i.i, label %bb.c, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.e = mul nuw nsw i64 %i.c, 224                ; 3 uses
@@ -239,9 +235,9 @@ _ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.f, i64 %i.e
   br label %bb.c
 
-bb.c:                                             ; preds = %.noexc27, %_ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %i.g, %.noexc27 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN7rocksdb13InternalStats15CompactionStatsESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc27 ]
+bb.c:                                             ; preds = %_ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc27
+  %.sink.i = phi ptr [ %i.g, %.noexc27 ], [ null, %_ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc27 ], [ null, %_ZNSt6vectorIN7rocksdb13InternalStats15CompactionStatsESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
   store ptr %.sink.i, ptr %i.i, align 8, !tbaa !930

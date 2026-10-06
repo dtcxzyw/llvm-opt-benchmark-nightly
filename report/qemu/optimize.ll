@@ -204,24 +204,20 @@ declare i64 @dup_const(i32 noundef, i64 noundef) local_unnamed_addr #3
 define internal fastcc void @record_mem_copy(ptr noundef nonnull %0, i32 noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   store ptr %i.d, ptr %i.a, align 8
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %bb.c, label %5
+  br i1 %i.e, label %bb.c, label %tcg_malloc.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr %i.a, ptr %i.f, align 8
-  br label %5
-
-5:                                                ; preds = %bb.c, %bb.b
-  store ptr null, ptr %i.c, align 8
   br label %tcg_malloc.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -243,8 +239,8 @@ bb.f:                                             ; preds = %bb.d
   %i.o = inttoptr i64 %i.i to ptr
   br label %tcg_malloc.exit
 
-tcg_malloc.exit:                                  ; preds = %bb.f, %bb.e, %5
-  %.0 = phi ptr [ %i.b, %5 ], [ %i.n, %bb.e ], [ %i.o, %bb.f ] ; 8 uses
+tcg_malloc.exit:                                  ; preds = %bb.b, %bb.c, %bb.f, %bb.e
+  %.0 = phi ptr [ %i.o, %bb.f ], [ %i.n, %bb.e ], [ %i.b, %bb.c ], [ %i.b, %bb.b ] ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(72) %.0, i8 noundef 0, i64 noundef 72, i1 noundef false) #9
   %i.p = getelementptr inbounds nuw i8, ptr %.0, i64 24
   store i64 %3, ptr %i.p, align 8

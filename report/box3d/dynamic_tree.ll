@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.a, %.thread
 ; Function Attrs: nounwind uwtable
 define i32 @b3DynamicTree_Rebuild(ptr nofree noundef captures(none) %0, i1 noundef zeroext %1) local_unnamed_addr #4 {
 bb.a:
-  %2 = alloca [1024 x %struct.b3RebuildItem], align 16 ; 11 uses
+  %2 = alloca [1024 x %struct.b3RebuildItem], align 16 ; 10 uses
   %i.a = alloca [1024 x i32], align 16            ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.c = load i32, ptr %i.b, align 4, !tbaa !22   ; 4 uses
@@ -470,15 +470,13 @@ bb.m:                                             ; preds = %.split75.us
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %i.ds = tail call fastcc i32 @b3AllocateNode(ptr noundef nonnull %0)
   store i32 %i.ds, ptr %2, align 16, !tbaa !69
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 -1, ptr %3, align 4, !tbaa !70
   %i.dt = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 0, ptr %i.dt, align 8, !tbaa !71
+  store i32 0, ptr %i.dt, align 8, !tbaa !70
   %i.du = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i32 %.us-phi76, ptr %i.du, align 16, !tbaa !72
+  store i32 %.us-phi76, ptr %i.du, align 16, !tbaa !71
   %i.dv = tail call fastcc i32 @b3PartitionMid(ptr noundef %i.dj, ptr noundef %i.dr, i32 noundef range(i32 -2147483647, -2147483648) %.us-phi76)
   %i.dw = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 %i.dv, ptr %i.dw, align 4, !tbaa !73
+  store i32 %i.dv, ptr %i.dw, align 4, !tbaa !72
   br label %.outer94
 
 .outer94:                                         ; preds = %.outer94.backedge, %bb.m
@@ -492,7 +490,7 @@ bb.m:                                             ; preds = %.split75.us
 bb.n:                                             ; preds = %.outer94, %bb.y
   %i.ea = phi i32 [ %i.eb, %bb.y ], [ %.ph, %.outer94 ]
   %i.eb = add nsw i32 %i.ea, 1                    ; 4 uses
-  store i32 %i.eb, ptr %i.dz, align 4, !tbaa !70
+  store i32 %i.eb, ptr %i.dz, align 4, !tbaa !73
   switch i32 %i.eb, label %bb.t [
     i32 2, label %bb.o
     i32 0, label %bb.u
@@ -510,7 +508,7 @@ bb.p:                                             ; preds = %bb.o
   %i.eh = sext i32 %i.eg to i64
   %i.ei = getelementptr inbounds [48 x i8], ptr %i.di, i64 %i.eh ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ef, i64 4
-  %i.ek = load i32, ptr %i.ej, align 4, !tbaa !70 ; 2 uses
+  %i.ek = load i32, ptr %i.ej, align 4, !tbaa !73 ; 2 uses
   %i.el = icmp eq i32 %i.ek, 0
   %i.em = load i32, ptr %i.dy, align 4, !tbaa !69 ; 3 uses
   br i1 %i.el, label %bb.q, label %bb.r
@@ -632,18 +630,18 @@ bb.z:                                             ; preds = %bb.u
   %i.go = tail call fastcc i32 @b3AllocateNode(ptr noundef nonnull %0)
   store i32 %i.go, ptr %i.gn, align 4, !tbaa !69
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gn, i64 4
-  store i32 -1, ptr %i.gp, align 4, !tbaa !70
+  store i32 -1, ptr %i.gp, align 4, !tbaa !73
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
-  store i32 %.097.i, ptr %i.gq, align 4, !tbaa !71
+  store i32 %.097.i, ptr %i.gq, align 4, !tbaa !70
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gn, i64 16
-  store i32 %.096.i, ptr %i.gr, align 4, !tbaa !72
+  store i32 %.096.i, ptr %i.gr, align 4, !tbaa !71
   %i.gs = sext i32 %.097.i to i64                 ; 2 uses
   %i.gt = getelementptr inbounds [4 x i8], ptr %i.dj, i64 %i.gs
   %i.gu = getelementptr inbounds [12 x i8], ptr %i.dr, i64 %i.gs
   %i.gv = tail call fastcc i32 @b3PartitionMid(ptr noundef %i.gt, ptr noundef %i.gu, i32 noundef %i.fx)
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gn, i64 12
   %i.gx = add nsw i32 %i.gv, %.097.i
-  store i32 %i.gx, ptr %i.gw, align 4, !tbaa !73
+  store i32 %i.gx, ptr %i.gw, align 4, !tbaa !72
   br label %.outer94.backedge
 
 .outer94.backedge:                                ; preds = %bb.z, %bb.s
@@ -1046,10 +1044,10 @@ attributes #19 = { nounwind }
 !67 = !{i64 0, i64 4, !28, i64 4, i64 4, !28, i64 8, i64 4, !28, i64 12, i64 4, !28, i64 16, i64 4, !28, i64 20, i64 4, !28, i64 24, i64 4, !28, i64 28, i64 4, !28, i64 32, i64 4, !28, i64 36, i64 4, !28}
 !68 = !{!"b3RebuildItem", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16}
 !69 = !{!68, !5, i64 0}
-!70 = !{!68, !5, i64 4}
-!71 = !{!68, !5, i64 8}
-!72 = !{!68, !5, i64 16}
-!73 = !{!68, !5, i64 12}
+!70 = !{!68, !5, i64 8}
+!71 = !{!68, !5, i64 16}
+!72 = !{!68, !5, i64 12}
+!73 = !{!68, !5, i64 4}
 !74 = !{!10, !10, i64 0}
 !75 = !{!11, !11, i64 0}
 !76 = !{!12, !12, i64 0}

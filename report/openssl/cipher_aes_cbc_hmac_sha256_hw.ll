@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca [8 x %struct.HASH_DESC], align 16   ; 17 uses
   %4 = alloca [8 x %struct.CIPH_DESC], align 16   ; 14 uses
   %i.a = alloca [288 x i8], align 16              ; 4 uses
-  %5 = alloca [8 x %union.anon.3], align 16       ; 18 uses
+  %5 = alloca [8 x %union.anon.3], align 16       ; 17 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !62     ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !27   ; 3 uses
@@ -309,8 +309,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
 
 .lr.ph383.split.i:                                ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 768
-  %i.be = load i64, ptr %i.bd, align 8            ; 2 uses
-  store i64 %i.be, ptr %5, align 16
+  %i.be = load i64, ptr %i.bd, align 8
   %i.bf = call i64 asm "bswapq $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.be) #8, !srcloc !69 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 728
   %i.bh = add i32 %i.j, -1

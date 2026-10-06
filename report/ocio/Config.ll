@@ -205,10 +205,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr %0, align 8, !tbaa !105    ; 3 uses
-  store i32 2, ptr %i.d, align 8, !tbaa !221
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  store i32 0, ptr %1, align 4, !tbaa !222
+  %i.d = load ptr, ptr %0, align 8, !tbaa !105
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c

@@ -205,10 +205,9 @@ _ZNK9func_decl20is_right_associativeEv.exit:      ; preds = %bb.al
   br label %bb.am
 
 _ZNK9func_decl12is_injectiveEv.exit.thread:       ; preds = %bb.al
-  %i.fi = getelementptr inbounds nuw i8, ptr %17, i64 17 ; 3 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %17, i64 17 ; 2 uses
   %i.fj = load i16, ptr %i.fi, align 1
-  %i.fk = and i16 %i.fj, -12                      ; 2 uses
-  store i16 %i.fk, ptr %i.fi, align 1
+  %i.fk = and i16 %i.fj, -12
   br label %bb.am
 
 bb.am:                                            ; preds = %_ZNK9func_decl20is_right_associativeEv.exit, %_ZNK9func_decl12is_injectiveEv.exit.thread

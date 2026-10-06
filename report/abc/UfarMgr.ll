@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %4 = alloca %"class.std::vector.29", align 8    ; 7 uses
-  %5 = alloca %"class.std::vector.29", align 8    ; 10 uses
+  %5 = alloca %"class.std::vector.29", align 8    ; 9 uses
   %6 = alloca %class.LogT, align 8                ; 12 uses
   %7 = alloca %class.LogT, align 8                ; 5 uses
   %8 = alloca %"class.std::queue", align 8        ; 19 uses
@@ -608,8 +608,6 @@ bb.am:                                            ; preds = %_ZNSt6vectorIcSaIcE
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ik, i8 0, i64 %i.ih, i1 false)
   store ptr %i.im, ptr %i.il, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #37
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 0, ptr %14, align 8
   %i.io = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ih) #43 ; 4 uses
   store ptr %i.io, ptr %5, align 8, !tbaa !322
   %i.ip = getelementptr inbounds nuw i8, ptr %5, i64 8

@@ -204,38 +204,35 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = add nsw i32 %2, -1                       ; 2 uses
+  %i.b = add nsw i32 %2, -1
   %.sroa.0.4.vec.extract = extractelement <2 x float> %0, i64 1 ; 3 uses
   %.sroa.0.0.vec.extract = extractelement <2 x float> %0, i64 0
   %wide.trip.count = zext nneg i32 %2 to i64
-  %.phi.trans.insert = zext nneg i32 %i.b to i64
-  %.phi.trans.insert32 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.phi.trans.insert
-  %.phi.trans.insert33 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert32, i64 4
-  %.pre = load float, ptr %.phi.trans.insert33, align 4
   %i.c = zext nneg i32 %i.b to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.e
-  %3 = phi float [ %.pre, %bb.b ], [ %i.f, %bb.e ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %.031 = phi i64 [ %i.c, %bb.b ], [ %indvars.iv, %bb.e ]
   %.02729 = phi i1 [ false, %bb.b ], [ %.1, %bb.e ] ; 2 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  %i.f = load float, ptr %i.e, align 4            ; 4 uses
+  %i.f = load float, ptr %i.e, align 4            ; 3 uses
   %i.g = fcmp ogt float %i.f, %.sroa.0.4.vec.extract
-  %i.h = fcmp ule float %3, %.sroa.0.4.vec.extract
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.031 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %5 = load float, ptr %4, align 4                ; 2 uses
+  %i.h = fcmp ule float %5, %.sroa.0.4.vec.extract
   %.not = xor i1 %i.g, %i.h
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.031
-  %i.i = load float, ptr %4, align 4
+  %i.i = load float, ptr %3, align 4
   %i.j = load float, ptr %i.d, align 4            ; 2 uses
   %i.k = fsub float %i.i, %i.j
   %i.l = fsub float %.sroa.0.4.vec.extract, %i.f
   %i.m = fmul float %i.l, %i.k
-  %i.n = fsub float %3, %i.f
+  %i.n = fsub float %5, %i.f
   %i.o = fdiv float %i.m, %i.n
   %i.p = fadd float %i.j, %i.o
   %i.q = fcmp olt float %.sroa.0.0.vec.extract, %i.p

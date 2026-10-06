@@ -205,8 +205,7 @@ _ZN8ImVectorI20ImFontAtlasRectEntryE6resizeEi.exit.i: ; preds = %bb.bb, %._ZN8Im
   %i.jw = phi ptr [ %.pre.i55, %._ZN8ImVectorI20ImFontAtlasRectEntryE6resizeEi.exit_crit_edge.i ], [ %i.jp, %bb.bb ]
   store i32 %i.jg, ptr %i.je, align 8, !tbaa !463
   %i.jx = sext i32 %i.jf to i64
-  %i.jy = getelementptr inbounds [4 x i8], ptr %i.jw, i64 %i.jx ; 2 uses
-  store i32 0, ptr %i.jy, align 4
+  %i.jy = getelementptr inbounds [4 x i8], ptr %i.jw, i64 %i.jx
   br label %_ZL29ImFontAtlasPackAllocRectEntryP11ImFontAtlasi.exit
 
 bb.bc:                                            ; preds = %bb.aw
@@ -609,49 +608,47 @@ middle.block331:                                  ; preds = %vector.body325
   br i1 %i.lj, label %.lr.ph10.preheader.i.i.i.i, label %._crit_edge11.i.i.i.i
 
 .lr.ph10.preheader.i.i.i.i:                       ; preds = %.lr.ph16.i.i.i.i
-  %i.lk = add nsw i32 %i.lh, -1                   ; 2 uses
-  %.phi.trans.insert.i.i.i.i = zext nneg i32 %i.lk to i64
-  %.phi.trans.insert32.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.lf, i64 %.phi.trans.insert.i.i.i.i
-  %.phi.trans.insert33.i.i.i.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert32.i.i.i.i, i64 4
-  %.pre.i.i.i.i = load float, ptr %.phi.trans.insert33.i.i.i.i, align 4, !tbaa !522
+  %i.lk = add nsw i32 %i.lh, -1
   br label %.lr.ph10.i.i.i.i
 
 .lr.ph10.i.i.i.i:                                 ; preds = %.lr.ph10._crit_edge.i.i.i.i, %.lr.ph10.preheader.i.i.i.i
   %i.ll = phi i32 [ %i.lh, %.lr.ph10.preheader.i.i.i.i ], [ %i.md, %.lr.ph10._crit_edge.i.i.i.i ]
-  %7 = phi float [ %.pre.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %i.lo, %.lr.ph10._crit_edge.i.i.i.i ] ; 2 uses
   %indvars.iv24.i28.i.i.i = phi i64 [ 0, %.lr.ph10.preheader.i.i.i.i ], [ %indvars.iv.next25.i29.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 5 uses
-  %.0857.i.i.i.i.a = phi i32 [ %i.lk, %.lr.ph10.preheader.i.i.i.i ], [ %.pre-phi.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ]
-  %.26.i.i.i.i = phi i32 [ %.18813.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %.3.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 3 uses
+  %.0857.i.i.i.i = phi i32 [ %i.lk, %.lr.ph10.preheader.i.i.i.i ], [ %.pre-phi.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ]
+  %.0857.i.i.i.i.a = phi i32 [ %.18813.i.i.i.i, %.lr.ph10.preheader.i.i.i.i ], [ %.3.i.i.i.i, %.lr.ph10._crit_edge.i.i.i.i ] ; 3 uses
+  %7 = sext i32 %.0857.i.i.i.i to i64             ; 3 uses
+  %8 = getelementptr inbounds [8 x i8], ptr %i.lf, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %10 = load float, ptr %9, align 4, !tbaa !522   ; 2 uses
   %i.lm = getelementptr inbounds nuw [8 x i8], ptr %i.lf, i64 %indvars.iv24.i28.i.i.i
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
-  %i.lo = load float, ptr %i.ln, align 4, !tbaa !522 ; 3 uses
-  %i.lp = fcmp oeq float %7, %i.lo
+  %i.lo = load float, ptr %i.ln, align 4, !tbaa !522 ; 2 uses
+  %i.lp = fcmp oeq float %10, %i.lo
   br i1 %i.lp, label %.lr.ph10._crit_edge.i.i.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph10.i.i.i.i
-  %i.lq = sext i32 %.26.i.i.i.i to i64
+  %i.lq = sext i32 %.0857.i.i.i.i.a to i64
   %i.lr = getelementptr inbounds [20 x i8], ptr %i.kz, i64 %i.lq ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 16
-  %i.lt = fcmp ogt float %7, %i.lo                ; 3 uses
+  %i.lt = fcmp ogt float %10, %i.lo               ; 3 uses
   %spec.store.select.i.i.i.i = zext i1 %i.lt to i32
   store i32 %spec.store.select.i.i.i.i, ptr %i.ls, align 4, !tbaa !794
-  %8 = sext i32 %.0857.i.i.i.i.a to i64           ; 2 uses
-  %i.lu = select i1 %i.lt, i64 %8, i64 %indvars.iv24.i28.i.i.i
+  %i.lu = select i1 %i.lt, i64 %7, i64 %indvars.iv24.i28.i.i.i
   %i.lv = getelementptr inbounds [8 x i8], ptr %i.lf, i64 %i.lu
-  %i.lw = select i1 %i.lt, i64 %indvars.iv24.i28.i.i.i, i64 %8
+  %i.lw = select i1 %i.lt, i64 %indvars.iv24.i28.i.i.i, i64 %7
   %i.lx = getelementptr inbounds [8 x i8], ptr %i.lf, i64 %i.lw
   %i.ly = load <2 x float>, ptr %i.lv, align 4, !tbaa !29
   %i.lz = load <2 x float>, ptr %i.lx, align 4, !tbaa !29
   %i.ma = shufflevector <2 x float> %i.ly, <2 x float> %i.lz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.mb = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ma, <4 x float> %i.ld, <4 x float> zeroinitializer)
   store <4 x float> %i.mb, ptr %i.lr, align 4, !tbaa !29
-  %i.mc = add nsw i32 %.26.i.i.i.i, 1
+  %i.mc = add nsw i32 %.0857.i.i.i.i.a, 1
   %.pre34.i.i.i.i = load i32, ptr %i.lg, align 4, !tbaa !258
   br label %.lr.ph10._crit_edge.i.i.i.i
 
 .lr.ph10._crit_edge.i.i.i.i:                      ; preds = %bb.ad, %.lr.ph10.i.i.i.i
   %i.md = phi i32 [ %.pre34.i.i.i.i, %bb.ad ], [ %i.ll, %.lr.ph10.i.i.i.i ] ; 2 uses
-  %.3.i.i.i.i = phi i32 [ %i.mc, %bb.ad ], [ %.26.i.i.i.i, %.lr.ph10.i.i.i.i ] ; 2 uses
+  %.3.i.i.i.i = phi i32 [ %i.mc, %bb.ad ], [ %.0857.i.i.i.i.a, %.lr.ph10.i.i.i.i ] ; 2 uses
   %.pre-phi.i.i.i.i = trunc i64 %indvars.iv24.i28.i.i.i to i32
   %indvars.iv.next25.i29.i.i.i = add nuw nsw i64 %indvars.iv24.i28.i.i.i, 1 ; 2 uses
   %i.me = sext i32 %i.md to i64

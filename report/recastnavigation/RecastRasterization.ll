@@ -204,11 +204,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ab, label %.lr.ph.preheader109, label %vector.body, !llvm.loop !83
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph
-  %i.ac = add nsw i32 %1, -1                      ; 2 uses
+  %i.ac = add nsw i32 %1, -1
   %wide.trip.count101 = zext nneg i32 %1 to i64
-  %.phi.trans.insert = zext nneg i32 %i.ac to i64
-  %.phi.trans.insert103 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.phi.trans.insert
-  %.pre = load float, ptr %.phi.trans.insert103, align 4, !tbaa !67
   br label %.lr.ph94
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader109, %.lr.ph
@@ -232,21 +229,23 @@ vector.body:                                      ; preds = %vector.body, %vecto
   ret void
 
 .lr.ph94:                                         ; preds = %.lr.ph94.preheader, %bb.i
-  %8 = phi float [ %.pre, %.lr.ph94.preheader ], [ %i.ah, %bb.i ] ; 3 uses
   %indvars.iv98 = phi i64 [ 0, %.lr.ph94.preheader ], [ %indvars.iv.next99, %bb.i ] ; 6 uses
-  %.092 = phi i32 [ %i.ac, %.lr.ph94.preheader ], [ %i.dp, %bb.i ]
+  %.092 = phi i32 [ %i.ac, %.lr.ph94.preheader ], [ %i.dp, %bb.i ] ; 2 uses
   %.08090 = phi i32 [ 0, %.lr.ph94.preheader ], [ %.3, %bb.i ] ; 6 uses
   %.08189 = phi i32 [ 0, %.lr.ph94.preheader ], [ %.4, %bb.i ] ; 6 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv98
-  %i.ah = load float, ptr %i.ag, align 4, !tbaa !67 ; 6 uses
+  %i.ah = load float, ptr %i.ag, align 4, !tbaa !67 ; 5 uses
   %i.ai = fcmp oge float %i.ah, 0.000000e+00      ; 2 uses
-  %i.aj = fcmp ult float %8, 0.000000e+00
+  %8 = sext i32 %.092 to i64
+  %9 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %8
+  %10 = load float, ptr %9, align 4, !tbaa !67    ; 3 uses
+  %i.aj = fcmp ult float %10, 0.000000e+00
   %i.ak = xor i1 %i.ai, %i.aj
   br i1 %i.ak, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph94
-  %i.al = fsub float %8, %i.ah
-  %i.am = fdiv float %8, %i.al                    ; 3 uses
+  %i.al = fsub float %10, %i.ah
+  %i.am = fdiv float %10, %i.al                   ; 3 uses
   %i.an = mul nsw i32 %.092, 3
   %i.ao = sext i32 %i.an to i64
   %i.ap = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ao ; 3 uses

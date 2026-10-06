@@ -205,9 +205,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.abi, label %.preheader.i.i, label %rle_compress.exit.i, !llvm.loop !55
 
 rle_compress.exit.thread.i:                       ; preds = %.critedge3.i.i, %bb.cg, %.loopexit.i
-  %.072.i.ph.i = phi i64 [ 0, %.loopexit.i ], [ -1, %bb.cg ], [ -1, %.critedge3.i.i ]
-  %i.abj = getelementptr inbounds nuw i8, ptr %i.rt, i64 48 ; 2 uses
-  store i64 %.072.i.ph.i, ptr %i.abj, align 8, !tbaa !107
+  %i.abj = getelementptr inbounds nuw i8, ptr %i.rt, i64 48
   br label %bb.ck
 
 rle_compress.exit.i:                              ; preds = %.loopexit.i.i

@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.fl = phi ptr [ %i.fk, %bb.k ], [ %i.fg, %bb.j ] ; 3 uses
-  store i64 2, ptr %i.fl, align 8, !tbaa !19
+  %i.fl = phi ptr [ %i.fk, %bb.k ], [ %i.fg, %bb.j ] ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   store i64 -1, ptr %i.fm, align 8, !tbaa !19
   br label %Vec_SetAppend.exit

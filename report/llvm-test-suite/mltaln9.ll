@@ -205,9 +205,7 @@ bb.i:                                             ; preds = %.loopexit
 
 bb.j:                                             ; preds = %.loopexit
   %i.af = zext nneg i32 %.1101.ph to i64          ; 2 uses
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.af ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  store float 0.000000e+00, ptr %5, align 4, !tbaa !533
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.af ; 3 uses
   store i32 %.0141, ptr %i.ag, align 4, !tbaa !532
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store i32 -1, ptr %i.ah, align 4, !tbaa !532

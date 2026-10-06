@@ -205,13 +205,12 @@ _ZN9grpc_core14promise_detail8SeqStateINS0_12TrySeqTraitsENS_2IfIbZNS_5http211Pi
   br label %_ZN9grpc_core4RaceIJN4absl12lts_2025051212AnyInvocableIFNS_4PollINS2_6StatusEEEvEEEEEclEv.exit
 
 _ZN9grpc_core4RaceIJN4absl12lts_2025051212AnyInvocableIFNS_4PollINS2_6StatusEEEvEEEEEclEv.exit.thread: ; preds = %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit.thread, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit._crit_edge
-  %i.ec = phi i64 [ %i.dw, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit.thread ], [ %.pre66, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit._crit_edge ] ; 2 uses
+  %i.ec = phi i64 [ %i.dw, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit.thread ], [ %.pre66, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit._crit_edge ]
   %i.ed = phi ptr [ %i.dx, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit.thread ], [ %i.eb, %_ZN9grpc_core2IfIbZZNS_5http211PingManager14TimeoutPromiseEmENUlbE_clEbEUlvE_ZZNS2_14TimeoutPromiseEmENS3_clEbEUlvE0_EclEv.exit._crit_edge ]
   store i64 55, ptr %i.ed, align 8, !tbaa !139, !noalias !4431
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #44, !noalias !4432
   store i8 1, ptr %10, align 8, !tbaa !1304, !alias.scope !4431
-  %i.ee = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
-  store i64 %i.ec, ptr %i.ee, align 8, !tbaa !139
+  %i.ee = getelementptr inbounds nuw i8, ptr %10, i64 8
   br label %bb.aj
 
 _ZN9grpc_core4RaceIJN4absl12lts_2025051212AnyInvocableIFNS_4PollINS2_6StatusEEEvEEEEEclEv.exit: ; preds = %_ZN9grpc_core14promise_detail8SeqStateINS0_12TrySeqTraitsENS_2IfIbZNS_5http211PingManager20PingPromiseCallbacks11PingTimeoutENS_8DurationEEUlvE0_ZNS6_11PingTimeoutES7_EUlvE1_EEJZNS5_14TimeoutPromiseEmEUlbE_EE8PollOnceEv.exit, %bb.v

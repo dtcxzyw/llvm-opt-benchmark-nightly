@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %accept1.exit
   %i.br = load i64, ptr %5, align 8, !tbaa !138   ; 4 uses
   %i.bs = getelementptr [8 x i8], ptr %i.bq, i64 %i.br
   %i.bt = getelementptr i8, ptr %i.bs, i64 -8
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !106 ; 3 uses
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !106 ; 2 uses
   %i.bv = load i16, ptr %i.bu, align 8, !tbaa !115
   %i.bw = icmp eq i16 %i.bv, 139
   br i1 %i.bw, label %bb.ac, label %bb.ak
@@ -237,7 +237,7 @@ bb.af:                                            ; preds = %pm_node_alloc.exit.
 
 bb.ag:                                            ; preds = %bb.af
   %i.cf = getelementptr i8, ptr %i.cb, i64 16
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !134 ; 3 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !134 ; 2 uses
   %i.ch = call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #30 ; 6 uses
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %bb.ah, label %pm_missing_node_create.exit.i
@@ -262,26 +262,25 @@ pm_missing_node_create.exit.i:                    ; preds = %bb.ag
 
 ._crit_edge27.i:                                  ; preds = %bb.af
   %.pre.i = load i32, ptr %0, align 8, !tbaa !109
-  %.phi.trans.insert.i = getelementptr i8, ptr %i.bu, i64 16
-  %.pre28.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !134
   br label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge27.i, %pm_missing_node_create.exit.i
-  %6 = phi ptr [ %i.cg, %pm_missing_node_create.exit.i ], [ %.pre28.i, %._crit_edge27.i ]
   %i.cn = phi i32 [ %i.cm, %pm_missing_node_create.exit.i ], [ %.pre.i, %._crit_edge27.i ]
-  %.024.i = phi ptr [ %i.ch, %pm_missing_node_create.exit.i ], [ %i.bu, %._crit_edge27.i ]
+  %.024.i = phi ptr [ %i.ch, %pm_missing_node_create.exit.i ], [ %i.bu, %._crit_edge27.i ] ; 2 uses
   %i.co = add i32 %i.cn, 1                        ; 2 uses
   store i32 %i.co, ptr %0, align 8, !tbaa !109
   %i.cp = getelementptr i8, ptr %i.cb, i64 8
-  %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !133
+  %6 = load ptr, ptr %i.cp, align 8, !tbaa !133
+  %7 = getelementptr i8, ptr %.024.i, i64 16
+  %i.cq = load ptr, ptr %7, align 8, !tbaa !134
   %.sroa.8.0..sroa_idx.i128 = getelementptr i8, ptr %i.bx, i64 40
   store i16 52, ptr %i.bx, align 8, !tbaa !110
   %.sroa.3.0..sroa_idx.i129 = getelementptr inbounds nuw i8, ptr %i.bx, i64 4
   store i32 %i.co, ptr %.sroa.3.0..sroa_idx.i129, align 4, !tbaa !31
   %.sroa.4.0..sroa_idx.i130 = getelementptr inbounds nuw i8, ptr %i.bx, i64 8 ; 2 uses
-  store ptr %i.cq, ptr %.sroa.4.0..sroa_idx.i130, align 8, !tbaa !36
+  store ptr %6, ptr %.sroa.4.0..sroa_idx.i130, align 8, !tbaa !36
   %.sroa.5.0..sroa_idx.i131 = getelementptr inbounds nuw i8, ptr %i.bx, i64 16 ; 2 uses
-  store ptr %6, ptr %.sroa.5.0..sroa_idx.i131, align 8, !tbaa !36
+  store ptr %i.cq, ptr %.sroa.5.0..sroa_idx.i131, align 8, !tbaa !36
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
   store ptr %i.cb, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !558
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 64

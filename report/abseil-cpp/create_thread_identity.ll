@@ -21,7 +21,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 400
   store atomic i8 0, ptr %i.c monotonic, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i32 0, ptr %i.d, align 4, !tbaa !10
+  store i32 0, ptr %i.d, align 4, !tbaa !34
   ret void
 }
 
@@ -85,14 +85,14 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit.i
 
 _ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit.i: ; preds = %bb.f, %_ZN4absl12lts_2026052613base_internal8SpinLock11TryLockImplEv.exit.i.i.i.i
-  %i.y = load ptr, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !13 ; 3 uses
+  %i.y = load ptr, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !11 ; 3 uses
   %.not.i = icmp eq ptr %i.y, null                ; 2 uses
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 408
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !34
-  store ptr %i.aa, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !13
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !32
+  store ptr %i.aa, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !11
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit.i
@@ -137,7 +137,7 @@ bb.m:                                             ; preds = %_ZNSt10lock_guardIN
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = add nsw i64 %i.am, 255
   %i.ao = and i64 %i.an, -256
-  %i.ap = inttoptr i64 %i.ao to ptr               ; 6 uses
+  %i.ap = inttoptr i64 %i.ao to ptr               ; 5 uses
   tail call void @AbslInternalPerThreadSemInit_lts_20260526(ptr noundef %i.ap)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 392
   store atomic i32 0, ptr %i.aq monotonic, align 8
@@ -145,8 +145,6 @@ bb.m:                                             ; preds = %_ZNSt10lock_guardIN
   store atomic i32 0, ptr %i.ar monotonic, align 4
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 400
   store atomic i8 0, ptr %i.as monotonic, align 16
-  %0 = getelementptr inbounds nuw i8, ptr %i.ap, i64 72
-  store i32 0, ptr %0, align 8, !tbaa !10
   br label %_ZN4absl12lts_2026052624synchronization_internalL17NewThreadIdentityEv.exit
 
 _ZN4absl12lts_2026052624synchronization_internalL17NewThreadIdentityEv.exit: ; preds = %_ZNSt10lock_guardIN4absl12lts_2026052613base_internal8SpinLockEED2Ev.exit.i, %bb.m
@@ -183,7 +181,7 @@ _ZN4absl12lts_2026052624synchronization_internalL17NewThreadIdentityEv.exit: ; p
   %i.bh = getelementptr inbounds nuw i8, ptr %.1.i, i64 400
   store atomic i8 0, ptr %i.bh monotonic, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %.1.i, i64 408
-  store ptr null, ptr %i.bi, align 8, !tbaa !34
+  store ptr null, ptr %i.bi, align 8, !tbaa !32
   tail call void @_ZN4absl12lts_2026052613base_internal24SetCurrentThreadIdentityEPNS1_14ThreadIdentityEPFvPvE(ptr noundef nonnull %.1.i, ptr noundef nonnull @_ZN4absl12lts_2026052624synchronization_internalL21ReclaimThreadIdentityEPv)
   ret ptr %.1.i
 }
@@ -261,10 +259,10 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit
 
 _ZN4absl12lts_2026052613base_internal14SpinLockHolderC2ERNS1_8SpinLockE.exit: ; preds = %_ZN4absl12lts_2026052613base_internal8SpinLock11TryLockImplEv.exit.i.i.i, %bb.h
-  %i.aa = load ptr, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !13
+  %i.aa = load ptr, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !11
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 408
-  store ptr %i.aa, ptr %i.ab, align 8, !tbaa !34
-  store ptr %0, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !13
+  store ptr %i.aa, ptr %i.ab, align 8, !tbaa !32
+  store ptr %0, ptr @_ZN4absl12lts_2026052624synchronization_internalL24thread_identity_freelistE, align 8, !tbaa !11
   %i.ac = load atomic i32, ptr @_ZN4absl12lts_2026052624synchronization_internalL13freelist_lockE monotonic, align 4
   %i.ad = and i32 %i.ac, 2
   %i.ae = atomicrmw xchg ptr @_ZN4absl12lts_2026052624synchronization_internalL13freelist_lockE, i32 %i.ad release, align 4 ; 3 uses
@@ -359,37 +357,37 @@ attributes #8 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!"_ZTSSt13__atomic_baseIjE", !6, i64 0}
-!10 = !{!9, !6, i64 0}
-!11 = !{!"any pointer", !5, i64 0}
-!12 = !{!"p1 _ZTSN4absl12lts_2026052613base_internal14ThreadIdentityE", !11, i64 0}
-!13 = !{!12, !12, i64 0}
-!14 = !{!"p1 _ZTSN4absl12lts_2026052613base_internal14PerThreadSynchE", !11, i64 0}
-!15 = !{!"bool", !5, i64 0}
-!16 = !{!"_ZTSN4absl12lts_2026052613base_internal14PerThreadSynch5StateE", !5, i64 0}
-!17 = !{!"_ZTSSt6atomicIN4absl12lts_2026052613base_internal14PerThreadSynch5StateEE", !16, i64 0}
-!18 = !{!"p1 _ZTSN4absl12lts_2026052615SynchWaitParamsE", !11, i64 0}
-!19 = !{!"long", !5, i64 0}
-!20 = !{!"p1 _ZTSN4absl12lts_2026052614SynchLocksHeldE", !11, i64 0}
-!21 = !{!"_ZTSN4absl12lts_2026052613base_internal14PerThreadSynchE", !14, i64 0, !14, i64 8, !15, i64 16, !15, i64 17, !15, i64 18, !15, i64 19, !15, i64 20, !6, i64 24, !17, i64 28, !18, i64 32, !19, i64 40, !19, i64 48, !20, i64 56}
-!22 = !{!"_ZTSSt13__atomic_baseIPvE", !11, i64 0}
-!23 = !{!"_ZTSSt6atomicIPvE", !22, i64 0}
-!24 = !{!"_ZTSSt13__atomic_baseIiE", !6, i64 0}
-!25 = !{!"_ZTSSt6atomicIiE", !24, i64 0}
-!26 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity14SchedulerStateE", !23, i64 0, !6, i64 8, !25, i64 12, !6, i64 16, !6, i64 20, !15, i64 24}
-!27 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity9WaitStateE", !5, i64 0}
-!28 = !{!"_ZTSSt6atomicIN4absl12lts_2026052613base_internal14ThreadIdentity9WaitStateEE", !27, i64 0}
-!29 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity11WaiterStateE", !5, i64 0}
-!30 = !{!"p1 _ZTSSt6atomicIiE", !11, i64 0}
-!31 = !{!"_ZTSSt13__atomic_baseIbE", !15, i64 0}
-!32 = !{!"_ZTSSt6atomicIbE", !31, i64 0}
-!33 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentityE", !21, i64 0, !26, i64 64, !28, i64 96, !5, i64 97, !29, i64 128, !30, i64 384, !25, i64 392, !25, i64 396, !32, i64 400, !6, i64 404, !12, i64 408}
-!34 = !{!33, !12, i64 408}
-!35 = !{!21, !6, i64 24}
-!36 = !{!15, !15, i64 0}
-!37 = !{!21, !20, i64 56}
-!38 = !{!26, !6, i64 8}
-!39 = !{!33, !6, i64 404}
-!40 = !{!33, !30, i64 384}
-!41 = !{!33, !20, i64 56}
+!9 = !{!"any pointer", !5, i64 0}
+!10 = !{!"p1 _ZTSN4absl12lts_2026052613base_internal14ThreadIdentityE", !9, i64 0}
+!11 = !{!10, !10, i64 0}
+!12 = !{!"p1 _ZTSN4absl12lts_2026052613base_internal14PerThreadSynchE", !9, i64 0}
+!13 = !{!"bool", !5, i64 0}
+!14 = !{!"_ZTSN4absl12lts_2026052613base_internal14PerThreadSynch5StateE", !5, i64 0}
+!15 = !{!"_ZTSSt6atomicIN4absl12lts_2026052613base_internal14PerThreadSynch5StateEE", !14, i64 0}
+!16 = !{!"p1 _ZTSN4absl12lts_2026052615SynchWaitParamsE", !9, i64 0}
+!17 = !{!"long", !5, i64 0}
+!18 = !{!"p1 _ZTSN4absl12lts_2026052614SynchLocksHeldE", !9, i64 0}
+!19 = !{!"_ZTSN4absl12lts_2026052613base_internal14PerThreadSynchE", !12, i64 0, !12, i64 8, !13, i64 16, !13, i64 17, !13, i64 18, !13, i64 19, !13, i64 20, !6, i64 24, !15, i64 28, !16, i64 32, !17, i64 40, !17, i64 48, !18, i64 56}
+!20 = !{!"_ZTSSt13__atomic_baseIPvE", !9, i64 0}
+!21 = !{!"_ZTSSt6atomicIPvE", !20, i64 0}
+!22 = !{!"_ZTSSt13__atomic_baseIiE", !6, i64 0}
+!23 = !{!"_ZTSSt6atomicIiE", !22, i64 0}
+!24 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity14SchedulerStateE", !21, i64 0, !6, i64 8, !23, i64 12, !6, i64 16, !6, i64 20, !13, i64 24}
+!25 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity9WaitStateE", !5, i64 0}
+!26 = !{!"_ZTSSt6atomicIN4absl12lts_2026052613base_internal14ThreadIdentity9WaitStateEE", !25, i64 0}
+!27 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentity11WaiterStateE", !5, i64 0}
+!28 = !{!"p1 _ZTSSt6atomicIiE", !9, i64 0}
+!29 = !{!"_ZTSSt13__atomic_baseIbE", !13, i64 0}
+!30 = !{!"_ZTSSt6atomicIbE", !29, i64 0}
+!31 = !{!"_ZTSN4absl12lts_2026052613base_internal14ThreadIdentityE", !19, i64 0, !24, i64 64, !26, i64 96, !5, i64 97, !27, i64 128, !28, i64 384, !23, i64 392, !23, i64 396, !30, i64 400, !6, i64 404, !10, i64 408}
+!32 = !{!31, !10, i64 408}
+!33 = !{!"_ZTSSt13__atomic_baseIjE", !6, i64 0}
+!34 = !{!33, !6, i64 0}
+!35 = !{!19, !6, i64 24}
+!36 = !{!13, !13, i64 0}
+!37 = !{!19, !18, i64 56}
+!38 = !{!24, !6, i64 8}
+!39 = !{!31, !6, i64 404}
+!40 = !{!31, !28, i64 384}
+!41 = !{!31, !18, i64 56}
 end_hunk_0

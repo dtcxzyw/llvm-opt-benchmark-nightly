@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS3_m.exit.i
 
 _ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS3_m.exit.i: ; preds = %.lr.ph.i.i.i201.preheader, %.loopexit.i.i
-  %.sroa.0.0.i = phi ptr [ null, %.loopexit.i.i ], [ %i.bc, %.lr.ph.i.i.i201.preheader ] ; 6 uses
+  %.sroa.0.0.i = phi ptr [ null, %.loopexit.i.i ], [ %i.bc, %.lr.ph.i.i.i201.preheader ] ; 5 uses
   br i1 %i.az, label %._crit_edge28.i, label %.lr.ph27.i
 
 .lr.ph27.i:                                       ; preds = %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EEC2ERKS3_m.exit.i
@@ -220,7 +220,7 @@ bb.j:                                             ; preds = %._crit_edge28.i
 bb.k:                                             ; preds = %bb.n, %.lr.ph27.i
   %.026.i = phi i64 [ 0, %.lr.ph27.i ], [ %i.bv, %bb.n ] ; 2 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0259.0345, i64 %.026.i
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !78 ; 5 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !78 ; 4 uses
   %i.bg = icmp eq ptr %i.bf, null
   br i1 %i.bg, label %bb.n, label %bb.l
 
@@ -233,20 +233,14 @@ bb.l:                                             ; preds = %bb.k
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i, i64 %.02136.i22.i
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !78 ; 2 uses
   %i.bn = icmp eq ptr %i.bm, null
-  br i1 %i.bn, label %._crit_edge.i206, label %.lr.ph.i204
-
-._crit_edge.i206:                                 ; preds = %bb.m, %bb.l
-  %.02136.i.lcssa21.i = phi i64 [ %.02136.i22.i, %bb.l ], [ %.02136.i.i205, %bb.m ]
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i, i64 %.02136.i.lcssa21.i ; 2 uses
-  store ptr %i.bf, ptr %8, align 8, !tbaa !78
-  br label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i
+  br i1 %i.bn, label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i, label %.lr.ph.i204
 
 .lr.ph.i204:                                      ; preds = %bb.l, %bb.m
   %i.bo = phi ptr [ %i.bt, %bb.m ], [ %i.bm, %bb.l ]
   %.02136.i24.i = phi i64 [ %.02136.i.i205, %bb.m ], [ %.02136.i22.i, %bb.l ] ; 2 uses
   %.02035.i23.i = phi i64 [ %i.bq, %bb.m ], [ 0, %bb.l ]
   %i.bp = icmp eq ptr %i.bo, %i.bf
-  br i1 %i.bp, label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.loopexit.i207, label %bb.m
+  br i1 %i.bp, label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.i204
   %i.bq = add i64 %.02035.i23.i, 1                ; 3 uses
@@ -257,15 +251,12 @@ bb.m:                                             ; preds = %.lr.ph.i204
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i, i64 %.02136.i.i205
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !78 ; 2 uses
   %i.bu = icmp eq ptr %i.bt, null
-  br i1 %i.bu, label %._crit_edge.i206, label %.lr.ph.i204
+  br i1 %i.bu, label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i, label %.lr.ph.i204
 
-_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.loopexit.i207: ; preds = %.lr.ph.i204
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i, i64 %.02136.i24.i
-  br label %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i
-
-_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i: ; preds = %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.loopexit.i207, %._crit_edge.i206
-  %10 = phi ptr [ %8, %._crit_edge.i206 ], [ %9, %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.loopexit.i207 ]
-  store ptr %i.bf, ptr %10, align 8, !tbaa !78
+_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i: ; preds = %bb.m, %.lr.ph.i204, %bb.l
+  %.02136.i24.lcssa.sink.i = phi i64 [ %.02136.i22.i, %bb.l ], [ %.02136.i24.i, %.lr.ph.i204 ], [ %.02136.i.i205, %bb.m ]
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i, i64 %.02136.i24.lcssa.sink.i
+  store ptr %i.bf, ptr %8, align 8, !tbaa !78
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN4Luau6detail14DenseHashTableIPNS0_4NodeES3_S3_NS0_16ItemInterfaceSetIS3_EENS_16DenseHashPointerESt8equal_toIS3_EE13insert_unsafeERKS3_.exit.i, %bb.k

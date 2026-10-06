@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not10, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = tail call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 6 uses
+  %i.g = tail call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 5 uses
   %.not.i = icmp eq ptr %i.g, null
   br i1 %.not.i, label %.thread14, label %bb.e
 
@@ -216,8 +216,6 @@ bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   store i32 1, ptr %i.g, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  store i32 1, ptr %2, align 4
   store ptr %i.g, ptr %i.e, align 8
   br label %.thread
 
@@ -262,7 +260,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not10.i, label %bb.d, label %.thread.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = tail call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 6 uses
+  %i.h = tail call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 5 uses
   %.not.i.i = icmp eq ptr %i.h, null
   br i1 %.not.i.i, label %.thread14.i, label %bb.e
 
@@ -274,8 +272,6 @@ bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
   store i32 1, ptr %i.h, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  store i32 1, ptr %1, align 4
   store ptr %i.h, ptr %i.f, align 8
   br label %.thread.i
 
@@ -380,7 +376,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not126, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 6 uses
+  %i.w = call ptr @event_mm_malloc_(i64 noundef 24) #19 ; 5 uses
   %.not.i129 = icmp eq ptr %i.w, null
   br i1 %.not.i129, label %.thread171, label %bb.g
 
@@ -392,8 +388,6 @@ bb.g:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, i8 0, i64 16, i1 false)
   store i32 1, ptr %i.w, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.w, i64 4
-  store i32 1, ptr %5, align 4
   store ptr %i.w, ptr %i.u, align 8
   br label %.thread
 

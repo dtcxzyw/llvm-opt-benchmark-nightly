@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.r, %_ZN6marisa8g
 
 bb.v:                                             ; preds = %._crit_edge
   %i.hb = add i64 %i.b, -1                        ; 2 uses
-  %i.hc = lshr i64 %i.hb, 9                       ; 13 uses
+  %i.hc = lshr i64 %i.hb, 9                       ; 11 uses
   %i.hd = lshr i64 %i.hb, 6
   %i.he = and i64 %i.hd, 7
   switch i64 %i.he, label %default.unreachable244 [
@@ -279,13 +279,12 @@ bb.w:                                             ; preds = %bb.v
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !47 ; 2 uses
   %i.hh = getelementptr inbounds nuw [12 x i8], ptr %i.hg, i64 %i.hc ; 2 uses
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !22
-  %i.hj = getelementptr inbounds nuw i8, ptr %i.hh, i64 4 ; 2 uses
+  %i.hj = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !23
   %i.hl = and i32 %i.hk, -128
   %i.hm = sub i32 %.090.lcssa, %i.hi              ; 2 uses
   %i.hn = and i32 %i.hm, 127
-  %i.ho = or disjoint i32 %i.hl, %i.hn            ; 2 uses
-  store i32 %i.ho, ptr %i.hj, align 4, !tbaa !23
+  %i.ho = or disjoint i32 %i.hl, %i.hn
   br label %bb.x
 
 bb.x:                                             ; preds = %._crit_edge166, %bb.w
@@ -304,14 +303,11 @@ bb.x:                                             ; preds = %._crit_edge166, %bb
 bb.y:                                             ; preds = %._crit_edge171, %bb.x
   %.tr.i119.pre-phi = phi i32 [ %.pre208, %._crit_edge171 ], [ %.tr.i118.pre-phi, %bb.x ] ; 2 uses
   %i.hx = phi i32 [ %.pre177, %._crit_edge171 ], [ %i.hw, %bb.x ]
-  %i.hy = phi ptr [ %.pre173, %._crit_edge171 ], [ %i.hq, %bb.x ] ; 2 uses
-  %4 = getelementptr inbounds nuw [12 x i8], ptr %i.hy, i64 %i.hc
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.hy = phi ptr [ %.pre173, %._crit_edge171 ], [ %i.hq, %bb.x ]
   %i.hz = and i32 %i.hx, -8355841
   %i.ia = shl i32 %.tr.i119.pre-phi, 15
   %i.ib = and i32 %i.ia, 8355840
-  %i.ic = or disjoint i32 %i.ib, %i.hz            ; 2 uses
-  store i32 %i.ic, ptr %5, align 4, !tbaa !23
+  %i.ic = or disjoint i32 %i.ib, %i.hz
   br label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge178, %bb.y
@@ -341,14 +337,11 @@ bb.aa:                                            ; preds = %._crit_edge185, %bb
 bb.ab:                                            ; preds = %._crit_edge190, %bb.aa
   %.tr.i121.pre-phi = phi i32 [ %.pre218, %._crit_edge190 ], [ %.pre-phi215, %bb.aa ] ; 2 uses
   %i.ir = phi i32 [ %.pre196, %._crit_edge190 ], [ %i.iq, %bb.aa ]
-  %i.is = phi ptr [ %.pre192, %._crit_edge190 ], [ %i.ik, %bb.aa ] ; 2 uses
-  %6 = getelementptr inbounds nuw [12 x i8], ptr %i.is, i64 %i.hc
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.is = phi ptr [ %.pre192, %._crit_edge190 ], [ %i.ik, %bb.aa ]
   %i.it = and i32 %i.ir, -261633
   %i.iu = shl i32 %.tr.i121.pre-phi, 9
   %i.iv = and i32 %i.iu, 261632
-  %i.iw = or disjoint i32 %i.iv, %i.it            ; 2 uses
-  store i32 %i.iw, ptr %7, align 4, !tbaa !24
+  %i.iw = or disjoint i32 %i.iv, %i.it
   br label %bb.ac
 
 bb.ac:                                            ; preds = %._crit_edge197, %bb.ab

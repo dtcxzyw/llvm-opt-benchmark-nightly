@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i
@@ -609,8 +608,7 @@ bb.f:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i
@@ -1013,8 +1011,7 @@ bb.f:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i
@@ -1417,8 +1414,7 @@ bb.f:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i

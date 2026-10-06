@@ -202,12 +202,11 @@ bb.r:                                             ; preds = %RSHAPE_CAPACITY.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bm = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..0..0..0..0..i.i13.i, i64 noundef %.0.i.i28, i64 noundef 53274, i32 noundef 0, i64 noundef 24) #15 ; 2 uses
   %i.bn = tail call noalias nonnull ptr @ruby_xmalloc2(i64 noundef %i.be, i64 noundef 8) #18
-  %i.bo = inttoptr i64 %i.bm to ptr               ; 4 uses
+  %i.bo = inttoptr i64 %i.bm to ptr               ; 3 uses
   %i.bp = getelementptr i8, ptr %i.bo, i64 16
   store ptr %i.bn, ptr %i.bp, align 8, !tbaa !20
   %i.bq = load i64, ptr %i.bo, align 8, !tbaa !22
-  %i.br = or i64 %i.bq, 65536                     ; 2 uses
-  store i64 %i.br, ptr %i.bo, align 8, !tbaa !22
+  %i.br = or i64 %i.bq, 65536
   br label %imemo_fields_new.exit
 
 imemo_fields_new.exit:                            ; preds = %bb.q, %bb.r

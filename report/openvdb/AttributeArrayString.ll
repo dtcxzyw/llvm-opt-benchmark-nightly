@@ -204,13 +204,13 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !161  ; 2 uses
   %i.c = lshr i64 %i.b, 3                         ; 9 uses
   %i.d = shl nuw nsw i64 %i.c, 1                  ; 3 uses
-  %i.e = load ptr, ptr %1, align 8, !tbaa !208    ; 9 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !208    ; 11 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.c
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !54   ; 5 uses
-  %i.h = load i32, ptr %i.f, align 4, !tbaa !54   ; 5 uses
+  %i.g = load i32, ptr %i.e, align 4, !tbaa !54   ; 3 uses
+  %i.h = load i32, ptr %i.f, align 4, !tbaa !54   ; 3 uses
   %i.i = icmp ult i32 %i.g, %i.h
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.d
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !54   ; 6 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !54   ; 4 uses
   br i1 %i.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -220,7 +220,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ult i32 %i.g, %i.k
   %i.n = select i1 %i.m, i64 %i.d, i64 0
-  %3 = tail call i32 @llvm.umax.i32(i32 %i.g, i32 %i.k)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -230,22 +229,20 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.p = icmp ult i32 %i.k, %i.g
   %i.q = select i1 %i.p, i64 %i.d, i64 0
-  %4 = tail call i32 @llvm.umin.i32(i32 %i.k, i32 %i.g)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
 
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e
-  %5 = phi i32 [ %3, %bb.c ], [ %4, %bb.e ], [ %i.h, %bb.b ], [ %i.h, %bb.d ] ; 3 uses
-  %i.r = phi i64 [ %i.n, %bb.c ], [ %i.q, %bb.e ], [ %i.c, %bb.b ], [ %i.c, %bb.d ] ; 2 uses
+  %i.r = phi i64 [ %i.n, %bb.c ], [ %i.q, %bb.e ], [ %i.c, %bb.b ], [ %i.c, %bb.d ] ; 3 uses
   %i.s = mul nuw nsw i64 %i.c, 3                  ; 3 uses
   %i.t = shl nuw nsw i64 %i.c, 2                  ; 3 uses
   %i.u = mul nuw i64 %i.c, 5                      ; 3 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.s
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.t
-  %i.x = load i32, ptr %i.v, align 4, !tbaa !54   ; 5 uses
-  %i.y = load i32, ptr %i.w, align 4, !tbaa !54   ; 5 uses
+  %i.x = load i32, ptr %i.v, align 4, !tbaa !54   ; 3 uses
+  %i.y = load i32, ptr %i.w, align 4, !tbaa !54   ; 3 uses
   %i.z = icmp ult i32 %i.x, %i.y
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.u
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !54 ; 6 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !54 ; 4 uses
   br i1 %i.z, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
@@ -255,7 +252,6 @@ bb.f:                                             ; preds = %_ZNK3tbb6detail2d11
 bb.g:                                             ; preds = %bb.f
   %i.ad = icmp ult i32 %i.x, %i.ab
   %i.ae = select i1 %i.ad, i64 %i.u, i64 %i.s
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.x, i32 %i.ab)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13
 
 bb.h:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit
@@ -265,12 +261,10 @@ bb.h:                                             ; preds = %_ZNK3tbb6detail2d11
 bb.i:                                             ; preds = %bb.h
   %i.ag = icmp ult i32 %i.ab, %i.x
   %i.ah = select i1 %i.ag, i64 %i.u, i64 %i.s
-  %7 = tail call i32 @llvm.umin.i32(i32 %i.ab, i32 %i.x)
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13
 
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit13: ; preds = %bb.f, %bb.g, %bb.h, %bb.i
-  %8 = phi i32 [ %6, %bb.g ], [ %7, %bb.i ], [ %i.y, %bb.f ], [ %i.y, %bb.h ] ; 3 uses
-  %i.ai = phi i64 [ %i.ae, %bb.g ], [ %i.ah, %bb.i ], [ %i.t, %bb.f ], [ %i.t, %bb.h ] ; 2 uses
+  %i.ai = phi i64 [ %i.ae, %bb.g ], [ %i.ah, %bb.i ], [ %i.t, %bb.f ], [ %i.t, %bb.h ] ; 3 uses
   %i.aj = mul nuw i64 %i.c, 6                     ; 3 uses
   %i.ak = mul nuw i64 %i.c, 7                     ; 3 uses
   %i.al = add i64 %i.b, -1                        ; 3 uses
@@ -306,11 +300,15 @@ bb.m:                                             ; preds = %bb.l
 _ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14: ; preds = %bb.j, %bb.k, %bb.l, %bb.m
   %i.bb = phi i32 [ %i.aw, %bb.k ], [ %i.ba, %bb.m ], [ %i.ap, %bb.j ], [ %i.ap, %bb.l ] ; 4 uses
   %i.bc = phi i64 [ %i.av, %bb.k ], [ %i.az, %bb.m ], [ %i.ak, %bb.j ], [ %i.ak, %bb.l ] ; 2 uses
-  %i.bd = icmp ult i32 %5, %8
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.r
+  %4 = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.ai
+  %5 = load i32, ptr %3, align 4, !tbaa !54       ; 3 uses
+  %6 = load i32, ptr %4, align 4, !tbaa !54       ; 3 uses
+  %i.bd = icmp ult i32 %5, %6
   br i1 %i.bd, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14
-  %i.be = icmp ult i32 %8, %i.bb
+  %i.be = icmp ult i32 %6, %i.bb
   br i1 %i.be, label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -319,7 +317,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15
 
 bb.p:                                             ; preds = %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit14
-  %i.bh = icmp ult i32 %i.bb, %8
+  %i.bh = icmp ult i32 %i.bb, %6
   br i1 %i.bh, label %_ZNK3tbb6detail2d116quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEESt4lessIjEE15median_of_threeERKS9_mmm.exit15, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -722,7 +720,7 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 3 ; 6 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 3 ; 5 uses
   store i8 0, ptr %i.aj, align 1, !tbaa !40
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !461
@@ -742,8 +740,8 @@ bb.l:                                             ; preds = %_ZN3tbb6detail2d118
   br i1 %i.au, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit
 
 .lr.ph.i:                                         ; preds = %bb.l
-  %.phi.trans.insert.i = zext i8 %i.as to i64
-  %.phi.trans.insert6.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.phi.trans.insert.i
+  %.phi.trans.insert.i = zext i8 %i.as to i64     ; 2 uses
+  %.phi.trans.insert6.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.phi.trans.insert.i ; 2 uses
   %.pre.i = load i8, ptr %.phi.trans.insert6.i, align 1, !tbaa !40
   %i.av = icmp ult i8 %.pre.i, %i.at
   br i1 %i.av, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit
@@ -753,9 +751,10 @@ bb.m:                                             ; preds = %bb.n
   br i1 %i.aw, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit, !llvm.loop !457
 
 _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i: ; preds = %.lr.ph.i, %bb.m
-  %6 = phi i8 [ %i.bk, %bb.m ], [ %i.as, %.lr.ph.i ] ; 3 uses
-  %i.ax = phi i8 [ %i.ca, %bb.m ], [ %i.ar, %.lr.ph.i ] ; 2 uses
-  %7 = zext i8 %6 to i64                          ; 2 uses
+  %6 = phi ptr [ %i.bz, %bb.m ], [ %.phi.trans.insert6.i, %.lr.ph.i ] ; 2 uses
+  %7 = phi i64 [ %i.bl, %bb.m ], [ %.phi.trans.insert.i, %.lr.ph.i ]
+  %i.ax = phi i8 [ %i.bk, %bb.m ], [ %i.as, %.lr.ph.i ] ; 2 uses
+  %8 = phi i8 [ %i.ca, %bb.m ], [ %i.ar, %.lr.ph.i ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.ak, i64 %7 ; 5 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16 ; 2 uses
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !209
@@ -770,10 +769,9 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iterat
   br i1 %i.bi, label %bb.n, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit
 
 bb.n:                                             ; preds = %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i
-  %8 = getelementptr inbounds nuw i8, ptr %i.aj, i64 %7 ; 2 uses
-  %i.bj = add nuw i8 %6, 1
+  %i.bj = add nuw i8 %i.ax, 1
   %i.bk = and i8 %i.bj, 7                         ; 5 uses
-  %i.bl = zext nneg i8 %i.bk to i64               ; 2 uses
+  %i.bl = zext nneg i8 %i.bk to i64               ; 3 uses
   %i.bm = getelementptr inbounds nuw [24 x i8], ptr %i.ak, i64 %i.bl ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bm, ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i64 24, i1 false), !tbaa.struct !461
   %i.bn = load i64, ptr %i.bm, align 8            ; 2 uses
@@ -790,18 +788,18 @@ bb.n:                                             ; preds = %_ZN3tbb6detail2d112
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !209
   store i64 %i.bw, ptr %i.az, align 8, !tbaa !209
-  %i.bx = load i8, ptr %8, align 1, !tbaa !40
+  %i.bx = load i8, ptr %6, align 1, !tbaa !40
   %i.by = add i8 %i.bx, 1                         ; 3 uses
-  store i8 %i.by, ptr %8, align 1, !tbaa !40
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.bl
+  store i8 %i.by, ptr %6, align 1, !tbaa !40
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.bl ; 2 uses
   store i8 %i.by, ptr %i.bz, align 1, !tbaa !40
-  %i.ca = add nuw nsw i8 %i.ax, 1                 ; 3 uses
+  %i.ca = add nuw nsw i8 %8, 1                    ; 3 uses
   %exitcond.not.i = icmp eq i8 %i.ca, 8
   br i1 %exitcond.not.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit.thread, label %bb.m, !llvm.loop !457
 
 _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE13split_to_fillEh.exit: ; preds = %bb.m, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i, %.lr.ph.i, %bb.l
-  %i.cb = phi i8 [ %i.ar, %bb.l ], [ %i.ar, %.lr.ph.i ], [ %i.ax, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.ca, %bb.m ] ; 6 uses
-  %i.cc = phi i8 [ %i.as, %bb.l ], [ %i.as, %.lr.ph.i ], [ %6, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.bk, %bb.m ] ; 6 uses
+  %i.cb = phi i8 [ %i.ar, %bb.l ], [ %i.ar, %.lr.ph.i ], [ %8, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.ca, %bb.m ] ; 6 uses
+  %i.cc = phi i8 [ %i.as, %bb.l ], [ %i.as, %.lr.ph.i ], [ %i.ax, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.bk, %bb.m ] ; 6 uses
   %i.cd = load ptr, ptr %i.al, align 8, !tbaa !177
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 24
   %i.cf = load atomic i8, ptr %i.ce monotonic, align 1, !range !116, !noundef !69

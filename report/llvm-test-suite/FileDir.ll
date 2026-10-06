@@ -205,9 +205,8 @@ _ZN11CStringBaseIwEaSEPKw.exit:                   ; preds = %_ZN11CStringBaseIwE
   %i.bt = icmp slt i32 %i.bo, -1
   %i.bu = shl nuw nsw i64 %i.bs, 2
   %i.bv = select i1 %i.bt, i64 -1, i64 %i.bu
-  %i.bw = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bv) #23, !noalias !126 ; 3 uses
+  %i.bw = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bv) #23, !noalias !126 ; 2 uses
   store ptr %i.bw, ptr %5, align 8, !tbaa !13, !alias.scope !126
-  store i32 0, ptr %i.bw, align 4, !tbaa !15, !noalias !126
   store i32 %i.bp, ptr %i.br, align 4, !tbaa !16, !alias.scope !126
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i
 
@@ -255,9 +254,8 @@ _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %bb.i, %bb.j
   %i.ck = icmp slt i32 %i.cf, -1
   %i.cl = shl nuw nsw i64 %i.cj, 2
   %i.cm = select i1 %i.ck, i64 -1, i64 %i.cl
-  %i.cn = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cm) #23, !noalias !127 ; 3 uses
+  %i.cn = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cm) #23, !noalias !127 ; 2 uses
   store ptr %i.cn, ptr %6, align 8, !tbaa !13, !alias.scope !127
-  store i32 0, ptr %i.cn, align 4, !tbaa !15, !noalias !127
   store i32 %i.cg, ptr %i.ci, align 4, !tbaa !16, !alias.scope !127
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i21
 

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE8allocateEi.exit.i.i
 
 _ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE8allocateEi.exit.i.i: ; preds = %bb.m, %bb.l
-  %i.ce = phi i32 [ %.pre.i18, %bb.m ], [ %i.bu, %bb.l ] ; 4 uses
+  %i.ce = phi i32 [ %.pre.i18, %bb.m ], [ %i.bu, %bb.l ] ; 3 uses
   %.0.i.i.i19 = phi ptr [ %i.cd, %bb.m ], [ null, %bb.l ] ; 8 uses
   %i.cf = icmp sgt i32 %i.ce, 0
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -301,22 +301,18 @@ _ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.thread.i.i
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.dh = load i8, ptr %i.dg, align 8, !tbaa !50, !range !169, !noundef !180
   %i.di = trunc nuw i8 %i.dh to i1
-  br i1 %i.di, label %bb.n, label %3
+  br i1 %i.di, label %bb.n, label %_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE10deallocateEv.exit.i.i
 
 bb.n:                                             ; preds = %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.thread.i.i
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.ch)
-  br label %3
-
-3:                                                ; preds = %bb.n, %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.thread.i.i
-  %.pre2.pre.i = load i32, ptr %i.bt, align 4, !tbaa !52
   br label %_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE10deallocateEv.exit.i.i
 
-_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE10deallocateEv.exit.i.i: ; preds = %3, %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.i.i
-  %.pre2.i21 = phi i32 [ %.pre2.pre.i, %3 ], [ %i.ce, %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.i.i ]
+_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE10deallocateEv.exit.i.i: ; preds = %bb.n, %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.thread.i.i, %_ZNK20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE4copyEiiPS2_.exit.i.i
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i8 1, ptr %i.dj, align 8, !tbaa !50
   store ptr %.0.i.i.i19, ptr %i.cg, align 8, !tbaa !51
   store i32 %i.bz, ptr %i.bv, align 8, !tbaa !53
+  %.pre2.i21 = load i32, ptr %i.bt, align 4, !tbaa !52
   br label %_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE9push_backERKS2_.exit
 
 _ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE9push_backERKS2_.exit: ; preds = %_ZN20btAlignedObjectArrayI10btTriIndexE9push_backERKS0_.exit, %bb.k, %_ZN20btAlignedObjectArrayI9btHashKeyI10btTriIndexEE10deallocateEv.exit.i.i

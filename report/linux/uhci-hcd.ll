@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
   %.val168 = load ptr, ptr %i.aw, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i64 0, ptr %i.b, align 8, !annotation !20
-  %i.cz = call ptr @dma_pool_alloc(ptr noundef %.val168, i32 noundef 2080, ptr noundef nonnull %i.b) #11 ; 11 uses
+  %i.cz = call ptr @dma_pool_alloc(ptr noundef %.val168, i32 noundef 2080, ptr noundef nonnull %i.b) #11 ; 10 uses
   %.not.i172 = icmp eq ptr %i.cz, null
   br i1 %.not.i172, label %uhci_alloc_td.exit173.thread, label %bb.t
 
@@ -235,13 +235,11 @@ bb.t:                                             ; preds = %bb.s
   store ptr %i.ax, ptr %i.dd, align 8
   store ptr %i.dj, ptr %i.de, align 16
   store volatile ptr %i.dd, ptr %i.dj, align 8
-  %i.dk = trunc nuw nsw i64 %i.bz to i32          ; 2 uses
+  %i.dk = trunc nuw nsw i64 %i.bz to i32
   %i.dl = shl nuw nsw i32 %i.ca, 19
   %i.dm = or disjoint i32 %i.dl, %i.s
   %i.dn = or i32 %i.dm, -2097152
   %i.do = trunc i64 %i.cc to i32
-  %3 = getelementptr i8, ptr %i.cz, i64 4
-  store i32 %i.dk, ptr %3, align 4
   %i.dp = getelementptr i8, ptr %i.cz, i64 8
   store i32 %i.dn, ptr %i.dp, align 8
   %i.dq = getelementptr i8, ptr %i.cz, i64 12

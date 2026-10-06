@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN20btAlignedObjectArrayIiE8allocateEi.exit.i.i
 
 _ZN20btAlignedObjectArrayIiE8allocateEi.exit.i.i: ; preds = %bb.d, %bb.c
-  %i.l = phi i32 [ %.pre.i, %bb.d ], [ %i.b, %bb.c ] ; 4 uses
+  %i.l = phi i32 [ %.pre.i, %bb.d ], [ %i.b, %bb.c ] ; 3 uses
   %.0.i.i.i = phi ptr [ %i.k, %bb.d ], [ null, %bb.c ] ; 8 uses
   %i.m = icmp sgt i32 %i.l, 0
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3120 ; 2 uses
@@ -301,22 +301,18 @@ _ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i: ; preds = %scalar.ph.pr
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 3128
   %i.ao = load i8, ptr %i.an, align 8, !tbaa !135, !range !143, !noundef !148
   %i.ap = trunc nuw i8 %i.ao to i1
-  br i1 %i.ap, label %bb.e, label %2
+  br i1 %i.ap, label %bb.e, label %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i
 
 bb.e:                                             ; preds = %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.o)
-  br label %2
-
-2:                                                ; preds = %bb.e, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i
-  %.pre2.pre.i = load i32, ptr %i.a, align 4, !tbaa !137
   br label %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i
 
-_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i: ; preds = %2, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i.i
-  %.pre2.i = phi i32 [ %.pre2.pre.i, %2 ], [ %i.l, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i.i ]
+_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i: ; preds = %bb.e, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i.i, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i.i
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 3128
   store i8 1, ptr %i.aq, align 8, !tbaa !135
   store ptr %.0.i.i.i, ptr %i.n, align 8, !tbaa !136
   store i32 %i.g, ptr %i.c, align 8, !tbaa !138
+  %.pre2.i = load i32, ptr %i.a, align 4, !tbaa !137
   br label %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit
 
 _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %bb.a, %bb.b, %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i

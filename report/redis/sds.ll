@@ -204,7 +204,7 @@ sdslen.exit:                                      ; preds = %bb.a, %bb.b, %bb.c,
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @sdsResize(ptr noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 10 uses
+  %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = getelementptr i8, ptr %0, i64 -1         ; 2 uses
   %.val = load i8, ptr %i.b, align 1, !tbaa !17   ; 3 uses
   %i.c = and i8 %.val, 7                          ; 5 uses
@@ -352,7 +352,7 @@ sdsAllocSize.exit:                                ; preds = %bb.f, %bb.g, %bb.h,
   store i64 %.0.i67, ptr %i.a, align 8, !tbaa !15
   %i.bi = tail call i64 @je_nallocx(i64 noundef %i.aq, i32 noundef 0) #23
   %i.bj = icmp eq i64 %i.bi, %.0.i67
-  br i1 %i.bj, label %sdssetlen.exit, label %bb.l
+  br i1 %i.bj, label %bb.t, label %bb.l
 
 bb.l:                                             ; preds = %sdsAllocSize.exit
   %i.bk = call ptr @zrealloc_usable(ptr noundef %i.ab, i64 noundef %i.aq, ptr noundef nonnull %i.a, ptr noundef null) #21 ; 6 uses
@@ -367,7 +367,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bq = add i64 %i.bn, %i.bp                    ; 3 uses
   %switch.tableidx = add nsw i8 %i.c, -1          ; 2 uses
   %i.br = icmp ult i8 %switch.tableidx, 3
-  br i1 %i.br, label %switch.lookup, label %sdssetlen.exit
+  br i1 %i.br, label %switch.lookup, label %bb.t
 
 switch.lookup:                                    ; preds = %bb.m
   %i.bs = zext nneg i8 %switch.tableidx to i64
@@ -375,7 +375,7 @@ switch.lookup:                                    ; preds = %bb.m
   %switch.load174 = load i32, ptr %switch.gep173, align 4
   %switch.ext175 = zext i32 %switch.load174 to i64
   %i.bt = icmp ugt i64 %i.bq, %switch.ext175
-  br i1 %i.bt, label %bb.n, label %sdssetlen.exit
+  br i1 %i.bt, label %bb.n, label %bb.t
 
 bb.n:                                             ; preds = %switch.lookup
   %i.bu = icmp ult i64 %i.bq, 65531
@@ -389,7 +389,7 @@ adjustTypeIfNeeded.exit.thread158:                ; preds = %bb.n
   store i8 2, ptr %i.bx, align 1, !tbaa !17
   %i.by = trunc i64 %spec.select to i16
   store i16 %i.by, ptr %i.bk, align 1, !tbaa !19
-  br label %sdssetlen.exit
+  br label %bb.t
 
 adjustTypeIfNeeded.exit:                          ; preds = %bb.n
   %i.bz = icmp ult i64 %i.bq, 4294967287          ; 3 uses
@@ -406,22 +406,11 @@ bb.o:                                             ; preds = %adjustTypeIfNeeded.
   %i.ce = trunc i64 %spec.select to i32
   %i.cf = getelementptr inbounds i8, ptr %i.cb, i64 -9
   store i32 %i.ce, ptr %i.cf, align 1, !tbaa !12
-  br label %sdssetlen.exit
+  br label %bb.t
 
 bb.p:                                             ; preds = %adjustTypeIfNeeded.exit
   %i.cg = getelementptr inbounds i8, ptr %i.cb, i64 -17
   store i64 %spec.select, ptr %i.cg, align 1, !tbaa !15
-  br label %sdssetlen.exit
-
-sdssetlen.exit:                                   ; preds = %bb.m, %switch.lookup, %bb.p, %bb.o, %adjustTypeIfNeeded.exit.thread158, %sdsAllocSize.exit
-  %.0 = phi i32 [ %.0.i115131, %sdsAllocSize.exit ], [ 17, %bb.p ], [ %.0.i115131, %switch.lookup ], [ %.0.i115131, %bb.m ], [ 9, %bb.o ], [ 5, %adjustTypeIfNeeded.exit.thread158 ]
-  %.051 = phi ptr [ %0, %sdsAllocSize.exit ], [ %i.cb, %bb.p ], [ %i.bm, %switch.lookup ], [ %i.bm, %bb.m ], [ %i.cb, %bb.o ], [ %i.bv, %adjustTypeIfNeeded.exit.thread158 ] ; 2 uses
-  %3 = load i64, ptr %i.a, align 8, !tbaa !15
-  %4 = xor i32 %.0, -1
-  %5 = sext i32 %4 to i64
-  %6 = add i64 %3, %5
-  %.phi.trans.insert = getelementptr i8, ptr %.051, i64 -1
-  %.val.i81.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !17
   br label %bb.t
 
 bb.q:                                             ; preds = %sdsReqType.exit
@@ -457,7 +446,7 @@ sdsReqType.exit.i74:                              ; preds = %bb.s
   br label %adjustTypeIfNeeded.exit80
 
 adjustTypeIfNeeded.exit80:                        ; preds = %bb.r, %sdsReqType.exit.i74, %bb.s, %switch.lookup177
-  %.1112 = phi i8 [ %spec.store.select, %bb.r ], [ %spec.store.select, %switch.lookup177 ], [ %..i.i75, %sdsReqType.exit.i74 ], [ 2, %bb.s ] ; 2 uses
+  %.1112 = phi i8 [ %spec.store.select, %bb.r ], [ %spec.store.select, %switch.lookup177 ], [ %..i.i75, %sdsReqType.exit.i74 ], [ 2, %bb.s ]
   %.0108 = phi i32 [ %switch.ext, %bb.r ], [ %switch.ext, %switch.lookup177 ], [ %..i76, %sdsReqType.exit.i74 ], [ 5, %bb.s ] ; 2 uses
   %i.cs = zext nneg i32 %.0108 to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cs ; 3 uses
@@ -466,18 +455,19 @@ adjustTypeIfNeeded.exit80:                        ; preds = %bb.r, %sdsReqType.e
   call void @zfree(ptr noundef %i.ab) #21
   %i.cv = getelementptr inbounds i8, ptr %i.ct, i64 -1
   store i8 %.1112, ptr %i.cv, align 1, !tbaa !17
-  %7 = load i64, ptr %i.a, align 8, !tbaa !15
-  %8 = xor i32 %.0108, -1
-  %9 = sext i32 %8 to i64
-  %10 = add i64 %7, %9
   br label %bb.t
 
-bb.t:                                             ; preds = %sdssetlen.exit, %adjustTypeIfNeeded.exit80
-  %.val.i81 = phi i8 [ %.val.i81.pre, %sdssetlen.exit ], [ %.1112, %adjustTypeIfNeeded.exit80 ] ; 6 uses
-  %.253 = phi ptr [ %.051, %sdssetlen.exit ], [ %i.ct, %adjustTypeIfNeeded.exit80 ] ; 15 uses
-  %.1 = phi i64 [ %6, %sdssetlen.exit ], [ %10, %adjustTypeIfNeeded.exit80 ] ; 4 uses
+bb.t:                                             ; preds = %bb.m, %sdsAllocSize.exit, %adjustTypeIfNeeded.exit.thread158, %bb.o, %bb.p, %switch.lookup, %adjustTypeIfNeeded.exit80
+  %.0.sink = phi i32 [ %.0108, %adjustTypeIfNeeded.exit80 ], [ %.0.i115131, %sdsAllocSize.exit ], [ 17, %bb.p ], [ %.0.i115131, %switch.lookup ], [ %.0.i115131, %bb.m ], [ 9, %bb.o ], [ 5, %adjustTypeIfNeeded.exit.thread158 ]
+  %.253 = phi ptr [ %i.ct, %adjustTypeIfNeeded.exit80 ], [ %0, %sdsAllocSize.exit ], [ %i.cb, %bb.p ], [ %i.bm, %switch.lookup ], [ %i.bm, %bb.m ], [ %i.cb, %bb.o ], [ %i.bv, %adjustTypeIfNeeded.exit.thread158 ] ; 15 uses
+  %3 = load i64, ptr %i.a, align 8, !tbaa !15
+  %4 = xor i32 %.0.sink, -1
+  %5 = sext i32 %4 to i64
+  %6 = add i64 %3, %5                             ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.253, i64 %spec.select
   store i8 0, ptr %i.cw, align 1, !tbaa !17
+  %7 = getelementptr i8, ptr %.253, i64 -1        ; 2 uses
+  %.val.i81 = load i8, ptr %7, align 1, !tbaa !17 ; 6 uses
   %i.cx = and i8 %.val.i81, 7
   switch i8 %i.cx, label %sdssetlen.exit83 [
     i8 0, label %bb.u
@@ -488,10 +478,9 @@ bb.t:                                             ; preds = %sdssetlen.exit, %ad
   ]
 
 bb.u:                                             ; preds = %bb.t
-  %11 = getelementptr i8, ptr %.253, i64 -1
   %.tr.i82 = trunc i64 %spec.select to i8
   %i.cy = shl i8 %.tr.i82, 3                      ; 2 uses
-  store i8 %i.cy, ptr %11, align 1, !tbaa !17
+  store i8 %i.cy, ptr %7, align 1, !tbaa !17
   br label %sdssetlen.exit83
 
 bb.v:                                             ; preds = %bb.t
@@ -528,26 +517,26 @@ sdssetlen.exit83:                                 ; preds = %bb.t, %bb.u, %bb.v,
   ]
 
 bb.z:                                             ; preds = %sdssetlen.exit83
-  %i.dh = trunc i64 %.1 to i8
+  %i.dh = trunc i64 %6 to i8
   %i.di = getelementptr inbounds i8, ptr %.253, i64 -2
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !17
   br label %.critedge
 
 bb.aa:                                            ; preds = %sdssetlen.exit83
-  %i.dj = trunc i64 %.1 to i16
+  %i.dj = trunc i64 %6 to i16
   %i.dk = getelementptr inbounds i8, ptr %.253, i64 -3
   store i16 %i.dj, ptr %i.dk, align 1, !tbaa !19
   br label %.critedge
 
 bb.ab:                                            ; preds = %sdssetlen.exit83
-  %i.dl = trunc i64 %.1 to i32
+  %i.dl = trunc i64 %6 to i32
   %i.dm = getelementptr inbounds i8, ptr %.253, i64 -5
   store i32 %i.dl, ptr %i.dm, align 1, !tbaa !12
   br label %.critedge
 
 bb.ac:                                            ; preds = %sdssetlen.exit83
   %i.dn = getelementptr inbounds i8, ptr %.253, i64 -9
-  store i64 %.1, ptr %i.dn, align 1, !tbaa !15
+  store i64 %6, ptr %i.dn, align 1, !tbaa !15
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.z, %sdssetlen.exit83, %bb.l, %bb.q

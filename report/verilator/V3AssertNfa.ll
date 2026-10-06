@@ -205,7 +205,7 @@ _ZN13AstNodeModule9addStmtspEP7AstNode.exit._crit_edge: ; preds = %_ZN13AstNodeM
   %i.fm = getelementptr inbounds nuw i8, ptr %56, i64 24
   %i.fn = getelementptr inbounds i8, ptr null, i64 %i.fl ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %56, i64 32 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fi, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.fi, align 8
   store ptr %i.fn, ptr %i.fo, align 8, !tbaa !342
   br label %bb.dv
 
@@ -608,7 +608,7 @@ bb.dv:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %i.zp = phi ptr [ %i.fr, %bb.z ], [ %i.fr, %bb.aa ], [ %i.fr, %bb.ab ], [ %i.fm, %.thread ]
   %.val204.i = phi ptr [ %i.fq, %bb.z ], [ %i.fq, %bb.aa ], [ %i.fq, %bb.ab ], [ null, %.thread ] ; 8 uses
   store ptr %i.zo, ptr %i.zp, align 8, !tbaa !344
-  %i.zq = getelementptr inbounds nuw i8, ptr %56, i64 40 ; 7 uses
+  %i.zq = getelementptr inbounds nuw i8, ptr %56, i64 40 ; 6 uses
   %i.zr = ptrtoint ptr %.sroa.8.3 to i64
   %i.zs = ptrtoint ptr %.sroa.01203.4 to i64      ; 2 uses
   %i.zt = sub i64 %i.zr, %i.zs                    ; 7 uses
@@ -620,7 +620,6 @@ bb.dv:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %i.zu = getelementptr inbounds nuw i8, ptr %56, i64 48
   %i.zv = getelementptr inbounds i8, ptr null, i64 %i.zt ; 2 uses
   %i.zw = getelementptr inbounds nuw i8, ptr %56, i64 56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.zq, i8 0, i64 16, i1 false)
   store ptr %i.zv, ptr %i.zw, align 8, !tbaa !631
   br label %bb.eb
 
@@ -1023,7 +1022,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = getelementptr inbounds i8, ptr null, i64 %i.f ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.a, align 8
   store ptr %i.h, ptr %i.i, align 8, !tbaa !342
   br label %_ZN12_GLOBAL__N_111BuildResultC2ERKS0_.exit
 
@@ -1426,7 +1425,7 @@ bb.pb:                                            ; preds = %.noexc125.i882
 
 ._crit_edge235.i:                                 ; preds = %bb.pm, %bb.pb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull readonly align 16 dereferenceable(48) %9, i64 16, i1 false)
-  %i.bgx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.bgx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bgy = getelementptr inbounds nuw i8, ptr %9, i64 16
   %.val10.i.i.i = load ptr, ptr %i.bgy, align 16, !tbaa !343, !noalias !839 ; 4 uses
   %i.bgz = getelementptr inbounds nuw i8, ptr %9, i64 24
@@ -1442,7 +1441,6 @@ bb.pb:                                            ; preds = %.noexc125.i882
   %i.bhd = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bhe = getelementptr inbounds i8, ptr null, i64 %i.bhc ; 2 uses
   %i.bhf = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bgx, i8 0, i64 16, i1 false), !alias.scope !839
   store ptr %i.bhe, ptr %i.bhf, align 8, !tbaa !342, !alias.scope !839
   br label %_ZN12_GLOBAL__N_111BuildResultC2ERKS0_.exit.i
 

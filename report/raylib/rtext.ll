@@ -205,47 +205,45 @@ middle.block618:                                  ; preds = %vector.body612
   br i1 %i.agt, label %.lr.ph9.preheader.i.i.i.i.i, label %._crit_edge10.i.i.i.i.i
 
 .lr.ph9.preheader.i.i.i.i.i:                      ; preds = %.lr.ph15.i.i.i.i.i
-  %i.agu = add nsw i32 %i.agr, -1                 ; 2 uses
+  %i.agu = add nsw i32 %i.agr, -1
   %wide.trip.count25.i.i.i.i.i = zext nneg i32 %i.agr to i64
-  %.phi.trans.insert.i.i.i.i.i = zext nneg i32 %i.agu to i64
-  %.phi.trans.insert32.i.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.agp, i64 %.phi.trans.insert.i.i.i.i.i
-  %.phi.trans.insert33.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert32.i.i.i.i.i, i64 4
-  %.pre.i28.i.i.i.i = load float, ptr %.phi.trans.insert33.i.i.i.i.i, align 4
   br label %.lr.ph9.i.i.i.i.i
 
 .lr.ph9.i.i.i.i.i:                                ; preds = %.lr.ph9._crit_edge.i.i.i.i.i, %.lr.ph9.preheader.i.i.i.i.i
-  %10 = phi float [ %.pre.i28.i.i.i.i, %.lr.ph9.preheader.i.i.i.i.i ], [ %i.agx, %.lr.ph9._crit_edge.i.i.i.i.i ] ; 2 uses
   %indvars.iv22.i.i.i.i.i = phi i64 [ 0, %.lr.ph9.preheader.i.i.i.i.i ], [ %indvars.iv.next23.i.i.i.i.i, %.lr.ph9._crit_edge.i.i.i.i.i ] ; 5 uses
-  %.0856.i.i.i.i.i.a = phi i32 [ %i.agu, %.lr.ph9.preheader.i.i.i.i.i ], [ %.pre-phi36.i.i.i.i.i, %.lr.ph9._crit_edge.i.i.i.i.i ]
-  %.25.i.i.i.i.i = phi i32 [ %.18812.i.i.i.i.i, %.lr.ph9.preheader.i.i.i.i.i ], [ %.3.i.i.i.i.i, %.lr.ph9._crit_edge.i.i.i.i.i ] ; 3 uses
+  %.0856.i.i.i.i.i = phi i32 [ %i.agu, %.lr.ph9.preheader.i.i.i.i.i ], [ %.pre-phi36.i.i.i.i.i, %.lr.ph9._crit_edge.i.i.i.i.i ]
+  %.0856.i.i.i.i.i.a = phi i32 [ %.18812.i.i.i.i.i, %.lr.ph9.preheader.i.i.i.i.i ], [ %.3.i.i.i.i.i, %.lr.ph9._crit_edge.i.i.i.i.i ] ; 3 uses
+  %10 = sext i32 %.0856.i.i.i.i.i to i64          ; 3 uses
+  %11 = getelementptr inbounds [8 x i8], ptr %i.agp, i64 %10
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %13 = load float, ptr %12, align 4              ; 2 uses
   %i.agv = getelementptr inbounds nuw [8 x i8], ptr %i.agp, i64 %indvars.iv22.i.i.i.i.i
   %i.agw = getelementptr inbounds nuw i8, ptr %i.agv, i64 4
-  %i.agx = load float, ptr %i.agw, align 4        ; 3 uses
-  %i.agy = fcmp oeq float %10, %i.agx
+  %i.agx = load float, ptr %i.agw, align 4        ; 2 uses
+  %i.agy = fcmp oeq float %13, %i.agx
   br i1 %i.agy, label %.lr.ph9._crit_edge.i.i.i.i.i, label %bb.eh
 
 bb.eh:                                            ; preds = %.lr.ph9.i.i.i.i.i
-  %i.agz = sext i32 %.25.i.i.i.i.i to i64
+  %i.agz = sext i32 %.0856.i.i.i.i.i.a to i64
   %i.aha = getelementptr inbounds [20 x i8], ptr %i.agm, i64 %i.agz ; 2 uses
   %i.ahb = getelementptr inbounds nuw i8, ptr %i.aha, i64 16
-  %i.ahc = fcmp ogt float %10, %i.agx             ; 3 uses
+  %i.ahc = fcmp ogt float %13, %i.agx             ; 3 uses
   %spec.store.select.i.i.i.i.i = zext i1 %i.ahc to i32
   store i32 %spec.store.select.i.i.i.i.i, ptr %i.ahb, align 4
-  %11 = sext i32 %.0856.i.i.i.i.i.a to i64        ; 2 uses
-  %i.ahd = select i1 %i.ahc, i64 %11, i64 %indvars.iv22.i.i.i.i.i
+  %i.ahd = select i1 %i.ahc, i64 %10, i64 %indvars.iv22.i.i.i.i.i
   %i.ahe = getelementptr inbounds [8 x i8], ptr %i.agp, i64 %i.ahd
-  %i.ahf = select i1 %i.ahc, i64 %indvars.iv22.i.i.i.i.i, i64 %11
+  %i.ahf = select i1 %i.ahc, i64 %indvars.iv22.i.i.i.i.i, i64 %10
   %i.ahg = getelementptr inbounds [8 x i8], ptr %i.agp, i64 %i.ahf
   %i.ahh = load <2 x float>, ptr %i.ahe, align 4
   %i.ahi = load <2 x float>, ptr %i.ahg, align 4
   %i.ahj = shufflevector <2 x float> %i.ahh, <2 x float> %i.ahi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ahk = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ahj, <4 x float> %i.zf, <4 x float> zeroinitializer)
   store <4 x float> %i.ahk, ptr %i.aha, align 4
-  %i.ahl = add nsw i32 %.25.i.i.i.i.i, 1
+  %i.ahl = add nsw i32 %.0856.i.i.i.i.i.a, 1
   br label %.lr.ph9._crit_edge.i.i.i.i.i
 
 .lr.ph9._crit_edge.i.i.i.i.i:                     ; preds = %bb.eh, %.lr.ph9.i.i.i.i.i
-  %.3.i.i.i.i.i = phi i32 [ %i.ahl, %bb.eh ], [ %.25.i.i.i.i.i, %.lr.ph9.i.i.i.i.i ] ; 2 uses
+  %.3.i.i.i.i.i = phi i32 [ %i.ahl, %bb.eh ], [ %.0856.i.i.i.i.i.a, %.lr.ph9.i.i.i.i.i ] ; 2 uses
   %.pre-phi36.i.i.i.i.i = trunc i64 %indvars.iv22.i.i.i.i.i to i32
   %indvars.iv.next23.i.i.i.i.i = add nuw nsw i64 %indvars.iv22.i.i.i.i.i, 1 ; 2 uses
   %exitcond26.not.i.i.i.i.i = icmp eq i64 %indvars.iv.next23.i.i.i.i.i, %wide.trip.count25.i.i.i.i.i

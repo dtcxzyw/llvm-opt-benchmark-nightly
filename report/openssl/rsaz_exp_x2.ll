@@ -205,11 +205,9 @@ bb.m:                                             ; preds = %bb.l
   store i8 %i.hm, ptr %i.hi, align 1, !tbaa !11
   %i.ho = lshr i64 %i.hh, 40
   %i.hp = trunc i64 %i.ho to i8
-  %i.hq = getelementptr inbounds nuw i8, ptr %.030.lcssa.i, i64 6 ; 3 uses
+  %i.hq = getelementptr inbounds nuw i8, ptr %.030.lcssa.i, i64 6 ; 2 uses
   store i8 %i.hp, ptr %i.hn, align 1, !tbaa !11
-  %i.hr = lshr i64 %i.hh, 48                      ; 2 uses
-  %13 = trunc i64 %i.hr to i8
-  store i8 %13, ptr %i.hq, align 1, !tbaa !11
+  %i.hr = lshr i64 %i.hh, 48
   %i.hs = add nsw i32 %.0.lcssa.i, -45
   %i.ht = lshr i32 %i.hs, 3                       ; 4 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %.032.lcssa.i, i64 8
@@ -407,11 +405,9 @@ from_words52.exit:                                ; preds = %.lr.ph.i38.i.prol.l
   store i8 %i.le, ptr %i.la, align 1, !tbaa !11
   %i.lg = lshr i64 %i.kz, 40
   %i.lh = trunc i64 %i.lg to i8
-  %i.li = getelementptr inbounds nuw i8, ptr %.030.lcssa.i125, i64 6 ; 3 uses
+  %i.li = getelementptr inbounds nuw i8, ptr %.030.lcssa.i125, i64 6 ; 2 uses
   store i8 %i.lh, ptr %i.lf, align 1, !tbaa !11
-  %i.lj = lshr i64 %i.kz, 48                      ; 2 uses
-  %14 = trunc i64 %i.lj to i8
-  store i8 %14, ptr %i.li, align 1, !tbaa !11
+  %i.lj = lshr i64 %i.kz, 48
   %i.lk = add nsw i32 %.0.lcssa.i126, -45
   %i.ll = lshr i32 %i.lk, 3                       ; 4 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %.032.lcssa.i124, i64 8

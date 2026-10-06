@@ -205,7 +205,7 @@ declare void @_ZN5arrow15fixed_size_listESt10shared_ptrINS_5FieldEEi(ptr dead_on
 define internal fastcc void @_ZN5arrow12_GLOBAL__N_114SchemaImporter15MakeChildFieldsEv(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(176) %1) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.arrow::Status", align 8     ; 6 uses
-  %3 = alloca %"class.std::vector.22", align 8    ; 12 uses
+  %3 = alloca %"class.std::vector.22", align 8    ; 11 uses
   %4 = alloca %"class.arrow::Result.134", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
@@ -224,14 +224,12 @@ bb.a:
   unreachable
 
 _ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.a
-  store i64 0, ptr %3, align 8
   %.not.i.i.i.i = icmp eq ptr %.val21, %.val20
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.h = shl nuw nsw i64 %i.f, 4                  ; 3 uses
-  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #38 ; 5 uses
-  store ptr %i.i, ptr %3, align 8, !tbaa !353
+  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #38 ; 4 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.f
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %i.h, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.i, i64 %i.h
@@ -244,10 +242,11 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.ex
 _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.lr.ph.preheader.i.i.i.i.i
   %.pre-phi48 = phi i64 [ %.pre47, %.lr.ph.preheader.i.i.i.i.i ], [ %i.d, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
   %.pre-phi = phi i64 [ %.pre46, %.lr.ph.preheader.i.i.i.i.i ], [ %i.d, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
-  %i.k = phi ptr [ %i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
-  %.val35 = phi ptr [ %.val35.pre, %.lr.ph.preheader.i.i.i.i.i ], [ %.val20, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %i.k = phi ptr [ %.val35.pre, %.lr.ph.preheader.i.i.i.i.i ], [ %.val20, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %.val35 = phi ptr [ %i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
   %.sink.i = phi ptr [ %i.j, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
   %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
+  store ptr %.val35, ptr %3, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %.sink.i, ptr %i.m, align 8, !tbaa !355
@@ -273,7 +272,7 @@ bb.b:                                             ; preds = %_ZN5arrow6ResultISt
   br i1 %.not, label %bb.c, label %.critedge.loopexit, !llvm.loop !2761
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %.val39 = phi ptr [ %.val35, %.lr.ph ], [ %.val, %bb.b ]
+  %.val39 = phi ptr [ %i.k, %.lr.ph ], [ %.val, %bb.b ]
   %.01238 = phi i64 [ 0, %.lr.ph ], [ %i.q, %bb.b ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.v = getelementptr inbounds nuw [176 x i8], ptr %.val39, i64 %.01238 ; 2 uses
@@ -466,7 +465,7 @@ _ZN5arrow6ResultISt10shared_ptrINS_5FieldEEED2Ev.exit: ; preds = %bb.q, %_ZN5arr
 _ZSt8_DestroyIPSt10shared_ptrIN5arrow5FieldEES3_EvT_S5_RSaIT0_E.exit.i.thread: ; preds = %.critedge.loopexit, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i
   %i.bx = phi ptr [ %.pre43, %.critedge.loopexit ], [ %.sink.i, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i ]
   %i.by = phi ptr [ %.pre42, %.critedge.loopexit ], [ %.0.lcssa.i.i.i.i.i, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i ]
-  %i.bz = phi ptr [ %.pre, %.critedge.loopexit ], [ %i.k, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i ]
+  %i.bz = phi ptr [ %.pre, %.critedge.loopexit ], [ %.val35, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5FieldEESaIS3_EEC2EmRKS4_.exit.thread.i ]
   store ptr null, ptr %0, align 8, !tbaa !132
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.bz, ptr %i.ca, align 8, !tbaa !353

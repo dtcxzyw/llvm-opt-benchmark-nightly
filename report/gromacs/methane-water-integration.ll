@@ -204,12 +204,11 @@ _ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EEC2EmRKS3_.exit.thread.i: ; pre
 _ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.bdl = mul nuw nsw i64 %i.bdi, 12             ; 3 uses
   %i.bdm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bdl) #18
-          to label %.noexc1407 unwind label %bb.dp ; 5 uses
+          to label %.noexc1407 unwind label %bb.dp ; 4 uses
 
 .noexc1407:                                       ; preds = %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EEC2EmRKS3_.exit.i
   store ptr %i.bdm, ptr %193, align 8, !tbaa !225
-  %i.bdn = getelementptr inbounds nuw i8, ptr %193, i64 8 ; 2 uses
-  store ptr %i.bdm, ptr %i.bdn, align 8, !tbaa !227
+  %i.bdn = getelementptr inbounds nuw i8, ptr %193, i64 8
   %i.bdo = getelementptr inbounds nuw [12 x i8], ptr %i.bdm, i64 %i.bdi
   %i.bdp = getelementptr inbounds nuw i8, ptr %193, i64 16
   store ptr %i.bdo, ptr %i.bdp, align 8, !tbaa !226

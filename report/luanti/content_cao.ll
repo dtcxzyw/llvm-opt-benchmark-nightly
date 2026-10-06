@@ -204,16 +204,13 @@ bb.ep:                                            ; preds = %_ZN11StreamProxylsE
   br i1 %.not.i.i.i218, label %bb.eq, label %_ZL25setBillboardTextureMatrixPN5scene19IBillboardSceneNodeEffii.exit
 
 bb.eq:                                            ; preds = %bb.ep
-  %i.ahs = call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #37 ; 7 uses
+  %i.ahs = call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #37 ; 5 uses
   %i.aht = getelementptr inbounds nuw i8, ptr %i.ahs, i64 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.aht, i8 0, i64 56, i1 false)
-  %32 = getelementptr inbounds nuw i8, ptr %i.ahs, i64 60
-  store float 1.000000e+00, ptr %32, align 4, !tbaa !48
-  %i.ahu = getelementptr inbounds nuw i8, ptr %i.ahs, i64 40
+  %i.ahu = getelementptr inbounds nuw i8, ptr %i.ahs, i64 60
   store float 1.000000e+00, ptr %i.ahu, align 4, !tbaa !48
-  %i.ahv = getelementptr inbounds nuw i8, ptr %i.ahs, i64 20
+  %i.ahv = getelementptr inbounds nuw i8, ptr %i.ahs, i64 40
   store float 1.000000e+00, ptr %i.ahv, align 4, !tbaa !48
-  store float 1.000000e+00, ptr %i.ahs, align 4, !tbaa !48
   store ptr %i.ahs, ptr %i.ahq, align 8, !tbaa !567
   br label %_ZL25setBillboardTextureMatrixPN5scene19IBillboardSceneNodeEffii.exit
 
@@ -616,16 +613,13 @@ bb.q:                                             ; preds = %bb.j, %bb.p, %bb.o,
   br i1 %.not.i.i.i, label %bb.r, label %_ZL25setBillboardTextureMatrixPN5scene19IBillboardSceneNodeEffii.exit
 
 bb.r:                                             ; preds = %bb.q
-  %i.dh = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #37 ; 7 uses
+  %i.dh = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #37 ; 5 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.di, i8 0, i64 56, i1 false)
-  %1 = getelementptr inbounds nuw i8, ptr %i.dh, i64 60
-  store float 1.000000e+00, ptr %1, align 4, !tbaa !48
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 40
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 60
   store float 1.000000e+00, ptr %i.dj, align 4, !tbaa !48
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dh, i64 20
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.dh, i64 40
   store float 1.000000e+00, ptr %i.dk, align 4, !tbaa !48
-  store float 1.000000e+00, ptr %i.dh, align 4, !tbaa !48
   store ptr %i.dh, ptr %i.df, align 8, !tbaa !567
   br label %_ZL25setBillboardTextureMatrixPN5scene19IBillboardSceneNodeEffii.exit
 

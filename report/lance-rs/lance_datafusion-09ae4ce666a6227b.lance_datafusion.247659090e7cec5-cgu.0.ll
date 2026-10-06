@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.b
   store i64 %i.b, ptr %i.a, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store ptr %i.g, ptr %i.m, align 8
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store i64 0, ptr %i.n, align 8
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i
