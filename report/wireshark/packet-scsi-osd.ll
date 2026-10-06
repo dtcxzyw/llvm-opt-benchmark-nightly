@@ -204,7 +204,7 @@ dissect_osd_attribute_data_in.exit:               ; preds = %bb.u, %bb.v, %bb.w,
 bb.aa:                                            ; preds = %dissect_osd_attribute_data_in.exit
   %.0218 = zext i32 %spec.select to i64
   %i.cq = tail call i64 @tvb_get_ntoh64(ptr noundef %0, i32 noundef %.1)
-  %spec.select227 = tail call i64 @llvm.umin.i64(i64 %i.cq, i64 %.0218) ; 8 uses
+  %spec.select227 = tail call i64 @llvm.umin.i64(i64 %i.cq, i64 %.0218) ; 5 uses
   %i.cr = load i32, ptr @hf_scsi_osd_additional_length, align 4
   %i.cs = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.cr, ptr noundef %0, i32 noundef %.1, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.ct = add i32 %.1, 8
@@ -266,11 +266,13 @@ bb.af:                                            ; preds = %bb.ad
 .lr.ph253.thread:                                 ; preds = %.critedge.thread
   %i.dq = add i32 %.1, 24                         ; 3 uses
   %i.dr = trunc i8 %i.dl to i1
+  %10 = trunc nuw i64 %spec.select227 to i32      ; 3 uses
   br i1 %i.dr, label %.lr.ph253.split.split.us, label %.lr.ph253.split.split
 
 .lr.ph253:                                        ; preds = %.critedge
   %i.ds = add i32 %.1, 24
   %i.dt = add nuw nsw i64 %spec.select227, 8
+  %11 = trunc nuw i64 %spec.select227 to i32      ; 2 uses
   br label %.lr.ph253.split.us
 
 .lr.ph253.split.us:                               ; preds = %.lr.ph253, %.loopexit.us
@@ -305,9 +307,8 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 bb.al:                                            ; preds = %bb.ak
   %i.ed = add i32 %.2252.us, 16                   ; 3 uses
-  %10 = zext i32 %i.ed to i64
-  %11 = icmp samesign ult i64 %spec.select227, %10
-  br i1 %11, label %.sink.split, label %bb.am
+  %12 = icmp ugt i32 %i.ed, %11
+  br i1 %12, label %.sink.split, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.ee = load i32, ptr @ett_osd_multi_object, align 4
@@ -341,8 +342,7 @@ bb.am:                                            ; preds = %bb.al
 .loopexit.us:                                     ; preds = %.lr.ph.us, %.preheader.us, %bb.ak
   %.6.us = phi i32 [ %i.ea, %bb.ak ], [ %i.el, %.preheader.us ], [ %i.el, %.lr.ph.us ] ; 2 uses
   %i.ey = add i32 %.6.us, -8
-  %12 = zext i32 %i.ey to i64
-  %13 = icmp samesign ugt i64 %spec.select227, %12
+  %13 = icmp ult i32 %i.ey, %11
   br i1 %13, label %.lr.ph253.split.us, label %.sink.split
 
 .preheader.us:                                    ; preds = %bb.am
@@ -358,27 +358,24 @@ bb.am:                                            ; preds = %bb.al
   %i.fb = load i32, ptr @hf_scsi_osd_collection_object_id, align 4
   %i.fc = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.fb, ptr noundef %0, i32 noundef %.2252.us256.us, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.fd = add i32 %.2252.us256.us, 8
-  %14 = zext i32 %.2252.us256.us to i64
-  %15 = icmp samesign ugt i64 %spec.select227, %14
-  br i1 %15, label %.lr.ph253.split.split.us.split.us, label %.sink.split
+  %14 = icmp ult i32 %.2252.us256.us, %10
+  br i1 %14, label %.lr.ph253.split.split.us.split.us, label %.sink.split
 
 .lr.ph253.split.split.us.split:                   ; preds = %.lr.ph253.split.split.us, %.lr.ph253.split.split.us.split
   %.2252.us256 = phi i32 [ %i.fg, %.lr.ph253.split.split.us.split ], [ %i.dq, %.lr.ph253.split.split.us ] ; 3 uses
   %i.fe = load i32, ptr @hf_scsi_osd_partition_id, align 4
   %i.ff = tail call fastcc ptr @dissect_osd_partition_id(ptr noundef %1, ptr noundef %0, i32 noundef %.2252.us256, ptr noundef %2, i32 noundef %i.fe, ptr noundef %9, i1 noundef zeroext false, i1 noundef zeroext false) ; 0 uses
   %i.fg = add i32 %.2252.us256, 8
-  %16 = zext i32 %.2252.us256 to i64
-  %17 = icmp samesign ugt i64 %spec.select227, %16
-  br i1 %17, label %.lr.ph253.split.split.us.split, label %.sink.split
+  %15 = icmp ult i32 %.2252.us256, %10
+  br i1 %15, label %.lr.ph253.split.split.us.split, label %.sink.split
 
 .lr.ph253.split.split:                            ; preds = %.lr.ph253.thread, %.lr.ph253.split.split
   %.2252 = phi i32 [ %i.fj, %.lr.ph253.split.split ], [ %i.dq, %.lr.ph253.thread ] ; 3 uses
   %i.fh = load i32, ptr @hf_scsi_osd_user_object_id, align 4
   %i.fi = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.fh, ptr noundef %0, i32 noundef %.2252, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.fj = add i32 %.2252, 8
-  %18 = zext i32 %.2252 to i64
-  %19 = icmp samesign ugt i64 %spec.select227, %18
-  br i1 %19, label %.lr.ph253.split.split, label %.sink.split
+  %16 = icmp ult i32 %.2252, %10
+  br i1 %16, label %.lr.ph253.split.split, label %.sink.split
 
 .sink.split:                                      ; preds = %.lr.ph253.split.split, %.lr.ph253.split.split.us.split, %.lr.ph253.split.split.us.split.us, %bb.am, %bb.al, %.loopexit.us, %dissect_osd_attribute_data_in.exit, %.thread, %.critedge, %.critedge.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
@@ -781,6 +778,7 @@ bb.u:                                             ; preds = %dissect_osd_attribu
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.cs = add i32 %.0114, 12
+  %10 = trunc nuw i64 %spec.select120 to i32
   br label %.lr.ph
 
 bb.v:                                             ; preds = %bb.u
@@ -793,8 +791,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cv = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.cu, ptr noundef %0, i32 noundef %.1125, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.cw = add i32 %.1125, 8
   %i.cx = add i32 %.1125, 4
-  %10 = zext i32 %i.cx to i64
-  %11 = icmp samesign ugt i64 %spec.select120, %10
+  %11 = icmp ult i32 %i.cx, %10
   br i1 %11, label %.lr.ph, label %.loopexit, !llvm.loop !11
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader, %dissect_osd_attribute_data_in.exit, %bb.v
