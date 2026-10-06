@@ -200,6 +200,7 @@ bb.ah:                                            ; preds = %.preheader139
   %i.bt = getelementptr [4 x i8], ptr @digitlimit, i64 %i.bn
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !10
   %i.bv = getelementptr [8 x i8], ptr @smallmax, i64 %i.bn
+  %3 = trunc nuw nsw i32 %.0101174 to i8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph156, %bb.an
@@ -240,8 +241,7 @@ bb.an:                                            ; preds = %bb.am, %bb.aj
   %i.cl = zext i8 %i.ck to i64
   %i.cm = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.cl
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !11  ; 2 uses
-  %3 = zext i8 %i.cn to i32
-  %4 = icmp samesign ugt i32 %.0101174, %3
+  %4 = icmp ult i8 %i.cn, %3
   br i1 %4, label %bb.ai, label %._crit_edge, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.an, %bb.ah

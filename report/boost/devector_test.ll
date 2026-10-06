@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !113
 
@@ -608,7 +608,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !135
 
@@ -1011,7 +1011,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !158
 
@@ -1414,7 +1414,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !192
 
@@ -1817,7 +1817,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !204
 
@@ -2220,7 +2220,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.ed = add i32 %i.ec, 1
   store i32 %i.ed, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.ee = add nuw i64 %.06.i.i.i.i.i, 4           ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.r, !llvm.loop !222
 

@@ -202,7 +202,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 4 uses
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = zext i32 %1 to i64
-  %i.e = add nuw nsw i64 %i.c, %i.d               ; 5 uses
+  %i.e = add nuw nsw i64 %i.c, %i.d               ; 4 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %.loopexit, label %bb.b
 
@@ -222,7 +222,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store ptr %i.m, ptr %0, align 8, !tbaa !19
-  %i.n = trunc nuw i64 %i.e to i32
+  %i.n = trunc nuw i64 %i.e to i32                ; 2 uses
   store i32 %i.n, ptr %i.a, align 4, !tbaa !17
   %.not29 = icmp eq i32 %1, 0
   br i1 %.not29, label %.loopexit, label %.lr.ph
@@ -233,9 +233,9 @@ bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %0, align 8, !tbaa !19
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !34
-  %i.r = add i32 %.026, 1                         ; 2 uses
-  %i.s = zext i32 %i.r to i64                     ; 2 uses
-  %3 = icmp samesign ugt i64 %i.e, %i.s
+  %i.r = add i32 %.026, 1                         ; 3 uses
+  %i.s = zext i32 %i.r to i64
+  %3 = icmp ult i32 %i.r, %i.n
   br i1 %3, label %.lr.ph, label %.loopexit, !llvm.loop !32
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a
@@ -277,7 +277,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !24   ; 4 uses
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = zext i32 %1 to i64
-  %i.e = add nuw nsw i64 %i.c, %i.d               ; 5 uses
+  %i.e = add nuw nsw i64 %i.c, %i.d               ; 4 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %.loopexit, label %bb.b
 
@@ -297,7 +297,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store ptr %i.m, ptr %0, align 8, !tbaa !26
-  %i.n = trunc nuw i64 %i.e to i32
+  %i.n = trunc nuw i64 %i.e to i32                ; 2 uses
   store i32 %i.n, ptr %i.a, align 4, !tbaa !24
   %.not30 = icmp eq i32 %1, 0
   br i1 %.not30, label %.loopexit, label %.lr.ph
@@ -308,9 +308,9 @@ bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %0, align 8, !tbaa !26
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.o
   store ptr %2, ptr %i.q, align 8, !tbaa !20
-  %i.r = add i32 %.027, 1                         ; 2 uses
-  %i.s = zext i32 %i.r to i64                     ; 2 uses
-  %3 = icmp samesign ugt i64 %i.e, %i.s
+  %i.r = add i32 %.027, 1                         ; 3 uses
+  %i.s = zext i32 %i.r to i64
+  %3 = icmp ult i32 %i.r, %i.n
   br i1 %3, label %.lr.ph, label %.loopexit, !llvm.loop !35
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a
