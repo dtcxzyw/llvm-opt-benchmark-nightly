@@ -1,0 +1,84 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 281e3b353f6dd..555218ac2f215 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -1811,6 +1811,23 @@ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+     return &I;
+   }
+ 
++  // (add (xor A, B) (shl (and A, B), 1)) --> (add A, B)
++  // (add (shl (and A, B), 1) (xor A, B)) --> (add A, B)
++  if (match(&I, m_c_BinOp(m_Xor(m_Value(A), m_Value(B)),
++                          m_Shl(m_c_And(m_Deferred(A), m_Deferred(B)), m_One())))) {
++    replaceOperand(I, 0, A);
++    replaceOperand(I, 1, B);
++    return &I;
++  }
++
++  // (add (xor A, B) (mul (and A, B), 2)) --> (add A, B)
++  if (match(&I, m_c_BinOp(m_Xor(m_Value(A), m_Value(B)),
++                          m_c_Mul(m_c_And(m_Deferred(A), m_Deferred(B)), m_SpecificInt(2))))) {
++    replaceOperand(I, 0, A);
++    replaceOperand(I, 1, B);
++    return &I;
++  }
++
+   // (add A (or A, -A)) --> (and (add A, -1) A)
+   // (add A (or -A, A)) --> (and (add A, -1) A)
+   // (add (or A, -A) A) --> (and (add A, -1) A)
+@@ -2718,6 +2735,23 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+       return BinaryOperator::CreateXor(A, B);
+   }
+ 
++  // (sub (add A, B) (shl (and A, B), 1)) --> (xor A, B)
++  {
++    Value *A, *B;
++    if (match(Op0, m_Add(m_Value(A), m_Value(B))) &&
++        (match(Op1, m_Shl(m_c_And(m_Specific(A), m_Specific(B)), m_One())) ||
++         match(Op1, m_c_Mul(m_c_And(m_Specific(A), m_Specific(B)), m_SpecificInt(2)))))
++      return BinaryOperator::CreateXor(A, B);
++  }
++
++  // (sub (shl (or A, B), 1) (xor A, B)) --> (add A, B)
++  {
++    Value *A, *B;
++    if (match(Op0, m_Shl(m_c_Or(m_Value(A), m_Value(B)), m_One())) &&
++        match(Op1, m_c_Xor(m_Specific(A), m_Specific(B))))
++      return BinaryOperator::CreateAdd(A, B);
++  }
++
+   // (sub (add A, B) (or A, B)) --> (and A, B)
+   {
+     Value *A, *B;
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index 992cf69f3cba3..ddb0bb9aa10de 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -5330,3 +5330,27 @@ define i32 @zext_add_no_fold_symmetric(i8 %x) {
+   %r = add i32 %z, -4
+   ret i32 %r
+ }
++
++define i32 @csa_add_shl(i32 %x, i32 %y) {
++; CHECK-LABEL: @csa_add_shl(
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %xor = xor i32 %x, %y
++  %and = and i32 %x, %y
++  %shl = shl i32 %and, 1
++  %add = add i32 %xor, %shl
++  ret i32 %add
++}
++
++define i32 @csa_add_mul(i32 %x, i32 %y) {
++; CHECK-LABEL: @csa_add_mul(
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %xor = xor i32 %x, %y
++  %and = and i32 %x, %y
++  %mul = mul i32 %and, 2
++  %add = add i32 %xor, %mul
++  ret i32 %add
++}
