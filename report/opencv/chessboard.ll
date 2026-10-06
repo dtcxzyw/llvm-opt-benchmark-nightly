@@ -205,26 +205,26 @@ declare void @_ZN2cv3MatC1Eiii(ptr noundef nonnull align 8 dereferenceable(208),
 define hidden noundef zeroext i1 @_ZNK2cv7details10Chessboard5Board4Cell8isInsideERKNS_6Point_IfEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(66) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1) local_unnamed_addr #16 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !163    ; 2 uses
-  %i.b = load float, ptr %i.a, align 4, !tbaa !164 ; 5 uses
+  %i.b = load float, ptr %i.a, align 4, !tbaa !164 ; 4 uses
   %i.c = fcmp uno float %i.b, 0.000000e+00
   br i1 %i.c, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.e = load float, ptr %i.d, align 4, !tbaa !165 ; 5 uses
+  %i.e = load float, ptr %i.d, align 4, !tbaa !165 ; 4 uses
   %i.f = fcmp uno float %i.e, 0.000000e+00
   br i1 %i.f, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !166  ; 2 uses
-  %i.i = load float, ptr %i.h, align 4, !tbaa !164 ; 4 uses
+  %i.i = load float, ptr %i.h, align 4, !tbaa !164 ; 5 uses
   %i.j = fcmp uno float %i.i, 0.000000e+00
   br i1 %i.j, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  %i.l = load float, ptr %i.k, align 4, !tbaa !165 ; 4 uses
+  %i.l = load float, ptr %i.k, align 4, !tbaa !165 ; 5 uses
   %i.m = fcmp uno float %i.l, 0.000000e+00
   br i1 %i.m, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.e
 
@@ -255,50 +255,50 @@ _ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit: ; preds = %bb.g
   br i1 %i.aa, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit
-  %2 = fsub float %i.z, %i.e
-  %3 = fsub float %i.w, %i.b
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %2 = insertelement <2 x float> poison, float %i.z, i64 0
+  %3 = insertelement <2 x float> %2, float %i.l, i64 1
   %i.ab = insertelement <2 x float> poison, float %i.e, i64 0
-  %i.ac = insertelement <2 x float> %i.ab, float %i.l, i64 1
-  %5 = insertelement <2 x float> poison, float %i.l, i64 0
-  %i.ad = insertelement <2 x float> %5, float %i.z, i64 1 ; 2 uses
-  %6 = fsub <2 x float> %i.ac, %i.ad
+  %i.ac = insertelement <2 x float> %i.ab, float %i.z, i64 1 ; 2 uses
+  %4 = fsub <2 x float> %3, %i.ac
+  %i.ad = insertelement <2 x float> poison, float %i.w, i64 0
+  %5 = insertelement <2 x float> %i.ad, float %i.i, i64 1
   %i.ae = insertelement <2 x float> poison, float %i.b, i64 0
-  %i.af = insertelement <2 x float> %i.ae, float %i.i, i64 1
-  %7 = insertelement <2 x float> poison, float %i.i, i64 0
-  %8 = insertelement <2 x float> %7, float %i.w, i64 1 ; 2 uses
-  %9 = fsub <2 x float> %i.af, %8
+  %i.af = insertelement <2 x float> %i.ae, float %i.w, i64 1 ; 2 uses
+  %6 = fsub <2 x float> %5, %i.af
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %8 = fsub float %i.e, %i.l
+  %9 = fsub float %i.b, %i.i
   %i.ag = load float, ptr %1, align 4, !tbaa !164 ; 3 uses
-  %10 = fsub float %i.ag, %i.b                    ; 2 uses
-  %11 = load float, ptr %4, align 4, !tbaa !165   ; 3 uses
-  %i.ah = fsub float %11, %i.e
-  %i.ai = fneg float %i.ah                        ; 2 uses
-  %i.aj = fmul float %3, %i.ai
-  %i.ak = tail call float @llvm.fmuladd.f32(float %10, float %2, float %i.aj) ; 2 uses
+  %10 = load float, ptr %7, align 4, !tbaa !165   ; 3 uses
+  %11 = fsub float %i.ag, %i.i
+  %i.ah = fsub float %10, %i.l
+  %i.ai = fneg float %i.ah
+  %i.aj = fmul float %9, %i.ai
+  %i.ak = tail call float @llvm.fmuladd.f32(float %11, float %8, float %i.aj) ; 2 uses
   %i.al = insertelement <2 x float> poison, float %i.ag, i64 0
   %i.am = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.an = fsub <2 x float> %i.am, %8
-  %i.ao = insertelement <2 x float> poison, float %11, i64 0
+  %i.an = fsub <2 x float> %i.am, %i.af           ; 2 uses
+  %i.ao = insertelement <2 x float> poison, float %10, i64 0
   %i.ap = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aq = fsub <2 x float> %i.ap, %i.ad
-  %i.ar = fneg <2 x float> %i.aq
-  %i.as = fmul <2 x float> %9, %i.ar
-  %i.at = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.an, <2 x float> %6, <2 x float> %i.as) ; 2 uses
-  %12 = fcmp ogt float %i.ak, 0.000000e+00
-  %i.au = extractelement <2 x float> %i.at, i64 0 ; 2 uses
-  %i.av = fcmp ogt float %i.au, 0.000000e+00      ; 2 uses
-  %or.cond = select i1 %12, i1 %i.av, i1 false
-  %i.aw = extractelement <2 x float> %i.at, i64 1 ; 2 uses
+  %i.aq = fsub <2 x float> %i.ap, %i.ac
+  %i.ar = fneg <2 x float> %i.aq                  ; 2 uses
+  %i.as = fmul <2 x float> %6, %i.ar
+  %i.at = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.an, <2 x float> %4, <2 x float> %i.as) ; 3 uses
+  %i.au = extractelement <2 x float> %i.at, i64 0
+  %i.av = fcmp ogt float %i.au, 0.000000e+00
+  %12 = fcmp ogt float %i.ak, 0.000000e+00        ; 2 uses
+  %i.aw = extractelement <2 x float> %i.at, i64 1
   %i.ax = fcmp ogt float %i.aw, 0.000000e+00
-  %or.cond3 = select i1 %or.cond, i1 %i.ax, i1 false
+  %13 = and i1 %i.av, %i.ax
+  %or.cond3 = and i1 %13, %12
   br i1 %or.cond3, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ay = fcmp olt float %i.ak, 0.000000e+00
-  %13 = fcmp olt float %i.au, 0.000000e+00        ; 2 uses
-  %or.cond5 = select i1 %i.ay, i1 %13, i1 false
-  %14 = fcmp olt float %i.aw, 0.000000e+00
-  %or.cond7 = select i1 %or.cond5, i1 %14, i1 false
+  %i.ay = fcmp olt float %i.ak, 0.000000e+00      ; 2 uses
+  %14 = fcmp uge <2 x float> %i.at, zeroinitializer
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, 0
+  %or.cond7 = and i1 %16, %i.ay
   br i1 %or.cond7, label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -313,29 +313,27 @@ bb.j:                                             ; preds = %bb.i
   %i.bh = insertelement <2 x float> %i.bg, float %i.p, i64 1
   %i.bi = fsub <2 x float> %i.bf, %i.bh
   %i.bj = fsub float %i.ag, %i.p
-  %i.bk = fsub float %11, %i.s
+  %i.bk = fsub float %10, %i.s
   %i.bl = fneg float %i.bk
-  %15 = insertelement <2 x float> poison, float %i.ai, i64 0
-  %i.bm = insertelement <2 x float> %15, float %i.bl, i64 1
+  %i.bm = insertelement <2 x float> %i.ar, float %i.bl, i64 1
   %i.bn = fmul <2 x float> %i.bi, %i.bm
-  %16 = insertelement <2 x float> poison, float %10, i64 0
-  %i.bo = insertelement <2 x float> %16, float %i.bj, i64 1
+  %i.bo = insertelement <2 x float> %i.an, float %i.bj, i64 1
   %i.bp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bo, <2 x float> %i.bd, <2 x float> %i.bn) ; 2 uses
   %i.bq = extractelement <2 x float> %i.bp, i64 0 ; 2 uses
   %i.br = fcmp ogt float %i.bq, 0.000000e+00
-  %or.cond9 = select i1 %i.br, i1 %i.av, i1 false
   %17 = extractelement <2 x float> %i.bp, i64 1   ; 2 uses
   %18 = fcmp ogt float %17, 0.000000e+00
-  %or.cond11 = select i1 %or.cond9, i1 %18, i1 false
+  %19 = and i1 %i.br, %18
+  %or.cond11 = and i1 %19, %12
   %i.bs = fcmp olt float %i.bq, 0.000000e+00
-  %or.cond13 = select i1 %i.bs, i1 %13, i1 false
-  %19 = fcmp olt float %17, 0.000000e+00
-  %20 = select i1 %or.cond13, i1 %19, i1 false
-  %21 = select i1 %or.cond11, i1 true, i1 %20
+  %20 = fcmp olt float %17, 0.000000e+00
+  %21 = and i1 %i.bs, %20
+  %22 = and i1 %21, %i.ay
+  %23 = or i1 %or.cond11, %22
   br label %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread
 
 _ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit.thread: ; preds = %bb.f, %bb.d, %bb.b, %bb.e, %bb.c, %bb.a, %bb.g, %bb.j, %bb.i, %bb.h, %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit
-  %.1 = phi i1 [ false, %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit ], [ %21, %bb.j ], [ true, %bb.i ], [ true, %bb.h ], [ false, %bb.g ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.d ], [ false, %bb.f ]
+  %.1 = phi i1 [ false, %_ZNK2cv7details10Chessboard5Board4Cell5emptyEv.exit ], [ %23, %bb.j ], [ true, %bb.i ], [ true, %bb.h ], [ false, %bb.g ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.d ], [ false, %bb.f ]
   ret i1 %.1
 }
 

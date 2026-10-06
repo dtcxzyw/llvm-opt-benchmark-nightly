@@ -205,10 +205,9 @@ bb.e:                                             ; preds = %bb.c
   %i.dc = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.db)
   %i.dd = insertelement <4 x float> poison, float %i.cx, i64 0
   %i.de = shufflevector <4 x float> %i.dd, <4 x float> poison, <4 x i32> zeroinitializer
-  %2 = fcmp ogt <4 x float> %i.de, %i.dc
-  %3 = freeze <4 x i1> %2
-  %i.df = bitcast <4 x i1> %3 to i4
-  %i.dg = icmp eq i4 %i.df, -1
+  %2 = fcmp ule <4 x float> %i.de, %i.dc
+  %i.df = bitcast <4 x i1> %2 to i4
+  %i.dg = icmp eq i4 %i.df, 0
   br i1 %i.dg, label %.critedge63, label %bb.f
 
 .critedge63:                                      ; preds = %.preheader67, %bb.e

@@ -205,7 +205,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load i32, ptr %i.e, align 8, !tbaa !35
   %i.g = insertelement <2 x double> poison, double %0, i64 0
-  %i.h = insertelement <2 x double> %i.g, double %1, i64 1
+  %i.h = insertelement <2 x double> %i.g, double %1, i64 1 ; 2 uses
   %i.i = shufflevector <2 x double> %i.h, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   br label %.lr.ph
 
@@ -214,7 +214,7 @@ bb.a:
   %.0396535 = phi i32 [ %.1397, %bb.bf ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.0398534 = phi i32 [ %.1399, %bb.bf ], [ %i.f, %.lr.ph.preheader ] ; 2 uses
   %.0400533 = phi i32 [ %i.qq, %bb.bf ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.0401532 = phi ptr [ %i.qr, %bb.bf ], [ %i.d, %.lr.ph.preheader ] ; 75 uses
+  %.0401532 = phi ptr [ %i.qr, %bb.bf ], [ %i.d, %.lr.ph.preheader ] ; 74 uses
   %i.j = icmp ne i32 %.0400533, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.0401532, i64 8
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !35 ; 2 uses
@@ -575,7 +575,7 @@ bb.t:                                             ; preds = %bb.d
   %i.jb = extractelement <2 x i1> %i.ja, i64 1
   %or.cond3 = or i1 %i.jb, %i.iz
   %i.jc = extractelement <2 x i1> %i.ja, i64 0
-  %or.cond5 = select i1 %or.cond3, i1 true, i1 %i.jc
+  %or.cond5 = or i1 %or.cond3, %i.jc
   br i1 %or.cond5, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -743,13 +743,12 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
 
 bb.an:                                            ; preds = %bb.d
   %i.mf = getelementptr inbounds nuw i8, ptr %.0401532, i64 48
-  %3 = load double, ptr %i.mf, align 8, !tbaa !19
-  %4 = fsub double %0, %3                         ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.0401532, i64 56
-  %6 = load double, ptr %5, align 8, !tbaa !19
-  %7 = fsub double %1, %6                         ; 4 uses
-  %8 = fmul double %7, %7
-  %i.mg = tail call double @llvm.fmuladd.f64(double %4, double %4, double %8) ; 2 uses
+  %3 = load <2 x double>, ptr %i.mf, align 8, !tbaa !19
+  %4 = fsub <2 x double> %i.h, %3                 ; 3 uses
+  %5 = extractelement <2 x double> %4, i64 1      ; 3 uses
+  %6 = fmul double %5, %5
+  %7 = extractelement <2 x double> %4, i64 0      ; 3 uses
+  %i.mg = tail call double @llvm.fmuladd.f64(double %7, double %7, double %6) ; 2 uses
   %i.mh = getelementptr inbounds nuw i8, ptr %.0401532, i64 152
   %i.mi = load double, ptr %i.mh, align 8, !tbaa !19
   %i.mj = fcmp olt double %i.mg, %i.mi
@@ -762,13 +761,13 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.mm, label %Pt_in_Poly.exit, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %9 = fcmp une double %4, 0.000000e+00
-  %10 = fcmp une double %7, 0.000000e+00
-  %or.cond13 = select i1 %9, i1 true, i1 %10
-  br i1 %or.cond13, label %bb.aq, label %Pt_in_Poly.exit
+  %8 = fcmp une <2 x double> %4, zeroinitializer
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not581 = icmp eq i2 %9, 0
+  br i1 %.not581, label %Pt_in_Poly.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.mn = tail call double @atan2(double noundef %7, double noundef %4) #18
+  %i.mn = tail call double @atan2(double noundef %5, double noundef %7) #18
   %i.mo = fmul double %i.mn, 1.800000e+02
   %i.mp = fdiv double %i.mo, f0x400921FB54442D18  ; 2 uses
   %i.mq = getelementptr inbounds nuw i8, ptr %.0401532, i64 64
@@ -830,11 +829,10 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.ob, label %Pt_in_Poly.exit, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.oc = fcmp une <2 x double> %i.nm, zeroinitializer ; 2 uses
-  %11 = extractelement <2 x i1> %i.oc, i64 0
-  %12 = extractelement <2 x i1> %i.oc, i64 1
-  %or.cond15 = select i1 %12, i1 true, i1 %11
-  br i1 %or.cond15, label %bb.aw, label %Pt_in_Poly.exit
+  %i.oc = fcmp une <2 x double> %i.nm, zeroinitializer
+  %10 = bitcast <2 x i1> %i.oc to i2
+  %.not580 = icmp eq i2 %10, 0
+  br i1 %.not580, label %Pt_in_Poly.exit, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.od = extractelement <2 x double> %i.nm, i64 0
@@ -909,11 +907,10 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not578, label %Pt_in_Poly.exit, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.qc = fcmp une <2 x double> %i.pe, zeroinitializer ; 2 uses
-  %13 = extractelement <2 x i1> %i.qc, i64 0
-  %14 = extractelement <2 x i1> %i.qc, i64 1
-  %or.cond17 = select i1 %14, i1 true, i1 %13
-  br i1 %or.cond17, label %bb.bc, label %Pt_in_Poly.exit
+  %i.qc = fcmp une <2 x double> %i.pe, zeroinitializer
+  %11 = bitcast <2 x i1> %i.qc to i2
+  %.not579 = icmp eq i2 %11, 0
+  br i1 %.not579, label %Pt_in_Poly.exit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.qd = extractelement <2 x double> %i.pe, i64 0

@@ -205,29 +205,29 @@ bb.an:                                            ; preds = %.loopexit325
 
 ._crit_edge.loopexit:                             ; preds = %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE3dotIS2_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS6_17scalar_product_opIdSA_EEE10ReturnTypeERKNS0_IS8_EE.exit231
   %i.rw = ptrtoint ptr %i.n to i64
-  %i.rx = insertelement <2 x double> poison, double %i.rt, i64 0
-  %i.ry = insertelement <2 x double> %i.rx, double %i.fe, i64 1
-  %i.rz = insertelement <2 x double> poison, double %i.ks, i64 0
-  %i.sa = insertelement <2 x double> %i.rz, double %i.ru, i64 1
-  %i.sb = insertelement <2 x double> poison, double %i.ru, i64 0
-  %i.sc = insertelement <2 x double> %i.sb, double %i.kr, i64 1
-  %i.sd = insertelement <2 x double> poison, double %i.kr, i64 0
-  %i.se = insertelement <2 x double> %i.sd, double %i.rt, i64 1
+  %i.rx = insertelement <2 x double> poison, double %i.fe, i64 0
+  %i.ry = insertelement <2 x double> %i.rx, double %i.rt, i64 1
+  %i.rz = insertelement <2 x double> poison, double %i.ru, i64 0
+  %i.sa = insertelement <2 x double> %i.rz, double %i.ks, i64 1
+  %i.sb = insertelement <2 x double> poison, double %i.kr, i64 0
+  %i.sc = insertelement <2 x double> %i.sb, double %i.ru, i64 1
+  %i.sd = insertelement <2 x double> poison, double %i.rt, i64 0
+  %i.se = insertelement <2 x double> %i.sd, double %i.kr, i64 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit
   %.pr.i416421 = phi ptr [ null, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.m, %._crit_edge.loopexit ] ; 5 uses
   %i.sf = phi i64 [ 0, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.rw, %._crit_edge.loopexit ]
   %i.sg = phi ptr [ null, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %scevgep.i.i.i.i.i, %._crit_edge.loopexit ] ; 2 uses
-  %i.sh = phi double [ 0.000000e+00, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.kr, %._crit_edge.loopexit ]
+  %i.sh = phi double [ 0.000000e+00, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.kr, %._crit_edge.loopexit ] ; 2 uses
   %i.si = phi double [ 0.000000e+00, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.ks, %._crit_edge.loopexit ] ; 2 uses
   %i.sj = phi double [ 0.000000e+00, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.fe, %._crit_edge.loopexit ] ; 2 uses
   %i.sk = phi <2 x double> [ zeroinitializer, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.ry, %._crit_edge.loopexit ]
   %i.sl = phi <2 x double> [ zeroinitializer, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.sa, %._crit_edge.loopexit ]
   %i.sm = phi <2 x double> [ zeroinitializer, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.sc, %._crit_edge.loopexit ]
   %i.sn = phi <2 x double> [ zeroinitializer, %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit ], [ %i.se, %._crit_edge.loopexit ]
-  %i.so = fneg <2 x double> %i.sn                 ; 2 uses
-  %15 = extractelement <2 x double> %i.so, i64 0
+  %i.so = fneg <2 x double> %i.sn
+  %15 = fneg double %i.sh
   %i.sp = fmul double %i.sh, %15
   %i.sq = call double @llvm.fmuladd.f64(double %i.sj, double %i.si, double %i.sp) ; 2 uses
   %i.sr = fcmp oeq double %i.sq, 0.000000e+00
@@ -239,11 +239,10 @@ bb.an:                                            ; preds = %.loopexit325
   %i.sw = insertelement <2 x double> poison, double %.0, i64 0
   %i.sx = shufflevector <2 x double> %i.sw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sy = fdiv <2 x double> %i.sv, %i.sx          ; 9 uses
-  %i.sz = fcmp olt <2 x double> %i.sy, splat (double f0x3EB0C6F7A0B5ED8D) ; 2 uses
-  %16 = extractelement <2 x i1> %i.sz, i64 0
-  %17 = extractelement <2 x i1> %i.sz, i64 1
-  %or.cond = select i1 %16, i1 true, i1 %17
-  br i1 %or.cond, label %bb.ao, label %bb.aq
+  %i.sz = fcmp olt <2 x double> %i.sy, splat (double f0x3EB0C6F7A0B5ED8D)
+  %16 = bitcast <2 x i1> %i.sz to i2
+  %.not = icmp eq i2 %16, 0
+  br i1 %.not, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %._crit_edge
   invoke fastcc void @"_ZZN3igl26fit_cubic_bezier_substringERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEEiiRKNS1_IdLi1ELin1ELi1ELi1ELin1EEES7_dbRSt6vectorIS2_SaIS2_EEENK3$_0clES4_iiS7_S7_RS2_"(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(24) %6)
@@ -394,7 +393,7 @@ vector.memcheck476:                               ; preds = %vector.scevcheck473
 
 vector.ph481:                                     ; preds = %vector.memcheck476
   %n.vec482 = and i64 %i.ti, 9223372036854775804  ; 3 uses
-  %broadcast.splat = shufflevector <2 x double> %i.sy, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x double> %i.sy, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   br label %vector.body483
 
 vector.body483:                                   ; preds = %vector.body483, %vector.ph481
@@ -438,7 +437,7 @@ middle.block490:                                  ; preds = %vector.body483
   %i.wb = load double, ptr %i.wa, align 8, !tbaa !24
   %i.wc = getelementptr inbounds nuw [8 x i8], ptr %i.ve, i64 %.05.i.i.i.i.i.i.i.i.i.i233.ph
   %i.wd = load double, ptr %i.wc, align 8, !tbaa !24
-  %i.we = extractelement <2 x double> %i.sy, i64 0
+  %i.we = extractelement <2 x double> %i.sy, i64 1
   %i.wf = fmul double %i.we, %i.wd
   %i.wg = fadd double %i.wb, %i.wf
   store double %i.wg, ptr %i.vy, align 8, !tbaa !24
@@ -451,8 +450,8 @@ middle.block490:                                  ; preds = %vector.body483
   br i1 %i.wi, label %.loopexit534, label %.lr.ph.i.i.i.i.i.i.i.i.i.i232.preheader.new
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i232.preheader.new:      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i232.prol.loopexit
-  %i.wj = extractelement <2 x double> %i.sy, i64 0
-  %i.wk = extractelement <2 x double> %i.sy, i64 0
+  %i.wj = extractelement <2 x double> %i.sy, i64 1
+  %i.wk = extractelement <2 x double> %i.sy, i64 1
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i232
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i232:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i232, %.lr.ph.i.i.i.i.i.i.i.i.i.i232.preheader.new
@@ -510,7 +509,7 @@ vector.memcheck496:                               ; preds = %vector.scevcheck493
 
 vector.ph502:                                     ; preds = %vector.memcheck496
   %n.vec503 = and i64 %i.ti, 9223372036854775804  ; 3 uses
-  %broadcast.splat505 = shufflevector <2 x double> %i.sy, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %broadcast.splat505 = shufflevector <2 x double> %i.sy, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body506
 
 vector.body506:                                   ; preds = %vector.body506, %vector.ph502
@@ -554,7 +553,7 @@ middle.block513:                                  ; preds = %vector.body506
   %i.yf = load double, ptr %i.ye, align 8, !tbaa !24
   %i.yg = getelementptr inbounds nuw [8 x i8], ptr %i.xi, i64 %.05.i.i.i.i.i.i.i.i.i.i236.ph
   %i.yh = load double, ptr %i.yg, align 8, !tbaa !24
-  %i.yi = extractelement <2 x double> %i.sy, i64 1
+  %i.yi = extractelement <2 x double> %i.sy, i64 0
   %i.yj = fmul double %i.yi, %i.yh
   %i.yk = fadd double %i.yf, %i.yj
   store double %i.yk, ptr %i.yc, align 8, !tbaa !24
@@ -567,8 +566,8 @@ middle.block513:                                  ; preds = %vector.body506
   br i1 %i.ym, label %.loopexit533, label %.lr.ph.i.i.i.i.i.i.i.i.i.i235.preheader.new
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i235.preheader.new:      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i235.prol.loopexit
-  %i.yn = extractelement <2 x double> %i.sy, i64 1
-  %i.yo = extractelement <2 x double> %i.sy, i64 1
+  %i.yn = extractelement <2 x double> %i.sy, i64 0
+  %i.yo = extractelement <2 x double> %i.sy, i64 0
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i235
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i235:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i235, %.lr.ph.i.i.i.i.i.i.i.i.i.i235.preheader.new

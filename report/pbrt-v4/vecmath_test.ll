@@ -204,19 +204,7 @@ bb.b:                                             ; preds = %bb.d
   store float f0xB9C9A429, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %20 = call <4 x float> @llvm.sqrt.v4f32(<4 x float> <float 1.000000e+00, float 1.000000e+00, float undef, float undef>)
-  %21 = shufflevector <4 x float> %20, <4 x float> <float poison, float poison, float f0x39C9FE7B, float f0x341F1A58>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %22 = fadd <4 x float> %21, <float -1.000000e+00, float -1.000000e+00, float f0xB9C9FE7B, float f0xB41F1A58> ; 2 uses
-  %23 = fmul <4 x float> %22, %22                 ; 4 uses
-  %shift = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = fadd <4 x float> %23, %shift
-  %shift231 = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop232 = fadd <4 x float> %shift231, %foldExtExtBinop
-  %shift234 = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop235 = fadd <4 x float> %shift234, %foldExtExtBinop232
-  %24 = extractelement <4 x float> %foldExtExtBinop235, i64 0
-  %25 = fdiv float %24, 6.000000e+00
-  store float %25, ptr %i.c, align 4, !tbaa !15
+  store float 0.000000e+00, ptr %i.c, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   store double 1.000000e-10, ptr %i.d, align 8, !tbaa !49
   call void @_ZN7testing8internal11CmpHelperLTIfdEENS_15AssertionResultEPKcS4_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %14, ptr noundef nonnull @.str.95, ptr noundef nonnull @.str.96, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
@@ -619,21 +607,7 @@ _ZN7testing15AssertionResultD2Ev.exit123:         ; preds = %bb.by, %.noexc.i.i1
   store float f0x38BBA0FA, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %26 = call <4 x float> @llvm.sqrt.v4f32(<4 x float> <float 1.000000e+00, float 1.000000e+00, float undef, float undef>)
-  %27 = shufflevector <4 x float> %26, <4 x float> <float poison, float poison, float f0xB94FC2AD, float f0x329845DA>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %28 = fadd <4 x float> %27, <float -1.000000e+00, float -1.000000e+00, float f0x394FC2AB, float f0xB29845D9> ; 2 uses
-  %29 = fmul <4 x float> %28, %28                 ; 4 uses
-  %30 = extractelement <4 x float> %29, i64 0
-  %31 = fadd float %30, f0x28800000
-  %32 = extractelement <4 x float> %29, i64 1
-  %33 = fadd float %31, %32
-  %34 = extractelement <4 x float> %29, i64 2
-  %35 = fadd float %34, %33
-  %36 = extractelement <4 x float> %29, i64 3
-  %37 = fadd float %36, %35
-  %38 = fadd float %37, f0x1A800000
-  %39 = fdiv float %38, 6.000000e+00
-  store float %39, ptr %i.c, align 4, !tbaa !15
+  store float f0x272AAAAB, ptr %i.c, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   store double 1.000000e-10, ptr %i.d, align 8, !tbaa !49
   call void @_ZN7testing8internal11CmpHelperLTIfdEENS_15AssertionResultEPKcS4_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %14, ptr noundef nonnull @.str.95, ptr noundef nonnull @.str.96, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
@@ -1035,9 +1009,6 @@ declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v4f32.p0(<4 x float>, ptr captures(none), <4 x i1>) #24

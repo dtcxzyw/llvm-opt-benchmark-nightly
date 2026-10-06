@@ -204,26 +204,27 @@ bb.at:                                            ; preds = %bb.ap, %bb.ar
   br i1 %.not15.i.i, label %._crit_edge.i.i140, label %.lr.ph.i.i, !llvm.loop !88
 
 ._crit_edge.i.i140:                               ; preds = %.lr.ph.i.i, %.preheader.i.i
-  %.0.lcssa.i.i = phi ptr [ %i.ei, %.preheader.i.i ], [ %i.en, %.lr.ph.i.i ] ; 4 uses
+  %.0.lcssa.i.i = phi ptr [ %i.ei, %.preheader.i.i ], [ %i.en, %.lr.ph.i.i ] ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 636
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !110
   %i.es = icmp eq i32 %i.er, 1
   %i.et = select i1 %i.es, ptr %.0.lcssa.i.i, ptr null
-  %i.eu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 560 ; 2 uses
-  %i.ev = load <4 x double>, ptr %i.eu, align 8
-  %17 = call <6 x double> @llvm.masked.load.v6f64.p0(ptr nonnull align 8 %i.eu, <6 x i1> <i1 true, i1 false, i1 false, i1 true, i1 true, i1 true>, <6 x double> poison)
-  %18 = shufflevector <6 x double> %17, <6 x double> poison, <4 x i32> <i32 0, i32 3, i32 4, i32 5>
+  %17 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 560
+  %i.eu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 592
+  %i.ev = load <4 x double>, ptr %17, align 8     ; 2 uses
+  %18 = load <2 x double>, ptr %i.eu, align 8
   %19 = fptrunc <4 x double> %i.ev to <4 x float> ; 3 uses
-  %20 = fptrunc <4 x double> %18 to <4 x float>   ; 4 uses
-  %21 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
-  %i.ew = fcmp olt <4 x float> %21, %19
-  %22 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 1>
-  %23 = shufflevector <4 x float> %20, <4 x float> %19, <4 x i32> <i32 0, i32 5, i32 6, i32 0>
-  %i.ex = select <4 x i1> %i.ew, <4 x float> %22, <4 x float> %23
+  %20 = shufflevector <2 x double> %18, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %21 = shufflevector <4 x double> %i.ev, <4 x double> %20, <4 x i32> <i32 3, i32 4, i32 5, i32 0>
+  %22 = fptrunc <4 x double> %21 to <4 x float>   ; 4 uses
+  %i.ew = fcmp olt <4 x float> %22, %19
+  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
+  %24 = shufflevector <4 x float> %22, <4 x float> %19, <4 x i32> <i32 3, i32 5, i32 6, i32 3>
+  %i.ex = select <4 x i1> %i.ew, <4 x float> %23, <4 x float> %24
   %i.ey = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
-  %24 = shufflevector <4 x float> %20, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
-  %i.ez = fcmp olt <2 x float> %i.ey, %24
-  %i.fa = select <2 x i1> %i.ez, <2 x float> %24, <2 x float> %i.ey
+  %25 = shufflevector <4 x float> %22, <4 x float> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %i.ez = fcmp olt <2 x float> %i.ey, %25
+  %i.fa = select <2 x i1> %i.ez, <2 x float> %25, <2 x float> %i.ey
   %i.fb = getelementptr inbounds nuw i8, ptr %i.et, i64 672 ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 696 ; 2 uses
   %i.fd = load i64, ptr %i.fc, align 8, !tbaa !33
@@ -625,9 +626,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #28
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <6 x double> @llvm.masked.load.v6f64.p0(ptr captures(none), <6 x i1>, <6 x double>) #29
 
 attributes #0 = { mustprogress norecurse uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

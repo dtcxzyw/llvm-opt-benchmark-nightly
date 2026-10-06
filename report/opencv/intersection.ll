@@ -205,8 +205,7 @@ bb.x:                                             ; preds = %bb.w
   %i.iz = fcmp ole <4 x float> %i.iy, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
   %i.ja = fcmp oge <4 x float> %i.iy, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
   %i.jb = shufflevector <4 x i1> %i.iz, <4 x i1> %i.ja, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %17 = freeze <4 x i1> %i.jb
-  %i.jc = bitcast <4 x i1> %17 to i4
+  %i.jc = bitcast <4 x i1> %i.jb to i4
   %i.jd = icmp eq i4 %i.jc, -1
   br i1 %i.jd, label %bb.y, label %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit.i
 

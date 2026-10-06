@@ -205,7 +205,7 @@ bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %2 = alloca %"class.std::allocator.26", align 1 ; 3 uses
   %i.a = load <4 x double>, ptr %0, align 8, !tbaa !163 ; 2 uses
-  %i.b = fptosi <4 x double> %i.a to <4 x i32>    ; 3 uses
+  %i.b = fptosi <4 x double> %i.a to <4 x i32>    ; 2 uses
   %i.c = sitofp <4 x i32> %i.b to <4 x double>
   %i.d = fcmp oeq <4 x double> %i.a, %i.c
   %i.e = freeze <4 x i1> %i.d
@@ -243,12 +243,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   resume { ptr, i32 } %i.h
 
 bb.e:                                             ; preds = %bb.a
-  %.sroa.0.0.insert.insert.v.bc = bitcast <4 x i32> %i.b to <2 x i64>
+  %.sroa.0.0.insert.insert.v.bc = bitcast <4 x i32> %i.b to <2 x i64> ; 2 uses
   %.sroa.0.0.insert.insert.v.extract = extractelement <2 x i64> %.sroa.0.0.insert.insert.v.bc, i64 0
+  %3 = extractelement <2 x i64> %.sroa.0.0.insert.insert.v.bc, i64 1
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.insert.insert.v.extract, 0
-  %.sroa.5.8.insert.insert.v.bc = bitcast <4 x i32> %i.b to <2 x i64>
-  %.sroa.5.8.insert.insert.v.extract = extractelement <2 x i64> %.sroa.5.8.insert.insert.v.bc, i64 1
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.5.8.insert.insert.v.extract, 1
+  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %3, 1
   ret { i64, i64 } %.fca.1.insert
 }
 

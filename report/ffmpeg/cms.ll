@@ -202,15 +202,14 @@ bb.d:                                             ; preds = %bb.c
   %i.u = extractelement <3 x float> %i.r, i64 0
   %i.v = fcmp nsz olt float %i.u, %i.f
   %i.w = shufflevector <3 x float> %i.r, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
-  %3 = shufflevector <4 x float> %i.w, <4 x float> %i.e, <4 x i32> <i32 2, i32 1, i32 0, i32 7>
+  %3 = shufflevector <4 x float> %i.w, <4 x float> %i.e, <4 x i32> <i32 1, i32 2, i32 0, i32 7>
   %i.x = shufflevector <2 x float> %i.d, <2 x float> poison, <3 x i32> <i32 poison, i32 1, i32 poison>
   %i.y = shufflevector <3 x float> %i.x, <3 x float> %i.r, <4 x i32> <i32 1, i32 1, i32 1, i32 5>
   %i.z = fcmp nsz ogt <4 x float> %3, %i.y
-  %4 = freeze <4 x i1> %i.z
-  %i.aa = bitcast <4 x i1> %4 to i4
+  %i.aa = bitcast <4 x i1> %i.z to i4
   %i.ab = icmp ne i4 %i.aa, 0
-  %op.rdx56 = select i1 %i.ab, i1 true, i1 %i.v
-  br i1 %op.rdx56, label %ingamut.exit22.thread, label %ingamut.exit22
+  %op.rdx58 = or i1 %i.ab, %i.v
+  br i1 %op.rdx58, label %ingamut.exit22.thread, label %ingamut.exit22
 
 ingamut.exit22:                                   ; preds = %bb.d
   %i.ac = fcmp nsz ogt <3 x float> %i.r, zeroinitializer
@@ -326,11 +325,10 @@ bb.f:                                             ; preds = %bb.e
   %i.dq = fcmp nsz ogt <4 x float> %i.dp, %i.e
   %i.dr = fcmp nsz olt <4 x float> %i.dp, %i.e
   %i.ds = shufflevector <4 x i1> %i.dq, <4 x i1> %i.dr, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %5 = freeze <4 x i1> %i.ds
-  %i.dt = bitcast <4 x i1> %5 to i4
+  %i.dt = bitcast <4 x i1> %i.ds to i4
   %i.du = icmp ne i4 %i.dt, 0
-  %op.rdx53 = select i1 %i.du, i1 true, i1 %i.do
-  br i1 %op.rdx53, label %.thread, label %ingamut.exit
+  %op.rdx55 = or i1 %i.du, %i.do
+  br i1 %op.rdx55, label %.thread, label %ingamut.exit
 
 ingamut.exit:                                     ; preds = %bb.f
   %i.dv = fcmp nsz ogt <3 x float> %i.dk, zeroinitializer
@@ -707,15 +705,14 @@ bb.d:                                             ; preds = %bb.c
   %i.dn = extractelement <3 x float> %i.dk, i64 0
   %i.do = fcmp nsz olt float %i.dn, %i.cx
   %i.dp = shufflevector <3 x float> %i.dk, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
-  %3 = shufflevector <4 x float> %i.dp, <4 x float> %i.cw, <4 x i32> <i32 2, i32 1, i32 0, i32 7>
+  %3 = shufflevector <4 x float> %i.dp, <4 x float> %i.cw, <4 x i32> <i32 1, i32 2, i32 0, i32 7>
   %i.dq = shufflevector <2 x float> %i.cv, <2 x float> poison, <3 x i32> <i32 poison, i32 1, i32 poison>
   %i.dr = shufflevector <3 x float> %i.dq, <3 x float> %i.dk, <4 x i32> <i32 1, i32 1, i32 1, i32 5>
   %i.ds = fcmp nsz ogt <4 x float> %3, %i.dr
-  %4 = freeze <4 x i1> %i.ds
-  %i.dt = bitcast <4 x i1> %4 to i4
+  %i.dt = bitcast <4 x i1> %i.ds to i4
   %i.du = icmp ne i4 %i.dt, 0
-  %op.rdx97 = select i1 %i.du, i1 true, i1 %i.do
-  br i1 %op.rdx97, label %ingamut.exit48.thread, label %ingamut.exit48
+  %op.rdx99 = or i1 %i.du, %i.do
+  br i1 %op.rdx99, label %ingamut.exit48.thread, label %ingamut.exit48
 
 ingamut.exit48:                                   ; preds = %bb.d
   %i.dv = fcmp nsz ogt <3 x float> %i.dk, zeroinitializer
@@ -832,11 +829,10 @@ bb.f:                                             ; preds = %bb.e
   %i.hk = fcmp nsz ogt <4 x float> %i.hj, %i.cw
   %i.hl = fcmp nsz olt <4 x float> %i.hj, %i.cw
   %i.hm = shufflevector <4 x i1> %i.hk, <4 x i1> %i.hl, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %5 = freeze <4 x i1> %i.hm
-  %i.hn = bitcast <4 x i1> %5 to i4
+  %i.hn = bitcast <4 x i1> %i.hm to i4
   %i.ho = icmp ne i4 %i.hn, 0
-  %op.rdx94 = select i1 %i.ho, i1 true, i1 %i.hi
-  br i1 %op.rdx94, label %.thread, label %ingamut.exit
+  %op.rdx96 = or i1 %i.ho, %i.hi
+  br i1 %op.rdx96, label %.thread, label %ingamut.exit
 
 ingamut.exit:                                     ; preds = %bb.f
   %i.hp = fcmp nsz ogt <3 x float> %i.he, zeroinitializer
@@ -1239,14 +1235,14 @@ bb.b:                                             ; preds = %bb.a
   %i.q = fcmp nsz ogt float %i.m, %i.p
   %i.r = extractelement <3 x float> %i.j, i64 2   ; 2 uses
   %i.s = fcmp nsz olt float %i.r, %i.l
+  %or.cond = or i1 %i.s, %i.q
   %3 = fcmp nsz ogt float %i.r, %i.p
-  %4 = or i1 %i.s, %3
-  %or.cond50 = select i1 %i.q, i1 true, i1 %4
+  %or.cond50 = or i1 %3, %or.cond
   %i.t = extractelement <3 x float> %i.j, i64 0   ; 2 uses
   %i.u = fcmp nsz olt float %i.t, %i.l
-  %5 = fcmp nsz ogt float %i.t, %i.p
-  %6 = or i1 %i.u, %5
-  %or.cond52 = select i1 %or.cond50, i1 true, i1 %6
+  %or.cond51 = or i1 %i.u, %or.cond50
+  %4 = fcmp nsz ogt float %i.t, %i.p
+  %or.cond52 = or i1 %4, %or.cond51
   br i1 %or.cond52, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1504,11 +1500,10 @@ bb.m:                                             ; preds = %bb.l
   %i.cj = fcmp nsz ogt <4 x float> %i.ci, %i.c
   %i.ck = fcmp nsz olt <4 x float> %i.ci, %i.c
   %i.cl = shufflevector <4 x i1> %i.cj, <4 x i1> %i.ck, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %2 = freeze <4 x i1> %i.cl
-  %i.cm = bitcast <4 x i1> %2 to i4
+  %i.cm = bitcast <4 x i1> %i.cl to i4
   %i.cn = icmp ne i4 %i.cm, 0
-  %op.rdx191 = select i1 %i.cn, i1 true, i1 %i.ch
-  br i1 %op.rdx191, label %.thread, label %ingamut.exit
+  %op.rdx193 = or i1 %i.cn, %i.ch
+  br i1 %op.rdx193, label %.thread, label %ingamut.exit
 
 ingamut.exit:                                     ; preds = %bb.m
   %i.co = fcmp nsz ogt <3 x float> %i.cd, zeroinitializer
@@ -1615,14 +1610,13 @@ bb.s:                                             ; preds = %bb.r
   %i.fd = extractelement <3 x float> %i.fa, i64 0
   %i.fe = fcmp nsz olt float %i.fd, %i.e
   %i.ff = shufflevector <3 x float> %i.fa, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
-  %3 = shufflevector <4 x float> %i.ff, <4 x float> %i.c, <4 x i32> <i32 2, i32 1, i32 0, i32 7>
+  %2 = shufflevector <4 x float> %i.ff, <4 x float> %i.c, <4 x i32> <i32 1, i32 2, i32 0, i32 7>
   %i.fg = shufflevector <3 x float> %i.bd, <3 x float> %i.fa, <4 x i32> <i32 1, i32 1, i32 1, i32 5>
-  %i.fh = fcmp nsz ogt <4 x float> %3, %i.fg
-  %4 = freeze <4 x i1> %i.fh
-  %i.fi = bitcast <4 x i1> %4 to i4
+  %i.fh = fcmp nsz ogt <4 x float> %2, %i.fg
+  %i.fi = bitcast <4 x i1> %i.fh to i4
   %i.fj = icmp ne i4 %i.fi, 0
-  %op.rdx194 = select i1 %i.fj, i1 true, i1 %i.fe
-  br i1 %op.rdx194, label %.thread162, label %ingamut.exit149
+  %op.rdx196 = or i1 %i.fj, %i.fe
+  br i1 %op.rdx196, label %.thread162, label %ingamut.exit149
 
 ingamut.exit149:                                  ; preds = %bb.s
   %i.fk = fcmp nsz ogt <3 x float> %i.fa, zeroinitializer

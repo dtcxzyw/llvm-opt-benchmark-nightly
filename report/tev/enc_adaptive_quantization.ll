@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.us.i
   %i.dn = extractelement <4 x float> %i.dm, i64 0
   %foldExtExtBinop = fmul <4 x float> %i.dm, %i.dm
   %i.do = shufflevector <4 x float> %foldExtExtBinop, <4 x float> %i.dm, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
-  %i.dp = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.do, <4 x float> splat (float f0x42EFD02B), <4 x float> splat (float f0x3C23D70A))
+  %i.dp = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.do, <4 x float> <float f0x42EFD02B, float poison, float poison, float poison>, <4 x float> <float f0x3C23D70A, float poison, float poison, float poison>)
   %i.dq = fmul float %i.dn, f0x431D2FBD
-  %i.dr = insertelement <4 x float> <float poison, float f0x431D2FBD, float f0x431D2FBD, float f0x431D2FBD>, float %i.dq, i64 0
-  %i.ds = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.dr, <4 x float> %i.do, <4 x float> splat (float f0x40ACF18E))
+  %i.dr = insertelement <4 x float> poison, float %i.dq, i64 0
+  %i.ds = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.dr, <4 x float> %i.do, <4 x float> <float f0x40ACF18E, float poison, float poison, float poison>)
   %foldExtExtBinop111 = fdiv <4 x float> %i.ds, %i.dp
   %i.dt = extractelement <4 x float> %foldExtExtBinop111, i64 0
   %i.du = fsub float %i.dj, %i.dh
@@ -328,10 +328,10 @@ bb.g:                                             ; preds = %bb.f
   %i.gh = extractelement <4 x float> %i.gg, i64 0
   %foldExtExtBinop113 = fmul <4 x float> %i.gg, %i.gg
   %i.gi = shufflevector <4 x float> %foldExtExtBinop113, <4 x float> %i.gg, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
-  %i.gj = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.gi, <4 x float> splat (float f0x42EFD02B), <4 x float> splat (float f0x3C23D70A))
+  %i.gj = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.gi, <4 x float> <float f0x42EFD02B, float poison, float poison, float poison>, <4 x float> <float f0x3C23D70A, float poison, float poison, float poison>)
   %i.gk = fmul float %i.gh, f0x431D2FBD
-  %i.gl = insertelement <4 x float> <float poison, float f0x431D2FBD, float f0x431D2FBD, float f0x431D2FBD>, float %i.gk, i64 0
-  %i.gm = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.gl, <4 x float> %i.gi, <4 x float> splat (float f0x40ACF18E))
+  %i.gl = insertelement <4 x float> poison, float %i.gk, i64 0
+  %i.gm = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.gl, <4 x float> %i.gi, <4 x float> <float f0x40ACF18E, float poison, float poison, float poison>)
   %foldExtExtBinop115 = fdiv <4 x float> %i.gm, %i.gj
   %i.gn = extractelement <4 x float> %foldExtExtBinop115, i64 0
   %i.go = fsub float %i.fy, %i.gd
@@ -339,10 +339,8 @@ bb.g:                                             ; preds = %bb.f
   %i.gq = fmul float %i.gp, %i.gp                 ; 2 uses
   %i.gr = fcmp oge float %i.gq, 2.000000e-01
   %spec.store.select.i.i = select i1 %i.gr, float 2.000000e-01, float %i.gq
-  %3 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %spec.store.select.i.i, i64 0
-  %4 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %3, <4 x float> <float f0x480E13D6, float f0x509DB406, float f0x509DB406, float f0x509DB406>, <4 x float> splat (float f0x41DC0BF4))
-  %5 = extractelement <4 x float> %4, i64 0
-  %i.gs = tail call float @llvm.sqrt.f32(float %5)
+  %.scalar.i.i.i = tail call float @llvm.fma.f32(float %spec.store.select.i.i, float f0x480E13D6, float f0x41DC0BF4)
+  %i.gs = tail call float @llvm.sqrt.f32(float %.scalar.i.i.i)
   %i.gt = fmul float %i.gs, 2.500000e-01          ; 2 uses
   %i.gu = and i64 %storemerge302.i, 3
   %.not.i217.i = icmp eq i64 %i.gu, 0
@@ -452,10 +450,10 @@ bb.m:                                             ; preds = %_ZZN3jxl6N_AVX212_G
   %i.jd = extractelement <4 x float> %i.jc, i64 0
   %foldExtExtBinop117 = fmul <4 x float> %i.jc, %i.jc
   %i.je = shufflevector <4 x float> %foldExtExtBinop117, <4 x float> %i.jc, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
-  %i.jf = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.je, <4 x float> splat (float f0x42EFD02B), <4 x float> splat (float f0x3C23D70A))
+  %i.jf = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.je, <4 x float> <float f0x42EFD02B, float poison, float poison, float poison>, <4 x float> <float f0x3C23D70A, float poison, float poison, float poison>)
   %i.jg = fmul float %i.jd, f0x431D2FBD
-  %i.jh = insertelement <4 x float> <float poison, float f0x431D2FBD, float f0x431D2FBD, float f0x431D2FBD>, float %i.jg, i64 0
-  %i.ji = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.jh, <4 x float> %i.je, <4 x float> splat (float f0x40ACF18E))
+  %i.jh = insertelement <4 x float> poison, float %i.jg, i64 0
+  %i.ji = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.jh, <4 x float> %i.je, <4 x float> <float f0x40ACF18E, float poison, float poison, float poison>)
   %foldExtExtBinop119 = fdiv <4 x float> %i.ji, %i.jf
   %i.jj = extractelement <4 x float> %foldExtExtBinop119, i64 0
   %i.jk = fsub float %i.iz, %i.ix
@@ -463,10 +461,8 @@ bb.m:                                             ; preds = %_ZZN3jxl6N_AVX212_G
   %i.jm = fmul float %i.jl, %i.jl                 ; 2 uses
   %i.jn = fcmp oge float %i.jm, 2.000000e-01
   %spec.store.select.i218.i = select i1 %i.jn, float 2.000000e-01, float %i.jm
-  %6 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %spec.store.select.i218.i, i64 0
-  %7 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %6, <4 x float> <float f0x480E13D6, float f0x509DB406, float f0x509DB406, float f0x509DB406>, <4 x float> splat (float f0x41DC0BF4))
-  %8 = extractelement <4 x float> %7, i64 0
-  %i.jo = tail call float @llvm.sqrt.f32(float %8)
+  %.scalar.i.i219.i = tail call float @llvm.fma.f32(float %spec.store.select.i218.i, float f0x480E13D6, float f0x41DC0BF4)
+  %i.jo = tail call float @llvm.sqrt.f32(float %.scalar.i.i219.i)
   %i.jp = fmul float %i.jo, 2.500000e-01          ; 2 uses
   %i.jq = sub i64 %.2296.i, %spec.select285.i
   %i.jr = getelementptr inbounds nuw [4 x i8], ptr %i.fu, i64 %i.jq ; 2 uses
@@ -869,13 +865,13 @@ begin_hunk_1_@"_ZZN3jxl6N_AVX212_GLOBAL__N_123AdaptiveQuantizationMapEfRKNS_6Ima
   %i.aul = bitcast <4 x i32> %i.auk to <4 x float>
   %i.aum = select <4 x i1> %i.auh, <4 x float> <float 5.000000e-01, float poison, float poison, float poison>, <4 x float> %i.aul
   %i.aun = fsub <4 x float> %i.auf, %i.aug        ; 6 uses
-  %i.auo = fadd <4 x float> %i.aun, splat (float f0x4122CC6B)
-  %i.aup = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.auo, <4 x float> %i.aun, <4 x float> splat (float f0x424379A1))
-  %i.auq = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aup, <4 x float> %i.aun, <4 x float> splat (float f0x42C519F0))
+  %i.auo = fadd <4 x float> %i.aun, <float f0x4122CC6B, float poison, float poison, float poison>
+  %i.aup = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.auo, <4 x float> %i.aun, <4 x float> <float f0x424379A1, float poison, float poison, float poison>)
+  %i.auq = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aup, <4 x float> %i.aun, <4 x float> <float f0x42C519F0, float poison, float poison, float poison>)
   %foldExtExtBinop121 = fmul <4 x float> %i.aum, %i.auq
-  %i.aur = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aun, <4 x float> splat (float f0x3E5749EE), <4 x float> splat (float f0xBCB621BE))
-  %i.aus = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aur, <4 x float> %i.aun, <4 x float> splat (float -1.944150e+01))
-  %i.aut = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aus, <4 x float> %i.aun, <4 x float> splat (float f0x42C519F1))
+  %i.aur = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aun, <4 x float> <float f0x3E5749EE, float poison, float poison, float poison>, <4 x float> <float f0xBCB621BE, float poison, float poison, float poison>)
+  %i.aus = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aur, <4 x float> %i.aun, <4 x float> <float -1.944150e+01, float poison, float poison, float poison>)
+  %i.aut = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aus, <4 x float> %i.aun, <4 x float> <float f0x42C519F1, float poison, float poison, float poison>)
   %foldExtExtBinop123 = fdiv <4 x float> %foldExtExtBinop121, %i.aut
   %i.auu = extractelement <4 x float> %foldExtExtBinop123, i64 0
   %i.auv = tail call float @llvm.fmuladd.f32(float %i.auu, float %i.tb, float %i.td)
@@ -1276,6 +1272,9 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fma.f32(float, float, float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #2
