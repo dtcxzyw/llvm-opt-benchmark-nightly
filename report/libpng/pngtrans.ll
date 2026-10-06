@@ -203,10 +203,12 @@ vector.ph:                                        ; preds = %.peel.next109
 vector.body:                                      ; preds = %bb.i, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %bb.i ] ; 2 uses
   %i.bu = sub i64 0, %index
-  %next.gep.a = getelementptr i8, ptr %i.bl, i64 %i.bu
-  %i.bv = getelementptr i8, ptr %next.gep.a, i64 -7
-  %2 = load <8 x i8>, ptr %i.bv, align 1, !tbaa !27
-  %i.bw = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
+  %next.gep = getelementptr i8, ptr %i.bl, i64 %i.bu ; 2 uses
+  %next.gep.a = getelementptr i8, ptr %next.gep, i64 -3
+  %i.bv = getelementptr i8, ptr %next.gep, i64 -7
+  %wide.load = load <4 x i8>, ptr %next.gep.a, align 1, !tbaa !27
+  %wide.load126 = load <4 x i8>, ptr %i.bv, align 1, !tbaa !27
+  %i.bw = shufflevector <4 x i8> %wide.load126, <4 x i8> %wide.load, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
   %.scalar = bitcast <8 x i8> %i.bw to i64
   %.not142 = icmp eq i64 %.scalar, 0
   br i1 %.not142, label %bb.i, label %bb.h

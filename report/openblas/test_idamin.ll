@@ -202,14 +202,20 @@ define void @__ctest_idamin_positive_step_2_N_4_run() #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [8 x double], align 16            ; 5 uses
+  %i.c = alloca [8 x double], align 16            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 4, ptr %i.a, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 2, ptr %i.b, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.c, i8 0, i64 64, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double 1.100000e+00, double poison, double 1.000000e+00, double poison, double 2.200000e+00, double poison, double 3.300000e+00>, ptr align 16 %i.c, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double 1.100000e+00, ptr %i.c, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  store double 2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  store double 3.300000e+00, ptr %2, align 16
   %i.d = call i32 @idamin_(ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #6
   %i.e = sext i32 %i.d to i64
   call void @assert_equal(i64 noundef 2, i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 250) #6
@@ -224,14 +230,20 @@ define void @__ctest_idamin_negative_step_2_N_4_run() #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [8 x double], align 16            ; 5 uses
+  %i.c = alloca [8 x double], align 16            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 4, ptr %i.a, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 2, ptr %i.b, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.c, i8 0, i64 64, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double -1.100000e+00, double poison, double 1.000000e+00, double poison, double -2.200000e+00, double poison, double -3.300000e+00>, ptr align 16 %i.c, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double -1.100000e+00, ptr %i.c, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  store double -2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  store double -3.300000e+00, ptr %2, align 16
   %i.d = call i32 @idamin_(ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #6
   %i.e = sext i32 %i.d to i64
   call void @assert_equal(i64 noundef 2, i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 262) #6
@@ -292,14 +304,20 @@ define void @__ctest_idamin_positive_step_2_N_5_run() #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [10 x double], align 16           ; 5 uses
+  %i.c = alloca [10 x double], align 16           ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 5, ptr %i.a, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 2, ptr %i.b, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.c, i8 0, i64 80, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double 1.100000e+00, double poison, double 1.000000e+00, double poison, double 2.200000e+00, double poison, double 3.300000e+00>, ptr align 16 %i.c, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double 1.100000e+00, ptr %i.c, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  store double 2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  store double 3.300000e+00, ptr %2, align 16
   %i.d = call i32 @idamin_(ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #6
   %i.e = sext i32 %i.d to i64
   call void @assert_equal(i64 noundef 5, i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 298) #6
@@ -314,14 +332,20 @@ define void @__ctest_idamin_negative_step_2_N_5_run() #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  %i.c = alloca [10 x double], align 16           ; 5 uses
+  %i.c = alloca [10 x double], align 16           ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 5, ptr %i.a, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store i32 2, ptr %i.b, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.c, i8 0, i64 80, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double -1.100000e+00, double poison, double 1.000000e+00, double poison, double -2.200000e+00, double poison, double -3.300000e+00>, ptr align 16 %i.c, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double -1.100000e+00, ptr %i.c, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  store double -2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  store double -3.300000e+00, ptr %2, align 16
   %i.d = call i32 @idamin_(ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #6
   %i.e = sext i32 %i.d to i64
   call void @assert_equal(i64 noundef 5, i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 310) #6
@@ -724,10 +748,16 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @__ctest_idamin_c_api_positive_step_2_N_4_run() #0 {
 bb.a:
-  %i.a = alloca [8 x double], align 16            ; 5 uses
+  %i.a = alloca [8 x double], align 16            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double 1.100000e+00, double poison, double 1.000000e+00, double poison, double 2.200000e+00, double poison, double 3.300000e+00>, ptr align 16 %i.a, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double 1.100000e+00, ptr %i.a, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store double 2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  store double 3.300000e+00, ptr %2, align 16
   %i.b = call i64 @cblas_idamin(i32 noundef 4, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %sext = shl i64 %i.b, 32
   %i.c = ashr exact i64 %sext, 32
@@ -739,10 +769,16 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @__ctest_idamin_c_api_negative_step_2_N_4_run() #0 {
 bb.a:
-  %i.a = alloca [8 x double], align 16            ; 5 uses
+  %i.a = alloca [8 x double], align 16            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, i8 0, i64 64, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double -1.100000e+00, double poison, double 1.000000e+00, double poison, double -2.200000e+00, double poison, double -3.300000e+00>, ptr align 16 %i.a, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double -1.100000e+00, ptr %i.a, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store double -2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  store double -3.300000e+00, ptr %2, align 16
   %i.b = call i64 @cblas_idamin(i32 noundef 4, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %sext = shl i64 %i.b, 32
   %i.c = ashr exact i64 %sext, 32
@@ -786,10 +822,16 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @__ctest_idamin_c_api_positive_step_2_N_5_run() #0 {
 bb.a:
-  %i.a = alloca [10 x double], align 16           ; 5 uses
+  %i.a = alloca [10 x double], align 16           ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.a, i8 0, i64 80, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double 1.100000e+00, double poison, double 1.000000e+00, double poison, double 2.200000e+00, double poison, double 3.300000e+00>, ptr align 16 %i.a, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double 1.100000e+00, ptr %i.a, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store double 2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  store double 3.300000e+00, ptr %2, align 16
   %i.b = call i64 @cblas_idamin(i32 noundef 5, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %sext = shl i64 %i.b, 32
   %i.c = ashr exact i64 %sext, 32
@@ -801,10 +843,16 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @__ctest_idamin_c_api_negative_step_2_N_5_run() #0 {
 bb.a:
-  %i.a = alloca [10 x double], align 16           ; 5 uses
+  %i.a = alloca [10 x double], align 16           ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.a, i8 0, i64 80, i1 false)
-  call void @llvm.masked.store.v7f64.p0(<7 x double> <double -1.100000e+00, double poison, double 1.000000e+00, double poison, double -2.200000e+00, double poison, double -3.300000e+00>, ptr align 16 %i.a, <7 x i1> <i1 true, i1 false, i1 true, i1 false, i1 true, i1 false, i1 true>)
+  store double -1.100000e+00, ptr %i.a, align 16
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store double 1.000000e+00, ptr %0, align 16
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store double -2.200000e+00, ptr %1, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  store double -3.300000e+00, ptr %2, align 16
   %i.b = call i64 @cblas_idamin(i32 noundef 5, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %sext = shl i64 %i.b, 32
   %i.c = ashr exact i64 %sext, 32
@@ -1117,9 +1165,6 @@ bb.a:
   tail call void @assert_equal(i64 noundef 49, i64 noundef %i.o, ptr noundef nonnull @.str, i32 noundef 788) #6
   ret void
 }
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v7f64.p0(<7 x double>, ptr captures(none), <7 x i1>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

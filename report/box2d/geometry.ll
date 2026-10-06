@@ -204,17 +204,19 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { <2 x float>, <2 x float> } @b2ComputeCapsuleAABB(ptr nofree noundef readonly captures(none) %0, <2 x float> %1, <2 x float> %2) local_unnamed_addr #9 {
 bb.a:
+  %3 = load <2 x float>, ptr %0, align 4          ; 2 uses
   %i.a = shufflevector <2 x float> %2, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.b = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %3 = load <4 x float>, ptr %0, align 4          ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = load <2 x float>, ptr %4, align 4          ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load float, ptr %i.c, align 4, !tbaa !28
   %i.e = fpext float %i.d to double
   %i.f = fadd double %i.e, 0.000000e+00
-  %i.g = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %i.g = shufflevector <2 x float> %3, <2 x float> %5, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
   %i.h = fmul <4 x float> %i.a, %i.g              ; 2 uses
   %i.i = shufflevector <2 x float> %2, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %i.j = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 3, i32 3>
+  %i.j = shufflevector <2 x float> %3, <2 x float> %5, <4 x i32> <i32 1, i32 1, i32 3, i32 3>
   %i.k = fmul <4 x float> %i.i, %i.j              ; 2 uses
   %i.l = fsub <4 x float> %i.h, %i.k
   %i.m = fadd <4 x float> %i.h, %i.k

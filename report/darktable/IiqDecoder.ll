@@ -205,41 +205,86 @@ vector.ph531:                                     ; preds = %vector.main.loop.it
   %i.po = and i64 %i.pn, 12
   %n.vec532 = and i64 %i.pn, 8589934576           ; 4 uses
   %i.pp = add nsw i64 %n.vec532, %i.pj            ; 2 uses
-  %broadcast.splatinsert = insertelement <16 x double> poison, double %i.pc, i64 0
-  %broadcast.splat = shufflevector <16 x double> %broadcast.splatinsert, <16 x double> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert533 = insertelement <16 x double> poison, double %i.pe, i64 0
-  %broadcast.splat534 = shufflevector <16 x double> %broadcast.splatinsert533, <16 x double> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert535 = insertelement <16 x double> poison, double %i.pg, i64 0
-  %broadcast.splat536 = shufflevector <16 x double> %broadcast.splatinsert535, <16 x double> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert537 = insertelement <16 x double> poison, double %i.pi, i64 0
-  %broadcast.splat538 = shufflevector <16 x double> %broadcast.splatinsert537, <16 x double> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert539 = insertelement <16 x i32> poison, i32 %i.oy, i64 0
-  %broadcast.splat540 = shufflevector <16 x i32> %broadcast.splatinsert539, <16 x i32> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert541 = insertelement <16 x i32> poison, i32 %i.oy, i64 0
-  %broadcast.splat542 = shufflevector <16 x i32> %broadcast.splatinsert541, <16 x i32> poison, <16 x i32> zeroinitializer
-  %induction = add <16 x i32> %broadcast.splat542, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %broadcast.splatinsert = insertelement <4 x double> poison, double %i.pc, i64 0
+  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert533 = insertelement <4 x double> poison, double %i.pe, i64 0
+  %broadcast.splat534 = shufflevector <4 x double> %broadcast.splatinsert533, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert535 = insertelement <4 x double> poison, double %i.pg, i64 0
+  %broadcast.splat536 = shufflevector <4 x double> %broadcast.splatinsert535, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert537 = insertelement <4 x double> poison, double %i.pi, i64 0
+  %broadcast.splat538 = shufflevector <4 x double> %broadcast.splatinsert537, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert539 = insertelement <4 x i32> poison, i32 %i.oy, i64 0
+  %broadcast.splat540 = shufflevector <4 x i32> %broadcast.splatinsert539, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert541 = insertelement <4 x i32> poison, i32 %i.oy, i64 0
+  %broadcast.splat542 = shufflevector <4 x i32> %broadcast.splatinsert541, <4 x i32> poison, <4 x i32> zeroinitializer
+  %induction = add <4 x i32> %broadcast.splat542, <i32 0, i32 1, i32 2, i32 3>
+  %invariant.op = sub <4 x i32> splat (i32 4), %broadcast.splat540
+  %invariant.op621 = sub <4 x i32> splat (i32 8), %broadcast.splat540
+  %invariant.op623 = sub <4 x i32> splat (i32 12), %broadcast.splat540
   %invariant.gep = getelementptr [2 x i8], ptr %i.ot, i64 %i.pj
   br label %vector.body543
 
 vector.body543:                                   ; preds = %vector.ph531, %vector.body543
   %index544 = phi i64 [ 0, %vector.ph531 ], [ %index.next545, %vector.body543 ] ; 2 uses
-  %vec.ind = phi <16 x i32> [ %induction, %vector.ph531 ], [ %vec.ind.next, %vector.body543 ] ; 2 uses
-  %7 = sub <16 x i32> %vec.ind, %broadcast.splat540
-  %8 = sitofp <16 x i32> %7 to <16 x double>      ; 4 uses
-  %9 = fmul nnan <16 x double> %8, %8             ; 2 uses
-  %10 = fmul <16 x double> %9, %8
-  %11 = call <16 x double> @llvm.fmuladd.v16f64(<16 x double> %broadcast.splat534, <16 x double> %8, <16 x double> %broadcast.splat)
-  %12 = call <16 x double> @llvm.fmuladd.v16f64(<16 x double> %broadcast.splat536, <16 x double> %9, <16 x double> %11)
-  %13 = call <16 x double> @llvm.fmuladd.v16f64(<16 x double> %broadcast.splat538, <16 x double> %10, <16 x double> %12) ; 2 uses
-  %14 = fcmp olt <16 x double> %13, zeroinitializer
-  %15 = select <16 x i1> %14, <16 x double> zeroinitializer, <16 x double> %13 ; 2 uses
-  %16 = fcmp ogt <16 x double> %15, splat (double 6.553500e+04)
-  %17 = select <16 x i1> %16, <16 x double> splat (double 6.553500e+04), <16 x double> %15
-  %18 = fptoui <16 x double> %17 to <16 x i16>
-  %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %index544
-  store <16 x i16> %18, ptr %gep, align 2, !tbaa !160, !noalias !347
+  %vec.ind = phi <4 x i32> [ %induction, %vector.ph531 ], [ %vec.ind.next, %vector.body543 ] ; 5 uses
+  %7 = sub <4 x i32> %vec.ind, %broadcast.splat540
+  %.reass = add <4 x i32> %vec.ind, %invariant.op
+  %.reass622 = add <4 x i32> %vec.ind, %invariant.op621
+  %.reass624 = add <4 x i32> %vec.ind, %invariant.op623
+  %8 = sitofp <4 x i32> %7 to <4 x double>        ; 4 uses
+  %9 = sitofp <4 x i32> %.reass to <4 x double>   ; 4 uses
+  %10 = sitofp <4 x i32> %.reass622 to <4 x double> ; 4 uses
+  %11 = sitofp <4 x i32> %.reass624 to <4 x double> ; 4 uses
+  %12 = fmul nnan <4 x double> %8, %8             ; 2 uses
+  %13 = fmul nnan <4 x double> %9, %9             ; 2 uses
+  %14 = fmul nnan <4 x double> %10, %10           ; 2 uses
+  %15 = fmul nnan <4 x double> %11, %11           ; 2 uses
+  %16 = fmul <4 x double> %12, %8
+  %17 = fmul <4 x double> %13, %9
+  %18 = fmul <4 x double> %14, %10
+  %19 = fmul <4 x double> %15, %11
+  %20 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat534, <4 x double> %8, <4 x double> %broadcast.splat)
+  %21 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat534, <4 x double> %9, <4 x double> %broadcast.splat)
+  %22 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat534, <4 x double> %10, <4 x double> %broadcast.splat)
+  %23 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat534, <4 x double> %11, <4 x double> %broadcast.splat)
+  %24 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat536, <4 x double> %12, <4 x double> %20)
+  %25 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat536, <4 x double> %13, <4 x double> %21)
+  %26 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat536, <4 x double> %14, <4 x double> %22)
+  %27 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat536, <4 x double> %15, <4 x double> %23)
+  %28 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat538, <4 x double> %16, <4 x double> %24) ; 2 uses
+  %29 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat538, <4 x double> %17, <4 x double> %25) ; 2 uses
+  %30 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat538, <4 x double> %18, <4 x double> %26) ; 2 uses
+  %31 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat538, <4 x double> %19, <4 x double> %27) ; 2 uses
+  %32 = fcmp olt <4 x double> %28, zeroinitializer
+  %33 = fcmp olt <4 x double> %29, zeroinitializer
+  %34 = fcmp olt <4 x double> %30, zeroinitializer
+  %35 = fcmp olt <4 x double> %31, zeroinitializer
+  %36 = select <4 x i1> %32, <4 x double> zeroinitializer, <4 x double> %28 ; 2 uses
+  %37 = select <4 x i1> %33, <4 x double> zeroinitializer, <4 x double> %29 ; 2 uses
+  %38 = select <4 x i1> %34, <4 x double> zeroinitializer, <4 x double> %30 ; 2 uses
+  %39 = select <4 x i1> %35, <4 x double> zeroinitializer, <4 x double> %31 ; 2 uses
+  %40 = fcmp ogt <4 x double> %36, splat (double 6.553500e+04)
+  %41 = fcmp ogt <4 x double> %37, splat (double 6.553500e+04)
+  %42 = fcmp ogt <4 x double> %38, splat (double 6.553500e+04)
+  %43 = fcmp ogt <4 x double> %39, splat (double 6.553500e+04)
+  %44 = select <4 x i1> %40, <4 x double> splat (double 6.553500e+04), <4 x double> %36
+  %45 = select <4 x i1> %41, <4 x double> splat (double 6.553500e+04), <4 x double> %37
+  %46 = select <4 x i1> %42, <4 x double> splat (double 6.553500e+04), <4 x double> %38
+  %47 = select <4 x i1> %43, <4 x double> splat (double 6.553500e+04), <4 x double> %39
+  %48 = fptoui <4 x double> %44 to <4 x i16>
+  %49 = fptoui <4 x double> %45 to <4 x i16>
+  %50 = fptoui <4 x double> %46 to <4 x i16>
+  %51 = fptoui <4 x double> %47 to <4 x i16>
+  %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %index544 ; 4 uses
+  %52 = getelementptr inbounds nuw i8, ptr %gep, i64 8
+  %53 = getelementptr inbounds nuw i8, ptr %gep, i64 16
+  %54 = getelementptr inbounds nuw i8, ptr %gep, i64 24
+  store <4 x i16> %48, ptr %gep, align 2, !tbaa !160, !noalias !347
+  store <4 x i16> %49, ptr %52, align 2, !tbaa !160, !noalias !347
+  store <4 x i16> %50, ptr %53, align 2, !tbaa !160, !noalias !347
+  store <4 x i16> %51, ptr %54, align 2, !tbaa !160, !noalias !347
   %index.next545 = add nuw i64 %index544, 16      ; 2 uses
-  %vec.ind.next = add <16 x i32> %vec.ind, splat (i32 16)
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 16)
   %i.pq = icmp eq i64 %index.next545, %n.vec532
   br i1 %i.pq, label %middle.block546, label %vector.body543, !llvm.loop !319
 
@@ -640,9 +685,6 @@ declare <2 x i32> @llvm.bswap.v2i32(<2 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.bswap.v2i16(<2 x i16>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x double> @llvm.fmuladd.v16f64(<16 x double>, <16 x double>, <16 x double>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #8

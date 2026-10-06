@@ -204,13 +204,19 @@ begin_hunk_0_@_Z13gmx_mat4_mmulPA4_fS0_S0_:.preheader
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_Z19gmx_mat4_init_unityPA4_f(ptr nofree noundef writeonly captures(none) initializes((0, 64)) %0) local_unnamed_addr #3 {
 bb.a:
+  store float 1.000000e+00, ptr %0, align 4, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %1, align 4, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %2, align 4, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 60
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
-  tail call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00>, ptr align 4 %0, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !10
+  store float 1.000000e+00, ptr %3, align 4, !tbaa !10
   ret void
 }
 
@@ -218,15 +224,19 @@ bb.a:
 define void @_Z22gmx_mat4_init_rotationifPA4_f(i32 noundef %0, float noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 64)) %2) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
+  store float 1.000000e+00, ptr %2, align 4, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.b, align 4, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.d, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 44
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 60
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  tail call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00>, ptr align 4 %2, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !10
+  store float 1.000000e+00, ptr %4, align 4, !tbaa !10
   switch i32 %0, label %bb.e [
     i32 0, label %bb.b
     i32 1, label %bb.c
@@ -581,9 +591,6 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #15
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v16f32.p0(<16 x float>, ptr captures(none), <16 x i1>) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -165,36 +165,72 @@ iter.check:                                       ; preds = %.preheader.i
   br i1 %min.iters.check, label %.lr.ph87.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check20 = icmp ult i32 %i.bo, 31
+  %min.iters.check20 = icmp ult i32 %i.bo, 63
   br i1 %min.iters.check20, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.br = and i64 %i.bq, 24
-  %n.vec = and i64 %i.bq, 8589934560              ; 5 uses
+  %i.br = and i64 %i.bq, 56
+  %n.vec = and i64 %i.bq, 8589934528              ; 5 uses
   %i.bs = shl nuw nsw i64 %n.vec, 1
   %i.bt = getelementptr i8, ptr %.2.lcssa.i, i64 %i.bs
   %i.bu = trunc i64 %n.vec to i32
   %i.bv = add i32 %.248.lcssa.i, %i.bu
-  %broadcast.splatinsert = insertelement <32 x float> poison, float %i.s, i64 0
-  %broadcast.splat = shufflevector <32 x float> %broadcast.splatinsert, <32 x float> poison, <32 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <16 x float> poison, float %i.s, i64 0
+  %broadcast.splat = shufflevector <16 x float> %broadcast.splatinsert, <16 x float> poison, <16 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bw = shl i64 %index, 1
-  %next.gep.a = getelementptr i8, ptr %.2.lcssa.i, i64 %i.bw ; 2 uses
-  %wide.load = load <32 x i16>, ptr %next.gep.a, align 2, !tbaa !13
-  %4 = zext <32 x i16> %wide.load to <32 x i32>
-  %5 = shl nuw <32 x i32> %4, splat (i32 16)
-  %6 = bitcast <32 x i32> %5 to <32 x float>      ; 3 uses
-  %7 = fcmp fast olt <32 x float> %6, zeroinitializer
-  %8 = fmul fast <32 x float> %broadcast.splat, %6
-  %9 = select nsz <32 x i1> %7, <32 x float> %8, <32 x float> %6
-  %10 = bitcast <32 x float> %9 to <32 x i32>
-  %11 = lshr <32 x i32> %10, splat (i32 16)
-  %12 = trunc nuw <32 x i32> %11 to <32 x i16>
-  store <32 x i16> %12, ptr %next.gep.a, align 2, !tbaa !13
-  %index.next = add nuw i64 %index, 32            ; 2 uses
+  %next.gep = getelementptr i8, ptr %.2.lcssa.i, i64 %i.bw ; 5 uses
+  %4 = getelementptr i8, ptr %next.gep, i64 32    ; 2 uses
+  %5 = getelementptr i8, ptr %next.gep, i64 64    ; 2 uses
+  %next.gep.a = getelementptr i8, ptr %next.gep, i64 96 ; 2 uses
+  %wide.load = load <16 x i16>, ptr %next.gep, align 2, !tbaa !13
+  %wide.load21 = load <16 x i16>, ptr %4, align 2, !tbaa !13
+  %wide.load22 = load <16 x i16>, ptr %5, align 2, !tbaa !13
+  %wide.load23 = load <16 x i16>, ptr %next.gep.a, align 2, !tbaa !13
+  %6 = zext <16 x i16> %wide.load to <16 x i32>
+  %7 = zext <16 x i16> %wide.load21 to <16 x i32>
+  %8 = zext <16 x i16> %wide.load22 to <16 x i32>
+  %9 = zext <16 x i16> %wide.load23 to <16 x i32>
+  %10 = shl nuw <16 x i32> %6, splat (i32 16)
+  %11 = shl nuw <16 x i32> %7, splat (i32 16)
+  %12 = shl nuw <16 x i32> %8, splat (i32 16)
+  %13 = shl nuw <16 x i32> %9, splat (i32 16)
+  %14 = bitcast <16 x i32> %10 to <16 x float>    ; 3 uses
+  %15 = bitcast <16 x i32> %11 to <16 x float>    ; 3 uses
+  %16 = bitcast <16 x i32> %12 to <16 x float>    ; 3 uses
+  %17 = bitcast <16 x i32> %13 to <16 x float>    ; 3 uses
+  %18 = fcmp fast olt <16 x float> %14, zeroinitializer
+  %19 = fcmp fast olt <16 x float> %15, zeroinitializer
+  %20 = fcmp fast olt <16 x float> %16, zeroinitializer
+  %21 = fcmp fast olt <16 x float> %17, zeroinitializer
+  %22 = fmul fast <16 x float> %broadcast.splat, %14
+  %23 = fmul fast <16 x float> %broadcast.splat, %15
+  %24 = fmul fast <16 x float> %broadcast.splat, %16
+  %25 = fmul fast <16 x float> %broadcast.splat, %17
+  %26 = select nsz <16 x i1> %18, <16 x float> %22, <16 x float> %14
+  %27 = select nsz <16 x i1> %19, <16 x float> %23, <16 x float> %15
+  %28 = select nsz <16 x i1> %20, <16 x float> %24, <16 x float> %16
+  %29 = select nsz <16 x i1> %21, <16 x float> %25, <16 x float> %17
+  %30 = bitcast <16 x float> %26 to <16 x i32>
+  %31 = bitcast <16 x float> %27 to <16 x i32>
+  %32 = bitcast <16 x float> %28 to <16 x i32>
+  %33 = bitcast <16 x float> %29 to <16 x i32>
+  %34 = lshr <16 x i32> %30, splat (i32 16)
+  %35 = lshr <16 x i32> %31, splat (i32 16)
+  %36 = lshr <16 x i32> %32, splat (i32 16)
+  %37 = lshr <16 x i32> %33, splat (i32 16)
+  %38 = trunc nuw <16 x i32> %34 to <16 x i16>
+  %39 = trunc nuw <16 x i32> %35 to <16 x i16>
+  %40 = trunc nuw <16 x i32> %36 to <16 x i16>
+  %41 = trunc nuw <16 x i32> %37 to <16 x i16>
+  store <16 x i16> %38, ptr %next.gep, align 2, !tbaa !13
+  store <16 x i16> %39, ptr %4, align 2, !tbaa !13
+  store <16 x i16> %40, ptr %5, align 2, !tbaa !13
+  store <16 x i16> %41, ptr %next.gep.a, align 2, !tbaa !13
+  %index.next = add nuw i64 %index, 64            ; 2 uses
   %i.bx = icmp eq i64 %index.next, %n.vec
   br i1 %i.bx, label %middle.block, label %vector.body, !llvm.loop !26
 
@@ -597,7 +633,7 @@ attributes #10 = { nocallback nofree nosync nounwind willreturn memory(read) }
 !28 = distinct !{!28, !30}
 !29 = distinct !{!29, !30, !15, !14}
 !30 = !{!"llvm.loop.mustprogress"}
-!31 = !{!"branch_weights", i32 8, i32 24}
+!31 = !{!"branch_weights", i32 8, i32 56}
 !32 = distinct !{!32, i1 false, !"LVerDomain"}
 !33 = distinct !{!33, !32}
 !34 = distinct !{!34, !32}

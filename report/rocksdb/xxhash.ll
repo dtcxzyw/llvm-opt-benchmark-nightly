@@ -205,26 +205,103 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #25
 define internal fastcc noundef i64 @_ZL21XXH3_len_129to240_64bPKhmS0_mm(ptr nofree noundef readonly captures(none) %0, i64 noundef range(i64 129, 241) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) unnamed_addr #26 {
 bb.a:
   %i.a = mul i64 %1, -7046029288634856825
-  %4 = load <16 x i64>, ptr %0, align 1, !tbaa !27 ; 2 uses
-  %5 = load <16 x i64>, ptr %2, align 1, !tbaa !27 ; 2 uses
-  %6 = shufflevector <16 x i64> %5, <16 x i64> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
-  %7 = insertelement <8 x i64> poison, i64 %3, i64 0
-  %8 = shufflevector <8 x i64> %7, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
-  %9 = add <8 x i64> %6, %8
-  %10 = shufflevector <16 x i64> %4, <16 x i64> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
-  %11 = xor <8 x i64> %9, %10
-  %12 = shufflevector <16 x i64> %5, <16 x i64> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %13 = sub <8 x i64> %12, %8
-  %14 = shufflevector <16 x i64> %4, <16 x i64> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %15 = xor <8 x i64> %13, %14
-  %16 = zext <8 x i64> %11 to <8 x i128>
-  %17 = zext <8 x i64> %15 to <8 x i128>
-  %18 = mul nuw <8 x i128> %17, %16               ; 2 uses
-  %19 = lshr <8 x i128> %18, splat (i128 64)
-  %20 = xor <8 x i128> %19, %18
-  %21 = trunc <8 x i128> %20 to <8 x i64>
-  %22 = tail call i64 @llvm.vector.reduce.add.v8i64(<8 x i64> %21)
-  %op.rdx = add i64 %22, %i.a                     ; 2 uses
+  %4 = load <4 x i64>, ptr %0, align 1, !tbaa !27
+  %5 = load <4 x i64>, ptr %2, align 1, !tbaa !27 ; 2 uses
+  %6 = insertelement <4 x i64> poison, i64 %3, i64 0
+  %7 = shufflevector <4 x i64> %6, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %8 = add <4 x i64> %5, %7
+  %9 = sub <4 x i64> %5, %7
+  %10 = shufflevector <4 x i64> %8, <4 x i64> %9, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %11 = xor <4 x i64> %10, %4                     ; 4 uses
+  %12 = extractelement <4 x i64> %11, i64 0
+  %13 = zext i64 %12 to i128
+  %14 = extractelement <4 x i64> %11, i64 1
+  %15 = zext i64 %14 to i128
+  %16 = mul nuw i128 %15, %13                     ; 2 uses
+  %17 = lshr i128 %16, 64
+  %18 = xor i128 %17, %16
+  %19 = trunc i128 %18 to i64
+  %20 = add i64 %i.a, %19
+  %21 = extractelement <4 x i64> %11, i64 2
+  %22 = zext i64 %21 to i128
+  %23 = extractelement <4 x i64> %11, i64 3
+  %24 = zext i64 %23 to i128
+  %25 = mul nuw i128 %24, %22                     ; 2 uses
+  %26 = lshr i128 %25, 64
+  %27 = xor i128 %26, %25
+  %28 = trunc i128 %27 to i64
+  %29 = add i64 %20, %28
+  %30 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %31 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %32 = load <4 x i64>, ptr %30, align 1, !tbaa !27 ; 2 uses
+  %33 = load <4 x i64>, ptr %31, align 1, !tbaa !27 ; 2 uses
+  %34 = shufflevector <4 x i64> %33, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %35 = insertelement <2 x i64> poison, i64 %3, i64 0
+  %36 = shufflevector <2 x i64> %35, <2 x i64> poison, <2 x i32> zeroinitializer ; 6 uses
+  %37 = add <2 x i64> %34, %36
+  %38 = shufflevector <4 x i64> %32, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %39 = xor <2 x i64> %37, %38
+  %40 = shufflevector <4 x i64> %33, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %41 = sub <2 x i64> %40, %36
+  %42 = shufflevector <4 x i64> %32, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %43 = xor <2 x i64> %41, %42
+  %44 = zext <2 x i64> %39 to <2 x i128>
+  %45 = zext <2 x i64> %43 to <2 x i128>
+  %46 = mul nuw <2 x i128> %45, %44               ; 2 uses
+  %47 = lshr <2 x i128> %46, splat (i128 64)
+  %48 = xor <2 x i128> %47, %46                   ; 2 uses
+  %49 = bitcast <2 x i128> %48 to <4 x i64>
+  %50 = extractelement <4 x i64> %49, i64 0
+  %51 = add i64 %29, %50
+  %52 = bitcast <2 x i128> %48 to <4 x i64>
+  %53 = extractelement <4 x i64> %52, i64 2
+  %54 = add i64 %51, %53
+  %55 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %56 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %57 = load <4 x i64>, ptr %55, align 1, !tbaa !27 ; 2 uses
+  %58 = load <4 x i64>, ptr %56, align 1, !tbaa !27 ; 2 uses
+  %59 = shufflevector <4 x i64> %58, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %60 = add <2 x i64> %59, %36
+  %61 = shufflevector <4 x i64> %57, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %62 = xor <2 x i64> %60, %61
+  %63 = shufflevector <4 x i64> %58, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %64 = sub <2 x i64> %63, %36
+  %65 = shufflevector <4 x i64> %57, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %66 = xor <2 x i64> %64, %65
+  %67 = zext <2 x i64> %62 to <2 x i128>
+  %68 = zext <2 x i64> %66 to <2 x i128>
+  %69 = mul nuw <2 x i128> %68, %67               ; 2 uses
+  %70 = lshr <2 x i128> %69, splat (i128 64)
+  %71 = xor <2 x i128> %70, %69                   ; 2 uses
+  %72 = bitcast <2 x i128> %71 to <4 x i64>
+  %73 = extractelement <4 x i64> %72, i64 0
+  %74 = add i64 %54, %73
+  %75 = bitcast <2 x i128> %71 to <4 x i64>
+  %76 = extractelement <4 x i64> %75, i64 2
+  %77 = add i64 %74, %76
+  %78 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %79 = getelementptr inbounds nuw i8, ptr %2, i64 96
+  %80 = load <4 x i64>, ptr %78, align 1, !tbaa !27 ; 2 uses
+  %81 = load <4 x i64>, ptr %79, align 1, !tbaa !27 ; 2 uses
+  %82 = shufflevector <4 x i64> %81, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %83 = add <2 x i64> %82, %36
+  %84 = shufflevector <4 x i64> %80, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %85 = xor <2 x i64> %83, %84
+  %86 = shufflevector <4 x i64> %81, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %87 = sub <2 x i64> %86, %36
+  %88 = shufflevector <4 x i64> %80, <4 x i64> poison, <2 x i32> <i32 1, i32 3>
+  %89 = xor <2 x i64> %87, %88
+  %90 = zext <2 x i64> %85 to <2 x i128>
+  %91 = zext <2 x i64> %89 to <2 x i128>
+  %92 = mul nuw <2 x i128> %91, %90               ; 2 uses
+  %93 = lshr <2 x i128> %92, splat (i128 64)
+  %94 = xor <2 x i128> %93, %92                   ; 2 uses
+  %95 = bitcast <2 x i128> %94 to <4 x i64>
+  %96 = extractelement <4 x i64> %95, i64 0
+  %97 = add i64 %77, %96
+  %98 = bitcast <2 x i128> %94 to <4 x i64>
+  %99 = extractelement <4 x i64> %98, i64 2
+  %op.rdx = add i64 %97, %99                      ; 2 uses
   %i.b = trunc nuw nsw i64 %1 to i32
   %i.c = lshr i32 %i.b, 4                         ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
@@ -626,9 +703,6 @@ declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i64> @llvm.bswap.v4i64(<4 x i64>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v8i64(<8 x i64>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x i64> @llvm.masked.load.v4i64.p0(ptr captures(none), <4 x i1>, <4 x i64>) #31

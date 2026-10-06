@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.l
-  %.1765 = phi ptr [ %.0, %bb.k ], [ %i.kg, %bb.l ] ; 6 uses
+  %.1765 = phi ptr [ %.0, %bb.k ], [ %i.kg, %bb.l ] ; 7 uses
   %.1715764 = phi i64 [ %.0714, %bb.k ], [ %i.kh, %bb.l ]
   %.1720763 = phi <2 x i64> [ %i.ec, %bb.k ], [ %i.ka, %bb.l ] ; 5 uses
   %.1723762 = phi <2 x i64> [ %.0722, %bb.k ], [ %i.kc, %bb.l ]
@@ -275,10 +275,12 @@ bb.l:                                             ; preds = %bb.k, %bb.l
   %i.gl = and <2 x i64> %i.gh, splat (i64 67108863) ; 5 uses
   %i.gm = lshr <2 x i64> %i.fw, splat (i64 40)
   %i.gn = or disjoint <2 x i64> %i.gm, %.1718     ; 5 uses
-  %i.go = getelementptr i8, ptr %.1765, i64 32
-  %3 = load <8 x i32>, ptr %i.go, align 1         ; 2 uses
-  %i.gp = shufflevector <8 x i32> %3, <8 x i32> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.gq = shufflevector <8 x i32> %3, <8 x i32> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %3 = getelementptr i8, ptr %.1765, i64 32
+  %4 = load <4 x i32>, ptr %3, align 1            ; 2 uses
+  %i.go = getelementptr i8, ptr %.1765, i64 48
+  %5 = load <4 x i32>, ptr %i.go, align 1         ; 2 uses
+  %i.gp = shufflevector <4 x i32> %4, <4 x i32> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.gq = shufflevector <4 x i32> %4, <4 x i32> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.gr = shufflevector <4 x i32> %i.gp, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.gs = bitcast <4 x i32> %i.gr to <2 x i64>
   %i.gt = shufflevector <4 x i32> %i.gp, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
@@ -384,7 +386,7 @@ bb.l:                                             ; preds = %bb.k, %bb.l
   %.2724 = phi <2 x i64> [ %.0722, %bb.j ], [ %i.kc, %bb.l ] ; 2 uses
   %.2721 = phi <2 x i64> [ %.0719, %bb.j ], [ %i.ka, %bb.l ] ; 2 uses
   %.2716 = phi i64 [ %.0714, %bb.j ], [ %i.kh, %bb.l ]
-  %.2 = phi ptr [ %.0, %bb.j ], [ %i.kg, %bb.l ]  ; 3 uses
+  %.2 = phi ptr [ %.0, %bb.j ], [ %i.kg, %bb.l ]  ; 4 uses
   %i.kj = icmp samesign ugt i64 %.2716, 31
   br i1 %i.kj, label %bb.m, label %bb.p
 
@@ -449,9 +451,11 @@ bb.m:                                             ; preds = %.loopexit
   br i1 %.not755, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %4 = load <8 x i32>, ptr %.2, align 1           ; 2 uses
-  %i.mo = shufflevector <8 x i32> %4, <8 x i32> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.mp = shufflevector <8 x i32> %4, <8 x i32> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %6 = load <4 x i32>, ptr %.2, align 1           ; 2 uses
+  %7 = getelementptr i8, ptr %.2, i64 16
+  %8 = load <4 x i32>, ptr %7, align 1            ; 2 uses
+  %i.mo = shufflevector <4 x i32> %6, <4 x i32> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.mp = shufflevector <4 x i32> %6, <4 x i32> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.mq = shufflevector <4 x i32> %i.mo, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.mr = bitcast <4 x i32> %i.mq to <2 x i64>
   %i.ms = shufflevector <4 x i32> %i.mo, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>, <4 x i32> <i32 2, i32 6, i32 3, i32 7>

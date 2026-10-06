@@ -204,26 +204,32 @@ bb.d:                                             ; preds = %_ZNK4pbrt11Interact
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 68
   %.sroa.026.0.copyload = load <2 x float>, ptr %i.u, align 4, !tbaa !59
   %.sroa.227.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %i.v = insertelement <2 x float> poison, float %2, i64 0 ; 2 uses
+  %.sroa.227.0.copyload = load float, ptr %.sroa.227.0..sroa_idx, align 4, !tbaa !59
+  %3 = fmul float %2, %.sroa.227.0.copyload
+  %i.v = insertelement <2 x float> poison, float %2, i64 0
   %i.w = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.x = fmul <2 x float> %i.w, %.sroa.026.0.copyload
   %i.y = load <2 x float>, ptr %i.t, align 4, !tbaa !59
   %i.z = fadd <2 x float> %i.x, %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
+  %4 = load float, ptr %i.aa, align 4, !tbaa !60
+  %5 = fadd float %3, %4
   store <2 x float> %i.z, ptr %i.t, align 4
+  store float %5, ptr %i.aa, align 4
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 80
   %.sroa.09.0.copyload = load <2 x float>, ptr %i.ac, align 8, !tbaa !59
-  %3 = fmul <2 x float> %i.w, %.sroa.09.0.copyload
-  %4 = load <2 x float>, ptr %i.ab, align 8, !tbaa !59
-  %5 = fadd <2 x float> %3, %4
-  store <2 x float> %5, ptr %i.ab, align 8
-  %6 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %.sroa.227.0..sroa_idx, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x float> poison), !tbaa !59
-  %7 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.aa, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x float> poison), !tbaa !60
-  %8 = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
-  %9 = fmul <4 x float> %8, %6
-  %10 = fadd <4 x float> %9, %7
-  tail call void @llvm.masked.store.v4f32.p0(<4 x float> %10, ptr align 4 %i.aa, <4 x i1> <i1 true, i1 false, i1 false, i1 true>)
+  %.sroa.210.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %.sroa.210.0.copyload = load float, ptr %.sroa.210.0..sroa_idx, align 8, !tbaa !59
+  %6 = fmul float %2, %.sroa.210.0.copyload
+  %7 = fmul <2 x float> %i.w, %.sroa.09.0.copyload
+  %8 = load <2 x float>, ptr %i.ab, align 8, !tbaa !59
+  %9 = fadd <2 x float> %7, %8
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %11 = load float, ptr %10, align 8, !tbaa !60
+  %12 = fadd float %6, %11
+  store <2 x float> %9, ptr %i.ab, align 8
+  store float %12, ptr %10, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNK4pbrt11Interaction8SpawnRayENS_7Vector3IfEE.exit

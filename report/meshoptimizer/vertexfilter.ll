@@ -204,7 +204,7 @@ _ZN7meshoptL12dispatchSimdIjEEvPFvPT_mES2_mm.exit: ; preds = %_ZN7meshoptL19deco
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @meshopt_decodeFilterColor(ptr nofree noundef captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0 = alloca <8 x float>, align 16         ; 8 uses
+  %3 = alloca [16 x i16], align 16                ; 9 uses
   %.sroa.0.i = alloca <4 x i32>, align 16         ; 7 uses
   %i.a = icmp eq i64 %2, 4
   %i.b = and i64 %1, -4                           ; 7 uses
@@ -340,10 +340,11 @@ bb.d:                                             ; preds = %bb.a
   %.060.i.i = phi i64 [ %i.en, %.lr.ph.i.i5 ], [ 0, %bb.d ] ; 2 uses
   %.idx.i.i = shl i64 %.060.i.i, 3
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i ; 3 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
-  %3 = load <8 x float>, ptr %i.cr, align 1, !tbaa !9 ; 2 uses
-  %i.ct = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.cu = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %4 = load <4 x float>, ptr %i.cr, align 1, !tbaa !9 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16 ; 2 uses
+  %5 = load <4 x float>, ptr %i.cs, align 1, !tbaa !9 ; 2 uses
+  %i.ct = shufflevector <4 x float> %4, <4 x float> %5, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.cu = shufflevector <4 x float> %4, <4 x float> %5, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.cv = bitcast <4 x float> %i.ct to <4 x i32>  ; 2 uses
   %i.cw = ashr <4 x i32> %i.cv, splat (i32 16)    ; 2 uses
   %i.cx = bitcast <4 x float> %i.cu to <4 x i32>  ; 3 uses
@@ -403,20 +404,22 @@ _ZN7meshoptL23decodeFilterColorSimd16EPtm.exit.i: ; preds = %.lr.ph.i.i5, %bb.d
   br i1 %.not.i6, label %_ZN7meshoptL12dispatchSimdIhEEvPFvPT_mES2_mm.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN7meshoptL23decodeFilterColorSimd16EPtm.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  store <8 x float> zeroinitializer, ptr %.sroa.0, align 16
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.ep = and i64 %1, 3                           ; 2 uses
   %i.eq = shl nuw nsw i64 %i.ep, 3                ; 2 uses
   %.idx.i = shl i64 %i.b, 3
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.0, ptr align 2 %i.er, i64 %i.eq, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %3, ptr align 2 %i.er, i64 %i.eq, i1 false)
   %.not.i20.i7 = icmp eq i64 %i.ep, 0
   br i1 %.not.i20.i7, label %_ZN7meshoptL23decodeFilterColorSimd16EPtm.exit24.i, label %.lr.ph.i21.i8
 
 .lr.ph.i21.i8:                                    ; preds = %bb.e
-  %.sroa.0.0..sroa.0.0. = load <8 x float>, ptr %.sroa.0, align 16, !tbaa !9 ; 2 uses
-  %i.es = shufflevector <8 x float> %.sroa.0.0..sroa.0.0., <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.et = shufflevector <8 x float> %.sroa.0.0..sroa.0.0., <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %.0..0..0..0..i = load <4 x float>, ptr %3, align 16, !tbaa !9 ; 2 uses
+  %.16..16..16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %.16..16..16..16..i = load <4 x float>, ptr %.16..16..16..16..sroa_idx, align 16, !tbaa !9 ; 2 uses
+  %i.es = shufflevector <4 x float> %.0..0..0..0..i, <4 x float> %.16..16..16..16..i, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.et = shufflevector <4 x float> %.0..0..0..0..i, <4 x float> %.16..16..16..16..i, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.eu = bitcast <4 x float> %i.es to <4 x i32>  ; 2 uses
   %i.ev = ashr <4 x i32> %i.eu, splat (i32 16)    ; 2 uses
   %i.ew = bitcast <4 x float> %i.et to <4 x i32>  ; 3 uses
@@ -465,14 +468,14 @@ bb.e:                                             ; preds = %_ZN7meshoptL23decod
   %i.gj = bitcast <4 x i32> %.inner32 to <8 x i16> ; 2 uses
   %i.gk = shufflevector <8 x i16> %i.gi, <8 x i16> %i.gj, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11>
   %i.gl = shufflevector <8 x i16> %i.gi, <8 x i16> %i.gj, <8 x i32> <i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
-  store <8 x i16> %i.gk, ptr %.sroa.0, align 16, !tbaa !9
-  %.sroa.0.16..16..16..16..sroa_idx33 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  store <8 x i16> %i.gk, ptr %3, align 16, !tbaa !9
+  %.sroa.0.16..16..16..16..sroa_idx33 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store <8 x i16> %i.gl, ptr %.sroa.0.16..16..16..16..sroa_idx33, align 16, !tbaa !9
   br label %_ZN7meshoptL23decodeFilterColorSimd16EPtm.exit24.i, !llvm.loop !22
 
 _ZN7meshoptL23decodeFilterColorSimd16EPtm.exit24.i: ; preds = %.lr.ph.i21.i8, %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.er, ptr nonnull align 16 %.sroa.0, i64 %i.eq, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.er, ptr nonnull align 16 %3, i64 %i.eq, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %_ZN7meshoptL12dispatchSimdIhEEvPFvPT_mES2_mm.exit
 
 _ZN7meshoptL12dispatchSimdIhEEvPFvPT_mES2_mm.exit: ; preds = %_ZN7meshoptL23decodeFilterColorSimd16EPtm.exit24.i, %_ZN7meshoptL23decodeFilterColorSimd16EPtm.exit.i, %_ZN7meshoptL22decodeFilterColorSimd8EPhm.exit23.i, %_ZN7meshoptL22decodeFilterColorSimd8EPhm.exit.i

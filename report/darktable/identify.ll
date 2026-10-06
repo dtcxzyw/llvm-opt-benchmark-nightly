@@ -205,7 +205,7 @@ declare noundef i32 @_ZN6LibRaw11ljpeg_startEP5jheadi(ptr noundef nonnull align 
 define void @_ZN6LibRaw27identify_process_dng_fieldsEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 5 uses
-  %i.b = alloca [4 x [4 x double]], align 16      ; 21 uses
+  %i.b = alloca [4 x [4 x double]], align 16      ; 24 uses
   %i.c = alloca [4 x [3 x double]], align 16      ; 9 uses
   %i.d = alloca [4 x [3 x double]], align 16      ; 15 uses
   %i.e = alloca [4 x i32], align 16               ; 10 uses
@@ -392,13 +392,19 @@ bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
+  store double 1.000000e+00, ptr %i.b, align 16, !tbaa !137
   %i.cs = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %1, align 8, !tbaa !137
   %i.ct = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ct, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %2, align 16, !tbaa !137
   %i.cu = getelementptr inbounds nuw i8, ptr %i.b, i64 88
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cu, i8 0, i64 32, i1 false)
-  call void @llvm.masked.store.v16f64.p0(<16 x double> <double 1.000000e+00, double poison, double poison, double poison, double poison, double 1.000000e+00, double poison, double poison, double poison, double poison, double 1.000000e+00, double poison, double poison, double poison, double poison, double 1.000000e+00>, ptr align 16 %i.b, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !137
+  store double 1.000000e+00, ptr %3, align 8, !tbaa !137
   %i.cv = icmp eq i16 %i.cp, 21
   br i1 %i.cv, label %.preheader539, label %.preheader541.1
 
@@ -800,9 +806,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #14
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v16f64.p0(<16 x double>, ptr captures(none), <16 x i1>) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
