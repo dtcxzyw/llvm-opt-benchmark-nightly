@@ -204,36 +204,39 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.k = load ptr, ptr %i.b, align 8, !tbaa !1131, !nonnull !129, !align !1132 ; 2 uses
+  %i.k = load ptr, ptr %i.b, align 8, !tbaa !1131, !nonnull !129, !align !1132 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !124  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre16 = load i32, ptr %i.k, align 4
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.d
+  %2 = phi i32 [ %.pre16, %.lr.ph ], [ %3, %bb.d ] ; 3 uses
   %.015 = phi ptr [ %i.g, %.lr.ph ], [ %i.y, %bb.d ] ; 2 uses
   %i.o = load ptr, ptr %.015, align 8, !tbaa !135 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 12
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.r = load i32, ptr %i.q, align 4, !tbaa !124  ; 2 uses
   %i.s = icmp eq i32 %i.r, %i.m
-  %2 = load i32, ptr %i.p, align 4                ; 2 uses
-  %i.t = load i32, ptr %i.k, align 4              ; 2 uses
-  %i.u = icmp eq i32 %2, %i.t                     ; 2 uses
+  %i.t = load i32, ptr %i.p, align 4              ; 2 uses
+  %i.u = icmp eq i32 %i.t, %2                     ; 2 uses
   %i.v = select i1 %i.s, i1 %i.u, i1 false
   br i1 %i.v, label %_ZNK4Luau8PositionleERKS0_.exit.thread, label %_ZNK4Luau8PositionleERKS0_.exit
 
 _ZNK4Luau8PositionleERKS0_.exit:                  ; preds = %bb.c
   %i.w = icmp ult i32 %i.r, %i.m
-  %i.x = icmp ult i32 %2, %i.t
+  %i.x = icmp ult i32 %i.t, %2
   %.0.i.i = select i1 %i.u, i1 %i.w, i1 %i.x
   br i1 %.0.i.i, label %_ZNK4Luau8PositionleERKS0_.exit.thread, label %bb.d
 
 _ZNK4Luau8PositionleERKS0_.exit.thread:           ; preds = %bb.c, %_ZNK4Luau8PositionleERKS0_.exit
   store ptr %i.o, ptr %i.n, align 8, !tbaa !143
+  %.pre = load i32, ptr %i.k, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNK4Luau8PositionleERKS0_.exit.thread, %_ZNK4Luau8PositionleERKS0_.exit
+  %3 = phi i32 [ %.pre, %_ZNK4Luau8PositionleERKS0_.exit.thread ], [ %2, %_ZNK4Luau8PositionleERKS0_.exit ]
   %i.y = getelementptr inbounds nuw i8, ptr %.015, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.y, %i.j
   br i1 %.not, label %.loopexit, label %bb.c

@@ -204,6 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49: ; preds = %_ZN
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49
   %wide.trip.count = zext nneg i32 %spec.select to i64 ; 2 uses
+  %.pre73 = load ptr, ptr %1, align 8, !tbaa !32  ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.cd = icmp eq i32 %spec.select, 1
   br i1 %i.cd, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -213,10 +214,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49: ; preds = %_ZN
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.u, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %bb.u ] ; 3 uses
-  %niter.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.u ]
-  %8 = load ptr, ptr %1, align 8, !tbaa !32
-  %i.ce = getelementptr inbounds nuw i8, ptr %8, i64 %indvars.iv ; 2 uses
+  %8 = phi ptr [ %.pre73, %.lr.ph.preheader.new ], [ %10, %bb.u ] ; 2 uses
+  %niter.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %bb.u ] ; 3 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.u ]
+  %i.ce = getelementptr inbounds nuw i8, ptr %8, i64 %niter.a ; 2 uses
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !26  ; 2 uses
   %i.cg = add i8 %i.cf, -97
   %or.cond = icmp ult i8 %i.cg, 26
@@ -225,11 +226,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49: ; preds = %_ZN
 bb.s:                                             ; preds = %.lr.ph
   %narrow = add nsw i8 %i.cf, -32
   store i8 %narrow, ptr %i.ce, align 1, !tbaa !26
+  %.pre = load ptr, ptr %1, align 8, !tbaa !32
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %bb.s, %.lr.ph
-  %9 = load ptr, ptr %1, align 8, !tbaa !32
-  %i.ch = getelementptr inbounds nuw i8, ptr %9, i64 %indvars.iv
+  %9 = phi ptr [ %.pre, %bb.s ], [ %8, %.lr.ph ]  ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %9, i64 %niter.a
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 1 ; 2 uses
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !26  ; 2 uses
   %i.ck = add i8 %i.cj, -97
@@ -239,11 +241,13 @@ bb.s:                                             ; preds = %.lr.ph
 bb.t:                                             ; preds = %.lr.ph.1
   %narrow.1 = add nsw i8 %i.cj, -32
   store i8 %narrow.1, ptr %i.ci, align 1, !tbaa !26
+  %.pre.1 = load ptr, ptr %1, align 8, !tbaa !32
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.lr.ph.1
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter.a, 2             ; 2 uses
+  %10 = phi ptr [ %.pre.1, %bb.t ], [ %9, %.lr.ph.1 ] ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %niter.a, 2 ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !205
 
@@ -252,11 +256,11 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.1
   br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.epil.init = phi ptr [ %.pre73, %.lr.ph.preheader ], [ %10, %.loopexit.loopexit.unr-lcssa ]
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]
   %lcmp.mod109 = trunc i32 %spec.select to i1
   call void @llvm.assume(i1 %lcmp.mod109)
-  %10 = load ptr, ptr %1, align 8, !tbaa !32
-  %i.cl = getelementptr inbounds nuw i8, ptr %10, i64 %indvars.iv.epil.init ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %.epil.init, i64 %indvars.iv.epil.init ; 2 uses
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !26  ; 2 uses
   %i.cn = add i8 %i.cm, -97
   %or.cond.epil = icmp ult i8 %i.cn, 26

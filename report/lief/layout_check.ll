@@ -205,6 +205,7 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %exitcond7.i1592, label %.lr.ph1008.preheader, label %.lr.ph.outer.i.preheader
 
 ._crit_edge.thread.i:                             ; preds = %.thread.i, %._crit_edge.i
+  %.val25.pre9142024.i = phi ptr [ %.val25.pre913.ph.i, %._crit_edge.i ], [ %.sroa.0632.0.lcssa1277, %.thread.i ]
   %i.xn = add nuw i64 %.0193.i1594, 1             ; 2 uses
   %indvars.iv.next.i = add i64 %indvars.iv.i1593, -1
   %exitcond7.i = icmp eq i64 %i.xn, %i.xm
@@ -213,12 +214,14 @@ bb.du:                                            ; preds = %bb.dt
 .lr.ph.outer.i.preheader:                         ; preds = %.preheader.preheader.i, %._crit_edge.thread.i
   %.0193.i1594 = phi i64 [ %i.xn, %._crit_edge.thread.i ], [ 0, %.preheader.preheader.i ]
   %indvars.iv.i1593 = phi i64 [ %indvars.iv.next.i, %._crit_edge.thread.i ], [ %i.xm, %.preheader.preheader.i ] ; 3 uses
+  %.val25.pre9.i1597 = phi ptr [ %.val25.pre9142024.i, %._crit_edge.thread.i ], [ %.sroa.0632.0.lcssa1277, %.preheader.preheader.i ]
   br label %.lr.ph.outer.i
 
 .lr.ph.outer.i:                                   ; preds = %.lr.ph.outer.i.preheader, %.thread.i
+  %.val25.pre913.ph.i = phi ptr [ %.sroa.0632.0.lcssa1277, %.thread.i ], [ %.val25.pre9.i1597, %.lr.ph.outer.i.preheader ] ; 4 uses
   %.02.ph.i = phi i64 [ %i.xp, %.thread.i ], [ 0, %.lr.ph.outer.i.preheader ] ; 2 uses
   %.0171.ph.i = phi i1 [ false, %.thread.i ], [ true, %.lr.ph.outer.i.preheader ]
-  %.phi.trans.insert1178 = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0632.0.lcssa1277, i64 %.02.ph.i
+  %.phi.trans.insert1178 = getelementptr inbounds nuw [24 x i8], ptr %.val25.pre913.ph.i, i64 %.02.ph.i
   %.phi.trans.insert1179 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert1178, i64 8
   %.pre1180 = load i32, ptr %.phi.trans.insert1179, align 8, !tbaa !661
   br label %.lr.ph.i
@@ -230,7 +233,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.xo = phi i32 [ %i.xs, %bb.dv ], [ %.pre1180, %.lr.ph.outer.i ]
   %.02.i = phi i64 [ %i.xp, %bb.dv ], [ %.02.ph.i, %.lr.ph.outer.i ] ; 2 uses
   %i.xp = add nuw i64 %.02.i, 1                   ; 5 uses
-  %i.xq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0632.0.lcssa1277, i64 %i.xp ; 3 uses
+  %i.xq = getelementptr inbounds nuw [24 x i8], ptr %.val25.pre913.ph.i, i64 %i.xp ; 3 uses
   %i.xr = getelementptr inbounds nuw i8, ptr %i.xq, i64 8
   %i.xs = load i32, ptr %i.xr, align 8, !tbaa !661 ; 2 uses
   %i.xt = icmp ugt i32 %i.xo, %i.xs
@@ -241,7 +244,7 @@ bb.dv:                                            ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !654
 
 .thread.i:                                        ; preds = %.lr.ph.i
-  %i.xu = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0632.0.lcssa1277, i64 %.02.i ; 2 uses
+  %i.xu = getelementptr inbounds nuw [24 x i8], ptr %.val25.pre913.ph.i, i64 %.02.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.xu, i64 24, i1 false), !tbaa.struct !663
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.xu, ptr noundef nonnull align 8 dereferenceable(24) %i.xq, i64 24, i1 false), !tbaa.struct !663

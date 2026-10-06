@@ -204,7 +204,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = getelementptr i8, ptr %0, i64 8          ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -227,12 +227,16 @@ bb.b:                                             ; preds = %.lr.ph49, %bb.h
   %.val42 = load i64, ptr %i.h, align 8, !tbaa !103 ; 2 uses
   %i.u = add i64 %.val42, 1
   %.not50 = icmp ult i64 %i.u, 2
-  br i1 %.not50, label %._crit_edge, label %.lr.ph
+  br i1 %.not50, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.b, %bb.d
-  %.val52 = phi i64 [ %.val, %bb.d ], [ %.val42, %bb.b ]
-  %.043 = phi i64 [ %i.ac, %bb.d ], [ 0, %bb.b ]  ; 3 uses
-  %4 = load ptr, ptr %i.i, align 8, !tbaa !105
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %.pre51 = load ptr, ptr %i.i, align 8, !tbaa !105
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %.val52 = phi i64 [ %.val, %bb.d ], [ %.val42, %.lr.ph.preheader ]
+  %4 = phi ptr [ %5, %bb.d ], [ %.pre51, %.lr.ph.preheader ] ; 2 uses
+  %.043 = phi i64 [ %i.ac, %bb.d ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.v = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %.043
   %i.w = load i16, ptr %i.v, align 2, !tbaa !84
   %.not28 = icmp eq i16 %i.w, 0
@@ -252,11 +256,13 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.ab, label %._crit_edge.loopexit, label %._crit_edge51
 
 ._crit_edge51:                                    ; preds = %bb.c
+  %.pre = load ptr, ptr %i.i, align 8, !tbaa !105
   %.val.pre = load i64, ptr %i.h, align 8, !tbaa !103
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge51, %.lr.ph
-  %.val = phi i64 [ %.val.pre, %._crit_edge51 ], [ %.val52, %.lr.ph ] ; 3 uses
+  %.val = phi i64 [ %.val52, %.lr.ph ], [ %.val.pre, %._crit_edge51 ] ; 3 uses
+  %5 = phi ptr [ %4, %.lr.ph ], [ %.pre, %._crit_edge51 ]
   %i.ac = add nuw i64 %.043, 1                    ; 2 uses
   %i.ad = icmp ne i64 %.val, 0
   %i.ae = zext i1 %i.ad to i64

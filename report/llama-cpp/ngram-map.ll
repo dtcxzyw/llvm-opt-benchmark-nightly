@@ -205,15 +205,20 @@ bb.as:                                            ; preds = %bb.ar, %_ZL21common
 .loopexit559:                                     ; preds = %bb.as, %bb.an, %bb.ao
   %i.ht = xor i64 %i.fv, -1
   %i.hu = add nsw i64 %i.ad, %i.ht                ; 3 uses
-  %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
+  %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
   %i.hw = icmp ugt i64 %i.hu, %i.fq
-  br i1 %i.hw, label %.lr.ph627, label %.critedge5
+  br i1 %i.hw, label %.lr.ph627, label %.loopexit559..critedge5_crit_edge
+
+.loopexit559..critedge5_crit_edge:                ; preds = %.loopexit559
+  %.pre760 = load i32, ptr %i.hv, align 8, !tbaa !14
+  br label %.critedge5
 
 .lr.ph627:                                        ; preds = %.loopexit559
   %i.hx = ptrtoint ptr %i.fo to i64
   %i.hy = ptrtoint ptr %i.fn to i64
   %i.hz = sub i64 %i.hx, %i.hy
   %i.ia = ashr exact i64 %i.hz, 2
+  %.pre759 = load i32, ptr %i.hv, align 8, !tbaa !38
   %xtraiter910 = and i64 %i.z, 3                  ; 3 uses
   %i.ib = icmp ult i16 %.fr, 4
   %unroll_iter915 = and i64 %i.z, 65532
@@ -222,16 +227,16 @@ bb.as:                                            ; preds = %bb.ar, %_ZL21common
   br label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph627, %bb.ax
+  %6 = phi i32 [ %.pre759, %.lr.ph627 ], [ %9, %bb.ax ] ; 3 uses
   %.0327625 = phi i64 [ %i.hu, %.lr.ph627 ], [ %i.jk, %bb.ax ] ; 4 uses
-  %6 = load i32, ptr %i.hv, align 8, !tbaa !38
   %i.ic = zext i32 %6 to i64
   %i.id = icmp ugt i64 %.0327625, %i.ic
   br i1 %i.id, label %bb.au, label %.critedge5
 
-.critedge5:                                       ; preds = %bb.at, %bb.ax, %.loopexit559
-  %7 = trunc i64 %i.hu to i32
-  %8 = load i32, ptr %i.hv, align 8, !tbaa !14
-  %.sroa.speculated491 = tail call i32 @llvm.umax.i32(i32 %8, i32 %7)
+.critedge5:                                       ; preds = %bb.at, %bb.ax, %.loopexit559..critedge5_crit_edge
+  %7 = phi i32 [ %.pre760, %.loopexit559..critedge5_crit_edge ], [ %6, %bb.at ], [ %9, %bb.ax ]
+  %8 = trunc i64 %i.hu to i32
+  %.sroa.speculated491 = tail call i32 @llvm.umax.i32(i32 %7, i32 %8)
   store i32 %.sroa.speculated491, ptr %i.hv, align 8, !tbaa !38
   br label %bb.ay
 
@@ -309,9 +314,11 @@ _ZL21common_ngram_map_hashRKSt6vectorIiSaIiEEmm.exit434: ; preds = %_ZL21common_
 bb.aw:                                            ; preds = %_ZL21common_ngram_map_hashRKSt6vectorIiSaIiEEmm.exit434
   %i.jj = trunc i64 %.0327625 to i32
   store i32 %i.jj, ptr %i.jg, align 4, !tbaa !14
+  %.pre758 = load i32, ptr %i.hv, align 8, !tbaa !38
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %_ZL21common_ngram_map_hashRKSt6vectorIiSaIiEEmm.exit434
+  %9 = phi i32 [ %.pre758, %bb.aw ], [ %6, %_ZL21common_ngram_map_hashRKSt6vectorIiSaIiEEmm.exit434 ] ; 2 uses
   %i.jk = add i64 %.0327625, -1                   ; 2 uses
   %i.jl = icmp ugt i64 %i.jk, %i.fq
   br i1 %i.jl, label %bb.at, label %.critedge5, !llvm.loop !77

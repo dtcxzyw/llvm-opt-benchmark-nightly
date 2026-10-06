@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   %.sroa.6.0.i = phi i64 [ %i.cn, %bb.aa ], [ 1, %.noexc.i ] ; 10 uses
   %.sroa.0.0.i = phi i64 [ 1, %bb.aa ], [ %i.cm, %.noexc.i ] ; 3 uses
   %i.co = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !798, !nonnull !53, !align !222 ; 6 uses
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !798, !nonnull !53, !align !222 ; 8 uses
   %i.cq = icmp eq i32 %i.bt, 1
   br i1 %i.cq, label %.preheader.i.i, label %bb.ah
 
@@ -216,6 +216,7 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   br i1 %or.cond, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph153.split.i.i.preheader
 
 .lr.ph153.split.i.i.preheader:                    ; preds = %.preheader.i.i
+  %.pre10.i.i.i.pre = load float, ptr %i.cp, align 4
   %xtraiter545 = and i64 %.sroa.7.0.copyload, 1
   %i.cs = icmp eq i64 %.sroa.7.0.copyload, 1
   %unroll_iter548 = and i64 %.sroa.7.0.copyload, -2
@@ -224,18 +225,20 @@ bb.ac:                                            ; preds = %bb.aa, %.noexc.i
   br label %.lr.ph153.split.i.i
 
 .lr.ph153.split.i.i:                              ; preds = %.lr.ph153.split.i.i.preheader, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i"
+  %.pre10.i.i.i = phi float [ %.pre10.i.i.i166.lcssa, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i" ], [ %.pre10.i.i.i.pre, %.lr.ph153.split.i.i.preheader ] ; 4 uses
   %.049152.i.i = phi i64 [ %i.dy, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i" ], [ 0, %.lr.ph153.split.i.i.preheader ] ; 2 uses
   %i.ct = mul i64 %.049152.i.i, %.sroa.7.0.copyload
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload, i64 %i.ct ; 3 uses
   br i1 %i.cs, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph153.split.i.i, %bb.af
+  %.pre10.i.i.i167 = phi float [ %.pre10.i.i.i166.1, %bb.af ], [ %.pre10.i.i.i, %.lr.ph153.split.i.i ]
+  %63 = phi float [ %65, %bb.af ], [ %.pre10.i.i.i, %.lr.ph153.split.i.i ] ; 2 uses
   %.09.i.i.i = phi i64 [ %i.do, %bb.af ], [ 0, %.lr.ph153.split.i.i ] ; 4 uses
   %niter549 = phi i64 [ %niter549.next.1, %bb.af ], [ 0, %.lr.ph153.split.i.i ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %.09.i.i.i
   %i.cw = load float, ptr %i.cv, align 4, !tbaa !223, !noalias !799 ; 2 uses
   %i.cx = fcmp ord float %i.cw, 0.000000e+00
-  %63 = load float, ptr %i.cp, align 4
   %i.cy = fcmp une float %i.cw, %63
   %i.cz = select i1 %i.cx, i1 %i.cy, i1 false
   br i1 %i.cz, label %bb.ad, label %.lr.ph.i.i.i.1
@@ -246,14 +249,16 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !44
   %i.dd = add i64 %i.dc, 1
   store i64 %i.dd, ptr %i.db, align 8, !tbaa !44
+  %.pre.i.i.i = load float, ptr %i.cp, align 4    ; 2 uses
   br label %.lr.ph.i.i.i.1
 
 .lr.ph.i.i.i.1:                                   ; preds = %bb.ad, %.lr.ph.i.i.i
+  %.pre10.i.i.i166 = phi float [ %.pre.i.i.i, %bb.ad ], [ %.pre10.i.i.i167, %.lr.ph.i.i.i ]
+  %64 = phi float [ %.pre.i.i.i, %bb.ad ], [ %63, %.lr.ph.i.i.i ] ; 2 uses
   %i.de = or disjoint i64 %.09.i.i.i, 1           ; 2 uses
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %i.de
   %i.dg = load float, ptr %i.df, align 4, !tbaa !223, !noalias !799 ; 2 uses
   %i.dh = fcmp ord float %i.dg, 0.000000e+00
-  %64 = load float, ptr %i.cp, align 4
   %i.di = fcmp une float %i.dg, %64
   %i.dj = select i1 %i.dh, i1 %i.di, i1 false
   br i1 %i.dj, label %bb.ae, label %bb.af
@@ -264,9 +269,12 @@ bb.ae:                                            ; preds = %.lr.ph.i.i.i.1
   %i.dm = load i64, ptr %i.dl, align 8, !tbaa !44
   %i.dn = add i64 %i.dm, 1
   store i64 %i.dn, ptr %i.dl, align 8, !tbaa !44
+  %.pre.i.i.i.1 = load float, ptr %i.cp, align 4  ; 2 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.lr.ph.i.i.i.1
+  %.pre10.i.i.i166.1 = phi float [ %.pre.i.i.i.1, %bb.ae ], [ %.pre10.i.i.i166, %.lr.ph.i.i.i.1 ] ; 3 uses
+  %65 = phi float [ %.pre.i.i.i.1, %bb.ae ], [ %64, %.lr.ph.i.i.i.1 ] ; 2 uses
   %i.do = add nuw i64 %.09.i.i.i, 2               ; 2 uses
   %niter549.next.1 = add nuw i64 %niter549, 2     ; 2 uses
   %niter549.ncmp.1 = icmp eq i64 %niter549.next.1, %unroll_iter548
@@ -276,13 +284,14 @@ bb.af:                                            ; preds = %bb.ae, %.lr.ph.i.i.
   br i1 %lcmp.mod546.not, label %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i", label %.lr.ph.i.i.i.epil.preheader
 
 .lr.ph.i.i.i.epil.preheader:                      ; preds = %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa", %.lr.ph153.split.i.i
+  %.pre10.i.i.i167.epil.init = phi float [ %.pre10.i.i.i, %.lr.ph153.split.i.i ], [ %.pre10.i.i.i166.1, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ]
+  %.epil.init556 = phi float [ %.pre10.i.i.i, %.lr.ph153.split.i.i ], [ %65, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ]
   %.09.i.i.i.epil.init = phi i64 [ 0, %.lr.ph153.split.i.i ], [ %i.do, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod547)
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %.09.i.i.i.epil.init
   %i.dq = load float, ptr %i.dp, align 4, !tbaa !223, !noalias !799 ; 2 uses
   %i.dr = fcmp ord float %i.dq, 0.000000e+00
-  %65 = load float, ptr %i.cp, align 4
-  %i.ds = fcmp une float %i.dq, %65
+  %i.ds = fcmp une float %i.dq, %.epil.init556
   %i.dt = select i1 %i.dr, i1 %i.ds, i1 false
   br i1 %i.dt, label %bb.ag, label %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i"
 
@@ -292,9 +301,11 @@ bb.ag:                                            ; preds = %.lr.ph.i.i.i.epil.p
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !44
   %i.dx = add i64 %i.dw, 1
   store i64 %i.dx, ptr %i.dv, align 8, !tbaa !44
+  %.pre.i.i.i.epil = load float, ptr %i.cp, align 4
   br label %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i"
 
 "_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i": ; preds = %.lr.ph.i.i.i.epil.preheader, %bb.ag, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa"
+  %.pre10.i.i.i166.lcssa = phi float [ %.pre10.i.i.i166.1, %"_ZZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS0_12DMatrixProxyEPNS0_13DataIterProxyIFvPvEFiS8_EEEfPNS0_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS0_17DenseAdapterBatchEEEDaSI_ENKUlSG_E_clImEEDaSG_.exit.i.i.unr-lcssa" ], [ %.pre.i.i.i.epil, %bb.ag ], [ %.pre10.i.i.i167.epil.init, %.lr.ph.i.i.i.epil.preheader ]
   %i.dy = add nuw i64 %.049152.i.i, 1             ; 2 uses
   %exitcond179.not.i.i = icmp eq i64 %i.dy, %.sroa.6.0.copyload
   br i1 %exitcond179.not.i.i, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph153.split.i.i, !llvm.loop !692
@@ -409,6 +420,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br i1 %or.cond90, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph143.split.i.i.preheader
 
 .lr.ph143.split.i.i.preheader:                    ; preds = %.preheader137.i.i
+  %.pre10.i.i88.i.i.pre = load float, ptr %i.cp, align 4
   %xtraiter540 = and i64 %.sroa.7.0.copyload, 1
   %i.er = icmp eq i64 %.sroa.7.0.copyload, 1
   %unroll_iter543 = and i64 %.sroa.7.0.copyload, -2
@@ -417,18 +429,20 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br label %.lr.ph143.split.i.i
 
 .lr.ph143.split.i.i:                              ; preds = %.lr.ph143.split.i.i.preheader, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i"
+  %.pre10.i.i88.i.i = phi float [ %.pre10.i.i88.i.i163.lcssa, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i" ], [ %.pre10.i.i88.i.i.pre, %.lr.ph143.split.i.i.preheader ] ; 4 uses
   %.040142.i.i = phi i64 [ %i.fx, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i" ], [ 0, %.lr.ph143.split.i.i.preheader ] ; 2 uses
   %i.es = mul i64 %.040142.i.i, %.sroa.7.0.copyload
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.copyload, i64 %i.es ; 3 uses
   br i1 %i.er, label %.lr.ph.i.i81.i.i.epil.preheader, label %.lr.ph.i.i81.i.i
 
 .lr.ph.i.i81.i.i:                                 ; preds = %.lr.ph143.split.i.i, %bb.aq
+  %.pre10.i.i88.i.i164 = phi float [ %.pre10.i.i88.i.i163.1, %bb.aq ], [ %.pre10.i.i88.i.i, %.lr.ph143.split.i.i ]
+  %66 = phi float [ %68, %bb.aq ], [ %.pre10.i.i88.i.i, %.lr.ph143.split.i.i ] ; 2 uses
   %.09.i.i82.i.i = phi i64 [ %i.fn, %bb.aq ], [ 0, %.lr.ph143.split.i.i ] ; 4 uses
   %niter544 = phi i64 [ %niter544.next.1, %bb.aq ], [ 0, %.lr.ph143.split.i.i ]
   %i.eu = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %.09.i.i82.i.i
   %i.ev = load float, ptr %i.eu, align 4, !tbaa !223, !noalias !802 ; 2 uses
   %i.ew = fcmp ord float %i.ev, 0.000000e+00
-  %66 = load float, ptr %i.cp, align 4
   %i.ex = fcmp une float %i.ev, %66
   %i.ey = select i1 %i.ew, i1 %i.ex, i1 false
   br i1 %i.ey, label %bb.ao, label %.lr.ph.i.i81.i.i.1
@@ -439,14 +453,16 @@ bb.ao:                                            ; preds = %.lr.ph.i.i81.i.i
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !44
   %i.fc = add i64 %i.fb, 1
   store i64 %i.fc, ptr %i.fa, align 8, !tbaa !44
+  %.pre.i.i91.i.i = load float, ptr %i.cp, align 4 ; 2 uses
   br label %.lr.ph.i.i81.i.i.1
 
 .lr.ph.i.i81.i.i.1:                               ; preds = %bb.ao, %.lr.ph.i.i81.i.i
+  %.pre10.i.i88.i.i163 = phi float [ %.pre.i.i91.i.i, %bb.ao ], [ %.pre10.i.i88.i.i164, %.lr.ph.i.i81.i.i ]
+  %67 = phi float [ %.pre.i.i91.i.i, %bb.ao ], [ %66, %.lr.ph.i.i81.i.i ] ; 2 uses
   %i.fd = or disjoint i64 %.09.i.i82.i.i, 1       ; 2 uses
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %i.fd
   %i.ff = load float, ptr %i.fe, align 4, !tbaa !223, !noalias !802 ; 2 uses
   %i.fg = fcmp ord float %i.ff, 0.000000e+00
-  %67 = load float, ptr %i.cp, align 4
   %i.fh = fcmp une float %i.ff, %67
   %i.fi = select i1 %i.fg, i1 %i.fh, i1 false
   br i1 %i.fi, label %bb.ap, label %bb.aq
@@ -457,9 +473,12 @@ bb.ap:                                            ; preds = %.lr.ph.i.i81.i.i.1
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !44
   %i.fm = add i64 %i.fl, 1
   store i64 %i.fm, ptr %i.fk, align 8, !tbaa !44
+  %.pre.i.i91.i.i.1 = load float, ptr %i.cp, align 4 ; 2 uses
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %.lr.ph.i.i81.i.i.1
+  %.pre10.i.i88.i.i163.1 = phi float [ %.pre.i.i91.i.i.1, %bb.ap ], [ %.pre10.i.i88.i.i163, %.lr.ph.i.i81.i.i.1 ] ; 3 uses
+  %68 = phi float [ %.pre.i.i91.i.i.1, %bb.ap ], [ %67, %.lr.ph.i.i81.i.i.1 ] ; 2 uses
   %i.fn = add nuw i64 %.09.i.i82.i.i, 2           ; 2 uses
   %niter544.next.1 = add nuw i64 %niter544, 2     ; 2 uses
   %niter544.ncmp.1 = icmp eq i64 %niter544.next.1, %unroll_iter543
@@ -469,13 +488,14 @@ bb.aq:                                            ; preds = %bb.ap, %.lr.ph.i.i8
   br i1 %lcmp.mod541.not, label %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i", label %.lr.ph.i.i81.i.i.epil.preheader
 
 .lr.ph.i.i81.i.i.epil.preheader:                  ; preds = %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa", %.lr.ph143.split.i.i
+  %.pre10.i.i88.i.i164.epil.init = phi float [ %.pre10.i.i88.i.i, %.lr.ph143.split.i.i ], [ %.pre10.i.i88.i.i163.1, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa" ]
+  %.epil.init = phi float [ %.pre10.i.i88.i.i, %.lr.ph143.split.i.i ], [ %68, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa" ]
   %.09.i.i82.i.i.epil.init = phi i64 [ 0, %.lr.ph143.split.i.i ], [ %i.fn, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa" ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod542)
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %.09.i.i82.i.i.epil.init
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !223, !noalias !802 ; 2 uses
   %i.fq = fcmp ord float %i.fp, 0.000000e+00
-  %68 = load float, ptr %i.cp, align 4
-  %i.fr = fcmp une float %i.fp, %68
+  %i.fr = fcmp une float %i.fp, %.epil.init
   %i.fs = select i1 %i.fq, i1 %i.fr, i1 false
   br i1 %i.fs, label %bb.ar, label %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i"
 
@@ -485,9 +505,11 @@ bb.ar:                                            ; preds = %.lr.ph.i.i81.i.i.ep
   %i.fv = load i64, ptr %i.fu, align 8, !tbaa !44
   %i.fw = add i64 %i.fv, 1
   store i64 %i.fw, ptr %i.fu, align 8, !tbaa !44
+  %.pre.i.i91.i.i.epil = load float, ptr %i.cp, align 4
   br label %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i"
 
 "_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i": ; preds = %.lr.ph.i.i81.i.i.epil.preheader, %bb.ar, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa"
+  %.pre10.i.i88.i.i163.lcssa = phi float [ %.pre10.i.i88.i.i163.1, %"_ZN4dmlc12OMPException3RunIZZZN7xgboost4data8cpu_impl12GetDataShapeEPKNS2_7ContextEPNS3_12DMatrixProxyEPNS3_13DataIterProxyIFvPvEFiSB_EEEfPNS3_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS3_17DenseAdapterBatchEEEDaSL_EUlSJ_E_JmEEEvSJ_DpT0_.exit84.i.i.unr-lcssa" ], [ %.pre.i.i91.i.i.epil, %bb.ar ], [ %.pre10.i.i88.i.i164.epil.init, %.lr.ph.i.i81.i.i.epil.preheader ]
   %i.fx = add nuw i64 %.040142.i.i, 1             ; 2 uses
   %exitcond174.not.i.i = icmp eq i64 %i.fx, %.sroa.6.0.copyload
   br i1 %exitcond174.not.i.i, label %"_ZN7xgboost6common11ParallelForImZZZNS_4data8cpu_impl12GetDataShapeEPKNS_7ContextEPNS2_12DMatrixProxyEPNS2_13DataIterProxyIFvPvEFiSA_EEEfPNS2_16ExternalDataInfoEENK3$_0clEvENKUlRKT_E_clINS2_17DenseAdapterBatchEEEDaSK_EUlSI_E_EEvSI_iNS0_5SchedEOT0_.exit.i", label %.lr.ph143.split.i.i, !llvm.loop !697

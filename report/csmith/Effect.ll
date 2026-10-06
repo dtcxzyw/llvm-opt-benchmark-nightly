@@ -202,7 +202,7 @@ define dso_local void @_ZN6Effect11consolidateEv(ptr nofree noundef nonnull alig
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !28     ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !28     ; 3 uses
   %.not39 = icmp eq ptr %i.b, %i.c
   br i1 %.not39, label %._crit_edge, label %.lr.ph.preheader
 
@@ -230,10 +230,10 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
   %i.p = phi ptr [ %i.ah, %bb.h ], [ %i.b, %.lr.ph.preheader ] ; 7 uses
-  %.033 = phi i64 [ %.1, %bb.h ], [ %i.g, %.lr.ph.preheader ] ; 3 uses
-  %.02132.a = phi i64 [ %i.ai, %bb.h ], [ 0, %.lr.ph.preheader ] ; 4 uses
-  %1 = load ptr, ptr %0, align 8, !tbaa !28
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.02132.a ; 4 uses
+  %1 = phi ptr [ %3, %bb.h ], [ %i.c, %.lr.ph.preheader ] ; 6 uses
+  %.02132.a = phi i64 [ %.1, %bb.h ], [ %i.g, %.lr.ph.preheader ] ; 3 uses
+  %.02132 = phi i64 [ %i.ai, %bb.h ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.02132 ; 4 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !34
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 88
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !58   ; 2 uses
@@ -259,6 +259,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull align 8 %i.v, i64 %i.z, i1 false)
   %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !27
+  %.pre = load ptr, ptr %0, align 8, !tbaa !28
   br label %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -271,17 +272,19 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit
 
 _ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit: ; preds = %bb.c, %bb.e, %bb.f, %bb.g
+  %2 = phi ptr [ %1, %bb.g ], [ %1, %bb.f ], [ %.pre, %bb.e ], [ %1, %bb.c ]
   %i.ad = phi ptr [ %i.p, %bb.g ], [ %i.p, %bb.f ], [ %.pre.i.i, %bb.e ], [ %i.p, %bb.c ]
   %i.ae = getelementptr inbounds i8, ptr %i.ad, i64 -8 ; 2 uses
   store ptr %i.ae, ptr %i.a, align 8, !tbaa !27
-  %i.af = add i64 %.02132.a, -1
-  %i.ag = add i64 %.033, -1
+  %i.af = add i64 %.02132, -1
+  %i.ag = add i64 %.02132.a, -1
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit, %bb.b, %.lr.ph
   %i.ah = phi ptr [ %i.ae, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %i.p, %bb.b ], [ %i.p, %.lr.ph ]
-  %.122 = phi i64 [ %i.af, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %.02132.a, %bb.b ], [ %.02132.a, %.lr.ph ]
-  %.1 = phi i64 [ %i.ag, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %.033, %bb.b ], [ %.033, %.lr.ph ] ; 2 uses
+  %3 = phi ptr [ %2, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %1, %bb.b ], [ %1, %.lr.ph ]
+  %.122 = phi i64 [ %i.af, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %.02132, %bb.b ], [ %.02132, %.lr.ph ]
+  %.1 = phi i64 [ %i.ag, %_ZNSt6vectorIPK8VariableSaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit ], [ %.02132.a, %bb.b ], [ %.02132.a, %.lr.ph ] ; 2 uses
   %i.ai = add i64 %.122, 1                        ; 2 uses
   %i.aj = icmp ult i64 %i.ai, %.1
   br i1 %i.aj, label %.lr.ph, label %._crit_edge, !llvm.loop !129

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   br label %.body.i
 
 bb.e:                                             ; preds = %bb.c
-  %i.ad = load i64, ptr %i.aa, align 8, !noalias !290, !noundef !3
+  %i.ad = load i64, ptr %i.aa, align 8, !noalias !290, !noundef !3 ; 2 uses
   switch i64 %i.ad, label %.thread5.i [
     i64 7, label %bb.f
     i64 10, label %bb.h
@@ -293,14 +293,14 @@ bb.n:                                             ; preds = %bb.u
           to label %.body.i unwind label %bb.w, !noalias !292
 
 .lr.ph.i:                                         ; preds = %.thread5.i, %bb.r
+  %6 = phi i64 [ %7, %bb.r ], [ %i.ad, %.thread5.i ] ; 4 uses
   %.sroa.01.014.i = phi ptr [ %i.bx, %bb.r ], [ %i.br, %.thread5.i ] ; 3 uses
   %.sroa.7.013.i = phi i64 [ %i.by, %bb.r ], [ 0, %.thread5.i ] ; 4 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.01.014.i, i64 24 ; 2 uses
   %i.by = add nuw nsw i64 %.sroa.7.013.i, 1
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.01.014.i, i64 16
-  %6 = load i64, ptr %i.bz, align 8, !noalias !292, !noundef !3 ; 2 uses
-  %i.ca = load i64, ptr %i.aa, align 8, !noalias !290, !noundef !3
-  %i.cb = icmp eq i64 %i.ca, %6
+  %i.ca = load i64, ptr %i.bz, align 8, !noalias !292, !noundef !3
+  %i.cb = icmp eq i64 %6, %i.ca
   br i1 %i.cb, label %bb.q, label %bb.r
 
 ._crit_edge.i:                                    ; preds = %bb.r, %.thread5.i
@@ -337,6 +337,7 @@ bb.q:                                             ; preds = %.lr.ph.i
   br i1 %i.ci, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.t, %bb.q, %.lr.ph.i
+  %7 = phi i64 [ %6, %.lr.ph.i ], [ %.pre.i, %bb.t ], [ %6, %bb.q ]
   %i.cj = icmp eq ptr %i.bx, %i.bu
   br i1 %i.cj, label %._crit_edge.i, label %.lr.ph.i
 
@@ -347,6 +348,7 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.s
   %i.cl = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.7.013.i
   store i8 1, ptr %i.cl, align 1, !noalias !292
+  %.pre.i = load i64, ptr %i.aa, align 8, !noalias !290
   br label %bb.r
 
 bb.u:                                             ; preds = %bb.s

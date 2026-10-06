@@ -205,7 +205,7 @@ bb.a:
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 7 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 574 ; 6 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 5 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 5 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 11 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 496 ; 8 uses
@@ -608,17 +608,21 @@ bb.sg:                                            ; preds = %bb.sd
   %i.cmj = icmp eq i32 %i.cmi, 7
   %.not22.i625 = icmp eq i64 %i.cme, 0
   %or.cond.i626 = or i1 %.not22.i625, %i.cmj
-  br i1 %or.cond.i626, label %.loopexit.i632, label %.lr.ph.i627.a
+  br i1 %or.cond.i626, label %.loopexit.i632, label %.lr.ph.i627
 
-.lr.ph.i627.a:                                    ; preds = %bb.sg, %bb.sj
-  %.in.i628 = phi i64 [ %i.cmk, %bb.sj ], [ %i.cme, %bb.sg ]
-  %.01623.i = phi ptr [ %i.cml, %bb.sj ], [ %i.ew, %bb.sg ]
+.lr.ph.i627:                                      ; preds = %bb.sg
+  %.pre24.i = load i16, ptr %i.ba, align 8, !tbaa !209
+  br label %.lr.ph.i627.a
+
+.lr.ph.i627.a:                                    ; preds = %bb.sj, %.lr.ph.i627
+  %8 = phi i16 [ %.pre24.i, %.lr.ph.i627 ], [ %9, %bb.sj ] ; 2 uses
+  %.in.i628 = phi i64 [ %i.cme, %.lr.ph.i627 ], [ %i.cmk, %bb.sj ]
+  %.01623.i = phi ptr [ %i.ew, %.lr.ph.i627 ], [ %i.cml, %bb.sj ]
   %i.cmk = add nsw i64 %.in.i628, -1              ; 2 uses
   %i.cml = getelementptr inbounds i8, ptr %.01623.i, i64 -8 ; 2 uses
   %i.cmm = load i64, ptr %i.cml, align 8, !tbaa !185 ; 2 uses
   %i.cmn = trunc i64 %i.cmm to i32
   %i.cmo = and i32 %i.cmn, 65535
-  %8 = load i16, ptr %i.ba, align 8, !tbaa !209
   %i.cmp = zext i16 %8 to i32
   %.not19.i629 = icmp samesign ult i32 %i.cmo, %i.cmp
   br i1 %.not19.i629, label %bb.si, label %bb.sh
@@ -635,9 +639,11 @@ bb.si:                                            ; preds = %.lr.ph.i627.a
   %i.cmu = load i8, ptr %i.cmt, align 1, !tbaa !186
   %i.cmv = xor i8 %i.cmu, 1
   store i8 %i.cmv, ptr %i.cmt, align 1, !tbaa !186
+  %.pre.i633 = load i16, ptr %i.ba, align 8, !tbaa !209
   br label %bb.sj
 
 bb.sj:                                            ; preds = %bb.si, %bb.sh
+  %9 = phi i16 [ %8, %bb.sh ], [ %.pre.i633, %bb.si ]
   %.not.i631 = icmp eq i64 %i.cmk, 0
   br i1 %.not.i631, label %.loopexit.i632, label %.lr.ph.i627.a, !llvm.loop !604
 
@@ -1040,7 +1046,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   br i1 %.not188, label %bb.l, label %bb.ad
 
 bb.l:                                             ; preds = %bb.k
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 6 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 7 uses
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !174
   %i.bm = call ptr @ft_mem_realloc(ptr noundef %i.f, i64 noundef 8, i64 noundef 0, i64 noundef %i.bl, ptr noundef null, ptr noundef nonnull %i.a) #21 ; 7 uses
   %i.bn = load i32, ptr %i.a, align 4, !tbaa !152
@@ -1257,6 +1263,7 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph213.preheader:                              ; preds = %.preheader200
   %wide.trip.count = zext i32 %i.ep to i64
+  %.pre243 = load i64, ptr %i.bk, align 8, !tbaa !174
   br label %.lr.ph213
 
 .preheader199:                                    ; preds = %bb.w
@@ -1285,11 +1292,11 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.fn, label %.lr.ph215, label %.loopexit, !llvm.loop !744
 
 .lr.ph213:                                        ; preds = %.lr.ph213.preheader, %bb.y
+  %2 = phi i64 [ %.pre243, %.lr.ph213.preheader ], [ %3, %bb.y ] ; 2 uses
   %indvars.iv236 = phi i64 [ 0, %.lr.ph213.preheader ], [ %indvars.iv.next237, %bb.y ] ; 3 uses
   %i.fo = getelementptr inbounds nuw [2 x i8], ptr %.0162, i64 %indvars.iv236
   %i.fp = load i16, ptr %i.fo, align 2, !tbaa !128
   %i.fq = zext i16 %i.fp to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bk, align 8, !tbaa !174
   %.not193 = icmp ugt i64 %2, %i.fq
   br i1 %.not193, label %bb.x, label %bb.y
 
@@ -1305,9 +1312,11 @@ bb.x:                                             ; preds = %.lr.ph213
   %i.fz = ashr i64 %i.fy, 16
   %i.ga = add nsw i64 %i.fz, %i.fs
   store i64 %i.ga, ptr %i.fr, align 8, !tbaa !185
+  %.pre = load i64, ptr %i.bk, align 8, !tbaa !174
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph213, %bb.x
+  %3 = phi i64 [ %2, %.lr.ph213 ], [ %.pre, %bb.x ]
   %indvars.iv.next237 = add nuw nsw i64 %indvars.iv236, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next237, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph213, !llvm.loop !745

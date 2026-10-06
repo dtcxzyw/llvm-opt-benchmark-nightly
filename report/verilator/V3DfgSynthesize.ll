@@ -205,26 +205,28 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = udiv exact i64 %i.c, 24
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %.pre.a = load ptr, ptr %i.f, align 8, !tbaa !539
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
+  %.pre = load ptr, ptr %i.f, align 8, !tbaa !539
+  %.pre.a = load ptr, ptr %i.g, align 8, !tbaa !503
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit, %bb.a
   ret ptr %2
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit
-  %i.h = phi ptr [ %.pre.a, %.lr.ph ], [ %i.ae, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit ] ; 5 uses
+  %i.h = phi ptr [ %.pre.a, %.lr.ph ], [ %4, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit ] ; 4 uses
+  %3 = phi ptr [ %.pre, %.lr.ph ], [ %i.ae, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit ] ; 2 uses
   %.07 = phi i64 [ %i.e, %.lr.ph ], [ %i.ag, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit ] ; 2 uses
   %.056 = phi ptr [ %0, %.lr.ph ], [ %i.af, %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit ] ; 3 uses
-  %3 = load ptr, ptr %i.g, align 8, !tbaa !503
-  %.not.i.i = icmp eq ptr %i.h, %3
+  %.not.i.i = icmp eq ptr %3, %i.h
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %.056, i64 24, i1 false), !tbaa.struct !554
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.056, i64 24, i1 false), !tbaa.struct !554
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !539
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 2 uses
   store ptr %i.j, ptr %i.f, align 8, !tbaa !539
+  %.pre8 = load ptr, ptr %i.g, align 8, !tbaa !503
   br label %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -280,11 +282,12 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN18Ast
 _ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.f, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
   store ptr %i.v, ptr %2, align 8, !tbaa !502
   store ptr %i.z, ptr %i.f, align 8, !tbaa !539
-  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %i.t
+  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %i.t ; 2 uses
   store ptr %i.ad, ptr %i.g, align 8, !tbaa !503
   br label %_ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit
 
 _ZNSt20back_insert_iteratorISt6vectorIN18AstToDfgSynthesize6DriverESaIS2_EEEaSERKS2_.exit: ; preds = %bb.c, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
+  %4 = phi ptr [ %.pre8, %bb.c ], [ %i.ad, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
   %i.ae = phi ptr [ %i.j, %bb.c ], [ %i.z, %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
   %i.af = getelementptr inbounds nuw i8, ptr %.056, i64 24
   %i.ag = add nsw i64 %.07, -1

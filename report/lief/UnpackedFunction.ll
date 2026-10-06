@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.h, %bb.j
   %i.do = load i16, ptr %i.o, align 2, !tbaa !82
   %i.dp = zext i16 %i.do to i64                   ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dm, i64 72 ; 6 uses
-  %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !83
+  %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !83 ; 2 uses
   %i.ds = load ptr, ptr %i.dn, align 8, !tbaa !84
   %i.dt = ptrtoint ptr %i.dr to i64
   %i.du = ptrtoint ptr %i.ds to i64               ; 2 uses
@@ -254,11 +254,12 @@ _ZNSt12_Vector_baseIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tE
   store ptr %i.ed, ptr %i.dn, align 8, !tbaa !84
   %i.en = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.eb
   store ptr %i.en, ptr %i.dy, align 8, !tbaa !85
-  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %i.dp
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %i.dp ; 2 uses
   store ptr %i.eo, ptr %i.dq, align 8, !tbaa !83
   br label %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE7reserveEm.exit
 
 _ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE7reserveEm.exit: ; preds = %bb.l, %_ZNSt12_Vector_baseIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE13_M_deallocateEPS4_m.exit.i
+  %.pre18.i = phi ptr [ %i.dr, %bb.l ], [ %i.eo, %_ZNSt12_Vector_baseIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE13_M_deallocateEPS4_m.exit.i ]
   %i.ep = load ptr, ptr %22, align 8, !tbaa !88   ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %22, i64 8
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !88 ; 2 uses
@@ -271,7 +272,8 @@ _ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_E
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i, %.lr.ph.i
-  %i.et = phi ptr [ %.pre.i30, %.lr.ph.i ], [ %i.fw, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i ] ; 5 uses
+  %25 = phi ptr [ %.pre18.i, %.lr.ph.i ], [ %26, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i ] ; 4 uses
+  %i.et = phi ptr [ %.pre.i30, %.lr.ph.i ], [ %i.fw, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i ] ; 2 uses
   %.sroa.012.016.i = phi ptr [ %i.ep, %.lr.ph.i ], [ %i.fx, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i ] ; 2 uses
   %i.eu = load i32, ptr %.sroa.012.016.i, align 4, !tbaa !44 ; 3 uses
   %i.ev = and i32 %i.eu, 262143
@@ -285,7 +287,6 @@ bb.n:                                             ; preds = %_ZNSt20back_insert_
   %.sroa.2.0.insert.insert.i.i.i = or disjoint i64 %.sroa.3.0.insert.shift.i.i.i, %.sroa.2.0.insert.shift.i.i.i
   %.sroa.0.0.insert.ext.i.i.i = zext nneg i32 %i.ev to i64
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.2.0.insert.insert.i.i.i, %.sroa.0.0.insert.ext.i.i.i ; 2 uses
-  %25 = load ptr, ptr %i.dq, align 8, !tbaa !83
   %.not.i.i.i.i31 = icmp eq ptr %i.et, %25
   br i1 %.not.i.i.i.i31, label %bb.p, label %bb.o
 
@@ -294,11 +295,12 @@ bb.o:                                             ; preds = %bb.n
   %i.ez = load ptr, ptr %i.es, align 8, !tbaa !85
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 8 ; 2 uses
   store ptr %i.fa, ptr %i.es, align 8, !tbaa !85
+  %.pre17.i = load ptr, ptr %i.dq, align 8, !tbaa !83
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i
 
 bb.p:                                             ; preds = %bb.n
   %i.fb = load ptr, ptr %i.dn, align 8, !tbaa !84 ; 5 uses
-  %i.fc = ptrtoint ptr %i.et to i64
+  %i.fc = ptrtoint ptr %25 to i64
   %i.fd = ptrtoint ptr %i.fb to i64               ; 2 uses
   %i.fe = sub i64 %i.fc, %i.fd                    ; 3 uses
   %i.ff = icmp eq i64 %i.fe, 9223372036854775800
@@ -321,7 +323,7 @@ _ZNKSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_
   %i.fm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fl) #26 ; 5 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.fe
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %i.fn, align 4
-  %.not10.i.i.i.i.i.i.i.i = icmp eq ptr %i.fb, %i.et
+  %.not10.i.i.i.i.i.i.i.i = icmp eq ptr %i.fb, %25
   br i1 %.not10.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %_ZNKSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i
@@ -333,7 +335,7 @@ _ZNKSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_
   store i64 %i.fo, ptr %.012.i.i.i.i.i.i.i.i, align 4, !alias.scope !292, !noalias !293
   %i.fp = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.fp, %i.et
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.fp, %25
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !270
 
 _ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %_ZNKSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
@@ -352,11 +354,12 @@ bb.r:                                             ; preds = %_ZNSt6vectorIN4LIEF
 _ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i: ; preds = %bb.r, %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i.i.i.i
   store ptr %i.fm, ptr %i.dn, align 8, !tbaa !84
   store ptr %i.fr, ptr %i.es, align 8, !tbaa !85
-  %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.fk
+  %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.fk ; 2 uses
   store ptr %i.fv, ptr %i.dq, align 8, !tbaa !83
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i
 
 _ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS5_EEEaSEOS5_.exit.i: ; preds = %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i, %bb.o
+  %26 = phi ptr [ %.pre17.i, %bb.o ], [ %i.fv, %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i ]
   %i.fw = phi ptr [ %i.fa, %bb.o ], [ %i.fr, %_ZNSt6vectorIN4LIEF2PE14unwind_aarch6416UnpackedFunction14epilog_scope_tESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i ]
   %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.012.016.i, i64 4 ; 2 uses
   %.not.i32 = icmp eq ptr %i.fx, %i.er

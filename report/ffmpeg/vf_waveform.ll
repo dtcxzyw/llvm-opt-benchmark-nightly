@@ -205,6 +205,7 @@ bb.i:                                             ; preds = %.lr.ph170
 .loopexit81.preheader:                            ; preds = %.lr.ph101
   %i.bk = sext i32 %i.ac to i64                   ; 0 uses
   %i.bl = sext i32 %i.z to i64                    ; 0 uses
+  %.pre142 = load ptr, ptr %i.bf, align 8, !tbaa !104
   br label %.loopexit81
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph101
@@ -269,8 +270,8 @@ bb.n:                                             ; preds = %.lr.ph176
   br i1 %i.by, label %.preheader84, label %.loopexit82, !llvm.loop !205
 
 .loopexit81:                                      ; preds = %.loopexit81.preheader, %.loopexit81
+  %5 = phi ptr [ %.pre142, %.loopexit81.preheader ], [ %5, %.loopexit81 ] ; 2 uses
   %indvars.iv128 = phi i64 [ %i.bh, %.loopexit81.preheader ], [ %indvars.iv.next129, %.loopexit81 ] ; 2 uses
-  %5 = load ptr, ptr %i.bf, align 8, !tbaa !104
   %i.bz = mul nsw i64 %indvars.iv128, %i.bi
   %i.ca = getelementptr inbounds i8, ptr %5, i64 %i.bz ; 0 uses
   %indvars.iv.next129 = add nsw i64 %indvars.iv128, 1 ; 2 uses

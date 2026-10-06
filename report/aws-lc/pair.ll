@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !24   ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !20   ; 2 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !20   ; 3 uses
   %i.p = icmp eq i64 %i.m, %i.o
   br i1 %i.p, label %bb.e, label %bb.f
 
@@ -213,24 +213,25 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.q = sub i64 %i.o, %i.m
   %spec.select = tail call i64 @llvm.umin.i64(i64 %i.q, i64 %i.a) ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 40
+  %.pre62 = load i64, ptr %i.r, align 8, !tbaa !25
   br label %bb.g
 
 bb.g:                                             ; preds = %OPENSSL_memcpy.exit, %bb.f
-  %i.t = phi i64 [ %i.m, %bb.f ], [ %i.ab, %OPENSSL_memcpy.exit ] ; 2 uses
+  %i.t = phi i64 [ %i.o, %bb.f ], [ %6, %OPENSSL_memcpy.exit ] ; 5 uses
+  %3 = phi i64 [ %i.m, %bb.f ], [ %i.ab, %OPENSSL_memcpy.exit ] ; 2 uses
+  %.045.a = phi i64 [ %.pre62, %bb.f ], [ %i.aa, %OPENSSL_memcpy.exit ] ; 2 uses
   %.048 = phi ptr [ %1, %bb.f ], [ %i.ad, %OPENSSL_memcpy.exit ] ; 2 uses
-  %.045.a = phi i64 [ %spec.select, %bb.f ], [ %i.ac, %OPENSSL_memcpy.exit ] ; 3 uses
-  %3 = load i64, ptr %i.r, align 8, !tbaa !25
-  %4 = add i64 %i.t, %3                           ; 2 uses
-  %5 = load i64, ptr %i.n, align 8, !tbaa !20     ; 4 uses
-  %.not58 = icmp ult i64 %4, %5
-  %i.u = select i1 %.not58, i64 0, i64 %5
+  %.045 = phi i64 [ %spec.select, %bb.f ], [ %i.ac, %OPENSSL_memcpy.exit ] ; 3 uses
+  %4 = add i64 %3, %.045.a                        ; 2 uses
+  %.not58 = icmp ult i64 %4, %i.t
+  %i.u = select i1 %.not58, i64 0, i64 %i.t
   %spec.select61 = sub nuw i64 %4, %i.u           ; 3 uses
-  %i.v = add i64 %spec.select61, %.045.a
-  %.not59 = icmp ugt i64 %i.v, %5
-  %i.w = sub i64 %5, %spec.select61
-  %.0 = select i1 %.not59, i64 %i.w, i64 %.045.a  ; 5 uses
+  %i.v = add i64 %spec.select61, %.045
+  %.not59 = icmp ugt i64 %i.v, %i.t
+  %i.w = sub i64 %i.t, %spec.select61
+  %.0 = select i1 %.not59, i64 %i.w, i64 %.045    ; 5 uses
   %i.x = icmp eq i64 %.0, 0
   br i1 %i.x, label %OPENSSL_memcpy.exit, label %bb.h
 
@@ -238,14 +239,18 @@ bb.h:                                             ; preds = %bb.g
   %i.y = load ptr, ptr %i.s, align 8, !tbaa !19
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %spec.select61
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.z, ptr readonly align 1 %.048, i64 %.0, i1 false)
+  %.pre = load i64, ptr %i.r, align 8, !tbaa !25
+  %.pre63 = load i64, ptr %i.n, align 8, !tbaa !20
   %.pre.a = load i64, ptr %i.l, align 8, !tbaa !24
   br label %OPENSSL_memcpy.exit
 
 OPENSSL_memcpy.exit:                              ; preds = %bb.g, %bb.h
-  %i.aa = phi i64 [ %i.t, %bb.g ], [ %.pre.a, %bb.h ]
-  %i.ab = add i64 %i.aa, %.0                      ; 2 uses
+  %5 = phi i64 [ %3, %bb.g ], [ %.pre.a, %bb.h ]
+  %6 = phi i64 [ %i.t, %bb.g ], [ %.pre63, %bb.h ]
+  %i.aa = phi i64 [ %.045.a, %bb.g ], [ %.pre, %bb.h ]
+  %i.ab = add i64 %5, %.0                         ; 2 uses
   store i64 %i.ab, ptr %i.l, align 8, !tbaa !24
-  %i.ac = sub i64 %.045.a, %.0                    ; 2 uses
+  %i.ac = sub i64 %.045, %.0                      ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.048, i64 %.0
   %.not60 = icmp eq i64 %i.ac, 0
   br i1 %.not60, label %bb.i, label %bb.g, !llvm.loop !28
@@ -307,50 +312,55 @@ bb.f:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 40
-  %.pre.a = load i64, ptr %i.s, align 8, !tbaa !25
+  %.pre = load i64, ptr %i.s, align 8, !tbaa !25
+  %.pre.a = load i64, ptr %i.t, align 8, !tbaa !20 ; 2 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.j, %bb.f
-  %i.v = phi i64 [ %i.m, %bb.f ], [ %i.ac, %bb.j ]
-  %i.w = phi i64 [ %.pre.a, %bb.f ], [ %spec.store.select.sink, %bb.j ] ; 3 uses
+  %i.v = phi i64 [ %.pre.a, %bb.f ], [ %5, %bb.j ]
+  %i.w = phi i64 [ %i.m, %bb.f ], [ %i.ac, %bb.j ]
+  %3 = phi i64 [ %.pre.a, %bb.f ], [ %7, %bb.j ]  ; 3 uses
+  %.047.a = phi i64 [ %.pre, %bb.f ], [ %spec.store.select.sink, %bb.j ] ; 3 uses
   %.050 = phi ptr [ %1, %bb.f ], [ %.1, %bb.j ]   ; 3 uses
-  %.047.a = phi i64 [ %spec.select, %bb.f ], [ %i.ah, %bb.j ] ; 3 uses
-  %3 = add i64 %i.w, %.047.a
-  %4 = load i64, ptr %i.t, align 8, !tbaa !20     ; 2 uses
-  %.not57 = icmp ugt i64 %3, %4
-  %i.x = sub i64 %4, %i.w
-  %.0 = select i1 %.not57, i64 %i.x, i64 %.047.a  ; 7 uses
+  %.047 = phi i64 [ %spec.select, %bb.f ], [ %i.ah, %bb.j ] ; 3 uses
+  %4 = add i64 %.047.a, %.047
+  %.not57 = icmp ugt i64 %4, %3
+  %i.x = sub i64 %3, %.047.a
+  %.0 = select i1 %.not57, i64 %i.x, i64 %.047    ; 7 uses
   %i.y = icmp eq i64 %.0, 0
   br i1 %i.y, label %OPENSSL_memcpy.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.z = load ptr, ptr %i.u, align 8, !tbaa !19
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.w
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %.047.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.050, ptr readonly align 1 %i.aa, i64 %.0, i1 false)
+  %.pre62 = load i64, ptr %i.t, align 8, !tbaa !20 ; 2 uses
   %.pre62.a = load i64, ptr %i.l, align 8, !tbaa !24
   br label %OPENSSL_memcpy.exit
 
 OPENSSL_memcpy.exit:                              ; preds = %bb.g, %bb.h
-  %i.ab = phi i64 [ %i.v, %bb.g ], [ %.pre62.a, %bb.h ] ; 2 uses
-  %i.ac = sub i64 %i.ab, %.0                      ; 2 uses
+  %5 = phi i64 [ %i.v, %bb.g ], [ %.pre62, %bb.h ] ; 3 uses
+  %6 = phi i64 [ %i.w, %bb.g ], [ %.pre62.a, %bb.h ] ; 2 uses
+  %i.ab = phi i64 [ %3, %bb.g ], [ %.pre62, %bb.h ]
+  %i.ac = sub i64 %6, %.0                         ; 2 uses
   store i64 %i.ac, ptr %i.l, align 8, !tbaa !24
-  %.not58 = icmp eq i64 %i.ab, %.0
+  %.not58 = icmp eq i64 %6, %.0
   br i1 %.not58, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %OPENSSL_memcpy.exit
   %i.ad = load i64, ptr %i.s, align 8, !tbaa !25
   %i.ae = add i64 %i.ad, %.0                      ; 2 uses
-  %5 = load i64, ptr %i.t, align 8, !tbaa !20
   %i.af = icmp eq i64 %i.ae, %5
   %spec.store.select = select i1 %i.af, i64 0, i64 %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %.050, i64 %.0
   br label %bb.j
 
 bb.j:                                             ; preds = %OPENSSL_memcpy.exit, %bb.i
+  %7 = phi i64 [ %5, %bb.i ], [ %i.ab, %OPENSSL_memcpy.exit ]
   %spec.store.select.sink = phi i64 [ %spec.store.select, %bb.i ], [ 0, %OPENSSL_memcpy.exit ] ; 2 uses
   %.1 = phi ptr [ %i.ag, %bb.i ], [ %.050, %OPENSSL_memcpy.exit ]
   store i64 %spec.store.select.sink, ptr %i.s, align 8, !tbaa !25
-  %i.ah = sub i64 %.047.a, %.0                    ; 2 uses
+  %i.ah = sub i64 %.047, %.0                      ; 2 uses
   %.not59 = icmp eq i64 %i.ah, 0
   br i1 %.not59, label %bb.k, label %bb.g, !llvm.loop !29
 

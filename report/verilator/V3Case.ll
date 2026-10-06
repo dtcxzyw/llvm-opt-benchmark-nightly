@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 6 uses
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !48
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !48 ; 2 uses
   %i.bk = load ptr, ptr %i.bg, align 8, !tbaa !47 ; 2 uses
   %i.bl = ptrtoint ptr %i.bj to i64
   %i.bm = ptrtoint ptr %i.bk to i64               ; 2 uses
@@ -251,11 +251,12 @@ _ZNSt12_Vector_baseIN11CaseVisitor9LhsRecordESaIS1_EE13_M_deallocateEPS1_m.exit.
   store ptr %i.bv, ptr %i.bg, align 8, !tbaa !47
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bt
   store ptr %i.ce, ptr %i.bq, align 8, !tbaa !142
-  %i.cf = getelementptr inbounds nuw [48 x i8], ptr %i.bv, i64 %i.be
+  %i.cf = getelementptr inbounds nuw [48 x i8], ptr %i.bv, i64 %i.be ; 2 uses
   store ptr %i.cf, ptr %i.bi, align 8, !tbaa !48
   br label %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit: ; preds = %bb.y, %_ZNSt12_Vector_baseIN11CaseVisitor9LhsRecordESaIS1_EE13_M_deallocateEPS1_m.exit.i
+  %.pre117 = phi ptr [ %i.bj, %bb.y ], [ %i.cf, %_ZNSt12_Vector_baseIN11CaseVisitor9LhsRecordESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.cg = phi ptr [ %i.bk, %bb.y ], [ %i.bv, %_ZNSt12_Vector_baseIN11CaseVisitor9LhsRecordESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %.sroa.071.097 = load ptr, ptr %i.a, align 8, !tbaa !102 ; 2 uses
   %.not9198 = icmp eq ptr %.sroa.071.097, null
@@ -309,18 +310,19 @@ _ZNK7AstNode5widthEv.exit:                        ; preds = %_ZSt4sortIN9__gnu_c
   br i1 %.not92102, label %bb.ag, label %.lr.ph104
 
 .lr.ph100:                                        ; preds = %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit
-  %i.db = phi ptr [ %i.dy, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit ], [ %.pre117.a, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit ] ; 5 uses
-  %.sroa.071.099.a = phi ptr [ %.sroa.071.0, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit ], [ %.sroa.071.097, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.071.099.a, i64 16 ; 2 uses
-  %3 = load ptr, ptr %i.bi, align 8, !tbaa !48
-  %.not.i46 = icmp eq ptr %i.db, %3
+  %i.db = phi ptr [ %3, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit ], [ %.pre117, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit ] ; 4 uses
+  %.sroa.071.099.a = phi ptr [ %i.dy, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit ], [ %.pre117.a, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit ] ; 2 uses
+  %.sroa.071.099 = phi ptr [ %.sroa.071.0, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit ], [ %.sroa.071.097, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE7reserveEm.exit ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.071.099, i64 16 ; 2 uses
+  %.not.i46 = icmp eq ptr %.sroa.071.099.a, %i.db
   br i1 %.not.i46, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph100
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.db, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false), !tbaa.struct !260
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.071.099.a, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false), !tbaa.struct !260
   %i.dc = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !142
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 48 ; 2 uses
   store ptr %i.dd, ptr %.phi.trans.insert, align 8, !tbaa !142
+  %.pre116 = load ptr, ptr %i.bi, align 8, !tbaa !48
   br label %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit
 
 bb.ad:                                            ; preds = %.lr.ph100
@@ -376,13 +378,14 @@ bb.af:                                            ; preds = %_ZNSt6vectorIN11Cas
 _ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.af, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i
   store ptr %i.dp, ptr %i.bg, align 8, !tbaa !47
   store ptr %i.dt, ptr %.phi.trans.insert, align 8, !tbaa !142
-  %i.dx = getelementptr inbounds nuw [48 x i8], ptr %i.dp, i64 %i.dn
+  %i.dx = getelementptr inbounds nuw [48 x i8], ptr %i.dp, i64 %i.dn ; 2 uses
   store ptr %i.dx, ptr %i.bi, align 8, !tbaa !48
   br label %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit
 
 _ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit: ; preds = %bb.ac, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
+  %3 = phi ptr [ %.pre116, %bb.ac ], [ %i.dx, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
   %i.dy = phi ptr [ %i.dd, %bb.ac ], [ %i.dt, %_ZNSt6vectorIN11CaseVisitor9LhsRecordESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 2 uses
-  %.sroa.071.0 = load ptr, ptr %.sroa.071.099.a, align 8, !tbaa !102 ; 2 uses
+  %.sroa.071.0 = load ptr, ptr %.sroa.071.099, align 8, !tbaa !102 ; 2 uses
   %.not91 = icmp eq ptr %.sroa.071.0, null
   br i1 %.not91, label %._crit_edge101.loopexit, label %.lr.ph100
 

@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [48 x i8], align 8                ; 6 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !9, !noundef !9 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !9 ; 3 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !9 ; 4 uses
   %.cast = inttoptr i64 %1 to ptr                 ; 6 uses
   %i.f = load i64, ptr %.cast, align 8, !noundef !9 ; 2 uses
   %.not = icmp eq i64 %i.e, %i.f
@@ -239,11 +239,11 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit
+  %2 = phi i64 [ %i.e, %.lr.ph ], [ %3, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ] ; 3 uses
   %.sroa.03.037 = phi i1 [ false, %.lr.ph ], [ %.sroa.0.0.i, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ] ; 2 uses
   %i.l = phi ptr [ %i.h, %.lr.ph ], [ %i.n, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ] ; 4 uses
-  %i.m = phi i64 [ 0, %.lr.ph ], [ %i.p, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ] ; 4 uses
+  %i.m = phi i64 [ 0, %.lr.ph ], [ %i.p, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ] ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 3 uses
-  %2 = load i64, ptr %.cast, align 8, !noalias !9524, !noundef !9
   %i.o = icmp eq i64 %i.m, %2
   br i1 %i.o, label %thread-pre-split, label %bb.f
 
@@ -266,11 +266,12 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   store i32 %i.r, ptr %i.l, align 4
   store i32 %i.t, ptr %i.u, align 4
+  %.pre = load i64, ptr %.cast, align 8, !noalias !9524
   br label %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit
 
 thread-pre-split:                                 ; preds = %bb.e, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit, %bb.d
   %storemerge63 = phi ptr [ %i.h, %bb.d ], [ %i.n, %bb.e ], [ %i.i, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ]
-  %storemerge = phi i64 [ 0, %bb.d ], [ %i.m, %bb.e ], [ %i.p, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ]
+  %storemerge = phi i64 [ 0, %bb.d ], [ %2, %bb.e ], [ %i.p, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ]
   %.sroa.03.029 = phi i1 [ false, %bb.d ], [ %.sroa.03.037, %bb.e ], [ %.sroa.0.0.i, %_RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit ]
   store ptr %storemerge63, ptr %i.c, align 8
   store i64 %storemerge, ptr %.sroa.4.0..sroa_idx, align 8
@@ -306,6 +307,7 @@ bb.m:                                             ; preds = %bb.aj, %_RINvNtCshz
   ret i1 %.sroa.03.1
 
 _RNvXs8_NvNtCs8K4cjrcxBsw_6hir_ty2dbs2_1__NtB7_11AnonConstIdNtNtCsd9Lm8bEdjjY_5salsa6update6Update12maybe_update.exit: ; preds = %bb.h, %bb.g
+  %3 = phi i64 [ %.pre, %bb.h ], [ %2, %bb.g ]
   %.sroa.0.0.i = phi i1 [ true, %bb.h ], [ %.sroa.03.037, %bb.g ] ; 2 uses
   %i.ab = icmp eq ptr %i.n, %i.i
   br i1 %i.ab, label %thread-pre-split, label %bb.e

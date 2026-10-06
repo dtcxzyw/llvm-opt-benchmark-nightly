@@ -202,13 +202,14 @@ scalar.ph.preheader:                              ; preds = %vector.scevcheck, %
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.bh = sext i16 %.sroa.035.0.extract.trunc to i32
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %brmerge = or i1 %.not5877, %.not65
   br i1 %brmerge, label %._crit_edge90, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.pre.pre = load i32, ptr %i.ay, align 4, !tbaa !30
   %.pre103.pre = load i16, ptr %i.bg, align 4, !tbaa !107
+  %.pre105.pre.pre = load float, ptr %i.bj, align 8, !tbaa !106
   br label %.preheader
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -229,6 +230,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not, label %._crit_edge, label %scalar.ph, !llvm.loop !209
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge82.split
+  %.pre105.pre = phi float [ %.pre105.pre119, %._crit_edge82.split ], [ %.pre105.pre.pre, %.preheader.preheader ] ; 2 uses
   %.pre103 = phi i16 [ %.pre103110, %._crit_edge82.split ], [ %.pre103.pre, %.preheader.preheader ] ; 2 uses
   %.pre = phi i32 [ %.pre106, %._crit_edge82.split ], [ %.pre.pre, %.preheader.preheader ] ; 2 uses
   %i.bu = phi i32 [ %i.bx, %._crit_edge82.split ], [ %i.bb, %.preheader.preheader ] ; 2 uses
@@ -244,6 +246,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not57, label %._crit_edge90, label %.preheader, !llvm.loop !210
 
 .lr.ph75:                                         ; preds = %.preheader, %._crit_edge76
+  %.pre105.pre121 = phi float [ %.pre105.pre, %.preheader ], [ %.pre105.pre119, %._crit_edge76 ]
+  %.pre105 = phi float [ %.pre105.pre, %.preheader ], [ %.pre105116, %._crit_edge76 ] ; 2 uses
   %.pre103112.a = phi i16 [ %.pre103, %.preheader ], [ %.pre103110, %._crit_edge76 ]
   %.pre108.a = phi i32 [ %.pre, %.preheader ], [ %.pre106, %._crit_edge76 ]
   %i.by = phi i32 [ %.pre, %.preheader ], [ %i.en, %._crit_edge76 ] ; 2 uses
@@ -283,10 +287,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not58, label %._crit_edge82.split, label %.lr.ph75, !llvm.loop !211
 
 bb.b:                                             ; preds = %.lr.ph75, %bb.h
+  %.pre105.pre120 = phi float [ %.pre105.pre121, %.lr.ph75 ], [ %.pre105.pre119, %bb.h ] ; 3 uses
+  %.pre105117 = phi float [ %.pre105, %.lr.ph75 ], [ %.pre105116, %bb.h ] ; 3 uses
   %.pre103111 = phi i16 [ %.pre103112.a, %.lr.ph75 ], [ %.pre103110, %bb.h ] ; 3 uses
   %.pre107.a = phi i32 [ %.pre108.a, %.lr.ph75 ], [ %.pre106, %bb.h ] ; 3 uses
   %i.da = phi i32 [ %i.by, %.lr.ph75 ], [ %i.en, %bb.h ] ; 3 uses
   %i.db = phi i16 [ %i.bz, %.lr.ph75 ], [ %i.eo, %bb.h ] ; 3 uses
+  %4 = phi float [ %.pre105, %.lr.ph75 ], [ %5, %bb.h ] ; 5 uses
   %.073 = phi i16 [ %.sroa.2.0.extract.trunc, %.lr.ph75 ], [ %i.ep, %bb.h ]
   %.04272 = phi i32 [ %i.cy, %.lr.ph75 ], [ %i.er, %bb.h ] ; 2 uses
   %.271 = phi i1 [ %.14778, %.lr.ph75 ], [ %.3, %bb.h ]
@@ -307,7 +314,6 @@ bb.b:                                             ; preds = %.lr.ph75, %bb.h
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.dn
   %i.dp = load float, ptr %i.do, align 4, !tbaa !63
   %i.dq = fmul nsz float %i.dm, %i.dp             ; 2 uses
-  %4 = load float, ptr %i.bj, align 8, !tbaa !106 ; 2 uses
   %i.dr = fadd nsz float %4, -1.000000e-01
   %i.ds = fcmp nsz ogt float %i.dq, %i.dr
   br i1 %i.ds, label %bb.c, label %bb.h
@@ -349,15 +355,19 @@ _ZNK14NodeDefManager3getEt.exit:                  ; preds = %bb.e, %bb.f
 
 bb.g:                                             ; preds = %_ZNK14NodeDefManager3getEt.exit
   store i32 126, ptr %i.de, align 4
+  %.pre104 = load float, ptr %i.bj, align 8, !tbaa !106 ; 3 uses
   %.pre104.a = load i16, ptr %i.bg, align 4, !tbaa !107 ; 2 uses
   %.pre105.a = load i32, ptr %i.ay, align 4, !tbaa !101 ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.c, %_ZNK14NodeDefManager3getEt.exit, %bb.g, %bb.b
+  %.pre105.pre119 = phi float [ %.pre104, %bb.g ], [ %.pre105.pre120, %_ZNK14NodeDefManager3getEt.exit ], [ %.pre105.pre120, %bb.c ], [ %.pre105.pre120, %bb.b ] ; 3 uses
+  %.pre105116 = phi float [ %.pre104, %bb.g ], [ %.pre105117, %_ZNK14NodeDefManager3getEt.exit ], [ %.pre105117, %bb.c ], [ %.pre105117, %bb.b ] ; 2 uses
   %.pre103110 = phi i16 [ %.pre104.a, %bb.g ], [ %.pre103111, %_ZNK14NodeDefManager3getEt.exit ], [ %.pre103111, %bb.c ], [ %.pre103111, %bb.b ] ; 3 uses
   %.pre106 = phi i32 [ %.pre105.a, %bb.g ], [ %.pre107.a, %_ZNK14NodeDefManager3getEt.exit ], [ %.pre107.a, %bb.c ], [ %.pre107.a, %bb.b ] ; 3 uses
   %i.en = phi i32 [ %.pre105.a, %bb.g ], [ %i.da, %_ZNK14NodeDefManager3getEt.exit ], [ %i.da, %bb.c ], [ %i.da, %bb.b ] ; 3 uses
   %i.eo = phi i16 [ %.pre104.a, %bb.g ], [ %i.db, %_ZNK14NodeDefManager3getEt.exit ], [ %i.db, %bb.c ], [ %i.db, %bb.b ] ; 3 uses
+  %5 = phi float [ %.pre104, %bb.g ], [ %4, %_ZNK14NodeDefManager3getEt.exit ], [ %4, %bb.c ], [ %4, %bb.b ]
   %.3 = phi i1 [ true, %bb.g ], [ true, %_ZNK14NodeDefManager3getEt.exit ], [ true, %bb.c ], [ %.271, %bb.b ] ; 4 uses
   %i.ep = add i16 %.073, -1                       ; 2 uses
   %i.eq = zext i16 %i.eo to i32

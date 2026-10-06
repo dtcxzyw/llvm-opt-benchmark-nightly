@@ -205,26 +205,27 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 .lr.ph205:                                        ; preds = %._crit_edge
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !144
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %.pre224 = load double, ptr %i.ce, align 8, !tbaa !228
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph205, %bb.m
+  %1 = phi double [ %.pre224, %.lr.ph205 ], [ %3, %bb.m ] ; 5 uses
   %.1202 = phi i64 [ %i.b, %.lr.ph205 ], [ %i.dh, %bb.m ] ; 10 uses
-  %1 = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %.1202
-  %2 = load double, ptr %1, align 8, !tbaa !35    ; 3 uses
-  %i.ci = load double, ptr %i.ce, align 8, !tbaa !228 ; 2 uses
-  %i.cj = fneg double %i.ci
-  %i.ck = fcmp ugt double %2, %i.cj
+  %2 = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %.1202
+  %i.ci = load double, ptr %2, align 8, !tbaa !35 ; 3 uses
+  %i.cj = fneg double %1
+  %i.ck = fcmp ugt double %i.ci, %i.cj
   br i1 %i.ck, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.cl = load ptr, ptr %i.cf, align 8, !tbaa !145
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.cl, i64 %.1202
   %i.cn = load double, ptr %i.cm, align 8, !tbaa !35
-  %i.co = fcmp ult double %i.cn, %i.ci
+  %i.co = fcmp ult double %i.cn, %1
   br i1 %i.co, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -236,6 +237,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ct = load ptr, ptr %i.ch, align 8, !tbaa !147
   %i.cu = getelementptr inbounds [8 x i8], ptr %i.ct, i64 %.1202
   store double 0.000000e+00, ptr %i.cu, align 8, !tbaa !35
+  %.pre = load double, ptr %i.ce, align 8, !tbaa !228
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.g, %bb.f
@@ -243,11 +245,11 @@ bb.i:                                             ; preds = %bb.g, %bb.f
   %i.cw = load double, ptr %i.cv, align 8, !tbaa !35 ; 4 uses
   %i.cx = load double, ptr %i.by, align 8, !tbaa !172 ; 2 uses
   %i.cy = fadd double %i.cw, %i.cx
-  %i.cz = fcmp olt double %i.cy, %2
+  %i.cz = fcmp olt double %i.cy, %i.ci
   br i1 %i.cz, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.da = fsub double %2, %i.cw
+  %i.da = fsub double %i.ci, %i.cw
   store double %i.da, ptr %i.by, align 8, !tbaa !172
   store i64 %.1202, ptr %i.bx, align 8, !tbaa !173
   br label %bb.m
@@ -267,6 +269,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.h, %bb.k, %bb.l, %bb.j
+  %3 = phi double [ %.pre, %bb.h ], [ %1, %bb.k ], [ %1, %bb.l ], [ %1, %bb.j ]
   %i.dh = add nsw i64 %.1202, 1                   ; 2 uses
   %exitcond220.not = icmp eq i64 %i.dh, %i.ca
   br i1 %exitcond220.not, label %._crit_edge206, label %bb.f, !llvm.loop !408

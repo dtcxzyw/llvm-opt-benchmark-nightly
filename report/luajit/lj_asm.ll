@@ -205,7 +205,7 @@ checkmclim.exit105.i.i:                           ; preds = %bb.id, %._crit_edge
   br i1 %.not95.i.i, label %bb.if, label %bb.id
 
 bb.id:                                            ; preds = %checkmclim.exit105.i.i
-  %i.ayf = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.i.i1068, i1 true) ; 2 uses
+  %i.ayf = call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.0.i.i1068, i1 true) ; 2 uses
   %i.ayg = zext nneg i32 %i.ayf to i64
   %i.ayh = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.ayg
   %i.ayi = load i32, ptr %i.ayh, align 4, !tbaa !26
@@ -608,7 +608,7 @@ bb.ayy:                                           ; preds = %bb.ayx, %checkmclim
 
 bb.ayz:                                           ; preds = %checkmclim.exit29.i, %.lr.ph.i236
   %.031.i = phi i32 [ %i.ilf, %.lr.ph.i236 ], [ %i.ilr, %checkmclim.exit29.i ] ; 2 uses
-  %i.ilg = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.031.i, i1 true) ; 2 uses
+  %i.ilg = call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.031.i, i1 true) ; 2 uses
   %i.ilh = zext nneg i32 %i.ilg to i64
   %i.ili = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.ilh
   %i.ilj = load i32, ptr %i.ili, align 4, !tbaa !26
@@ -1011,7 +1011,7 @@ bb.bao:                                           ; preds = %bb.ban, %bb.bam, %b
   %.not226.i = icmp ult i16 %i.ioz, 256
   %i.irx = shl nuw i32 1, %i.ipa
   %i.iry = xor i32 %i.irx, -1
-  %i.irz = select i1 %.not226.i, i32 %i.iry, i32 -1
+  %i.irz = select i1 %.not226.i, i32 %i.iry, i32 49135
   %.2176.i = and i32 %i.irz, %.1175291.i          ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %indvars.i = trunc i64 %indvars.iv.next.i to i32
@@ -1414,20 +1414,23 @@ bb.a:
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !57   ; 2 uses
   %i.d = zext nneg i32 %1 to i64                  ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %.pre109 = load i64, ptr %i.f, align 8, !tbaa !84
+  %.pre111 = load i64, ptr %i.g, align 8, !tbaa !85
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph94, %tailrecurse.backedge
   %i.i = phi ptr [ %i.c, %.lr.ph94 ], [ %i.ai, %tailrecurse.backedge ] ; 3 uses
+  %2 = phi i64 [ %.pre111, %.lr.ph94 ], [ %4, %tailrecurse.backedge ]
+  %3 = phi i64 [ %.pre109, %.lr.ph94 ], [ %5, %tailrecurse.backedge ]
   %i.j = phi ptr [ %i.e, %.lr.ph94 ], [ %i.ak, %tailrecurse.backedge ] ; 16 uses
   %i.k = phi i64 [ %i.d, %.lr.ph94 ], [ %i.aj, %tailrecurse.backedge ]
   %.tr7792 = phi i32 [ %1, %.lr.ph94 ], [ %.tr77.be, %tailrecurse.backedge ] ; 5 uses
   %i.l = and i64 %i.k, 63
   %i.m = shl nuw i64 1, %i.l
-  %2 = load i64, ptr %i.f, align 8, !tbaa !84
-  %i.n = or i64 %2, %i.m
+  %i.n = or i64 %3, %i.m                          ; 3 uses
   store i64 %i.n, ptr %i.f, align 8, !tbaa !84
   %i.o = add nuw nsw i32 %.tr7792, -79764919      ; 3 uses
   %i.p = xor i32 %i.o, %.tr7792
@@ -1440,8 +1443,7 @@ bb.b:                                             ; preds = %.lr.ph94, %tailrecu
   %i.w = and i32 %i.v, 63
   %i.x = zext nneg i32 %i.w to i64
   %i.y = shl nuw i64 1, %i.x
-  %3 = load i64, ptr %i.g, align 8, !tbaa !85
-  %i.z = or i64 %3, %i.y
+  %i.z = or i64 %2, %i.y                          ; 3 uses
   store i64 %i.z, ptr %i.g, align 8, !tbaa !85
   %i.aa = getelementptr inbounds nuw i8, ptr %i.j, i64 6 ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 2, !tbaa !25  ; 2 uses
@@ -1467,12 +1469,16 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  %.pre110 = load i64, ptr %i.g, align 8, !tbaa !85
+  %.pre = load i64, ptr %i.f, align 8, !tbaa !84
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 2
   %.pre.a = load ptr, ptr %i.a, align 8, !tbaa !57
   br label %tailrecurse.backedge
 
 tailrecurse.backedge:                             ; preds = %bb.r, %bb.o, %bb.f
   %i.ai = phi ptr [ %.pre.a, %bb.f ], [ %i.i, %bb.o ], [ %i.i, %bb.r ] ; 2 uses
+  %4 = phi i64 [ %.pre110, %bb.f ], [ %i.z, %bb.o ], [ %i.z, %bb.r ]
+  %5 = phi i64 [ %.pre, %bb.f ], [ %i.n, %bb.o ], [ %i.n, %bb.r ]
   %.tr77.be.in.in = phi ptr [ %i.ah, %bb.f ], [ %i.j, %bb.o ], [ %i.j, %bb.r ]
   %.tr77.be.in = load i16, ptr %.tr77.be.in.in, align 2, !tbaa !25 ; 3 uses
   %.tr77.be = zext i16 %.tr77.be.in to i32
@@ -1875,7 +1881,7 @@ checkmclim.exit22:                                ; preds = %bb.b, %bb.a
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %checkmclim.exit22
-  %i.k = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true) ; 2 uses
+  %i.k = tail call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true) ; 2 uses
   %i.l = zext nneg i32 %i.k to i64
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !26

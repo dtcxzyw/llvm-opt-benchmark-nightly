@@ -204,7 +204,7 @@ _ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaI
 _ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit: ; preds = %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i, %bb.k
   %.sroa.15.1 = phi ptr [ %i.be, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %.sroa.15.092, %bb.k ] ; 7 uses
   %.0.lcssa.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %.sroa.10.094, %bb.k ] ; 4 uses
-  %.sroa.050.1 = phi ptr [ %i.ab, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %.sroa.050.095, %bb.k ] ; 22 uses
+  %.sroa.050.1 = phi ptr [ %i.ab, %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE17_M_realloc_insertIJRKS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i ], [ %.sroa.050.095, %bb.k ] ; 24 uses
   %.sroa.10.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 8 ; 10 uses
   %i.bf = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.047.093) #45 ; 2 uses
   %.not = icmp eq ptr %i.bf, %i.p
@@ -240,21 +240,26 @@ bb.o:                                             ; preds = %._crit_edge
 .noexc20:                                         ; preds = %bb.o
   %i.bn = icmp sgt i64 %i.bi, 128
   %scevgep.i = getelementptr i8, ptr %.sroa.050.1, i64 8 ; 2 uses
-  br i1 %i.bn, label %.lr.ph.i.i.a, label %bb.u
+  br i1 %i.bn, label %.lr.ph.i.i, label %bb.u
 
-.lr.ph.i.i.a:                                     ; preds = %.noexc20, %bb.t
-  %.sroa.0.023.i.idx.i = phi i64 [ %.sroa.0.023.i.add.i, %bb.t ], [ 8, %.noexc20 ] ; 4 uses
-  %.pn22.i.i = phi ptr [ %.sroa.0.023.i.ptr.i, %bb.t ], [ %.sroa.050.1, %.noexc20 ] ; 3 uses
+.lr.ph.i.i:                                       ; preds = %.noexc20
+  %.pre109 = load ptr, ptr %.sroa.050.1, align 8  ; 2 uses
+  %5 = ptrtoint ptr %.pre109 to i64
+  br label %.lr.ph.i.i.a
+
+.lr.ph.i.i.a:                                     ; preds = %bb.t, %.lr.ph.i.i
+  %6 = phi i64 [ %5, %.lr.ph.i.i ], [ %9, %bb.t ]
+  %7 = phi ptr [ %.pre109, %.lr.ph.i.i ], [ %10, %bb.t ]
+  %.sroa.0.023.i.idx.i = phi i64 [ 8, %.lr.ph.i.i ], [ %.sroa.0.023.i.add.i, %bb.t ] ; 4 uses
+  %.pn22.i.i = phi ptr [ %.sroa.050.1, %.lr.ph.i.i ], [ %.sroa.0.023.i.ptr.i, %bb.t ] ; 3 uses
   %.sroa.0.023.i.ptr.i = getelementptr inbounds nuw i8, ptr %.sroa.050.1, i64 %.sroa.0.023.i.idx.i ; 4 uses
-  %i.bo = load ptr, ptr %.sroa.0.023.i.ptr.i, align 8 ; 3 uses
+  %i.bo = load ptr, ptr %.sroa.0.023.i.ptr.i, align 8 ; 4 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 72
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !195 ; 3 uses
-  %5 = load ptr, ptr %.sroa.050.1, align 8        ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %5, i64 72
+  %i.br = getelementptr inbounds nuw i8, ptr %7, i64 72
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !195
   %i.bt = icmp ult i64 %i.bq, %i.bs
-  %6 = ptrtoint ptr %i.bo to i64
-  %i.bu = ptrtoint ptr %5 to i64
+  %i.bu = ptrtoint ptr %i.bo to i64               ; 2 uses
   br i1 %i.bt, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %.lr.ph.i.i.a
@@ -267,7 +272,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   %i.bw = getelementptr inbounds nuw i8, ptr %.pn22.i.i, i64 8
-  store i64 %i.bu, ptr %i.bw, align 8, !tbaa !192
+  store i64 %6, ptr %i.bw, align 8, !tbaa !192
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i: ; preds = %bb.r, %bb.q
@@ -296,10 +301,14 @@ bb.s:                                             ; preds = %.lr.ph.i.i.a
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.s
   %.sroa.04.0.lcssa.i.i.i = phi ptr [ %.sroa.0.023.i.ptr.i, %bb.s ], [ %.sroa.0.09.i.i.i, %.lr.ph.i.i.i ]
-  store i64 %6, ptr %.sroa.04.0.lcssa.i.i.i, align 8, !tbaa !192
+  store i64 %i.bu, ptr %.sroa.04.0.lcssa.i.i.i, align 8, !tbaa !192
+  %.pre108 = load ptr, ptr %.sroa.050.1, align 8  ; 2 uses
+  %8 = ptrtoint ptr %.pre108 to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i
+  %9 = phi i64 [ %8, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i.i ], [ %i.bu, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i ]
+  %10 = phi ptr [ %.pre108, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i.i ], [ %i.bo, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i ]
   %.sroa.0.023.i.add.i = add nuw nsw i64 %.sroa.0.023.i.idx.i, 8 ; 2 uses
   %.not.i.i36 = icmp eq i64 %.sroa.0.023.i.add.i, 128
   br i1 %.not.i.i36, label %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS9_SI_EEEEvT_SM_T0_.exit.i, label %.lr.ph.i.i.a, !llvm.loop !537
@@ -344,20 +353,25 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_con
 
 bb.u:                                             ; preds = %.noexc20
   %.not21.i20.i = icmp eq ptr %.sroa.050.1, %.0.lcssa.i.i.i.i.i.pn
-  br i1 %.not21.i20.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEEPFbRKS9_SG_EEvT_SJ_T0_.exit, label %.lr.ph.i21.i
+  br i1 %.not21.i20.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEEPFbRKS9_SG_EEvT_SJ_T0_.exit, label %.lr.ph.i21.i.preheader
 
-.lr.ph.i21.i:                                     ; preds = %bb.u, %bb.aa
-  %.sroa.0.023.i22.i = phi ptr [ %.sroa.0.0.i26.i, %bb.aa ], [ %scevgep.i, %bb.u ] ; 7 uses
-  %.pn22.i23.i = phi ptr [ %.sroa.0.023.i22.i, %bb.aa ], [ %.sroa.050.1, %bb.u ] ; 4 uses
-  %i.cv = load ptr, ptr %.sroa.0.023.i22.i, align 8 ; 3 uses
+.lr.ph.i21.i.preheader:                           ; preds = %bb.u
+  %.pre107 = load ptr, ptr %.sroa.050.1, align 8  ; 2 uses
+  %11 = ptrtoint ptr %.pre107 to i64
+  br label %.lr.ph.i21.i
+
+.lr.ph.i21.i:                                     ; preds = %.lr.ph.i21.i.preheader, %bb.aa
+  %12 = phi i64 [ %15, %bb.aa ], [ %11, %.lr.ph.i21.i.preheader ]
+  %13 = phi ptr [ %16, %bb.aa ], [ %.pre107, %.lr.ph.i21.i.preheader ]
+  %.sroa.0.023.i22.i = phi ptr [ %.sroa.0.0.i26.i, %bb.aa ], [ %scevgep.i, %.lr.ph.i21.i.preheader ] ; 7 uses
+  %.pn22.i23.i = phi ptr [ %.sroa.0.023.i22.i, %bb.aa ], [ %.sroa.050.1, %.lr.ph.i21.i.preheader ] ; 4 uses
+  %i.cv = load ptr, ptr %.sroa.0.023.i22.i, align 8 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 72
   %i.cx = load i64, ptr %i.cw, align 8, !tbaa !195 ; 3 uses
-  %7 = load ptr, ptr %.sroa.050.1, align 8        ; 2 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 72
+  %i.cy = getelementptr inbounds nuw i8, ptr %13, i64 72
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !195
   %i.da = icmp ult i64 %i.cx, %i.cz
-  %8 = ptrtoint ptr %i.cv to i64
-  %i.db = ptrtoint ptr %7 to i64
+  %i.db = ptrtoint ptr %i.cv to i64               ; 2 uses
   br i1 %i.da, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %.lr.ph.i21.i
@@ -380,7 +394,7 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   %i.dk = getelementptr inbounds nuw i8, ptr %.pn22.i23.i, i64 8
-  store i64 %i.db, ptr %i.dk, align 8, !tbaa !192
+  store i64 %12, ptr %i.dk, align 8, !tbaa !192
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i33.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i33.i: ; preds = %bb.y, %bb.x, %bb.w
@@ -409,10 +423,14 @@ bb.z:                                             ; preds = %.lr.ph.i21.i
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i24.i: ; preds = %.lr.ph.i.i28.i, %bb.z
   %.sroa.04.0.lcssa.i.i25.i = phi ptr [ %.sroa.0.023.i22.i, %bb.z ], [ %.sroa.0.09.i.i29.i, %.lr.ph.i.i28.i ]
-  store i64 %8, ptr %.sroa.04.0.lcssa.i.i25.i, align 8, !tbaa !192
+  store i64 %i.db, ptr %.sroa.04.0.lcssa.i.i25.i, align 8, !tbaa !192
+  %.pre = load ptr, ptr %.sroa.050.1, align 8     ; 2 uses
+  %14 = ptrtoint ptr %.pre to i64
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i24.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i33.i
+  %15 = phi i64 [ %14, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i24.i ], [ %i.db, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i33.i ]
+  %16 = phi ptr [ %.pre, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIPFbRKS9_SI_EEEEvT_T0_.exit.i24.i ], [ %i.cv, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i33.i ]
   %.sroa.0.0.i26.i = getelementptr inbounds nuw i8, ptr %.sroa.0.023.i22.i, i64 8
   %.not.i27.i = icmp eq ptr %.sroa.0.023.i22.i, %.0.lcssa.i.i.i.i.i.pn
   br i1 %.not.i27.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES5_EESt6vectorIS9_SaIS9_EEEEPFbRKS9_SG_EEvT_SJ_T0_.exit, label %.lr.ph.i21.i, !llvm.loop !537

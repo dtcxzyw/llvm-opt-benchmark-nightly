@@ -202,15 +202,16 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i, label %.loopexit93.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.thread84.thread.i
-  %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %wide.trip.count.i = zext i32 %i.as to i64
+  %.pre103.i = load i64, ptr %i.at, align 8, !tbaa !76
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.r, %.lr.ph.i
-  %indvars.iv.i.a = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.r ] ; 2 uses
-  %1 = load i64, ptr %i.at, align 8, !tbaa !76
-  %i.au = inttoptr i64 %1 to ptr
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv.i.a
+  %indvars.iv.i.a = phi i64 [ %.pre103.i, %.lr.ph.i ], [ %1, %bb.r ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.r ] ; 2 uses
+  %i.au = inttoptr i64 %indvars.iv.i.a to ptr
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv.i
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !28 ; 2 uses
   %i.ax = ashr i64 %i.aw, 47
   %i.ay = trunc nsw i64 %i.ax to i32
@@ -229,10 +230,12 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   tail call fastcc void @gc_mark(ptr noundef %0, ptr noundef nonnull %i.bc)
+  %.pre.i = load i64, ptr %i.at, align 8, !tbaa !76
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %1 = phi i64 [ %indvars.iv.i.a, %bb.o ], [ %indvars.iv.i.a, %bb.p ], [ %.pre.i, %bb.q ]
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.loopexit93.i, label %bb.o, !llvm.loop !126
 
@@ -616,14 +619,15 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.i = zext i32 %i.h to i64
   %i.j = sub nsw i64 0, %i.i
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %.pre15 = load i64, ptr %i.k, align 8, !tbaa !139
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %.013.a = phi i64 [ %i.j, %.lr.ph ], [ %i.s, %bb.d ] ; 2 uses
-  %2 = load i64, ptr %i.k, align 8, !tbaa !139
-  %i.l = inttoptr i64 %2 to ptr
-  %i.m = getelementptr inbounds [8 x i8], ptr %i.l, i64 %.013.a
+  %.013.a = phi i64 [ %.pre15, %.lr.ph ], [ %2, %bb.d ] ; 2 uses
+  %.013 = phi i64 [ %i.j, %.lr.ph ], [ %i.s, %bb.d ] ; 2 uses
+  %i.l = inttoptr i64 %.013.a to ptr
+  %i.m = getelementptr inbounds [8 x i8], ptr %i.l, i64 %.013
   %i.n = load i64, ptr %i.m, align 8, !tbaa !27
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -634,10 +638,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call fastcc void @gc_mark(ptr noundef %0, ptr noundef nonnull %i.o)
+  %.pre = load i64, ptr %i.k, align 8, !tbaa !139
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %i.s = add nsw i64 %.013.a, 1                   ; 2 uses
+  %2 = phi i64 [ %.013.a, %bb.b ], [ %.pre, %bb.c ]
+  %i.s = add nsw i64 %.013, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, 0
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !136
 
@@ -852,12 +858,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %.pre38 = load ptr, ptr %i.g, align 8, !tbaa !148
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.h
+  %2 = phi ptr [ %.pre38, %.lr.ph ], [ %3, %bb.h ] ; 3 uses
   %.037 = phi i32 [ %i.e, %.lr.ph ], [ %i.aa, %bb.h ] ; 3 uses
-  %2 = load ptr, ptr %i.g, align 8, !tbaa !148
   %i.h = zext nneg i32 %.037 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.h ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 5 ; 2 uses
@@ -877,9 +884,11 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call fastcc void @gc_mark(ptr noundef %0, ptr noundef nonnull %i.o)
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !148
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
+  %3 = phi ptr [ %2, %bb.d ], [ %.pre, %bb.e ], [ %2, %bb.c ]
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.t = load i8, ptr %i.s, align 4, !tbaa !28
   %i.u = and i8 %i.t, 31

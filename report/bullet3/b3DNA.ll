@@ -204,7 +204,8 @@ _ZN20b3AlignedObjectArrayIiE6resizeEiRKi.exit:    ; preds = %.lr.ph.i, %bb.a
   br i1 %i.bt, label %.lr.ph59, label %._crit_edge
 
 .lr.ph59:                                         ; preds = %.preheader
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.pre67 = load ptr, ptr %i.bu, align 8, !tbaa !19
   br label %bb.q
 
 bb.f:                                             ; preds = %.lr.ph57, %.loopexit
@@ -373,8 +374,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.lr.ph59, %bb.s
   %i.fg = phi i32 [ %i.fd, %.lr.ph59 ], [ %i.fl, %bb.s ]
+  %2 = phi ptr [ %.pre67, %.lr.ph59 ], [ %3, %bb.s ] ; 2 uses
   %indvars.iv62 = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next63, %bb.s ] ; 3 uses
-  %2 = load ptr, ptr %i.bu, align 8, !tbaa !19
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv62
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !84
   %i.fj = icmp eq i32 %i.fi, 1
@@ -383,11 +384,13 @@ bb.q:                                             ; preds = %.lr.ph59, %bb.s
 bb.r:                                             ; preds = %bb.q
   %i.fk = trunc nuw nsw i64 %indvars.iv62 to i32
   tail call void @_ZN6bParse4bDNA19initRecurseCmpFlagsEi(ptr noundef nonnull align 8 dereferenceable(420) %0, i32 noundef %i.fk)
+  %.pre66 = load ptr, ptr %i.bu, align 8, !tbaa !19
   %.pre66.a = load i32, ptr %i.a, align 4, !tbaa !42
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   %i.fl = phi i32 [ %i.fg, %bb.q ], [ %.pre66.a, %bb.r ] ; 2 uses
+  %3 = phi ptr [ %2, %bb.q ], [ %.pre66, %bb.r ]
   %indvars.iv.next63 = add nuw nsw i64 %indvars.iv62, 1 ; 2 uses
   %i.fm = sext i32 %i.fl to i64
   %i.fn = icmp slt i64 %indvars.iv.next63, %i.fm
@@ -790,6 +793,7 @@ bb.e:                                             ; preds = %_ZN6bParse4bDNA14ge
 .lr.ph:                                           ; preds = %bb.e
   %i.bp = add nsw i32 %i.bm, -1                   ; 2 uses
   %.not = icmp eq i32 %i.bp, 0
+  %.pre56 = load ptr, ptr %i.k, align 8, !tbaa !34 ; 2 uses
   br i1 %.not, label %._crit_edge.loopexit.peel.begin, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph
@@ -797,6 +801,7 @@ bb.e:                                             ; preds = %_ZN6bParse4bDNA14ge
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.split, %bb.h
+  %1 = phi ptr [ %.pre56, %.lr.ph.split ], [ %.pre, %bb.h ]
   %.03445 = phi i32 [ 0, %.lr.ph.split ], [ %i.cy, %bb.h ] ; 2 uses
   %.pn44 = phi ptr [ %i.q, %.lr.ph.split ], [ %.03546, %bb.h ] ; 2 uses
   %.03643 = phi i32 [ 0, %.lr.ph.split ], [ %i.cx, %bb.h ]
@@ -808,7 +813,6 @@ bb.f:                                             ; preds = %.lr.ph.split, %bb.h
   %i.bv = getelementptr inbounds [24 x i8], ptr %i.bt, i64 %i.bu
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !79
   %i.bx = load i16, ptr %.03546, align 2, !tbaa !83
-  %1 = load ptr, ptr %i.k, align 8, !tbaa !34
   %i.by = sext i16 %i.bx to i64
   %i.bz = getelementptr inbounds [8 x i8], ptr %1, i64 %i.by
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !80
@@ -841,6 +845,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.cu = mul nsw i32 %i.ck, %.0                  ; 2 uses
   %i.cv = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.6, i32 noundef %i.cu) ; 0 uses
   %i.cw = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.8) ; 0 uses
+  %.pre = load ptr, ptr %i.k, align 8, !tbaa !34  ; 2 uses
   %i.cx = add nsw i32 %i.cu, %.03643              ; 2 uses
   %i.cy = add nuw nsw i32 %.03445, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %.03445, %i.bq
@@ -852,6 +857,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br label %._crit_edge.loopexit.peel.begin
 
 ._crit_edge.loopexit.peel.begin:                  ; preds = %._crit_edge.loopexit.peel.begin.loopexit, %.lr.ph
+  %2 = phi ptr [ %.pre56, %.lr.ph ], [ %.pre, %._crit_edge.loopexit.peel.begin.loopexit ]
   %.str.7..str.8 = phi ptr [ @.str.7, %.lr.ph ], [ %i.da, %._crit_edge.loopexit.peel.begin.loopexit ]
   %i.db = phi ptr [ %i.q, %.lr.ph ], [ %.03546, %._crit_edge.loopexit.peel.begin.loopexit ] ; 2 uses
   %i.dc = phi i32 [ 0, %.lr.ph ], [ %i.cx, %._crit_edge.loopexit.peel.begin.loopexit ]
@@ -863,7 +869,6 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.dh = getelementptr inbounds [24 x i8], ptr %i.df, i64 %i.dg
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !79
   %i.dj = load i16, ptr %.03546.peel, align 2, !tbaa !83
-  %2 = load ptr, ptr %i.k, align 8, !tbaa !34
   %i.dk = sext i16 %i.dj to i64
   %i.dl = getelementptr inbounds [8 x i8], ptr %2, i64 %i.dk
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !80

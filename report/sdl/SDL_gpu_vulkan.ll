@@ -205,13 +205,14 @@ VULKAN_INTERNAL_ReturnDescriptorSetCacheToPool.exit: ; preds = %.lr.ph.i, %bb.u
   br i1 %.not, label %.loopexit, label %.lr.ph150
 
 .lr.ph150:                                        ; preds = %.preheader
-  %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 2000
+  %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 2000 ; 2 uses
+  %.pre181 = load ptr, ptr %i.hv, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph150, %bb.x
   %i.hw = phi i32 [ %i.hu, %.lr.ph150 ], [ %i.ig, %bb.x ] ; 2 uses
+  %3 = phi ptr [ %.pre181, %.lr.ph150 ], [ %4, %bb.x ] ; 3 uses
   %indvars.iv176 = phi i64 [ 0, %.lr.ph150 ], [ %indvars.iv.next177, %bb.x ] ; 2 uses
-  %3 = load ptr, ptr %i.hv, align 8               ; 2 uses
   %i.hx = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv176 ; 2 uses
   %i.hy = load ptr, ptr %i.hx, align 8
   %i.hz = icmp eq ptr %i.hy, %1
@@ -226,10 +227,12 @@ bb.w:                                             ; preds = %bb.v
   %i.ie = load i32, ptr %i.ht, align 8
   %i.if = add i32 %i.ie, -1                       ; 2 uses
   store i32 %i.if, ptr %i.ht, align 8
+  %.pre180 = load ptr, ptr %i.hv, align 8
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.v, %bb.w
   %i.ig = phi i32 [ %i.hw, %bb.v ], [ %i.if, %bb.w ] ; 2 uses
+  %4 = phi ptr [ %3, %bb.v ], [ %.pre180, %bb.w ]
   %indvars.iv.next177 = add nuw nsw i64 %indvars.iv176, 1 ; 2 uses
   %i.ih = zext i32 %i.ig to i64
   %i.ii = icmp samesign ult i64 %indvars.iv.next177, %i.ih

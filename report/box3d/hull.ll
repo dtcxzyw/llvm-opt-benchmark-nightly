@@ -205,7 +205,7 @@ b3HullBuilder_NewFace.exit.i:                     ; preds = %bb.ar, %b3HullBuild
   store ptr %.0.i86.i, ptr %i.xa, align 8, !tbaa !56
   %i.xb = getelementptr inbounds nuw i8, ptr %.0.i146.i.i, i64 32
   store ptr null, ptr %i.xb, align 8, !tbaa !47
-  %i.xc = load ptr, ptr %i.bh, align 8, !tbaa !185 ; 5 uses
+  %i.xc = load ptr, ptr %i.bh, align 8, !tbaa !185 ; 6 uses
   %i.xd = load i32, ptr %i.ph, align 4, !tbaa !204 ; 4 uses
   %i.xe = add nsw i32 %i.xd, 1                    ; 5 uses
   store i32 %i.xe, ptr %i.ph, align 4, !tbaa !204
@@ -298,8 +298,8 @@ b3HullBuilder_NewFace.exit.i:                     ; preds = %bb.ar, %b3HullBuild
 
 .lr.ph.i17.i.i:                                   ; preds = %.lr.ph.i17.i.i.preheader, %bb.aw
   %i.yo = phi i32 [ %i.zi, %bb.aw ], [ %i.xe, %.lr.ph.i17.i.i.preheader ] ; 2 uses
+  %4 = phi ptr [ %5, %bb.aw ], [ %i.xc, %.lr.ph.i17.i.i.preheader ] ; 3 uses
   %indvars.iv.i18.i.i = phi i64 [ %indvars.iv.next.i19.i.i, %bb.aw ], [ 0, %.lr.ph.i17.i.i.preheader ] ; 2 uses
-  %4 = load ptr, ptr %i.bh, align 8, !tbaa !185
   %i.yp = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.i18.i.i
   %i.yq = load ptr, ptr %i.yp, align 8, !tbaa !57 ; 3 uses
   %i.yr = getelementptr inbounds nuw i8, ptr %i.yq, i64 24
@@ -339,11 +339,13 @@ bb.au:                                            ; preds = %bb.au, %bb.at
 
 bb.av:                                            ; preds = %bb.au
   call fastcc void @b3HullBuilder_ConnectFaces(ptr noundef nonnull %3, ptr noundef %.1.i.i58.i)
+  %.pre.i21.i.i = load ptr, ptr %i.bh, align 8, !tbaa !185
   %.pre.i21.i.i.a = load i32, ptr %i.ph, align 4, !tbaa !204
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.as, %.lr.ph.i17.i.i
   %i.zi = phi i32 [ %.pre.i21.i.i.a, %bb.av ], [ %i.yo, %bb.as ], [ %i.yo, %.lr.ph.i17.i.i ] ; 5 uses
+  %5 = phi ptr [ %.pre.i21.i.i, %bb.av ], [ %4, %bb.as ], [ %4, %.lr.ph.i17.i.i ]
   %indvars.iv.next.i19.i.i = add nuw nsw i64 %indvars.iv.i18.i.i, 1 ; 2 uses
   %i.zj = sext i32 %i.zi to i64
   %i.zk = icmp slt i64 %indvars.iv.next.i19.i.i, %i.zj
@@ -746,7 +748,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -769,12 +771,16 @@ bb.b:                                             ; preds = %.lr.ph45, %bb.h
   %i.u = load i64, ptr %i.h, align 8, !tbaa !94   ; 2 uses
   %i.v = add i64 %i.u, 1
   %.not46 = icmp ult i64 %i.v, 2
-  br i1 %.not46, label %._crit_edge, label %.lr.ph
+  br i1 %.not46, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.b, %bb.d
-  %i.w = phi i64 [ %i.ag, %bb.d ], [ %i.u, %bb.b ]
-  %.039 = phi i64 [ %i.ah, %bb.d ], [ 0, %bb.b ]  ; 3 uses
-  %4 = load ptr, ptr %i.i, align 8, !tbaa !93
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %.pre47 = load ptr, ptr %i.i, align 8, !tbaa !93
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %i.w = phi i64 [ %i.ag, %bb.d ], [ %i.u, %.lr.ph.preheader ]
+  %4 = phi ptr [ %5, %bb.d ], [ %.pre47, %.lr.ph.preheader ] ; 2 uses
+  %.039 = phi i64 [ %i.ah, %bb.d ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.x = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %.039
   %i.y = load i16, ptr %i.x, align 2, !tbaa !104
   %.not28 = icmp eq i16 %i.y, 0
@@ -794,11 +800,13 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.af, label %._crit_edge.loopexit, label %._crit_edge47
 
 ._crit_edge47:                                    ; preds = %bb.c
+  %.pre = load ptr, ptr %i.i, align 8, !tbaa !93
   %.pre.a = load i64, ptr %i.h, align 8, !tbaa !94
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge47, %.lr.ph
-  %i.ag = phi i64 [ %.pre.a, %._crit_edge47 ], [ %i.w, %.lr.ph ] ; 3 uses
+  %i.ag = phi i64 [ %i.w, %.lr.ph ], [ %.pre.a, %._crit_edge47 ] ; 3 uses
+  %5 = phi ptr [ %4, %.lr.ph ], [ %.pre, %._crit_edge47 ]
   %i.ah = add nuw i64 %.039, 1                    ; 2 uses
   %i.ai = icmp ne i64 %i.ag, 0
   %i.aj = zext i1 %i.ai to i64

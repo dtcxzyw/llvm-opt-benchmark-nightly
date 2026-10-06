@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.f, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load i64, ptr %i.h, align 8              ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -211,6 +211,7 @@ bb.a:
   %i.m = load i64, ptr %i.l, align 8              ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !nonnull !5
+  %.pre11 = load i64, ptr %i.g, align 8, !alias.scope !139, !noalias !140
   %.pre11.a = load ptr, ptr %i.a, align 8, !alias.scope !139, !noalias !140
   br label %bb.c
 
@@ -223,13 +224,13 @@ bb.b:                                             ; preds = %.invoke
 bb.c:                                             ; preds = %.lr.ph, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit
   %i.q = phi i64 [ %i.e, %.lr.ph ], [ %i.ah, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit ] ; 2 uses
   %i.r = phi ptr [ %.pre11.a, %.lr.ph ], [ %i.aj, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit ] ; 3 uses
-  %i.s = phi i64 [ %i.d, %.lr.ph ], [ %i.ai, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit ] ; 2 uses
-  %2 = add i64 %i.s, 1                            ; 3 uses
-  store i64 %2, ptr %i.b, align 8, !alias.scope !138
-  %3 = load i64, ptr %i.g, align 8, !alias.scope !139, !noalias !140, !noundef !5
-  %i.t = icmp ugt i64 %3, 2
+  %i.s = phi i64 [ %.pre11, %.lr.ph ], [ %4, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit ] ; 3 uses
+  %2 = phi i64 [ %i.d, %.lr.ph ], [ %i.ai, %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit ] ; 2 uses
+  %3 = add i64 %2, 1                              ; 3 uses
+  store i64 %3, ptr %i.b, align 8, !alias.scope !138
+  %i.t = icmp ugt i64 %i.s, 2
   %.sink10.i.i = select i1 %i.t, ptr %i.r, ptr %i.a
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %.sink10.i.i, i64 %i.s
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %.sink10.i.i, i64 %2
   %i.v = load i32, ptr %i.u, align 4, !range !4, !noundef !5 ; 2 uses
   %i.w = icmp eq i32 %i.v, 1
   br i1 %i.w, label %_RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit, label %bb.d
@@ -253,6 +254,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.y
   store i8 1, ptr %i.ae, align 1, !noalias !141
+  %.pre = load i64, ptr %i.g, align 8, !alias.scope !139, !noalias !140
   %.pre.a = load ptr, ptr %i.a, align 8, !alias.scope !139, !noalias !140
   %.pre12 = load i64, ptr %i.b, align 8, !alias.scope !138
   %.pre13 = load i64, ptr %i.c, align 8, !alias.scope !138
@@ -269,8 +271,9 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_16UseDefMapBuilder20mark_definition_used.exit: ; preds = %bb.c, %bb.e, %bb.g
   %i.ah = phi i64 [ %i.q, %bb.c ], [ %i.q, %bb.e ], [ %.pre13, %bb.g ] ; 2 uses
-  %i.ai = phi i64 [ %2, %bb.c ], [ %2, %bb.e ], [ %.pre12, %bb.g ] ; 2 uses
+  %i.ai = phi i64 [ %3, %bb.c ], [ %3, %bb.e ], [ %.pre12, %bb.g ] ; 2 uses
   %i.aj = phi ptr [ %i.r, %bb.c ], [ %i.r, %bb.e ], [ %.pre.a, %bb.g ]
+  %4 = phi i64 [ %i.s, %bb.c ], [ %i.s, %bb.e ], [ %.pre, %bb.g ]
   %i.ak = icmp eq i64 %i.ai, %i.ah
   br i1 %i.ak, label %._crit_edge, label %bb.c
 

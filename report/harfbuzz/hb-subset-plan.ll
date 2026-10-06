@@ -205,24 +205,25 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge
   br i1 %i.bq, label %.lr.ph152, label %._crit_edge153
 
 .lr.ph152:                                        ; preds = %.preheader135
-  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %.pre163 = load ptr, ptr %i.br, align 8, !tbaa !250
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph152, %bb.ab
-  %.2106151 = phi i32 [ %i.g, %.lr.ph152 ], [ %.3, %bb.ab ] ; 3 uses
-  %.2109150.a = phi i32 [ %.0117, %.lr.ph152 ], [ %.3110, %bb.ab ] ; 3 uses
-  %.6149.a = phi i32 [ %.5, %.lr.ph152 ], [ %.7, %bb.ab ] ; 5 uses
-  %.1118148.a = phi i32 [ %.0117, %.lr.ph152 ], [ %.2119, %bb.ab ] ; 7 uses
-  %7 = load ptr, ptr %i.br, align 8, !tbaa !250   ; 4 uses
-  %i.bv = add i32 %.2109150.a, -1                 ; 4 uses
+  %7 = phi ptr [ %.pre163, %.lr.ph152 ], [ %8, %bb.ab ] ; 7 uses
+  %.2109150.a = phi i32 [ %i.g, %.lr.ph152 ], [ %.3, %bb.ab ] ; 3 uses
+  %.6149.a = phi i32 [ %.0117, %.lr.ph152 ], [ %.3110, %bb.ab ] ; 3 uses
+  %.1118148.a = phi i32 [ %.5, %.lr.ph152 ], [ %.7, %bb.ab ] ; 5 uses
+  %.1118148 = phi i32 [ %.0117, %.lr.ph152 ], [ %.2119, %bb.ab ] ; 7 uses
+  %i.bv = add i32 %.6149.a, -1                    ; 4 uses
   %i.bw = zext i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.bw ; 4 uses
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !253 ; 2 uses
   %i.bz = load ptr, ptr %i.bs, align 8, !tbaa !250
-  %i.ca = add i32 %.2106151, -1                   ; 4 uses
+  %i.ca = add i32 %.2109150.a, -1                 ; 4 uses
   %i.cb = zext i32 %i.ca to i64
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %i.cb ; 3 uses
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !253 ; 3 uses
@@ -230,7 +231,7 @@ bb.u:                                             ; preds = %.lr.ph152, %bb.ab
   br i1 %i.ce, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.cf = add i32 %.6149.a, -1                    ; 2 uses
+  %i.cf = add i32 %.1118148.a, -1                 ; 2 uses
   %i.cg = zext i32 %i.cf to i64                   ; 3 uses
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.cg
   %i.ci = load i64, ptr %i.bx, align 4, !tbaa !157
@@ -260,7 +261,7 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.dc, ptr noundef nonnull align 8 dereferenceable(64) %6, i64 64, i1 false), !tbaa.struct !944
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   %i.dd = load ptr, ptr %i.bu, align 8, !tbaa !254
-  %i.de = load ptr, ptr %i.br, align 8, !tbaa !250
+  %i.de = load ptr, ptr %i.br, align 8, !tbaa !250 ; 2 uses
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.cg
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 4
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !256
@@ -277,7 +278,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %2, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
-  %i.dl = add i32 %.6149.a, -1                    ; 2 uses
+  %i.dl = add i32 %.1118148.a, -1                 ; 2 uses
   %i.dm = zext i32 %i.dl to i64
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.dm
   %i.do = load i64, ptr %i.bx, align 4, !tbaa !157
@@ -288,29 +289,31 @@ bb.z:                                             ; preds = %bb.w
   br i1 %3, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dp = add i32 %.6149.a, -1                    ; 2 uses
+  %i.dp = add i32 %.1118148.a, -1                 ; 2 uses
   %i.dq = zext i32 %i.dp to i64
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.dq ; 2 uses
   store i32 %i.cd, ptr %i.dr, align 4, !tbaa !253
-  %i.ds = add i32 %.1118148.a, 1
+  %i.ds = add i32 %.1118148, 1
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dr, i64 4
-  store i32 %.1118148.a, ptr %i.dt, align 4, !tbaa !256
+  store i32 %.1118148, ptr %i.dt, align 4, !tbaa !256
   %i.du = load ptr, ptr %i.bt, align 8, !tbaa !254
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !256
   %i.dx = zext i32 %i.dw to i64
   %i.dy = getelementptr inbounds nuw [72 x i8], ptr %i.du, i64 %i.dx
   %i.dz = load ptr, ptr %i.bu, align 8, !tbaa !254
-  %i.ea = zext i32 %.1118148.a to i64
+  %i.ea = zext i32 %.1118148 to i64
   %i.eb = getelementptr inbounds nuw [72 x i8], ptr %i.dz, i64 %i.ea
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.eb, ptr noundef nonnull align 8 dereferenceable(72) %i.dy, i64 72, i1 false), !tbaa.struct !318
+  %.pre = load ptr, ptr %i.br, align 8, !tbaa !250
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.y, %bb.x, %bb.aa, %bb.z, %bb.v
-  %.2119 = phi i32 [ %.1118148.a, %bb.v ], [ %.1118148.a, %bb.y ], [ %.1118148.a, %bb.x ], [ %i.ds, %bb.aa ], [ %.1118148.a, %bb.z ] ; 2 uses
-  %.7 = phi i32 [ %i.cf, %bb.v ], [ %i.dl, %bb.y ], [ %.6149.a, %bb.x ], [ %i.dp, %bb.aa ], [ %.6149.a, %bb.z ] ; 2 uses
-  %.3110 = phi i32 [ %i.bv, %bb.v ], [ %i.bv, %bb.y ], [ %i.bv, %bb.x ], [ %.2109150.a, %bb.aa ], [ %.2109150.a, %bb.z ] ; 3 uses
-  %.3 = phi i32 [ %i.ca, %bb.v ], [ %.2106151, %bb.y ], [ %.2106151, %bb.x ], [ %i.ca, %bb.aa ], [ %i.ca, %bb.z ] ; 3 uses
+  %8 = phi ptr [ %i.de, %bb.v ], [ %7, %bb.y ], [ %7, %bb.x ], [ %.pre, %bb.aa ], [ %7, %bb.z ]
+  %.2119 = phi i32 [ %.1118148, %bb.v ], [ %.1118148, %bb.y ], [ %.1118148, %bb.x ], [ %i.ds, %bb.aa ], [ %.1118148, %bb.z ] ; 2 uses
+  %.7 = phi i32 [ %i.cf, %bb.v ], [ %i.dl, %bb.y ], [ %.1118148.a, %bb.x ], [ %i.dp, %bb.aa ], [ %.1118148.a, %bb.z ] ; 2 uses
+  %.3110 = phi i32 [ %i.bv, %bb.v ], [ %i.bv, %bb.y ], [ %i.bv, %bb.x ], [ %.6149.a, %bb.aa ], [ %.6149.a, %bb.z ] ; 3 uses
+  %.3 = phi i32 [ %i.ca, %bb.v ], [ %.2109150.a, %bb.y ], [ %.2109150.a, %bb.x ], [ %i.ca, %bb.aa ], [ %i.ca, %bb.z ] ; 3 uses
   %i.ec = icmp ne i32 %.3110, 0                   ; 2 uses
   %i.ed = icmp ne i32 %.3, 0                      ; 2 uses
   %i.ee = and i1 %i.ec, %i.ed

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 32         ; 5 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !41   ; 14 uses
-  %i.e = getelementptr i8, ptr %0, i64 40         ; 4 uses
+  %i.e = getelementptr i8, ptr %0, i64 40         ; 6 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !42   ; 8 uses
   %i.g = getelementptr i8, ptr %i.d, i64 10       ; 3 uses
   %i.h = load i8, ptr %i.g, align 2, !tbaa !43
@@ -328,6 +328,7 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph159:                                        ; preds = %bb.m
   %i.bn = getelementptr i8, ptr %i.f, i64 8
+  %.val149.pre175 = load ptr, ptr %i.e, align 8, !tbaa !42
   br label %bb.n
 
 ._crit_edge160:                                   ; preds = %_Py_NewRef.exit, %bb.m
@@ -335,8 +336,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.s
 
 bb.n:                                             ; preds = %.lr.ph159, %_Py_NewRef.exit
+  %.val149 = phi ptr [ %.val149.pre175, %.lr.ph159 ], [ %.val149176, %_Py_NewRef.exit ] ; 3 uses
   %.0138157 = phi i64 [ 0, %.lr.ph159 ], [ %i.ch, %_Py_NewRef.exit ] ; 3 uses
-  %.val149 = load ptr, ptr %i.e, align 8, !tbaa !42 ; 2 uses
   %i.bo = getelementptr i8, ptr %.val149, i64 8
   %i.bp = load i8, ptr %.val149, align 8, !tbaa !61
   %i.bq = zext i8 %i.bp to i64
@@ -353,11 +354,13 @@ bb.n:                                             ; preds = %.lr.ph159, %_Py_New
 bb.o:                                             ; preds = %bb.n
   %i.bz = add nuw i32 %i.bx, 1
   store i32 %i.bz, ptr %i.bw, align 8, !tbaa !43
+  %.val149.pre = load ptr, ptr %i.e, align 8, !tbaa !42
   %.pre = load ptr, ptr %i.bv, align 8, !tbaa !59
   br label %_Py_NewRef.exit
 
 _Py_NewRef.exit:                                  ; preds = %bb.n, %bb.o
   %i.ca = phi ptr [ %i.bw, %bb.n ], [ %.pre, %bb.o ]
+  %.val149176 = phi ptr [ %.val149, %bb.n ], [ %.val149.pre, %bb.o ]
   %i.cb = getelementptr [24 x i8], ptr %i.bd, i64 %.0138157 ; 3 uses
   %i.cc = getelementptr i8, ptr %i.cb, i64 8
   store ptr %i.bw, ptr %i.cc, align 8, !tbaa !52
@@ -377,6 +380,7 @@ bb.p:                                             ; preds = %bb.l
 
 .lr.ph:                                           ; preds = %bb.p
   %i.ci = getelementptr i8, ptr %i.f, i64 8
+  %.val148.pre172 = load ptr, ptr %i.e, align 8, !tbaa !42
   br label %bb.q
 
 ._crit_edge:                                      ; preds = %_Py_NewRef.exit150, %bb.p
@@ -384,8 +388,8 @@ bb.p:                                             ; preds = %bb.l
   br label %bb.s
 
 bb.q:                                             ; preds = %.lr.ph, %_Py_NewRef.exit150
+  %.val148 = phi ptr [ %.val148.pre172, %.lr.ph ], [ %.val148173, %_Py_NewRef.exit150 ] ; 3 uses
   %.0137156 = phi i64 [ 0, %.lr.ph ], [ %i.cz, %_Py_NewRef.exit150 ] ; 3 uses
-  %.val148 = load ptr, ptr %i.e, align 8, !tbaa !42 ; 2 uses
   %i.cj = getelementptr i8, ptr %.val148, i64 8
   %i.ck = load i8, ptr %.val148, align 8, !tbaa !61
   %i.cl = zext i8 %i.ck to i64
@@ -402,9 +406,11 @@ bb.q:                                             ; preds = %.lr.ph, %_Py_NewRef
 bb.r:                                             ; preds = %bb.q
   %i.cu = add nuw i32 %i.cs, 1
   store i32 %i.cu, ptr %i.cr, align 8, !tbaa !43
+  %.val148.pre = load ptr, ptr %i.e, align 8, !tbaa !42
   br label %_Py_NewRef.exit150
 
 _Py_NewRef.exit150:                               ; preds = %bb.q, %bb.r
+  %.val148173 = phi ptr [ %.val148, %bb.q ], [ %.val148.pre, %bb.r ]
   %i.cv = getelementptr [16 x i8], ptr %i.bd, i64 %.0137156 ; 2 uses
   store ptr %i.cr, ptr %i.cv, align 8, !tbaa !59
   %i.cw = getelementptr [8 x i8], ptr %i.ci, i64 %i.cp

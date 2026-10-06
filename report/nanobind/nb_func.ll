@@ -205,7 +205,7 @@ bb.a:
   %i.j = load i64, ptr %i.e, align 8
   %.fr25 = freeze i64 %i.j
   %i.k = icmp ult i64 %.fr25, 4294967297
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 4 uses
   br i1 %i.k, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.g
@@ -222,14 +222,15 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.s = and i64 %i.r, %i.q
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.019.024.us, i64 8 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.019.024.us, i64 16 ; 2 uses
+  %.pre17.i.us = load ptr, ptr %i.l, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
   %i.v = phi i64 [ %i.r, %bb.b ], [ %i.aj, %bb.f ]
+  %4 = phi ptr [ %.pre17.i.us, %bb.b ], [ %5, %bb.f ] ; 2 uses
   %.013.i.us = phi i16 [ 0, %bb.b ], [ %i.ak, %bb.f ] ; 4 uses
   %.012.i.us = phi i32 [ %i.p, %bb.b ], [ %.1.i.us, %bb.f ] ; 3 uses
   %.0.i.us = phi i64 [ %i.s, %bb.b ], [ %i.am, %bb.f ] ; 2 uses
-  %4 = load ptr, ptr %i.l, align 8
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %4, i64 %.0.i.us ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 4 ; 4 uses
   %i.y = load i16, ptr %i.x, align 4              ; 2 uses
@@ -255,11 +256,13 @@ bb.e:                                             ; preds = %bb.d
   store i16 %.013.i.us, ptr %i.x, align 4
   %i.ai = load i32, ptr %i.w, align 8
   store i32 %.012.i.us, ptr %i.w, align 8
+  %.pre.i.us = load ptr, ptr %i.l, align 8
   %.pre30 = load i64, ptr %2, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
   %i.aj = phi i64 [ %.pre30, %bb.e ], [ %i.v, %bb.c ] ; 2 uses
+  %5 = phi ptr [ %.pre.i.us, %bb.e ], [ %4, %bb.c ]
   %.114.i.us = phi i16 [ %i.ah, %bb.e ], [ %.013.i.us, %bb.c ]
   %.1.i.us = phi i32 [ %i.ai, %bb.e ], [ %.012.i.us, %bb.c ]
   %i.ak = add i16 %.114.i.us, 1
@@ -361,15 +364,16 @@ bb.i:                                             ; preds = %.lr.ph.split
   %i.ci = and i64 %i.ch, %i.cg
   %i.cj = trunc i64 %i.cg to i32
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.019.024, i64 16 ; 2 uses
+  %.pre17.i = load ptr, ptr %i.l, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.m, %bb.i
   %i.cl = phi i64 [ %i.ch, %bb.i ], [ %i.cz, %bb.m ]
+  %6 = phi ptr [ %.pre17.i, %bb.i ], [ %7, %bb.m ] ; 2 uses
   %.013.i = phi i16 [ 0, %bb.i ], [ %i.da, %bb.m ] ; 4 uses
   %.012.i = phi i32 [ %i.cj, %bb.i ], [ %.1.i, %bb.m ] ; 3 uses
   %.0.i = phi i64 [ %i.ci, %bb.i ], [ %i.dc, %bb.m ] ; 2 uses
-  %5 = load ptr, ptr %i.l, align 8
-  %i.cm = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %.0.i ; 6 uses
+  %i.cm = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %.0.i ; 6 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 4 ; 4 uses
   %i.co = load i16, ptr %i.cn, align 4            ; 2 uses
   %i.cp = icmp sgt i16 %.013.i, %i.co
@@ -394,11 +398,13 @@ bb.l:                                             ; preds = %bb.k
   store i16 %.013.i, ptr %i.cn, align 4
   %i.cy = load i32, ptr %i.cm, align 8
   store i32 %.012.i, ptr %i.cm, align 8
+  %.pre.i = load ptr, ptr %i.l, align 8
   %.pre = load i64, ptr %2, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.j
   %i.cz = phi i64 [ %.pre, %bb.l ], [ %i.cl, %bb.j ] ; 2 uses
+  %7 = phi ptr [ %.pre.i, %bb.l ], [ %6, %bb.j ]
   %.114.i = phi i16 [ %i.cx, %bb.l ], [ %.013.i, %bb.j ]
   %.1.i = phi i32 [ %i.cy, %bb.l ], [ %.012.i, %bb.j ]
   %i.da = add i16 %.114.i, 1

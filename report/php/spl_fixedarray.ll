@@ -204,6 +204,7 @@ bb.c:                                             ; preds = %.critedge
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !16
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.n
+  %.pre53 = load ptr, ptr %i.f, align 8, !tbaa !38
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.e
@@ -228,10 +229,10 @@ bb.c:                                             ; preds = %.critedge
   br label %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %2 = phi ptr [ %i.ah, %bb.e ], [ %.pre53, %.lr.ph.preheader ]
   %.052 = phi i64 [ %i.ao, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %.04651 = phi i32 [ %i.ag, %bb.e ], [ %i.m, %.lr.ph.preheader ]
   %.04750 = phi ptr [ %i.af, %bb.e ], [ %i.s, %.lr.ph.preheader ] ; 3 uses
-  %2 = load ptr, ptr %i.f, align 8, !tbaa !38
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %.052 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -241,7 +242,7 @@ bb.c:                                             ; preds = %.critedge
   store i32 %i.ad, ptr %i.ae, align 8, !tbaa !16
   %i.af = getelementptr inbounds nuw i8, ptr %.04750, i64 16
   %i.ag = add i32 %.04651, 1                      ; 3 uses
-  %i.ah = load ptr, ptr %i.f, align 8, !tbaa !38
+  %i.ah = load ptr, ptr %i.f, align 8, !tbaa !38  ; 2 uses
   %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.ah, i64 %.052 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 9
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !16

@@ -204,12 +204,13 @@ bb.a:
   br i1 %.not15, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.val.i.a = load ptr, ptr %3, align 8, !noalias !8791, !nonnull !32, !align !33, !noundef !32 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.val.i.a, i64 4
+  %.val.i.a = load ptr, ptr %3, align 8, !noalias !8791
+  %.val.i.pre = load ptr, ptr %3, align 8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit
-  %i.e = phi ptr [ %i.n, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
+  %5 = phi ptr [ %7, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
+  %i.e = phi ptr [ %i.n, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit ], [ %.val.i.a, %.lr.ph.preheader ] ; 4 uses
   %i.f = phi ptr [ %i.m, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit ], [ %i.d, %.lr.ph.preheader ] ; 4 uses
   %.sroa.4.016 = phi ptr [ %.pn3.i, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit ], [ %2, %.lr.ph.preheader ] ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.013, ptr noundef nonnull align 4 dereferenceable(16) %i.f, i64 16, i1 false)
@@ -219,12 +220,13 @@ bb.a:
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 3 uses
   store ptr %i.g, ptr %i.b, align 8
-  %i.h = load i32, ptr %5, align 4, !noalias !8791, !noundef !32
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %i.h = load i32, ptr %6, align 4, !noalias !8791, !noundef !32
   %i.i = icmp eq i32 %.sroa.5.0.copyload, %i.h
   br i1 %i.i, label %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit
 
 _RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i: ; preds = %.lr.ph
-  %i.j = load i32, ptr %.val.i.a, align 4, !range !45, !noalias !8791, !noundef !32
+  %i.j = load i32, ptr %i.e, align 4, !range !45, !noalias !8791, !noundef !32
   %i.k = icmp eq i32 %.sroa.414.0.copyload, %i.j
   br i1 %i.k, label %bb.b, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit
 
@@ -241,9 +243,10 @@ bb.b:                                             ; preds = %_RNCNCNvMs3_NtNtNtC
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit: ; preds = %.lr.ph, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i, %bb.b
   %i.m = phi ptr [ %.pre17, %bb.b ], [ %i.g, %.lr.ph ], [ %i.g, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i ] ; 2 uses
-  %i.n = phi ptr [ %.pre, %bb.b ], [ %i.e, %.lr.ph ], [ %i.e, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i ] ; 2 uses
+  %7 = phi ptr [ %.pre, %bb.b ], [ %5, %.lr.ph ], [ %5, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i ] ; 2 uses
+  %i.n = phi ptr [ %.val.i.pre, %bb.b ], [ %i.e, %.lr.ph ], [ %i.e, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i ]
   %.pn3.i = phi ptr [ %i.l, %bb.b ], [ %.sroa.4.016, %.lr.ph ], [ %.sroa.4.016, %_RNCNCNvMs3_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_8Bindings20evaluate_known_casessP_00Bf_.exit.i ] ; 2 uses
-  %.not = icmp eq ptr %i.m, %i.n
+  %.not = icmp eq ptr %i.m, %7
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints15TypeVarSolutionINtNtNtCscdodAO9FK5_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB2i_zENCNCNvMs3_NtNtB19_4call4bindNtB3V_8Bindings20evaluate_known_casessP_00NCINvNtB2n_16in_place_collect24write_in_place_with_dropB15_E0E0B1b_.exit, %bb.a

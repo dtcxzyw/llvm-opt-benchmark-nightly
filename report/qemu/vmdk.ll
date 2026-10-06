@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.e = load ptr, ptr %i.d, align 8
+  %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
   %i.f = tail call zeroext i1 @qemu_in_main_thread() #13
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -221,12 +221,13 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 72
+  %.pre12 = load ptr, ptr %i.e, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.f
   %i.k = phi i32 [ %i.h, %.lr.ph ], [ %i.t, %bb.f ]
+  %1 = phi ptr [ %.pre12, %.lr.ph ], [ %2, %bb.f ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %1 = load ptr, ptr %i.e, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.m = load i8, ptr %i.l, align 1, !range !9, !noundef !10
   %i.n = trunc nuw i8 %i.m to i1
@@ -239,11 +240,13 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load ptr, ptr %i.j, align 8
   %i.s = getelementptr inbounds nuw [272 x i8], ptr %i.r, i64 %indvars.iv
   store ptr %i.q, ptr %i.s, align 8
+  %.pre = load ptr, ptr %i.e, align 8
   %.pre.a = load i32, ptr %i.g, align 4
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.t = phi i32 [ %i.k, %bb.d ], [ %.pre.a, %bb.e ] ; 2 uses
+  %2 = phi ptr [ %1, %bb.d ], [ %.pre, %bb.e ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = sext i32 %i.t to i64
   %i.v = icmp slt i64 %indvars.iv.next, %i.u
@@ -646,14 +649,15 @@ bb.a:
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 72
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16496 ; 2 uses
+  %.pre16 = load ptr, ptr %i.f, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.h = phi i32 [ %i.d, %.lr.ph ], [ %i.t, %bb.d ]
+  %2 = phi ptr [ %.pre16, %.lr.ph ], [ %3, %bb.d ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  %2 = load ptr, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw [272 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load i8, ptr %i.j, align 8, !range !9, !noundef !10
@@ -669,11 +673,13 @@ bb.c:                                             ; preds = %bb.b
   %i.r = tail call i64 @llvm.smax.i64(i64 %i.q, i64 %i.n)
   %i.s = trunc i64 %i.r to i32
   store i32 %i.s, ptr %i.g, align 8
+  %.pre = load ptr, ptr %i.f, align 8
   %.pre.a = load i32, ptr %i.c, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.t = phi i32 [ %i.h, %bb.b ], [ %.pre.a, %bb.c ] ; 2 uses
+  %3 = phi ptr [ %2, %bb.b ], [ %.pre, %bb.c ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = sext i32 %i.t to i64
   %i.v = icmp slt i64 %indvars.iv.next, %i.u

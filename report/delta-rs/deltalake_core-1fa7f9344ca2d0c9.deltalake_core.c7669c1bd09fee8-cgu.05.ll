@@ -205,9 +205,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -305,17 +306,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
   %i.ca = add nuw i64 %.sroa.7.049, 1
   %i.cb = load i16, ptr %.sroa.0.050, align 2, !noundef !4
   %i.cc = zext i16 %i.cb to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bj, align 8, !noundef !4
   %i.cd = icmp ugt i64 %2, %i.cc
   br i1 %i.cd, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.ce = icmp eq ptr %i.bz, %i.bh
   br i1 %i.ce, label %._crit_edge, label %bb.ad
 
@@ -356,6 +358,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cw = load i8, ptr %i.cv, align 1, !noundef !4
   %i.cx = and i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -758,9 +761,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -858,17 +862,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 4 ; 2 uses
   %i.ca = add nuw nsw i64 %.sroa.7.049, 1
   %i.cb = load i32, ptr %.sroa.0.050, align 4, !noundef !4
   %i.cc = zext i32 %i.cb to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bj, align 8, !noundef !4
   %i.cd = icmp ugt i64 %2, %i.cc
   br i1 %i.cd, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.ce = icmp eq ptr %i.bz, %i.bh
   br i1 %i.ce, label %._crit_edge, label %bb.ad
 
@@ -909,6 +914,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cw = load i8, ptr %i.cv, align 1, !noundef !4
   %i.cx = and i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -1311,9 +1317,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -1411,23 +1418,24 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 8 ; 2 uses
   %i.ca = add nuw nsw i64 %.sroa.7.049, 1
-  %2 = load i64, ptr %.sroa.0.050, align 8, !noundef !4 ; 2 uses
-  %i.cb = load i64, ptr %i.bj, align 8, !noundef !4
-  %i.cc = icmp ult i64 %2, %i.cb
+  %i.cb = load i64, ptr %.sroa.0.050, align 8, !noundef !4 ; 2 uses
+  %i.cc = icmp ult i64 %i.cb, %2
   br i1 %i.cc, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.cd = icmp eq ptr %i.bz, %i.bh
   br i1 %i.cd, label %._crit_edge, label %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.ce = load ptr, ptr %i.bk, align 8, !noundef !4
   %i.cf = load i64, ptr %i.bl, align 8, !noundef !4
-  %i.cg = add i64 %i.cf, %2                       ; 2 uses
+  %i.cg = add i64 %i.cf, %i.cb                    ; 2 uses
   %i.ch = lshr i64 %i.cg, 3
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !noundef !4
@@ -1461,6 +1469,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cv = load i8, ptr %i.cu, align 1, !noundef !4
   %i.cw = and i8 %i.cv, %i.ct
   store i8 %i.cw, ptr %i.cu, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -1863,9 +1872,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bd, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.be, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -1963,17 +1973,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bb, %.lr.ph ], [ %i.bu, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.ae ] ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 1 ; 2 uses
   %i.bv = add nuw i64 %.sroa.7.049, 1
   %i.bw = load i8, ptr %.sroa.0.050, align 1, !noundef !4
   %i.bx = sext i8 %i.bw to i64                    ; 2 uses
-  %2 = load i64, ptr %i.be, align 8, !noundef !4
   %i.by = icmp ugt i64 %2, %i.bx
   br i1 %i.by, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.bz = icmp eq ptr %i.bu, %i.bc
   br i1 %i.bz, label %._crit_edge, label %bb.ad
 
@@ -2014,6 +2025,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cr = load i8, ptr %i.cq, align 1, !noundef !4
   %i.cs = and i8 %i.cr, %i.cp
   store i8 %i.cs, ptr %i.cq, align 1
+  %.pre51 = load i64, ptr %i.be, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -2416,9 +2428,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -2516,17 +2529,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 2 ; 2 uses
   %i.ca = add nuw i64 %.sroa.7.049, 1
   %i.cb = load i16, ptr %.sroa.0.050, align 2, !noundef !4
   %i.cc = sext i16 %i.cb to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bj, align 8, !noundef !4
   %i.cd = icmp ugt i64 %2, %i.cc
   br i1 %i.cd, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.ce = icmp eq ptr %i.bz, %i.bh
   br i1 %i.ce, label %._crit_edge, label %bb.ad
 
@@ -2567,6 +2581,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cw = load i8, ptr %i.cv, align 1, !noundef !4
   %i.cx = and i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -2969,9 +2984,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -3069,17 +3085,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 4 ; 2 uses
   %i.ca = add nuw nsw i64 %.sroa.7.049, 1
   %i.cb = load i32, ptr %.sroa.0.050, align 4, !noundef !4
   %i.cc = sext i32 %i.cb to i64                   ; 2 uses
-  %2 = load i64, ptr %i.bj, align 8, !noundef !4
   %i.cd = icmp ugt i64 %2, %i.cc
   br i1 %i.cd, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.ce = icmp eq ptr %i.bz, %i.bh
   br i1 %i.ce, label %._crit_edge, label %bb.ad
 
@@ -3120,6 +3137,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cw = load i8, ptr %i.cv, align 1, !noundef !4
   %i.cx = and i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -3522,9 +3540,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bi, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.bj, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -3622,23 +3641,24 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bg, %.lr.ph ], [ %i.bz, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.ae ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 8 ; 2 uses
   %i.ca = add nuw nsw i64 %.sroa.7.049, 1
-  %2 = load i64, ptr %.sroa.0.050, align 8, !noundef !4 ; 2 uses
-  %i.cb = load i64, ptr %i.bj, align 8, !noundef !4
-  %i.cc = icmp ult i64 %2, %i.cb
+  %i.cb = load i64, ptr %.sroa.0.050, align 8, !noundef !4 ; 2 uses
+  %i.cc = icmp ult i64 %i.cb, %2
   br i1 %i.cc, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.cd = icmp eq ptr %i.bz, %i.bh
   br i1 %i.cd, label %._crit_edge, label %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.ce = load ptr, ptr %i.bk, align 8, !noundef !4
   %i.cf = load i64, ptr %i.bl, align 8, !noundef !4
-  %i.cg = add i64 %i.cf, %2                       ; 2 uses
+  %i.cg = add i64 %i.cf, %i.cb                    ; 2 uses
   %i.ch = lshr i64 %i.cg, 3
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !noundef !4
@@ -3672,6 +3692,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cv = load i8, ptr %i.cu, align 1, !noundef !4
   %i.cw = and i8 %i.cv, %i.ct
   store i8 %i.cw, ptr %i.cu, align 1
+  %.pre51 = load i64, ptr %i.bj, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l
@@ -4074,9 +4095,10 @@ bb.w:                                             ; preds = %_RNvMNtNtCs7xHNgVo2
   br i1 %i.bd, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %.pre52 = load i64, ptr %i.be, align 8
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.ae, %bb.w
@@ -4174,17 +4196,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs7xHNgVo2C7m_12arrow_buffer6
   br label %bb.k
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.ae
+  %2 = phi i64 [ %.pre52, %.lr.ph ], [ %3, %bb.ae ] ; 3 uses
   %.sroa.0.050 = phi ptr [ %i.bb, %.lr.ph ], [ %i.bu, %bb.ae ] ; 2 uses
   %.sroa.7.049 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.ae ] ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 1 ; 2 uses
   %i.bv = add nuw i64 %.sroa.7.049, 1
   %i.bw = load i8, ptr %.sroa.0.050, align 1, !noundef !4
   %i.bx = zext i8 %i.bw to i64                    ; 2 uses
-  %2 = load i64, ptr %i.be, align 8, !noundef !4
   %i.by = icmp ugt i64 %2, %i.bx
   br i1 %i.by, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit, %bb.ad, %bb.af
+  %3 = phi i64 [ %.pre51, %_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder7set_bit.exit ], [ %2, %bb.ad ], [ %2, %bb.af ]
   %i.bz = icmp eq ptr %i.bu, %i.bc
   br i1 %i.bz, label %._crit_edge, label %bb.ad
 
@@ -4225,6 +4248,7 @@ _RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer7builder7booleanNtB2_20BooleanBufferBuilder
   %i.cr = load i8, ptr %i.cq, align 1, !noundef !4
   %i.cs = and i8 %i.cr, %i.cp
   store i8 %i.cs, ptr %i.cq, align 1
+  %.pre51 = load i64, ptr %i.be, align 8
   br label %bb.ae
 
 bb.ai:                                            ; preds = %.body, %bb.l

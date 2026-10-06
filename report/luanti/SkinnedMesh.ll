@@ -205,7 +205,7 @@ bb.a:
   %1 = alloca %"class.std::vector.112", align 8   ; 17 uses
   %2 = alloca %"class.std::vector.117", align 8   ; 7 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !186    ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !81   ; 2 uses
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !53   ; 2 uses
@@ -511,7 +511,8 @@ bb.s:                                             ; preds = %.lr.ph129, %bb.s
 
 .lr.ph131:                                        ; preds = %_ZSt6fill_nIPPN5scene11SkinnedMesh6SJointEmS3_ET_S5_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc77
   %.0.i.i.i.i.i75.ph = phi ptr [ %i.db, %.noexc77 ], [ %i.de, %_ZSt6fill_nIPPN5scene11SkinnedMesh6SJointEmS3_ET_S5_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
-  %i.dn = load ptr, ptr %1, align 8, !tbaa !196
+  %3 = load ptr, ptr %1, align 8, !tbaa !196
+  %i.dn = load ptr, ptr %i.b, align 8, !tbaa !53
   br label %bb.u
 
 bb.t:                                             ; preds = %_ZNSt6vectorIPN5scene11SkinnedMesh6SJointESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
@@ -522,12 +523,12 @@ bb.t:                                             ; preds = %_ZNSt6vectorIPN5sce
   br label %_ZNSt6vectorItSaItEED2Ev.exit
 
 bb.u:                                             ; preds = %.lr.ph131, %bb.w
+  %4 = phi ptr [ %i.dn, %.lr.ph131 ], [ %5, %bb.w ] ; 2 uses
   %indvars.iv143 = phi i64 [ 0, %.lr.ph131 ], [ %indvars.iv.next144, %bb.w ] ; 4 uses
-  %i.dp = getelementptr inbounds nuw [2 x i8], ptr %i.dn, i64 %indvars.iv143
+  %i.dp = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv143
   %i.dq = load i16, ptr %i.dp, align 2, !tbaa !175
   %i.dr = zext i16 %i.dq to i64
-  %3 = load ptr, ptr %i.b, align 8, !tbaa !53
-  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.dr
+  %i.ds = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.dr
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !28 ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 390 ; 2 uses
   %i.dv = load i32, ptr %i.du, align 2            ; 2 uses
@@ -543,9 +544,11 @@ bb.v:                                             ; preds = %bb.u
   %.sroa.091.0.insert.ext = zext i16 %i.ea to i32
   %.sroa.091.0.insert.insert = or disjoint i32 %.sroa.091.0.insert.ext, 65536
   store i32 %.sroa.091.0.insert.insert, ptr %i.du, align 2
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !53
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
+  %5 = phi ptr [ %.pre, %bb.v ], [ %4, %bb.u ]
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %indvars.iv143
   store ptr %i.dt, ptr %i.eb, align 8, !tbaa !28
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dt, i64 388

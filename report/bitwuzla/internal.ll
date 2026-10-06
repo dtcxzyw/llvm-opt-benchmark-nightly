@@ -205,8 +205,9 @@ _ZN7CaDiCaL8Internal5fixedEi.exit.1:              ; preds = %bb.e, %_ZN7CaDiCaL8
   br i1 %.not5669, label %._crit_edge73, label %.lr.ph72
 
 .lr.ph72:                                         ; preds = %._crit_edge67
-  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 712
+  %.pre84 = load ptr, ptr %i.aw, align 8, !tbaa !228
   br label %bb.f
 
 .lr.ph66:                                         ; preds = %._crit_edge, %.lr.ph66
@@ -230,11 +231,11 @@ _ZN7CaDiCaL8Internal5fixedEi.exit.1:              ; preds = %bb.e, %_ZN7CaDiCaL8
   br i1 %.not5774, label %._crit_edge78, label %.lr.ph77
 
 bb.f:                                             ; preds = %.lr.ph72, %bb.i
+  %1 = phi ptr [ %.pre84, %.lr.ph72 ], [ %3, %bb.i ] ; 2 uses
   %.sroa.043.070 = phi i32 [ 1, %.lr.ph72 ], [ %i.bt, %bb.i ] ; 6 uses
-  %1 = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.043.070, i1 true)
-  %2 = load ptr, ptr %i.aw, align 8, !tbaa !228
-  %i.bg = zext nneg i32 %1 to i64                 ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 %i.bg
+  %2 = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.043.070, i1 true)
+  %i.bg = zext nneg i32 %2 to i64                 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 %i.bg
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !165 ; 2 uses
   %.not.i28 = icmp eq i8 %i.bi, 0
   br i1 %.not.i28, label %_ZN7CaDiCaL8Internal5fixedEi.exit33, label %bb.g
@@ -261,9 +262,11 @@ bb.h:                                             ; preds = %_ZN7CaDiCaL8Interna
   %i.bq = sub nsw i32 0, %.sroa.043.070
   %i.br = select i1 %i.bp, i32 %i.bq, i32 %.sroa.043.070
   %i.bs = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.9, i32 noundef %i.br) ; 0 uses
+  %.pre = load ptr, ptr %i.aw, align 8, !tbaa !228
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %_ZN7CaDiCaL8Internal5fixedEi.exit33
+  %3 = phi ptr [ %.pre, %bb.h ], [ %1, %_ZN7CaDiCaL8Internal5fixedEi.exit33 ]
   %i.bt = add i32 %.sroa.043.070, 1
   %.not56 = icmp eq i32 %.sroa.043.070, %i.av
   br i1 %.not56, label %._crit_edge73, label %bb.f

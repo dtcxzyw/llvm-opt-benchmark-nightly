@@ -30,13 +30,14 @@ bb.a:
   br i1 %.not20, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 4 uses
+  %.pre23 = load i64, ptr %i.a, align 8, !tbaa !9
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
+  %3 = phi i64 [ %.pre23, %.lr.ph ], [ %4, %bb.d ]
   %.01722 = phi ptr [ %0, %.lr.ph ], [ %i.e, %bb.d ] ; 2 uses
   %.01821 = phi i64 [ %1, %.lr.ph ], [ %i.f, %bb.d ] ; 2 uses
-  %3 = load i64, ptr %i.a, align 8, !tbaa !9
   %i.b = and i64 %3, 63                           ; 2 uses
   %i.c = sub nuw nsw i64 64, %i.b
   %spec.select = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %.01821) ; 4 uses
@@ -45,7 +46,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %.01722, i64 %spec.select
   %i.f = sub nuw i64 %.01821, %spec.select        ; 2 uses
   %i.g = load i64, ptr %i.a, align 8, !tbaa !9
-  %i.h = add i64 %spec.select, %i.g               ; 2 uses
+  %i.h = add i64 %spec.select, %i.g               ; 3 uses
   store i64 %i.h, ptr %i.a, align 8, !tbaa !9
   %i.i = and i64 %i.h, 63
   %i.j = icmp eq i64 %i.i, 0
@@ -53,9 +54,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call fastcc void @process(ptr noundef nonnull %2)
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !9
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %4 = phi i64 [ %.pre, %bb.c ], [ %i.h, %bb.b ]
   %.not = icmp eq i64 %i.f, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !11
 

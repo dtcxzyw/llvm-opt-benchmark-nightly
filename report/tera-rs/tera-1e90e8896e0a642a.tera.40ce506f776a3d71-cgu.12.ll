@@ -204,7 +204,7 @@ bb.ht:                                            ; preds = %bb.hr, %bb.hs
     #dbg_value(ptr %0, !14465, !DIExpression(), !14775)
     #dbg_value(ptr %0, !14469, !DIExpression(), !14778)
   %i.un = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15529 ; 4 uses
-  %i.uo = load i64, ptr %i.un, align 8, !dbg !15529, !noundef !1394 ; 4 uses
+  %i.uo = load i64, ptr %i.un, align 8, !dbg !15529, !noundef !1394 ; 8 uses
     #dbg_value(i64 %i.uo, !13244, !DIExpression(), !14779)
   %i.up = icmp ult i64 %i.uo, 164703072086692426, !dbg !15530
   call void @llvm.assume(i1 %i.up), !dbg !15531
@@ -301,36 +301,38 @@ bb.hw:                                            ; preds = %bb.hu
     #dbg_value(ptr %0, !14565, !DIExpression(), !14861)
     #dbg_value(ptr %0, !14569, !DIExpression(), !14864)
     #dbg_value(ptr %0, !14573, !DIExpression(), !14867)
-  %2 = load i64, ptr %i.un, align 8, !dbg !15553, !noundef !1394
     #dbg_value(ptr poison, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr poison, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-    #dbg_value(i64 %2, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
-    #dbg_value(i64 %2, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
-  %i.vi = icmp ult i64 %i.vh, %2, !dbg !15554
-  br i1 %i.vi, label %bb.hx, label %.prol.loopexit, !dbg !15554
+    #dbg_value(i64 %i.uo, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
+    #dbg_value(i64 %i.uo, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
+  %i.vi = icmp ult i64 %i.vh, %i.uo, !dbg !15553
+  br i1 %i.vi, label %bb.hx, label %.prol.loopexit, !dbg !15553
 
 bb.hx:                                            ; preds = %.prol.preheader
-  %i.vj = load ptr, ptr %i.vd, align 8, !dbg !15555, !nonnull !1394, !noundef !1394
+  %i.vj = load ptr, ptr %i.vd, align 8, !dbg !15554, !nonnull !1394, !noundef !1394
     #dbg_value(ptr %i.vj, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr %i.vj, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-  %i.vk = getelementptr inbounds nuw [56 x i8], ptr %i.vj, i64 %i.vh, !dbg !15556 ; 2 uses
-  %i.vl = load i8, ptr %i.vk, align 8, !dbg !15557, !range !3235, !noundef !1394
-  %.off.prol = add nsw i8 %i.vl, -27, !dbg !15558
-  %switch.prol = icmp ult i8 %.off.prol, 2, !dbg !15558
-  br i1 %switch.prol, label %bb.hy, label %.prol.loopexit, !dbg !15558
+  %i.vk = getelementptr inbounds nuw [56 x i8], ptr %i.vj, i64 %i.vh, !dbg !15555 ; 2 uses
+  %i.vl = load i8, ptr %i.vk, align 8, !dbg !15556, !range !3235, !noundef !1394
+  %.off.prol = add nsw i8 %i.vl, -27, !dbg !15557
+  %switch.prol = icmp ult i8 %.off.prol, 2, !dbg !15557
+  br i1 %switch.prol, label %bb.hy, label %.prol.loopexit, !dbg !15557
 
 bb.hy:                                            ; preds = %bb.hx
   %.sroa.059.0.prol = getelementptr inbounds nuw i8, ptr %i.vk, i64 8, !dbg !14850
     #dbg_value(ptr %.sroa.059.0.prol, !13248, !DIExpression(), !14874)
-  store i64 %i.uo, ptr %.sroa.059.0.prol, align 8, !dbg !15559
+  store i64 %i.uo, ptr %.sroa.059.0.prol, align 8, !dbg !15558
+  %.pre.prol = load i64, ptr %i.un, align 8, !dbg !15559
   br label %.prol.loopexit, !dbg !15560
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.hx, %bb.hy, %.lr.ph
+  %.unr = phi i64 [ %i.uo, %.lr.ph ], [ %i.uo, %bb.hx ], [ %i.uo, %.prol.preheader ], [ %.pre.prol, %bb.hy ]
   %.unr.a = phi ptr [ %.sroa.4115.sroa.0.0.copyload, %.lr.ph ], [ %i.vg, %bb.hy ], [ %i.vg, %bb.hx ], [ %i.vg, %.prol.preheader ]
   %i.vm = icmp eq i64 %i.ve, 0, !dbg !15549
   br i1 %i.vm, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterjEECs5yXxDE1DkoT_4tera.exit657, label %.lr.ph.new, !dbg !15549
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %bb.id
+  %2 = phi i64 [ %4, %bb.id ], [ %.unr, %.prol.loopexit ], !dbg !15559 ; 3 uses
   %i.vn = phi ptr [ %i.vu, %bb.id ], [ %.unr.a, %.prol.loopexit ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !14836), !dbg !13520
     #dbg_value(ptr %i.vn, !14833, !DIExpression(), !13148)
@@ -339,22 +341,21 @@ bb.hy:                                            ; preds = %bb.hx
     #dbg_value(ptr %i.vn, !14843, !DIExpression(), !13155)
   %i.vo = getelementptr inbounds nuw i8, ptr %i.vn, i64 8, !dbg !15550 ; 2 uses
   store ptr %i.vo, ptr %.sroa.450.0..sroa_idx, align 8, !dbg !15551, !alias.scope !14836
-  %3 = load i64, ptr %i.vn, align 8, !dbg !15552, !noalias !14836, !noundef !1394 ; 2 uses
-    #dbg_value(i64 %3, !13247, !DIExpression(), !14850)
-    #dbg_value(i64 %3, !14533, !DIExpression(), !14852)
-    #dbg_value(i64 %3, !14538, !DIExpression(), !14855)
-    #dbg_value(i64 %3, !14544, !DIExpression(), !14858)
+  %i.vp = load i64, ptr %i.vn, align 8, !dbg !15552, !noalias !14836, !noundef !1394 ; 2 uses
+    #dbg_value(i64 %i.vp, !13247, !DIExpression(), !14850)
+    #dbg_value(i64 %i.vp, !14533, !DIExpression(), !14852)
+    #dbg_value(i64 %i.vp, !14538, !DIExpression(), !14855)
+    #dbg_value(i64 %i.vp, !14544, !DIExpression(), !14858)
     #dbg_value(ptr %0, !14534, !DIExpression(), !14859)
     #dbg_value(ptr %0, !14565, !DIExpression(), !14861)
     #dbg_value(ptr %0, !14569, !DIExpression(), !14864)
     #dbg_value(ptr %0, !14573, !DIExpression(), !14867)
-  %i.vp = load i64, ptr %i.un, align 8, !dbg !15553, !noundef !1394
     #dbg_value(ptr poison, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr poison, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-    #dbg_value(i64 %i.vp, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
-    #dbg_value(i64 %i.vp, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
-  %i.vq = icmp ult i64 %3, %i.vp, !dbg !15554
-  br i1 %i.vq, label %bb.hz, label %bb.ia, !dbg !15554
+    #dbg_value(i64 %2, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
+    #dbg_value(i64 %2, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
+  %i.vq = icmp ult i64 %i.vp, %2, !dbg !15553
+  br i1 %i.vq, label %bb.hz, label %bb.ia, !dbg !15553
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterjEECs5yXxDE1DkoT_4tera.exit657: ; preds = %.prol.loopexit, %bb.id, %bb.hw
     #dbg_value(ptr %i.q, !14875, !DIExpression(), !13160)
@@ -364,16 +365,17 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_ite
   br label %bb.q, !dbg !15564
 
 bb.hz:                                            ; preds = %.lr.ph.new
-  %i.vr = load ptr, ptr %i.vd, align 8, !dbg !15555, !nonnull !1394, !noundef !1394
+  %i.vr = load ptr, ptr %i.vd, align 8, !dbg !15554, !nonnull !1394, !noundef !1394
     #dbg_value(ptr %i.vr, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr %i.vr, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-  %i.vs = getelementptr inbounds nuw [56 x i8], ptr %i.vr, i64 %3, !dbg !15556 ; 2 uses
-  %i.vt = load i8, ptr %i.vs, align 8, !dbg !15557, !range !3235, !noundef !1394
-  %.off = add nsw i8 %i.vt, -27, !dbg !15558
-  %switch = icmp ult i8 %.off, 2, !dbg !15558
-  br i1 %switch, label %bb.ie, label %bb.ia, !dbg !15558
+  %i.vs = getelementptr inbounds nuw [56 x i8], ptr %i.vr, i64 %i.vp, !dbg !15555 ; 2 uses
+  %i.vt = load i8, ptr %i.vs, align 8, !dbg !15556, !range !3235, !noundef !1394
+  %.off = add nsw i8 %i.vt, -27, !dbg !15557
+  %switch = icmp ult i8 %.off, 2, !dbg !15557
+  br i1 %switch, label %bb.ie, label %bb.ia, !dbg !15557
 
 bb.ia:                                            ; preds = %bb.hz, %.lr.ph.new, %bb.ie
+  %3 = phi i64 [ %2, %bb.hz ], [ %2, %.lr.ph.new ], [ %.pre, %bb.ie ] ; 3 uses
     #dbg_value(ptr %i.q, !14832, !DIExpression(), !13161)
     #dbg_value(i64 1, !14841, !DIExpression(), !13152)
     #dbg_value(ptr %i.q, !14826, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !13162)
@@ -394,31 +396,32 @@ bb.ia:                                            ; preds = %bb.hz, %.lr.ph.new,
     #dbg_value(ptr %0, !14565, !DIExpression(), !14861)
     #dbg_value(ptr %0, !14569, !DIExpression(), !14864)
     #dbg_value(ptr %0, !14573, !DIExpression(), !14867)
-  %4 = load i64, ptr %i.un, align 8, !dbg !15553, !noundef !1394
     #dbg_value(ptr poison, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr poison, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-    #dbg_value(i64 %4, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
-    #dbg_value(i64 %4, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
-  %i.vw = icmp ult i64 %i.vv, %4, !dbg !15554
-  br i1 %i.vw, label %bb.ib, label %bb.id, !dbg !15554
+    #dbg_value(i64 %3, !14539, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14855)
+    #dbg_value(i64 %3, !14545, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14858)
+  %i.vw = icmp ult i64 %i.vv, %3, !dbg !15553
+  br i1 %i.vw, label %bb.ib, label %bb.id, !dbg !15553
 
 bb.ib:                                            ; preds = %bb.ia
-  %i.vx = load ptr, ptr %i.vd, align 8, !dbg !15555, !nonnull !1394, !noundef !1394
+  %i.vx = load ptr, ptr %i.vd, align 8, !dbg !15554, !nonnull !1394, !noundef !1394
     #dbg_value(ptr %i.vx, !14539, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14855)
     #dbg_value(ptr %i.vx, !14545, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14858)
-  %i.vy = getelementptr inbounds nuw [56 x i8], ptr %i.vx, i64 %i.vv, !dbg !15556 ; 2 uses
-  %i.vz = load i8, ptr %i.vy, align 8, !dbg !15557, !range !3235, !noundef !1394
-  %.off.1 = add nsw i8 %i.vz, -27, !dbg !15558
-  %switch.1 = icmp ult i8 %.off.1, 2, !dbg !15558
-  br i1 %switch.1, label %bb.ic, label %bb.id, !dbg !15558
+  %i.vy = getelementptr inbounds nuw [56 x i8], ptr %i.vx, i64 %i.vv, !dbg !15555 ; 2 uses
+  %i.vz = load i8, ptr %i.vy, align 8, !dbg !15556, !range !3235, !noundef !1394
+  %.off.1 = add nsw i8 %i.vz, -27, !dbg !15557
+  %switch.1 = icmp ult i8 %.off.1, 2, !dbg !15557
+  br i1 %switch.1, label %bb.ic, label %bb.id, !dbg !15557
 
 bb.ic:                                            ; preds = %bb.ib
   %.sroa.059.0.1 = getelementptr inbounds nuw i8, ptr %i.vy, i64 8, !dbg !14850
     #dbg_value(ptr %.sroa.059.0.1, !13248, !DIExpression(), !14874)
-  store i64 %i.uo, ptr %.sroa.059.0.1, align 8, !dbg !15559
+  store i64 %i.uo, ptr %.sroa.059.0.1, align 8, !dbg !15558
+  %.pre.1 = load i64, ptr %i.un, align 8, !dbg !15559
   br label %bb.id, !dbg !15560
 
 bb.id:                                            ; preds = %bb.ic, %bb.ib, %bb.ia
+  %4 = phi i64 [ %3, %bb.ib ], [ %3, %bb.ia ], [ %.pre.1, %bb.ic ]
     #dbg_value(ptr %i.q, !14832, !DIExpression(), !13161)
     #dbg_value(i64 1, !14841, !DIExpression(), !13152)
     #dbg_value(ptr %i.q, !14826, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !13162)
@@ -429,7 +432,8 @@ bb.id:                                            ; preds = %bb.ic, %bb.ib, %bb.
 bb.ie:                                            ; preds = %bb.hz
   %.sroa.059.0 = getelementptr inbounds nuw i8, ptr %i.vs, i64 8, !dbg !14850
     #dbg_value(ptr %.sroa.059.0, !13248, !DIExpression(), !14874)
-  store i64 %i.uo, ptr %.sroa.059.0, align 8, !dbg !15559
+  store i64 %i.uo, ptr %.sroa.059.0, align 8, !dbg !15558
+  %.pre = load i64, ptr %i.un, align 8, !dbg !15559
   br label %bb.ia, !dbg !15560
 
 bb.if:                                            ; preds = %bb.hl
@@ -832,13 +836,13 @@ begin_hunk_1_@llvm.memmove.p0.p0.i64
 !15550 = !DILocation(line: 627, column: 28, scope: !13150, inlinedAt: !13151)
 !15551 = !DILocation(line: 284, column: 13, scope: !13141, inlinedAt: !13144)
 !15552 = !DILocation(line: 1758, column: 9, scope: !13156, inlinedAt: !13157)
-!15553 = !DILocation(line: 1912, column: 92, scope: !12940, inlinedAt: !14863)
-!15554 = !DILocation(line: 195, column: 12, scope: !12938, inlinedAt: !14857)
-!15555 = !DILocation(line: 627, column: 9, scope: !12942, inlinedAt: !14873)
-!15556 = !DILocation(line: 197, column: 27, scope: !12938, inlinedAt: !14857)
-!15557 = !DILocation(line: 394, column: 39, scope: !12351)
-!15558 = !DILocation(line: 394, column: 33, scope: !12351)
-!15559 = !DILocation(line: 397, column: 41, scope: !12350)
+!15553 = !DILocation(line: 195, column: 12, scope: !12938, inlinedAt: !14857)
+!15554 = !DILocation(line: 627, column: 9, scope: !12942, inlinedAt: !14873)
+!15555 = !DILocation(line: 197, column: 27, scope: !12938, inlinedAt: !14857)
+!15556 = !DILocation(line: 394, column: 39, scope: !12351)
+!15557 = !DILocation(line: 394, column: 33, scope: !12351)
+!15558 = !DILocation(line: 397, column: 41, scope: !12350)
+!15559 = !DILocation(line: 1912, column: 92, scope: !12940, inlinedAt: !14863)
 !15560 = !DILocation(line: 398, column: 37, scope: !12351)
 !15561 = !DILocation(line: 848, column: 1, scope: !13158, inlinedAt: !13159)
 !15562 = !DILocation(line: 401, column: 29, scope: !12355)

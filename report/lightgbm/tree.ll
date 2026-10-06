@@ -205,7 +205,7 @@ bb.a:
   %i.c = ptrtoaddr ptr %i.b to i64
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8, !tbaa !275 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !359 ; 4 uses
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !359 ; 5 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !359 ; 2 uses
   %i.d = icmp ugt i64 %1, 3
@@ -445,9 +445,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %vec.epilog.middle.block, %middle.block
   %i.dm = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bv
   %i.dn = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %.pre49 = load i64, ptr %.sroa.5.0.copyload, align 8, !tbaa !276
   br label %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit
 
 _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit: ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader, %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38
+  %3 = phi i64 [ %4, %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38 ], [ %.pre49, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ] ; 2 uses
   %.3 = phi ptr [ %.4, %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38 ], [ %.2, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ] ; 2 uses
   %.0 = phi ptr [ %.1, %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38 ], [ %i.b, %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit.preheader ] ; 7 uses
   %i.do = load i8, ptr %.0, align 1, !tbaa !202
@@ -471,12 +473,11 @@ _ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !88
   %i.eh = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v116detail11utf8_decodeEPKcPjPi.shifte, i64 %i.du
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !88
-  %3 = load i64, ptr %.sroa.5.0.copyload, align 8, !tbaa !276 ; 2 uses
   %.not.i8.not.i34 = icmp ne i64 %3, 0            ; 4 uses
   br i1 %.not.i8.not.i34, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_ZN3fmt3v116detail4copyIcPKcPcTnNSt9enable_ifIXntsr23is_back_insert_iteratorIT1_EE5valueEiE4typeELi0EEES7_T0_SA_S7_.exit
-  %i.ej = add i64 %3, -1
+  %i.ej = add i64 %3, -1                          ; 2 uses
   store i64 %i.ej, ptr %.sroa.5.0.copyload, align 8, !tbaa !276
   br label %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38
 
@@ -484,9 +485,11 @@ bb.h:                                             ; preds = %_ZN3fmt3v116detail4
   %i.ek = ptrtoint ptr %.3 to i64
   %i.el = sub i64 %i.ek, %i.dn
   store i64 %i.el, ptr %.sroa.7.0.copyload, align 8, !tbaa !276
+  %.pre = load i64, ptr %.sroa.5.0.copyload, align 8, !tbaa !276
   br label %_ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38
 
 _ZZN3fmt3v116detail18for_each_codepointIZNS1_16code_point_indexENS0_17basic_string_viewIcEEmEUljS4_E_EEvS4_T_ENKUlPKcS8_E_clES8_S8_.exit38: ; preds = %bb.g, %bb.h
+  %4 = phi i64 [ %i.ej, %bb.g ], [ %.pre, %bb.h ]
   %i.em = and i8 %i.ea, 63
   %i.en = zext nneg i8 %i.em to i32
   %i.eo = shl nuw nsw i32 %i.en, 6

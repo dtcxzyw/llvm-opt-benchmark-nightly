@@ -204,7 +204,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.a, align 8, !dbg !23784, !alias.scope !23731
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23784
   %.val1.i = load i64, ptr %i.b, align 8, !dbg !23784, !alias.scope !23731
-  %.val2.i = load ptr, ptr %0, align 8, !dbg !23784, !alias.scope !23731, !nonnull !2755, !align !7214, !noundef !2755 ; 9 uses
+  %.val2.i = load ptr, ptr %0, align 8, !dbg !23784, !alias.scope !23731, !nonnull !2755, !align !7214, !noundef !2755 ; 10 uses
     #dbg_value(ptr poison, !23734, !DIExpression(), !23675)
     #dbg_value(ptr poison, !23737, !DIExpression(), !23676)
     #dbg_value(ptr poison, !23740, !DIExpression(), !23677)
@@ -231,31 +231,35 @@ bb.a:
 .lr.ph.i.i:                                       ; preds = %bb.a
   %.not.i.i = icmp eq ptr %.0.val.fr.i.i, null
   %i.e = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24 ; 4 uses
-  br i1 %.not.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
+  br i1 %.not.i.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.i.i
 
-.lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %bb.c
-  %.sroa.0.03.us.i.i = phi i64 [ %1, %bb.c ], [ 0, %.lr.ph.i.i ] ; 4 uses
-    #dbg_value(i64 %.sroa.0.03.us.i.i, !23738, !DIExpression(), !23696)
+.lr.ph.split.us.preheader.i.i:                    ; preds = %.lr.ph.i.i
+  %.pre7.i.i = load ptr, ptr %.val2.i, align 8, !dbg !23788, !noalias !23731
+  br label %.lr.ph.split.us.i.i, !dbg !23789
+
+.lr.ph.split.us.i.i:                              ; preds = %bb.c, %.lr.ph.split.us.preheader.i.i
+  %1 = phi ptr [ %3, %bb.c ], [ %.pre7.i.i, %.lr.ph.split.us.preheader.i.i ], !dbg !23788 ; 2 uses
+  %.sroa.0.03.us.i.i = phi i64 [ %2, %bb.c ], [ 0, %.lr.ph.split.us.preheader.i.i ] ; 4 uses
+    #dbg_value(i64 %.sroa.0.03.us.i.i, !23738, !DIExpression(), !23698)
     #dbg_value(i64 %.sroa.0.03.us.i.i, !23756, !DIExpression(), !23681)
     #dbg_value(i64 %.sroa.0.03.us.i.i, !23759, !DIExpression(), !23684)
-  %1 = add nuw i64 %.sroa.0.03.us.i.i, 1, !dbg !23788
-    #dbg_value(i64 %1, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
-    #dbg_value(i64 %.sroa.0.03.us.i.i, !23751, !DIExpression(), !23697)
-    #dbg_value(i64 %.sroa.0.03.us.i.i, !23771, !DIExpression(), !23700)
+  %2 = add nuw i64 %.sroa.0.03.us.i.i, 1, !dbg !23790
+    #dbg_value(i64 %2, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
+    #dbg_value(i64 %.sroa.0.03.us.i.i, !23751, !DIExpression(), !23699)
+    #dbg_value(i64 %.sroa.0.03.us.i.i, !23772, !DIExpression(), !23700)
     #dbg_value(i64 %.sroa.0.03.us.i.i, !23766, !DIExpression(), !23690)
     #dbg_value(i64 %.sroa.0.03.us.i.i, !23774, !DIExpression(), !23703)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23700)
-  %2 = load ptr, ptr %.val2.i, align 8, !dbg !23789, !noalias !23731, !nonnull !2755, !noundef !2755
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.0.03.us.i.i, !dbg !23790 ; 2 uses
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23700)
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.03.us.i.i, !dbg !23791 ; 2 uses
     #dbg_value(ptr %i.f, !23762, !DIExpression(), !23687)
-  %i.g = load i8, ptr %i.f, align 1, !dbg !23791, !noalias !23731, !noundef !2755
-  %i.h = icmp eq i8 %i.g, -128, !dbg !23791
-  br i1 %i.h, label %bb.b, label %bb.c, !dbg !23792
+  %i.g = load i8, ptr %i.f, align 1, !dbg !23792, !noalias !23731, !noundef !2755
+  %i.h = icmp eq i8 %i.g, -128, !dbg !23792
+  br i1 %i.h, label %bb.b, label %bb.c, !dbg !23789
 
 bb.b:                                             ; preds = %.lr.ph.split.us.i.i
     #dbg_value(ptr %.val2.i, !23765, !DIExpression(), !23690)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23707)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23709)
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23707)
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23709)
   %i.i = add i64 %.sroa.0.03.us.i.i, -16, !dbg !23793
   %i.j = load i64, ptr %i.c, align 8, !dbg !23794, !noalias !23731, !noundef !2755
   %i.k = and i64 %i.j, %i.i, !dbg !23795
@@ -267,10 +271,12 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i.i
   %i.o = load i64, ptr %i.e, align 8, !dbg !23800, !noalias !23731, !noundef !2755
   %i.p = add i64 %i.o, -1, !dbg !23800
   store i64 %i.p, ptr %i.e, align 8, !dbg !23800, !noalias !23731
+  %.pre.i.i = load ptr, ptr %.val2.i, align 8, !dbg !23788, !noalias !23731
   br label %bb.c, !dbg !23801
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.i.i
-    #dbg_value(i64 %1, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
+  %3 = phi ptr [ %.pre.i.i, %bb.b ], [ %1, %.lr.ph.split.us.i.i ]
+    #dbg_value(i64 %2, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
     #dbg_value(ptr undef, !23740, !DIExpression(), !23677)
     #dbg_value(ptr undef, !23737, !DIExpression(), !23676)
     #dbg_value(ptr undef, !23734, !DIExpression(), !23675)
@@ -280,22 +286,22 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.split
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %bb.d
   %.sroa.0.03.i.i = phi i64 [ %i.q, %bb.d ], [ 0, %.lr.ph.i.i ] ; 5 uses
-    #dbg_value(i64 %.sroa.0.03.i.i, !23738, !DIExpression(), !23696)
+    #dbg_value(i64 %.sroa.0.03.i.i, !23738, !DIExpression(), !23698)
     #dbg_value(i64 %.sroa.0.03.i.i, !23756, !DIExpression(), !23681)
     #dbg_value(i64 %.sroa.0.03.i.i, !23759, !DIExpression(), !23684)
-  %i.q = add nuw i64 %.sroa.0.03.i.i, 1, !dbg !23788
+  %i.q = add nuw i64 %.sroa.0.03.i.i, 1, !dbg !23790
     #dbg_value(i64 %i.q, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
-    #dbg_value(i64 %.sroa.0.03.i.i, !23751, !DIExpression(), !23697)
-    #dbg_value(i64 %.sroa.0.03.i.i, !23771, !DIExpression(), !23700)
+    #dbg_value(i64 %.sroa.0.03.i.i, !23751, !DIExpression(), !23699)
+    #dbg_value(i64 %.sroa.0.03.i.i, !23772, !DIExpression(), !23700)
     #dbg_value(i64 %.sroa.0.03.i.i, !23766, !DIExpression(), !23690)
     #dbg_value(i64 %.sroa.0.03.i.i, !23774, !DIExpression(), !23703)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23700)
-  %i.r = load ptr, ptr %.val2.i, align 8, !dbg !23789, !noalias !23731, !nonnull !2755, !noundef !2755
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %.sroa.0.03.i.i, !dbg !23790 ; 2 uses
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23700)
+  %i.r = load ptr, ptr %.val2.i, align 8, !dbg !23788, !noalias !23731, !nonnull !2755, !noundef !2755
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %.sroa.0.03.i.i, !dbg !23791 ; 2 uses
     #dbg_value(ptr %i.s, !23762, !DIExpression(), !23687)
-  %i.t = load i8, ptr %i.s, align 1, !dbg !23791, !noalias !23731, !noundef !2755
-  %i.u = icmp eq i8 %i.t, -128, !dbg !23791
-  br i1 %i.u, label %bb.e, label %bb.d, !dbg !23792
+  %i.t = load i8, ptr %i.s, align 1, !dbg !23792, !noalias !23731, !noundef !2755
+  %i.u = icmp eq i8 %i.t, -128, !dbg !23792
+  br i1 %i.u, label %bb.e, label %bb.d, !dbg !23789
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.split.i.i
     #dbg_value(i64 %i.q, !23750, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23694)
@@ -307,10 +313,10 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.split
   br i1 %exitcond.not.i.i, label %_RNvXs1_NtCsjqcU1oJFKXj_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer.exit, label %.lr.ph.split.i.i, !dbg !23787
 
 bb.e:                                             ; preds = %.lr.ph.split.i.i
-  %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1, !dbg !23788
+  %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1, !dbg !23790
     #dbg_value(ptr %.val2.i, !23765, !DIExpression(), !23690)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23707)
-    #dbg_value(ptr %.val2.i, !23772, !DIExpression(), !23709)
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23707)
+    #dbg_value(ptr %.val2.i, !23771, !DIExpression(), !23709)
   %i.v = add i64 %.sroa.0.03.i.i, -16, !dbg !23793
   %i.w = load i64, ptr %i.c, align 8, !dbg !23794, !noalias !23731, !noundef !2755
   %i.x = and i64 %i.w, %i.v, !dbg !23795
@@ -713,20 +719,20 @@ begin_hunk_1_@llvm.umin.i32
 !23693 = distinct !DILocation(line: 0, scope: !23691, inlinedAt: !23692)
 !23694 = distinct !DILocation(line: 0, scope: !23670, inlinedAt: !23671)
 !23695 = distinct !DILocation(line: 2192, column: 26, scope: !23663, inlinedAt: !23674)
-!23696 = distinct !DILocation(line: 0, scope: !23664, inlinedAt: !23673)
-!23697 = distinct !DILocation(line: 0, scope: !23668, inlinedAt: !23671)
-!23698 = distinct !DISubprogram(name: "ctrl", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner4ctrl", scope: !176, file: !6136, line: 2621, type: !6231, scopeLine: 2621, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !366, templateParams: !2755, declaration: !6232, retainedNodes: !23773)
-!23699 = distinct !DILocation(line: 3004, column: 31, scope: !23668, inlinedAt: !23671)
-!23700 = distinct !DILocation(line: 0, scope: !23698, inlinedAt: !23699)
+!23696 = distinct !DISubprogram(name: "ctrl", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner4ctrl", scope: !176, file: !6136, line: 2621, type: !6231, scopeLine: 2621, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !366, templateParams: !2755, declaration: !6232, retainedNodes: !23773)
+!23697 = distinct !DILocation(line: 3004, column: 31, scope: !23668, inlinedAt: !23671)
+!23698 = distinct !DILocation(line: 0, scope: !23664, inlinedAt: !23673)
+!23699 = distinct !DILocation(line: 0, scope: !23668, inlinedAt: !23671)
+!23700 = distinct !DILocation(line: 0, scope: !23696, inlinedAt: !23697)
 !23701 = distinct !DISubprogram(name: "bucket_ptr", linkageName: "_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner10bucket_ptr", scope: !176, file: !6136, line: 2393, type: !6603, scopeLine: 2393, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !366, templateParams: !2755, declaration: !6604, retainedNodes: !23777)
 !23702 = distinct !DILocation(line: 3007, column: 40, scope: !23667, inlinedAt: !23671)
 !23703 = distinct !DILocation(line: 0, scope: !23701, inlinedAt: !23702)
 !23704 = distinct !DISubprogram(name: "add<u8>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOh3addCsaTqK2fWTXJW_11qlog_dancer", scope: !6258, file: !6256, line: 937, type: !6260, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !366, templateParams: !2920)
-!23705 = distinct !DILocation(line: 2624, column: 37, scope: !23698, inlinedAt: !23699)
+!23705 = distinct !DILocation(line: 2624, column: 37, scope: !23696, inlinedAt: !23697)
 !23706 = distinct !DILocation(line: 2593, column: 19, scope: !23688, inlinedAt: !23689)
-!23707 = distinct !DILocation(line: 0, scope: !23698, inlinedAt: !23706)
+!23707 = distinct !DILocation(line: 0, scope: !23696, inlinedAt: !23706)
 !23708 = distinct !DILocation(line: 2594, column: 19, scope: !23688, inlinedAt: !23689)
-!23709 = distinct !DILocation(line: 0, scope: !23698, inlinedAt: !23708)
+!23709 = distinct !DILocation(line: 0, scope: !23696, inlinedAt: !23708)
 !23710 = distinct !DISubprogram(name: "wrapping_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj12wrapping_sub", scope: !6547, file: !6545, line: 2718, type: !6563, scopeLine: 2718, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !366, templateParams: !2755)
 !23711 = distinct !DILocation(line: 2589, column: 30, scope: !23688, inlinedAt: !23689)
 !23712 = distinct !DILocation(line: 2624, column: 37, scope: !23778, inlinedAt: !23708)
@@ -786,14 +792,14 @@ begin_hunk_1_@llvm.umin.i32
 !23767 = !{!23765, !23766, !23764}
 !23768 = !DILocalVariable(name: "self", arg: 1, scope: !23691, file: !6136, line: 2634, type: !6463)
 !23769 = !{!23768}
-!23771 = !DILocalVariable(name: "index", arg: 2, scope: !23698, file: !6136, line: 2621, type: !2749)
-!23772 = !DILocalVariable(name: "self", arg: 1, scope: !23698, file: !6136, line: 2621, type: !6463)
-!23773 = !{!23772, !23771}
+!23771 = !DILocalVariable(name: "self", arg: 1, scope: !23696, file: !6136, line: 2621, type: !6463)
+!23772 = !DILocalVariable(name: "index", arg: 2, scope: !23696, file: !6136, line: 2621, type: !2749)
+!23773 = !{!23771, !23772}
 !23774 = !DILocalVariable(name: "index", arg: 2, scope: !23701, file: !6136, line: 2393, type: !2749)
 !23775 = !DILocalVariable(name: "self", arg: 1, scope: !23701, file: !6136, line: 2393, type: !6463)
 !23776 = !DILocalVariable(name: "size_of", arg: 3, scope: !23701, file: !6136, line: 2393, type: !2749)
 !23777 = !{!23775, !23774, !23776}
-!23778 = !DILexicalBlockFile(scope: !23698, file: !6136, discriminator: 4)
+!23778 = !DILexicalBlockFile(scope: !23696, file: !6136, discriminator: 4)
 !23779 = !DILocalVariable(name: "self", arg: 1, scope: !23714, file: !6136, line: 2438, type: !6463)
 !23780 = !{!23779}
 !23781 = !DILocalVariable(name: "bucket_mask", arg: 1, scope: !23720, file: !6136, line: 182, type: !2749)
@@ -803,16 +809,16 @@ begin_hunk_1_@llvm.umin.i32
 !23785 = !DILocation(line: 2635, column: 9, scope: !23691, inlinedAt: !23692)
 !23786 = !DILocation(line: 2192, column: 50, scope: !23663, inlinedAt: !23674)
 !23787 = !DILocation(line: 1100, column: 12, scope: !23665, inlinedAt: !23673)
-!23788 = !DILocation(line: 1043, column: 17, scope: !23682, inlinedAt: !23683)
-!23789 = !DILocation(line: 2624, column: 18, scope: !23698, inlinedAt: !23699)
-!23790 = !DILocation(line: 971, column: 18, scope: !23704, inlinedAt: !23705)
-!23791 = !DILocation(line: 4, column: 23, scope: !23685, inlinedAt: !23686)
-!23792 = !DILocation(line: 3004, column: 24, scope: !23668, inlinedAt: !23671)
+!23788 = !DILocation(line: 2624, column: 18, scope: !23696, inlinedAt: !23697)
+!23789 = !DILocation(line: 3004, column: 24, scope: !23668, inlinedAt: !23671)
+!23790 = !DILocation(line: 1043, column: 17, scope: !23682, inlinedAt: !23683)
+!23791 = !DILocation(line: 971, column: 18, scope: !23704, inlinedAt: !23705)
+!23792 = !DILocation(line: 4, column: 23, scope: !23685, inlinedAt: !23686)
 !23793 = !DILocation(line: 2719, column: 13, scope: !23710, inlinedAt: !23711)
 !23794 = !DILocation(line: 2589, column: 60, scope: !23688, inlinedAt: !23689)
 !23795 = !DILocation(line: 2589, column: 22, scope: !23688, inlinedAt: !23689)
 !23796 = !DILocation(line: 2593, column: 13, scope: !23688, inlinedAt: !23689)
-!23797 = !DILocation(line: 2624, column: 18, scope: !23698, inlinedAt: !23708)
+!23797 = !DILocation(line: 2624, column: 18, scope: !23696, inlinedAt: !23708)
 !23798 = !DILocation(line: 971, column: 18, scope: !23704, inlinedAt: !23712)
 !23799 = !DILocation(line: 2594, column: 13, scope: !23688, inlinedAt: !23689)
 !23800 = !DILocation(line: 3009, column: 25, scope: !23668, inlinedAt: !23671)

@@ -204,17 +204,18 @@ _ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit25: ; preds = %bb.e, %bb.f
 .lr.ph:                                           ; preds = %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit25
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr @_ZZN4ojph5localL10mel_encodeEPNS0_10mel_structEbE7mel_exp, i64 %i.az
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !9
-  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.pre28 = load i32, ptr %i.be, align 8, !tbaa !15
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26
   %i.bg = phi i32 [ %i.av, %.lr.ph ], [ %i.by, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26 ]
   %i.bh = phi i32 [ %i.aw, %.lr.ph ], [ %i.bz, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26 ]
-  %.027.a = phi i32 [ %i.bd, %.lr.ph ], [ %i.bi, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26 ] ; 2 uses
-  %2 = load i32, ptr %i.be, align 8, !tbaa !15
-  %i.bi = add nsw i32 %.027.a, -1                 ; 2 uses
-  %i.bj = lshr i32 %2, %i.bi
+  %.027.a = phi i32 [ %.pre28, %.lr.ph ], [ %2, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26 ] ; 2 uses
+  %.027 = phi i32 [ %i.bd, %.lr.ph ], [ %i.bi, %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26 ] ; 2 uses
+  %i.bi = add nsw i32 %.027, -1                   ; 2 uses
+  %i.bj = lshr i32 %.027.a, %i.bi
   %i.bk = and i32 %i.bj, 1
   %i.bl = shl i32 %i.bh, 1
   %i.bm = or disjoint i32 %i.bl, %i.bk            ; 3 uses
@@ -238,12 +239,14 @@ bb.h:                                             ; preds = %bb.g
   %i.bx = select i1 %i.bw, i32 7, i32 8           ; 2 uses
   store i32 %i.bx, ptr %i.ah, align 8, !tbaa !28
   store i32 0, ptr %i.ae, align 4, !tbaa !27
+  %.pre = load i32, ptr %i.be, align 8, !tbaa !15
   br label %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26
 
 _ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26: ; preds = %bb.g, %bb.h
   %i.by = phi i32 [ %i.bn, %bb.g ], [ %i.bx, %bb.h ]
   %i.bz = phi i32 [ %i.bm, %bb.g ], [ 0, %bb.h ]
-  %i.ca = icmp sgt i32 %.027.a, 1
+  %2 = phi i32 [ %.027.a, %bb.g ], [ %.pre, %bb.h ]
+  %i.ca = icmp sgt i32 %.027, 1
   br i1 %i.ca, label %bb.g, label %._crit_edge.loopexit, !llvm.loop !70
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4ojph5localL12mel_emit_bitEPNS0_10mel_structEi.exit26

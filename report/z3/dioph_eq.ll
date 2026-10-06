@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1048 ; 10 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1048 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1056 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !204  ; 2 uses
   %i.d = load i32, ptr %i.a, align 8, !tbaa !249  ; 2 uses
@@ -608,6 +608,7 @@ _ZN16indexed_uint_set6removeEj.exit:              ; preds = %_ZN2lp4joinENS_8lia
 .lr.ph106:                                        ; preds = %_ZN16indexed_uint_set6removeEj.exit
   %i.fy = load ptr, ptr %i.b, align 8, !tbaa !204 ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 1064
+  %.pre110 = load i32, ptr %i.a, align 8, !tbaa !249
   br label %bb.aq
 
 ._crit_edge107:                                   ; preds = %_ZN16indexed_uint_set6removeEj.exit72, %_ZN16indexed_uint_set6removeEj.exit
@@ -646,20 +647,20 @@ _ZNSt6vectorIj13std_allocatorIjEED2Ev.exit70:     ; preds = %_ZNSt6vectorIj13std
   ret i32 %.2
 
 bb.aq:                                            ; preds = %.lr.ph106, %_ZN16indexed_uint_set6removeEj.exit72
+  %3 = phi i32 [ %.pre110, %.lr.ph106 ], [ %4, %_ZN16indexed_uint_set6removeEj.exit72 ]
   %.sroa.073.0105 = phi ptr [ %i.fu, %.lr.ph106 ], [ %i.gu, %_ZN16indexed_uint_set6removeEj.exit72 ] ; 2 uses
-  %3 = load i32, ptr %.sroa.073.0105, align 4, !tbaa !205 ; 3 uses
-  %i.ge = load i32, ptr %i.a, align 8, !tbaa !249
-  %i.gf = add i32 %i.ge, -1                       ; 2 uses
+  %i.ge = load i32, ptr %.sroa.073.0105, align 4, !tbaa !205 ; 3 uses
+  %i.gf = add i32 %3, -1                          ; 3 uses
   store i32 %i.gf, ptr %i.a, align 8, !tbaa !249
   %i.gg = zext i32 %i.gf to i64
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %i.gg
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !205 ; 3 uses
-  %.not.i71 = icmp eq i32 %3, %i.gi
+  %.not.i71 = icmp eq i32 %i.ge, %i.gi
   br i1 %.not.i71, label %_ZN16indexed_uint_set6removeEj.exit72, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.gj = load ptr, ptr %i.fz, align 8, !tbaa !204 ; 2 uses
-  %i.gk = zext i32 %3 to i64
+  %i.gk = zext i32 %i.ge to i64
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.gj, i64 %i.gk ; 2 uses
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !205 ; 2 uses
   %i.gn = zext i32 %i.gi to i64
@@ -672,10 +673,12 @@ bb.ar:                                            ; preds = %bb.aq
   store i32 %i.gr, ptr %i.gl, align 4, !tbaa !205
   %i.gs = zext i32 %i.gr to i64
   %i.gt = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %i.gs
-  store i32 %3, ptr %i.gt, align 4, !tbaa !205
+  store i32 %i.ge, ptr %i.gt, align 4, !tbaa !205
+  %.pre109 = load i32, ptr %i.a, align 8, !tbaa !249
   br label %_ZN16indexed_uint_set6removeEj.exit72
 
 _ZN16indexed_uint_set6removeEj.exit72:            ; preds = %bb.aq, %bb.ar
+  %4 = phi i32 [ %i.gf, %bb.aq ], [ %.pre109, %bb.ar ]
   %i.gu = getelementptr inbounds nuw i8, ptr %.sroa.073.0105, i64 4 ; 2 uses
   %i.gv = icmp eq ptr %i.gu, %i.fw
   br i1 %i.gv, label %._crit_edge107, label %bb.aq
