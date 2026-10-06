@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.z, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = add i64 %.sroa.07.0.i.i, 16             ; 2 uses
+  %i.aa = add nuw i64 %.sroa.07.0.i.i, 16         ; 2 uses
   %i.ab = add i64 %.sroa.03.0.i.i, %i.aa          ; 2 uses
   %i.ac = icmp ult i64 %i.ab, %.sroa.03.0.i.i
   br i1 %i.ac, label %bb.i, label %bb.b

@@ -204,7 +204,7 @@ bb.ao:                                            ; preds = %._crit_edge73.threa
   %.not46.i = icmp eq i32 %i.en, 0
   %i.eo = call i32 @llvm.usub.sat.i32(i32 %i.dz, i32 1)
   %i.ep = icmp ult i32 %i.eo, %.sroa.020.0.extract.trunc.i
-  %or.cond.i = and i1 %i.ep, %.not46.i
+  %or.cond.i = and i1 %.not46.i, %i.ep
   br i1 %or.cond.i, label %.lr.ph.us.i, label %._crit_edge73.thread.i
 
 .lr.ph.us.i:                                      ; preds = %bb.ao

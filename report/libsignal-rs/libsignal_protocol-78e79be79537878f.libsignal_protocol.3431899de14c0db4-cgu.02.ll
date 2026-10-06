@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.u
   br i1 %i.bz, label %.invoke172.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ca = add i64 %i.bi, 16                       ; 2 uses
+  %i.ca = add nuw i64 %i.bi, 16                   ; 2 uses
   %i.cb = add i64 %i.ca, %.sroa.0.0.i.i12         ; 2 uses
   %i.cc = icmp ult i64 %i.cb, %.sroa.0.0.i.i12
   br i1 %i.cc, label %.invoke172.i, label %bb.u
@@ -541,7 +541,7 @@ bb.bd:                                            ; preds = %bb.ba
   br i1 %i.gm, label %.invoke, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.gn = add i64 %i.fx, 16                       ; 2 uses
+  %i.gn = add nuw i64 %i.fx, 16                   ; 2 uses
   %i.go = add i64 %i.gn, %.sroa.0.0.i.i19         ; 2 uses
   %i.gp = icmp ult i64 %i.go, %.sroa.0.0.i.i19
   br i1 %i.gp, label %.invoke, label %bb.ba
@@ -665,7 +665,7 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.r, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = add i64 %i.b, 16                         ; 2 uses
+  %i.s = add nuw i64 %i.b, 16                     ; 2 uses
   %i.t = add i64 %i.s, %.sroa.0.0.i               ; 2 uses
   %i.u = icmp ult i64 %i.t, %.sroa.0.0.i
   br i1 %i.u, label %bb.j, label %bb.b
@@ -1068,7 +1068,7 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.q, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.r = add i64 %i.a, 16                         ; 2 uses
+  %i.r = add nuw i64 %i.a, 16                     ; 2 uses
   %i.s = add i64 %i.r, %.sroa.0.0                 ; 2 uses
   %i.t = icmp ult i64 %i.s, %.sroa.0.0
   br i1 %i.t, label %bb.j, label %bb.b

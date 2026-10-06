@@ -206,7 +206,7 @@ bb.v:                                             ; preds = %bb.r
   br i1 %i.bw, label %.invoke201, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bx = add i64 %i.bf, 16                       ; 2 uses
+  %i.bx = add nuw i64 %i.bf, 16                   ; 2 uses
   %i.by = add i64 %i.bx, %.sroa.0.0.i16           ; 2 uses
   %i.bz = icmp ult i64 %i.by, %.sroa.0.0.i16
   br i1 %i.bz, label %.invoke201, label %bb.r
@@ -502,7 +502,7 @@ bb.at:                                            ; preds = %_RNCINvMs6_NtCs25Yk
   br i1 %i.fn, label %.invoke207, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.fo = add i64 %i.ex, 16                       ; 2 uses
+  %i.fo = add nuw i64 %i.ex, 16                   ; 2 uses
   %i.fp = add i64 %i.fo, %.sroa.0.0.i.i26         ; 2 uses
   %i.fq = icmp ult i64 %i.fp, %.sroa.0.0.i.i26
   br i1 %i.fq, label %.invoke207, label %_RNCINvMs6_NtCs25YkazkrsH5_9hashbrown3rawINtB8_8RawTableTINtCskOHnqPTvc0z_3lru6KeyRefNtNtCs8frGy5WneL6_4fish4proc3PidEINtNtNtCs3oUPovFnLWP_4core3ptr8non_null7NonNullINtBV_8LruEntryB1k_INtNtCs1xwejQucwHj_5alloc2rc2RcNtNtB1o_11wait_handle10WaitHandleEEEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B1R_NtNtBa_6hasher18DefaultHashBuilderE0E0B1o_.exit25
@@ -832,7 +832,7 @@ bb.v:                                             ; preds = %bb.r
   br i1 %i.bw, label %.invoke201, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bx = add i64 %i.bf, 16                       ; 2 uses
+  %i.bx = add nuw i64 %i.bf, 16                   ; 2 uses
   %i.by = add i64 %i.bx, %.sroa.0.0.i16           ; 2 uses
   %i.bz = icmp ult i64 %i.by, %.sroa.0.0.i16
   br i1 %i.bz, label %.invoke201, label %bb.r
@@ -1128,7 +1128,7 @@ bb.at:                                            ; preds = %_RNCINvMs6_NtCs25Yk
   br i1 %i.fn, label %.invoke207, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.fo = add i64 %i.ex, 16                       ; 2 uses
+  %i.fo = add nuw i64 %i.ex, 16                   ; 2 uses
   %i.fp = add i64 %i.fo, %.sroa.0.0.i.i26         ; 2 uses
   %i.fq = icmp ult i64 %i.fp, %.sroa.0.0.i.i26
   br i1 %i.fq, label %.invoke207, label %_RNCINvMs6_NtCs25YkazkrsH5_9hashbrown3rawINtB8_8RawTableTINtCskOHnqPTvc0z_3lru6KeyRefNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEINtNtNtCs3oUPovFnLWP_4core3ptr8non_null7NonNullINtBV_8LruEntryB1k_NtNtCsaL1QbXo9JQH_3std4time7InstantEEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B2c_NtNtBa_6hasher18DefaultHashBuilderE0E0Cs8frGy5WneL6_4fish.exit25
@@ -1458,7 +1458,7 @@ bb.v:                                             ; preds = %bb.r
   br i1 %i.bw, label %.invoke201, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bx = add i64 %i.bf, 16                       ; 2 uses
+  %i.bx = add nuw i64 %i.bf, 16                   ; 2 uses
   %i.by = add i64 %i.bx, %.sroa.0.0.i16           ; 2 uses
   %i.bz = icmp ult i64 %i.by, %.sroa.0.0.i16
   br i1 %i.bz, label %.invoke201, label %bb.r
@@ -1754,7 +1754,7 @@ bb.at:                                            ; preds = %_RNCINvMs6_NtCs25Yk
   br i1 %i.fn, label %.invoke207, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.fo = add i64 %i.ex, 16                       ; 2 uses
+  %i.fo = add nuw i64 %i.ex, 16                   ; 2 uses
   %i.fp = add i64 %i.fo, %.sroa.0.0.i.i26         ; 2 uses
   %i.fq = icmp ult i64 %i.fp, %.sroa.0.0.i.i26
   br i1 %i.fq, label %.invoke207, label %_RNCINvMs6_NtCs25YkazkrsH5_9hashbrown3rawINtB8_8RawTableTINtCskOHnqPTvc0z_3lru6KeyRefNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEINtNtNtCs3oUPovFnLWP_4core3ptr8non_null7NonNullINtBV_8LruEntryB1k_NtNtNtCs8frGy5WneL6_4fish7history7history11HistoryItemEEEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B2c_NtNtBa_6hasher18DefaultHashBuilderE0E0B3m_.exit25
@@ -1881,7 +1881,7 @@ bb.c:                                             ; preds = %._crit_edge
   br i1 %i.v, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = add i64 %.sroa.07.0.i, 16                ; 2 uses
+  %i.w = add nuw i64 %.sroa.07.0.i, 16            ; 2 uses
   %i.x = add i64 %.sroa.03.0.i, %i.w              ; 2 uses
   %i.y = icmp ult i64 %i.x, %.sroa.03.0.i
   br i1 %i.y, label %bb.f, label %bb.b
@@ -2284,7 +2284,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.t, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = add i64 %.sroa.07.0.i.i.i, 16            ; 2 uses
+  %i.u = add nuw i64 %.sroa.07.0.i.i.i, 16        ; 2 uses
   %i.v = add i64 %.sroa.03.0.i.i.i, %i.u          ; 2 uses
   %i.w = icmp ult i64 %i.v, %.sroa.03.0.i.i.i
   br i1 %i.w, label %bb.i, label %bb.b
@@ -2451,7 +2451,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.w, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.x = add i64 %.sroa.07.0.i.i.i, 16            ; 2 uses
+  %i.x = add nuw i64 %.sroa.07.0.i.i.i, 16        ; 2 uses
   %i.y = add i64 %.sroa.03.0.i.i.i, %i.x          ; 2 uses
   %i.z = icmp ult i64 %i.y, %.sroa.03.0.i.i.i
   br i1 %i.z, label %bb.j, label %bb.c
@@ -2545,7 +2545,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br i1 %i.z, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.aa = add i64 %.sroa.07.0.i.i.i, 16           ; 2 uses
+  %i.aa = add nuw i64 %.sroa.07.0.i.i.i, 16       ; 2 uses
   %i.ab = add i64 %.sroa.03.0.i.i.i, %i.aa        ; 2 uses
   %i.ac = icmp ult i64 %i.ab, %.sroa.03.0.i.i.i
   br i1 %i.ac, label %bb.g, label %bb.c
@@ -2948,7 +2948,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.ac, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ad = add i64 %.sroa.07.0.i.i.i.i, 16         ; 2 uses
+  %i.ad = add nuw i64 %.sroa.07.0.i.i.i.i, 16     ; 2 uses
   %i.ae = add i64 %.sroa.03.0.i.i.i.i, %i.ad      ; 2 uses
   %i.af = icmp ult i64 %i.ae, %.sroa.03.0.i.i.i.i
   br i1 %i.af, label %bb.h, label %bb.d
@@ -3351,7 +3351,7 @@ bb.t:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.dx, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.dy = add i64 %.sroa.07.0.i.i.i.i, 16         ; 2 uses
+  %i.dy = add nuw i64 %.sroa.07.0.i.i.i.i, 16     ; 2 uses
   %i.dz = add i64 %.sroa.03.0.i.i.i.i, %i.dy      ; 2 uses
   %i.ea = icmp ult i64 %i.dz, %.sroa.03.0.i.i.i.i
   br i1 %i.ea, label %bb.w, label %bb.s
@@ -3754,7 +3754,7 @@ bb.ck:                                            ; preds = %._crit_edge.i.i43
   br i1 %i.kk, label %.invoke.i, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.kl = add i64 %.sroa.07.0.i.i.i, 16           ; 2 uses
+  %i.kl = add nuw i64 %.sroa.07.0.i.i.i, 16       ; 2 uses
   %i.km = add i64 %.sroa.03.0.i.i.i, %i.kl        ; 2 uses
   %i.kn = icmp ult i64 %i.km, %.sroa.03.0.i.i.i
   br i1 %i.kn, label %.invoke.i, label %bb.cj
@@ -3875,7 +3875,7 @@ bb.cr:                                            ; preds = %._crit_edge.i.i.i59
   br i1 %i.mc, label %.invoke.i.i, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.md = add i64 %.sroa.07.0.i.i.i.i51, 16       ; 2 uses
+  %i.md = add nuw i64 %.sroa.07.0.i.i.i.i51, 16   ; 2 uses
   %i.me = add i64 %.sroa.03.0.i.i.i.i53, %i.md    ; 2 uses
   %i.mf = icmp ult i64 %i.me, %.sroa.03.0.i.i.i.i53
   br i1 %i.mf, label %.invoke.i.i, label %bb.cq
@@ -4170,7 +4170,7 @@ bb.dm:                                            ; preds = %bb.dl
   br label %bb.dp
 
 bb.dn:                                            ; preds = %bb.dk
-  %i.qc = add i64 %i.pc, 16                       ; 2 uses
+  %i.qc = add nuw i64 %i.pc, 16                   ; 2 uses
   %i.qd = add i64 %i.qc, %.sroa.0.018.i.i.i.i.i   ; 2 uses
   %i.qe = icmp ult i64 %i.qd, %.sroa.0.018.i.i.i.i.i
   br i1 %i.qe, label %.invoke96.i.i, label %bb.dh
@@ -4573,7 +4573,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.af, label %.invoke77.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ag = add i64 %.sroa.07.0.i.i.i.i, 16         ; 2 uses
+  %i.ag = add nuw i64 %.sroa.07.0.i.i.i.i, 16     ; 2 uses
   %i.ah = add i64 %.sroa.03.0.i.i.i.i, %i.ag      ; 2 uses
   %i.ai = icmp ult i64 %i.ah, %.sroa.03.0.i.i.i.i
   br i1 %i.ai, label %.invoke77.i, label %bb.c
@@ -4717,7 +4717,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cp, label %.invoke.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.cq = add i64 %.sroa.07.0.i.i.i.i.i, 16       ; 2 uses
+  %i.cq = add nuw i64 %.sroa.07.0.i.i.i.i.i, 16   ; 2 uses
   %i.cr = add i64 %.sroa.03.0.i.i.i.i.i, %i.cq    ; 2 uses
   %i.cs = icmp ult i64 %i.cr, %.sroa.03.0.i.i.i.i.i
   br i1 %i.cs, label %.invoke.i.i, label %bb.n
@@ -4980,7 +4980,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %bb.au
 
 bb.as:                                            ; preds = %bb.ap
-  %i.go = add i64 %i.fo, 16                       ; 2 uses
+  %i.go = add nuw i64 %i.fo, 16                   ; 2 uses
   %i.gp = add i64 %i.go, %.sroa.0.018.i.i.i.i     ; 2 uses
   %i.gq = icmp ult i64 %i.gp, %.sroa.0.018.i.i.i.i
   br i1 %i.gq, label %.invoke.i, label %bb.aj
@@ -5383,7 +5383,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.av, label %.invoke, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.aw = add i64 %.sroa.07.0.i.i.i.i, 16         ; 2 uses
+  %i.aw = add nuw i64 %.sroa.07.0.i.i.i.i, 16     ; 2 uses
   %i.ax = add i64 %.sroa.03.0.i.i.i.i, %i.aw      ; 2 uses
   %i.ay = icmp ult i64 %i.ax, %.sroa.03.0.i.i.i.i
   br i1 %i.ay, label %.invoke, label %bb.d
@@ -5567,7 +5567,7 @@ bb.q:                                             ; preds = %._crit_edge.i.i
   br i1 %i.di, label %.invoke.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.dj = add i64 %.sroa.07.0.i.i.i, 16           ; 2 uses
+  %i.dj = add nuw i64 %.sroa.07.0.i.i.i, 16       ; 2 uses
   %i.dk = add i64 %.sroa.03.0.i.i.i, %i.dj        ; 2 uses
   %i.dl = icmp ult i64 %i.dk, %.sroa.03.0.i.i.i
   br i1 %i.dl, label %.invoke.i, label %bb.p
@@ -5847,7 +5847,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.ap
 
 bb.an:                                            ; preds = %bb.ak
-  %i.gs = add i64 %i.fs, 16                       ; 2 uses
+  %i.gs = add nuw i64 %i.fs, 16                   ; 2 uses
   %i.gt = add i64 %i.gs, %.sroa.0.018.i.i.i.i.i   ; 2 uses
   %i.gu = icmp ult i64 %i.gt, %.sroa.0.018.i.i.i.i.i
   br i1 %i.gu, label %.invoke.i.i, label %bb.ah
