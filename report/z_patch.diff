@@ -1,0 +1,61 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 281e3b353f6dd..c96dd4d8bff51 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2718,6 +2718,24 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+       return BinaryOperator::CreateXor(A, B);
+   }
+ 
++  // (sub (or A, B), (and A, ~B)) --> B
++  // (sub (or A, B), (and ~A, B)) --> A
++  {
++    Value *A, *B;
++    if (match(Op1, m_c_And(m_Value(A), m_Not(m_Value(B)))) &&
++        match(Op0, m_c_Or(m_Specific(A), m_Specific(B))))
++      return replaceInstUsesWith(I, B);
++  }
++
++  // (sub (xor A, B), (and A, ~B)) --> (and ~A, B)
++  // (sub (xor A, B), (and ~A, B)) --> (and A, ~B)
++  {
++    Value *A, *B;
++    if (match(Op1, m_c_And(m_Value(A), m_Not(m_Value(B)))) &&
++        match(Op0, m_c_Xor(m_Specific(A), m_Specific(B))))
++      return BinaryOperator::CreateAnd(Builder.CreateNot(A), B);
++  }
++
+   // (sub (add A, B) (or A, B)) --> (and A, B)
+   {
+     Value *A, *B;
+diff --git a/llvm/test/Transforms/InstCombine/sub.ll b/llvm/test/Transforms/InstCombine/sub.ll
+index 1e7fa477c362c..7d294ba74366e 100644
+--- a/llvm/test/Transforms/InstCombine/sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub.ll
+@@ -2948,3 +2948,27 @@ define i32 @sub_const_or_no_disjoint(i32 %x) {
+   %r = sub i32 100, %a
+   ret i32 %r
+ }
++
++define i32 @sub_or_relative_complement(i32 %x, i32 %y) {
++; CHECK-LABEL: @sub_or_relative_complement(
++; CHECK-NEXT:    ret i32 [[Y:%.*]]
++;
++  %or = or i32 %x, %y
++  %not = xor i32 %y, -1
++  %and = and i32 %x, %not
++  %sub = sub i32 %or, %and
++  ret i32 %sub
++}
++
++define i32 @sub_xor_relative_complement(i32 %x, i32 %y) {
++; CHECK-LABEL: @sub_xor_relative_complement(
++; CHECK-NEXT:    [[NOTX:%.*]] = xor i32 [[X:%.*]], -1
++; CHECK-NEXT:    [[R:%.*]] = and i32 [[NOTX]], [[Y:%.*]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %xor = xor i32 %x, %y
++  %not = xor i32 %y, -1
++  %and = and i32 %x, %not
++  %sub = sub i32 %xor, %and
++  ret i32 %sub
++}
