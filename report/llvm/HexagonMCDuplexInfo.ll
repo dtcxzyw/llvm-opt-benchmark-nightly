@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph82.split.preheader:                         ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
-  %i.h = zext i32 %i.e to i64
+  %i.h = zext i32 %i.e to i64                     ; 2 uses
   %i.i = add i32 %i.e, 1
   br label %.lr.ph82.split
 
@@ -479,10 +479,12 @@ bb.w:                                             ; preds = %_ZN4llvm18HexagonMC
   br label %_ZN4llvm23SmallVectorTemplateBaseINS_15DuplexCandidateELb1EE9push_backES1_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseINS_15DuplexCandidateELb1EE9push_backES1_.exit: ; preds = %bb.w, %bb.v, %bb.l, %bb.k, %bb.m, %bb.n
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
+  %4 = icmp samesign ult i64 %indvars.iv.next, %i.h
   %i.cn = icmp samesign ult i64 %indvars.iv.next87, %i.h
-  br i1 %i.cn, label %.lr.ph, label %.loopexit, !llvm.loop !50
+  %5 = select i1 %4, i1 %i.cn, i1 false
+  br i1 %5, label %.lr.ph, label %.loopexit, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.a
   ret void

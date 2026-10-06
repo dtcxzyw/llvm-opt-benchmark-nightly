@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/swfenc?download=true
 inline.NumInlined: 75
 inline.NumDeleted: 8
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@swf_write_header:bb.a
 
 .thread198:                                       ; preds = %bb.am, %bb.an, %bb.al
@@ -202,7 +204,7 @@ declare void @avio_wl32(ptr noundef, i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @put_swf_rect(ptr noundef %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [256 x i8], align 16              ; 10 uses
+  %i.a = alloca [256 x i8], align 16              ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   %i.c = icmp eq i32 %1, 0
@@ -337,33 +339,75 @@ bb.m:                                             ; preds = %put_bits.exit29
   br label %put_bits.exit33
 
 put_bits.exit33:                                  ; preds = %bb.l, %bb.m
-  %.sroa.36.9.idx = phi i64 [ %.sroa.36.7.idx, %bb.l ], [ %.sroa.36.7.add, %bb.m ] ; 2 uses
+  %.sroa.36.9.idx = phi i64 [ %.sroa.36.7.idx, %bb.l ], [ %.sroa.36.7.add, %bb.m ] ; 6 uses
   %.026.i.i31 = phi i32 [ %i.ao, %bb.l ], [ %i.al, %bb.m ]
   %.0.i.i32 = phi i32 [ %i.ap, %bb.l ], [ %i.av, %bb.m ] ; 3 uses
   %i.aw = icmp slt i32 %.0.i.i32, 32
   br i1 %i.aw, label %.lr.ph.i, label %flush_put_bits.exit
 
 .lr.ph.i:                                         ; preds = %put_bits.exit33
-  %i.ax = shl i32 %.026.i.i31, %.0.i.i32
-  br label %bb.n
+  %i.ax = shl i32 %.026.i.i31, %.0.i.i32          ; 2 uses
+  %3 = sub nsw i32 31, %.0.i.i32
+  %4 = lshr i32 %3, 3
+  %5 = trunc nuw nsw i64 %.sroa.36.9.idx to i32
+  %6 = add nuw nsw i32 %4, %5                     ; 2 uses
+  %7 = add nuw nsw i32 %6, 1
+  %wide.trip.count = zext nneg i32 %7 to i64      ; 4 uses
+  %8 = sub i64 %wide.trip.count, %.sroa.36.9.idx
+  %9 = zext i32 %6 to i64
+  %10 = sub i64 %9, %.sroa.36.9.idx
+  %xtraiter = and i64 %8, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.i, %bb.n
-  %.sroa.36.10.idx.a = phi i64 [ %.sroa.36.9.idx, %.lr.ph.i ], [ %.sroa.36.10.add, %bb.n ] ; 2 uses
-  %.sroa.19.0 = phi i32 [ %.0.i.i32, %.lr.ph.i ], [ %3, %bb.n ] ; 2 uses
-  %.sroa.0.0 = phi i32 [ %i.ax, %.lr.ph.i ], [ %i.ba, %bb.n ] ; 2 uses
+  %.sroa.36.10.idx.a = phi i64 [ %.sroa.36.10.add, %bb.n ], [ %.sroa.36.9.idx, %.lr.ph.i ] ; 2 uses
+  %.sroa.19.0 = phi i32 [ %i.ba, %bb.n ], [ %i.ax, %.lr.ph.i ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %bb.n ], [ 0, %.lr.ph.i ]
   %.sroa.36.10.ptr.a = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.36.10.idx.a
-  %i.ay = lshr i32 %.sroa.0.0, 24
+  %i.ay = lshr i32 %.sroa.19.0, 24
   %i.az = trunc nuw i32 %i.ay to i8
   %.sroa.36.10.add = add nuw nsw i64 %.sroa.36.10.idx.a, 1 ; 2 uses
   store i8 %i.az, ptr %.sroa.36.10.ptr.a, align 1, !tbaa !61
-  %i.ba = shl i32 %.sroa.0.0, 8
-  %3 = add nsw i32 %.sroa.19.0, 8
-  %4 = icmp slt i32 %.sroa.19.0, 24
-  br i1 %4, label %bb.n, label %flush_put_bits.exit, !llvm.loop !0
+  %i.ba = shl i32 %.sroa.19.0, 8                  ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %bb.n, !llvm.loop !83
 
-flush_put_bits.exit:                              ; preds = %bb.n, %put_bits.exit33
-  %.sroa.36.9.idx.pn = phi i64 [ %.sroa.36.9.idx, %put_bits.exit33 ], [ %.sroa.36.10.add, %bb.n ]
-  %i.bb = trunc i64 %.sroa.36.9.idx.pn to i32
+.prol.loopexit:                                   ; preds = %bb.n, %.lr.ph.i
+  %.sroa.36.10.idx.unr = phi i64 [ %.sroa.36.9.idx, %.lr.ph.i ], [ %.sroa.36.10.add, %bb.n ]
+  %.sroa.0.0.unr = phi i32 [ %i.ax, %.lr.ph.i ], [ %i.ba, %bb.n ]
+  %11 = icmp ult i64 %10, 3
+  br i1 %11, label %flush_put_bits.exit, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.prol.loopexit, %.lr.ph.i.new
+  %.sroa.36.10.idx = phi i64 [ %.sroa.36.10.add.3, %.lr.ph.i.new ], [ %.sroa.36.10.idx.unr, %.prol.loopexit ] ; 5 uses
+  %.sroa.0.0 = phi i32 [ 0, %.lr.ph.i.new ], [ %.sroa.0.0.unr, %.prol.loopexit ] ; 4 uses
+  %.sroa.36.10.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.36.10.idx
+  %12 = lshr i32 %.sroa.0.0, 24
+  %13 = trunc nuw i32 %12 to i8
+  store i8 %13, ptr %.sroa.36.10.ptr, align 1, !tbaa !61
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.36.10.idx
+  %.sroa.36.10.ptr.1 = getelementptr inbounds nuw i8, ptr %14, i64 1
+  %15 = lshr i32 %.sroa.0.0, 16
+  %16 = trunc i32 %15 to i8
+  store i8 %16, ptr %.sroa.36.10.ptr.1, align 1, !tbaa !61
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.36.10.idx
+  %.sroa.36.10.ptr.2 = getelementptr inbounds nuw i8, ptr %17, i64 2
+  %18 = lshr i32 %.sroa.0.0, 8
+  %19 = trunc i32 %18 to i8
+  store i8 %19, ptr %.sroa.36.10.ptr.2, align 1, !tbaa !61
+  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.36.10.idx
+  %.sroa.36.10.ptr.3 = getelementptr inbounds nuw i8, ptr %20, i64 3
+  %21 = trunc i32 %.sroa.0.0 to i8
+  %.sroa.36.10.add.3 = add nuw nsw i64 %.sroa.36.10.idx, 4 ; 2 uses
+  store i8 %21, ptr %.sroa.36.10.ptr.3, align 1, !tbaa !61
+  %exitcond.not.3 = icmp eq i64 %.sroa.36.10.add.3, %wide.trip.count
+  br i1 %exitcond.not.3, label %flush_put_bits.exit, label %.lr.ph.i.new, !llvm.loop !0
+
+flush_put_bits.exit:                              ; preds = %.prol.loopexit, %.lr.ph.i.new, %put_bits.exit33
+  %.sroa.36.9.idx.pn = phi i64 [ %.sroa.36.9.idx, %put_bits.exit33 ], [ %wide.trip.count, %.lr.ph.i.new ], [ %wide.trip.count, %.prol.loopexit ]
+  %i.bb = trunc nuw nsw i64 %.sroa.36.9.idx.pn to i32
   call void @avio_write(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef %i.bb) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret void
@@ -430,7 +474,7 @@ bb.a:                                             ; preds = %bb.a, %put_bits.exi
   %i.b = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %i.c = lshr i32 %.01012.i, 1                    ; 2 uses
   %.not.i = icmp eq i32 %i.c, 0
-  br i1 %.not.i, label %max_nbits.exit, label %bb.a, !llvm.loop !83
+  br i1 %.not.i, label %max_nbits.exit, label %bb.a, !llvm.loop !85
 
 max_nbits.exit:                                   ; preds = %bb.a, %max_nbits.exit
   %.013.i13 = phi i32 [ %i.d, %max_nbits.exit ], [ 1, %bb.a ] ; 2 uses
@@ -438,7 +482,7 @@ max_nbits.exit:                                   ; preds = %bb.a, %max_nbits.ex
   %i.d = add nuw nsw i32 %.013.i13, 1             ; 2 uses
   %i.e = lshr i32 %.01012.i14, 1                  ; 2 uses
   %.not.i15 = icmp eq i32 %i.e, 0
-  br i1 %.not.i15, label %put_bits.exit21, label %max_nbits.exit, !llvm.loop !83
+  br i1 %.not.i15, label %put_bits.exit21, label %max_nbits.exit, !llvm.loop !85
 
 put_bits.exit21:                                  ; preds = %max_nbits.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 256
@@ -841,5 +885,7 @@ attributes #9 = { noreturn nounwind }
 !80 = !{!40, !7, i64 40}
 !81 = !{!"AVIOContext", !11, i64 0, !19, i64 8, !7, i64 16, !19, i64 24, !19, i64 32, !10, i64 40, !10, i64 48, !10, i64 56, !10, i64 64, !20, i64 72, !7, i64 80, !7, i64 84, !7, i64 88, !7, i64 92, !7, i64 96, !20, i64 104, !19, i64 112, !10, i64 120, !10, i64 128, !10, i64 136, !7, i64 144, !7, i64 148, !19, i64 152, !19, i64 160, !10, i64 168, !7, i64 176, !19, i64 184, !20, i64 192, !20, i64 200}
 !82 = !{!81, !7, i64 144}
-!83 = distinct !{!83, !50}
+!83 = distinct !{!83, !84}
+!84 = !{!"llvm.loop.unroll.disable"}
+!85 = distinct !{!85, !50}
 end_hunk_1

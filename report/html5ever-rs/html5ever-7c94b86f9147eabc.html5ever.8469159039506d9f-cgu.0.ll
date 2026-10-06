@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph55, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -231,9 +231,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader43, %bb.l
   %.sroa.01.0.i.i45 = phi i64 [ %i.t, %bb.l ], [ 2, %.preheader43 ] ; 4 uses
   %i.r = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %6 = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %7 = getelementptr i8, ptr %6, i64 -40
-  %i.s = tail call fastcc noundef zeroext i1 @_RNvYNvYNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBY_3ops8function5FnMutTRB5_B24_EE8call_mutCsbmOI1VUejFP_9html5ever(ptr noundef nonnull align 8 %i.r, ptr noundef nonnull align 8 %7) #21, !noalias !75, !inline_history !73
+  %6 = add nsw i64 %.sroa.01.0.i.i45, -1          ; 2 uses
+  %7 = icmp ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %6
+  %i.s = tail call fastcc noundef zeroext i1 @_RNvYNvYNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBY_3ops8function5FnMutTRB5_B24_EE8call_mutCsbmOI1VUejFP_9html5ever(ptr noundef nonnull align 8 %i.r, ptr noundef nonnull align 8 %8) #21, !noalias !75, !inline_history !73
   br i1 %i.s, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
@@ -244,9 +246,11 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph49:                                         ; preds = %.preheader, %bb.m
   %.sroa.01.1.i.i48 = phi i64 [ %i.w, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.u = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %8 = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %9 = getelementptr i8, ptr %8, i64 -40
-  %i.v = tail call fastcc noundef zeroext i1 @_RNvYNvYNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBY_3ops8function5FnMutTRB5_B24_EE8call_mutCsbmOI1VUejFP_9html5ever(ptr noundef nonnull align 8 %i.u, ptr noundef nonnull align 8 %9) #21, !noalias !75, !inline_history !73
+  %9 = add nsw i64 %.sroa.01.1.i.i48, -1          ; 2 uses
+  %10 = icmp ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %9
+  %i.v = tail call fastcc noundef zeroext i1 @_RNvYNvYNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBY_3ops8function5FnMutTRB5_B24_EE8call_mutCsbmOI1VUejFP_9html5ever(ptr noundef nonnull align 8 %i.u, ptr noundef nonnull align 8 %11) #21, !noalias !75, !inline_history !73
   br i1 %i.v, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49

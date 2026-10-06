@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46537)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -241,8 +241,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46537, !noalias !46538, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46539
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46539
@@ -261,8 +264,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46537, !noalias !46538, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46539
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46539
@@ -665,7 +671,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46584)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -701,8 +707,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46584, !noalias !46585, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46586
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46586
@@ -721,8 +730,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46584, !noalias !46585, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46586
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46586
@@ -1125,7 +1137,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46631)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -1161,8 +1173,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46631, !noalias !46632, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46633
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46633
@@ -1181,8 +1196,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46631, !noalias !46632, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46633
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46633
@@ -1585,7 +1603,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46678)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -1621,8 +1639,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46678, !noalias !46679, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46680
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46680
@@ -1641,8 +1662,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46678, !noalias !46679, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46680
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46680
@@ -2045,7 +2069,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46725)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -2081,8 +2105,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46725, !noalias !46726, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46727
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46727
@@ -2101,8 +2128,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46725, !noalias !46726, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46727
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46727
@@ -2505,7 +2535,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.t, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h2ffdd93ccbc5c2aeE.exit": ; preds = %bb.e
-  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.u = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46772)
   %.not.i33 = icmp ult i64 %i.u, %.sroa.01.0
@@ -2541,8 +2571,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader51, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader51 ]
-  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 3 uses
+  %.sroa.01.0.i.i66 = phi i64 [ %i.ad, %bb.i ], [ 2, %.preheader51 ] ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.0.i.i66
+  %5 = add i64 %.sroa.01.0.i.i66, -1
+  %6 = icmp ult i64 %5, %i.u
+  call void @llvm.assume(i1 %6)
   %.val8.i = load i32, ptr %i.aa, align 8, !alias.scope !46772, !noalias !46773, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !46774
   store i32 %.val8.i, ptr %i.d, align 4, !noalias !46774
@@ -2561,8 +2594,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph70:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i69 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.sroa.01.1.i.i69
+  %7 = add i64 %.sroa.01.1.i.i69, -1
+  %8 = icmp ult i64 %7, %i.u
+  call void @llvm.assume(i1 %8)
   %.val.i = load i32, ptr %i.ae, align 8, !alias.scope !46772, !noalias !46773, !noundef !34 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !46774
   store i32 %.val.i, ptr %i.f, align 4, !noalias !46774

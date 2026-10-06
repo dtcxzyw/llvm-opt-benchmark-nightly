@@ -205,8 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.p = phi i64 [ %i.s, %bb.c ], [ %i.d, %.preheader30 ]
   %.sroa.01.0.i32 = phi i64 [ %i.ac, %bb.c ], [ 2, %.preheader30 ] ; 4 uses
   %i.q = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i32 ; 3 uses
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i32
-  %4 = getelementptr i8, ptr %3, i64 -304         ; 2 uses
+  %3 = add nsw i64 %.sroa.01.0.i32, -1            ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.s = load i64, ptr %i.r, align 8, !range !27, !noundef !4 ; 2 uses
   %cond.i.i.i2 = icmp eq i64 %i.s, -2             ; 2 uses
@@ -219,8 +221,8 @@ bb.b:                                             ; preds = %bb.a
   %cond.i5.i.i7 = icmp eq i64 %i.p, -2            ; 2 uses
   %spec.select.i6.i.i8 = select i1 %cond.i5.i.i7, i64 8, i64 32
   %spec.select5.i7.i.i9 = select i1 %cond.i5.i.i7, i64 16, i64 40
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select.i6.i.i8
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select5.i7.i.i9
+  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.i6.i.i8
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select5.i7.i.i9
   %.sroa.0.0.i8.i.i10 = load ptr, ptr %i.v, align 8, !nonnull !4, !noundef !4
   %.sroa.4.0.i9.i.i11 = load i64, ptr %i.w, align 8, !noundef !4 ; 2 uses
   %spec.store.select.i.i12 = tail call i64 @llvm.umin.i64(i64 %.sroa.4.0.i.i.i6, i64 %.sroa.4.0.i9.i.i11)
@@ -241,8 +243,10 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ad = phi i64 [ %i.ag, %bb.d ], [ %i.d, %.preheader ]
   %.sroa.01.1.i35 = phi i64 [ %i.aq, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i35 ; 3 uses
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i35
-  %6 = getelementptr i8, ptr %5, i64 -304         ; 2 uses
+  %6 = add nsw i64 %.sroa.01.1.i35, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   %i.ag = load i64, ptr %i.af, align 8, !range !27, !noundef !4 ; 2 uses
   %cond.i.i.i14 = icmp eq i64 %i.ag, -2           ; 2 uses
@@ -255,8 +259,8 @@ bb.c:                                             ; preds = %.lr.ph
   %cond.i5.i.i19 = icmp eq i64 %i.ad, -2          ; 2 uses
   %spec.select.i6.i.i20 = select i1 %cond.i5.i.i19, i64 8, i64 32
   %spec.select5.i7.i.i21 = select i1 %cond.i5.i.i19, i64 16, i64 40
-  %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 %spec.select.i6.i.i20
-  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 %spec.select5.i7.i.i21
+  %i.aj = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select.i6.i.i20
+  %i.ak = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select5.i7.i.i21
   %.sroa.0.0.i8.i.i22 = load ptr, ptr %i.aj, align 8, !nonnull !4, !noundef !4
   %.sroa.4.0.i9.i.i23 = load i64, ptr %i.ak, align 8, !noundef !4 ; 2 uses
   %spec.store.select.i.i24 = tail call i64 @llvm.umin.i64(i64 %.sroa.4.0.i.i.i18, i64 %.sroa.4.0.i9.i.i23)
@@ -325,9 +329,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader6, %bb.c
   %.sroa.01.0.i8 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader6 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %4 = getelementptr i8, ptr %3, i64 -304
-  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess1_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %4) #40
+  %3 = add nsw i64 %.sroa.01.0.i8, -1             ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3
+  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess1_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %5) #40
   br i1 %i.e, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess1_0E0EB14_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -338,9 +344,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i11 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %6 = getelementptr i8, ptr %5, i64 -304
-  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess1_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %6) #40
+  %6 = add nsw i64 %.sroa.01.1.i11, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6
+  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess1_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %8) #40
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess1_0E0EB14_.exit
 
 bb.d:                                             ; preds = %.lr.ph12
@@ -400,9 +408,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader6, %bb.c
   %.sroa.01.0.i8 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader6 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %4 = getelementptr i8, ptr %3, i64 -304
-  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess2_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %4) #40
+  %3 = add nsw i64 %.sroa.01.0.i8, -1             ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3
+  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess2_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %5) #40
   br i1 %i.e, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess2_0E0EB14_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -413,9 +423,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i11 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %6 = getelementptr i8, ptr %5, i64 -304
-  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess2_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %6) #40
+  %6 = add nsw i64 %.sroa.01.1.i11, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6
+  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess2_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %8) #40
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess2_0E0EB14_.exit
 
 bb.d:                                             ; preds = %.lr.ph12
@@ -503,8 +515,10 @@ bb.b:                                             ; preds = %bb.a
   %i.s = phi i64 [ %i.v, %bb.c ], [ %i.d, %.preheader30 ]
   %.sroa.01.0.i32 = phi i64 [ %i.ai, %bb.c ], [ 2, %.preheader30 ] ; 4 uses
   %i.t = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i32 ; 3 uses
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i32
-  %4 = getelementptr i8, ptr %3, i64 -304         ; 2 uses
+  %3 = add nsw i64 %.sroa.01.0.i32, -1            ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.v = load i64, ptr %i.u, align 8, !range !27, !noundef !4 ; 2 uses
   %cond.i.i.i2 = icmp eq i64 %i.v, -2             ; 2 uses
@@ -517,8 +531,8 @@ bb.b:                                             ; preds = %bb.a
   %cond.i8.i.i7 = icmp eq i64 %i.s, -2            ; 2 uses
   %spec.select.i9.i.i8 = select i1 %cond.i8.i.i7, i64 8, i64 32
   %spec.select5.i10.i.i9 = select i1 %cond.i8.i.i7, i64 16, i64 40
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select.i9.i.i8
-  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 %spec.select5.i10.i.i9
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.i9.i.i8
+  %i.z = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select5.i10.i.i9
   %.sroa.0.0.i11.i.i10 = load ptr, ptr %i.y, align 8, !nonnull !4, !noundef !4
   %.sroa.4.0.i12.i.i11 = load i64, ptr %i.z, align 8, !noundef !4 ; 4 uses
   %spec.store.select.i.i12 = tail call i64 @llvm.umin.i64(i64 %.sroa.4.0.i.i.i6, i64 %.sroa.4.0.i12.i.i11)
@@ -542,8 +556,10 @@ bb.c:                                             ; preds = %.lr.ph
   %i.aj = phi i64 [ %i.am, %bb.d ], [ %i.d, %.preheader ]
   %.sroa.01.1.i35 = phi i64 [ %i.az, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.ak = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i35 ; 3 uses
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i35
-  %6 = getelementptr i8, ptr %5, i64 -304         ; 2 uses
+  %6 = add nsw i64 %.sroa.01.1.i35, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.am = load i64, ptr %i.al, align 8, !range !27, !noundef !4 ; 2 uses
   %cond.i.i.i14 = icmp eq i64 %i.am, -2           ; 2 uses
@@ -556,8 +572,8 @@ bb.c:                                             ; preds = %.lr.ph
   %cond.i8.i.i19 = icmp eq i64 %i.aj, -2          ; 2 uses
   %spec.select.i9.i.i20 = select i1 %cond.i8.i.i19, i64 8, i64 32
   %spec.select5.i10.i.i21 = select i1 %cond.i8.i.i19, i64 16, i64 40
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 %spec.select.i9.i.i20
-  %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 %spec.select5.i10.i.i21
+  %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select.i9.i.i20
+  %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select5.i10.i.i21
   %.sroa.0.0.i11.i.i22 = load ptr, ptr %i.ap, align 8, !nonnull !4, !noundef !4
   %.sroa.4.0.i12.i.i23 = load i64, ptr %i.aq, align 8, !noundef !4 ; 4 uses
   %spec.store.select.i.i24 = tail call i64 @llvm.umin.i64(i64 %.sroa.4.0.i.i.i18, i64 %.sroa.4.0.i12.i.i23)
@@ -629,9 +645,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader6, %bb.c
   %.sroa.01.0.i8 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader6 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %4 = getelementptr i8, ptr %3, i64 -304
-  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %4) #40
+  %3 = add nsw i64 %.sroa.01.0.i8, -1             ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3
+  %i.e = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess_0E0Bz_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %5) #40
   br i1 %i.e, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess_0E0EB14_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -642,9 +660,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i11 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %6 = getelementptr i8, ptr %5, i64 -304
-  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %6) #40
+  %6 = add nsw i64 %.sroa.01.1.i11, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6
+  %i.h = tail call fastcc noundef zeroext i1 @_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData16sort_unstable_byNCNvBz_12sort_entriess_0E0Bz_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %8) #40
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_16sort_unstable_byNCNvB14_12sort_entriess_0E0EB14_.exit
 
 bb.d:                                             ; preds = %.lr.ph12
@@ -1047,7 +1067,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.q
 
 bb.h:                                             ; preds = %bb.f
-  %i.ad = sub nuw nsw i64 %1, %.sroa.09.0         ; 11 uses
+  %i.ad = sub nuw nsw i64 %1, %.sroa.09.0         ; 13 uses
   %i.ae = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.ad, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1074,9 +1094,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader72, %bb.l
   %.sroa.01.0.i.i81 = phi i64 [ %i.ak, %bb.l ], [ 2, %.preheader72 ] ; 4 uses
   %i.ai = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %.sroa.01.0.i.i81
-  %6 = getelementptr [304 x i8], ptr %i.ae, i64 %.sroa.01.0.i.i81
-  %7 = getelementptr i8, ptr %6, i64 -304
-  %i.aj = call fastcc noundef zeroext i1 @_RNCINvMNtCs7tKScEop1B6_5alloc5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData11sort_by_keybNCNvBA_12sort_entriess4_0E0BA_(ptr noundef nonnull align 8 %i.ai, ptr noundef nonnull align 8 %7) #40, !noalias !1177, !inline_history !1116
+  %6 = add nsw i64 %.sroa.01.0.i.i81, -1          ; 2 uses
+  %7 = icmp ult i64 %6, %i.ad
+  call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %6
+  %i.aj = call fastcc noundef zeroext i1 @_RNCINvMNtCs7tKScEop1B6_5alloc5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData11sort_by_keybNCNvBA_12sort_entriess4_0E0BA_(ptr noundef nonnull align 8 %i.ai, ptr noundef nonnull align 8 %8) #40, !noalias !1177, !inline_history !1116
   br i1 %i.aj, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
@@ -1087,9 +1109,11 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph85:                                         ; preds = %.preheader, %bb.m
   %.sroa.01.1.i.i84 = phi i64 [ %i.an, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.al = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %.sroa.01.1.i.i84
-  %8 = getelementptr [304 x i8], ptr %i.ae, i64 %.sroa.01.1.i.i84
-  %9 = getelementptr i8, ptr %8, i64 -304
-  %i.am = call fastcc noundef zeroext i1 @_RNCINvMNtCs7tKScEop1B6_5alloc5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData11sort_by_keybNCNvBA_12sort_entriess4_0E0BA_(ptr noundef nonnull align 8 %i.al, ptr noundef nonnull align 8 %9) #40, !noalias !1177, !inline_history !1116
+  %9 = add nsw i64 %.sroa.01.1.i.i84, -1          ; 2 uses
+  %10 = icmp ult i64 %9, %i.ad
+  call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %9
+  %i.am = call fastcc noundef zeroext i1 @_RNCINvMNtCs7tKScEop1B6_5alloc5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData11sort_by_keybNCNvBA_12sort_entriess4_0E0BA_(ptr noundef nonnull align 8 %i.al, ptr noundef nonnull align 8 %11) #40, !noalias !1177, !inline_history !1116
   br i1 %i.am, label %bb.m, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph85

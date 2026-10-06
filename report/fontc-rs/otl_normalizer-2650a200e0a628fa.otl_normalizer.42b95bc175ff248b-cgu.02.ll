@@ -204,9 +204,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader6, %bb.c
   %.sroa.01.0.i8 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader6 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [120 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %3 = getelementptr [120 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %4 = getelementptr i8, ptr %3, i64 -120
-  %i.e = tail call fastcc noundef zeroext i1 @_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1G_3ops8function5FnMutTRB5_B2N_EE8call_mutBa_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %4) #25
+  %3 = add nsw i64 %.sroa.01.0.i8, -1             ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [120 x i8], ptr %0, i64 %3
+  %i.e = tail call fastcc noundef zeroext i1 @_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1G_3ops8function5FnMutTRB5_B2N_EE8call_mutBa_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %5) #25
   br i1 %i.e, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtB17_4gpos5marks18MarkAttachmentRuleENvYB12_NtNtB8_3cmp10PartialOrd2ltEB17_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -217,9 +219,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i11 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [120 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %5 = getelementptr [120 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %6 = getelementptr i8, ptr %5, i64 -120
-  %i.h = tail call fastcc noundef zeroext i1 @_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1G_3ops8function5FnMutTRB5_B2N_EE8call_mutBa_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %6) #25
+  %6 = add nsw i64 %.sroa.01.1.i11, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [120 x i8], ptr %0, i64 %6
+  %i.h = tail call fastcc noundef zeroext i1 @_RNvYNvYINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtBa_4gpos5marks18MarkAttachmentRuleENtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltINtNtNtB1G_3ops8function5FnMutTRB5_B2N_EE8call_mutBa_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %8) #25
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runINtNtCs5JazJsyow1H_14otl_normalizer6common10SingleRuleNtNtNtB17_4gpos5marks18MarkAttachmentRuleENvYB12_NtNtB8_3cmp10PartialOrd2ltEB17_.exit
 
 bb.d:                                             ; preds = %.lr.ph12

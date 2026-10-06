@@ -205,6 +205,9 @@ _RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11
 .lr.ph:                                           ; preds = %.preheader28, %bb.g
   %.sroa.01.0.i34 = phi i64 [ %i.ao, %bb.g ], [ 2, %.preheader28 ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i34
+  %3 = add nsw i64 %.sroa.01.0.i34, -1            ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val5 = load i64, ptr %i.v, align 8, !range !8, !noundef !4
   %i.w = add i64 %.val5, -1                       ; 2 uses
   %i.x = icmp ult i64 %i.w, %.val7.i.i
@@ -215,9 +218,8 @@ bb.e:                                             ; preds = %.lr.ph
   unreachable
 
 _RNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB5_5Graph13get_node_name.exit.i.i13: ; preds = %.lr.ph
-  %i.y = getelementptr [8 x i8], ptr %0, i64 %.sroa.01.0.i34
-  %3 = getelementptr i8, ptr %i.y, i64 -8
-  %.val6 = load i64, ptr %3, align 8
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %.val6 = load i64, ptr %i.y, align 8
   %i.z = add i64 %.val6, -1                       ; 2 uses
   %i.aa = icmp ult i64 %i.z, %.val7.i.i
   br i1 %i.aa, label %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11SymbolUsize16sort_unstable_byNCNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB1Q_5Graph12detect_cycle0E0B1Q_.exit16, label %bb.f, !prof !11
@@ -252,6 +254,9 @@ bb.g:                                             ; preds = %_RNCINvMNtCs6JMX4GR
 .lr.ph37:                                         ; preds = %.preheader, %bb.j
   %.sroa.01.1.i36 = phi i64 [ %i.bi, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i36
+  %5 = add nsw i64 %.sroa.01.1.i36, -1            ; 2 uses
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val2 = load i64, ptr %i.ap, align 8, !range !8, !noundef !4
   %i.aq = add i64 %.val2, -1                      ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %.val7.i.i
@@ -262,9 +267,8 @@ bb.h:                                             ; preds = %.lr.ph37
   unreachable
 
 _RNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB5_5Graph13get_node_name.exit.i.i20: ; preds = %.lr.ph37
-  %i.as = getelementptr [8 x i8], ptr %0, i64 %.sroa.01.1.i36
-  %4 = getelementptr i8, ptr %i.as, i64 -8
-  %.val3 = load i64, ptr %4, align 8
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5
+  %.val3 = load i64, ptr %i.as, align 8
   %i.at = add i64 %.val3, -1                      ; 2 uses
   %i.au = icmp ult i64 %i.at, %.val7.i.i
   br i1 %i.au, label %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11SymbolUsize16sort_unstable_byNCNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB1Q_5Graph12detect_cycle0E0B1Q_.exit23, label %bb.i, !prof !11
@@ -438,6 +442,9 @@ _RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11
 .lr.ph:                                           ; preds = %.preheader28, %bb.g
   %.sroa.01.0.i34 = phi i64 [ %i.ao, %bb.g ], [ 2, %.preheader28 ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i34
+  %3 = add nsw i64 %.sroa.01.0.i34, -1            ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val5 = load i64, ptr %i.v, align 8, !range !8, !noundef !4
   %i.w = add i64 %.val5, -1                       ; 2 uses
   %i.x = icmp ult i64 %i.w, %.val7.i.i
@@ -448,9 +455,8 @@ bb.e:                                             ; preds = %.lr.ph
   unreachable
 
 _RNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB5_5Graph13get_node_name.exit.i.i13: ; preds = %.lr.ph
-  %i.y = getelementptr [8 x i8], ptr %0, i64 %.sroa.01.0.i34
-  %3 = getelementptr i8, ptr %i.y, i64 -8
-  %.val6 = load i64, ptr %3, align 8
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %.val6 = load i64, ptr %i.y, align 8
   %i.z = add i64 %.val6, -1                       ; 2 uses
   %i.aa = icmp ult i64 %i.z, %.val7.i.i
   br i1 %i.aa, label %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11SymbolUsize16sort_unstable_byNCNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB1Q_5Graph9run_tsorts_0E0B1Q_.exit16, label %bb.f, !prof !11
@@ -485,6 +491,9 @@ bb.g:                                             ; preds = %_RNCINvMNtCs6JMX4GR
 .lr.ph37:                                         ; preds = %.preheader, %bb.j
   %.sroa.01.1.i36 = phi i64 [ %i.bi, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i36
+  %5 = add nsw i64 %.sroa.01.1.i36, -1            ; 2 uses
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val2 = load i64, ptr %i.ap, align 8, !range !8, !noundef !4
   %i.aq = add i64 %.val2, -1                      ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %.val7.i.i
@@ -495,9 +504,8 @@ bb.h:                                             ; preds = %.lr.ph37
   unreachable
 
 _RNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB5_5Graph13get_node_name.exit.i.i20: ; preds = %.lr.ph37
-  %i.as = getelementptr [8 x i8], ptr %0, i64 %.sroa.01.1.i36
-  %4 = getelementptr i8, ptr %i.as, i64 -8
-  %.val3 = load i64, ptr %4, align 8
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5
+  %.val3 = load i64, ptr %i.as, align 8
   %i.at = add i64 %.val3, -1                      ; 2 uses
   %i.au = icmp ult i64 %i.at, %.val7.i.i
   br i1 %i.au, label %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtNtCskMQyL8guyrm_15string_interner6symbol11SymbolUsize16sort_unstable_byNCNvMs1_Cs2AkyTgTLZ1a_8uu_tsortNtB1Q_5Graph9run_tsorts_0E0B1Q_.exit23, label %bb.i, !prof !11

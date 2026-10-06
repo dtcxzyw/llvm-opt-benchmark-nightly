@@ -205,7 +205,7 @@ bb.a:
   %i.g = alloca ptr, align 8                      ; 70 uses
   %i.h = alloca i32, align 4                      ; 88 uses
   %i.i = alloca [3 x i32], align 4                ; 6 uses
-  %i.j = alloca [72 x i8], align 16               ; 12 uses
+  %i.j = alloca [72 x i8], align 16               ; 13 uses
   %i.k = alloca [21 x i32], align 16              ; 13 uses
   %i.l = alloca [3 x i32], align 4                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #11
@@ -608,7 +608,7 @@ bb.ag:                                            ; preds = %.lr.ph.i183.7
   br label %readbits.exit193
 
 readbits.exit193:                                 ; preds = %.lr.ph.i183.7, %bb.ag
-  %i.ny = call fastcc i32 @compute_magic_bits(ptr noundef %i.i) ; 4 uses
+  %i.ny = call fastcc i32 @compute_magic_bits(ptr noundef %i.i) ; 5 uses
   %.off354 = add i32 %3, 2
   %.not331 = icmp ult i32 %.off354, 5
   br i1 %.not331, label %._crit_edge353, label %.lr.ph352
@@ -622,6 +622,10 @@ readbits.exit193:                                 ; preds = %.lr.ph.i183.7, %bb.
   %i.oc = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %i.od = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.oe = getelementptr inbounds nuw i8, ptr %i.c, i64 72
+  %4 = add nsw i32 %i.ny, -8
+  %5 = lshr i32 %4, 3
+  %6 = zext nneg i32 %5 to i64
+  %scevgep = getelementptr i8, ptr %i.j, i64 %6
   %i.of = zext nneg i32 %i.lc to i64
   %i.og = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %i.of
   %i.oh = zext nneg i32 %i.ij to i64
@@ -1024,8 +1028,8 @@ bb.be:                                            ; preds = %.lr.ph.i213.3
 .lr.ph.i225:                                      ; preds = %.lr.ph.i225.preheader, %readbits.exit.i229
   %i.xv = phi i32 [ %i.aak, %readbits.exit.i229 ], [ %.promoted312, %.lr.ph.i225.preheader ] ; 4 uses
   %i.xw = phi ptr [ %i.aal, %readbits.exit.i229 ], [ %.promoted, %.lr.ph.i225.preheader ] ; 3 uses
-  %.023.i = phi ptr [ %i.aam, %readbits.exit.i229 ], [ %i.j, %.lr.ph.i225.preheader ] ; 2 uses
-  %.0922.i = phi i32 [ %i.aan, %readbits.exit.i229 ], [ %i.ny, %.lr.ph.i225.preheader ] ; 2 uses
+  %.023.i = phi ptr [ %i.aam, %readbits.exit.i229 ], [ %i.j, %.lr.ph.i225.preheader ] ; 3 uses
+  %.0922.i = phi i32 [ %i.aan, %readbits.exit.i229 ], [ %i.ny, %.lr.ph.i225.preheader ]
   %i.xx = load i8, ptr %i.xw, align 1, !tbaa !19
   %i.xy = lshr i32 128, %i.xv
   %i.xz = zext i8 %i.xx to i32                    ; 2 uses
@@ -1197,8 +1201,8 @@ readbits.exit.i229:                               ; preds = %bb.bj, %.lr.ph.i.7.
   %i.aam = getelementptr inbounds nuw i8, ptr %.023.i, i64 1 ; 2 uses
   store i8 %i.aah, ptr %.023.i, align 1, !tbaa !19
   %i.aan = add nsw i32 %.0922.i, -8               ; 2 uses
-  %4 = icmp sgt i32 %.0922.i, 15
-  br i1 %4, label %.lr.ph.i225, label %._crit_edge.i, !llvm.loop !3
+  %exitcond.not = icmp eq ptr %.023.i, %scevgep
+  br i1 %exitcond.not, label %._crit_edge.i, label %.lr.ph.i225, !llvm.loop !3
 
 ._crit_edge.i:                                    ; preds = %readbits.exit.i229, %.preheader
   %.09.lcssa.i = phi i32 [ %i.ny, %.preheader ], [ %i.aan, %readbits.exit.i229 ] ; 2 uses

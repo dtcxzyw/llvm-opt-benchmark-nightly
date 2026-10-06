@@ -205,11 +205,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !971
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !971 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.aj, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -236,7 +237,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !971
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !971 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -269,8 +270,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ai, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !2034
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -282,7 +284,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.al = load ptr, ptr %i.aj, align 8, !tbaa !852
+  %i.al = load ptr, ptr %5, align 8, !tbaa !852
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 152
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !224 ; 3 uses
   br label %bb.g
@@ -685,11 +687,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !991
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !991 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.ah, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -715,7 +718,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !991
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !991 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -747,8 +750,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !2124
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -760,7 +764,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 5520
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 5520
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !891 ; 3 uses
   br label %bb.g
 
@@ -1163,11 +1167,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !995
+  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !995 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %i.e = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %i.bc, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 7 uses
   %.sroa.0.025.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.025.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -1208,7 +1213,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimi
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread.i
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.025.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !995
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !995 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread.i
@@ -1261,8 +1266,9 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimiz
   br i1 %i.bb, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, label %bb.f, !llvm.loop !2144
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ] ; 3 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.025.i.ptr, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %.sroa.0.013.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ], [ %.sroa.05.012.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ]
-  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ] ; 3 uses
+  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_11BddAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.025.i.add = add nuw nsw i64 %.sroa.0.025.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.025.i.add, 64
@@ -1274,10 +1280,10 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.be = load ptr, ptr %i.bc, align 8, !tbaa !852
+  %i.be = load ptr, ptr %5, align 8, !tbaa !852
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 152
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !224 ; 3 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 5520
+  %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 5520
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_11BddAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_T0_.exit.i, %.lr.ph.i12
@@ -1680,11 +1686,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1095
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1095 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.aj, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -1711,7 +1718,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1095
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1095 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -1744,8 +1751,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ai, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !2858
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -1757,7 +1765,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.al = load ptr, ptr %i.aj, align 8, !tbaa !1054
+  %i.al = load ptr, ptr %5, align 8, !tbaa !1054
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 152
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !224 ; 3 uses
   br label %bb.g
@@ -2160,11 +2168,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1115
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1115 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.ah, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -2190,7 +2199,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1115
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1115 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -2222,8 +2231,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !2948
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -2235,7 +2245,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 5552
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 5552
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !891 ; 3 uses
   br label %bb.g
 
@@ -2638,11 +2648,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !1119
+  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !1119 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %i.e = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %i.bc, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 7 uses
   %.sroa.0.025.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.025.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -2683,7 +2694,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimi
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread.i
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.025.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1119
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1119 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread.i
@@ -2736,8 +2747,9 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimiz
   br i1 %i.bb, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, label %bb.f, !llvm.loop !2968
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ] ; 3 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.025.i.ptr, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %.sroa.0.013.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ], [ %.sroa.05.012.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ]
-  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ] ; 3 uses
+  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESL_EEbSA_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_15BddMspfAnalyzerIS3_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSA_T0_.exit.thread.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.025.i.add = add nuw nsw i64 %.sroa.0.025.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.025.i.add, 64
@@ -2749,10 +2761,10 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_SH_T0_.exit
-  %i.be = load ptr, ptr %i.bc, align 8, !tbaa !1054
+  %i.be = load ptr, ptr %5, align 8, !tbaa !1054
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 152
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !224 ; 3 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 5552
+  %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 5552
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_15BddMspfAnalyzerISA_EEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSH_T0_.exit.i, %.lr.ph.i12
@@ -3155,11 +3167,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1242
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1242 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.aj, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -3186,7 +3199,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1242
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1242 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -3219,8 +3232,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ai, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !3511
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.aj = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -3232,7 +3246,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE2_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit
-  %i.al = load ptr, ptr %i.aj, align 8, !tbaa !1164
+  %i.al = load ptr, ptr %5, align 8, !tbaa !1164
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 152
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !224 ; 3 uses
   br label %bb.g
@@ -3635,11 +3649,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1262
+  %.pre24.i = load ptr, ptr %2, align 8, !tbaa !1262 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.e = phi ptr [ %.pre24.i, %.lr.ph.i ], [ %i.ah, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn21.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.022.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -3665,7 +3680,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1262
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1262 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -3697,8 +3712,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, !llvm.loop !3601
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.i.i, %bb.f, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %bb.f ], [ %4, %.lr.ph.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.i.i ]
-  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ] ; 2 uses
+  %i.ah = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %bb.f ], [ %i.e, %.lr.ph.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -3710,7 +3726,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE12_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 5680
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 5680
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !891 ; 3 uses
   br label %bb.g
 
@@ -4113,11 +4129,12 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !1266
+  %.pre26.i = load ptr, ptr %2, align 8, !tbaa !1266 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
+  %4 = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %i.e = phi ptr [ %.pre26.i, %.lr.ph.i ], [ %i.bc, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 7 uses
   %.sroa.0.025.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.025.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
@@ -4158,7 +4175,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimi
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread.i
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.025.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1266
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !1266 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
 bb.e:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread.i
@@ -4211,8 +4228,9 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9Optimiz
   br i1 %i.bb, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, label %bb.f, !llvm.loop !3621
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.thread.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread20.i, %bb.e, %bb.d
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread20.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.i.i ], [ %4, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.thread.i.i ] ; 3 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.025.i.ptr, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread20.i ], [ %.sroa.0.013.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.thread.i.i ], [ %.sroa.05.012.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.i.i ]
-  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.thread.i.i ] ; 3 uses
+  %i.bc = phi ptr [ %i.e, %bb.e ], [ %.pre.i, %bb.d ], [ %i.e, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclINS_17__normal_iteratorIPiSt6vectorIiSaIiEEEESP_EEbSE_T0_.exit.thread20.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.i.i ], [ %i.e, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS2_9OptimizerIS3_NS2_8AnalyzerIS3_NS2_9SimulatorIS3_EENS2_9SatSolverIS3_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EclIiNS_17__normal_iteratorIPiSt6vectorIiSaIiEEEEEEbRSE_T0_.exit.thread.i.i ]
   store i32 %i.f, ptr %.sink.i, align 4, !tbaa !220
   %.sroa.0.025.i.add = add nuw nsw i64 %.sroa.0.025.i.idx, 4 ; 2 uses
   %.not.i = icmp eq i64 %.sroa.0.025.i.add, 64
@@ -4224,10 +4242,10 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %.not9.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSL_SL_T0_.exit
-  %i.be = load ptr, ptr %i.bc, align 8, !tbaa !1164
+  %i.be = load ptr, ptr %5, align 8, !tbaa !1164
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 152
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !224 ; 3 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 5680
+  %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 5680
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZN3rrr10AndNetwork10SortFaninsIZNS9_9OptimizerISA_NS9_8AnalyzerISA_NS9_9SimulatorISA_EENS9_9SatSolverISA_EEEEE10SortFaninsEiEUliiE14_EEviRKT_EUliiE_EEEvSL_T0_.exit.i, %.lr.ph.i12

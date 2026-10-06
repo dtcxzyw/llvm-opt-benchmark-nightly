@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.bj = sdiv i64 %i.bi, %i.s                    ; 2 uses
   %i.bk = trunc i64 %i.bj to i32
   %i.bl = mul nsw i64 %i.bh, %i.u
-  %i.bm = sdiv i64 %i.bl, %i.s
-  %i.bn = trunc i64 %i.bm to i32                  ; 2 uses
+  %i.bm = sdiv i64 %i.bl, %i.s                    ; 2 uses
+  %i.bn = trunc i64 %i.bm to i32
   %i.bo = load i32, ptr %i.v, align 8, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
@@ -229,7 +229,9 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %sext = shl i64 %i.bj, 32
-  %i.by = ashr exact i64 %sext, 32                ; 2 uses
+  %5 = ashr exact i64 %sext, 32                   ; 2 uses
+  %sext141 = shl i64 %i.bm, 32
+  %i.by = ashr exact i64 %sext141, 32
   %wide.trip.count = zext nneg i32 %i.ay to i64
   %i.bz = insertelement <8 x i16> poison, i16 %i.bx, i64 0
   %i.ca = shufflevector <8 x i16> %i.bz, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
@@ -238,8 +240,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv128 = phi i64 [ %i.by, %.preheader.preheader ], [ %indvars.iv.next129, %._crit_edge ] ; 4 uses
-  %i.cd = sub nsw i64 %indvars.iv128, %i.by       ; 3 uses
+  %indvars.iv128 = phi i64 [ %5, %.preheader.preheader ], [ %indvars.iv.next129, %._crit_edge ] ; 4 uses
+  %i.cd = sub nsw i64 %indvars.iv128, %5          ; 3 uses
   %i.ce = mul nsw i64 %i.cd, %i.bs
   %i.cf = trunc nsw i64 %i.cd to i32
   %i.cg = trunc nsw i64 %i.cd to i32
@@ -264,8 +266,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
 
 ._crit_edge:                                      ; preds = %bb.t
   %indvars.iv.next129 = add nsw i64 %indvars.iv128, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next129 to i32
-  %exitcond131.not = icmp eq i32 %lftr.wideiv, %i.bn
+  %exitcond131.not = icmp eq i64 %indvars.iv.next129, %i.by
   br i1 %exitcond131.not, label %._crit_edge123.split.loopexit, label %.preheader, !llvm.loop !159
 
 bb.c:                                             ; preds = %.preheader, %bb.t

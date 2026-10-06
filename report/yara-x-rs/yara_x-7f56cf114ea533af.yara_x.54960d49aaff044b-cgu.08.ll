@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1917)
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
@@ -246,8 +246,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.preheader31.i, %bb.l
   %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader31.i ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader31.i ]
-  %.sroa.01.0.i33.i = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader31.i ] ; 3 uses
+  %.sroa.01.0.i33.i = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader31.i ] ; 4 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i33.i ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i33.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %i.z = getelementptr i8, ptr %i.y, i64 8
   %.val10.i = load ptr, ptr %i.z, align 8, !alias.scope !1917, !noalias !1918, !nonnull !5, !noundef !5 ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 16
@@ -269,8 +272,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 .lr.ph37.i:                                       ; preds = %.preheader.i, %bb.m
   %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader.i ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader.i ]
-  %.sroa.01.1.i36.i = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i36.i = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i36.i ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i36.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   %.val.i = load ptr, ptr %i.ai, align 8, !alias.scope !1917, !noalias !1918, !nonnull !5, !noundef !5 ; 2 uses
   %i.aj = getelementptr i8, ptr %i.ah, i64 16
@@ -509,7 +515,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -537,8 +543,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader21.i ]
-  %.sroa.01.0.i23.i = phi i64 [ %i.t, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.t, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.r, align 4, !alias.scope !1931, !noalias !1932, !noundef !5 ; 2 uses
   %i.s = icmp slt i32 %.val8.i, %.val9.i
   br i1 %i.s, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs7gfv9tzbXmh_6yara_x8compiler9PatternIdNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.l
@@ -550,8 +559,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader.i ]
-  %.sroa.01.1.i26.i = phi i64 [ %i.w, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.w, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %8 = add nsw i64 %.sroa.01.1.i26.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.u, align 4, !alias.scope !1931, !noalias !1932, !noundef !5 ; 2 uses
   %i.v = icmp slt i32 %.val.i, %.val7.i
   br i1 %i.v, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs7gfv9tzbXmh_6yara_x8compiler9PatternIdNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
@@ -816,7 +828,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -845,8 +857,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
   %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader21.i ]
-  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
   %i.s = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %i.t = getelementptr i8, ptr %i.s, i64 24
   %.val8.i = load i64, ptr %i.t, align 8, !alias.scope !1943, !noalias !1944, !noundef !5 ; 2 uses
   %i.u = icmp ult i64 %.val9.i, %.val8.i
@@ -859,8 +874,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
   %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader.i ]
-  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.w = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %8 = add nsw i64 %.sroa.01.1.i26.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %i.x = getelementptr i8, ptr %i.w, i64 24
   %.val.i = load i64, ptr %i.x, align 8, !alias.scope !1943, !noalias !1944, !noundef !5 ; 2 uses
   %i.y = icmp ult i64 %.val7.i, %.val.i
@@ -1091,7 +1109,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1958)
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
@@ -1132,8 +1150,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.preheader31.i, %bb.l
   %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader31.i ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader31.i ]
-  %.sroa.01.0.i33.i = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader31.i ] ; 3 uses
+  %.sroa.01.0.i33.i = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader31.i ] ; 4 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i33.i ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i33.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %i.z = getelementptr i8, ptr %i.y, i64 8
   %.val10.i = load ptr, ptr %i.z, align 8, !alias.scope !1958, !noalias !1959, !nonnull !5, !noundef !5 ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 16
@@ -1155,8 +1176,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 .lr.ph37.i:                                       ; preds = %.preheader.i, %bb.m
   %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader.i ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader.i ]
-  %.sroa.01.1.i36.i = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i36.i = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i36.i ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i36.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   %.val.i = load ptr, ptr %i.ai, align 8, !alias.scope !1958, !noalias !1959, !nonnull !5, !noundef !5 ; 2 uses
   %i.aj = getelementptr i8, ptr %i.ah, i64 16
@@ -1559,7 +1583,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2120)
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
@@ -1599,8 +1623,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.preheader31.i, %bb.l
   %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader31.i ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader31.i ]
-  %.sroa.01.0.i33.i = phi i64 [ %i.ae, %bb.l ], [ 2, %.preheader31.i ] ; 3 uses
+  %.sroa.01.0.i33.i = phi i64 [ %i.ae, %bb.l ], [ 2, %.preheader31.i ] ; 4 uses
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.01.0.i33.i ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i33.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %.val10.i = load ptr, ptr %i.x, align 8, !alias.scope !2120, !noalias !2121, !nonnull !5, !noundef !5 ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 8
   %.val11.i = load i64, ptr %i.y, align 8, !alias.scope !2120, !noalias !2121, !noundef !5 ; 3 uses
@@ -1621,8 +1648,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 .lr.ph37.i:                                       ; preds = %.preheader.i, %bb.m
   %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader.i ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader.i ]
-  %.sroa.01.1.i36.i = phi i64 [ %i.am, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i36.i = phi i64 [ %i.am, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.01.1.i36.i ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i36.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load ptr, ptr %i.af, align 8, !alias.scope !2120, !noalias !2121, !nonnull !5, !noundef !5 ; 2 uses
   %i.ag = getelementptr i8, ptr %i.af, i64 8
   %.val7.i = load i64, ptr %i.ag, align 8, !alias.scope !2120, !noalias !2121, !noundef !5 ; 3 uses
@@ -1900,7 +1930,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [192 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1929,8 +1959,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
   %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader21.i ]
-  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
   %i.s = getelementptr inbounds nuw [192 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %i.t = getelementptr i8, ptr %i.s, i64 168
   %.val8.i = load i64, ptr %i.t, align 8, !alias.scope !2137, !noalias !2138, !noundef !5 ; 2 uses
   %i.u = icmp ult i64 %.val8.i, %.val9.i
@@ -1943,8 +1976,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
   %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader.i ]
-  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.w = getelementptr inbounds nuw [192 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %8 = add nsw i64 %.sroa.01.1.i26.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %i.x = getelementptr i8, ptr %i.w, i64 168
   %.val.i = load i64, ptr %i.x, align 8, !alias.scope !2137, !noalias !2138, !noundef !5 ; 2 uses
   %i.y = icmp ult i64 %.val.i, %.val7.i
@@ -2175,7 +2211,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [64 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2170)
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
@@ -2215,8 +2251,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.preheader31.i, %bb.l
   %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader31.i ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader31.i ]
-  %.sroa.01.0.i33.i = phi i64 [ %i.ae, %bb.l ], [ 2, %.preheader31.i ] ; 3 uses
+  %.sroa.01.0.i33.i = phi i64 [ %i.ae, %bb.l ], [ 2, %.preheader31.i ] ; 4 uses
   %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.n, i64 %.sroa.01.0.i33.i ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i33.i, -1
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %.val10.i = load ptr, ptr %i.x, align 8, !alias.scope !2170, !noalias !2171, !nonnull !5, !noundef !5 ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 8
   %.val11.i = load i64, ptr %i.y, align 8, !alias.scope !2170, !noalias !2171, !noundef !5 ; 3 uses
@@ -2237,8 +2276,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 .lr.ph37.i:                                       ; preds = %.preheader.i, %bb.m
   %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader.i ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader.i ]
-  %.sroa.01.1.i36.i = phi i64 [ %i.am, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i36.i = phi i64 [ %i.am, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.af = getelementptr inbounds nuw [64 x i8], ptr %i.n, i64 %.sroa.01.1.i36.i ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i36.i, -1
+  %9 = icmp samesign ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load ptr, ptr %i.af, align 8, !alias.scope !2170, !noalias !2171, !nonnull !5, !noundef !5 ; 2 uses
   %i.ag = getelementptr i8, ptr %i.af, i64 8
   %.val7.i = load i64, ptr %i.ag, align 8, !alias.scope !2170, !noalias !2171, !noundef !5 ; 3 uses

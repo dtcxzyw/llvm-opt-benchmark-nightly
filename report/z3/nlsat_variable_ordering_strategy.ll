@@ -202,11 +202,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
-  %.pre22.i = load ptr, ptr %i.e, align 8, !tbaa !33
+  %.pre22.i = load ptr, ptr %i.e, align 8, !tbaa !33 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i, %bb.b
+  %3 = phi ptr [ %.pre22.i, %bb.b ], [ %4, %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i ] ; 3 uses
   %i.f = phi ptr [ %.pre22.i, %bb.b ], [ %i.ag, %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i ] ; 7 uses
   %.020.i.idx = phi i64 [ 4, %bb.b ], [ %.020.i.add, %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i ] ; 4 uses
   %.pn19.i = phi ptr [ %0, %bb.b ], [ %.020.i.ptr, %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i ] ; 3 uses
@@ -231,7 +232,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.020.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %i.e, align 8, !tbaa !33
+  %.pre.i = load ptr, ptr %i.e, align 8, !tbaa !33 ; 2 uses
   br label %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i
 
 bb.f:                                             ; preds = %bb.d
@@ -268,8 +269,9 @@ bb.g:                                             ; preds = %bb.c
   br i1 %.0.i.i.i.i, label %.lr.ph.i.i, label %_ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i, !llvm.loop !137
 
 _ZSt13move_backwardIPjS0_ET0_T_S2_S1_.exit.i:     ; preds = %.lr.ph.i.i, %bb.g, %bb.f, %bb.e
+  %4 = phi ptr [ %3, %bb.f ], [ %.pre.i, %bb.e ], [ %3, %bb.g ], [ %3, %.lr.ph.i.i ] ; 4 uses
   %.sink.i = phi ptr [ %0, %bb.f ], [ %0, %bb.e ], [ %.020.i.ptr, %bb.g ], [ %.015.i.i, %.lr.ph.i.i ]
-  %i.ag = phi ptr [ %i.f, %bb.f ], [ %.pre.i, %bb.e ], [ %i.f, %bb.g ], [ %i.f, %.lr.ph.i.i ] ; 4 uses
+  %i.ag = phi ptr [ %i.f, %bb.f ], [ %.pre.i, %bb.e ], [ %i.f, %bb.g ], [ %i.f, %.lr.ph.i.i ]
   store i32 %i.g, ptr %.sink.i, align 4, !tbaa !34
   %.020.i.add = add nuw nsw i64 %.020.i.idx, 4    ; 2 uses
   %.not.i = icmp eq i64 %.020.i.add, 64
@@ -284,12 +286,12 @@ _ZSt16__insertion_sortIPjN9__gnu_cxx5__ops15_Iter_comp_iterIN5nlsat22vos_var_inf
   %.08.i = phi ptr [ %i.ba, %_ZSt25__unguarded_linear_insertIPjN9__gnu_cxx5__ops14_Val_comp_iterIN5nlsat22vos_var_info_collector3imp21univariate_reorder_ltEEEEvT_T0_.exit.i ], [ %i.ah, %_ZSt16__insertion_sortIPjN9__gnu_cxx5__ops15_Iter_comp_iterIN5nlsat22vos_var_info_collector3imp21univariate_reorder_ltEEEEvT_S9_T0_.exit ] ; 5 uses
   %i.ai = load i32, ptr %.08.i, align 4, !tbaa !34 ; 4 uses
   %i.aj = zext i32 %i.ai to i64
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.aj ; 2 uses
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.aj ; 2 uses
   %.011.i.i = getelementptr inbounds i8, ptr %.08.i, i64 -4 ; 2 uses
   %i.al = load i32, ptr %.011.i.i, align 4, !tbaa !34 ; 3 uses
   %i.am = load i32, ptr %i.ak, align 4, !tbaa !34 ; 2 uses
   %i.an = zext i32 %i.al to i64
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.an
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !34 ; 2 uses
   %.not.i.i12.i.i11 = icmp eq i32 %i.am, %i.ap
   %i.aq = icmp ugt i32 %i.am, %i.ap
@@ -306,7 +308,7 @@ _ZSt16__insertion_sortIPjN9__gnu_cxx5__ops15_Iter_comp_iterIN5nlsat22vos_var_inf
   %i.at = load i32, ptr %.0.i.i17, align 4, !tbaa !34 ; 3 uses
   %i.au = load i32, ptr %i.ak, align 4, !tbaa !34 ; 2 uses
   %i.av = zext i32 %i.at to i64
-  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.av
+  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.av
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !34 ; 2 uses
   %.not.i.i.i.i18 = icmp eq i32 %i.au, %i.ax
   %i.ay = icmp ugt i32 %i.au, %i.ax

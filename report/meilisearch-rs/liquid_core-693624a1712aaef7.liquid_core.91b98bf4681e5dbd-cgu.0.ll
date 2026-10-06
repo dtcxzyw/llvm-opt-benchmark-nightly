@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.z, %bb.e
   br i1 %i.k, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h6b1a56c575260d01E.exit", label %bb.p
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h6b1a56c575260d01E.exit": ; preds = %bb.f
-  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i33 = icmp ult i64 %i.l, %.sroa.01.0
   br i1 %.not.i33, label %bb.g, label %bb.h
@@ -233,8 +233,11 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph:                                           ; preds = %.preheader50, %bb.j
   %.val9.i = phi i8 [ %.val8.i, %bb.j ], [ %.val10.i, %.preheader50 ]
-  %.sroa.01.0.i.i55 = phi i64 [ %i.s, %bb.j ], [ 2, %.preheader50 ] ; 3 uses
+  %.sroa.01.0.i.i55 = phi i64 [ %i.s, %bb.j ], [ 2, %.preheader50 ] ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.0.i.i55
+  %6 = add i64 %.sroa.01.0.i.i55, -1
+  %7 = icmp ult i64 %6, %i.l
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i8, ptr %i.q, align 1, !range !28, !alias.scope !11122, !noalias !11123, !noundef !6 ; 2 uses
   %i.r = icmp samesign ult i8 %.val8.i, %.val9.i
   br i1 %i.r, label %_ZN4core5slice4sort6shared17find_existing_run17h56e0bc05f6e27f9fE.exit.i, label %bb.j
@@ -246,8 +249,11 @@ bb.j:                                             ; preds = %.lr.ph
 
 .lr.ph59:                                         ; preds = %.preheader, %bb.k
   %.val7.i = phi i8 [ %.val.i, %bb.k ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i58 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i58 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.1.i.i58
+  %8 = add i64 %.sroa.01.1.i.i58, -1
+  %9 = icmp ult i64 %8, %i.l
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i8, ptr %i.t, align 1, !range !28, !alias.scope !11122, !noalias !11123, !noundef !6 ; 2 uses
   %i.u = icmp samesign ult i8 %.val.i, %.val7.i
   br i1 %i.u, label %bb.k, label %_ZN4core5slice4sort6shared17find_existing_run17h56e0bc05f6e27f9fE.exit.i
@@ -650,8 +656,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader22, %bb.c
   %.val9 = phi i64 [ %.val7, %bb.c ], [ %.val11, %.preheader22 ] ; 2 uses
   %.val8 = phi ptr [ %.val6, %bb.c ], [ %.val10, %.preheader22 ]
-  %.sroa.01.0.i24 = phi i64 [ %i.q, %bb.c ], [ 2, %.preheader22 ] ; 3 uses
+  %.sroa.01.0.i24 = phi i64 [ %i.q, %bb.c ], [ 2, %.preheader22 ] ; 4 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i24 ; 2 uses
+  %3 = add i64 %.sroa.01.0.i24, -1
+  %4 = icmp ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val6 = load ptr, ptr %i.j, align 8, !nonnull !6, !align !8, !noundef !6 ; 2 uses
   %i.k = getelementptr i8, ptr %i.j, i64 8
   %.val7 = load i64, ptr %i.k, align 8, !noundef !6 ; 3 uses
@@ -672,8 +681,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph28:                                         ; preds = %.preheader, %bb.d
   %.val5 = phi i64 [ %.val3, %bb.d ], [ %.val11, %.preheader ] ; 2 uses
   %.val4 = phi ptr [ %.val, %bb.d ], [ %.val10, %.preheader ]
-  %.sroa.01.1.i27 = phi i64 [ %i.y, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i27 = phi i64 [ %i.y, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.1.i27 ; 2 uses
+  %5 = add i64 %.sroa.01.1.i27, -1
+  %6 = icmp ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load ptr, ptr %i.r, align 8, !nonnull !6, !align !8, !noundef !6 ; 2 uses
   %i.s = getelementptr i8, ptr %i.r, i64 8
   %.val3 = load i64, ptr %i.s, align 8, !noundef !6 ; 3 uses

@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 10 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
 
@@ -230,10 +230,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner12ZoneInfoName12split_at_mutBE_.exit11.preheader.i.i.i, label %.lr.ph27.i
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
-  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i ; 2 uses
-  %6 = getelementptr i8, ptr %i.s, i64 -8
-  %i.t = tail call noundef i8 @_RNvXs8_NtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5innerNtB5_12ZoneInfoNameNtNtCs3oUPovFnLWP_4core3cmp10PartialOrd11partial_cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %6), !noalias !149 ; 2 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1          ; 2 uses
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %6
+  %i.t = tail call noundef i8 @_RNvXs8_NtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5innerNtB5_12ZoneInfoNameNtNtCs3oUPovFnLWP_4core3cmp10PartialOrd11partial_cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %8), !noalias !149 ; 2 uses
   %.not.i.i7.i = icmp ne i8 %i.t, -2
   %i.u = icmp slt i8 %i.t, 0
   %.sroa.0.0.i.i8.i = and i1 %.not.i.i7.i, %i.u
@@ -245,10 +248,13 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB12_NtNtB8_3cmp10PartialOrd2ltEB1c_.exit.i, label %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i ; 2 uses
-  %7 = getelementptr i8, ptr %i.w, i64 -8
-  %i.x = tail call noundef i8 @_RNvXs8_NtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5innerNtB5_12ZoneInfoNameNtNtCs3oUPovFnLWP_4core3cmp10PartialOrd11partial_cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %7), !noalias !149 ; 2 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %9 = add nsw i64 %.sroa.01.1.i26.i, -1          ; 2 uses
+  %10 = icmp samesign ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %9
+  %i.x = tail call noundef i8 @_RNvXs8_NtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5innerNtB5_12ZoneInfoNameNtNtCs3oUPovFnLWP_4core3cmp10PartialOrd11partial_cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %11), !noalias !149 ; 2 uses
   %.not.i.i9.i = icmp ne i8 %i.x, -2
   %i.y = icmp slt i8 %i.x, 0
   %.sroa.0.0.i.i10.i = and i1 %.not.i.i9.i, %i.y

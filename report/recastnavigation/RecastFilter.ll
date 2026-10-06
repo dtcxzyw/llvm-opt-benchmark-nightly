@@ -128,24 +128,26 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
 
 _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
-  %i.g = load i32, ptr %3, align 8, !tbaa !66     ; 5 uses
+  %i.g = load i32, ptr %3, align 8, !tbaa !66
+  %.fr = freeze i32 %i.g                          ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !67   ; 3 uses
-  %i.j = icmp sgt i32 %i.i, 0
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !67
+  %.fr203 = freeze i32 %i.i                       ; 3 uses
+  %i.j = icmp sgt i32 %.fr203, 0
   br i1 %i.j, label %.preheader135.lr.ph, label %._crit_edge169.split
 
 .preheader135.lr.ph:                              ; preds = %_ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit
-  %i.k = icmp sgt i32 %i.g, 0
+  %i.k = icmp sgt i32 %.fr, 0
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
   %i.m = sub nsw i32 0, %2                        ; 5 uses
   %i.n = xor i32 %2, -1                           ; 12 uses
   br i1 %i.k, label %.preheader135.preheader, label %._crit_edge169.split
 
 .preheader135.preheader:                          ; preds = %.preheader135.lr.ph
-  %i.o = zext nneg i32 %i.g to i64                ; 2 uses
-  %i.p = zext nneg i32 %i.i to i64
-  %wide.trip.count175 = zext nneg i32 %i.i to i64
-  %wide.trip.count = zext nneg i32 %i.g to i64
+  %i.o = zext nneg i32 %.fr to i64                ; 3 uses
+  %i.p = zext nneg i32 %.fr203 to i64             ; 2 uses
+  %wide.trip.count175 = zext nneg i32 %.fr203 to i64
+  %wide.trip.count = zext nneg i32 %.fr to i64
   br label %.preheader135
 
 .preheader135:                                    ; preds = %.preheader135.preheader, %._crit_edge167
@@ -155,12 +157,13 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
   %i.s = add nuw nsw i64 %indvars.iv172, 1        ; 2 uses
   %.not111.1 = icmp samesign ult i64 %i.s, %i.p
   %i.t = trunc i64 %i.s to i32
-  %i.u = mul i32 %i.g, %i.t
+  %i.u = mul i32 %.fr, %i.t
   %i.v = zext i32 %i.u to i64
-  %.not203 = icmp eq i64 %indvars.iv172, 0
+  %4 = add nsw i64 %indvars.iv172, -1
+  %or.cond118.3 = icmp ult i64 %4, %i.p
   %i.w = trunc i64 %indvars.iv172 to i32
   %i.x = add i32 %i.w, -1
-  %i.y = mul i32 %i.x, %i.g
+  %i.y = mul i32 %i.x, %.fr
   %i.z = zext i32 %i.y to i64
   br label %bb.d
 
@@ -194,7 +197,8 @@ bb.d:                                             ; preds = %.preheader135, %._c
   br i1 %.not160, label %._crit_edge164, label %.lr.ph163.preheader
 
 .lr.ph163.preheader:                              ; preds = %bb.d
-  %.not202 = icmp eq i64 %indvars.iv, 0
+  %5 = add nsw i64 %indvars.iv, -1
+  %or.cond117 = icmp ult i64 %5, %i.o
   %i.ai = add nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %.not110.2 = icmp samesign ult i64 %i.ai, %i.o
   br label %.lr.ph163
@@ -230,7 +234,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %i.ar = phi i32 [ %i.aq, %bb.f ], [ 65535, %bb.e ] ; 16 uses
-  br i1 %.not202, label %.thread127, label %bb.h
+  br i1 %or.cond117, label %bb.h, label %.thread127
 
 bb.h:                                             ; preds = %bb.g
   %i.as = load ptr, ptr %i.l, align 8, !tbaa !69  ; 4 uses
@@ -454,7 +458,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   %.179.lcssa.2 = phi i32 [ %.179.lcssa.1, %bb.y ], [ %.482.ph.2, %bb.ae ], [ %.179146.2, %bb.ad ] ; 4 uses
   %.1.lcssa.2 = phi i32 [ %.1.lcssa.1, %bb.y ], [ %.4.ph.2, %bb.ae ], [ %.1147.2, %bb.ad ] ; 4 uses
   %.592.2 = phi i32 [ %.592.1, %bb.y ], [ %.289.ph.2, %bb.ae ], [ %i.dp, %bb.ad ] ; 2 uses
-  br i1 %.not203, label %.thread127, label %bb.af
+  br i1 %or.cond118.3, label %bb.af, label %.thread127
 
 bb.af:                                            ; preds = %._crit_edge.2
   %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %indvars.iv

@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %.0116.i = phi ptr [ %i.dw, %bb.r ], [ %i.ea, %bb.s ] ; 5 uses
   %.0115.i = phi ptr [ %i.dy, %bb.r ], [ %i.ee, %bb.s ] ; 11 uses
   %i.eh = load i32, ptr @hf_mka_live_peer_list_set, align 4
-  %i.ei = zext nneg i16 %i.dl to i32              ; 5 uses
+  %i.ei = zext nneg i16 %i.dl to i32              ; 6 uses
   %i.ej = add nuw nsw i32 %i.ei, 4
   %i.ek = call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.eh, ptr noundef %0, i32 noundef %.0159, i32 noundef %i.ej, i32 noundef 0)
   %i.el = load i32, ptr @ett_mka_live_peer_list_set, align 4
@@ -266,7 +266,14 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
 .lr.ph.i:                                         ; preds = %bb.ab
   %i.fi = zext i8 %.0117.i to i32
   %.not140.i = icmp eq i8 %.0117.i, 0
-  br i1 %.not132.i, label %.lr.ph.split.i, label %.lr.ph.split.us.i
+  br i1 %.not132.i, label %.lr.ph.split.preheader.i, label %.lr.ph.split.us.i
+
+.lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
+  %8 = add nsw i32 %i.ei, -16
+  %9 = lshr i32 %8, 4
+  %10 = add nuw nsw i32 %9, 1
+  %11 = and i32 %i.ei, 15
+  br label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.lr.ph.split.us.i
   %.0113150.us.i = phi i32 [ %.0113.us.i, %.lr.ph.split.us.i ], [ %.0113145.i, %.lr.ph.i ]
@@ -282,12 +289,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
   %i.fp = icmp samesign ugt i32 %.0120146.us.i, 31
   br i1 %i.fp, label %.lr.ph.split.us.i, label %.loopexit.i, !llvm.loop !9
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.ah
-  %.0113150.i = phi i32 [ %.0113.i, %bb.ah ], [ %.0113145.i, %.lr.ph.i ] ; 2 uses
-  %.0149.i = phi i32 [ %i.gl, %bb.ah ], [ 1, %.lr.ph.i ] ; 3 uses
-  %.0113.in148.i = phi i32 [ %i.gi, %bb.ah ], [ %.0159, %.lr.ph.i ] ; 2 uses
-  %.1147.i = phi i1 [ %.2.i, %bb.ah ], [ true, %.lr.ph.i ]
-  %.0120146.i = phi i32 [ %8, %bb.ah ], [ %i.ei, %.lr.ph.i ] ; 2 uses
+.lr.ph.split.i:                                   ; preds = %bb.ah, %.lr.ph.split.preheader.i
+  %.0113150.i = phi i32 [ %.0113.i, %bb.ah ], [ %.0113145.i, %.lr.ph.split.preheader.i ] ; 2 uses
+  %.0149.i = phi i32 [ %i.gl, %bb.ah ], [ 1, %.lr.ph.split.preheader.i ] ; 4 uses
+  %.0113.in148.i = phi i32 [ %i.gi, %bb.ah ], [ %.0159, %.lr.ph.split.preheader.i ] ; 2 uses
+  %.1147.i = phi i1 [ %.2.i, %bb.ah ], [ true, %.lr.ph.split.preheader.i ]
   %i.fq = load i32, ptr @hf_mka_peer_mi, align 4
   %i.fr = call ptr @proto_tree_add_item(ptr noundef %i.em, i32 noundef %i.fq, ptr noundef %0, i32 noundef %.0113150.i, i32 noundef 12, i32 noundef 0) ; 0 uses
   %i.fs = load ptr, ptr %i.bd, align 8
@@ -337,14 +343,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ad
   %i.gi = add i32 %.0113.in148.i, 16              ; 2 uses
   %i.gj = load i32, ptr @hf_mka_peer_mn, align 4
   %i.gk = call ptr @proto_tree_add_item(ptr noundef %i.em, i32 noundef %i.gj, ptr noundef %0, i32 noundef %i.gi, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %8 = add nsw i32 %.0120146.i, -16               ; 2 uses
   %i.gl = add nuw nsw i32 %.0149.i, 1
   %.0113.i = add i32 %.0113.in148.i, 20           ; 2 uses
-  %9 = icmp sgt i32 %.0120146.i, 31
-  br i1 %9, label %.lr.ph.split.i, label %._crit_edge.i, !llvm.loop !9
+  %exitcond.not.i = icmp eq i32 %.0149.i, %10
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !9
 
 ._crit_edge.i:                                    ; preds = %bb.ah, %bb.ab
-  %.0120.lcssa.i = phi i32 [ %i.ei, %bb.ab ], [ %8, %bb.ah ] ; 3 uses
+  %.0120.lcssa.i = phi i32 [ %i.ei, %bb.ab ], [ %11, %bb.ah ] ; 3 uses
   %.1.lcssa.i = phi i1 [ %.not132.i, %bb.ab ], [ %.2.i, %bb.ah ]
   %.0113.lcssa.i = phi i32 [ %.0113145.i, %bb.ab ], [ %.0113.i, %bb.ah ] ; 3 uses
   %i.gm = icmp ne ptr %.0115.i, null

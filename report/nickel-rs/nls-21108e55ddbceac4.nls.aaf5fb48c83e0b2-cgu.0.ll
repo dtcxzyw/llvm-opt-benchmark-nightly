@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
   br i1 %.not.i33, label %bb.f, label %bb.g
@@ -251,8 +251,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = phi i32 [ %i.aj, %bb.i ], [ %i.s, %.preheader58 ]
   %i.ac = phi i32 [ %i.ah, %bb.i ], [ %i.q, %.preheader58 ] ; 2 uses
   %i.ad = phi i32 [ %i.af, %bb.i ], [ %i.o, %.preheader58 ] ; 2 uses
-  %.sroa.01.0.i.i63 = phi i64 [ %i.an, %bb.i ], [ 2, %.preheader58 ] ; 3 uses
+  %.sroa.01.0.i.i63 = phi i64 [ %i.an, %bb.i ], [ 2, %.preheader58 ] ; 4 uses
   %i.ae = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.0.i.i63 ; 3 uses
+  %5 = add i64 %.sroa.01.0.i.i63, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %i.af = load i32, ptr %i.ae, align 4, !alias.scope !94740, !noalias !94741, !noundef !44 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !94740, !noalias !94741, !noundef !44 ; 3 uses
@@ -276,8 +279,11 @@ bb.i:                                             ; preds = %.lr.ph
   %i.ao = phi i32 [ %i.aw, %bb.j ], [ %i.s, %.preheader ]
   %i.ap = phi i32 [ %i.au, %bb.j ], [ %i.q, %.preheader ] ; 2 uses
   %i.aq = phi i32 [ %i.as, %bb.j ], [ %i.o, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i66 = phi i64 [ %i.ba, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i66 = phi i64 [ %i.ba, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ar = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.1.i.i66 ; 3 uses
+  %7 = add i64 %.sroa.01.1.i.i66, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %i.as = load i32, ptr %i.ar, align 4, !alias.scope !94742, !noalias !94743, !noundef !44 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
   %i.au = load i32, ptr %i.at, align 4, !alias.scope !94742, !noalias !94743, !noundef !44 ; 3 uses
@@ -635,7 +641,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.sroa.09.0 ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94914)
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
@@ -702,8 +708,10 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader69, %bb.i
   %.sroa.01.0.i.i84 = phi i64 [ %i.bn, %bb.i ], [ 2, %.preheader69 ] ; 4 uses
   %i.an = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.0.i.i84 ; 3 uses
-  %6 = getelementptr [12 x i8], ptr %i.l, i64 %.sroa.01.0.i.i84 ; 3 uses
-  %7 = getelementptr i8, ptr %6, i64 -12
+  %6 = add i64 %.sroa.01.0.i.i84, -1              ; 2 uses
+  %7 = icmp ult i64 %6, %i.k
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %6 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94930)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94931)
   %.val2.i43 = load ptr, ptr %.val8.i, align 8, !noalias !94932, !nonnull !44, !align !50, !noundef !44
@@ -720,13 +728,13 @@ bb.h:                                             ; preds = %bb.g
   %.val.i44 = load ptr, ptr %.val8.i, align 8, !noalias !94932, !nonnull !44, !align !50, !noundef !44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94937), !noalias !94920
   %i.ax = getelementptr inbounds nuw i8, ptr %.val.i44, i64 288
-  %i.ay = load i32, ptr %7, align 4, !alias.scope !94938, !noalias !94939, !noundef !44
+  %i.ay = load i32, ptr %8, align 4, !alias.scope !94938, !noalias !94939, !noundef !44
   %i.az = tail call { ptr, i64 } @_ZN18nickel_lang_parser5files5Files4name17hc4b8930715dcfb2aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ax, i32 noundef %i.ay), !noalias !94940 ; 2 uses
   %i.ba = extractvalue { ptr, i64 } %i.az, 0      ; 2 uses
   %i.bb = extractvalue { ptr, i64 } %i.az, 1      ; 2 uses
-  %i.bc = getelementptr i8, ptr %6, i64 -8
+  %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.bd = load i32, ptr %i.bc, align 4, !alias.scope !94938, !noalias !94939, !noundef !44 ; 2 uses
-  %i.be = getelementptr i8, ptr %6, i64 -4
+  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.bf = load i32, ptr %i.be, align 4, !alias.scope !94938, !noalias !94939, !noundef !44
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ], !noalias !94920
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ba) ], !noalias !94920
@@ -753,8 +761,10 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph88:                                         ; preds = %.preheader68, %bb.j
   %.sroa.01.1.i.i87 = phi i64 [ %i.co, %bb.j ], [ 2, %.preheader68 ] ; 4 uses
   %i.bo = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.1.i.i87 ; 3 uses
-  %8 = getelementptr [12 x i8], ptr %i.l, i64 %.sroa.01.1.i.i87 ; 3 uses
-  %9 = getelementptr i8, ptr %8, i64 -12
+  %9 = add i64 %.sroa.01.1.i.i87, -1              ; 2 uses
+  %10 = icmp ult i64 %9, %i.k
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %9 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94943)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94944)
   %.val2.i = load ptr, ptr %.val8.i, align 8, !noalias !94945, !nonnull !44, !align !50, !noundef !44
@@ -771,13 +781,13 @@ bb.i:                                             ; preds = %.lr.ph
   %.val.i42 = load ptr, ptr %.val8.i, align 8, !noalias !94945, !nonnull !44, !align !50, !noundef !44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94950), !noalias !94920
   %i.by = getelementptr inbounds nuw i8, ptr %.val.i42, i64 288
-  %i.bz = load i32, ptr %9, align 4, !alias.scope !94951, !noalias !94952, !noundef !44
+  %i.bz = load i32, ptr %11, align 4, !alias.scope !94951, !noalias !94952, !noundef !44
   %i.ca = tail call { ptr, i64 } @_ZN18nickel_lang_parser5files5Files4name17hc4b8930715dcfb2aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.by, i32 noundef %i.bz), !noalias !94953 ; 2 uses
   %i.cb = extractvalue { ptr, i64 } %i.ca, 0      ; 2 uses
   %i.cc = extractvalue { ptr, i64 } %i.ca, 1      ; 2 uses
-  %i.cd = getelementptr i8, ptr %8, i64 -8
+  %i.cd = getelementptr inbounds nuw i8, ptr %11, i64 4
   %i.ce = load i32, ptr %i.cd, align 4, !alias.scope !94951, !noalias !94952, !noundef !44 ; 2 uses
-  %i.cf = getelementptr i8, ptr %8, i64 -4
+  %i.cf = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.cg = load i32, ptr %i.cf, align 4, !alias.scope !94951, !noalias !94952, !noundef !44
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bs) ], !noalias !94920
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ], !noalias !94920
@@ -1180,7 +1190,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h50afddd1600e3be1E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h50afddd1600e3be1E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95060)
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
@@ -1220,8 +1230,11 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader54, %bb.i
   %.val13.i = phi i64 [ %.val11.i, %bb.i ], [ %.val15.i, %.preheader54 ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.i ], [ %.val14.i, %.preheader54 ]
-  %.sroa.01.0.i.i59 = phi i64 [ %i.ac, %bb.i ], [ 2, %.preheader54 ] ; 3 uses
+  %.sroa.01.0.i.i59 = phi i64 [ %i.ac, %bb.i ], [ 2, %.preheader54 ] ; 4 uses
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.01.0.i.i59 ; 2 uses
+  %5 = add i64 %.sroa.01.0.i.i59, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %.val10.i = load ptr, ptr %i.v, align 8, !alias.scope !95060, !noalias !95061, !nonnull !44, !align !57, !noundef !44 ; 2 uses
   %i.w = getelementptr i8, ptr %i.v, i64 8
   %.val11.i = load i64, ptr %i.w, align 8, !alias.scope !95060, !noalias !95061, !noundef !44 ; 3 uses
@@ -1242,8 +1255,11 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph63:                                         ; preds = %.preheader, %bb.j
   %.val9.i = phi i64 [ %.val7.i, %bb.j ], [ %.val15.i, %.preheader ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.j ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i62 = phi i64 [ %i.ak, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i62 = phi i64 [ %i.ak, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.01.1.i.i62 ; 2 uses
+  %7 = add i64 %.sroa.01.1.i.i62, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %.val.i = load ptr, ptr %i.ad, align 8, !alias.scope !95060, !noalias !95061, !nonnull !44, !align !57, !noundef !44 ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val7.i = load i64, ptr %i.ae, align 8, !alias.scope !95060, !noalias !95061, !noundef !44 ; 3 uses
@@ -1617,7 +1633,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h228df6ad066f0165E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h228df6ad066f0165E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [136 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
   br i1 %.not.i33, label %bb.f, label %bb.g
@@ -1654,8 +1670,11 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader52, %bb.i
   %.val13.i = phi i32 [ %.val11.i, %bb.i ], [ %.val15.i, %.preheader52 ]
   %.val12.i = phi i32 [ %.val10.i, %bb.i ], [ %.val14.i, %.preheader52 ] ; 2 uses
-  %.sroa.01.0.i.i57 = phi i64 [ %i.aa, %bb.i ], [ 2, %.preheader52 ] ; 3 uses
+  %.sroa.01.0.i.i57 = phi i64 [ %i.aa, %bb.i ], [ 2, %.preheader52 ] ; 4 uses
   %i.u = getelementptr inbounds nuw [136 x i8], ptr %i.l, i64 %.sroa.01.0.i.i57 ; 2 uses
+  %5 = add i64 %.sroa.01.0.i.i57, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %i.v = getelementptr i8, ptr %i.u, i64 96
   %.val10.i = load i32, ptr %i.v, align 8, !alias.scope !95142, !noalias !95143, !noundef !44 ; 3 uses
   %i.w = getelementptr i8, ptr %i.u, i64 100
@@ -1674,8 +1693,11 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph61:                                         ; preds = %.preheader, %bb.j
   %.val9.i = phi i32 [ %.val7.i, %bb.j ], [ %.val15.i, %.preheader ]
   %.val8.i = phi i32 [ %.val.i, %bb.j ], [ %.val14.i, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i60 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i60 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ab = getelementptr inbounds nuw [136 x i8], ptr %i.l, i64 %.sroa.01.1.i.i60 ; 2 uses
+  %7 = add i64 %.sroa.01.1.i.i60, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %i.ac = getelementptr i8, ptr %i.ab, i64 96
   %.val.i = load i32, ptr %i.ac, align 8, !alias.scope !95142, !noalias !95143, !noundef !44 ; 3 uses
   %i.ad = getelementptr i8, ptr %i.ab, i64 100
@@ -2055,7 +2077,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h41f26a172fbf24d7E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h41f26a172fbf24d7E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95237)
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
@@ -2096,8 +2118,11 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader54, %bb.i
   %.val13.i = phi i64 [ %.val11.i, %bb.i ], [ %.val15.i, %.preheader54 ] ; 2 uses
   %.val12.i = phi ptr [ %.val10.i, %bb.i ], [ %.val14.i, %.preheader54 ]
-  %.sroa.01.0.i.i59 = phi i64 [ %i.ae, %bb.i ], [ 2, %.preheader54 ] ; 3 uses
+  %.sroa.01.0.i.i59 = phi i64 [ %i.ae, %bb.i ], [ 2, %.preheader54 ] ; 4 uses
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.01.0.i.i59 ; 2 uses
+  %5 = add i64 %.sroa.01.0.i.i59, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %i.x = getelementptr i8, ptr %i.w, i64 8
   %.val10.i = load ptr, ptr %i.x, align 8, !alias.scope !95237, !noalias !95238, !nonnull !44, !noundef !44 ; 2 uses
   %i.y = getelementptr i8, ptr %i.w, i64 16
@@ -2119,8 +2144,11 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph63:                                         ; preds = %.preheader, %bb.j
   %.val9.i = phi i64 [ %.val7.i, %bb.j ], [ %.val15.i, %.preheader ] ; 2 uses
   %.val8.i = phi ptr [ %.val.i, %bb.j ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i62 = phi i64 [ %i.an, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i62 = phi i64 [ %i.an, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.01.1.i.i62 ; 2 uses
+  %7 = add i64 %.sroa.01.1.i.i62, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %i.ag = getelementptr i8, ptr %i.af, i64 8
   %.val.i = load ptr, ptr %i.ag, align 8, !alias.scope !95237, !noalias !95238, !nonnull !44, !noundef !44 ; 2 uses
   %i.ah = getelementptr i8, ptr %i.af, i64 16
@@ -2465,7 +2493,7 @@ bb.e:                                             ; preds = %bb.z, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h7f42314f14f130f9E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %.sroa.09.0 ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95406)
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
@@ -2532,8 +2560,10 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader69, %bb.i
   %.sroa.01.0.i.i84 = phi i64 [ %i.bn, %bb.i ], [ 2, %.preheader69 ] ; 4 uses
   %i.an = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.0.i.i84 ; 3 uses
-  %6 = getelementptr [12 x i8], ptr %i.l, i64 %.sroa.01.0.i.i84 ; 3 uses
-  %7 = getelementptr i8, ptr %6, i64 -12
+  %6 = add i64 %.sroa.01.0.i.i84, -1              ; 2 uses
+  %7 = icmp ult i64 %6, %i.k
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %6 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95422)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95423)
   %.val2.i43 = load ptr, ptr %.val8.i, align 8, !noalias !95424, !nonnull !44, !align !50, !noundef !44
@@ -2550,13 +2580,13 @@ bb.h:                                             ; preds = %bb.g
   %.val.i44 = load ptr, ptr %.val8.i, align 8, !noalias !95424, !nonnull !44, !align !50, !noundef !44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95429), !noalias !95412
   %i.ax = getelementptr inbounds nuw i8, ptr %.val.i44, i64 288
-  %i.ay = load i32, ptr %7, align 4, !alias.scope !95430, !noalias !95431, !noundef !44
+  %i.ay = load i32, ptr %8, align 4, !alias.scope !95430, !noalias !95431, !noundef !44
   %i.az = tail call { ptr, i64 } @_ZN18nickel_lang_parser5files5Files4name17hc4b8930715dcfb2aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ax, i32 noundef %i.ay), !noalias !95432 ; 2 uses
   %i.ba = extractvalue { ptr, i64 } %i.az, 0      ; 2 uses
   %i.bb = extractvalue { ptr, i64 } %i.az, 1      ; 2 uses
-  %i.bc = getelementptr i8, ptr %6, i64 -8
+  %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.bd = load i32, ptr %i.bc, align 4, !alias.scope !95430, !noalias !95431, !noundef !44 ; 2 uses
-  %i.be = getelementptr i8, ptr %6, i64 -4
+  %i.be = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.bf = load i32, ptr %i.be, align 4, !alias.scope !95430, !noalias !95431, !noundef !44
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ], !noalias !95412
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ba) ], !noalias !95412
@@ -2583,8 +2613,10 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph88:                                         ; preds = %.preheader68, %bb.j
   %.sroa.01.1.i.i87 = phi i64 [ %i.co, %bb.j ], [ 2, %.preheader68 ] ; 4 uses
   %i.bo = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %.sroa.01.1.i.i87 ; 3 uses
-  %8 = getelementptr [12 x i8], ptr %i.l, i64 %.sroa.01.1.i.i87 ; 3 uses
-  %9 = getelementptr i8, ptr %8, i64 -12
+  %9 = add i64 %.sroa.01.1.i.i87, -1              ; 2 uses
+  %10 = icmp ult i64 %9, %i.k
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %9 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95435)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95436)
   %.val2.i = load ptr, ptr %.val8.i, align 8, !noalias !95437, !nonnull !44, !align !50, !noundef !44
@@ -2601,13 +2633,13 @@ bb.i:                                             ; preds = %.lr.ph
   %.val.i42 = load ptr, ptr %.val8.i, align 8, !noalias !95437, !nonnull !44, !align !50, !noundef !44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95442), !noalias !95412
   %i.by = getelementptr inbounds nuw i8, ptr %.val.i42, i64 288
-  %i.bz = load i32, ptr %9, align 4, !alias.scope !95443, !noalias !95444, !noundef !44
+  %i.bz = load i32, ptr %11, align 4, !alias.scope !95443, !noalias !95444, !noundef !44
   %i.ca = tail call { ptr, i64 } @_ZN18nickel_lang_parser5files5Files4name17hc4b8930715dcfb2aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.by, i32 noundef %i.bz), !noalias !95445 ; 2 uses
   %i.cb = extractvalue { ptr, i64 } %i.ca, 0      ; 2 uses
   %i.cc = extractvalue { ptr, i64 } %i.ca, 1      ; 2 uses
-  %i.cd = getelementptr i8, ptr %8, i64 -8
+  %i.cd = getelementptr inbounds nuw i8, ptr %11, i64 4
   %i.ce = load i32, ptr %i.cd, align 4, !alias.scope !95443, !noalias !95444, !noundef !44 ; 2 uses
-  %i.cf = getelementptr i8, ptr %8, i64 -4
+  %i.cf = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.cg = load i32, ptr %i.cf, align 4, !alias.scope !95443, !noalias !95444, !noundef !44
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bs) ], !noalias !95412
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ], !noalias !95412
@@ -3010,7 +3042,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17hd37c1a39ccc70b55E.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17hd37c1a39ccc70b55E.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
   br i1 %.not.i33, label %bb.f, label %bb.g
@@ -3039,8 +3071,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %.preheader50, %bb.i
   %.val9.i = phi i32 [ %.val8.i, %bb.i ], [ %.val10.i, %.preheader50 ]
-  %.sroa.01.0.i.i55 = phi i64 [ %i.t, %bb.i ], [ 2, %.preheader50 ] ; 3 uses
+  %.sroa.01.0.i.i55 = phi i64 [ %i.t, %bb.i ], [ 2, %.preheader50 ] ; 4 uses
   %i.q = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %.sroa.01.0.i.i55
+  %5 = add i64 %.sroa.01.0.i.i55, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %i.r = getelementptr i8, ptr %i.q, i64 40
   %.val8.i = load i32, ptr %i.r, align 8, !alias.scope !95520, !noalias !95521, !noundef !44 ; 2 uses
   %i.s = icmp ult i32 %.val8.i, %.val9.i
@@ -3053,8 +3088,11 @@ bb.i:                                             ; preds = %.lr.ph
 
 .lr.ph59:                                         ; preds = %.preheader, %bb.j
   %.val7.i = phi i32 [ %.val.i, %bb.j ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i58 = phi i64 [ %i.x, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i58 = phi i64 [ %i.x, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.u = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %.sroa.01.1.i.i58
+  %7 = add i64 %.sroa.01.1.i.i58, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %i.v = getelementptr i8, ptr %i.u, i64 40
   %.val.i = load i32, ptr %i.v, align 8, !alias.scope !95520, !noalias !95521, !noundef !44 ; 2 uses
   %i.w = icmp ult i32 %.val.i, %.val7.i
@@ -3377,7 +3415,7 @@ bb.e:                                             ; preds = %bb.y, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17hebd8cd95f8e33b0fE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17hebd8cd95f8e33b0fE.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
   br i1 %.not.i33, label %bb.f, label %bb.g
@@ -3414,8 +3452,11 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader53, %bb.i
   %.val13.i = phi i32 [ %.val11.i, %bb.i ], [ %.val15.i, %.preheader53 ]
   %.val12.i = phi i32 [ %.val10.i, %bb.i ], [ %.val14.i, %.preheader53 ] ; 2 uses
-  %.sroa.01.0.i.i58 = phi i64 [ %i.aa, %bb.i ], [ 2, %.preheader53 ] ; 3 uses
+  %.sroa.01.0.i.i58 = phi i64 [ %i.aa, %bb.i ], [ 2, %.preheader53 ] ; 4 uses
   %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.01.0.i.i58 ; 2 uses
+  %5 = add i64 %.sroa.01.0.i.i58, -1
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
   %i.v = getelementptr i8, ptr %i.u, i64 8
   %.val10.i = load i32, ptr %i.v, align 8, !alias.scope !95567, !noalias !95568, !noundef !44 ; 3 uses
   %i.w = getelementptr i8, ptr %i.u, i64 12
@@ -3434,8 +3475,11 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph62:                                         ; preds = %.preheader, %bb.j
   %.val9.i = phi i32 [ %.val7.i, %bb.j ], [ %.val15.i, %.preheader ]
   %.val8.i = phi i32 [ %.val.i, %bb.j ], [ %.val14.i, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i61 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i61 = phi i64 [ %i.ah, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.01.1.i.i61 ; 2 uses
+  %7 = add i64 %.sroa.01.1.i.i61, -1
+  %8 = icmp ult i64 %7, %i.k
+  tail call void @llvm.assume(i1 %8)
   %i.ac = getelementptr i8, ptr %i.ab, i64 8
   %.val.i = load i32, ptr %i.ac, align 8, !alias.scope !95567, !noalias !95568, !noundef !44 ; 3 uses
   %i.ad = getelementptr i8, ptr %i.ab, i64 12
@@ -3798,7 +3842,7 @@ bb.e:                                             ; preds = %bb.ca, %bb.d
   br i1 %i.j, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h039c89d3920cf8efE.exit", label %bb.o
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h039c89d3920cf8efE.exit": ; preds = %bb.e
-  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.k = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.l = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i33 = icmp ult i64 %i.k, %.sroa.01.0
   br i1 %.not.i33, label %bb.f, label %bb.g
@@ -3825,9 +3869,11 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader108, %bb.i
   %.sroa.01.0.i.i113 = phi i64 [ %i.r, %bb.i ], [ 2, %.preheader108 ] ; 4 uses
   %i.p = getelementptr inbounds nuw [96 x i8], ptr %i.l, i64 %.sroa.01.0.i.i113
-  %5 = getelementptr [96 x i8], ptr %i.l, i64 %.sroa.01.0.i.i113
-  %6 = getelementptr i8, ptr %5, i64 -96
-  %i.q = tail call fastcc noundef zeroext i1 @_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.p, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %6), !noalias !95732, !inline_history !95588
+  %5 = add i64 %.sroa.01.0.i.i113, -1             ; 2 uses
+  %6 = icmp ult i64 %5, %i.k
+  tail call void @llvm.assume(i1 %6)
+  %7 = getelementptr inbounds nuw [96 x i8], ptr %i.l, i64 %5
+  %i.q = tail call fastcc noundef zeroext i1 @_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.p, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %7), !noalias !95732, !inline_history !95588
   br i1 %i.q, label %_ZN4core5slice4sort6shared17find_existing_run17h12a74c463fee8948E.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
@@ -3838,9 +3884,11 @@ bb.i:                                             ; preds = %.lr.ph
 .lr.ph117:                                        ; preds = %.preheader, %bb.j
   %.sroa.01.1.i.i116 = phi i64 [ %i.u, %bb.j ], [ 2, %.preheader ] ; 4 uses
   %i.s = getelementptr inbounds nuw [96 x i8], ptr %i.l, i64 %.sroa.01.1.i.i116
-  %7 = getelementptr [96 x i8], ptr %i.l, i64 %.sroa.01.1.i.i116
-  %8 = getelementptr i8, ptr %7, i64 -96
-  %i.t = tail call fastcc noundef zeroext i1 @_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %8), !noalias !95732, !inline_history !95588
+  %8 = add i64 %.sroa.01.1.i.i116, -1             ; 2 uses
+  %9 = icmp ult i64 %8, %i.k
+  tail call void @llvm.assume(i1 %9)
+  %10 = getelementptr inbounds nuw [96 x i8], ptr %i.l, i64 %8
+  %i.t = tail call fastcc noundef zeroext i1 @_ZN4core3ops8function5FnMut8call_mut17h555bf1ac516b8997E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %10), !noalias !95732, !inline_history !95588
   br i1 %i.t, label %bb.j, label %_ZN4core5slice4sort6shared17find_existing_run17h12a74c463fee8948E.exit.i
 
 bb.j:                                             ; preds = %.lr.ph117

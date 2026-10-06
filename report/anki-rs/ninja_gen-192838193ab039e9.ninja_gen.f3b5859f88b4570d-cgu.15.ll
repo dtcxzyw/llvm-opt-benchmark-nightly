@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_ZN4core5sli
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
@@ -219,9 +219,9 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.p = getelementptr i8, ptr %i.n, i64 32
-  %.val14.i = load ptr, ptr %i.p, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
+  %.val14.i = load ptr, ptr %i.p, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3 ; 3 uses
   %i.q = getelementptr i8, ptr %i.n, i64 40
-  %.val15.i = load i64, ptr %i.q, align 8, !alias.scope !31, !noalias !32, !noundef !3
+  %.val15.i = load i64, ptr %i.q, align 8, !alias.scope !31, !noalias !32, !noundef !3 ; 3 uses
   %i.r = getelementptr i8, ptr %i.n, i64 8
   %.val16.i = load ptr, ptr %i.r, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
   %i.s = getelementptr i8, ptr %i.n, i64 16
@@ -238,47 +238,49 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not39.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph34.i
 
 .lr.ph.i:                                         ; preds = %.preheader28.i, %bb.l
-  %.sroa.01.0.i30.i.a = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader28.i ] ; 3 uses
-  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i30.i.a ; 4 uses
-  %7 = getelementptr i8, ptr %6, i64 8
-  %.val10.i = load ptr, ptr %7, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
-  %8 = getelementptr i8, ptr %6, i64 16
-  %.val11.i = load i64, ptr %8, align 8, !alias.scope !31, !noalias !32, !noundef !3
-  %i.v = getelementptr i8, ptr %6, i64 -16
-  %.val12.i.a = load ptr, ptr %i.v, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
-  %i.w = getelementptr i8, ptr %6, i64 -8
-  %.val13.i = load i64, ptr %i.w, align 8, !alias.scope !31, !noalias !32, !noundef !3
-  %i.x = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h016d9fa549d7cf95E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val10.i, i64 noundef %.val11.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val12.i.a, i64 noundef %.val13.i), !noalias !33
+  %.sroa.01.0.i30.i.a = phi i64 [ %.val13.i, %bb.l ], [ %.val15.i, %.preheader28.i ]
+  %.val12.i = phi ptr [ %.val12.i.a, %bb.l ], [ %.val14.i, %.preheader28.i ]
+  %.sroa.01.0.i30.i = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader28.i ] ; 4 uses
+  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i30.i ; 2 uses
+  %7 = add i64 %.sroa.01.0.i30.i, -1
+  %8 = icmp ult i64 %7, %i.m
+  tail call void @llvm.assume(i1 %8)
+  %i.v = getelementptr i8, ptr %6, i64 8
+  %.val12.i.a = load ptr, ptr %i.v, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3 ; 2 uses
+  %i.w = getelementptr i8, ptr %6, i64 16
+  %.val13.i = load i64, ptr %i.w, align 8, !alias.scope !31, !noalias !32, !noundef !3 ; 2 uses
+  %i.x = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h016d9fa549d7cf95E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val12.i.a, i64 noundef %.val13.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val12.i, i64 noundef %.sroa.01.0.i30.i.a), !noalias !33
   %i.y = icmp slt i8 %i.x, 0
   br i1 %i.y, label %_ZN4core5slice4sort6shared17find_existing_run17h1b2141ed0c29da66E.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i
-  %i.z = add nuw i64 %.sroa.01.0.i30.i.a, 1       ; 2 uses
+  %i.z = add nuw i64 %.sroa.01.0.i30.i, 1         ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.z, %i.m
   br i1 %exitcond.not.i, label %_ZN4core5slice4sort6shared17find_existing_run17h1b2141ed0c29da66E.exit.i, label %.lr.ph.i
 
 .lr.ph34.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i33.i.a = phi i64 [ %i.ae, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %9 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i33.i.a ; 4 uses
-  %10 = getelementptr i8, ptr %9, i64 8
-  %.val.i = load ptr, ptr %10, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
-  %11 = getelementptr i8, ptr %9, i64 16
-  %.val7.i = load i64, ptr %11, align 8, !alias.scope !31, !noalias !32, !noundef !3
-  %i.aa = getelementptr i8, ptr %9, i64 -16
-  %.val8.i.a = load ptr, ptr %i.aa, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3
-  %i.ab = getelementptr i8, ptr %9, i64 -8
-  %.val9.i = load i64, ptr %i.ab, align 8, !alias.scope !31, !noalias !32, !noundef !3
-  %i.ac = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h016d9fa549d7cf95E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i, i64 noundef %.val7.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val8.i.a, i64 noundef %.val9.i), !noalias !33
+  %.sroa.01.1.i33.i.a = phi i64 [ %.val9.i, %bb.m ], [ %.val15.i, %.preheader.i ]
+  %.val8.i = phi ptr [ %.val8.i.a, %bb.m ], [ %.val14.i, %.preheader.i ]
+  %.sroa.01.1.i33.i = phi i64 [ %i.ae, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %9 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i33.i ; 2 uses
+  %10 = add i64 %.sroa.01.1.i33.i, -1
+  %11 = icmp ult i64 %10, %i.m
+  tail call void @llvm.assume(i1 %11)
+  %i.aa = getelementptr i8, ptr %9, i64 8
+  %.val8.i.a = load ptr, ptr %i.aa, align 8, !alias.scope !31, !noalias !32, !nonnull !3, !noundef !3 ; 2 uses
+  %i.ab = getelementptr i8, ptr %9, i64 16
+  %.val9.i = load i64, ptr %i.ab, align 8, !alias.scope !31, !noalias !32, !noundef !3 ; 2 uses
+  %i.ac = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h016d9fa549d7cf95E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val8.i.a, i64 noundef %.val9.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val8.i, i64 noundef %.sroa.01.1.i33.i.a), !noalias !33
   %i.ad = icmp slt i8 %i.ac, 0
   br i1 %i.ad, label %bb.m, label %_ZN4core5slice4sort6shared17find_existing_run17h1b2141ed0c29da66E.exit.i
 
 bb.m:                                             ; preds = %.lr.ph34.i
-  %i.ae = add nuw i64 %.sroa.01.1.i33.i.a, 1      ; 2 uses
+  %i.ae = add nuw i64 %.sroa.01.1.i33.i, 1        ; 2 uses
   %exitcond42.not.i = icmp eq i64 %i.ae, %i.m
   br i1 %exitcond42.not.i, label %_ZN4core5slice4sort6shared17find_existing_run17h1b2141ed0c29da66E.exit.i, label %.lr.ph34.i
 
 _ZN4core5slice4sort6shared17find_existing_run17h1b2141ed0c29da66E.exit.i: ; preds = %bb.m, %.lr.ph34.i, %bb.l, %.lr.ph.i
-  %.sroa.0.0.i.i = phi i64 [ %i.m, %bb.l ], [ %.sroa.01.0.i30.i.a, %.lr.ph.i ], [ %.sroa.01.1.i33.i.a, %.lr.ph34.i ], [ %i.m, %bb.m ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %i.m, %bb.l ], [ %.sroa.01.0.i30.i, %.lr.ph.i ], [ %.sroa.01.1.i33.i, %.lr.ph34.i ], [ %i.m, %bb.m ] ; 5 uses
   %i.af = icmp ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.af)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0

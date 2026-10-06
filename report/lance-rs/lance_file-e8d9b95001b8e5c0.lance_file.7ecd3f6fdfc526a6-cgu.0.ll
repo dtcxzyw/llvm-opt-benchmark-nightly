@@ -205,8 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader12, %bb.c
   %.val5 = phi i32 [ %.val4, %bb.c ], [ %.val6, %.preheader12 ]
-  %.sroa.01.0.i14 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader12 ] ; 3 uses
+  %.sroa.01.0.i14 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader12 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.01.0.i14
+  %3 = add nsw i64 %.sroa.01.0.i14, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val4 = load i32, ptr %i.d, align 4, !alias.scope !129, !noalias !130, !noundef !62 ; 2 uses
   %i.e = icmp ult i32 %.val4, %.val5
   br i1 %i.e, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECsaSXGKSfiU2E_10lance_file.exit, label %bb.c
@@ -218,8 +221,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph18:                                         ; preds = %.preheader, %bb.d
   %.val3 = phi i32 [ %.val, %bb.d ], [ %.val6, %.preheader ]
-  %.sroa.01.1.i17 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i17 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.01.1.i17
+  %5 = add nsw i64 %.sroa.01.1.i17, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load i32, ptr %i.g, align 4, !alias.scope !129, !noalias !130, !noundef !62 ; 2 uses
   %i.h = icmp ult i32 %.val, %.val3
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECsaSXGKSfiU2E_10lance_file.exit
@@ -622,7 +628,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -651,8 +657,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader48, %bb.l
   %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader48 ]
-  %.sroa.01.0.i.i53 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader48 ] ; 3 uses
+  %.sroa.01.0.i.i53 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader48 ] ; 4 uses
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.0.i.i53
+  %6 = add nsw i64 %.sroa.01.0.i.i53, -1
+  %7 = icmp ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %i.u = getelementptr i8, ptr %i.t, i64 16
   %.val8.i = load i64, ptr %i.u, align 8, !alias.scope !16799, !noalias !16800, !noundef !62 ; 2 uses
   %i.v = icmp ult i64 %.val8.i, %.val9.i
@@ -665,8 +674,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph57:                                         ; preds = %.preheader, %bb.m
   %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i56 = phi i64 [ %i.aa, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i56 = phi i64 [ %i.aa, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.x = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.1.i.i56
+  %8 = add nsw i64 %.sroa.01.1.i.i56, -1
+  %9 = icmp ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %i.y = getelementptr i8, ptr %i.x, i64 16
   %.val.i = load i64, ptr %i.y, align 8, !alias.scope !16799, !noalias !16800, !noundef !62 ; 2 uses
   %i.z = icmp ult i64 %.val.i, %.val7.i
@@ -990,7 +1002,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [360 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -1018,8 +1030,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader49, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader49 ]
-  %.sroa.01.0.i.i54 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader49 ] ; 3 uses
+  %.sroa.01.0.i.i54 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader49 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [360 x i8], ptr %i.o, i64 %.sroa.01.0.i.i54
+  %6 = add nsw i64 %.sroa.01.0.i.i54, -1
+  %7 = icmp ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.s, align 8, !alias.scope !16848, !noalias !16849, !noundef !62 ; 2 uses
   %i.t = icmp slt i32 %.val8.i, %.val9.i
   br i1 %i.t, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTlTNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v16writer10statistics17StatisticsBuilderEENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3v_11collections5btree3mapINtB4i_8BTreeMaplB14_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5i_8adapters3map3MapINtNtB6f_6filter6FilterINtNtNtB5i_7sources7from_fn6FromFnNCNvB1Z_12visit_fields0ENCNvMB1Z_NtB1Z_19StatisticsCollector7try_new0ENCB7X_s_0EE0E0EB27_.exit.i, label %bb.l
@@ -1031,8 +1046,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph58:                                         ; preds = %.preheader, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i57 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i57 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [360 x i8], ptr %i.o, i64 %.sroa.01.1.i.i57
+  %8 = add nsw i64 %.sroa.01.1.i.i57, -1
+  %9 = icmp ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.v, align 8, !alias.scope !16848, !noalias !16849, !noundef !62 ; 2 uses
   %i.w = icmp slt i32 %.val.i, %.val7.i
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTlTNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v16writer10statistics17StatisticsBuilderEENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3v_11collections5btree3mapINtB4i_8BTreeMaplB14_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5i_8adapters3map3MapINtNtB6f_6filter6FilterINtNtNtB5i_7sources7from_fn6FromFnNCNvB1Z_12visit_fields0ENCNvMB1Z_NtB1Z_19StatisticsCollector7try_new0ENCB7X_s_0EE0E0EB27_.exit.i
@@ -1377,7 +1395,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 10 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -1405,8 +1423,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader48, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader48 ]
-  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 3 uses
+  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i.i53
+  %6 = add nsw i64 %.sroa.01.0.i.i53, -1
+  %7 = icmp ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.s, align 4, !alias.scope !16904, !noalias !16905, !noundef !62 ; 2 uses
   %i.t = icmp ult i32 %.val8.i, %.val9.i
   br i1 %i.t, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4N_ENCNvNtNtCsaSXGKSfiU2E_10lance_file6reader10structural24field_id_to_column_index0EE0E0EB5A_.exit.i, label %bb.l
@@ -1418,8 +1439,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph57:                                         ; preds = %.preheader, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i.i56
+  %8 = add nsw i64 %.sroa.01.1.i.i56, -1
+  %9 = icmp ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.v, align 4, !alias.scope !16904, !noalias !16905, !noundef !62 ; 2 uses
   %i.w = icmp ult i32 %.val.i, %.val7.i
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4N_ENCNvNtNtCsaSXGKSfiU2E_10lance_file6reader10structural24field_id_to_column_index0EE0E0EB5A_.exit.i
@@ -1804,7 +1828,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 10 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -1832,8 +1856,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader48, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader48 ]
-  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 3 uses
+  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i.i53
+  %6 = add nsw i64 %.sroa.01.0.i.i53, -1
+  %7 = icmp ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.s, align 4, !alias.scope !16946, !noalias !16947, !noundef !62 ; 2 uses
   %i.t = icmp ult i32 %.val8.i, %.val9.i
   br i1 %i.t, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters3map3MapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4z_ENCNvNtNtCsaSXGKSfiU2E_10lance_file8versions2v124field_id_to_column_index0EE0E0EB5m_.exit.i, label %bb.l
@@ -1845,8 +1872,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph57:                                         ; preds = %.preheader, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i.i56
+  %8 = add nsw i64 %.sroa.01.1.i.i56, -1
+  %9 = icmp ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.v, align 4, !alias.scope !16946, !noalias !16947, !noundef !62 ; 2 uses
   %i.w = icmp ult i32 %.val.i, %.val7.i
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters3map3MapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4z_ENCNvNtNtCsaSXGKSfiU2E_10lance_file8versions2v124field_id_to_column_index0EE0E0EB5m_.exit.i
@@ -2231,7 +2261,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 10 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -2259,8 +2289,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader48, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader48 ]
-  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 3 uses
+  %.sroa.01.0.i.i53 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader48 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i.i53
+  %6 = add nsw i64 %.sroa.01.0.i.i53, -1
+  %7 = icmp ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.s, align 4, !alias.scope !16988, !noalias !16989, !noundef !62 ; 2 uses
   %i.t = icmp ult i32 %.val8.i, %.val9.i
   br i1 %i.t, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters3map3MapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4z_ENCNvNtNtCsaSXGKSfiU2E_10lance_file8versions4v2_024field_id_to_column_index0EE0E0EB5m_.exit.i, label %bb.l
@@ -2272,8 +2305,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph57:                                         ; preds = %.preheader, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i56 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i.i56
+  %8 = add nsw i64 %.sroa.01.1.i.i56, -1
+  %9 = icmp ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.v, align 4, !alias.scope !16988, !noalias !16989, !noundef !62 ; 2 uses
   %i.w = icmp ult i32 %.val.i, %.val7.i
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmmENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapmmEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters3map3MapINtNtB3V_3zip3ZipINtNtNtB1e_3vec9into_iter8IntoIterlEB4z_ENCNvNtNtCsaSXGKSfiU2E_10lance_file8versions4v2_024field_id_to_column_index0EE0E0EB5m_.exit.i

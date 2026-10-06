@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.z, %bb.e
   br i1 %i.k, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h8c0eaaa980aa594aE.exit", label %bb.p
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h8c0eaaa980aa594aE.exit": ; preds = %bb.f
-  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.m = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i33 = icmp ult i64 %i.l, %.sroa.01.0
   br i1 %.not.i33, label %bb.g, label %bb.h
@@ -234,8 +234,11 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph:                                           ; preds = %.preheader50, %bb.j
   %.val9.i = phi i16 [ %.val8.i, %bb.j ], [ %.val10.i, %.preheader50 ]
-  %.sroa.01.0.i.i55 = phi i64 [ %i.u, %bb.j ], [ 2, %.preheader50 ] ; 3 uses
+  %.sroa.01.0.i.i55 = phi i64 [ %i.u, %bb.j ], [ 2, %.preheader50 ] ; 4 uses
   %i.r = getelementptr inbounds nuw [80 x i8], ptr %i.m, i64 %.sroa.01.0.i.i55
+  %6 = add i64 %.sroa.01.0.i.i55, -1
+  %7 = icmp ult i64 %6, %i.l
+  tail call void @llvm.assume(i1 %7)
   %i.s = getelementptr i8, ptr %i.r, i64 72
   %.val8.i = load i16, ptr %i.s, align 8, !alias.scope !7107, !noalias !7108, !noundef !25 ; 2 uses
   %i.t = icmp ult i16 %.val9.i, %.val8.i
@@ -248,8 +251,11 @@ bb.j:                                             ; preds = %.lr.ph
 
 .lr.ph59:                                         ; preds = %.preheader, %bb.k
   %.val7.i = phi i16 [ %.val.i, %bb.k ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i58 = phi i64 [ %i.y, %bb.k ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i58 = phi i64 [ %i.y, %bb.k ], [ 2, %.preheader ] ; 4 uses
   %i.v = getelementptr inbounds nuw [80 x i8], ptr %i.m, i64 %.sroa.01.1.i.i58
+  %8 = add i64 %.sroa.01.1.i.i58, -1
+  %9 = icmp ult i64 %8, %i.l
+  tail call void @llvm.assume(i1 %9)
   %i.w = getelementptr i8, ptr %i.v, i64 72
   %.val.i = load i16, ptr %i.w, align 8, !alias.scope !7107, !noalias !7108, !noundef !25 ; 2 uses
   %i.x = icmp ult i16 %.val7.i, %.val.i
@@ -591,7 +597,7 @@ bb.f:                                             ; preds = %bb.aa, %bb.e
   br i1 %i.k, label %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h6f98a60fdcc39898E.exit", label %bb.p
 
 "_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h6f98a60fdcc39898E.exit": ; preds = %bb.f
-  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.l = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.m = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i33 = icmp ult i64 %i.l, %.sroa.01.0
   br i1 %.not.i33, label %bb.g, label %bb.h
@@ -618,9 +624,11 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph:                                           ; preds = %.preheader51, %bb.j
   %.sroa.01.0.i.i66 = phi i64 [ %i.s, %bb.j ], [ 2, %.preheader51 ] ; 4 uses
   %i.q = getelementptr inbounds nuw [96 x i8], ptr %i.m, i64 %.sroa.01.0.i.i66
-  %6 = getelementptr [96 x i8], ptr %i.m, i64 %.sroa.01.0.i.i66
-  %7 = getelementptr i8, ptr %6, i64 -96
-  %i.r = tail call fastcc noundef zeroext i1 @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17hf0271141338a9c98E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %7), !noalias !7183, !inline_history !7136
+  %6 = add i64 %.sroa.01.0.i.i66, -1              ; 2 uses
+  %7 = icmp ult i64 %6, %i.l
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [96 x i8], ptr %i.m, i64 %6
+  %i.r = tail call fastcc noundef zeroext i1 @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17hf0271141338a9c98E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %8), !noalias !7183, !inline_history !7136
   br i1 %i.r, label %_ZN4core5slice4sort6shared17find_existing_run17hd51ff3d3ed8ffadeE.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph
@@ -631,9 +639,11 @@ bb.j:                                             ; preds = %.lr.ph
 .lr.ph70:                                         ; preds = %.preheader, %bb.k
   %.sroa.01.1.i.i69 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader ] ; 4 uses
   %i.t = getelementptr inbounds nuw [96 x i8], ptr %i.m, i64 %.sroa.01.1.i.i69
-  %8 = getelementptr [96 x i8], ptr %i.m, i64 %.sroa.01.1.i.i69
-  %9 = getelementptr i8, ptr %8, i64 -96
-  %i.u = tail call fastcc noundef zeroext i1 @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17hf0271141338a9c98E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.t, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %9), !noalias !7183, !inline_history !7136
+  %9 = add i64 %.sroa.01.1.i.i69, -1              ; 2 uses
+  %10 = icmp ult i64 %9, %i.l
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [96 x i8], ptr %i.m, i64 %9
+  %i.u = tail call fastcc noundef zeroext i1 @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17hf0271141338a9c98E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.t, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %11), !noalias !7183, !inline_history !7136
   br i1 %i.u, label %bb.k, label %_ZN4core5slice4sort6shared17find_existing_run17hd51ff3d3ed8ffadeE.exit.i
 
 bb.k:                                             ; preds = %.lr.ph70

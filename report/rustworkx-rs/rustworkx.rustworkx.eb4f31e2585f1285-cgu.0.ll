@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph80, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph80 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph80 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.078 = phi i64 [ 0, %.lr.ph80 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.078 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26892)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -228,8 +228,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !26892 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtB8_5GraphuuNtBa_10UndirectedENCINvB37_40greedy_edge_color_with_coloring_strategyRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB6s_5types3any5PyAnyEB6n_B4G_ENCNvNtCskcxRuJ53GpR_9rustworkx8coloring23graph_greedy_edge_color0NtNtB6s_3err5PyErrEs1_0B8A_E0E0B7D_(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !26892
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -241,8 +244,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !26892 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtB8_5GraphuuNtBa_10UndirectedENCINvB37_40greedy_edge_color_with_coloring_strategyRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB6s_5types3any5PyAnyEB6n_B4G_ENCNvNtCskcxRuJ53GpR_9rustworkx8coloring23graph_greedy_edge_color0NtNtB6s_3err5PyErrEs1_0B8A_E0E0B7D_(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !26892
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -645,7 +651,7 @@ bb.b:                                             ; preds = %.lr.ph80, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph80 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph80 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.078 = phi i64 [ 0, %.lr.ph80 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.078 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26994)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -668,8 +674,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !26994 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtB8_5GraphuuNtBa_10UndirectedENCINvB37_40greedy_edge_color_with_coloring_strategyRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB6s_5types3any5PyAnyEB6n_B4G_ENCNvNtCskcxRuJ53GpR_9rustworkx8coloring23graph_greedy_edge_colors_0zEs1_0zE0E0B7D_(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !26994
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -681,8 +690,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !26994 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtB8_5GraphuuNtBa_10UndirectedENCINvB37_40greedy_edge_color_with_coloring_strategyRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB6s_5types3any5PyAnyEB6n_B4G_ENCNvNtCskcxRuJ53GpR_9rustworkx8coloring23graph_greedy_edge_colors_0zEs1_0zE0E0B7D_(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !26994
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -1085,7 +1097,7 @@ bb.b:                                             ; preds = %.lr.ph80, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph80 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph80 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.078 = phi i64 [ 0, %.lr.ph80 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.078 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27096)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -1108,8 +1120,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !27096 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB56_5types3any5PyAnyEB51_NtBa_10UndirectedENCNvNtCskcxRuJ53GpR_9rustworkx8coloring18graph_greedy_color0NtNtB56_3err5PyErrE0E0B6u_(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !27096
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -1121,8 +1136,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !27096 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB56_5types3any5PyAnyEB51_NtBa_10UndirectedENCNvNtCskcxRuJ53GpR_9rustworkx8coloring18graph_greedy_color0NtNtB56_3err5PyErrE0E0B6u_(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !27096
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -1525,7 +1543,7 @@ bb.b:                                             ; preds = %.lr.ph80, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph80 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph80 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.078 = phi i64 [ 0, %.lr.ph80 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.078        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.078 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27198)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -1548,8 +1566,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !27198 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB56_5types3any5PyAnyEB51_NtBa_10UndirectedENCNvNtCskcxRuJ53GpR_9rustworkx8coloring18graph_greedy_colors_0zE0E0B6u_(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !27198
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -1561,8 +1582,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !27198 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core3cmp7ReverseINtNtB26_6option6OptionRjEENCINvNtCsbNMRYq9Xj9a_14rustworkx_core8coloring39inner_greedy_node_color_strategy_degreeRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB56_5types3any5PyAnyEB51_NtBa_10UndirectedENCNvNtCskcxRuJ53GpR_9rustworkx8coloring18graph_greedy_colors_0zE0E0B6u_(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !27198
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -1965,7 +1989,7 @@ bb.b:                                             ; preds = %.lr.ph92, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph92 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph92 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.090 = phi i64 [ 0, %.lr.ph92 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.090        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.090        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.090 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27300)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -1988,8 +2012,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !27300 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core6option6OptionRjENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4C_5types3any5PyAnyEB4x_EE0E0CskcxRuJ53GpR_9rustworkx(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !27300
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -2001,8 +2028,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !27300 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core6option6OptionRjENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4C_5types3any5PyAnyEB4x_EE0E0CskcxRuJ53GpR_9rustworkx(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !27300
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -2405,7 +2435,7 @@ bb.b:                                             ; preds = %.lr.ph92, %._crit_e
   %i.j = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph92 ], [ %i.be, %._crit_edge ]
   %i.k = phi i64 [ 0, %.lr.ph92 ], [ %i.ce, %._crit_edge ] ; 3 uses
   %.sroa.02.090 = phi i64 [ 0, %.lr.ph92 ], [ %.sroa.0.0.i37, %._crit_edge ] ; 10 uses
-  %i.l = sub nuw nsw i64 %1, %.sroa.02.090        ; 7 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.02.090        ; 9 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.090 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27402)
   %i.n = icmp samesign ult i64 %i.l, 2
@@ -2428,8 +2458,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.d
   %.val15.i = phi i32 [ %.val14.i, %bb.d ], [ %.val17.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader1.i ] ; 4 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.l
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i32, ptr %i.q, align 4, !alias.scope !27402 ; 2 uses
   %i.r = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core6option6OptionRjENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4C_5types3any5PyAnyEB4x_NtBa_10UndirectedEE0E0CskcxRuJ53GpR_9rustworkx(ptr nonnull readonly %.0.val, i32 %.val14.i, i32 %.val15.i) #64, !noalias !27402
   br i1 %i.r, label %.loopexit, label %bb.d
@@ -2441,8 +2474,11 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.e
   %.val12.i = phi i32 [ %.val11.i, %bb.e ], [ %.val17.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.v, %bb.e ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !27402 ; 2 uses
   %i.u = tail call fastcc noundef zeroext i1 @_RNCINvYSNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E15par_sort_by_keyINtNtCslwFuT2d6ECx_4core6option6OptionRjENCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core12connectivity11core_number11core_numberRINtNtB8_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4C_5types3any5PyAnyEB4x_NtBa_10UndirectedEE0E0CskcxRuJ53GpR_9rustworkx(ptr nonnull readonly %.0.val, i32 %.val11.i, i32 %.val12.i) #64, !noalias !27402
   br i1 %i.u, label %bb.e, label %.loopexit
@@ -2845,7 +2881,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtNtC
   %i.f = phi ptr [ %i.ba, %._crit_edge ], [ inttoptr (i64 8 to ptr), %bb.a ]
   %i.g = phi i64 [ %storemerge.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
   %.sroa.02.054 = phi i64 [ %.sroa.0.0.i34, %._crit_edge ], [ 0, %bb.a ] ; 10 uses
-  %i.h = sub nuw nsw i64 %1, %.sroa.02.054        ; 7 uses
+  %i.h = sub nuw nsw i64 %1, %.sroa.02.054        ; 9 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.02.054 ; 8 uses
   %i.j = icmp samesign ult i64 %i.h, 2
   br i1 %i.j, label %.loopexit, label %bb.b
@@ -2866,8 +2902,11 @@ bb.b:                                             ; preds = %.lr.ph56
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.c
   %.val13.i = phi i32 [ %.val12.i, %bb.c ], [ %.val14.i, %.preheader1.i ]
-  %.sroa.01.03.i = phi i64 [ %i.o, %bb.c ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.03.i = phi i64 [ %i.o, %bb.c ], [ 2, %.preheader1.i ] ; 4 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %.sroa.01.03.i
+  %3 = add nsw i64 %.sroa.01.03.i, -1
+  %4 = icmp samesign ult i64 %3, %i.h
+  tail call void @llvm.assume(i1 %4)
   %.val12.i = load i32, ptr %i.m, align 4, !alias.scope !27454, !noundef !67 ; 2 uses
   %i.n = icmp ult i32 %.val12.i, %.val13.i
   br i1 %i.n, label %.loopexit, label %bb.c
@@ -2879,8 +2918,11 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i, %bb.d
   %.val11.i = phi i32 [ %.val.i, %bb.d ], [ %.val14.i, %.preheader.i ]
-  %.sroa.01.16.i = phi i64 [ %i.r, %bb.d ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.16.i = phi i64 [ %i.r, %bb.d ], [ 2, %.preheader.i ] ; 4 uses
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %.sroa.01.16.i
+  %5 = add nsw i64 %.sroa.01.16.i, -1
+  %6 = icmp samesign ult i64 %5, %i.h
+  tail call void @llvm.assume(i1 %6)
   %.val.i = load i32, ptr %i.p, align 4, !alias.scope !27454, !noundef !67 ; 2 uses
   %i.q = icmp ult i32 %.val.i, %.val11.i
   br i1 %i.q, label %bb.d, label %.loopexit
@@ -3283,7 +3325,7 @@ bb.b:                                             ; preds = %.lr.ph253, %._crit_
   %i.g = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph253 ], [ %i.di, %._crit_edge ]
   %i.h = phi i64 [ 0, %.lr.ph253 ], [ %storemerge.lcssa, %._crit_edge ] ; 3 uses
   %.sroa.02.0251 = phi i64 [ 0, %.lr.ph253 ], [ %.sroa.0.0.i48, %._crit_edge ] ; 10 uses
-  %i.i = sub nuw nsw i64 %1, %.sroa.02.0251       ; 7 uses
+  %i.i = sub nuw nsw i64 %1, %.sroa.02.0251       ; 9 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.02.0251 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27508)
   %i.k = icmp samesign ult i64 %i.i, 2
@@ -3357,8 +3399,11 @@ _RNCINvYSjINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutjE15par_sort_by_keyTj
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.h
   %.val15.i = phi i64 [ %.val14.i, %bb.h ], [ %.val17.i, %.preheader1.i ] ; 7 uses
-  %.sroa.01.023.i = phi i64 [ %i.bg, %bb.h ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.023.i = phi i64 [ %i.bg, %bb.h ], [ 2, %.preheader1.i ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.sroa.01.023.i
+  %3 = add nsw i64 %.sroa.01.023.i, -1
+  %4 = icmp samesign ult i64 %3, %i.i
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i64, ptr %i.ao, align 8, !alias.scope !27508, !noundef !67 ; 8 uses
   %i.ap = icmp ult i64 %.val14.i, %i.n
   br i1 %i.ap, label %bb.f, label %.invoke743
@@ -3400,8 +3445,11 @@ bb.h:                                             ; preds = %_RNCINvYSjINtNtCs1J
 
 .lr.ph26.i:                                       ; preds = %.preheader.i, %bb.k
   %.val12.i = phi i64 [ %.val11.i, %bb.k ], [ %.val17.i, %.preheader.i ] ; 7 uses
-  %.sroa.01.125.i = phi i64 [ %i.bz, %bb.k ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.125.i = phi i64 [ %i.bz, %bb.k ], [ 2, %.preheader.i ] ; 4 uses
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.sroa.01.125.i
+  %5 = add nsw i64 %.sroa.01.125.i, -1
+  %6 = icmp samesign ult i64 %5, %i.i
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i64, ptr %i.bh, align 8, !alias.scope !27508, !noundef !67 ; 8 uses
   %i.bi = icmp ult i64 %.val11.i, %i.n
   br i1 %i.bi, label %bb.i, label %.invoke743
@@ -3804,7 +3852,7 @@ bb.b:                                             ; preds = %.lr.ph253, %._crit_
   %i.g = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph253 ], [ %i.di, %._crit_edge ]
   %i.h = phi i64 [ 0, %.lr.ph253 ], [ %storemerge.lcssa, %._crit_edge ] ; 3 uses
   %.sroa.02.0251 = phi i64 [ 0, %.lr.ph253 ], [ %.sroa.0.0.i48, %._crit_edge ] ; 10 uses
-  %i.i = sub nuw nsw i64 %1, %.sroa.02.0251       ; 7 uses
+  %i.i = sub nuw nsw i64 %1, %.sroa.02.0251       ; 9 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.02.0251 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27573)
   %i.k = icmp samesign ult i64 %i.i, 2
@@ -3878,8 +3926,11 @@ _RNCINvYSjINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutjE15par_sort_by_keyTj
 
 .lr.ph.i:                                         ; preds = %.preheader1.i, %bb.h
   %.val15.i = phi i64 [ %.val14.i, %bb.h ], [ %.val17.i, %.preheader1.i ] ; 7 uses
-  %.sroa.01.023.i = phi i64 [ %i.bg, %bb.h ], [ 2, %.preheader1.i ] ; 3 uses
+  %.sroa.01.023.i = phi i64 [ %i.bg, %bb.h ], [ 2, %.preheader1.i ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.sroa.01.023.i
+  %3 = add nsw i64 %.sroa.01.023.i, -1
+  %4 = icmp samesign ult i64 %3, %i.i
+  tail call void @llvm.assume(i1 %4)
   %.val14.i = load i64, ptr %i.ao, align 8, !alias.scope !27573, !noundef !67 ; 8 uses
   %i.ap = icmp ult i64 %.val14.i, %i.n
   br i1 %i.ap, label %bb.f, label %.invoke743
@@ -3921,8 +3972,11 @@ bb.h:                                             ; preds = %_RNCINvYSjINtNtCs1J
 
 .lr.ph26.i:                                       ; preds = %.preheader.i, %bb.k
   %.val12.i = phi i64 [ %.val11.i, %bb.k ], [ %.val17.i, %.preheader.i ] ; 7 uses
-  %.sroa.01.125.i = phi i64 [ %i.bz, %bb.k ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.125.i = phi i64 [ %i.bz, %bb.k ], [ 2, %.preheader.i ] ; 4 uses
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.sroa.01.125.i
+  %5 = add nsw i64 %.sroa.01.125.i, -1
+  %6 = icmp samesign ult i64 %5, %i.i
+  tail call void @llvm.assume(i1 %6)
   %.val11.i = load i64, ptr %i.bh, align 8, !alias.scope !27573, !noundef !67 ; 8 uses
   %i.bi = icmp ult i64 %.val11.i, %i.n
   br i1 %i.bi, label %bb.i, label %.invoke743
@@ -4325,6 +4379,9 @@ bb.a:
   %i.c = phi double [ %i.f, %bb.b ], [ %.pre30, %bb.a ] ; 2 uses
   %.sroa.02.14.us = phi i64 [ %i.t, %bb.b ], [ 1, %bb.a ] ; 5 uses
   %i.d = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.02.14.us ; 3 uses
+  %2 = add nsw i64 %.sroa.02.14.us, -1            ; 2 uses
+  %3 = icmp samesign ult i64 %2, %1
+  tail call void @llvm.assume(i1 %3)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27744)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27745)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27746)
@@ -4335,12 +4392,12 @@ bb.a:
   br i1 %.not1.i.us, label %_RNCINvYSNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tree17MetricClosureEdgeINtNtCs1JJT1bG4y5L_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCINvB8_12steiner_treeRINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB3X_5types3any5PyAnyEB3S_NtB2S_10UndirectedENCNvNtCskcxRuJ53GpR_9rustworkx12steiner_tree12steiner_tree0NtNtB3X_3err5PyErrE0E0B5m_.exit.us, label %.split.us
 
 .split.us:                                        ; preds = %.lr.ph.us
-  %i.g = getelementptr [48 x i8], ptr %0, i64 %.sroa.02.14.us ; 2 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 -16
+  %i.g = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %2 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !27742, !noalias !27743, !noundef !67
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !27743, !noalias !27742, !noundef !67
-  %i.l = getelementptr i8, ptr %i.g, i64 -24
+  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.m = load i64, ptr %i.l, align 8, !alias.scope !27742, !noalias !27743, !noundef !67 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !27743, !noalias !27742, !noundef !67 ; 2 uses
@@ -4743,6 +4800,9 @@ bb.a:
   %i.c = phi i64 [ %i.f, %bb.b ], [ %.pre30, %bb.a ] ; 2 uses
   %.sroa.02.14.us = phi i64 [ %i.u, %bb.b ], [ 1, %bb.a ] ; 5 uses
   %i.d = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.02.14.us ; 3 uses
+  %2 = add nsw i64 %.sroa.02.14.us, -1            ; 2 uses
+  %3 = icmp samesign ult i64 %2, %1
+  tail call void @llvm.assume(i1 %3)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27799)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27800)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27801)
@@ -4757,12 +4817,12 @@ _RNCINvYSNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tree17MetricClosureEdgeINtN
   br i1 %i.h, label %.split._crit_edge.us, label %bb.b
 
 .split.us:                                        ; preds = %.lr.ph.us
-  %i.i = getelementptr [48 x i8], ptr %0, i64 %.sroa.02.14.us ; 2 uses
-  %i.j = getelementptr i8, ptr %i.i, i64 -8
+  %i.i = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %2 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load double, ptr %i.j, align 8, !alias.scope !27797, !noalias !27798, !noundef !67
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.m = load double, ptr %i.l, align 8, !alias.scope !27798, !noalias !27797, !noundef !67
-  %i.n = getelementptr i8, ptr %i.i, i64 -16
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !27797, !noalias !27798, !noundef !67 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.q = load i64, ptr %i.p, align 8, !alias.scope !27798, !noalias !27797, !noundef !67 ; 2 uses
@@ -5165,8 +5225,11 @@ bb.a:
 .preheader16:                                     ; preds = %bb.a, %bb.b
   %.val9 = phi i64 [ %.val7, %bb.b ], [ %.val11, %bb.a ]
   %.val8 = phi i64 [ %.val6, %bb.b ], [ %.val10, %bb.a ] ; 2 uses
-  %.sroa.01.0.i18 = phi i64 [ %i.l, %bb.b ], [ 2, %bb.a ] ; 3 uses
+  %.sroa.01.0.i18 = phi i64 [ %i.l, %bb.b ], [ 2, %bb.a ] ; 4 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.01.0.i18 ; 2 uses
+  %2 = add nsw i64 %.sroa.01.0.i18, -1
+  %3 = icmp samesign ult i64 %2, %1
+  tail call void @llvm.assume(i1 %3)
   %.val6 = load i64, ptr %i.g, align 8, !noundef !67 ; 3 uses
   %i.h = getelementptr i8, ptr %i.g, i64 8
   %.val7 = load i64, ptr %i.h, align 8, !noundef !67 ; 2 uses
@@ -5184,8 +5247,11 @@ bb.b:                                             ; preds = %.preheader16
 .preheader:                                       ; preds = %bb.a, %bb.c
   %.val5 = phi i64 [ %.val3, %bb.c ], [ %.val11, %bb.a ]
   %.val4 = phi i64 [ %.val, %bb.c ], [ %.val10, %bb.a ] ; 2 uses
-  %.sroa.01.1.i19 = phi i64 [ %i.r, %bb.c ], [ 2, %bb.a ] ; 3 uses
+  %.sroa.01.1.i19 = phi i64 [ %i.r, %bb.c ], [ 2, %bb.a ] ; 4 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.01.1.i19 ; 2 uses
+  %4 = add nsw i64 %.sroa.01.1.i19, -1
+  %5 = icmp samesign ult i64 %4, %1
+  tail call void @llvm.assume(i1 %5)
   %.val = load i64, ptr %i.m, align 8, !noundef !67 ; 3 uses
   %i.n = getelementptr i8, ptr %i.m, i64 8
   %.val3 = load i64, ptr %i.n, align 8, !noundef !67 ; 2 uses
@@ -5588,7 +5654,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.l, %.sroa.01.0
   br i1 %.not.i31, label %bb.h, label %bb.i
@@ -5616,8 +5682,11 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph:                                           ; preds = %.preheader45, %bb.k
   %.val7.i = phi i8 [ %.val6.i, %bb.k ], [ %.val8.i, %.preheader45 ]
-  %.sroa.01.0.i.i50 = phi i64 [ %i.s, %bb.k ], [ 2, %.preheader45 ] ; 3 uses
+  %.sroa.01.0.i.i50 = phi i64 [ %i.s, %bb.k ], [ 2, %.preheader45 ] ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.0.i.i50
+  %5 = add nsw i64 %.sroa.01.0.i.i50, -1
+  %6 = icmp ult i64 %5, %i.l
+  tail call void @llvm.assume(i1 %6)
   %.val6.i = load i8, ptr %i.q, align 1, !range !149, !alias.scope !37225, !noalias !37226, !noundef !67 ; 2 uses
   %i.r = icmp samesign ult i8 %.val6.i, %.val7.i
   br i1 %i.r, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.k
@@ -5629,8 +5698,11 @@ bb.k:                                             ; preds = %.lr.ph
 
 .lr.ph54:                                         ; preds = %.preheader, %bb.l
   %.val5.i = phi i8 [ %.val.i, %bb.l ], [ %.val8.i, %.preheader ]
-  %.sroa.01.1.i.i53 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i53 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.1.i.i53
+  %7 = add nsw i64 %.sroa.01.1.i.i53, -1
+  %8 = icmp ult i64 %7, %i.l
+  tail call void @llvm.assume(i1 %8)
   %.val.i = load i8, ptr %i.t, align 1, !range !149, !alias.scope !37225, !noalias !37226, !noundef !67 ; 2 uses
   %i.u = icmp samesign ult i8 %.val.i, %.val5.i
   br i1 %i.u, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
@@ -5996,7 +6068,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 12 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37316)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37317)
@@ -6032,8 +6104,11 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph:                                           ; preds = %.preheader81, %bb.k
   %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.preheader81 ]
   %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.preheader81 ]
-  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 3 uses
+  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.0.i.i132 ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i.i132, -1
+  %7 = icmp ult i64 %6, %i.l
+  tail call void @llvm.assume(i1 %7)
   %.val10.i = load i32, ptr %i.s, align 4, !alias.scope !37316, !noalias !37319 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 4
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !37316, !noalias !37319 ; 2 uses
@@ -6048,8 +6123,11 @@ bb.k:                                             ; preds = %.lr.ph
 .lr.ph136:                                        ; preds = %.preheader80, %bb.l
   %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.preheader80 ]
   %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.preheader80 ]
-  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 3 uses
+  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 4 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.1.i.i135 ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i.i135, -1
+  %9 = icmp ult i64 %8, %i.l
+  tail call void @llvm.assume(i1 %9)
   %.val5.i = load i32, ptr %i.w, align 4, !alias.scope !37316, !noalias !37319 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 4
   %.val6.i = load i32, ptr %i.x, align 4, !alias.scope !37316, !noalias !37319 ; 2 uses
@@ -6452,7 +6530,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 12 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37434)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37435)
@@ -6488,8 +6566,11 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph:                                           ; preds = %.preheader81, %bb.k
   %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.preheader81 ]
   %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.preheader81 ]
-  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 3 uses
+  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.0.i.i132 ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i.i132, -1
+  %7 = icmp ult i64 %6, %i.l
+  tail call void @llvm.assume(i1 %7)
   %.val10.i = load i32, ptr %i.s, align 4, !alias.scope !37434, !noalias !37437 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 4
   %.val11.i = load i32, ptr %i.t, align 4, !alias.scope !37434, !noalias !37437 ; 2 uses
@@ -6504,8 +6585,11 @@ bb.k:                                             ; preds = %.lr.ph
 .lr.ph136:                                        ; preds = %.preheader80, %bb.l
   %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.preheader80 ]
   %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.preheader80 ]
-  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 3 uses
+  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 4 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.1.i.i135 ; 2 uses
+  %8 = add nsw i64 %.sroa.01.1.i.i135, -1
+  %9 = icmp ult i64 %8, %i.l
+  tail call void @llvm.assume(i1 %9)
   %.val5.i = load i32, ptr %i.w, align 4, !alias.scope !37434, !noalias !37437 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 4
   %.val6.i = load i32, ptr %i.x, align 4, !alias.scope !37434, !noalias !37437 ; 2 uses

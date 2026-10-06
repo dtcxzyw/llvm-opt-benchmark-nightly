@@ -204,11 +204,12 @@ bb.b:                                             ; preds = %._crit_edge
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %.val.val.pre23.i.i.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !70
+  %.val.val.pre23.i.i.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !70 ; 2 uses
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %.val, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
+  %.val.val.i.i46.i.i.i.i.i = phi i32 [ %.val.val.pre23.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ %.val.val.i.i.i.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i ] ; 3 uses
   %.val.val.i.i.i.i.i.i = phi i32 [ %.val.val.pre23.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ %.val.val.i.i.i.i.i.i.i.a, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i ] ; 4 uses
   %.sroa.0.021.i.idx.i.i.i.i.i = phi i64 [ 8, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.0.021.i.add.i.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i ] ; 4 uses
   %.pn20.i.i.i.i.i.i = phi ptr [ %.val, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.0.021.i.ptr.i.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i ] ; 3 uses
@@ -233,7 +234,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.val, i64 %.sroa.0.021.i.idx.i.i.i.i.i, i1 false)
-  %.val.val.pre.i.i.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !70
+  %.val.val.pre.i.i.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !70 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -265,8 +266,9 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.ao, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i, !llvm.loop !158
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.g, %bb.f, %bb.e
+  %.val.val.i.i.i.i.i.i.i = phi i32 [ %.val.val.i.i46.i.i.i.i.i, %bb.f ], [ %.val.val.pre.i.i.i.i.i.i, %bb.e ], [ %.val.val.i.i46.i.i.i.i.i, %bb.g ], [ %.val.val.i.i46.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ] ; 2 uses
   %.sink.i.i.i.i.i.i = phi ptr [ %.val, %bb.f ], [ %.val, %bb.e ], [ %.sroa.0.021.i.ptr.i.i.i.i.i, %bb.g ], [ %.sroa.0.011.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ]
-  %.val.val.i.i.i.i.i.i.i.a = phi i32 [ %.val.val.i.i.i.i.i.i, %bb.f ], [ %.val.val.pre.i.i.i.i.i.i, %bb.e ], [ %.val.val.i.i.i.i.i.i, %bb.g ], [ %.val.val.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ] ; 2 uses
+  %.val.val.i.i.i.i.i.i.i.a = phi i32 [ %.val.val.i.i.i.i.i.i, %bb.f ], [ %.val.val.pre.i.i.i.i.i.i, %bb.e ], [ %.val.val.i.i.i.i.i.i, %bb.g ], [ %.val.val.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ]
   store ptr %i.s, ptr %.sink.i.i.i.i.i.i, align 8, !tbaa !53
   %.sroa.0.021.i.add.i.i.i.i.i = add nuw nsw i64 %.sroa.0.021.i.idx.i.i.i.i.i, 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.0.021.i.add.i.i.i.i.i, 128
@@ -278,7 +280,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5Entr
   br i1 %.not7.i.i.i.i.i.i, label %"_ZN4llvm4sortIRSt6vectorIPNS_14DWARFUnitIndex5EntryESaIS4_EEZNKS2_13getFromOffsetEmE3$_1EEvOT_T0_.exit", label %.lr.ph.i10.i.i.i.i.i
 
 .lr.ph.i10.i.i.i.i.i:                             ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_13getFromOffsetEmE3$_1EEEvT_SF_T0_.exit.i.i.i.i.i"
-  %i.aq = sext i32 %.val.val.i.i.i.i.i.i.i.a to i64 ; 3 uses
+  %i.aq = sext i32 %.val.val.i.i.i.i.i.i.i to i64 ; 3 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPN4llvm14DWARFUnitIndex5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZNKS3_13getFromOffsetEmE3$_1EEEvT_T0_.exit.i.i.i.i.i.i", %.lr.ph.i10.i.i.i.i.i

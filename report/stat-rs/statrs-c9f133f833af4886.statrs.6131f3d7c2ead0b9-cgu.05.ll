@@ -73,7 +73,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.u
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -110,8 +110,11 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11sta
 
 .lr.ph.i:                                         ; preds = %.preheader27.i, %bb.n
   %.val9.i = phi double [ %.val8.i, %bb.n ], [ %.val10.i, %.preheader27.i ] ; 2 uses
-  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 3 uses
+  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 4 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i31.i
+  %6 = add nsw i64 %.sroa.01.0.i31.i, -1
+  %7 = icmp samesign ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load double, ptr %i.r, align 8, !alias.scope !36, !noalias !37, !noundef !4 ; 3 uses
   %brmerge.not.i12.i = fcmp uno double %.val8.i, %.val9.i
   br i1 %brmerge.not.i12.i, label %bb.m, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples2_0E0BP_.exit14.i, !prof !5
@@ -131,8 +134,11 @@ bb.n:                                             ; preds = %_RNCINvMNtCs1xwejQu
 
 .lr.ph34.i:                                       ; preds = %.preheader.i, %bb.p
   %.val7.i = phi double [ %.val.i, %bb.p ], [ %.val10.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i33.i
+  %8 = add nsw i64 %.sroa.01.1.i33.i, -1
+  %9 = icmp samesign ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load double, ptr %i.t, align 8, !alias.scope !36, !noalias !37, !noundef !4 ; 3 uses
   %brmerge.not.i15.i = fcmp uno double %.val.i, %.val7.i
   br i1 %brmerge.not.i15.i, label %bb.o, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples2_0E0BP_.exit17.i, !prof !5
@@ -521,7 +527,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.u
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -558,8 +564,11 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11sta
 
 .lr.ph.i:                                         ; preds = %.preheader27.i, %bb.n
   %.val9.i = phi double [ %.val8.i, %bb.n ], [ %.val10.i, %.preheader27.i ] ; 2 uses
-  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 3 uses
+  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 4 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i31.i
+  %6 = add nsw i64 %.sroa.01.0.i31.i, -1
+  %7 = icmp samesign ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load double, ptr %i.r, align 8, !alias.scope !82, !noalias !83, !noundef !4 ; 3 uses
   %brmerge.not.i12.i = fcmp uno double %.val8.i, %.val9.i
   br i1 %brmerge.not.i12.i, label %bb.m, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples3_0E0BP_.exit14.i, !prof !5
@@ -579,8 +588,11 @@ bb.n:                                             ; preds = %_RNCINvMNtCs1xwejQu
 
 .lr.ph34.i:                                       ; preds = %.preheader.i, %bb.p
   %.val7.i = phi double [ %.val.i, %bb.p ], [ %.val10.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i33.i
+  %8 = add nsw i64 %.sroa.01.1.i33.i, -1
+  %9 = icmp samesign ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load double, ptr %i.t, align 8, !alias.scope !82, !noalias !83, !noundef !4 ; 3 uses
   %brmerge.not.i15.i = fcmp uno double %.val.i, %.val7.i
   br i1 %brmerge.not.i15.i, label %bb.o, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples3_0E0BP_.exit17.i, !prof !5
@@ -969,7 +981,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.u
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !128)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -1006,8 +1018,11 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11sta
 
 .lr.ph.i:                                         ; preds = %.preheader27.i, %bb.n
   %.val9.i = phi double [ %.val8.i, %bb.n ], [ %.val10.i, %.preheader27.i ] ; 2 uses
-  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 3 uses
+  %.sroa.01.0.i31.i = phi i64 [ %i.s, %bb.n ], [ 2, %.preheader27.i ] ; 4 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i31.i
+  %6 = add nsw i64 %.sroa.01.0.i31.i, -1
+  %7 = icmp samesign ult i64 %6, %i.n
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load double, ptr %i.r, align 8, !alias.scope !128, !noalias !129, !noundef !4 ; 3 uses
   %brmerge.not.i12.i = fcmp uno double %.val8.i, %.val9.i
   br i1 %brmerge.not.i12.i, label %bb.m, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples4_0E0BP_.exit14.i, !prof !5
@@ -1027,8 +1042,11 @@ bb.n:                                             ; preds = %_RNCINvMNtCs1xwejQu
 
 .lr.ph34.i:                                       ; preds = %.preheader.i, %bb.p
   %.val7.i = phi double [ %.val.i, %bb.p ], [ %.val10.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i33.i = phi i64 [ %i.u, %bb.p ], [ 2, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i33.i
+  %8 = add nsw i64 %.sroa.01.1.i33.i, -1
+  %9 = icmp samesign ult i64 %8, %i.n
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load double, ptr %i.t, align 8, !alias.scope !128, !noalias !129, !noundef !4 ; 3 uses
   %brmerge.not.i15.i = fcmp uno double %.val.i, %.val7.i
   br i1 %brmerge.not.i15.i, label %bb.o, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples4_0E0BP_.exit17.i, !prof !5

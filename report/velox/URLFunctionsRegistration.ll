@@ -205,13 +205,14 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
-  %.pre25.i = load ptr, ptr %2, align 8, !tbaa !758
+  %.pre25.i = load ptr, ptr %2, align 8, !tbaa !758 ; 2 uses
   %.pre27.i = load i8, ptr %i.e, align 1, !tbaa !681, !range !140 ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i
   %i.f = phi i8 [ %.pre27.i, %.lr.ph.i ], [ %i.at, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
+  %4 = phi ptr [ %.pre25.i, %.lr.ph.i ], [ %5, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
   %i.g = phi i8 [ %.pre27.i, %.lr.ph.i ], [ %i.au, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
   %i.h = phi ptr [ %.pre25.i, %.lr.ph.i ], [ %i.av, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 5 uses
   %.sroa.0.022.i.idx = phi i64 [ 4, %.lr.ph.i ], [ %.sroa.0.022.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
@@ -240,7 +241,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %.sroa.0.022.i.idx, i1 false)
-  %.pre.i = load ptr, ptr %2, align 8, !tbaa !758
+  %.pre.i = load ptr, ptr %2, align 8, !tbaa !758 ; 2 uses
   %.pre26.i = load i8, ptr %i.e, align 1, !tbaa !681, !range !140 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i
 
@@ -291,9 +292,10 @@ bb.f:                                             ; preds = %bb.b
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit.i: ; preds = %.lr.ph.split.i.i, %.lr.ph.split.us.i.i, %bb.f, %bb.e, %bb.d
   %i.at = phi i8 [ %i.f, %bb.e ], [ %.pre26.i, %bb.d ], [ %i.f, %.lr.ph.split.us.i.i ], [ %i.f, %bb.f ], [ %i.f, %.lr.ph.split.i.i ] ; 2 uses
+  %5 = phi ptr [ %4, %bb.e ], [ %.pre.i, %bb.d ], [ %4, %.lr.ph.split.us.i.i ], [ %4, %bb.f ], [ %4, %.lr.ph.split.i.i ] ; 2 uses
   %.sink.i = phi ptr [ %0, %bb.e ], [ %0, %bb.d ], [ %.sroa.0.010.us.i.i, %.lr.ph.split.us.i.i ], [ %.sroa.0.022.i.ptr, %bb.f ], [ %.sroa.0.010.i.i, %.lr.ph.split.i.i ]
   %i.au = phi i8 [ %i.g, %bb.e ], [ %.pre26.i, %bb.d ], [ 1, %.lr.ph.split.us.i.i ], [ %i.g, %bb.f ], [ 0, %.lr.ph.split.i.i ]
-  %i.av = phi ptr [ %i.h, %bb.e ], [ %.pre.i, %bb.d ], [ %i.h, %.lr.ph.split.us.i.i ], [ %i.h, %bb.f ], [ %i.h, %.lr.ph.split.i.i ] ; 2 uses
+  %i.av = phi ptr [ %i.h, %bb.e ], [ %.pre.i, %bb.d ], [ %i.h, %.lr.ph.split.us.i.i ], [ %i.h, %bb.f ], [ %i.h, %.lr.ph.split.i.i ]
   store i32 %i.i, ptr %.sink.i, align 4, !tbaa !130
   %.sroa.0.022.i.add = add nuw nsw i64 %.sroa.0.022.i.idx, 4 ; 2 uses
   %i.aw = icmp eq i64 %.sroa.0.022.i.add, 64
@@ -305,7 +307,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   br i1 %i.ay, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorImE11sortIndicesILb0EZNKSC_11sortIndicesERS5_NSA_12CompareFlagsEEUliE1_ZNKSC_11sortIndicesESE_SF_EUliE2_EEvT0_T1_SE_SF_EUliiE_EEEvT_SM_SI_.exit, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorImE11sortIndicesILb0EZNKSC_11sortIndicesERS5_NSA_12CompareFlagsEEUliE1_ZNKSC_11sortIndicesESE_SF_EUliE2_EEvT0_T1_SE_SF_EUliiE_EEEvT_SM_SI_.exit
-  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 144
+  %i.az = getelementptr inbounds nuw i8, ptr %5, i64 144
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !728 ; 6 uses
   %i.bb = trunc nuw i8 %i.at to i1
   br i1 %i.bb, label %.lr.ph.split.us.i, label %.lr.ph.split.i

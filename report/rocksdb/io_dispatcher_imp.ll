@@ -204,12 +204,13 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.ez, label %.lr.ph.i.i.i.i, label %.preheader.i17.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.af
-  %.val.val.pre22.i.i.i.i = load ptr, ptr %2, align 8, !tbaa !165
+  %.val.val.pre22.i.i.i.i = load ptr, ptr %2, align 8, !tbaa !165 ; 2 uses
   %.pre26.i.i.i.i = load i64, ptr %i.ep, align 8, !tbaa !62
   %scevgep.i.i.i = getelementptr i8, ptr %i.ep, i64 8
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.al, %.lr.ph.i.i.i.i
+  %.val.val.i.i46.i.i.i = phi ptr [ %.val.val.pre22.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.val.val.i.i.i.i.i, %bb.al ] ; 2 uses
   %i.fa = phi i64 [ %.pre26.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.ft, %bb.al ] ; 2 uses
   %.val.val.i.i.i.i = phi ptr [ %.val.val.pre22.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.val.val.i.i.i.i.i.a, %bb.al ] ; 3 uses
   %.sroa.0.020.i.idx.i.i.i = phi i64 [ 8, %.lr.ph.i.i.i.i ], [ %.sroa.0.020.i.add.i.i.i, %bb.al ] ; 4 uses
@@ -230,7 +231,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.ep, i64 %.sroa.0.020.i.idx.i.i.i, i1 false)
-  %.val.val.pre.i.i.i.i = load ptr, ptr %2, align 8, !tbaa !165
+  %.val.val.pre.i.i.i.i = load ptr, ptr %2, align 8, !tbaa !165 ; 2 uses
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i
 
 bb.aj:                                            ; preds = %bb.ah
@@ -239,6 +240,7 @@ bb.aj:                                            ; preds = %bb.ah
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.aj, %bb.ai
+  %.val.val.i.i45.i.i.i = phi ptr [ %.val.val.pre.i.i.i.i, %bb.ai ], [ %.val.val.i.i46.i.i.i, %bb.aj ]
   %.val.val24.i.i.i.i = phi ptr [ %.val.val.pre.i.i.i.i, %bb.ai ], [ %.val.val.i.i.i.i, %bb.aj ]
   store i64 %i.fb, ptr %i.ep, align 8, !tbaa !62
   br label %bb.al
@@ -270,8 +272,9 @@ bb.ak:                                            ; preds = %bb.ag
   br label %bb.al
 
 bb.al:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i
+  %.val.val.i.i.i.i.i = phi ptr [ %.val.val.i.i45.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i ], [ %.val.val.i.i46.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i.i.i.i" ] ; 4 uses
   %i.ft = phi i64 [ %i.fb, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i ], [ %.pre.i.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i.i.i.i" ]
-  %.val.val.i.i.i.i.i.a = phi ptr [ %.val.val24.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i ], [ %.val.val.i.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i.i.i.i" ] ; 4 uses
+  %.val.val.i.i.i.i.i.a = phi ptr [ %.val.val24.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i.i.i ], [ %.val.val.i.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i.i.i.i" ]
   %.sroa.0.020.i.add.i.i.i = add nuw nsw i64 %.sroa.0.020.i.idx.i.i.i, 8 ; 2 uses
   %i.fu = icmp eq i64 %.sroa.0.020.i.add.i.i.i, 128
   br i1 %i.fu, label %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_T0_.exit.i.i.i", label %bb.ag, !llvm.loop !676
@@ -282,7 +285,7 @@ bb.al:                                            ; preds = %"_ZSt25__unguarded_
   br i1 %i.fw, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS7_5IOJobEEPSA_INS7_7ReadSetEEE3$_0EvT_SJ_T0_.exit", label %.lr.ph.i10.i.i.i
 
 .lr.ph.i10.i.i.i:                                 ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_T0_.exit.i.i.i"
-  %.val.val.val.i.i.i.i.i = load ptr, ptr %.val.val.i.i.i.i.i.a, align 8, !tbaa !355 ; 3 uses
+  %.val.val.val.i.i.i.i.i = load ptr, ptr %.val.val.i.i.i.i.i, align 8, !tbaa !355 ; 3 uses
   br label %bb.am
 
 bb.am:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i11.i.i.i", %.lr.ph.i10.i.i.i
@@ -404,7 +407,7 @@ bb.at:                                            ; preds = %"_ZSt25__unguarded_
   br i1 %i.ho, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS7_5IOJobEEPSA_INS7_7ReadSetEEE3$_0EvT_SJ_T0_.exit", label %bb.an, !llvm.loop !676
 
 "_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS7_5IOJobEEPSA_INS7_7ReadSetEEE3$_0EvT_SJ_T0_.exit": ; preds = %bb.at, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i11.i.i.i", %.preheader.i17.i.i.i, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_T0_.exit.i.i.i", %bb.ae, %._crit_edge
-  %i.hp = phi ptr [ %.val.val.i.i.i.i.i.a, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i11.i.i.i" ], [ %i.dy, %._crit_edge ], [ %.pre307, %.preheader.i17.i.i.i ], [ %.val.val.i.i.i.i.i.a, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_T0_.exit.i.i.i" ], [ %i.dy, %bb.ae ], [ %.val.val23.i29.i.i.i, %bb.at ] ; 3 uses
+  %i.hp = phi ptr [ %.val.val.i.i.i.i.i, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops14_Val_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_.exit.i11.i.i.i" ], [ %i.dy, %._crit_edge ], [ %.pre307, %.preheader.i17.i.i.i ], [ %.val.val.i.i.i.i.i, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_T0_.exit.i.i.i" ], [ %i.dy, %bb.ae ], [ %.val.val23.i29.i.i.i, %bb.at ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 8

@@ -156,7 +156,7 @@ bb.k:                                             ; preds = %_ZN13duckdb_brotliL
   %.lcssa141 = phi i32 [ 0, %_ZN13duckdb_brotliL8FastLog2Em.exit112 ], [ %.lcssa139, %.thread ] ; 5 uses
   %.087137 = phi i64 [ 1, %_ZN13duckdb_brotliL8FastLog2Em.exit112 ], [ %.2, %.thread ] ; 5 uses
   %.094136 = phi double [ 0.000000e+00, %_ZN13duckdb_brotliL8FastLog2Em.exit112 ], [ %.4, %.thread ] ; 5 uses
-  %.3100135 = phi i64 [ 0, %_ZN13duckdb_brotliL8FastLog2Em.exit112 ], [ %.4101, %.thread ] ; 5 uses
+  %.3100135 = phi i64 [ 0, %_ZN13duckdb_brotliL8FastLog2Em.exit112 ], [ %.4101, %.thread ] ; 6 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.3100135 ; 2 uses
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !6  ; 5 uses
   %.not109 = icmp eq i32 %i.bv, 0
@@ -164,7 +164,12 @@ bb.k:                                             ; preds = %_ZN13duckdb_brotliL
 
 .preheader:                                       ; preds = %bb.k
   %.not146 = icmp eq i64 %.3100135, 255
-  br i1 %.not146, label %.critedge.thread, label %.lr.ph127
+  br i1 %.not146, label %.critedge.thread, label %.lr.ph127.preheader
+
+.lr.ph127.preheader:                              ; preds = %.preheader
+  %1 = trunc nuw nsw i64 %.3100135 to i32
+  %2 = sub nuw nsw i32 256, %1
+  br label %.lr.ph127
 
 bb.l:                                             ; preds = %bb.k
   %i.bw = icmp ult i32 %i.bv, 256
@@ -199,9 +204,9 @@ _ZN13duckdb_brotliL8FastLog2Em.exit:              ; preds = %bb.m, %bb.n
   %i.cl = add nuw nsw i64 %.3100135, 1
   br label %.thread
 
-.lr.ph127:                                        ; preds = %.preheader, %bb.o
-  %.0126.in = phi i64 [ %.0126, %bb.o ], [ %.3100135, %.preheader ]
-  %.086125 = phi i32 [ %i.cp, %bb.o ], [ 1, %.preheader ] ; 2 uses
+.lr.ph127:                                        ; preds = %.lr.ph127.preheader, %bb.o
+  %.0126.in = phi i64 [ %.0126, %bb.o ], [ %.3100135, %.lr.ph127.preheader ]
+  %.086125 = phi i32 [ %i.cp, %bb.o ], [ 1, %.lr.ph127.preheader ] ; 2 uses
   %.0126 = add nuw nsw i64 %.0126.in, 1           ; 3 uses
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0126
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !6
@@ -209,19 +214,19 @@ _ZN13duckdb_brotliL8FastLog2Em.exit:              ; preds = %bb.m, %bb.n
   br i1 %i.co, label %bb.o, label %.critedge
 
 bb.o:                                             ; preds = %.lr.ph127
-  %i.cp = add nuw nsw i32 %.086125, 1             ; 2 uses
+  %i.cp = add nuw nsw i32 %.086125, 1
   %exitcond153.not = icmp eq i64 %.0126, 255
   br i1 %exitcond153.not, label %.critedge, label %.lr.ph127, !llvm.loop !13
 
 .critedge:                                        ; preds = %.lr.ph127, %bb.o
-  %.086.lcssa = phi i32 [ %i.cp, %bb.o ], [ %.086125, %.lr.ph127 ] ; 4 uses
-  %i.cq = zext i32 %.086.lcssa to i64
+  %.086.lcssa = phi i32 [ %2, %bb.o ], [ %.086125, %.lr.ph127 ] ; 4 uses
+  %i.cq = zext nneg i32 %.086.lcssa to i64
   %i.cr = add nuw nsw i64 %.3100135, %i.cq        ; 3 uses
   %i.cs = icmp eq i64 %i.cr, 256
   br i1 %i.cs, label %.critedge.thread, label %bb.p
 
 bb.p:                                             ; preds = %.critedge
-  %i.ct = icmp ult i32 %.086.lcssa, 3
+  %i.ct = icmp samesign ult i32 %.086.lcssa, 3
   br i1 %i.ct, label %bb.q, label %.lr.ph133.preheader
 
 bb.q:                                             ; preds = %bb.p

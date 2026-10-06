@@ -205,7 +205,7 @@ put_bits32.exit:                                  ; preds = %bb.f, %bb.g
   %.sroa.14.2.lcssa = phi i32 [ %i.bn, %bb.e ], [ %i.cv, %put_bits32.exit ] ; 3 uses
   %.sroa.84.2.lcssa.idx = phi i64 [ %.sroa.84.1.idx, %bb.e ], [ %.sroa.84.13.idx, %put_bits32.exit ] ; 5 uses
   %.sroa.0.2.lcssa = phi i32 [ %i.bu, %bb.e ], [ %i.cw, %put_bits32.exit ] ; 2 uses
-  %.044.lcssa = phi i32 [ %spec.select232, %bb.e ], [ %i.dg, %put_bits32.exit ] ; 9 uses
+  %.044.lcssa = phi i32 [ %spec.select232, %bb.e ], [ %i.dg, %put_bits32.exit ] ; 10 uses
   %.sroa.84.2.lcssa.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.84.2.lcssa.idx
   %.not.i = icmp eq i32 %.044.lcssa, 0
   br i1 %.not.i, label %get_bits_long.exit, label %bb.h
@@ -279,21 +279,27 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %put_bits.exit82
 
 put_bits.exit82:                                  ; preds = %bb.k, %bb.o
-  %.sroa.84.15.idx = phi i64 [ %.sroa.84.2.lcssa.idx, %bb.k ], [ %.sroa.84.14.idx, %bb.o ] ; 3 uses
+  %.sroa.84.15.idx = phi i64 [ %.sroa.84.2.lcssa.idx, %bb.k ], [ %.sroa.84.14.idx, %bb.o ] ; 4 uses
   %.026.i.i80 = phi i32 [ %i.ei, %bb.k ], [ %.0.i, %bb.o ]
-  %.pn245 = phi i32 [ %i.bo, %bb.k ], [ %reass.sub.i79, %bb.o ]
-  %.0.i.i81 = sub i32 %.pn245, %.044.lcssa        ; 3 uses
+  %.pn245 = phi i32 [ %i.bo, %bb.k ], [ %reass.sub.i79, %bb.o ] ; 2 uses
+  %.0.i.i81 = sub i32 %.pn245, %.044.lcssa        ; 2 uses
   %i.ep = icmp slt i32 %.0.i.i81, 32
   br i1 %i.ep, label %.lr.ph.i, label %.loopexit
 
 .lr.ph.i:                                         ; preds = %put_bits.exit82
   %i.eq = shl i32 %.026.i.i80, %.0.i.i81
   %i.er = call i64 @llvm.umax.i64(i64 %.sroa.84.15.idx, i64 6)
+  %1 = add nsw i32 %.044.lcssa, 31
+  %2 = sub i32 %1, %.pn245
+  %3 = lshr i32 %2, 3
+  %4 = trunc nuw nsw i64 %.sroa.84.15.idx to i32
+  %5 = add nuw nsw i32 %3, %4
+  %6 = add nuw nsw i32 %5, 1
+  %wide.trip.count = zext nneg i32 %6 to i64      ; 2 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.r, %.lr.ph.i
   %.sroa.84.16.idx = phi i64 [ %.sroa.84.15.idx, %.lr.ph.i ], [ %.sroa.84.16.add, %bb.r ] ; 3 uses
-  %.sroa.41.3 = phi i32 [ %.0.i.i81, %.lr.ph.i ], [ %1, %bb.r ] ; 2 uses
   %.sroa.0.3 = phi i32 [ %i.eq, %.lr.ph.i ], [ %i.eu, %bb.r ] ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.84.16.idx, %i.er
   br i1 %exitcond.not, label %bb.q, label %bb.r
@@ -310,16 +316,15 @@ bb.r:                                             ; preds = %bb.p
   %.sroa.84.16.add = add nuw nsw i64 %.sroa.84.16.idx, 1 ; 2 uses
   store i8 %i.et, ptr %.sroa.84.16.ptr, align 1, !tbaa !9
   %i.eu = shl i32 %.sroa.0.3, 8
-  %1 = add nsw i32 %.sroa.41.3, 8
-  %2 = icmp slt i32 %.sroa.41.3, 24
-  br i1 %2, label %bb.p, label %.loopexit, !llvm.loop !164
+  %exitcond252.not = icmp eq i64 %.sroa.84.16.add, %wide.trip.count
+  br i1 %exitcond252.not, label %.loopexit, label %bb.p, !llvm.loop !164
 
 .thread:                                          ; preds = %bb.c, %put_bits.exit73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %.thread229
 
 .loopexit:                                        ; preds = %bb.r, %put_bits.exit82
-  %.sroa.84.15.idx.pn = phi i64 [ %.sroa.84.15.idx, %put_bits.exit82 ], [ %.sroa.84.16.add, %bb.r ]
+  %.sroa.84.15.idx.pn = phi i64 [ %.sroa.84.15.idx, %put_bits.exit82 ], [ %wide.trip.count, %bb.r ]
   %i.ev = load ptr, ptr %i.y, align 8, !tbaa !49
   %sext235 = shl i64 %.sroa.84.15.idx.pn, 32
   %i.ew = ashr exact i64 %sext235, 32
