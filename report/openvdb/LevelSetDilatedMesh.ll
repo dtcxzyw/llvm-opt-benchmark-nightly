@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.bv, ptr %3, align 4, !tbaa !741
   %i.bw = icmp eq i32 %i.bv, 2
   %i.bx = fcmp ogt double %i.ay, %i.bo
-  %or.cond = select i1 %i.bw, i1 %i.bx, i1 false
+  %or.cond = and i1 %i.bx, %i.bw
   br i1 %or.cond, label %.sink.split, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.bw, ptr %3, align 4, !tbaa !741
   %i.bx = icmp eq i32 %i.bw, 2
   %i.by = fcmp ogt double %i.ax, %i.bp
-  %or.cond = select i1 %i.bx, i1 %i.by, i1 false
+  %or.cond = and i1 %i.by, %i.bx
   br i1 %or.cond, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f

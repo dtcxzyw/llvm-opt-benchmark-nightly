@@ -205,16 +205,18 @@ bb.f:                                             ; preds = %bb.e
   %i.bi = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bj = fdiv <2 x double> %i.q, %i.bi           ; 3 uses
   %i.bk = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.bj)
-  %i.bl = fcmp oeq <2 x double> %i.bk, splat (double +inf)
+  %i.bl = fcmp oeq <2 x double> %i.bk, splat (double +inf) ; 2 uses
   %i.bm = extractelement <2 x double> %i.bj, i64 1
   %i.bn = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.q)
-  %i.bo = fcmp olt <2 x double> %i.bn, splat (double f0x3E112E0BE0000000)
-  %6 = select <2 x i1> %i.bl, <2 x i1> %i.bo, <2 x i1> zeroinitializer ; 2 uses
-  %i.bp = extractelement <2 x i1> %6, i64 1
+  %i.bo = fcmp olt <2 x double> %i.bn, splat (double f0x3E112E0BE0000000) ; 2 uses
+  %foldExtExtBinop113 = and <2 x i1> %i.bo, %i.bl
+  %i.bp = extractelement <2 x i1> %foldExtExtBinop113, i64 1
   %.0 = select i1 %i.bp, double 0.000000e+00, double %i.bm ; 2 uses
+  %6 = extractelement <2 x i1> %i.bl, i64 0
+  %i.bq = extractelement <2 x i1> %i.bo, i64 0
+  %or.cond = select i1 %6, i1 %i.bq, i1 false
   %7 = extractelement <2 x double> %i.bj, i64 0
-  %i.bq = extractelement <2 x i1> %6, i64 0
-  br i1 %i.bq, label %bb.g, label %bb.j
+  br i1 %or.cond, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
   br label %bb.j
@@ -223,16 +225,18 @@ bb.h:                                             ; preds = %bb.e
   %i.br = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bs = fdiv <2 x double> %i.u, %i.br           ; 3 uses
   %i.bt = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.bs)
-  %i.bu = fcmp oeq <2 x double> %i.bt, splat (double +inf)
+  %i.bu = fcmp oeq <2 x double> %i.bt, splat (double +inf) ; 2 uses
   %i.bv = extractelement <2 x double> %i.bs, i64 1
   %i.bw = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.u)
-  %i.bx = fcmp olt <2 x double> %i.bw, splat (double f0x3E112E0BE0000000)
-  %8 = select <2 x i1> %i.bu, <2 x i1> %i.bx, <2 x i1> zeroinitializer ; 2 uses
-  %i.by = extractelement <2 x i1> %8, i64 1
+  %i.bx = fcmp olt <2 x double> %i.bw, splat (double f0x3E112E0BE0000000) ; 2 uses
+  %foldExtExtBinop115 = and <2 x i1> %i.bx, %i.bu
+  %i.by = extractelement <2 x i1> %foldExtExtBinop115, i64 1
   %.196 = select i1 %i.by, double 0.000000e+00, double %i.bv ; 2 uses
+  %8 = extractelement <2 x i1> %i.bu, i64 0
+  %i.bz = extractelement <2 x i1> %i.bx, i64 0
+  %or.cond20 = select i1 %8, i1 %i.bz, i1 false
   %9 = extractelement <2 x double> %i.bs, i64 0
-  %i.bz = extractelement <2 x i1> %8, i64 0
-  br i1 %i.bz, label %bb.i, label %bb.j
+  br i1 %or.cond20, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   br label %bb.j
@@ -536,16 +540,18 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q
   %i.el = fdiv <2 x double> %i.dn, %i.cp          ; 3 uses
   %i.em = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.el)
-  %i.en = fcmp oeq <2 x double> %i.em, splat (double +inf)
+  %i.en = fcmp oeq <2 x double> %i.em, splat (double +inf) ; 2 uses
   %i.eo = extractelement <2 x double> %i.el, i64 1
   %i.ep = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.dn)
-  %i.eq = fcmp olt <2 x double> %i.ep, splat (double f0x3E112E0BE0000000)
-  %2 = select <2 x i1> %i.en, <2 x i1> %i.eq, <2 x i1> zeroinitializer ; 2 uses
-  %i.er = extractelement <2 x i1> %2, i64 1
+  %i.eq = fcmp olt <2 x double> %i.ep, splat (double f0x3E112E0BE0000000) ; 2 uses
+  %foldExtExtBinop = and <2 x i1> %i.eq, %i.en
+  %i.er = extractelement <2 x i1> %foldExtExtBinop, i64 1
   %.0.i = select i1 %i.er, double 0.000000e+00, double %i.eo ; 2 uses
+  %2 = extractelement <2 x i1> %i.en, i64 0
+  %i.es = extractelement <2 x i1> %i.eq, i64 0
+  %or.cond.i59 = select i1 %2, i1 %i.es, i1 false
   %3 = extractelement <2 x double> %i.el, i64 0
-  %i.es = extractelement <2 x i1> %2, i64 0
-  br i1 %i.es, label %bb.s, label %bb.v
+  br i1 %or.cond.i59, label %bb.s, label %bb.v
 
 bb.s:                                             ; preds = %bb.r
   br label %bb.v
@@ -553,16 +559,18 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.q
   %i.et = fdiv <2 x double> %i.dq, %i.cr          ; 3 uses
   %i.eu = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.et)
-  %i.ev = fcmp oeq <2 x double> %i.eu, splat (double +inf)
+  %i.ev = fcmp oeq <2 x double> %i.eu, splat (double +inf) ; 2 uses
   %i.ew = extractelement <2 x double> %i.et, i64 1
   %i.ex = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.dq)
-  %i.ey = fcmp olt <2 x double> %i.ex, splat (double f0x3E112E0BE0000000)
-  %4 = select <2 x i1> %i.ev, <2 x i1> %i.ey, <2 x i1> zeroinitializer ; 2 uses
-  %i.ez = extractelement <2 x i1> %4, i64 1
+  %i.ey = fcmp olt <2 x double> %i.ex, splat (double f0x3E112E0BE0000000) ; 2 uses
+  %foldExtExtBinop244 = and <2 x i1> %i.ey, %i.ev
+  %i.ez = extractelement <2 x i1> %foldExtExtBinop244, i64 1
   %.196.i = select i1 %i.ez, double 0.000000e+00, double %i.ew ; 2 uses
+  %4 = extractelement <2 x i1> %i.ev, i64 0
+  %i.fa = extractelement <2 x i1> %i.ey, i64 0
+  %or.cond20.i = select i1 %4, i1 %i.fa, i1 false
   %5 = extractelement <2 x double> %i.et, i64 0
-  %i.fa = extractelement <2 x i1> %4, i64 0
-  br i1 %i.fa, label %bb.u, label %bb.v
+  br i1 %or.cond20.i, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   br label %bb.v

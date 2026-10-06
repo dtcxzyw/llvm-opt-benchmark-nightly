@@ -205,61 +205,45 @@ bb.a:
   %i.e = fdiv double %i.d, 1.800000e+02           ; 2 uses
   %i.f = tail call double @cos(double noundef %i.e) #20
   %i.g = tail call double @sin(double noundef %i.e) #20
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %2 = load float, ptr %1, align 4, !tbaa !42     ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.i = insertelement <2 x double> poison, double %i.f, i64 0
-  %i.j = insertelement <2 x double> %i.i, double %i.g, i64 1
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.i = insertelement <2 x double> poison, double %i.g, i64 0
+  %i.j = insertelement <2 x double> %i.i, double %i.f, i64 1
   %i.k = fptrunc <2 x double> %i.j to <2 x float>
-  %i.l = fmul <2 x float> %i.k, splat (float 5.000000e-01) ; 3 uses
-  %3 = extractelement <2 x float> %i.l, i64 1
-  %4 = fmul float %2, %3                          ; 2 uses
-  %5 = load <4 x float>, ptr %0, align 4
-  %6 = extractelement <2 x float> %i.l, i64 0
-  %7 = fmul float %6, %2                          ; 2 uses
-  %8 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.m = fmul <2 x float> %i.l, %8                ; 4 uses
-  %9 = load float, ptr %0, align 4, !tbaa !44     ; 2 uses
-  %10 = fsub float %9, %4                         ; 2 uses
-  %11 = load float, ptr %i.h, align 4, !tbaa !46  ; 2 uses
-  %12 = fadd float %7, %11                        ; 2 uses
-  %13 = fadd float %4, %9
-  %14 = fsub float %11, %7
-  %15 = insertelement <4 x float> poison, float %13, i64 0
-  %16 = insertelement <4 x float> %15, float %14, i64 1 ; 2 uses
-  %17 = insertelement <4 x float> %16, float %10, i64 2
-  %18 = insertelement <4 x float> %17, float %12, i64 3
-  %19 = shufflevector <2 x float> %i.m, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %20 = fsub <4 x float> %18, %19                 ; 4 uses
-  %21 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %i.n = fadd <2 x float> %i.m, %21
-  %22 = shufflevector <2 x float> %i.n, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
-  %23 = insertelement <2 x float> %i.m, float %12, i64 1
-  %24 = insertelement <2 x float> %i.m, float %10, i64 0
-  %i.o = fadd <2 x float> %23, %24
-  %25 = shufflevector <2 x float> %i.o, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
-  %26 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %27 = fcmp olt <4 x float> %20, %26
-  %28 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %29 = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  %30 = select <4 x i1> %27, <4 x float> %28, <4 x float> %29 ; 3 uses
-  %31 = shufflevector <4 x float> %22, <4 x float> %30, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %32 = shufflevector <4 x float> %30, <4 x float> %22, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %33 = fcmp olt <4 x float> %31, %32
-  %34 = select <4 x i1> %33, <4 x float> %22, <4 x float> %30 ; 3 uses
-  %35 = shufflevector <4 x float> %25, <4 x float> %34, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %36 = shufflevector <4 x float> %34, <4 x float> %25, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %37 = fcmp olt <4 x float> %35, %36
-  %38 = select <4 x i1> %37, <4 x float> %25, <4 x float> %34 ; 2 uses
-  %39 = tail call <4 x float> @llvm.floor.v4f32(<4 x float> %38)
-  %40 = shufflevector <4 x float> %39, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %41 = fptosi <2 x float> %40 to <2 x i32>       ; 2 uses
-  %42 = tail call <4 x float> @llvm.ceil.v4f32(<4 x float> %38)
-  %43 = shufflevector <4 x float> %42, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.p = fptosi <2 x float> %43 to <2 x i32>
-  %i.q = sub <2 x i32> %i.p, %41
+  %i.l = fmul <2 x float> %i.k, splat (float 5.000000e-01) ; 2 uses
+  %1 = load <2 x float>, ptr %i.h, align 4, !tbaa !24 ; 2 uses
+  %2 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.m = fmul <2 x float> %2, %i.l                ; 2 uses
+  %3 = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %4 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
+  %5 = fmul <2 x float> %3, %4                    ; 4 uses
+  %6 = load <2 x float>, ptr %0, align 4, !tbaa !24 ; 2 uses
+  %7 = fsub <2 x float> %6, %i.m                  ; 2 uses
+  %8 = fadd <2 x float> %6, %i.m                  ; 2 uses
+  %9 = shufflevector <2 x float> %7, <2 x float> %8, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %10 = fsub <2 x float> %9, %5                   ; 4 uses
+  %11 = shufflevector <2 x float> %8, <2 x float> %7, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %12 = fsub <2 x float> %11, %5                  ; 4 uses
+  %i.n = fadd <2 x float> %5, %11                 ; 4 uses
+  %i.o = fadd <2 x float> %5, %9                  ; 4 uses
+  %13 = fcmp olt <2 x float> %12, %10
+  %14 = select <2 x i1> %13, <2 x float> %12, <2 x float> %10 ; 2 uses
+  %15 = fcmp olt <2 x float> %i.n, %14
+  %16 = select <2 x i1> %15, <2 x float> %i.n, <2 x float> %14 ; 2 uses
+  %17 = fcmp olt <2 x float> %i.o, %16
+  %18 = select <2 x i1> %17, <2 x float> %i.o, <2 x float> %16
+  %19 = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %18)
+  %20 = fptosi <2 x float> %19 to <2 x i32>       ; 2 uses
+  %21 = fcmp olt <2 x float> %10, %12
+  %22 = select <2 x i1> %21, <2 x float> %12, <2 x float> %10 ; 2 uses
+  %23 = fcmp olt <2 x float> %22, %i.n
+  %24 = select <2 x i1> %23, <2 x float> %i.n, <2 x float> %22 ; 2 uses
+  %25 = fcmp olt <2 x float> %24, %i.o
+  %26 = select <2 x i1> %25, <2 x float> %i.o, <2 x float> %24
+  %27 = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %26)
+  %i.p = fptosi <2 x float> %27 to <2 x i32>
+  %i.q = sub <2 x i32> %i.p, %20
   %i.r = add <2 x i32> %i.q, splat (i32 1)
-  %.sroa.0.0.insert.insert = bitcast <2 x i32> %41 to i64
+  %.sroa.0.0.insert.insert = bitcast <2 x i32> %20 to i64
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.insert.insert, 0
   %.sroa.5.8.insert.insert = bitcast <2 x i32> %i.r to i64
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.5.8.insert.insert, 1
@@ -662,10 +646,10 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.floor.v4f32(<4 x float>) #8
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.ceil.v4f32(<4 x float>) #8
+declare <2 x float> @llvm.floor.v2f32(<2 x float>) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

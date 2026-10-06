@@ -205,7 +205,7 @@ bb.a:
   store i32 %i.cx, ptr %.sroa.10.0..sroa_idx.i.i.i, align 4
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 3 uses
   store <2 x float> %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8
-  %.sroa.12.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 72
+  %.sroa.12.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 72 ; 3 uses
   store <2 x float> %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.12.0..sroa_idx.i.i.i, align 8
   %.sroa.13.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 80 ; 2 uses
   store i32 %i.ct, ptr %.sroa.13.0..sroa_idx.i.i.i, align 8
@@ -215,7 +215,7 @@ bb.a:
   store <2 x float> %.sroa.2.0.copyload.i.i31.i.i.i.i, ptr %.sroa.15.0..sroa_idx.i.i.i, align 4
   %.sroa.16.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 100 ; 2 uses
   store <2 x float> %.sroa.0.0.copyload.i.i34.i.i.i.i, ptr %.sroa.16.0..sroa_idx.i.i.i, align 4
-  %.sroa.17.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 108
+  %.sroa.17.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 108 ; 2 uses
   store <2 x float> %.sroa.2.0.copyload.i.i36.i.i.i.i, ptr %.sroa.17.0..sroa_idx.i.i.i, align 4
   %.sroa.18.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 116 ; 2 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i.i.i.i.i.i, ptr %.sroa.18.0..sroa_idx.i.i.i, align 4
@@ -308,7 +308,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond.i.i.i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %11 = load <4 x float>, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8
+  %.sroa.0.0.copyload4.i.i.i.i.i = load <2 x float>, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8
+  %.sroa.8.0.copyload.i.i.i.i.i = load <2 x float>, ptr %.sroa.12.0..sroa_idx.i.i.i, align 8, !tbaa !122
   %i.eh = load float, ptr %.sroa.14.0..sroa_idx.i.i.i, align 4, !tbaa !437
   %i.ei = load float, ptr %i.dm, align 8, !tbaa !437
   %i.ej = fadd float %i.eh, %i.ei
@@ -317,6 +318,7 @@ bb.d:                                             ; preds = %bb.c
   %i.em = load float, ptr %i.dn, align 8, !tbaa !437
   %i.en = fadd float %i.el, %i.em
   %i.eo = fmul float %i.en, 2.500000e-01
+  %11 = shufflevector <2 x float> %.sroa.0.0.copyload4.i.i.i.i.i, <2 x float> %.sroa.8.0.copyload.i.i.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ep = fmul <4 x float> %.fr, %11
   %i.eq = insertelement <4 x float> poison, float %i.eo, i64 0
   %i.er = shufflevector <4 x float> %i.eq, <4 x float> poison, <4 x i32> zeroinitializer
@@ -340,7 +342,8 @@ bb.e:                                             ; preds = %bb.c
   %i.fa = add nsw i32 %i.ez, -1
   %i.fb = call noundef float @_ZN4pbrt6detail8DispatchIRZNKS_12LightSampler3PMFERKNS_18LightSampleContextENS_5LightEEUlT_E_fNS_19UniformLightSamplerENS_17PowerLightSamplerENS_22ExhaustiveLightSamplerENS_15BVHLightSamplerEEET0_OS7_PKvi(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef %i.ex, i32 noundef %i.fa)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
-  %12 = load <4 x float>, ptr %.sroa.16.0..sroa_idx.i.i.i, align 4
+  %.sroa.0.0.copyload.i.i.i.i.i = load <2 x float>, ptr %.sroa.16.0..sroa_idx.i.i.i, align 4
+  %.sroa.6.0.copyload.i.i.i.i.i = load <2 x float>, ptr %.sroa.17.0..sroa_idx.i.i.i, align 4, !tbaa !122
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 4 dereferenceable(48) %8, i64 48, i1 false)
   %.sroa.03.0.copyload.i.i.i.i = load <2 x float>, ptr %.sroa.3.0..sroa_idx.i.i.i, align 4
@@ -367,12 +370,13 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.fj = insertelement <4 x float> poison, float %i.fb, i64 0
   %i.fk = shufflevector <4 x float> %i.fj, <4 x float> poison, <4 x i32> zeroinitializer
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2>
-  %i.fl = fmul <4 x float> %i.fk, %13
+  %12 = shufflevector <2 x float> %.sroa.6.0.copyload.i.i.i.i.i, <2 x float> %.sroa.0.0.copyload.i.i.i.i.i, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
+  %i.fl = fmul <4 x float> %i.fk, %12
   %i.fm = insertelement <4 x float> poison, float %i.fi, i64 0
   %i.fn = shufflevector <4 x float> %i.fm, <4 x float> poison, <4 x i32> zeroinitializer
   %i.fo = fmul <4 x float> %i.fl, %i.fn           ; 3 uses
-  %14 = load <4 x float>, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8
+  %.sroa.0.0.copyload4.i58.i.i.i.i = load <2 x float>, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8
+  %.sroa.8.0.copyload.i60.i.i.i.i = load <2 x float>, ptr %.sroa.12.0..sroa_idx.i.i.i, align 8, !tbaa !122
   %.sroa.0.0.copyload4.i71.i.i.i.i = load <2 x float>, ptr %.sroa.14.0..sroa_idx.i.i.i, align 4 ; 2 uses
   %.sroa.8.0.copyload.i73.i.i.i.i = load <2 x float>, ptr %.sroa.15.0..sroa_idx.i.i.i, align 4, !tbaa !122 ; 2 uses
   %.sroa.0.0.vec.extract.i74.i.i.i.i = extractelement <2 x float> %.sroa.0.0.copyload4.i71.i.i.i.i, i64 0
@@ -390,7 +394,8 @@ bb.e:                                             ; preds = %bb.c
   %i.fz = fadd float %i.fx, %i.fy
   %i.ga = fadd float %i.fv, %i.fz
   %i.gb = fmul float %i.ga, 2.500000e-01
-  %i.gc = fmul <4 x float> %.fr, %14
+  %13 = shufflevector <2 x float> %.sroa.0.0.copyload4.i58.i.i.i.i, <2 x float> %.sroa.8.0.copyload.i60.i.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.gc = fmul <4 x float> %.fr, %13
   %i.gd = insertelement <4 x float> poison, float %i.gb, i64 0
   %i.ge = shufflevector <4 x float> %i.gd, <4 x float> poison, <4 x i32> zeroinitializer
   %i.gf = fdiv <4 x float> %i.gc, %i.ge

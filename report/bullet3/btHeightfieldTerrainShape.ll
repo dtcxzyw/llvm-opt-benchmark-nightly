@@ -205,16 +205,16 @@ bb.b:                                             ; preds = %bb.a
   %i.at = shufflevector <2 x i1> %i.as, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.au = select <2 x i1> %i.at, <2 x float> zeroinitializer, <2 x float> %i.ar ; 4 uses
   %i.av = extractelement <2 x float> %i.au, i64 1
-  %4 = fcmp olt float %i.av, 0.000000e+00         ; 2 uses
-  %5 = sext i1 %4 to i32
-  %6 = fcmp ule <2 x float> %i.au, zeroinitializer ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 1          ; 2 uses
-  %i.aw = select i1 %7, i32 %5, i32 1             ; 2 uses
+  %4 = fcmp ule float %i.av, 0.000000e+00         ; 2 uses
+  %5 = fcmp olt <2 x float> %i.au, zeroinitializer ; 2 uses
+  %6 = extractelement <2 x i1> %5, i64 1          ; 2 uses
+  %7 = sext i1 %6 to i32
+  %i.aw = select i1 %4, i32 %7, i32 1             ; 2 uses
   %i.ax = extractelement <2 x float> %i.au, i64 0
-  %8 = fcmp olt float %i.ax, 0.000000e+00         ; 2 uses
-  %9 = sext i1 %8 to i32
-  %10 = extractelement <2 x i1> %6, i64 0         ; 2 uses
-  %i.ay = select i1 %10, i32 %9, i32 1            ; 2 uses
+  %8 = fcmp ule float %i.ax, 0.000000e+00         ; 2 uses
+  %9 = extractelement <2 x i1> %5, i64 0          ; 2 uses
+  %10 = sext i1 %9 to i32
+  %i.ay = select i1 %8, i32 %10, i32 1            ; 2 uses
   %.not = icmp eq i32 %i.aw, 0                    ; 2 uses
   %.not78 = icmp eq i32 %i.ay, 0                  ; 2 uses
   %i.az = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.au)
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %7, label %bb.e, label %bb.d
+  br i1 %4, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.bf = tail call noundef float @llvm.ceil.f32(float %i.x)
@@ -245,7 +245,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
   br i1 %.not78, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  br i1 %10, label %bb.i, label %bb.h
+  br i1 %8, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bl = tail call noundef float @llvm.ceil.f32(float %i.ae)
@@ -266,12 +266,12 @@ bb.j:                                             ; preds = %bb.f, %bb.h, %bb.i
   %i.bt = tail call noundef float @llvm.floor.f32(float %i.ae)
   %i.bu = fptosi float %i.bt to i32
   %i.bv = fcmp oeq float %.071, 0.000000e+00      ; 2 uses
-  %narrow = and i1 %4, %i.bv
+  %narrow = and i1 %6, %i.bv
   %spec.select = sext i1 %narrow to i32
   %.sroa.0.0 = add nsw i32 %i.bs, %spec.select
   %.172 = select i1 %i.bv, float %i.bc, float %.071
   %i.bw = fcmp oeq float %.0, 0.000000e+00        ; 2 uses
-  %narrow92 = select i1 %i.bw, i1 %8, i1 false
+  %narrow92 = and i1 %9, %i.bw
   %spec.select91 = sext i1 %narrow92 to i32
   %.sroa.9.0 = add nsw i32 %i.bu, %spec.select91
   %.1 = select i1 %i.bw, float %i.be, float %.0
@@ -674,16 +674,16 @@ bb.b:                                             ; preds = %bb.a
   %i.at = shufflevector <2 x i1> %i.as, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.au = select <2 x i1> %i.at, <2 x float> zeroinitializer, <2 x float> %i.ar ; 4 uses
   %i.av = extractelement <2 x float> %i.au, i64 1
-  %4 = fcmp olt float %i.av, 0.000000e+00         ; 2 uses
-  %5 = sext i1 %4 to i32
-  %6 = fcmp ule <2 x float> %i.au, zeroinitializer ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 1          ; 2 uses
-  %i.aw = select i1 %7, i32 %5, i32 1             ; 2 uses
+  %4 = fcmp ule float %i.av, 0.000000e+00         ; 2 uses
+  %5 = fcmp olt <2 x float> %i.au, zeroinitializer ; 2 uses
+  %6 = extractelement <2 x i1> %5, i64 1          ; 2 uses
+  %7 = sext i1 %6 to i32
+  %i.aw = select i1 %4, i32 %7, i32 1             ; 2 uses
   %i.ax = extractelement <2 x float> %i.au, i64 0
-  %8 = fcmp olt float %i.ax, 0.000000e+00         ; 2 uses
-  %9 = sext i1 %8 to i32
-  %10 = extractelement <2 x i1> %6, i64 0         ; 2 uses
-  %i.ay = select i1 %10, i32 %9, i32 1            ; 2 uses
+  %8 = fcmp ule float %i.ax, 0.000000e+00         ; 2 uses
+  %9 = extractelement <2 x i1> %5, i64 0          ; 2 uses
+  %10 = sext i1 %9 to i32
+  %i.ay = select i1 %8, i32 %10, i32 1            ; 2 uses
   %.not = icmp eq i32 %i.aw, 0                    ; 2 uses
   %.not78 = icmp eq i32 %i.ay, 0                  ; 2 uses
   %i.az = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.au)
@@ -695,7 +695,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %7, label %bb.e, label %bb.d
+  br i1 %4, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.bf = tail call noundef float @llvm.ceil.f32(float %i.x)
@@ -714,7 +714,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
   br i1 %.not78, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  br i1 %10, label %bb.i, label %bb.h
+  br i1 %8, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bl = tail call noundef float @llvm.ceil.f32(float %i.ae)
@@ -735,12 +735,12 @@ bb.j:                                             ; preds = %bb.f, %bb.h, %bb.i
   %i.bt = tail call noundef float @llvm.floor.f32(float %i.ae)
   %i.bu = fptosi float %i.bt to i32
   %i.bv = fcmp oeq float %.071, 0.000000e+00      ; 2 uses
-  %narrow = and i1 %4, %i.bv
+  %narrow = and i1 %6, %i.bv
   %spec.select = sext i1 %narrow to i32
   %.sroa.0.0 = add nsw i32 %i.bs, %spec.select
   %.172 = select i1 %i.bv, float %i.bc, float %.071
   %i.bw = fcmp oeq float %.0, 0.000000e+00        ; 2 uses
-  %narrow92 = select i1 %i.bw, i1 %8, i1 false
+  %narrow92 = and i1 %9, %i.bw
   %spec.select91 = sext i1 %narrow92 to i32
   %.sroa.9.0 = add nsw i32 %i.bu, %spec.select91
   %.1 = select i1 %i.bw, float %i.be, float %.0

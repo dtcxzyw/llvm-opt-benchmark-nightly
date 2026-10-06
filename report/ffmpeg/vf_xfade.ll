@@ -205,7 +205,7 @@ bb.a:
   %i.t = shufflevector <8 x float> %i.s, <8 x float> poison, <8 x i32> zeroinitializer
   %i.u = insertelement <4 x float> poison, float %4, i64 0 ; 2 uses
   %i.v = shufflevector <4 x float> %i.u, <4 x float> poison, <4 x i32> zeroinitializer
-  %8 = shufflevector <4 x float> %i.u, <4 x float> poison, <16 x i32> zeroinitializer
+  %8 = shufflevector <4 x float> %i.u, <4 x float> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   %min.epilog.iters.check = icmp eq i64 %i.r, 0
   %n.vec87 = and i64 %wide.trip.count, 2147483644 ; 3 uses
@@ -436,7 +436,7 @@ bb.a:
   %i.y = insertelement <4 x float> poison, float %4, i64 0
   %i.z = shufflevector <4 x float> %i.y, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aa = insertelement <2 x float> poison, float %4, i64 0
-  %8 = shufflevector <2 x float> %i.aa, <2 x float> poison, <8 x i32> zeroinitializer
+  %8 = shufflevector <2 x float> %i.aa, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br label %.preheader.lr.ph
 
@@ -626,7 +626,7 @@ bb.a:
   %i.t = shufflevector <8 x float> %i.s, <8 x float> poison, <8 x i32> zeroinitializer
   %i.u = insertelement <4 x float> poison, float %4, i64 0 ; 2 uses
   %i.v = shufflevector <4 x float> %i.u, <4 x float> poison, <4 x i32> zeroinitializer
-  %8 = shufflevector <4 x float> %i.u, <4 x float> poison, <16 x i32> zeroinitializer
+  %8 = shufflevector <4 x float> %i.u, <4 x float> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   %min.epilog.iters.check = icmp eq i64 %i.r, 0
   %n.vec87 = and i64 %wide.trip.count, 2147483644 ; 3 uses
@@ -860,7 +860,7 @@ bb.a:
   %i.y = insertelement <4 x float> poison, float %4, i64 0
   %i.z = shufflevector <4 x float> %i.y, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aa = insertelement <2 x float> poison, float %4, i64 0
-  %8 = shufflevector <2 x float> %i.aa, <2 x float> poison, <8 x i32> zeroinitializer
+  %8 = shufflevector <2 x float> %i.aa, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br label %.preheader.lr.ph
 

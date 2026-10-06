@@ -204,11 +204,14 @@ _ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i.i: ; preds =
   br label %_ZNSt10unique_ptrIN7rocksdb13BlobLogWriterESt14default_deleteIS1_EEaSEOS4_.exit
 
 _ZNSt10unique_ptrIN7rocksdb13BlobLogWriterESt14default_deleteIS1_EEaSEOS4_.exit: ; preds = %bb.d, %_ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i.i
-  %i.z = phi ptr [ %i.w, %bb.d ], [ %.pre, %_ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i.i ] ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
-  %3 = call <5 x i64> @llvm.masked.load.v5i64.p0(ptr nonnull align 8 %i.aa, <5 x i1> <i1 true, i1 false, i1 true, i1 true, i1 true>, <5 x i64> poison), !tbaa !145
-  %4 = shufflevector <5 x i64> %3, <5 x i64> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 4>
-  store <4 x i64> %4, ptr %i.n, align 8, !tbaa !145
+  %i.z = phi ptr [ %i.w, %bb.d ], [ %.pre, %_ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i.i ] ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 32
+  %4 = call <3 x i64> @llvm.masked.load.v3i64.p0(ptr nonnull align 8 %3, <3 x i1> <i1 true, i1 false, i1 true>, <3 x i64> poison), !tbaa !145
+  %5 = shufflevector <3 x i64> %4, <3 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %6 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !145
+  %7 = shufflevector <2 x i64> %5, <2 x i64> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %7, ptr %i.n, align 8, !tbaa !145
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !496
   store i64 %i.ac, ptr %i.o, align 8, !tbaa !497
@@ -223,7 +226,7 @@ _ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i: ; preds = %
   br label %_ZN7rocksdb24BlobFilePartitionManager19ResetPartitionStateEPNS0_9PartitionE.exit
 
 _ZN7rocksdb24BlobFilePartitionManager19ResetPartitionStateEPNS0_9PartitionE.exit: ; preds = %_ZNSt10unique_ptrIN7rocksdb13BlobLogWriterESt14default_deleteIS1_EEaSEOS4_.exit, %_ZNKSt14default_deleteIN7rocksdb13BlobLogWriterEEclEPS1_.exit.i.i.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(54) %i.aa, i8 0, i64 54, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(54) %3, i8 0, i64 54, i1 false)
   %i.ae = load ptr, ptr %i.p, align 8, !tbaa !245 ; 3 uses
   %i.af = load ptr, ptr %i.q, align 8, !tbaa !498
   %i.ag = getelementptr inbounds i8, ptr %i.af, i64 -48
@@ -626,7 +629,7 @@ declare i64 @llvm.umin.i64(i64, i64) #26
 declare i64 @llvm.umax.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <5 x i64> @llvm.masked.load.v5i64.p0(ptr captures(none), <5 x i1>, <5 x i64>) #27
+declare <3 x i64> @llvm.masked.load.v3i64.p0(ptr captures(none), <3 x i1>, <3 x i64>) #27
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nounwind uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }

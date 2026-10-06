@@ -205,8 +205,7 @@ filter_samples.exit213:                           ; preds = %._crit_edge32
   %i.kk = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %indvars.iv.i208.epil.init
   %i.kl = load double, ptr %i.kk, align 8, !tbaa !41
   %i.km = insertelement <2 x double> poison, double %i.kl, i64 0
-  %2 = shufflevector <2 x double> %i.km, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.kn = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %2, <2 x double> %i.n, <2 x double> %.epil.init291)
+  %i.kn = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.km, <2 x double> %i.n, <2 x double> %.epil.init291)
   %i.ko = extractelement <2 x double> %i.kn, i64 0
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %i.jj, i64 %indvars.iv.i208.epil.init
   store double %i.ko, ptr %i.kp, align 8, !tbaa !41

@@ -87,13 +87,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ao = tail call double @llvm.fmuladd.f64(double %i.an, double %2, double %i.am) ; 2 uses
   %i.ap = fcmp ugt double %i.ao, 0.000000e+00
   %i.aq = fcmp ugt double %2, %i.ak
-  %or.cond = select i1 %i.ap, i1 true, i1 %i.aq
+  %or.cond = or i1 %i.aq, %i.ap
   br i1 %or.cond, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
   %i.ar = fcmp ult double %i.ao, 0.000000e+00
   %i.as = fcmp ult double %2, %i.ak
-  %or.cond104 = select i1 %i.ar, i1 true, i1 %i.as
+  %or.cond104 = or i1 %i.as, %i.ar
   br i1 %or.cond104, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

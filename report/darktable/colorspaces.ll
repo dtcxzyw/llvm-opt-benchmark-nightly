@@ -205,59 +205,65 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.3, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.lcssa = phi ptr [ @dt_alternate_colormatrices, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 56), %bb.b ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 112), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 168), %bb.d ] ; 5 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
-  %i.h = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
-  %i.j = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
+  %.lcssa = phi ptr [ @dt_alternate_colormatrices, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 56), %bb.b ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 112), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @dt_alternate_colormatrices, i64 168), %bb.d ] ; 7 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
+  %4 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
+  %5 = load i32, ptr %4, align 4, !tbaa !16
+  %i.g = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
+  %6 = load i32, ptr %i.h, align 8, !tbaa !16
+  %i.i = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
+  %i.j = getelementptr inbounds nuw i8, ptr %.lcssa, i64 28
   %i.k = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
-  %i.l = load <2 x i32>, ptr %i.g, align 4, !tbaa !16 ; 3 uses
+  %i.l = load <2 x i32>, ptr %3, align 4, !tbaa !16 ; 3 uses
   %i.m = sitofp <2 x i32> %i.l to <2 x float>
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   store double 1.000000e+00, ptr %i.n, align 16, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %i.o = load <2 x i32>, ptr %i.h, align 8, !tbaa !16 ; 3 uses
+  %i.o = load <2 x i32>, ptr %i.g, align 8, !tbaa !16 ; 3 uses
   %i.p = sitofp <2 x i32> %i.o to <2 x float>
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double 1.000000e+00, ptr %i.q, align 16, !tbaa !15
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.s = load <2 x i32>, ptr %i.j, align 4, !tbaa !16 ; 3 uses
+  %i.s = load <2 x i32>, ptr %i.i, align 4, !tbaa !16 ; 3 uses
   %i.t = sitofp <2 x i32> %i.s to <2 x float>
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 40
   store double 1.000000e+00, ptr %i.u, align 8, !tbaa !15
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.w = load <2 x i32>, ptr %i.k, align 8, !tbaa !16 ; 3 uses
-  %3 = tail call <10 x i32> @llvm.masked.load.v10i32.p0(ptr nonnull align 8 %i.i, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>, <10 x i32> poison), !tbaa !16
-  %4 = shufflevector <10 x i32> %3, <10 x i32> poison, <4 x i32> <i32 0, i32 3, i32 6, i32 9>
-  %i.x = shufflevector <2 x i32> %i.o, <2 x i32> %i.s, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
-  %i.y = shufflevector <2 x i32> %i.w, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %7 = tail call <4 x i32> @llvm.masked.load.v4i32.p0(ptr nonnull align 4 %i.j, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x i32> poison), !tbaa !16
+  %i.x = shufflevector <2 x i32> %i.l, <2 x i32> %i.o, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %i.y = shufflevector <2 x i32> %i.s, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.z = shufflevector <4 x i32> %i.x, <4 x i32> %i.y, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
-  %i.aa = shufflevector <2 x i32> %i.l, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %i.aa = shufflevector <2 x i32> %i.w, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.ab = shufflevector <4 x i32> %i.z, <4 x i32> %i.aa, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %i.ac = shufflevector <2 x i32> %i.o, <2 x i32> %i.s, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
-  %i.ad = shufflevector <2 x i32> %i.w, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.ac = shufflevector <2 x i32> %i.l, <2 x i32> %i.o, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %i.ad = shufflevector <2 x i32> %i.s, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ae = shufflevector <4 x i32> %i.ac, <4 x i32> %i.ad, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
-  %i.af = shufflevector <2 x i32> %i.l, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.af = shufflevector <2 x i32> %i.w, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ag = shufflevector <4 x i32> %i.ae, <4 x i32> %i.af, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
   %i.ah = add nsw <4 x i32> %i.ab, %i.ag
-  %i.ai = add nsw <4 x i32> %i.ah, %4
+  %8 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %9 = insertelement <4 x i32> %8, i32 %6, i64 1
+  %10 = shufflevector <4 x i32> %9, <4 x i32> %7, <4 x i32> <i32 0, i32 1, i32 4, i32 7>
+  %i.ai = add nsw <4 x i32> %i.ah, %10
   %i.aj = sitofp <4 x i32> %i.ai to <4 x float>   ; 4 uses
-  %5 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %i.ak = fdiv reassoc nsz arcp contract afn <2 x float> %i.m, %5
+  %11 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.ak = fdiv reassoc nsz arcp contract afn <2 x float> %i.m, %11
   %i.al = fpext <2 x float> %i.ak to <2 x double>
   store <2 x double> %i.al, ptr %1, align 16, !tbaa !17
-  %6 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.am = fdiv reassoc nsz arcp contract afn <2 x float> %i.p, %6
+  %12 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.am = fdiv reassoc nsz arcp contract afn <2 x float> %i.p, %12
   %i.an = fpext <2 x float> %i.am to <2 x double>
   store <2 x double> %i.an, ptr %2, align 16, !tbaa !17
-  %7 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.ao = fdiv reassoc nsz arcp contract afn <2 x float> %i.t, %7
+  %13 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.ao = fdiv reassoc nsz arcp contract afn <2 x float> %i.t, %13
   %i.ap = fpext <2 x float> %i.ao to <2 x double>
   store <2 x double> %i.ap, ptr %i.r, align 8, !tbaa !17
   %i.aq = sitofp <2 x i32> %i.w to <2 x float>
-  %8 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.ar = fdiv reassoc nsz arcp contract afn <2 x float> %i.aq, %8
+  %14 = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %i.ar = fdiv reassoc nsz arcp contract afn <2 x float> %i.aq, %14
   %i.as = fpext <2 x float> %i.ar to <2 x double>
   store <2 x double> %i.as, ptr %i.v, align 16, !tbaa !17
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 64
@@ -365,63 +371,66 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.4, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.lcssa = phi ptr [ @dt_vendor_colormatrices, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 56), %bb.b ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 112), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 168), %bb.d ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 224), %bb.e ] ; 6 uses
+  %.lcssa = phi ptr [ @dt_vendor_colormatrices, %bb.a ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 56), %bb.b ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 112), %bb.c ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 168), %bb.d ], [ getelementptr inbounds nuw (i8, ptr @dt_vendor_colormatrices, i64 224), %bb.e ] ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
-  %i.i = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
-  %i.j = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
-  %i.k = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 40
+  %3 = load i32, ptr %i.h, align 4, !tbaa !16     ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
+  %4 = load i32, ptr %i.i, align 4, !tbaa !16
+  %i.j = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %.lcssa, i64 16
+  %5 = load i32, ptr %i.k, align 8, !tbaa !16
+  %6 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
+  %i.l = getelementptr inbounds nuw i8, ptr %.lcssa, i64 28
+  %7 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double 1.000000e+00, ptr %i.l, align 16, !tbaa !15
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %5 = load <2 x i32>, ptr %i.i, align 8, !tbaa !16 ; 3 uses
-  %6 = sitofp <2 x i32> %5 to <2 x float>
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %8 = sitofp reassoc nsz arcp contract afn i32 %3 to float
+  %9 = insertelement <2 x float> <float poison, float 1.000000e+06>, float %8, i64 0
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
   store double 1.000000e+00, ptr %i.m, align 16, !tbaa !15
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.n = load <2 x i32>, ptr %i.j, align 4, !tbaa !16 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
+  %i.n = load <2 x i32>, ptr %i.j, align 8, !tbaa !16 ; 3 uses
   %i.o = sitofp <2 x i32> %i.n to <2 x float>
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store double 1.000000e+00, ptr %i.p, align 8, !tbaa !15
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %8 = load <2 x i32>, ptr %i.k, align 8, !tbaa !16 ; 3 uses
-  %i.r = load <2 x i32>, ptr %4, align 8, !tbaa !16
-  %9 = load i32, ptr %i.h, align 4, !tbaa !16
-  %10 = tail call <10 x i32> @llvm.masked.load.v10i32.p0(ptr nonnull align 8 %3, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>, <10 x i32> poison), !tbaa !16
-  %11 = shufflevector <10 x i32> %10, <10 x i32> poison, <4 x i32> <i32 0, i32 3, i32 6, i32 9>
-  %12 = sitofp reassoc nsz arcp contract afn i32 %9 to float
-  %13 = insertelement <2 x float> <float poison, float 1.000000e+06>, float %12, i64 0
-  %14 = shufflevector <2 x i32> %5, <2 x i32> %i.n, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
-  %15 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %16 = shufflevector <4 x i32> %14, <4 x i32> %15, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
-  %i.s = shufflevector <2 x i32> %i.r, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store double 1.000000e+00, ptr %i.p, align 16, !tbaa !15
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.r = load <2 x i32>, ptr %6, align 4, !tbaa !16 ; 3 uses
+  %10 = sitofp <2 x i32> %i.r to <2 x float>
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  store double 1.000000e+00, ptr %11, align 8, !tbaa !15
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %13 = load <2 x i32>, ptr %7, align 8, !tbaa !16 ; 3 uses
+  %14 = tail call <4 x i32> @llvm.masked.load.v4i32.p0(ptr nonnull align 4 %i.l, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x i32> poison), !tbaa !16
+  %15 = shufflevector <2 x i32> %i.n, <2 x i32> %i.r, <4 x i32> <i32 poison, i32 1, i32 3, i32 poison>
+  %16 = insertelement <4 x i32> %15, i32 %3, i64 0
+  %i.s = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.t = shufflevector <4 x i32> %16, <4 x i32> %i.s, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %17 = shufflevector <2 x i32> %5, <2 x i32> %i.n, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
-  %i.u = insertelement <4 x i32> %17, i32 1000000, i64 3
-  %i.v = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %18 = shufflevector <4 x i32> %i.u, <4 x i32> %i.v, <4 x i32> <i32 0, i32 1, i32 4, i32 3>
+  %17 = shufflevector <2 x i32> %i.n, <2 x i32> %i.r, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
+  %i.u = insertelement <4 x i32> %17, i32 1000000, i64 0
+  %i.v = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %18 = shufflevector <4 x i32> %i.u, <4 x i32> %i.v, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
   %i.w = add nsw <4 x i32> %i.t, %18
-  %i.x = add nsw <4 x i32> %i.w, %11
+  %19 = insertelement <4 x i32> poison, i32 %4, i64 0
+  %20 = insertelement <4 x i32> %19, i32 %5, i64 1
+  %21 = shufflevector <4 x i32> %20, <4 x i32> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 7>
+  %i.x = add nsw <4 x i32> %i.w, %21
   %i.y = sitofp <4 x i32> %i.x to <4 x float>     ; 4 uses
-  %19 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %i.z = fdiv reassoc nsz arcp contract afn <2 x float> %13, %19
+  %22 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.z = fdiv reassoc nsz arcp contract afn <2 x float> %9, %22
   %i.aa = fpext <2 x float> %i.z to <2 x double>
   store <2 x double> %i.aa, ptr %1, align 16, !tbaa !17
-  %20 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.ab = fdiv reassoc nsz arcp contract afn <2 x float> %6, %20
+  %23 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.ab = fdiv reassoc nsz arcp contract afn <2 x float> %i.o, %23
   %i.ac = fpext <2 x float> %i.ab to <2 x double>
   store <2 x double> %i.ac, ptr %2, align 16, !tbaa !17
-  %21 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.ad = fdiv reassoc nsz arcp contract afn <2 x float> %i.o, %21
+  %24 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.ad = fdiv reassoc nsz arcp contract afn <2 x float> %10, %24
   %i.ae = fpext <2 x float> %i.ad to <2 x double>
-  store <2 x double> %i.ae, ptr %7, align 8, !tbaa !17
-  %i.af = sitofp <2 x i32> %8 to <2 x float>
-  %22 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.ag = fdiv reassoc nsz arcp contract afn <2 x float> %i.af, %22
+  store <2 x double> %i.ae, ptr %i.q, align 8, !tbaa !17
+  %i.af = sitofp <2 x i32> %13 to <2 x float>
+  %25 = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %i.ag = fdiv reassoc nsz arcp contract afn <2 x float> %i.af, %25
   %i.ah = fpext <2 x float> %i.ag to <2 x double>
-  store <2 x double> %i.ah, ptr %i.q, align 16, !tbaa !17
+  store <2 x double> %i.ah, ptr %12, align 16, !tbaa !17
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 64
   store double 1.000000e+00, ptr %i.ai, align 16, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
@@ -483,7 +492,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %i.c = getelementptr inbounds nuw [56 x i8], ptr @dt_profiled_colormatrices, i64 %indvars.iv ; 6 uses
+  %i.c = getelementptr inbounds nuw [56 x i8], ptr @dt_profiled_colormatrices, i64 %indvars.iv ; 8 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !121
   %i.e = tail call i32 @strcasecmp(ptr noundef %0, ptr noundef %i.d) #27
   %.not = icmp eq i32 %i.e, 0
@@ -491,9 +500,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 44
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 52
+  %4 = load i32, ptr %3, align 4, !tbaa !16
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %5 = load i32, ptr %i.h, align 8, !tbaa !16
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   %i.k = load <2 x i32>, ptr %i.f, align 4, !tbaa !16 ; 3 uses
@@ -512,36 +525,38 @@ bb.d:                                             ; preds = %bb.c
   store double 1.000000e+00, ptr %i.t, align 8, !tbaa !15
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.v = load <2 x i32>, ptr %i.j, align 8, !tbaa !16 ; 3 uses
-  %3 = tail call <10 x i32> @llvm.masked.load.v10i32.p0(ptr nonnull align 8 %i.h, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>, <10 x i32> poison), !tbaa !16
-  %4 = shufflevector <10 x i32> %3, <10 x i32> poison, <4 x i32> <i32 0, i32 3, i32 6, i32 9>
-  %i.w = shufflevector <2 x i32> %i.n, <2 x i32> %i.r, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
-  %i.x = shufflevector <2 x i32> %i.v, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %7 = tail call <4 x i32> @llvm.masked.load.v4i32.p0(ptr nonnull align 4 %6, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x i32> poison), !tbaa !16
+  %i.w = shufflevector <2 x i32> %i.k, <2 x i32> %i.n, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %i.x = shufflevector <2 x i32> %i.r, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.y = shufflevector <4 x i32> %i.w, <4 x i32> %i.x, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
-  %i.z = shufflevector <2 x i32> %i.k, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %i.z = shufflevector <2 x i32> %i.v, <2 x i32> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.aa = shufflevector <4 x i32> %i.y, <4 x i32> %i.z, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %i.ab = shufflevector <2 x i32> %i.n, <2 x i32> %i.r, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
-  %i.ac = shufflevector <2 x i32> %i.v, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.ab = shufflevector <2 x i32> %i.k, <2 x i32> %i.n, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %i.ac = shufflevector <2 x i32> %i.r, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ad = shufflevector <4 x i32> %i.ab, <4 x i32> %i.ac, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
-  %i.ae = shufflevector <2 x i32> %i.k, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.ae = shufflevector <2 x i32> %i.v, <2 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.af = shufflevector <4 x i32> %i.ad, <4 x i32> %i.ae, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
   %i.ag = add nsw <4 x i32> %i.aa, %i.af
-  %i.ah = add nsw <4 x i32> %i.ag, %4
+  %8 = insertelement <4 x i32> poison, i32 %4, i64 0
+  %9 = insertelement <4 x i32> %8, i32 %5, i64 1
+  %10 = shufflevector <4 x i32> %9, <4 x i32> %7, <4 x i32> <i32 0, i32 1, i32 4, i32 7>
+  %i.ah = add nsw <4 x i32> %i.ag, %10
   %i.ai = sitofp <4 x i32> %i.ah to <4 x float>   ; 4 uses
-  %5 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %i.aj = fdiv reassoc nsz arcp contract afn <2 x float> %i.l, %5
+  %11 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.aj = fdiv reassoc nsz arcp contract afn <2 x float> %i.l, %11
   %i.ak = fpext <2 x float> %i.aj to <2 x double>
   store <2 x double> %i.ak, ptr %1, align 16, !tbaa !17
-  %6 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.al = fdiv reassoc nsz arcp contract afn <2 x float> %i.o, %6
+  %12 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.al = fdiv reassoc nsz arcp contract afn <2 x float> %i.o, %12
   %i.am = fpext <2 x float> %i.al to <2 x double>
   store <2 x double> %i.am, ptr %2, align 16, !tbaa !17
-  %7 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.an = fdiv reassoc nsz arcp contract afn <2 x float> %i.s, %7
+  %13 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.an = fdiv reassoc nsz arcp contract afn <2 x float> %i.s, %13
   %i.ao = fpext <2 x float> %i.an to <2 x double>
   store <2 x double> %i.ao, ptr %i.q, align 8, !tbaa !17
   %i.ap = sitofp <2 x i32> %i.v to <2 x float>
-  %8 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.aq = fdiv reassoc nsz arcp contract afn <2 x float> %i.ap, %8
+  %14 = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %i.aq = fdiv reassoc nsz arcp contract afn <2 x float> %i.ap, %14
   %i.ar = fpext <2 x float> %i.aq to <2 x double>
   store <2 x double> %i.ar, ptr %i.u, align 16, !tbaa !17
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 64
@@ -944,7 +959,7 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare float @llvm.fabs.f32(float) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <10 x i32> @llvm.masked.load.v10i32.p0(ptr captures(none), <10 x i1>, <10 x i32>) #23
+declare <4 x i32> @llvm.masked.load.v4i32.p0(ptr captures(none), <4 x i1>, <4 x i32>) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x double> @llvm.exp.v8f64(<8 x double>) #20

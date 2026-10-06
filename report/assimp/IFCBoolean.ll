@@ -202,9 +202,9 @@ bb.n:                                             ; preds = %bb.d
 
 bb.o:                                             ; preds = %bb.n
   %i.hd = fcmp oge double %i.df, 0.000000e+00
-  %6 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.dx, i64 0
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> <double f0x3EB0C6F7A0000000, double 0.000000e+00>, <2 x double> splat (double 1.000000e+00))
-  %i.he = fcmp ole <2 x double> %i.de, %7         ; 2 uses
+  %.scalar = tail call double @llvm.fmuladd.f64(double %i.dx, double f0x3EB0C6F7A0000000, double 1.000000e+00)
+  %6 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.scalar, i64 0
+  %i.he = fcmp ole <2 x double> %i.de, %6         ; 2 uses
   %i.hf = insertelement <2 x i1> %i.ay, i1 %i.hd, i64 0 ; 2 uses
   %i.hg = and <2 x i1> %i.hf, %i.he
   %i.hh = or <2 x i1> %i.hf, %i.he

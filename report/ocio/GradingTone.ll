@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %_ZN16OpenColorIO_v2
   %i.bz = extractelement <2 x float> %i.bp, i64 0 ; 3 uses
   store float %i.bz, ptr %i.bd, align 4, !tbaa !19
   %i.ca = fneg float %i.bl
-  %4 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.ca, i64 0
-  %5 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float 4.000000e-01, float 0.000000e+00>, <2 x float> splat (float 1.000000e+00)) ; 2 uses
-  store <2 x float> %5, ptr %i.bg, align 8, !tbaa !19
+  %.scalar = tail call float @llvm.fmuladd.f32(float %i.ca, float 4.000000e-01, float 1.000000e+00) ; 4 uses
+  %4 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %.scalar, i64 0
+  store <2 x float> %4, ptr %i.bg, align 8, !tbaa !19
   br i1 %i.an, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -241,12 +241,11 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  %6 = extractelement <2 x float> %5, i64 0       ; 3 uses
   %i.dc = fsub float %2, %i.br                    ; 2 uses
-  %i.dd = fadd float %6, -1.000000e+00            ; 2 uses
+  %i.dd = fadd float %.scalar, -1.000000e+00      ; 2 uses
   %i.de = fmul float %i.dd, %i.dc
   %i.df = fsub float %i.br, %i.bx                 ; 2 uses
-  %i.dg = fsub float %i.bn, %6
+  %i.dg = fsub float %i.bn, %.scalar
   %i.dh = tail call float @llvm.fmuladd.f32(float %i.dg, float 5.000000e-01, float %i.dd)
   %i.di = fmul float %i.dh, %i.df
   %i.dj = tail call float @llvm.fmuladd.f32(float %i.de, float 5.000000e-01, float %i.di)
@@ -276,7 +275,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.pre-phi170 = phi float [ %i.df, %bb.j ], [ %i.cq, %bb.i ]
   %.pre-phi169 = phi float [ %i.dq, %bb.j ], [ %i.cf, %bb.i ]
   %.pre-phi = phi float [ %i.do, %bb.j ], [ %i.cd, %bb.i ]
-  %i.ec = phi float [ %6, %bb.j ], [ %i.db, %bb.i ] ; 2 uses
+  %i.ec = phi float [ %.scalar, %bb.j ], [ %i.db, %bb.i ] ; 2 uses
   %i.ed = phi float [ %i.eb, %bb.j ], [ %i.bz, %bb.i ] ; 2 uses
   %i.ee = fadd float %i.ed, 1.000000e+00
   %i.ef = fmul float %i.ee, %.pre-phi

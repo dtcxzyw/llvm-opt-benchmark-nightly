@@ -204,9 +204,11 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %bb.c, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %bb.c ] ; 3 uses
-  %i.q = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
-  %4 = load <8 x i32>, ptr %i.q, align 4, !alias.scope !298
-  %5 = shufflevector <8 x i32> %4, <8 x i32> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3>
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %wide.load = load <4 x i32>, ptr %i.q, align 4, !alias.scope !298
+  %wide.load58 = load <4 x i32>, ptr %4, align 4, !alias.scope !298
+  %5 = shufflevector <4 x i32> %wide.load58, <4 x i32> %wide.load, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.r = icmp slt <8 x i32> %5, zeroinitializer
   %i.s = bitcast <8 x i1> %i.r to i8
   %.not = icmp eq i8 %i.s, 0

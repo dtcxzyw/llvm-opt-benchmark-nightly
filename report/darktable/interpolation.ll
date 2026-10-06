@@ -205,15 +205,17 @@ bb.g:                                             ; preds = %bb.f
   %min.iters.check164 = icmp ult i64 %i.ez, 4
   %min.iters.check166 = icmp ult i64 %i.ez, 16
   %n.vec168 = and i64 %i.ez, -16                  ; 4 uses
-  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.fg, i64 0
-  %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert169 = insertelement <8 x i64> poison, i64 %i.fi, i64 0
-  %broadcast.splat170 = shufflevector <8 x i64> %broadcast.splatinsert169, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert171 = insertelement <8 x i64> poison, i64 %factor.i98, i64 0
-  %broadcast.splat172 = shufflevector <8 x i64> %broadcast.splatinsert171, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert173 = insertelement <8 x i64> poison, i64 %i.fk, i64 0
-  %broadcast.splat174 = shufflevector <8 x i64> %broadcast.splatinsert173, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
-  %invariant.op = add <8 x i64> splat (i64 8), %broadcast.splat
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.fg, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert169 = insertelement <4 x i64> poison, i64 %i.fi, i64 0
+  %broadcast.splat170 = shufflevector <4 x i64> %broadcast.splatinsert169, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert171 = insertelement <4 x i64> poison, i64 %factor.i98, i64 0
+  %broadcast.splat172 = shufflevector <4 x i64> %broadcast.splatinsert171, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splatinsert173 = insertelement <4 x i64> poison, i64 %i.fk, i64 0
+  %broadcast.splat174 = shufflevector <4 x i64> %broadcast.splatinsert173, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
+  %invariant.op = add <4 x i64> splat (i64 4), %broadcast.splat
+  %invariant.op261 = add <4 x i64> splat (i64 8), %broadcast.splat
+  %invariant.op263 = add <4 x i64> splat (i64 12), %broadcast.splat
   %cmp.n186 = icmp eq i64 %i.ez, %n.vec168
   %i.fl = and i64 %i.af, 6
   %min.epilog.iters.check192 = icmp eq i64 %i.fl, 0
@@ -240,7 +242,7 @@ iter.check189:                                    ; preds = %.lr.ph, %.loopexit2
   %spec.select = select i1 %i.fp, i64 %i.fq, i64 %i.fm
   %.0.i = select i1 %i.fo, i64 %i.fn, i64 %spec.select
   %i.fr = mul nsw i64 %.0.i, %i.fj
-  %i.fs = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fr ; 4 uses
+  %i.fs = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fr ; 6 uses
   br i1 %min.iters.check164, label %_mirror.exit99.preheader, label %vector.main.loop.iter.check165
 
 vector.main.loop.iter.check165:                   ; preds = %iter.check189
@@ -248,45 +250,77 @@ vector.main.loop.iter.check165:                   ; preds = %iter.check189
 
 vector.body175:                                   ; preds = %vector.main.loop.iter.check165, %vector.body175
   %index176 = phi i64 [ %index.next183, %vector.body175 ], [ 0, %vector.main.loop.iter.check165 ] ; 2 uses
-  %vec.ind = phi <8 x i64> [ %vec.ind.next, %vector.body175 ], [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.main.loop.iter.check165 ] ; 3 uses
-  %vec.phi177 = phi <8 x float> [ %25, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
-  %vec.phi178 = phi <8 x float> [ %26, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
-  %8 = add nsw <8 x i64> %vec.ind, %broadcast.splat ; 5 uses
-  %.reass = add <8 x i64> %vec.ind, %invariant.op ; 5 uses
-  %9 = sub <8 x i64> zeroinitializer, %8
-  %10 = sub <8 x i64> zeroinitializer, %.reass
-  %11 = icmp slt <8 x i64> %8, zeroinitializer
-  %12 = icmp slt <8 x i64> %.reass, zeroinitializer
-  %13 = icmp ugt <8 x i64> %8, %broadcast.splat170
-  %14 = icmp ugt <8 x i64> %.reass, %broadcast.splat170
-  %15 = sub nsw <8 x i64> %broadcast.splat172, %8
-  %16 = sub nsw <8 x i64> %broadcast.splat172, %.reass
-  %17 = select <8 x i1> %13, <8 x i64> %15, <8 x i64> %8
-  %18 = select <8 x i1> %14, <8 x i64> %16, <8 x i64> %.reass
-  %19 = select <8 x i1> %11, <8 x i64> %9, <8 x i64> %17
-  %20 = select <8 x i1> %12, <8 x i64> %10, <8 x i64> %18
-  %21 = mul nsw <8 x i64> %19, %broadcast.splat174
-  %22 = mul nsw <8 x i64> %20, %broadcast.splat174
-  %wide.gep = getelementptr inbounds [4 x i8], ptr %i.fs, <8 x i64> %21
-  %wide.gep179 = getelementptr inbounds [4 x i8], ptr %i.fs, <8 x i64> %22
-  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index176 ; 2 uses
-  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 32
-  %wide.load180 = load <8 x float>, ptr %i.ft, align 64, !tbaa !19
-  %wide.load181 = load <8 x float>, ptr %i.fu, align 32, !tbaa !19
-  %wide.masked.gather = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !19
-  %wide.masked.gather182 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep179, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !19
-  %23 = fmul reassoc nsz arcp contract afn <8 x float> %wide.masked.gather, %wide.load180
-  %24 = fmul reassoc nsz arcp contract afn <8 x float> %wide.masked.gather182, %wide.load181
-  %25 = fadd reassoc nsz arcp contract afn <8 x float> %23, %vec.phi177 ; 2 uses
-  %26 = fadd reassoc nsz arcp contract afn <8 x float> %24, %vec.phi178 ; 2 uses
+  %vec.ind = phi <4 x i64> [ %vec.ind.next, %vector.body175 ], [ <i64 0, i64 1, i64 2, i64 3>, %vector.main.loop.iter.check165 ] ; 5 uses
+  %vec.phi177 = phi <4 x float> [ %43, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
+  %vec.phi178 = phi <4 x float> [ %44, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
+  %vec.phi179 = phi <4 x float> [ %45, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
+  %vec.phi180 = phi <4 x float> [ %46, %vector.body175 ], [ zeroinitializer, %vector.main.loop.iter.check165 ]
+  %8 = add nsw <4 x i64> %vec.ind, %broadcast.splat ; 5 uses
+  %.reass = add <4 x i64> %vec.ind, %invariant.op ; 5 uses
+  %.reass262 = add <4 x i64> %vec.ind, %invariant.op261 ; 5 uses
+  %.reass264 = add <4 x i64> %vec.ind, %invariant.op263 ; 5 uses
+  %9 = sub <4 x i64> zeroinitializer, %8
+  %10 = sub <4 x i64> zeroinitializer, %.reass
+  %11 = sub <4 x i64> zeroinitializer, %.reass262
+  %12 = sub <4 x i64> zeroinitializer, %.reass264
+  %13 = icmp slt <4 x i64> %8, zeroinitializer
+  %14 = icmp slt <4 x i64> %.reass, zeroinitializer
+  %15 = icmp slt <4 x i64> %.reass262, zeroinitializer
+  %16 = icmp slt <4 x i64> %.reass264, zeroinitializer
+  %17 = icmp ugt <4 x i64> %8, %broadcast.splat170
+  %18 = icmp ugt <4 x i64> %.reass, %broadcast.splat170
+  %19 = icmp ugt <4 x i64> %.reass262, %broadcast.splat170
+  %20 = icmp ugt <4 x i64> %.reass264, %broadcast.splat170
+  %21 = sub nsw <4 x i64> %broadcast.splat172, %8
+  %22 = sub nsw <4 x i64> %broadcast.splat172, %.reass
+  %23 = sub nsw <4 x i64> %broadcast.splat172, %.reass262
+  %24 = sub nsw <4 x i64> %broadcast.splat172, %.reass264
+  %25 = select <4 x i1> %17, <4 x i64> %21, <4 x i64> %8
+  %26 = select <4 x i1> %18, <4 x i64> %22, <4 x i64> %.reass
+  %27 = select <4 x i1> %19, <4 x i64> %23, <4 x i64> %.reass262
+  %28 = select <4 x i1> %20, <4 x i64> %24, <4 x i64> %.reass264
+  %29 = select <4 x i1> %13, <4 x i64> %9, <4 x i64> %25
+  %30 = select <4 x i1> %14, <4 x i64> %10, <4 x i64> %26
+  %31 = select <4 x i1> %15, <4 x i64> %11, <4 x i64> %27
+  %32 = select <4 x i1> %16, <4 x i64> %12, <4 x i64> %28
+  %33 = mul nsw <4 x i64> %29, %broadcast.splat174
+  %34 = mul nsw <4 x i64> %30, %broadcast.splat174
+  %35 = mul nsw <4 x i64> %31, %broadcast.splat174
+  %36 = mul nsw <4 x i64> %32, %broadcast.splat174
+  %wide.gep = getelementptr inbounds [4 x i8], ptr %i.fs, <4 x i64> %33
+  %wide.gep181 = getelementptr inbounds [4 x i8], ptr %i.fs, <4 x i64> %34
+  %wide.gep182 = getelementptr inbounds [4 x i8], ptr %i.fs, <4 x i64> %35
+  %wide.gep183 = getelementptr inbounds [4 x i8], ptr %i.fs, <4 x i64> %36
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index176 ; 4 uses
+  %37 = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
+  %38 = getelementptr inbounds nuw i8, ptr %i.ft, i64 32
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 48
+  %wide.load184 = load <4 x float>, ptr %i.ft, align 64, !tbaa !19
+  %wide.load185 = load <4 x float>, ptr %37, align 16, !tbaa !19
+  %wide.load186 = load <4 x float>, ptr %38, align 32, !tbaa !19
+  %wide.load187 = load <4 x float>, ptr %i.fu, align 16, !tbaa !19
+  %wide.masked.gather = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !19
+  %wide.masked.gather188 = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep181, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !19
+  %wide.masked.gather189 = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep182, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !19
+  %wide.masked.gather190 = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep183, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !19
+  %39 = fmul reassoc nsz arcp contract afn <4 x float> %wide.masked.gather, %wide.load184
+  %40 = fmul reassoc nsz arcp contract afn <4 x float> %wide.masked.gather188, %wide.load185
+  %41 = fmul reassoc nsz arcp contract afn <4 x float> %wide.masked.gather189, %wide.load186
+  %42 = fmul reassoc nsz arcp contract afn <4 x float> %wide.masked.gather190, %wide.load187
+  %43 = fadd reassoc nsz arcp contract afn <4 x float> %39, %vec.phi177 ; 2 uses
+  %44 = fadd reassoc nsz arcp contract afn <4 x float> %40, %vec.phi178 ; 2 uses
+  %45 = fadd reassoc nsz arcp contract afn <4 x float> %41, %vec.phi179 ; 2 uses
+  %46 = fadd reassoc nsz arcp contract afn <4 x float> %42, %vec.phi180 ; 2 uses
   %index.next183 = add nuw i64 %index176, 16      ; 2 uses
-  %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 16)
+  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 16)
   %i.fv = icmp eq i64 %index.next183, %n.vec168
   br i1 %i.fv, label %middle.block184, label %vector.body175, !llvm.loop !95
 
 middle.block184:                                  ; preds = %vector.body175
-  %bin.rdx185 = fadd reassoc nsz arcp contract afn <8 x float> %26, %25
-  %i.fw = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx185) ; 3 uses
+  %bin.rdx193 = fadd reassoc nsz arcp contract afn <4 x float> %44, %43
+  %bin.rdx194 = fadd reassoc nsz arcp contract afn <4 x float> %45, %bin.rdx193
+  %bin.rdx195 = fadd reassoc nsz arcp contract afn <4 x float> %46, %bin.rdx194
+  %i.fw = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx195) ; 3 uses
   br i1 %cmp.n186, label %.loopexit218, label %vec.epilog.iter.check191
 
 vec.epilog.iter.check191:                         ; preds = %middle.block184
@@ -689,10 +723,10 @@ declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #7
 declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
-declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #13
+declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
-declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #13
+declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

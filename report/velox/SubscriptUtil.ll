@@ -205,17 +205,9 @@ _ZNSt12__shared_ptrIN8facebook5velox9functions6detail11LookupTableIvEELN9__gnu_c
   %i.aae = getelementptr inbounds nuw i8, ptr %i.aad, i64 24
   %i.aaf = load i64, ptr %i.aae, align 8, !tbaa !296 ; 2 uses
   %i.aag = icmp ult i64 %i.aaf, 256
-  %.pre374.i = call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 0, i64 0) ; 4 uses
-  %.pre376.i = lshr i64 %.pre374.i, 24
-  %.pre378.i = or i64 %.pre376.i, 128             ; 5 uses
   br i1 %i.aag, label %.loopexit264.i, label %bb.fy
 
 bb.fy:                                            ; preds = %_ZNSt12__shared_ptrIN8facebook5velox9functions6detail11LookupTableIvEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-  %39 = shl nuw nsw i64 %.pre378.i, 1
-  %40 = or disjoint i64 %39, 1                    ; 2 uses
-  %41 = trunc nuw i64 %.pre378.i to i8
-  %42 = insertelement <16 x i8> poison, i8 %41, i64 0
-  %43 = shufflevector <16 x i8> %42, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   %i.aah = and i64 %i.aaf, 255                    ; 3 uses
   %i.aai = shl nuw i64 1, %i.aah
   %i.aaj = getelementptr inbounds nuw i8, ptr %i.aad, i64 16
@@ -225,11 +217,11 @@ bb.fy:                                            ; preds = %_ZNSt12__shared_ptr
 
 bb.fz:                                            ; preds = %bb.gc, %bb.fy
   %.022.i30.i.i = phi i64 [ %i.aai, %bb.fy ], [ %i.abi, %bb.gc ]
-  %.024.i29.i.i = phi i64 [ %.pre374.i, %bb.fy ], [ %i.abj, %bb.gc ] ; 2 uses
+  %.024.i29.i.i = phi i64 [ 0, %bb.fy ], [ %i.abj, %bb.gc ] ; 2 uses
   %i.aam = call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %.024.i29.i.i, i64 range(i64 0, 256) %i.aah)
   %i.aan = getelementptr inbounds nuw [64 x i8], ptr %i.aak, i64 %i.aam ; 3 uses
   %i.aao = load <16 x i8>, ptr %i.aan, align 16   ; 2 uses
-  %i.aap = icmp eq <16 x i8> %i.aao, %43
+  %i.aap = icmp eq <16 x i8> %i.aao, splat (i8 -128)
   %i.aaq = bitcast <16 x i1> %i.aap to i16
   %i.aar = and i16 %i.aaq, 4095
   %i.aas = zext nneg i16 %i.aar to i32
@@ -264,7 +256,7 @@ bb.gb:                                            ; preds = %.critedge.i.i.i
 
 bb.gc:                                            ; preds = %bb.gb
   %i.abi = add i64 %.022.i30.i.i, -1              ; 2 uses
-  %i.abj = add i64 %.024.i29.i.i, %40
+  %i.abj = add i64 %.024.i29.i.i, 257
   %.not.i.i101.i = icmp eq i64 %i.abi, 0
   br i1 %.not.i.i101.i, label %.loopexit264.i, label %bb.fz, !llvm.loop !3
 
@@ -274,7 +266,7 @@ bb.gc:                                            ; preds = %bb.gb
   %i.abk = getelementptr inbounds nuw i8, ptr %i.aab, i64 8
   %i.abl = load ptr, ptr %i.abk, align 8, !tbaa !972, !nonnull !182, !align !244
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31, !noalias !973
-  invoke void @_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastSetIN8facebook5velox9functions6detail6MapKeyENS8_12MapKeyHasherENS_26HeterogeneousAccessEqualToIS9_vEENS6_6memory12StlAllocatorIS9_EEEEvvNSE_ISt4pairIKiSG_EEESt17integral_constantIbLb1EEEEE19tryEmplaceValueImplIiJRiRNSD_10MemoryPoolEEEESH_INS1_11F14ItemIterIPNS1_8F14ChunkIjEEEEbESH_ImmERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.303") align 8 %9, ptr noundef nonnull align 8 dereferenceable(32) %i.aad, i64 %.pre374.i, i64 %.pre378.i, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 8 dereferenceable(264) %i.abl)
+  invoke void @_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiNS_10F14FastSetIN8facebook5velox9functions6detail6MapKeyENS8_12MapKeyHasherENS_26HeterogeneousAccessEqualToIS9_vEENS6_6memory12StlAllocatorIS9_EEEEvvNSE_ISt4pairIKiSG_EEESt17integral_constantIbLb1EEEEE19tryEmplaceValueImplIiJRiRNSD_10MemoryPoolEEEESH_INS1_11F14ItemIterIPNS1_8F14ChunkIjEEEEbESH_ImmERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.303") align 8 %9, ptr noundef nonnull align 8 dereferenceable(32) %i.aad, i64 0, i64 128, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 8 dereferenceable(264) %i.abl)
           to label %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i unwind label %bb.gd
 
 _ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i: ; preds = %.loopexit264.i
@@ -285,11 +277,6 @@ _ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i:
   %.pre353.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !296
   %.phi.trans.insert354.i = getelementptr inbounds nuw i8, ptr %.pre352.i, i64 16
   %.pre355.i = load ptr, ptr %.phi.trans.insert354.i, align 8, !tbaa !295
-  %.pre360.i = shl nuw nsw i64 %.pre378.i, 1
-  %.pre362.i = or disjoint i64 %.pre360.i, 1
-  %.pre364.i = trunc nuw i64 %.pre378.i to i8
-  %.pre366.i = insertelement <16 x i8> poison, i8 %.pre364.i, i64 0
-  %.pre368.i = shufflevector <16 x i8> %.pre366.i, <16 x i8> poison, <16 x i32> zeroinitializer
   %.pre370.i = and i64 %.pre353.i, 255
   br label %_ZNK8facebook5velox9functions6detail11LookupTableIvE18containsMapAtIndexEi.exit.i
 
@@ -300,19 +287,17 @@ bb.gd:                                            ; preds = %.loopexit264.i
 
 _ZNK8facebook5velox9functions6detail11LookupTableIvE18containsMapAtIndexEi.exit.i: ; preds = %bb.ga, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i
   %.pre-phi371.i = phi i64 [ %.pre370.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i ], [ %i.aah, %bb.ga ]
-  %.pre-phi369.i = phi <16 x i8> [ %.pre368.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i ], [ %43, %bb.ga ]
-  %.pre-phi363.i = phi i64 [ %.pre362.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i ], [ %40, %bb.ga ]
   %i.abn = phi ptr [ %.pre355.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i ], [ %i.aak, %bb.ga ]
   %i.abo = phi ptr [ %.pre352.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE16ensureMapAtIndexEi.exit.i ], [ %i.aad, %bb.ga ]
   %i.abp = getelementptr inbounds nuw i8, ptr %i.abo, i64 8
   br label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gg, %_ZNK8facebook5velox9functions6detail11LookupTableIvE18containsMapAtIndexEi.exit.i
-  %.024.i.i.i.i = phi i64 [ %.pre374.i, %_ZNK8facebook5velox9functions6detail11LookupTableIvE18containsMapAtIndexEi.exit.i ], [ %i.ack, %bb.gg ] ; 2 uses
+  %.024.i.i.i.i = phi i64 [ 0, %_ZNK8facebook5velox9functions6detail11LookupTableIvE18containsMapAtIndexEi.exit.i ], [ %i.ack, %bb.gg ] ; 2 uses
   %i.abq = call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %.024.i.i.i.i, i64 range(i64 0, 256) %.pre-phi371.i)
   %i.abr = getelementptr inbounds nuw [64 x i8], ptr %i.abn, i64 %i.abq ; 3 uses
   %i.abs = load <16 x i8>, ptr %i.abr, align 16
-  %i.abt = icmp eq <16 x i8> %i.abs, %.pre-phi369.i
+  %i.abt = icmp eq <16 x i8> %i.abs, splat (i8 -128)
   %i.abu = bitcast <16 x i1> %i.abt to i16
   %i.abv = and i16 %i.abu, 4095
   %i.abw = zext nneg i16 %i.abv to i32
@@ -341,7 +326,7 @@ bb.gf:                                            ; preds = %.critedge.i.i.i.i
   br i1 %i.acj, label %bb.gh, label %.critedge.i.i.i.i, !prof !121, !llvm.loop !2
 
 bb.gg:                                            ; preds = %.critedge.i.i.i.i
-  %i.ack = add i64 %.024.i.i.i.i, %.pre-phi363.i
+  %i.ack = add i64 %.024.i.i.i.i, 257
   br label %bb.ge, !llvm.loop !3
 
 bb.gh:                                            ; preds = %bb.gf

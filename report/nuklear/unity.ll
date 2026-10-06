@@ -205,9 +205,9 @@ bb.ai:                                            ; preds = %bb.ah
   %or.cond.not.not.not.i.i = and i1 %i.iv, %i.iw  ; 3 uses
   %i.ix = fcmp ule float %sqrtf.i.i, 0.000000e+00
   %i.iy = fcmp ult float %i.iu, 0.000000e+00
+  %or.cond117.i.i = or i1 %i.ix, %i.iy
   %10 = fcmp ugt float %i.iu, 1.000000e+00
-  %11 = or i1 %i.iy, %10
-  %or.cond118.i.i = select i1 %i.ix, i1 true, i1 %11
+  %or.cond118.i.i = or i1 %10, %or.cond117.i.i
   br i1 %or.cond118.i.i, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai

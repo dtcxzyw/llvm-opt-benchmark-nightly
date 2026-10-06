@@ -204,18 +204,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN25SquareMatrix_Basics4_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 _ZN7testing15AssertionResultD2Ev.exit:
-  %1 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 11 uses
+  %1 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 14 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
-  %3 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 7 uses
+  %3 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 10 uses
   %4 = alloca %"class.testing::Message", align 8  ; 8 uses
   %5 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %6 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %7 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 8 uses
   %8 = alloca %"class.testing::Message", align 8  ; 8 uses
   %9 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %10 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 9 uses
+  %10 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 12 uses
   %11 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
-  %12 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 7 uses
+  %12 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 10 uses
   %13 = alloca %"class.testing::Message", align 8 ; 8 uses
   %14 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %15 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 6 uses
@@ -237,7 +237,7 @@ _ZN7testing15AssertionResultD2Ev.exit:
   %31 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %32 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %33 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
-  %34 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 8 uses
+  %34 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 11 uses
   %35 = alloca %"class.testing::Message", align 8 ; 8 uses
   %36 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %37 = alloca %"class.pbrt::SquareMatrix.39", align 4 ; 10 uses
@@ -247,22 +247,34 @@ _ZN7testing15AssertionResultD2Ev.exit:
   %41 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %42 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
-  call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00>, ptr align 4 %1, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !37
+  store float 1.000000e+00, ptr %1, align 4, !tbaa !37
+  %43 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %43, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.a, align 4, !tbaa !37
+  %44 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %44, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.b, align 4, !tbaa !37
+  %45 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 60
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %45, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.c, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
-  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
-  call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00>, ptr align 4 %3, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !37
+  store float 1.000000e+00, ptr %3, align 4, !tbaa !37
+  %46 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %46, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.d, align 4, !tbaa !37
+  %47 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %47, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.e, align 4, !tbaa !37
+  %48 = getelementptr inbounds nuw i8, ptr %3, i64 44
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 60
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %48, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.f, align 4, !tbaa !37
   call void @_ZN7testing8internal11CmpHelperEQIN4pbrt12SquareMatrixILi4EEES4_EENS_15AssertionResultEPKcS7_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %2, ptr noundef nonnull @.str.225, ptr noundef nonnull @.str.226, ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(64) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.g = load i8, ptr %2, align 8, !tbaa !18, !range !19, !noundef !20
@@ -555,22 +567,34 @@ bb.al:                                            ; preds = %bb.ai
 _ZN7testing15AssertionResultD2Ev.exit125:         ; preds = %bb.ah, %.noexc.i.i121, %bb.aj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i123
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  %i.bs = getelementptr inbounds nuw i8, ptr %10, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bs, i8 0, i64 16, i1 false)
-  %i.bt = getelementptr inbounds nuw i8, ptr %10, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bt, i8 0, i64 16, i1 false)
-  %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bu, i8 0, i64 16, i1 false)
-  call void @llvm.masked.store.v16f32.p0(<16 x float> <float 8.000000e+00, float poison, float poison, float poison, float poison, float 2.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 5.000000e-01>, ptr align 4 %10, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !37
+  store float 8.000000e+00, ptr %10, align 4, !tbaa !37
+  %49 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.bs = getelementptr inbounds nuw i8, ptr %10, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %49, i8 0, i64 16, i1 false)
+  store float 2.000000e+00, ptr %i.bs, align 4, !tbaa !37
+  %50 = getelementptr inbounds nuw i8, ptr %10, i64 24
+  %i.bt = getelementptr inbounds nuw i8, ptr %10, i64 40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %50, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.bt, align 4, !tbaa !37
+  %51 = getelementptr inbounds nuw i8, ptr %10, i64 44
+  %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 60
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %51, i8 0, i64 16, i1 false)
+  store float 5.000000e-01, ptr %i.bu, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
-  %i.bv = getelementptr inbounds nuw i8, ptr %12, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bv, i8 0, i64 16, i1 false), !alias.scope !115
-  %i.bw = getelementptr inbounds nuw i8, ptr %12, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bw, i8 0, i64 16, i1 false), !alias.scope !115
-  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bx, i8 0, i64 16, i1 false), !alias.scope !115
-  call void @llvm.masked.store.v16f32.p0(<16 x float> <float 8.000000e+00, float poison, float poison, float poison, float poison, float 2.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 5.000000e-01>, ptr align 4 %12, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !37, !alias.scope !115
+  %52 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.bv = getelementptr inbounds nuw i8, ptr %12, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %52, i8 0, i64 16, i1 false), !alias.scope !115
+  %53 = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %i.bw = getelementptr inbounds nuw i8, ptr %12, i64 40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %53, i8 0, i64 16, i1 false), !alias.scope !115
+  %54 = getelementptr inbounds nuw i8, ptr %12, i64 44
+  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 60
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %54, i8 0, i64 16, i1 false), !alias.scope !115
+  store float 8.000000e+00, ptr %12, align 4, !tbaa !37, !alias.scope !115
+  store float 2.000000e+00, ptr %i.bv, align 4, !tbaa !37, !alias.scope !115
+  store float 1.000000e+00, ptr %i.bw, align 4, !tbaa !37, !alias.scope !115
+  store float 5.000000e-01, ptr %i.bx, align 4, !tbaa !37, !alias.scope !115
   call void @_ZN7testing8internal11CmpHelperEQIN4pbrt12SquareMatrixILi4EEES4_EENS_15AssertionResultEPKcS7_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %11, ptr noundef nonnull @.str.228, ptr noundef nonnull @.str.229, ptr noundef nonnull align 4 dereferenceable(64) %10, ptr noundef nonnull align 4 dereferenceable(64) %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   %i.by = load i8, ptr %11, align 8, !tbaa !18, !range !19, !noundef !20
@@ -973,13 +997,19 @@ bb.ek:                                            ; preds = %bb.eh
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #25
-  %i.iq = getelementptr inbounds nuw i8, ptr %34, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.iq, i8 0, i64 16, i1 false), !alias.scope !118
-  %i.ir = getelementptr inbounds nuw i8, ptr %34, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ir, i8 0, i64 16, i1 false), !alias.scope !118
-  %i.is = getelementptr inbounds nuw i8, ptr %34, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.is, i8 0, i64 16, i1 false), !alias.scope !118
-  call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.250000e-01, float poison, float poison, float poison, float poison, float 5.000000e-01, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 2.000000e+00>, ptr align 4 %34, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !37, !alias.scope !118
+  %55 = getelementptr inbounds nuw i8, ptr %34, i64 4
+  %i.iq = getelementptr inbounds nuw i8, ptr %34, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %55, i8 0, i64 16, i1 false), !alias.scope !118
+  %56 = getelementptr inbounds nuw i8, ptr %34, i64 24
+  %i.ir = getelementptr inbounds nuw i8, ptr %34, i64 40
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %56, i8 0, i64 16, i1 false), !alias.scope !118
+  %57 = getelementptr inbounds nuw i8, ptr %34, i64 44
+  %i.is = getelementptr inbounds nuw i8, ptr %34, i64 60
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %57, i8 0, i64 16, i1 false), !alias.scope !118
+  store float 1.250000e-01, ptr %34, align 4, !tbaa !37, !alias.scope !118
+  store float 5.000000e-01, ptr %i.iq, align 4, !tbaa !37, !alias.scope !118
+  store float 1.000000e+00, ptr %i.ir, align 4, !tbaa !37, !alias.scope !118
+  store float 2.000000e+00, ptr %i.is, align 4, !tbaa !37, !alias.scope !118
   %i.it = load i8, ptr %i.ei, align 4, !tbaa !50, !range !19, !noundef !20
   %i.iu = trunc nuw i8 %i.it to i1
   br i1 %i.iu, label %_ZN4pstd8optionalIN4pbrt12SquareMatrixILi4EEEEdeEv.exit220, label %bb.el
@@ -1381,9 +1411,6 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshr.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #16
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v16f32.p0(<16 x float>, ptr captures(none), <16 x i1>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fma.v8f32(<8 x float>, <8 x float>, <8 x float>) #16

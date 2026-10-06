@@ -204,15 +204,15 @@ bb.a:
   %i.p = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.n, <2 x float> %i.b, <2 x float> %i.o)
   %i.q = insertelement <2 x float> poison, float %i.k, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.s = fdiv <2 x float> %i.p, %i.r              ; 2 uses
-  %i.t = extractelement <2 x float> %i.s, i64 1   ; 2 uses
+  %i.s = fdiv <2 x float> %i.p, %i.r              ; 3 uses
+  %i.t = extractelement <2 x float> %i.s, i64 1
   %i.u = fsub float 1.000000e+00, %i.t
-  %4 = fcmp ogt float %i.t, 0.000000e+00
-  %5 = extractelement <2 x float> %i.s, i64 0     ; 2 uses
-  %6 = fcmp ogt float %5, 0.000000e+00
-  %7 = fcmp ogt float %i.u, %5
-  %8 = and i1 %6, %7
-  %or.cond3 = select i1 %4, i1 %8, i1 false
+  %4 = fcmp ule <2 x float> %i.s, zeroinitializer
+  %5 = bitcast <2 x i1> %4 to i2
+  %6 = icmp eq i2 %5, 0
+  %7 = extractelement <2 x float> %i.s, i64 0
+  %8 = fcmp ogt float %i.u, %7
+  %or.cond3 = and i1 %6, %8
   ret i1 %or.cond3
 }
 

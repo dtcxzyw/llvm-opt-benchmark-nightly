@@ -205,7 +205,7 @@ _ZL7getMassRK7t_atomsib.exit195.thread:           ; preds = %bb.cp, %_ZL7getMass
   %i.afj = fadd <2 x float> %i.afi, %i.afh
   %i.afk = fptosi <2 x float> %i.afj to <2 x i16>
   %i.afl = shufflevector <2 x i16> %i.afk, <2 x i16> poison, <5 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 1>
-  %i.afm = call <5 x i16> @llvm.smax.v5i16(<5 x i16> %i.afl, <5 x i16> <i16 1, i16 undef, i16 undef, i16 undef, i16 -32768>)
+  %i.afm = call <5 x i16> @llvm.smax.v5i16(<5 x i16> %i.afl, <5 x i16> <i16 1, i16 poison, i16 poison, i16 poison, i16 -32768>)
   call void @llvm.masked.store.v5i16.p0(<5 x i16> %i.afm, ptr align 4 %i.aer, <5 x i1> <i1 true, i1 false, i1 false, i1 false, i1 true>), !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %7, ptr noundef nonnull align 4 dereferenceable(28) %i.aer, i64 28, i1 false), !tbaa.struct !312

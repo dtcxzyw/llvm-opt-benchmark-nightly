@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !119
   %i.bk = icmp slt i32 %i.bi, 0
   %i.bl = icmp sgt i32 %i.ax, 268435455
-  %or.cond = or i1 %i.bk, %i.bl
+  %or.cond = or i1 %i.bl, %i.bk
   br i1 %or.cond, label %bb.m, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

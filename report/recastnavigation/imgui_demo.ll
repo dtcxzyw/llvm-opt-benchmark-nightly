@@ -205,9 +205,9 @@ bb.dt:                                            ; preds = %.lr.ph298, %.loopex
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #26
   %i.ox = uitofp nneg i32 %.0162297 to float
   %i.oy = call float @sinf(float noundef %i.ox) #26
-  %71 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.oy, i64 0
-  %72 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %71, <2 x float> <float 2.000000e+01, float 0.000000e+00>, <2 x float> <float 4.000000e+01, float 0.000000e+00>)
-  store <2 x float> %72, ptr %50, align 8, !tbaa !50
+  %.scalar = call float @llvm.fmuladd.f32(float %i.oy, float 2.000000e+01, float 4.000000e+01)
+  %71 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.scalar, i64 0
+  store <2 x float> %71, ptr %50, align 8, !tbaa !50
   %i.oz = call noundef zeroext i1 @_ZN5ImGui6ButtonEPKcRK6ImVec2(ptr noundef nonnull @.str.1363, ptr noundef nonnull align 4 dereferenceable(8) %50) #26 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #26
   call void @_ZN5ImGui13PopStyleColorEi(i32 noundef 3) #26
@@ -306,9 +306,9 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du, %.pe
   %i.pv = add nuw nsw i32 %.0161296, %.0162297
   %i.pw = uitofp nneg i32 %i.pv to float
   %i.px = call float @sinf(float noundef %i.pw) #26
-  %73 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.px, i64 0
-  %74 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %73, <2 x float> <float 2.000000e+01, float 0.000000e+00>, <2 x float> <float 4.000000e+01, float 0.000000e+00>)
-  store <2 x float> %74, ptr %50, align 8, !tbaa !50
+  %.scalar374 = call float @llvm.fmuladd.f32(float %i.px, float 2.000000e+01, float 4.000000e+01)
+  %72 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.scalar374, i64 0
+  store <2 x float> %72, ptr %50, align 8, !tbaa !50
   %i.py = call noundef zeroext i1 @_ZN5ImGui6ButtonEPKcRK6ImVec2(ptr noundef %i.pj, ptr noundef nonnull align 4 dereferenceable(8) %50) #26 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #26
   call void @_ZN5ImGui13PopStyleColorEi(i32 noundef 3) #26

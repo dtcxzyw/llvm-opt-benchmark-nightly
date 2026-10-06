@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ba = icmp sgt i32 %.0.i, %i.s
-  %or.cond = select i1 %i.av, i1 %i.ba, i1 false
+  %or.cond = and i1 %i.av, %i.ba
   br i1 %or.cond, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -212,7 +212,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.bc = icmp slt i32 %.0.i, %i.s
-  %or.cond22 = select i1 %i.az, i1 %i.bc, i1 false
+  %or.cond22 = and i1 %i.bc, %i.az
   br i1 %or.cond22, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -222,7 +222,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.be = icmp slt i32 %.1.i, %i.s
-  %or.cond23 = select i1 %i.ay, i1 %i.be, i1 false
+  %or.cond23 = and i1 %i.be, %i.ay
   br i1 %or.cond23, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q

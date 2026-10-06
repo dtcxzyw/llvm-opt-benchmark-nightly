@@ -205,7 +205,7 @@ _ZN4CGAL7Point_3INS_5EpickEEC2ERKdS4_S4_S4_.exit110: ; preds = %bb.c
 bb.d:                                             ; preds = %bb.c
   %i.dd = fcmp une double %i.n, 0.000000e+00
   %i.de = fcmp une double %i.l, 0.000000e+00
-  %or.cond = select i1 %i.dd, i1 true, i1 %i.de
+  %or.cond = or i1 %i.dd, %i.de
   br i1 %or.cond, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -223,7 +223,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d
   %i.dk = fcmp une double %i.j, 0.000000e+00
   %i.dl = fcmp une double %i.h, 0.000000e+00
-  %or.cond172 = select i1 %i.dk, i1 true, i1 %i.dl
+  %or.cond172 = or i1 %i.dl, %i.dk
   br i1 %or.cond172, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -241,7 +241,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g
   %i.dr = fcmp une double %i.aw, 0.000000e+00
   %i.ds = fcmp une double %i.av, 0.000000e+00
-  %or.cond173 = select i1 %i.dr, i1 true, i1 %i.ds
+  %or.cond173 = or i1 %i.ds, %i.dr
   br i1 %or.cond173, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j

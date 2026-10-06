@@ -204,11 +204,11 @@ inBetween.exit.i.i:                               ; preds = %bb.l
   %i.gs = extractelement <2 x double> %i.fy, i64 1 ; 4 uses
   %i.gt = fcmp olt double %i.cs, %i.gs
   %i.gu = fcmp olt double %i.gs, %i.cu
-  %or.cond20.i.i.i = select i1 %i.gt, i1 %i.gu, i1 false
+  %or.cond20.i.i.i = and i1 %i.gt, %i.gu
   %i.gv = fcmp olt double %i.cu, %i.gs
   %i.gw = fcmp olt double %i.gs, %i.cs
-  %1 = select i1 %i.gv, i1 %i.gw, i1 false
-  %2 = select i1 %or.cond20.i.i.i, i1 true, i1 %1
+  %1 = and i1 %i.gv, %i.gw
+  %2 = or i1 %or.cond20.i.i.i, %1
   br i1 %2, label %clear.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %inBetween.exit.i.i, %.split.i.i, %.lr.ph.i.i
@@ -241,11 +241,11 @@ bb.n:                                             ; preds = %bb.m
 inBetween.exit42.i.i:                             ; preds = %bb.n
   %i.hm = fcmp olt double %i.cs, %i.ga
   %i.hn = fcmp olt double %i.ga, %i.cu
-  %or.cond20.i39.i.i = select i1 %i.hm, i1 %i.hn, i1 false
+  %or.cond20.i39.i.i = and i1 %i.hm, %i.hn
   %i.ho = fcmp olt double %i.cu, %i.ga
   %i.hp = fcmp olt double %i.ga, %i.cs
-  %3 = select i1 %i.ho, i1 %i.hp, i1 false
-  %4 = select i1 %or.cond20.i39.i.i, i1 true, i1 %3
+  %3 = and i1 %i.ho, %i.hp
+  %4 = or i1 %or.cond20.i39.i.i, %3
   br i1 %4, label %clear.exit.i, label %intersect.exit.i
 
 intersect.exit.i:                                 ; preds = %inBetween.exit42.i.i, %.split43.i.i, %bb.m
@@ -535,11 +535,11 @@ inBetween.exit.i127:                              ; preds = %bb.k
   %i.ea = extractelement <2 x double> %i.dg, i64 1 ; 4 uses
   %i.eb = fcmp olt double %3, %i.ea
   %i.ec = fcmp olt double %i.ea, %.sroa.10.0.copyload
-  %or.cond20.i.i128 = select i1 %i.eb, i1 %i.ec, i1 false
+  %or.cond20.i.i128 = and i1 %i.eb, %i.ec
   %i.ed = fcmp olt double %.sroa.10.0.copyload, %i.ea
   %i.ee = fcmp olt double %i.ea, %3
-  %4 = select i1 %i.ed, i1 %i.ee, i1 false
-  %5 = select i1 %or.cond20.i.i128, i1 true, i1 %4
+  %4 = and i1 %i.ed, %i.ee
+  %5 = or i1 %or.cond20.i.i128, %4
   br i1 %5, label %clear.exit.thread166, label %bb.l
 
 bb.l:                                             ; preds = %inBetween.exit.i127, %.split.i129, %.lr.ph.i
@@ -572,11 +572,11 @@ bb.m:                                             ; preds = %bb.l
 inBetween.exit42.i123:                            ; preds = %bb.m
   %i.eu = fcmp olt double %3, %i.di
   %i.ev = fcmp olt double %i.di, %.sroa.10.0.copyload
-  %or.cond20.i39.i124 = select i1 %i.eu, i1 %i.ev, i1 false
+  %or.cond20.i39.i124 = and i1 %i.eu, %i.ev
   %i.ew = fcmp olt double %.sroa.10.0.copyload, %i.di
   %i.ex = fcmp olt double %i.di, %3
-  %6 = select i1 %i.ew, i1 %i.ex, i1 false
-  %7 = select i1 %or.cond20.i39.i124, i1 true, i1 %6
+  %6 = and i1 %i.ew, %i.ex
+  %7 = or i1 %or.cond20.i39.i124, %6
   br i1 %7, label %clear.exit.thread166, label %intersect.exit131
 
 intersect.exit131:                                ; preds = %bb.l, %.split43.i125, %inBetween.exit42.i123
@@ -652,11 +652,11 @@ inBetween.exit.i:                                 ; preds = %bb.n
   %i.gz = extractelement <2 x double> %i.gf, i64 1 ; 4 uses
   %i.ha = fcmp olt double %3, %i.gz
   %i.hb = fcmp olt double %i.gz, %.sroa.10.0.copyload
-  %or.cond20.i.i = select i1 %i.ha, i1 %i.hb, i1 false
+  %or.cond20.i.i = and i1 %i.ha, %i.hb
   %i.hc = fcmp olt double %.sroa.10.0.copyload, %i.gz
   %i.hd = fcmp olt double %i.gz, %3
-  %8 = select i1 %i.hc, i1 %i.hd, i1 false
-  %9 = select i1 %or.cond20.i.i, i1 true, i1 %8
+  %8 = and i1 %i.hc, %i.hd
+  %9 = or i1 %or.cond20.i.i, %8
   br i1 %9, label %clear.exit.thread166, label %bb.o
 
 bb.o:                                             ; preds = %inBetween.exit.i, %.split.i, %.lr.ph27.i
@@ -689,11 +689,11 @@ bb.p:                                             ; preds = %bb.o
 inBetween.exit42.i:                               ; preds = %bb.p
   %i.ht = fcmp olt double %3, %i.gh
   %i.hu = fcmp olt double %i.gh, %.sroa.10.0.copyload
-  %or.cond20.i39.i = select i1 %i.ht, i1 %i.hu, i1 false
+  %or.cond20.i39.i = and i1 %i.ht, %i.hu
   %i.hv = fcmp olt double %.sroa.10.0.copyload, %i.gh
   %i.hw = fcmp olt double %i.gh, %3
-  %10 = select i1 %i.hv, i1 %i.hw, i1 false
-  %11 = select i1 %or.cond20.i39.i, i1 true, i1 %10
+  %10 = and i1 %i.hv, %i.hw
+  %11 = or i1 %or.cond20.i39.i, %10
   br i1 %11, label %clear.exit.thread166, label %intersect.exit
 
 intersect.exit:                                   ; preds = %bb.o, %.split43.i, %inBetween.exit42.i
@@ -883,11 +883,11 @@ inBetween.exit.i147:                              ; preds = %bb.t
   %i.mh = extractelement <2 x double> %i.ln, i64 1 ; 4 uses
   %i.mi = fcmp olt double %3, %i.mh
   %i.mj = fcmp olt double %i.mh, %.sroa.10.0.copyload17
-  %or.cond20.i.i148 = select i1 %i.mi, i1 %i.mj, i1 false
+  %or.cond20.i.i148 = and i1 %i.mi, %i.mj
   %i.mk = fcmp olt double %.sroa.10.0.copyload17, %i.mh
   %i.ml = fcmp olt double %i.mh, %3
-  %12 = select i1 %i.mk, i1 %i.ml, i1 false
-  %13 = select i1 %or.cond20.i.i148, i1 true, i1 %12
+  %12 = and i1 %i.mk, %i.ml
+  %13 = or i1 %or.cond20.i.i148, %12
   br i1 %13, label %clear.exit119.thread179, label %bb.u
 
 bb.u:                                             ; preds = %inBetween.exit.i147, %.split.i149, %.lr.ph.i115
@@ -920,11 +920,11 @@ bb.v:                                             ; preds = %bb.u
 inBetween.exit42.i143:                            ; preds = %bb.v
   %i.nb = fcmp olt double %3, %i.lp
   %i.nc = fcmp olt double %i.lp, %.sroa.10.0.copyload17
-  %or.cond20.i39.i144 = select i1 %i.nb, i1 %i.nc, i1 false
+  %or.cond20.i39.i144 = and i1 %i.nb, %i.nc
   %i.nd = fcmp olt double %.sroa.10.0.copyload17, %i.lp
   %i.ne = fcmp olt double %i.lp, %3
-  %14 = select i1 %i.nd, i1 %i.ne, i1 false
-  %15 = select i1 %or.cond20.i39.i144, i1 true, i1 %14
+  %14 = and i1 %i.nd, %i.ne
+  %15 = or i1 %or.cond20.i39.i144, %14
   br i1 %15, label %clear.exit119.thread179, label %intersect.exit151
 
 intersect.exit151:                                ; preds = %bb.u, %.split43.i145, %inBetween.exit42.i143
@@ -1000,11 +1000,11 @@ inBetween.exit.i137:                              ; preds = %bb.w
   %i.pg = extractelement <2 x double> %i.om, i64 1 ; 4 uses
   %i.ph = fcmp olt double %3, %i.pg
   %i.pi = fcmp olt double %i.pg, %.sroa.10.0.copyload17
-  %or.cond20.i.i138 = select i1 %i.ph, i1 %i.pi, i1 false
+  %or.cond20.i.i138 = and i1 %i.ph, %i.pi
   %i.pj = fcmp olt double %.sroa.10.0.copyload17, %i.pg
   %i.pk = fcmp olt double %i.pg, %3
-  %16 = select i1 %i.pj, i1 %i.pk, i1 false
-  %17 = select i1 %or.cond20.i.i138, i1 true, i1 %16
+  %16 = and i1 %i.pj, %i.pk
+  %17 = or i1 %or.cond20.i.i138, %16
   br i1 %17, label %clear.exit119.thread179, label %bb.x
 
 bb.x:                                             ; preds = %inBetween.exit.i137, %.split.i139, %.lr.ph27.i105
@@ -1037,11 +1037,11 @@ bb.y:                                             ; preds = %bb.x
 inBetween.exit42.i133:                            ; preds = %bb.y
   %i.qa = fcmp olt double %3, %i.oo
   %i.qb = fcmp olt double %i.oo, %.sroa.10.0.copyload17
-  %or.cond20.i39.i134 = select i1 %i.qa, i1 %i.qb, i1 false
+  %or.cond20.i39.i134 = and i1 %i.qa, %i.qb
   %i.qc = fcmp olt double %.sroa.10.0.copyload17, %i.oo
   %i.qd = fcmp olt double %i.oo, %3
-  %18 = select i1 %i.qc, i1 %i.qd, i1 false
-  %19 = select i1 %or.cond20.i39.i134, i1 true, i1 %18
+  %18 = and i1 %i.qc, %i.qd
+  %19 = or i1 %or.cond20.i39.i134, %18
   br i1 %19, label %clear.exit119.thread179, label %intersect.exit141
 
 intersect.exit141:                                ; preds = %bb.x, %.split43.i135, %inBetween.exit42.i133
@@ -1283,11 +1283,11 @@ bb.b:                                             ; preds = %bb.a
 inBetween.exit:                                   ; preds = %bb.b
   %i.t = fcmp olt double %1, %5
   %i.u = fcmp olt double %5, %3
-  %or.cond20.i = select i1 %i.t, i1 %i.u, i1 false
+  %or.cond20.i = and i1 %i.t, %i.u
   %i.v = fcmp olt double %3, %5
   %i.w = fcmp olt double %5, %1
-  %8 = select i1 %i.v, i1 %i.w, i1 false
-  %9 = select i1 %or.cond20.i, i1 true, i1 %8
+  %8 = and i1 %i.v, %i.w
+  %9 = or i1 %or.cond20.i, %8
   br i1 %9, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.split, %inBetween.exit, %bb.a
@@ -1319,11 +1319,11 @@ bb.d:                                             ; preds = %bb.c
 inBetween.exit42:                                 ; preds = %bb.d
   %i.an = fcmp olt double %1, %7
   %i.ao = fcmp olt double %7, %3
-  %or.cond20.i39 = select i1 %i.an, i1 %i.ao, i1 false
+  %or.cond20.i39 = and i1 %i.an, %i.ao
   %i.ap = fcmp olt double %3, %7
   %i.aq = fcmp olt double %7, %1
-  %10 = select i1 %i.ap, i1 %i.aq, i1 false
-  %11 = select i1 %or.cond20.i39, i1 true, i1 %10
+  %10 = and i1 %i.ap, %i.aq
+  %11 = or i1 %or.cond20.i39, %10
   br i1 %11, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.split43, %inBetween.exit42, %bb.c

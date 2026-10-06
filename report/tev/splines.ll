@@ -205,9 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.i, i64 28
   %i.bb = load float, ptr %i.aw, align 4, !tbaa !122 ; 2 uses
-  %i.bc = load float, ptr %i.ax, align 4, !tbaa !123 ; 2 uses
-  %10 = insertelement <4 x float> poison, float %i.bc, i64 0
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>
+  %i.bc = load float, ptr %i.ax, align 4, !tbaa !123
   %i.bd = load <4 x float>, ptr %i.i, align 4     ; 2 uses
   %i.be = shufflevector <4 x float> %i.bd, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bf = extractelement <4 x float> %i.bd, i64 1
@@ -218,10 +216,6 @@ bb.c:                                             ; preds = %bb.b
   %i.bk = insertelement <4 x float> %i.bi, float %i.bj, i64 0
   %i.bl = load float, ptr %i.ay, align 4, !tbaa !27 ; 2 uses
   %i.bm = fneg float %i.bl
-  %12 = insertelement <4 x float> poison, float %i.bm, i64 0
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> zeroinitializer
-  %14 = insertelement <4 x float> poison, float %i.bl, i64 0
-  %15 = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> zeroinitializer
   br label %bb.d
 
 _ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentIN3hwy6N_AVX24SimdIfLm8ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i: ; preds = %_ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentIN3hwy6N_AVX24SimdIfLm8ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i, %.lr.ph.i
@@ -306,10 +300,10 @@ bb.d:                                             ; preds = %_ZN3jxl6N_AVX212_GL
   %i.ee = insertelement <4 x float> %i.eb, float %i.ed, i64 0 ; 2 uses
   %i.ef = fcmp ole <4 x float> %i.ee, zeroinitializer
   %i.eg = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.ee) ; 4 uses
-  %i.eh = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eg, <4 x float> splat (float f0x3D9F35DB), <4 x float> splat (float f0x39573B11))
-  %i.ei = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eh, <4 x float> %i.eg, <4 x float> splat (float f0x3E6DB0EC))
-  %i.ej = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ei, <4 x float> %i.eg, <4 x float> splat (float f0x3E8E3E87))
-  %i.ek = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ej, <4 x float> %i.eg, <4 x float> splat (float 1.000000e+00))
+  %i.eh = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eg, <4 x float> <float f0x3D9F35DB, float poison, float poison, float poison>, <4 x float> <float f0x39573B11, float poison, float poison, float poison>)
+  %i.ei = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eh, <4 x float> %i.eg, <4 x float> <float f0x3E6DB0EC, float poison, float poison, float poison>)
+  %i.ej = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ei, <4 x float> %i.eg, <4 x float> <float f0x3E8E3E87, float poison, float poison, float poison>)
+  %i.ek = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ej, <4 x float> %i.eg, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>)
   %i.el = select <4 x i1> %i.ef, <4 x i32> <i32 -2147483648, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.em = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ea, <4 x float> splat (float 5.000000e-01), <4 x float> splat (float f0xBEB504F3)) ; 2 uses
   %i.en = extractelement <4 x float> %i.em, i64 0
@@ -317,23 +311,23 @@ bb.d:                                             ; preds = %_ZN3jxl6N_AVX212_GL
   %i.ep = insertelement <4 x float> %i.em, float %i.eo, i64 0 ; 2 uses
   %i.eq = fcmp ole <4 x float> %i.ep, zeroinitializer
   %i.er = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.ep) ; 4 uses
-  %i.es = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.er, <4 x float> splat (float f0x3D9F35DB), <4 x float> splat (float f0x39573B11))
-  %i.et = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.es, <4 x float> %i.er, <4 x float> splat (float f0x3E6DB0EC))
-  %i.eu = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.et, <4 x float> %i.er, <4 x float> splat (float f0x3E8E3E87))
-  %i.ev = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eu, <4 x float> %i.er, <4 x float> splat (float 1.000000e+00))
+  %i.es = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.er, <4 x float> <float f0x3D9F35DB, float poison, float poison, float poison>, <4 x float> <float f0x39573B11, float poison, float poison, float poison>)
+  %i.et = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.es, <4 x float> %i.er, <4 x float> <float f0x3E6DB0EC, float poison, float poison, float poison>)
+  %i.eu = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.et, <4 x float> %i.er, <4 x float> <float f0x3E8E3E87, float poison, float poison, float poison>)
+  %i.ev = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.eu, <4 x float> %i.er, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>)
   %i.ew = shufflevector <4 x float> %i.ek, <4 x float> %i.ev, <2 x i32> <i32 0, i32 4> ; 2 uses
   %i.ex = fmul <2 x float> %i.ew, %i.ew
   %i.ey = fdiv <2 x float> splat (float 1.000000e+00), %i.ex
   %i.ez = shufflevector <2 x float> %i.ey, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.fa = shufflevector <4 x float> %i.ez, <4 x float> <float poison, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
   %i.fb = fneg <4 x float> %i.fa
-  %i.fc = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.fb, <4 x float> %i.fa, <4 x float> splat (float 1.000000e+00))
+  %i.fc = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.fb, <4 x float> %i.fa, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>)
   %i.fd = bitcast <4 x float> %i.fc to <4 x i32>
   %i.fe = xor <4 x i32> %i.el, %i.fd
   %i.ff = bitcast <4 x i32> %i.fe to <4 x float>
   %i.fg = shufflevector <4 x float> <float poison, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, <4 x float> %i.ez, <4 x i32> <i32 5, i32 1, i32 2, i32 3> ; 2 uses
   %i.fh = fneg <4 x float> %i.fg
-  %i.fi = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.fh, <4 x float> %i.fg, <4 x float> splat (float 1.000000e+00))
+  %i.fi = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.fh, <4 x float> %i.fg, <4 x float> <float 1.000000e+00, float poison, float poison, float poison>)
   %i.fj = select <4 x i1> %i.eq, <4 x i32> <i32 -2147483648, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.fk = bitcast <4 x float> %i.fi to <4 x i32>
   %i.fl = xor <4 x i32> %i.fj, %i.fk
@@ -341,55 +335,41 @@ bb.d:                                             ; preds = %_ZN3jxl6N_AVX212_GL
   %i.fn = fsub <4 x float> %i.ff, %i.fm           ; 2 uses
   %foldExtExtBinop = fmul <4 x float> %i.fn, %i.fn
   %i.fo = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %i.fp = fmul float %i.bc, %i.fo
-  %16 = insertelement <4 x float> %11, float %i.fp, i64 0 ; 5 uses
+  %i.fp = fmul float %i.bc, %i.fo                 ; 5 uses
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.147.i ; 3 uses
-  %i.fr = load float, ptr %i.fq, align 1, !tbaa !50
-  %17 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.fr, i64 0 ; 2 uses
+  %i.fr = load float, ptr %i.fq, align 1, !tbaa !50 ; 2 uses
   br i1 %6, label %.split.us.preheader.i35.i, label %.split.preheader.i34.i
 
 .split.preheader.i34.i:                           ; preds = %bb.d
-  %18 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %13, <4 x float> %16, <4 x float> %17)
-  %19 = extractelement <4 x float> %18, i64 0
-  store float %19, ptr %i.fq, align 1, !tbaa !50
+  %.scalar74.i.i = tail call float @llvm.fma.f32(float %i.bm, float %i.fp, float %i.fr)
+  store float %.scalar74.i.i, ptr %i.fq, align 1, !tbaa !50
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.147.i ; 2 uses
   %i.ft = load float, ptr %i.fs, align 1, !tbaa !50
-  %20 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.ft, i64 0
   %i.fu = load <2 x float>, ptr %i.az, align 4, !tbaa !27
   %i.fv = fneg <2 x float> %i.fu                  ; 2 uses
-  %21 = shufflevector <2 x float> %i.fv, <2 x float> poison, <4 x i32> zeroinitializer
-  %22 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %21, <4 x float> %16, <4 x float> %20)
-  %23 = extractelement <4 x float> %22, i64 0
-  store float %23, ptr %i.fs, align 1, !tbaa !50
+  %10 = extractelement <2 x float> %i.fv, i64 0
+  %.scalar75.i.i = tail call float @llvm.fma.f32(float %10, float %i.fp, float %i.ft)
+  store float %.scalar75.i.i, ptr %i.fs, align 1, !tbaa !50
   %i.fw = extractelement <2 x float> %i.fv, i64 1
   br label %_ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentIN3hwy6N_AVX24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i
 
 .split.us.preheader.i35.i:                        ; preds = %bb.d
-  %24 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %15, <4 x float> %16, <4 x float> %17)
-  %25 = extractelement <4 x float> %24, i64 0
-  store float %25, ptr %i.fq, align 1, !tbaa !50
+  %.scalar.i37.i = tail call float @llvm.fma.f32(float %i.bl, float %i.fp, float %i.fr)
+  store float %.scalar.i37.i, ptr %i.fq, align 1, !tbaa !50
   %i.fx = load float, ptr %i.az, align 4, !tbaa !27
-  %26 = insertelement <4 x float> poison, float %i.fx, i64 0
-  %27 = shufflevector <4 x float> %26, <4 x float> poison, <4 x i32> zeroinitializer
   %i.fy = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.147.i ; 2 uses
   %i.fz = load float, ptr %i.fy, align 1, !tbaa !50
-  %28 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.fz, i64 0
-  %29 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %27, <4 x float> %16, <4 x float> %28)
-  %30 = extractelement <4 x float> %29, i64 0
-  store float %30, ptr %i.fy, align 1, !tbaa !50
+  %.scalar72.i.i = tail call float @llvm.fma.f32(float %i.fx, float %i.fp, float %i.fz)
+  store float %.scalar72.i.i, ptr %i.fy, align 1, !tbaa !50
   %i.ga = load float, ptr %i.ba, align 4, !tbaa !27
   br label %_ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentIN3hwy6N_AVX24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i
 
 _ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentIN3hwy6N_AVX24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i: ; preds = %.split.us.preheader.i35.i, %.split.preheader.i34.i
   %.sink.i.i = phi float [ %i.fw, %.split.preheader.i34.i ], [ %i.ga, %.split.us.preheader.i35.i ]
-  %31 = insertelement <4 x float> poison, float %.sink.i.i, i64 0
-  %32 = shufflevector <4 x float> %31, <4 x float> poison, <4 x i32> zeroinitializer
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.147.i ; 2 uses
   %i.gc = load float, ptr %i.gb, align 1, !tbaa !50
-  %33 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.gc, i64 0
-  %34 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %32, <4 x float> %16, <4 x float> %33)
-  %35 = extractelement <4 x float> %34, i64 0
-  store float %35, ptr %i.gb, align 1, !tbaa !50
+  %.scalar76.i.i = tail call float @llvm.fma.f32(float %.sink.i.i, float %i.fp, float %i.gc)
+  store float %.scalar76.i.i, ptr %i.gb, align 1, !tbaa !50
   %i.gd = add nuw i64 %.147.i, 1                  ; 2 uses
   %i.ge = icmp ult i64 %i.gd, %i.v
   br i1 %i.ge, label %bb.d, label %_ZN3jxl6N_AVX212_GLOBAL__N_111DrawSegmentERKNS_13SplineSegmentEbmmmPrPf.exit, !llvm.loop !448
@@ -790,6 +770,9 @@ declare i64 @llvm.smin.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fma.f32(float, float, float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2

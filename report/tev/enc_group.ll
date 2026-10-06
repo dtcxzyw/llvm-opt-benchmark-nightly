@@ -205,16 +205,16 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_123DCFromLowestFrequenciesENS_14AcStrat
   store <2 x float> %i.aqv, ptr %i.aqc, align 4, !tbaa !57, !alias.scope !2009, !noalias !1997
   %i.aqw = shufflevector <4 x float> %i.aqh, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.aqx = shufflevector <4 x float> %i.aqs, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
-  %i.aqy = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aqx, <4 x float> splat (float f0x3F0A8BD4), <4 x float> %i.aqw) ; 3 uses
-  %i.aqz = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aqx, <4 x float> splat (float f0xBF0A8BD4), <4 x float> %i.aqw) ; 3 uses
+  %i.aqy = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aqx, <4 x float> <float f0x3F0A8BD4, float f0x3F0A8BD4, float poison, float poison>, <4 x float> %i.aqw) ; 3 uses
+  %i.aqz = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.aqx, <4 x float> <float f0xBF0A8BD4, float f0xBF0A8BD4, float poison, float poison>, <4 x float> %i.aqw) ; 3 uses
   %i.ara = shufflevector <4 x float> %i.aqy, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   store <2 x float> %i.ara, ptr %4, align 4, !tbaa !57, !alias.scope !2010, !noalias !2011
   %i.arb = shufflevector <4 x float> %i.aqz, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   store <2 x float> %i.arb, ptr %i.apv, align 4, !tbaa !57, !alias.scope !2012, !noalias !2011
   %i.arc = shufflevector <4 x float> %i.aqj, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.ard = shufflevector <4 x float> %i.aqu, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
-  %i.are = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ard, <4 x float> splat (float f0x3FA73D75), <4 x float> %i.arc) ; 3 uses
-  %i.arf = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ard, <4 x float> splat (float f0xBFA73D75), <4 x float> %i.arc) ; 3 uses
+  %i.are = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ard, <4 x float> <float f0x3FA73D75, float f0x3FA73D75, float poison, float poison>, <4 x float> %i.arc) ; 3 uses
+  %i.arf = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %i.ard, <4 x float> <float f0xBFA73D75, float f0xBFA73D75, float poison, float poison>, <4 x float> %i.arc) ; 3 uses
   %i.arg = shufflevector <4 x float> %i.are, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   store <2 x float> %i.arg, ptr %i.aow, align 4, !tbaa !57, !alias.scope !2010, !noalias !2011
   %i.arh = shufflevector <4 x float> %i.arf, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -391,36 +391,28 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_123DCFromLowestFrequenciesENS_14AcStrat
   %i.avs = getelementptr inbounds nuw i8, ptr %4, i64 4116
   %i.avt = getelementptr inbounds nuw i8, ptr %4, i64 4120
   %i.avu = getelementptr inbounds nuw i8, ptr %4, i64 4124
-  %i.avv = fadd float %i.ava, %i.avh              ; 2 uses
+  %i.avv = fadd float %i.ava, %i.avh              ; 3 uses
   store float %i.avv, ptr %i.avo, align 4, !tbaa !57, !alias.scope !2042, !noalias !2036
-  %i.avw = fsub float %i.ava, %i.avh              ; 2 uses
+  %i.avw = fsub float %i.ava, %i.avh              ; 3 uses
   store float %i.avw, ptr %i.avs, align 4, !tbaa !57, !alias.scope !2043, !noalias !2036
   %i.avx = fadd float %i.avd, %i.avl              ; 2 uses
   %i.avy = fmul float %i.avd, f0x3FB504F3         ; 2 uses
-  %i.avz = fadd float %i.avy, %i.avx              ; 2 uses
+  %i.avz = fadd float %i.avy, %i.avx              ; 3 uses
   store float %i.avz, ptr %i.avt, align 4, !tbaa !57, !alias.scope !2044, !noalias !2036
-  %i.awa = fsub float %i.avy, %i.avx              ; 2 uses
+  %i.awa = fsub float %i.avy, %i.avx              ; 3 uses
   store float %i.awa, ptr %i.avu, align 4, !tbaa !57, !alias.scope !2045, !noalias !2036
-  %33 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.avv, i64 0 ; 2 uses
-  %34 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.avz, i64 0 ; 2 uses
-  %35 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %34, <4 x float> splat (float f0x3F0A8BD4), <4 x float> %33)
-  %36 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %34, <4 x float> splat (float f0xBF0A8BD4), <4 x float> %33)
-  %37 = extractelement <4 x float> %35, i64 0     ; 2 uses
-  store float %37, ptr %4, align 4, !tbaa !57, !alias.scope !2046, !noalias !2047
-  %38 = extractelement <4 x float> %36, i64 0     ; 2 uses
-  store float %38, ptr %i.avm, align 4, !tbaa !57, !alias.scope !2048, !noalias !2047
-  %39 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.avw, i64 0 ; 2 uses
-  %40 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.awa, i64 0 ; 2 uses
-  %41 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %40, <4 x float> splat (float f0x3FA73D75), <4 x float> %39)
-  %42 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %40, <4 x float> splat (float f0xBFA73D75), <4 x float> %39)
-  %43 = extractelement <4 x float> %41, i64 0     ; 2 uses
-  store float %43, ptr %i.ave, align 4, !tbaa !57, !alias.scope !2046, !noalias !2047
-  %44 = extractelement <4 x float> %42, i64 0     ; 2 uses
-  store float %44, ptr %i.avi, align 4, !tbaa !57, !alias.scope !2048, !noalias !2047
-  store float %37, ptr %i.avn, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
-  store float %43, ptr %i.avp, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
-  store float %44, ptr %i.avq, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
-  store float %38, ptr %i.avr, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
+  %.scalar.i.i.i.i.i146 = tail call float @llvm.fma.f32(float %i.avz, float f0x3F0A8BD4, float %i.avv) ; 2 uses
+  %.scalar2.i.i.i.i.i147 = tail call float @llvm.fma.f32(float %i.avz, float f0xBF0A8BD4, float %i.avv) ; 2 uses
+  store float %.scalar.i.i.i.i.i146, ptr %4, align 4, !tbaa !57, !alias.scope !2046, !noalias !2047
+  store float %.scalar2.i.i.i.i.i147, ptr %i.avm, align 4, !tbaa !57, !alias.scope !2048, !noalias !2047
+  %.scalar3.i.i.i.i.i148 = tail call float @llvm.fma.f32(float %i.awa, float f0x3FA73D75, float %i.avw) ; 2 uses
+  %.scalar4.i.i.i.i.i149 = tail call float @llvm.fma.f32(float %i.awa, float f0xBFA73D75, float %i.avw) ; 2 uses
+  store float %.scalar3.i.i.i.i.i148, ptr %i.ave, align 4, !tbaa !57, !alias.scope !2046, !noalias !2047
+  store float %.scalar4.i.i.i.i.i149, ptr %i.avi, align 4, !tbaa !57, !alias.scope !2048, !noalias !2047
+  store float %.scalar.i.i.i.i.i146, ptr %i.avn, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
+  store float %.scalar3.i.i.i.i.i148, ptr %i.avp, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
+  store float %.scalar4.i.i.i.i.i149, ptr %i.avq, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
+  store float %.scalar2.i.i.i.i.i147, ptr %i.avr, align 4, !tbaa !56, !alias.scope !2037, !noalias !2036
   %.val12.val.i146 = load <4 x float>, ptr %i.avn, align 4, !tbaa !57, !alias.scope !2049, !noalias !2036
   store <4 x float> %.val12.val.i146, ptr %2, align 1, !tbaa !57, !alias.scope !2050, !noalias !2051
   br label %bb.c
@@ -466,37 +458,29 @@ begin_hunk_0_@_ZN3jxl6N_AVX212_GLOBAL__N_123DCFromLowestFrequenciesENS_14AcStrat
   %i.aww = getelementptr inbounds nuw i8, ptr %4, i64 4116
   %i.awx = getelementptr inbounds nuw i8, ptr %4, i64 4120
   %i.awy = getelementptr inbounds nuw i8, ptr %4, i64 4124
-  %i.awz = fadd float %i.awt, %i.awr              ; 2 uses
+  %i.awz = fadd float %i.awt, %i.awr              ; 3 uses
   store float %i.awz, ptr %i.awp, align 4, !tbaa !57, !alias.scope !2060, !noalias !2052
-  %i.axa = fsub float %i.awr, %i.awt              ; 2 uses
+  %i.axa = fsub float %i.awr, %i.awt              ; 3 uses
   store float %i.axa, ptr %i.aww, align 4, !tbaa !57, !alias.scope !2061, !noalias !2052
   %i.axb = fadd float %i.aws, %i.awu              ; 2 uses
   %i.axc = fmul float %i.aws, f0x3FB504F3         ; 2 uses
-  %i.axd = fadd float %i.axc, %i.axb              ; 2 uses
+  %i.axd = fadd float %i.axc, %i.axb              ; 3 uses
   store float %i.axd, ptr %i.awx, align 4, !tbaa !57, !alias.scope !2062, !noalias !2052
-  %i.axe = fsub float %i.axc, %i.axb              ; 2 uses
+  %i.axe = fsub float %i.axc, %i.axb              ; 3 uses
   store float %i.axe, ptr %i.awy, align 4, !tbaa !57, !alias.scope !2063, !noalias !2052
-  %45 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.awz, i64 0 ; 2 uses
-  %46 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.axd, i64 0 ; 2 uses
-  %47 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %46, <4 x float> splat (float f0x3F0A8BD4), <4 x float> %45)
-  %48 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %46, <4 x float> splat (float f0xBF0A8BD4), <4 x float> %45)
-  %49 = extractelement <4 x float> %47, i64 0
-  store float %49, ptr %2, align 1, !tbaa !57, !alias.scope !2064, !noalias !2065
+  %.scalar.i.i.i.i.i = tail call float @llvm.fma.f32(float %i.axd, float f0x3F0A8BD4, float %i.awz)
+  %.scalar2.i.i.i.i.i = tail call float @llvm.fma.f32(float %i.axd, float f0xBF0A8BD4, float %i.awz)
+  store float %.scalar.i.i.i.i.i, ptr %2, align 1, !tbaa !57, !alias.scope !2064, !noalias !2065
   %.idx.i12.i.i.i.i.i = mul i64 %3, 12
   %i.axf = getelementptr inbounds nuw i8, ptr %2, i64 %.idx.i12.i.i.i.i.i
-  %50 = extractelement <4 x float> %48, i64 0
-  store float %50, ptr %i.axf, align 1, !tbaa !57, !alias.scope !2066, !noalias !2065
-  %51 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.axa, i64 0 ; 2 uses
-  %52 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.axe, i64 0 ; 2 uses
-  %53 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %52, <4 x float> splat (float f0x3FA73D75), <4 x float> %51)
-  %54 = tail call noundef <4 x float> @llvm.fma.v4f32(<4 x float> %52, <4 x float> splat (float f0xBFA73D75), <4 x float> %51)
+  store float %.scalar2.i.i.i.i.i, ptr %i.axf, align 1, !tbaa !57, !alias.scope !2066, !noalias !2065
+  %.scalar3.i.i.i.i.i = tail call float @llvm.fma.f32(float %i.axe, float f0x3FA73D75, float %i.axa)
+  %.scalar4.i.i.i.i.i = tail call float @llvm.fma.f32(float %i.axe, float f0xBFA73D75, float %i.axa)
   %i.axg = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3
-  %55 = extractelement <4 x float> %53, i64 0
-  store float %55, ptr %i.axg, align 1, !tbaa !57, !alias.scope !2064, !noalias !2065
+  store float %.scalar3.i.i.i.i.i, ptr %i.axg, align 1, !tbaa !57, !alias.scope !2064, !noalias !2065
   %.idx28.i.i.i.i.i.i = shl i64 %3, 3
   %i.axh = getelementptr inbounds nuw i8, ptr %2, i64 %.idx28.i.i.i.i.i.i
-  %56 = extractelement <4 x float> %54, i64 0
-  store float %56, ptr %i.axh, align 1, !tbaa !57, !alias.scope !2066, !noalias !2065
+  store float %.scalar4.i.i.i.i.i, ptr %i.axh, align 1, !tbaa !57, !alias.scope !2066, !noalias !2065
   br label %bb.c
 
 .preheader282.preheader:                          ; preds = %bb.a
@@ -897,6 +881,9 @@ declare <4 x float> @llvm.copysign.v4f32(<4 x float>, <4 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fma.f32(float, float, float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.copysign.v8f32(<8 x float>, <8 x float>) #2

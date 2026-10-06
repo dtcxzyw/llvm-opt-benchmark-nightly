@@ -204,8 +204,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEplERKS1_(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %2 = load <4 x float>, ptr %0, align 4
+  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
   %i.a = load <4 x float>, ptr %1, align 4, !tbaa !10
+  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.b = fadd <4 x float> %i.a, %2                ; 2 uses
   %i.c = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.d = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -220,9 +223,12 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEmlEf(ptr noundef nonnull align 4 dereferenceable(16) %0, float noundef %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %2 = load <4 x float>, ptr %0, align 4
+  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
   %i.a = insertelement <4 x float> poison, float %1, i64 0
   %i.b = shufflevector <4 x float> %i.a, <4 x float> poison, <4 x i32> zeroinitializer
+  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.c = fmul <4 x float> %i.b, %2                ; 2 uses
   %i.d = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.e = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -234,7 +240,10 @@ define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixI
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEdvEf(ptr noundef nonnull align 4 dereferenceable(16) %0, float noundef %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %2 = load <4 x float>, ptr %0, align 4
+  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
+  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.a = insertelement <4 x float> poison, float %1, i64 0
   %i.b = shufflevector <4 x float> %i.a, <4 x float> poison, <4 x i32> zeroinitializer
   %i.c = fdiv <4 x float> %2, %i.b                ; 2 uses
@@ -637,13 +646,19 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local void @_ZN4pbrt12SquareMatrixILi4EEC2Ev(ptr noundef nonnull align 4 dereferenceable(64) %0) unnamed_addr #2 comdat($_ZN4pbrt12SquareMatrixILi4EEC5Ev) align 2 {
 .preheader:
+  store float 1.000000e+00, ptr %0, align 4, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %1, align 4, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %2, align 4, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 60
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
-  tail call void @llvm.masked.store.v16f32.p0(<16 x float> <float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison, float 1.000000e+00>, ptr align 4 %0, <16 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>), !tbaa !10
+  store float 1.000000e+00, ptr %3, align 4, !tbaa !10
   ret void
 }
 
@@ -1045,9 +1060,6 @@ declare float @llvm.sqrt.f32(float) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v16f32.p0(<16 x float>, ptr captures(none), <16 x i1>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.copysign.v2f32(<2 x float>, <2 x float>) #10

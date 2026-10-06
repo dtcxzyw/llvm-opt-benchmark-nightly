@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.gk = fcmp olt float %i.gf, %i.gj
   %i.gl = extractelement <2 x float> %i.fy, i64 0 ; 2 uses
   %i.gm = fcmp olt float %i.gl, f0x34000000
-  %or.cond4 = select i1 %i.gk, i1 true, i1 %i.gm
+  %or.cond4 = or i1 %i.gm, %i.gk
   br i1 %or.cond4, label %bb.z, label %bb.ac
 
 bb.z:                                             ; preds = %bb.y
@@ -608,7 +608,7 @@ bb.aq:                                            ; preds = %._crit_edge594
   %i.ol = insertelement <2 x float> %i.ok, float %i.oj, i64 1
   %i.om = insertelement <2 x float> poison, float %i.ob, i64 0
   %i.on = insertelement <2 x float> %i.om, float %i.oi, i64 1
-  %i.oo = fsub <2 x float> %i.ol, %i.on           ; 8 uses
+  %i.oo = fsub <2 x float> %i.ol, %i.on           ; 7 uses
   %i.op = shufflevector <2 x float> %i.my, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.oq = shufflevector <2 x float> %i.nb, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.or = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.op, <2 x float> %i.oo, <2 x float> %i.oq)
@@ -616,16 +616,28 @@ bb.aq:                                            ; preds = %._crit_edge594
   %i.ot = shufflevector <2 x float> %i.nh, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.ou = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.os, <2 x float> %i.oo, <2 x float> %i.ot)
   %i.ov = fneg <2 x float> %i.ou
-  %i.ow = fdiv <2 x float> %i.ov, %i.or           ; 6 uses
-  %i.ox = shufflevector <2 x float> %i.oo, <2 x float> %i.ow, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
-  %i.oy = fcmp ole <4 x float> %i.ox, splat (float 1.000000e+00)
-  %11 = fcmp oge <4 x float> %i.ox, zeroinitializer
-  %12 = and <4 x i1> %11, %i.oy                   ; 2 uses
-  %13 = shufflevector <4 x i1> %12, <4 x i1> poison, <2 x i32> <i32 2, i32 3>
-  %14 = shufflevector <4 x i1> %12, <4 x i1> poison, <2 x i32> <i32 0, i32 1>
-  %15 = select <2 x i1> %13, <2 x i1> %14, <2 x i1> zeroinitializer ; 2 uses
-  %i.oz = extractelement <2 x i1> %15, i64 1
-  br i1 %i.oz, label %bb.ar, label %bb.as
+  %i.ow = fdiv <2 x float> %i.ov, %i.or           ; 5 uses
+  %11 = extractelement <2 x float> %i.ow, i64 1   ; 3 uses
+  %12 = fcmp oge float %11, 0.000000e+00
+  %i.ox = shufflevector <2 x float> %i.oo, <2 x float> %i.ow, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.oy = fcmp ole <4 x float> %i.ox, splat (float 1.000000e+00) ; 4 uses
+  %13 = extractelement <4 x i1> %i.oy, i64 3
+  %or.cond10 = and i1 %12, %13
+  %14 = extractelement <2 x float> %i.oo, i64 1   ; 3 uses
+  %15 = fcmp oge float %14, 0.000000e+00
+  %or.cond13 = and i1 %15, %or.cond10
+  %16 = extractelement <4 x i1> %i.oy, i64 1
+  %17 = and i1 %16, %or.cond13
+  %18 = extractelement <2 x float> %i.ow, i64 0   ; 2 uses
+  %19 = fcmp oge float %18, 0.000000e+00
+  %20 = extractelement <4 x i1> %i.oy, i64 2
+  %or.cond16 = and i1 %19, %20
+  %21 = extractelement <2 x float> %i.oo, i64 0   ; 2 uses
+  %22 = fcmp oge float %21, 0.000000e+00
+  %or.cond19 = and i1 %22, %or.cond16
+  %i.oz = extractelement <4 x i1> %i.oy, i64 0
+  %23 = and i1 %i.oz, %or.cond19
+  br i1 %17, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
   %i.pa = shufflevector <2 x float> %i.ow, <2 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -664,8 +676,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.qg = phi i1 [ false, %bb.aq ], [ %i.qf, %bb.ar ] ; 2 uses
-  %16 = extractelement <2 x i1> %15, i64 0
-  br i1 %16, label %bb.at, label %.critedge
+  br i1 %23, label %bb.at, label %.critedge
 
 bb.at:                                            ; preds = %bb.as
   %i.qh = shufflevector <2 x float> %i.ow, <2 x float> poison, <2 x i32> zeroinitializer
@@ -704,7 +715,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %brmerge, label %.thread.split.loop.exit, label %bb.au
 
 .critedge:                                        ; preds = %bb.as
-  br i1 %i.qg, label %.thread.split.loop.exit813, label %bb.au
+  br i1 %i.qg, label %.thread, label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %._crit_edge594, %bb.ae, %.critedge
   %i.rn = phi <2 x float> [ %i.nh, %._crit_edge594 ], [ %i.nh, %.critedge ], [ zeroinitializer, %bb.ae ], [ %i.nh, %bb.at ]
@@ -740,22 +751,13 @@ bb.au:                                            ; preds = %bb.at, %._crit_edge
   br i1 %i.so, label %bb.av, label %.thread521
 
 .thread.split.loop.exit:                          ; preds = %bb.at
-  %17 = extractelement <2 x float> %i.ow, i64 0
-  %18 = extractelement <2 x float> %i.ow, i64 1
-  %.mux.le = select i1 %i.rm, float %17, float %18
-  %19 = extractelement <2 x float> %i.oo, i64 0
-  %20 = extractelement <2 x float> %i.oo, i64 1
-  %.mux778.le = select i1 %i.rm, float %19, float %20
+  %.mux.le = select i1 %i.rm, float %18, float %11
+  %.mux778.le = select i1 %i.rm, float %21, float %14
   br label %.thread
 
-.thread.split.loop.exit813:                       ; preds = %.critedge
-  %21 = extractelement <2 x float> %i.ow, i64 1
-  %22 = extractelement <2 x float> %i.oo, i64 1
-  br label %.thread
-
-.thread:                                          ; preds = %.thread.split.loop.exit813, %.thread.split.loop.exit
-  %.pn648 = phi float [ %.mux.le, %.thread.split.loop.exit ], [ %21, %.thread.split.loop.exit813 ]
-  %.pn650 = phi float [ %.mux778.le, %.thread.split.loop.exit ], [ %22, %.thread.split.loop.exit813 ]
+.thread:                                          ; preds = %.critedge, %.thread.split.loop.exit
+  %.pn648 = phi float [ %.mux.le, %.thread.split.loop.exit ], [ %11, %.critedge ]
+  %.pn650 = phi float [ %.mux778.le, %.thread.split.loop.exit ], [ %14, %.critedge ]
   %i.sp = insertelement <2 x float> poison, float %.pn648, i64 0
   %i.sq = insertelement <2 x float> %i.sp, float %.pn650, i64 1
   %i.sr = fadd <2 x float> %i.sq, %i.hn
@@ -1158,7 +1160,7 @@ bb.bp:                                            ; preds = %._crit_edge559
   %i.sk = fcmp olt float %i.sh, %i.sj
   %i.sl = call float @llvm.fabs.f32(float %i.si)
   %i.sm = fcmp olt float %i.sl, f0x34000000
-  %or.cond514 = select i1 %i.sk, i1 true, i1 %i.sm
+  %or.cond514 = or i1 %i.sm, %i.sk
   br i1 %or.cond514, label %bb.bq, label %bb.bu
 
 bb.bq:                                            ; preds = %bb.bp
@@ -1561,7 +1563,7 @@ bb.by:                                            ; preds = %._crit_edge962
   %i.ul = fcmp olt float %i.uj, %i.uk
   %i.um = call float @llvm.fabs.f32(float %i.ub)
   %i.un = fcmp olt float %i.um, f0x34000000
-  %or.cond869 = select i1 %i.ul, i1 true, i1 %i.un
+  %or.cond869 = or i1 %i.un, %i.ul
   br i1 %or.cond869, label %bb.bz, label %bb.cd
 
 bb.bz:                                            ; preds = %bb.by

@@ -205,29 +205,37 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(164) %3, ptr noundef nonnull align 4 dereferenceable(164) %i.d, i64 164, i1 false), !tbaa.struct !122
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 232 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !74
-  %i.g = load ptr, ptr %i.b, align 8, !tbaa !76   ; 4 uses
+  %i.g = load ptr, ptr %i.b, align 8, !tbaa !76   ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.i = sext i32 %i.f to i64                     ; 2 uses
-  %i.j = getelementptr inbounds [20 x i8], ptr %i.h, i64 %i.i ; 5 uses
+  %i.j = getelementptr inbounds [20 x i8], ptr %i.h, i64 %i.i ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 12 ; 3 uses
+  %6 = load float, ptr %i.k, align 4, !tbaa !12
+  %7 = fadd reassoc nsz arcp contract afn float %6, -1.000000e+00
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 84 ; 4 uses
-  %i.m = getelementptr inbounds [20 x i8], ptr %i.l, i64 %i.i ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  %i.m = getelementptr inbounds [20 x i8], ptr %i.l, i64 %i.i ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  store float %7, ptr %8, align 8, !tbaa !56
+  %9 = getelementptr inbounds nuw i8, ptr %i.g, i64 28
+  %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 3 uses
-  %6 = call <23 x float> @llvm.masked.load.v23f32.p0(ptr nonnull align 4 %i.j, <23 x i1> <i1 true, i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true>, <23 x float> poison), !tbaa !12
-  %7 = shufflevector <23 x float> %6, <23 x float> poison, <8 x i32> <i32 3, i32 20, i32 0, i32 20, i32 1, i32 21, i32 2, i32 22>
-  %8 = fadd reassoc nsz arcp contract afn <8 x float> %7, <float -1.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>
-  store <8 x float> %8, ptr %i.n, align 8, !tbaa !12
-  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 12 ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 56
-  %9 = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 3 uses
-  %10 = load <2 x float>, ptr %i.k, align 4, !tbaa !12
-  %11 = load <2 x float>, ptr %i.p, align 4, !tbaa !12
-  %12 = shufflevector <2 x float> %10, <2 x float> %11, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x float> %12, ptr %i.q, align 8, !tbaa !12
+  %10 = load <4 x float>, ptr %i.m, align 4, !tbaa !12 ; 2 uses
+  %11 = extractelement <4 x float> %10, i64 0
+  store float %11, ptr %9, align 4, !tbaa !57
+  %12 = load <4 x float>, ptr %i.j, align 4, !tbaa !12
+  %13 = shufflevector <4 x float> %12, <4 x float> %10, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %13, ptr %i.n, align 8, !tbaa !12
+  %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 3 uses
+  %14 = load float, ptr %i.p, align 4, !tbaa !12
+  %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 6 uses
+  %15 = load float, ptr %i.q, align 4, !tbaa !12
+  %16 = getelementptr inbounds nuw i8, ptr %i.g, i64 64
+  store float %14, ptr %16, align 8, !tbaa !56
+  %17 = getelementptr inbounds nuw i8, ptr %i.g, i64 68
+  store float %15, ptr %17, align 4, !tbaa !57
   %i.r = load float, ptr %i.o, align 4, !tbaa !12
   %i.s = fadd reassoc nsz arcp contract afn float %i.r, 1.000000e+00
-  %i.t = load float, ptr %9, align 4, !tbaa !12
+  %i.t = load float, ptr %i.q, align 4, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   store float %i.s, ptr %i.u, align 8, !tbaa !56
   %i.v = getelementptr inbounds nuw i8, ptr %i.g, i64 76
@@ -411,20 +419,28 @@ vector.ph:                                        ; preds = %bb.b, %bb.a
   %i.dp = fmul reassoc nsz arcp contract afn float %i.dm, %i.do
   %i.dq = fadd reassoc nsz arcp contract afn float %i.dp, %i.dl
   store float %i.dq, ptr %i.dn, align 4, !tbaa !12
-  %i.dr = load ptr, ptr %i.b, align 8, !tbaa !76  ; 8 uses
-  %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 24
-  %13 = call <23 x float> @llvm.masked.load.v23f32.p0(ptr nonnull align 4 %i.j, <23 x i1> <i1 true, i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true>, <23 x float> poison), !tbaa !12
-  %14 = shufflevector <23 x float> %13, <23 x float> poison, <8 x i32> <i32 3, i32 20, i32 0, i32 20, i32 1, i32 21, i32 2, i32 22>
-  %15 = fadd reassoc nsz arcp contract afn <8 x float> %14, <float -1.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>
-  store <8 x float> %15, ptr %i.ds, align 8, !tbaa !12
-  %16 = getelementptr inbounds nuw i8, ptr %i.dr, i64 56
-  %17 = load <2 x float>, ptr %i.k, align 4, !tbaa !12
-  %18 = load <2 x float>, ptr %i.p, align 4, !tbaa !12
-  %19 = shufflevector <2 x float> %17, <2 x float> %18, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x float> %19, ptr %16, align 8, !tbaa !12
+  %i.dr = load ptr, ptr %i.b, align 8, !tbaa !76  ; 11 uses
+  %18 = load float, ptr %i.k, align 4, !tbaa !12
+  %19 = fadd reassoc nsz arcp contract afn float %18, -1.000000e+00
+  %20 = getelementptr inbounds nuw i8, ptr %i.dr, i64 24
+  store float %19, ptr %20, align 8, !tbaa !56
+  %21 = getelementptr inbounds nuw i8, ptr %i.dr, i64 28
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 32
+  %22 = load <4 x float>, ptr %i.m, align 4, !tbaa !12 ; 2 uses
+  %23 = extractelement <4 x float> %22, i64 0
+  store float %23, ptr %21, align 4, !tbaa !57
+  %24 = load <4 x float>, ptr %i.j, align 4, !tbaa !12
+  %25 = shufflevector <4 x float> %24, <4 x float> %22, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %25, ptr %i.ds, align 8, !tbaa !12
+  %26 = load float, ptr %i.p, align 4, !tbaa !12
+  %27 = load float, ptr %i.q, align 4, !tbaa !12
+  %28 = getelementptr inbounds nuw i8, ptr %i.dr, i64 64
+  store float %26, ptr %28, align 8, !tbaa !56
+  %29 = getelementptr inbounds nuw i8, ptr %i.dr, i64 68
+  store float %27, ptr %29, align 4, !tbaa !57
   %i.dt = load float, ptr %i.o, align 4, !tbaa !12
   %i.du = fadd reassoc nsz arcp contract afn float %i.dt, 1.000000e+00
-  %i.dv = load float, ptr %9, align 4, !tbaa !12
+  %i.dv = load float, ptr %i.q, align 4, !tbaa !12
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 72
   store float %i.du, ptr %i.dw, align 8, !tbaa !56
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dr, i64 76
@@ -505,20 +521,28 @@ vector.ph:                                        ; preds = %bb.b, %bb.a
   %i.fs = load double, ptr %i.ce, align 8, !tbaa !133
   %i.ft = load float, ptr %i.cg, align 8, !tbaa !80
   call fastcc void @dt_iop_rawdenoise_get_params(ptr noundef nonnull %3, i32 noundef %i.fr, double noundef %i.fs, double noundef 0.000000e+00, float noundef %i.ft)
-  %i.fu = load ptr, ptr %i.b, align 8, !tbaa !76  ; 8 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 24
-  %20 = call <23 x float> @llvm.masked.load.v23f32.p0(ptr nonnull align 4 %i.j, <23 x i1> <i1 true, i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true>, <23 x float> poison), !tbaa !12
-  %21 = shufflevector <23 x float> %20, <23 x float> poison, <8 x i32> <i32 3, i32 20, i32 0, i32 20, i32 1, i32 21, i32 2, i32 22>
-  %22 = fadd reassoc nsz arcp contract afn <8 x float> %21, <float -1.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>
-  store <8 x float> %22, ptr %i.fv, align 8, !tbaa !12
-  %23 = getelementptr inbounds nuw i8, ptr %i.fu, i64 56
-  %24 = load <2 x float>, ptr %i.k, align 4, !tbaa !12
-  %25 = load <2 x float>, ptr %i.p, align 4, !tbaa !12
-  %26 = shufflevector <2 x float> %24, <2 x float> %25, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x float> %26, ptr %23, align 8, !tbaa !12
+  %i.fu = load ptr, ptr %i.b, align 8, !tbaa !76  ; 11 uses
+  %30 = load float, ptr %i.k, align 4, !tbaa !12
+  %31 = fadd reassoc nsz arcp contract afn float %30, -1.000000e+00
+  %32 = getelementptr inbounds nuw i8, ptr %i.fu, i64 24
+  store float %31, ptr %32, align 8, !tbaa !56
+  %33 = getelementptr inbounds nuw i8, ptr %i.fu, i64 28
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 32
+  %34 = load <4 x float>, ptr %i.m, align 4, !tbaa !12 ; 2 uses
+  %35 = extractelement <4 x float> %34, i64 0
+  store float %35, ptr %33, align 4, !tbaa !57
+  %36 = load <4 x float>, ptr %i.j, align 4, !tbaa !12
+  %37 = shufflevector <4 x float> %36, <4 x float> %34, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %37, ptr %i.fv, align 8, !tbaa !12
+  %38 = load float, ptr %i.p, align 4, !tbaa !12
+  %39 = load float, ptr %i.q, align 4, !tbaa !12
+  %40 = getelementptr inbounds nuw i8, ptr %i.fu, i64 64
+  store float %38, ptr %40, align 8, !tbaa !56
+  %41 = getelementptr inbounds nuw i8, ptr %i.fu, i64 68
+  store float %39, ptr %41, align 4, !tbaa !57
   %i.fw = load float, ptr %i.o, align 4, !tbaa !12
   %i.fx = fadd reassoc nsz arcp contract afn float %i.fw, 1.000000e+00
-  %i.fy = load float, ptr %9, align 4, !tbaa !12
+  %i.fy = load float, ptr %i.q, align 4, !tbaa !12
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fu, i64 72
   store float %i.fx, ptr %i.fz, align 8, !tbaa !56
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fu, i64 76
@@ -688,17 +712,35 @@ bb.h:                                             ; preds = %bb.d
 vector.ph337:                                     ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
   %i.js = load ptr, ptr %i.c, align 8, !tbaa !121
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(164) %3, ptr noundef nonnull align 4 dereferenceable(164) %i.js, i64 164, i1 false), !tbaa.struct !122
-  %i.jt = load ptr, ptr %i.b, align 8, !tbaa !76  ; 11 uses
+  %i.jt = load ptr, ptr %i.b, align 8, !tbaa !76  ; 15 uses
   %i.ju = sext i32 %i.jm to i64                   ; 2 uses
-  %i.jv = getelementptr inbounds [20 x i8], ptr %i.h, i64 %i.ju ; 4 uses
-  %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 12
-  %i.jx = getelementptr inbounds [20 x i8], ptr %i.l, i64 %i.ju ; 2 uses
-  %i.jy = getelementptr inbounds nuw i8, ptr %i.jt, i64 24
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.jv, i64 4
-  %27 = call <23 x float> @llvm.masked.load.v23f32.p0(ptr nonnull align 4 %i.jv, <23 x i1> <i1 true, i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true>, <23 x float> poison), !tbaa !12
-  %28 = shufflevector <23 x float> %27, <23 x float> poison, <8 x i32> <i32 3, i32 20, i32 0, i32 20, i32 1, i32 21, i32 2, i32 22>
-  %29 = fadd reassoc nsz arcp contract afn <8 x float> %28, <float -1.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>
-  store <8 x float> %29, ptr %i.jy, align 8, !tbaa !12
+  %i.jv = getelementptr inbounds [20 x i8], ptr %i.h, i64 %i.ju ; 5 uses
+  %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 12 ; 2 uses
+  %42 = load float, ptr %i.jw, align 4, !tbaa !12
+  %43 = fadd reassoc nsz arcp contract afn float %42, -1.000000e+00
+  %i.jx = getelementptr inbounds [20 x i8], ptr %i.l, i64 %i.ju ; 5 uses
+  %44 = load float, ptr %i.jx, align 4, !tbaa !12
+  %45 = getelementptr inbounds nuw i8, ptr %i.jt, i64 24
+  store float %43, ptr %45, align 8, !tbaa !56
+  %46 = getelementptr inbounds nuw i8, ptr %i.jt, i64 28
+  %47 = getelementptr inbounds nuw i8, ptr %i.jv, i64 4
+  %48 = getelementptr inbounds nuw i8, ptr %i.jx, i64 4
+  %49 = load float, ptr %48, align 4, !tbaa !12
+  %50 = load <2 x float>, ptr %i.jv, align 4, !tbaa !12
+  %51 = shufflevector <2 x float> %50, <2 x float> poison, <3 x i32> <i32 poison, i32 0, i32 1>
+  %52 = insertelement <3 x float> poison, float %44, i64 0
+  %53 = shufflevector <3 x float> %52, <3 x float> %51, <4 x i32> <i32 0, i32 4, i32 0, i32 5>
+  store <4 x float> %53, ptr %46, align 4, !tbaa !12
+  %54 = getelementptr inbounds nuw i8, ptr %i.jt, i64 44
+  store float %49, ptr %54, align 4, !tbaa !57
+  %i.jy = getelementptr inbounds nuw i8, ptr %i.jv, i64 8
+  %55 = load float, ptr %i.jy, align 4, !tbaa !12
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.jx, i64 8
+  %56 = load float, ptr %i.jz, align 4, !tbaa !12
+  %57 = getelementptr inbounds nuw i8, ptr %i.jt, i64 48
+  store float %55, ptr %57, align 8, !tbaa !56
+  %58 = getelementptr inbounds nuw i8, ptr %i.jt, i64 52
+  store float %56, ptr %58, align 4, !tbaa !57
   %i.ka = load float, ptr %i.jw, align 4, !tbaa !12
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jx, i64 12
   %i.kc = load float, ptr %i.kb, align 4, !tbaa !12
@@ -714,7 +756,7 @@ vector.ph337:                                     ; preds = %bb.h, %bb.g, %bb.f,
   store float %i.kg, ptr %i.kj, align 8, !tbaa !56
   %i.kk = getelementptr inbounds nuw i8, ptr %i.jt, i64 68
   store float %i.ki, ptr %i.kk, align 4, !tbaa !57
-  %i.kl = load float, ptr %i.jz, align 4, !tbaa !12
+  %i.kl = load float, ptr %47, align 4, !tbaa !12
   %i.km = fadd reassoc nsz arcp contract afn float %i.kl, 1.000000e+00
   %i.kn = load float, ptr %i.kh, align 4, !tbaa !12
   %i.ko = getelementptr inbounds nuw i8, ptr %i.jt, i64 72
@@ -1116,9 +1158,6 @@ declare <8 x float> @llvm.masked.load.v8f32.p0(ptr captures(none), <8 x i1>, <8 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v8f32.p0(<8 x float>, ptr captures(none), <8 x i1>) #16
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <23 x float> @llvm.masked.load.v23f32.p0(ptr captures(none), <23 x i1>, <23 x float>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.exp.v4f32(<4 x float>) #14

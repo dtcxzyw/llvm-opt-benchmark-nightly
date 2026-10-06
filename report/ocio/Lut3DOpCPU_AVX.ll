@@ -38,15 +38,19 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
   %.065203.i = phi i32 [ %i.jt, %.lr.ph.i ], [ 0, %bb.a ]
-  %.066202.i = phi ptr [ %i.jr, %.lr.ph.i ], [ %2, %bb.a ] ; 3 uses
+  %.066202.i = phi ptr [ %i.jr, %.lr.ph.i ], [ %2, %bb.a ] ; 5 uses
   %.067201.i = phi ptr [ %i.js, %.lr.ph.i ], [ %3, %bb.a ] ; 5 uses
-  %5 = load <16 x float>, ptr %.066202.i, align 1, !tbaa !15 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.066202.i, i64 64
-  %6 = load <16 x float>, ptr %i.r, align 1, !tbaa !15 ; 2 uses
-  %i.s = shufflevector <16 x float> %5, <16 x float> poison, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %i.t = shufflevector <16 x float> %6, <16 x float> poison, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %i.u = shufflevector <16 x float> %5, <16 x float> poison, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %i.v = shufflevector <16 x float> %6, <16 x float> poison, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
+  %5 = load <8 x float>, ptr %.066202.i, align 1, !tbaa !15 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.066202.i, i64 32
+  %7 = load <8 x float>, ptr %6, align 1, !tbaa !15 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.066202.i, i64 64
+  %9 = load <8 x float>, ptr %8, align 1, !tbaa !15 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.066202.i, i64 96
+  %10 = load <8 x float>, ptr %i.r, align 1, !tbaa !15 ; 2 uses
+  %i.s = shufflevector <8 x float> %5, <8 x float> %7, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
+  %i.t = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
+  %i.u = shufflevector <8 x float> %5, <8 x float> %7, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
+  %i.v = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
   %i.w = bitcast <8 x float> %i.s to <4 x double> ; 2 uses
   %i.x = bitcast <8 x float> %i.t to <4 x double> ; 2 uses
   %i.y = shufflevector <4 x double> %i.w, <4 x double> %i.x, <4 x i32> <i32 0, i32 4, i32 2, i32 6>

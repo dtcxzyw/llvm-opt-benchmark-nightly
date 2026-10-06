@@ -205,7 +205,6 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 4 uses
-  %5 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.n, i64 0
   %i.w = extractelement <2 x float> %i.m, i64 0   ; 3 uses
   br label %bb.c
 
@@ -217,11 +216,10 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.x = load float, ptr %i.i, align 8, !tbaa !702
   %i.y = trunc nuw nsw i64 %indvars.iv41 to i32
   %i.z = uitofp nneg i32 %i.y to float
-  %6 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.x, i64 0
-  %i.aa = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.z, i64 0
-  %7 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> %i.aa, <2 x float> %5) ; 2 uses
+  %.scalar = call float @llvm.fmuladd.f32(float %i.x, float %i.z, float %i.n)
+  %i.aa = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.scalar, i64 0 ; 2 uses
   %invariant.gep36 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv41
-  %i.ab = insertelement <2 x float> %7, float 0.000000e+00, i64 1 ; 3 uses
+  %i.ab = insertelement <2 x float> %i.aa, float 0.000000e+00, i64 1 ; 3 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN11btSparseSdfILi3EE15DistanceToShapeERK9btVector3P16btCollisionShape.exit.3
@@ -338,7 +336,7 @@ _ZN11btSparseSdfILi3EE15DistanceToShapeERK9btVector3P16btCollisionShape.exit.2: 
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   store float %i.bf, ptr %4, align 8, !tbaa !159
   store float %i.ar, ptr %i.o, align 4, !tbaa !159
-  store <2 x float> %7, ptr %i.p, align 8, !tbaa !159
+  store <2 x float> %i.aa, ptr %i.p, align 8, !tbaa !159
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   store float 1.000000e+00, ptr %2, align 4, !tbaa !159
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)

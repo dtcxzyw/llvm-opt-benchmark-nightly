@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 192
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !179  ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !179  ; 3 uses
   %.not = icmp eq ptr %i.l, null
   br i1 %.not, label %thread-pre-split.thread, label %bb.d
 
@@ -217,9 +217,11 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #34
-  %1 = tail call <21 x float> @llvm.masked.load.v21f32.p0(ptr nonnull align 16 %i.l, <21 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 false, i1 true, i1 true>, <21 x float> poison), !tbaa !15
-  %2 = shufflevector <21 x float> %1, <21 x float> poison, <8 x i32> <i32 0, i32 1, i32 3, i32 4, i32 16, i32 17, i32 19, i32 20>
-  store <8 x float> %2, ptr %i.a, align 16, !tbaa !15
+  %1 = getelementptr inbounds nuw i8, ptr %i.l, i64 64
+  %2 = tail call <5 x float> @llvm.masked.load.v5f32.p0(ptr nonnull align 16 %i.l, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x float> poison), !tbaa !15
+  %3 = tail call <5 x float> @llvm.masked.load.v5f32.p0(ptr nonnull align 16 %1, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x float> poison), !tbaa !15
+  %4 = shufflevector <5 x float> %2, <5 x float> %3, <8 x i32> <i32 0, i32 1, i32 3, i32 4, i32 5, i32 6, i32 8, i32 9>
+  store <8 x float> %4, ptr %i.a, align 16, !tbaa !15
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 664
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !126  ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 96
@@ -622,7 +624,7 @@ declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #12
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <21 x float> @llvm.masked.load.v21f32.p0(ptr captures(none), <21 x i1>, <21 x float>) #32
+declare <5 x float> @llvm.masked.load.v5f32.p0(ptr captures(none), <5 x i1>, <5 x float>) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v4f64(double, <4 x double>) #12

@@ -205,11 +205,7 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   call void @_ZN5ImGui5PopIDEv()
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #30
   %exitcond294.peel.not = icmp ult i32 %i.nu, 2
-  br i1 %exitcond294.peel.not, label %.loopexit298, label %.peel.next296.preheader
-
-.peel.next296.preheader:                          ; preds = %bb.cr
-  %72 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.nr, i64 0
-  br label %.peel.next296
+  br i1 %exitcond294.peel.not, label %.loopexit298, label %.peel.next296
 
 .loopexit298:                                     ; preds = %bb.cu, %bb.cr
   %i.ok = add nuw nsw i32 %.0170267, 1            ; 2 uses
@@ -217,8 +213,8 @@ bb.cr:                                            ; preds = %.lr.ph268, %.loopex
   %i.om = icmp slt i32 %i.ok, %i.ol
   br i1 %i.om, label %bb.cr, label %._crit_edge, !llvm.loop !395
 
-.peel.next296:                                    ; preds = %.peel.next296.preheader, %bb.cu
-  %.0169266 = phi i32 [ %i.pk, %bb.cu ], [ 1, %.peel.next296.preheader ] ; 8 uses
+.peel.next296:                                    ; preds = %bb.cr, %bb.cu
+  %.0169266 = phi i32 [ %i.pk, %bb.cu ], [ 1, %bb.cr ] ; 8 uses
   call void @_ZN5ImGui8SameLineEff(float noundef 0.000000e+00, float noundef -1.000000e+00)
   %i.on = add nuw nsw i32 %.0169266, %i.ns
   call void @_ZN5ImGui6PushIDEi(i32 noundef %i.on)
@@ -302,9 +298,9 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %.pe
   %i.pg = uitofp nneg i32 %i.pf to float
   %i.ph = call float @sinf(float noundef %i.pg) #30
   %i.pi = fmul float %i.nr, %i.ph
-  %73 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.pi, i64 0
-  %74 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %73, <2 x float> <float 5.000000e-01, float 0.000000e+00>, <2 x float> %72)
-  store <2 x float> %74, ptr %51, align 8, !tbaa !46
+  %.scalar = call float @llvm.fmuladd.f32(float %i.pi, float 5.000000e-01, float %i.nr)
+  %72 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.scalar, i64 0
+  store <2 x float> %72, ptr %51, align 8, !tbaa !46
   %i.pj = call noundef zeroext i1 @_ZN5ImGui6ButtonEPKcRK6ImVec2(ptr noundef %i.ot, ptr noundef nonnull align 4 dereferenceable(8) %51) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #30
   call void @_ZN5ImGui13PopStyleColorEi(i32 noundef 3)

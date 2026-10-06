@@ -205,10 +205,13 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   ]
 
 bb.l:                                             ; preds = %bb.k, %bb.k
-  %i.dn = load ptr, ptr %8, align 8, !tbaa !398   ; 2 uses
-  %16 = call <9 x float> @llvm.masked.load.v9f32.p0(ptr align 4 %i.dn, <9 x i1> <i1 true, i1 false, i1 false, i1 true, i1 true, i1 false, i1 false, i1 false, i1 true>, <9 x float> poison), !tbaa !169
-  %17 = shufflevector <9 x float> %16, <9 x float> poison, <4 x i32> <i32 0, i32 4, i32 8, i32 3>
-  store <4 x float> %17, ptr %i.b, align 16, !tbaa !169
+  %i.dn = load ptr, ptr %8, align 8, !tbaa !398   ; 3 uses
+  %16 = load float, ptr %i.dn, align 4, !tbaa !169
+  %17 = getelementptr inbounds nuw i8, ptr %i.dn, i64 12
+  %18 = call <6 x float> @llvm.masked.load.v6f32.p0(ptr nonnull align 4 %17, <6 x i1> <i1 true, i1 true, i1 false, i1 false, i1 false, i1 true>, <6 x float> poison), !tbaa !169
+  %19 = shufflevector <6 x float> %18, <6 x float> poison, <4 x i32> <i32 poison, i32 1, i32 5, i32 0>
+  %20 = insertelement <4 x float> %19, float %16, i64 0
+  store <4 x float> %20, ptr %i.b, align 16, !tbaa !169
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 24
   %i.dp = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.dq = load <2 x float>, ptr %i.do, align 4, !tbaa !169
@@ -611,7 +614,7 @@ declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x flo
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <9 x float> @llvm.masked.load.v9f32.p0(ptr captures(none), <9 x i1>, <9 x float>) #21
+declare <6 x float> @llvm.masked.load.v6f32.p0(ptr captures(none), <6 x i1>, <6 x float>) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 x float>) #21

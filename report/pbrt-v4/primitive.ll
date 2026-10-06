@@ -204,76 +204,72 @@ bb.a:
   %.sroa.241.0.copyload.i = load float, ptr %.sroa.241.0..sroa_idx.i, align 4, !noalias !157 ; 2 uses
   %i.p = shufflevector <2 x float> %.sroa.040.0.copyload.i, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 64
-  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 80
-  %10 = load <2 x float>, ptr %i.r, align 4, !tbaa !15, !noalias !157
-  %11 = fmul <2 x float> %.sroa.040.0.copyload.i, %10 ; 2 uses
-  %shift = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %11, %shift
-  %12 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %13 = getelementptr inbounds nuw i8, ptr %i.g, i64 88
-  %14 = load float, ptr %13, align 4, !tbaa !15, !noalias !157
-  %15 = fmul float %.sroa.241.0.copyload.i, %14
-  %16 = fadd float %12, %15                       ; 5 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.g, i64 100
-  %18 = call <9 x float> @llvm.masked.load.v9f32.p0(ptr nonnull align 4 %i.q, <9 x i1> <i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <9 x float> poison), !tbaa !15, !noalias !157 ; 3 uses
-  %19 = shufflevector <9 x float> %18, <9 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <9 x float> %18, <9 x float> poison, <2 x i32> <i32 1, i32 8>
-  %i.s = fmul <2 x float> %i.p, %20
-  %21 = load <2 x float>, ptr %17, align 4, !tbaa !15, !noalias !157 ; 2 uses
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <4 x float> %19, <4 x float> %22, <2 x i32> <i32 0, i32 4>
-  %i.t = fmul <2 x float> %.sroa.040.0.copyload.i, %23
-  %24 = fadd <2 x float> %i.s, %i.t
-  %25 = insertelement <2 x float> poison, float %.sroa.241.0.copyload.i, i64 0
-  %26 = shufflevector <2 x float> %25, <2 x float> poison, <2 x i32> zeroinitializer
-  %27 = shufflevector <2 x float> %21, <2 x float> poison, <9 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %28 = shufflevector <9 x float> %18, <9 x float> %27, <2 x i32> <i32 2, i32 10>
-  %29 = fmul <2 x float> %26, %28
-  %30 = fadd <2 x float> %24, %29                 ; 7 uses
-  %31 = fmul float %16, %16
-  %32 = fmul <2 x float> %30, %30                 ; 2 uses
-  %33 = extractelement <2 x float> %32, i64 0
-  %34 = fadd float %33, %31
-  %35 = extractelement <2 x float> %32, i64 1
-  %i.u = fadd float %34, %35                      ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 84
+  %10 = call <5 x float> @llvm.masked.load.v5f32.p0(ptr nonnull align 4 %i.q, <5 x i1> <i1 true, i1 true, i1 true, i1 false, i1 true>, <5 x float> poison), !tbaa !15, !noalias !157 ; 3 uses
+  %11 = shufflevector <5 x float> %10, <5 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <5 x float> %10, <5 x float> poison, <2 x i32> <i32 1, i32 4>
+  %13 = fmul <2 x float> %i.p, %12
+  %14 = load <2 x float>, ptr %i.r, align 4, !tbaa !15, !noalias !157 ; 2 uses
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %16 = shufflevector <4 x float> %11, <4 x float> %15, <2 x i32> <i32 0, i32 4>
+  %17 = fmul <2 x float> %.sroa.040.0.copyload.i, %16
+  %18 = fadd <2 x float> %13, %17
+  %19 = insertelement <2 x float> poison, float %.sroa.241.0.copyload.i, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %21 = shufflevector <2 x float> %14, <2 x float> poison, <5 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison>
+  %22 = shufflevector <5 x float> %10, <5 x float> %21, <2 x i32> <i32 2, i32 6>
+  %i.s = fmul <2 x float> %20, %22
+  %23 = fadd <2 x float> %18, %i.s                ; 5 uses
+  %24 = getelementptr inbounds nuw i8, ptr %i.g, i64 96
+  %25 = load <2 x float>, ptr %24, align 4, !tbaa !15, !noalias !157
+  %i.t = fmul <2 x float> %.sroa.040.0.copyload.i, %25 ; 2 uses
+  %shift = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %i.t, %shift
+  %26 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %27 = getelementptr inbounds nuw i8, ptr %i.g, i64 104
+  %28 = load float, ptr %27, align 4, !tbaa !15, !noalias !157
+  %29 = fmul float %.sroa.241.0.copyload.i, %28
+  %30 = fadd float %26, %29                       ; 5 uses
+  %31 = fmul <2 x float> %23, %23                 ; 2 uses
+  %shift29 = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop30 = fadd <2 x float> %31, %shift29
+  %32 = extractelement <2 x float> %foldExtExtBinop30, i64 0
+  %33 = fmul float %30, %30
+  %i.u = fadd float %32, %33                      ; 2 uses
   %i.v = fcmp ogt float %i.u, 0.000000e+00
   br i1 %i.v, label %bb.b, label %_ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 12
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.y = load float, ptr %i.x, align 4, !tbaa !72, !noalias !157
-  %i.z = load float, ptr %i.w, align 8, !tbaa !73, !noalias !157
+  %i.z = load float, ptr %i.w, align 16, !tbaa !73, !noalias !157
   %i.aa = fsub float %i.y, %i.z
   %i.ab = fmul float %i.aa, 5.000000e-01
-  %i.ac = call <2 x float> @llvm.fabs.v2f32(<2 x float> %30)
-  %i.ad = call noundef float @llvm.fabs.f32(float %16)
-  %36 = fmul float %i.ad, %i.ab
-  %37 = load <6 x float>, ptr %5, align 16, !tbaa !15, !noalias !157 ; 2 uses
-  %38 = shufflevector <6 x float> %37, <6 x float> poison, <2 x i32> <i32 1, i32 5>
-  %39 = shufflevector <6 x float> %37, <6 x float> poison, <2 x i32> <i32 0, i32 4>
-  %i.ae = fsub <2 x float> %38, %39
+  %i.ac = call <2 x float> @llvm.fabs.v2f32(<2 x float> %23)
+  %i.ad = call noundef float @llvm.fabs.f32(float %30)
+  %34 = load <4 x float>, ptr %5, align 16, !tbaa !15, !noalias !157 ; 2 uses
+  %35 = shufflevector <4 x float> %34, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %36 = shufflevector <4 x float> %34, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %i.ae = fsub <2 x float> %35, %36
   %i.af = fmul <2 x float> %i.ae, splat (float 5.000000e-01)
   %i.ag = fmul <2 x float> %i.ac, %i.af           ; 2 uses
-  %40 = extractelement <2 x float> %i.ag, i64 0
-  %41 = fadd float %40, %36
-  %i.ah = extractelement <2 x float> %i.ag, i64 1
-  %42 = fadd float %41, %i.ah
-  %43 = fdiv float %42, %i.u                      ; 4 uses
-  %44 = extractelement <2 x float> %30, i64 0
-  %45 = fmul float %44, %43
-  %46 = fmul float %16, %43
-  %47 = extractelement <2 x float> %30, i64 1
-  %i.ai = fmul float %47, %43
-  %.sroa.0.0.vec.insert.i56.i = insertelement <2 x float> poison, float %45, i64 0
-  %.sroa.0.4.vec.insert.i57.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i56.i, float %46, i64 1
-  %i.aj = call noundef nonnull align 4 dereferenceable(24) ptr @_ZN4pbrt8Point3fipLIfEERS0_NS_7Vector3IT_EE(ptr noundef nonnull align 4 dereferenceable(24) %5, <2 x float> %.sroa.0.4.vec.insert.i57.i, float %i.ai), !noalias !157 ; 0 uses
-  %i.ak = fsub float %3, %43
+  %shift32 = shufflevector <2 x float> %i.ag, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop33 = fadd <2 x float> %i.ag, %shift32
+  %i.ah = extractelement <2 x float> %foldExtExtBinop33, i64 0
+  %37 = fmul float %i.ad, %i.ab
+  %38 = fadd float %i.ah, %37
+  %39 = fdiv float %38, %i.u                      ; 3 uses
+  %40 = insertelement <2 x float> poison, float %39, i64 0
+  %41 = shufflevector <2 x float> %40, <2 x float> poison, <2 x i32> zeroinitializer
+  %42 = fmul <2 x float> %23, %41
+  %i.ai = fmul float %30, %39
+  %i.aj = call noundef nonnull align 4 dereferenceable(24) ptr @_ZN4pbrt8Point3fipLIfEERS0_NS_7Vector3IT_EE(ptr noundef nonnull align 4 dereferenceable(24) %5, <2 x float> %42, float %i.ai), !noalias !157 ; 0 uses
+  %i.ak = fsub float %3, %39
   br label %_ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit
 
 _ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit: ; preds = %bb.a, %bb.b
   %.0 = phi float [ %i.ak, %bb.b ], [ %3, %bb.a ] ; 2 uses
-  %.sroa.045.4.vec.insert.i.i = insertelement <2 x float> %30, float %16, i64 1
   %.sroa.060.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.sroa.060.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.sroa.060.sroa.5.0.copyload.i = load float, ptr %.sroa.060.sroa.5.0..sroa_idx.i, align 16, !noalias !157
@@ -294,10 +290,9 @@ _ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit: ; preds = %bb.a, %bb.b
   %.sroa.27.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   store float %i.ar, ptr %.sroa.27.0..sroa_idx.i.i, align 8, !alias.scope !157
   %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 12
-  store <2 x float> %.sroa.045.4.vec.insert.i.i, ptr %i.aw, align 4, !alias.scope !157
+  store <2 x float> %23, ptr %i.aw, align 4, !alias.scope !157
   %.sroa.23.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 20
-  %48 = extractelement <2 x float> %30, i64 1
-  store float %48, ptr %.sroa.23.0..sroa_idx.i.i, align 4, !alias.scope !157
+  store float %30, ptr %.sroa.23.0..sroa_idx.i.i, align 4, !alias.scope !157
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 24
   store float %i.at, ptr %i.ax, align 8, !tbaa !77, !alias.scope !157
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 32
@@ -529,76 +524,72 @@ bb.a:
   %.sroa.241.0.copyload.i = load float, ptr %.sroa.241.0..sroa_idx.i, align 4, !noalias !165 ; 2 uses
   %i.l = shufflevector <2 x float> %.sroa.040.0.copyload.i, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  %7 = load <2 x float>, ptr %i.n, align 4, !tbaa !15, !noalias !165
-  %8 = fmul <2 x float> %.sroa.040.0.copyload.i, %7 ; 2 uses
-  %shift = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %8, %shift
-  %9 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 88
-  %11 = load float, ptr %10, align 4, !tbaa !15, !noalias !165
-  %12 = fmul float %.sroa.241.0.copyload.i, %11
-  %13 = fadd float %9, %12                        ; 5 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 100
-  %15 = call <9 x float> @llvm.masked.load.v9f32.p0(ptr nonnull align 4 %i.m, <9 x i1> <i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <9 x float> poison), !tbaa !15, !noalias !165 ; 3 uses
-  %16 = shufflevector <9 x float> %15, <9 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %17 = shufflevector <9 x float> %15, <9 x float> poison, <2 x i32> <i32 1, i32 8>
-  %i.o = fmul <2 x float> %i.l, %17
-  %18 = load <2 x float>, ptr %14, align 4, !tbaa !15, !noalias !165 ; 2 uses
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <4 x float> %16, <4 x float> %19, <2 x i32> <i32 0, i32 4>
-  %i.p = fmul <2 x float> %.sroa.040.0.copyload.i, %20
-  %21 = fadd <2 x float> %i.o, %i.p
-  %22 = insertelement <2 x float> poison, float %.sroa.241.0.copyload.i, i64 0
-  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer
-  %24 = shufflevector <2 x float> %18, <2 x float> poison, <9 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %25 = shufflevector <9 x float> %15, <9 x float> %24, <2 x i32> <i32 2, i32 10>
-  %26 = fmul <2 x float> %23, %25
-  %27 = fadd <2 x float> %21, %26                 ; 7 uses
-  %28 = fmul float %13, %13
-  %29 = fmul <2 x float> %27, %27                 ; 2 uses
-  %30 = extractelement <2 x float> %29, i64 0
-  %31 = fadd float %30, %28
-  %32 = extractelement <2 x float> %29, i64 1
-  %i.q = fadd float %31, %32                      ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 84
+  %7 = call <5 x float> @llvm.masked.load.v5f32.p0(ptr nonnull align 4 %i.m, <5 x i1> <i1 true, i1 true, i1 true, i1 false, i1 true>, <5 x float> poison), !tbaa !15, !noalias !165 ; 3 uses
+  %8 = shufflevector <5 x float> %7, <5 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <5 x float> %7, <5 x float> poison, <2 x i32> <i32 1, i32 4>
+  %10 = fmul <2 x float> %i.l, %9
+  %11 = load <2 x float>, ptr %i.n, align 4, !tbaa !15, !noalias !165 ; 2 uses
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %8, <4 x float> %12, <2 x i32> <i32 0, i32 4>
+  %14 = fmul <2 x float> %.sroa.040.0.copyload.i, %13
+  %15 = fadd <2 x float> %10, %14
+  %16 = insertelement <2 x float> poison, float %.sroa.241.0.copyload.i, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = shufflevector <2 x float> %11, <2 x float> poison, <5 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison>
+  %19 = shufflevector <5 x float> %7, <5 x float> %18, <2 x i32> <i32 2, i32 6>
+  %i.o = fmul <2 x float> %17, %19
+  %20 = fadd <2 x float> %15, %i.o                ; 5 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.c, i64 96
+  %22 = load <2 x float>, ptr %21, align 4, !tbaa !15, !noalias !165
+  %i.p = fmul <2 x float> %.sroa.040.0.copyload.i, %22 ; 2 uses
+  %shift = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %i.p, %shift
+  %23 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %24 = getelementptr inbounds nuw i8, ptr %i.c, i64 104
+  %25 = load float, ptr %24, align 4, !tbaa !15, !noalias !165
+  %26 = fmul float %.sroa.241.0.copyload.i, %25
+  %27 = fadd float %23, %26                       ; 5 uses
+  %28 = fmul <2 x float> %20, %20                 ; 2 uses
+  %shift5 = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop6 = fadd <2 x float> %28, %shift5
+  %29 = extractelement <2 x float> %foldExtExtBinop6, i64 0
+  %30 = fmul float %27, %27
+  %i.q = fadd float %29, %30                      ; 2 uses
   %i.r = fcmp ogt float %i.q, 0.000000e+00
   br i1 %i.r, label %bb.b, label %_ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 20
   %i.u = load float, ptr %i.t, align 4, !tbaa !72, !noalias !165
-  %i.v = load float, ptr %i.s, align 8, !tbaa !73, !noalias !165
+  %i.v = load float, ptr %i.s, align 16, !tbaa !73, !noalias !165
   %i.w = fsub float %i.u, %i.v
   %i.x = fmul float %i.w, 5.000000e-01
-  %i.y = call <2 x float> @llvm.fabs.v2f32(<2 x float> %27)
-  %i.z = call noundef float @llvm.fabs.f32(float %13)
-  %33 = fmul float %i.z, %i.x
-  %34 = load <6 x float>, ptr %4, align 16, !tbaa !15, !noalias !165 ; 2 uses
-  %35 = shufflevector <6 x float> %34, <6 x float> poison, <2 x i32> <i32 1, i32 5>
-  %36 = shufflevector <6 x float> %34, <6 x float> poison, <2 x i32> <i32 0, i32 4>
-  %i.aa = fsub <2 x float> %35, %36
+  %i.y = call <2 x float> @llvm.fabs.v2f32(<2 x float> %20)
+  %i.z = call noundef float @llvm.fabs.f32(float %27)
+  %31 = load <4 x float>, ptr %4, align 16, !tbaa !15, !noalias !165 ; 2 uses
+  %32 = shufflevector <4 x float> %31, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %33 = shufflevector <4 x float> %31, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %i.aa = fsub <2 x float> %32, %33
   %i.ab = fmul <2 x float> %i.aa, splat (float 5.000000e-01)
   %i.ac = fmul <2 x float> %i.y, %i.ab            ; 2 uses
-  %37 = extractelement <2 x float> %i.ac, i64 0
-  %38 = fadd float %37, %33
-  %i.ad = extractelement <2 x float> %i.ac, i64 1
-  %39 = fadd float %38, %i.ad
-  %40 = fdiv float %39, %i.q                      ; 4 uses
-  %41 = extractelement <2 x float> %27, i64 0
-  %42 = fmul float %41, %40
-  %43 = fmul float %13, %40
-  %44 = extractelement <2 x float> %27, i64 1
-  %i.ae = fmul float %44, %40
-  %.sroa.0.0.vec.insert.i56.i = insertelement <2 x float> poison, float %42, i64 0
-  %.sroa.0.4.vec.insert.i57.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i56.i, float %43, i64 1
-  %i.af = call noundef nonnull align 4 dereferenceable(24) ptr @_ZN4pbrt8Point3fipLIfEERS0_NS_7Vector3IT_EE(ptr noundef nonnull align 4 dereferenceable(24) %4, <2 x float> %.sroa.0.4.vec.insert.i57.i, float %i.ae), !noalias !165 ; 0 uses
-  %i.ag = fsub float %2, %40
+  %shift8 = shufflevector <2 x float> %i.ac, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop9 = fadd <2 x float> %i.ac, %shift8
+  %i.ad = extractelement <2 x float> %foldExtExtBinop9, i64 0
+  %34 = fmul float %i.z, %i.x
+  %35 = fadd float %i.ad, %34
+  %36 = fdiv float %35, %i.q                      ; 3 uses
+  %37 = insertelement <2 x float> poison, float %36, i64 0
+  %38 = shufflevector <2 x float> %37, <2 x float> poison, <2 x i32> zeroinitializer
+  %39 = fmul <2 x float> %20, %38
+  %i.ae = fmul float %27, %36
+  %i.af = call noundef nonnull align 4 dereferenceable(24) ptr @_ZN4pbrt8Point3fipLIfEERS0_NS_7Vector3IT_EE(ptr noundef nonnull align 4 dereferenceable(24) %4, <2 x float> %39, float %i.ae), !noalias !165 ; 0 uses
+  %i.ag = fsub float %2, %36
   br label %_ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit
 
 _ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit: ; preds = %bb.a, %bb.b
   %.0 = phi float [ %i.ag, %bb.b ], [ %2, %bb.a ]
-  %.sroa.045.4.vec.insert.i.i = insertelement <2 x float> %27, float %13, i64 1
   %.sroa.060.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 4
   %.sroa.060.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.060.sroa.5.0.copyload.i = load float, ptr %.sroa.060.sroa.5.0..sroa_idx.i, align 16, !noalias !165
@@ -619,10 +610,9 @@ _ZNK4pbrt9Transform12ApplyInverseERKNS_3RayEPf.exit: ; preds = %bb.a, %bb.b
   %.sroa.27.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   store float %i.an, ptr %.sroa.27.0..sroa_idx.i.i, align 8, !alias.scope !165
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 12
-  store <2 x float> %.sroa.045.4.vec.insert.i.i, ptr %i.as, align 4, !alias.scope !165
+  store <2 x float> %20, ptr %i.as, align 4, !alias.scope !165
   %.sroa.23.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %6, i64 20
-  %45 = extractelement <2 x float> %27, i64 1
-  store float %45, ptr %.sroa.23.0..sroa_idx.i.i, align 4, !alias.scope !165
+  store float %27, ptr %.sroa.23.0..sroa_idx.i.i, align 4, !alias.scope !165
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 24
   store float %i.ap, ptr %i.at, align 8, !tbaa !77, !alias.scope !165
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 32
@@ -1025,13 +1015,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 declare float @llvm.sqrt.f32(float) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <9 x float> @llvm.masked.load.v9f32.p0(ptr captures(none), <9 x i1>, <9 x float>) #22
+declare <5 x float> @llvm.masked.load.v5f32.p0(ptr captures(none), <5 x i1>, <5 x float>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #10
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <5 x float> @llvm.masked.load.v5f32.p0(ptr captures(none), <5 x i1>, <5 x float>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fma.v2f32(<2 x float>, <2 x float>, <2 x float>) #10

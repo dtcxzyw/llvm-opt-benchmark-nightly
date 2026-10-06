@@ -205,17 +205,21 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
 .lr.ph303:                                        ; preds = %.lr.ph327, %.lr.ph303
   %.5301 = phi ptr [ %i.fm, %.lr.ph303 ], [ %.4326, %.lr.ph327 ] ; 5 uses
   %.0245300 = phi i32 [ %i.fn, %.lr.ph303 ], [ 0, %.lr.ph327 ]
-  %.0248299 = phi ptr [ %i.fl, %.lr.ph303 ], [ %i.eo, %.lr.ph327 ] ; 3 uses
-  %7 = load <8 x i32>, ptr %.0248299, align 16, !tbaa !30 ; 2 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %.0248299, i64 32
-  %8 = load <8 x i32>, ptr %i.eq, align 16, !tbaa !30 ; 2 uses
-  %i.er = shufflevector <8 x i32> %7, <8 x i32> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %.0248299 = phi ptr [ %i.fl, %.lr.ph303 ], [ %i.eo, %.lr.ph327 ] ; 5 uses
+  %7 = load <4 x i32>, ptr %.0248299, align 16, !tbaa !30 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.0248299, i64 16
+  %9 = load <4 x i32>, ptr %8, align 16, !tbaa !30 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.0248299, i64 32
+  %11 = load <4 x i32>, ptr %10, align 16, !tbaa !30 ; 2 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %.0248299, i64 48
+  %12 = load <4 x i32>, ptr %i.eq, align 16, !tbaa !30 ; 2 uses
+  %i.er = shufflevector <4 x i32> %7, <4 x i32> %9, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.es = bitcast <4 x i32> %i.er to <2 x i64>    ; 2 uses
-  %i.et = shufflevector <8 x i32> %7, <8 x i32> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.et = shufflevector <4 x i32> %7, <4 x i32> %9, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
   %i.eu = bitcast <4 x i32> %i.et to <2 x i64>    ; 2 uses
-  %i.ev = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.ev = shufflevector <4 x i32> %11, <4 x i32> %12, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.ew = bitcast <4 x i32> %i.ev to <2 x i64>    ; 2 uses
-  %i.ex = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.ex = shufflevector <4 x i32> %11, <4 x i32> %12, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
   %i.ey = bitcast <4 x i32> %i.ex to <2 x i64>    ; 2 uses
   %i.ez = shufflevector <2 x i64> %i.es, <2 x i64> %i.ew, <2 x i32> <i32 0, i32 2>
   %i.fa = shufflevector <2 x i64> %i.es, <2 x i64> %i.ew, <2 x i32> <i32 1, i32 3>
@@ -422,10 +426,12 @@ begin_hunk_0_@_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.omp_outli
 .lr.ph334:                                        ; preds = %.lr.ph358, %.lr.ph334
   %.9332 = phi ptr [ %i.jt, %.lr.ph334 ], [ %.8357, %.lr.ph358 ] ; 3 uses
   %.0235331 = phi i32 [ %i.ju, %.lr.ph334 ], [ 0, %.lr.ph358 ]
-  %.0238330 = phi ptr [ %i.js, %.lr.ph334 ], [ %i.ji, %.lr.ph358 ] ; 2 uses
-  %9 = load <8 x i32>, ptr %.0238330, align 16, !tbaa !30 ; 2 uses
-  %i.jk = shufflevector <8 x i32> %9, <8 x i32> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %i.jl = shufflevector <8 x i32> %9, <8 x i32> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %.0238330 = phi ptr [ %i.js, %.lr.ph334 ], [ %i.ji, %.lr.ph358 ] ; 3 uses
+  %13 = load <4 x i32>, ptr %.0238330, align 16, !tbaa !30 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.0238330, i64 16
+  %15 = load <4 x i32>, ptr %14, align 16, !tbaa !30 ; 2 uses
+  %i.jk = shufflevector <4 x i32> %13, <4 x i32> %15, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.jl = shufflevector <4 x i32> %13, <4 x i32> %15, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
   store <4 x i32> %i.jk, ptr %.9332, align 1, !tbaa !30
   %i.jm = getelementptr inbounds nuw i8, ptr %.9332, i64 16
   store <4 x i32> %i.jl, ptr %i.jm, align 1, !tbaa !30

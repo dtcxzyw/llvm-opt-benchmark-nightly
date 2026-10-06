@@ -157,7 +157,7 @@ _ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i: ; preds = %b
 _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i: ; preds = %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i
   %i.p = icmp ult i32 %spec.store.select.i, 2048  ; 2 uses
   %i.q = icmp ult i32 %spec.store.select.i, 65536 ; 2 uses
-  %..i28.i = select i1 %i.q, i64 3, i64 4
+  %..i28.i = select i1 %i.q, i64 3, i64 4, !prof !16
   %.0.i.i = select i1 %i.p, i64 2, i64 %..i28.i
   %i.r = icmp ult i64 %.02043.i, %.0.i.i
   br i1 %i.r, label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit.thread, label %bb.e
@@ -169,7 +169,7 @@ _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i: ; preds = %_ZN5bo
 .thread.i:                                        ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i
   %i.t = trunc nuw nsw i32 %spec.store.select.i to i8
   %i.u = getelementptr inbounds nuw i8, ptr %.02242.i, i64 1
-  store i8 %i.t, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.t, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.j
 
 bb.e:                                             ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i
@@ -180,16 +180,16 @@ bb.f:                                             ; preds = %bb.e
   %i.w = trunc nuw nsw i32 %i.v to i8
   %i.x = or disjoint i8 %i.w, -64
   %i.y = getelementptr inbounds nuw i8, ptr %.02242.i, i64 1
-  store i8 %i.x, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.x, ptr %.02242.i, align 1, !tbaa !17
   %i.z = trunc i32 %spec.store.select.i to i8
   %i.aa = and i8 %i.z, 63
   %i.ab = or disjoint i8 %i.aa, -128
   %i.ac = getelementptr inbounds nuw i8, ptr %.02242.i, i64 2
-  store i8 %i.ab, ptr %i.y, align 1, !tbaa !16
+  store i8 %i.ab, ptr %i.y, align 1, !tbaa !17
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
-  br i1 %i.q, label %bb.h, label %bb.i, !prof !17
+  br i1 %i.q, label %bb.h, label %bb.i, !prof !16
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %.02242.i, i64 2
@@ -197,17 +197,17 @@ bb.h:                                             ; preds = %bb.g
   %i.af = lshr i32 %spec.store.select.i, 12
   %i.ag = trunc nuw nsw i32 %i.af to i8
   %i.ah = or disjoint i8 %i.ag, -32
-  store i8 %i.ah, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.ah, ptr %.02242.i, align 1, !tbaa !17
   %i.ai = lshr i32 %spec.store.select.i, 6
   %i.aj = trunc i32 %i.ai to i8
   %i.ak = and i8 %i.aj, 63
   %i.al = or disjoint i8 %i.ak, -128
-  store i8 %i.al, ptr %i.ae, align 1, !tbaa !16
+  store i8 %i.al, ptr %i.ae, align 1, !tbaa !17
   %i.am = trunc i32 %spec.store.select.i to i8
   %i.an = and i8 %i.am, 63
   %i.ao = or disjoint i8 %i.an, -128
   %i.ap = getelementptr inbounds nuw i8, ptr %.02242.i, i64 3
-  store i8 %i.ao, ptr %i.ad, align 1, !tbaa !16
+  store i8 %i.ao, ptr %i.ad, align 1, !tbaa !17
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -225,7 +225,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bb = insertelement <4 x i8> %i.ba, i8 %i.ax, i64 3
   %i.bc = and <4 x i8> %i.bb, <i8 -1, i8 63, i8 63, i8 63>
   %i.bd = or <4 x i8> %i.bc, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %i.bd, ptr %.02242.i, align 1, !tbaa !16
+  store <4 x i8> %i.bd, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f, %.thread.i
@@ -236,12 +236,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f,
   br i1 %.not.i, label %.loopexit, label %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i
 
 _ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit.thread: ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i
-  store i8 0, ptr %.02242.i, align 1, !tbaa !16
+  store i8 0, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.k
 
 .loopexit:                                        ; preds = %bb.j, %bb.d
   %.022.lcssa.i = phi ptr [ %0, %bb.d ], [ %.0.i29.i, %bb.j ]
-  store i8 0, ptr %.022.lcssa.i, align 1, !tbaa !16
+  store i8 0, ptr %.022.lcssa.i, align 1, !tbaa !17
   store ptr %0, ptr %i.a, align 8, !tbaa !11
   br label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit32
 
@@ -273,7 +273,7 @@ _ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i15: ; preds = 
 _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22: ; preds = %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i15
   %i.bn = icmp ult i32 %spec.store.select.i21, 2048 ; 2 uses
   %i.bo = icmp ult i32 %spec.store.select.i21, 65536 ; 2 uses
-  %..i28.i23 = select i1 %i.bo, i64 3, i64 4
+  %..i28.i23 = select i1 %i.bo, i64 3, i64 4, !prof !16
   %.0.i.i24 = select i1 %i.bn, i64 2, i64 %..i28.i23
   %i.bp = icmp ult i64 %.02043.i16, %.0.i.i24
   br i1 %i.bp, label %.thread34.i, label %bb.m
@@ -285,7 +285,7 @@ _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30: ; preds = %_ZN5
 .thread.i31:                                      ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30
   %i.br = trunc nuw nsw i32 %spec.store.select.i21 to i8
   %i.bs = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 1
-  store i8 %i.br, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.br, ptr %.02242.i17, align 1, !tbaa !17
   br label %bb.r
 
 bb.m:                                             ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22
@@ -296,16 +296,16 @@ bb.n:                                             ; preds = %bb.m
   %i.bu = trunc nuw nsw i32 %i.bt to i8
   %i.bv = or disjoint i8 %i.bu, -64
   %i.bw = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 1
-  store i8 %i.bv, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.bv, ptr %.02242.i17, align 1, !tbaa !17
   %i.bx = trunc i32 %spec.store.select.i21 to i8
   %i.by = and i8 %i.bx, 63
   %i.bz = or disjoint i8 %i.by, -128
   %i.ca = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 2
-  store i8 %i.bz, ptr %i.bw, align 1, !tbaa !16
+  store i8 %i.bz, ptr %i.bw, align 1, !tbaa !17
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %i.bo, label %bb.p, label %bb.q, !prof !17
+  br i1 %i.bo, label %bb.p, label %bb.q, !prof !16
 
 bb.p:                                             ; preds = %bb.o
   %i.cb = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 2
@@ -313,17 +313,17 @@ bb.p:                                             ; preds = %bb.o
   %i.cd = lshr i32 %spec.store.select.i21, 12
   %i.ce = trunc nuw nsw i32 %i.cd to i8
   %i.cf = or disjoint i8 %i.ce, -32
-  store i8 %i.cf, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.cf, ptr %.02242.i17, align 1, !tbaa !17
   %i.cg = lshr i32 %spec.store.select.i21, 6
   %i.ch = trunc i32 %i.cg to i8
   %i.ci = and i8 %i.ch, 63
   %i.cj = or disjoint i8 %i.ci, -128
-  store i8 %i.cj, ptr %i.cc, align 1, !tbaa !16
+  store i8 %i.cj, ptr %i.cc, align 1, !tbaa !17
   %i.ck = trunc i32 %spec.store.select.i21 to i8
   %i.cl = and i8 %i.ck, 63
   %i.cm = or disjoint i8 %i.cl, -128
   %i.cn = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 3
-  store i8 %i.cm, ptr %i.cb, align 1, !tbaa !16
+  store i8 %i.cm, ptr %i.cb, align 1, !tbaa !17
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
@@ -341,7 +341,7 @@ bb.q:                                             ; preds = %bb.o
   %i.cz = insertelement <4 x i8> %i.cy, i8 %i.cv, i64 3
   %i.da = and <4 x i8> %i.cz, <i8 -1, i8 63, i8 63, i8 63>
   %i.db = or <4 x i8> %i.da, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %i.db, ptr %.02242.i17, align 1, !tbaa !16
+  store <4 x i8> %i.db, ptr %.02242.i17, align 1, !tbaa !17
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n, %.thread.i31
@@ -353,7 +353,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n,
 
 .thread34.i:                                      ; preds = %bb.r, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22, %bb.l
   %.022.lcssa.i28 = phi ptr [ %i.bg, %bb.l ], [ %.0.i29.i26, %bb.r ], [ %.02242.i17, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22 ], [ %.02242.i17, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30 ]
-  store i8 0, ptr %.022.lcssa.i28, align 1, !tbaa !16
+  store i8 0, ptr %.022.lcssa.i28, align 1, !tbaa !17
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !11
   br label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit32
 
@@ -417,7 +417,7 @@ _ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i: ; preds = %b
 _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i: ; preds = %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i
   %i.p = icmp ult i32 %spec.store.select.i, 2048  ; 2 uses
   %i.q = icmp ult i32 %spec.store.select.i, 65536 ; 2 uses
-  %..i28.i = select i1 %i.q, i64 3, i64 4
+  %..i28.i = select i1 %i.q, i64 3, i64 4, !prof !16
   %.0.i.i = select i1 %i.p, i64 2, i64 %..i28.i
   %i.r = icmp ult i64 %.02043.i, %.0.i.i
   br i1 %i.r, label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit.thread, label %bb.e
@@ -429,7 +429,7 @@ _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i: ; preds = %_ZN5bo
 .thread.i:                                        ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i
   %i.t = trunc nuw nsw i32 %spec.store.select.i to i8
   %i.u = getelementptr inbounds nuw i8, ptr %.02242.i, i64 1
-  store i8 %i.t, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.t, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.j
 
 bb.e:                                             ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i
@@ -440,16 +440,16 @@ bb.f:                                             ; preds = %bb.e
   %i.w = trunc nuw nsw i32 %i.v to i8
   %i.x = or disjoint i8 %i.w, -64
   %i.y = getelementptr inbounds nuw i8, ptr %.02242.i, i64 1
-  store i8 %i.x, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.x, ptr %.02242.i, align 1, !tbaa !17
   %i.z = trunc i32 %spec.store.select.i to i8
   %i.aa = and i8 %i.z, 63
   %i.ab = or disjoint i8 %i.aa, -128
   %i.ac = getelementptr inbounds nuw i8, ptr %.02242.i, i64 2
-  store i8 %i.ab, ptr %i.y, align 1, !tbaa !16
+  store i8 %i.ab, ptr %i.y, align 1, !tbaa !17
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
-  br i1 %i.q, label %bb.h, label %bb.i, !prof !17
+  br i1 %i.q, label %bb.h, label %bb.i, !prof !16
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %.02242.i, i64 2
@@ -457,17 +457,17 @@ bb.h:                                             ; preds = %bb.g
   %i.af = lshr i32 %spec.store.select.i, 12
   %i.ag = trunc nuw nsw i32 %i.af to i8
   %i.ah = or disjoint i8 %i.ag, -32
-  store i8 %i.ah, ptr %.02242.i, align 1, !tbaa !16
+  store i8 %i.ah, ptr %.02242.i, align 1, !tbaa !17
   %i.ai = lshr i32 %spec.store.select.i, 6
   %i.aj = trunc i32 %i.ai to i8
   %i.ak = and i8 %i.aj, 63
   %i.al = or disjoint i8 %i.ak, -128
-  store i8 %i.al, ptr %i.ae, align 1, !tbaa !16
+  store i8 %i.al, ptr %i.ae, align 1, !tbaa !17
   %i.am = trunc i32 %spec.store.select.i to i8
   %i.an = and i8 %i.am, 63
   %i.ao = or disjoint i8 %i.an, -128
   %i.ap = getelementptr inbounds nuw i8, ptr %.02242.i, i64 3
-  store i8 %i.ao, ptr %i.ad, align 1, !tbaa !16
+  store i8 %i.ao, ptr %i.ad, align 1, !tbaa !17
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -485,7 +485,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bb = insertelement <4 x i8> %i.ba, i8 %i.ax, i64 3
   %i.bc = and <4 x i8> %i.bb, <i8 -1, i8 63, i8 63, i8 63>
   %i.bd = or <4 x i8> %i.bc, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %i.bd, ptr %.02242.i, align 1, !tbaa !16
+  store <4 x i8> %i.bd, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f, %.thread.i
@@ -496,12 +496,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f,
   br i1 %.not.i, label %.loopexit, label %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i
 
 _ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit.thread: ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i
-  store i8 0, ptr %.02242.i, align 1, !tbaa !16
+  store i8 0, ptr %.02242.i, align 1, !tbaa !17
   br label %bb.k
 
 .loopexit:                                        ; preds = %bb.j, %bb.d
   %.022.lcssa.i = phi ptr [ %0, %bb.d ], [ %.0.i29.i, %bb.j ]
-  store i8 0, ptr %.022.lcssa.i, align 1, !tbaa !16
+  store i8 0, ptr %.022.lcssa.i, align 1, !tbaa !17
   store ptr %0, ptr %i.a, align 8, !tbaa !13
   br label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit32
 
@@ -533,7 +533,7 @@ _ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i15: ; preds = 
 _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22: ; preds = %_ZN5boost6nowide3utf10utf_traitsIwLi4EE6decodeIPKwEEjRT_S7_.exit.i15
   %i.bn = icmp ult i32 %spec.store.select.i21, 2048 ; 2 uses
   %i.bo = icmp ult i32 %spec.store.select.i21, 65536 ; 2 uses
-  %..i28.i23 = select i1 %i.bo, i64 3, i64 4
+  %..i28.i23 = select i1 %i.bo, i64 3, i64 4, !prof !16
   %.0.i.i24 = select i1 %i.bn, i64 2, i64 %..i28.i23
   %i.bp = icmp ult i64 %.02043.i16, %.0.i.i24
   br i1 %i.bp, label %.thread34.i, label %bb.m
@@ -545,7 +545,7 @@ _ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30: ; preds = %_ZN5
 .thread.i31:                                      ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30
   %i.br = trunc nuw nsw i32 %spec.store.select.i21 to i8
   %i.bs = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 1
-  store i8 %i.br, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.br, ptr %.02242.i17, align 1, !tbaa !17
   br label %bb.r
 
 bb.m:                                             ; preds = %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22
@@ -556,16 +556,16 @@ bb.n:                                             ; preds = %bb.m
   %i.bu = trunc nuw nsw i32 %i.bt to i8
   %i.bv = or disjoint i8 %i.bu, -64
   %i.bw = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 1
-  store i8 %i.bv, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.bv, ptr %.02242.i17, align 1, !tbaa !17
   %i.bx = trunc i32 %spec.store.select.i21 to i8
   %i.by = and i8 %i.bx, 63
   %i.bz = or disjoint i8 %i.by, -128
   %i.ca = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 2
-  store i8 %i.bz, ptr %i.bw, align 1, !tbaa !16
+  store i8 %i.bz, ptr %i.bw, align 1, !tbaa !17
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %i.bo, label %bb.p, label %bb.q, !prof !17
+  br i1 %i.bo, label %bb.p, label %bb.q, !prof !16
 
 bb.p:                                             ; preds = %bb.o
   %i.cb = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 2
@@ -573,17 +573,17 @@ bb.p:                                             ; preds = %bb.o
   %i.cd = lshr i32 %spec.store.select.i21, 12
   %i.ce = trunc nuw nsw i32 %i.cd to i8
   %i.cf = or disjoint i8 %i.ce, -32
-  store i8 %i.cf, ptr %.02242.i17, align 1, !tbaa !16
+  store i8 %i.cf, ptr %.02242.i17, align 1, !tbaa !17
   %i.cg = lshr i32 %spec.store.select.i21, 6
   %i.ch = trunc i32 %i.cg to i8
   %i.ci = and i8 %i.ch, 63
   %i.cj = or disjoint i8 %i.ci, -128
-  store i8 %i.cj, ptr %i.cc, align 1, !tbaa !16
+  store i8 %i.cj, ptr %i.cc, align 1, !tbaa !17
   %i.ck = trunc i32 %spec.store.select.i21 to i8
   %i.cl = and i8 %i.ck, 63
   %i.cm = or disjoint i8 %i.cl, -128
   %i.cn = getelementptr inbounds nuw i8, ptr %.02242.i17, i64 3
-  store i8 %i.cm, ptr %i.cb, align 1, !tbaa !16
+  store i8 %i.cm, ptr %i.cb, align 1, !tbaa !17
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
@@ -601,7 +601,7 @@ bb.q:                                             ; preds = %bb.o
   %i.cz = insertelement <4 x i8> %i.cy, i8 %i.cv, i64 3
   %i.da = and <4 x i8> %i.cz, <i8 -1, i8 63, i8 63, i8 63>
   %i.db = or <4 x i8> %i.da, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %i.db, ptr %.02242.i17, align 1, !tbaa !16
+  store <4 x i8> %i.db, ptr %.02242.i17, align 1, !tbaa !17
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n, %.thread.i31
@@ -613,7 +613,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n,
 
 .thread34.i:                                      ; preds = %bb.r, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22, %bb.l
   %.022.lcssa.i28 = phi ptr [ %i.bg, %bb.l ], [ %.0.i29.i26, %bb.r ], [ %.02242.i17, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.i22 ], [ %.02242.i17, %_ZN5boost6nowide3utf10utf_traitsIcLi1EE5widthEj.exit.thread.i30 ]
-  store i8 0, ptr %.022.lcssa.i28, align 1, !tbaa !16
+  store i8 0, ptr %.022.lcssa.i28, align 1, !tbaa !17
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !13
   br label %_ZN5boost6nowide3utf14convert_bufferIcwEEPT_S4_mPKT0_S7_.exit32
 
@@ -655,6 +655,6 @@ attributes #8 = { builtin allocsize(0) }
 !13 = !{!12, !9, i64 16}
 !14 = !{!"wchar_t", !4, i64 0}
 !15 = !{!14, !14, i64 0}
-!16 = !{!4, !4, i64 0}
-!17 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!16 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!17 = !{!4, !4, i64 0}
 end_hunk_0

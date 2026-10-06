@@ -204,8 +204,7 @@ line_segments_distance.exit:                      ; preds = %bb.i, %.preheader.p
   %i.fv = fcmp ole <4 x double> %i.fu, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
   %i.fw = fcmp oge <4 x double> %i.fu, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
   %i.fx = shufflevector <4 x i1> %i.fv, <4 x i1> %i.fw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %4 = freeze <4 x i1> %i.fx
-  %i.fy = bitcast <4 x i1> %4 to i4
+  %i.fy = bitcast <4 x i1> %i.fx to i4
   %i.fz = icmp eq i4 %i.fy, -1
   %or.cond7 = select i1 %i.fz, i1 true, i1 %i.fd
   br i1 %or.cond7, label %bb.m, label %bb.t
@@ -225,13 +224,13 @@ bb.m:                                             ; preds = %.preheader113.prehe
   %i.ge = fdiv double %i.gd, %i.ga                ; 5 uses
   %i.gf = fcmp oeq double %i.e, %i.m
   %i.gg = fcmp oeq double %i.f, %i.q
-  %or.cond111 = select i1 %i.gf, i1 %i.gg, i1 false
+  %or.cond111 = and i1 %i.gf, %i.gg
   br i1 %or.cond111, label %bb.t, label %bb.n
 
 bb.n:                                             ; preds = %.preheader.preheader
   %i.gh = fcmp oeq double %i.e, %i.p
   %i.gi = fcmp oeq double %i.f, %i.o
-  %or.cond112 = select i1 %i.gh, i1 %i.gi, i1 false
+  %or.cond112 = and i1 %i.gh, %i.gi
   br i1 %or.cond112, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -241,7 +240,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   %i.gk = fcmp oeq double %i.c, %i.m
   %i.gl = fcmp oeq double %i.b, %i.q
-  %or.cond136 = select i1 %i.gk, i1 %i.gl, i1 false
+  %or.cond136 = and i1 %i.gk, %i.gl
   br i1 %or.cond136, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -251,7 +250,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.gn = fcmp oeq double %i.c, %i.p
   %i.go = fcmp oeq double %i.b, %i.o
-  %or.cond137 = select i1 %i.gn, i1 %i.go, i1 false
+  %or.cond137 = and i1 %i.gn, %i.go
   br i1 %or.cond137, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
