@@ -203,11 +203,11 @@ bb.aa:                                            ; preds = %bb.w
   %i.ho = fdiv <2 x double> %i.hl, %i.hn
   store <2 x double> %i.ho, ptr %i.a, align 16, !tbaa !49
   %i.hp = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %6 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %2, i64 0
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> <double -5.400000e+01, double 0.000000e+00>, <2 x double> <double -2.100000e+01, double 6.000000e+00>)
+  %.scalar = tail call double @llvm.fmuladd.f64(double %2, double -5.400000e+01, double -2.100000e+01)
+  %6 = insertelement <2 x double> <double poison, double 6.000000e+00>, double %.scalar, i64 0
   %i.hq = insertelement <2 x double> poison, double %i.n, i64 0
   %i.hr = shufflevector <2 x double> %i.hq, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hs = fdiv <2 x double> %7, %i.hr
+  %i.hs = fdiv <2 x double> %6, %i.hr
   store <2 x double> %i.hs, ptr %i.hp, align 16, !tbaa !49
   %i.ht = tail call double @llvm.fmuladd.f64(double %2, double -1.620000e+02, double -8.100000e+01)
   %i.hu = fdiv double %i.ht, %i.n

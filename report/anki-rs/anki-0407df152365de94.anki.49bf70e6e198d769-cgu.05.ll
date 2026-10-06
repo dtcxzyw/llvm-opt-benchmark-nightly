@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cc = fcmp olt float %i.cb, %i.aj
   %i.cd = fsub float %.sroa.0117.0184.i, %i.ca
   %i.ce = fcmp olt float %i.cd, %i.aj
-  %or.cond.i = select i1 %i.cc, i1 true, i1 %i.ce
+  %or.cond.i = or i1 %i.cc, %i.ce
   br i1 %or.cond.i, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %bb.v

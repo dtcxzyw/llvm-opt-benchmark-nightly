@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cg = and i32 %i.cf, 64
   %.not189 = icmp ne i32 %i.cg, 0                 ; 2 uses
   %brmerge = or i1 %.not.i.i.i207, %.not189
-  %.sroa.2.8.insert.ext.i.i.i.i.mux = select i1 %.not189, i32 %.val205, i32 0
+  %.sroa.2.8.insert.ext.i.i.i.i.mux = select i1 %.not189, i32 %.val205, i32 0, !prof !532
   br i1 %brmerge, label %_ZN9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEi.exit, label %bb.o, !prof !159
 
 bb.o:                                             ; preds = %bb.n
@@ -399,7 +399,7 @@ bb.ae:                                            ; preds = %_ZN11hb_vector_tIS_
   %i.fb = and i32 %i.fa, 64
   %.not191 = icmp ne i32 %i.fb, 0                 ; 2 uses
   %brmerge500 = or i1 %.not.i.i.i219, %.not191
-  %.sroa.2.8.insert.ext.i.i.i.i217.mux = select i1 %.not191, i32 %.val203, i32 0
+  %.sroa.2.8.insert.ext.i.i.i.i217.mux = select i1 %.not191, i32 %.val203, i32 0, !prof !532
   br i1 %brmerge500, label %_ZN9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEi.exit227, label %bb.af, !prof !159
 
 bb.af:                                            ; preds = %bb.ae
@@ -802,7 +802,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.lw = and i32 %i.lv, 64
   %.not199 = icmp ne i32 %i.lw, 0                 ; 2 uses
   %brmerge501 = or i1 %.not.i.i.i263, %.not199
-  %.sroa.2.8.insert.ext.i.i.i.i261.mux = select i1 %.not199, i32 %.val, i32 0
+  %.sroa.2.8.insert.ext.i.i.i.i261.mux = select i1 %.not199, i32 %.val, i32 0, !prof !532
   br i1 %brmerge501, label %_ZN9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEi.exit271, label %bb.bp, !prof !159
 
 bb.bp:                                            ; preds = %bb.bo

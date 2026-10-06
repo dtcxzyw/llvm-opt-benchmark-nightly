@@ -153,9 +153,9 @@ bb.a:
   %i.cl = load <8 x float>, ptr %i.ci, align 4, !tbaa !26 ; 3 uses
   %i.cm = load <4 x float>, ptr %i.ck, align 4, !tbaa !26
   %i.cn = shufflevector <4 x float> %i.cm, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison> ; 3 uses
-  %5 = shufflevector <8 x float> %i.cl, <8 x float> %i.cn, <4 x i32> <i32 2, i32 5, i32 8, i32 11> ; 4 uses
-  %6 = shufflevector <8 x float> %i.cl, <8 x float> %i.cn, <4 x i32> <i32 0, i32 3, i32 6, i32 9> ; 4 uses
-  %7 = shufflevector <8 x float> %i.cl, <8 x float> %i.cn, <4 x i32> <i32 1, i32 4, i32 7, i32 10> ; 4 uses
+  %5 = shufflevector <8 x float> %i.cn, <8 x float> %i.cl, <4 x i32> <i32 3, i32 0, i32 13, i32 10> ; 4 uses
+  %6 = shufflevector <8 x float> %i.cn, <8 x float> %i.cl, <4 x i32> <i32 1, i32 14, i32 11, i32 8> ; 4 uses
+  %7 = shufflevector <8 x float> %i.cn, <8 x float> %i.cl, <4 x i32> <i32 2, i32 15, i32 12, i32 9> ; 4 uses
   %i.co = fsub <4 x float> %i.bq, %6              ; 2 uses
   %i.cp = fsub <4 x float> %i.br, %7              ; 2 uses
   %i.cq = fsub <4 x float> %i.bs, %5              ; 2 uses

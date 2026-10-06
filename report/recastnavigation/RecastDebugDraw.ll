@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %.preheader.i
   br i1 %.not.1.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ef = trunc i64 %indvars.iv.i to i32          ; 2 uses
+  %i.ef = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
   %i.eg = sitofp i32 %i.ef to float
   %i.eh = add i32 %i.ef, 1
   %i.ei = sitofp i32 %i.eh to float

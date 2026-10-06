@@ -141,8 +141,8 @@ bb.a:
   %i.a = fmul double %1, %1                       ; 6 uses
   %i.b = fmul double %i.a, %i.a                   ; 3 uses
   %i.c = fmul double %i.a, %i.b
-  %3 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.a, i64 0
-  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double -1.306300e-01, double 0.000000e+00>, <2 x double> <double 8.471900e-01, double 1.011830e+00>)
+  %.scalar = tail call double @llvm.fmuladd.f64(double %i.a, double -1.306300e-01, double 8.471900e-01)
+  %3 = insertelement <2 x double> <double poison, double 1.011830e+00>, double %.scalar, i64 0
   %i.d = tail call double @llvm.fmuladd.f64(double %i.a, double 5.494000e-02, double -4.515000e-02)
   %i.e = insertelement <2 x double> poison, double %i.c, i64 0
   %i.f = insertelement <2 x double> %i.e, double %i.b, i64 1 ; 3 uses
@@ -152,7 +152,7 @@ bb.a:
   %i.j = insertelement <2 x double> <double poison, double -2.625000e-02>, double %i.d, i64 0
   %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.i, <2 x double> <double -2.326000e-02, double 1.926000e-02>, <2 x double> %i.j)
   %i.l = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.f, <2 x double> <double 3.310000e-03, double -3.960000e-03>, <2 x double> %i.k)
-  %i.m = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.g, <2 x double> %i.l, <2 x double> %4)
+  %i.m = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.g, <2 x double> %i.l, <2 x double> %3)
   %i.n = insertelement <2 x double> poison, double %0, i64 0
   %i.o = insertelement <2 x double> %i.n, double %1, i64 1
   %i.p = fmul <2 x double> %i.o, %i.m             ; 2 uses

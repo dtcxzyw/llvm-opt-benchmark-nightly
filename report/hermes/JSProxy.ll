@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.o
   %i.cu = call fastcc noundef i32 @_ZN6hermes2vm12_GLOBAL__N_130isCompatiblePropertyDescriptorERNS0_7RuntimeERKNS0_19DefinePropertyFlagsENS0_6HandleINS0_11HermesValueEEERKNS0_26ComputedPropertyDescriptorES9_(ptr noundef nonnull align 8 dereferenceable(9816) %1, i16 %.sroa.078.0.extract.trunc, ptr %4, i16 %.val44, ptr %.sroa.0.0.copyload)
   %i.cv = icmp eq i32 %i.cu, 0                    ; 2 uses
   %brmerge = select i1 %i.cv, i1 true, i1 %i.cf, !prof !377
-  %.mux = select i1 %i.cv, i32 0, i32 257
+  %.mux = select i1 %i.cv, i32 0, i32 257, !prof !377
   br i1 %brmerge, label %bb.t, label %bb.s, !prof !290
 
 bb.s:                                             ; preds = %bb.r
