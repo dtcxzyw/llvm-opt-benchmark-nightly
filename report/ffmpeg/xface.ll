@@ -203,16 +203,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.w
-  %indvars.iv137 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next138189192, %bb.w ] ; 13 uses
-  %i.ax = add nsw i64 %indvars.iv137, -2          ; 4 uses
+  %indvars.iv137 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next138189192, %bb.w ] ; 12 uses
+  %i.ax = add nsw i64 %indvars.iv137, -2          ; 3 uses
   %i.ay = icmp samesign ult i64 %indvars.iv137, 3
-  br i1 %i.ay, label %.split101.us, label %.split
+  br i1 %i.ay, label %.split101.us, label %.split.split.split.us.preheader
 
-.split:                                           ; preds = %bb.b
-  %2 = icmp ult i64 %i.ax, 49
-  br i1 %2, label %.split.split.split.us.preheader, label %.split.split.split.preheader.2
-
-.split.split.split.us.preheader:                  ; preds = %.split
+.split.split.split.us.preheader:                  ; preds = %bb.b
   br i1 %i.c, label %.split.split.split.us.1.thread, label %.split.split.split.us.1
 
 .split.split.split.us.1.thread:                   ; preds = %.split.split.split.us.preheader
@@ -245,26 +241,25 @@ bb.c:                                             ; preds = %.split.split.split.
   %i.bl = add nuw nsw i32 %.2.us111.1170, %i.bk
   br label %.split.1
 
+.split.1:                                         ; preds = %.split.split.split.us.2, %bb.c
+  %.us-phi.ph = phi i32 [ %i.bl, %bb.c ], [ 0, %.split.split.split.us.2 ]
+  %i.bm = add nsw i64 %indvars.iv137, -1
+  br label %.split.split.split.us.preheader.1
+
 .split101.us:                                     ; preds = %bb.b
   switch i64 %indvars.iv137, label %.split.split.split.preheader.2 [
     i64 2, label %.split.split.split.us.preheader.1
     i64 0, label %.split.split.split.preheader.3
   ]
 
-.split.1:                                         ; preds = %.split.split.split.us.2, %bb.c
-  %.us-phi.ph = phi i32 [ %i.bl, %bb.c ], [ 0, %.split.split.split.us.2 ] ; 2 uses
-  %i.bm = add nsw i64 %indvars.iv137, -1
-  %3 = icmp samesign ult i64 %indvars.iv137, 50
-  br i1 %3, label %.split.split.split.us.preheader.1, label %.split.split.split.preheader.2
-
 .split.split.split.us.preheader.1:                ; preds = %.split101.us, %.split.1
-  %.us-phi172174 = phi i32 [ %.us-phi.ph, %.split.1 ], [ 0, %.split101.us ] ; 4 uses
-  %4 = phi i64 [ %i.bm, %.split.1 ], [ 1, %.split101.us ] ; 3 uses
+  %2 = phi i64 [ %i.bm, %.split.1 ], [ 1, %.split101.us ] ; 3 uses
+  %.us-phi172 = phi i32 [ %.us-phi.ph, %.split.1 ], [ 0, %.split101.us ] ; 4 uses
   br i1 %i.k, label %.split.split.split.us.1.1.thread, label %.split.split.split.us.1.1
 
 .split.split.split.us.1.1.thread:                 ; preds = %.split.split.split.us.preheader.1
-  %i.bn = shl nuw nsw i32 %.us-phi172174, 1
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.n, i64 %4
+  %i.bn = shl nuw nsw i32 %.us-phi172, 1
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.n, i64 %2
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !11
   %i.bq = zext i8 %i.bp to i32
   %i.br = add nuw nsw i32 %i.bn, %i.bq
@@ -274,9 +269,9 @@ bb.c:                                             ; preds = %.split.split.split.
   br i1 %i.l, label %.split.split.split.us.2.1.thread, label %.split.split.split.us.2.1
 
 .split.split.split.us.2.1.thread:                 ; preds = %.split.split.split.us.1.1, %.split.split.split.us.1.1.thread
-  %.2.us111.1130179 = phi i32 [ %i.br, %.split.split.split.us.1.1.thread ], [ %.us-phi172174, %.split.split.split.us.1.1 ]
+  %.2.us111.1130179 = phi i32 [ %i.br, %.split.split.split.us.1.1.thread ], [ %.us-phi172, %.split.split.split.us.1.1 ]
   %i.bs = shl nuw nsw i32 %.2.us111.1130179, 1
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 %4
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 %2
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11
   %i.bv = zext i8 %i.bu to i32
   %i.bw = add nuw nsw i32 %i.bs, %i.bv
@@ -286,20 +281,20 @@ bb.c:                                             ; preds = %.split.split.split.
   br i1 %.not165, label %.split.split.split.1.3.thread195, label %bb.d
 
 bb.d:                                             ; preds = %.split.split.split.us.2.1.thread, %.split.split.split.us.2.1
-  %.2.us111.1.1182 = phi i32 [ %i.bw, %.split.split.split.us.2.1.thread ], [ %.us-phi172174, %.split.split.split.us.2.1 ]
+  %.2.us111.1.1182 = phi i32 [ %i.bw, %.split.split.split.us.2.1.thread ], [ %.us-phi172, %.split.split.split.us.2.1 ]
   %i.bx = shl nuw nsw i32 %.2.us111.1.1182, 1
-  %i.by = getelementptr inbounds nuw i8, ptr %i.r, i64 %4
+  %i.by = getelementptr inbounds nuw i8, ptr %i.r, i64 %2
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !11
   %i.ca = zext i8 %i.bz to i32
   %i.cb = add nuw nsw i32 %i.bx, %i.ca
   br label %.split.split.split.preheader.2
 
-.split.split.split.preheader.2:                   ; preds = %.split101.us, %.split, %.split.1, %bb.d
-  %.us-phi.1184 = phi i32 [ 0, %.split101.us ], [ 0, %.split ], [ %i.cb, %bb.d ], [ %.us-phi.ph, %.split.1 ] ; 3 uses
+.split.split.split.preheader.2:                   ; preds = %.split101.us, %bb.d
+  %.us-phi.1179 = phi i32 [ 0, %.split101.us ], [ %i.cb, %bb.d ] ; 3 uses
   br i1 %i.s, label %.split.split.split.1.2.thread, label %.split.split.split.1.2
 
 .split.split.split.1.2.thread:                    ; preds = %.split.split.split.preheader.2
-  %i.cc = shl nuw nsw i32 %.us-phi.1184, 1
+  %i.cc = shl nuw nsw i32 %.us-phi.1179, 1
   %i.cd = getelementptr inbounds nuw i8, ptr %i.w, i64 %indvars.iv137
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !11
   %i.cf = zext i8 %i.ce to i32
@@ -310,12 +305,12 @@ bb.d:                                             ; preds = %.split.split.split.
   br i1 %i.t, label %bb.e, label %.split.split.split.1.3.thread195
 
 .split.split.split.1.3.thread195:                 ; preds = %.split.split.split.us.2.1, %.split.split.split.1.2
-  %.2.2136203 = phi i32 [ %.us-phi.1184, %.split.split.split.1.2 ], [ %.us-phi172174, %.split.split.split.us.2.1 ]
+  %.2.2136203 = phi i32 [ %.us-phi.1179, %.split.split.split.1.2 ], [ %.us-phi172, %.split.split.split.us.2.1 ]
   %indvars.iv.next138188 = add nuw nsw i64 %indvars.iv137, 1
   br label %.split.4
 
 bb.e:                                             ; preds = %.split.split.split.1.2.thread, %.split.split.split.1.2
-  %.2.2136186 = phi i32 [ %i.cg, %.split.split.split.1.2.thread ], [ %.us-phi.1184, %.split.split.split.1.2 ]
+  %.2.2136186 = phi i32 [ %i.cg, %.split.split.split.1.2.thread ], [ %.us-phi.1179, %.split.split.split.1.2 ]
   %i.ch = shl nuw nsw i32 %.2.2136186, 1
   %i.ci = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv137
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !11

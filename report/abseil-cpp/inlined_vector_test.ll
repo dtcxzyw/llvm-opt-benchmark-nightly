@@ -205,7 +205,6 @@ bb.a:
   br label %.preheader345
 
 .preheader345:                                    ; preds = %bb.a, %bb.c
-  %indvars.iv = phi i64 [ 2, %bb.a ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %bb.c ] ; 2 uses
   %.077475 = phi i64 [ 1, %bb.a ], [ %i.af, %bb.c ] ; 7 uses
   %i.ac = shl nuw nsw i64 %indvar, 2
@@ -225,7 +224,6 @@ bb.b:                                             ; preds = %bb.c
 bb.c:                                             ; preds = %bb.d
   %i.af = add nuw nsw i64 %.077475, 1
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond602.not = icmp eq i64 %indvar.next, 19
   br i1 %exitcond602.not, label %bb.b, label %.preheader345, !llvm.loop !1458
 
@@ -628,7 +626,7 @@ _ZN7testing15AssertionResultD2Ev.exit190:         ; preds = %_ZNKSt14default_del
   br label %bb.dx
 
 .preheader:                                       ; preds = %_ZN7testing15AssertionResultD2Ev.exit216, %.preheader341
-  %i.kr = icmp samesign ult i64 %.075473, %.077475
+  %i.kr = icmp samesign ult i64 %.075473, %.077475 ; 2 uses
   br i1 %i.kr, label %.lr.ph472, label %._crit_edge
 
 .lr.ph470:                                        ; preds = %.preheader341, %_ZN7testing15AssertionResultD2Ev.exit216
@@ -876,9 +874,8 @@ bb.de:                                            ; preds = %._crit_edge
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %._crit_edge, %bb.de
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #36
   call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef %i.ae) #39
-  %i.mt = add nuw nsw i64 %.075473, 1             ; 2 uses
-  %exitcond600.not = icmp eq i64 %i.mt, %indvars.iv
-  br i1 %exitcond600.not, label %bb.d, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, !llvm.loop !1493
+  %i.mt = add nuw nsw i64 %.075473, 1
+  br i1 %i.kr, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, label %bb.d, !llvm.loop !1493
 
 .lr.ph472:                                        ; preds = %.preheader, %_ZN7testing15AssertionResultD2Ev.exit238
   %.0471 = phi i64 [ %i.os, %_ZN7testing15AssertionResultD2Ev.exit238 ], [ %.075473, %.preheader ] ; 2 uses

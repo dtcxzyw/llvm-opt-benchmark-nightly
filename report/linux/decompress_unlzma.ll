@@ -129,40 +129,35 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.ag
 
 bb.j:                                             ; preds = %bb.h
-  %i.ag = zext i8 %i.ae to i32                    ; 3 uses
+  %i.ag = zext i8 %i.ae to i32                    ; 2 uses
   %i.ah = icmp ugt i8 %i.ae, 8
   br i1 %i.ah, label %.preheader114, label %._crit_edge
 
 .preheader114:                                    ; preds = %bb.j
-  %11 = call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 17)
-  %i.ai = trunc nuw i32 %11 to i8
-  %.lhs.trunc = add i8 %i.ai, 8                   ; 2 uses
-  %i.aj = udiv i8 %.lhs.trunc, 9
-  %.zext = zext nneg i8 %i.aj to i32              ; 4 uses
-  %12 = add nuw nsw i32 %.zext, 1                 ; 2 uses
-  %i.ak = add nsw i32 %i.ag, -9
+  %11 = add nsw i32 %i.ag, -9                     ; 2 uses
+  %i.ai = trunc i32 %11 to i8                     ; 2 uses
+  %i.aj = udiv i8 %i.ai, 9
+  %.zext = zext nneg i8 %i.aj to i32              ; 3 uses
+  %i.ak = add nuw nsw i32 %.zext, 1
   %.neg = mul nsw i32 %.zext, -9
-  %i.al = add nsw i32 %.neg, %i.ak                ; 2 uses
-  %i.am = icmp ugt i8 %.lhs.trunc, 35
+  %i.al = add nsw i32 %.neg, %11                  ; 2 uses
+  %i.am = icmp ugt i8 %i.ai, 35
   br i1 %i.am, label %.lr.ph127.preheader, label %._crit_edge
 
 .lr.ph127.preheader:                              ; preds = %.preheader114
-  %i.an = add nuw nsw i32 %.zext, 5
-  %13 = call i32 @llvm.umin.i32(i32 %12, i32 9)
-  %14 = sub nuw nsw i32 %i.an, %13
-  %.lhs.trunc163 = trunc nuw nsw i32 %14 to i8
+  %i.an = add nsw i32 %.zext, -4                  ; 2 uses
+  %.lhs.trunc163 = trunc nsw i32 %i.an to i8
   %i.ao = udiv i8 %.lhs.trunc163, 5
   %.zext164 = zext nneg i8 %i.ao to i32           ; 2 uses
-  %15 = add nuw nsw i32 %.zext164, 1
-  %i.ap = add nsw i32 %.zext, -4
+  %i.ap = add nuw nsw i32 %.zext164, 1
   %.neg159 = mul nsw i32 %.zext164, -5
-  %i.aq = add nsw i32 %.neg159, %i.ap
+  %i.aq = add nsw i32 %.neg159, %i.an
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.j, %.lr.ph127.preheader, %.preheader114
   %.068.lcssa162 = phi i32 [ %i.al, %.preheader114 ], [ %i.al, %.lr.ph127.preheader ], [ %i.ag, %bb.j ] ; 2 uses
-  %.071.lcssa = phi i32 [ %12, %.preheader114 ], [ %i.aq, %.lr.ph127.preheader ], [ 0, %bb.j ] ; 2 uses
-  %.070.lcssa = phi i32 [ 0, %.preheader114 ], [ %15, %.lr.ph127.preheader ], [ 0, %bb.j ]
+  %.071.lcssa = phi i32 [ %i.ak, %.preheader114 ], [ %i.aq, %.lr.ph127.preheader ], [ 0, %bb.j ] ; 2 uses
+  %.070.lcssa = phi i32 [ 0, %.preheader114 ], [ %i.ap, %.lr.ph127.preheader ], [ 0, %bb.j ]
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 5 ; 3 uses
   br label %bb.k
 
@@ -564,12 +559,6 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #8
 
 attributes #0 = { cold fn_ret_thunk_extern inlinehint noredzone nounwind null_pointer_is_valid optsize sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

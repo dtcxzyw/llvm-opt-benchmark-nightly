@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph.i.i.us.i
 
 .lr.ph.i.i.us.i:                                  ; preds = %.lr.ph.i.i.us.i.preheader, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i
-  %.sroa.0.031.us.i.idx = phi i64 [ %.sroa.0.031.us.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i ], [ 8, %.lr.ph.i.i.us.i.preheader ] ; 5 uses
+  %.sroa.0.031.us.i.idx = phi i64 [ %.sroa.0.031.us.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i ], [ 8, %.lr.ph.i.i.us.i.preheader ] ; 4 uses
   %.pn30.us.i = phi ptr [ %.sroa.0.031.us.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i ], [ %0, %.lr.ph.i.i.us.i.preheader ]
   %.sroa.0.031.us.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.031.us.i.idx ; 3 uses
   %i.g = load ptr, ptr %.sroa.0.031.us.i.ptr, align 8, !tbaa !35 ; 2 uses
@@ -236,13 +236,9 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN2cv13SparseNodeCmpEEclINS_17__normal_itera
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.us.i
   %i.p = icmp samesign ugt i64 %.sroa.0.031.us.i.idx, 8
-  br i1 %i.p, label %bb.f, label %3, !prof !147
+  br i1 %i.p, label %bb.f, label %bb.e, !prof !147
 
-3:                                                ; preds = %bb.d
-  %4 = icmp eq i64 %.sroa.0.031.us.i.idx, 8
-  br i1 %4, label %bb.e, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %.pn30.us.i, i64 8
   store ptr %i.i, ptr %i.q, align 8, !tbaa !35
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i
@@ -280,8 +276,8 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx5__ops
   store ptr %i.r, ptr %.sroa.05.015.us.i.us.i, align 8, !tbaa !35
   br label %.lr.ph.i.i.us.i.us.i
 
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN2cv13SparseNodeCmpEEclIPKNS2_9SparseMat4NodeENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.us.i.us.i, %bb.h, %bb.f, %bb.e, %3
-  %.sroa.05.015.us.i.us58.sink.i = phi ptr [ %0, %3 ], [ %0, %bb.f ], [ %0, %bb.e ], [ %.sroa.05.015.us.i.us.i, %bb.h ], [ %.sroa.05.015.us.i.us.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN2cv13SparseNodeCmpEEclIPKNS2_9SparseMat4NodeENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.us.i.us.i ]
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.us.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN2cv13SparseNodeCmpEEclIPKNS2_9SparseMat4NodeENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.us.i.us.i, %bb.h, %bb.f, %bb.e
+  %.sroa.05.015.us.i.us58.sink.i = phi ptr [ %.sroa.05.015.us.i.us.i, %bb.h ], [ %0, %bb.f ], [ %0, %bb.e ], [ %.sroa.05.015.us.i.us.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN2cv13SparseNodeCmpEEclIPKNS2_9SparseMat4NodeENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.us.i.us.i ]
   store ptr %i.g, ptr %.sroa.05.015.us.i.us58.sink.i, align 8, !tbaa !35
   %.sroa.0.031.us.i.add = add nuw nsw i64 %.sroa.0.031.us.i.idx, 8 ; 2 uses
   %.not.us.i = icmp eq i64 %.sroa.0.031.us.i.add, 128

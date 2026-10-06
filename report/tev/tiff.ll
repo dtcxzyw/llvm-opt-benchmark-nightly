@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN6LibRaw14parse_tiff_ifdEx:bb.a
   %i.aff = call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.afg = lshr i16 %i.aff, 2
   %i.afh = and i16 %i.afg, 4095                   ; 4 uses
-  %i.afi = zext nneg i16 %i.afh to i32            ; 9 uses
+  %i.afi = zext nneg i16 %i.afh to i32            ; 8 uses
   %.not11051408 = icmp eq i16 %i.aev, 0
   br i1 %.not11051408, label %.loopexit1172, label %iter.check2199
 
@@ -608,23 +608,21 @@ iter.check:                                       ; preds = %.loopexit1172.3
   %.phi.trans.insert1855 = zext nneg i16 %i.afh to i64
   %.phi.trans.insert1856 = getelementptr inbounds nuw [2 x i8], ptr %i.fx, i64 %.phi.trans.insert1855
   %.pre1857 = load i16, ptr %.phi.trans.insert1856, align 2, !tbaa !93 ; 5 uses
-  %umax = call i32 @llvm.umax.i32(i32 %i.afi, i32 4094)
-  %3 = add nuw nsw i32 %umax, 1
-  %4 = sub nsw i32 %3, %i.afi                     ; 7 uses
-  %min.iters.check = icmp ult i32 %4, 4
+  %3 = xor i32 %i.afi, 4095                       ; 7 uses
+  %min.iters.check = icmp samesign ult i32 %3, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check2056 = icmp ult i32 %4, 16
+  %min.iters.check2056 = icmp samesign ult i32 %3, 16
   br i1 %min.iters.check2056, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.atp = and i32 %4, 12
-  %n.vec = and i32 %4, -16                        ; 5 uses
-  %i.atq = trunc nsw i32 %n.vec to i16
-  %i.atr = shl i16 %i.atq, 4
+  %i.atp = and i32 %3, 12
+  %n.vec = and i32 %3, 4080                       ; 5 uses
+  %i.atq = trunc nuw nsw i32 %n.vec to i16
+  %i.atr = shl nuw i16 %i.atq, 4
   %i.ats = add i16 %.pre1857, %i.atr              ; 2 uses
-  %i.att = add nsw i32 %n.vec, %i.afi
+  %i.att = add nuw nsw i32 %n.vec, %i.afi
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %.pre1857, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer
   %induction = add <8 x i16> %broadcast.splat, <i16 0, i16 16, i16 32, i16 48, i16 64, i16 80, i16 96, i16 112>
@@ -648,7 +646,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.aub, label %middle.block, label %vector.body, !llvm.loop !149
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %4, %n.vec
+  %cmp.n = icmp eq i32 %3, %n.vec
   br i1 %cmp.n, label %.thread1155, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -658,11 +656,11 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.resume.val = phi i16 [ %i.ats, %vec.epilog.iter.check ], [ %.pre1857, %vector.main.loop.iter.check ]
-  %n.vec2058 = and i32 %4, -4                     ; 4 uses
-  %i.auc = trunc nsw i32 %n.vec2058 to i16
-  %i.aud = shl i16 %i.auc, 4
+  %n.vec2058 = and i32 %3, 4092                   ; 4 uses
+  %i.auc = trunc nuw nsw i32 %n.vec2058 to i16
+  %i.aud = shl nuw i16 %i.auc, 4
   %i.aue = add i16 %.pre1857, %i.aud
-  %i.auf = add nsw i32 %n.vec2058, %i.afi
+  %i.auf = add nuw nsw i32 %n.vec2058, %i.afi
   %broadcast.splatinsert2059 = insertelement <4 x i16> poison, i16 %bc.resume.val, i64 0
   %broadcast.splat2060 = shufflevector <4 x i16> %broadcast.splatinsert2059, <4 x i16> poison, <4 x i32> zeroinitializer
   %induction2061 = add <4 x i16> %broadcast.splat2060, <i16 0, i16 16, i16 32, i16 48>
@@ -683,7 +681,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.aul, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !150
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n2066 = icmp eq i32 %4, %n.vec2058
+  %cmp.n2066 = icmp eq i32 %3, %n.vec2058
   br i1 %cmp.n2066, label %.thread1155, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -1085,9 +1083,6 @@ declare float @llvm.sqrt.f32(float) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
