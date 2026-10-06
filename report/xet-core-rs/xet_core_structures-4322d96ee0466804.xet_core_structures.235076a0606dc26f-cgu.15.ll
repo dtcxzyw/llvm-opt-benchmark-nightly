@@ -205,8 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader11, %bb.c
   %i.f = phi i64 [ %i.h, %bb.c ], [ %i.c, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.j, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+  %.sroa.01.0.i13 = phi i64 [ %i.j, %bb.c ], [ 2, %.preheader11 ] ; 4 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i13
+  %3 = add nsw i64 %.sroa.01.0.i13, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val3 = load ptr, ptr %i.g, align 8, !nonnull !4, !align !5, !noundef !4
   %i.h = load i64, ptr %.val3, align 8, !alias.scope !30, !noalias !31, !noundef !4 ; 2 uses
   %i.i = icmp ult i64 %i.h, %i.f
@@ -219,8 +222,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph17:                                         ; preds = %.preheader, %bb.d
   %i.k = phi i64 [ %i.m, %bb.d ], [ %i.c, %.preheader ]
-  %.sroa.01.1.i16 = phi i64 [ %i.o, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i16 = phi i64 [ %i.o, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.1.i16
+  %5 = add nsw i64 %.sroa.01.1.i16, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load ptr, ptr %i.l, align 8, !nonnull !4, !align !5, !noundef !4
   %i.m = load i64, ptr %.val, align 8, !alias.scope !32, !noalias !33, !noundef !4 ; 2 uses
   %i.n = icmp ult i64 %i.m, %i.k
@@ -330,8 +336,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader11, %bb.c
   %i.f = phi i64 [ %i.h, %bb.c ], [ %i.c, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.j, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+  %.sroa.01.0.i13 = phi i64 [ %i.j, %bb.c ], [ 2, %.preheader11 ] ; 4 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i13
+  %3 = add nsw i64 %.sroa.01.0.i13, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val3 = load ptr, ptr %i.g, align 8, !nonnull !4, !align !5, !noundef !4
   %i.h = load i64, ptr %.val3, align 8, !alias.scope !55, !noalias !56, !noundef !4 ; 2 uses
   %i.i = icmp ult i64 %i.h, %i.f
@@ -344,8 +353,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph17:                                         ; preds = %.preheader, %bb.d
   %i.k = phi i64 [ %i.m, %bb.d ], [ %i.c, %.preheader ]
-  %.sroa.01.1.i16 = phi i64 [ %i.o, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i16 = phi i64 [ %i.o, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.1.i16
+  %5 = add nsw i64 %.sroa.01.1.i16, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load ptr, ptr %i.l, align 8, !nonnull !4, !align !5, !noundef !4
   %i.m = load i64, ptr %.val, align 8, !alias.scope !57, !noalias !58, !noundef !4 ; 2 uses
   %i.n = icmp ult i64 %i.m, %i.k
@@ -451,8 +463,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader11, %bb.c
   %.val4 = phi i64 [ %.val3, %bb.c ], [ %.val5, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i13
+  %3 = add nsw i64 %.sroa.01.0.i13, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val3 = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
   %i.e = icmp ult i64 %.val3, %.val4
   br i1 %i.e, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENCINvMB6_SB12_20sort_unstable_by_keyyNCINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard14set_operations13set_operationINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEINtNtB3i_9bufwriter9BufWriterQINtNtNtB1T_10merklehash9data_hash11HashedWriteB4c_EEEs2_0E0EB1T_.exit, label %bb.c
@@ -464,8 +479,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph17:                                         ; preds = %.preheader, %bb.d
   %.val2 = phi i64 [ %.val, %bb.d ], [ %.val5, %.preheader ]
-  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.1.i16
+  %5 = add nsw i64 %.sroa.01.1.i16, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load i64, ptr %i.g, align 8, !noundef !4 ; 2 uses
   %i.h = icmp ult i64 %.val, %.val2
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENCINvMB6_SB12_20sort_unstable_by_keyyNCINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard14set_operations13set_operationINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader9BufReaderNtNtCsG258MDvU3F_3std2fs4FileEINtNtB3i_9bufwriter9BufWriterQINtNtNtB1T_10merklehash9data_hash11HashedWriteB4c_EEEs2_0E0EB1T_.exit
@@ -544,8 +562,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader11, %bb.c
   %.val4 = phi i64 [ %.val3, %bb.c ], [ %.val5, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i13
+  %3 = add nsw i64 %.sroa.01.0.i13, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val3 = load i64, ptr %i.d, align 8, !alias.scope !74, !noalias !75, !noundef !4 ; 2 uses
   %i.e = icmp ult i64 %.val3, %.val4
   br i1 %i.e, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runjNvYjNtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit, label %bb.c
@@ -557,8 +578,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph17:                                         ; preds = %.preheader, %bb.d
   %.val2 = phi i64 [ %.val, %bb.d ], [ %.val5, %.preheader ]
-  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i16
+  %5 = add nsw i64 %.sroa.01.1.i16, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load i64, ptr %i.g, align 8, !alias.scope !74, !noalias !75, !noundef !4 ; 2 uses
   %i.h = icmp ult i64 %.val, %.val2
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runjNvYjNtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit
@@ -697,7 +721,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph55, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -725,9 +749,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader43, %bb.l
   %.sroa.01.0.i.i45 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader43 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %6 = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %7 = getelementptr i8, ptr %6, i64 -40
-  %i.t = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %7), !noalias !85
+  %6 = add nsw i64 %.sroa.01.0.i.i45, -1          ; 2 uses
+  %7 = icmp ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %6
+  %i.t = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %8), !noalias !85
   %i.u = icmp eq i8 %i.t, -1
   br i1 %i.u, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i, label %bb.l
 
@@ -739,9 +765,11 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph49:                                         ; preds = %.preheader, %bb.m
   %.sroa.01.1.i.i48 = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.w = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %8 = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %9 = getelementptr i8, ptr %8, i64 -40
-  %i.x = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %9), !noalias !85
+  %9 = add nsw i64 %.sroa.01.1.i.i48, -1          ; 2 uses
+  %10 = icmp ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %9
+  %i.x = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %11), !noalias !85
   %i.y = icmp eq i8 %i.x, -1
   br i1 %i.y, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i
 
@@ -978,7 +1006,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph55, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.n = getelementptr inbounds nuw [184 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1006,9 +1034,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader43, %bb.l
   %.sroa.01.0.i.i45 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader43 ] ; 4 uses
   %i.s = getelementptr inbounds nuw [184 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %6 = getelementptr [184 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
-  %7 = getelementptr i8, ptr %6, i64 -184
-  %i.t = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %7), !noalias !91
+  %6 = add nsw i64 %.sroa.01.0.i.i45, -1          ; 2 uses
+  %7 = icmp ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [184 x i8], ptr %i.n, i64 %6
+  %i.t = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %8), !noalias !91
   %i.u = icmp eq i8 %i.t, -1
   br i1 %i.u, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i, label %bb.l
 
@@ -1020,9 +1050,11 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph49:                                         ; preds = %.preheader, %bb.m
   %.sroa.01.1.i.i48 = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.w = getelementptr inbounds nuw [184 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %8 = getelementptr [184 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
-  %9 = getelementptr i8, ptr %8, i64 -184
-  %i.x = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %9), !noalias !91
+  %9 = add nsw i64 %.sroa.01.1.i.i48, -1          ; 2 uses
+  %10 = icmp ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [184 x i8], ptr %i.n, i64 %9
+  %i.x = tail call noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHashNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(184) %11), !noalias !91
   %i.y = icmp eq i8 %i.x, -1
   br i1 %i.y, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i
 

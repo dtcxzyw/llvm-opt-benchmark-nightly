@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
 
@@ -233,10 +233,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph27.i
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
-  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
-  %i.s = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i ; 2 uses
-  %6 = getelementptr i8, ptr %i.s, i64 -112
-  %i.t = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4jsonNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.s, ptr noundef nonnull align 8 %6), !noalias !1329 ; 2 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
+  %i.s = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1          ; 2 uses
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %6
+  %i.t = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4jsonNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.s, ptr noundef nonnull align 8 %8), !noalias !1329 ; 2 uses
   %.not.i.i7.i = icmp ne i8 %i.t, -2
   %i.u = icmp slt i8 %i.t, 0
   %.sroa.0.0.i.i8.i = and i1 %.not.i.i7.i, %i.u
@@ -248,10 +251,13 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskIqAKC4t9Ft_2yr.exit.i, label %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.w = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i ; 2 uses
-  %7 = getelementptr i8, ptr %i.w, i64 -112
-  %i.x = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4jsonNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.w, ptr noundef nonnull align 8 %7), !noalias !1329 ; 2 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.w = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %9 = add nsw i64 %.sroa.01.1.i26.i, -1          ; 2 uses
+  %10 = icmp samesign ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %9
+  %i.x = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4jsonNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.w, ptr noundef nonnull align 8 %11), !noalias !1329 ; 2 uses
   %.not.i.i9.i = icmp ne i8 %i.x, -2
   %i.y = icmp slt i8 %i.x, 0
   %.sroa.0.0.i.i10.i = and i1 %.not.i.i9.i, %i.y
@@ -482,8 +488,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
 
@@ -510,10 +516,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph27.i
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
-  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
-  %i.s = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i ; 2 uses
-  %6 = getelementptr i8, ptr %i.s, i64 -112
-  %i.t = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4yamlNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.s, ptr noundef nonnull align 8 %6), !noalias !1333 ; 2 uses
+  %.sroa.01.0.i23.i = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
+  %i.s = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1          ; 2 uses
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %6
+  %i.t = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4yamlNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.s, ptr noundef nonnull align 8 %8), !noalias !1333 ; 2 uses
   %.not.i.i7.i = icmp ne i8 %i.t, -2
   %i.u = icmp slt i8 %i.t, 0
   %.sroa.0.0.i.i8.i = and i1 %.not.i.i7.i, %i.u
@@ -525,10 +534,13 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4yaml2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskIqAKC4t9Ft_2yr.exit.i, label %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.w = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i ; 2 uses
-  %7 = getelementptr i8, ptr %i.w, i64 -112
-  %i.x = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4yamlNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.w, ptr noundef nonnull align 8 %7), !noalias !1333 ; 2 uses
+  %.sroa.01.1.i26.i = phi i64 [ %i.z, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.w = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i
+  %9 = add nsw i64 %.sroa.01.1.i26.i, -1          ; 2 uses
+  %10 = icmp samesign ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %9
+  %i.x = tail call noundef i8 @_RNvXs0_NtCskIStwd7HrDO_12yara_x_proto4yamlNtB5_2KVNtNtCskKLDkoKarTP_4core3cmp10PartialOrd11partial_cmp(ptr noundef nonnull align 8 %i.w, ptr noundef nonnull align 8 %11), !noalias !1333 ; 2 uses
   %.not.i.i9.i = icmp ne i8 %i.x, -2
   %i.y = icmp slt i8 %i.x, 0
   %.sroa.0.0.i.i10.i = and i1 %.not.i.i9.i, %i.y
@@ -759,8 +771,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
 
@@ -788,12 +800,15 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not27.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph22.i
 
 .lr.ph.i:                                         ; preds = %.preheader16.i, %bb.l
-  %.sroa.01.0.i18.i = phi i64 [ %i.ab, %bb.l ], [ 2, %.preheader16.i ] ; 3 uses
-  %i.v = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %.sroa.01.0.i18.i ; 2 uses
-  %6 = getelementptr i8, ptr %i.v, i64 -48
+  %.sroa.01.0.i18.i = phi i64 [ %i.ab, %bb.l ], [ 2, %.preheader16.i ] ; 4 uses
+  %i.v = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %.sroa.01.0.i18.i
+  %6 = add nsw i64 %.sroa.01.0.i18.i, -1          ; 2 uses
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %6
   %i.w = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.v), !noalias !1345
   %i.x = extractvalue { i32, i32 } %i.w, 0
-  %i.y = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %6), !noalias !1344
+  %i.y = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %8), !noalias !1344
   %i.z = extractvalue { i32, i32 } %i.y, 0
   %i.aa = icmp ult i32 %i.x, %i.z
   br i1 %i.aa, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report5PatchNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keyjNCNvNtNtCskIqAKC4t9Ft_2yr8commands3fix17exec_fix_warnings0E0EB2O_.exit.i, label %bb.l
@@ -804,12 +819,15 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report5PatchNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keyjNCNvNtNtCskIqAKC4t9Ft_2yr8commands3fix17exec_fix_warnings0E0EB2O_.exit.i, label %.lr.ph.i
 
 .lr.ph22.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i21.i = phi i64 [ %i.ai, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.ac = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %.sroa.01.1.i21.i ; 2 uses
-  %7 = getelementptr i8, ptr %i.ac, i64 -48
+  %.sroa.01.1.i21.i = phi i64 [ %i.ai, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.ac = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %.sroa.01.1.i21.i
+  %9 = add nsw i64 %.sroa.01.1.i21.i, -1          ; 2 uses
+  %10 = icmp samesign ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %9
   %i.ad = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ac), !noalias !1346
   %i.ae = extractvalue { i32, i32 } %i.ad, 0
-  %i.af = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %7), !noalias !1344
+  %i.af = tail call { i32, i32 } @_RNvMs_NtNtCs7gfv9tzbXmh_6yara_x8compiler6reportNtB4_5Patch4span(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %11), !noalias !1344
   %i.ag = extractvalue { i32, i32 } %i.af, 0
   %i.ah = icmp ult i32 %i.ae, %i.ag
   br i1 %i.ah, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCs7gfv9tzbXmh_6yara_x8compiler6report5PatchNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keyjNCNvNtNtCskIqAKC4t9Ft_2yr8commands3fix17exec_fix_warnings0E0EB2O_.exit.i

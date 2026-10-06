@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f, %_ZN4core5sli
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
-  %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
+  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
+  %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2903)
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -254,23 +254,27 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.preheader27.i, %bb.l
   %.val7.i.i.i10.i = phi i64 [ %.val5.i.i.i8.i, %bb.l ], [ %.val5.i.i.i.i, %.preheader27.i ]
   %.val6.i.i.i9.i = phi ptr [ %.val.i.i.i7.i, %bb.l ], [ %.val.i.i.i.i, %.preheader27.i ]
-  %.sroa.01.0.i29.i = phi i64 [ %i.am, %bb.l ], [ 2, %.preheader27.i ] ; 3 uses
-  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.0.i29.i ; 4 uses
+  %.sroa.01.0.i29.i = phi i64 [ %i.am, %bb.l ], [ 2, %.preheader27.i ] ; 4 uses
+  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.0.i29.i ; 3 uses
+  %7 = add i64 %.sroa.01.0.i29.i, -1              ; 2 uses
+  %8 = icmp ult i64 %7, %i.m
+  tail call void @llvm.assume(i1 %8)
+  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %7
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2915)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2916)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2917)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2918)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2919)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2920)
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.val.i.i.i7.i = load ptr, ptr %i.ac, align 8, !alias.scope !2921, !noalias !2922, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
+  %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 16
   %.val5.i.i.i8.i = load i64, ptr %i.ad, align 8, !alias.scope !2921, !noalias !2922, !noundef !5 ; 2 uses
   %i.ae = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17hd8bf36e0389dcd3dE"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i.i.i7.i, i64 noundef %.val5.i.i.i8.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val6.i.i.i9.i, i64 noundef %.val7.i.i.i10.i), !noalias !2923 ; 2 uses
   %i.af = icmp eq i8 %i.ae, 0
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
+  %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ah = load i8, ptr %i.ag, align 8, !range !12, !alias.scope !2921, !noalias !2922
-  %i.ai = getelementptr i8, ptr %i.ab, i64 -8
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   %i.aj = load i8, ptr %i.ai, align 8, !range !12, !alias.scope !2924, !noalias !2925
   %i.ak = sub nsw i8 %i.ah, %i.aj
   %.sroa.0.0.i.i.i11.i = select i1 %i.af, i8 %i.ak, i8 %i.ae
@@ -285,23 +289,27 @@ bb.l:                                             ; preds = %.lr.ph.i
 .lr.ph33.i:                                       ; preds = %.preheader.i, %bb.m
   %.val7.i.i.i15.i = phi i64 [ %.val5.i.i.i13.i, %bb.m ], [ %.val5.i.i.i.i, %.preheader.i ]
   %.val6.i.i.i14.i = phi ptr [ %.val.i.i.i12.i, %bb.m ], [ %.val.i.i.i.i, %.preheader.i ]
-  %.sroa.01.1.i32.i = phi i64 [ %i.ay, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.1.i32.i ; 4 uses
+  %.sroa.01.1.i32.i = phi i64 [ %i.ay, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %9 = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.1.i32.i ; 3 uses
+  %10 = add i64 %.sroa.01.1.i32.i, -1             ; 2 uses
+  %11 = icmp ult i64 %10, %i.m
+  tail call void @llvm.assume(i1 %11)
+  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %10
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2926)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2927)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2928)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2929)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2930)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2931)
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 8
   %.val.i.i.i12.i = load ptr, ptr %i.ao, align 8, !alias.scope !2932, !noalias !2933, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %i.ap = getelementptr inbounds nuw i8, ptr %9, i64 16
   %.val5.i.i.i13.i = load i64, ptr %i.ap, align 8, !alias.scope !2932, !noalias !2933, !noundef !5 ; 2 uses
   %i.aq = tail call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17hd8bf36e0389dcd3dE"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i.i.i12.i, i64 noundef %.val5.i.i.i13.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val6.i.i.i14.i, i64 noundef %.val7.i.i.i15.i), !noalias !2934 ; 2 uses
   %i.ar = icmp eq i8 %i.aq, 0
-  %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 24
+  %i.as = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.at = load i8, ptr %i.as, align 8, !range !12, !alias.scope !2932, !noalias !2933
-  %i.au = getelementptr i8, ptr %i.an, i64 -8
+  %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   %i.av = load i8, ptr %i.au, align 8, !range !12, !alias.scope !2935, !noalias !2936
   %i.aw = sub nsw i8 %i.at, %i.av
   %.sroa.0.0.i.i.i16.i = select i1 %i.ar, i8 %i.aw, i8 %i.aq
@@ -537,7 +545,7 @@ bb.g:                                             ; preds = %bb.f, %_ZN4core5sli
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 11 uses
+  %i.m = sub nuw i64 %1, %.sroa.09.0              ; 13 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -565,8 +573,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader22.i, %bb.l
   %.val9.i = phi i32 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader22.i ]
-  %.sroa.01.0.i24.i = phi i64 [ %i.t, %bb.l ], [ 2, %.preheader22.i ] ; 3 uses
+  %.sroa.01.0.i24.i = phi i64 [ %i.t, %bb.l ], [ 2, %.preheader22.i ] ; 4 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.sroa.01.0.i24.i
+  %6 = add i64 %.sroa.01.0.i24.i, -1
+  %7 = icmp ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
   %.val8.i = load i32, ptr %i.r, align 4, !alias.scope !2956, !noalias !2957, !noundef !5 ; 2 uses
   %i.s = icmp ult i32 %.val8.i, %.val9.i
   br i1 %i.s, label %_ZN4core5slice4sort6shared17find_existing_run17h5dab3cfa82fbed2dE.exit.i, label %bb.l
@@ -578,8 +589,11 @@ bb.l:                                             ; preds = %.lr.ph.i
 
 .lr.ph28.i:                                       ; preds = %.preheader.i, %bb.m
   %.val7.i = phi i32 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader.i ]
-  %.sroa.01.1.i27.i = phi i64 [ %i.w, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
+  %.sroa.01.1.i27.i = phi i64 [ %i.w, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.sroa.01.1.i27.i
+  %8 = add i64 %.sroa.01.1.i27.i, -1
+  %9 = icmp ult i64 %8, %i.m
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.u, align 4, !alias.scope !2956, !noalias !2957, !noundef !5 ; 2 uses
   %i.v = icmp ult i32 %.val.i, %.val7.i
   br i1 %i.v, label %bb.m, label %_ZN4core5slice4sort6shared17find_existing_run17h5dab3cfa82fbed2dE.exit.i

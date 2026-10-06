@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %i.ah = getelementptr inbounds i8, ptr %i.v, i64 %i.ad
   store ptr %i.ah, ptr %i.w, align 8, !tbaa !67
-  %i.ai = ashr exact i64 %i.ad, 2                 ; 2 uses
+  %i.ai = ashr exact i64 %i.ad, 2                 ; 3 uses
   %i.aj = icmp eq ptr %i.aa, %i.z
   br i1 %i.aj, label %bb.m, label %.lr.ph89
 
@@ -236,7 +236,7 @@ bb.p:                                             ; preds = %bb.m
   br label %bb.ao
 
 bb.q:                                             ; preds = %.lr.ph89, %_ZN4cvc58internal6StringD2Ev.exit48
-  %.087 = phi i64 [ 0, %.lr.ph89 ], [ %i.bu, %_ZN4cvc58internal6StringD2Ev.exit48 ] ; 6 uses
+  %.087 = phi i64 [ 0, %.lr.ph89 ], [ %i.bu, %_ZN4cvc58internal6StringD2Ev.exit48 ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   invoke void @_ZNK4cvc58internal6String6substrEm(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::String") align 8 %9, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.087)
           to label %bb.r unwind label %bb.t
@@ -248,7 +248,9 @@ bb.r:                                             ; preds = %bb.q
           to label %bb.s unwind label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  br i1 %i.as, label %.lr.ph, label %.critedge35
+  %.not84 = icmp ule i64 %.087, %i.ai
+  %or.cond.not = select i1 %i.as, i1 %.not84, i1 false
+  br i1 %or.cond.not, label %.lr.ph, label %.critedge35
 
 bb.t:                                             ; preds = %bb.q
   %i.at = landingpad { ptr, i32 }

@@ -202,14 +202,14 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.l = getelementptr i8, ptr %1, i64 8
   %i.m = load i64, ptr %i.l, align 8
-  %i.n = srem i64 %i.k, 1000000000                ; 2 uses
-  %i.o = sdiv i64 %i.k, 1000000000
+  %i.n = srem i64 %i.k, 1000000000                ; 3 uses
+  %i.o = sdiv i64 %i.k, 1000000000                ; 2 uses
   %i.p = trunc nsw i64 %i.n to i32                ; 3 uses
   %i.q = getelementptr i8, ptr %0, i64 16         ; 3 uses
   store i32 %i.p, ptr %i.q, align 8
   %i.r = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.m, i64 %i.d) ; 2 uses
   %i.s = extractvalue { i64, i1 } %i.r, 1
-  %i.t = extractvalue { i64, i1 } %i.r, 0         ; 2 uses
+  %i.t = extractvalue { i64, i1 } %i.r, 0         ; 3 uses
   store i64 %i.t, ptr %i.e, align 8
   br i1 %i.s, label %bb.g, label %bb.h
 
@@ -218,21 +218,33 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.u = add i64 %i.t, %i.o                       ; 3 uses
+  %i.u = add i64 %i.t, %i.o
+  %.fr = freeze i64 %i.u                          ; 3 uses
   %i.v = icmp sgt i64 %i.n, 0
-  %i.w = icmp slt i64 %i.u, 0
-  %or.cond.i24 = select i1 %i.v, i1 %i.w, i1 false
+  %i.w = icmp slt i64 %.fr, 0
+  %or.cond.i24 = and i1 %i.v, %i.w
   br i1 %or.cond.i24, label %.critedge.i.i.preheader, label %.critedge2.i.i.preheader
 
 .critedge.i.i.preheader:                          ; preds = %bb.h
-  %i.x = add nsw i32 %i.p, -1000000000            ; 2 uses
-  %i.y = add nsw i64 %i.u, 1
-  store i32 %i.x, ptr %i.q, align 8
+  %i.x = add nsw i32 %i.p, -1000000000
+  %5 = xor i64 %.fr, -1
+  %6 = add nuw nsw i64 %i.n, 4294967295
+  %7 = and i64 %6, 4294966784
+  %.cmp = icmp samesign ugt i64 %7, 999999999
+  %8 = zext i1 %.cmp to i64
+  %umin = call i64 @llvm.umin.i64(i64 %5, i64 %8) ; 2 uses
+  %9 = trunc nuw nsw i64 %umin to i32
+  %.neg = mul nuw nsw i32 %9, -1000000000
+  %10 = add i32 %.neg, %i.x                       ; 2 uses
+  %11 = add nsw i64 %i.o, %umin
+  %12 = add i64 %11, %i.t
+  %i.y = add i64 %12, 1
+  store i32 %10, ptr %i.q, align 8
   br label %.critedge2.i.i.preheader
 
 .critedge2.i.i.preheader:                         ; preds = %.critedge.i.i.preheader, %bb.h
-  %.sink.i.lcssa23 = phi i64 [ %i.y, %.critedge.i.i.preheader ], [ %i.u, %bb.h ] ; 2 uses
-  %.lcssa.promoted.i.i.lcssa = phi i32 [ %i.x, %.critedge.i.i.preheader ], [ %i.p, %bb.h ]
+  %.sink.i.lcssa23 = phi i64 [ %i.y, %.critedge.i.i.preheader ], [ %.fr, %bb.h ] ; 2 uses
+  %.lcssa.promoted.i.i.lcssa = phi i32 [ %10, %.critedge.i.i.preheader ], [ %i.p, %bb.h ]
   store i64 %.sink.i.lcssa23, ptr %i.e, align 8
   br label %.critedge2.i.i
 
@@ -633,6 +645,9 @@ declare double @llvm.round.f64(double) #12
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @rel_time_to_secs_str(ptr noundef, ptr noundef) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #12

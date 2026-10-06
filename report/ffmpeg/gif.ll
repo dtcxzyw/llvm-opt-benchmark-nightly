@@ -204,15 +204,17 @@ bb.n:                                             ; preds = %bb.m, %.preheader11
   br i1 %exitcond157.i, label %.thread104.i.i, label %.preheader116.us.i.i
 
 .thread.i.i:                                      ; preds = %bb.n
-  %indvars155.le.i.a = trunc i64 %indvars.iv150.i.i to i32 ; 5 uses
+  %indvars155.le.i.a = trunc i64 %indvars.iv150.i.i to i32 ; 4 uses
   %i.bz = icmp sgt i32 %i.bu, %indvars155.le.i.a
   br i1 %i.bz, label %.preheader.us.preheader.i217.i, label %.thread104.i.i
 
 .preheader.us.preheader.i217.i:                   ; preds = %.thread.i.i
-  %i.ca = zext nneg i32 %i.ax to i64
+  %i.ca = zext nneg i32 %i.ax to i64              ; 2 uses
   %i.cb = add nsw i64 %i.ca, -1
   %sext205.i = shl i64 %indvars.iv150.i.i, 32
-  %i.cc = ashr exact i64 %sext205.i, 32
+  %i.cc = ashr exact i64 %sext205.i, 32           ; 2 uses
+  %4 = add nsw i64 %i.ca, -2
+  %smin.i = tail call i64 @llvm.smin.i64(i64 %4, i64 %i.cc)
   br label %.preheader.us.i218.i
 
 .preheader.us.i218.i:                             ; preds = %._crit_edge.us125.i.i, %.preheader.us.preheader.i217.i
@@ -232,20 +234,24 @@ bb.p:                                             ; preds = %bb.o, %.preheader.u
   %i.ce = load i8, ptr %gep205.i.i, align 1, !tbaa !75
   %i.cf = zext i8 %i.ce to i32
   %.not91.us.i.i = icmp eq i32 %i.ba, %i.cf
-  br i1 %.not91.us.i.i, label %bb.o, label %.thread104.loopexit.i.i.a
+  br i1 %.not91.us.i.i, label %bb.o, label %.thread104.loopexit.i.i
 
 ._crit_edge.us125.i.i:                            ; preds = %bb.o
   %indvars.iv.next160.i.i = add nsw i64 %indvars.iv159.i.i, -1 ; 2 uses
   %i.cg = icmp sgt i64 %indvars.iv.next160.i.i, %i.cc
-  br i1 %i.cg, label %.preheader.us.i218.i, label %.thread104.i.i
+  br i1 %i.cg, label %.preheader.us.i218.i, label %.thread104.loopexit.i.i.a
 
-.thread104.loopexit.i.i.a:                        ; preds = %bb.p
-  %i.ch = trunc nsw i64 %indvars.iv159.i.i to i32
+.thread104.loopexit.i.i:                          ; preds = %bb.p
+  %5 = trunc nsw i64 %indvars.iv159.i.i to i32
   br label %.thread104.i.i
 
-.thread104.i.i:                                   ; preds = %._crit_edge.us.i.i, %._crit_edge.us125.i.i, %.thread104.loopexit.i.i.a, %.thread.i.i, %bb.l
-  %.241.i = phi i32 [ %indvars155.le.i.a, %.thread.i.i ], [ %indvars155.le.i.a, %._crit_edge.us125.i.i ], [ %indvars155.le.i.a, %.thread104.loopexit.i.i.a ], [ 0, %bb.l ], [ %i.bu, %._crit_edge.us.i.i ] ; 5 uses
-  %.083121.i.i = phi i32 [ %i.bu, %.thread.i.i ], [ %indvars155.le.i.a, %._crit_edge.us125.i.i ], [ %i.ch, %.thread104.loopexit.i.i.a ], [ %i.bu, %bb.l ], [ %i.bu, %._crit_edge.us.i.i ] ; 4 uses
+.thread104.loopexit.i.i.a:                        ; preds = %._crit_edge.us125.i.i
+  %i.ch = trunc nsw i64 %smin.i to i32
+  br label %.thread104.i.i
+
+.thread104.i.i:                                   ; preds = %._crit_edge.us.i.i, %.thread104.loopexit.i.i.a, %.thread104.loopexit.i.i, %.thread.i.i, %bb.l
+  %.241.i = phi i32 [ %indvars155.le.i.a, %.thread104.loopexit.i.i.a ], [ %indvars155.le.i.a, %.thread104.loopexit.i.i ], [ 0, %bb.l ], [ %indvars155.le.i.a, %.thread.i.i ], [ %i.bu, %._crit_edge.us.i.i ] ; 5 uses
+  %.083121.i.i = phi i32 [ %i.ch, %.thread104.loopexit.i.i.a ], [ %5, %.thread104.loopexit.i.i ], [ %i.bu, %bb.l ], [ %i.bu, %.thread.i.i ], [ %i.bu, %._crit_edge.us.i.i ] ; 4 uses
   %.not85.i = icmp eq i32 %i.ay, 1
   br i1 %.not85.i, label %.thread109.i.i, label %.lr.ph128.preheader.i.i
 
@@ -647,6 +653,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1>, i1 immarg) #8

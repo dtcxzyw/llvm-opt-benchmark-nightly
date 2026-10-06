@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 .preheader29.preheader:                           ; preds = %bb.f
   %i.t = lshr i16 %i.s, 2
   %i.u = and i16 %i.t, 4095                       ; 4 uses
-  %i.v = zext nneg i16 %i.u to i32                ; 9 uses
+  %i.v = zext nneg i16 %i.u to i32                ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader29.preheader
@@ -603,23 +603,21 @@ iter.check228:                                    ; preds = %.loopexit.3
   %.phi.trans.insert55 = zext nneg i16 %i.u to i64
   %.phi.trans.insert56 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %.phi.trans.insert55
   %.pre57 = load i16, ptr %.phi.trans.insert56, align 2, !tbaa !225 ; 5 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.v, i32 4094)
-  %2 = add nuw nsw i32 %umax, 1
-  %3 = sub nsw i32 %2, %i.v                       ; 7 uses
-  %min.iters.check207 = icmp ult i32 %3, 8
+  %2 = xor i32 %i.v, 4095                         ; 7 uses
+  %min.iters.check207 = icmp samesign ult i32 %2, 8
   br i1 %min.iters.check207, label %vec.epilog.scalar.ph229.preheader, label %vector.main.loop.iter.check208
 
 vector.main.loop.iter.check208:                   ; preds = %iter.check228
-  %min.iters.check209 = icmp ult i32 %3, 64
+  %min.iters.check209 = icmp samesign ult i32 %2, 64
   br i1 %min.iters.check209, label %vec.epilog.ph232, label %vector.ph210
 
 vector.ph210:                                     ; preds = %vector.main.loop.iter.check208
-  %i.ek = and i32 %3, 56
-  %n.vec211 = and i32 %3, -64                     ; 5 uses
-  %i.el = trunc nsw i32 %n.vec211 to i16
-  %i.em = shl i16 %i.el, 4
+  %i.ek = and i32 %2, 56
+  %n.vec211 = and i32 %2, 4032                    ; 5 uses
+  %i.el = trunc nuw nsw i32 %n.vec211 to i16
+  %i.em = shl nuw i16 %i.el, 4
   %i.en = add i16 %.pre57, %i.em                  ; 2 uses
-  %i.eo = add nsw i32 %n.vec211, %i.v
+  %i.eo = add nuw nsw i32 %n.vec211, %i.v
   %broadcast.splatinsert212 = insertelement <16 x i16> poison, i16 %.pre57, i64 0
   %broadcast.splat213 = shufflevector <16 x i16> %broadcast.splatinsert212, <16 x i16> poison, <16 x i32> zeroinitializer
   %induction214 = add <16 x i16> %broadcast.splat213, <i16 0, i16 16, i16 32, i16 48, i16 64, i16 80, i16 96, i16 112, i16 128, i16 144, i16 160, i16 176, i16 192, i16 208, i16 224, i16 240>
@@ -649,7 +647,7 @@ vector.body215:                                   ; preds = %vector.ph210, %vect
   br i1 %i.fa, label %middle.block223, label %vector.body215, !llvm.loop !217
 
 middle.block223:                                  ; preds = %vector.body215
-  %cmp.n224 = icmp eq i32 %3, %n.vec211
+  %cmp.n224 = icmp eq i32 %2, %n.vec211
   br i1 %cmp.n224, label %.loopexit.4, label %vec.epilog.iter.check230
 
 vec.epilog.iter.check230:                         ; preds = %middle.block223
@@ -659,11 +657,11 @@ vec.epilog.iter.check230:                         ; preds = %middle.block223
 vec.epilog.ph232:                                 ; preds = %vector.main.loop.iter.check208, %vec.epilog.iter.check230
   %vec.epilog.resume.val225 = phi i32 [ %n.vec211, %vec.epilog.iter.check230 ], [ 0, %vector.main.loop.iter.check208 ]
   %bc.resume.val226 = phi i16 [ %i.en, %vec.epilog.iter.check230 ], [ %.pre57, %vector.main.loop.iter.check208 ]
-  %n.vec233 = and i32 %3, -8                      ; 4 uses
-  %i.fb = trunc nsw i32 %n.vec233 to i16
-  %i.fc = shl i16 %i.fb, 4
+  %n.vec233 = and i32 %2, 4088                    ; 4 uses
+  %i.fb = trunc nuw nsw i32 %n.vec233 to i16
+  %i.fc = shl nuw i16 %i.fb, 4
   %i.fd = add i16 %.pre57, %i.fc
-  %i.fe = add nsw i32 %n.vec233, %i.v
+  %i.fe = add nuw nsw i32 %n.vec233, %i.v
   %broadcast.splatinsert234 = insertelement <8 x i16> poison, i16 %bc.resume.val226, i64 0
   %broadcast.splat235 = shufflevector <8 x i16> %broadcast.splatinsert234, <8 x i16> poison, <8 x i32> zeroinitializer
   %induction236 = add <8 x i16> %broadcast.splat235, <i16 0, i16 16, i16 32, i16 48, i16 64, i16 80, i16 96, i16 112>
@@ -684,7 +682,7 @@ vec.epilog.vector.body237:                        ; preds = %vec.epilog.vector.b
   br i1 %i.fk, label %vec.epilog.middle.block242, label %vec.epilog.vector.body237, !llvm.loop !218
 
 vec.epilog.middle.block242:                       ; preds = %vec.epilog.vector.body237
-  %cmp.n243 = icmp eq i32 %3, %n.vec233
+  %cmp.n243 = icmp eq i32 %2, %n.vec233
   br i1 %cmp.n243, label %.loopexit.4, label %vec.epilog.scalar.ph229.preheader
 
 vec.epilog.scalar.ph229.preheader:                ; preds = %iter.check228, %vec.epilog.iter.check230, %vec.epilog.middle.block242
@@ -1086,9 +1084,6 @@ declare <8 x i32> @llvm.bswap.v8i32(<8 x i32>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <3 x i16> @llvm.masked.load.v3i16.p0(ptr captures(none), <3 x i1>, <3 x i16>) #26

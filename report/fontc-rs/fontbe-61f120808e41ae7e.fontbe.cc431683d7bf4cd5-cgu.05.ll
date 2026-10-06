@@ -204,9 +204,11 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader6, %bb.c
   %.sroa.01.0.i8 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader6 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i8
-  %4 = getelementptr i8, ptr %3, i64 -304
-  %i.e = tail call fastcc noundef zeroext i1 @_RNvYNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB6_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %4) #40
+  %3 = add nsw i64 %.sroa.01.0.i8, -1             ; 2 uses
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3
+  %i.e = tail call fastcc noundef zeroext i1 @_RNvYNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB6_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %5) #40
   br i1 %i.e, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -217,9 +219,11 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i11 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i11
-  %6 = getelementptr i8, ptr %5, i64 -304
-  %i.h = tail call fastcc noundef zeroext i1 @_RNvYNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB6_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %6) #40
+  %6 = add nsw i64 %.sroa.01.1.i11, -1            ; 2 uses
+  %7 = icmp samesign ult i64 %6, %1
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6
+  %i.h = tail call fastcc noundef zeroext i1 @_RNvYNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNtNtCsf3Ta7LF998c_4core3cmp10PartialOrd2ltB6_(ptr noundef nonnull align 8 %i.g, ptr noundef nonnull align 8 %8) #40
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCshxhuDJfZv4T_6fontbe13orchestration8KernPairNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit
 
 bb.d:                                             ; preds = %.lr.ph12
@@ -432,8 +436,11 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.preheader11, %bb.c
   %.val4 = phi i64 [ %.val3, %bb.c ], [ %.val5, %.preheader11 ]
-  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 3 uses
+  %.sroa.01.0.i13 = phi i64 [ %i.f, %bb.c ], [ 2, %.preheader11 ] ; 4 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i13
+  %3 = add nsw i64 %.sroa.01.0.i13, -1
+  %4 = icmp samesign ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
   %.val3 = load i64, ptr %i.d, align 8, !alias.scope !20, !noalias !21, !noundef !10 ; 2 uses
   %i.e = icmp ult i64 %.val3, %.val4
   br i1 %i.e, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runjNvYjNtNtB8_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit, label %bb.c
@@ -445,8 +452,11 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph17:                                         ; preds = %.preheader, %bb.d
   %.val2 = phi i64 [ %.val, %bb.d ], [ %.val5, %.preheader ]
-  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i16 = phi i64 [ %i.i, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i16
+  %5 = add nsw i64 %.sroa.01.1.i16, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val = load i64, ptr %i.g, align 8, !alias.scope !20, !noalias !21, !noundef !10 ; 2 uses
   %i.h = icmp ult i64 %.val, %.val2
   br i1 %i.h, label %bb.d, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runjNvYjNtNtB8_3cmp10PartialOrd2ltECshxhuDJfZv4T_6fontbe.exit

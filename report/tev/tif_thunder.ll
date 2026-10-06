@@ -38,7 +38,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = zext i16 %i.b to i32
-  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderSetupDecode.module, ptr noundef nonnull @.str, i32 noundef %i.c) #5
+  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderSetupDecode.module, ptr noundef nonnull @.str, i32 noundef %i.c) #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -68,7 +68,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderDecodeRow.module, ptr noundef nonnull @.str.1) #5
+  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderDecodeRow.module, ptr noundef nonnull @.str.1) #4
   br label %.loopexit
 
 bb.c:                                             ; preds = %.lr.ph, %ThunderDecode.exit
@@ -142,8 +142,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 ._crit_edge.i:                                    ; preds = %.preheader.i
   %i.ah = trunc i32 %.1114.i to i8
-  %4 = tail call i32 @llvm.usub.sat.i32(i32 %.0104.i, i32 2)
-  %i.ai = add nuw nsw i32 %4, 1                   ; 2 uses
+  %i.ai = add nsw i32 %.0104.i, -1                ; 2 uses
   %i.aj = lshr i32 %i.ai, 1
   %i.ak = zext nneg i32 %i.aj to i64              ; 2 uses
   %i.al = add nuw nsw i64 %i.ak, 1
@@ -151,7 +150,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %scevgep.i = getelementptr i8, ptr %.1106.i, i64 1
   %scevgep175.i = getelementptr i8, ptr %scevgep.i, i64 %i.ak ; 2 uses
   %i.am = add nsw i32 %.0104.i, -2
-  %i.an = and i32 %i.ai, 2147483646
+  %i.an = and i32 %i.ai, -2
   %i.ao = sub nsw i32 %i.am, %i.an
   %i.ap = icmp eq i32 %i.ao, -1
   br i1 %i.ap, label %bb.i, label %._crit_edge.thread.i
@@ -409,7 +408,7 @@ ThunderDecode.exit.thread:                        ; preds = %._crit_edge161.i
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 844
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !38
   %i.eh = zext i32 %i.eg to i64
-  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderDecode.module, ptr noundef nonnull @.str.2, ptr noundef nonnull %i.ee, i64 noundef %i.eh, i64 noundef %.0107.lcssa.i, i64 noundef range(i64 0, 4294967296) %i.k) #5
+  tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @ThunderDecode.module, ptr noundef nonnull @.str.2, ptr noundef nonnull %i.ee, i64 noundef %i.eh, i64 noundef %.0107.lcssa.i, i64 noundef range(i64 0, 4294967296) %i.k) #4
   br label %.loopexit
 
 ThunderDecode.exit:                               ; preds = %._crit_edge161.i
@@ -429,15 +428,11 @@ declare void @TIFFErrorExtR(ptr noundef, ptr noundef, ptr noundef, ...) local_un
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #4
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

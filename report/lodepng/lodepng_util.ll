@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %.critedge
 bb.c:                                             ; preds = %.lr.ph401, %bb.b
   %.0214400 = phi i64 [ 0, %.lr.ph401 ], [ %i.dw, %bb.b ]
   %.0363399 = phi i64 [ 132, %.lr.ph401 ], [ %i.ed, %bb.b ] ; 10 uses
+  %3 = add nuw nsw i64 %.0363399, 4               ; 2 uses
   %i.dx = add nuw nsw i64 %.0363399, 8            ; 2 uses
   %i.dy = icmp samesign ugt i64 %i.dx, %2
   br i1 %i.dy, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit257, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.0363399
-  %i.dz = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 %3
   %i.ea = load i32, ptr %i.dz, align 1
   %i.eb = tail call i32 @llvm.bswap.i32(i32 %i.ea)
   %i.ec = zext i32 %i.eb to i64
@@ -242,9 +242,13 @@ bb.f:                                             ; preds = %_ZN7lodepngL15decod
   %or.cond246 = select i1 %.not227, i1 true, i1 %i.ek
   %i.el = icmp ult i32 %.0.i258, 8
   %or.cond247 = or i1 %i.el, %or.cond246
-  br i1 %or.cond247, label %.critedge243, label %bb.g
+  br i1 %or.cond247, label %.critedge243, label %4
 
-bb.g:                                             ; preds = %bb.f
+4:                                                ; preds = %bb.f
+  %5 = icmp samesign ugt i64 %3, %2
+  br i1 %5, label %_ZN7lodepngL9isICCwordEPKhmmPKc.exit284.thread, label %bb.g
+
+bb.g:                                             ; preds = %4
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 %.0363399 ; 13 uses
   %i.en = load i8, ptr %i.em, align 1, !tbaa !21
   switch i8 %i.en, label %_ZN7lodepngL9isICCwordEPKhmmPKc.exit284.thread [
@@ -526,8 +530,8 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit290:  ; preds = %_ZN7lodepngL18decod
   store i32 1, ptr %i.b, align 4, !tbaa !55
   br label %.critedge
 
-_ZN7lodepngL9isICCwordEPKhmmPKc.exit284.thread:   ; preds = %bb.g, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit, %bb.i, %bb.h, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit268, %bb.o, %bb.n, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit276, %bb.u, %bb.t, %bb.z, %bb.aa, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit284
-  %i.je = tail call fastcc noundef i32 @_ZN7lodepngL9isICCwordEPKhmmPKc(ptr noundef nonnull %1, i64 noundef %2, i64 noundef %.0363399, ptr noundef nonnull @.str.8)
+_ZN7lodepngL9isICCwordEPKhmmPKc.exit284.thread:   ; preds = %bb.g, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit, %bb.i, %bb.h, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit268, %bb.o, %bb.n, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit276, %bb.u, %bb.t, %4, %bb.z, %bb.aa, %_ZN7lodepngL9isICCwordEPKhmmPKc.exit284
+  %i.je = tail call fastcc noundef i32 @_ZN7lodepngL9isICCwordEPKhmmPKc(ptr noundef %1, i64 noundef %2, i64 noundef %.0363399, ptr noundef nonnull @.str.8)
   %.not232 = icmp eq i32 %i.je, 0
   br i1 %.not232, label %bb.ap, label %bb.af
 

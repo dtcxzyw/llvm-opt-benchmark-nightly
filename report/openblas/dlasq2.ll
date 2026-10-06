@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlasq2?download=true
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -61,12 +61,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #7
-  %i.u = getelementptr inbounds i8, ptr %1, i64 -8 ; 102 uses
+  %i.u = getelementptr inbounds i8, ptr %1, i64 -8 ; 104 uses
   store i32 0, ptr %2, align 4, !tbaa !33
   %i.v = tail call double @dlamch_(ptr noundef nonnull @.str) #7
   %i.w = tail call double @dlamch_(ptr noundef nonnull @.str.1) #7 ; 4 uses
   %i.x = fmul double %i.v, 1.000000e+02           ; 2 uses
-  %i.y = fmul double %i.x, %i.x                   ; 11 uses
+  %i.y = fmul double %i.x, %i.x                   ; 13 uses
   %i.z = load i32, ptr %0, align 4, !tbaa !33     ; 6 uses
   %i.aa = icmp slt i32 %i.z, 0
   br i1 %i.aa, label %bb.b, label %bb.c
@@ -469,7 +469,7 @@ bb.ae:                                            ; preds = %._crit_edge631
 .loopexit614:                                     ; preds = %.loopexit614.loopexit, %bb.ae, %._crit_edge631
   %i.iy = phi double [ %.pre, %.loopexit614.loopexit ], [ %i.ih, %bb.ae ], [ %i.ih, %._crit_edge631 ] ; 4 uses
   store i32 0, ptr %i.q, align 4, !tbaa !33
-  %i.iz = add i32 %i.id, -4                       ; 3 uses
+  %i.iz = add i32 %i.id, -4                       ; 4 uses
   %.not603636 = icmp slt i32 %i.iz, 4             ; 2 uses
   br i1 %.not603636, label %._crit_edge641.thread, label %.lr.ph640.preheader
 
@@ -643,41 +643,101 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aq, %bb.
   %i.lv = sext i32 %i.id to i64
   %i.lw = getelementptr [8 x i8], ptr %i.u, i64 %i.lv
   %i.lx = getelementptr i8, ptr %i.lw, i64 -16
-  %i.ly = load double, ptr %i.lx, align 8, !tbaa !35
-  %i.lz = sext i32 %i.lu to i64
-  br label %.lr.ph640.1
+  %i.ly = load double, ptr %i.lx, align 8, !tbaa !35 ; 4 uses
+  %i.lz = sext i32 %i.lu to i64                   ; 3 uses
+  %3 = zext nneg i32 %i.iz to i64
+  %4 = add nsw i64 %3, -4                         ; 2 uses
+  %5 = and i64 %4, 4
+  %lcmp.mod989.not.not = icmp eq i64 %5, 0
+  br i1 %lcmp.mod989.not.not, label %.lr.ph640.1.prol, label %.lr.ph640.1.prol.loopexit
 
-.lr.ph640.1:                                      ; preds = %bb.au, %.lr.ph640.preheader.1
-  %indvars.iv756.1 = phi i64 [ %i.lz, %.lr.ph640.preheader.1 ], [ %indvars.iv.next757.1, %bb.au ] ; 3 uses
-  %.1555637.1 = phi double [ %i.ly, %.lr.ph640.preheader.1 ], [ %.2556.1.a, %bb.au ] ; 3 uses
+.lr.ph640.1.prol:                                 ; preds = %.lr.ph640.preheader.1
+  %6 = getelementptr [8 x i8], ptr %i.u, i64 %i.lz ; 3 uses
+  %7 = getelementptr i8, ptr %6, i64 -8           ; 2 uses
+  %8 = load double, ptr %7, align 8, !tbaa !35    ; 2 uses
+  %9 = fmul double %i.y, %i.ly
+  %10 = fcmp ugt double %8, %9
+  br i1 %10, label %14, label %11
+
+11:                                               ; preds = %.lr.ph640.1.prol
+  store double 0.000000e+00, ptr %7, align 8, !tbaa !35
+  %12 = getelementptr i8, ptr %6, i64 -24
+  %13 = load double, ptr %12, align 8, !tbaa !35
+  br label %.lr.ph640.1.prol.loopexit.unr-lcssa
+
+14:                                               ; preds = %.lr.ph640.1.prol
+  %15 = getelementptr i8, ptr %6, i64 -24
+  %16 = load double, ptr %15, align 8, !tbaa !35
+  %17 = fadd double %i.ly, %8
+  %18 = fdiv double %i.ly, %17
+  %19 = fmul double %18, %16
+  br label %.lr.ph640.1.prol.loopexit.unr-lcssa
+
+.lr.ph640.1.prol.loopexit.unr-lcssa:              ; preds = %14, %11
+  %.2556.1.prol = phi double [ %13, %11 ], [ %19, %14 ]
+  %indvars.iv.next757.1.prol = add nsw i64 %i.lz, -4
+  br label %.lr.ph640.1.prol.loopexit
+
+.lr.ph640.1.prol.loopexit:                        ; preds = %.lr.ph640.1.prol.loopexit.unr-lcssa, %.lr.ph640.preheader.1
+  %indvars.iv756.1.unr = phi i64 [ %i.lz, %.lr.ph640.preheader.1 ], [ %indvars.iv.next757.1.prol, %.lr.ph640.1.prol.loopexit.unr-lcssa ]
+  %.1555637.1.unr = phi double [ %i.ly, %.lr.ph640.preheader.1 ], [ %.2556.1.prol, %.lr.ph640.1.prol.loopexit.unr-lcssa ]
+  %20 = icmp eq i64 %4, 0
+  br i1 %20, label %.lr.ph647.1, label %.lr.ph640.1
+
+.lr.ph640.1:                                      ; preds = %.lr.ph640.1.prol.loopexit, %bb.au
+  %indvars.iv756.1 = phi i64 [ %indvars.iv.next757.1, %bb.au ], [ %indvars.iv756.1.unr, %.lr.ph640.1.prol.loopexit ] ; 4 uses
+  %.1555637.1 = phi double [ %.2556.1.a, %bb.au ], [ %.1555637.1.unr, %.lr.ph640.1.prol.loopexit ] ; 3 uses
   %i.ma = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv756.1 ; 3 uses
   %i.mb = getelementptr i8, ptr %i.ma, i64 -8     ; 2 uses
   %i.mc = load double, ptr %i.mb, align 8, !tbaa !35 ; 2 uses
   %i.md = fmul double %i.y, %.1555637.1
   %i.me = fcmp ugt double %i.mc, %i.md
-  br i1 %i.me, label %bb.at, label %bb.as
+  br i1 %i.me, label %24, label %21
 
-bb.as:                                            ; preds = %.lr.ph640.1
+21:                                               ; preds = %.lr.ph640.1
   store double 0.000000e+00, ptr %i.mb, align 8, !tbaa !35
-  %i.mf = getelementptr i8, ptr %i.ma, i64 -24
+  %22 = getelementptr i8, ptr %i.ma, i64 -24
+  %23 = load double, ptr %22, align 8, !tbaa !35
+  br label %.lr.ph640.1.1
+
+24:                                               ; preds = %.lr.ph640.1
+  %25 = getelementptr i8, ptr %i.ma, i64 -24
+  %26 = load double, ptr %25, align 8, !tbaa !35
+  %27 = fadd double %.1555637.1, %i.mc
+  %28 = fdiv double %.1555637.1, %27
+  %29 = fmul double %28, %26
+  br label %.lr.ph640.1.1
+
+.lr.ph640.1.1:                                    ; preds = %24, %21
+  %.2556.1 = phi double [ %23, %21 ], [ %29, %24 ] ; 3 uses
+  %30 = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv756.1 ; 3 uses
+  %31 = getelementptr i8, ptr %30, i64 -40        ; 2 uses
+  %32 = load double, ptr %31, align 8, !tbaa !35  ; 2 uses
+  %33 = fmul double %i.y, %.2556.1
+  %34 = fcmp ugt double %32, %33
+  br i1 %34, label %bb.at, label %bb.as
+
+bb.as:                                            ; preds = %.lr.ph640.1.1
+  store double 0.000000e+00, ptr %31, align 8, !tbaa !35
+  %i.mf = getelementptr i8, ptr %30, i64 -56
   %i.mg = load double, ptr %i.mf, align 8, !tbaa !35
   br label %bb.au
 
-bb.at:                                            ; preds = %.lr.ph640.1
-  %i.mh = getelementptr i8, ptr %i.ma, i64 -24
+bb.at:                                            ; preds = %.lr.ph640.1.1
+  %i.mh = getelementptr i8, ptr %30, i64 -56
   %i.mi = load double, ptr %i.mh, align 8, !tbaa !35
-  %i.mj = fadd double %.1555637.1, %i.mc
-  %i.mk = fdiv double %.1555637.1, %i.mj
+  %i.mj = fadd double %.2556.1, %32
+  %i.mk = fdiv double %.2556.1, %i.mj
   %i.ml = fmul double %i.mk, %i.mi
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
   %.2556.1.a = phi double [ %i.mg, %bb.as ], [ %i.ml, %bb.at ]
-  %indvars.iv.next757.1 = add nsw i64 %indvars.iv756.1, -4
-  %.not603.1 = icmp slt i64 %indvars.iv756.1, 9
+  %indvars.iv.next757.1 = add nsw i64 %indvars.iv756.1, -8
+  %.not603.1 = icmp slt i64 %indvars.iv756.1, 13
   br i1 %.not603.1, label %.lr.ph647.1, label %.lr.ph640.1, !llvm.loop !15
 
-.lr.ph647.1:                                      ; preds = %bb.au
+.lr.ph647.1:                                      ; preds = %bb.au, %.lr.ph640.1.prol.loopexit
   %i.mm = getelementptr i8, ptr %1, i64 8
   %i.mn = load double, ptr %i.mm, align 8, !tbaa !35
   %i.mo = sext i32 %i.lu to i64

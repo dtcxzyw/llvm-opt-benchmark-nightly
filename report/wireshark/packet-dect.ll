@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.e, %bb.e, %bb.e,
   %.086262 = phi ptr [ null, %.thread ], [ %i.y, %bb.h ] ; 2 uses
   %.088261 = phi ptr [ null, %.thread ], [ %i.q, %bb.h ] ; 2 uses
   %i.z = phi i1 [ false, %.thread ], [ %.ph, %bb.h ]
-  %.091113259 = phi i32 [ 0, %.thread ], [ %.091.ph, %bb.h ] ; 5 uses
+  %.091113259 = phi i32 [ 0, %.thread ], [ %.091.ph, %bb.h ] ; 4 uses
   %.not180 = icmp eq i32 %.091113259, 0
   %i.aa = getelementptr i8, ptr %1, i64 416
-  %i.ab = zext nneg i32 %.091113259 to i64
+  %i.ab = zext nneg i32 %.091113259 to i64        ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.preheader, %._crit_edge
@@ -224,25 +224,22 @@ bb.i:                                             ; preds = %.preheader, %._crit
 
 bb.j:                                             ; preds = %.lr.ph, %bb.m
   %indvars.iv246 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next247, %bb.m ] ; 2 uses
-  %indvars.iv242 = phi i32 [ %.091113259, %.lr.ph ], [ %indvars.iv.next243, %bb.m ] ; 3 uses
   %.0178 = phi i16 [ 0, %.lr.ph ], [ %.1.lcssa, %bb.m ]
   %.194176 = phi i32 [ 19, %.lr.ph ], [ %i.at, %bb.m ] ; 2 uses
-  %umin = call i32 @llvm.umin.i32(i32 %indvars.iv242, i32 15) ; 2 uses
-  %5 = add nuw nsw i32 %umin, 1
   %i.ag = load ptr, ptr %i.aa, align 8
   %i.ah = call ptr @wmem_strbuf_new(ptr noundef %i.ag, ptr noundef null) ; 2 uses
-  %wide.trip.count = zext i32 %indvars.iv242 to i64
-  %invariant.gep = getelementptr i8, ptr %i.b, i64 %indvars.iv246
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.l
+  %indvars.iv240 = phi i32 [ 0, %bb.j ], [ %indvars.iv.next241, %bb.l ]
   %indvars.iv = phi i64 [ 0, %bb.j ], [ %indvars.iv.next, %bb.l ] ; 3 uses
   %.1175 = phi i16 [ %.0178, %bb.j ], [ %i.ap, %bb.l ] ; 3 uses
-  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count
-  br i1 %exitcond.not, label %bb.m, label %bb.l
+  %5 = or disjoint i64 %indvars.iv, %indvars.iv246 ; 2 uses
+  %.not107 = icmp samesign ult i64 %5, %i.ab
+  br i1 %.not107, label %bb.l, label %.split.loop.exit
 
 bb.l:                                             ; preds = %bb.k
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv
+  %gep = getelementptr i8, ptr %i.b, i64 %5
   %i.ai = load i8, ptr %gep, align 1
   %i.aj = urem i16 %.1175, 31
   %i.ak = zext nneg i16 %i.aj to i64
@@ -252,20 +249,24 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = zext i8 %i.an to i32
   call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.ah, ptr noundef nonnull @.str.741, i32 noundef %i.ao)
   %i.ap = add i16 %.1175, 1                       ; 2 uses
+  %indvars.iv.next241 = add nuw nsw i32 %indvars.iv240, 1 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond245.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond245.not, label %bb.m, label %bb.k, !llvm.loop !8
 
-bb.m:                                             ; preds = %bb.k, %bb.l
-  %.1.lcssa = phi i16 [ %.1175, %bb.k ], [ %i.ap, %bb.l ]
-  %.lcssa173 = phi i32 [ %umin, %bb.k ], [ %5, %bb.l ] ; 2 uses
+.split.loop.exit:                                 ; preds = %bb.k
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %.split.loop.exit
+  %.1.lcssa = phi i16 [ %.1175, %.split.loop.exit ], [ %i.ap, %bb.l ]
+  %.lcssa173 = phi i32 [ %6, %.split.loop.exit ], [ %indvars.iv.next241, %bb.l ] ; 2 uses
   %i.aq = load i32, ptr @hf_dect_B_Data, align 4
   %i.ar = call ptr @wmem_strbuf_get_str(ptr noundef %i.ah)
   %i.as = call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_none_format(ptr noundef %.086262, i32 noundef %i.aq, ptr noundef %2, i32 noundef %.194176, i32 noundef %.lcssa173, ptr noundef nonnull @.str.742, ptr noundef %i.ar) ; 0 uses
   %i.at = add i32 %.lcssa173, %.194176            ; 2 uses
   %indvars.iv.next247 = add nuw nsw i64 %indvars.iv246, 16 ; 2 uses
   %i.au = icmp samesign ult i64 %indvars.iv.next247, %i.ab
-  %indvars.iv.next243 = add i32 %indvars.iv242, -16
   br i1 %i.au, label %bb.j, label %._crit_edge, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.i

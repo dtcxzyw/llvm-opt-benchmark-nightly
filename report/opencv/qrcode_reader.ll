@@ -205,6 +205,7 @@ bb.a:
   %i.t = sext i32 %i.c to i64                     ; 6 uses
   %i.u = add nsw i64 %i.t, 1                      ; 5 uses
   %i.v = sext i32 %i.d to i64
+  %wide.trip.count86 = sext i32 %i.o to i64
   %wide.trip.count = sext i32 %i.q to i64         ; 3 uses
   %i.w = add nsw i64 %wide.trip.count, -2
   %i.x = sub nsw i64 %i.w, %i.t                   ; 2 uses
@@ -385,8 +386,7 @@ bb.c:                                             ; preds = %bb.b, %scalar.ph
   %.lcssa = phi i32 [ %i.cc, %middle.block ], [ %i.cz, %bb.c ] ; 2 uses
   tail call void @_ZN5zxing9BitMatrix10setRowBoolEiPb(ptr noundef nonnull align 8 dereferenceable(346) %i.b, i32 noundef %i.ad, ptr noundef nonnull %i.j)
   %indvars.iv.next84 = add nsw i64 %indvars.iv83, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next84 to i32
-  %exitcond86.not = icmp eq i32 %i.o, %lftr.wideiv
+  %exitcond86.not = icmp eq i64 %indvars.iv.next84, %wide.trip.count86
   br i1 %exitcond86.not, label %._crit_edge77, label %.lr.ph.us, !llvm.loop !196
 
 .lr.ph76.split:                                   ; preds = %.lr.ph76, %.lr.ph76.split

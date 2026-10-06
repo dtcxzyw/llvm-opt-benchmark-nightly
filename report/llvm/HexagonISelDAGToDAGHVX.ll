@@ -205,7 +205,7 @@ bb.bu:                                            ; preds = %._crit_edge356, %bb
 
 bb.bv:                                            ; preds = %.lr.ph355, %_ZN12_GLOBAL__N_112NodeTemplateD2Ev.exit
   %.val138357 = phi i32 [ %.promoted, %.lr.ph355 ], [ %i.aaf, %_ZN12_GLOBAL__N_112NodeTemplateD2Ev.exit ] ; 2 uses
-  %.0101353 = phi i32 [ 0, %.lr.ph355 ], [ %i.zi, %_ZN12_GLOBAL__N_112NodeTemplateD2Ev.exit ] ; 7 uses
+  %.0101353 = phi i32 [ 0, %.lr.ph355 ], [ %i.zi, %_ZN12_GLOBAL__N_112NodeTemplateD2Ev.exit ] ; 8 uses
   %i.yf = icmp eq i32 %.0101353, %i.xp
   %.pre394 = load ptr, ptr %17, align 8, !tbaa !31 ; 6 uses
   br i1 %i.yf, label %._crit_edge395, label %bb.bw
@@ -228,7 +228,7 @@ bb.bw:                                            ; preds = %bb.bv
   br label %bb.bx
 
 bb.bx:                                            ; preds = %._crit_edge395, %bb.bw
-  %.pre-phi = phi i64 [ %.pre402, %._crit_edge395 ], [ %i.yg, %bb.bw ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre402, %._crit_edge395 ], [ %i.yg, %bb.bw ]
   %i.yo = phi i32 [ %.pre397, %._crit_edge395 ], [ %i.yi, %bb.bw ]
   %i.yp = phi i1 [ true, %._crit_edge395 ], [ %i.yn, %bb.bw ] ; 2 uses
   %i.yq = shl nuw i32 1, %i.yo                    ; 3 uses
@@ -245,33 +245,30 @@ bb.bx:                                            ; preds = %._crit_edge395, %bb
   br label %.lr.ph347
 
 .lr.ph347:                                        ; preds = %.lr.ph347.preheader, %bb.by
-  %indvars.iv379 = phi i64 [ %.pre-phi, %.lr.ph347.preheader ], [ %indvars.iv.next380, %bb.by ] ; 2 uses
-  %indvars.iv377 = phi i64 [ %i.yu, %.lr.ph347.preheader ], [ %indvars.iv.next378, %bb.by ] ; 3 uses
-  %.0100346.a = phi i32 [ %i.yq, %.lr.ph347.preheader ], [ %i.zb, %bb.by ] ; 2 uses
-  %i.yv = getelementptr inbounds nuw [4 x i8], ptr %.pre394, i64 %indvars.iv377
+  %indvars.iv379 = phi i64 [ %i.yu, %.lr.ph347.preheader ], [ %indvars.iv.next378, %bb.by ] ; 3 uses
+  %.0100346 = phi i32 [ %i.yq, %.lr.ph347.preheader ], [ %i.zb, %bb.by ] ; 2 uses
+  %.0100346.a = phi i32 [ %.0101353, %.lr.ph347.preheader ], [ %28, %bb.by ]
+  %i.yv = getelementptr inbounds nuw [4 x i8], ptr %.pre394, i64 %indvars.iv379
   %i.yw = load i32, ptr %i.yv, align 4, !tbaa !34 ; 2 uses
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %.pre394, i64 %indvars.iv379
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 8
-  %i.yx = load i32, ptr %26, align 4, !tbaa !34
+  %25 = add nuw i32 %.0100346.a, 2
+  %26 = zext i32 %25 to i64
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %.pre394, i64 %26
+  %i.yx = load i32, ptr %27, align 4, !tbaa !34
   %i.yy = icmp uge i32 %i.yw, %i.yx
   %i.yz = xor i1 %i.yp, %i.yy
-  br i1 %i.yz, label %bb.by, label %.critedge.loopexit.split.loop.exit519
+  %28 = trunc nuw i64 %indvars.iv379 to i32       ; 2 uses
+  br i1 %i.yz, label %bb.by, label %.critedge
 
 bb.by:                                            ; preds = %.lr.ph347
   %i.za = shl nuw i32 1, %i.yw
-  %i.zb = or i32 %i.za, %.0100346.a               ; 2 uses
-  %indvars.iv.next378 = add nuw nsw i64 %indvars.iv377, 1 ; 2 uses
+  %i.zb = or i32 %i.za, %.0100346                 ; 2 uses
+  %indvars.iv.next378 = add nuw nsw i64 %indvars.iv379, 1 ; 2 uses
   %i.zc = icmp samesign ult i64 %indvars.iv.next378, %i.ye
-  %indvars.iv.next380 = add nuw nsw i64 %indvars.iv379, 1
   br i1 %i.zc, label %.lr.ph347, label %.critedge, !llvm.loop !991
 
-.critedge.loopexit.split.loop.exit519:            ; preds = %.lr.ph347
-  %27 = trunc nuw i64 %indvars.iv377 to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.by, %.critedge.loopexit.split.loop.exit519, %.preheader
-  %.0100.lcssa = phi i32 [ %i.yq, %.preheader ], [ %.0100346.a, %.critedge.loopexit.split.loop.exit519 ], [ %i.zb, %bb.by ]
-  %.lcssa = phi i32 [ %i.ys, %.preheader ], [ %27, %.critedge.loopexit.split.loop.exit519 ], [ %i.xp, %bb.by ] ; 2 uses
+.critedge:                                        ; preds = %.lr.ph347, %bb.by, %.preheader
+  %.0100.lcssa = phi i32 [ %i.yq, %.preheader ], [ %i.zb, %bb.by ], [ %.0100346, %.lr.ph347 ]
+  %.lcssa = phi i32 [ %i.ys, %.preheader ], [ %i.xp, %bb.by ], [ %28, %.lr.ph347 ] ; 2 uses
   %i.zd = zext i32 %.lcssa to i64
   %i.ze = getelementptr inbounds nuw [4 x i8], ptr %.pre394, i64 %i.zd
   %i.zf = load i32, ptr %i.ze, align 4, !tbaa !34

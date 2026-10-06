@@ -202,16 +202,13 @@ bb.br:                                            ; preds = %bb.w
   %i.agm = load i32, ptr @hf_lbmc_tsni_num_recs, align 4
   %i.agn = call ptr @proto_tree_add_item(ptr noundef %i.agf, i32 noundef %i.agm, ptr noundef %i.jl, i32 noundef 2, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.ago = add i8 %i.aga, -4                      ; 2 uses
+  %28 = zext i8 %i.ago to i32                     ; 2 uses
   %i.agp = icmp ugt i8 %i.ago, 7
-  br i1 %i.agp, label %.lr.ph.preheader.i, label %dissect_nhdr_tsni.exit
+  br i1 %i.agp, label %.lr.ph.i841, label %dissect_nhdr_tsni.exit
 
-.lr.ph.preheader.i:                               ; preds = %bb.br
-  %28 = zext i8 %i.ago to i32
-  br label %.lr.ph.i841
-
-.lr.ph.i841:                                      ; preds = %.lr.ph.i841, %.lr.ph.preheader.i
-  %.039.i = phi i32 [ %i.ahc, %.lr.ph.i841 ], [ 4, %.lr.ph.preheader.i ] ; 4 uses
-  %.03537.i = phi i32 [ %i.ahb, %.lr.ph.i841 ], [ %28, %.lr.ph.preheader.i ] ; 2 uses
+.lr.ph.i841:                                      ; preds = %bb.br, %.lr.ph.i841
+  %.039.i = phi i32 [ %i.ahc, %.lr.ph.i841 ], [ 4, %bb.br ] ; 4 uses
+  %.03537.i = phi i32 [ %i.ahb, %.lr.ph.i841 ], [ %28, %bb.br ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #12
   store i32 0, ptr %i.s, align 4
   %i.agq = load i32, ptr @hf_lbmc_tsni_rec, align 4
@@ -227,12 +224,17 @@ bb.br:                                            ; preds = %bb.w
   %i.aha = call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %2, ptr noundef %i.agy, ptr noundef nonnull @ei_lbmc_analysis_tsni, ptr noundef nonnull @.str.1744, i32 noundef %i.agz) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #12
   %i.ahb = add nsw i32 %.03537.i, -8
-  %i.ahc = add nuw nsw i32 %.039.i, 8             ; 2 uses
+  %i.ahc = add nuw nsw i32 %.039.i, 8
   %i.ahd = icmp samesign ugt i32 %.03537.i, 15
-  br i1 %i.ahd, label %.lr.ph.i841, label %dissect_nhdr_tsni.exit, !llvm.loop !9
+  br i1 %i.ahd, label %.lr.ph.i841, label %._crit_edge.loopexit.i, !llvm.loop !9
 
-dissect_nhdr_tsni.exit:                           ; preds = %.lr.ph.i841, %bb.br
-  %.0.lcssa.i840 = phi i32 [ 4, %bb.br ], [ %i.ahc, %.lr.ph.i841 ] ; 2 uses
+._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i841
+  %29 = and i32 %28, 248
+  %30 = or disjoint i32 %29, 4
+  br label %dissect_nhdr_tsni.exit
+
+dissect_nhdr_tsni.exit:                           ; preds = %bb.br, %._crit_edge.loopexit.i
+  %.0.lcssa.i840 = phi i32 [ 4, %bb.br ], [ %30, %._crit_edge.loopexit.i ] ; 2 uses
   call void @proto_item_set_len(ptr noundef %i.agd, i32 noundef %.0.lcssa.i840)
   br label %bb.ib
 

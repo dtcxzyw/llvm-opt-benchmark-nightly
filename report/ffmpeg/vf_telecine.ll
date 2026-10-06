@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.d
-  %.0143 = phi i32 [ %i.cx, %._crit_edge ], [ %i.v, %bb.d ] ; 3 uses
+  %.0143 = phi i32 [ %i.cx, %._crit_edge ], [ %i.v, %bb.d ] ; 4 uses
   %.0141 = phi i32 [ %i.ad, %._crit_edge ], [ 0, %bb.d ]
-  %.0140 = phi i32 [ 1, %._crit_edge ], [ 0, %bb.d ] ; 2 uses
+  %.0140 = phi i32 [ 1, %._crit_edge ], [ 0, %bb.d ] ; 3 uses
   %i.cy = icmp sgt i32 %.0143, 1
   br i1 %i.cy, label %.lr.ph187, label %._crit_edge188
 
@@ -216,11 +216,16 @@ bb.g:                                             ; preds = %._crit_edge, %bb.d
   %i.dd = getelementptr inbounds nuw i8, ptr %i.h, i64 68
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 276
   %i.df = zext nneg i32 %.0140 to i64
+  %2 = add nsw i32 %.0143, -2
+  %3 = lshr i32 %2, 1
+  %4 = add nuw nsw i32 %.0140, %3
+  %5 = add nuw nsw i32 %4, 1                      ; 2 uses
+  %wide.trip.count = zext nneg i32 %5 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph187, %._crit_edge183
   %indvars.iv208 = phi i64 [ %i.df, %.lr.ph187 ], [ %indvars.iv.next209, %._crit_edge183 ] ; 2 uses
-  %.1144184 = phi i32 [ %.0143, %.lr.ph187 ], [ %i.ei, %._crit_edge183 ] ; 2 uses
+  %.1144184 = phi i32 [ %.0143, %.lr.ph187 ], [ %i.ei, %._crit_edge183 ]
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %indvars.iv208 ; 3 uses
   %i.dh = tail call i32 @ff_inlink_make_frame_writable(ptr noundef %0, ptr noundef nonnull %i.dg) #5 ; 3 uses
   %i.di = icmp slt i32 %i.dh, 0
@@ -264,17 +269,13 @@ bb.h:                                             ; preds = %.lr.ph187, %._crit_
   store i32 %i.eh, ptr %i.ef, align 4, !tbaa !62
   %indvars.iv.next209 = add nuw nsw i64 %indvars.iv208, 1 ; 2 uses
   %i.ei = add nsw i32 %.1144184, -2               ; 2 uses
-  %2 = icmp sgt i32 %.1144184, 3
-  br i1 %2, label %bb.h, label %._crit_edge188.loopexit, !llvm.loop !49
+  %exitcond.not = icmp eq i64 %indvars.iv.next209, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge188, label %bb.h, !llvm.loop !49
 
-._crit_edge188.loopexit:                          ; preds = %._crit_edge183
-  %3 = trunc nuw nsw i64 %indvars.iv.next209 to i32
-  br label %._crit_edge188
-
-._crit_edge188:                                   ; preds = %._crit_edge188.loopexit, %bb.g
-  %.1144.lcssa = phi i32 [ %.0143, %bb.g ], [ %i.ei, %._crit_edge188.loopexit ]
-  %.1142.lcssa = phi i32 [ %.0141, %bb.g ], [ %i.dh, %._crit_edge188.loopexit ]
-  %.1.lcssa = phi i32 [ %.0140, %bb.g ], [ %3, %._crit_edge188.loopexit ] ; 2 uses
+._crit_edge188:                                   ; preds = %._crit_edge183, %bb.g
+  %.1144.lcssa = phi i32 [ %.0143, %bb.g ], [ %i.ei, %._crit_edge183 ]
+  %.1142.lcssa = phi i32 [ %.0141, %bb.g ], [ %i.dh, %._crit_edge183 ]
+  %.1.lcssa = phi i32 [ %.0140, %bb.g ], [ %5, %._crit_edge183 ] ; 2 uses
   %i.ej = icmp eq i32 %.1144.lcssa, 1
   br i1 %i.ej, label %.preheader, label %bb.j
 
@@ -327,7 +328,7 @@ bb.j:                                             ; preds = %._crit_edge193, %._
   %i.fj = getelementptr inbounds nuw i8, ptr %i.f, i64 248
   %i.fk = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %i.fl = getelementptr inbounds nuw i8, ptr %i.h, i64 52
-  %wide.trip.count.a = zext i32 %.1.lcssa to i64
+  %wide.trip.count.a = zext nneg i32 %.1.lcssa to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph196, %bb.l

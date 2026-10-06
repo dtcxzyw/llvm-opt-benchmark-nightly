@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
 
@@ -251,22 +251,25 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph27.i
 
 .lr.ph.i:                                         ; preds = %.preheader21.i, %bb.l
-  %.sroa.01.0.i23.i = phi i64 [ %i.bd, %bb.l ], [ 2, %.preheader21.i ] ; 3 uses
-  %i.aj = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i ; 4 uses
-  %6 = getelementptr i8, ptr %i.aj, i64 -40
+  %.sroa.01.0.i23.i = phi i64 [ %i.bd, %bb.l ], [ 2, %.preheader21.i ] ; 4 uses
+  %i.aj = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i23.i ; 2 uses
+  %6 = add nsw i64 %.sroa.01.0.i23.i, -1          ; 2 uses
+  %7 = icmp samesign ult i64 %6, %i.m
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !334)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !335)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !336)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
   %i.al = load i8, ptr %i.ak, align 8, !range !328, !alias.scope !338, !noalias !339, !noundef !3 ; 2 uses
-  %i.am = getelementptr i8, ptr %i.aj, i64 -8
+  %i.am = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.an = load i8, ptr %i.am, align 8, !range !328, !alias.scope !340, !noalias !341, !noundef !3 ; 2 uses
   %i.ao = sub nsw i8 %i.al, %i.an
   %i.ap = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.aj), !noalias !339 ; 2 uses
   %i.aq = extractvalue { ptr, i64 } %i.ap, 0
   %i.ar = extractvalue { ptr, i64 } %i.ap, 1      ; 2 uses
-  %i.as = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %6), !noalias !333 ; 2 uses
+  %i.as = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %8), !noalias !333 ; 2 uses
   %i.at = extractvalue { ptr, i64 } %i.as, 0
   %i.au = extractvalue { ptr, i64 } %i.as, 1      ; 2 uses
   %spec.store.select.i.i7.i = tail call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.au)
@@ -287,22 +290,25 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCINvMs1_B14_NtB14_5Zalsa3newNtNtB16_13database_impl12DatabaseImplE0E0EB16_.exit.i, label %.lr.ph.i
 
 .lr.ph27.i:                                       ; preds = %.preheader.i, %bb.m
-  %.sroa.01.1.i26.i = phi i64 [ %i.by, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
-  %i.be = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i ; 4 uses
-  %7 = getelementptr i8, ptr %i.be, i64 -40
+  %.sroa.01.1.i26.i = phi i64 [ %i.by, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.be = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i26.i ; 2 uses
+  %9 = add nsw i64 %.sroa.01.1.i26.i, -1          ; 2 uses
+  %10 = icmp samesign ult i64 %9, %i.m
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %9 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !342)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !344)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !345)
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 32
   %i.bg = load i8, ptr %i.bf, align 8, !range !328, !alias.scope !346, !noalias !347, !noundef !3 ; 2 uses
-  %i.bh = getelementptr i8, ptr %i.be, i64 -8
+  %i.bh = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.bi = load i8, ptr %i.bh, align 8, !range !328, !alias.scope !348, !noalias !349, !noundef !3 ; 2 uses
   %i.bj = sub nsw i8 %i.bg, %i.bi
   %i.bk = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.be), !noalias !347 ; 2 uses
   %i.bl = extractvalue { ptr, i64 } %i.bk, 0
   %i.bm = extractvalue { ptr, i64 } %i.bk, 1      ; 2 uses
-  %i.bn = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %7), !noalias !333 ; 2 uses
+  %i.bn = tail call { ptr, i64 } @_RNvMs3_NtCsC8CapfvpQ1_5salsa5zalsaNtB5_9ErasedJar9type_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %11), !noalias !333 ; 2 uses
   %i.bo = extractvalue { ptr, i64 } %i.bn, 0
   %i.bp = extractvalue { ptr, i64 } %i.bn, 1      ; 2 uses
   %spec.store.select.i.i9.i = tail call i64 @llvm.umin.i64(i64 %i.bm, i64 %i.bp)

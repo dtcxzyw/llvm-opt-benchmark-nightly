@@ -14,25 +14,22 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write)
 define dso_local void @time64_to_tm(i64 noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 20), (24, 40)) %2) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = srem i64 %0, 86400                       ; 2 uses
+  %i.a = srem i64 %0, 86400                       ; 3 uses
   %i.b = sdiv i64 %0, 86400                       ; 2 uses
-  %i.c = sext i32 %1 to i64                       ; 2 uses
-  %i.d = add nsw i64 %i.a, %i.c                   ; 4 uses
+  %i.c = sext i32 %1 to i64                       ; 3 uses
+  %i.d = add nsw i64 %i.a, %i.c                   ; 2 uses
   %i.e = icmp slt i64 %i.d, 0
   br i1 %i.e, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.d, i64 -86400)
-  %4 = add nsw i64 %3, 86399
-  %i.f = sub nsw i64 %4, %i.d
-  %.lhs.trunc75 = trunc i64 %i.f to i32
-  %5 = udiv i32 %.lhs.trunc75, 86400
-  %.zext = zext nneg i32 %5 to i64                ; 2 uses
-  %i.g = mul nuw nsw i64 %.zext, 86400
-  %i.h = add nsw i64 %i.a, %i.g
-  %i.i = add nsw i64 %i.h, %i.c
-  %i.j = add nsw i64 %i.i, 86400
-  %i.k = xor i64 %.zext, -1
+  %3 = xor i64 %i.a, -1
+  %i.f = sub nsw i64 %3, %i.c
+  %4 = udiv i64 %i.f, 86400                       ; 2 uses
+  %i.g = mul nuw i64 %4, 86400
+  %i.h = add i64 %i.a, %i.g
+  %i.i = add i64 %i.h, %i.c
+  %i.j = add i64 %i.i, 86400
+  %i.k = xor i64 %4, -1
   %i.l = add nsw i64 %i.b, %i.k
   br label %.preheader
 
@@ -43,10 +40,10 @@ bb.a:
   br i1 %i.m, label %.lr.ph69.preheader, label %._crit_edge
 
 .lr.ph69.preheader:                               ; preds = %.preheader
-  %i.n = add nsw i64 %.0.lcssa, -86400
-  %i.o = add nsw i64 %.0.lcssa, 86399
+  %i.n = add i64 %.0.lcssa, -86400
+  %i.o = add i64 %.0.lcssa, 86399
   %smin = tail call i64 @llvm.smin.i64(i64 %.0.lcssa, i64 172799)
-  %i.p = sub nsw i64 %i.o, %smin
+  %i.p = sub i64 %i.o, %smin
   %i.q = udiv i64 %i.p, 86400                     ; 2 uses
   %.neg = mul i64 %i.q, -86400
   %i.r = add i64 %.neg, %i.n
@@ -124,9 +121,6 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #1
 
 attributes #0 = { fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

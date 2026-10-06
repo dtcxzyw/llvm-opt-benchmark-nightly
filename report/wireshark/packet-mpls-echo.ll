@@ -202,9 +202,8 @@ bb.ag:                                            ; preds = %bb.l
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.ev = add nsw i32 %.1278315, -8
-  %5 = call i32 @llvm.usub.sat.i32(i32 %i.bk, i32 7)
-  %i.ew = add nuw nsw i32 %5, 3                   ; 2 uses
-  %i.ex = and i32 %i.ew, 131068                   ; 2 uses
+  %i.ew = add nsw i32 %i.bk, -4                   ; 2 uses
+  %i.ex = and i32 %i.ew, -4                       ; 2 uses
   %i.ey = sub nsw i32 %i.ev, %i.ex
   %i.ez = add i32 %.1281314, 8
   %i.fa = add i32 %i.ez, %i.ex
@@ -392,9 +391,6 @@ declare i16 @llvm.umin.i16(i16, i16) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #3
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

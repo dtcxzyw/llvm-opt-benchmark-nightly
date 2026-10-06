@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.l, i32 0) ; 2 uses
   %spec.select = tail call i32 @llvm.smin.i32(i32 %i.r, i32 %i.o) ; 2 uses
-  %i.s = lshr i32 %spec.store.select, 3           ; 3 uses
-  %i.t = ashr i32 %spec.select, 3                 ; 2 uses
+  %i.s = lshr i32 %spec.store.select, 3           ; 4 uses
+  %i.t = ashr i32 %spec.select, 3                 ; 3 uses
   %i.u = and i32 %spec.store.select, 7
   %i.v = lshr i32 255, %i.u                       ; 2 uses
   %i.w = and i32 %spec.select, 7
@@ -229,13 +229,15 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.ah = getelementptr i8, ptr %i.z, i64 %i.aa
   %scevgep = getelementptr i8, ptr %i.ah, i64 1
-  %i.ai = add nsw i32 %i.t, -2
-  %4 = sub nsw i32 %i.ai, %i.s
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %6 = add nuw nsw i64 %5, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 -1, i64 %6, i1 false), !tbaa !75
+  %4 = xor i32 %i.s, -1
+  %i.ai = add nsw i32 %i.t, %4
+  %5 = zext i32 %i.ai to i64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 -1, i64 %5, i1 false), !tbaa !75
+  %6 = add nsw i32 %i.t, -2
+  %7 = sub nsw i32 %6, %i.s
+  %8 = zext i32 %7 to i64
   %i.aj = getelementptr i8, ptr %i.z, i64 %i.aa
-  %i.ak = getelementptr i8, ptr %i.aj, i64 %5
+  %i.ak = getelementptr i8, ptr %i.aj, i64 %8
   %scevgep43 = getelementptr i8, ptr %i.ak, i64 1
   br label %._crit_edge
 

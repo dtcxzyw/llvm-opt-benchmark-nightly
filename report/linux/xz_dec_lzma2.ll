@@ -205,19 +205,17 @@ bb.w:                                             ; preds = %bb.v
   %notmask.i = shl nsw i32 -1, %storemerge.lcssa24.i
   %i.dc = xor i32 %notmask.i, -1
   store i32 %i.dc, ptr %i.n, align 4
-  %i.dd = zext nneg i8 %.0.lcssa.i to i32         ; 3 uses
+  %i.dd = zext nneg i8 %.0.lcssa.i to i32         ; 2 uses
   %i.de = icmp samesign ugt i8 %.0.lcssa.i, 8
   br i1 %i.de, label %.lr.ph33.preheader.i, label %._crit_edge34.i
 
 .lr.ph33.preheader.i:                             ; preds = %._crit_edge.i
-  %i.df = add nsw i32 %i.dd, -9
-  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.dd, i32 17)
-  %i.dg = trunc nuw nsw i32 %2 to i8
-  %.lhs.trunc.i = add nuw nsw i8 %i.dg, 8
-  %i.dh = udiv i8 %.lhs.trunc.i, 9
+  %i.df = add nsw i32 %i.dd, -9                   ; 2 uses
+  %i.dg = trunc nuw nsw i32 %i.df to i8
+  %i.dh = udiv i8 %i.dg, 9
   %.zext.i = zext nneg i8 %i.dh to i32            ; 2 uses
   %.neg.i = mul nsw i32 %.zext.i, -9
-  %i.di = add nsw i32 %i.df, %.neg.i
+  %i.di = add nsw i32 %.neg.i, %i.df
   %i.dj = add nuw nsw i32 %.zext.i, 1
   br label %._crit_edge34.i
 
@@ -619,9 +617,6 @@ declare i64 @llvm.umin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #7
 
 attributes #0 = { fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }

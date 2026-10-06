@@ -205,7 +205,7 @@ bb.a:
 .preheader402.preheader:                          ; preds = %.preheader402.lr.ph
   %i.i = add nsw i32 %3, -3
   %i.j = sext i32 %i.i to i64
-  %i.k = zext nneg i32 %3 to i64
+  %i.k = zext nneg i32 %3 to i64                  ; 2 uses
   %wide.trip.count = zext nneg i32 %3 to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 20
@@ -215,7 +215,7 @@ bb.a:
   br label %.preheader402
 
 .preheader402:                                    ; preds = %.preheader402.preheader, %._crit_edge
-  %indvars.iv452 = phi i64 [ 0, %.preheader402.preheader ], [ %indvars.iv.next453.pre-phi, %._crit_edge ] ; 9 uses
+  %indvars.iv452 = phi i64 [ 0, %.preheader402.preheader ], [ %indvars.iv.next453.pre-phi, %._crit_edge ] ; 10 uses
   %i.q = icmp samesign ugt i64 %indvars.iv452, 2
   %i.r = icmp slt i64 %indvars.iv452, %i.j
   %spec.select = select i1 %i.r, i32 %i.f, i32 3
@@ -225,6 +225,7 @@ bb.a:
   %i.u = and i32 %i.t, 14                         ; 4 uses
   %i.v = mul nuw nsw i64 %indvars.iv452, %i.h
   %i.w = mul nuw nsw i64 %indvars.iv452, %i.g     ; 2 uses
+  %.not549 = icmp sgt i64 %indvars.iv452, %i.k
   %i.x = trunc nsw i64 %i.s to i32                ; 4 uses
   %i.y = shl i32 %i.x, 1
   %i.z = and i32 %i.y, 14                         ; 3 uses
@@ -252,36 +253,39 @@ bb.b:                                             ; preds = %.preheader402, %bb.
   %or.cond = select i1 %i.am, i1 %i.q, i1 false
   %.1323 = select i1 %or.cond, i32 %spec.select, i32 %.0322408 ; 5 uses
   %i.an = icmp eq i32 %.1323, %2
-  br i1 %i.an, label %.._crit_edge_crit_edge, label %.split.preheader
+  br i1 %i.an, label %.._crit_edge_crit_edge, label %7
 
 .._crit_edge_crit_edge:                           ; preds = %bb.b
   %.pre = add nuw nsw i64 %indvars.iv452, 1
   br label %._crit_edge
 
-.split.preheader:                                 ; preds = %bb.b
+7:                                                ; preds = %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
-  %7 = add i32 %.1323, -1                         ; 10 uses
-  %8 = sext i32 %7 to i64                         ; 9 uses
-  %i.ao = or i32 %7, %i.x
+  %8 = add i32 %.1323, -1                         ; 10 uses
+  %9 = sext i32 %8 to i64                         ; 9 uses
+  br i1 %.not549, label %.split.preheader.1, label %.split.preheader
+
+.split.preheader:                                 ; preds = %7
+  %i.ao = or i32 %8, %i.x
   %or.cond3 = icmp sgt i32 %i.ao, -1
-  %i.ap = icmp slt i32 %7, %2
+  %i.ap = icmp slt i32 %8, %2
   %or.cond354 = and i1 %i.ap, %or.cond3
   br i1 %or.cond354, label %bb.i, label %.split.1
 
-.split.preheader.1:                               ; preds = %bb.k, %.split.2
-  %i.aq = or i32 %7, %i.ad
+.split.preheader.1:                               ; preds = %.split.2, %bb.k, %7
+  %i.aq = or i32 %8, %i.ad
   %or.cond3.1440 = icmp sgt i32 %i.aq, -1
-  %i.ar = icmp slt i32 %7, %2
+  %i.ar = icmp slt i32 %8, %2
   %or.cond354.1441 = and i1 %i.ar, %or.cond3.1440
   br i1 %or.cond354.1441, label %bb.c, label %.split.1.1
 
 bb.c:                                             ; preds = %.split.preheader.1
-  %i.as = and i32 %7, 1
+  %i.as = and i32 %8, 1
   %.tr.i365.1443 = or disjoint i32 %i.as, %i.u
   %i.at = shl nuw nsw i32 %.tr.i365.1443, 1
   %i.au = lshr i32 %4, %i.at
   %i.av = and i32 %i.au, 3
-  %i.aw = getelementptr [4 x i8], ptr %i.ac, i64 %8
+  %i.aw = getelementptr [4 x i8], ptr %i.ac, i64 %9
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !12
   %i.ay = zext nneg i32 %i.av to i64
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ay ; 3 uses
@@ -295,7 +299,7 @@ bb.c:                                             ; preds = %.split.preheader.1
   br label %.split.1.1
 
 .split.1.1:                                       ; preds = %bb.c, %.split.preheader.1
-  %indvars.iv.next.1444 = add nsw i64 %8, 1       ; 3 uses
+  %indvars.iv.next.1444 = add nsw i64 %9, 1       ; 3 uses
   %i.bf = trunc nsw i64 %indvars.iv.next.1444 to i32 ; 2 uses
   %i.bg = or i32 %i.bf, %i.ad
   %or.cond3.1.1 = icmp sgt i32 %i.bg, -1
@@ -323,7 +327,7 @@ bb.d:                                             ; preds = %.split.1.1
   br label %.split.2.1
 
 .split.2.1:                                       ; preds = %bb.d, %.split.1.1
-  %indvars.iv.next.1.1 = add nsw i64 %8, 2        ; 3 uses
+  %indvars.iv.next.1.1 = add nsw i64 %9, 2        ; 3 uses
   %i.bv = trunc nsw i64 %indvars.iv.next.1.1 to i32 ; 2 uses
   %i.bw = or i32 %i.bv, %i.ad
   %or.cond3.2.1 = icmp sgt i32 %i.bw, -1
@@ -354,19 +358,19 @@ bb.e:                                             ; preds = %.split.2.1
   br i1 %i.af, label %.split.preheader.2, label %.split405.us.2
 
 .split.preheader.2:                               ; preds = %.split405.us.1
-  %i.cl = or i32 %7, %i.ak
+  %i.cl = or i32 %8, %i.ak
   %or.cond3.2445 = icmp sgt i32 %i.cl, -1
-  %i.cm = icmp slt i32 %7, %2
+  %i.cm = icmp slt i32 %8, %2
   %or.cond354.2446 = and i1 %i.cm, %or.cond3.2445
   br i1 %or.cond354.2446, label %bb.f, label %.split.1.2
 
 bb.f:                                             ; preds = %.split.preheader.2
-  %i.cn = and i32 %7, 1
+  %i.cn = and i32 %8, 1
   %.tr.i365.2448 = or disjoint i32 %i.cn, %i.ah
   %i.co = shl nuw nsw i32 %.tr.i365.2448, 1
   %i.cp = lshr i32 %4, %i.co
   %i.cq = and i32 %i.cp, 3
-  %i.cr = getelementptr [4 x i8], ptr %i.aj, i64 %8
+  %i.cr = getelementptr [4 x i8], ptr %i.aj, i64 %9
   %i.cs = load float, ptr %i.cr, align 4, !tbaa !12
   %i.ct = zext nneg i32 %i.cq to i64
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ct ; 3 uses
@@ -380,7 +384,7 @@ bb.f:                                             ; preds = %.split.preheader.2
   br label %.split.1.2
 
 .split.1.2:                                       ; preds = %bb.f, %.split.preheader.2
-  %indvars.iv.next.2 = add nsw i64 %8, 1          ; 3 uses
+  %indvars.iv.next.2 = add nsw i64 %9, 1          ; 3 uses
   %i.da = trunc nsw i64 %indvars.iv.next.2 to i32 ; 2 uses
   %i.db = or i32 %i.da, %i.ak
   %or.cond3.1.2 = icmp sgt i32 %i.db, -1
@@ -408,7 +412,7 @@ bb.g:                                             ; preds = %.split.1.2
   br label %.split.2.2
 
 .split.2.2:                                       ; preds = %bb.g, %.split.1.2
-  %indvars.iv.next.1.2 = add nsw i64 %8, 2        ; 3 uses
+  %indvars.iv.next.1.2 = add nsw i64 %9, 2        ; 3 uses
   %i.dq = trunc nsw i64 %indvars.iv.next.1.2 to i32 ; 2 uses
   %i.dr = or i32 %i.dq, %i.ak
   %or.cond3.2.2 = icmp sgt i32 %i.dr, -1
@@ -453,12 +457,12 @@ bb.h:                                             ; preds = %.split.2.2
   br i1 %.not349, label %bb.n, label %bb.l
 
 bb.i:                                             ; preds = %.split.preheader
-  %i.eq = and i32 %7, 1
+  %i.eq = and i32 %8, 1
   %.tr.i365 = or disjoint i32 %i.eq, %i.z
   %i.er = shl nuw nsw i32 %.tr.i365, 1
   %i.es = lshr i32 %4, %i.er
   %i.et = and i32 %i.es, 3
-  %i.eu = getelementptr [4 x i8], ptr %i.ab, i64 %8
+  %i.eu = getelementptr [4 x i8], ptr %i.ab, i64 %9
   %i.ev = load float, ptr %i.eu, align 4, !tbaa !12
   %i.ew = zext nneg i32 %i.et to i64
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ew ; 3 uses
@@ -472,7 +476,7 @@ bb.i:                                             ; preds = %.split.preheader
   br label %.split.1
 
 .split.1:                                         ; preds = %.split.preheader, %bb.i
-  %indvars.iv.next = add nsw i64 %8, 1            ; 3 uses
+  %indvars.iv.next = add nsw i64 %9, 1            ; 3 uses
   %i.fd = trunc nsw i64 %indvars.iv.next to i32   ; 2 uses
   %i.fe = or i32 %i.fd, %i.x
   %or.cond3.1 = icmp sgt i32 %i.fe, -1
@@ -500,7 +504,7 @@ bb.j:                                             ; preds = %.split.1
   br label %.split.2
 
 .split.2:                                         ; preds = %bb.j, %.split.1
-  %indvars.iv.next.1 = add nsw i64 %8, 2          ; 3 uses
+  %indvars.iv.next.1 = add nsw i64 %9, 2          ; 3 uses
   %i.ft = trunc nsw i64 %indvars.iv.next.1 to i32 ; 2 uses
   %i.fu = or i32 %i.ft, %i.x
   %or.cond3.2 = icmp sgt i32 %i.fu, -1

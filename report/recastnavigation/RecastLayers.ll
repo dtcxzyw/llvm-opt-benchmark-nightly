@@ -205,10 +205,10 @@ bb.bx:                                            ; preds = %bb.bv
   %i.ti = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 5 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 9 uses
-  %i.tl = sext i32 %2 to i64                      ; 4 uses
-  %i.tm = sext i32 %i.rx to i64                   ; 2 uses
+  %i.tl = sext i32 %2 to i64                      ; 6 uses
+  %i.tm = sext i32 %i.rx to i64                   ; 3 uses
   %i.tn = sext i32 %i.k to i64                    ; 3 uses
-  %i.to = sext i32 %i.ry to i64
+  %i.to = sext i32 %i.ry to i64                   ; 2 uses
   %wide.trip.count1168 = zext i8 %.0615.lcssa to i64 ; 2 uses
   %wide.trip.count1184 = zext nneg i32 %i.ry to i64
   %wide.trip.count1179 = zext nneg i32 %i.rx to i64
@@ -400,7 +400,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.
   br i1 %niter1340.ncmp.1, label %._crit_edge1032.loopexit.unr-lcssa, label %.lr.ph1031.new
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge1044
-  %indvars.iv1181 = phi i64 [ %indvars.iv.next1182, %._crit_edge1044 ], [ 0, %.preheader.lr.ph ] ; 5 uses
+  %indvars.iv1181 = phi i64 [ %indvars.iv.next1182, %._crit_edge1044 ], [ 0, %.preheader.lr.ph ] ; 4 uses
   %i.wh = add nsw i64 %indvars.iv1181, %i.tl      ; 3 uses
   %i.wi = mul nsw i64 %i.wh, %i.tn                ; 3 uses
   %i.wj = mul nuw nsw i64 %indvars.iv1181, %i.tm
@@ -408,9 +408,11 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.
   %i.wl = add nsw i64 %i.wh, 1                    ; 2 uses
   %i.wm = mul nsw i64 %i.wl, %i.tn
   %i.wn = icmp slt i64 %i.wl, %invariant.op1314
-  %i.wo = add nsw i64 %i.wh, -1
+  %i.wo = add nsw i64 %i.wh, -1                   ; 2 uses
   %i.wp = mul nsw i64 %i.wo, %i.tn
-  %.not1299.not.not = icmp ne i64 %indvars.iv1181, 0
+  %5 = sub nsw i64 %i.wo, %i.tl                   ; 2 uses
+  %6 = icmp sgt i64 %5, -1
+  %7 = icmp slt i64 %5, %i.to
   br label %bb.cn
 
 ._crit_edge1046.split.loopexit:                   ; preds = %._crit_edge1044
@@ -430,7 +432,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.
   br i1 %exitcond1185.not, label %._crit_edge1046.split.loopexit, label %.preheader
 
 bb.cn:                                            ; preds = %.preheader, %._crit_edge1041
-  %indvars.iv1176 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next1177, %._crit_edge1041 ] ; 5 uses
+  %indvars.iv1176 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next1177, %._crit_edge1041 ] ; 4 uses
   %i.wt = add nsw i64 %indvars.iv1176, %i.tl      ; 5 uses
   %i.wu = load ptr, ptr %i.ti, align 8, !tbaa !73
   %i.wv = getelementptr [4 x i8], ptr %i.wu, i64 %i.wt
@@ -448,7 +450,10 @@ bb.cn:                                            ; preds = %.preheader, %._crit
   %i.xd = zext nneg i32 %i.xc to i64
   %i.xe = zext nneg i32 %i.xa to i64
   %i.xf = trunc nuw nsw i64 %indvars.iv1176 to i32 ; 2 uses
-  %.not1298.not.not = icmp ne i64 %indvars.iv1176, 0
+  %8 = add nsw i64 %i.wt, -1                      ; 2 uses
+  %9 = sub nsw i64 %8, %i.tl                      ; 2 uses
+  %10 = icmp sgt i64 %9, -1
+  %11 = icmp slt i64 %9, %i.tm
   %i.xg = add nsw i64 %i.wt, 1                    ; 2 uses
   %i.xh = icmp slt i64 %i.xg, %invariant.op
   br label %bb.co
@@ -511,9 +516,8 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cq
   %i.yo = load ptr, ptr %i.ti, align 8, !tbaa !73
   %i.yp = getelementptr [4 x i8], ptr %i.yo, i64 %i.wi
-  %i.yq = getelementptr [4 x i8], ptr %i.yp, i64 %i.wt
-  %5 = getelementptr i8, ptr %i.yq, i64 -4
-  %i.yr = load i32, ptr %5, align 4
+  %i.yq = getelementptr [4 x i8], ptr %i.yp, i64 %8
+  %i.yr = load i32, ptr %i.yq, align 4
   %i.ys = and i32 %i.yr, 16777215
   %i.yt = add nuw nsw i32 %i.ys, %i.yn
   %i.yu = zext nneg i32 %i.yt to i64              ; 4 uses
@@ -565,8 +569,9 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cv, %bb.
   %i.zr = phi i8 [ %i.zf, %bb.ct ], [ %.pre1203, %bb.cv ], [ %i.zf, %bb.cu ]
   %.1554 = phi i8 [ 0, %bb.ct ], [ 1, %bb.cv ], [ 1, %bb.cu ]
   %.not698 = icmp ne i8 %i.zr, 0
-  %or.cond726.a = select i1 %.not698, i1 %.not697, i1 false
-  %narrow = and i1 %or.cond726.a, %.not1298.not.not
+  %or.cond726 = select i1 %.not698, i1 %.not697, i1 false
+  %or.cond726.a = select i1 %or.cond726, i1 %10, i1 false
+  %narrow = select i1 %or.cond726.a, i1 %11, i1 false
   %spec.select = zext i1 %narrow to i8
   br label %bb.cx
 
@@ -780,9 +785,10 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp, %bb.
   %i.adr = phi i8 [ %i.ade, %bb.do ], [ %.pre1212, %bb.dq ], [ %i.ade, %bb.dp ]
   %.1554.3 = phi i8 [ %.2555.2, %bb.do ], [ %i.adf, %bb.dq ], [ %i.adf, %bb.dp ]
   %.not698.3 = icmp ne i8 %i.adr, 0
-  %or.cond726.3.a = select i1 %.not698.3, i1 %.not697.3, i1 false
-  %6 = and i1 %or.cond726.3.a, %.not1299.not.not
-  %.1.3 = select i1 %6, i8 8, i8 0
+  %or.cond726.3 = select i1 %.not698.3, i1 %.not697.3, i1 false
+  %or.cond726.3.a = select i1 %or.cond726.3, i1 %6, i1 false
+  %12 = select i1 %or.cond726.3.a, i1 %7, i1 false
+  %.1.3 = select i1 %12, i8 8, i8 0
   %spec.select1318 = or i8 %.3.2, %.1.3
   br label %bb.ds
 

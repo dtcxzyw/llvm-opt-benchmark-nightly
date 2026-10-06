@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.p = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.o, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -232,9 +232,11 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader61, %bb.l
   %.sroa.01.0.i.i74 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader61 ] ; 4 uses
   %i.t = getelementptr inbounds nuw [56 x i8], ptr %i.p, i64 %.sroa.01.0.i.i74
-  %6 = getelementptr [56 x i8], ptr %i.p, i64 %.sroa.01.0.i.i74
-  %7 = getelementptr i8, ptr %6, i64 -56
-  %i.u = tail call fastcc noundef zeroext i1 @_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtB7_11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEE7sort_byNCINvXs1o_NtB1g_3mapINtB2X_8BTreeMapBz_B1b_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3C_8adapters10filter_map9FilterMapIB4K_INtB2X_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB7_3vec3VecB5G_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB6C_s_0EE0E0B6G_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.t, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %7) #28, !noalias !894, !inline_history !851
+  %6 = add nsw i64 %.sroa.01.0.i.i74, -1          ; 2 uses
+  %7 = icmp ult i64 %6, %i.o
+  tail call void @llvm.assume(i1 %7)
+  %8 = getelementptr inbounds nuw [56 x i8], ptr %i.p, i64 %6
+  %i.u = tail call fastcc noundef zeroext i1 @_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtB7_11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEE7sort_byNCINvXs1o_NtB1g_3mapINtB2X_8BTreeMapBz_B1b_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3C_8adapters10filter_map9FilterMapIB4K_INtB2X_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB7_3vec3VecB5G_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB6C_s_0EE0E0B6G_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.t, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %8) #28, !noalias !894, !inline_history !851
   br i1 %i.u, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
@@ -245,9 +247,11 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph78:                                         ; preds = %.preheader, %bb.m
   %.sroa.01.1.i.i77 = phi i64 [ %i.y, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.w = getelementptr inbounds nuw [56 x i8], ptr %i.p, i64 %.sroa.01.1.i.i77
-  %8 = getelementptr [56 x i8], ptr %i.p, i64 %.sroa.01.1.i.i77
-  %9 = getelementptr i8, ptr %8, i64 -56
-  %i.x = tail call fastcc noundef zeroext i1 @_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtB7_11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEE7sort_byNCINvXs1o_NtB1g_3mapINtB2X_8BTreeMapBz_B1b_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3C_8adapters10filter_map9FilterMapIB4K_INtB2X_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB7_3vec3VecB5G_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB6C_s_0EE0E0B6G_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %9) #28, !noalias !894, !inline_history !851
+  %9 = add nsw i64 %.sroa.01.1.i.i77, -1          ; 2 uses
+  %10 = icmp ult i64 %9, %i.o
+  tail call void @llvm.assume(i1 %10)
+  %11 = getelementptr inbounds nuw [56 x i8], ptr %i.p, i64 %9
+  %i.x = tail call fastcc noundef zeroext i1 @_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtB7_11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEE7sort_byNCINvXs1o_NtB1g_3mapINtB2X_8BTreeMapBz_B1b_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3C_8adapters10filter_map9FilterMapIB4K_INtB2X_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB7_3vec3VecB5G_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB6C_s_0EE0E0B6G_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %11) #28, !noalias !894, !inline_history !851
   br i1 %i.x, label %bb.m, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph78
@@ -650,7 +654,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.y = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.y = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i31 = icmp ult i64 %i.y, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -688,8 +692,11 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader45, %bb.l
   %.val6.i = phi i32 [ %.val5.i, %bb.l ], [ %.val7.i, %.preheader45 ]
-  %.sroa.01.0.i.i50 = phi i64 [ %i.an, %bb.l ], [ 2, %.preheader45 ] ; 3 uses
+  %.sroa.01.0.i.i50 = phi i64 [ %i.an, %bb.l ], [ 2, %.preheader45 ] ; 4 uses
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.sroa.01.0.i.i50
+  %6 = add nsw i64 %.sroa.01.0.i.i50, -1
+  %7 = icmp ult i64 %6, %i.y
+  tail call void @llvm.assume(i1 %7)
   %.val5.i = load i32, ptr %i.ah, align 8, !alias.scope !960, !noalias !961 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i32 %.val5.i, ptr %i.d, align 4
@@ -711,8 +718,11 @@ bb.l:                                             ; preds = %.lr.ph
 
 .lr.ph54:                                         ; preds = %.preheader, %bb.m
   %.val4.i = phi i32 [ %.val.i, %bb.m ], [ %.val7.i, %.preheader ]
-  %.sroa.01.1.i.i53 = phi i64 [ %i.au, %bb.m ], [ 2, %.preheader ] ; 3 uses
+  %.sroa.01.1.i.i53 = phi i64 [ %i.au, %bb.m ], [ 2, %.preheader ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.sroa.01.1.i.i53
+  %8 = add nsw i64 %.sroa.01.1.i.i53, -1
+  %9 = icmp ult i64 %8, %i.y
+  tail call void @llvm.assume(i1 %9)
   %.val.i = load i32, ptr %i.ao, align 8, !alias.scope !960, !noalias !961 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i32 %.val.i, ptr %i.f, align 4

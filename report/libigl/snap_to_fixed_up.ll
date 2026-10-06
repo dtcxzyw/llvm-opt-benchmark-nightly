@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %.lr.ph146, %bb.k
   %i.n = sub i64 %i.e, %.0143
   %i.o = add nuw nsw i64 %.0143, %.052144         ; 5 uses
   %i.p = xor i64 %.0143, -1
-  %i.q = add nsw i64 %.sroa.speculated, %i.p      ; 9 uses
+  %i.q = add nsw i64 %.sroa.speculated, %i.p      ; 8 uses
   %i.r = icmp sgt i64 %i.q, 0
   br i1 %i.r, label %bb.c, label %.lr.ph._crit_edge
 
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %i.aa = load <4 x float>, ptr %i.w, align 1, !tbaa !13
   %i.ab = load <4 x float>, ptr %i.x, align 1, !tbaa !13
-  %i.ac = fmul <4 x float> %i.aa, %i.ab           ; 3 uses
+  %i.ac = fmul <4 x float> %i.aa, %i.ab           ; 2 uses
   %i.ad = icmp samesign ugt i64 %i.q, 7
   br i1 %i.ad, label %bb.e, label %bb.g
 
@@ -238,14 +238,11 @@ bb.e:                                             ; preds = %bb.d
   %i.af = load <4 x float>, ptr %i.ae, align 1, !tbaa !13
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.ah = load <4 x float>, ptr %i.ag, align 1, !tbaa !13
-  %i.ai = fmul <4 x float> %i.af, %i.ah           ; 2 uses
-  %11 = icmp samesign ugt i64 %i.q, 15
-  br i1 %11, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
+  %i.ai = fmul <4 x float> %i.af, %i.ah
+  br label %.lr.ph.i.i.i
 
-._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %bb.e
-  %.075.lcssa.i.i.i = phi <4 x float> [ %i.ai, %bb.e ], [ %i.ax, %.lr.ph.i.i.i ]
-  %.072.lcssa.i.i.i = phi <4 x float> [ %i.ac, %bb.e ], [ %i.aq, %.lr.ph.i.i.i ]
-  %i.aj = fadd <4 x float> %.075.lcssa.i.i.i, %.072.lcssa.i.i.i ; 2 uses
+._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i
+  %i.aj = fadd <4 x float> %i.ax, %i.aq           ; 2 uses
   %i.ak = icmp samesign ugt i64 %i.z, %i.y
   br i1 %i.ak, label %bb.f, label %bb.g
 

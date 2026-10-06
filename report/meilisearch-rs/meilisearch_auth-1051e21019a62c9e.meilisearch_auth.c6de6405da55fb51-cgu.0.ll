@@ -205,9 +205,12 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader7, %bb.c
   %.sroa.01.0.i9 = phi i64 [ %i.l, %bb.c ], [ 2, %.preheader7 ] ; 4 uses
   %i.f = getelementptr inbounds nuw [160 x i8], ptr %0, i64 %.sroa.01.0.i9
-  %i.g = getelementptr [160 x i8], ptr %0, i64 %.sroa.01.0.i9
+  %3 = add i64 %.sroa.01.0.i9, -1                 ; 2 uses
+  %4 = icmp ult i64 %3, %1
+  tail call void @llvm.assume(i1 %4)
+  %i.g = getelementptr inbounds nuw [160 x i8], ptr %0, i64 %3
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 96
-  %i.i = getelementptr i8, ptr %i.g, i64 -64
+  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 96
   %i.j = tail call fastcc noundef range(i8 -1, 2) i8 @"_ZN73_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$core..cmp..Ord$GT$3cmp17h619e9bf26d2df8f1E"(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.i, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.h)
   %i.k = icmp slt i8 %i.j, 0
   br i1 %i.k, label %_ZN4core5slice4sort6shared17find_existing_run17ha4efdebc3f8350b5E.exit, label %bb.c
@@ -220,9 +223,12 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph13:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i12 = phi i64 [ %i.s, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.m = getelementptr inbounds nuw [160 x i8], ptr %0, i64 %.sroa.01.1.i12
-  %i.n = getelementptr [160 x i8], ptr %0, i64 %.sroa.01.1.i12
+  %5 = add i64 %.sroa.01.1.i12, -1                ; 2 uses
+  %6 = icmp ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
+  %i.n = getelementptr inbounds nuw [160 x i8], ptr %0, i64 %5
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 96
-  %i.p = getelementptr i8, ptr %i.n, i64 -64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 96
   %i.q = tail call fastcc noundef range(i8 -1, 2) i8 @"_ZN73_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$core..cmp..Ord$GT$3cmp17h619e9bf26d2df8f1E"(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.p, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.o)
   %i.r = icmp slt i8 %i.q, 0
   br i1 %i.r, label %bb.d, label %_ZN4core5slice4sort6shared17find_existing_run17ha4efdebc3f8350b5E.exit

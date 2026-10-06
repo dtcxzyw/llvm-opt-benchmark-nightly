@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.p
 .lr.ph165:                                        ; preds = %.lr.ph142.preheader, %.lr.ph142
   %i.bl = phi ptr [ %i.bk, %.lr.ph142 ], [ %i.bc, %.lr.ph142.preheader ] ; 3 uses
   %.078141164 = phi i64 [ %i.bm, %.lr.ph142 ], [ 0, %.lr.ph142.preheader ]
-  %i.bm = add nuw i64 %.078141164, 1              ; 2 uses
+  %i.bm = add i64 %.078141164, 1                  ; 2 uses
   %i.bn = load i8, ptr %i.bl, align 1, !tbaa !32
   %i.bo = zext i8 %i.bn to i64
   %i.bp = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 96), i64 %i.bo
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.d, label %.critedge.us.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = add nuw i64 %.042.us.i, 1                ; 2 uses
+  %i.p = add i64 %.042.us.i, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.p, %indvars.iv.i
   br i1 %exitcond.not.i, label %.critedge.us.i, label %bb.b, !llvm.loop !227
 
