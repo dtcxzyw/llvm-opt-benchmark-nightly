@@ -205,14 +205,13 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicy
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_mEEE11try_emplaceIS9_Li0EJmETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISA_SB_SC_SG_E14const_iteratorEEE5valueEiE4typeELi0EEESD_INSM_8iteratorEbERKSK_DpOT1_.exit.thread
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !18 ; 4 uses
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !18 ; 3 uses
   %i.ah = icmp ult i64 %i.ag, 16
   call void @llvm.assume(i1 %i.ah)
   %i.ai = add nuw nsw i64 %i.ag, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ab, ptr noundef nonnull align 8 dereferenceable(1) %i.ad, i64 %i.ai, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store i64 %i.ag, ptr %i.ak, align 8, !tbaa !18
+  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.ad, ptr %1, align 8, !tbaa !17
   store i64 0, ptr %i.aj, align 8, !tbaa !18
   store i8 0, ptr %i.ad, align 8, !tbaa !20
@@ -615,7 +614,7 @@ bb.d:                                             ; preds = %bb.c, %_ZNSt7__cxx1
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE17_M_realloc_insertIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.3 = alloca { i64, %union.anon }, align 16 ; 8 uses
+  %.sroa.3 = alloca { i64, %union.anon }, align 16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !61   ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !60     ; 5 uses
@@ -648,27 +647,26 @@ bb.c:                                             ; preds = %_ZNKSt6vectorIN6goo
 
 _ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit, %bb.c
   %i.q = phi ptr [ %i.p, %bb.c ], [ null, %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n ; 14 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3)
   %i.s = load ptr, ptr %2, align 8, !tbaa !17     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.u = icmp eq ptr %i.s, %i.t
+  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 3 uses
   br i1 %i.u, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; preds = %_ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !18   ; 5 uses
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !18   ; 4 uses
   %i.x = icmp ult i64 %i.w, 16
   tail call void @llvm.assume(i1 %i.x)
   %i.y = add nuw nsw i64 %i.w, 1
   %.sroa.3.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.3.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(1) %i.t, i64 %i.y, i1 false)
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %i.w, ptr %.sroa.3, align 16, !tbaa !18
   store ptr %i.t, ptr %2, align 8, !tbaa !17
   store i64 0, ptr %i.z, align 8, !tbaa !18
   store i8 0, ptr %i.t, align 8, !tbaa !20
-  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   store ptr %4, ptr %i.r, align 8, !tbaa !19
   %i.aa = add nuw nsw i64 %i.w, 1
   %.sroa.3.8..sroa_idx65 = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 8
@@ -684,11 +682,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %_Z
   store ptr %i.t, ptr %2, align 8, !tbaa !17
   store i64 0, ptr %i.ab, align 8, !tbaa !18
   store i8 0, ptr %i.t, align 8, !tbaa !20
-  %5 = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   store ptr %i.s, ptr %i.r, align 8, !tbaa !17
   %.sroa.3.8..sroa_idx66 = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 8
   %.sroa.3.8..sroa.3.16. = load i64, ptr %.sroa.3.8..sroa_idx66, align 8, !tbaa !20
-  store i64 %.sroa.3.8..sroa.3.16., ptr %5, align 8, !tbaa !20
+  store i64 %.sroa.3.8..sroa.3.16., ptr %4, align 8, !tbaa !20
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread

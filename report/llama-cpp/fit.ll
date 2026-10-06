@@ -205,23 +205,22 @@ bb.i:                                             ; preds = %bb.e
   unreachable
 
 _ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i: ; preds = %bb.i
-  store i64 0, ptr %0, align 8
   %.not.i.i.i.i = icmp eq i64 %i.u, 0
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseI24llama_device_memory_dataSaIS0_EEC2EmRKS1_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
   %i.w = mul nuw nsw i64 %i.u, 40                 ; 3 uses
-  %i.x = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #26 ; 5 uses
-  store ptr %i.x, ptr %0, align 8, !tbaa !17
+  %i.x = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #26 ; 4 uses
   %i.y = getelementptr inbounds nuw [40 x i8], ptr %i.x, i64 %i.u
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.x, i8 0, i64 %i.w, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.x, i64 %i.w
   br label %_ZNSt12_Vector_baseI24llama_device_memory_dataSaIS0_EEC2EmRKS1_.exit.thread.i
 
 _ZNSt12_Vector_baseI24llama_device_memory_dataSaIS0_EEC2EmRKS1_.exit.thread.i: ; preds = %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i, %.lr.ph.preheader.i.i.i.i.i
-  %i.z = phi ptr [ %i.x, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 5 uses
+  %i.z = phi ptr [ %i.x, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 6 uses
   %i.aa = phi ptr [ %i.y, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 2 uses
   %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 5 uses
+  store ptr %i.z, ptr %0, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.aa, ptr %i.ac, align 8, !tbaa !21
@@ -624,7 +623,7 @@ _ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit: 
   br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseI24llama_device_memory_dataSaIS0_EEC2EmRKS1_.exit.thread, label %.lr.ph.preheader.i.i.i.i
 
 _ZNSt12_Vector_baseI24llama_device_memory_dataSaIS0_EEC2EmRKS1_.exit.thread: ; preds = %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   br label %bb.c
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %_ZNSt6vectorI24llama_device_memory_dataSaIS0_EE17_S_check_init_lenEmRKS1_.exit

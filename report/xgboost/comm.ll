@@ -205,7 +205,7 @@ bb.a:
   %14 = alloca %"struct.xgboost::collective::Result", align 8 ; 10 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %16 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
-  %17 = alloca %"struct.xgboost::collective::Result", align 8 ; 9 uses
+  %17 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %18 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %19 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %20 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
@@ -439,14 +439,11 @@ bb.l:                                             ; preds = %"_ZN7xgboost10colle
 "_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit": ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #12, !noalias !250
   %.pr76 = load ptr, ptr %18, align 8, !noalias !251 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !251)
   %.not.i.i30 = icmp eq ptr %.pr76, null
   br i1 %.not.i.i30, label %bb.m, label %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_4EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit.thread"
 
 "_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_4EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit.thread": ; preds = %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit", %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit.thread"
-  %i.be = phi ptr [ %i.bd, %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit.thread" ], [ %.pr76, %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit" ] ; 2 uses
-  %23 = ptrtoint ptr %i.be to i64
-  store i64 %23, ptr %17, align 8, !tbaa !73, !alias.scope !251
+  %i.be = phi ptr [ %i.bd, %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit.thread" ], [ %.pr76, %"_ZN7xgboost10collectivelsIZNS0_18ConnectTrackerImplENS0_5proto8PeerInfoENSt6chrono8durationIlSt5ratioILl1ELl1EEEEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_9TCPSocketEiiE3$_3EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOSM_OSL_.exit" ]
   store ptr null, ptr %18, align 8, !tbaa !73, !noalias !251
   br label %bb.r
 
@@ -849,7 +846,7 @@ bb.a:
   %15 = alloca %"struct.xgboost::collective::Result", align 8 ; 10 uses
   %16 = alloca %"struct.xgboost::collective::Result", align 8 ; 7 uses
   %17 = alloca %"struct.xgboost::collective::Result", align 8 ; 9 uses
-  %18 = alloca %"struct.xgboost::collective::Result", align 8 ; 9 uses
+  %18 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %19 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %20 = alloca %"struct.xgboost::collective::Result", align 8 ; 8 uses
   %21 = alloca %"struct.xgboost::collective::Result", align 8 ; 6 uses
@@ -986,14 +983,11 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 "_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit": ; preds = %bb.h
   %.pr = load ptr, ptr %19, align 8, !noalias !593 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !593)
   %.not.i.i28 = icmp eq ptr %.pr, null
   br i1 %.not.i.i28, label %bb.i, label %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_2EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit.thread"
 
 "_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_2EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit.thread": ; preds = %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit", %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit.thread"
-  %i.as = phi ptr [ %i.ao, %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit.thread" ], [ %.pr, %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit" ] ; 2 uses
-  %23 = ptrtoint ptr %i.as to i64
-  store i64 %23, ptr %18, align 8, !tbaa !73, !alias.scope !593
+  %i.as = phi ptr [ %i.ao, %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit.thread" ], [ %.pr, %"_ZN7xgboost10collectivelsIZNS0_9RabitComm8ShutdownEvE3$_1EENSt9enable_ifIXsr3stdE14is_invocable_vIT_EENS0_6ResultEE4typeEOS6_OS5_.exit" ]
   store ptr null, ptr %19, align 8, !tbaa !73, !noalias !593
   br label %bb.j
 

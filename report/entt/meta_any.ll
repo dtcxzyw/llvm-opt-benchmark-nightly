@@ -205,17 +205,18 @@ bb.a:
   %14 = alloca %"class.testing::Message", align 8 ; 7 uses
   %15 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
-  %i.a = load ptr, ptr @_ZN4entt7locatorINS_8meta_ctxEE7serviceE, align 8, !tbaa !69 ; 3 uses
+  %i.a = load ptr, ptr @_ZN4entt7locatorINS_8meta_ctxEE7serviceE, align 8, !tbaa !69 ; 2 uses
   %.not.i.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i, label %bb.b, label %_ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN4entt7locatorINS_8meta_ctxEE7emplaceITkSt12derived_fromIT_ES1_JEQsr3stlE18constructible_fromITL0__DpTL0_0_EEERS1_DpOT0_()
   %.pre = load ptr, ptr @_ZN4entt7locatorINS_8meta_ctxEE7serviceE, align 8, !tbaa !69
+  %16 = icmp eq ptr %.pre, null
   br label %_ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit
 
 _ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit: ; preds = %bb.a, %bb.b
-  %16 = phi ptr [ %.pre, %bb.b ], [ %i.a, %bb.a ] ; 2 uses
+  %.not.i.i50 = phi i1 [ %16, %bb.b ], [ false, %bb.a ]
   %i.c = phi ptr [ %i.b, %bb.b ], [ %i.a, %bb.a ]
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
@@ -233,25 +234,17 @@ _ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit: ; preds = %bb.a, %b
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   store ptr @_ZN4entt8meta_any12basic_vtableITkNS_17cvref_unqualifiedEvEEvNS_8internal11meta_traitsERKS0_Pv, ptr %i.j, align 8, !tbaa !86
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %.not.i.i50 = icmp eq ptr %16, null
   br i1 %.not.i.i50, label %bb.c, label %_ZN4entt9basic_anyILm16ELm8EE24invoke_deleter_if_existsEv.exit.i.i.thread
 
 _ZN4entt9basic_anyILm16ELm8EE24invoke_deleter_if_existsEv.exit.i.i.thread: ; preds = %_ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
-  store ptr @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedEvEEPKvNS_8internal11any_requestERKS1_S4_, ptr %i.k, align 8, !tbaa !62
-  store i32 1219850847, ptr %i.m, align 8, !tbaa !63
-  store ptr null, ptr %i.l, align 8, !tbaa !73
-  store i8 0, ptr %i.n, align 4, !tbaa !74
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 36
   store ptr null, ptr %2, align 8, !tbaa !64
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  store ptr %16, ptr %i.o, align 8, !tbaa !72
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  store ptr null, ptr %i.p, align 8, !tbaa !87
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
-  store ptr @_ZN4entt8meta_any12basic_vtableITkNS_17cvref_unqualifiedEvEEvNS_8internal11meta_traitsERKS0_Pv, ptr %i.q, align 8, !tbaa !86
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 56
   br label %bb.h
 
 bb.c:                                             ; preds = %_ZN4entt8meta_anyC2IvJEEESt15in_place_type_tIT_EDpOT0_.exit

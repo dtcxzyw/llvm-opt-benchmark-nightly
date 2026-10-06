@@ -205,7 +205,7 @@ _ZN20btAlignedObjectArrayIiE8allocateEi.exit.i:   ; preds = %bb.r, %bb.q
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 788
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !32 ; 3 uses
   %i.cf = icmp sgt i32 %i.ce, 0
-  %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 3 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !31 ; 9 uses
   br i1 %i.cf, label %.lr.ph.i.i61, label %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i
 
@@ -298,17 +298,13 @@ _ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i: ; preds = %scalar.ph.prol
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 808
   %i.dh = load i8, ptr %i.dg, align 8, !tbaa !30, !range !72, !noundef !93
   %i.di = trunc nuw i8 %i.dh to i1
-  br i1 %i.di, label %bb.s, label %.noexc67
+  br i1 %i.di, label %bb.s, label %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i
 
 bb.s:                                             ; preds = %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i
   invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.ch)
-          to label %.noexc67 unwind label %bb.af
+          to label %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i unwind label %bb.af
 
-.noexc67:                                         ; preds = %bb.s, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i
-  store ptr null, ptr %i.cg, align 8, !tbaa !31
-  br label %_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i
-
-_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i: ; preds = %.noexc67, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i
+_ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i: ; preds = %bb.s, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.thread.i, %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 808
   store i8 1, ptr %i.dj, align 8, !tbaa !30
   store ptr %.0.i.i59, ptr %i.cg, align 8, !tbaa !31

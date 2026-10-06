@@ -205,10 +205,9 @@ bb.bb:                                            ; preds = %bb.ay
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oi, i64 2488
   %i.ok = load ptr, ptr %i.oj, align 8, !tbaa !206 ; 2 uses
   %i.ol = getelementptr inbounds nuw i8, ptr %i.ok, i64 144
-  %i.om = load ptr, ptr %i.ol, align 8, !tbaa !235 ; 3 uses
+  %i.om = load ptr, ptr %i.ol, align 8, !tbaa !235 ; 2 uses
   %i.on = load i32, ptr %i.om, align 8, !tbaa !185
-  %i.oo = or i32 %i.on, 32768                     ; 2 uses
-  store i32 %i.oo, ptr %i.om, align 8, !tbaa !185
+  %i.oo = or i32 %i.on, 32768
   %.sroa.05.0.copyload.i = load ptr, ptr %36, align 8, !tbaa !101
   %.sroa.3.0.copyload.i195 = load i64, ptr %.sroa.3.0..sroa_idx.i194, align 8, !tbaa !102
   br label %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE32_maybe_filter_val_scalar_literalERKNS3_12ScannedBlockE.exit
@@ -283,10 +282,9 @@ bb.bf:                                            ; preds = %bb.bc
   %i.pk = getelementptr inbounds nuw i8, ptr %i.pj, i64 2488
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !206 ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 144
-  %i.pn = load ptr, ptr %i.pm, align 8, !tbaa !235 ; 3 uses
+  %i.pn = load ptr, ptr %i.pm, align 8, !tbaa !235 ; 2 uses
   %i.po = load i32, ptr %i.pn, align 8, !tbaa !185
-  %i.pp = or i32 %i.po, 32768                     ; 2 uses
-  store i32 %i.pp, ptr %i.pn, align 8, !tbaa !185
+  %i.pp = or i32 %i.po, 32768
   %.sroa.05.0.copyload.i202 = load ptr, ptr %37, align 8, !tbaa !101
   %.sroa.3.0.copyload.i204 = load i64, ptr %.sroa.3.0..sroa_idx.i203, align 8, !tbaa !102
   br label %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE31_maybe_filter_val_scalar_foldedERKNS3_12ScannedBlockE.exit
@@ -689,10 +687,9 @@ bb.hl:                                            ; preds = %bb.hi
   %i.bii = getelementptr inbounds nuw i8, ptr %i.bih, i64 2488
   %i.bij = load ptr, ptr %i.bii, align 8, !tbaa !206 ; 2 uses
   %i.bik = getelementptr inbounds nuw i8, ptr %i.bij, i64 144
-  %i.bil = load ptr, ptr %i.bik, align 8, !tbaa !235 ; 3 uses
+  %i.bil = load ptr, ptr %i.bik, align 8, !tbaa !235 ; 2 uses
   %i.bim = load i32, ptr %i.bil, align 8, !tbaa !185
-  %i.bin = or i32 %i.bim, 32768                   ; 2 uses
-  store i32 %i.bin, ptr %i.bil, align 8, !tbaa !185
+  %i.bin = or i32 %i.bim, 32768
   %.sroa.05.0.copyload.i = load ptr, ptr %65, align 8, !tbaa !101
   %.sroa.3.0.copyload.i692 = load i64, ptr %.sroa.3.0..sroa_idx.i691, align 8, !tbaa !102
   br label %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE32_maybe_filter_val_scalar_literalERKNS3_12ScannedBlockE.exit
@@ -768,10 +765,9 @@ bb.hp:                                            ; preds = %bb.hm
   %i.bjk = getelementptr inbounds nuw i8, ptr %i.bjj, i64 2488
   %i.bjl = load ptr, ptr %i.bjk, align 8, !tbaa !206 ; 2 uses
   %i.bjm = getelementptr inbounds nuw i8, ptr %i.bjl, i64 144
-  %i.bjn = load ptr, ptr %i.bjm, align 8, !tbaa !235 ; 3 uses
+  %i.bjn = load ptr, ptr %i.bjm, align 8, !tbaa !235 ; 2 uses
   %i.bjo = load i32, ptr %i.bjn, align 8, !tbaa !185
-  %i.bjp = or i32 %i.bjo, 32768                   ; 2 uses
-  store i32 %i.bjp, ptr %i.bjn, align 8, !tbaa !185
+  %i.bjp = or i32 %i.bjo, 32768
   %.sroa.05.0.copyload.i699 = load ptr, ptr %66, align 8, !tbaa !101
   %.sroa.3.0.copyload.i701 = load i64, ptr %.sroa.3.0..sroa_idx.i700, align 8, !tbaa !102
   br label %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE31_maybe_filter_val_scalar_foldedERKNS3_12ScannedBlockE.exit

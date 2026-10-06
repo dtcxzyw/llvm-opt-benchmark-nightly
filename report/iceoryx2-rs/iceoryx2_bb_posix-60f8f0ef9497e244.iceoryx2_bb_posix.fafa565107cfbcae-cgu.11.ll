@@ -202,11 +202,9 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 bb.p:                                             ; preds = %bb.n, %bb.q
-  %.sink40 = phi ptr [ %i.bt, %bb.q ], [ %i.bm, %bb.n ] ; 6 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.sink40, i64 8
-  store i32 1, ptr %1, align 8
-  %i.bn = getelementptr inbounds nuw i8, ptr %.sink40, i64 12
-  store i32 0, ptr %i.bn, align 4
+  %.sink40 = phi ptr [ %i.bt, %bb.q ], [ %i.bm, %bb.n ] ; 5 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %.sink40, i64 8
+  store i32 1, ptr %i.bn, align 8
   store i64 0, ptr %.sink40, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %.sink40, i64 12
   store i32 2, ptr %i.bo, align 4

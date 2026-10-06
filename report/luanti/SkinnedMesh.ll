@@ -205,15 +205,16 @@ _ZNK5scene11IMeshBuffer14getVertexCountEv.exit:   ; preds = %.noexc
           to label %.noexc5 unwind label %bb.g    ; 4 uses
 
 .noexc5:                                          ; preds = %.lr.ph.preheader.i.i.i.i.i.i
-  store ptr %i.w, ptr %i.u, align 8, !tbaa !173
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.o
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.w, i8 0, i64 %i.v, i1 false)
   %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.w, i64 %i.v
   br label %_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i
 
-_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i: ; preds = %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit, %.noexc5
+_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i: ; preds = %.noexc5, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit
+  %.sink.i = phi ptr [ %i.w, %.noexc5 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit ]
   %.sink.i.i = phi ptr [ %i.x, %.noexc5 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit ]
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i.i, %.noexc5 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit ]
+  store ptr %.sink.i, ptr %i.u, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   store ptr %.sink.i.i, ptr %i.z, align 8, !tbaa !231
@@ -302,15 +303,16 @@ _ZNK5scene11IMeshBuffer14getVertexCountEv.exit8:  ; preds = %.noexc6
           to label %.noexc15 unwind label %bb.m   ; 4 uses
 
 .noexc15:                                         ; preds = %.lr.ph.preheader.i.i.i.i.i.i10
-  store ptr %i.bg, ptr %i.be, align 8, !tbaa !173
   %i.bh = getelementptr inbounds nuw [24 x i8], ptr %i.bg, i64 %i.ay
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false)
   %scevgep.i.i.i.i.i.i11 = getelementptr i8, ptr %i.bg, i64 %i.bf
   br label %_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i14
 
-_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i14: ; preds = %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit8, %.noexc15
+_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i14: ; preds = %.noexc15, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit8
+  %.sink.i12 = phi ptr [ %i.bg, %.noexc15 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit8 ]
   %.sink.i.i12 = phi ptr [ %i.bh, %.noexc15 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit8 ]
   %.0.lcssa.i.i.i.i.i.i13 = phi ptr [ %scevgep.i.i.i.i.i.i11, %.noexc15 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit8 ]
+  store ptr %.sink.i12, ptr %i.be, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ap, i64 40
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ap, i64 48
   store ptr %.sink.i.i12, ptr %i.bj, align 8, !tbaa !231
@@ -399,15 +401,16 @@ _ZNK5scene11IMeshBuffer14getVertexCountEv.exit22: ; preds = %.noexc20
           to label %.noexc29 unwind label %bb.s   ; 4 uses
 
 .noexc29:                                         ; preds = %.lr.ph.preheader.i.i.i.i.i.i24
-  store ptr %i.cq, ptr %i.co, align 8, !tbaa !173
   %i.cr = getelementptr inbounds nuw [24 x i8], ptr %i.cq, i64 %i.ci
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cq, i8 0, i64 %i.cp, i1 false)
   %scevgep.i.i.i.i.i.i25 = getelementptr i8, ptr %i.cq, i64 %i.cp
   br label %_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i28
 
-_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i28: ; preds = %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit22, %.noexc29
+_ZNSt12_Vector_baseIN5scene12WeightBuffer13VertexWeightsESaIS2_EEC2EmRKS3_.exit.thread.i.i28: ; preds = %.noexc29, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit22
+  %.sink.i26 = phi ptr [ %i.cq, %.noexc29 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit22 ]
   %.sink.i.i26 = phi ptr [ %i.cr, %.noexc29 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit22 ]
   %.0.lcssa.i.i.i.i.i.i27 = phi ptr [ %scevgep.i.i.i.i.i.i25, %.noexc29 ], [ null, %_ZNK5scene11IMeshBuffer14getVertexCountEv.exit22 ]
+  store ptr %.sink.i26, ptr %i.co, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bz, i64 40
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bz, i64 48
   store ptr %.sink.i.i26, ptr %i.ct, align 8, !tbaa !231

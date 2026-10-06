@@ -205,11 +205,9 @@ bb.ee:                                            ; preds = %bb.ed
   br label %bb.eg
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.aat = call noalias dereferenceable_or_null(104) ptr @calloc(i64 noundef 1, i64 noundef 104) #40 ; 6 uses
-  %2 = getelementptr i8, ptr %i.aat, i64 12
-  store i32 2, ptr %2, align 4
-  %i.aau = getelementptr i8, ptr %i.aat, i64 88
-  store i32 1, ptr %i.aau, align 8
+  %i.aat = call noalias dereferenceable_or_null(104) ptr @calloc(i64 noundef 1, i64 noundef 104) #40 ; 5 uses
+  %i.aau = getelementptr i8, ptr %i.aat, i64 12
+  store i32 2, ptr %i.aau, align 4
   %i.aav = call noalias dereferenceable_or_null(8) ptr @calloc(i64 noundef 1, i64 noundef 8) #40 ; 3 uses
   %i.aaw = getelementptr i8, ptr %i.aat, i64 96
   store ptr %i.aav, ptr %i.aaw, align 8

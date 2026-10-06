@@ -56,13 +56,12 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.g, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %calloc.i = tail call dereferenceable_or_null(80) ptr @calloc(i64 1, i64 80) ; 9 uses
+  %calloc.i = tail call dereferenceable_or_null(80) ptr @calloc(i64 1, i64 80) ; 8 uses
   store ptr %calloc.i, ptr %i.e, align 8, !tbaa !22
   %i.h = icmp eq ptr %calloc.i, null
   br i1 %i.h, label %cvProjCreate.exit, label %cvProjSetDefaults.exit.i
 
 cvProjSetDefaults.exit.i:                         ; preds = %bb.h
-  store i32 1, ptr %calloc.i, align 8, !tbaa !37
   %i.i = getelementptr inbounds nuw i8, ptr %calloc.i, i64 4
   store i32 1, ptr %i.i, align 4, !tbaa !24
   %i.j = getelementptr inbounds nuw i8, ptr %calloc.i, i64 8
@@ -72,7 +71,7 @@ cvProjSetDefaults.exit.i:                         ; preds = %bb.h
   %i.l = getelementptr inbounds nuw i8, ptr %calloc.i, i64 32
   store i32 10, ptr %i.l, align 8, !tbaa !27
   %i.m = getelementptr inbounds nuw i8, ptr %calloc.i, i64 48
-  store <2 x double> <double 1.000000e-01, double 2.500000e-01>, ptr %i.m, align 8, !tbaa !38
+  store <2 x double> <double 1.000000e-01, double 2.500000e-01>, ptr %i.m, align 8, !tbaa !37
   br label %bb.i
 
 cvProjCreate.exit:                                ; preds = %bb.h
@@ -81,7 +80,7 @@ cvProjCreate.exit:                                ; preds = %bb.h
 
 bb.i:                                             ; preds = %cvProjSetDefaults.exit.i, %bb.g
   %i.n = phi ptr [ %calloc.i, %cvProjSetDefaults.exit.i ], [ %i.f, %bb.g ] ; 2 uses
-  store i32 0, ptr %i.n, align 8, !tbaa !37
+  store i32 0, ptr %i.n, align 8, !tbaa !38
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 40
   store ptr %1, ptr %i.o, align 8, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2576
@@ -484,8 +483,8 @@ attributes #8 = { nounwind }
 !34 = !{!16, !16, i64 0}
 !35 = !{!23, !16, i64 72}
 !36 = !{!21, !5, i64 40}
-!37 = !{!23, !5, i64 0}
-!38 = !{!10, !10, i64 0}
+!37 = !{!10, !10, i64 0}
+!38 = !{!23, !5, i64 0}
 !39 = !{!21, !11, i64 472}
 !40 = !{!21, !11, i64 480}
 !41 = !{!21, !11, i64 464}

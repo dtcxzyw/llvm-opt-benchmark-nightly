@@ -205,7 +205,7 @@ JS_ToUint32.exit:                                 ; preds = %bb.h, %bb.f, %bb.i
 define internal { i64, i64 } @js_math_sumPrecise(ptr noundef %0, i64 %1, i64 %2, i32 %3, ptr nofree noundef readonly captures(none) %4) #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %struct.SumPreciseState, align 8    ; 19 uses
+  %5 = alloca %struct.SumPreciseState, align 8    ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #49
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #49
   %i.b = load i64, ptr %4, align 8
@@ -406,19 +406,20 @@ middle.block:                                     ; preds = %vector.body
 bb.q:                                             ; preds = %._crit_edge.i
   %i.cc = add nuw nsw i32 %.0122.i, 1             ; 3 uses
   %.not137.i = icmp slt i32 %i.cc, %i.t
-  %.phi.trans.insert.i = zext nneg i32 %i.cc to i64
-  %.phi.trans.insert153.i = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.phi.trans.insert.i ; 2 uses
+  %.phi.trans.insert.i = zext nneg i32 %i.cc to i64 ; 2 uses
   br i1 %.not137.i, label %._crit_edge152.i, label %bb.r
 
 ._crit_edge152.i:                                 ; preds = %bb.q
+  %.phi.trans.insert153.i = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.phi.trans.insert.i
   %.pre.i = load i64, ptr %.phi.trans.insert153.i, align 8, !tbaa !240
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %._crit_edge152.i
+bb.r:                                             ; preds = %._crit_edge152.i, %bb.q
   %i.cd = phi i64 [ %.pre.i, %._crit_edge152.i ], [ %i.bg, %bb.q ] ; 2 uses
   %i.ce = sub nuw nsw i32 64, %.0128.i
   %i.cf = zext nneg i32 %i.ce to i64
   %i.cg = lshr i64 %.0.i, %i.cf
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.phi.trans.insert.i
   %i.ch = xor i64 %i.cg, %.neg.i
   %i.ci = add i64 %i.cd, %i.ch                    ; 2 uses
   %i.cj = icmp ult i64 %i.ci, %i.cd
@@ -426,7 +427,7 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge1
   %i.cl = icmp ult i64 %i.ck, %i.ca
   %i.cm = or i1 %i.cj, %i.cl
   %i.cn = zext i1 %i.cm to i64
-  store i64 %i.ck, ptr %.phi.trans.insert153.i, align 8, !tbaa !240
+  store i64 %i.ck, ptr %6, align 8, !tbaa !240
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %._crit_edge.i

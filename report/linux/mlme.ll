@@ -204,8 +204,7 @@ bb.cq:                                            ; preds = %bb.cd
   br label %bb.cs
 
 bb.cr:                                            ; preds = %.critedge61.i
-  %i.ls = call ptr @skb_put(ptr noundef nonnull %1, i32 noundef 1) #19 ; 2 uses
-  store i8 0, ptr %i.ls, align 1
+  %i.ls = call ptr @skb_put(ptr noundef nonnull %1, i32 noundef 1) #19
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %.critedge61._crit_edge.i

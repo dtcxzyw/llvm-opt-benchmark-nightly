@@ -204,12 +204,11 @@ _ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIaSaI
 
 bb.am:                                            ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i
   %i.fn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fk) #33
-          to label %.noexc81 unwind label %bb.as  ; 5 uses
+          to label %.noexc81 unwind label %bb.as  ; 4 uses
 
 .noexc81:                                         ; preds = %bb.am
   store ptr %i.fn, ptr %8, align 16, !tbaa !225
-  %i.fo = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  store ptr %i.fn, ptr %i.fo, align 8, !tbaa !401
+  %i.fo = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fn, i64 %i.fk ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %8, i64 16
   store ptr %i.fp, ptr %i.fq, align 16, !tbaa !281
@@ -250,20 +249,14 @@ bb.aq:                                            ; preds = %bb.ap
 _ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82: ; preds = %bb.ap
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not.i.i.i.i83 = icmp eq i32 %i.gb, 0
-  br i1 %.not.i.i.i.i83, label %_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85, label %bb.ar
-
-_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85: ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  br label %bb.cy
+  br i1 %.not.i.i.i.i83, label %bb.cy, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82
   %i.ge = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gc) #33
-          to label %.noexc87 unwind label %bb.at  ; 4 uses
+          to label %.noexc87 unwind label %bb.at  ; 3 uses
 
 .noexc87:                                         ; preds = %bb.ar
   store ptr %i.ge, ptr %0, align 8, !tbaa !225
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr %i.ge, ptr %14, align 8, !tbaa !401
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 %i.gc ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.gf, ptr %i.gg, align 8, !tbaa !281
@@ -666,11 +659,11 @@ bb.cx:                                            ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.qc, ptr %i.qa, align 8, !tbaa !281
   br label %_ZNSt6vectorIaSaIaEED2Ev.exit
 
-bb.cy:                                            ; preds = %_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85, %.noexc87
-  %.pr = phi ptr [ %i.fr, %_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85 ], [ %.pr.pre, %.noexc87 ] ; 3 uses
-  %i.qd = phi ptr [ %13, %_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85 ], [ %14, %.noexc87 ]
-  %.0.i.i.i.i.i.i.i84 = phi ptr [ null, %_ZNSt12_Vector_baseIaSaIaEEC2EmRKS0_.exit.thread.i85 ], [ %i.gf, %.noexc87 ]
-  store ptr %.0.i.i.i.i.i.i.i84, ptr %i.qd, align 8, !tbaa !401
+bb.cy:                                            ; preds = %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82, %.noexc87
+  %.pr = phi ptr [ %.pr.pre, %.noexc87 ], [ %i.fr, %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82 ] ; 3 uses
+  %i.qd = phi ptr [ %i.gf, %.noexc87 ], [ null, %_ZNSt6vectorIaSaIaEE17_S_check_init_lenEmRKS0_.exit.i82 ]
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.qd, ptr %13, align 8, !tbaa !401
   %.not.i.i.i149 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i149, label %_ZNSt6vectorIaSaIaEED2Ev.exit, label %bb.cz
 

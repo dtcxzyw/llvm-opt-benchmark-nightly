@@ -202,7 +202,7 @@ bb.be:                                            ; preds = %bb.bb, %bb.bc, %bb.
   br i1 %.not699, label %._crit_edge696, label %.lr.ph695
 
 .lr.ph695:                                        ; preds = %._crit_edge611
-  %i.ed = getelementptr inbounds nuw i8, ptr %i.dz, i64 24 ; 17 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.dz, i64 24 ; 16 uses
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph695, %zend_tmp_string_release.exit480
@@ -449,9 +449,7 @@ bb.bx:                                            ; preds = %.lr.ph689, %bb.bt, 
 
 bb.by:                                            ; preds = %bb.bx
   %i.hb = add nsw i32 %.4377687, 1                ; 2 uses
-  %i.hc = sext i32 %i.hb to i64                   ; 2 uses
-  %2 = getelementptr inbounds i8, ptr %i.ed, i64 %i.hc
-  store i8 0, ptr %2, align 1, !tbaa !12
+  %i.hc = sext i32 %i.hb to i64
   br label %bb.bz
 
 bb.bz:                                            ; preds = %._crit_edge795, %bb.by

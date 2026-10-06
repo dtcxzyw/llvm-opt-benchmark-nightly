@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_ZN11V3ExecGraph14T
   %i.fe = getelementptr inbounds nuw i8, ptr %17, i64 24 ; 5 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %17, i64 40 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %17, i64 48 ; 2 uses
-  %i.fh = getelementptr inbounds nuw i8, ptr %17, i64 72 ; 7 uses
+  %i.fh = getelementptr inbounds nuw i8, ptr %17, i64 72 ; 6 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %17, i64 80 ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %17, i64 88 ; 3 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %17, i64 32
@@ -608,11 +608,7 @@ bb.dl:                                            ; preds = %bb.dh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fh, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i412 = icmp eq i32 %i.wa, 0
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.fg, i8 0, i64 20, i1 false)
-  br i1 %.not.i.i.i.i.i412, label %_ZNSt12_Vector_baseISt6vectorIPK9ExecMTaskSaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i.i418, label %.lr.ph.preheader.i.i.i.i.i.i413
-
-_ZNSt12_Vector_baseISt6vectorIPK9ExecMTaskSaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i.i418: ; preds = %bb.dl
-  store i64 0, ptr %i.fh, align 8
-  br label %bb.dn
+  br i1 %.not.i.i.i.i.i412, label %bb.dn, label %.lr.ph.preheader.i.i.i.i.i.i413
 
 .lr.ph.preheader.i.i.i.i.i.i413:                  ; preds = %bb.dl
   %i.we = mul nuw nsw i64 %i.wd, 24               ; 3 uses
@@ -632,9 +628,9 @@ bb.dm:                                            ; preds = %.lr.ph.preheader.i.
   call void @_ZNSt13unordered_setIPK9ExecMTaskSt4hashIS2_ESt8equal_toIS2_ESaIS2_EED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.fb) #25
   br label %.body419
 
-bb.dn:                                            ; preds = %.noexc.i414, %_ZNSt12_Vector_baseISt6vectorIPK9ExecMTaskSaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i.i418
-  %.sink.i.i416 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIPK9ExecMTaskSaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i.i418 ], [ %i.wg, %.noexc.i414 ]
-  %.0.lcssa.i.i.i.i.i.i417 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIPK9ExecMTaskSaIS3_EESaIS5_EEC2EmRKS6_.exit.thread.i.i418 ], [ %scevgep.i.i.i.i.i.i415, %.noexc.i414 ]
+bb.dn:                                            ; preds = %bb.dl, %.noexc.i414
+  %.sink.i.i416 = phi ptr [ %i.wg, %.noexc.i414 ], [ null, %bb.dl ]
+  %.0.lcssa.i.i.i.i.i.i417 = phi ptr [ %scevgep.i.i.i.i.i.i415, %.noexc.i414 ], [ null, %bb.dl ]
   store ptr %.sink.i.i416, ptr %i.fj, align 8, !tbaa !298
   store ptr %.0.lcssa.i.i.i.i.i.i417, ptr %i.fi, align 8, !tbaa !299
   %i.wi = load ptr, ptr %i.bx, align 8, !tbaa !258 ; 12 uses

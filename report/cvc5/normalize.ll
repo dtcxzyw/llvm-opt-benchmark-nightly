@@ -205,7 +205,7 @@ _ZN4cvc58internal13preprocessing6passesL21compareBySuperpatternEPNS2_8NodeInfoES
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef nonnull align 8 dereferenceable(24) ptr @_ZN4cvc58internal13preprocessing6passesL24getOrComputeSuperpatternERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorISB_IPNS2_8NodeInfoESaISD_EESaISF_EERKSt13unordered_mapIS8_SB_ISt10shared_ptrISC_ESaISM_EESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIS9_SO_EEERSK_IS8_SB_ISB_IiSaIiEESaIS10_EESQ_SS_SaIST_IS9_S12_EEE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(56) %3) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::vector.478", align 8   ; 9 uses
+  %4 = alloca %"class.std::vector.478", align 8   ; 8 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = tail call ptr @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St6vectorIS8_IiSaIiEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb1ELb0ELb1EEEE4findERS7_(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull align 8 dereferenceable(32) %0) ; 2 uses
   %.not = icmp eq ptr %i.b, null
@@ -232,20 +232,19 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %bb.c
-  store i64 0, ptr %4, align 8
   %.not.i.i.i.i = icmp eq ptr %i.e, %i.f
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt6vectorIiSaIiEESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #27 ; 4 uses
-  store ptr %i.l, ptr %4, align 8, !tbaa !216
+  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #27 ; 3 uses
   %i.m = getelementptr i8, ptr %i.l, i64 %i.i
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.l, i8 0, i64 %i.i, i1 false)
   br label %_ZNSt12_Vector_baseISt6vectorIiSaIiEESaIS2_EEC2EmRKS3_.exit.thread.i
 
 _ZNSt12_Vector_baseISt6vectorIiSaIiEESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, %.lr.ph.preheader.i.i.i.i.i
-  %i.n = phi ptr [ %i.l, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 4 uses
+  %i.n = phi ptr [ %i.l, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 5 uses
   %i.o = phi ptr [ %i.m, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ] ; 4 uses
+  store ptr %i.n, ptr %4, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.o, ptr %i.q, align 8, !tbaa !241

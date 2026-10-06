@@ -105,14 +105,13 @@ bb.d:                                             ; preds = %_ZN5Eigen9DenseBase
 .thread280.i:                                     ; preds = %.preheader.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %0, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !17
   %i.al = load double, ptr %2, align 16, !tbaa !19, !noalias !11
-  %i.am = fneg double %i.al                       ; 2 uses
-  store double %i.am, ptr %0, align 16, !tbaa !19, !alias.scope !11
+  %i.am = fneg double %i.al
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread280.i, %.preheader.1.i
   %i.an = phi double [ %i.am, %.thread280.i ], [ %i.ak, %.preheader.1.i ]
   %.0105274288.i = phi i64 [ 0, %.thread280.i ], [ -1, %.preheader.1.i ]
-  %i.ao = phi ptr [ %0, %.thread280.i ], [ %i.ag, %.preheader.1.i ] ; 2 uses
+  %i.ao = phi ptr [ %0, %.thread280.i ], [ %i.ag, %.preheader.1.i ]
   %.idx.i.i.i256276286.i = phi i64 [ 0, %.thread280.i ], [ %.idx.i.i.i256270.i, %.preheader.1.i ]
   %invariant.gep279285.i = phi ptr [ %1, %.thread280.i ], [ %invariant.gep271.i, %.preheader.1.i ]
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -120,8 +119,7 @@ bb.e:                                             ; preds = %.thread280.i, %.pre
   %gep.1.i = getelementptr i8, ptr %invariant.gep279285.i, i64 8
   %i.ar = load double, ptr %gep.1.i, align 8, !tbaa !19, !noalias !11
   %i.as = fneg double %i.aq
-  %i.at = tail call double @llvm.fmuladd.f64(double %i.as, double %i.ar, double %i.an) ; 2 uses
-  store double %i.at, ptr %i.ao, align 8, !tbaa !19, !alias.scope !11
+  %i.at = tail call double @llvm.fmuladd.f64(double %i.as, double %i.ar, double %i.an)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.preheader.1.i

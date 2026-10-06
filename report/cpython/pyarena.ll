@@ -137,7 +137,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = icmp ult i64 %i.c, 8192
   %i.k = select i1 %i.j, i64 8192, i64 %i.d       ; 2 uses
   %i.l = add i64 %i.k, 32
-  %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #3 ; 8 uses
+  %i.m = tail call ptr @PyMem_Malloc(i64 noundef %i.l) #3 ; 7 uses
   %.not.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i, label %block_alloc.exit.thread, label %bb.c
 
@@ -151,9 +151,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.r = add i64 %i.q, 7
   %i.s = and i64 %i.r, -8
-  %i.t = sub i64 %i.s, %i.q                       ; 3 uses
-  %2 = getelementptr i8, ptr %i.m, i64 8
-  store i64 %i.t, ptr %2, align 8, !tbaa !19
+  %i.t = sub i64 %i.s, %i.q                       ; 2 uses
   %i.u = getelementptr i8, ptr %i.b, i64 16
   store ptr %i.m, ptr %i.u, align 8, !tbaa !18
   %.pre20.i = add i64 %i.t, %i.d

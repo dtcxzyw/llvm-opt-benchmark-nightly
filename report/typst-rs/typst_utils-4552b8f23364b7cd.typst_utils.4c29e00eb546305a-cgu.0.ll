@@ -206,8 +206,9 @@ bb.a:
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %i.d = alloca [520 x i8], align 8               ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 512 ; 20 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(520) %i.d, i8 0, i64 520, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 512 ; 20 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(519) %i.e, i8 0, i64 519, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !423)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !424)
   br label %.lr.ph.i
@@ -220,9 +221,9 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.f
   store i8 %i.h, ptr %i.i, align 1, !alias.scope !423, !noalias !424
   %i.j = add nuw nsw i64 %.sroa.0.07.i, 1
-  %i.k = load i64, ptr %i.e, align 8, !alias.scope !423, !noalias !424, !noundef !5
+  %i.k = load i64, ptr %4, align 8, !alias.scope !423, !noalias !424, !noundef !5
   %i.l = add i64 %i.k, 1                          ; 5 uses
-  store i64 %i.l, ptr %i.e, align 8, !alias.scope !423, !noalias !424
+  store i64 %i.l, ptr %4, align 8, !alias.scope !423, !noalias !424
   %i.m = icmp samesign ult i64 %.sroa.0.07.i, 37
   %i.n = icmp ult i64 %i.l, 512                   ; 2 uses
   %or.cond.i = and i1 %i.m, %i.n
@@ -243,9 +244,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.p
   store i8 %i.r, ptr %i.s, align 1, !alias.scope !425, !noalias !426
   %i.t = add nuw i64 %.sroa.0.07.i7, 1            ; 2 uses
-  %i.u = load i64, ptr %i.e, align 8, !alias.scope !425, !noalias !426, !noundef !5
+  %i.u = load i64, ptr %4, align 8, !alias.scope !425, !noalias !426, !noundef !5
   %i.v = add i64 %i.u, 1                          ; 4 uses
-  store i64 %i.v, ptr %i.e, align 8, !alias.scope !425, !noalias !426
+  store i64 %i.v, ptr %4, align 8, !alias.scope !425, !noalias !426
   %i.w = icmp ult i64 %i.t, %2
   %i.x = icmp ult i64 %i.v, 512
   %or.cond.i8 = and i1 %i.w, %i.x
@@ -259,27 +260,27 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
 .lr.ph.i11:                                       ; preds = %_RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit9
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.y
   store i8 34, ptr %i.aa, align 1, !alias.scope !427, !noalias !428
-  %i.ab = load i64, ptr %i.e, align 8, !alias.scope !427, !noalias !428, !noundef !5
+  %i.ab = load i64, ptr %4, align 8, !alias.scope !427, !noalias !428, !noundef !5
   %i.ac = add i64 %i.ab, 1                        ; 4 uses
-  store i64 %i.ac, ptr %i.e, align 8, !alias.scope !427, !noalias !428
+  store i64 %i.ac, ptr %4, align 8, !alias.scope !427, !noalias !428
   %i.ad = icmp ult i64 %i.ac, 512
   br i1 %i.ad, label %.lr.ph.i11.1, label %_RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit14
 
 .lr.ph.i11.1:                                     ; preds = %.lr.ph.i11
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ac
   store i8 46, ptr %i.ae, align 1, !alias.scope !427, !noalias !428
-  %i.af = load i64, ptr %i.e, align 8, !alias.scope !427, !noalias !428, !noundef !5
+  %i.af = load i64, ptr %4, align 8, !alias.scope !427, !noalias !428, !noundef !5
   %i.ag = add i64 %i.af, 1                        ; 4 uses
-  store i64 %i.ag, ptr %i.e, align 8, !alias.scope !427, !noalias !428
+  store i64 %i.ag, ptr %4, align 8, !alias.scope !427, !noalias !428
   %i.ah = icmp ult i64 %i.ag, 512
   br i1 %i.ah, label %.lr.ph.i11.2, label %_RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit14
 
 .lr.ph.i11.2:                                     ; preds = %.lr.ph.i11.1
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ag
   store i8 32, ptr %i.ai, align 1, !alias.scope !427, !noalias !428
-  %i.aj = load i64, ptr %i.e, align 8, !alias.scope !427, !noalias !428, !noundef !5
+  %i.aj = load i64, ptr %4, align 8, !alias.scope !427, !noalias !428, !noundef !5
   %i.ak = add i64 %i.aj, 1                        ; 2 uses
-  store i64 %i.ak, ptr %i.e, align 8, !alias.scope !427, !noalias !428
+  store i64 %i.ak, ptr %4, align 8, !alias.scope !427, !noalias !428
   br label %_RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit14
 
 _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit14: ; preds = %.lr.ph.i11, %.lr.ph.i11.1, %.lr.ph.i11.2, %_RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exit9
@@ -300,9 +301,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.an
   store i8 %i.ap, ptr %i.aq, align 1, !alias.scope !429, !noalias !430
   %i.ar = add nuw nsw i64 %.sroa.0.07.i17, 1
-  %i.as = load i64, ptr %i.e, align 8, !alias.scope !429, !noalias !430, !noundef !5
+  %i.as = load i64, ptr %4, align 8, !alias.scope !429, !noalias !430, !noundef !5
   %i.at = add i64 %i.as, 1                        ; 4 uses
-  store i64 %i.at, ptr %i.e, align 8, !alias.scope !429, !noalias !430
+  store i64 %i.at, ptr %4, align 8, !alias.scope !429, !noalias !430
   %i.au = icmp samesign ult i64 %.sroa.0.07.i17, 55
   %i.av = icmp ult i64 %i.at, 512
   %or.cond.i18 = and i1 %i.au, %i.av
@@ -321,9 +322,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.aw
   store i8 %i.ay, ptr %i.az, align 1, !alias.scope !431, !noalias !432
   %i.ba = add nuw nsw i64 %.sroa.0.07.i22, 1
-  %i.bb = load i64, ptr %i.e, align 8, !alias.scope !431, !noalias !432, !noundef !5
+  %i.bb = load i64, ptr %4, align 8, !alias.scope !431, !noalias !432, !noundef !5
   %i.bc = add i64 %i.bb, 1                        ; 4 uses
-  store i64 %i.bc, ptr %i.e, align 8, !alias.scope !431, !noalias !432
+  store i64 %i.bc, ptr %4, align 8, !alias.scope !431, !noalias !432
   %i.bd = icmp samesign ult i64 %.sroa.0.07.i22, 46
   %i.be = icmp ult i64 %i.bc, 512
   %or.cond.i23 = and i1 %i.bd, %i.be
@@ -344,9 +345,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.bk = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.bh
   store i8 %i.bj, ptr %i.bk, align 1, !alias.scope !433, !noalias !434
   %i.bl = add nuw nsw i64 %.sroa.0.07.i27, 1
-  %i.bm = load i64, ptr %i.e, align 8, !alias.scope !433, !noalias !434, !noundef !5
+  %i.bm = load i64, ptr %4, align 8, !alias.scope !433, !noalias !434, !noundef !5
   %i.bn = add i64 %i.bm, 1                        ; 6 uses
-  store i64 %i.bn, ptr %i.e, align 8, !alias.scope !433, !noalias !434
+  store i64 %i.bn, ptr %4, align 8, !alias.scope !433, !noalias !434
   %i.bo = icmp samesign ult i64 %.sroa.0.07.i27, 29
   %i.bp = icmp ult i64 %i.bn, 512
   %or.cond.i28 = and i1 %i.bo, %i.bp
@@ -366,9 +367,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.bu = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.br
   store i8 %i.bt, ptr %i.bu, align 1, !alias.scope !435, !noalias !436
   %i.bv = add nuw nsw i64 %.sroa.0.07.i32, 1
-  %i.bw = load i64, ptr %i.e, align 8, !alias.scope !435, !noalias !436, !noundef !5
+  %i.bw = load i64, ptr %4, align 8, !alias.scope !435, !noalias !436, !noundef !5
   %i.bx = add i64 %i.bw, 1                        ; 6 uses
-  store i64 %i.bx, ptr %i.e, align 8, !alias.scope !435, !noalias !436
+  store i64 %i.bx, ptr %4, align 8, !alias.scope !435, !noalias !436
   %i.by = icmp samesign ult i64 %.sroa.0.07.i32, 29
   %i.bz = icmp ult i64 %i.bx, 512
   %or.cond.i33 = and i1 %i.by, %i.bz
@@ -388,9 +389,9 @@ _RNvNvNtCs6xpQEr8gLsQ_11typst_utils4pico29failed_to_compile_time_intern4push.exi
   %i.ce = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.cb
   store i8 %i.cd, ptr %i.ce, align 1, !alias.scope !437, !noalias !438
   %i.cf = add nuw nsw i64 %.sroa.0.07.i37, 1
-  %i.cg = load i64, ptr %i.e, align 8, !alias.scope !437, !noalias !438, !noundef !5
+  %i.cg = load i64, ptr %4, align 8, !alias.scope !437, !noalias !438, !noundef !5
   %i.ch = add i64 %i.cg, 1                        ; 4 uses
-  store i64 %i.ch, ptr %i.e, align 8, !alias.scope !437, !noalias !438
+  store i64 %i.ch, ptr %4, align 8, !alias.scope !437, !noalias !438
   %i.ci = icmp samesign ult i64 %.sroa.0.07.i37, 25
   %i.cj = icmp ult i64 %i.ch, 512
   %or.cond.i38 = and i1 %i.ci, %i.cj

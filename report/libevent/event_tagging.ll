@@ -158,7 +158,8 @@ define range(i32 -2147483647, -2147483648) i32 @evtag_encode_tag(ptr noundef %0,
 bb.a:
   %i.a = alloca [5 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.a, i8 0, i64 5, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  store i32 0, ptr %2, align 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -311,7 +312,8 @@ bb.a:
   %i.a = alloca [5 x i8], align 1                 ; 7 uses
   %i.b = alloca [5 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.b, i8 0, i64 5, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i32 0, ptr %4, align 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -406,7 +408,8 @@ bb.a:
   %i.a = alloca [5 x i8], align 1                 ; 7 uses
   %i.b = alloca [5 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.b, i8 0, i64 5, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i32 0, ptr %3, align 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -561,7 +564,8 @@ encode_int_internal.exit:                         ; preds = %bb.a, %._crit_edge.
   %i.x = phi i8 [ 0, %bb.a ], [ %i.u, %._crit_edge.i ]
   store i8 %i.x, ptr %i.c, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.b, i8 0, i64 5, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i32 0, ptr %3, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %encode_int_internal.exit
@@ -698,7 +702,8 @@ encode_int64_internal.exit:                       ; preds = %bb.a, %._crit_edge.
   %i.x = phi i8 [ 0, %bb.a ], [ %i.u, %._crit_edge.i ]
   store i8 %i.x, ptr %i.c, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.b, i8 0, i64 5, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i32 0, ptr %3, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %encode_int64_internal.exit

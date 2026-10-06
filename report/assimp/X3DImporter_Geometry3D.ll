@@ -204,7 +204,7 @@ bb.a:
   %15 = alloca %"class.std::vector", align 8      ; 27 uses
   %16 = alloca %"class.std::vector.29", align 8   ; 19 uses
   %17 = alloca %"class.std::vector.34", align 8   ; 13 uses
-  %18 = alloca %"class.std::vector", align 8      ; 13 uses
+  %18 = alloca %"class.std::vector", align 8      ; 12 uses
   %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.a = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 6 uses
@@ -607,11 +607,7 @@ bb.cf:                                            ; preds = %._crit_edge
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %._crit_edge
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %18, i8 0, i64 24, i1 false)
   %.not.i.i.i.i359 = icmp eq ptr %i.pl, %i.pm
-  br i1 %.not.i.i.i.i359, label %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EEC2EmRKS2_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EEC2EmRKS2_.exit.thread.i: ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  store i64 0, ptr %18, align 8
-  br label %bb.da
+  br i1 %.not.i.i.i.i359, label %bb.da, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
   %i.ps = mul nuw nsw i64 %i.pq, 12               ; 3 uses
@@ -1014,9 +1010,9 @@ bb.cz:                                            ; preds = %_ZN10aiVector3tIfEd
   %exitcond1061.not = icmp eq i64 %i.ads, %.pre-phi1153
   br i1 %exitcond1061.not, label %._crit_edge, label %.lr.ph1011, !llvm.loop !40
 
-bb.da:                                            ; preds = %.noexc362, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EEC2EmRKS2_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.pu, %.noexc362 ]
-  %.0.lcssa.i.i.i.i.i360 = phi ptr [ null, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc362 ]
+bb.da:                                            ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, %.noexc362
+  %.sink.i = phi ptr [ %i.pu, %.noexc362 ], [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ]
+  %.0.lcssa.i.i.i.i.i360 = phi ptr [ %scevgep.i.i.i.i.i, %.noexc362 ], [ null, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ]
   %i.adt = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.adu = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 3 uses
   store ptr %.sink.i, ptr %i.adu, align 8

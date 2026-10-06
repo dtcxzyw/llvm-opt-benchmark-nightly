@@ -202,28 +202,21 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.u = load i32, ptr %i.m, align 4
   %i.v = and i32 %i.u, 2
   %.not33.i = icmp eq i32 %i.v, 0
-  br i1 %.not33.i, label %tvb_new_with_subset.exit, label %bb.e
+  br i1 %.not33.i, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr i8, ptr %0, i64 52
   %i.x = load i32, ptr %i.w, align 4
   %i.y = getelementptr i8, ptr %i.e, i64 52
   store i32 %i.x, ptr %i.y, align 4
-  br label %tvb_new_with_subset.exit
-
-tvb_new_with_subset.exit:                         ; preds = %bb.d, %bb.e
-  %1 = getelementptr i8, ptr %0, i64 24
-  %2 = load ptr, ptr %1, align 8
-  %3 = getelementptr i8, ptr %i.e, i64 24
-  store ptr %2, ptr %3, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
   %i.z = tail call ptr @tvb_new_real_data(ptr noundef null, i32 noundef 0, i32 noundef 0)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %tvb_new_with_subset.exit
-  %.0 = phi ptr [ %i.e, %tvb_new_with_subset.exit ], [ %i.z, %bb.f ] ; 3 uses
+bb.g:                                             ; preds = %bb.e, %bb.d, %bb.f
+  %.0 = phi ptr [ %i.z, %bb.f ], [ %i.e, %bb.d ], [ %i.e, %bb.e ] ; 3 uses
   %i.aa = getelementptr i8, ptr %.0, i64 24
   store ptr %.0, ptr %i.aa, align 8
   ret ptr %.0

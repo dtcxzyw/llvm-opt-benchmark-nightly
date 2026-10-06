@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.c = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #23 ; 4 uses
-  store i32 0, ptr %i.c, align 4, !tbaa !38
+  %i.c = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #23 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 0, ptr %i.d, align 4, !tbaa !39
   store ptr %i.c, ptr %.phi.trans.insert, align 8, !tbaa !32
@@ -237,10 +236,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.c = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #23 ; 4 uses
+  %i.c = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #23 ; 3 uses
   store i32 0, ptr %i.c, align 4, !tbaa !38
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %2, align 4, !tbaa !39
   store ptr %i.c, ptr %.phi.trans.insert, align 8, !tbaa !32
   br label %._crit_edge
 

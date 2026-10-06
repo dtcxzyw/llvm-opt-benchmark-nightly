@@ -205,73 +205,70 @@ bb.ia:                                            ; preds = %bb.hz, %bb.bg
 
 .preheader.preheader:                             ; preds = %._crit_edge
   %i.sx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.sy = load i16, ptr %i.sx, align 8, !tbaa !13 ; 2 uses
+  %i.sy = load i16, ptr %i.sx, align 8, !tbaa !13
   %i.sz = and i16 %i.sy, 1
   %.not351 = icmp eq i16 %i.sz, 0
   br i1 %.not351, label %bb.ib, label %.preheader.1
 
 .preheader.1:                                     ; preds = %.preheader.preheader
   %i.ta = getelementptr inbounds nuw i8, ptr %4, i64 72
-  %i.tb = load i16, ptr %i.ta, align 8, !tbaa !13 ; 2 uses
+  %i.tb = load i16, ptr %i.ta, align 8, !tbaa !13
   %i.tc = and i16 %i.tb, 1
   %.not351.1 = icmp eq i16 %i.tc, 0
   br i1 %.not351.1, label %bb.ib, label %.preheader.2
 
 .preheader.2:                                     ; preds = %.preheader.1
   %i.td = getelementptr inbounds nuw i8, ptr %4, i64 136
-  %i.te = load i16, ptr %i.td, align 8, !tbaa !13 ; 2 uses
+  %i.te = load i16, ptr %i.td, align 8, !tbaa !13
   %i.tf = and i16 %i.te, 1
   %.not351.2 = icmp eq i16 %i.tf, 0
   br i1 %.not351.2, label %bb.ib, label %.preheader.3
 
 .preheader.3:                                     ; preds = %.preheader.2
   %i.tg = getelementptr inbounds nuw i8, ptr %4, i64 200
-  %i.th = load i16, ptr %i.tg, align 8, !tbaa !13 ; 2 uses
+  %i.th = load i16, ptr %i.tg, align 8, !tbaa !13
   %i.ti = and i16 %i.th, 1
   %.not351.3 = icmp eq i16 %i.ti, 0
   br i1 %.not351.3, label %bb.ib, label %.preheader.4
 
 .preheader.4:                                     ; preds = %.preheader.3
   %i.tj = getelementptr inbounds nuw i8, ptr %4, i64 264
-  %i.tk = load i16, ptr %i.tj, align 8, !tbaa !13 ; 2 uses
+  %i.tk = load i16, ptr %i.tj, align 8, !tbaa !13
   %i.tl = and i16 %i.tk, 1
   %.not351.4 = icmp eq i16 %i.tl, 0
   br i1 %.not351.4, label %bb.ib, label %.preheader.5
 
 .preheader.5:                                     ; preds = %.preheader.4
   %i.tm = getelementptr inbounds nuw i8, ptr %4, i64 328
-  %i.tn = load i16, ptr %i.tm, align 8, !tbaa !13 ; 2 uses
+  %i.tn = load i16, ptr %i.tm, align 8, !tbaa !13
   %i.to = and i16 %i.tn, 1
   %.not351.5 = icmp eq i16 %i.to, 0
   br i1 %.not351.5, label %bb.ib, label %.preheader.6
 
 .preheader.6:                                     ; preds = %.preheader.5
   %i.tp = getelementptr inbounds nuw i8, ptr %4, i64 392
-  %i.tq = load i16, ptr %i.tp, align 8, !tbaa !13 ; 2 uses
+  %i.tq = load i16, ptr %i.tp, align 8, !tbaa !13
   %i.tr = and i16 %i.tq, 1
   %.not351.6 = icmp eq i16 %i.tr, 0
   br i1 %.not351.6, label %bb.ib, label %.preheader.7
 
 .preheader.7:                                     ; preds = %.preheader.6
   %i.ts = getelementptr inbounds nuw i8, ptr %4, i64 456
-  %i.tt = load i16, ptr %i.ts, align 8, !tbaa !13 ; 2 uses
+  %i.tt = load i16, ptr %i.ts, align 8, !tbaa !13
   %i.tu = and i16 %i.tt, 1
   %.not351.7 = icmp eq i16 %i.tu, 0
-  br i1 %.not351.7, label %bb.ib, label %53
-
-53:                                               ; preds = %.preheader.7
-  %.phi.trans.insert687 = getelementptr inbounds i8, ptr %4, i64 -56
-  %.pre688 = load i16, ptr %.phi.trans.insert687, align 8, !tbaa !13
+  %spec.select = select i1 %.not351.7, i64 7, i64 -1
   br label %bb.ib
 
-bb.ib:                                            ; preds = %53, %.preheader.7, %.preheader.6, %.preheader.5, %.preheader.4, %.preheader.3, %.preheader.2, %.preheader.1, %.preheader.preheader
-  %54 = phi i16 [ %.pre688, %53 ], [ %i.sy, %.preheader.preheader ], [ %i.tb, %.preheader.1 ], [ %i.tt, %.preheader.7 ], [ %i.te, %.preheader.2 ], [ %i.tn, %.preheader.5 ], [ %i.th, %.preheader.3 ], [ %i.tq, %.preheader.6 ], [ %i.tk, %.preheader.4 ] ; 2 uses
-  %.0196 = phi i64 [ -1, %53 ], [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ], [ 7, %.preheader.7 ], [ 2, %.preheader.2 ], [ 5, %.preheader.5 ], [ 3, %.preheader.3 ], [ 6, %.preheader.6 ], [ 4, %.preheader.4 ]
-  %55 = getelementptr inbounds [64 x i8], ptr %4, i64 %.0196 ; 4 uses
-  %i.tv = icmp slt i16 %54, 0
-  %i.tw = ashr i16 %54, 5
+bb.ib:                                            ; preds = %.preheader.7, %.preheader.6, %.preheader.5, %.preheader.4, %.preheader.3, %.preheader.2, %.preheader.1, %.preheader.preheader
+  %.0196 = phi i64 [ 4, %.preheader.4 ], [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ], [ %spec.select, %.preheader.7 ], [ 2, %.preheader.2 ], [ 5, %.preheader.5 ], [ 3, %.preheader.3 ], [ 6, %.preheader.6 ]
+  %53 = getelementptr inbounds [64 x i8], ptr %4, i64 %.0196 ; 5 uses
+  %54 = getelementptr inbounds nuw i8, ptr %53, i64 8
+  %55 = load i16, ptr %54, align 8, !tbaa !13     ; 2 uses
+  %i.tv = icmp slt i16 %55, 0
+  %i.tw = ashr i16 %55, 5
   %i.tx = sext i16 %i.tw to i32
-  %i.ty = getelementptr inbounds nuw i8, ptr %55, i64 12
+  %i.ty = getelementptr inbounds nuw i8, ptr %53, i64 12
   %i.tz = load i32, ptr %i.ty, align 4
   %i.ua = select i1 %i.tv, i32 %i.tz, i32 %i.tx
   %i.ub = icmp eq i32 %i.ua, 0
@@ -279,7 +276,7 @@ bb.ib:                                            ; preds = %53, %.preheader.7, 
 
 bb.ic:                                            ; preds = %bb.ib
   %i.uc = getelementptr inbounds nuw i8, ptr %4, i64 704
-  %i.ud = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %55, ptr noundef nonnull align 8 dereferenceable(64) %i.uc)
+  %i.ud = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %53, ptr noundef nonnull align 8 dereferenceable(64) %i.uc)
           to label %bb.ii unwind label %bb.id     ; 0 uses
 
 bb.id:                                            ; preds = %bb.ic
@@ -293,11 +290,11 @@ bb.ie:                                            ; preds = %bb.ib
   %i.uf = getelementptr inbounds nuw i8, ptr %51, i64 8
   store i16 2, ptr %i.uf, align 8, !tbaa !13
   %i.ug = getelementptr inbounds nuw i8, ptr %4, i64 704
-  %i.uh = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6icu_7815SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(72) %18, ptr noundef nonnull align 8 dereferenceable(64) %i.ug, ptr noundef nonnull align 8 dereferenceable(64) %55, ptr noundef nonnull align 8 dereferenceable(64) %51, ptr noundef nonnull align 4 dereferenceable(4) %5)
+  %i.uh = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6icu_7815SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(72) %18, ptr noundef nonnull align 8 dereferenceable(64) %i.ug, ptr noundef nonnull align 8 dereferenceable(64) %53, ptr noundef nonnull align 8 dereferenceable(64) %51, ptr noundef nonnull align 4 dereferenceable(4) %5)
           to label %bb.if unwind label %bb.ih     ; 0 uses
 
 bb.if:                                            ; preds = %bb.ie
-  %i.ui = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %55, ptr noundef nonnull align 8 dereferenceable(64) %51)
+  %i.ui = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %53, ptr noundef nonnull align 8 dereferenceable(64) %51)
           to label %bb.ig unwind label %bb.ih     ; 0 uses
 
 bb.ig:                                            ; preds = %bb.if

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %regle
   %i.af = sext i16 %i.ae to i32
   %.neg.i = sub nsw i32 %.pre-phi, %i.af
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 88
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !48 ; 3 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !48 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !63
   %i.ak = add i32 %.neg.i, %i.aj
@@ -292,9 +292,7 @@ bb.h:                                             ; preds = %removevars.exit
   store i32 %i.bn, ptr %i.cd, align 8, !tbaa !130
   %i.ce = add nsw i32 %i.bp, 1
   store i32 %i.ce, ptr %i.bo, align 8, !tbaa !126
-  %.pre51 = load ptr, ptr %i.c, align 8, !tbaa !25 ; 2 uses
-  %.phi.trans.insert = getelementptr i8, ptr %.pre51, i64 88
-  %.pre52 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !48
+  %.pre51 = load ptr, ptr %i.c, align 8, !tbaa !25
   %.pre53 = load i16, ptr %i.e, align 8, !tbaa !79 ; 2 uses
   %.pre55 = sext i16 %.pre53 to i32
   br label %bb.i
@@ -302,16 +300,16 @@ bb.h:                                             ; preds = %removevars.exit
 bb.i:                                             ; preds = %bb.h, %removevars.exit
   %.pre-phi56 = phi i32 [ %.pre55, %bb.h ], [ %.pre-phi, %removevars.exit ] ; 2 uses
   %i.cf = phi i16 [ %.pre53, %bb.h ], [ %i.ab, %removevars.exit ] ; 10 uses
-  %i.cg = phi ptr [ %.pre52, %bb.h ], [ %i.ah, %removevars.exit ] ; 9 uses
-  %1 = phi ptr [ %.pre51, %bb.h ], [ %i.aa, %removevars.exit ] ; 3 uses
-  %2 = getelementptr i8, ptr %1, i64 88           ; 2 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16 ; 2 uses
+  %i.cg = phi ptr [ %.pre51, %bb.h ], [ %i.aa, %removevars.exit ] ; 3 uses
+  %1 = getelementptr i8, ptr %i.cg, i64 88        ; 3 uses
+  %2 = load ptr, ptr %1, align 8, !tbaa !48       ; 9 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ci = icmp sgt i32 %.pre-phi56, 0
   br i1 %i.ci, label %.lr.ph87.preheader, label %reglevel.exit.i
 
 .lr.ph87.preheader:                               ; preds = %bb.i
   %.val8.i.i = load i32, ptr %i.h, align 8, !tbaa !47
-  %.val.val.val.i.i27 = load ptr, ptr %i.cg, align 8, !tbaa !54
+  %.val.val.val.i.i27 = load ptr, ptr %2, align 8, !tbaa !54
   br label %.lr.ph87
 
 bb.j:                                             ; preds = %.lr.ph87
@@ -339,7 +337,7 @@ reglevel.exit.i:                                  ; preds = %bb.j, %bb.i, %.thre
   %.2.i.i = phi i8 [ %i.ct, %.thread.i.i ], [ 0, %bb.i ], [ 0, %bb.j ] ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !81 ; 3 uses
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.cg, i64 24 ; 2 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.cx = load i32, ptr %i.cw, align 8, !tbaa !126 ; 3 uses
   %i.cy = icmp slt i32 %i.cv, %i.cx
   br i1 %i.cy, label %.lr.ph.i25, label %solvegotos.exit
@@ -347,9 +345,9 @@ reglevel.exit.i:                                  ; preds = %bb.j, %bb.i, %.thre
 .lr.ph.i25:                                       ; preds = %reglevel.exit.i
   %i.cz = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.b, i64 18 ; 3 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.db = getelementptr inbounds nuw i8, ptr %i.cg, i64 48
   %i.dc = load i32, ptr %i.cz, align 8, !tbaa !80
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.cg, i64 40
+  %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.de = load i32, ptr %i.dd, align 8, !tbaa !61
   %i.df = icmp slt i32 %i.dc, %i.de
   br i1 %i.df, label %.lr.ph.split.i, label %.lr.ph.split.us.i
@@ -426,7 +424,7 @@ reglevel.exit40.thread.us.us.i:                   ; preds = %reglevel.exit40.thr
 .lr.ph89:                                         ; preds = %.lr.ph.split.us.split.i
   %i.ej = zext nneg i16 %i.eh to i32
   %.val8.i36.us.i = load i32, ptr %i.h, align 8, !tbaa !47
-  %.val.val.val.i38.us.i = load ptr, ptr %i.cg, align 8, !tbaa !54
+  %.val.val.val.i38.us.i = load ptr, ptr %2, align 8, !tbaa !54
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.l
@@ -470,7 +468,7 @@ reglevel.exit40.thread.us.i:                      ; preds = %bb.k, %.lr.ph.split
   %i.fa = getelementptr inbounds [24 x i8], ptr %i.ey, i64 %i.ez ; 4 uses
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !122
   %i.fc = load i32, ptr %i.cz, align 8, !tbaa !80 ; 2 uses
-  %.val.i26 = load ptr, ptr %2, align 8, !tbaa !48 ; 4 uses
+  %.val.i26 = load ptr, ptr %1, align 8, !tbaa !48 ; 4 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.val.i26, i64 40
   %i.fe = load i32, ptr %i.fd, align 8, !tbaa !61 ; 2 uses
   %i.ff = icmp slt i32 %i.fc, %i.fe
@@ -509,7 +507,7 @@ findlabel.exit.i:                                 ; preds = %bb.o
   br i1 %i.fu, label %bb.p, label %bb.q, !prof !16
 
 bb.p:                                             ; preds = %findlabel.exit.i
-  tail call fastcc void @jumpscopeerror(ptr noundef nonnull %1, ptr noundef nonnull %i.fp) #9
+  tail call fastcc void @jumpscopeerror(ptr noundef nonnull %i.cg, ptr noundef nonnull %i.fp) #9
   unreachable
 
 bb.q:                                             ; preds = %findlabel.exit.i
@@ -680,11 +678,11 @@ bb.aa:                                            ; preds = %reglevel.exit40.thr
   br i1 %i.ir, label %.lr.ph.split.i, label %._crit_edge.loopexit.i, !llvm.loop !213
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.aa
-  %.pre64.i = load ptr, ptr %2, align 8, !tbaa !48
+  %.pre64.i = load ptr, ptr %1, align 8, !tbaa !48
   br label %solvegotos.exit
 
 solvegotos.exit:                                  ; preds = %reglevel.exit40.thread.us.i, %reglevel.exit40.thread.us.us.i.prol.loopexit, %reglevel.exit40.thread.us.us.i, %reglevel.exit.i, %._crit_edge.loopexit.i
-  %i.is = phi ptr [ %i.cg, %reglevel.exit40.thread.us.us.i.prol.loopexit ], [ %i.cg, %reglevel.exit.i ], [ %.pre64.i, %._crit_edge.loopexit.i ], [ %i.cg, %reglevel.exit40.thread.us.us.i ], [ %i.cg, %reglevel.exit40.thread.us.i ]
+  %i.is = phi ptr [ %2, %reglevel.exit40.thread.us.us.i.prol.loopexit ], [ %2, %reglevel.exit.i ], [ %.pre64.i, %._crit_edge.loopexit.i ], [ %2, %reglevel.exit40.thread.us.us.i ], [ %2, %reglevel.exit40.thread.us.i ]
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.iu = load i32, ptr %i.it, align 8, !tbaa !80
   %i.iv = getelementptr inbounds nuw i8, ptr %i.is, i64 40

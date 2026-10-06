@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %i.x = add nsw i64 %i.w, 64
   %i.y = tail call noalias ptr @_emalloc(i64 noundef %i.x) #17 ; 2 uses
   store ptr %0, ptr %i.y, align 8, !tbaa !116
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 6 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 5 uses
   %i.aa = load ptr, ptr @pdo_row_ce, align 8, !tbaa !112
   tail call void @zend_object_std_init(ptr noundef nonnull %i.z, ptr noundef %i.aa) #15
   %i.ab = load ptr, ptr @pdo_row_ce, align 8, !tbaa !112
@@ -214,11 +214,9 @@ bb.g:                                             ; preds = %bb.f
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !42
   %i.ae = add i32 %i.ad, 1
   store i32 %i.ae, ptr %i.ac, align 8, !tbaa !42
-  %i.af = load i32, ptr %i.z, align 8, !tbaa !42  ; 3 uses
+  %i.af = load i32, ptr %i.z, align 8, !tbaa !42  ; 2 uses
   %i.ag = icmp ne i32 %i.af, 0
   tail call void @llvm.assume(i1 %i.ag)
-  %10 = add i32 %i.af, -1
-  store i32 %10, ptr %i.z, align 8, !tbaa !42
   br label %pdo_get_lazy_object.exit
 
 pdo_get_lazy_object.exit:                         ; preds = %._crit_edge.i, %bb.g

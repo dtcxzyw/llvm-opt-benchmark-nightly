@@ -205,7 +205,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12Dens
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E15LookupBucketForIS4_EEbRKT_RPSB_.exit184, %bb.u
-  %i.fk = phi ptr [ %.sink.i.i181, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E15LookupBucketForIS4_EEbRKT_RPSB_.exit184 ], [ %.sink.i.i.i60, %bb.u ] ; 5 uses
+  %i.fk = phi ptr [ %.sink.i.i181, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E15LookupBucketForIS4_EEbRKT_RPSB_.exit184 ], [ %.sink.i.i.i60, %bb.u ] ; 4 uses
   %i.fl = phi i32 [ %.pre.i.i64, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E15LookupBucketForIS4_EEbRKT_RPSB_.exit184 ], [ %i.ed, %bb.u ]
   %i.fm = add i32 %i.fl, 1
   store i32 %i.fm, ptr %i.i, align 8, !tbaa !103
@@ -221,8 +221,6 @@ bb.z:                                             ; preds = %bb.y
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16InsertIntoBucketIS4_JEEEPSB_SF_OT_DpOT0_.exit.i66: ; preds = %bb.z, %bb.y
   store ptr %i.dd, ptr %i.fk, align 8, !tbaa !100
-  %1 = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
-  store i32 0, ptr %1, align 8, !tbaa !106
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fk, i64 16
   store ptr null, ptr %i.fr, align 8, !tbaa !107
   br label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt4pairIjS4_ENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E16FindAndConstructEOS4_.exit70

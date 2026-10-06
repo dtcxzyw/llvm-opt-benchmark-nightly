@@ -205,7 +205,7 @@ _ZN20btAlignedObjectArrayI9btVector3E10deallocateEv.exit.i.i119: ; preds = %bb.a
   br i1 %i.fz, label %.lr.ph233, label %._crit_edge234
 
 .lr.ph233:                                        ; preds = %.preheader
-  %i.ga = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 4 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 3 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 4 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
@@ -608,22 +608,17 @@ bb.bh:                                            ; preds = %.lr.ph230, %bb.bh
   %i.ou = load i32, ptr %i.lm, align 4, !tbaa !56
   %i.ov = add nsw i32 %i.ou, 1
   store i32 %i.ov, ptr %i.lm, align 4, !tbaa !56
-  %9 = load i8, ptr %i.ga, align 8, !range !35
-  %10 = trunc nuw i8 %9 to i1
-  br i1 %10, label %11, label %_ZN6btFaceD2Ev.exit
-
-11:                                               ; preds = %.loopexit
   invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.ke)
           to label %_ZN6btFaceD2Ev.exit unwind label %bb.bi
 
-bb.bi:                                            ; preds = %11
+bb.bi:                                            ; preds = %.loopexit
   %i.ow = landingpad { ptr, i32 }
           catch ptr null
   %i.ox = extractvalue { ptr, i32 } %i.ow, 0
   call void @__clang_call_terminate(ptr %i.ox) #17
   unreachable
 
-_ZN6btFaceD2Ev.exit:                              ; preds = %.loopexit, %11
+_ZN6btFaceD2Ev.exit:                              ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   %indvars.iv.next245 = add nuw nsw i64 %indvars.iv244, 1 ; 2 uses

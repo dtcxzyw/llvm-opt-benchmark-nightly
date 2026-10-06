@@ -205,7 +205,7 @@ bb.a:
   %.sroa.064.i = alloca float, align 4            ; 7 uses
   %.sroa.565.i = alloca float, align 4            ; 7 uses
   %.sroa.866.i = alloca float, align 4            ; 7 uses
-  %.sroa.062.i = alloca float, align 4            ; 8 uses
+  %.sroa.062.i = alloca float, align 4            ; 7 uses
   %.sroa.5.i = alloca float, align 4              ; 7 uses
   %.sroa.863.i = alloca float, align 4            ; 7 uses
   %i.a = zext i1 %3 to i8
@@ -477,7 +477,6 @@ _ZN10aiVector3tIfEixEj.exit35.thread.i:           ; preds = %.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.062.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.863.i)
-  store float 0.000000e+00, ptr %.sroa.062.i, align 4
   store float 0.000000e+00, ptr %.sroa.5.i, align 4
   store float 0.000000e+00, ptr %.sroa.863.i, align 4
   store float 1.000000e+00, ptr %.sroa.568.i, align 4

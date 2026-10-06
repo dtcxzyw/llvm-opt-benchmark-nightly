@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %.lr.ph960._crit_edg
   %i.gw = sub i64 %i.gv, %.51072
   %scevgep1073 = getelementptr i8, ptr %.5, i64 %i.gw
   %i.gx = sub i64 %i.bq, %.51072
-  %scevgep1074 = getelementptr i8, ptr %.5, i64 %i.gx ; 2 uses
+  %scevgep1074 = getelementptr i8, ptr %.5, i64 %i.gx
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ba, %.loopexit830
@@ -220,7 +220,6 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba
   %i.hc = add i32 %.5404, 1
-  store i8 48, ptr %scevgep1074, align 1, !tbaa !12
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.az
@@ -623,7 +622,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aw = zext nneg i32 %i.av to i64
   %i.ax = shl nuw nsw i64 %i.aw, 2
   %i.ay = add nuw nsw i64 %i.ax, 32
-  %i.az = tail call noalias ptr @malloc(i64 noundef %i.ay) #26 ; 6 uses
+  %i.az = tail call noalias ptr @malloc(i64 noundef %i.ay) #26 ; 5 uses
   %.not.i = icmp eq ptr %i.az, null
   br i1 %.not.i, label %Bclear.exit, label %bb.f
 
@@ -636,8 +635,6 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.at, ptr %i.ba, align 8, !tbaa !23
   %i.bb = getelementptr i8, ptr %i.az, i64 12
   store i32 %i.au, ptr %i.bb, align 4, !tbaa !24
-  %3 = getelementptr i8, ptr %i.az, i64 20
-  store i32 0, ptr %3, align 4, !tbaa !26
   %i.bc = getelementptr i8, ptr %i.az, i64 16     ; 2 uses
   store i32 0, ptr %i.bc, align 8, !tbaa !25
   %i.bd = load i32, ptr %i.a, align 4, !tbaa !26

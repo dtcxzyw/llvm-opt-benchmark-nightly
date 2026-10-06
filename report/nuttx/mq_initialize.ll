@@ -25,7 +25,6 @@ declare dso_local ptr @memset(ptr noundef, i32 noundef, i64 noundef) #1
 ; Function Attrs: nofree norecurse noredzone nosync nounwind optsize memory(write, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @nxmq_initialize() local_unnamed_addr #2 {
 bb.a:
-  store ptr @g_msgfree, ptr @g_msgfree, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -42,16 +41,12 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %.019.i, i64 56 ; 2 uses
   %i.e = add nuw nsw i32 %.01718.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.e, 8
-  br i1 %exitcond.not.i, label %mq_msgblockinit.exit, label %bb.b, !llvm.loop !7
+  br i1 %exitcond.not.i, label %bb.c, label %bb.b, !llvm.loop !7
 
-mq_msgblockinit.exit:                             ; preds = %bb.b
-  store ptr @g_msgfreeirq, ptr @g_msgfreeirq, align 8
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.c, %mq_msgblockinit.exit
-  %i.f = phi ptr [ @g_msgfreeirq, %mq_msgblockinit.exit ], [ %.019.i12, %bb.c ] ; 2 uses
-  %.019.i12 = phi ptr [ %i.d, %mq_msgblockinit.exit ], [ %i.i, %bb.c ] ; 7 uses
-  %.01718.i13 = phi i32 [ 0, %mq_msgblockinit.exit ], [ %i.j, %bb.c ]
+bb.c:                                             ; preds = %bb.b, %bb.c
+  %i.f = phi ptr [ %.019.i12, %bb.c ], [ @g_msgfreeirq, %bb.b ] ; 2 uses
+  %.019.i12 = phi ptr [ %i.i, %bb.c ], [ %i.d, %bb.b ] ; 7 uses
+  %.01718.i13 = phi i32 [ %i.j, %bb.c ], [ 0, %bb.b ]
   %i.g = getelementptr inbounds nuw i8, ptr %.019.i12, i64 16
   store i8 2, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %.019.i12, i64 8
@@ -62,16 +57,12 @@ bb.c:                                             ; preds = %bb.c, %mq_msgblocki
   %i.i = getelementptr inbounds nuw i8, ptr %.019.i12, i64 56 ; 2 uses
   %i.j = add nuw nsw i32 %.01718.i13, 1           ; 2 uses
   %exitcond.not.i14 = icmp eq i32 %i.j, 8
-  br i1 %exitcond.not.i14, label %mq_msgblockinit.exit15, label %bb.c, !llvm.loop !7
+  br i1 %exitcond.not.i14, label %bb.d, label %bb.c, !llvm.loop !7
 
-mq_msgblockinit.exit15:                           ; preds = %bb.c
-  store ptr @g_msgfreelist, ptr @g_msgfreelist, align 8
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.d, %mq_msgblockinit.exit15
-  %i.k = phi ptr [ @g_msgfreelist, %mq_msgblockinit.exit15 ], [ %.02.i, %bb.d ] ; 2 uses
-  %.02.i = phi ptr [ %i.i, %mq_msgblockinit.exit15 ], [ %i.m, %bb.d ] ; 6 uses
-  %.0141.i = phi i32 [ 0, %mq_msgblockinit.exit15 ], [ %i.n, %bb.d ]
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %i.k = phi ptr [ %.02.i, %bb.d ], [ @g_msgfreelist, %bb.c ] ; 2 uses
+  %.02.i = phi ptr [ %i.m, %bb.d ], [ %i.i, %bb.c ] ; 6 uses
+  %.0141.i = phi i32 [ %i.n, %bb.d ], [ 0, %bb.c ]
   %i.l = getelementptr inbounds nuw i8, ptr %.02.i, i64 8
   store ptr %i.k, ptr %i.l, align 8
   store ptr @g_msgfreelist, ptr %.02.i, align 8

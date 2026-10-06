@@ -205,9 +205,8 @@ _ZN4asio9execution6detail17any_executor_baseD2Ev.exit: ; preds = %_ZN4asio2ip14b
   br label %.lr.ph.i11.i
 
 ._crit_edge.i.i.thread60:                         ; preds = %_ZN4asio9execution6detail17any_executor_baseD2Ev.exit
-  %i.ap = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   store ptr %i.ap, ptr %12, align 8, !tbaa !194, !alias.scope !3318
-  store i8 45, ptr %i.ap, align 8, !tbaa !189, !alias.scope !3318
   %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 8
   store i64 1, ptr %i.aq, align 8, !tbaa !197, !alias.scope !3318
   %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 17
@@ -610,49 +609,40 @@ bb.ee:                                            ; preds = %_ZNSt7promiseIvE9se
   %i.rf = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.rg = load i8, ptr %i.re, align 8, !tbaa !772
   switch i8 %i.rg, label %bb.ej [
-    i8 -1, label %_ZN12async_simple4coro6detail11LazyPromiseIN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEEE12return_valueIS8_EEvOT_Qsr3stdE16is_convertible_vIOTL0__SB_E.exit.from._ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i.thread
-    i8 0, label %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i
+    i8 -1, label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
+    i8 0, label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
     i8 1, label %bb.ef
     i8 2, label %bb.eh
   ], !prof !792
-
-_ZN12async_simple4coro6detail11LazyPromiseIN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEEE12return_valueIS8_EEvOT_Qsr3stdE16is_convertible_vIOTL0__SB_E.exit.from._ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i.thread: ; preds = %bb.ee
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  store i8 0, ptr %17, align 8, !tbaa !794
-  br label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
 
 bb.ef:                                            ; preds = %bb.ee
   %i.rh = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ri = load i8, ptr %i.rh, align 8, !tbaa !794, !range !316, !noundef !317
   %i.rj = trunc nuw i8 %i.ri to i1
-  br i1 %i.rj, label %bb.eg, label %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i
+  br i1 %i.rj, label %bb.eg, label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
 
 bb.eg:                                            ; preds = %bb.ef
   call void @_ZN7coro_io16socket_wrapper_tD2Ev(ptr noundef nonnull align 8 dead_on_return(65) dereferenceable(81) %i.rf) #47
-  br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i
+  br label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
 
 bb.eh:                                            ; preds = %bb.ee
   %i.rk = load ptr, ptr %i.rf, align 8, !tbaa !523
   %.not.i.i.i.i.i.i.i.i.i.i.i204 = icmp eq ptr %i.rk, null
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i204, label %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i, label %bb.ei
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i204, label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit, label %bb.ei
 
 bb.ei:                                            ; preds = %bb.eh
   call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(81) %i.rf) #47
-  br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i
+  br label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
 
 bb.ej:                                            ; preds = %bb.ee
   unreachable
 
-_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i: ; preds = %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  br label %.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit
-
-.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit: ; preds = %_ZN12async_simple4coro6detail11LazyPromiseIN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEEE12return_valueIS8_EEvOT_Qsr3stdE16is_convertible_vIOTL0__SB_E.exit.from._ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i.thread, %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i
-  %19 = phi ptr [ %17, %_ZN12async_simple4coro6detail11LazyPromiseIN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEEE12return_valueIS8_EEvOT_Qsr3stdE16is_convertible_vIOTL0__SB_E.exit.from._ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i.thread ], [ %18, %_ZNSt8__detail9__variant16_Variant_storageILb0EJSt9monostateN2tl8expectedIN7coro_io16socket_wrapper_tESt10error_codeEENSt15__exception_ptr13exception_ptrEEE8_M_resetEv.exit.i.i ]
+.from._ZN2tl6detail21expected_storage_baseIN7coro_io16socket_wrapper_tESt10error_codeLb0ELb1EED2Ev.exit: ; preds = %bb.ee, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 %.sroa.02.0.copyload.i, ptr %i.rf, align 8, !tbaa !190
   %.sroa.4108.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %.sroa.5.0.copyload.i, ptr %.sroa.4108.0..sroa_idx, align 8, !tbaa !387
-  store i8 0, ptr %19, align 8, !tbaa !794
+  store i8 0, ptr %17, align 8, !tbaa !794
   store i8 1, ptr %i.re, align 8, !tbaa !772
   br label %bb.es
 

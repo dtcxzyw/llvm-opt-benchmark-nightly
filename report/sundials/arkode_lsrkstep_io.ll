@@ -202,11 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !23   ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 152
-  store i64 25, ptr %2, align 8, !tbaa !41
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 180
-  store i32 0, ptr %3, align 4, !tbaa !42
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !23
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -216,17 +212,17 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %.pre, i64 180
-  store i32 1, ptr %i.g, align 4, !tbaa !42
+  store i32 1, ptr %i.g, align 4, !tbaa !41
   %i.h = getelementptr inbounds nuw i8, ptr %.pre, i64 152
-  store i64 1, ptr %i.h, align 8, !tbaa !41
+  store i64 1, ptr %i.h, align 8, !tbaa !42
   br label %bb.f
 
 bb.e:                                             ; preds = %.thread, %bb.c
   %i.i = phi ptr [ %i.e, %.thread ], [ %.pre, %bb.c ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 152
-  store i64 %1, ptr %i.j, align 8, !tbaa !41
+  store i64 %1, ptr %i.j, align 8, !tbaa !42
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 180
-  store i32 0, ptr %i.k, align 4, !tbaa !42
+  store i32 0, ptr %i.k, align 4, !tbaa !41
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.a
@@ -629,10 +625,10 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.d, align 4, !tbaa !40
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 152
-  store i64 25, ptr %i.f, align 8, !tbaa !41
+  store i64 25, ptr %i.f, align 8, !tbaa !42
   store <2 x double> <double 1.010000e+00, double f0x3FC3B13B13B13B14>, ptr %i.e, align 8, !tbaa !69
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 180
-  store i32 0, ptr %i.g, align 4, !tbaa !42
+  store i32 0, ptr %i.g, align 4, !tbaa !41
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 160
   store i32 -1, ptr %i.h, align 8, !tbaa !46
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 164
@@ -929,7 +925,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ar = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.55, double noundef %i.aq) #7 ; 0 uses
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !23
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 152
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !41
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !42
   %i.av = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.56, i64 noundef %i.au) #7 ; 0 uses
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !23
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 160
@@ -941,7 +937,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bd = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.58, i32 noundef %i.bc) #7 ; 0 uses
   %i.be = load ptr, ptr %i.a, align 8, !tbaa !23
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 180
-  %i.bg = load i32, ptr %i.bf, align 4, !tbaa !42
+  %i.bg = load i32, ptr %i.bf, align 4, !tbaa !41
   %i.bh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.59, i32 noundef %i.bg) #7 ; 0 uses
   br label %bb.o
 
@@ -1097,8 +1093,8 @@ attributes #8 = { nounwind willreturn memory(read) }
 !38 = !{!28, !16, i64 80}
 !39 = !{!28, !5, i64 32}
 !40 = !{!28, !5, i64 28}
-!41 = !{!28, !16, i64 152}
-!42 = !{!28, !5, i64 180}
+!41 = !{!28, !5, i64 180}
+!42 = !{!28, !16, i64 152}
 !43 = !{!28, !5, i64 68}
 !44 = !{!28, !12, i64 136}
 !45 = !{!28, !5, i64 188}

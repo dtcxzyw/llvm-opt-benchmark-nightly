@@ -205,7 +205,7 @@ bb.a:
   %115 = alloca %"struct.doctest::detail::Expression_lhs.5", align 8 ; 19 uses
   %116 = alloca %"struct.doctest::detail::ExpressionDecomposer", align 4 ; 7 uses
   %117 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %118 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 16 uses
+  %118 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 17 uses
   %119 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 8 uses
   %120 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %121 = alloca %"class.nlohmann::json_abi_v3_12_0::detail::iter_impl", align 8 ; 12 uses
@@ -608,10 +608,11 @@ bb.lk:                                            ; preds = %._crit_edge.i.i
   store i32 %i.agb, ptr %i.agc, align 8, !tbaa !104, !alias.scope !411
   call void @llvm.lifetime.start.p0(ptr nonnull %118) #28
   store ptr %110, ptr %118, align 8, !tbaa !92, !alias.scope !412
-  %i.agd = getelementptr inbounds nuw i8, ptr %118, i64 8 ; 2 uses
-  %i.age = getelementptr inbounds nuw i8, ptr %118, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.agd, i8 0, i64 16, i1 false), !alias.scope !412
-  store i64 -9223372036854775808, ptr %i.age, align 8, !tbaa !93, !alias.scope !412
+  %191 = getelementptr inbounds nuw i8, ptr %118, i64 8
+  %i.agd = getelementptr inbounds nuw i8, ptr %118, i64 24
+  %i.age = getelementptr inbounds nuw i8, ptr %118, i64 16
+  store i64 0, ptr %i.age, align 8
+  store i64 -9223372036854775808, ptr %i.agd, align 8, !tbaa !93, !alias.scope !412
   br label %bb.ln
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.lk, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i.i
@@ -714,7 +715,7 @@ bb.lm:                                            ; preds = %_ZNSt8_Rb_treeINSt7
 
 bb.ln:                                            ; preds = %._crit_edge1685, %.thread1590
   %i.aha = phi ptr [ %i.afx, %.thread1590 ], [ %.pre1686, %._crit_edge1685 ]
-  %i.ahb = phi ptr [ %i.agd, %.thread1590 ], [ %i.agy, %._crit_edge1685 ]
+  %i.ahb = phi ptr [ %191, %.thread1590 ], [ %i.agy, %._crit_edge1685 ]
   %i.ahc = getelementptr inbounds nuw i8, ptr %i.aha, i64 8
   store ptr %i.ahc, ptr %i.ahb, align 8, !tbaa !95, !alias.scope !414
   br label %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE3endEv.exit939

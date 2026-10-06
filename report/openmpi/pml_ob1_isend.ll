@@ -202,14 +202,12 @@ bb.t:                                             ; preds = %bb.s
 .thread:                                          ; preds = %bb.s, %bb.t
   %i.bj = getelementptr i8, ptr %6, i64 272
   %.val = load ptr, ptr %i.bj, align 8, !tbaa !50
-  %i.bk = tail call fastcc ptr @ompi_comm_peer_lookup(ptr %.val, i32 noundef %3) ; 2 uses
+  %i.bk = tail call fastcc ptr @ompi_comm_peer_lookup(ptr %.val, i32 noundef %3)
   %.not104 = icmp eq ptr %i.bk, null
   br i1 %.not104, label %.thread115, label %bb.u, !prof !49
 
 bb.u:                                             ; preds = %.thread
-  %i.bl = tail call fastcc ptr @opal_free_list_wait() ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.bl, i64 496
-  store ptr %i.bk, ptr %7, align 8, !tbaa !74
+  %i.bl = tail call fastcc ptr @opal_free_list_wait()
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t

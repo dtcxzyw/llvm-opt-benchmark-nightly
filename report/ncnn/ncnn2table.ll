@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135: ; preds = %bb
   store i64 %i.ey, ptr %0, align 8
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.fu, ptr %i.gm, align 8, !tbaa !233
-  %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i64 0, ptr %i.gn, align 8
+  %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %.thread233
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135
@@ -230,8 +229,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135: ; preds = %bb
   %i.gv = phi ptr [ %i.gn, %._crit_edge.thread ], [ %i.gr, %._crit_edge ]
   %.sroa.0214.0.lcssa343 = phi ptr [ null, %._crit_edge.thread ], [ %.sroa.0214.1, %._crit_edge ]
   store ptr null, ptr %i.gv, align 8, !tbaa !136
-  %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store ptr null, ptr %i.gw, align 8, !tbaa !213
+  %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.gx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr null, ptr %i.gx, align 8, !tbaa !171
   br label %bb.br

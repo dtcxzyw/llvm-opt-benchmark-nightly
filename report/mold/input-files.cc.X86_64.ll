@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 2 ; 6 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 3 ; 5 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 3 ; 4 uses
   store <4 x i8> <i8 0, i8 0, i8 1, i8 0>, ptr %5, align 8, !tbaa !77
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !1381
@@ -227,23 +227,20 @@ bb.e:                                             ; preds = %thread-pre-split, %
   br i1 %i.w, label %.lr.ph.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE13split_to_fillEh.exit
 
 .lr.ph.i:                                         ; preds = %bb.e
-  %.promoted4.i = load i8, ptr %5, align 8        ; 2 uses
-  %.phi.trans.insert.i = zext i8 %.promoted4.i to i64
-  %.phi.trans.insert6.i = getelementptr inbounds nuw i8, ptr %i.p, i64 %.phi.trans.insert.i
-  %.pre.i = load i8, ptr %.phi.trans.insert6.i, align 1, !tbaa !77
+  %.pre.i = load i8, ptr %5, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %.lr.ph.i
-  %i.x = phi i8 [ %.pre.i, %.lr.ph.i ], [ %i.ba, %bb.g ]
-  %i.y = phi i8 [ %.promoted.i, %.lr.ph.i ], [ %i.bc, %bb.g ] ; 3 uses
-  %6 = phi i8 [ %.promoted4.i, %.lr.ph.i ], [ %i.am, %bb.g ] ; 2 uses
-  %7 = zext i8 %6 to i64                          ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.p, i64 %7 ; 2 uses
-  %i.z = icmp ult i8 %i.x, %i.v
+  %i.x = phi i8 [ %.promoted.i, %.lr.ph.i ], [ %i.bc, %bb.g ] ; 3 uses
+  %i.y = phi i8 [ %.pre.i, %.lr.ph.i ], [ %i.am, %bb.g ] ; 2 uses
+  %6 = zext i8 %i.y to i64                        ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.p, i64 %6 ; 3 uses
+  %8 = load i8, ptr %7, align 1, !tbaa !77
+  %i.z = icmp ult i8 %8, %i.v
   br i1 %i.z, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE13split_to_fillEh.exit
 
 _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i: ; preds = %bb.f
-  %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %7 ; 5 uses
+  %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %6 ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !739
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
@@ -257,7 +254,7 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iterat
   br i1 %i.ak, label %bb.g, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE13split_to_fillEh.exit
 
 bb.g:                                             ; preds = %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i
-  %i.al = add nuw i8 %6, 1
+  %i.al = add nuw i8 %i.y, 1
   %i.am = and i8 %i.al, 7                         ; 3 uses
   store i8 %i.am, ptr %5, align 8, !tbaa !1385
   %i.an = zext nneg i8 %i.am to i64               ; 2 uses
@@ -277,18 +274,18 @@ bb.g:                                             ; preds = %_ZN3tbb6detail2d112
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !739
   store i64 %i.ay, ptr %i.ab, align 8, !tbaa !739
-  %i.az = load i8, ptr %8, align 1, !tbaa !77
-  %i.ba = add i8 %i.az, 1                         ; 3 uses
-  store i8 %i.ba, ptr %8, align 1, !tbaa !77
+  %i.az = load i8, ptr %7, align 1, !tbaa !77
+  %i.ba = add i8 %i.az, 1                         ; 2 uses
+  store i8 %i.ba, ptr %7, align 1, !tbaa !77
   %i.bb = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.an
   store i8 %i.ba, ptr %i.bb, align 1, !tbaa !77
-  %i.bc = add nuw nsw i8 %i.y, 1                  ; 3 uses
+  %i.bc = add nuw nsw i8 %i.x, 1                  ; 3 uses
   store i8 %i.bc, ptr %i.o, align 2, !tbaa !1384
   %exitcond.not.i = icmp eq i8 %i.bc, 8
   br i1 %exitcond.not.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE13split_to_fillEh.exit.thread, label %bb.f, !llvm.loop !1377
 
 _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE13split_to_fillEh.exit: ; preds = %bb.f, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i, %bb.e
-  %.pr = phi i8 [ %.promoted.i, %bb.e ], [ %i.y, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.y, %bb.f ] ; 2 uses
+  %.pr = phi i8 [ %.promoted.i, %bb.e ], [ %i.x, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EE12is_divisibleEh.exit.i ], [ %i.x, %bb.f ] ; 2 uses
   %i.bd = load ptr, ptr %i.r, align 8, !tbaa !717
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
   %i.bf = load atomic i8, ptr %i.be monotonic, align 1, !range !107, !noundef !108

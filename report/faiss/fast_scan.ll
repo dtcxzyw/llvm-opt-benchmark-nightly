@@ -205,14 +205,13 @@ _ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i.i19: ; preds = %bb.w
 .noexc14.i.i.i.i21:                               ; preds = %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i.i19
   %i.ck = shl nuw nsw i64 %3, 1                   ; 2 uses
   %i.cl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ck) #28
-          to label %.noexc6.i.i22 unwind label %bb.y, !noalias !623 ; 5 uses
+          to label %.noexc6.i.i22 unwind label %bb.y, !noalias !623 ; 4 uses
 
 .noexc6.i.i22:                                    ; preds = %.noexc14.i.i.i.i21
   store ptr %i.cl, ptr %i.ci, align 8, !tbaa !92, !noalias !623
   %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.cl, i64 %3
   %i.cn = getelementptr inbounds nuw i8, ptr %i.bx, i64 144
   store ptr %i.cm, ptr %i.cn, align 8, !tbaa !93, !noalias !623
-  store i16 0, ptr %i.cl, align 2, !tbaa !95, !noalias !623
   %i.co = getelementptr i8, ptr %i.cl, i64 2      ; 3 uses
   %i.cp = add nsw i64 %3, -1                      ; 2 uses
   %i.cq = icmp eq i64 %i.cp, 0
@@ -327,14 +326,13 @@ _ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i.i32: ; preds = %bb.a
 .noexc14.i.i.i.i34:                               ; preds = %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i.i.i.i.i32
   %i.dv = shl nuw nsw i64 %3, 1                   ; 2 uses
   %i.dw = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dv) #28
-          to label %.noexc6.i.i35 unwind label %bb.ah, !noalias !627 ; 5 uses
+          to label %.noexc6.i.i35 unwind label %bb.ah, !noalias !627 ; 4 uses
 
 .noexc6.i.i35:                                    ; preds = %.noexc14.i.i.i.i34
   store ptr %i.dw, ptr %i.dt, align 8, !tbaa !92, !noalias !627
   %i.dx = getelementptr inbounds nuw [2 x i8], ptr %i.dw, i64 %3
   %i.dy = getelementptr inbounds nuw i8, ptr %i.di, i64 144
   store ptr %i.dx, ptr %i.dy, align 8, !tbaa !93, !noalias !627
-  store i16 0, ptr %i.dw, align 2, !tbaa !95, !noalias !627
   %i.dz = getelementptr i8, ptr %i.dw, i64 2      ; 3 uses
   %i.ea = add nsw i64 %3, -1                      ; 2 uses
   %i.eb = icmp eq i64 %i.ea, 0

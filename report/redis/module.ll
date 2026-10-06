@@ -204,11 +204,9 @@ bb.e:                                             ; preds = %bb.d
 .critedge53:                                      ; preds = %bb.c, %bb.b, %.critedge
   %spec.select = tail call i64 @llvm.umax.i64(i64 %1, i64 8192) ; 2 uses
   %i.x = add i64 %spec.select, 16
-  %i.y = tail call noalias ptr @zmalloc(i64 noundef %i.x) #32 ; 5 uses
+  %i.y = tail call noalias ptr @zmalloc(i64 noundef %i.x) #32 ; 4 uses
   %i.z = trunc i64 %spec.select to i32
   store i32 %i.z, ptr %i.y, align 8, !tbaa !29
-  %2 = getelementptr inbounds nuw i8, ptr %i.y, i64 4
-  store i32 0, ptr %2, align 4, !tbaa !29
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !41
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !42

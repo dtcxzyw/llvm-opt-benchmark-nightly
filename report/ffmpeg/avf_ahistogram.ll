@@ -205,10 +205,7 @@ bb.al:                                            ; preds = %bb.al, %.lr.ph490.i
   br i1 %i.vo, label %._crit_edge495.i, label %.lr.ph494.i
 
 .split.us.thread.i:                               ; preds = %.preheader.i
-  %i.vp = getelementptr inbounds nuw i8, ptr %i.y, i64 68 ; 3 uses
-  %1 = load i32, ptr %i.vp, align 4, !tbaa !48
-  %2 = add nsw i32 %1, 1
-  store i32 %2, ptr %i.vp, align 4, !tbaa !48
+  %i.vp = getelementptr inbounds nuw i8, ptr %i.y, i64 68
   br label %bb.an
 
 .thread.i:                                        ; preds = %.loopexit.i

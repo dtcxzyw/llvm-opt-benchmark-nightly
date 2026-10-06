@@ -205,7 +205,7 @@ bb.a:
   %21 = alloca %"class.std::vector.185", align 8  ; 11 uses
   %22 = alloca %"class.casadi::MX", align 8       ; 7 uses
   %23 = alloca %"struct.std::pair.190", align 8   ; 6 uses
-  %24 = alloca %"class.std::vector.185", align 8  ; 17 uses
+  %24 = alloca %"class.std::vector.185", align 8  ; 16 uses
   %25 = alloca %"class.std::vector.29", align 8   ; 10 uses
   %26 = alloca %"class.std::allocator.31", align 1 ; 4 uses
   %27 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -608,11 +608,7 @@ bb.cn:                                            ; preds = %bb.cm
 _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.cm
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %24, i8 0, i64 24, i1 false)
   %.not.i.i.i.i481 = icmp eq i64 %i.rg, 0
-  br i1 %.not.i.i.i.i481, label %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i: ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  store i64 0, ptr %24, align 8
-  br label %bb.co
+  br i1 %.not.i.i.i.i481, label %bb.co, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.ri = mul nuw nsw i64 %i.rg, 24               ; 3 uses
@@ -626,10 +622,10 @@ _ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.rj, i64 %i.ri
   br label %bb.co
 
-bb.co:                                            ; preds = %.noexc483, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i
-  %i.rl = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %i.rj, %.noexc483 ] ; 2 uses
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %i.rk, %.noexc483 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc483 ] ; 3 uses
+bb.co:                                            ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.noexc483
+  %i.rl = phi ptr [ %i.rj, %.noexc483 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
+  %.sink.i = phi ptr [ %i.rk, %.noexc483 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc483 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 3 uses
   %i.rm = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 2 uses
   %i.rn = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.rn, align 8, !tbaa !261
@@ -1032,9 +1028,9 @@ _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ;
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 4 uses
-  store ptr %i.i, ptr %0, align 8, !tbaa !260
   %5 = getelementptr i8, ptr %i.i, i64 %i.f       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %i.f, i1 false)
+  store ptr %i.i, ptr %0, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %5, ptr %i.k, align 8, !tbaa !261
@@ -1437,7 +1433,7 @@ bb.a:
   %30 = alloca %"class.std::vector.194", align 8  ; 12 uses
   %31 = alloca %"class.std::vector.185", align 8  ; 16 uses
   %32 = alloca %"class.std::vector.185", align 8  ; 25 uses
-  %33 = alloca %"class.std::vector.185", align 8  ; 22 uses
+  %33 = alloca %"class.std::vector.185", align 8  ; 21 uses
   %34 = alloca %"class.std::vector.29", align 8   ; 10 uses
   %35 = alloca %"class.std::allocator.31", align 1 ; 4 uses
   %36 = alloca %"class.casadi::MX", align 8       ; 7 uses
@@ -1840,11 +1836,7 @@ bb.dv:                                            ; preds = %bb.du
 _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.du
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %33, i8 0, i64 24, i1 false)
   %.not.i.i.i.i652 = icmp eq i64 %i.abr, 0
-  br i1 %.not.i.i.i.i652, label %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i653
-
-_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i: ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  store i64 0, ptr %33, align 8
-  br label %bb.dw
+  br i1 %.not.i.i.i.i652, label %bb.dw, label %.lr.ph.preheader.i.i.i.i.i653
 
 .lr.ph.preheader.i.i.i.i.i653:                    ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.abt = mul nuw nsw i64 %i.abr, 24             ; 3 uses
@@ -1858,10 +1850,10 @@ _ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.
   %scevgep.i.i.i.i.i654 = getelementptr i8, ptr %i.abu, i64 %i.abt
   br label %bb.dw
 
-bb.dw:                                            ; preds = %.noexc658, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i
-  %i.abw = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %i.abu, %.noexc658 ] ; 2 uses
-  %.sink.i655 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %i.abv, %.noexc658 ]
-  %.0.lcssa.i.i.i.i.i656 = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %scevgep.i.i.i.i.i654, %.noexc658 ] ; 3 uses
+bb.dw:                                            ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.noexc658
+  %i.abw = phi ptr [ %i.abu, %.noexc658 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
+  %.sink.i655 = phi ptr [ %i.abv, %.noexc658 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %.0.lcssa.i.i.i.i.i656 = phi ptr [ %scevgep.i.i.i.i.i654, %.noexc658 ], [ null, %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 3 uses
   %i.abx = getelementptr inbounds nuw i8, ptr %33, i64 8 ; 2 uses
   %i.aby = getelementptr inbounds nuw i8, ptr %33, i64 16 ; 2 uses
   store ptr %.sink.i655, ptr %i.aby, align 8, !tbaa !261
@@ -2264,9 +2256,9 @@ _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ;
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #30 ; 4 uses
-  store ptr %i.i, ptr %0, align 8, !tbaa !260
   %5 = getelementptr i8, ptr %i.i, i64 %i.f       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.i, i8 0, i64 %i.f, i1 false)
+  store ptr %i.i, ptr %0, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %5, ptr %i.k, align 8, !tbaa !261
@@ -2669,10 +2661,10 @@ _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ;
 .lr.ph163:                                        ; preds = %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.c = mul nuw nsw i64 %2, 24                   ; 3 uses
   %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #30 ; 6 uses
-  store ptr %i.d, ptr %0, align 8, !tbaa !260
   %i.e = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.d, i8 0, i64 %i.c, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.d, i64 %i.c
+  store ptr %i.d, ptr %0, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.e, ptr %i.g, align 8, !tbaa !261

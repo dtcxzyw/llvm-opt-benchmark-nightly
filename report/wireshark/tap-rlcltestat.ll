@@ -154,7 +154,7 @@ bb.e:                                             ; preds = %bb.b
 
 .preheader:                                       ; preds = %bb.e
   %i.y = load i8, ptr %3, align 8
-  %i.z = getelementptr i8, ptr %3, i64 4          ; 2 uses
+  %i.z = getelementptr i8, ptr %3, i64 4
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
@@ -162,7 +162,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %.thread96, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = tail call noalias dereferenceable_or_null(128) ptr @g_malloc(i64 noundef 128) #8 ; 10 uses
+  %i.aa = tail call noalias dereferenceable_or_null(128) ptr @g_malloc(i64 noundef 128) #8 ; 9 uses
   %.not33.i = icmp eq ptr %i.aa, null
   br i1 %.not33.i, label %.thread96, label %bb.p
 
@@ -190,7 +190,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i81, label %.thread92, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aj = tail call noalias dereferenceable_or_null(128) ptr @g_malloc(i64 noundef 128) #8 ; 10 uses
+  %i.aj = tail call noalias dereferenceable_or_null(128) ptr @g_malloc(i64 noundef 128) #8 ; 9 uses
   %.not33.i82 = icmp eq ptr %i.aj, null
   br i1 %.not33.i82, label %.thread92, label %bb.m
 
@@ -198,9 +198,6 @@ bb.m:                                             ; preds = %bb.l
   %i.ak = load i8, ptr %3, align 8
   %i.al = getelementptr i8, ptr %i.aj, i64 8
   store i8 %i.ak, ptr %i.al, align 8
-  %5 = load i16, ptr %i.z, align 4
-  %6 = getelementptr i8, ptr %i.aj, i64 10
-  store i16 %5, ptr %6, align 2
   %i.am = getelementptr i8, ptr %i.aj, i64 16
   store i32 0, ptr %i.am, align 8
   %i.an = getelementptr i8, ptr %i.aj, i64 20
@@ -231,10 +228,6 @@ bb.p:                                             ; preds = %bb.g
   %i.as = load i8, ptr %3, align 8
   %i.at = getelementptr i8, ptr %i.aa, i64 8
   store i8 %i.as, ptr %i.at, align 8
-  %7 = getelementptr i8, ptr %3, i64 4
-  %8 = load i16, ptr %7, align 4
-  %9 = getelementptr i8, ptr %i.aa, i64 10
-  store i16 %8, ptr %9, align 2
   %i.au = getelementptr i8, ptr %i.aa, i64 16
   store i32 0, ptr %i.au, align 8
   %i.av = getelementptr i8, ptr %i.aa, i64 20

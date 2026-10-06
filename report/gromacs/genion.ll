@@ -205,9 +205,8 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.a
 
 .noexc11.i:                                       ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.h = shl nuw nsw i64 %i.f, 2
-  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #28, !noalias !145 ; 5 uses
+  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #28, !noalias !145 ; 4 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.f
-  store i32 0, ptr %i.i, align 4, !tbaa !12, !noalias !145
   %i.k = getelementptr i8, ptr %i.i, i64 4        ; 3 uses
   %i.l = add nsw i64 %i.f, -1                     ; 2 uses
   %i.m = icmp eq i64 %i.l, 0
@@ -394,11 +393,10 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i29: ; preds = %_ZL29group
   %i.bz = getelementptr inbounds i8, ptr %i.bw, i64 -8
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !12
   %i.cb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #28
-          to label %.noexc44 unwind label %bb.h   ; 7 uses
+          to label %.noexc44 unwind label %bb.h   ; 6 uses
 
 .noexc44:                                         ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i29
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %i.f ; 2 uses
-  store i32 0, ptr %i.cb, align 4, !tbaa !12, !noalias !146
   %i.cd = getelementptr i8, ptr %i.cb, i64 4      ; 3 uses
   br i1 %i.ab, label %.lr.ph.i34, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i32
 

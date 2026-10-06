@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.std::allocator.5", align 1  ; 3 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::vector.105", align 8   ; 11 uses
-  %8 = alloca %"class.std::vector.28", align 8    ; 14 uses
+  %8 = alloca %"class.std::vector.28", align 8    ; 13 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
@@ -257,7 +257,6 @@ bb.c:                                             ; preds = %_ZNK8Variable10is_v
 .thread1.i:                                       ; preds = %bb.c
   %i.t = getelementptr inbounds i8, ptr null, i64 %i.s ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store i64 0, ptr %8, align 8
   store ptr %i.t, ptr %i.u, align 8, !tbaa !140, !alias.scope !255
   br label %bb.i
 
@@ -660,7 +659,7 @@ bb.a:
 define dso_local void @_ZNK8Variable9to_stringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(200) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::vector.105", align 8   ; 12 uses
-  %3 = alloca %"class.std::vector.28", align 8    ; 14 uses
+  %3 = alloca %"class.std::vector.28", align 8    ; 13 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %6 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 17 uses
@@ -714,7 +713,6 @@ bb.c:                                             ; preds = %_ZNK8Variable10is_v
 .thread1.i:                                       ; preds = %bb.c
   %i.u = getelementptr inbounds i8, ptr null, i64 %i.t ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store i64 0, ptr %3, align 8
   store ptr %i.u, ptr %i.v, align 8, !tbaa !140, !alias.scope !271
   br label %bb.i
 
@@ -1117,7 +1115,7 @@ declare void @_ZNK4Type22get_type_sizeof_stringERNSt7__cxx1112basic_stringIcSt11
 define dso_local noundef i32 @_ZNK8Variable23output_addressable_nameERSoi(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::vector.105", align 8   ; 11 uses
-  %4 = alloca %"class.std::vector.28", align 8    ; 14 uses
+  %4 = alloca %"class.std::vector.28", align 8    ; 13 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
@@ -1162,7 +1160,6 @@ bb.c:                                             ; preds = %_ZNK8Variable10is_v
 .thread1.i:                                       ; preds = %bb.c
   %i.p = getelementptr inbounds i8, ptr null, i64 %i.o ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i64 0, ptr %4, align 8
   store ptr %i.p, ptr %i.q, align 8, !tbaa !140, !alias.scope !323
   br label %bb.i
 
@@ -1565,7 +1562,7 @@ declare void @_Z16output_print_strRSoRKNSt7__cxx1112basic_stringIcSt11char_trait
 define dso_local noundef i32 @_ZNK8Variable17output_value_dumpERSoRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef %3) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::vector.105", align 8   ; 11 uses
-  %5 = alloca %"class.std::vector.28", align 8    ; 14 uses
+  %5 = alloca %"class.std::vector.28", align 8    ; 13 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -1613,7 +1610,6 @@ bb.c:                                             ; preds = %_ZNK8Variable10is_v
 .thread1.i:                                       ; preds = %bb.c
   %i.p = getelementptr inbounds i8, ptr null, i64 %i.o ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store i64 0, ptr %5, align 8
   store ptr %i.p, ptr %i.q, align 8, !tbaa !140, !alias.scope !335
   br label %bb.i
 

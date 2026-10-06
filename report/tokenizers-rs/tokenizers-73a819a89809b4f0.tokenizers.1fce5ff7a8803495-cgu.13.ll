@@ -204,7 +204,7 @@ bb.a:
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !680, !noalias !681
   %.sroa.42.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.53.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.64.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
+  %.sroa.64.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
@@ -287,12 +287,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %.thread.i.i
   %i.az = phi i64 [ %i.av, %bb.d ], [ %i.av, %bb.e ], [ %i.av, %bb.c ], [ %i.w, %.thread.i.i ]
   %i.ba = phi ptr [ %i.ar, %bb.d ], [ %i.ar, %bb.e ], [ %i.ar, %bb.c ], [ %i.j, %.thread.i.i ] ; 2 uses
-  %.sroa.04.0.i.i.i.i.i = phi i64 [ 2, %bb.d ], [ %..i.i.i.i.i, %bb.e ], [ 1, %bb.c ], [ 1, %.thread.i.i ] ; 2 uses
+  %.sroa.04.0.i.i.i.i.i = phi i64 [ 2, %bb.d ], [ %..i.i.i.i.i, %bb.e ], [ 1, %bb.c ], [ 1, %.thread.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !683
   store i64 %i.g, ptr %i.b, align 8, !noalias !684
   store i64 0, ptr %.sroa.42.0..sroa_idx.i.i.i.i, align 8, !noalias !684
   store i64 %.sroa.2.09.i.i, ptr %.sroa.53.0..sroa_idx.i.i.i.i, align 8, !noalias !684
-  store i64 %.sroa.04.0.i.i.i.i.i, ptr %.sroa.64.0..sroa_idx.i.i.i.i, align 8, !noalias !684
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !685
   store ptr %.sroa.64.0..sroa_idx.i.i.i.i, ptr %i.a, align 8, !noalias !686
   store ptr %1, ptr %i.f, align 8, !noalias !686

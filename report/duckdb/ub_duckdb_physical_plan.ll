@@ -204,15 +204,16 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEE
           to label %.noexc351 unwind label %bb.en ; 4 uses
 
 .noexc351:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i.i
-  store ptr %i.vf, ptr %25, align 8, !tbaa !103
   %i.vg = getelementptr inbounds nuw [8 x i8], ptr %i.vf, i64 %i.vc
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.vf, i8 0, i64 %i.ve, i1 false), !tbaa !355
   %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.vf, i64 %i.ve
   br label %_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EEC2EmRKS6_.exit.thread.i.i
 
-_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EEC2EmRKS6_.exit.thread.i.i: ; preds = %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i, %.noexc351
+_ZNSt12_Vector_baseIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EEC2EmRKS6_.exit.thread.i.i: ; preds = %.noexc351, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
+  %.sink.i = phi ptr [ %i.vf, %.noexc351 ], [ null, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i ]
   %.sink.i.i = phi ptr [ %i.vg, %.noexc351 ], [ null, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i ]
   %.0.lcssa.i.i.i.i.i.i349 = phi ptr [ %scevgep.i.i.i.i.i.i, %.noexc351 ], [ null, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i ]
+  store ptr %.sink.i, ptr %25, align 8
   %i.vh = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %25, i64 16
   store ptr %.sink.i.i, ptr %i.vi, align 8, !tbaa !287

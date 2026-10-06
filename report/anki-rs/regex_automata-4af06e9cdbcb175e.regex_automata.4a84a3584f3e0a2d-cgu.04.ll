@@ -204,7 +204,8 @@ bb.a:
 
 vector.ph:                                        ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %3, i8 0, i64 255, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %wide.load = load <16 x i8>, ptr %1, align 1
   %wide.load65 = load <16 x i8>, ptr %i.c, align 1
@@ -607,7 +608,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZN14regex_automata4util8alphabet12ByteClassSet7add_set17h3afaeba9ec52048bE.exit, label %bb.c
 
 vector.ph:                                        ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %0, i8 0, i64 256, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %2, i8 0, i64 255, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %0, align 1
   store <16 x i8> <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31>, ptr %i.j, align 1
@@ -1010,9 +1012,10 @@ bb.g:                                             ; preds = %.body
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define void @"_ZN86_$LT$regex_automata..util..alphabet..ByteClasses$u20$as$u20$core..default..Default$GT$7default17h7e71e815c5ccafcaE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([256 x i8]) align 1 captures(none) dereferenceable(256) initializes((0, 256)) %0) unnamed_addr #12 {
+define void @"_ZN86_$LT$regex_automata..util..alphabet..ByteClasses$u20$as$u20$core..default..Default$GT$7default17h7e71e815c5ccafcaE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([256 x i8]) align 1 captures(none) dereferenceable(256) initializes((1, 256)) %0) unnamed_addr #12 {
 vector.ph:
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %0, i8 0, i64 256, i1 false)
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %1, i8 0, i64 255, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %0, align 1
   store <16 x i8> <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31>, ptr %i.a, align 1

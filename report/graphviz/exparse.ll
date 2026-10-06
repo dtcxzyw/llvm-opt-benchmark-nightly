@@ -204,10 +204,9 @@ bb.g:                                             ; preds = %.thread53.i
 
 bb.h:                                             ; preds = %bb.g, %.thread53.i, %extypename.exit49.i, %bb.f
   %.0.i = phi i64 [ %i.ab, %bb.g ], [ 0, %.thread53.i ], [ 321, %extypename.exit49.i ], [ 321, %bb.f ]
-  %i.ac = tail call ptr @gv_arena_alloc(ptr noundef nonnull %i.b, i64 noundef 8, i64 noundef 64) #22 ; 6 uses
+  %i.ac = tail call ptr @gv_arena_alloc(ptr noundef nonnull %i.b, i64 noundef 8, i64 noundef 64) #22 ; 5 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store i64 %.0.i, ptr %i.ad, align 8, !tbaa !11
-  store i64 263, ptr %i.ac, align 8, !tbaa !12
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   store i8 0, ptr %i.ae, align 8, !tbaa !13
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
@@ -610,10 +609,9 @@ bb.au:                                            ; preds = %bb.at
   %i.ee = icmp eq i64 %i.ed, 282
   %i.ef = select i1 %i.ee, ptr %i.de, ptr null
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dx, i64 96
-  %i.eh = tail call ptr @gv_arena_alloc(ptr noundef nonnull %i.eg, i64 noundef 8, i64 noundef 64) #22 ; 7 uses
+  %i.eh = tail call ptr @gv_arena_alloc(ptr noundef nonnull %i.eg, i64 noundef 8, i64 noundef 64) #22 ; 6 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   store i64 %i.eb, ptr %i.ei, align 8, !tbaa !11
-  store i64 259, ptr %i.eh, align 8, !tbaa !12
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eh, i64 16
   store i8 0, ptr %i.ej, align 8, !tbaa !13
   %i.ek = getelementptr inbounds nuw i8, ptr %i.eh, i64 24

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.a,
 define internal fastcc ptr @hostrange_delete_host(ptr nofree noundef captures(none) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8
   %i.c = icmp eq i64 %1, %i.b
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -235,18 +235,16 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.n, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 28
   store i8 1, ptr %i.o, align 4
-  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.p, i8 0, i64 20, i1 false)
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.p, i8 0, i64 12, i1 false)
   br label %hostrange_copy.exit
 
 bb.g:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = load i32, ptr %i.q, align 8
-  %i.s = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 32, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.8, i32 noundef 567, ptr noundef nonnull @__func__.hostrange_new) #21 ; 6 uses
+  %i.s = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 32, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.8, i32 noundef 567, ptr noundef nonnull @__func__.hostrange_new) #21 ; 5 uses
   %i.t = tail call ptr @xstrdup(ptr noundef %i.l) #21
   store ptr %i.t, ptr %i.s, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store i64 %i.b, ptr %2, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store i64 %i.f, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 24

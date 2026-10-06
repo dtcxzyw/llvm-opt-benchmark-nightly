@@ -202,9 +202,7 @@ bb.ag:                                            ; preds = %uv__signal_compare.
 
 .thread.i:                                        ; preds = %bb.y
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 136
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bt, i8 0, i64 24, i1 false)
-  store i32 1, ptr %8, align 8, !tbaa !31
   store ptr %0, ptr @uv__signal_tree.0, align 8, !tbaa !33
   br label %uv__signal_tree_s_RB_INSERT_COLOR.exit.i
 

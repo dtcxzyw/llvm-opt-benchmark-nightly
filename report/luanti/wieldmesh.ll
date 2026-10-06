@@ -204,23 +204,22 @@ bb.g:                                             ; preds = %bb.e
   unreachable
 
 _ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i: ; preds = %bb.g
-  store i64 0, ptr %0, align 8
   %.not.i.i.i.i = icmp eq i32 %i.v, 0
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseI9FrameSpecSaIS0_EEC2EmRKS1_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
   %i.y = shl nuw nsw i64 %i.w, 4                  ; 3 uses
-  %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #26 ; 5 uses
-  store ptr %i.z, ptr %0, align 8, !tbaa !166
+  %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #26 ; 4 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %i.w
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.z, i8 0, i64 %i.y, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.z, i64 %i.y
   br label %_ZNSt12_Vector_baseI9FrameSpecSaIS0_EEC2EmRKS1_.exit.thread.i
 
 _ZNSt12_Vector_baseI9FrameSpecSaIS0_EEC2EmRKS1_.exit.thread.i: ; preds = %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i, %.lr.ph.preheader.i.i.i.i.i
-  %i.ab = phi ptr [ %i.z, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 4 uses
+  %i.ab = phi ptr [ %i.z, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 5 uses
   %.sink.i = phi ptr [ %i.aa, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ] ; 2 uses
   %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorI9FrameSpecSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i ]
+  store ptr %i.ab, ptr %0, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sink.i, ptr %i.ad, align 8, !tbaa !167

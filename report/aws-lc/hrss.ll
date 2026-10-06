@@ -205,7 +205,8 @@ bb.j:                                             ; preds = %vec.epilog.vector.b
   %i.md = getelementptr inbounds nuw i8, ptr %i.n, i64 2816
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.md, ptr noundef %25, ptr noundef %26, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %27, i8 0, i64 1408, i1 false)
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %28, i8 0, i64 1392, i1 false)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %bb.j
@@ -608,6 +609,8 @@ poly_invert_mod2.exit.i:                          ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #10
   %i.aaa = getelementptr inbounds nuw i8, ptr %24, i64 1402 ; 2 uses
   %i.aab = getelementptr inbounds nuw i8, ptr %i.n, i64 2816 ; 6 uses
+  %29 = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %30 = getelementptr inbounds nuw i8, ptr %17, i64 16
   br label %bb.z
 
 vec.epilog.scalar.ph278:                          ; preds = %vec.epilog.scalar.ph278.prol.loopexit, %vec.epilog.scalar.ph278
@@ -658,7 +661,7 @@ bb.ab:                                            ; preds = %bb.z
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %19, ptr noundef nonnull readonly align 16 dereferenceable(1408) %i.qz, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %18, ptr noundef %19, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %20, i8 0, i64 1408, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %29, i8 0, i64 1392, i1 false)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ac, %bb.ab
@@ -709,7 +712,7 @@ bb.ae:                                            ; preds = %poly_mul.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %16, ptr noundef nonnull readonly align 16 dereferenceable(1408) %24, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %15, ptr noundef %16, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %17, i8 0, i64 1408, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %30, i8 0, i64 1392, i1 false)
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.af, %bb.ae
@@ -765,7 +768,8 @@ bb.ah:                                            ; preds = %poly_invert.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %13, ptr noundef nonnull readonly align 16 dereferenceable(1408) %i.fo, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %12, ptr noundef %13, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %14, i8 0, i64 1408, i1 false)
+  %31 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %31, i8 0, i64 1392, i1 false)
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ai, %bb.ah
@@ -815,7 +819,8 @@ bb.ak:                                            ; preds = %poly_mul.exit72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %10, ptr noundef nonnull readonly align 16 dereferenceable(1408) %i.fo, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %9, ptr noundef %10, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %11, i8 0, i64 1408, i1 false)
+  %32 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %32, i8 0, i64 1392, i1 false)
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.al, %bb.ak
@@ -911,7 +916,8 @@ bb.an:                                            ; preds = %vec.epilog.vector.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %7, ptr noundef nonnull readonly align 16 dereferenceable(1408) %i.s, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %6, ptr noundef %7, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %8, i8 0, i64 1408, i1 false)
+  %33 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %33, i8 0, i64 1392, i1 false)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ao, %bb.an
@@ -961,7 +967,8 @@ bb.aq:                                            ; preds = %poly_mul.exit85
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %4, ptr noundef nonnull readonly align 16 dereferenceable(1408) %i.s, i64 1408, i1 false)
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.n, ptr noundef %i.aab, ptr noundef %3, ptr noundef %4, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %5, i8 0, i64 1408, i1 false)
+  %34 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %34, i8 0, i64 1392, i1 false)
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ar, %bb.aq
@@ -1240,7 +1247,8 @@ bb.e:                                             ; preds = %poly_short_sample.e
   %i.cx = getelementptr inbounds nuw i8, ptr %i.i, i64 2816
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.i, ptr noundef %i.cx, ptr noundef %4, ptr noundef %5, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %6, i8 0, i64 1408, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %7, i8 0, i64 1392, i1 false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
@@ -1643,7 +1651,8 @@ bb.j:                                             ; preds = %poly_from_poly3.exi
   %i.fz = getelementptr inbounds nuw i8, ptr %i.j, i64 2816
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.j, ptr noundef %i.fz, ptr noundef %7, ptr noundef %8, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %9, i8 0, i64 1408, i1 false)
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %10, i8 0, i64 1392, i1 false)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %bb.j
@@ -1880,7 +1889,8 @@ bb.s:                                             ; preds = %vec.epilog.vector.b
   %i.kg = getelementptr inbounds nuw i8, ptr %i.j, i64 2816
   call fastcc void @poly_mul_vec_aux(ptr noundef nonnull %i.j, ptr noundef %i.kg, ptr noundef %4, ptr noundef %5, i64 noundef 88)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1408) %6, i8 0, i64 1408, i1 false)
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1392) %11, i8 0, i64 1392, i1 false)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %bb.s

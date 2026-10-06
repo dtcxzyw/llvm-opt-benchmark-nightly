@@ -205,15 +205,13 @@ bb.f:                                             ; preds = %bb.c
   br label %BackwardRefsNewBlock.exit
 
 BackwardRefsNewBlock.exit:                        ; preds = %bb.e, %bb.f
-  %.020.i = phi ptr [ %i.o, %bb.e ], [ %i.i, %bb.f ] ; 6 uses
+  %.020.i = phi ptr [ %i.o, %bb.e ], [ %i.i, %bb.f ] ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !14
   store ptr %.020.i, ptr %i.w, align 8, !tbaa !16
   store ptr %.020.i, ptr %i.v, align 8, !tbaa !14
   store ptr %.020.i, ptr %i.a, align 8, !tbaa !18
   store ptr null, ptr %.020.i, align 8, !tbaa !20
-  %2 = getelementptr inbounds nuw i8, ptr %.020.i, i64 16
-  store i32 0, ptr %2, align 8, !tbaa !26
   br label %bb.g
 
 bb.g:                                             ; preds = %BackwardRefsNewBlock.exit, %bb.b
@@ -616,14 +614,12 @@ bb.af:                                            ; preds = %bb.ac
   br label %BackwardRefsNewBlock.exit.i.i.i
 
 BackwardRefsNewBlock.exit.i.i.i:                  ; preds = %bb.af, %bb.ae
-  %.020.i.i.i.i = phi ptr [ %i.gt, %bb.ae ], [ %i.gn, %bb.af ] ; 6 uses
+  %.020.i.i.i.i = phi ptr [ %i.gt, %bb.ae ], [ %i.gn, %bb.af ] ; 5 uses
   %i.gz = load ptr, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i.i.i, ptr %i.gz, align 8, !tbaa !16
   store ptr %.020.i.i.i.i, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i.i.i, ptr %i.de, align 8, !tbaa !18
   store ptr null, ptr %.020.i.i.i.i, align 8, !tbaa !20
-  %19 = getelementptr inbounds nuw i8, ptr %.020.i.i.i.i, i64 16
-  store i32 0, ptr %19, align 8, !tbaa !26
   br label %bb.ag
 
 bb.ag:                                            ; preds = %BackwardRefsNewBlock.exit.i.i.i, %bb.ab
@@ -690,14 +686,12 @@ bb.an:                                            ; preds = %bb.ak
   br label %BackwardRefsNewBlock.exit.i72.i.i
 
 BackwardRefsNewBlock.exit.i72.i.i:                ; preds = %bb.an, %bb.am
-  %.020.i.i73.i.i = phi ptr [ %i.hv, %bb.am ], [ %i.hp, %bb.an ] ; 6 uses
+  %.020.i.i73.i.i = phi ptr [ %i.hv, %bb.am ], [ %i.hp, %bb.an ] ; 5 uses
   %i.ib = load ptr, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i73.i.i, ptr %i.ib, align 8, !tbaa !16
   store ptr %.020.i.i73.i.i, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i73.i.i, ptr %i.de, align 8, !tbaa !18
   store ptr null, ptr %.020.i.i73.i.i, align 8, !tbaa !20
-  %20 = getelementptr inbounds nuw i8, ptr %.020.i.i73.i.i, i64 16
-  store i32 0, ptr %20, align 8, !tbaa !26
   br label %bb.ao
 
 bb.ao:                                            ; preds = %BackwardRefsNewBlock.exit.i72.i.i, %bb.aj
@@ -759,14 +753,12 @@ bb.au:                                            ; preds = %bb.ar
   br label %BackwardRefsNewBlock.exit.i.i81.i.i
 
 BackwardRefsNewBlock.exit.i.i81.i.i:              ; preds = %bb.au, %bb.at
-  %.020.i.i.i82.i.i = phi ptr [ %i.iu, %bb.at ], [ %i.io, %bb.au ] ; 6 uses
+  %.020.i.i.i82.i.i = phi ptr [ %i.iu, %bb.at ], [ %i.io, %bb.au ] ; 5 uses
   %i.ja = load ptr, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i.i82.i.i, ptr %i.ja, align 8, !tbaa !16
   store ptr %.020.i.i.i82.i.i, ptr %i.db, align 8, !tbaa !14
   store ptr %.020.i.i.i82.i.i, ptr %i.de, align 8, !tbaa !18
   store ptr null, ptr %.020.i.i.i82.i.i, align 8, !tbaa !20
-  %21 = getelementptr inbounds nuw i8, ptr %.020.i.i.i82.i.i, i64 16
-  store i32 0, ptr %21, align 8, !tbaa !26
   br label %bb.av
 
 bb.av:                                            ; preds = %BackwardRefsNewBlock.exit.i.i81.i.i, %bb.aq
@@ -1169,14 +1161,12 @@ bb.j:                                             ; preds = %bb.g
   br label %BackwardRefsNewBlock.exit.i.i
 
 BackwardRefsNewBlock.exit.i.i:                    ; preds = %bb.j, %bb.i
-  %.020.i.i.i = phi ptr [ %i.ax, %bb.i ], [ %i.ar, %bb.j ] ; 6 uses
+  %.020.i.i.i = phi ptr [ %i.ax, %bb.i ], [ %i.ar, %bb.j ] ; 5 uses
   %i.bd = load ptr, ptr %i.b, align 8, !tbaa !14
   store ptr %.020.i.i.i, ptr %i.bd, align 8, !tbaa !16
   store ptr %.020.i.i.i, ptr %i.b, align 8, !tbaa !14
   store ptr %.020.i.i.i, ptr %i.i, align 8, !tbaa !18
   store ptr null, ptr %.020.i.i.i, align 8, !tbaa !20
-  %5 = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 16
-  store i32 0, ptr %5, align 8, !tbaa !26
   br label %bb.k
 
 bb.k:                                             ; preds = %BackwardRefsNewBlock.exit.i.i, %bb.f
@@ -1243,14 +1233,12 @@ bb.q:                                             ; preds = %bb.n
   br label %BackwardRefsNewBlock.exit.i
 
 BackwardRefsNewBlock.exit.i:                      ; preds = %bb.q, %bb.p
-  %.020.i.i = phi ptr [ %i.bx, %bb.p ], [ %i.br, %bb.q ] ; 6 uses
+  %.020.i.i = phi ptr [ %i.bx, %bb.p ], [ %i.br, %bb.q ] ; 5 uses
   %i.cd = load ptr, ptr %i.b, align 8, !tbaa !14
   store ptr %.020.i.i, ptr %i.cd, align 8, !tbaa !16
   store ptr %.020.i.i, ptr %i.b, align 8, !tbaa !14
   store ptr %.020.i.i, ptr %i.i, align 8, !tbaa !18
   store ptr null, ptr %.020.i.i, align 8, !tbaa !20
-  %6 = getelementptr inbounds nuw i8, ptr %.020.i.i, i64 16
-  store i32 0, ptr %6, align 8, !tbaa !26
   br label %bb.r
 
 bb.r:                                             ; preds = %BackwardRefsNewBlock.exit.i, %bb.m

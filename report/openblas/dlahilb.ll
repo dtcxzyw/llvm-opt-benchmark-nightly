@@ -202,7 +202,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store double %.099.lcssa, ptr %i.b, align 8, !tbaa !27
   call void @dlaset_(ptr noundef nonnull @.str.1, ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull @c_b4, ptr noundef nonnull %i.b, ptr noundef %6, ptr noundef nonnull %7) #4
   %i.bt = load i32, ptr %0, align 4, !tbaa !24    ; 13 uses
-  %i.bu = sitofp i32 %i.bt to double              ; 3 uses
+  %i.bu = sitofp i32 %i.bt to double
   store double %i.bu, ptr %8, align 8, !tbaa !27
   %.not108131 = icmp slt i32 %i.bt, 2
   br i1 %.not108131, label %._crit_edge135, label %.lr.ph134
@@ -211,6 +211,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.bv = add nsw i32 %i.bt, -1                   ; 3 uses
   %i.bw = add nuw i32 %i.bt, 1                    ; 3 uses
   %wide.trip.count153 = zext i32 %i.bw to i64     ; 2 uses
+  %load_initial = load double, ptr %8, align 8    ; 2 uses
   %xtraiter = and i64 %wide.trip.count153, 1
   %i.bx = icmp eq i32 %i.bw, 3
   br i1 %i.bx, label %.epil.preheader, label %.lr.ph134.new
@@ -221,7 +222,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph134.new
-  %i.ca = phi double [ %i.bu, %.lr.ph134.new ], [ %i.db, %bb.i ]
+  %i.ca = phi double [ %load_initial, %.lr.ph134.new ], [ %i.db, %bb.i ]
   %indvars.iv150 = phi i64 [ 2, %.lr.ph134.new ], [ %indvars.iv.next151.1, %bb.i ] ; 8 uses
   %niter = phi i64 [ 0, %.lr.ph134.new ], [ %niter.next.1, %bb.i ] ; 2 uses
   %i.cb = add nsw i64 %indvars.iv150, -1          ; 2 uses
@@ -264,7 +265,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph134.ne
   br i1 %lcmp.mod.not, label %._crit_edge135, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge135.loopexit.unr-lcssa, %.lr.ph134
-  %.epil.init = phi double [ %i.bu, %.lr.ph134 ], [ %i.db, %._crit_edge135.loopexit.unr-lcssa ]
+  %.epil.init = phi double [ %load_initial, %.lr.ph134 ], [ %i.db, %._crit_edge135.loopexit.unr-lcssa ]
   %indvars.iv150.epil.init = phi i64 [ 2, %.lr.ph134 ], [ %indvars.iv.next151.1, %._crit_edge135.loopexit.unr-lcssa ] ; 3 uses
   %lcmp.mod244 = trunc i32 %i.bw to i1
   call void @llvm.assume(i1 %lcmp.mod244)

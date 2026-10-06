@@ -204,7 +204,7 @@ bb.a:
   %8 = alloca %"class.std::vector", align 8       ; 13 uses
   %9 = alloca %"class.std::mersenne_twister_engine", align 8 ; 8 uses
   %10 = alloca %"class.std::random_device", align 8 ; 7 uses
-  %11 = alloca %"class.std::vector.447", align 8  ; 12 uses
+  %11 = alloca %"class.std::vector.447", align 8  ; 11 uses
   %12 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %13 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %14 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 13 uses
@@ -437,11 +437,7 @@ bb.u:                                             ; preds = %_ZNSt6vectorIN4cvc5
 _ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE6resizeEm.exit
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
   %.not.i.i.i.i63 = icmp eq i64 %i.bo, 0
-  br i1 %.not.i.i.i.i63, label %_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i: ; preds = %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
-  store i64 0, ptr %11, align 8
-  br label %bb.v
+  br i1 %.not.i.i.i.i63, label %bb.v, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
   %i.bq = mul nuw nsw i64 %i.bo, 24               ; 3 uses
@@ -455,10 +451,10 @@ _ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.br, i64 %i.bq
   br label %bb.v
 
-bb.v:                                             ; preds = %.noexc65, %_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i
-  %i.bt = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.br, %.noexc65 ]
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.bs, %.noexc65 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS4_EESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc65 ] ; 2 uses
+bb.v:                                             ; preds = %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i, %.noexc65
+  %i.bt = phi ptr [ %i.br, %.noexc65 ], [ null, %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  %.sink.i = phi ptr [ %i.bs, %.noexc65 ], [ null, %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc65 ], [ null, %_ZNSt6vectorIS_IN4cvc58internal12NodeTemplateILb1EEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ] ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr %.sink.i, ptr %i.bv, align 8, !tbaa !322

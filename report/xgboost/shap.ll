@@ -205,7 +205,7 @@ bb.a:
   %70 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %71 = alloca %"class.xgboost::linalg::TensorView", align 8 ; 8 uses
   %72 = alloca %"struct.xgboost::interpretability::(anonymous namespace)::QuadratureTreeShapModelData", align 8 ; 18 uses
-  %73 = alloca %"class.std::vector.53", align 8   ; 15 uses
+  %73 = alloca %"class.std::vector.53", align 8   ; 14 uses
   %74 = alloca %"class.std::vector.58", align 8   ; 15 uses
   %75 = alloca %"class.std::vector.10", align 8   ; 12 uses
   %76 = alloca %"class.std::vector.58", align 8   ; 15 uses
@@ -608,11 +608,7 @@ bb.aa:                                            ; preds = %_ZN7xgboost16interp
 _ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %_ZN7xgboost16interpretability6detail17GetQuadratureRuleEv.exit
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %73, i8 0, i64 24, i1 false)
   %.not.i.i.i.i118 = icmp eq i32 %i.bo, 0         ; 7 uses
-  br i1 %.not.i.i.i.i118, label %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  store i64 0, ptr %73, align 8
-  br label %bb.ab
+  br i1 %.not.i.i.i.i118, label %bb.ab, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.dz = shl nuw nsw i64 %i.dx, 5                ; 3 uses
@@ -626,9 +622,9 @@ _ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i: ; pr
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.ea, i64 %i.dz
   br label %bb.ab
 
-bb.ab:                                            ; preds = %.noexc120, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %i.eb, %.noexc120 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc120 ]
+bb.ab:                                            ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc120
+  %.sink.i = phi ptr [ %i.eb, %.noexc120 ], [ null, %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc120 ], [ null, %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.ec = getelementptr inbounds nuw i8, ptr %73, i64 8 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.ed, align 8, !tbaa !102
@@ -1031,7 +1027,7 @@ bb.a:
   %79 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %80 = alloca %"class.xgboost::linalg::TensorView", align 8 ; 8 uses
   %81 = alloca %"class.xgboost::common::Span.72", align 8 ; 9 uses
-  %82 = alloca %"class.std::vector.53", align 8   ; 15 uses
+  %82 = alloca %"class.std::vector.53", align 8   ; 14 uses
   %83 = alloca %"class.std::vector.58", align 8   ; 15 uses
   %84 = alloca %"class.std::vector.10", align 8   ; 12 uses
   %85 = alloca %"class.xgboost::linalg::TensorView.63", align 8 ; 8 uses
@@ -1434,11 +1430,7 @@ bb.bo:                                            ; preds = %bb.bn
 _ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.bn
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %82, i8 0, i64 24, i1 false)
   %.not.i.i.i.i110 = icmp eq i32 %i.ba, 0         ; 6 uses
-  br i1 %.not.i.i.i.i110, label %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i111
-
-_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  store i64 0, ptr %82, align 8
-  br label %bb.bp
+  br i1 %.not.i.i.i.i110, label %bb.bp, label %.lr.ph.preheader.i.i.i.i.i111
 
 .lr.ph.preheader.i.i.i.i.i111:                    ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.kc = shl nuw nsw i64 %i.ka, 5                ; 3 uses
@@ -1452,9 +1444,9 @@ _ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i: ; pr
   %scevgep.i.i.i.i.i112 = getelementptr i8, ptr %i.kd, i64 %i.kc
   br label %bb.bp
 
-bb.bp:                                            ; preds = %.noexc116, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i
-  %.sink.i113 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %i.ke, %.noexc116 ]
-  %.0.lcssa.i.i.i.i.i114 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost7RegTree4FVecESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %scevgep.i.i.i.i.i112, %.noexc116 ]
+bb.bp:                                            ; preds = %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc116
+  %.sink.i113 = phi ptr [ %i.ke, %.noexc116 ], [ null, %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %.0.lcssa.i.i.i.i.i114 = phi ptr [ %scevgep.i.i.i.i.i112, %.noexc116 ], [ null, %_ZNSt6vectorIN7xgboost7RegTree4FVecESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.kf = getelementptr inbounds nuw i8, ptr %82, i64 8 ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %82, i64 16 ; 2 uses
   store ptr %.sink.i113, ptr %i.kg, align 8, !tbaa !102

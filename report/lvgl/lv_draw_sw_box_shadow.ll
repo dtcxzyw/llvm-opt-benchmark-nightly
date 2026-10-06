@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lvgl/original/lv_draw_sw_box_shadow?download=true
 inline.NumInlined: 5
 inline.NumDeleted: 3
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -139,7 +139,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.bo = load i32, ptr %i.z, align 8, !tbaa !50  ; 6 uses
-  %i.bp = add i32 %i.bo, %spec.select414          ; 15 uses
+  %i.bp = add i32 %i.bo, %spec.select414          ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -162,25 +162,20 @@ bb.i:                                             ; preds = %bb.h
   call void @lv_draw_sw_mask_radius_init(ptr noundef nonnull %4, ptr noundef nonnull %3, i32 noundef range(i32 -2147483648, 1073741824) %spec.select414, i1 noundef zeroext false) #6
   %i.cd = icmp eq i32 %i.bo, 1
   %i.ce = ashr i32 %i.bo, 1
-  %.097.i = select i1 %i.cd, i32 1, i32 %i.ce     ; 7 uses
+  %.097.i = select i1 %i.cd, i32 1, i32 %i.ce     ; 5 uses
   %i.cf = sext i32 %i.bp to i64                   ; 4 uses
-  %i.cg = call ptr @lv_malloc(i64 noundef %i.cf) #6 ; 8 uses
+  %i.cg = call ptr @lv_malloc(i64 noundef %i.cf) #6 ; 6 uses
   %i.ch = icmp sgt i32 %i.bp, 0
   br i1 %i.ch, label %.lr.ph109.i, label %._crit_edge.i
 
 .lr.ph109.i:                                      ; preds = %bb.i
+  %.not.i = icmp eq i32 %i.bp, 1
   %i.ci = shl nuw nsw i64 %i.cf, 1
   %wide.trip.count.i = zext nneg i32 %i.bp to i64
-  %13 = add nsw i64 %wide.trip.count.i, -1        ; 3 uses
-  %xtraiter = and i64 %13, 1
-  %14 = icmp eq i32 %i.bp, 2                      ; 0 uses
-  %unroll_iter = and i64 %13, -2
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod588 = trunc i64 %13 to i1
   br label %bb.j
 
 bb.j:                                             ; preds = %.loopexit104.i, %.lr.ph109.i
-  %.095107.i = phi ptr [ %i.bn, %.lr.ph109.i ], [ %i.da, %.loopexit104.i ] ; 6 uses
+  %.095107.i = phi ptr [ %i.bn, %.lr.ph109.i ], [ %i.da, %.loopexit104.i ] ; 5 uses
   %.096106.i = phi i32 [ 0, %.lr.ph109.i ], [ %i.db, %.loopexit104.i ] ; 2 uses
   call void @lv_memset(ptr noundef %i.cg, i8 noundef zeroext -1, i64 noundef %i.cf) #6
   %i.cj = load ptr, ptr %4, align 8, !tbaa !57
@@ -197,87 +192,41 @@ bb.l:                                             ; preds = %bb.j
   %i.cn = zext i8 %i.cm to i32
   %i.co = shl nuw nsw i32 %i.cn, 6
   %i.cp = sdiv i32 %i.co, %.097.i
-  %i.cq = trunc nsw i32 %i.cp to i16              ; 3 uses
+  %i.cq = trunc nsw i32 %i.cp to i16
   store i16 %i.cq, ptr %.095107.i, align 2, !tbaa !9
-  switch i32 %i.bp, label %.lr.ph.i [
-    i32 1, label %.loopexit104.i
-    i32 2, label %.lr.ph.i.epil.preheader
-  ]
+  br i1 %.not.i, label %.loopexit104.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l, %bb.n
-  %15 = phi i16 [ %.sink.i.1, %bb.n ], [ %i.cq, %bb.l ]
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.n ], [ 1, %bb.l ] ; 5 uses
-  %niter = phi i64 [ %niter.next.1, %bb.n ], [ 0, %bb.l ]
-  %16 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %indvars.iv.i ; 2 uses
-  %17 = load i8, ptr %16, align 1, !tbaa !58      ; 2 uses
-  %i.cr = getelementptr i8, ptr %16, i64 -1
+  %indvars.iv.i = phi i64 [ %niter.next.1, %bb.n ], [ 1, %bb.l ] ; 4 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %indvars.iv.i
+  %14 = load i8, ptr %13, align 1, !tbaa !58      ; 2 uses
+  %15 = add nsw i64 %indvars.iv.i, -1             ; 2 uses
+  %i.cr = getelementptr inbounds i8, ptr %i.cg, i64 %15
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !58
-  %i.ct = icmp eq i8 %17, %i.cs
-  br i1 %i.ct, label %.lr.ph.i.1, label %18
+  %i.ct = icmp eq i8 %14, %i.cs
+  br i1 %i.ct, label %.lr.ph.i.1, label %bb.m
 
-18:                                               ; preds = %.lr.ph.i
-  %19 = zext i8 %17 to i32
-  %20 = shl nuw nsw i32 %19, 6
-  %21 = sdiv i32 %20, %.097.i
-  %22 = trunc nsw i32 %21 to i16
-  br label %.lr.ph.i.1
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i
+  %i.cu = getelementptr inbounds [2 x i8], ptr %.095107.i, i64 %15
+  %16 = load i16, ptr %i.cu, align 2, !tbaa !9
+  br label %bb.n
 
-.lr.ph.i.1:                                       ; preds = %18, %.lr.ph.i
-  %.sink.i = phi i16 [ %22, %18 ], [ %15, %.lr.ph.i ] ; 2 uses
-  %i.cu = getelementptr inbounds nuw [2 x i8], ptr %.095107.i, i64 %indvars.iv.i
-  store i16 %.sink.i, ptr %i.cu, align 2, !tbaa !9
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %indvars.iv.next.i
-  %24 = load i8, ptr %23, align 1, !tbaa !58      ; 2 uses
-  %25 = getelementptr i8, ptr %i.cg, i64 %indvars.iv.i
-  %26 = load i8, ptr %25, align 1, !tbaa !58
-  %27 = icmp eq i8 %24, %26
-  br i1 %27, label %bb.n, label %bb.m
-
-bb.m:                                             ; preds = %.lr.ph.i.1
-  %i.cv = zext i8 %24 to i32
+bb.m:                                             ; preds = %.lr.ph.i
+  %i.cv = zext i8 %14 to i32
   %i.cw = shl nuw nsw i32 %i.cv, 6
   %i.cx = sdiv i32 %i.cw, %.097.i
   %i.cy = trunc nsw i32 %i.cx to i16
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %.lr.ph.i.1
-  %.sink.i.1 = phi i16 [ %i.cy, %bb.m ], [ %.sink.i, %.lr.ph.i.1 ] ; 3 uses
-  %i.cz = getelementptr inbounds nuw [2 x i8], ptr %.095107.i, i64 %indvars.iv.next.i
+  %.sink.i.1 = phi i16 [ %16, %.lr.ph.i.1 ], [ %i.cy, %bb.m ]
+  %i.cz = getelementptr inbounds nuw [2 x i8], ptr %.095107.i, i64 %indvars.iv.i
   store i16 %.sink.i.1, ptr %i.cz, align 2, !tbaa !9
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit104.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !13
+  %niter.next.1 = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count.i
+  br i1 %niter.ncmp.1, label %.loopexit104.i, label %.lr.ph.i, !llvm.loop !13
 
-.loopexit104.i.loopexit.unr-lcssa:                ; preds = %bb.n
-  br i1 %lcmp.mod.not, label %.loopexit104.i, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %bb.l, %.loopexit104.i.loopexit.unr-lcssa
-  %.epil.init = phi i16 [ %i.cq, %bb.l ], [ %.sink.i.1, %.loopexit104.i.loopexit.unr-lcssa ]
-  %indvars.iv.i.epil.init = phi i64 [ 1, %bb.l ], [ %indvars.iv.next.i.1, %.loopexit104.i.loopexit.unr-lcssa ] ; 2 uses
-  call void @llvm.assume(i1 %lcmp.mod588)
-  %28 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %indvars.iv.i.epil.init ; 2 uses
-  %29 = load i8, ptr %28, align 1, !tbaa !58      ; 2 uses
-  %30 = getelementptr i8, ptr %28, i64 -1
-  %31 = load i8, ptr %30, align 1, !tbaa !58
-  %32 = icmp eq i8 %29, %31
-  br i1 %32, label %.loopexit104.i.loopexit.epilog-lcssa, label %33
-
-33:                                               ; preds = %.lr.ph.i.epil.preheader
-  %34 = zext i8 %29 to i32
-  %35 = shl nuw nsw i32 %34, 6
-  %36 = sdiv i32 %35, %.097.i
-  %37 = trunc nsw i32 %36 to i16
-  br label %.loopexit104.i.loopexit.epilog-lcssa
-
-.loopexit104.i.loopexit.epilog-lcssa:             ; preds = %33, %.lr.ph.i.epil.preheader
-  %.sink.i.epil = phi i16 [ %37, %33 ], [ %.epil.init, %.lr.ph.i.epil.preheader ]
-  %38 = getelementptr inbounds nuw [2 x i8], ptr %.095107.i, i64 %indvars.iv.i.epil.init
-  store i16 %.sink.i.epil, ptr %38, align 2, !tbaa !9
-  br label %.loopexit104.i
-
-.loopexit104.i:                                   ; preds = %.loopexit104.i.loopexit.epilog-lcssa, %.loopexit104.i.loopexit.unr-lcssa, %bb.l, %bb.k
+.loopexit104.i:                                   ; preds = %bb.n, %bb.l, %bb.k
   %i.da = getelementptr inbounds nuw [2 x i8], ptr %.095107.i, i64 %i.cf
   %i.db = add nuw nsw i32 %.096106.i, 1           ; 2 uses
   %exitcond124.not.i = icmp eq i32 %i.db, %i.bp

@@ -204,18 +204,18 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define void @b2MakeOffsetPolygon(ptr dead_on_unwind noalias nofree writable sret(%struct.b2Polygon) align 4 captures(none) initializes((0, 144)) %0, ptr nofree noundef readonly captures(none) %1, <2 x float> %2, <2 x float> %3) local_unnamed_addr #6 {
+define void @b2MakeOffsetPolygon(ptr dead_on_unwind noalias nofree writable sret(%struct.b2Polygon) align 4 captures(none) initializes((8, 144)) %0, ptr nofree noundef readonly captures(none) %1, <2 x float> %2, <2 x float> %3) local_unnamed_addr #6 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17, !noalias !68 ; 5 uses
   %i.c = icmp slt i32 %i.b, 3
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   br i1 %i.c, label %bb.b, label %.new
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(96) %i.d, i8 0, i64 96, i1 false), !alias.scope !69
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i32 4, ptr %4, align 4, !tbaa !19, !alias.scope !69
   store <4 x float> <float -5.000000e-01, float -5.000000e-01, float 5.000000e-01, float -5.000000e-01>, ptr %0, align 4, !tbaa !20, !alias.scope !69
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -231,9 +231,9 @@ bb.b:                                             ; preds = %bb.a
   br label %b2MakeOffsetRoundedPolygon.exit
 
 .new:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(144) %0, i8 0, i64 136, i1 false), !alias.scope !68
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  store i32 %i.b, ptr %5, align 4, !tbaa !19, !alias.scope !68
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(128) %5, i8 0, i64 128, i1 false), !alias.scope !68
+  store i32 %i.b, ptr %4, align 4, !tbaa !19, !alias.scope !68
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 136
   store float 0.000000e+00, ptr %i.h, align 4, !tbaa !21, !alias.scope !68
   %wide.trip.count.i = zext nneg i32 %i.b to i64  ; 4 uses
@@ -306,8 +306,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %.sroa.013.0.copyload.i.i = load <2 x float>, ptr %0, align 4, !tbaa !20, !alias.scope !68 ; 3 uses
   %i.at = add nsw i32 %i.b, -1
   %wide.trip.count.i.i = zext nneg i32 %i.at to i64
-  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.pre.i.i = load <2 x float>, ptr %.phi.trans.insert.i.i, align 4, !alias.scope !68
+  %.pre.i.i = load <2 x float>, ptr %5, align 4, !alias.scope !68
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i
@@ -385,17 +384,17 @@ b2MakeOffsetRoundedPolygon.exit:                  ; preds = %bb.b, %b2ComputePol
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @b2MakeOffsetRoundedPolygon(ptr dead_on_unwind noalias nofree writable sret(%struct.b2Polygon) align 4 captures(none) initializes((0, 144)) %0, ptr nofree noundef readonly captures(none) %1, <2 x float> %2, <2 x float> %3, float noundef %4) local_unnamed_addr #3 {
+define void @b2MakeOffsetRoundedPolygon(ptr dead_on_unwind noalias nofree writable sret(%struct.b2Polygon) align 4 captures(none) initializes((8, 144)) %0, ptr nofree noundef readonly captures(none) %1, <2 x float> %2, <2 x float> %3, float noundef %4) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 6 uses
   %i.c = icmp slt i32 %i.b, 3
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   br i1 %i.c, label %bb.b, label %.new
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(96) %i.d, i8 0, i64 96, i1 false), !alias.scope !74
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i32 4, ptr %5, align 4, !tbaa !19, !alias.scope !74
   store <4 x float> <float -5.000000e-01, float -5.000000e-01, float 5.000000e-01, float -5.000000e-01>, ptr %0, align 4, !tbaa !20, !alias.scope !74
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -411,9 +410,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 .new:                                             ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(144) %0, i8 0, i64 136, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  store i32 %i.b, ptr %6, align 4, !tbaa !19
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(128) %6, i8 0, i64 128, i1 false)
+  store i32 %i.b, ptr %5, align 4, !tbaa !19
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 136
   store float %4, ptr %i.h, align 4, !tbaa !21
   %wide.trip.count = zext nneg i32 %i.b to i64    ; 3 uses

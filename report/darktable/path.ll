@@ -96,11 +96,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load float, ptr %0, align 4, !tbaa !12
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load float, ptr %i.d, align 4, !tbaa !12 ; 7 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
+  %i.e = load float, ptr %i.d, align 4, !tbaa !12 ; 5 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
   %i.j = load float, ptr %i.f, align 4, !tbaa !12
   %i.k = fmul reassoc nsz arcp contract afn float %i.j, %7 ; 2 uses
   %i.l = load float, ptr %i.h, align 4, !tbaa !12
@@ -123,13 +123,10 @@ bb.c:                                             ; preds = %bb.b
   %i.w = fmul reassoc nsz arcp contract afn float %i.r, %6 ; 2 uses
   %i.x = fmul reassoc nsz arcp contract afn float %cos.i, %i.w
   %i.y = fadd reassoc nsz arcp contract afn float %i.x, %i.n
-  %8 = fdiv reassoc nsz arcp contract afn float %i.y, %7 ; 2 uses
-  store float %8, ptr %i.f, align 4, !tbaa !12
-  %i.z = fmul reassoc nsz arcp contract afn float %sin.i, %i.w ; 2 uses
-  %9 = fadd reassoc nsz arcp contract afn float %i.z, %i.e
-  store float %9, ptr %i.g, align 4, !tbaa !12
-  %10 = fmul reassoc nsz arcp contract afn float %8, %7
-  %i.aa = fsub reassoc nsz arcp contract afn float %10, %i.n
+  %i.z = fmul reassoc nsz arcp contract afn float %sin.i, %i.w
+  %8 = fmul reassoc nsz arcp contract afn float %i.y, %7
+  %9 = fdiv reassoc nsz arcp contract afn float %8, %7
+  %i.aa = fsub reassoc nsz arcp contract afn float %9, %i.n
   %i.ab = tail call reassoc nsz arcp contract afn float @hypotf(float noundef %i.aa, float noundef %i.z) #24
   %i.ac = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %i.q, float %i.o)
   %i.ad = fsub reassoc nsz arcp contract afn float %i.ac, %5
@@ -150,13 +147,10 @@ bb.d:                                             ; preds = %bb.b
   %i.am = fdiv reassoc nsz arcp contract afn float %i.ah, %6 ; 2 uses
   %i.an = fmul reassoc nsz arcp contract afn float %cos46.i, %i.am
   %i.ao = fadd reassoc nsz arcp contract afn float %i.an, %i.n
-  %11 = fdiv reassoc nsz arcp contract afn float %i.ao, %7 ; 2 uses
-  store float %11, ptr %i.h, align 4, !tbaa !12
-  %i.ap = fmul reassoc nsz arcp contract afn float %sin45.i, %i.am ; 2 uses
-  %12 = fadd reassoc nsz arcp contract afn float %i.ap, %i.e
-  store float %12, ptr %i.i, align 4, !tbaa !12
-  %13 = fmul reassoc nsz arcp contract afn float %11, %7
-  %i.aq = fsub reassoc nsz arcp contract afn float %13, %i.n
+  %i.ap = fmul reassoc nsz arcp contract afn float %sin45.i, %i.am
+  %10 = fmul reassoc nsz arcp contract afn float %i.ao, %7
+  %11 = fdiv reassoc nsz arcp contract afn float %10, %7
+  %i.aq = fsub reassoc nsz arcp contract afn float %11, %i.n
   %i.ar = tail call reassoc nsz arcp contract afn float @hypotf(float noundef %i.aq, float noundef %i.ap) #24
   %i.as = tail call reassoc nsz arcp contract afn float @llvm.atan2.f32(float %i.ag, float %i.ae)
   %i.at = fadd reassoc nsz arcp contract afn float %i.as, %5

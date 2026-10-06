@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.r
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 1251 ; 3 uses
   %i.cj = load i8, ptr %i.ci, align 1             ; 3 uses
   %i.ck = zext i8 %i.cj to i64                    ; 2 uses
-  %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.ch, i64 %i.ck ; 3 uses
+  %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.ch, i64 %i.ck ; 2 uses
   %i.cm = load i8, ptr %i.cl, align 8             ; 3 uses
   %.not115.i = icmp ugt i8 %i.cm, -65
   br i1 %.not115.i, label %bb.v, label %bb.u
@@ -256,8 +256,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.x
-  %i.di = or disjoint i8 %i.cm, 1                 ; 2 uses
-  store i8 %i.di, ptr %i.cl, align 8
+  %i.di = or disjoint i8 %i.cm, 1
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa

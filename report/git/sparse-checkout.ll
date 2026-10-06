@@ -204,9 +204,7 @@ bb.aa:                                            ; preds = %clean_tracked_spars
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 248
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !91
   call void @free(ptr noundef %i.db) #14
-  %i.dc = load ptr, ptr %i.a, align 8, !tbaa !68  ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.dc, i64 248
-  store ptr null, ptr %9, align 8, !tbaa !91
+  %i.dc = load ptr, ptr %i.a, align 8, !tbaa !68
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %clean_tracked_sparse_directories.exit

@@ -205,16 +205,11 @@ bb.ba:                                            ; preds = %bb.az
 
 .thread63.i.i:                                    ; preds = %bb.ba
   %i.jv = icmp eq i32 %i.jm, 1
-  br i1 %i.jv, label %1, label %bb.bb
+  br i1 %i.jv, label %.lr.ph87.i.i.preheader, label %bb.bb
 
 .thread63.thread.i.i:                             ; preds = %.thread.i241.i
   %i.jw = icmp eq i8 %.pre.i.i, 49
-  br i1 %i.jw, label %1, label %.thread118.i.i
-
-1:                                                ; preds = %.thread63.thread.i.i, %.thread63.i.i
-  %.28594111.i.i = phi ptr [ %.285.lcssa.i.i, %.thread63.thread.i.i ], [ %.285.4.i.i, %.thread63.i.i ] ; 2 uses
-  store i8 48, ptr %.28594111.i.i, align 1, !tbaa !29
-  br label %.lr.ph87.i.i.preheader
+  br i1 %i.jw, label %.lr.ph87.i.i.preheader, label %.thread118.i.i
 
 bb.bb:                                            ; preds = %.thread63.i.i
   %i.jx = icmp eq i32 %i.jp, 17232
@@ -251,8 +246,8 @@ bb.bf:                                            ; preds = %.thread118.i.i
   %i.kd = icmp eq i8 %i.kc, 48
   br i1 %i.kd, label %.lr.ph87.i.i.preheader, label %._crit_edge88.i.i
 
-.lr.ph87.i.i.preheader:                           ; preds = %.thread70.i.i, %.thread118.i.i, %1
-  %.486.i.i.ph = phi ptr [ %.28594111.i.i, %1 ], [ %.28594110117121.i.i, %.thread118.i.i ], [ %.28593.i.i, %.thread70.i.i ]
+.lr.ph87.i.i.preheader:                           ; preds = %.thread70.i.i, %.thread118.i.i, %.thread63.thread.i.i, %.thread63.i.i
+  %.486.i.i.ph = phi ptr [ %.285.4.i.i, %.thread63.i.i ], [ %.285.lcssa.i.i, %.thread63.thread.i.i ], [ %.28594110117121.i.i, %.thread118.i.i ], [ %.28593.i.i, %.thread70.i.i ]
   br label %.lr.ph87.i.i
 
 .lr.ph87.i.i:                                     ; preds = %.lr.ph87.i.i.preheader, %.lr.ph87.i.i

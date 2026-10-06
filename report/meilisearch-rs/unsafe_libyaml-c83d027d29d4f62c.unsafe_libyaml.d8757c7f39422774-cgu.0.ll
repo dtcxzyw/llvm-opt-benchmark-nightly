@@ -205,7 +205,7 @@ _ZN14unsafe_libyaml7scanner4SKIP17hd4c15babb41ede52E.exit180.i: ; preds = %"_ZN5
 
 bb.bv:                                            ; preds = %.critedge.i
   %i.ie = getelementptr inbounds nuw i8, ptr %i.ej, i64 1
-  %i.if = load i8, ptr %i.ie, align 1, !noundef !6 ; 2 uses
+  %i.if = load i8, ptr %i.ie, align 1, !noundef !6
   switch i8 %i.if, label %.thread271.i [
     i8 13, label %bb.bw
     i8 10, label %bb.bw
@@ -325,16 +325,15 @@ _ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i: ; pre
   %i.jx = getelementptr i8, ptr %i.js, i64 %i.jr
   store ptr %i.jx, ptr %i.bp, align 8
   store ptr %i.js, ptr %i.e, align 8
-  %.pre358.i = load ptr, ptr %i.cm, align 8       ; 2 uses
-  %.phi.trans.insert.i = getelementptr i8, ptr %.pre358.i, i64 1
-  %.pre359.i = load i8, ptr %.phi.trans.insert.i, align 1
+  %.pre358.i = load ptr, ptr %i.cm, align 8
   br label %bb.cj
 
 bb.cj:                                            ; preds = %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i, %.thread271.i
   %i.jy = phi ptr [ %i.ji, %.thread271.i ], [ %i.jw, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i ] ; 51 uses
-  %2 = phi i8 [ %i.if, %.thread271.i ], [ %.pre359.i, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i ]
-  %3 = phi ptr [ %i.ej, %.thread271.i ], [ %.pre358.i, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i ] ; 2 uses
-  switch i8 %2, label %.loopexit296.i.sink.split [
+  %2 = phi ptr [ %i.ej, %.thread271.i ], [ %.pre358.i, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit186.i ] ; 3 uses
+  %3 = getelementptr i8, ptr %2, i64 1
+  %4 = load i8, ptr %3, align 1, !noundef !6
+  switch i8 %4, label %.loopexit296.i.sink.split [
     i8 48, label %bb.ck
     i8 97, label %bb.cl
     i8 98, label %bb.cm
@@ -482,7 +481,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.db, %bb.
   %exitcond.not.i.1 = phi i1 [ false, %bb.db ], [ true, %bb.cj ], [ false, %bb.dc ] ; 2 uses
   %exitcond.not.i.3 = phi i1 [ true, %bb.db ], [ false, %bb.cj ], [ false, %bb.dc ] ; 2 uses
   %.sroa.017.0.i = phi i64 [ 4, %bb.db ], [ 2, %bb.cj ], [ 8, %bb.dc ]
-  %i.kw = load i8, ptr %3, align 1, !noundef !6   ; 4 uses
+  %i.kw = load i8, ptr %2, align 1, !noundef !6   ; 4 uses
   %i.kx = icmp sgt i8 %i.kw, -1
   br i1 %i.kx, label %bb.df, label %bb.de
 
@@ -529,7 +528,7 @@ _ZN14unsafe_libyaml7scanner4SKIP17hd4c15babb41ede52E.exit190.i: ; preds = %"_ZN5
   %i.lk = load i64, ptr %i.dd, align 8, !noundef !6 ; 2 uses
   %i.ll = add i64 %i.lk, -1
   store i64 %i.ll, ptr %i.dd, align 8
-  %i.lm = getelementptr i8, ptr %3, i64 %.sroa.0.0.i188.i ; 3 uses
+  %i.lm = getelementptr i8, ptr %2, i64 %.sroa.0.0.i188.i ; 3 uses
   store ptr %i.lm, ptr %i.cm, align 8
   %i.ln = load i8, ptr %i.lm, align 1, !noundef !6 ; 4 uses
   %i.lo = icmp sgt i8 %i.ln, -1

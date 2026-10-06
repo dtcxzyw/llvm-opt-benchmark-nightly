@@ -205,8 +205,6 @@ bb.l:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.m:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit.i
   store i8 1, ptr %i.q, align 8, !tbaa !149
-  %3 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %3, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i
 
 _ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i: ; preds = %bb.m, %bb.l
@@ -609,8 +607,6 @@ bb.g:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.h:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit20
   store i8 1, ptr %i.a, align 8, !tbaa !149
-  %2 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %2, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit: ; preds = %bb.g, %bb.h
@@ -666,8 +662,6 @@ bb.l:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.m:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit23
   store i8 1, ptr %i.af, align 8, !tbaa !149
-  %3 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %3, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit25
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit25: ; preds = %bb.l, %bb.m
@@ -723,8 +717,6 @@ bb.q:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.r:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit28
   store i8 1, ptr %i.bd, align 8, !tbaa !149
-  %4 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %4, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit30
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit30: ; preds = %bb.q, %bb.r
@@ -758,8 +750,6 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 1, ptr %i.cm, align 8, !tbaa !149
-  %5 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %5, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit32
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit32: ; preds = %bb.u, %bb.v
@@ -1162,8 +1152,6 @@ bb.l:                                             ; preds = %_ZN3CFF14byte_str_r
 
 bb.m:                                             ; preds = %_ZN3CFF14byte_str_ref_tixEi.exit.i
   store i8 1, ptr %i.q, align 8, !tbaa !149
-  %3 = load i64, ptr @_hb_NullPool, align 16
-  store i64 %3, ptr @_hb_CrapPool, align 16
   br label %_ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i
 
 _ZN3CFF11arg_stack_tINS_8number_tEE10push_fixedEi.exit.i: ; preds = %bb.m, %bb.l

@@ -204,7 +204,7 @@ _ZNK11PairingHeapIN11PropagateCpILN8GraphWay2enE0EE10PendingKeyEE3maxEv.exit.thr
 
 _ZNK11PairingHeapIN11PropagateCpILN8GraphWay2enE0EE10PendingKeyEE3maxEv.exit: ; preds = %bb.b
   store ptr null, ptr %0, align 8, !tbaa !484
-  %i.j = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE0EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.f) ; 10 uses
+  %i.j = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE0EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.f) ; 8 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !484
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 4 uses
   store ptr %0, ptr %i.k, align 8, !tbaa !487
@@ -239,7 +239,6 @@ bb.e:                                             ; preds = %_ZNK11PairingHeapIN
   br i1 %.not.i.i17, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store ptr null, ptr %i.j, align 8, !tbaa !484
   store ptr %.pr, ptr %0, align 8, !tbaa !314
   %i.s = getelementptr inbounds nuw i8, ptr %.pr, i64 16
   store ptr %0, ptr %i.s, align 8, !tbaa !487
@@ -250,7 +249,6 @@ bb.g:                                             ; preds = %bb.e
   store ptr null, ptr %i.l, align 8, !tbaa !484
   %i.t = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE0EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.m) ; 4 uses
   %i.u = load ptr, ptr %i.j, align 8, !tbaa !484  ; 2 uses
-  store ptr null, ptr %i.j, align 8, !tbaa !484
   store ptr %i.u, ptr %i.t, align 8, !tbaa !484
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store ptr %i.t, ptr %i.v, align 8, !tbaa !487
@@ -384,7 +382,7 @@ _ZNK11PairingHeapIN11PropagateCpILN8GraphWay2enE1EE10PendingKeyEE3maxEv.exit.thr
 
 _ZNK11PairingHeapIN11PropagateCpILN8GraphWay2enE1EE10PendingKeyEE3maxEv.exit: ; preds = %bb.b
   store ptr null, ptr %0, align 8, !tbaa !490
-  %i.j = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE1EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.f) ; 10 uses
+  %i.j = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE1EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.f) ; 8 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !490
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 4 uses
   store ptr %0, ptr %i.k, align 8, !tbaa !493
@@ -419,7 +417,6 @@ bb.e:                                             ; preds = %_ZNK11PairingHeapIN
   br i1 %.not.i.i17, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store ptr null, ptr %i.j, align 8, !tbaa !490
   store ptr %.pr, ptr %0, align 8, !tbaa !328
   %i.s = getelementptr inbounds nuw i8, ptr %.pr, i64 16
   store ptr %0, ptr %i.s, align 8, !tbaa !493
@@ -430,7 +427,6 @@ bb.g:                                             ; preds = %bb.e
   store ptr null, ptr %i.l, align 8, !tbaa !490
   %i.t = call noundef ptr @_ZN11PairingHeapIN11PropagateCpILN8GraphWay2enE1EE10PendingKeyEE6reduceEPNS5_4NodeE(ptr noundef nonnull %i.m) ; 4 uses
   %i.u = load ptr, ptr %i.j, align 8, !tbaa !490  ; 2 uses
-  store ptr null, ptr %i.j, align 8, !tbaa !490
   store ptr %i.u, ptr %i.t, align 8, !tbaa !490
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store ptr %i.t, ptr %i.v, align 8, !tbaa !493

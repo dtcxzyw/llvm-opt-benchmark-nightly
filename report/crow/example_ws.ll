@@ -205,29 +205,26 @@ bb.a:
   %22 = alloca %"class.crow::logger", align 8     ; 8 uses
   %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   store i32 %5, ptr %0, align 8, !tbaa !1084
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.d = add i32 %5, -1                           ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i32 %i.d, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i: ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 16, i1 false)
-  br label %bb.b
+  br i1 %.not.i.i.i.i, label %bb.b, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.a
   %i.e = zext i32 %i.d to i64                     ; 2 uses
   %i.f = shl nuw nsw i64 %i.e, 2                  ; 3 uses
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #43 ; 4 uses
-  store ptr %i.g, ptr %i.c, align 8, !tbaa !386
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.e
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.g, i8 0, i64 %i.f, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.g, i64 %i.f
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.preheader.i.i.i.i.i, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.h, %.lr.ph.preheader.i.i.i.i.i ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ]
+bb.b:                                             ; preds = %bb.a, %.lr.ph.preheader.i.i.i.i.i
+  %.sink = phi ptr [ %i.g, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  %.sink.i = phi ptr [ %i.h, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  store ptr %.sink, ptr %i.c, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %.sink.i, ptr %i.j, align 8, !tbaa !387
@@ -630,29 +627,26 @@ bb.a:
   %24 = alloca %"class.crow::logger", align 8     ; 8 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   store i32 %5, ptr %0, align 8, !tbaa !1119
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = add i32 %5, -1                           ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i32 %i.c, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i: ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 16, i1 false)
-  br label %bb.b
+  br i1 %.not.i.i.i.i, label %bb.b, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.a
   %i.d = zext i32 %i.c to i64                     ; 2 uses
   %i.e = shl nuw nsw i64 %i.d, 2                  ; 3 uses
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #43 ; 4 uses
-  store ptr %i.f, ptr %i.b, align 8, !tbaa !386
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.d
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.f, i8 0, i64 %i.e, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.f, i64 %i.e
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.preheader.i.i.i.i.i, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.g, %.lr.ph.preheader.i.i.i.i.i ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt6atomicIjESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ]
+bb.b:                                             ; preds = %bb.a, %.lr.ph.preheader.i.i.i.i.i
+  %.sink = phi ptr [ %i.f, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  %.sink.i = phi ptr [ %i.g, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %bb.a ]
+  store ptr %.sink, ptr %i.b, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %.sink.i, ptr %i.i, align 8, !tbaa !387
@@ -1055,7 +1049,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.i = getelementptr inbounds i8, ptr null, i64 %i.g ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  store i64 0, ptr %2, align 8
   store ptr %i.i, ptr %i.j, align 8, !tbaa !323
   br label %bb.f
 
@@ -1458,7 +1452,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorImSaImE
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ad = getelementptr inbounds i8, ptr null, i64 %i.ab ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.y, align 8
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !1407
   br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i
 
@@ -1861,7 +1855,7 @@ bb.ex:                                            ; preds = %_ZNSt6vectorImSaImE
   %i.vg = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.vh = getelementptr inbounds i8, ptr null, i64 %i.vf ; 2 uses
   %i.vi = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vc, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.vc, align 8
   store ptr %i.vh, ptr %i.vi, align 8, !tbaa !1407
   br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i384
 
@@ -2264,7 +2258,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.l = getelementptr inbounds i8, ptr null, i64 %i.j ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.c, align 8
   store ptr %i.l, ptr %i.m, align 8, !tbaa !1407
   br label %_ZNSt6vectorImSaImEEC2ERKS1_.exit.i
 

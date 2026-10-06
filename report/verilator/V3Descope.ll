@@ -202,7 +202,7 @@ _ZN16VSelfPointerTextC2ENS_5EmptyE.exit.thread.i.i.i.i.i.i: ; preds = %bb.a
   br label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   %i.m = load i8, ptr @__libc_single_threaded, align 1, !tbaa !22
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i8 %i.m, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZN16VSelfPointerTextC2ENS_5EmptyE.exit.i.i.i.i.i.i, label %.thread.i.i.i.i.i
@@ -210,8 +210,7 @@ bb.b:                                             ; preds = %bb.a
 .thread.i.i.i.i.i:                                ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.o = load i32, ptr %i.l, align 4, !tbaa !24
-  %i.p = add nsw i32 %i.o, 1                      ; 2 uses
-  store i32 %i.p, ptr %i.l, align 4, !tbaa !24
+  %i.p = add nsw i32 %i.o, 1
   store ptr %i.i, ptr %i.h, align 8, !tbaa !123
   store ptr %i.j, ptr %i.n, align 8, !tbaa !124
   br label %bb.d

@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 12 uses
   %15 = alloca %"class.xgboost::common::BlockedSpace2d", align 8 ; 10 uses
   %16 = alloca %class.anon.593, align 8           ; 5 uses
-  %17 = alloca %"class.std::vector.374", align 8  ; 14 uses
+  %17 = alloca %"class.std::vector.374", align 8  ; 13 uses
   %18 = alloca %"struct.xgboost::tree::TreeEvaluator::SplitEvaluator", align 8 ; 11 uses
   %19 = alloca %class.anon.594, align 8           ; 12 uses
   store i64 %1, ptr %7, align 8
@@ -608,11 +608,7 @@ bb.am:                                            ; preds = %bb.al
 _ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.al
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false)
   %.not.i.i.i.i89 = icmp eq i64 %i.ej, 0
-  br i1 %.not.i.i.i.i89, label %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i90
-
-_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  store i64 0, ptr %17, align 8
-  br label %bb.an
+  br i1 %.not.i.i.i.i89, label %bb.an, label %.lr.ph.preheader.i.i.i.i.i90
 
 .lr.ph.preheader.i.i.i.i.i90:                     ; preds = %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.el = mul i64 %i.eh, %i.ec                    ; 3 uses
@@ -628,11 +624,11 @@ _ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thre
   %.pre179 = load ptr, ptr %6, align 8, !tbaa !379
   br label %bb.an
 
-bb.an:                                            ; preds = %.noexc95, %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i
-  %i.eo = phi ptr [ %i.ee, %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %.pre179, %.noexc95 ] ; 2 uses
-  %i.ep = phi ptr [ %i.ed, %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %.pre178, %.noexc95 ] ; 2 uses
-  %.sink.i92 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %i.en, %.noexc95 ]
-  %.0.lcssa.i.i.i.i.i93 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost4tree16MultiExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %scevgep.i.i.i.i.i91, %.noexc95 ]
+bb.an:                                            ; preds = %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc95
+  %i.eo = phi ptr [ %.pre179, %.noexc95 ], [ %i.ee, %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 2 uses
+  %i.ep = phi ptr [ %.pre178, %.noexc95 ], [ %i.ed, %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 2 uses
+  %.sink.i92 = phi ptr [ %i.en, %.noexc95 ], [ null, %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %.0.lcssa.i.i.i.i.i93 = phi ptr [ %scevgep.i.i.i.i.i91, %.noexc95 ], [ null, %_ZNSt6vectorIN7xgboost4tree16MultiExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.eq = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   store ptr %.sink.i92, ptr %i.er, align 8, !tbaa !357
@@ -1035,7 +1031,7 @@ bb.l:                                             ; preds = %_ZN7xgboost4tree18I
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.au = getelementptr inbounds i8, ptr null, i64 %i.x ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.as, align 8
   store ptr %i.au, ptr %i.av, align 8, !tbaa !347
   br label %bb.q
 
@@ -1438,7 +1434,7 @@ bb.a:
   %9 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %10 = alloca %"class.xgboost::common::BlockedSpace2d", align 8 ; 10 uses
   %11 = alloca %class.anon.834, align 8           ; 5 uses
-  %12 = alloca %"class.std::vector.807", align 8  ; 15 uses
+  %12 = alloca %"class.std::vector.807", align 8  ; 14 uses
   %13 = alloca %"struct.xgboost::tree::TreeEvaluator::SplitEvaluator", align 8 ; 11 uses
   %14 = alloca %class.anon.835, align 8           ; 13 uses
   store i64 %3, ptr %6, align 8
@@ -1476,13 +1472,13 @@ _ZNSt6vectorISt10shared_ptrIN7xgboost16HostDeviceVectorIjEEESaIS4_EE17_S_check_i
 bb.b:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN7xgboost16HostDeviceVectorIjEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
   %i.o = shl nuw nsw i64 %i.k, 4                  ; 3 uses
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #38 ; 5 uses
-  store ptr %i.p, ptr %7, align 8, !tbaa !692
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.k
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.p, i8 0, i64 %i.o, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.p, i64 %i.o ; 2 uses
   %.pre = load ptr, ptr %i.e, align 8, !tbaa !457
   %.pre148 = load ptr, ptr %5, align 8, !tbaa !474 ; 2 uses
   %i.r = icmp eq ptr %.pre, %.pre148
+  store ptr %i.p, ptr %7, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   store ptr %i.q, ptr %i.t, align 8, !tbaa !693
@@ -1737,11 +1733,7 @@ bb.z:                                             ; preds = %bb.y
 _ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.y
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
   %.not.i.i.i.i69 = icmp eq i64 %i.dc, 0
-  br i1 %.not.i.i.i.i69, label %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i70
-
-_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  store i64 0, ptr %12, align 8
-  br label %bb.aa
+  br i1 %.not.i.i.i.i69, label %bb.aa, label %.lr.ph.preheader.i.i.i.i.i70
 
 .lr.ph.preheader.i.i.i.i.i70:                     ; preds = %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
   %i.de = mul i64 %i.da, %i.cv                    ; 3 uses
@@ -1757,11 +1749,11 @@ _ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread
   %.pre153 = load ptr, ptr %5, align 8, !tbaa !474
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.noexc75, %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i
-  %i.dh = phi ptr [ %i.cx, %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %.pre153, %.noexc75 ] ; 2 uses
-  %i.di = phi ptr [ %i.cw, %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %.pre152, %.noexc75 ] ; 2 uses
-  %.sink.i72 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %i.dg, %.noexc75 ]
-  %.0.lcssa.i.i.i.i.i73 = phi ptr [ null, %_ZNSt12_Vector_baseIN7xgboost4tree14CPUExpandEntryESaIS2_EEC2EmRKS3_.exit.thread.i ], [ %scevgep.i.i.i.i.i71, %.noexc75 ]
+bb.aa:                                            ; preds = %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %.noexc75
+  %i.dh = phi ptr [ %.pre153, %.noexc75 ], [ %i.cx, %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 2 uses
+  %i.di = phi ptr [ %.pre152, %.noexc75 ], [ %i.cw, %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 2 uses
+  %.sink.i72 = phi ptr [ %i.dg, %.noexc75 ], [ null, %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %.0.lcssa.i.i.i.i.i73 = phi ptr [ %scevgep.i.i.i.i.i71, %.noexc75 ], [ null, %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %i.dj = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   store ptr %.sink.i72, ptr %i.dk, align 8, !tbaa !458

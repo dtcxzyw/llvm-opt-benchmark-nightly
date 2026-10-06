@@ -205,18 +205,23 @@ bb.aj:                                            ; preds = %.lr.ph283
           to label %bb.an unwind label %.loopexit ; 0 uses
 
 bb.ak:                                            ; preds = %.lr.ph283, %.lr.ph283, %.lr.ph283
-  %i.eg = getelementptr i8, ptr %i.cz, i64 %.0282
+  %i.eg = getelementptr i8, ptr %i.cz, i64 %.0282 ; 2 uses
   %i.eh = getelementptr i8, ptr %i.eg, i64 -1
   %i.ei = load i8, ptr %i.eh, align 1, !tbaa !63
   %.not98 = icmp eq i8 %i.ei, 92
-  br i1 %.not98, label %.invoke418, label %bb.al
+  br i1 %.not98, label %7, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.ej = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.080287
   br label %.invoke419
 
-.invoke418:                                       ; preds = %.lr.ph283, %bb.ak
-  %i.ek = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 noundef signext %i.cy)
+7:                                                ; preds = %bb.ak
+  %8 = load i8, ptr %i.eg, align 1, !tbaa !63
+  br label %.invoke418
+
+.invoke418:                                       ; preds = %.lr.ph283, %7
+  %9 = phi i8 [ %8, %7 ], [ %i.cy, %.lr.ph283 ]
+  %i.ek = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 noundef signext %9)
           to label %bb.an unwind label %.loopexit ; 0 uses
 
 bb.am:                                            ; preds = %.lr.ph283

@@ -202,7 +202,9 @@ bb.e:                                             ; preds = %.thread, %bb.d
   br i1 %i.k, label %.split14, label %_ZN6google8protobuf5Arena6CreateINS0_8internal11MicroString8LargeRepEJEEEPT_PS1_DpOT0_.exit
 
 _ZN6google8protobuf5Arena6CreateINS0_8internal11MicroString8LargeRepEJEEEPT_PS1_DpOT0_.exit: ; preds = %.thread23
-  %i.l = tail call noundef ptr @_ZN6google8protobuf5Arena8AllocateEm(ptr noundef nonnull align 8 dereferenceable(168) %3, i64 noundef 16)
+  %i.l = tail call noundef ptr @_ZN6google8protobuf5Arena8AllocateEm(ptr noundef nonnull align 8 dereferenceable(168) %3, i64 noundef 16) ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  store i64 0, ptr %5, align 8
   br label %bb.g
 
 .split14:                                         ; preds = %.thread23
@@ -215,12 +217,12 @@ bb.f:                                             ; preds = %.split14
   br label %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit
 
 _ZN6google8protobuf8internal11MicroString7DestroyEv.exit: ; preds = %.split14, %bb.f
-  %i.o = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #11
+  %i.o = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #11 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.o, i8 0, i64 16, i1 false)
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit, %_ZN6google8protobuf5Arena6CreateINS0_8internal11MicroString8LargeRepEJEEEPT_PS1_DpOT0_.exit
-  %.sink = phi ptr [ %i.o, %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit ], [ %i.l, %_ZN6google8protobuf5Arena6CreateINS0_8internal11MicroString8LargeRepEJEEEPT_PS1_DpOT0_.exit ] ; 5 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sink, i8 0, i64 16, i1 false)
+  %.sink = phi ptr [ %i.l, %_ZN6google8protobuf5Arena6CreateINS0_8internal11MicroString8LargeRepEJEEEPT_PS1_DpOT0_.exit ], [ %i.o, %_ZN6google8protobuf8internal11MicroString7DestroyEv.exit ] ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sink, i64 12
   store i32 0, ptr %i.p, align 4, !tbaa !14
   %i.q = ptrtoint ptr %.sink to i64

@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   %.024 = phi i32 [ %i.bc, %.lr.ph.preheader ], [ %i.bh, %.lr.ph ] ; 3 uses
   %i.bd = urem i32 %.024, 10
   %i.be = trunc nuw nsw i32 %i.bd to i8
-  %i.bf = or disjoint i8 %i.be, 48                ; 2 uses
+  %i.bf = or disjoint i8 %i.be, 48
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.bg = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !68
@@ -214,7 +214,7 @@ bb.o:                                             ; preds = %bb.n
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.bi = icmp slt i32 %1, 0
-  br i1 %i.bi, label %bb.p, label %.lr.ph.i
+  br i1 %i.bi, label %bb.p, label %._crit_edge.thread
 
 bb.p:                                             ; preds = %._crit_edge
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -228,16 +228,21 @@ _ZN7CaDiCaL4File3putEc.exit15.thread:             ; preds = %bb.p
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !67
   %i.bo = add i64 %i.bn, 1
   store i64 %i.bo, ptr %i.bm, align 8, !tbaa !67
-  br label %.lr.ph.i
+  br label %._crit_edge.thread
 
-.lr.ph.i:                                         ; preds = %_ZN7CaDiCaL4File3putEc.exit15.thread, %._crit_edge
-  %2 = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
+._crit_edge.thread:                               ; preds = %_ZN7CaDiCaL4File3putEc.exit15.thread, %._crit_edge
+  %2 = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next ; 2 uses
+  %3 = load i8, ptr %2, align 1, !tbaa !68        ; 2 uses
+  %.not10.i = icmp eq i8 %3, 0
+  br i1 %.not10.i, label %_ZN7CaDiCaL4File3putEc.exit15, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %._crit_edge.thread
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.r, %.lr.ph.i
-  %i.br = phi i8 [ %i.bf, %.lr.ph.i ], [ %i.by, %bb.r ]
+  %i.br = phi i8 [ %3, %.lr.ph.i ], [ %i.by, %bb.r ]
   %.0611.i16 = phi ptr [ %2, %.lr.ph.i ], [ %i.bx, %bb.r ]
   %i.bs = sext i8 %i.br to i32
   %i.bt = load ptr, ptr %i.bp, align 8, !tbaa !66
@@ -254,8 +259,8 @@ bb.r:                                             ; preds = %bb.q
   %.not.i18 = icmp eq i8 %i.by, 0
   br i1 %.not.i18, label %_ZN7CaDiCaL4File3putEc.exit15, label %bb.q, !llvm.loop !3
 
-_ZN7CaDiCaL4File3putEc.exit15:                    ; preds = %bb.r, %bb.q, %bb.p
-  %.012 = phi i1 [ false, %bb.p ], [ %.not9.not.i17.not.not, %bb.q ], [ %.not9.not.i17.not.not, %bb.r ]
+_ZN7CaDiCaL4File3putEc.exit15:                    ; preds = %bb.r, %bb.q, %._crit_edge.thread, %bb.p
+  %.012 = phi i1 [ false, %bb.p ], [ true, %._crit_edge.thread ], [ %.not9.not.i17.not.not, %bb.q ], [ %.not9.not.i17.not.not, %bb.r ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %_ZN7CaDiCaL4File3putEc.exit
 

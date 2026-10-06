@@ -202,7 +202,7 @@ middle.block:                                     ; preds = %vector.body
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.s, %middle.block ], [ %i.s, %.lr.ph.i.i.i.i.i.i.i.i.i ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.ac, align 8, !tbaa !79
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.ae = load i32, ptr %i.k, align 4, !tbaa !36  ; 3 uses
   %i.af = sext i32 %i.ae to i64                   ; 2 uses
   %i.ag = icmp slt i32 %i.ae, 0
@@ -218,11 +218,7 @@ bb.f:                                             ; preds = %.loopexit
 _ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i: ; preds = %.loopexit
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i8 0, i64 24, i1 false)
   %.not.i.i.i.i9 = icmp eq i32 %i.ae, 0
-  br i1 %.not.i.i.i.i9, label %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.thread.i: ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, i8 0, i64 16, i1 false)
-  br label %bb.g
+  br i1 %.not.i.i.i.i9, label %bb.g, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
   %i.ah = shl nuw nsw i64 %i.af, 3                ; 3 uses
@@ -236,9 +232,9 @@ _ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.threa
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.ai, i64 %i.ah
   br label %bb.g
 
-bb.g:                                             ; preds = %.noexc11, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %i.aj, %.noexc11 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EEC2EmRKS5_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc11 ]
+bb.g:                                             ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i, %.noexc11
+  %.sink.i = phi ptr [ %i.aj, %.noexc11 ], [ null, %_ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc11 ], [ null, %_ZNSt6vectorIN5Ipopt8SmartPtrIKNS0_6MatrixEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %.sink.i, ptr %i.al, align 8, !tbaa !50

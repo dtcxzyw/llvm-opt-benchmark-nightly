@@ -205,7 +205,7 @@ bb.a:
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %15 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 19 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %17 = alloca %"class.std::vector.155", align 8  ; 23 uses
+  %17 = alloca %"class.std::vector.155", align 8  ; 22 uses
   %i.h = alloca i32, align 4                      ; 6 uses
   %18 = alloca %class.ThreadExceptionHelper, align 8 ; 7 uses
   %19 = alloca %"class.std::vector.19", align 8   ; 15 uses
@@ -608,11 +608,7 @@ bb.by:                                            ; preds = %bb.bx
 _ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i: ; preds = %bb.bx
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false)
   %.not.i.i.i.i213 = icmp eq i32 %i.ob, 0
-  br i1 %.not.i.i.i.i213, label %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i: ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
-  store i64 0, ptr %17, align 8
-  br label %bb.bz
+  br i1 %.not.i.i.i.i213, label %bb.bz, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
   %i.oe = shl nuw nsw i64 %i.oc, 3                ; 3 uses
@@ -626,9 +622,9 @@ _ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EE
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.of, i64 %i.oe
   br label %bb.bz
 
-bb.bz:                                            ; preds = %.noexc215, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.og, %.noexc215 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc215 ]
+bb.bz:                                            ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i, %.noexc215
+  %.sink.i = phi ptr [ %i.og, %.noexc215 ], [ null, %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc215 ], [ null, %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
   %i.oh = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.oi, align 8, !tbaa !260
@@ -1031,7 +1027,7 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 7 uses
   %i.h = alloca ptr, align 8                      ; 4 uses
   %i.i = alloca i64, align 8                      ; 5 uses
-  %11 = alloca %"class.std::vector.155", align 8  ; 23 uses
+  %11 = alloca %"class.std::vector.155", align 8  ; 22 uses
   %12 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 19 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -1095,24 +1091,21 @@ bb.d:                                             ; preds = %bb.c, %_ZN8LightGBM
 _ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i: ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i32 %.066, 0            ; 2 uses
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i: ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
-  store i64 0, ptr %11, align 8
-  br label %bb.e
+  br i1 %.not.i.i.i.i, label %bb.e, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
   %i.w = shl nuw nsw i64 %i.u, 3                  ; 3 uses
   %i.x = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #37 ; 4 uses
-  store ptr %i.x, ptr %11, align 8, !tbaa !256
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.u
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.x, i8 0, i64 %i.w, i1 false), !tbaa !259
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.x, i64 %i.w
   br label %bb.e
 
-bb.e:                                             ; preds = %.lr.ph.preheader.i.i.i.i.i, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %i.y, %.lr.ph.preheader.i.i.i.i.i ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EEC2EmRKS6_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ]
+bb.e:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i, %.lr.ph.preheader.i.i.i.i.i
+  %.sink = phi ptr [ %i.x, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  %.sink.i = phi ptr [ %i.y, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10unique_ptrIN8LightGBM9BinMapperESt14default_deleteIS2_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ]
+  store ptr %.sink, ptr %11, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.aa, align 8, !tbaa !260

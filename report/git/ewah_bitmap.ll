@@ -48,7 +48,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc i64 @add_empty_words(ptr nofree noundef captures(none) %0, i32 noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 3 uses
   %.val47 = load i64, ptr %i.b, align 8, !tbaa !18 ; 6 uses
   %i.c = trunc i64 %.val47 to i32
   %i.d = and i32 %i.c, 1
@@ -67,8 +67,7 @@ bb.c:                                             ; preds = %bb.b
   %.not.i = icmp ne i32 %1, 0
   %i.j = and i64 %.val47, -2
   %masksel.i = zext i1 %.not.i to i64
-  %storemerge.i = or disjoint i64 %i.j, %masksel.i ; 2 uses
-  store i64 %storemerge.i, ptr %i.b, align 8, !tbaa !18
+  %storemerge.i = or disjoint i64 %i.j, %masksel.i
   br label %buffer_push_rlw.exit._crit_edge
 
 bb.d:                                             ; preds = %bb.a
@@ -115,21 +114,18 @@ buffer_push_rlw.exit:                             ; preds = %.thread75, %st_mult
   store i64 0, ptr %i.y, align 8, !tbaa !18
   %i.z = load i64, ptr %i.k, align 8, !tbaa !19
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.z
-  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 -8 ; 5 uses
+  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 -8 ; 3 uses
   store ptr %i.ab, ptr %i.a, align 8, !tbaa !17
-  %.not43 = icmp eq i32 %1, 0
-  %.val48.pre = load i64, ptr %i.ab, align 8, !tbaa !18 ; 2 uses
-  br i1 %.not43, label %buffer_push_rlw.exit._crit_edge, label %3
-
-3:                                                ; preds = %buffer_push_rlw.exit
-  %storemerge.i53 = or i64 %.val48.pre, 1         ; 2 uses
-  store i64 %storemerge.i53, ptr %i.ab, align 8, !tbaa !18
+  %.not43 = icmp ne i32 %1, 0
+  %.val48.pre = load i64, ptr %i.ab, align 8, !tbaa !18
+  %storemerge.i53 = zext i1 %.not43 to i64
+  %spec.select114 = or i64 %.val48.pre, %storemerge.i53
   br label %buffer_push_rlw.exit._crit_edge
 
-buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exit, %bb.d, %3, %bb.c
-  %.val48 = phi i64 [ %storemerge.i, %bb.c ], [ %.val47, %bb.d ], [ %storemerge.i53, %3 ], [ %.val48.pre, %buffer_push_rlw.exit ] ; 2 uses
-  %4 = phi ptr [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.ab, %3 ], [ %i.ab, %buffer_push_rlw.exit ]
-  %.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ 1, %3 ], [ 1, %buffer_push_rlw.exit ] ; 3 uses
+buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exit, %bb.d, %bb.c
+  %.val48 = phi i64 [ %storemerge.i, %bb.c ], [ %.val47, %bb.d ], [ %spec.select114, %buffer_push_rlw.exit ] ; 2 uses
+  %3 = phi ptr [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.ab, %buffer_push_rlw.exit ]
+  %.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ 1, %buffer_push_rlw.exit ] ; 3 uses
   %i.ac = lshr i64 %.val48, 1
   %i.ad = and i64 %i.ac, 4294967295               ; 2 uses
   %i.ae = xor i64 %i.ad, 4294967295
@@ -139,7 +135,7 @@ buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exi
   %i.ai = shl nuw nsw i64 %i.ag, 1
   %i.aj = or i64 %i.ai, -8589934591
   %i.ak = and i64 %i.aj, %i.ah
-  store i64 %i.ak, ptr %4, align 8, !tbaa !18
+  store i64 %i.ak, ptr %3, align 8, !tbaa !18
   %i.al = sub nuw i64 %2, %i.af                   ; 4 uses
   %i.am = icmp ugt i64 %i.al, 4294967294
   br i1 %i.am, label %.lr.ph, label %._crit_edge

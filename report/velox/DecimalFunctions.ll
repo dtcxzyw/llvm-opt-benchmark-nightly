@@ -205,7 +205,8 @@ _ZZN3fmt3v116detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic
 
 iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %3, i8 0, i64 6, i1 false)
   %min.iters.check = icmp ult i64 %i.bw, 16
   %i.by = sub i64 %i.bv, %i.c
   %diff.check = icmp ugt i64 %i.by, -128

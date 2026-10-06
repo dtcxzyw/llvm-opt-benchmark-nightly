@@ -205,42 +205,37 @@ bb.wx:                                            ; preds = %bb.ww
   br i1 %i.bzu, label %bb.wy, label %._crit_edge153.i.a
 
 bb.wy:                                            ; preds = %bb.wx
-  %i.bzv = load i64, ptr %i.buq, align 8, !tbaa !189 ; 2 uses
+  %i.bzv = load i64, ptr %i.buq, align 8, !tbaa !189
   %i.bzw = icmp ugt i64 %i.byr, %i.bzv
-  br i1 %i.bzw, label %.thread.i137, label %._crit_edge153.i.a
+  %spec.select.i137 = select i1 %i.bzw, i32 15, i32 14
+  br label %._crit_edge153.i.a
 
 ._crit_edge153.i.a:                               ; preds = %bb.wy, %bb.wx, %bb.ww, %bb.wv, %bb.wu, %bb.wt, %bb.ws, %bb.wr, %bb.wq, %bb.wp, %bb.wo, %bb.wn, %bb.wm, %bb.wl
-  %.074125.lcssa.wide.ph.ph.i = phi i32 [ 1, %bb.wl ], [ 2, %bb.wm ], [ 3, %bb.wn ], [ 4, %bb.wo ], [ 5, %bb.wp ], [ 6, %bb.wq ], [ 7, %bb.wr ], [ 8, %bb.ws ], [ 9, %bb.wt ], [ 10, %bb.wu ], [ 11, %bb.wv ], [ 12, %bb.ww ], [ 13, %bb.wx ], [ 14, %bb.wy ] ; 2 uses
-  %.phi.trans.insert.i136 = zext nneg i32 %.074125.lcssa.wide.ph.ph.i to i64
+  %.074125.lcssa.wide.ph.ph.i = phi i32 [ %spec.select.i137, %bb.wy ], [ 1, %bb.wl ], [ 2, %bb.wm ], [ 3, %bb.wn ], [ 4, %bb.wo ], [ 5, %bb.wp ], [ 6, %bb.wq ], [ 7, %bb.wr ], [ 8, %bb.ws ], [ 9, %bb.wt ], [ 10, %bb.wu ], [ 11, %bb.wv ], [ 12, %bb.ww ], [ 13, %bb.wx ] ; 2 uses
+  %.phi.trans.insert.i136 = zext nneg i32 %.074125.lcssa.wide.ph.ph.i to i64 ; 3 uses
   %.phi.trans.insert154.i = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.phi.trans.insert.i136
   %.pre155.i = load i64, ptr %.phi.trans.insert154.i, align 8, !tbaa !189
-  br label %.thread.i137
+  %36 = icmp eq i64 %.pre155.i, 0
+  br i1 %36, label %._crit_edge156.i, label %bb.wz
 
-.thread.i137:                                     ; preds = %._crit_edge153.i.a, %bb.wy
-  %36 = phi i64 [ %.pre155.i, %._crit_edge153.i.a ], [ %i.bzv, %bb.wy ]
-  %37 = phi i32 [ %.074125.lcssa.wide.ph.ph.i, %._crit_edge153.i.a ], [ 15, %bb.wy ] ; 2 uses
-  %38 = icmp eq i64 %36, 0
-  br i1 %38, label %._crit_edge156.i, label %bb.wz
-
-._crit_edge156.i:                                 ; preds = %.thread.i137, %bb.wk
-  %i.bzx = phi i32 [ %37, %.thread.i137 ], [ 0, %bb.wk ]
+._crit_edge156.i:                                 ; preds = %bb.wk, %._crit_edge153.i.a
+  %i.bzx = phi i32 [ %.074125.lcssa.wide.ph.ph.i, %._crit_edge153.i.a ], [ 0, %bb.wk ]
   %i.bzy = zext nneg i32 %i.bzx to i64            ; 2 uses
   %i.bzz = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bzy
   %i.caa = load ptr, ptr %i.bzz, align 8, !tbaa !40
   call void @hi_sdsfree(ptr noundef %i.caa) #32
   br label %bb.xa
 
-bb.wz:                                            ; preds = %.thread.i137
-  %39 = zext nneg i32 %37 to i64                  ; 2 uses
+bb.wz:                                            ; preds = %._crit_edge153.i.a
   %i.cab = load ptr, ptr %i.q, align 16, !tbaa !40
   call void @hi_sdsfree(ptr noundef %i.cab) #32
-  %i.cac = shl nuw nsw i64 %39, 3                 ; 2 uses
+  %i.cac = shl nuw nsw i64 %.phi.trans.insert.i136, 3 ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.p, ptr noundef nonnull align 8 dereferenceable(1) %i.bty, i64 %i.cac, i1 false)
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.q, ptr noundef nonnull align 8 dereferenceable(1) %i.btz, i64 %i.cac, i1 false)
   br label %bb.xa
 
 bb.xa:                                            ; preds = %bb.wz, %._crit_edge156.i
-  %.pre-phi.i134 = phi i64 [ %39, %bb.wz ], [ %i.bzy, %._crit_edge156.i ] ; 2 uses
+  %.pre-phi.i134 = phi i64 [ %.phi.trans.insert.i136, %bb.wz ], [ %i.bzy, %._crit_edge156.i ] ; 2 uses
   %i.cad = load i64, ptr %i.byq, align 8, !tbaa !189
   %i.cae = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.pre-phi.i134
   store i64 %i.cad, ptr %i.cae, align 8, !tbaa !189

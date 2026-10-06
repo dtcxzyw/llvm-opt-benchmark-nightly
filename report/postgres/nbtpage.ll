@@ -204,7 +204,6 @@ bb.an:                                            ; preds = %BTreeTupleIsPosting
   %i.gr = zext nneg i16 %narrow to i64
   %wide.trip.count = zext nneg i16 %i.go to i64
   %i.gs = trunc nuw nsw i64 %indvars.iv145 to i32
-  %5 = insertelement <2 x i16> <i16 poison, i16 0>, i16 %i.fv, i64 0
   br label %bb.ao
 
 ._crit_edge:                                      ; preds = %.thread.thread
@@ -289,7 +288,7 @@ bb.at:                                            ; preds = %bb.as
   %i.hw = tail call ptr @palloc(i64 noundef %i.gr) #9 ; 3 uses
   store ptr %i.ga, ptr %i.hw, align 8
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
-  store <2 x i16> %5, ptr %i.hx, align 8
+  store i16 %i.fv, ptr %i.hx, align 8
   br label %bb.au
 
 bb.au:                                            ; preds = %._crit_edge154, %bb.at

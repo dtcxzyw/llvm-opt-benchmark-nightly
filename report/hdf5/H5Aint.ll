@@ -202,10 +202,8 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not88, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bz = call ptr @H5FL_blk_free(ptr noundef nonnull @H5_attr_buf_blk_free_list, ptr noundef nonnull %i.by) #10
-  %i.ca = load ptr, ptr %i.k, align 8, !tbaa !29  ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ca, i64 56
-  store ptr %i.bz, ptr %3, align 8, !tbaa !49
+  %i.bz = call ptr @H5FL_blk_free(ptr noundef nonnull @H5_attr_buf_blk_free_list, ptr noundef nonnull %i.by) #10 ; 0 uses
+  %i.ca = load ptr, ptr %i.k, align 8, !tbaa !29
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u

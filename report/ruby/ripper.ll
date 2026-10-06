@@ -205,17 +205,12 @@ bb.a:
   %.val.i.i = load ptr, ptr %i.b, align 8, !tbaa !124
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %. = select i1 %i.a, i32 40, i32 36             ; 2 uses
-  %i.d = tail call ptr @rb_ast_newnode(ptr noundef %.val.i.i, i32 noundef range(i32 0, 115) %., i64 noundef range(i64 32, 129) 56, i64 noundef 8) #29 ; 10 uses
+  %i.d = tail call ptr @rb_ast_newnode(ptr noundef %.val.i.i, i32 noundef range(i32 0, 115) %., i64 noundef range(i64 32, 129) 56, i64 noundef 8) #29 ; 9 uses
   tail call void @rb_node_init(ptr noundef %i.d, i32 noundef range(i32 0, 115) %.) #29
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull readonly align 4 dereferenceable(16) %6, i64 16, i1 false)
-  %7 = load i32, ptr %6, align 4, !tbaa !62
-  %8 = sext i32 %7 to i64
   %i.f = load i64, ptr %i.d, align 8, !tbaa !70
-  %i.g = and i64 %i.f, 32767                      ; 2 uses
-  %9 = shl nsw i64 %8, 15
-  %10 = or disjoint i64 %i.g, %9
-  store i64 %10, ptr %i.d, align 8, !tbaa !70
+  %i.g = and i64 %i.f, 32767
   %i.h = load i32, ptr %i.c, align 8, !tbaa !194  ; 2 uses
   %i.i = add nsw i32 %i.h, 1
   store i32 %i.i, ptr %i.c, align 8, !tbaa !194
@@ -618,11 +613,9 @@ bb.h:                                             ; preds = %bb.g
   %i.aa = shl nsw i64 %i.z, 1
   %i.ab = shl i64 %i.z, 4
   %i.ac = add i64 %i.ab, 24
-  %i.ad = tail call noalias nonnull ptr @ruby_xmalloc(i64 noundef %i.ac) #30 ; 6 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  store i64 %i.aa, ptr %1, align 8, !tbaa !22
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  store i64 0, ptr %i.ae, align 8, !tbaa !22
+  %i.ad = tail call noalias nonnull ptr @ruby_xmalloc(i64 noundef %i.ac) #30 ; 5 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
+  store i64 %i.aa, ptr %i.ae, align 8, !tbaa !22
   store ptr null, ptr %i.ad, align 8, !tbaa !339
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !348

@@ -205,8 +205,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #37 ; 4 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #37 ; 5 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !103
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store ptr %i.j, ptr %2, align 8, !tbaa !102
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.h ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.k, ptr %i.l, align 8, !tbaa !252
@@ -218,9 +220,10 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorIcSaIcEEC2ERKS1_.exit
 
 bb.e:                                             ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = getelementptr inbounds i8, ptr null, i64 %i.h ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  store i64 0, ptr %0, align 8
   store ptr %i.n, ptr %i.o, align 8, !tbaa !252
   br label %_ZNSt6vectorIcSaIcEEC2ERKS1_.exit
 
@@ -231,8 +234,8 @@ bb.f:                                             ; preds = %bb.c
 
 _ZNSt6vectorIcSaIcEEC2ERKS1_.exit:                ; preds = %bb.e, %bb.d, %bb.f
   %i.q = phi ptr [ %i.k, %bb.d ], [ %i.n, %bb.e ], [ %i.k, %bb.f ]
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.q, ptr %2, align 8, !tbaa !102
+  %4 = phi ptr [ %2, %bb.d ], [ %3, %bb.e ], [ %2, %bb.f ]
+  store ptr %i.q, ptr %4, align 8, !tbaa !102
   ret void
 }
 
@@ -635,7 +638,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.q = getelementptr inbounds i8, ptr null, i64 %i.o ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
+  store i64 0, ptr %i.i, align 8
   store ptr %i.q, ptr %i.r, align 8, !tbaa !133
   br label %_ZNSt6vectorIS_IiSaIiEESaIS1_EE16_Temporary_valueC2IJRKS1_EEEPS3_DpOT_.exit
 

@@ -205,13 +205,12 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.en, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread.i151, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i140
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread.i151: ; preds = %bb.ai
-  %i.eo = load i64, ptr %i.ee, align 8, !tbaa !300 ; 4 uses
+  %i.eo = load i64, ptr %i.ee, align 8, !tbaa !300 ; 3 uses
   %i.ep = icmp samesign ult i64 %i.eo, 16
   call void @llvm.assume(i1 %i.ep)
   %i.eq = add nuw nsw i64 %i.eo, 1                ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.el, ptr noundef nonnull align 8 dereferenceable(1) %i.ah, i64 %i.eq, i1 false)
-  %i.er = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store i64 %i.eo, ptr %i.er, align 8, !tbaa !300
+  %i.er = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.ah, ptr %10, align 8, !tbaa !217
   store i64 0, ptr %i.ee, align 8, !tbaa !300
   store i8 0, ptr %i.ah, align 8, !tbaa !254
@@ -614,14 +613,13 @@ _ZNSt12_Vector_baseIN6duckdb9PathSplitESaIS1_EE11_M_allocateEm.exit: ; preds = %
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; preds = %_ZNSt12_Vector_baseIN6duckdb9PathSplitESaIS1_EE11_M_allocateEm.exit
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !300  ; 4 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !300  ; 3 uses
   %i.y = icmp samesign ult i64 %i.x, 16
   call void @llvm.assume(i1 %i.y)
   %i.z = add nuw nsw i64 %i.x, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.s, ptr noundef nonnull align 8 dereferenceable(1) %i.u, i64 %i.z, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store i64 %i.x, ptr %i.ab, align 8, !tbaa !300
+  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.u, ptr %3, align 8, !tbaa !217
   store i64 0, ptr %i.aa, align 8, !tbaa !300
   store i8 0, ptr %i.u, align 8, !tbaa !254

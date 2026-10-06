@@ -205,9 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %VULKAN_INTERNAL_PushUniformData.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store i32 0, ptr %4, align 8
+  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 12 ; 2 uses
   store i32 0, ptr %i.x, align 4
   store ptr %i.w, ptr %i.k, align 8
@@ -281,9 +279,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %VULKAN_INTERNAL_PushUniformData.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store i32 0, ptr %4, align 8
+  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 12 ; 2 uses
   store i32 0, ptr %i.x, align 4
   store ptr %i.w, ptr %i.k, align 8
@@ -686,9 +682,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %VULKAN_INTERNAL_PushUniformData.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store i32 0, ptr %4, align 8
+  %i.w = tail call fastcc ptr @VULKAN_INTERNAL_AcquireUniformBufferFromPool(ptr noundef nonnull %0) ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 12 ; 2 uses
   store i32 0, ptr %i.x, align 4
   store ptr %i.w, ptr %i.k, align 8

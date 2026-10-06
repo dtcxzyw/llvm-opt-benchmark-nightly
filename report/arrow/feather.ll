@@ -204,7 +204,7 @@ define internal fastcc void @_ZN5arrow3ipc7feather12_GLOBAL__N_18ReaderV24ReadER
 bb.a:
   %4 = alloca %"class.arrow::Result.87", align 8  ; 13 uses
   %5 = alloca %"class.std::shared_ptr.91", align 16 ; 7 uses
-  %6 = alloca %"class.std::vector.295", align 8   ; 13 uses
+  %6 = alloca %"class.std::vector.295", align 8   ; 12 uses
   %7 = alloca %"class.arrow::Result.300", align 8 ; 12 uses
   %8 = alloca %"class.arrow::Result.307", align 8 ; 13 uses
   %9 = alloca %"class.std::shared_ptr.28", align 8 ; 4 uses
@@ -259,11 +259,7 @@ bb.f:                                             ; preds = %bb.e
 _ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %bb.e
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq i32 %i.m, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i
-
-_ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  store i64 0, ptr %6, align 8
-  br label %bb.g
+  br i1 %.not.i.i.i.i, label %bb.g, label %.lr.ph.preheader.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.p = shl nuw nsw i64 %i.n, 4                  ; 3 uses
@@ -277,9 +273,9 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.q, i64 %i.p
   br label %bb.g
 
-bb.g:                                             ; preds = %.noexc40, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.thread.i
-  %.sink.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.thread.i ], [ %i.r, %.noexc40 ]
-  %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EEC2EmRKS4_.exit.thread.i ], [ %scevgep.i.i.i.i.i, %.noexc40 ]
+bb.g:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.noexc40
+  %.sink.i = phi ptr [ %i.r, %.noexc40 ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.noexc40 ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   store ptr %.sink.i, ptr %i.t, align 8, !tbaa !250

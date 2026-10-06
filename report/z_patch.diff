@@ -1,0 +1,1237 @@
+diff --git a/llvm/lib/Analysis/PHITransAddr.cpp b/llvm/lib/Analysis/PHITransAddr.cpp
+index 5c5cd54b959d1..2b2850c53617d 100644
+--- a/llvm/lib/Analysis/PHITransAddr.cpp
++++ b/llvm/lib/Analysis/PHITransAddr.cpp
+@@ -26,6 +26,29 @@ static cl::opt<bool> EnableAddPhiTranslation(
+     "gvn-add-phi-translation", cl::init(false), cl::Hidden,
+     cl::desc("Enable phi-translation of add instructions"));
+ 
++/// Return true if \p Avail, an existing instruction computing the translated
++/// \p Orig, has no poison-generating flags \p Orig lacks. Otherwise \p Avail
++/// may be poison where \p Orig is not, and cannot be used in its place.
++static bool hasNoExtraPoisonFlags(const Instruction *Avail,
++                                  const Instruction *Orig) {
++  if (!Avail->hasPoisonGeneratingFlags())
++    return true;
++  if (isa<FPMathOperator>(Avail))
++    return false;
++  if (isa<PossiblyNonNegInst>(Avail))
++    return Orig->hasNonNeg();
++  if (auto *Trunc = dyn_cast<TruncInst>(Avail)) {
++    auto *OrigTrunc = cast<TruncInst>(Orig);
++    return (!Trunc->hasNoUnsignedWrap() || OrigTrunc->hasNoUnsignedWrap()) &&
++           (!Trunc->hasNoSignedWrap() || OrigTrunc->hasNoSignedWrap());
++  }
++  if (auto *GEP = dyn_cast<GetElementPtrInst>(Avail)) {
++    GEPNoWrapFlags NW = GEP->getNoWrapFlags();
++    return (NW & cast<GetElementPtrInst>(Orig)->getNoWrapFlags()) == NW;
++  }
++  return false;
++}
++
+ static bool canPHITrans(Instruction *Inst) {
+   if (isa<PHINode>(Inst) || isa<GetElementPtrInst>(Inst) || isa<CastInst>(Inst))
+     return true;
+@@ -208,6 +231,7 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+         if (CastInst *CastI = dyn_cast<CastInst>(U))
+           if (CastI->getOpcode() == Cast->getOpcode() &&
+               CastI->getType() == Cast->getType() &&
++              hasNoExtraPoisonFlags(CastI, Cast) &&
+               (!DT || DT->dominates(CastI->getParent(), PredBB)))
+             return CastI;
+       }
+@@ -251,6 +275,7 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+             GEPI->getSourceElementType() == GEP->getSourceElementType() &&
+             GEPI->getNumOperands() == GEPOps.size() &&
+             GEPI->getParent()->getParent() == CurBB->getParent() &&
++            hasNoExtraPoisonFlags(GEPI, GEP) &&
+             (!DT || DT->dominates(GEPI->getParent(), PredBB))) {
+           if (std::equal(GEPOps.begin(), GEPOps.end(), GEPI->op_begin()))
+             return GEPI;
+@@ -303,6 +328,8 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+       if (BinaryOperator *BO = dyn_cast<BinaryOperator>(U))
+         if (BO->getOpcode() == Instruction::Add &&
+             BO->getOperand(0) == LHS && BO->getOperand(1) == RHS &&
++            (!BO->hasNoSignedWrap() || isNSW) &&
++            (!BO->hasNoUnsignedWrap() || isNUW) &&
+             BO->getParent()->getParent() == CurBB->getParent() &&
+             (!DT || DT->dominates(BO->getParent(), PredBB)))
+           return BO;
+diff --git a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+index 62245d05a6d63..d51cfc2afd843 100644
+--- a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+@@ -1093,18 +1093,33 @@ struct DSEState {
+   /// MemoryLocation during execution of the containing function.
+   bool isGuaranteedLoopInvariant(const Value *Ptr);
+ 
++  /// Returns true if a killing location translated through the phis of a
++  /// block to its predecessor \p TransPred, which branches unconditionally to
++  /// it, is written by the killing def on all paths from \p BB to the killing
++  /// def. This is the case if all paths from \p BB pass through \p TransPred
++  /// and, if \p TransPred is in a cycle (with the phi block), \p BB is
++  /// \p TransPred. Otherwise paths from \p BB could enter the phi block from
++  /// another predecessor first.
++  bool isInTranslationRegion(const BasicBlock *BB,
++                             const BasicBlock *TransPred) const {
++    return BB == TransPred ||
++           (!CI.getCycle(TransPred) && PDT.dominates(TransPred, BB));
++  }
++
+   // Find a MemoryDef writing to \p KillingLoc and dominating \p StartAccess,
+   // with no read access between them or on any other path to a function exit
+   // block if \p KillingLoc is not accessible after the function returns. If
+   // there is no such MemoryDef, return std::nullopt. The returned value may not
+   // (completely) overwrite \p KillingLoc. Currently we bail out when we
+-  // encounter an aliasing MemoryUse (read).
++  // encounter an aliasing MemoryUse (read). If \p KillingLoc has been
++  // translated through phis to \p TransPred, only accesses in its translation
++  // region are considered.
+   std::optional<MemoryAccess *>
+   getDomMemoryDef(MemoryDef *KillingDef, MemoryAccess *StartAccess,
+                   const MemoryLocation &KillingLoc, const Value *KillingUndObj,
+                   unsigned &ScanLimit, unsigned &WalkerStepLimit,
+                   bool IsMemTerm, unsigned &PartialLimit,
+-                  bool IsInitializesAttrMemLoc);
++                  bool IsInitializesAttrMemLoc, BasicBlock *TransPred);
+ 
+   /// Delete dead memory defs and recursively add their operands to ToRemove if
+   /// they became dead.
+@@ -1645,11 +1660,13 @@ bool DSEState::isGuaranteedLoopInvariant(const Value *Ptr) {
+   return true;
+ }
+ 
+-std::optional<MemoryAccess *> DSEState::getDomMemoryDef(
+-    MemoryDef *KillingDef, MemoryAccess *StartAccess,
+-    const MemoryLocation &KillingLoc, const Value *KillingUndObj,
+-    unsigned &ScanLimit, unsigned &WalkerStepLimit, bool IsMemTerm,
+-    unsigned &PartialLimit, bool IsInitializesAttrMemLoc) {
++std::optional<MemoryAccess *>
++DSEState::getDomMemoryDef(MemoryDef *KillingDef, MemoryAccess *StartAccess,
++                          const MemoryLocation &KillingLoc,
++                          const Value *KillingUndObj, unsigned &ScanLimit,
++                          unsigned &WalkerStepLimit, bool IsMemTerm,
++                          unsigned &PartialLimit, bool IsInitializesAttrMemLoc,
++                          BasicBlock *TransPred) {
+   if (ScanLimit == 0 || WalkerStepLimit == 0) {
+     LLVM_DEBUG(dbgs() << "\n    ...  hit scan limit\n");
+     return std::nullopt;
+@@ -1688,6 +1705,11 @@ std::optional<MemoryAccess *> DSEState::getDomMemoryDef(
+       return std::nullopt;
+     }
+ 
++    if (TransPred && !isInTranslationRegion(Current->getBlock(), TransPred)) {
++      LLVM_DEBUG(dbgs() << "   ...  outside translation region\n");
++      return std::nullopt;
++    }
++
+     // Cost of a step. Accesses in the same block are more likely to be valid
+     // candidates for elimination, hence consider them cheaper.
+     unsigned StepCost = KillingDef->getBlock() == Current->getBlock()
+@@ -2615,26 +2637,34 @@ DSEState::eliminateDeadDefs(const MemoryLocationWrapper &KillingLocWrapper) {
+   unsigned WalkerStepLimit = MemorySSAUpwardsStepLimit;
+   unsigned PartialLimit = MemorySSAPartialStoreLimit;
+   // Worklist of MemoryAccesses that may be killed by
+-  // "KillingLocWrapper.MemDef".
+-  SmallSetVector<MemoryAccess *, 8> ToCheck;
++  // "KillingLocWrapper.MemDef", together with the pointer of the killing
++  // location to check them against and, if the pointer has been translated
++  // through phis, the predecessor it has been translated to.
++  SmallSetVector<std::tuple<MemoryAccess *, const Value *, BasicBlock *>, 8>
++      ToCheck;
+   // Track MemoryAccesses that have been deleted in the loop below, so we can
+   // skip them. Don't use SkipStores for this, which may contain reused
+   // MemoryAccess addresses.
+   SmallPtrSet<MemoryAccess *, 8> Deleted;
+   [[maybe_unused]] unsigned OrigNumSkipStores = SkipStores.size();
+-  ToCheck.insert(KillingLocWrapper.MemDef->getDefiningAccess());
++  bool IsMemTerm = isMemTerminatorInst(KillingLocWrapper.DefInst);
++  ToCheck.insert({KillingLocWrapper.MemDef->getDefiningAccess(),
++                  KillingLocWrapper.MemLoc.Ptr, nullptr});
+ 
+   // Check if MemoryAccesses in the worklist are killed by
+   // "KillingLocWrapper.MemDef".
+   for (unsigned I = 0; I < ToCheck.size(); I++) {
+-    MemoryAccess *Current = ToCheck[I];
++    auto [Current, KillingPtr, TransPred] = ToCheck[I];
+     if (Deleted.contains(Current))
+       continue;
++    MemoryLocation KillingLoc =
++        KillingLocWrapper.MemLoc.getWithNewPtr(KillingPtr);
++    const Value *KillingUndObj = TransPred ? getUnderlyingObject(KillingPtr)
++                                           : KillingLocWrapper.UnderlyingObject;
+     std::optional<MemoryAccess *> MaybeDeadAccess = getDomMemoryDef(
+-        KillingLocWrapper.MemDef, Current, KillingLocWrapper.MemLoc,
+-        KillingLocWrapper.UnderlyingObject, ScanLimit, WalkerStepLimit,
+-        isMemTerminatorInst(KillingLocWrapper.DefInst), PartialLimit,
+-        KillingLocWrapper.DefByInitializesAttr);
++        KillingLocWrapper.MemDef, Current, KillingLoc, KillingUndObj, ScanLimit,
++        WalkerStepLimit, IsMemTerm, PartialLimit,
++        KillingLocWrapper.DefByInitializesAttr, TransPred);
+ 
+     if (!MaybeDeadAccess) {
+       LLVM_DEBUG(dbgs() << "  finished walk\n");
+@@ -2642,18 +2672,49 @@ DSEState::eliminateDeadDefs(const MemoryLocationWrapper &KillingLocWrapper) {
+     }
+     MemoryAccess *DeadAccess = *MaybeDeadAccess;
+     LLVM_DEBUG(dbgs() << " Checking if we can kill " << *DeadAccess);
+-    if (isa<MemoryPhi>(DeadAccess)) {
++    if (auto *Phi = dyn_cast<MemoryPhi>(DeadAccess)) {
+       LLVM_DEBUG(dbgs() << "\n  ... adding incoming values to worklist\n");
+-      for (Value *V : cast<MemoryPhi>(DeadAccess)->incoming_values()) {
+-        MemoryAccess *IncomingAccess = cast<MemoryAccess>(V);
++      BasicBlock *PhiBlock = Phi->getBlock();
++      // If the killing pointer depends on phis in PhiBlock, translate it to
++      // the predecessors. The phis must not change before the killing def
++      // executes, i.e. PhiBlock must not be in a cycle or must contain the
++      // killing def (which is only possible before translating). A translated
++      // pointer can be translated again, as PhiBlock is in the translation
++      // region of TransPred and Pred only branches to PhiBlock, so the
++      // translation region of Pred is contained in the one of TransPred.
++      // Memory terminators only kill accesses to their own underlying object,
++      // so there is no point in translating them.
++      PHITransAddr Addr(const_cast<Value *>(KillingPtr), DL, nullptr);
++      bool Translate = !IsMemTerm &&
++                       (!CI.getCycle(PhiBlock) ||
++                        PhiBlock == KillingLocWrapper.MemDef->getBlock()) &&
++                       Addr.needsPHITranslationFromBlock(PhiBlock) &&
++                       Addr.isPotentiallyPHITranslatable();
++      for (auto [Pred, IncomingVal] :
++           zip_equal(Phi->blocks(), Phi->incoming_values())) {
++        auto *IncomingAccess = cast<MemoryAccess>(IncomingVal);
+         BasicBlock *IncomingBlock = IncomingAccess->getBlock();
+-        BasicBlock *PhiBlock = DeadAccess->getBlock();
+ 
+         // We only consider incoming MemoryAccesses that come before the
+         // MemoryPhi. Otherwise we could discover candidates that do not
+         // strictly dominate our starting def.
+-        if (PostOrderNumbers[IncomingBlock] > PostOrderNumbers[PhiBlock])
+-          ToCheck.insert(IncomingAccess);
++        if (PostOrderNumbers[IncomingBlock] <= PostOrderNumbers[PhiBlock])
++          continue;
++
++        // The translated pointer is only written by the killing def on paths
++        // entering PhiBlock from Pred, so only candidates in the translation
++        // region of Pred are considered for it (see getDomMemoryDef). If it
++        // does not include IncomingBlock, keep the untranslated pointer.
++        if (Translate && Pred->getSingleSuccessor() == PhiBlock &&
++            isInTranslationRegion(IncomingBlock, Pred)) {
++          PHITransAddr PredAddr = Addr;
++          if (PredAddr.translateValue(PhiBlock, Pred, &DT,
++                                      /*MustDominate=*/true)) {
++            ToCheck.insert({IncomingAccess, PredAddr.getAddr(), Pred});
++            continue;
++          }
++        }
++        ToCheck.insert({IncomingAccess, KillingPtr, TransPred});
+       }
+       continue;
+     }
+@@ -2672,12 +2733,13 @@ DSEState::eliminateDeadDefs(const MemoryLocationWrapper &KillingLocWrapper) {
+     MemoryLocationWrapper &DeadLocWrapper =
+         DeadDefWrapper.DefinedLocations.front();
+     LLVM_DEBUG(dbgs() << " (" << *DeadLocWrapper.DefInst << ")\n");
+-    ToCheck.insert(DeadLocWrapper.MemDef->getDefiningAccess());
++    ToCheck.insert(
++        {DeadLocWrapper.MemDef->getDefiningAccess(), KillingPtr, TransPred});
+     NumGetDomMemoryDefPassed++;
+ 
+     if (!DebugCounter::shouldExecute(MemorySSACounter))
+       continue;
+-    if (isMemTerminatorInst(KillingLocWrapper.DefInst)) {
++    if (IsMemTerm) {
+       if (KillingLocWrapper.UnderlyingObject != DeadLocWrapper.UnderlyingObject)
+         continue;
+       LLVM_DEBUG(dbgs() << "DSE: Remove Dead Store:\n  DEAD: "
+@@ -2690,17 +2752,19 @@ DSEState::eliminateDeadDefs(const MemoryLocationWrapper &KillingLocWrapper) {
+       // Check if DeadI overwrites KillingI.
+       int64_t KillingOffset = 0;
+       int64_t DeadOffset = 0;
+-      OverwriteResult OR =
+-          isOverwrite(KillingLocWrapper.DefInst, DeadLocWrapper.DefInst,
+-                      KillingLocWrapper.MemLoc, DeadLocWrapper.MemLoc,
+-                      KillingOffset, DeadOffset);
++      OverwriteResult OR = isOverwrite(
++          KillingLocWrapper.DefInst, DeadLocWrapper.DefInst, KillingLoc,
++          DeadLocWrapper.MemLoc, KillingOffset, DeadOffset);
+       if (OR == OW_MaybePartial) {
+         auto &IOL = IOLs[DeadLocWrapper.DefInst->getParent()];
+-        OR = isPartialOverwrite(KillingLocWrapper.MemLoc, DeadLocWrapper.MemLoc,
+-                                KillingOffset, DeadOffset,
+-                                DeadLocWrapper.DefInst, IOL);
++        OR =
++            isPartialOverwrite(KillingLoc, DeadLocWrapper.MemLoc, KillingOffset,
++                               DeadOffset, DeadLocWrapper.DefInst, IOL);
+       }
+-      if (EnablePartialStoreMerging && OR == OW_PartialEarlierWithFullLater) {
++      // Merging removes the killing store, which a translated location does
++      // not justify.
++      if (EnablePartialStoreMerging && !TransPred &&
++          OR == OW_PartialEarlierWithFullLater) {
+         auto *DeadSI = dyn_cast<StoreInst>(DeadLocWrapper.DefInst);
+         auto *KillingSI = dyn_cast<StoreInst>(KillingLocWrapper.DefInst);
+         // We are re-using tryToMergePartialOverlappingStores, which requires
+diff --git a/llvm/test/Transforms/DeadStoreElimination/phi-translation.ll b/llvm/test/Transforms/DeadStoreElimination/phi-translation.ll
+index 65e6332b1e47d..1187ae0e11c07 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/phi-translation.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/phi-translation.ll
+@@ -263,5 +263,843 @@ exit:
+ }
+ 
+ 
++; The stores in %then and %else can be eliminated by translating %p through
++; the phi, even though %a and %b are visible to the caller.
++define void @memoryphi_translate_visible(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_visible(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A:%.*]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %then, label %else
++
++then:
++  store i8 0, ptr %a
++  br label %end
++
++else:
++  store i8 9, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  store i8 10, ptr %p
++  ret void
++}
++
++; Same as @memoryphi_translate_visible, but translating a GEP of the phi.
++define void @memoryphi_translate_gep(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_gep(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A:%.*]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    [[GEP_P:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
++; CHECK-NEXT:    store i32 10, ptr [[GEP_P]], align 4
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %then, label %else
++
++then:
++  %gep.a = getelementptr inbounds i8, ptr %a, i64 4
++  store i32 0, ptr %gep.a
++  br label %end
++
++else:
++  %gep.b = getelementptr inbounds i8, ptr %b, i64 4
++  store i32 9, ptr %gep.b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  %gep.p = getelementptr inbounds i8, ptr %p, i64 4
++  store i32 10, ptr %gep.p
++  ret void
++}
++
++; The store in %pre can be eliminated: all paths from it go through %then.
++define void @memoryphi_translate_postdom_pred(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_postdom_pred(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[PRE:%.*]], label [[ELSE:%.*]]
++; CHECK:       pre:
++; CHECK-NEXT:    br label [[THEN:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A:%.*]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %pre, label %else
++
++pre:
++  store i8 0, ptr %a
++  br label %then
++
++then:
++  br label %end
++
++else:
++  store i8 9, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  store i8 10, ptr %p
++  ret void
++}
++
++; The store in %entry is not post-dominated by %then, so the killing pointer is
++; not translated to %then. It can still be eliminated using the untranslated
++; pointer, which must alias %a.
++define void @memoryphi_translate_untranslated_fallback(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_untranslated_fallback(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    store i8 9, ptr [[B:%.*]], align 1
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A:%.*]], [[THEN]] ], [ [[A]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i8 0, ptr %a
++  br i1 %c, label %then, label %else
++
++then:
++  br label %end
++
++else:
++  store i8 9, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %a, %else ]
++  store i8 10, ptr %p
++  ret void
++}
++
++; The store to %a in %entry cannot be eliminated: %entry does not branch
++; unconditionally to %end and on the path through %else, %p is %b and %a is
++; read afterwards.
++define i8 @memoryphi_translate_other_path_reads(i1 %c, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_other_path_reads(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca i8, align 1
++; CHECK-NEXT:    store i8 0, ptr [[A]], align 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[END:%.*]], label [[ELSE:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[A]], align 1
++; CHECK-NEXT:    ret i8 [[L]]
++;
++entry:
++  %a = alloca i8
++  store i8 0, ptr %a
++  br i1 %c, label %end, label %else
++
++else:
++  store i8 5, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %entry ], [ %b, %else ]
++  store i8 1, ptr %p
++  %l = load i8, ptr %a
++  ret i8 %l
++}
++
++; The store to %a in %entry cannot be eliminated: %entry does not branch
++; unconditionally to %end and %a is visible to the caller and not overwritten on
++; the path through %else.
++define void @memoryphi_translate_other_path_visible(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_other_path_visible(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i8 0, ptr [[A:%.*]], align 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[END:%.*]], label [[ELSE:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i8 0, ptr %a
++  br i1 %c, label %end, label %else
++
++else:
++  store i8 5, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %entry ], [ %b, %else ]
++  store i8 1, ptr %p
++  ret void
++}
++
++; The store to %a in %entry cannot be eliminated: it is reached by translating
++; through %then, but also reaches %end through %else.
++define void @memoryphi_translate_not_postdominated(i1 %c, ptr noalias %a, ptr noalias %b, ptr noalias %x) {
++; CHECK-LABEL: @memoryphi_translate_not_postdominated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i8 0, ptr [[A:%.*]], align 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    store i8 3, ptr [[X:%.*]], align 1
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i8 0, ptr %a
++  br i1 %c, label %then, label %else
++
++then:
++  store i8 3, ptr %x
++  br label %end
++
++else:
++  store i8 5, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  store i8 1, ptr %p
++  ret void
++}
++
++; The store to %a in %entry cannot be eliminated: the memory state incoming
++; from %bb1 is defined in %entry, but %p is %b on that edge.
++define i8 @memoryphi_translate_incoming_block_differs(i1 %c, i1 %d, ptr noalias %b, ptr noalias %x) {
++; CHECK-LABEL: @memoryphi_translate_incoming_block_differs(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca i8, align 1
++; CHECK-NEXT:    store i8 0, ptr [[A]], align 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[END:%.*]], label [[SPLIT:%.*]]
++; CHECK:       split:
++; CHECK-NEXT:    br i1 [[D:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
++; CHECK:       bb1:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       bb2:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[BB1]] ], [ [[X:%.*]], [[BB2]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[A]], align 1
++; CHECK-NEXT:    ret i8 [[L]]
++;
++entry:
++  %a = alloca i8
++  store i8 0, ptr %a
++  br i1 %c, label %end, label %split
++
++split:
++  br i1 %d, label %bb1, label %bb2
++
++bb1:
++  br label %end
++
++bb2:
++  store i8 5, ptr %x
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %entry ], [ %b, %bb1 ], [ %x, %bb2 ]
++  store i8 1, ptr %p
++  %l = load i8, ptr %a
++  ret i8 %l
++}
++
++; The store to %a in %entry cannot be eliminated: %p changes on the backedge,
++; so the killing store may first execute with %p == %b and the following load
++; reads the stored value.
++define void @memoryphi_translate_loop_header_kill_in_body(ptr noalias %b, i1 %c, i1 %ec) {
++; CHECK-LABEL: @memoryphi_translate_loop_header_kill_in_body(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca i8, align 1
++; CHECK-NEXT:    store i8 0, ptr [[A]], align 1
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[LATCH:%.*]] ]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[KILL:%.*]], label [[LATCH]]
++; CHECK:       kill:
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[A]], align 1
++; CHECK-NEXT:    call void @use.i8(i8 [[L]])
++; CHECK-NEXT:    br label [[LATCH]]
++; CHECK:       latch:
++; CHECK-NEXT:    br i1 [[EC:%.*]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = alloca i8
++  store i8 0, ptr %a
++  br label %loop
++
++loop:
++  %p = phi ptr [ %a, %entry ], [ %b, %latch ]
++  br i1 %c, label %kill, label %latch
++
++kill:
++  store i8 1, ptr %p
++  %l = load i8, ptr %a
++  call void @use.i8(i8 %l)
++  br label %latch
++
++latch:
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The store to %a in %entry cannot be eliminated: the killing store after the
++; loop may execute with %p == %b.
++define i8 @memoryphi_translate_loop_header_kill_in_exit(ptr noalias %b, ptr noalias %x, i1 %c) {
++; CHECK-LABEL: @memoryphi_translate_loop_header_kill_in_exit(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca i8, align 1
++; CHECK-NEXT:    store i8 0, ptr [[A]], align 1
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[LATCH:%.*]] ]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[KILL:%.*]], label [[LATCH]]
++; CHECK:       latch:
++; CHECK-NEXT:    store i8 7, ptr [[X:%.*]], align 1
++; CHECK-NEXT:    br label [[LOOP]]
++; CHECK:       kill:
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[A]], align 1
++; CHECK-NEXT:    ret i8 [[L]]
++;
++entry:
++  %a = alloca i8
++  store i8 0, ptr %a
++  br label %loop
++
++loop:
++  %p = phi ptr [ %a, %entry ], [ %b, %latch ]
++  br i1 %c, label %kill, label %latch
++
++latch:
++  store i8 7, ptr %x
++  br label %loop
++
++kill:
++  store i8 1, ptr %p
++  %l = load i8, ptr %a
++  ret i8 %l
++}
++
++; The store in %entry can be eliminated: the killing store in the loop header
++; overwrites %a in the first iteration.
++define void @memoryphi_translate_loop_header_kill_in_header(ptr noalias %a, ptr noalias %b, i1 %ec) {
++; CHECK-LABEL: @memoryphi_translate_loop_header_kill_in_header(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A:%.*]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    br i1 [[EC:%.*]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i8 0, ptr %a
++  br label %loop
++
++loop:
++  %p = phi ptr [ %a, %entry ], [ %b, %loop ]
++  store i8 1, ptr %p
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The stores in %then and %else can be eliminated: the killing store is in the
++; phi block, so the phi cannot change before it executes.
++define void @memoryphi_translate_diamond_in_loop(ptr noalias %a, ptr noalias %b, i1 %c, i1 %ec) {
++; CHECK-LABEL: @memoryphi_translate_diamond_in_loop(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[MERGE:%.*]] ]
++; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[GEP_B:%.*]] = getelementptr inbounds i8, ptr [[B:%.*]], i64 [[IV]]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    br label [[MERGE]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[MERGE]]
++; CHECK:       merge:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[GEP_A]], [[THEN]] ], [ [[GEP_B]], [[ELSE]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    br i1 [[EC:%.*]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %merge ]
++  %gep.a = getelementptr inbounds i8, ptr %a, i64 %iv
++  %gep.b = getelementptr inbounds i8, ptr %b, i64 %iv
++  br i1 %c, label %then, label %else
++
++then:
++  store i8 0, ptr %gep.a
++  br label %merge
++
++else:
++  store i8 9, ptr %gep.b
++  br label %merge
++
++merge:
++  %p = phi ptr [ %gep.a, %then ], [ %gep.b, %else ]
++  store i8 10, ptr %p
++  %iv.next = add i64 %iv, 1
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The store to %a in %entry cannot be eliminated: %pred is in a cycle with the
++; phi block, so the killing store first executes with %p == %b and the
++; following load reads the stored value.
++define void @memoryphi_translate_pred_in_cycle(i1 %c, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_pred_in_cycle(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = alloca i8, align 1
++; CHECK-NEXT:    store i8 0, ptr [[A]], align 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[PRED:%.*]], label [[LOOP:%.*]]
++; CHECK:       pred:
++; CHECK-NEXT:    br label [[LOOP]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[PRED]] ], [ [[B:%.*]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[A]], align 1
++; CHECK-NEXT:    call void @use.i8(i8 [[L]])
++; CHECK-NEXT:    br label [[PRED]]
++;
++entry:
++  %a = alloca i8
++  store i8 0, ptr %a
++  br i1 %c, label %pred, label %loop
++
++pred:
++  br label %loop
++
++loop:
++  %p = phi ptr [ %a, %pred ], [ %b, %entry ]
++  store i8 1, ptr %p
++  %l = load i8, ptr %a
++  call void @use.i8(i8 %l)
++  br label %pred
++}
++
++; The killing store must not be merged into the store in %entry: it may write
++; %b in later iterations.
++define void @memoryphi_translate_loop_header_no_merge(ptr noalias %a, ptr noalias %b, i1 %ec) {
++; CHECK-LABEL: @memoryphi_translate_loop_header_no_merge(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i32 0, ptr [[A:%.*]], align 4
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[ENTRY:%.*]] ], [ [[B:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    br i1 [[EC:%.*]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i32 0, ptr %a
++  br label %loop
++
++loop:
++  %p = phi ptr [ %a, %entry ], [ %b, %loop ]
++  store i8 1, ptr %p
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; All stores can be eliminated by translating %p through both phis.
++define void @memoryphi_translate_chain(i1 %c.0, i1 %c.1, ptr noalias %a, ptr noalias %b, ptr noalias %x) {
++; CHECK-LABEL: @memoryphi_translate_chain(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C_0:%.*]], label [[INNER:%.*]], label [[OTHER:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[INNER_THEN:%.*]], label [[INNER_ELSE:%.*]]
++; CHECK:       inner.then:
++; CHECK-NEXT:    br label [[INNER_END:%.*]]
++; CHECK:       inner.else:
++; CHECK-NEXT:    br label [[INNER_END]]
++; CHECK:       inner.end:
++; CHECK-NEXT:    [[Q:%.*]] = phi ptr [ [[A:%.*]], [[INNER_THEN]] ], [ [[X:%.*]], [[INNER_ELSE]] ]
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[Q]], [[INNER_END]] ], [ [[B:%.*]], [[OTHER]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c.0, label %inner, label %other
++
++inner:
++  br i1 %c.1, label %inner.then, label %inner.else
++
++inner.then:
++  store i8 0, ptr %a
++  br label %inner.end
++
++inner.else:
++  store i8 1, ptr %x
++  br label %inner.end
++
++inner.end:
++  %q = phi ptr [ %a, %inner.then ], [ %x, %inner.else ]
++  br label %end
++
++other:
++  store i8 2, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %q, %inner.end ], [ %b, %other ]
++  store i8 10, ptr %p
++  ret void
++}
++
++; The store to %a in %inner.then cannot be eliminated: %inner.end can branch to
++; %other, so the killing store may write %b.
++define void @memoryphi_translate_chain_not_postdominated(i1 %c.0, i1 %c.1, i1 %c.2, ptr noalias %a, ptr noalias %b, ptr noalias %x, ptr noalias %z) {
++; CHECK-LABEL: @memoryphi_translate_chain_not_postdominated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C_0:%.*]], label [[INNER:%.*]], label [[OTHER:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[INNER_THEN:%.*]], label [[INNER_ELSE:%.*]]
++; CHECK:       inner.then:
++; CHECK-NEXT:    store i8 0, ptr [[A:%.*]], align 1
++; CHECK-NEXT:    br label [[INNER_END:%.*]]
++; CHECK:       inner.else:
++; CHECK-NEXT:    store i8 1, ptr [[X:%.*]], align 1
++; CHECK-NEXT:    br label [[INNER_END]]
++; CHECK:       inner.end:
++; CHECK-NEXT:    [[Q:%.*]] = phi ptr [ [[A]], [[INNER_THEN]] ], [ [[X]], [[INNER_ELSE]] ]
++; CHECK-NEXT:    br i1 [[C_2:%.*]], label [[INNER_EXIT:%.*]], label [[OTHER]]
++; CHECK:       inner.exit:
++; CHECK-NEXT:    store i8 3, ptr [[Z:%.*]], align 1
++; CHECK-NEXT:    br label [[PRED:%.*]]
++; CHECK:       pred:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[Q]], [[PRED]] ], [ [[B:%.*]], [[OTHER]] ]
++; CHECK-NEXT:    store i8 10, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c.0, label %inner, label %other
++
++inner:
++  br i1 %c.1, label %inner.then, label %inner.else
++
++inner.then:
++  store i8 0, ptr %a
++  br label %inner.end
++
++inner.else:
++  store i8 1, ptr %x
++  br label %inner.end
++
++inner.end:
++  %q = phi ptr [ %a, %inner.then ], [ %x, %inner.else ]
++  br i1 %c.2, label %inner.exit, label %other
++
++inner.exit:
++  store i8 3, ptr %z
++  br label %pred
++
++pred:
++  br label %end
++
++other:
++  store i8 2, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %q, %pred ], [ %b, %other ]
++  store i8 10, ptr %p
++  ret void
++}
++
++; The store to %a in %pre cannot be eliminated: %q changes on the backedge of
++; %loop, so the killing store may write %b.
++define void @memoryphi_translate_chain_loop(i1 %c.0, i1 %c.1, ptr noalias %a, ptr noalias %b, ptr noalias %c, ptr noalias %x) {
++; CHECK-LABEL: @memoryphi_translate_chain_loop(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C_0:%.*]], label [[PRE:%.*]], label [[OTHER:%.*]]
++; CHECK:       pre:
++; CHECK-NEXT:    store i8 0, ptr [[A:%.*]], align 1
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[Q:%.*]] = phi ptr [ [[A]], [[PRE]] ], [ [[B:%.*]], [[LATCH:%.*]] ]
++; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[LATCH]], label [[LOOP_EXIT:%.*]]
++; CHECK:       latch:
++; CHECK-NEXT:    store i8 7, ptr [[X:%.*]], align 1
++; CHECK-NEXT:    br label [[LOOP]]
++; CHECK:       loop.exit:
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[Q]], [[LOOP_EXIT]] ], [ [[C:%.*]], [[OTHER]] ]
++; CHECK-NEXT:    store i8 1, ptr [[P]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c.0, label %pre, label %other
++
++pre:
++  store i8 0, ptr %a
++  br label %loop
++
++loop:
++  %q = phi ptr [ %a, %pre ], [ %b, %latch ]
++  br i1 %c.1, label %latch, label %loop.exit
++
++latch:
++  store i8 7, ptr %x
++  br label %loop
++
++loop.exit:
++  br label %end
++
++other:
++  store i8 5, ptr %c
++  br label %end
++
++end:
++  %p = phi ptr [ %q, %loop.exit ], [ %c, %other ]
++  store i8 1, ptr %p
++  ret void
++}
++
++; The memset in %then is partially overwritten by the killing store translated
++; to %a and can be shortened.
++define void @memoryphi_translate_partial_memset(i1 %c, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_partial_memset(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i64 4
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[TMP0]], i8 0, i64 4, i1 false)
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i32 1, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %then, label %else
++
++then:
++  call void @llvm.memset.p0.i64(ptr %a, i8 0, i64 8, i1 false)
++  br label %end
++
++else:
++  store i32 9, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  store i32 1, ptr %p
++  ret void
++}
++
++; The store of %v in %then is completely overwritten by the store to %a.4 and
++; the killing store translated to %a together, and can be eliminated.
++define void @memoryphi_translate_partial_combined(i1 %c, i64 %v, ptr noalias %a, ptr noalias %b) {
++; CHECK-LABEL: @memoryphi_translate_partial_combined(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    [[A_4:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i64 4
++; CHECK-NEXT:    store i32 2, ptr [[A_4]], align 4
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       else:
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[A]], [[THEN]] ], [ [[B:%.*]], [[ELSE]] ]
++; CHECK-NEXT:    store i32 1, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %then, label %else
++
++then:
++  store i64 %v, ptr %a
++  %a.4 = getelementptr inbounds i8, ptr %a, i64 4
++  store i32 2, ptr %a.4
++  br label %end
++
++else:
++  store i32 9, ptr %b
++  br label %end
++
++end:
++  %p = phi ptr [ %a, %then ], [ %b, %else ]
++  store i32 1, ptr %p
++  ret void
++}
++
++; The store to %dp in %pred cannot be eliminated: translating %k to %pred must
++; not reuse %zx, whose nneg flag makes it poison for negative %x, and %dp
++; differs from %k for negative %x.
++define i8 @memoryphi_translate_no_reuse_nneg(ptr %arr, i8 %x, i1 %c) {
++; CHECK-LABEL: @memoryphi_translate_no_reuse_nneg(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[BASE:%.*]] = getelementptr i8, ptr [[ARR:%.*]], i64 256
++; CHECK-NEXT:    [[ZX:%.*]] = zext nneg i8 [[X:%.*]] to i64
++; CHECK-NEXT:    [[GX:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[ZX]]
++; CHECK-NEXT:    [[SX:%.*]] = sext i8 [[X]] to i64
++; CHECK-NEXT:    [[DP:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[SX]]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[PRED:%.*]], label [[OTHER:%.*]]
++; CHECK:       pred:
++; CHECK-NEXT:    store i8 42, ptr [[DP]], align 1
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    store i8 7, ptr [[ARR]], align 1
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[IP:%.*]] = phi i8 [ [[X]], [[PRED]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[IP]] to i64
++; CHECK-NEXT:    [[K:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[Z]]
++; CHECK-NEXT:    store i8 99, ptr [[K]], align 1
++; CHECK-NEXT:    [[R:%.*]] = load i8, ptr [[DP]], align 1
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %base = getelementptr i8, ptr %arr, i64 256
++  %zx = zext nneg i8 %x to i64
++  %gx = getelementptr i8, ptr %base, i64 %zx
++  %sx = sext i8 %x to i64
++  %dp = getelementptr i8, ptr %base, i64 %sx
++  br i1 %c, label %pred, label %other
++
++pred:
++  store i8 42, ptr %dp, align 1
++  br label %end
++
++other:
++  store i8 7, ptr %arr, align 1
++  br label %end
++
++end:
++  %ip = phi i8 [ %x, %pred ], [ 0, %other ]
++  %z = zext i8 %ip to i64
++  %k = getelementptr i8, ptr %base, i64 %z
++  store i8 99, ptr %k, align 1
++  %r = load i8, ptr %dp, align 1
++  ret i8 %r
++}
++
++; The store to %dp in %pred cannot be eliminated: translating %k to %pred must
++; not reuse %xa, whose nuw flag makes it poison for %x == 255, and %dp differs
++; from %k for %x == 255.
++define i8 @memoryphi_translate_no_reuse_nuw(ptr %arr, i8 %x, i1 %c) {
++; CHECK-LABEL: @memoryphi_translate_no_reuse_nuw(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[XA:%.*]] = add nuw i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[ZX:%.*]] = zext i8 [[XA]] to i64
++; CHECK-NEXT:    [[GX:%.*]] = getelementptr i8, ptr [[ARR:%.*]], i64 [[ZX]]
++; CHECK-NEXT:    [[DZ:%.*]] = zext i8 [[X]] to i64
++; CHECK-NEXT:    [[D1:%.*]] = add i64 [[DZ]], 1
++; CHECK-NEXT:    [[DP:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[D1]]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[PRED:%.*]], label [[OTHER:%.*]]
++; CHECK:       pred:
++; CHECK-NEXT:    store i8 42, ptr [[DP]], align 1
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    store i8 7, ptr [[ARR]], align 1
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[IP:%.*]] = phi i8 [ [[X]], [[PRED]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[IP]], 1
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[ADD]] to i64
++; CHECK-NEXT:    [[K:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[Z]]
++; CHECK-NEXT:    store i8 99, ptr [[K]], align 1
++; CHECK-NEXT:    [[R:%.*]] = load i8, ptr [[DP]], align 1
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %xa = add nuw i8 %x, 1
++  %zx = zext i8 %xa to i64
++  %gx = getelementptr i8, ptr %arr, i64 %zx
++  %dz = zext i8 %x to i64
++  %d1 = add i64 %dz, 1
++  %dp = getelementptr i8, ptr %arr, i64 %d1
++  br i1 %c, label %pred, label %other
++
++pred:
++  store i8 42, ptr %dp, align 1
++  br label %end
++
++other:
++  store i8 7, ptr %arr, align 1
++  br label %end
++
++end:
++  %ip = phi i8 [ %x, %pred ], [ 0, %other ]
++  %add = add i8 %ip, 1
++  %z = zext i8 %add to i64
++  %k = getelementptr i8, ptr %arr, i64 %z
++  store i8 99, ptr %k, align 1
++  %r = load i8, ptr %dp, align 1
++  ret i8 %r
++}
++
+ declare void @use(ptr)
+ declare void @fn()
++declare void @use.i8(i8)
++declare void @llvm.memset.p0.i64(ptr, i8, i64, i1)
+diff --git a/llvm/test/Transforms/GVN/PRE/pre-load.ll b/llvm/test/Transforms/GVN/PRE/pre-load.ll
+index 2cdec2f2120af..a20f3a322d284 100644
+--- a/llvm/test/Transforms/GVN/PRE/pre-load.ll
++++ b/llvm/test/Transforms/GVN/PRE/pre-load.ll
+@@ -317,7 +317,7 @@ return:
+ define void @test7(i32 %N, ptr nocapture %G) nounwind ssp {
+ ; CHECK-LABEL: @test7(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds double, ptr [[G:%.*]], i64 1
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr double, ptr [[G:%.*]], i64 1
+ ; CHECK-NEXT:    store double 1.000000e+00, ptr [[TMP0]], align 8
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[N:%.*]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = icmp sgt i32 [[TMP1]], 1
+diff --git a/llvm/test/Transforms/GVN/phi-translate-poison-flags.ll b/llvm/test/Transforms/GVN/phi-translate-poison-flags.ll
+new file mode 100644
+index 0000000000000..98ed210e60d59
+--- /dev/null
++++ b/llvm/test/Transforms/GVN/phi-translate-poison-flags.ll
+@@ -0,0 +1,97 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=gvn -gvn-add-phi-translation -S %s | FileCheck %s
++
++; PHI translation must not reuse existing instructions with poison-generating
++; flags the translated instruction does not have. In both tests, the load in
++; %merge must not be replaced by the value stored in %then, which writes a
++; different address.
++
++; %x.zext.nneg is poison for negative %x, but (base + zext(x)) and
++; (base + sext(x)) differ then.
++define i8 @no_reuse_zext_nneg(ptr %base, i8 %x, i1 %c) {
++; CHECK-LABEL: define i8 @no_reuse_zext_nneg(
++; CHECK-SAME: ptr [[BASE:%.*]], i8 [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[X_ZEXT_NNEG:%.*]] = zext nneg i8 [[X]] to i64
++; CHECK-NEXT:    [[GEP_ZEXT_NNEG:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[X_ZEXT_NNEG]]
++; CHECK-NEXT:    [[X_SEXT:%.*]] = sext i8 [[X]] to i64
++; CHECK-NEXT:    [[GEP_SEXT:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[X_SEXT]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ENTRY_MERGE_CRIT_EDGE:.*]]
++; CHECK:       [[ENTRY_MERGE_CRIT_EDGE]]:
++; CHECK-NEXT:    br label %[[MERGE:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    store i8 42, ptr [[GEP_SEXT]], align 1
++; CHECK-NEXT:    br label %[[MERGE]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    [[IDX:%.*]] = phi i8 [ [[X]], %[[THEN]] ], [ 0, %[[ENTRY_MERGE_CRIT_EDGE]] ]
++; CHECK-NEXT:    [[IDX_ZEXT:%.*]] = zext i8 [[IDX]] to i64
++; CHECK-NEXT:    [[GEP_IDX:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[IDX_ZEXT]]
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[GEP_IDX]], align 1
++; CHECK-NEXT:    ret i8 [[L]]
++;
++entry:
++  %x.zext.nneg = zext nneg i8 %x to i64
++  %gep.zext.nneg = getelementptr i8, ptr %base, i64 %x.zext.nneg
++  %x.sext = sext i8 %x to i64
++  %gep.sext = getelementptr i8, ptr %base, i64 %x.sext
++  br i1 %c, label %then, label %merge
++
++then:
++  store i8 42, ptr %gep.sext
++  br label %merge
++
++merge:
++  %idx = phi i8 [ %x, %then ], [ 0, %entry ]
++  %idx.zext = zext i8 %idx to i64
++  %gep.idx = getelementptr i8, ptr %base, i64 %idx.zext
++  %l = load i8, ptr %gep.idx
++  ret i8 %l
++}
++
++; %x.inc.nuw is poison for %x == 255, but (base + zext(x + 1)) and
++; (base + zext(x) + 1) differ then.
++define i8 @no_reuse_add_nuw(ptr %base, i8 %x, i1 %c) {
++; CHECK-LABEL: define i8 @no_reuse_add_nuw(
++; CHECK-SAME: ptr [[BASE:%.*]], i8 [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[X_INC_NUW:%.*]] = add nuw i8 [[X]], 1
++; CHECK-NEXT:    [[X_INC_NUW_ZEXT:%.*]] = zext i8 [[X_INC_NUW]] to i64
++; CHECK-NEXT:    [[GEP_INC_NUW:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[X_INC_NUW_ZEXT]]
++; CHECK-NEXT:    [[X_ZEXT:%.*]] = zext i8 [[X]] to i64
++; CHECK-NEXT:    [[X_ZEXT_INC:%.*]] = add i64 [[X_ZEXT]], 1
++; CHECK-NEXT:    [[GEP_ZEXT_INC:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[X_ZEXT_INC]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ENTRY_MERGE_CRIT_EDGE:.*]]
++; CHECK:       [[ENTRY_MERGE_CRIT_EDGE]]:
++; CHECK-NEXT:    br label %[[MERGE:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    store i8 42, ptr [[GEP_ZEXT_INC]], align 1
++; CHECK-NEXT:    br label %[[MERGE]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    [[IDX:%.*]] = phi i8 [ [[X]], %[[THEN]] ], [ 0, %[[ENTRY_MERGE_CRIT_EDGE]] ]
++; CHECK-NEXT:    [[IDX_INC:%.*]] = add i8 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_INC_ZEXT:%.*]] = zext i8 [[IDX_INC]] to i64
++; CHECK-NEXT:    [[GEP_IDX:%.*]] = getelementptr i8, ptr [[BASE]], i64 [[IDX_INC_ZEXT]]
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[GEP_IDX]], align 1
++; CHECK-NEXT:    ret i8 [[L]]
++;
++entry:
++  %x.inc.nuw = add nuw i8 %x, 1
++  %x.inc.nuw.zext = zext i8 %x.inc.nuw to i64
++  %gep.inc.nuw = getelementptr i8, ptr %base, i64 %x.inc.nuw.zext
++  %x.zext = zext i8 %x to i64
++  %x.zext.inc = add i64 %x.zext, 1
++  %gep.zext.inc = getelementptr i8, ptr %base, i64 %x.zext.inc
++  br i1 %c, label %then, label %merge
++
++then:
++  store i8 42, ptr %gep.zext.inc
++  br label %merge
++
++merge:
++  %idx = phi i8 [ %x, %then ], [ 0, %entry ]
++  %idx.inc = add i8 %idx, 1
++  %idx.inc.zext = zext i8 %idx.inc to i64
++  %gep.idx = getelementptr i8, ptr %base, i64 %idx.inc.zext
++  %l = load i8, ptr %gep.idx
++  ret i8 %l
++}

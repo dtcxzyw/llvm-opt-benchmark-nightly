@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = shl i64 %i.g, 32                        ; 2 uses
   %sext86 = add i64 %i.aj, 4294967296
   %i.ak = ashr exact i64 %sext86, 32
-  %i.al = tail call ptr %i.ai(ptr noundef nonnull %8, i64 noundef %i.ak) #5 ; 6 uses
+  %i.al = tail call ptr %i.ai(ptr noundef nonnull %8, i64 noundef %i.ak) #5 ; 5 uses
   %i.am = icmp eq ptr %i.al, null
   br i1 %i.am, label %bb.j, label %bb.k
 
@@ -228,9 +228,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.av = load ptr, ptr %0, align 8, !tbaa !24    ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  store ptr %i.al, ptr %9, align 8, !tbaa !14
+  %i.av = load ptr, ptr %0, align 8, !tbaa !24
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.h, %bb.m
@@ -633,7 +631,7 @@ bb.i:                                             ; preds = %bb.h
   %sext86 = add i64 %i.an, 4294967296
   %i.ao = ashr exact i64 %sext86, 30
   %i.ap = and i64 %i.ao, -4
-  %i.aq = tail call ptr %i.am(ptr noundef nonnull %8, i64 noundef %i.ap) #5 ; 6 uses
+  %i.aq = tail call ptr %i.am(ptr noundef nonnull %8, i64 noundef %i.ap) #5 ; 5 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %bb.j, label %bb.k
 
@@ -661,9 +659,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.bb = load ptr, ptr %0, align 8, !tbaa !33    ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  store ptr %i.aq, ptr %9, align 8, !tbaa !29
+  %i.bb = load ptr, ptr %0, align 8, !tbaa !33
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.h, %bb.m

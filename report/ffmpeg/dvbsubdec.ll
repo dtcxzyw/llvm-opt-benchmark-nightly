@@ -204,14 +204,12 @@ bb.av:                                            ; preds = %.lr.ph.i.i136
   br i1 %.not.i.i140, label %.loopexit110.i, label %.lr.ph.i.i136, !llvm.loop !5
 
 .loopexit110.i:                                   ; preds = %bb.av, %bb.au
-  %i.ix = call ptr @av_memdup(ptr noundef nonnull @default_clut, i64 noundef 1120) #9 ; 6 uses
+  %i.ix = call ptr @av_memdup(ptr noundef nonnull @default_clut, i64 noundef 1120) #9 ; 5 uses
   %.not102.i = icmp eq ptr %i.ix, null
   br i1 %.not102.i, label %dvbsub_display_end_segment.exit156, label %get_clut.exit.thread.i
 
 get_clut.exit.thread.i:                           ; preds = %.loopexit110.i
   store i32 %i.ip, ptr %i.ix, align 8, !tbaa !86
-  %4 = getelementptr inbounds nuw i8, ptr %i.ix, i64 4
-  store i32 -1, ptr %4, align 4, !tbaa !118
   %i.iy = load ptr, ptr %i.iu, align 8, !tbaa !59
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ix, i64 1112
   store ptr %i.iy, ptr %i.iz, align 8, !tbaa !62

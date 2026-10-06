@@ -205,8 +205,7 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCC
   store i64 %i.i, ptr %i.c, align 8, !noalias !1501
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store ptr %i.u, ptr %i.x, align 8, !noalias !1501
-  %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  store i64 0, ptr %i.y, align 8, !noalias !1501
+  %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   br label %bb.f
 
 .thread94.i:                                      ; preds = %bb.v, %bb.u, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCCFGI3ul_14lance_encoding.exit.thread79.i
@@ -609,8 +608,7 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCC
   store i64 %i.i, ptr %i.c, align 8, !noalias !1626
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store ptr %i.s, ptr %i.v, align 8, !noalias !1626
-  %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  store i64 0, ptr %i.w, align 8, !noalias !1626
+  %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   br label %bb.f
 
 .thread94.i:                                      ; preds = %bb.v, %bb.u, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCCFGI3ul_14lance_encoding.exit.thread79.i
@@ -1013,7 +1011,7 @@ bb.cd:                                            ; preds = %bb.cc
   %i.lb = icmp samesign ult i64 %i.kz, %i.la
   call void @llvm.assume(i1 %i.lb)
   %i.lc = getelementptr i8, ptr %1, i64 32        ; 2 uses
-  %i.ld = load ptr, ptr %i.lc, align 8, !alias.scope !24984, !nonnull !75, !noundef !75 ; 14 uses
+  %i.ld = load ptr, ptr %i.lc, align 8, !alias.scope !24984, !nonnull !75, !noundef !75 ; 13 uses
   %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.ld, i64 %i.kz
   %i.lf = load ptr, ptr %i.le, align 8, !noalias !24984, !nonnull !75, !align !95, !noundef !75 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !24985)
@@ -1028,7 +1026,7 @@ _RNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_10BinaryHeapNtNt
 bb.ce:                                            ; preds = %bb.cd
   %.sroa.0.0.copyload.i.i44 = load ptr, ptr %i.ld, align 8, !noalias !24986 ; 4 uses
   store ptr %i.lf, ptr %i.ld, align 8, !noalias !24986
-  %i.li = ptrtoint ptr %i.lf to i64               ; 4 uses
+  %i.li = ptrtoint ptr %i.lf to i64               ; 3 uses
   %i.lj = add nsw i64 %.val24, -3                 ; 2 uses
   %.not.not11.i.i.i = icmp samesign ult i64 %.val24, 4
   br i1 %.not.not11.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
@@ -1039,11 +1037,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 ._crit_edge.thread.i.i.i:                         ; preds = %bb.ce
   %i.ll = icmp eq i64 %i.kz, 2
-  br i1 %i.ll, label %.thread.i.i.i, label %.thread23.i.i.i
-
-.thread23.i.i.i:                                  ; preds = %._crit_edge.thread.i.i.i
-  store i64 %i.li, ptr %i.ld, align 8, !noalias !24987
-  br label %_RNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3popB1j_.exit
+  br i1 %i.ll, label %.thread.i.i.i, label %_RNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3popB1j_.exit
 
 .thread.i.i.i:                                    ; preds = %._crit_edge.thread.i.i.i, %._crit_edge.i.i.i
   %.sroa.05.0.lcssa22.i.i.i = phi i64 [ 1, %._crit_edge.thread.i.i.i ], [ %i.mq, %._crit_edge.i.i.i ] ; 2 uses
@@ -1052,12 +1046,12 @@ bb.ce:                                            ; preds = %bb.cd
   %i.ln = getelementptr inbounds nuw [8 x i8], ptr %i.ld, i64 %.sroa.12.0.lcssa21.i.i.i
   %i.lo = load i64, ptr %i.lm, align 8, !noalias !24986
   store i64 %i.lo, ptr %i.ln, align 8, !noalias !24986
-  store i64 %i.li, ptr %i.lm, align 8, !noalias !24988
+  store i64 %i.li, ptr %i.lm, align 8, !noalias !24987
   br label %.lr.ph.i.i.i.i45
 
 bb.cf:                                            ; preds = %._crit_edge.i.i.i
   %i.lp = getelementptr inbounds nuw [8 x i8], ptr %i.ld, i64 %i.ml
-  store i64 %i.li, ptr %i.lp, align 8, !noalias !24987
+  store i64 %i.li, ptr %i.lp, align 8, !noalias !24988
   br label %.lr.ph.i.i.i.i45
 
 .lr.ph.i.i.i.i45:                                 ; preds = %bb.cf, %.thread.i.i.i
@@ -1119,8 +1113,8 @@ bb.ci:                                            ; preds = %bb.cc
   %i.mr = icmp eq i64 %.val20, 0
   br i1 %i.mr, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1M_.exit, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1M_.exit.sink.split
 
-_RNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3popB1j_.exit: ; preds = %bb.cg, %bb.ch, %.thread23.i.i.i
-  %storemerge.lcssa.i.i.i.i = phi i64 [ 0, %.thread23.i.i.i ], [ %storemerge10.i.i.i.i, %bb.cg ], [ 0, %bb.ch ]
+_RNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3popB1j_.exit: ; preds = %bb.cg, %bb.ch, %._crit_edge.thread.i.i.i
+  %storemerge.lcssa.i.i.i.i = phi i64 [ 0, %._crit_edge.thread.i.i.i ], [ 0, %bb.ch ], [ %storemerge10.i.i.i.i, %bb.cg ]
   %i.ms = getelementptr inbounds nuw [8 x i8], ptr %i.ld, i64 %storemerge.lcssa.i.i.i.i
   store i64 %i.li, ptr %i.ms, align 8, !noalias !24989
   %.not.i = icmp eq ptr %.sroa.0.0.copyload.i.i44, null
@@ -1523,12 +1517,9 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %i.hw, label %_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer13with_capacity.exit.i.i.thread, label %.split.thread.i.i.i
 
 _RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer13with_capacity.exit.i.i.thread: ; preds = %.split.i.i.i
-  %.sroa.420.0..sroa_idx.i.i273 = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  store i64 0, ptr %.sroa.420.0..sroa_idx.i.i273, align 8, !noalias !26811
-  %.sroa.521.0..sroa_idx.i.i274 = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  store ptr inttoptr (i64 128 to ptr), ptr %.sroa.521.0..sroa_idx.i.i274, align 8, !noalias !26811
-  %.sroa.6.0..sroa_idx.i.i106275 = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i.i106275, i8 0, i64 16, i1 false), !noalias !26811
+  %.sroa.420.0..sroa_idx.i.i273 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %.sroa.521.0..sroa_idx.i.i274 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %.sroa.6.0..sroa_idx.i.i106275 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   br label %_RINvYINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtB8_3zip3ZipINtNtNtBc_5slice4iter4IteryEB17_ENCNCNvXs3_NtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4blobNtB1O_16BlobFieldDecoderNtNtB1U_7decoder18LogicalPageDecoder15wait_for_loaded0s_0ENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvXsa_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7booleanNtB51_13BooleanBufferINtNtB4f_7collect12FromIteratorbE9from_iterB3_E0EB1U_.exit.i.i
 
 .split.thread.i.i.i:                              ; preds = %.split.i.i.i, %bb.bh
@@ -1931,13 +1922,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.y, label %_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer13with_capacity.exit.thread.i, label %.split.thread.i.i
 
 _RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer13with_capacity.exit.thread.i: ; preds = %.split.i.i
-  %.sroa.4.0..sroa_idx44.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  store i64 0, ptr %.sroa.4.0..sroa_idx44.i, align 8, !noalias !71352
-  %.sroa.5.0..sroa_idx45.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  store ptr inttoptr (i64 128 to ptr), ptr %.sroa.5.0..sroa_idx45.i, align 8, !noalias !71352
-  %.sroa.6.0..sroa_idx46.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
+  %.sroa.4.0..sroa_idx44.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %.sroa.5.0..sroa_idx45.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %.sroa.6.0..sroa_idx46.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.cb = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx46.i, i8 0, i64 16, i1 false), !noalias !71352
   br label %._crit_edge.i
 
 .split.thread.i.i:                                ; preds = %.split.i.i, %bb.n
@@ -2340,8 +2328,7 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCC
   store i64 %i.dd, ptr %i.o, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   store ptr %i.dk, ptr %i.dn, align 8
-  %i.do = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
-  store i64 0, ptr %i.do, align 8
+  %i.do = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   br label %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit
 
 _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit: ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCCFGI3ul_14lance_encoding.exit171.thread316._RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecyE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit_crit_edge, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjjpCCFGI3ul_14lance_encoding.exit171
@@ -2744,11 +2731,11 @@ begin_hunk_6_@llvm.umax.i128
 !24930 = distinct !{!24930, i1 false, !"_RNCNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB7_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3pop0B1l_"}
 !24931 = distinct !{!24931, !24930, !"_RNCNvMs9_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB7_10BinaryHeapNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderE3pop0B1l_: argument 0"}
 !24932 = distinct !{!24932, i1 false, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_"}
-!24933 = distinct !{!24933, !24932, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_: argument 0"}
+!24933 = distinct !{!24933, !24932, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_: argument 0:thread"}
 !24934 = distinct !{!24934, i1 false, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_"}
-!24935 = distinct !{!24935, !24934, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_: argument 0"}
-!24936 = distinct !{!24936, !24932, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_: argument 0:thread"}
-!24937 = distinct !{!24937, !24934, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_: argument 0:thread"}
+!24935 = distinct !{!24935, !24934, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_: argument 0:thread"}
+!24936 = distinct !{!24936, !24932, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_: argument 0"}
+!24937 = distinct !{!24937, !24934, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_: argument 0"}
 !24938 = distinct !{!24938, i1 false, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_"}
 !24939 = distinct !{!24939, !24938, !"_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc11collections11binary_heap4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderEEB1F_: argument 0"}
 !24940 = distinct !{!24940, i1 false, !"_RNvXsc_NtNtCs40k4W9msRzi_5alloc11collections11binary_heapINtB5_4HoleNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical6struct9WaitOrderENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropB1c_"}
@@ -2801,7 +2788,7 @@ begin_hunk_6_@llvm.umax.i128
 !24987 = !{!24935, !24933, !24931, !24929}
 !24988 = !{!24937, !24936, !24931, !24929}
 !24989 = !{!24941, !24939, !24931, !24929}
-!24990 = !{!"branch_weights", !"expected", i32 1171082, i32 2146312566}
+!24990 = !{!"branch_weights", !"expected", i32 1176245, i32 2146307403}
 !24991 = !{!24943}
 !24992 = distinct !{!24992, i1 false, !"_RNvXs_NtNtCscI6d9CVNmLh_4core6future6futureINtNtB8_3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtB4_6Futurep6OutputINtNtB8_6result6ResultINtNtB10_3vec3VecNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesENtNtCs63DIHKhvmTb_10lance_core5error5ErrorENtNtB8_6marker4SendEL_EEB1v_4pollCsjjpCCFGI3ul_14lance_encoding"}
 !24993 = distinct !{!24993, !24992, !"_RNvXs_NtNtCscI6d9CVNmLh_4core6future6futureINtNtB8_3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtB4_6Futurep6OutputINtNtB8_6result6ResultINtNtB10_3vec3VecNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesENtNtCs63DIHKhvmTb_10lance_core5error5ErrorENtNtB8_6marker4SendEL_EEB1v_4pollCsjjpCCFGI3ul_14lance_encoding: argument 1"}

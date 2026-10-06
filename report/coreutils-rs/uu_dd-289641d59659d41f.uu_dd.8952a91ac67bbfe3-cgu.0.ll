@@ -205,7 +205,8 @@ bb.k:                                             ; preds = %bb.i
 .thread167:                                       ; preds = %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ar = tail call noundef ptr @setlocale(i32 noundef 0, ptr noundef nonnull @183) #27, !noalias !2732 ; 0 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.b, i8 0, i64 256, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %2, i8 0, i64 255, i1 false)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.thread167
@@ -237,7 +238,8 @@ _RNvNtCsbMXVmEvvZJf_5uu_dd17conversion_tables24get_lcase_to_ucase_table.exit.i: 
 bb.n:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ax = tail call noundef ptr @setlocale(i32 noundef 0, ptr noundef nonnull @183) #27, !noalias !2734 ; 0 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %3, i8 0, i64 255, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %bb.n
