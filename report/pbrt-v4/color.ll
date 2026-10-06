@@ -205,12 +205,13 @@ select.unfold:                                    ; preds = %bb.m, %_ZNSt10lock_
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.bt = load ptr, ptr %i.bs, align 8
   %i.bu = invoke noundef ptr %i.bt(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef 5124, i64 noundef 4)
-          to label %.noexc17 unwind label %bb.o, !inline_history !128 ; 4 uses
+          to label %.noexc17 unwind label %bb.o, !inline_history !128 ; 5 uses
 
 .noexc17:                                         ; preds = %select.unfold
   store float %i.ay, ptr %i.bu, align 4, !tbaa !51
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 4 ; 9 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5120) %i.bv, i8 0, i64 5120, i1 false)
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 4 ; 8 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5116) %5, i8 0, i64 5116, i1 false)
   br label %bb.p
 
 .preheader.i.i.i:                                 ; preds = %bb.p
@@ -613,12 +614,13 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write, errnomem: write) uwtable
-define dso_local void @_ZN4pbrt18GammaColorEncodingC2Ef(ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(5124) initializes((0, 5124)) %0, float noundef %1) unnamed_addr #9 align 2 {
+define dso_local void @_ZN4pbrt18GammaColorEncodingC2Ef(ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(5124) initializes((0, 4), (8, 5124)) %0, float noundef %1) unnamed_addr #9 align 2 {
 bb.a:
   store float %1, ptr %0, align 4, !tbaa !51
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 9 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1028 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5120) %i.a, i8 0, i64 5120, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5116) %2, i8 0, i64 5116, i1 false)
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.b

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.a, %bb.h
 ; Function Attrs: inlinehint nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc range(i32 -32, 1) i32 @pmix_bfrops_base_tma_copy_regattr(ptr nofree noundef captures(none) initializes((0, 8)) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #6 {
 bb.a:
-  %i.a = tail call noalias noundef dereferenceable_or_null(536) ptr @malloc(i64 noundef 536) #41 ; 6 uses
+  %i.a = tail call noalias noundef dereferenceable_or_null(536) ptr @malloc(i64 noundef 536) #41 ; 7 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pmix_bfrops_base_tma_regattr_create.exit.thread, label %.preheader.i, !prof !90
 
@@ -227,9 +227,10 @@ bb.b:                                             ; preds = %.preheader.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.preheader.i
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(512) %i.e, i8 0, i64 512, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(511) %2, i8 0, i64 511, i1 false)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %bb.c

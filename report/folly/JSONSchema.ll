@@ -205,24 +205,26 @@ _ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit: ; preds = %_ZN5f
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !431  ; 2 uses
   store ptr %i.p, ptr %i.n, align 8, !tbaa !431
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !424  ; 3 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !424  ; 2 uses
   %.not.i.i.not.i3 = icmp eq ptr %i.r, null
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
-  br i1 %.not.i.i.not.i3, label %_ZN5folly9SingletonINS_10jsonschema9ValidatorENS_6detail10DefaultTagES4_E15getTeardownFuncESt8functionIFvPS2_EE.exit, label %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i
+  br i1 %.not.i.i.not.i3, label %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread, label %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i
+
+_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread: ; preds = %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  br label %_ZN5folly9SingletonINS_10jsonschema9ValidatorENS_6detail10DefaultTagES4_E15getTeardownFuncESt8functionIFvPS2_EE.exit
 
 _ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i: ; preds = %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !429
-  store ptr %i.r, ptr %6, align 8, !tbaa !424
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, i8 0, i64 16, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
   br label %_ZN5folly9SingletonINS_10jsonschema9ValidatorENS_6detail10DefaultTagES4_E15getTeardownFuncESt8functionIFvPS2_EE.exit
 
-_ZN5folly9SingletonINS_10jsonschema9ValidatorENS_6detail10DefaultTagES4_E15getTeardownFuncESt8functionIFvPS2_EE.exit: ; preds = %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i
-  %i.t = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ %6, %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit ] ; 2 uses
-  %.sink3.i = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ %4, %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit ]
-  %.sink2.i = phi ptr [ %i.p, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly10jsonschema9ValidatorEEZNS0_9SingletonIS2_NS0_6detail10DefaultTagES7_E15getTeardownFuncESt8functionIS4_EEUlS3_E_E9_M_invokeERKSt9_Any_dataOS3_, %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit ]
-  %.sink.i = phi ptr [ %i.r, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly10jsonschema9ValidatorEEZNS0_9SingletonIS2_NS0_6detail10DefaultTagES7_E15getTeardownFuncESt8functionIS4_EEUlS3_E_E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation, %_ZNSt8functionIFPN5folly10jsonschema9ValidatorEvEEC2EOS5_.exit ]
+_ZN5folly9SingletonINS_10jsonschema9ValidatorENS_6detail10DefaultTagES4_E15getTeardownFuncESt8functionIFvPS2_EE.exit: ; preds = %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i
+  %i.t = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ %6, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread ] ; 2 uses
+  %.sink3.i = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ %4, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread ]
+  %.sink2.i = phi ptr [ %i.p, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly10jsonschema9ValidatorEEZNS0_9SingletonIS2_NS0_6detail10DefaultTagES7_E15getTeardownFuncESt8functionIS4_EEUlS3_E_E9_M_invokeERKSt9_Any_dataOS3_, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread ]
+  %.sink.i = phi ptr [ %i.r, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly10jsonschema9ValidatorEEZNS0_9SingletonIS2_NS0_6detail10DefaultTagES7_E15getTeardownFuncESt8functionIS4_EEUlS3_E_E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation, %_ZNSt8functionIFvPN5folly10jsonschema9ValidatorEEEC2EOS5_.exit.thread ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sink3.i, i8 0, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %.sink2.i, ptr %i.u, align 8, !tbaa !431, !alias.scope !10431

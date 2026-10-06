@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: write) uwtable
-define void @_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util8alphabetNtB5_11ByteClassesNtNtCsj6eKBz9Db1c_4core7default7Default7default(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([256 x i8]) align 1 captures(none) dereferenceable(256) initializes((0, 256)) %0) unnamed_addr #8 !dbg !12787 {
+define void @_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util8alphabetNtB5_11ByteClassesNtNtCsj6eKBz9Db1c_4core7default7Default7default(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([256 x i8]) align 1 captures(none) dereferenceable(256) initializes((1, 256)) %0) unnamed_addr #8 !dbg !12787 {
 vector.ph:
     #dbg_value(ptr poison, !2696, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !12794)
     #dbg_value(ptr poison, !2696, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !12794)
@@ -214,7 +214,8 @@ vector.ph:
     #dbg_value(ptr poison, !2700, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !12795)
     #dbg_value(ptr poison, !2700, !DIExpression(DW_OP_LLVM_fragment, 16, 8), !12795)
     #dbg_declare(ptr %0, !12800, !DIExpression(), !12805)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %0, i8 0, i64 256, i1 false), !dbg !12813
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !12813
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(255) %1, i8 0, i64 255, i1 false), !dbg !12813
     #dbg_value(i8 0, !12801, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !12807)
     #dbg_value(i8 0, !12801, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !12807)
     #dbg_value(i8 -1, !12801, !DIExpression(DW_OP_LLVM_fragment, 16, 8), !12807)

@@ -165,7 +165,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %0, ptr %i.ae, align 8, !tbaa !30
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 6228
   store i32 %1, ptr %i.af, align 4, !tbaa !31
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 3 uses
   store double 0.000000e+00, ptr %i.ag, align 8, !tbaa !32
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 2088 ; 2 uses
   store double 0.000000e+00, ptr %i.ah, align 8, !tbaa !32
@@ -178,17 +178,18 @@ bb.c:                                             ; preds = %bb.d
   ret ptr %i.e
 
 bb.d:                                             ; preds = %bb.b, %bb.d
-  %3 = phi double [ 0.000000e+00, %bb.b ], [ %i.am, %bb.d ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 6 uses
-  %i.aj = load double, ptr %i.ab, align 8, !tbaa !52
-  %4 = trunc i64 %indvars.iv to i32
-  %5 = add i32 %4, -1
-  %i.ak = sitofp i32 %5 to double
-  %i.al = call double @pow(double noundef %i.aj, double noundef %i.ak) #17, !tbaa !15
-  %i.am = fadd double %3, %i.al                   ; 3 uses
+  %3 = add nsw i64 %indvars.iv, -1                ; 2 uses
+  %4 = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %3
+  %i.aj = load double, ptr %4, align 8, !tbaa !32 ; 2 uses
+  %5 = load double, ptr %i.ab, align 8, !tbaa !52
+  %6 = trunc nuw nsw i64 %3 to i32
+  %i.ak = sitofp i32 %6 to double
+  %i.al = call double @pow(double noundef %5, double noundef %i.ak) #17, !tbaa !15
+  %i.am = fadd double %i.aj, %i.al                ; 2 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv
   store double %i.am, ptr %i.an, align 8, !tbaa !32
-  %i.ao = fsub double %i.am, %3
+  %i.ao = fsub double %i.am, %i.aj
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
   store double %i.ao, ptr %i.ap, align 8, !tbaa !32
   %i.aq = load double, ptr %i.ad, align 8, !tbaa !53

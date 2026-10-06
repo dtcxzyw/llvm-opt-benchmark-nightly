@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not20.i.i, label %event_mm_calloc_.exit.thread.i, label %event_mm_calloc_.exit.thread11.i
 
 event_mm_calloc_.exit.thread11.i:                 ; preds = %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.b, i8 0, i64 56, i1 false)
+  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %0, i8 0, i64 40, i1 false)
   br label %bb.c
 
 event_mm_calloc_.exit.thread.i:                   ; preds = %bb.b
@@ -321,7 +322,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not20.i, label %event_mm_calloc_.exit.thread, label %event_mm_calloc_.exit.thread11
 
 event_mm_calloc_.exit.thread11:                   ; preds = %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.b, i8 0, i64 56, i1 false)
+  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %0, i8 0, i64 48, i1 false)
   br label %bb.c
 
 event_mm_calloc_.exit.thread:                     ; preds = %bb.b
@@ -724,7 +726,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not20.i, label %event_mm_calloc_.exit.thread, label %event_mm_calloc_.exit.thread34
 
 event_mm_calloc_.exit.thread34:                   ; preds = %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
+  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   br label %.preheader.preheader
 
 event_mm_calloc_.exit.thread:                     ; preds = %bb.b
@@ -1127,7 +1130,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not20.i, label %event_mm_calloc_.exit.thread, label %event_mm_calloc_.exit.thread95
 
 event_mm_calloc_.exit.thread95:                   ; preds = %bb.o
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(168) %i.au, i8 0, i64 168, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.au, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(160) %2, i8 0, i64 160, i1 false)
   br label %bb.q
 
 event_mm_calloc_.exit.thread:                     ; preds = %bb.o

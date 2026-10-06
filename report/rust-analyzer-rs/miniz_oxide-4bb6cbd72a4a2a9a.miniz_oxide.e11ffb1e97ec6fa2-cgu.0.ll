@@ -205,7 +205,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core5write.exit5.thread: ; preds = %
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide14optimize_table(ptr noalias nofree noundef nonnull align 2 captures(address) dereferenceable(4320) %0, i64 noundef range(i64 0, 3) %1, i64 noundef range(i64 19, 289) %2, i64 noundef range(i64 7, 16) %3, i1 noundef zeroext %4) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [2048 x i8], align 8              ; 16 uses
+  %i.a = alloca [2048 x i8], align 8              ; 15 uses
   %i.b = alloca [4096 x i8], align 8              ; 11 uses
   %i.c = alloca [40 x i8], align 8                ; 10 uses
   %i.d = alloca [1152 x i8], align 2              ; 8 uses
@@ -325,7 +325,8 @@ bb.e:                                             ; preds = %bb.b
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.e
   %.not.i = phi i1 [ %i.be, %._crit_edge.i.loopexit ], [ true, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !69
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false), !noalias !69
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2040) %5, i8 0, i64 2040, i1 false), !noalias !69
   br label %bb.l
 
 bb.f:                                             ; preds = %bb.l
@@ -347,7 +348,7 @@ bb.f:                                             ; preds = %bb.l
 
 bb.g:                                             ; preds = %._crit_edge47.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !69
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false), !noalias !69
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2040) %5, i8 0, i64 2040, i1 false), !noalias !69
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g

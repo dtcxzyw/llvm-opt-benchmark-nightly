@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e,
 define internal fastcc void @_RNvMs0_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB5_5Lexer4next(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) initializes((57, 58)) %1) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
-  %i.b = alloca [40 x i8], align 8                ; 14 uses
+  %i.b = alloca [40 x i8], align 8                ; 15 uses
   %i.c = alloca [40 x i8], align 8                ; 8 uses
   %i.d = alloca [16 x i8], align 8                ; 7 uses
   %i.e = alloca [15 x i8], align 8                ; 6 uses
@@ -608,7 +608,7 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6
 _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6FilterINtNtB6_4skip4SkipINtNtNtBa_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB2f_5Lexer10blocky_raw0EINtNtBa_6option8IntoIterRB23_EENtNtNtB8_6traits8iterator8Iterator4nextB2h_.exit.i.i.thread.thread.i.i: ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6filter6FilterINtNtB6_4skip4SkipINtNtNtBa_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB2f_5Lexer10blocky_raw0EINtNtBa_6option8IntoIterRB23_EENtNtNtB8_6traits8iterator8Iterator4nextB2h_.exit.i.i.i.i
   %.val.i.i.pre.i.i = load ptr, ptr %i.ado, align 8, !noalias !2848 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr i8, ptr %i.adn, i64 -8
-  %.val3.i.i.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !noalias !2848 ; 2 uses
+  %.val3.i.i.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !noalias !2848, !noundef !19 ; 2 uses
   %i.afy = getelementptr inbounds nuw i8, ptr %.val.i.i.pre.i.i, i64 %.val3.i.i.pre.i.i
   %.not.i18.i.i.i.i.i.i266.i.i = icmp samesign eq i64 %.val3.i.i.pre.i.i, 0
   br i1 %.not.i18.i.i.i.i.i.i266.i.i, label %_RINvXs1_NtNtNtCs3oUPovFnLWP_4core4iter8adapters6filterINtB6_6FilterINtNtB8_4skip4SkipINtNtNtBc_5slice4iter4IterReEENCNvMs1_NtCs5PEMdK7bMAG_12typst_syntax5lexerNtB1X_5Lexer10blocky_raw0ENtNtNtBa_6traits8iterator8Iterator4foldjQNCINvNtB8_3map8map_foldRB1L_jjNCB1R_s_0NvYjNtNtBc_3cmp3Ord3minE0EB1Z_.exit.i.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.i.preheader.i.i
@@ -1011,10 +1011,12 @@ bb.rn:                                            ; preds = %bb.rl, %bb.rk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !3056
   store ptr %.sroa.4.0.copyload, ptr %i.b, align 8, !noalias !3058
   %.sroa.55.0..sroa_idx655.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i64 0, ptr %.sroa.55.0..sroa_idx655.i, align 8, !noalias !3058
   %.sroa.68.0..sroa_idx956.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.814.0..sroa_idx1558.i.a = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.55.0..sroa_idx655.i, i8 0, i64 24, i1 false)
-  store i8 %.sroa.02.0.i.i.i.i, ptr %.sroa.814.0..sroa_idx1558.i.a, align 8, !noalias !3058
+  %.sroa.814.0..sroa_idx1558.i.a = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  store i64 0, ptr %.sroa.814.0..sroa_idx1558.i.a, align 8, !noalias !3058
+  %.sroa.814.0..sroa_idx1558.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store i8 %.sroa.02.0.i.i.i.i, ptr %.sroa.814.0..sroa_idx1558.i, align 8, !noalias !3058
   br label %_RNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB5_3MapINtNtCsakL8LGkl72C_4ecow3vec8IntoIterNtNtB11_6string9EcoStringENCINvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB25_10SyntaxNode10with_hintsINtBZ_6EcoVecB1x_EE0ENtNtNtB9_6traits8iterator8Iterator4nextB27_.exit.i.i
 
 .lr.ph.i.i177:                                    ; preds = %bb.rq

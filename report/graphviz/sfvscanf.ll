@@ -202,7 +202,7 @@ bb.cy:                                            ; preds = %bb.cx
 bb.cz:                                            ; preds = %bb.cy
   %i.ke = zext nneg i32 %i.kb to i64
   %i.kf = getelementptr inbounds nuw i8, ptr %i.jz, i64 %i.ke
-  %i.kg = load i8, ptr %i.kf, align 1, !tbaa !8   ; 2 uses
+  %i.kg = load i8, ptr %i.kf, align 1, !tbaa !8
   %i.kh = sext i8 %i.kg to i32
   %i.ki = icmp slt i32 %i.kh, %i.jw
   br i1 %i.ki, label %bb.de, label %.critedge49
@@ -222,7 +222,7 @@ bb.dc:                                            ; preds = %bb.db, %.thread827
   %i.kl = phi ptr [ %spec.select852, %bb.db ], [ getelementptr inbounds nuw (i8, ptr @_Sftable, i64 408), %.thread827 ] ; 2 uses
   %i.km = zext nneg i32 %.7637.ph to i64
   %i.kn = getelementptr inbounds nuw i8, ptr %i.kl, i64 %i.km
-  %i.ko = load i8, ptr %i.kn, align 1, !tbaa !8   ; 2 uses
+  %i.ko = load i8, ptr %i.kn, align 1, !tbaa !8
   %i.kp = sext i8 %i.ko to i32
   %.not747 = icmp sgt i32 %.4626796824833, %i.kp
   br i1 %.not747, label %bb.de, label %bb.dd
@@ -232,12 +232,11 @@ bb.dd:                                            ; preds = %bb.da, %bb.dc
   br label %.critedge29
 
 bb.de:                                            ; preds = %bb.dc, %bb.cz
-  %.pre = phi i8 [ %i.kg, %bb.cz ], [ %i.ko, %bb.dc ]
-  %.12642 = phi i32 [ %i.kb, %bb.cz ], [ %.7637.ph, %bb.dc ] ; 4 uses
+  %.12642 = phi i32 [ %i.kb, %bb.cz ], [ %.7637.ph, %bb.dc ] ; 5 uses
   %.5627 = phi i32 [ %i.jw, %bb.cz ], [ %.4626796824833, %bb.dc ] ; 11 uses
   %.10609 = phi i32 [ %i.ka, %bb.cz ], [ %.7606.ph, %bb.dc ] ; 6 uses
   %.25 = phi i32 [ %.24, %bb.cz ], [ %.15572.ph, %bb.dc ] ; 5 uses
-  %.0555 = phi ptr [ %i.jz, %bb.cz ], [ %i.kl, %bb.dc ] ; 4 uses
+  %.0555 = phi ptr [ %i.jz, %bb.cz ], [ %i.kl, %bb.dc ] ; 5 uses
   %i.kr = call range(i32 0, 8) i32 @llvm.ctpop.i32(i32 %.5627)
   %i.ks = icmp samesign ult i32 %i.kr, 2
   br i1 %i.ks, label %bb.df, label %.preheader858
@@ -246,6 +245,9 @@ bb.de:                                            ; preds = %bb.dc, %bb.cz
   %i.kt = zext nneg i32 %.5627 to i64             ; 2 uses
   %smin1165 = call i32 @llvm.smin.i32(i32 %.10609, i32 1)
   %i.ku = add i32 %smin1165, -1                   ; 2 uses
+  %.phi.trans.insert = zext nneg i32 %.12642 to i64
+  %.phi.trans.insert1167 = getelementptr inbounds nuw i8, ptr %.0555, i64 %.phi.trans.insert
+  %.pre = load i8, ptr %.phi.trans.insert1167, align 1, !tbaa !8
   %i.kv = load i64, ptr %2, align 16, !tbaa !8
   %i.kw = mul i64 %i.kv, %i.kt
   %i.kx = sext i8 %.pre to i64

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.a
 
 .lr.ph125.i:                                      ; preds = %drmp3_hdr_valid.exit.thread.i, %.lr.ph125.preheader.i
   %indvars.iv140.i = phi i64 [ 0, %.lr.ph125.preheader.i ], [ %indvars.iv.next141.i, %drmp3_hdr_valid.exit.thread.i ] ; 6 uses
-  %.063121.i = phi ptr [ %1, %.lr.ph125.preheader.i ], [ %i.ka, %drmp3_hdr_valid.exit.thread.i ] ; 6 uses
+  %.063121.i = phi ptr [ %1, %.lr.ph125.preheader.i ], [ %i.ka, %drmp3_hdr_valid.exit.thread.i ] ; 7 uses
   %i.cv = load i8, ptr %.063121.i, align 1
   %i.cw = icmp eq i8 %i.cv, -1
   br i1 %i.cw, label %bb.n, label %drmp3_hdr_valid.exit.thread.i
@@ -426,7 +426,7 @@ drmp3_hdr_compare.exit.thread.i:                  ; preds = %bb.z, %bb.y, %bb.x,
 
 .critedge.i:                                      ; preds = %drmp3_hdr_compare.exit.thread.i, %drmp3_hdr_padding.exit.i
   %.055.lcssa.i = phi i32 [ %spec.select.i.i, %drmp3_hdr_padding.exit.i ], [ %.257.i, %drmp3_hdr_compare.exit.thread.i ]
-  %.054.lcssa.i = phi i32 [ %i.eu, %drmp3_hdr_padding.exit.i ], [ %.2.i, %drmp3_hdr_compare.exit.thread.i ] ; 9 uses
+  %.054.lcssa.i = phi i32 [ %i.eu, %drmp3_hdr_padding.exit.i ], [ %.2.i, %drmp3_hdr_compare.exit.thread.i ] ; 11 uses
   %.lcssa.i = phi i1 [ false, %drmp3_hdr_padding.exit.i ], [ %i.hk, %drmp3_hdr_compare.exit.thread.i ]
   %i.hm = add nsw i32 %.054.lcssa.i, %i.ew        ; 2 uses
   %.not67.i = icmp sgt i32 %i.hm, %2
@@ -435,16 +435,17 @@ drmp3_hdr_compare.exit.thread.i:                  ; preds = %bb.z, %bb.y, %bb.x,
 
 bb.aa:                                            ; preds = %.critedge.i
   %i.hn = sub nuw nsw i64 %i.cu, %indvars.iv140.i
-  %.val.pre.i.i = load i8, ptr %i.cx, align 1     ; 2 uses
-  %.val16.pre.i.i = load i8, ptr %i.df, align 1   ; 3 uses
-  %7 = icmp ult i8 %.val16.pre.i.i, 16
   br label %drmp3_hdr_padding.exit.i.i
 
 drmp3_hdr_padding.exit.i.i:                       ; preds = %bb.af, %bb.aa
-  %.val16.i.i = phi i8 [ %.val16.pre.i.i, %bb.aa ], [ %i.ju, %bb.af ] ; 3 uses
-  %.val.i.i = phi i8 [ %.val.pre.i.i, %bb.aa ], [ %i.jm, %bb.af ] ; 2 uses
   %.021.i.i = phi i32 [ 0, %bb.aa ], [ %i.jy, %bb.af ] ; 2 uses
-  %.01420.i.i = phi i32 [ 0, %bb.aa ], [ %i.jd, %bb.af ]
+  %.01420.i.i = phi i32 [ 0, %bb.aa ], [ %i.jd, %bb.af ] ; 2 uses
+  %7 = sext i32 %.01420.i.i to i64
+  %8 = getelementptr inbounds i8, ptr %.063121.i, i64 %7 ; 2 uses
+  %9 = getelementptr i8, ptr %8, i64 1
+  %.val.i.i = load i8, ptr %9, align 1            ; 2 uses
+  %10 = getelementptr i8, ptr %8, i64 2
+  %.val16.i.i = load i8, ptr %10, align 1         ; 3 uses
   %i.ho = zext i8 %.val.i.i to i32                ; 5 uses
   %i.hp = and i32 %i.ho, 6
   %i.hq = icmp eq i32 %i.hp, 6
@@ -507,7 +508,7 @@ bb.ab:                                            ; preds = %drmp3_hdr_padding.e
 
 bb.ac:                                            ; preds = %bb.ab
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ji, i64 1
-  %i.jm = load i8, ptr %i.jl, align 1             ; 4 uses
+  %i.jm = load i8, ptr %i.jl, align 1             ; 3 uses
   %i.jn = zext i8 %i.jm to i32                    ; 2 uses
   %i.jo = and i32 %i.jn, 240
   %i.jp = icmp ne i32 %i.jo, 240
@@ -521,26 +522,33 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.jt = getelementptr inbounds nuw i8, ptr %i.ji, i64 2
-  %i.ju = load i8, ptr %i.jt, align 1             ; 4 uses
+  %i.ju = load i8, ptr %i.jt, align 1             ; 3 uses
   %i.jv = zext i8 %i.ju to i32                    ; 2 uses
   %.mask.i.i.i.i = and i32 %i.jv, 240
-  %.not6.i.i.i.i = icmp ne i32 %.mask.i.i.i.i, 240
+  %.not6.i.i.i.i = icmp eq i32 %.mask.i.i.i.i, 240
   %i.jw = and i32 %i.jv, 12
-  %.not8.i.i.i = icmp ne i32 %i.jw, 12
-  %or.cond.i.not28.i.i = and i1 %.not6.i.i.i.i, %.not8.i.i.i
-  %8 = xor i8 %i.jm, %.val.pre.i.i
-  %9 = icmp ult i8 %8, 2
-  %or.cond.i91.i = select i1 %or.cond.i.not28.i.i, i1 %9, i1 false
-  br i1 %or.cond.i91.i, label %bb.ae, label %.critedge.thread.i
+  %.not8.i.i.i = icmp eq i32 %i.jw, 12
+  %or.cond.i.i.i = or i1 %.not6.i.i.i.i, %.not8.i.i.i
+  br i1 %or.cond.i.i.i, label %.critedge.thread.i, label %11
 
-bb.ae:                                            ; preds = %bb.ad
-  %10 = xor i8 %i.ju, %.val16.pre.i.i
-  %11 = and i8 %10, 12
-  %12 = icmp ne i8 %11, 0
+11:                                               ; preds = %bb.ad
+  %12 = load i8, ptr %i.cx, align 1
+  %13 = xor i8 %12, %i.jm
+  %14 = icmp ult i8 %13, 2
+  br i1 %14, label %15, label %.critedge.thread.i
+
+15:                                               ; preds = %11
+  %16 = load i8, ptr %i.df, align 1               ; 2 uses
+  %17 = xor i8 %16, %i.ju
+  %18 = and i8 %17, 12
+  %19 = icmp eq i8 %18, 0
+  br i1 %19, label %bb.ae, label %.critedge.thread.i
+
+bb.ae:                                            ; preds = %15
+  %20 = icmp ult i8 %16, 16
   %i.jx = icmp ult i8 %i.ju, 16
-  %.not.i92.i = xor i1 %7, %i.jx
-  %or.cond27.i.i = select i1 %12, i1 true, i1 %.not.i92.i
-  br i1 %or.cond27.i.i, label %.critedge.thread.i, label %bb.af
+  %.not.i92.i = xor i1 %i.jx, %20
+  br i1 %.not.i92.i, label %.critedge.thread.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.jy = add nuw nsw i32 %.021.i.i, 1            ; 2 uses
@@ -551,10 +559,10 @@ drmp3d_match_frame.exit.i:                        ; preds = %drmp3_hdr_padding.e
   %.not.i142 = icmp eq i32 %.021.i.i, 0
   br i1 %.not.i142, label %.critedge.thread.i, label %drmp3d_find_frame.exit.loopexit339
 
-.critedge.thread.i:                               ; preds = %bb.p, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %drmp3d_match_frame.exit.i, %.critedge.i
-  %.054112.i = phi i32 [ %.054.lcssa.i, %bb.ae ], [ %.054.lcssa.i, %.critedge.i ], [ %.054.lcssa.i, %drmp3d_match_frame.exit.i ], [ %.054.lcssa.i, %bb.ab ], [ %.054.lcssa.i, %bb.ac ], [ %.054.lcssa.i, %bb.ad ], [ %.054118.i, %bb.p ]
+.critedge.thread.i:                               ; preds = %bb.p, %bb.ae, %15, %11, %bb.ad, %bb.ac, %bb.ab, %drmp3d_match_frame.exit.i, %.critedge.i
+  %.054111.i = phi i32 [ %.054.lcssa.i, %bb.ae ], [ %.054.lcssa.i, %.critedge.i ], [ %.054.lcssa.i, %drmp3d_match_frame.exit.i ], [ %.054.lcssa.i, %bb.ab ], [ %.054.lcssa.i, %bb.ac ], [ %.054.lcssa.i, %bb.ad ], [ %.054.lcssa.i, %11 ], [ %.054.lcssa.i, %15 ], [ %.054118.i, %bb.p ]
   %.not69.i = icmp eq i64 %indvars.iv140.i, 0
-  %i.jz = icmp eq i32 %.054112.i, %2
+  %i.jz = icmp eq i32 %.054111.i, %2
   %or.cond73.i = select i1 %.not69.i, i1 %i.jz, i1 false
   br i1 %or.cond73.i, label %drmp3d_find_frame.exit.loopexit339, label %.thread.i
 
@@ -957,10 +965,10 @@ bb.ab:                                            ; preds = %bb.s, %.thread, %bb
 
 bb.ac:                                            ; preds = %.thread
   %i.dy = getelementptr inbounds nuw i8, ptr %i.bk, i64 26 ; 2 uses
-  %i.dz = zext nneg i8 %i.bh to i64
+  %i.dz = zext nneg i8 %i.bh to i64               ; 2 uses
   %i.ea = getelementptr i8, ptr %i.dy, i64 %i.dz
   %i.eb = getelementptr i8, ptr %i.ea, i64 -1
-  %i.ec = load i8, ptr %i.eb, align 1             ; 2 uses
+  %i.ec = load i8, ptr %i.eb, align 1
   %i.ed = zext i8 %i.ec to i16
   %i.ee = icmp ugt i16 %i.dv, %i.ed
   br i1 %i.ee, label %bb.ad, label %bb.ah
@@ -984,16 +992,16 @@ bb.ad:                                            ; preds = %bb.ac
   store i64 0, ptr %i.eh, align 8
   %.pre = load i8, ptr %2, align 1
   %.phi.trans.insert.a = zext i8 %.pre to i64
-  %.phi.trans.insert338 = getelementptr i8, ptr %i.dy, i64 %.phi.trans.insert.a
-  %.phi.trans.insert339 = getelementptr i8, ptr %.phi.trans.insert338, i64 -1
-  %.pre340 = load i8, ptr %.phi.trans.insert339, align 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.preheader.preheader, %bb.ad
-  %3 = phi i8 [ %.pre340, %.preheader.preheader ], [ %i.ec, %bb.ad ]
+  %.pre-phi = phi i64 [ %.phi.trans.insert.a, %.preheader.preheader ], [ %i.dz, %bb.ad ]
   %i.ei = getelementptr inbounds nuw i8, ptr %i.bk, i64 264
   %i.ej = load ptr, ptr %i.ei, align 8
-  %i.ek = zext i8 %3 to i64
+  %3 = getelementptr i8, ptr %i.dy, i64 %.pre-phi
+  %4 = getelementptr i8, ptr %3, i64 -1
+  %5 = load i8, ptr %4, align 1
+  %i.ek = zext i8 %5 to i64
   %i.el = getelementptr inbounds nuw [80 x i8], ptr %i.ej, i64 %i.ek ; 3 uses
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.el, ptr %i.em, align 8

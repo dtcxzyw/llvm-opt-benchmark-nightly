@@ -202,6 +202,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   br i1 %.not354373, label %._crit_edge377, label %.lr.ph376.preheader
 
 .lr.ph376.preheader:                              ; preds = %._crit_edge372
+  %load_initial = load double, ptr %12, align 8   ; 2 uses
   %i.lf = zext nneg i32 %i.le to i64
   %i.lg = add nsw i64 %i.lf, -1                   ; 2 uses
   %xtraiter548 = and i64 %i.lg, 3                 ; 3 uses
@@ -214,7 +215,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   br label %.lr.ph376
 
 .lr.ph376:                                        ; preds = %.lr.ph376, %.lr.ph376.preheader.new
-  %i.lj = phi double [ 1.000000e+00, %.lr.ph376.preheader.new ], [ %i.mo, %.lr.ph376 ]
+  %i.lj = phi double [ %load_initial, %.lr.ph376.preheader.new ], [ %i.mo, %.lr.ph376 ]
   %indvars.iv409 = phi i64 [ 2, %.lr.ph376.preheader.new ], [ %indvars.iv.next410.3, %.lr.ph376 ] ; 7 uses
   %niter552 = phi i64 [ 0, %.lr.ph376.preheader.new ], [ %niter552.next.3, %.lr.ph376 ]
   %i.lk = getelementptr [8 x i8], ptr %i.e, i64 %indvars.iv409
@@ -275,7 +276,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   br i1 %lcmp.mod549.not, label %.lr.ph380.preheader, label %.lr.ph376.epil.preheader
 
 .lr.ph376.epil.preheader:                         ; preds = %.lr.ph380.preheader.unr-lcssa, %.lr.ph376.preheader
-  %.epil.init = phi double [ 1.000000e+00, %.lr.ph376.preheader ], [ %i.mo, %.lr.ph380.preheader.unr-lcssa ]
+  %.epil.init = phi double [ %load_initial, %.lr.ph376.preheader ], [ %i.mo, %.lr.ph380.preheader.unr-lcssa ]
   %indvars.iv409.epil.init = phi i64 [ 2, %.lr.ph376.preheader ], [ %indvars.iv.next410.3, %.lr.ph380.preheader.unr-lcssa ]
   %lcmp.mod550 = icmp ne i64 %xtraiter548, 0
   tail call void @llvm.assume(i1 %lcmp.mod550)

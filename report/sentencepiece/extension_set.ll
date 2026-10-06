@@ -205,7 +205,13 @@ _ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit: ; preds = %bb.a, %
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit
-  %i.h = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #28
+  %i.h = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #28 ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %1, i8 0, i64 24, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
+  store ptr %3, ptr %2, align 8, !tbaa !136
+  store i8 0, ptr %3, align 8, !tbaa !46
   br label %_ZN6google8protobuf5Arena14CreateInternalINS0_8internal16InternalMetadata9ContainerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJEEEPT_PS1_DpOT0_.exit
 
 bb.d:                                             ; preds = %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit
@@ -226,16 +232,18 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit
 
 _ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit: ; preds = %bb.d, %bb.e
-  %i.s = tail call noundef ptr @_ZN6google8protobuf8internal9ArenaImpl28AllocateAlignedAndAddCleanupEmPFvPvE(ptr noundef nonnull align 8 dereferenceable(40) %.0.i, i64 noundef 40, ptr noundef nonnull @_ZN6google8protobuf8internal21arena_destruct_objectINS1_16InternalMetadata9ContainerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvPv)
+  %i.s = tail call noundef ptr @_ZN6google8protobuf8internal9ArenaImpl28AllocateAlignedAndAddCleanupEmPFvPvE(ptr noundef nonnull align 8 dereferenceable(40) %.0.i, i64 noundef 40, ptr noundef nonnull @_ZN6google8protobuf8internal21arena_destruct_objectINS1_16InternalMetadata9ContainerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvPv) ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  store ptr %6, ptr %5, align 8, !tbaa !136
+  %7 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  store i64 0, ptr %7, align 8, !tbaa !102
   br label %_ZN6google8protobuf5Arena14CreateInternalINS0_8internal16InternalMetadata9ContainerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJEEEPT_PS1_DpOT0_.exit
 
 _ZN6google8protobuf5Arena14CreateInternalINS0_8internal16InternalMetadata9ContainerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJEEEPT_PS1_DpOT0_.exit: ; preds = %bb.c, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit
-  %.sink11 = phi ptr [ %i.h, %bb.c ], [ %i.s, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit ] ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sink11, i8 0, i64 40, i1 false)
-  %1 = getelementptr inbounds nuw i8, ptr %.sink11, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %.sink11, i64 24 ; 2 uses
-  store ptr %2, ptr %1, align 8, !tbaa !136
-  store i8 0, ptr %2, align 8, !tbaa !46
+  %.sink11 = phi ptr [ %i.h, %bb.c ], [ %i.s, %_ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit ] ; 3 uses
   %i.t = ptrtoint ptr %.sink11 to i64
   %i.u = or i64 %i.t, 1
   %i.v = inttoptr i64 %i.u to ptr

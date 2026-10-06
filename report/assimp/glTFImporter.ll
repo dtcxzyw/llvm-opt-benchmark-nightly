@@ -205,7 +205,7 @@ bb.er:                                            ; preds = %_ZNK10glTFCommon3Re
 
 bb.es:                                            ; preds = %bb.er
   store i64 %i.aqu, ptr %i.aqx, align 16
-  %i.aqy = getelementptr inbounds nuw i8, ptr %i.aqx, i64 8 ; 9 uses
+  %i.aqy = getelementptr inbounds nuw i8, ptr %i.aqx, i64 8 ; 10 uses
   %i.aqz = icmp eq i32 %i.aqt, 0
   br i1 %i.aqz, label %.loopexit573, label %bb.et
 
@@ -294,20 +294,24 @@ _ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit427:     ; preds = %.loopexit573
   br i1 %i.ase, label %bb.ew, label %.loopexit569
 
 .lr.ph893:                                        ; preds = %.lr.ph893.preheader, %bb.eu
-  %9 = phi i32 [ 1, %.lr.ph893.preheader ], [ %i.ask, %bb.eu ]
-  %indvars.iv1164 = phi i64 [ 2, %.lr.ph893.preheader ], [ %indvars.iv.next1165, %bb.eu ] ; 3 uses
-  %i.asf = getelementptr [16 x i8], ptr %i.aqy, i64 %indvars.iv1164 ; 2 uses
-  %i.asg = getelementptr i8, ptr %i.asf, i64 -16
-  store i32 2, ptr %i.asg, align 8
+  %indvars.iv1164 = phi i64 [ 2, %.lr.ph893.preheader ], [ %indvars.iv.next1165, %bb.eu ] ; 4 uses
+  %9 = getelementptr [16 x i8], ptr %i.aqy, i64 %indvars.iv1164 ; 2 uses
+  %10 = getelementptr i8, ptr %9, i64 -16
+  %i.asf = getelementptr [16 x i8], ptr %i.aqy, i64 %indvars.iv1164
+  %11 = getelementptr i8, ptr %i.asf, i64 -24
+  %12 = load ptr, ptr %11, align 8
+  %i.asg = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %13 = load i32, ptr %i.asg, align 4
+  store i32 2, ptr %10, align 8
   %i.ash = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #32
           to label %bb.eu unwind label %bb.ev     ; 3 uses
 
 bb.eu:                                            ; preds = %.lr.ph893
-  %i.asi = getelementptr i8, ptr %i.asf, i64 -8
+  %i.asi = getelementptr i8, ptr %9, i64 -8
   store ptr %i.ash, ptr %i.asi, align 8
-  store i32 %9, ptr %i.ash, align 4
+  store i32 %13, ptr %i.ash, align 4
   %i.asj = getelementptr inbounds nuw i8, ptr %i.ash, i64 4
-  %i.ask = trunc nuw i64 %indvars.iv1164 to i32   ; 2 uses
+  %i.ask = trunc nuw i64 %indvars.iv1164 to i32
   store i32 %i.ask, ptr %i.asj, align 4
   %indvars.iv.next1165 = add nuw nsw i64 %indvars.iv1164, 1 ; 2 uses
   %exitcond1168.not = icmp eq i64 %indvars.iv.next1165, %wide.trip.count1167

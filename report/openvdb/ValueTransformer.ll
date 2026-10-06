@@ -205,15 +205,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIlLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load i64, ptr %i.ba, align 8, !tbaa !61
   %broadcast.splatinsert72 = insertelement <2 x i64> poison, i64 %.pre.i, i64 0
@@ -452,15 +453,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.ez = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre30.i ; 2 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ez, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.ez, i64 33792
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fb, i8 0, i64 33784, i1 false)
   %i.fc = load i32, ptr %i.j, align 4, !tbaa !59
   %i.fd = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fe = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fc, i64 2
   %i.ff = shufflevector <2 x i32> %i.fd, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fg = shufflevector <4 x i32> %i.ff, <4 x i32> %i.fe, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fh = and <4 x i32> %i.fg, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fh, ptr %i.fb, align 8, !tbaa !59
+  store <4 x i32> %i.fh, ptr %5, align 8, !tbaa !59
   br i1 %.not28.i, label %vector.ph78, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -863,15 +865,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load double, ptr %i.ba, align 8, !tbaa !65
   %broadcast.splatinsert71 = insertelement <2 x double> poison, double %.pre.i, i64 0
@@ -1114,15 +1117,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.fb = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre28.i ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.fb, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fd, i8 0, i64 33784, i1 false)
   %i.fe = load i32, ptr %i.j, align 4, !tbaa !59
   %i.ff = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fg = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fe, i64 2
   %i.fh = shufflevector <2 x i32> %i.ff, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fi = shufflevector <4 x i32> %i.fh, <4 x i32> %i.fg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fj = and <4 x i32> %i.fi, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fj, ptr %i.fd, align 8, !tbaa !59
+  store <4 x i32> %i.fj, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %vector.ph77, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -1525,15 +1529,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIlLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load i64, ptr %i.ba, align 8, !tbaa !61
   %broadcast.splatinsert72 = insertelement <2 x i64> poison, i64 %.pre.i, i64 0
@@ -1772,15 +1777,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.ez = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre30.i ; 2 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ez, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.ez, i64 33792
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fb, i8 0, i64 33784, i1 false)
   %i.fc = load i32, ptr %i.j, align 4, !tbaa !59
   %i.fd = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fe = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fc, i64 2
   %i.ff = shufflevector <2 x i32> %i.fd, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fg = shufflevector <4 x i32> %i.ff, <4 x i32> %i.fe, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fh = and <4 x i32> %i.fg, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fh, ptr %i.fb, align 8, !tbaa !59
+  store <4 x i32> %i.fh, ptr %5, align 8, !tbaa !59
   br i1 %.not28.i, label %vector.ph78, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -2183,15 +2189,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load double, ptr %i.ba, align 8, !tbaa !65
   %broadcast.splatinsert71 = insertelement <2 x double> poison, double %.pre.i, i64 0
@@ -2434,15 +2441,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.fb = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre28.i ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.fb, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fd, i8 0, i64 33784, i1 false)
   %i.fe = load i32, ptr %i.j, align 4, !tbaa !59
   %i.ff = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fg = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fe, i64 2
   %i.fh = shufflevector <2 x i32> %i.ff, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fi = shufflevector <4 x i32> %i.fh, <4 x i32> %i.fg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fj = and <4 x i32> %i.fi, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fj, ptr %i.fd, align 8, !tbaa !59
+  store <4 x i32> %i.fj, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %vector.ph77, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -2845,15 +2853,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIlLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load i64, ptr %i.ba, align 8, !tbaa !61
   %broadcast.splatinsert71 = insertelement <2 x i64> poison, i64 %.pre.i, i64 0
@@ -3086,15 +3095,16 @@ bb.s:                                             ; preds = %_ZNSt3mapIN7openvdb
   %i.eu = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.ev = zext nneg i32 %i.ee to i64
   %i.ew = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %i.ev ; 2 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.eu, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eu, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.eu, i64 33792
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.ex, i8 0, i64 33784, i1 false)
   %i.ey = load i32, ptr %i.j, align 4, !tbaa !59
   %i.ez = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fa = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.ey, i64 2
   %i.fb = shufflevector <2 x i32> %i.ez, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fc = shufflevector <4 x i32> %i.fb, <4 x i32> %i.fa, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fd = and <4 x i32> %i.fc, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fd, ptr %i.ex, align 8, !tbaa !59
+  store <4 x i32> %i.fd, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %bb.t, label %vector.ph77
 
 bb.t:                                             ; preds = %.thread.i
@@ -3497,15 +3507,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load double, ptr %i.ba, align 8, !tbaa !65
   %broadcast.splatinsert70 = insertelement <2 x double> poison, double %.pre.i, i64 0
@@ -3746,15 +3757,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.fb = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre28.i ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.fb, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fd, i8 0, i64 33784, i1 false)
   %i.fe = load i32, ptr %i.j, align 4, !tbaa !59
   %i.ff = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fg = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fe, i64 2
   %i.fh = shufflevector <2 x i32> %i.ff, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fi = shufflevector <4 x i32> %i.fh, <4 x i32> %i.fg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fj = and <4 x i32> %i.fi, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fj, ptr %i.fd, align 8, !tbaa !59
+  store <4 x i32> %i.fj, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %vector.ph76, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -4157,15 +4169,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIlLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load i64, ptr %i.ba, align 8, !tbaa !61
   %broadcast.splatinsert71 = insertelement <2 x i64> poison, i64 %.pre.i, i64 0
@@ -4406,15 +4419,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.fa = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre28.i ; 2 uses
-  %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.fa, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.fa, i64 33792
+  %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fc, i8 0, i64 33784, i1 false)
   %i.fd = load i32, ptr %i.j, align 4, !tbaa !59
   %i.fe = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.ff = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fd, i64 2
   %i.fg = shufflevector <2 x i32> %i.fe, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fh = shufflevector <4 x i32> %i.fg, <4 x i32> %i.ff, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fi = and <4 x i32> %i.fh, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fi, ptr %i.fc, align 8, !tbaa !59
+  store <4 x i32> %i.fi, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %vector.ph77, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i
@@ -4817,15 +4831,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.h
 
 _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread: ; preds = %bb.g, %bb.e, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPSt13_Rb_tree_nodeISF_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a
   %i.as = tail call noalias noundef nonnull dereferenceable(270352) ptr @_Znwm(i64 noundef 270352) #24 ; 11 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270352) %i.as, i8 0, i64 270336, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 270336
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(270328) %i.at, i8 0, i64 270328, i1 false)
   %i.au = load i32, ptr %i.j, align 4, !tbaa !59
   %i.av = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.aw = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.au, i64 2
   %i.ax = shufflevector <2 x i32> %i.av, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x i32> %i.ax, <4 x i32> %i.aw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
-  store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !59
+  store <4 x i32> %i.az, ptr %4, align 8, !tbaa !59
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre.i = load double, ptr %i.ba, align 8, !tbaa !65
   %broadcast.splatinsert70 = insertelement <2 x double> poison, double %.pre.i, i64 0
@@ -5066,15 +5081,16 @@ bb.t:                                             ; preds = %bb.s
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %i.fb = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #24 ; 9 uses
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %.1.ph, i64 %.pre28.i ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.fb, i8 0, i64 33792, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.fb, i64 33792
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33784) %i.fd, i8 0, i64 33784, i1 false)
   %i.fe = load i32, ptr %i.j, align 4, !tbaa !59
   %i.ff = load <2 x i32>, ptr %1, align 4, !tbaa !59
   %i.fg = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 -1>, i32 %i.fe, i64 2
   %i.fh = shufflevector <2 x i32> %i.ff, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fi = shufflevector <4 x i32> %i.fh, <4 x i32> %i.fg, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fj = and <4 x i32> %i.fi, <i32 -128, i32 -128, i32 -128, i32 0>
-  store <4 x i32> %i.fj, ptr %i.fd, align 8, !tbaa !59
+  store <4 x i32> %i.fj, ptr %5, align 8, !tbaa !59
   br i1 %.not26.i, label %vector.ph76, label %bb.u
 
 bb.u:                                             ; preds = %.thread.i

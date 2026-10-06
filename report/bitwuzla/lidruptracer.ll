@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %putc_unlocked.exit.
   %.032 = phi i32 [ %i.dk, %.lr.ph.preheader ], [ %i.dp, %.lr.ph ] ; 3 uses
   %i.dl = urem i32 %.032, 10
   %i.dm = trunc nuw nsw i32 %i.dl to i8
-  %i.dn = or disjoint i8 %i.dm, 48                ; 2 uses
+  %i.dn = or disjoint i8 %i.dm, 48
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.do = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
   store i8 %i.dn, ptr %i.do, align 1, !tbaa !76
@@ -214,7 +214,7 @@ bb.o:                                             ; preds = %putc_unlocked.exit.
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.dq = icmp slt i32 %1, 0
-  br i1 %i.dq, label %bb.p, label %.lr.ph.i
+  br i1 %i.dq, label %bb.p, label %._crit_edge.thread
 
 bb.p:                                             ; preds = %._crit_edge
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -242,16 +242,21 @@ _ZN7CaDiCaL4File3putEc.exit21.thread:             ; preds = %putc_unlocked.exit.
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !77
   %i.eb = add i64 %i.ea, 1
   store i64 %i.eb, ptr %i.dz, align 8, !tbaa !77
-  br label %.lr.ph.i
+  br label %._crit_edge.thread
 
-.lr.ph.i:                                         ; preds = %_ZN7CaDiCaL4File3putEc.exit21.thread, %._crit_edge
-  %2 = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
+._crit_edge.thread:                               ; preds = %_ZN7CaDiCaL4File3putEc.exit21.thread, %._crit_edge
+  %2 = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next ; 2 uses
+  %3 = load i8, ptr %2, align 1, !tbaa !76        ; 2 uses
+  %.not9.i = icmp eq i8 %3, 0
+  br i1 %.not9.i, label %_ZN7CaDiCaL4File3putEc.exit21, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %._crit_edge.thread
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.r, %.lr.ph.i
-  %i.ee = phi i8 [ %i.dn, %.lr.ph.i ], [ %i.eq, %bb.r ] ; 2 uses
+  %i.ee = phi i8 [ %3, %.lr.ph.i ], [ %i.eq, %bb.r ] ; 2 uses
   %.0610.i22 = phi ptr [ %2, %.lr.ph.i ], [ %i.ep, %bb.r ]
   %i.ef = load ptr, ptr %i.ec, align 8, !tbaa !67 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 40 ; 2 uses
@@ -282,8 +287,8 @@ bb.r:                                             ; preds = %putc_unlocked.exit.
   %.not.i26 = icmp eq i8 %i.eq, 0
   br i1 %.not.i26, label %_ZN7CaDiCaL4File3putEc.exit21, label %bb.q, !llvm.loop !4
 
-_ZN7CaDiCaL4File3putEc.exit21:                    ; preds = %bb.r, %putc_unlocked.exit.i.i24, %putc_unlocked.exit.i18
-  %.012 = phi i1 [ false, %putc_unlocked.exit.i18 ], [ true, %bb.r ], [ false, %putc_unlocked.exit.i.i24 ]
+_ZN7CaDiCaL4File3putEc.exit21:                    ; preds = %bb.r, %putc_unlocked.exit.i.i24, %._crit_edge.thread, %putc_unlocked.exit.i18
+  %.012 = phi i1 [ false, %putc_unlocked.exit.i18 ], [ true, %._crit_edge.thread ], [ true, %bb.r ], [ false, %putc_unlocked.exit.i.i24 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %_ZN7CaDiCaL4File3putEc.exit
 

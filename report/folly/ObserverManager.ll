@@ -205,24 +205,26 @@ _ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !3059 ; 2 uses
   store ptr %i.p, ptr %i.n, align 8, !tbaa !3059
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !802  ; 3 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !802  ; 2 uses
   %.not.i.i.not.i3 = icmp eq ptr %i.r, null
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
-  br i1 %.not.i.i.not.i3, label %_ZN5folly9SingletonINS_15observer_detail15ObserverManager14UpdatesManagerENS_6detail10DefaultTagES5_E15getTeardownFuncESt8functionIFvPS3_EE.exit, label %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i
+  br i1 %.not.i.i.not.i3, label %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread, label %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i
+
+_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread: ; preds = %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  br label %_ZN5folly9SingletonINS_15observer_detail15ObserverManager14UpdatesManagerENS_6detail10DefaultTagES5_E15getTeardownFuncESt8functionIFvPS3_EE.exit
 
 _ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i: ; preds = %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !757
-  store ptr %i.r, ptr %6, align 8, !tbaa !802
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, i8 0, i64 16, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
   br label %_ZN5folly9SingletonINS_15observer_detail15ObserverManager14UpdatesManagerENS_6detail10DefaultTagES5_E15getTeardownFuncESt8functionIFvPS3_EE.exit
 
-_ZN5folly9SingletonINS_15observer_detail15ObserverManager14UpdatesManagerENS_6detail10DefaultTagES5_E15getTeardownFuncESt8functionIFvPS3_EE.exit: ; preds = %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i
-  %i.t = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ %6, %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit ] ; 2 uses
-  %.sink3.i = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ %4, %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit ]
-  %.sink2.i = phi ptr [ %i.p, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEZNS0_9SingletonIS3_NS0_6detail10DefaultTagES8_E15getTeardownFuncESt8functionIS5_EEUlS4_E_E9_M_invokeERKSt9_Any_dataOS4_, %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit ]
-  %.sink.i = phi ptr [ %i.r, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEZNS0_9SingletonIS3_NS0_6detail10DefaultTagES8_E15getTeardownFuncESt8functionIS5_EEUlS4_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, %_ZNSt8functionIFPN5folly15observer_detail15ObserverManager14UpdatesManagerEvEEC2EOS6_.exit ]
+_ZN5folly9SingletonINS_15observer_detail15ObserverManager14UpdatesManagerENS_6detail10DefaultTagES5_E15getTeardownFuncESt8functionIFvPS3_EE.exit: ; preds = %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i
+  %i.t = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ %6, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread ] ; 2 uses
+  %.sink3.i = phi ptr [ %i.s, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ %4, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread ]
+  %.sink2.i = phi ptr [ %i.p, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEZNS0_9SingletonIS3_NS0_6detail10DefaultTagES8_E15getTeardownFuncESt8functionIS5_EEUlS4_E_E9_M_invokeERKSt9_Any_dataOS4_, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread ]
+  %.sink.i = phi ptr [ %i.r, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.i ], [ @_ZNSt17_Function_handlerIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEZNS0_9SingletonIS3_NS0_6detail10DefaultTagES8_E15getTeardownFuncESt8functionIS5_EEUlS4_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, %_ZNSt8functionIFvPN5folly15observer_detail15ObserverManager14UpdatesManagerEEEC2EOS6_.exit.thread ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sink3.i, i8 0, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %.sink2.i, ptr %i.u, align 8, !tbaa !3059, !alias.scope !3671

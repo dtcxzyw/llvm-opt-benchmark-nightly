@@ -205,7 +205,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #6
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6Assimp18SortByPTypeProcess7ExecuteEP7aiScene(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, ptr nofree noundef captures(none) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector", align 8       ; 15 uses
+  %2 = alloca %"class.std::vector", align 8       ; 16 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [4 x i32], align 16               ; 7 uses
   %i.c = alloca [1024 x i8], align 16             ; 5 uses
@@ -238,6 +238,8 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE7reserveEm.exit:     ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %i.m = shl i32 %.pre, 2                         ; 2 uses
   %i.n = zext i32 %i.m to i64                     ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 0, ptr %3, align 8
   %.not.i.i.i.i = icmp eq i32 %i.m, 0
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i, label %bb.d
 
@@ -252,12 +254,11 @@ _ZNSt12_Vector_baseIjSaIjEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIP6ai
 bb.d:                                             ; preds = %_ZNSt6vectorIP6aiMeshSaIS1_EE7reserveEm.exit
   %i.q = shl nuw nsw i64 %i.n, 2                  ; 3 uses
   %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #21
-          to label %.noexc437 unwind label %.thread1422 ; 6 uses
+          to label %.noexc437 unwind label %.thread1422 ; 5 uses
 
 .noexc437:                                        ; preds = %bb.d
   store ptr %i.r, ptr %2, align 8
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store ptr %i.r, ptr %i.s, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.n
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.t, ptr %i.u, align 8

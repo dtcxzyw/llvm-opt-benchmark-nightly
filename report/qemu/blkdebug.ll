@@ -202,7 +202,7 @@ qemu_lockable_auto_unlock.exit.thread:            ; preds = %bb.c
   br label %glib_autoptr_cleanup_QemuLockable.exit._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %process_rule.exit
-  %.023 = phi ptr [ %i.n, %process_rule.exit ], [ %i.k, %.lr.ph.preheader ] ; 9 uses
+  %.023 = phi ptr [ %i.n, %process_rule.exit ], [ %i.k, %.lr.ph.preheader ] ; 10 uses
   %.02022 = phi i32 [ %.1, %process_rule.exit ], [ %i.l, %.lr.ph.preheader ] ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.023, i64 56 ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
@@ -236,22 +236,24 @@ bb.f:                                             ; preds = %bb.e
   %i.z = load i32, ptr %i.a, align 4
   %i.aa = icmp eq i32 %i.z, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 464 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.023, i64 72 ; 3 uses
   br i1 %i.aa, label %.thread.i, label %bb.g
 
 .thread.i:                                        ; preds = %bb.f
+  %2 = getelementptr inbounds nuw i8, ptr %.023, i64 72 ; 2 uses
   store ptr null, ptr %2, align 8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %.pre.i = load ptr, ptr %i.ab, align 8          ; 2 uses
-  store ptr %.pre.i, ptr %2, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %.023, i64 72 ; 2 uses
+  store ptr %.pre.i, ptr %3, align 8
   %i.ac = icmp eq ptr %.pre.i, null
   br i1 %i.ac, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %.thread.i
+  %4 = phi ptr [ %2, %.thread.i ], [ %3, %bb.g ]
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 472
-  store ptr %2, ptr %i.ad, align 8
+  store ptr %4, ptr %i.ad, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g

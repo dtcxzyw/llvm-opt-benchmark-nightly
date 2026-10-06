@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.u, %bb.z, %.loop
   %indvars.iv217 = phi i64 [ %indvars.iv.next218, %.preheader ], [ 0, %bb.ab ] ; 4 uses
   %i.cz = getelementptr inbounds nuw [12 x i8], ptr %i.y, i64 %indvars.iv217
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 4
-  %i.db = load i32, ptr %i.da, align 4, !tbaa !49 ; 2 uses
+  %i.db = load i32, ptr %i.da, align 4, !tbaa !49
   %.not167 = icmp slt i32 %.2148, %i.db
   %indvars.iv.next218 = add nuw nsw i64 %indvars.iv217, 1
   br i1 %.not167, label %.loopexit.loopexit, label %.preheader, !llvm.loop !107
@@ -216,7 +216,7 @@ bb.ab:                                            ; preds = %bb.u, %bb.z, %.loop
   %i.de = sext i32 %i.dd to i64                   ; 3 uses
   %i.df = getelementptr inbounds [12 x i8], ptr %i.y, i64 %i.de ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 4
-  %i.dh = load i32, ptr %i.dg, align 4, !tbaa !49 ; 3 uses
+  %i.dh = load i32, ptr %i.dg, align 4, !tbaa !49
   %.not165 = icmp slt i32 %.2148, %i.dh
   br i1 %.not165, label %bb.ad, label %bb.ac
 
@@ -245,10 +245,9 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ae, %bb.ad, %.loopexit.loopexit
-  %3 = phi i32 [ %i.db, %.loopexit.loopexit ], [ %i.dh, %bb.ad ], [ %i.dh, %bb.ae ]
   %.pre-phi = phi i64 [ %indvars.iv217, %.loopexit.loopexit ], [ %i.de, %bb.ad ], [ %i.de, %bb.ae ]
   %.3142 = phi i32 [ %i.dm, %.loopexit.loopexit ], [ %i.dd, %bb.ad ], [ %i.dd, %bb.ae ] ; 2 uses
-  %i.dn = getelementptr inbounds [12 x i8], ptr %i.y, i64 %.pre-phi
+  %i.dn = getelementptr inbounds [12 x i8], ptr %i.y, i64 %.pre-phi ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !48 ; 3 uses
   %i.dp = icmp sgt i32 %i.do, -1
   br i1 %i.dp, label %bb.af, label %bb.ai
@@ -272,9 +271,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 
 bb.ai:                                            ; preds = %.loopexit
   %i.dx = and i32 %i.do, 2147483647
+  %3 = getelementptr inbounds nuw i8, ptr %i.dn, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !49
   %i.dy = xor i32 %.2148, -1
   %i.dz = add i32 %i.dx, %i.dy
-  %i.ea = add i32 %i.dz, %3
+  %i.ea = add i32 %i.dz, %4
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.r, %bb.w, %bb.m, %bb.a, %bb.b, %bb.ai, %bb.ah, %bb.p, %bb.n, %bb.j, %bb.g

@@ -95,7 +95,7 @@ bb.a:
   %i.c = alloca [3 x double], align 16            ; 10 uses
   %i.d = alloca [4 x double], align 16            ; 15 uses
   %i.e = sext i32 %3 to i64                       ; 4 uses
-  %i.f = tail call noalias ptr @calloc(i64 noundef %i.e, i64 noundef 40) #10 ; 12 uses
+  %i.f = tail call noalias ptr @calloc(i64 noundef %i.e, i64 noundef 40) #10 ; 13 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.aq, label %bb.b
 
@@ -105,7 +105,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %wide.trip.count = zext nneg i32 %3 to i64      ; 2 uses
-  %8 = load <2 x double>, ptr %2, align 8
   br label %.lr.ph
 
 .lr.ph208:                                        ; preds = %.lr.ph
@@ -121,16 +120,19 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %9 = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.s, %.lr.ph ]
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
-  %10 = phi <2 x double> [ %8, %.lr.ph.preheader ], [ %i.n, %.lr.ph ]
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv
-  %i.n = load <2 x double>, ptr %i.m, align 8     ; 2 uses
-  %i.o = fsub <2 x double> %10, %i.n              ; 2 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
+  %8 = add nsw i64 %indvars.iv, -1                ; 2 uses
+  %9 = getelementptr inbounds [40 x i8], ptr %i.f, i64 %8
+  %10 = load double, ptr %9, align 8, !tbaa !34
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv
+  %i.m = getelementptr inbounds [16 x i8], ptr %2, i64 %8
+  %12 = load <2 x double>, ptr %11, align 8
+  %i.n = load <2 x double>, ptr %i.m, align 8
+  %i.o = fsub <2 x double> %i.n, %12              ; 2 uses
   %i.p = extractelement <2 x double> %i.o, i64 0
   %i.q = extractelement <2 x double> %i.o, i64 1
   %i.r = tail call double @hypot(double noundef %i.p, double noundef %i.q) #11
-  %i.s = fadd double %9, %i.r                     ; 2 uses
+  %i.s = fadd double %10, %i.r
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %i.f, i64 %indvars.iv
   store double %i.s, ptr %i.t, align 8, !tbaa !34
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
