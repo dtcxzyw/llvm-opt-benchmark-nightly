@@ -205,12 +205,7 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.b
   %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 464), align 8, !tbaa !239 ; 2 uses
   %i.j = icmp sgt i32 %i.i, 0
-  br i1 %i.j, label %sub_0.preheader, label %.thread.thread
-
-.thread.thread:                                   ; preds = %.preheader
-  %0 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1896), align 8, !tbaa !810
-  %1 = icmp eq i32 %0, 0
-  br i1 %1, label %bb.f, label %bb.g
+  br i1 %i.j, label %sub_0.preheader, label %.thread.a
 
 sub_0.preheader:                                  ; preds = %.preheader
   %wide.trip.count = zext nneg i32 %i.i to i64
@@ -237,17 +232,17 @@ sub_0:                                            ; preds = %sub_0.preheader, %b
   %i.p = getelementptr inbounds nuw i8, ptr %spec.select, i64 1
   %i.q = load i8, ptr %i.p, align 1
   %i.r = icmp eq i8 %i.q, 0
-  br i1 %i.r, label %.thread.a, label %.thread41
+  br i1 %i.r, label %bb.d, label %.thread41
 
 .tail.thread:                                     ; preds = %sub_0
   %i.s = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %spec.select, ptr noundef nonnull dereferenceable(8) @.str.459) #40
   %.not16 = icmp eq i32 %i.s, 0
-  br i1 %.not16, label %.thread.a, label %sub_025
+  br i1 %.not16, label %bb.d, label %sub_025
 
 .thread41:                                        ; preds = %.tail
   %i.t = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %spec.select, ptr noundef nonnull dereferenceable(8) @.str.459) #40
   %.not1642 = icmp eq i32 %i.t, 0
-  br i1 %.not1642, label %.thread.a, label %.tail24.thread
+  br i1 %.not1642, label %bb.d, label %.tail24.thread
 
 sub_025:                                          ; preds = %.tail.thread
   %.not37 = icmp eq i8 %i.o, 58
@@ -263,44 +258,44 @@ sub_126:                                          ; preds = %sub_025
   %i.w = getelementptr inbounds nuw i8, ptr %spec.select, i64 2
   %i.x = load i8, ptr %i.w, align 1
   %i.y = icmp eq i8 %i.x, 0
-  br i1 %i.y, label %.thread.a, label %.tail24.thread
+  br i1 %i.y, label %bb.d, label %.tail24.thread
 
 .tail24.thread:                                   ; preds = %.thread41, %sub_126, %sub_025, %.tail24
   %i.z = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %spec.select, ptr noundef nonnull dereferenceable(4) @.str.461) #40
   %.not18.not = icmp eq i32 %i.z, 0
-  br i1 %.not18.not, label %.thread.a, label %bb.c
+  br i1 %.not18.not, label %bb.d, label %bb.c
 
-.thread.a:                                        ; preds = %.tail24.thread, %bb.c, %.tail, %.tail24, %.tail.thread, %.thread41
-  %2 = phi i1 [ true, %.tail24.thread ], [ true, %.tail.thread ], [ true, %.tail24 ], [ true, %.tail ], [ false, %bb.c ], [ true, %.thread41 ]
+.thread.a:                                        ; preds = %bb.c, %.preheader
   %i.aa = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1896), align 8, !tbaa !810
-  %i.ab = icmp eq i32 %i.aa, 0                    ; 2 uses
-  %or.cond = and i1 %i.ab, %2
-  br i1 %or.cond, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %.thread.a
-  %i.ac = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !62
-  %3 = icmp sgt i32 %i.ac, 3
-  br i1 %3, label %bb.h, label %.sink.split
-
-bb.e:                                             ; preds = %.thread.a
+  %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %.thread.thread, %bb.e
+bb.d:                                             ; preds = %.tail24.thread, %.tail, %.tail24, %.tail.thread, %.thread41
+  %i.ac = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1896), align 8, !tbaa !810
+  %0 = icmp eq i32 %i.ac, 0
+  br i1 %0, label %bb.e, label %bb.g
+
+bb.e:                                             ; preds = %bb.d
+  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !62
+  %2 = icmp sgt i32 %1, 3
+  br i1 %2, label %bb.h, label %.sink.split
+
+bb.f:                                             ; preds = %.thread.a
   %i.ad = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !62
   %i.ae = icmp sgt i32 %i.ad, 3
   br i1 %i.ae, label %bb.h, label %.sink.split
 
-bb.g:                                             ; preds = %.thread.thread, %bb.e
+bb.g:                                             ; preds = %bb.d, %.thread.a
   %i.af = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !62
   %i.ag = icmp sgt i32 %i.af, 3
   br i1 %i.ag, label %bb.h, label %.sink.split
 
-.sink.split:                                      ; preds = %bb.g, %bb.f, %bb.d
-  %.str.462.sink = phi ptr [ @.str.462, %bb.d ], [ @.str.463, %bb.f ], [ @.str.464, %bb.g ]
+.sink.split:                                      ; preds = %bb.g, %bb.f, %bb.e
+  %.str.462.sink = phi ptr [ @.str.462, %bb.e ], [ @.str.463, %bb.f ], [ @.str.464, %bb.g ]
   tail call void (i32, ptr, ...) @_serverLog(i32 noundef 3, ptr noundef nonnull %.str.462.sink)
   br label %bb.h
 
-bb.h:                                             ; preds = %.sink.split, %bb.d, %bb.g, %bb.f, %bb.b, %bb.a
+bb.h:                                             ; preds = %.sink.split, %bb.e, %bb.g, %bb.f, %bb.b, %bb.a
   ret void
 }
 

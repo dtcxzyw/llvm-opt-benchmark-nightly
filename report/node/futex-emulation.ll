@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/futex-emulation?download=true
 inline.NumInlined: 1031
 inline.NumDeleted: 551
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
-loop-unroll.NumUnrolledNotLatch: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN2v88internal13FutexWaitList21DeleteNodesForIsolateEPNS0_7IsolateEPPNS0_17FutexWaitListNodeES6_:bb.a
 _ZN2v88internal13FutexWaitList21DeleteAsyncWaiterNodeEPNS0_17FutexWaitListNodeE.exit: ; preds = %bb.g, %_ZNKSt14default_deleteIN2v88internal17FutexWaitListNode10AsyncStateEEclEPS3_.exit.i.i.i
   tail call void @_ZN2v84base17ConditionVariableD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(48) %.022) #17
@@ -205,8 +204,9 @@ _ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit: ; preds = %bb.a, %bb.b, %bb.c
   br i1 %i.j, label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader, label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us.outer
 
 _ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader: ; preds = %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit
-  %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object, i64 448), align 8
-  br label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer
+  %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object, i64 448), align 8 ; 2 uses
+  %2 = icmp eq ptr %i.l, getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object, i64 432)
+  br i1 %2, label %_ZN2v88internal29NoGarbageCollectionMutexGuardD2Ev.exit, label %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread
 
 _ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us: ; preds = %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us.outer, %bb.g
   %.sroa.026.0.us = phi ptr [ %i.ad, %bb.g ], [ %.sroa.026.0.us.ph, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us.outer ] ; 4 uses
@@ -284,32 +284,28 @@ _ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us.outer: ; preds = %_ZN
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.7.0.us.ph, i64 32
   br label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.us
 
-_ZN2v88internal29NoGarbageCollectionMutexGuardD2Ev.exit: ; preds = %.split.us, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer
-  %.us-phi = phi i32 [ %.015.ph, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer ], [ %.015.us, %.split.us ]
+_ZN2v88internal29NoGarbageCollectionMutexGuardD2Ev.exit: ; preds = %.split.us, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader
+  %.us-phi = phi i32 [ %.1.lcssa, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer ], [ 0, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader ], [ %.015.us, %.split.us ]
   tail call void @_ZN2v84base5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object) #17
   ret i32 %.us-phi
 
-_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread: ; preds = %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.7.0.ph, i64 32
-  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8
+_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread: ; preds = %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer
+  %.01548 = phi i32 [ %.1.lcssa, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer ], [ 0, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader ] ; 2 uses
+  %.sroa.7.047 = phi ptr [ %3, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer ], [ %i.l, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader ] ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.7.047, i64 40
   %.036 = load ptr, ptr %i.ag, align 8            ; 2 uses
   %.not37 = icmp eq ptr %.036, null
-  br i1 %.not37, label %._crit_edge, label %.lr.ph
+  br i1 %.not37, label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread, %bb.k
-  %.1.lcssa = phi i32 [ %.015.ph, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread ], [ %.2, %bb.k ]
-  %3 = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.7.0.ph) #19
-  br label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer
-
-_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer: ; preds = %._crit_edge, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader
-  %.sroa.7.0.ph = phi ptr [ %3, %._crit_edge ], [ %i.l, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader ] ; 3 uses
-  %.015.ph = phi i32 [ %.1.lcssa, %._crit_edge ], [ 0, %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.preheader ] ; 3 uses
-  %i.ah = icmp eq ptr %.sroa.7.0.ph, getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object, i64 432)
+_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer: ; preds = %bb.k, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread
+  %.1.lcssa = phi i32 [ %.01548, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread ], [ %.2, %bb.k ] ; 2 uses
+  %3 = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.7.047) #19 ; 2 uses
+  %i.ah = icmp eq ptr %3, getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_111GetWaitListEvE6object, i64 432)
   br i1 %i.ah, label %_ZN2v88internal29NoGarbageCollectionMutexGuardD2Ev.exit, label %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread
 
 .lr.ph:                                           ; preds = %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread, %bb.k
   %.039 = phi ptr [ %.0, %bb.k ], [ %.036, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread ] ; 4 uses
-  %.138 = phi i32 [ %.2, %bb.k ], [ %.015.ph, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread ] ; 4 uses
+  %.138 = phi i32 [ %.2, %bb.k ], [ %.01548, %_ZNK2v84base8SmallMapISt3mapIPNS_8internal7IsolateENS3_13FutexWaitList11HeadAndTailESt4lessIS5_ESaISt4pairIKS5_S7_EEELm4ENS0_8internal16select_equal_keyISE_Lb0EE9equal_keyENSF_19SmallMapDefaultInitISE_EEE8iteratoreqERKSM_.exit.thread ] ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.039, i64 32
   %i.aj = load i8, ptr %i.ai, align 8, !range !19, !noundef !20
   %i.ak = trunc nuw i8 %i.aj to i1
@@ -345,7 +341,7 @@ bb.k:                                             ; preds = %_ZNKSt10__weak_ptrI
   %i.av = getelementptr inbounds nuw i8, ptr %.039, i64 16
   %.0 = load ptr, ptr %i.av, align 8              ; 2 uses
   %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !52
+  br i1 %.not, label %_ZN2v88internal12_GLOBAL__N_111GetWaitListEv.exit.split.outer, label %.lr.ph, !llvm.loop !52
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable

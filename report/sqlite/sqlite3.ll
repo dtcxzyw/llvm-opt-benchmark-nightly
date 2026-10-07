@@ -206,11 +206,11 @@ bb.z:                                             ; preds = %unixTempFileDir.exi
   %i.bu = load i64, ptr %i.a, align 8, !tbaa !565
   %i.bv = call ptr (i32, ptr, ptr, ...) @sqlite3_snprintf(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull @.str.90, ptr noundef nonnull %.07.i, i64 noundef %i.bu, i32 noundef 0) ; 0 uses
   %i.bw = load i8, ptr %i.bt, align 1, !tbaa !733
-  %.not = icmp eq i8 %i.bw, 0
-  %3 = icmp samesign ult i32 %.013, 11
-  %i.bx = select i1 %.not, i1 %3, i1 false
+  %.not = icmp ne i8 %i.bw, 0
+  %3 = icmp samesign ugt i32 %.013, 10
+  %i.bx = select i1 %.not, i1 true, i1 %3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #58
-  br i1 %i.bx, label %bb.aa, label %.loopexit
+  br i1 %i.bx, label %.loopexit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %.215 = add nuw nsw i32 %.013, 1
@@ -613,9 +613,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %.not67, label %bb.l, label %.thread97
 
 bb.l:                                             ; preds = %bb.k
-  %i.ax = icmp eq i32 %3, 0                       ; 3 uses
-  %spec.select = select i1 %i.ax, i8 2, i8 0
-  %spec.select73 = select i1 %i.ax, i32 %1, i32 0
+  %i.ax = icmp eq i32 %3, 0
   %i.ay = getelementptr i8, ptr %0, i64 64        ; 2 uses
   br i1 %i.ax, label %.split.us, label %.split
 
@@ -685,7 +683,7 @@ releasePage.exit78.us:                            ; preds = %bb.p, %bb.o, %bb.m
 .split:                                           ; preds = %bb.l, %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #58
   %.val = load i32, ptr %i.ay, align 8, !tbaa !997
-  %i.ce = call fastcc i32 @allocateBtreePage(ptr noundef nonnull %0, ptr noundef %i.g, ptr noundef %i.e, i32 noundef %spec.select73, i8 noundef zeroext %spec.select) ; 2 uses
+  %i.ce = call fastcc i32 @allocateBtreePage(ptr noundef nonnull %0, ptr noundef %i.g, ptr noundef %i.e, i32 noundef 0, i8 noundef zeroext 0) ; 2 uses
   %.not68 = icmp eq i32 %i.ce, 0
   br i1 %.not68, label %bb.t, label %.split105.us
 

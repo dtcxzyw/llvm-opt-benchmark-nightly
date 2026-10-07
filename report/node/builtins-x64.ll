@@ -204,7 +204,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327:
   tail call void @_ZN2v88internal14MacroAssembler10EnterFrameENS0_10StackFrame4TypeE(ptr noundef nonnull align 8 dereferenceable(436) %0, i32 noundef %i.d) #8
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 5, i8 4, i64 32, i32 noundef 8) #8
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 6, i64 407175168, ptr nonnull inttoptr (i64 2 to ptr), i32 noundef 8) #8
-  %.sroa.088.0.copyload.sroa.speculated = select i1 %i.c, i8 3, i8 7 ; 9 uses
+  %.sroa.088.0.copyload.sroa.speculated = select i1 %i.c, i8 3, i8 7 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
   store i32 0, ptr %6, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 4
@@ -221,18 +221,14 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313: ; preds = %_ZN2v88internal7Op
   tail call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_6TaggedINS0_3SmiEEE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 10, i64 0) #8
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 3762618368, ptr nonnull inttoptr (i64 2 to ptr), i8 10, i32 noundef 8) #8
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 3628400640, ptr nonnull inttoptr (i64 2 to ptr), i8 10, i32 noundef 8) #8
-  tail call void @_ZN2v88internal14MacroAssembler16LoadRootRelativeENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 %.sroa.088.0.copyload.sroa.speculated, i32 noundef 55168) #8
-  %10 = or disjoint i8 %.sroa.088.0.copyload.sroa.speculated, 64
-  %.sroa.0926.2.insert.ext = zext nneg i8 %10 to i64
-  %.sroa.0926.2.insert.shift = shl nuw nsw i64 %.sroa.0926.2.insert.ext, 16 ; 2 uses
-  %.sroa.0926.3.insert.insert = or disjoint i64 %.sroa.0926.2.insert.shift, 939524096
-  tail call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 %.sroa.088.0.copyload.sroa.speculated, i64 %.sroa.0926.3.insert.insert, ptr nonnull inttoptr (i64 2 to ptr)) #8
+  tail call void @_ZN2v88internal14MacroAssembler16LoadRootRelativeENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 3, i32 noundef 55168) #8
+  tail call void @_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 3, i64 943915008, ptr nonnull inttoptr (i64 2 to ptr)) #8
   %i.g = tail call i64 @_ZN2v88internal17ExternalReference16wasm_start_stackEv() #8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   store i8 6, ptr %5, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 7, ptr %i.h, align 1
-  call fastcc void @_ZN2v88internal12_GLOBAL__N_112SwitchStacksEPNS0_14MacroAssemblerENS0_17ExternalReferenceENS0_8RegisterEPNS0_5LabelES5_St16initializer_listIS5_E(ptr noundef nonnull %0, i64 %i.g, i8 %.sroa.088.0.copyload.sroa.speculated, ptr noundef nonnull %6, i8 -1, ptr nonnull %5, i64 2)
+  call fastcc void @_ZN2v88internal12_GLOBAL__N_112SwitchStacksEPNS0_14MacroAssemblerENS0_17ExternalReferenceENS0_8RegisterEPNS0_5LabelES5_St16initializer_listIS5_E(ptr noundef nonnull %0, i64 %i.g, i8 3, ptr noundef nonnull %6, i8 -1, ptr nonnull %5, i64 2)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   call void @_ZN2v88internal14MacroAssembler16LoadRootRelativeENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 0, i32 noundef 55168) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 %.sroa.091.0.copyload, i8 5, i32 noundef 8) #8
@@ -242,14 +238,11 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313: ; preds = %_ZN2v88internal7Op
   call void @_ZN2v88internal14MacroAssembler4PushENS0_9ImmediateE(ptr noundef nonnull align 8 dereferenceable(436) %0, i64 0) #8
   call void @_ZN2v88internal14MacroAssembler10EnterFrameENS0_10StackFrame4TypeE(ptr noundef nonnull align 8 dereferenceable(436) %0, i32 noundef 7) #8
   call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 noundef zeroext 5, i8 4, i64 88, i32 noundef 8) #8
-  call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 %.sroa.088.0.copyload.sroa.speculated, i8 4, i32 noundef 8) #8
+  call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 3, i8 4, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 458752, ptr nonnull inttoptr (i64 1 to ptr), i32 noundef 8) #8
-  %.sroa.0714.2.insert.ext719 = zext nneg i8 %.sroa.088.0.copyload.sroa.speculated to i64
-  %.sroa.0714.2.insert.shift720 = shl nuw nsw i64 %.sroa.0714.2.insert.ext719, 16
-  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.0714.2.insert.shift720, ptr nonnull inttoptr (i64 1 to ptr), i8 10, i32 noundef 8) #8
+  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 196608, ptr nonnull inttoptr (i64 1 to ptr), i8 10, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 138870784, ptr nonnull inttoptr (i64 2 to ptr), i32 noundef 8) #8
-  %.sroa.0924.3.insert.insert = or disjoint i64 %.sroa.0926.2.insert.shift, 134217728
-  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.0924.3.insert.insert, ptr nonnull inttoptr (i64 2 to ptr), i8 10, i32 noundef 8) #8
+  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 138608640, ptr nonnull inttoptr (i64 2 to ptr), i8 10, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 4031053824, ptr nonnull inttoptr (i64 2 to ptr), i8 %.sroa.088.0.copyload.sroa.speculated, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 3762618368, ptr nonnull inttoptr (i64 2 to ptr), i8 6, i32 noundef 8) #8
   %i.i = and i8 %.sroa.091.0.copyload, 5
@@ -652,7 +645,7 @@ declare void @_ZN2v88internal14MacroAssembler17StoreRootRelativeEiNS0_8RegisterE
 declare void @_ZN2v88internal14MacroAssembler25LoadProtectedPointerFieldENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(436), i8, i64, ptr) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN2v88internal12_GLOBAL__N_112SwitchStacksEPNS0_14MacroAssemblerENS0_17ExternalReferenceENS0_8RegisterEPNS0_5LabelES5_St16initializer_listIS5_E(ptr noundef %0, i64 %1, i8 %2, ptr noundef %3, i8 range(i8 -1, 3) %4, ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #0 {
+define internal fastcc void @_ZN2v88internal12_GLOBAL__N_112SwitchStacksEPNS0_14MacroAssemblerENS0_17ExternalReferenceENS0_8RegisterEPNS0_5LabelES5_St16initializer_listIS5_E(ptr noundef %0, i64 %1, i8 range(i8 3, 10) %2, ptr noundef %3, i8 range(i8 -1, 3) %4, ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.8.val ; 2 uses
   %.not13 = icmp samesign eq i64 %.8.val, 0       ; 2 uses

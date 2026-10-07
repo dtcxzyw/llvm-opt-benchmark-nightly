@@ -44,8 +44,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not120, label %._crit_edge, label %.lr.ph105
 
 .lr.ph105:                                        ; preds = %.preheader
-  %.not121 = icmp eq i32 %2, 0                    ; 2 uses
-  %4 = select i1 %.not121, i32 3, i32 4           ; 3 uses
+  %.not121 = icmp eq i32 %2, 0
   br i1 %.not121, label %.lr.ph105.split, label %.lr.ph105.split.us
 
 .lr.ph105.split.us:                               ; preds = %.lr.ph105, %.loopexit.us
@@ -79,7 +78,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.us.preheader:                              ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
-  %i.p = call ptr @ares_malloc_data(i32 noundef %4) #3 ; 8 uses
+  %i.p = call ptr @ares_malloc_data(i32 noundef 4) #3 ; 8 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %.thread, label %bb.g
 
@@ -122,7 +121,7 @@ bb.j:                                             ; preds = %bb.i
   %.04298.us108 = phi i64 [ %i.as, %bb.l ], [ 1, %bb.j ] ; 2 uses
   %.14597.us109 = phi ptr [ %i.ae, %bb.l ], [ %i.p, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
-  %i.ae = call ptr @ares_malloc_data(i32 noundef %4) #3 ; 6 uses
+  %i.ae = call ptr @ares_malloc_data(i32 noundef 4) #3 ; 6 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %.thread, label %bb.k
 
@@ -195,7 +194,7 @@ bb.p:                                             ; preds = %bb.o
   %.14597.us = phi ptr [ %i.be, %bb.t ], [ %.044103, %bb.p ] ; 2 uses
   %.14796.us = phi ptr [ %.248.us, %bb.t ], [ %.046102, %bb.p ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
-  %i.be = call ptr @ares_malloc_data(i32 noundef %4) #3 ; 7 uses
+  %i.be = call ptr @ares_malloc_data(i32 noundef 3) #3 ; 7 uses
   %i.bf = icmp eq ptr %i.be, null
   br i1 %i.bf, label %.thread, label %bb.q
 

@@ -203,7 +203,6 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.sink13.v.i = select i1 %1, i64 232, i64 256   ; 2 uses
   br i1 %1, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN6embree5Accel12Intersectors6selectEb.exit.us
@@ -211,7 +210,6 @@ bb.a:
   %.04.us = phi i64 [ %i.u, %_ZN6embree5Accel12Intersectors6selectEb.exit.us ], [ 0, %.lr.ph ] ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.04.us
   %i.g = load ptr, ptr %i.f, align 8              ; 10 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 192
   %i.i = load ptr, ptr %i.h, align 8
   %.not.i.us = icmp eq ptr %i.i, null
@@ -245,7 +243,7 @@ bb.c:                                             ; preds = %.sink.split.i.us, %
   br i1 %.not9.i.us, label %_ZN6embree5Accel12Intersectors6selectEb.exit.us, label %.sink.split11.i.us
 
 .sink.split11.i.us:                               ; preds = %bb.c
-  %.sink13.i.us = getelementptr inbounds nuw i8, ptr %2, i64 %.sink13.v.i
+  %.sink13.i.us = getelementptr inbounds nuw i8, ptr %i.g, i64 320
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 296
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %.sink13.i.us, i64 24, i1 false)
   br label %_ZN6embree5Accel12Intersectors6selectEb.exit.us
@@ -269,7 +267,6 @@ _ZN6embree5Accel12Intersectors6selectEb.exit.us:  ; preds = %.sink.split11.i.us,
   %.04 = phi i64 [ %i.as, %_ZN6embree5Accel12Intersectors6selectEb.exit ], [ 0, %.lr.ph ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.04
   %i.ae = load ptr, ptr %i.ad, align 8            ; 10 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ae, i64 88
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 192
   %i.ag = load ptr, ptr %i.af, align 8
   %.not.i = icmp eq ptr %i.ag, null
@@ -303,7 +300,7 @@ bb.e:                                             ; preds = %.thread3.i, %.threa
   br i1 %.not9.i, label %_ZN6embree5Accel12Intersectors6selectEb.exit, label %.sink.split11.i
 
 .sink.split11.i:                                  ; preds = %bb.e
-  %.sink13.i = getelementptr inbounds nuw i8, ptr %3, i64 %.sink13.v.i
+  %.sink13.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 344
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ae, i64 296
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ar, ptr noundef nonnull align 8 dereferenceable(24) %.sink13.i, i64 24, i1 false)
   br label %_ZN6embree5Accel12Intersectors6selectEb.exit

@@ -205,12 +205,12 @@ ZSTD_row_fillHashCache.exit6:                     ; preds = %ZSTD_hashPtrSalted.
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph108, %.critedge9.i
-  %.0.i107 = phi ptr [ %i.ao, %.lr.ph108 ], [ %.7.i, %.critedge9.i ] ; 16 uses
+  %.0.i107 = phi ptr [ %i.ao, %.lr.ph108 ], [ %.7.i, %.critedge9.i ] ; 17 uses
   %.0410.i106 = phi ptr [ %3, %.lr.ph108 ], [ %.6416.i, %.critedge9.i ] ; 11 uses
   %.2472.i105 = phi i32 [ %i.s, %.lr.ph108 ], [ %.9479.i, %.critedge9.i ] ; 3 uses
   %.2482.i104 = phi i32 [ %i.q, %.lr.ph108 ], [ %.9489.i, %.critedge9.i ] ; 5 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %.0.i107, i64 1 ; 3 uses
-  %i.hq = ptrtoint ptr %.0.i107 to i64            ; 2 uses
+  %i.hp = getelementptr inbounds nuw i8, ptr %.0.i107, i64 1 ; 2 uses
+  %i.hq = ptrtoint ptr %.0.i107 to i64            ; 3 uses
   %i.hr = sub i64 %i.hq, %i.gz
   %i.hs = trunc i64 %i.hr to i32
   %reass.sub = sub i32 %i.hs, %.2482.i104
@@ -303,11 +303,8 @@ bb.w:                                             ; preds = %bb.t
   br label %ZSTD_searchMax.exit
 
 ZSTD_searchMax.exit:                              ; preds = %bb.m, %bb.n, %bb.o, %bb.q, %bb.r, %bb.s, %bb.u, %bb.v, %bb.w
-  %.0.i11 = phi i64 [ %i.im, %bb.q ], [ %i.in, %bb.r ], [ %i.io, %bb.s ], [ %i.ip, %bb.u ], [ %i.iq, %bb.v ], [ %i.ir, %bb.w ], [ %i.ij, %bb.m ], [ %i.ik, %bb.n ], [ %i.il, %bb.o ] ; 5 uses
-  %.not = icmp eq i64 %.0.i11, 0                  ; 2 uses
-  %i.is = load i64, ptr %i.a, align 8             ; 3 uses
-  %.0430.i = select i1 %.not, i64 1, i64 %i.is    ; 3 uses
-  %.0422.i = select i1 %.not, ptr %i.hp, ptr %.0.i107 ; 3 uses
+  %.0.i11 = phi i64 [ %i.im, %bb.q ], [ %i.in, %bb.r ], [ %i.io, %bb.s ], [ %i.ip, %bb.u ], [ %i.iq, %bb.v ], [ %i.ir, %bb.w ], [ %i.ij, %bb.m ], [ %i.ik, %bb.n ], [ %i.il, %bb.o ] ; 4 uses
+  %i.is = load i64, ptr %i.a, align 8             ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.it = icmp ult i64 %.0.i11, 4
   br i1 %i.it, label %bb.x, label %bb.y
@@ -328,13 +325,12 @@ bb.y:                                             ; preds = %ZSTD_searchMax.exit
   br i1 %i.jb, label %bb.z, label %bb.ab
 
 bb.z:                                             ; preds = %bb.y
-  %5 = ptrtoint ptr %.0.i107 to i64
+  %5 = add i64 %i.hq, -4294967293
   %i.jc = add i64 %i.is, %i.gz
-  %reass.sub112 = sub i64 %5, %i.jc
-  %6 = add i64 %reass.sub112, -4294967293         ; 2 uses
-  %i.jd = trunc i64 %6 to i32
+  %reass.sub112 = sub i64 %5, %i.jc               ; 2 uses
+  %i.jd = trunc i64 %reass.sub112 to i32
   %i.je = icmp ugt i32 %i.g, %i.jd                ; 2 uses
-  %i.jf = and i64 %6, 4294967295
+  %i.jf = and i64 %reass.sub112, 4294967295
   %i.jg = select i1 %i.je, ptr %i.aa, ptr %i.i    ; 2 uses
   %.v113 = select i1 %i.je, ptr %invariant.gep, ptr %i.e
   %i.jh = getelementptr i8, ptr %.v113, i64 %i.jf ; 2 uses
@@ -345,7 +341,7 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph81:                                         ; preds = %bb.z, %bb.aa
   %.0409.i80 = phi ptr [ %i.jm, %bb.aa ], [ %i.jh, %bb.z ]
-  %.17.i79 = phi ptr [ %i.jk, %bb.aa ], [ %.0422.i, %bb.z ] ; 2 uses
+  %.17.i79 = phi ptr [ %i.jk, %bb.aa ], [ %.0.i107, %bb.z ] ; 2 uses
   %.21.i78 = phi i64 [ %i.jp, %bb.aa ], [ %.0.i11, %bb.z ] ; 2 uses
   %i.jk = getelementptr inbounds i8, ptr %.17.i79, i64 -1 ; 4 uses
   %i.jl = load i8, ptr %i.jk, align 1, !tbaa !53
@@ -363,8 +359,8 @@ bb.aa:                                            ; preds = %.lr.ph81
 
 .critedge7.i:                                     ; preds = %bb.aa, %.lr.ph81, %bb.z
   %.21.i.lcssa = phi i64 [ %.0.i11, %bb.z ], [ %.21.i78, %.lr.ph81 ], [ %i.jp, %bb.aa ]
-  %.17.i.lcssa = phi ptr [ %.0422.i, %bb.z ], [ %.17.i79, %.lr.ph81 ], [ %i.jk, %bb.aa ]
-  %i.js = trunc i64 %.0430.i to i32
+  %.17.i.lcssa = phi ptr [ %.0.i107, %bb.z ], [ %.17.i79, %.lr.ph81 ], [ %i.jk, %bb.aa ]
+  %i.js = trunc i64 %i.is to i32
   %i.jt = add i32 %i.js, -3
   br label %bb.ab
 
@@ -372,8 +368,8 @@ bb.ab:                                            ; preds = %bb.j, %.critedge7.i
   %.3483.i = phi i32 [ %.2482.i104, %bb.j ], [ %i.jt, %.critedge7.i ], [ %.2482.i104, %bb.y ] ; 2 uses
   %.3473.i = phi i32 [ %.2472.i105, %bb.j ], [ %.2482.i104, %.critedge7.i ], [ %.2472.i105, %bb.y ] ; 2 uses
   %.23.i = phi i64 [ %i.ii, %bb.j ], [ %.21.i.lcssa, %.critedge7.i ], [ %.0.i11, %bb.y ] ; 2 uses
-  %.15445.i = phi i64 [ 1, %bb.j ], [ %.0430.i, %.critedge7.i ], [ %.0430.i, %bb.y ]
-  %.19.i = phi ptr [ %i.hp, %bb.j ], [ %.17.i.lcssa, %.critedge7.i ], [ %.0422.i, %bb.y ] ; 5 uses
+  %.15445.i = phi i64 [ 1, %bb.j ], [ %i.is, %.critedge7.i ], [ %i.is, %bb.y ]
+  %.19.i = phi ptr [ %i.hp, %bb.j ], [ %.17.i.lcssa, %.critedge7.i ], [ %.0.i107, %bb.y ] ; 5 uses
   %i.ju = ptrtoint ptr %.19.i to i64              ; 4 uses
   %i.jv = ptrtoint ptr %.0410.i106 to i64         ; 2 uses
   %i.jw = sub i64 %i.ju, %i.jv                    ; 7 uses
@@ -776,7 +772,7 @@ ZSTD_dedicatedDictSearch_lazy_search.exit:        ; preds = %bb.r, %bb.u, %.thre
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -1179,7 +1175,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -1582,7 +1578,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_4_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -1985,7 +1981,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.aa, %bb.ad, %.th
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -2388,7 +2384,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -2791,7 +2787,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_5_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -3194,7 +3190,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.aa, %bb.ad, %.th
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_4(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -3597,7 +3593,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_5(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -4000,7 +3996,7 @@ ZSTD_RowFindBestMatch.exit:                       ; preds = %bb.z, %bb.ac, %.thr
 }
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
+define internal fastcc range(i64 3, 0) i64 @ZSTD_RowFindBestMatch_dedicatedDictSearch_6_6(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [64 x i32], align 16              ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses

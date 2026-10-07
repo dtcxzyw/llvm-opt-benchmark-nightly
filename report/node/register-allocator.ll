@@ -1,10 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/register-allocator?download=true
 inline.NumInlined: 5702
 inline.NumDeleted: 2184
-loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 11
-loop-unroll.NumUnrolledNotLatch: 1
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@_ZN2v88internal8compiler19LinearScanAllocator31ChooseOneOfTwoPredecessorStatesEPNS1_16InstructionBlockENS1_16LifetimePositionE:bb.a
   %i.cw = call noundef nonnull ptr @_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_(ptr noundef %.sroa.4.0.i197, ptr noundef nonnull align 8 dereferenceable(32) %i.aj) #36 ; 0 uses
   %i.cx = load i64, ptr %i.am, align 8
@@ -206,34 +205,23 @@ define hidden noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator1
 bb.a:
   %i.a = load i64, ptr %3, align 8
   %.fr33 = freeze i64 %i.a                        ; 2 uses
-  %4 = icmp eq i64 %.fr33, -1                     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.fr33
-  %.sroa.01.0.i15 = select i1 %4, ptr null, ptr %5
-  br i1 %4, label %.split30.preheader, label %.split30.us.outer
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
+  %.idx = shl nuw nsw i64 %.fr33, 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx
+  switch i64 %.fr33, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us [
+    i64 -1, label %.split30.preheader
+    i64 0, label %.split32.us
+  ]
 
 .split30.preheader:                               ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.e = load ptr, ptr %i.d, align 8
-  br label %.split30.outer
+  %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
+  %.not4046 = icmp eq ptr %i.e, %i.c
+  br i1 %.not4046, label %.split32.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread
 
-.split30.outer:                                   ; preds = %bb.b, %.split30.preheader
-  %.sroa.7.0.ph = phi ptr [ %i.x, %bb.b ], [ %i.e, %.split30.preheader ] ; 3 uses
-  %6 = icmp eq ptr %.sroa.7.0.ph, %i.c
-  br i1 %6, label %.split32.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread
-
-.split30.us:                                      ; preds = %.split30.us.outer, %9
-  %.sroa.021.0.us = phi ptr [ %10, %9 ], [ %.sroa.021.0.us.ph, %.split30.us.outer ] ; 4 uses
-  %.not.i.us = icmp eq ptr %.sroa.021.0.us, null  ; 2 uses
-  br i1 %.not.i.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us, label %.split.us
-
-.split.us:                                        ; preds = %.split30.us
-  %7 = icmp eq ptr %.sroa.021.0.us, %.sroa.01.0.i15
-  br i1 %7, label %.split32.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us
-
-_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us: ; preds = %.split30.us, %.split.us
-  %i.f = phi ptr [ %.sroa.021.0.us, %.split.us ], [ %13, %.split30.us ] ; 2 uses
+_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us: ; preds = %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us, %bb.a
+  %i.f = phi ptr [ %5, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us ], [ %i.b, %bb.a ] ; 3 uses
   %.sroa.0.0.copyload.us = load ptr, ptr %i.f, align 8
   %.sroa.4.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.4.0.copyload.us = load i32, ptr %.sroa.4.0..sroa_idx.us, align 8
@@ -244,30 +232,17 @@ _ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt
   %i.k = load i32, ptr %i.j, align 4
   %i.l = lshr i32 %i.k, 13
   %i.m = trunc i32 %i.l to i8
-  %i.n = tail call noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull align 8 dereferenceable(476) %i.i, i8 noundef zeroext %i.m, i32 noundef %.sroa.4.0.copyload.us, i8 noundef zeroext %1, i32 noundef %2) #36
-  br i1 %i.n, label %.split32.us, label %8
+  %i.n = tail call noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull align 8 dereferenceable(476) %i.i, i8 noundef zeroext %i.m, i32 noundef %.sroa.4.0.copyload.us, i8 noundef zeroext %1, i32 noundef %2) #36 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
+  %.not = icmp eq ptr %4, %5
+  %or.cond = select i1 %i.n, i1 true, i1 %.not
+  br i1 %or.cond, label %.split32.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us
 
-8:                                                ; preds = %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us
-  br i1 %.not.i.us, label %11, label %9
-
-9:                                                ; preds = %8
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.021.0.us, i64 16
-  br label %.split30.us
-
-11:                                               ; preds = %8
-  %12 = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.7.0.us.ph) #38
-  br label %.split30.us.outer
-
-.split30.us.outer:                                ; preds = %bb.a, %11
-  %.sroa.7.0.us.ph = phi ptr [ %12, %11 ], [ null, %bb.a ] ; 2 uses
-  %.sroa.021.0.us.ph = phi ptr [ null, %11 ], [ %i.b, %bb.a ]
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.7.0.us.ph, i64 32
-  br label %.split30.us
-
-_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread: ; preds = %.split30.outer
-  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.7.0.ph, i64 32 ; 2 uses
+_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread: ; preds = %.split30.preheader, %bb.b
+  %.sroa.7.047 = phi ptr [ %i.x, %bb.b ], [ %i.e, %.split30.preheader ] ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.7.047, i64 32
   %.sroa.0.0.copyload = load ptr, ptr %i.o, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.047, i64 40
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8
   %i.p = load ptr, ptr %0, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32
@@ -276,15 +251,16 @@ _ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt
   %i.t = load i32, ptr %i.s, align 4
   %i.u = lshr i32 %i.t, 13
   %i.v = trunc i32 %i.u to i8
-  %i.w = tail call noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull align 8 dereferenceable(476) %i.r, i8 noundef zeroext %i.v, i32 noundef %.sroa.4.0.copyload, i8 noundef zeroext %1, i32 noundef %2) #36
+  %i.w = tail call noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull align 8 dereferenceable(476) %i.r, i8 noundef zeroext %i.v, i32 noundef %.sroa.4.0.copyload, i8 noundef zeroext %1, i32 noundef %2) #36 ; 3 uses
   br i1 %i.w, label %.split32.us, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread
-  %i.x = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.7.0.ph) #38
-  br label %.split30.outer
+  %i.x = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.7.047) #38 ; 2 uses
+  %.not40 = icmp eq ptr %i.x, %i.c
+  br i1 %.not40, label %.split32.us, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread
 
-.split32.us:                                      ; preds = %.split.us, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread, %.split30.outer
-  %.us-phi = phi i1 [ true, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread ], [ false, %.split30.outer ], [ true, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us ], [ false, %.split.us ]
+.split32.us:                                      ; preds = %bb.b, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us, %bb.a, %.split30.preheader
+  %.us-phi = phi i1 [ false, %bb.a ], [ false, %.split30.preheader ], [ %i.n, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratordeEv.exit.us ], [ %i.w, %_ZNK2v84base8SmallMapINS_8internal7ZoneMapIPNS2_8compiler17TopLevelLiveRangeEiSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE14const_iteratoreqERKSF_.exit.thread ], [ %i.w, %bb.b ]
   ret i1 %.us-phi
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.a, ptr %i.e, align 8, !tbaa !13
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 3 uses
   %i.g = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.f, ptr noundef null) #10
   %.not.not = icmp eq i32 %i.g, 0
   br i1 %.not.not, label %bb.d, label %.preheader.1.thread
@@ -212,8 +212,12 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 176 ; 2 uses
   %i.i = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.h, ptr noundef null) #10
-  %.not48.not = icmp eq i32 %i.i, 0               ; 2 uses
-  br i1 %.not48.not, label %bb.e, label %bb.i
+  %.not48.not = icmp eq i32 %i.i, 0
+  br i1 %.not48.not, label %bb.e, label %.thread90
+
+.thread90:                                        ; preds = %bb.d
+  %2 = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %i.f) #10 ; 0 uses
+  br label %.preheader.1.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 4 uses
@@ -243,26 +247,20 @@ bb.h:                                             ; preds = %bb.g
   %i.t = icmp eq ptr %i.q, null
   br i1 %i.t, label %bb.i, label %bb.m
 
-bb.i:                                             ; preds = %bb.d, %bb.e, %bb.f, %bb.g, %bb.h
-  %.sroa.7.0.ph = phi ptr [ null, %bb.d ], [ null, %bb.e ], [ %i.j, %bb.f ], [ %i.j, %bb.g ], [ %i.j, %bb.h ] ; 2 uses
-  %.sroa.0.0.ph = phi ptr [ null, %bb.d ], [ null, %bb.e ], [ null, %bb.f ], [ %i.l, %bb.g ], [ %i.l, %bb.h ] ; 2 uses
-  %.sroa.5.0.ph = phi ptr [ null, %bb.d ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.g ], [ %i.n, %bb.h ] ; 2 uses
+bb.i:                                             ; preds = %bb.e, %bb.f, %bb.g, %bb.h
+  %.sroa.7.0.ph = phi ptr [ %i.j, %bb.h ], [ null, %bb.e ], [ %i.j, %bb.f ], [ %i.j, %bb.g ] ; 2 uses
+  %.sroa.0.0.ph = phi ptr [ %i.l, %bb.h ], [ null, %bb.e ], [ null, %bb.f ], [ %i.l, %bb.g ] ; 2 uses
+  %.sroa.5.0.ph = phi ptr [ %i.n, %bb.h ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.g ] ; 2 uses
   %i.u = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %i.f) #10 ; 0 uses
-  br i1 %.not48.not, label %2, label %4
-
-2:                                                ; preds = %bb.i
   %3 = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %i.h) #10 ; 0 uses
-  br label %4
-
-4:                                                ; preds = %2, %bb.i
   %.not53.2 = icmp eq ptr %.sroa.7.0.ph, null
   br i1 %.not53.2, label %.preheader.preheader, label %bb.j
 
-bb.j:                                             ; preds = %4
+bb.j:                                             ; preds = %bb.i
   %i.v = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %.sroa.7.0.ph) #10 ; 0 uses
   br label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %bb.j, %4
+.preheader.preheader:                             ; preds = %bb.j, %bb.i
   %.not52 = icmp eq ptr %.sroa.0.0.ph, null
   br i1 %.not52, label %.preheader.1, label %bb.k
 
@@ -278,7 +276,7 @@ bb.l:                                             ; preds = %.preheader.1
   %i.x = tail call i32 @pthread_cond_destroy(ptr noundef nonnull %.sroa.5.0.ph) #10 ; 0 uses
   br label %.preheader.1.thread
 
-.preheader.1.thread:                              ; preds = %bb.c, %bb.l, %.preheader.1
+.preheader.1.thread:                              ; preds = %bb.c, %.thread90, %bb.l, %.preheader.1
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !19
   tail call void @CRYPTO_free(ptr noundef %i.z, ptr noundef nonnull @.str, i32 noundef 619) #10

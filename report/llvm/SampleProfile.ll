@@ -204,8 +204,7 @@ bb.aw:                                            ; preds = %_ZN4llvm6detail12De
 .lr.ph225.i:                                      ; preds = %bb.aw
   %.sroa.2.0..sroa_idx.i77.i = getelementptr inbounds nuw i8, ptr %55, i64 8
   %.sroa.2.0.copyload.i.i = load i8, ptr %.sroa.2.0..sroa_idx.i77.i, align 8
-  %i.lt = trunc nuw i8 %.sroa.2.0.copyload.i.i to i1 ; 2 uses
-  %69 = select i1 %i.lt, i64 8, i64 16
+  %i.lt = trunc nuw i8 %.sroa.2.0.copyload.i.i to i1
   br i1 %i.lt, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us.i, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.i
 
 _ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us.i: ; preds = %.lr.ph225.i, %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us.i
@@ -244,7 +243,7 @@ _ZNK4llvm10sampleprof10FunctionId11getHashCodeEv.exit.i: ; preds = %bb.ax, %_ZNK
   store i64 %.0.i.i, ptr %i.f, align 8, !tbaa !124
   %i.lw = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapImNS_6detail13DenseSetEmptyENS_12DenseMapInfoImvEENS2_12DenseSetPairImEEEEmS3_S5_S7_E24lookupOrInsertIntoBucketImJEEESt4pairIPS7_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(24) %i.dx, ptr noundef nonnull align 8 dereferenceable(8) %i.f), !noalias !1219 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #24
-  %i.lx = getelementptr inbounds nuw i8, ptr %.sroa.0184.0224.i, i64 %69 ; 2 uses
+  %i.lx = getelementptr inbounds nuw i8, ptr %.sroa.0184.0224.i, i64 16 ; 2 uses
   %.not218.i = icmp eq ptr %i.lx, %.sroa.0.0.copyload.i80.i
   br i1 %.not218.i, label %.loopexit.i, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.i
 
@@ -254,8 +253,7 @@ bb.ay:                                            ; preds = %_ZN4llvm6detail12De
 .lr.ph.i:                                         ; preds = %bb.ay
   %.sroa.2.0..sroa_idx.i88.i = getelementptr inbounds nuw i8, ptr %55, i64 8
   %.sroa.2.0.copyload.i89.i = load i8, ptr %.sroa.2.0..sroa_idx.i88.i, align 8
-  %i.ly = trunc nuw i8 %.sroa.2.0.copyload.i89.i to i1 ; 2 uses
-  %70 = select i1 %i.ly, i64 8, i64 16            ; 2 uses
+  %i.ly = trunc nuw i8 %.sroa.2.0.copyload.i89.i to i1
   br i1 %i.ly, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.us.i, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.i
 
 _ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.us.i: ; preds = %.lr.ph.i, %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us.i
@@ -282,7 +280,7 @@ _ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJE
   br label %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us.i
 
 _ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us.i: ; preds = %_ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJEEEPS2_NS_9StringRefERT_DpOT0_.exit.i.i.i.us.i, %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.us.i
-  %i.mk = getelementptr inbounds nuw i8, ptr %.sroa.0171.0222.us.i, i64 %70 ; 2 uses
+  %i.mk = getelementptr inbounds nuw i8, ptr %.sroa.0171.0222.us.i, i64 8 ; 2 uses
   %.not217.us.i = icmp eq ptr %i.mk, %.sroa.0.0.copyload.i80.i
   br i1 %.not217.us.i, label %.loopexit.i, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.us.i
 
@@ -325,7 +323,7 @@ _ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJE
   br label %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.i
 
 _ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.i: ; preds = %_ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJEEEPS2_NS_9StringRefERT_DpOT0_.exit.i.i.i.i, %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.i
-  %i.my = getelementptr inbounds nuw i8, ptr %.sroa.0171.0222.i, i64 %70 ; 2 uses
+  %i.my = getelementptr inbounds nuw i8, ptr %.sroa.0171.0222.i, i64 16 ; 2 uses
   %.not217.i = icmp eq ptr %i.my, %.sroa.0.0.copyload.i80.i
   br i1 %.not217.i, label %.loopexit.i, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit103.i
 

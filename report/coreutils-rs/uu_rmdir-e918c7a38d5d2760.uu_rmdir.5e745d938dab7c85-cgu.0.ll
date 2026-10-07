@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 0, ptr %.sroa.56.0..sroa_idx, align 8
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !219
   %i.o = tail call noundef dereferenceable_or_null(5) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 5, i64 noundef 1) #19, !noalias !219 ; 8 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 3 uses
-  %.sink6.i = select i1 %i.p, i64 1, i64 5        ; 2 uses
+  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
   %.sink.i = select i1 %i.p, ptr inttoptr (i64 5 to ptr), ptr %i.o ; 3 uses
   br i1 %i.p, label %bb.d, label %.lr.ph150.i, !prof !7
 
@@ -457,7 +456,7 @@ bb.s:                                             ; preds = %.lr.ph150.i31
 bb.t:                                             ; preds = %.loopexit75
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  store i64 %.sink6.i, ptr %i.i, align 8
+  store i64 5, ptr %i.i, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %.sink.i, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -547,7 +546,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
   br label %bb.b
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECs86MjTkXjVIv_8uu_rmdir.exit45: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECs86MjTkXjVIv_8uu_rmdir.exit
-  call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink.i, i64 noundef %.sink6.i, i64 noundef range(i64 1, -9223372036854775807) 1) #19, !noalias !230
+  call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink.i, i64 noundef 5, i64 noundef range(i64 1, -9223372036854775807) 1) #19, !noalias !230
   br label %bb.y
 
 bb.z:                                             ; preds = %bb.b

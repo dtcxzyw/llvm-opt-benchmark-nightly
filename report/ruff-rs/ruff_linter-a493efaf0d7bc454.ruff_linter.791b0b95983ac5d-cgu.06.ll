@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %_RNvMNtNtCsEhZmuQNq
 .lr.ph.i.i:                                       ; preds = %.noexc
   %i.bw = load i8, ptr %i.bl, align 8, !range !15, !alias.scope !4097, !noalias !4098
   %.fr25.i.i = freeze i8 %i.bw
-  %i.bx = trunc i8 %.fr25.i.i to i1               ; 2 uses
-  %..i.i.i = select i1 %i.bx, i32 39, i32 34      ; 2 uses
+  %i.bx = trunc i8 %.fr25.i.i to i1
   br i1 %i.bx, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %.backedge.us.i.i
@@ -220,7 +219,7 @@ bb.e:                                             ; preds = %_RNvMNtNtCsEhZmuQNq
 bb.f:                                             ; preds = %.lr.ph.split.us.i.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.by, i64 32
   %i.ce = load i32, ptr %i.cd, align 8, !range !45, !alias.scope !4099, !noalias !4100, !noundef !5
-  %i.cf = icmp eq i32 %i.ce, %..i.i.i
+  %i.cf = icmp eq i32 %i.ce, 39
   br i1 %i.cf, label %.backedge.us.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -290,7 +289,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i.i.us.i.i
 bb.k:                                             ; preds = %.lr.ph.split.i.i
   %i.df = getelementptr inbounds nuw i8, ptr %i.da, i64 32
   %i.dg = load i32, ptr %i.df, align 8, !range !45, !alias.scope !4099, !noalias !4100, !noundef !5
-  %i.dh = icmp eq i32 %i.dg, %..i.i.i
+  %i.dh = icmp eq i32 %i.dg, 34
   br i1 %i.dh, label %.backedge.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k

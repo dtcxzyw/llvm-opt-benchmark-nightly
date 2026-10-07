@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10007)
   %i.g = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 80
   %i.h = load i32, ptr %i.g, align 8, !range !48, !alias.scope !10006, !noalias !10008, !noundef !10 ; 4 uses
-  %.not12 = icmp eq i32 %i.h, -1                  ; 2 uses
-  %1 = select i1 %.not12, i64 1452335207727870361, i64 386524617143769950 ; 2 uses
+  %.not12 = icmp eq i32 %i.h, -1
   br i1 %.not12, label %_RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -216,8 +215,8 @@ bb.c:                                             ; preds = %bb.b
   %i.j = zext nneg i32 %i.h to i64                ; 2 uses
   %i.k = add nsw i64 %i.j, -1
   %i.l = select i1 %i.i, i64 %i.k, i64 0          ; 2 uses
-  %2 = add nsw i64 %1, %i.l
-  %3 = mul i64 %2, -1065810590584100411           ; 3 uses
+  %1 = mul i64 %i.l, -1065810590584100411
+  %2 = add i64 %1, 7745086105557359958            ; 3 uses
   switch i64 %i.l, label %bb.d [
     i64 0, label %bb.e
     i64 1, label %bb.h
@@ -230,7 +229,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10011)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10012)
-  %i.m = add i64 %3, %i.j
+  %i.m = add i64 %2, %i.j
   %i.n = mul i64 %i.m, -1065810590584100411       ; 2 uses
   store i64 %i.n, ptr %i.e, align 8, !alias.scope !10013, !noalias !10014
   %i.o = trunc nuw i32 %i.h to i1
@@ -288,7 +287,7 @@ bb.h:                                             ; preds = %bb.c
   %i.au = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 96
   %.val1.i.i.i.i.i.i = load ptr, ptr %i.au, align 8, !alias.scope !10021, !noalias !10022, !nonnull !10, !noundef !10 ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10023)
-  %i.av = add i64 %.val.i.i.i.i.i.i, %3
+  %i.av = add i64 %.val.i.i.i.i.i.i, %2
   %i.aw = mul i64 %i.av, -1065810590584100411     ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i, i64 16 ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i, i64 72 ; 3 uses
@@ -691,7 +690,7 @@ bb.ab:                                            ; preds = %bb.aa
 _RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i: ; preds = %bb.ab, %bb.aa
   %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i = phi i64 [ %extract.t.i.i.i.i.i.i.i.i, %bb.ab ], [ %extract.t1.i.i.i.i.i.i.i.i, %bb.aa ]
   %.sroa.0.0.i.off64.i.i.i.i.i.i.i.i = phi i64 [ %extract.t2.i.i.i.i.i.i.i.i, %bb.ab ], [ %extract.t4.i.i.i.i.i.i.i.i, %bb.aa ]
-  %i.kd = add i64 %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i, %3
+  %i.kd = add i64 %.sroa.0.0.i.off0.i.i.i.i.i.i.i.i, %2
   %i.ke = mul i64 %i.kd, -1065810590584100411
   %i.kf = add i64 %i.ke, %.sroa.0.0.i.off64.i.i.i.i.i.i.i.i
   %i.kg = mul i64 %i.kf, -1065810590584100411
@@ -732,7 +731,7 @@ _RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oU
   br label %_RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i
 
 _RINvXs8_NtNtCsdaEETE4DqmE_13typst_library9visualize5paintNtB6_5PaintNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i: ; preds = %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i, %bb.b
-  %i.lo = phi i64 [ %1, %bb.b ], [ %storemerge.i.i.i.i.i.i.i.i, %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %i.jt, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %storemerge.i.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ]
+  %i.lo = phi i64 [ 1452335207727870361, %bb.b ], [ %storemerge.i.i.i.i.i.i.i.i, %_RINvXs6_NtNtCsdaEETE4DqmE_13typst_library9visualize6tilingNtB6_6TilingNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %i.jt, %_RINvXsb_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB6_8GradientNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ], [ %storemerge.i.i.i.i.i.i.i, %_RINvXsy_NtNtCsdaEETE4DqmE_13typst_library9visualize5colorNtB6_5ColorNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtCsiUdj97bPFdy_10rustc_hash8FxHasherECs8jFhWeO2DFb_9typst_pdf.exit.i.i.i.i.i.i ]
   %i.lp = load i64, ptr %i.f, align 8, !range !19, !alias.scope !10006, !noalias !10008, !noundef !10 ; 2 uses
   %i.lq = add i64 %i.lp, %i.lo
   %i.lr = mul i64 %i.lq, -1065810590584100411     ; 2 uses
@@ -1135,7 +1134,7 @@ _RNvMsd_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecAhj10_E4pushCs8jFhWeO2DFb_9typst_p
   br label %.split102.i.i
 
 .split102.i.i:                                    ; preds = %.split102.i.split.i, %.split102.us.i.i
-  %.us-phi103.i.i = phi { ptr, i32 } [ %i.cp, %.split102.us.i.i ], [ %i.cq, %.split102.i.split.i ] ; 2 uses
+  %.us-phi103.i.i = phi { ptr, i32 } [ %i.cq, %.split102.i.split.i ], [ %i.cp, %.split102.us.i.i ] ; 2 uses
   %i.cr = icmp eq i64 %.fr.i.i, 0
   %brmerge.i = select i1 %i.cr, i1 true, i1 %i.bx
   br i1 %brmerge.i, label %.body.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs8jFhWeO2DFb_9typst_pdf.exit.i.i4.i.i.i.i.i

@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.noexc2.i.i.i, %_RN
 .thread:                                          ; preds = %bb.d
   store i8 -1, ptr %i.e, align 8, !alias.scope !2112, !noalias !2113
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2091
-  br label %bb.n
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i
 
 bb.h:                                             ; preds = %bb.f, %_RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameINtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENtNtNtB9_6traits8iterator8Iterator4nextB4R_.exit.i.i.i.i.i, %bb.e
   %i.k = landingpad { ptr, i32 }
@@ -246,16 +246,15 @@ bb.l:                                             ; preds = %_RINvNtCsf3Ta7LF998
   br label %bb.k
 
 bb.m:                                             ; preds = %_RNvYNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters5chain5ChainINtNtNtBc_7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEINtNtBa_3map3MapIB2b_INtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1p_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB5I_33make_preliminary_glyph_categoriess_00EENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceB5K_.exit
-  %.pre = load i8, ptr %1, align 8, !range !14, !alias.scope !2115 ; 2 uses
+  %.pre = load i8, ptr %1, align 8, !range !14, !alias.scope !2115 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2115)
   %i.m = icmp eq i8 %.pre, -3
   br i1 %i.m, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters5chain5ChainINtNtNtB14_7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEINtNtB12_3map3MapIB2O_INtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB22_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB6m_33make_preliminary_glyph_categoriess_00EEEEB6o_.exit, label %bb.n
 
-bb.n:                                             ; preds = %.thread, %bb.m
-  %2 = phi i8 [ -2, %.thread ], [ %.pre, %bb.m ]  ; 3 uses
+bb.n:                                             ; preds = %bb.m
   call void @llvm.experimental.noalias.scope.decl(metadata !2116)
   call void @llvm.experimental.noalias.scope.decl(metadata !2117)
-  %i.n = icmp eq i8 %2, -2
+  %i.n = icmp eq i8 %.pre, -2
   br i1 %i.n, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -263,14 +262,14 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.experimental.noalias.scope.decl(metadata !2119)
   call void @llvm.experimental.noalias.scope.decl(metadata !2120)
   call void @llvm.experimental.noalias.scope.decl(metadata !2121)
-  %i.o = icmp eq i8 %2, -1
+  %i.o = icmp eq i8 %.pre, -1
   br i1 %i.o, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.experimental.noalias.scope.decl(metadata !2122)
   call void @llvm.experimental.noalias.scope.decl(metadata !2123)
   call void @llvm.experimental.noalias.scope.decl(metadata !2124)
-  %switch.i.i.i.i.i.i.i.i.i.i = icmp samesign ult i8 %2, 25
+  %switch.i.i.i.i.i.i.i.i.i.i = icmp samesign ult i8 %.pre, 25
   br i1 %switch.i.i.i.i.i.i.i.i.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -299,7 +298,7 @@ bb.t:                                             ; preds = %bb.s
   invoke void @_RNvXse_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterINtCsbeZck1VjBmm_8indexmap6BucketNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameINtB7_3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEEENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsjceHdiZFn9b_13glyphs2fontir(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.u)
           to label %.body unwind label %bb.v
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i: ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources4once4OnceNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEEECsjceHdiZFn9b_13glyphs2fontir.exit.i.i: ; preds = %.thread, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !2129, !noundef !5
   %i.z = icmp eq ptr %i.y, null

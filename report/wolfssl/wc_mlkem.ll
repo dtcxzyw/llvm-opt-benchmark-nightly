@@ -204,23 +204,19 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i32, ptr %i.h, align 8, !tbaa !14
   %i.j = and i32 %i.i, 2
   %.not = icmp eq i32 %i.j, 0
-  br i1 %.not, label %bb.c, label %4
+  br i1 %.not, label %.thread19, label %bb.c
 
-4:                                                ; preds = %bb.b
-  %5 = call i32 @wc_RNG_GenerateBlock(ptr noundef nonnull %3, ptr noundef nonnull %i.a, i32 noundef 32) #8
-  br label %bb.c
-
-bb.c:                                             ; preds = %4, %bb.b
-  %.1 = phi i32 [ %5, %4 ], [ -192, %bb.b ]       ; 2 uses
-  %i.k = icmp eq i32 %.1, 0
+bb.c:                                             ; preds = %bb.b
+  %4 = call i32 @wc_RNG_GenerateBlock(ptr noundef nonnull %3, ptr noundef nonnull %i.a, i32 noundef 32) #8 ; 2 uses
+  %i.k = icmp eq i32 %4, 0
   br i1 %i.k, label %bb.d, label %.thread19
 
 bb.d:                                             ; preds = %bb.c
   %i.l = call i32 @wc_MlKemKey_EncapsulateWithRandom(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %i.a, i32 noundef 32)
   br label %.thread19
 
-.thread19:                                        ; preds = %bb.a, %bb.d, %bb.c
-  %.2 = phi i32 [ %i.l, %bb.d ], [ %.1, %bb.c ], [ -173, %bb.a ]
+.thread19:                                        ; preds = %bb.b, %bb.a, %bb.d, %bb.c
+  %.2 = phi i32 [ %i.l, %bb.d ], [ %4, %bb.c ], [ -173, %bb.a ], [ -192, %bb.b ]
   fence seq_cst
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !tbaa !16
   fence seq_cst

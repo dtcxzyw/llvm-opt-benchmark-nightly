@@ -205,8 +205,7 @@ _ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i:        ; preds = %_ZNK4llvm9StringRef
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27, !noalias !389
   %i.xg = getelementptr inbounds nuw i8, ptr %66, i64 8 ; 7 uses
   %i.xh = load i64, ptr %i.xg, align 8, !tbaa !36, !noalias !389
-  %i.xi = icmp eq i64 %i.xh, 0                    ; 2 uses
-  %108 = select i1 %i.xi, i64 0, i64 9
+  %i.xi = icmp eq i64 %i.xh, 0
   br i1 %i.xi, label %bb.cq, label %.loopexit69.i.i
 
 bb.cq:                                            ; preds = %_ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i
@@ -415,7 +414,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %.not115.i.i, label %.loopexit69.i.i, label %.lr.ph103.i.i
 
 .loopexit69.i.i:                                  ; preds = %.thread48.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i300.i.i, %bb.cq, %_ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i
-  %.sroa.5.4.i.i = phi i64 [ 9, %_ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i ], [ %i.zv, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i300.i.i ], [ 0, %bb.cq ], [ %108, %.thread48.i.i ]
+  %.sroa.5.4.i.i = phi i64 [ 9, %_ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i ], [ %i.zv, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i300.i.i ], [ 0, %bb.cq ], [ 0, %.thread48.i.i ]
   %.sroa.012.4.i.i = phi ptr [ @.str.46, %_ZN4llvm6TripleC2ENS_9StringRefE.exit.i.i ], [ %i.zu, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i300.i.i ], [ @.str.4, %bb.cq ], [ @.str.4, %.thread48.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #27, !noalias !389
   %i.zx = getelementptr inbounds nuw i8, ptr %68, i64 16

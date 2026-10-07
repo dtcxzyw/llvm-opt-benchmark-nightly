@@ -202,7 +202,6 @@ bb.a:
   br i1 %i.d, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %.preheader
-  %1 = select i1 %0, ptr @.str.124, ptr @.str.125 ; 2 uses
   br i1 %0, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.k
@@ -279,7 +278,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ai = load ptr, ptr %i.ah, align 8
   %i.aj = load i32, ptr %i.j, align 8
   %i.ak = tail call ptr @node_state_string(i32 noundef %i.aj) #14
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.123, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__._handle_planned, ptr noundef nonnull %1, ptr noundef %i.ai, ptr noundef %i.ak) #14
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.123, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__._handle_planned, ptr noundef nonnull @.str.124, ptr noundef %i.ai, ptr noundef %i.ak) #14
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.split.us
@@ -335,7 +334,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = load i32, ptr %i.ay, align 8
   %i.bj = tail call ptr @node_state_string(i32 noundef %i.bi) #14
-  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.123, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__._handle_planned, ptr noundef nonnull %1, ptr noundef %i.bh, ptr noundef %i.bj) #14
+  tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.123, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__._handle_planned, ptr noundef nonnull @.str.125, ptr noundef %i.bh, ptr noundef %i.bj) #14
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.m, %bb.o, %bb.n, %bb.l

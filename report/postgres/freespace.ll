@@ -111,8 +111,7 @@ bb.g:                                             ; preds = %bb.f
   %i.w = urem i64 %i.u, 4069
   %i.x = trunc nuw nsw i64 %i.w to i32
   %.sroa.23.0.insert.ext.i.peel = shl i64 %i.v, 32
-  %.sroa.02.0.insert.ext.i.peel = and i64 %i.t, 4294967295
-  %.sroa.02.0.insert.insert.i.peel = or disjoint i64 %.sroa.02.0.insert.ext.i.peel, %.sroa.23.0.insert.ext.i.peel
+  %.sroa.02.0.insert.insert.i.peel = or disjoint i64 %i.t, %.sroa.23.0.insert.ext.i.peel
   %i.y = tail call fastcc i32 @fsm_readbuf(ptr noundef %0, i64 %.sroa.02.0.insert.insert.i.peel, i1 noundef zeroext true) ; 6 uses
   tail call void @LockBufferInternal(i32 noundef %i.y, i32 noundef 3) #7
   %i.z = icmp slt i32 %i.y, 0

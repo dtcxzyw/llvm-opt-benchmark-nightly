@@ -205,8 +205,7 @@ bb.ev:                                            ; preds = %bb.et
   %or.cond.i2040 = icmp ugt i32 %i.qv, 268435455
   %i.qw = shl nuw nsw i32 %i.qv, 3
   %i.qx = select i1 %or.cond.i2040, i32 -8, i32 %i.qw ; 2 uses
-  %or.cond.i.i = icmp ugt i32 %i.qx, 2147483134   ; 3 uses
-  %.0.i.i = select i1 %or.cond.i.i, i32 -1094995529, i32 0 ; 2 uses
+  %or.cond.i.i = icmp ugt i32 %i.qx, 2147483134   ; 2 uses
   %i.qy = add nuw nsw i32 %i.qx, 8
   %i.qz = select i1 %or.cond.i.i, i32 8, i32 %i.qy ; 6 uses
   br i1 %or.cond.i.i, label %.thread2181, label %bb.ew
@@ -609,7 +608,7 @@ bb.fx:                                            ; preds = %bb.fw
 
 .thread2168:                                      ; preds = %.thread2142, %bb.fx, %bb.fw, %.thread2708
   %.sroa.02086.8 = phi ptr [ %.sroa.02086.62712, %.thread2708 ], [ %i.aby, %bb.fw ], [ %i.aby, %bb.fx ], [ %.sroa.02086.22131, %.thread2142 ] ; 2 uses
-  %.7 = phi i32 [ %.21837, %.thread2708 ], [ %.0.i.i, %bb.fw ], [ %.0.i.i, %bb.fx ], [ %.21837, %.thread2142 ] ; 2 uses
+  %.7 = phi i32 [ %.21837, %.thread2708 ], [ 0, %bb.fw ], [ 0, %bb.fx ], [ %.21837, %.thread2142 ] ; 2 uses
   %i.ack = ptrtoint ptr %.sroa.02086.8 to i64
   %i.acl = sub i64 %i.ah, %i.ack                  ; 2 uses
   %i.acm = trunc i64 %i.acl to i32
@@ -618,11 +617,12 @@ bb.fx:                                            ; preds = %bb.fw
 
 ._crit_edge.loopexit:                             ; preds = %.thread2168
   %i.aco = icmp eq i32 %.21844, 0
+  %4 = icmp eq i32 %.7, 0
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bytestream2_init.exit
   %.01842.lcssa = phi i1 [ true, %bytestream2_init.exit ], [ %i.aco, %._crit_edge.loopexit ]
-  %.01835.lcssa = phi i32 [ 0, %bytestream2_init.exit ], [ %.7, %._crit_edge.loopexit ] ; 5 uses
+  %.01835.lcssa = phi i1 [ true, %bytestream2_init.exit ], [ %4, %._crit_edge.loopexit ] ; 3 uses
   %i.acp = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 9 uses
   %i.acq = load i32, ptr %i.acp, align 8, !tbaa !56
   %i.acr = tail call i32 @av_pix_fmt_count_planes(i32 noundef %i.acq) #11
@@ -921,9 +921,8 @@ bb.hg:                                            ; preds = %bb.hf
 bb.hh:                                            ; preds = %._crit_edge2397
   %i.afz = load i32, ptr %i.q, align 4, !tbaa !160
   %.not1966 = icmp ne i32 %i.afz, 1
-  %.not1975 = icmp eq i32 %.01835.lcssa, 0
   %i.aga = and i1 %.not1966, %i.adj
-  %or.cond2789 = select i1 %i.aga, i1 %.not1975, i1 false
+  %or.cond2789 = select i1 %i.aga, i1 %.01835.lcssa, i1 false
   br i1 %or.cond2789, label %.lr.ph2458, label %.loopexit2719
 
 .lr.ph2458:                                       ; preds = %bb.hh
@@ -1326,14 +1325,12 @@ bb.ii:                                            ; preds = %bb.ih
 bb.ij:                                            ; preds = %bb.ii
   %i.asp = load i32, ptr %i.q, align 4, !tbaa !160
   %.not1968 = icmp ne i32 %i.asp, 1
-  %.not1969 = icmp eq i32 %.01835.lcssa, 0
   %i.asq = and i1 %.not1968, %i.adj
-  %or.cond2790 = select i1 %i.asq, i1 %.not1969, i1 false
+  %or.cond2790 = select i1 %i.asq, i1 %.01835.lcssa, i1 false
   br i1 %or.cond2790, label %.lr.ph2431, label %.loopexit2719
 
 bb.ik:                                            ; preds = %bb.ii, %bb.ih
-  %.not1969.old = icmp eq i32 %.01835.lcssa, 0
-  %or.cond20262427.old = select i1 %i.adj, i1 %.not1969.old, i1 false
+  %or.cond20262427.old = select i1 %i.adj, i1 %.01835.lcssa, i1 false
   br i1 %or.cond20262427.old, label %.lr.ph2431, label %.loopexit2719
 
 .lr.ph2431:                                       ; preds = %bb.ij, %bb.ik
@@ -1736,24 +1733,20 @@ interlaced_vertical_filter.exit2083:              ; preds = %scalar.ph3246, %mid
 .loopexit2251:                                    ; preds = %.loopexit, %._crit_edge2397, %bb.jl, %.loopexit2719
   %i.bmw = load i32, ptr %i.acp, align 8, !tbaa !56
   %i.bmx = icmp eq i32 %i.bmw, 145
-  br i1 %i.bmx, label %bb.kb, label %.critedge
+  br i1 %i.bmx, label %bb.kb, label %bb.kc
 
 bb.kb:                                            ; preds = %.loopexit2251
   %i.bmy = load i32, ptr %i.h, align 8, !tbaa !50
   tail call fastcc void @process_bayer(ptr noundef %1, i32 noundef %i.bmy)
-  br label %.critedge
+  br label %bb.kc
 
-.critedge:                                        ; preds = %.loopexit2251, %bb.kb
-  %4 = icmp slt i32 %.01835.lcssa, 0
-  br i1 %4, label %.thread2181, label %bb.kc
-
-bb.kc:                                            ; preds = %.critedge
+bb.kc:                                            ; preds = %bb.kb, %.loopexit2251
   store i32 1, ptr %2, align 4, !tbaa !49
   %i.bmz = load i32, ptr %i.ab, align 8, !tbaa !166
   br label %.thread2181
 
-.thread2181:                                      ; preds = %.thread2149, %bb.eb, %bb.ep, %bb.ct, %bb.cs, %bb.eo, %bb.ev, %bb.dq, %bb.ds, %bb.do, %bb.ea, %.thread2147, %bb.dw, %.preheader2267, %bb.gt, %bb.gu, %bb.gv, %.thread2187.loopexit, %bb.gw, %bb.gx, %.thread2187.loopexit.1, %bb.gy, %bb.gz, %bb.ha, %bb.hb, %bb.hc, %.thread2187.loopexit.3, %bb.hd, %bb.he, %.thread2187.loopexit.4, %bb.hf, %bb.hg, %.preheader2267.us, %bb.gi, %bb.gj, %bb.gk, %.thread2187.us.us, %bb.gl, %bb.gm, %bb.gn, %bb.go, %bb.gp, %.thread2187.us.us.3, %bb.gq, %bb.gr, %bb.jf, %bb.jg, %bb.ib, %bb.ic, %bb.jv, %bb.jw, %bb.js, %bb.ei, %bb.ek, %bb.eg, %bb.ee, %bb.ck, %bb.cf, %bb.bw, %bb.bt, %bb.bq, %bb.bn, %bb.bk, %bb.az, %bb.ax, %bb.ar, %bb.ak, %bb.ah, %bb.ag, %bb.y, %bb.w, %bb.u, %bb.er, %bb.fv, %bb.fp, %bb.eu, %bb.ir, %bb.iv, %bb.iz, %bb.hs, %bb.hw, %bb.gs, %bb.ho, %bb.gg, %bb.dn, %.critedge, %bb.kc
-  %.61829 = phi i32 [ -1163346256, %bb.u ], [ %.01835.lcssa, %.critedge ], [ %i.bmz, %bb.kc ], [ -22, %bb.ek ], [ -1094995529, %bb.ib ], [ -22, %bb.er ], [ -22, %bb.fv ], [ -22, %bb.fp ], [ %i.kg, %bb.dn ], [ -22, %bb.ir ], [ -22, %bb.iv ], [ -22, %bb.iz ], [ -22, %bb.eg ], [ -1094995529, %.preheader2267.us ], [ -22, %bb.hs ], [ -22, %bb.hw ], [ -22, %bb.js ], [ -1094995529, %.preheader2267 ], [ -22, %bb.gs ], [ -22, %bb.ho ], [ -1094995529, %bb.jf ], [ -22, %bb.ee ], [ -22, %bb.gg ], [ -22, %bb.ei ], [ -22, %bb.eu ], [ -1163346256, %bb.ck ], [ -22, %bb.cf ], [ -22, %bb.bw ], [ -22, %bb.bt ], [ -22, %bb.bq ], [ -22, %bb.bn ], [ -1094995529, %bb.bk ], [ -1163346256, %bb.az ], [ -22, %bb.ax ], [ -22, %bb.ar ], [ -22, %bb.ak ], [ -22, %bb.ah ], [ -22, %bb.ag ], [ -22, %bb.y ], [ -1163346256, %bb.w ], [ -1094995529, %bb.jv ], [ -1094995529, %bb.jw ], [ -1094995529, %bb.ic ], [ -1094995529, %bb.jg ], [ -1094995529, %bb.gr ], [ -1094995529, %bb.gq ], [ -1094995529, %.thread2187.us.us.3 ], [ -1094995529, %bb.gp ], [ -1094995529, %bb.go ], [ -1094995529, %bb.gn ], [ -1094995529, %bb.gm ], [ -1094995529, %bb.gl ], [ -1094995529, %.thread2187.us.us ], [ -1094995529, %bb.gk ], [ -1094995529, %bb.gj ], [ -1094995529, %bb.gi ], [ -1094995529, %bb.hg ], [ -1094995529, %bb.hf ], [ -1094995529, %.thread2187.loopexit.4 ], [ -1094995529, %bb.he ], [ -1094995529, %bb.hd ], [ -1094995529, %.thread2187.loopexit.3 ], [ -1094995529, %bb.hc ], [ -1094995529, %bb.hb ], [ -1094995529, %bb.ha ], [ -1094995529, %bb.gz ], [ -1094995529, %bb.gy ], [ -1094995529, %.thread2187.loopexit.1 ], [ -1094995529, %bb.gx ], [ -1094995529, %bb.gw ], [ -1094995529, %.thread2187.loopexit ], [ -1094995529, %bb.gv ], [ -1094995529, %bb.gu ], [ -1094995529, %bb.gt ], [ -1094995529, %bb.eb ], [ -1094995529, %.thread2149 ], [ -1094995529, %bb.eo ], [ -1094995529, %bb.ev ], [ -1094995529, %bb.cs ], [ -1094995529, %bb.ct ], [ -1094995529, %bb.ep ], [ %i.kk, %bb.do ], [ %i.ks, %bb.ds ], [ %i.la, %bb.dw ], [ -1163346256, %.thread2147 ], [ -1163346256, %bb.ea ], [ -1094995529, %bb.dq ]
+.thread2181:                                      ; preds = %.thread2149, %bb.eb, %bb.ep, %bb.ct, %bb.cs, %bb.eo, %bb.ev, %bb.dq, %bb.ds, %bb.do, %bb.ea, %.thread2147, %bb.dw, %.preheader2267, %bb.gt, %bb.gu, %bb.gv, %.thread2187.loopexit, %bb.gw, %bb.gx, %.thread2187.loopexit.1, %bb.gy, %bb.gz, %bb.ha, %bb.hb, %bb.hc, %.thread2187.loopexit.3, %bb.hd, %bb.he, %.thread2187.loopexit.4, %bb.hf, %bb.hg, %.preheader2267.us, %bb.gi, %bb.gj, %bb.gk, %.thread2187.us.us, %bb.gl, %bb.gm, %bb.gn, %bb.go, %bb.gp, %.thread2187.us.us.3, %bb.gq, %bb.gr, %bb.jf, %bb.jg, %bb.ib, %bb.ic, %bb.jv, %bb.jw, %bb.js, %bb.ei, %bb.ek, %bb.eg, %bb.ee, %bb.ck, %bb.cf, %bb.bw, %bb.bt, %bb.bq, %bb.bn, %bb.bk, %bb.az, %bb.ax, %bb.ar, %bb.ak, %bb.ah, %bb.ag, %bb.y, %bb.w, %bb.u, %bb.er, %bb.fv, %bb.fp, %bb.eu, %bb.ir, %bb.iv, %bb.iz, %bb.hs, %bb.hw, %bb.gs, %bb.ho, %bb.gg, %bb.dn, %bb.kc
+  %.61829 = phi i32 [ -1163346256, %bb.u ], [ -1094995529, %bb.ib ], [ %i.bmz, %bb.kc ], [ -22, %bb.ek ], [ -1094995529, %bb.jf ], [ -22, %bb.er ], [ -22, %bb.fv ], [ -22, %bb.fp ], [ %i.kg, %bb.dn ], [ -22, %bb.ir ], [ -22, %bb.iv ], [ -22, %bb.iz ], [ -22, %bb.eg ], [ -1094995529, %.preheader2267.us ], [ -22, %bb.hs ], [ -22, %bb.hw ], [ -22, %bb.js ], [ -1094995529, %.preheader2267 ], [ -22, %bb.gs ], [ -22, %bb.ho ], [ -1094995529, %bb.jv ], [ -22, %bb.ee ], [ -22, %bb.gg ], [ -22, %bb.ei ], [ -22, %bb.eu ], [ -1163346256, %bb.ck ], [ -22, %bb.cf ], [ -22, %bb.bw ], [ -22, %bb.bt ], [ -22, %bb.bq ], [ -22, %bb.bn ], [ -1094995529, %bb.bk ], [ -1163346256, %bb.az ], [ -22, %bb.ax ], [ -22, %bb.ar ], [ -22, %bb.ak ], [ -22, %bb.ah ], [ -22, %bb.ag ], [ -22, %bb.y ], [ -1163346256, %bb.w ], [ -1094995529, %bb.jw ], [ -1094995529, %bb.ic ], [ -1094995529, %bb.jg ], [ -1094995529, %bb.gr ], [ -1094995529, %bb.gq ], [ -1094995529, %.thread2187.us.us.3 ], [ -1094995529, %bb.gp ], [ -1094995529, %bb.go ], [ -1094995529, %bb.gn ], [ -1094995529, %bb.gm ], [ -1094995529, %bb.gl ], [ -1094995529, %.thread2187.us.us ], [ -1094995529, %bb.gk ], [ -1094995529, %bb.gj ], [ -1094995529, %bb.gi ], [ -1094995529, %bb.hg ], [ -1094995529, %bb.hf ], [ -1094995529, %.thread2187.loopexit.4 ], [ -1094995529, %bb.he ], [ -1094995529, %bb.hd ], [ -1094995529, %.thread2187.loopexit.3 ], [ -1094995529, %bb.hc ], [ -1094995529, %bb.hb ], [ -1094995529, %bb.ha ], [ -1094995529, %bb.gz ], [ -1094995529, %bb.gy ], [ -1094995529, %.thread2187.loopexit.1 ], [ -1094995529, %bb.gx ], [ -1094995529, %bb.gw ], [ -1094995529, %.thread2187.loopexit ], [ -1094995529, %bb.gv ], [ -1094995529, %bb.gu ], [ -1094995529, %bb.gt ], [ -1094995529, %bb.eb ], [ -1094995529, %.thread2149 ], [ -1094995529, %bb.eo ], [ -1094995529, %bb.ev ], [ -1094995529, %bb.cs ], [ -1094995529, %bb.ct ], [ -1094995529, %bb.ep ], [ %i.kk, %bb.do ], [ %i.ks, %bb.ds ], [ %i.la, %bb.dw ], [ -1094995529, %bb.dq ], [ -1163346256, %bb.ea ], [ -1163346256, %.thread2147 ]
   ret i32 %.61829
 }
 

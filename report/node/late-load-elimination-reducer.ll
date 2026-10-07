@@ -1,10 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/late-load-elimination-reducer?download=true
 inline.NumInlined: 4977
 inline.NumDeleted: 2626
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
-loop-unroll.NumUnrolledNotLatch: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN2v88internal8compiler10turboshaft27LateLoadEliminationAnalyzer3RunEv:bb.a
   %i.eq = icmp eq i64 %i.ep, -1
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.0112.0134, i64 96
@@ -206,19 +205,15 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ig = getelementptr inbounds nuw i8, ptr %.sroa.0101.0138, i64 56 ; 2 uses
-  %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0101.0138, i64 64
+  %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0101.0138, i64 64 ; 2 uses
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.ig, i64 %.fr142
   %.sroa.01.0.i90 = select i1 %i.hv, ptr null, ptr %i.ii
-  br i1 %i.hv, label %.split137.preheader, label %.split137.us.outer
+  br i1 %i.hv, label %.split137.outer, label %.split137.us.outer
 
-.split137.preheader:                              ; preds = %bb.ad
+.split137.outer:                                  ; preds = %bb.ad
   %9 = getelementptr inbounds nuw i8, ptr %.sroa.0101.0138, i64 80
-  %10 = load ptr, ptr %9, align 8
-  br label %.split137.outer
-
-.split137.outer:                                  ; preds = %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread, %.split137.preheader
-  %.sroa.7.0.ph = phi ptr [ %i.jm, %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread ], [ %10, %.split137.preheader ] ; 3 uses
-  %i.ij = icmp eq ptr %.sroa.7.0.ph, %i.ih
+  %10 = load ptr, ptr %9, align 8                 ; 2 uses
+  %i.ij = icmp eq ptr %10, %i.ih
   br i1 %i.ij, label %.loopexit, label %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread
 
 .split137.us:                                     ; preds = %.split137.us.outer, %bb.ae
@@ -268,8 +263,9 @@ bb.af:                                            ; preds = %_ZNK2v84base8SmallM
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.7.0.us.ph, i64 32
   br label %.split137.us
 
-_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread: ; preds = %.split137.outer
-  %i.ja = getelementptr inbounds nuw i8, ptr %.sroa.7.0.ph, i64 32
+_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread: ; preds = %.split137.outer, %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread
+  %.sroa.7.0158 = phi ptr [ %i.jm, %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread ], [ %10, %.split137.outer ] ; 2 uses
+  %i.ja = getelementptr inbounds nuw i8, ptr %.sroa.7.0158, i64 32
   %i.jb = load i64, ptr %i.ja, align 4            ; 2 uses
   %.sroa.05.0.copyload = load i32, ptr %i.hs, align 8
   %.sroa.2.0.insert.ext.i = zext i32 %.sroa.05.0.copyload to i64
@@ -290,10 +286,11 @@ _ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4les
   %i.jk = load ptr, ptr %i.ds, align 8
   %i.jl = getelementptr inbounds nuw [8 x i8], ptr %i.jk, i64 %i.jj
   store i64 -4294967294, ptr %i.jl, align 4
-  %i.jm = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.7.0.ph) #23
-  br label %.split137.outer
+  %i.jm = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.7.0158) #23 ; 2 uses
+  %11 = icmp eq ptr %i.jm, %i.ih
+  br i1 %11, label %.loopexit, label %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread
 
-.loopexit:                                        ; preds = %.split.us, %.split137.outer, %bb.ac, %bb.ab
+.loopexit:                                        ; preds = %.split.us, %_ZNK2v84base8SmallMapISt3mapINS_8internal8compiler10turboshaft7OpIndexES6_St4lessIS6_ESaISt4pairIKS6_S6_EEELm4ENS0_8internal16select_equal_keyISD_Lb0EE9equal_keyENSE_19SmallMapDefaultInitISD_EEE14const_iteratoreqERKSL_.exit.thread, %.split137.outer, %bb.ac, %bb.ab
   %i.jn = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0101.0138) #23 ; 2 uses
   %i.jo = icmp eq ptr %i.jn, %i.dl
   br i1 %i.jo, label %._crit_edge141, label %bb.ab

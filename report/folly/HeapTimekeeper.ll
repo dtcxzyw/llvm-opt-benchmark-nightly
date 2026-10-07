@@ -202,8 +202,7 @@ bb.a:
 define linkonce_odr noundef zeroext i1 @_ZN5folly6detail17distributed_mutex4spinINS1_6WaiterISt6atomicEEEEbRT_Rjj(ptr noundef nonnull align 64 dereferenceable(192) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, i32 noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.timespec, align 8           ; 11 uses
-  %.not = icmp eq i32 %2, 8                       ; 2 uses
-  %4 = select i1 %.not, i64 9, i64 1              ; 2 uses
+  %.not = icmp eq i32 %2, 8
   %i.a = tail call noundef i64 @llvm.x86.rdtsc()  ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -215,9 +214,9 @@ bb.a:
   %.029.us = phi i64 [ %i.p, %bb.i ], [ 0, %bb.a ]
   %i.d = icmp ult i64 %.029.us, 40000             ; 2 uses
   %i.e = shl i64 %.030.us, 8
-  %5 = select i1 %i.d, i64 %i.e, i64 0
-  %6 = or disjoint i64 %5, %4
-  %i.f = atomicrmw xchg ptr %i.b, i64 %6 acq_rel, align 8 ; 2 uses
+  %4 = or disjoint i64 %i.e, 1
+  %5 = select i1 %i.d, i64 %4, i64 1
+  %i.f = atomicrmw xchg ptr %i.b, i64 %5 acq_rel, align 8 ; 2 uses
   %trunc.us = trunc i64 %i.f to i8                ; 2 uses
   switch i8 %trunc.us, label %bb.c [
     i8 10, label %bb.b
@@ -299,7 +298,7 @@ bb.j:                                             ; preds = %.split
 
 .thread.i:                                        ; preds = %bb.j, %.split
   %i.w = phi i64 [ %i.v, %bb.j ], [ -256, %.split ]
-  %i.x = or i64 %i.w, %4
+  %i.x = or i64 %i.w, 9
   %i.y = atomicrmw xchg ptr %i.b, i64 %i.x acq_rel, align 8
   br label %_ZN5folly6detail17distributed_mutex7publishINS1_6WaiterISt6atomicEEEEmmmmmRbRT_j.exit
 
@@ -702,8 +701,7 @@ _ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.ex
   br label %bb.ad, !llvm.loop !788
 
 _ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.i.i: ; preds = %bb.e
-  %.not.i154 = icmp eq i32 %.016.i.i, 8           ; 2 uses
-  %23 = select i1 %.not.i154, i64 9, i64 1        ; 2 uses
+  %.not.i154 = icmp eq i32 %.016.i.i, 8
   %i.bn = call noundef i64 @llvm.x86.rdtsc()      ; 4 uses
   br i1 %.not.i154, label %.split.i, label %.thread.i.us.i
 
@@ -714,9 +712,9 @@ _ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.ex
   %.029.us.i = phi i64 [ %i.ca, %bb.o ], [ 0, %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.i.i ]
   %i.bo = icmp ult i64 %.029.us.i, 40000          ; 2 uses
   %i.bp = shl i64 %.030.us.i, 8
-  %24 = select i1 %i.bo, i64 %i.bp, i64 0
-  %25 = or disjoint i64 %24, %23
-  %i.bq = atomicrmw xchg ptr %i.e, i64 %25 acq_rel, align 8 ; 2 uses
+  %23 = or disjoint i64 %i.bp, 1
+  %24 = select i1 %i.bo, i64 %23, i64 1
+  %i.bq = atomicrmw xchg ptr %i.e, i64 %24 acq_rel, align 8 ; 2 uses
   %trunc.us.i = trunc i64 %i.bq to i8             ; 2 uses
   switch i8 %trunc.us.i, label %bb.i [
     i8 10, label %bb.h
@@ -802,7 +800,7 @@ bb.p:                                             ; preds = %.split.i
 
 .thread.i.i:                                      ; preds = %bb.p, %.split.i
   %i.ch = phi i64 [ %i.cg, %bb.p ], [ -256, %.split.i ]
-  %i.ci = or i64 %i.ch, %23
+  %i.ci = or i64 %i.ch, 9
   %i.cj = atomicrmw xchg ptr %i.e, i64 %i.ci acq_rel, align 8
   br label %_ZN5folly6detail17distributed_mutex7publishINS1_6WaiterISt6atomicEEEEmmmmmRbRT_j.exit.i
 

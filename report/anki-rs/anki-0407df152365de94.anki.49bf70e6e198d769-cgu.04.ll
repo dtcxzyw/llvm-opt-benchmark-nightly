@@ -206,8 +206,7 @@ bb.ef:                                            ; preds = %bb.ee
   store ptr %i.rm, ptr %i.ap, align 8
   store i64 %i.rn, ptr %i.ep, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao)
-  %i.ro = icmp ugt i64 %i.rh, 2                   ; 2 uses
-  %.sroa.0507.2 = select i1 %i.ro, i64 3, i64 2   ; 2 uses
+  %i.ro = icmp ugt i64 %i.rh, 2
   br i1 %i.ro, label %bb.eg, label %.invoke1257, !prof !12
 
 bb.eg:                                            ; preds = %bb.ef
@@ -217,15 +216,15 @@ bb.eg:                                            ; preds = %bb.ef
   store ptr %i.rl, ptr %.sroa.6196.sroa.0.sroa.5.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   store i64 2, ptr %.sroa.6196.sroa.4.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an)
-  %.not824 = icmp ult i64 %.sroa.0507.2, %i.rh
-  br i1 %.not824, label %bb.eh, label %.invoke1257, !prof !12
+  %.not824.not = icmp eq i64 %i.rh, 3
+  br i1 %.not824.not, label %.invoke1257, label %bb.eh, !prof !9
 
 bb.eh:                                            ; preds = %bb.eg
   store ptr %i.rf, ptr %i.an, align 8
   store i64 %i.rh, ptr %.sroa.6203.0..sroa_idx204, align 8
   store ptr %i.rj, ptr %.sroa.6203.sroa.0.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   store ptr %i.rl, ptr %.sroa.6203.sroa.0.sroa.5.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
-  store i64 %.sroa.0507.2, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.s, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dx, i64 noundef 4)
@@ -316,8 +315,7 @@ bb.ep:                                            ; preds = %bb.eo
   store ptr %i.ru, ptr %i.az, align 8
   store i64 %i.rv, ptr %i.eh, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
-  %i.rw = icmp ugt i64 %i.qi, 2                   ; 2 uses
-  %.sroa.0470.2 = select i1 %i.rw, i64 3, i64 2   ; 2 uses
+  %i.rw = icmp ugt i64 %i.qi, 2
   br i1 %i.rw, label %bb.eq, label %.invoke1257, !prof !12
 
 bb.eq:                                            ; preds = %bb.ep
@@ -327,15 +325,15 @@ bb.eq:                                            ; preds = %bb.ep
   store ptr %i.qm, ptr %.sroa.6166.sroa.0.sroa.5.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   store i64 2, ptr %.sroa.6166.sroa.4.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax)
-  %.not822 = icmp ult i64 %.sroa.0470.2, %i.qi
-  br i1 %.not822, label %bb.er, label %.invoke1257, !prof !12
+  %.not822.not = icmp eq i64 %i.qi, 3
+  br i1 %.not822.not, label %.invoke1257, label %bb.er, !prof !9
 
 bb.er:                                            ; preds = %bb.eq
   store ptr %i.qg, ptr %i.ax, align 8
   store i64 %i.qi, ptr %.sroa.6173.0..sroa_idx174, align 8
   store ptr %i.qk, ptr %.sroa.6173.sroa.0.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   store ptr %i.qm, ptr %.sroa.6173.sroa.0.sroa.5.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
-  store i64 %.sroa.0470.2, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.t, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dx, i64 noundef 4)
@@ -738,8 +736,7 @@ bb.ef:                                            ; preds = %bb.ee
   store ptr %i.ro, ptr %i.ar, align 8
   store i64 %i.rp, ptr %i.er, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
-  %i.rq = icmp ugt i64 %i.rj, 2                   ; 2 uses
-  %.sroa.0507.2 = select i1 %i.rq, i64 3, i64 2   ; 2 uses
+  %i.rq = icmp ugt i64 %i.rj, 2
   br i1 %i.rq, label %bb.eg, label %.invoke1261, !prof !12
 
 bb.eg:                                            ; preds = %bb.ef
@@ -749,15 +746,15 @@ bb.eg:                                            ; preds = %bb.ef
   store ptr %i.rn, ptr %.sroa.6196.sroa.0.sroa.5.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   store i64 2, ptr %.sroa.6196.sroa.4.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap)
-  %.not828 = icmp ult i64 %.sroa.0507.2, %i.rj
-  br i1 %.not828, label %bb.eh, label %.invoke1261, !prof !12
+  %.not828.not = icmp eq i64 %i.rj, 3
+  br i1 %.not828.not, label %.invoke1261, label %bb.eh, !prof !9
 
 bb.eh:                                            ; preds = %bb.eg
   store ptr %i.rh, ptr %i.ap, align 8
   store i64 %i.rj, ptr %.sroa.6203.0..sroa_idx204, align 8
   store ptr %i.rl, ptr %.sroa.6203.sroa.0.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   store ptr %i.rn, ptr %.sroa.6203.sroa.0.sroa.5.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
-  store i64 %.sroa.0507.2, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.u, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dz, i64 noundef 4)
@@ -848,8 +845,7 @@ bb.ep:                                            ; preds = %bb.eo
   store ptr %i.rw, ptr %i.bb, align 8
   store i64 %i.rx, ptr %i.ej, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
-  %i.ry = icmp ugt i64 %i.qk, 2                   ; 2 uses
-  %.sroa.0470.2 = select i1 %i.ry, i64 3, i64 2   ; 2 uses
+  %i.ry = icmp ugt i64 %i.qk, 2
   br i1 %i.ry, label %bb.eq, label %.invoke1261, !prof !12
 
 bb.eq:                                            ; preds = %bb.ep
@@ -859,15 +855,15 @@ bb.eq:                                            ; preds = %bb.ep
   store ptr %i.qo, ptr %.sroa.6166.sroa.0.sroa.5.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   store i64 2, ptr %.sroa.6166.sroa.4.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
-  %.not826 = icmp ult i64 %.sroa.0470.2, %i.qk
-  br i1 %.not826, label %bb.er, label %.invoke1261, !prof !12
+  %.not826.not = icmp eq i64 %i.qk, 3
+  br i1 %.not826.not, label %.invoke1261, label %bb.er, !prof !9
 
 bb.er:                                            ; preds = %bb.eq
   store ptr %i.qi, ptr %i.az, align 8
   store i64 %i.qk, ptr %.sroa.6173.0..sroa_idx174, align 8
   store ptr %i.qm, ptr %.sroa.6173.sroa.0.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   store ptr %i.qo, ptr %.sroa.6173.sroa.0.sroa.5.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
-  store i64 %.sroa.0470.2, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.v, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dz, i64 noundef 4)
@@ -1270,8 +1266,7 @@ bb.ef:                                            ; preds = %bb.ee
   store ptr %i.ro, ptr %i.ar, align 8
   store i64 %i.rp, ptr %i.er, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
-  %i.rq = icmp ugt i64 %i.rj, 2                   ; 2 uses
-  %.sroa.0507.2 = select i1 %i.rq, i64 3, i64 2   ; 2 uses
+  %i.rq = icmp ugt i64 %i.rj, 2
   br i1 %i.rq, label %bb.eg, label %.invoke1261, !prof !12
 
 bb.eg:                                            ; preds = %bb.ef
@@ -1281,15 +1276,15 @@ bb.eg:                                            ; preds = %bb.ef
   store ptr %i.rn, ptr %.sroa.6196.sroa.0.sroa.5.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   store i64 2, ptr %.sroa.6196.sroa.4.0..sroa.6196.0..sroa_idx197.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap)
-  %.not828 = icmp ult i64 %.sroa.0507.2, %i.rj
-  br i1 %.not828, label %bb.eh, label %.invoke1261, !prof !12
+  %.not828.not = icmp eq i64 %i.rj, 3
+  br i1 %.not828.not, label %.invoke1261, label %bb.eh, !prof !9
 
 bb.eh:                                            ; preds = %bb.eg
   store ptr %i.rh, ptr %i.ap, align 8
   store i64 %i.rj, ptr %.sroa.6203.0..sroa_idx204, align 8
   store ptr %i.rl, ptr %.sroa.6203.sroa.0.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   store ptr %i.rn, ptr %.sroa.6203.sroa.0.sroa.5.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
-  store i64 %.sroa.0507.2, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6203.sroa.4.0..sroa.6203.0..sroa_idx204.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.u, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dz, i64 noundef 4)
@@ -1380,8 +1375,7 @@ bb.ep:                                            ; preds = %bb.eo
   store ptr %i.rw, ptr %i.bb, align 8
   store i64 %i.rx, ptr %i.ej, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
-  %i.ry = icmp ugt i64 %i.qk, 2                   ; 2 uses
-  %.sroa.0470.2 = select i1 %i.ry, i64 3, i64 2   ; 2 uses
+  %i.ry = icmp ugt i64 %i.qk, 2
   br i1 %i.ry, label %bb.eq, label %.invoke1261, !prof !12
 
 bb.eq:                                            ; preds = %bb.ep
@@ -1391,15 +1385,15 @@ bb.eq:                                            ; preds = %bb.ep
   store ptr %i.qo, ptr %.sroa.6166.sroa.0.sroa.5.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   store i64 2, ptr %.sroa.6166.sroa.4.0..sroa.6166.0..sroa_idx167.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
-  %.not826 = icmp ult i64 %.sroa.0470.2, %i.qk
-  br i1 %.not826, label %bb.er, label %.invoke1261, !prof !12
+  %.not826.not = icmp eq i64 %i.qk, 3
+  br i1 %.not826.not, label %.invoke1261, label %bb.er, !prof !9
 
 bb.er:                                            ; preds = %bb.eq
   store ptr %i.qi, ptr %i.az, align 8
   store i64 %i.qk, ptr %.sroa.6173.0..sroa_idx174, align 8
   store ptr %i.qm, ptr %.sroa.6173.sroa.0.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   store ptr %i.qo, ptr %.sroa.6173.sroa.0.sroa.5.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
-  store i64 %.sroa.0470.2, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
+  store i64 3, ptr %.sroa.6173.sroa.4.0..sroa.6173.0..sroa_idx174.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   invoke void @_ZN3hex6encode17hede4ebcc2778ac76E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.v, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.dz, i64 noundef 4)

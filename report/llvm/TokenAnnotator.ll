@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit12
 
 _ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit12: ; preds = %bb.f, %bb.e, %bb.d, %bb.u, %bb.t, %bb.s, %bb.r, %bb.o, %bb.n, %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser32isTableGenDAGArgBreakingOperatorERKNS0_11FormatTokenE.exit, %bb.p, %bb.b
-  %.0 = phi i1 [ true, %bb.u ], [ true, %bb.o ], [ true, %bb.s ], [ true, %bb.p ], [ false, %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser32isTableGenDAGArgBreakingOperatorERKNS0_11FormatTokenE.exit ], [ false, %bb.b ], [ true, %bb.n ], [ true, %bb.r ], [ true, %bb.t ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ] ; 2 uses
+  %.0 = phi i1 [ true, %bb.u ], [ true, %bb.o ], [ true, %bb.s ], [ true, %bb.p ], [ false, %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser32isTableGenDAGArgBreakingOperatorERKNS0_11FormatTokenE.exit ], [ false, %bb.b ], [ true, %bb.n ], [ true, %bb.r ], [ true, %bb.t ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %.val7.i = load ptr, ptr %0, align 8, !tbaa !20
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
@@ -255,7 +255,6 @@ _ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_
   %i.cx = getelementptr inbounds nuw [56 x i8], ptr %.val.i, i64 %i.cw
   %i.cy = getelementptr inbounds i8, ptr %i.cx, i64 -9
   store i8 1, ptr %i.cy, align 1, !tbaa !402
-  %4 = select i1 %.0, i8 -120, i8 -121            ; 2 uses
   br i1 %.0, label %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_3tok9TokenKindEj.exit.split.us, label %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_3tok9TokenKindEj.exit.split
 
 _ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_3tok9TokenKindEj.exit.split.us: ; preds = %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_3tok9TokenKindEj.exit, %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser20skipToNextNonCommentEv.exit27.thread.us
@@ -285,7 +284,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cz, i64 67
-  store i8 %4, ptr %i.dj, align 1, !tbaa !261
+  store i8 -120, ptr %i.dj, align 1, !tbaa !261
   br label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit29.us
 
 _ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit29.us: ; preds = %bb.aa, %bb.z
@@ -349,7 +348,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.ej = getelementptr inbounds nuw i8, ptr %i.dz, i64 67
-  store i8 %4, ptr %i.ej, align 1, !tbaa !261
+  store i8 -121, ptr %i.ej, align 1, !tbaa !261
   br label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit29
 
 _ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit29: ; preds = %bb.ae, %bb.af

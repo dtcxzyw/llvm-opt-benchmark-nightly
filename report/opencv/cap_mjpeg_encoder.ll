@@ -205,8 +205,7 @@ declare void @__cxa_end_catch() local_unnamed_addr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2cv5mjpeg12convertToYUVEiiiPsS1_PKhiiiii(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #10 comdat {
 bb.a:
-  %i.a = icmp sgt i32 %1, 1                       ; 2 uses
-  %11 = select i1 %i.a, i32 16, i32 8             ; 3 uses
+  %i.a = icmp sgt i32 %1, 1
   br i1 %i.a, label %bb.b, label %.preheader166
 
 .preheader166:                                    ; preds = %bb.a
@@ -216,7 +215,6 @@ bb.a:
 .preheader165.lr.ph:                              ; preds = %.preheader166
   %i.c = icmp sgt i32 %7, 0
   %i.d = sext i32 %8 to i64                       ; 2 uses
-  %12 = zext nneg i32 %11 to i64
   br i1 %i.c, label %.preheader165.preheader, label %.loopexit
 
 .preheader165.preheader:                          ; preds = %.preheader165.lr.ph
@@ -268,7 +266,6 @@ bb.b:                                             ; preds = %bb.a
   %i.w = sext i32 %i.v to i64
   %i.x = sub nsw i64 0, %i.w                      ; 3 uses
   %i.y = sext i32 %8 to i64                       ; 3 uses
-  %13 = zext nneg i32 %11 to i64                  ; 3 uses
   br i1 %i.r, label %.preheader162.lr.ph.split, label %.loopexit
 
 .preheader162.lr.ph.split:                        ; preds = %.preheader162.lr.ph
@@ -280,7 +277,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader162.us:                                 ; preds = %.preheader162.lr.ph.split, %._crit_edge174.split.us.us
   %.1188.us = phi ptr [ %spec.select.us, %._crit_edge174.split.us.us ], [ %3, %.preheader162.lr.ph.split ] ; 2 uses
-  %.1143185.us = phi ptr [ %14, %._crit_edge174.split.us.us ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
+  %.1143185.us = phi ptr [ %11, %._crit_edge174.split.us.us ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
   %.2147184.us = phi ptr [ %i.bu, %._crit_edge174.split.us.us ], [ %5, %.preheader162.lr.ph.split ]
   %.1149183.us = phi i32 [ %i.br, %._crit_edge174.split.us.us ], [ 0, %.preheader162.lr.ph.split ] ; 2 uses
   br label %bb.c
@@ -346,13 +343,13 @@ bb.c:                                             ; preds = %bb.c, %.preheader16
   %spec.select.idx.us = zext nneg i32 %i.bt to i64
   %spec.select.us = getelementptr inbounds nuw i8, ptr %.1188.us, i64 %spec.select.idx.us
   %i.bu = getelementptr inbounds i8, ptr %i.bq, i64 %i.y
-  %14 = getelementptr inbounds nuw [2 x i8], ptr %.1143185.us, i64 %13
+  %11 = getelementptr inbounds nuw i8, ptr %.1143185.us, i64 32
   %exitcond232.not = icmp eq i32 %i.br, %6
   br i1 %exitcond232.not, label %.loopexit, label %.preheader162.us, !llvm.loop !182
 
 .preheader162.us195:                              ; preds = %.preheader162.lr.ph.split, %._crit_edge174.split.split.us.us
   %.1188.us196 = phi ptr [ %spec.select.us205, %._crit_edge174.split.split.us.us ], [ %3, %.preheader162.lr.ph.split ] ; 2 uses
-  %.1143185.us197 = phi ptr [ %15, %._crit_edge174.split.split.us.us ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
+  %.1143185.us197 = phi ptr [ %12, %._crit_edge174.split.split.us.us ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
   %.2147184.us198 = phi ptr [ %i.dq, %._crit_edge174.split.split.us.us ], [ %5, %.preheader162.lr.ph.split ]
   %.1149183.us199 = phi i32 [ %i.dn, %._crit_edge174.split.split.us.us ], [ 0, %.preheader162.lr.ph.split ] ; 2 uses
   br label %bb.d
@@ -418,7 +415,7 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %spec.select.idx.us204 = zext nneg i32 %i.dp to i64
   %spec.select.us205 = getelementptr inbounds nuw i8, ptr %.1188.us196, i64 %spec.select.idx.us204
   %i.dq = getelementptr inbounds i8, ptr %i.dm, i64 %i.y
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %.1143185.us197, i64 %13
+  %12 = getelementptr inbounds nuw i8, ptr %.1143185.us197, i64 32
   %exitcond226.not = icmp eq i32 %i.dn, %6
   br i1 %exitcond226.not, label %.loopexit, label %.preheader162.us195, !llvm.loop !182
 
@@ -435,12 +432,11 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.ea = sub nsw i64 0, %i.dz
   %i.eb = shl nsw i32 %8, 1
   %i.ec = sext i32 %i.eb to i64
-  %16 = zext nneg i32 %11 to i64                  ; 8 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader161, %.preheader
   %.0211 = phi ptr [ %3, %.preheader161 ], [ %i.uu, %.preheader ] ; 17 uses
-  %.0142210 = phi ptr [ %4, %.preheader161 ], [ %i.ut, %.preheader ] ; 25 uses
+  %.0142210 = phi ptr [ %4, %.preheader161 ], [ %i.ut, %.preheader ] ; 33 uses
   %.0145209 = phi ptr [ %5, %.preheader161 ], [ %i.us, %.preheader ] ; 22 uses
   %.0148208 = phi i32 [ 0, %.preheader161 ], [ %i.ur, %.preheader ] ; 2 uses
   %i.ed = load i8, ptr %.0145209, align 1, !tbaa !10
@@ -457,13 +453,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.em = load i8, ptr %i.el, align 1, !tbaa !10
   %i.en = zext i8 %i.em to i16
   %i.eo = add nsw i16 %i.en, -128
-  %17 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  store i16 %i.eo, ptr %17, align 2, !tbaa !55
+  %13 = getelementptr inbounds nuw i8, ptr %.0142210, i64 32
+  store i16 %i.eo, ptr %13, align 2, !tbaa !55
   %i.ep = getelementptr i8, ptr %i.el, i64 1
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !10
   %i.er = zext i8 %i.eq to i16
   %i.es = add nsw i16 %i.er, -128
-  %i.et = getelementptr inbounds nuw i8, ptr %17, i64 2
+  %i.et = getelementptr inbounds nuw i8, ptr %.0142210, i64 34
   store i16 %i.es, ptr %i.et, align 2, !tbaa !55
   %i.eu = getelementptr inbounds i8, ptr %.0145209, i64 %i.ds ; 2 uses
   %i.ev = load i8, ptr %i.eu, align 1, !tbaa !10
@@ -516,14 +512,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !10
   %i.gn = zext i8 %i.gm to i16
   %i.go = add nsw i16 %i.gn, -128
-  %18 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.gp = getelementptr inbounds nuw i8, ptr %18, i64 4
+  %i.gp = getelementptr inbounds nuw i8, ptr %.0142210, i64 36
   store i16 %i.go, ptr %i.gp, align 2, !tbaa !55
   %i.gq = getelementptr i8, ptr %i.gl, i64 1
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !10
   %i.gs = zext i8 %i.gr to i16
   %i.gt = add nsw i16 %i.gs, -128
-  %i.gu = getelementptr inbounds nuw i8, ptr %18, i64 6
+  %i.gu = getelementptr inbounds nuw i8, ptr %.0142210, i64 38
   store i16 %i.gt, ptr %i.gu, align 2, !tbaa !55
   %i.gv = getelementptr inbounds i8, ptr %i.gb, i64 %i.ds ; 2 uses
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !10
@@ -577,14 +572,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.io = load i8, ptr %i.in, align 1, !tbaa !10
   %i.ip = zext i8 %i.io to i16
   %i.iq = add nsw i16 %i.ip, -128
-  %19 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.ir = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.ir = getelementptr inbounds nuw i8, ptr %.0142210, i64 40
   store i16 %i.iq, ptr %i.ir, align 2, !tbaa !55
   %i.is = getelementptr i8, ptr %i.in, i64 1
   %i.it = load i8, ptr %i.is, align 1, !tbaa !10
   %i.iu = zext i8 %i.it to i16
   %i.iv = add nsw i16 %i.iu, -128
-  %i.iw = getelementptr inbounds nuw i8, ptr %19, i64 10
+  %i.iw = getelementptr inbounds nuw i8, ptr %.0142210, i64 42
   store i16 %i.iv, ptr %i.iw, align 2, !tbaa !55
   %i.ix = getelementptr inbounds i8, ptr %i.id, i64 %i.ds ; 2 uses
   %i.iy = load i8, ptr %i.ix, align 1, !tbaa !10
@@ -638,14 +632,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.kq = load i8, ptr %i.kp, align 1, !tbaa !10
   %i.kr = zext i8 %i.kq to i16
   %i.ks = add nsw i16 %i.kr, -128
-  %20 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.kt = getelementptr inbounds nuw i8, ptr %20, i64 12
+  %i.kt = getelementptr inbounds nuw i8, ptr %.0142210, i64 44
   store i16 %i.ks, ptr %i.kt, align 2, !tbaa !55
   %i.ku = getelementptr i8, ptr %i.kp, i64 1
   %i.kv = load i8, ptr %i.ku, align 1, !tbaa !10
   %i.kw = zext i8 %i.kv to i16
   %i.kx = add nsw i16 %i.kw, -128
-  %i.ky = getelementptr inbounds nuw i8, ptr %20, i64 14
+  %i.ky = getelementptr inbounds nuw i8, ptr %.0142210, i64 46
   store i16 %i.kx, ptr %i.ky, align 2, !tbaa !55
   %i.kz = getelementptr inbounds i8, ptr %i.kf, i64 %i.ds ; 2 uses
   %i.la = load i8, ptr %i.kz, align 1, !tbaa !10
@@ -699,14 +692,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !10
   %i.mt = zext i8 %i.ms to i16
   %i.mu = add nsw i16 %i.mt, -128
-  %21 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.mv = getelementptr inbounds nuw i8, ptr %21, i64 16
+  %i.mv = getelementptr inbounds nuw i8, ptr %.0142210, i64 48
   store i16 %i.mu, ptr %i.mv, align 2, !tbaa !55
   %i.mw = getelementptr i8, ptr %i.mr, i64 1
   %i.mx = load i8, ptr %i.mw, align 1, !tbaa !10
   %i.my = zext i8 %i.mx to i16
   %i.mz = add nsw i16 %i.my, -128
-  %i.na = getelementptr inbounds nuw i8, ptr %21, i64 18
+  %i.na = getelementptr inbounds nuw i8, ptr %.0142210, i64 50
   store i16 %i.mz, ptr %i.na, align 2, !tbaa !55
   %i.nb = getelementptr inbounds i8, ptr %i.mh, i64 %i.ds ; 2 uses
   %i.nc = load i8, ptr %i.nb, align 1, !tbaa !10
@@ -760,14 +752,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.ou = load i8, ptr %i.ot, align 1, !tbaa !10
   %i.ov = zext i8 %i.ou to i16
   %i.ow = add nsw i16 %i.ov, -128
-  %22 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.ox = getelementptr inbounds nuw i8, ptr %22, i64 20
+  %i.ox = getelementptr inbounds nuw i8, ptr %.0142210, i64 52
   store i16 %i.ow, ptr %i.ox, align 2, !tbaa !55
   %i.oy = getelementptr i8, ptr %i.ot, i64 1
   %i.oz = load i8, ptr %i.oy, align 1, !tbaa !10
   %i.pa = zext i8 %i.oz to i16
   %i.pb = add nsw i16 %i.pa, -128
-  %i.pc = getelementptr inbounds nuw i8, ptr %22, i64 22
+  %i.pc = getelementptr inbounds nuw i8, ptr %.0142210, i64 54
   store i16 %i.pb, ptr %i.pc, align 2, !tbaa !55
   %i.pd = getelementptr inbounds i8, ptr %i.oj, i64 %i.ds ; 2 uses
   %i.pe = load i8, ptr %i.pd, align 1, !tbaa !10
@@ -821,14 +812,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.qw = load i8, ptr %i.qv, align 1, !tbaa !10
   %i.qx = zext i8 %i.qw to i16
   %i.qy = add nsw i16 %i.qx, -128
-  %23 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.qz = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.qz = getelementptr inbounds nuw i8, ptr %.0142210, i64 56
   store i16 %i.qy, ptr %i.qz, align 2, !tbaa !55
   %i.ra = getelementptr i8, ptr %i.qv, i64 1
   %i.rb = load i8, ptr %i.ra, align 1, !tbaa !10
   %i.rc = zext i8 %i.rb to i16
   %i.rd = add nsw i16 %i.rc, -128
-  %i.re = getelementptr inbounds nuw i8, ptr %23, i64 26
+  %i.re = getelementptr inbounds nuw i8, ptr %.0142210, i64 58
   store i16 %i.rd, ptr %i.re, align 2, !tbaa !55
   %i.rf = getelementptr inbounds i8, ptr %i.ql, i64 %i.ds ; 2 uses
   %i.rg = load i8, ptr %i.rf, align 1, !tbaa !10
@@ -882,14 +872,13 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
   %i.sy = load i8, ptr %i.sx, align 1, !tbaa !10
   %i.sz = zext i8 %i.sy to i16
   %i.ta = add nsw i16 %i.sz, -128
-  %24 = getelementptr inbounds nuw [2 x i8], ptr %.0142210, i64 %16 ; 2 uses
-  %i.tb = getelementptr inbounds nuw i8, ptr %24, i64 28
+  %i.tb = getelementptr inbounds nuw i8, ptr %.0142210, i64 60
   store i16 %i.ta, ptr %i.tb, align 2, !tbaa !55
   %i.tc = getelementptr i8, ptr %i.sx, i64 1
   %i.td = load i8, ptr %i.tc, align 1, !tbaa !10
   %i.te = zext i8 %i.td to i16
   %i.tf = add nsw i16 %i.te, -128
-  %i.tg = getelementptr inbounds nuw i8, ptr %24, i64 30
+  %i.tg = getelementptr inbounds nuw i8, ptr %.0142210, i64 62
   store i16 %i.tf, ptr %i.tg, align 2, !tbaa !55
   %i.th = getelementptr inbounds i8, ptr %i.sn, i64 %i.ds ; 2 uses
   %i.ti = load i8, ptr %i.th, align 1, !tbaa !10
@@ -938,7 +927,7 @@ bb.d:                                             ; preds = %bb.d, %.preheader16
 
 .preheader162:                                    ; preds = %.preheader162.lr.ph.split, %._crit_edge174.split.split
   %.1188 = phi ptr [ %spec.select, %._crit_edge174.split.split ], [ %3, %.preheader162.lr.ph.split ] ; 2 uses
-  %.1143185 = phi ptr [ %25, %._crit_edge174.split.split ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
+  %.1143185 = phi ptr [ %14, %._crit_edge174.split.split ], [ %4, %.preheader162.lr.ph.split ] ; 2 uses
   %.2147184 = phi ptr [ %i.vv, %._crit_edge174.split.split ], [ %5, %.preheader162.lr.ph.split ]
   %.1149183 = phi i32 [ %i.vs, %._crit_edge174.split.split ], [ 0, %.preheader162.lr.ph.split ] ; 2 uses
   br label %bb.e
@@ -982,12 +971,12 @@ bb.e:                                             ; preds = %.preheader162, %bb.
   %spec.select.idx = zext nneg i32 %i.vu to i64
   %spec.select = getelementptr inbounds nuw i8, ptr %.1188, i64 %spec.select.idx
   %i.vv = getelementptr inbounds i8, ptr %i.vr, i64 %i.y
-  %25 = getelementptr inbounds nuw [2 x i8], ptr %.1143185, i64 %13
+  %14 = getelementptr inbounds nuw i8, ptr %.1143185, i64 32
   %exitcond238.not = icmp eq i32 %i.vs, %6
   br i1 %exitcond238.not, label %.loopexit, label %.preheader162, !llvm.loop !182
 
 iter.check:                                       ; preds = %.preheader165.preheader, %._crit_edge
-  %.2144171 = phi ptr [ %26, %._crit_edge ], [ %4, %.preheader165.preheader ] ; 8 uses
+  %.2144171 = phi ptr [ %15, %._crit_edge ], [ %4, %.preheader165.preheader ] ; 8 uses
   %.4170 = phi ptr [ %i.xu, %._crit_edge ], [ %5, %.preheader165.preheader ] ; 8 uses
   %.2150169 = phi i32 [ %i.xt, %._crit_edge ], [ 0, %.preheader165.preheader ]
   %brmerge = select i1 %min.iters.check, i1 true, i1 %i.l
@@ -1107,7 +1096,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.xt = add nuw nsw i32 %.2150169, 1            ; 2 uses
   %i.xu = getelementptr inbounds i8, ptr %.4170, i64 %i.d
-  %26 = getelementptr inbounds nuw [2 x i8], ptr %.2144171, i64 %12
+  %15 = getelementptr inbounds nuw i8, ptr %.2144171, i64 16
   %exitcond220.not = icmp eq i32 %i.xt, %6
   br i1 %exitcond220.not, label %.loopexit, label %iter.check, !llvm.loop !191
 

@@ -205,7 +205,6 @@ ISEQ_COMPILE_DATA.exit40:                         ; preds = %rbimpl_intern_const
   br label %bb.b
 
 bb.b:                                             ; preds = %ISEQ_COMPILE_DATA.exit37, %ISEQ_COMPILE_DATA.exit40, %ISEQ_COMPILE_DATA.exit
-  %4 = select i1 %3, i64 20, i64 0                ; 2 uses
   br i1 %3, label %.split, label %.split.us
 
 .split.us:                                        ; preds = %bb.b, %bb.f
@@ -236,7 +235,7 @@ bb.e:                                             ; preds = %bb.d
   %i.u = load ptr, ptr %i.l, align 8, !tbaa !70
   %i.v = getelementptr i8, ptr %i.u, i64 288
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !303
-  %i.x = call i32 @rb_id_table_insert(ptr noundef %i.w, i64 noundef %2, i64 noundef %4) #37 ; 0 uses
+  %i.x = call i32 @rb_id_table_insert(ptr noundef %i.w, i64 noundef %2, i64 noundef 0) #37 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
@@ -272,23 +271,20 @@ bb.g:                                             ; preds = %.split
 bb.h:                                             ; preds = %bb.g, %.split
   %i.aj = phi ptr [ %i.ag, %bb.g ], [ %i.af, %.split ]
   %i.ak = call i32 @rb_id_table_lookup(ptr noundef %i.aj, i64 noundef %2, ptr noundef nonnull %i.a) #37
-  %.not32.a = icmp eq i32 %i.ak, 0
-  br i1 %.not32.a, label %.sink.split, label %5
+  %.not32 = icmp eq i32 %i.ak, 0
+  %4 = load i64, ptr %i.a, align 8
+  %.not32.a = icmp eq i64 %4, 0
+  %or.cond56 = select i1 %.not32, i1 true, i1 %.not32.a
+  br i1 %or.cond56, label %.sink.split, label %bb.i
 
-5:                                                ; preds = %bb.h
-  %6 = load i64, ptr %i.a, align 8
-  %7 = icmp eq i64 %6, 0
-  br i1 %7, label %.sink.split, label %bb.i
-
-.sink.split:                                      ; preds = %bb.h, %5
-  %.sink53 = phi i64 [ 20, %5 ], [ %4, %bb.h ]
+.sink.split:                                      ; preds = %bb.h
   %i.al = load ptr, ptr %i.ac, align 8, !tbaa !70
   %i.am = getelementptr i8, ptr %i.al, i64 288
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !303
-  %i.ao = call i32 @rb_id_table_insert(ptr noundef %i.an, i64 noundef %2, i64 noundef %.sink53) #37 ; 0 uses
+  %i.ao = call i32 @rb_id_table_insert(ptr noundef %i.an, i64 noundef %2, i64 noundef 20) #37 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %.sink.split, %5
+bb.i:                                             ; preds = %bb.h, %.sink.split
   %i.ap = load ptr, ptr %i.ac, align 8, !tbaa !70
   %i.aq = getelementptr i8, ptr %i.ap, i64 168
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !168

@@ -202,16 +202,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %.044 = phi i32 [ -1, %bb.a ], [ %i.f, %bb.d ]  ; 2 uses
+  %.044 = phi i32 [ -1, %bb.a ], [ %i.f, %bb.d ]
   %.pn = phi ptr [ %i.d, %bb.a ], [ %.042, %bb.d ]
   %.042.in = getelementptr inbounds nuw i8, ptr %.pn, i64 8
   %.042 = load ptr, ptr %.042.in, align 8, !tbaa !93 ; 3 uses
   %.not = icmp eq ptr %.042, null
-  br i1 %.not, label %2, label %bb.c
+  br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load ptr, ptr %.042, align 8, !tbaa !95  ; 5 uses
-  %i.f = add nsw i32 %.044, 1                     ; 3 uses
+  %i.e = load ptr, ptr %.042, align 8, !tbaa !95  ; 8 uses
+  %i.f = add nsw i32 %.044, 1                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 56
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !106
   %i.i = tail call ptr %i.h(ptr noundef %i.e) #16
@@ -223,24 +223,16 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 216
   %i.m = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull dereferenceable(1) %1) #17
   %.not58 = icmp eq i32 %i.m, 0
-  br i1 %.not58, label %2, label %bb.b
+  br i1 %.not58, label %.thread52, label %bb.b
 
-2:                                                ; preds = %bb.b, %bb.d
-  %.145 = phi i32 [ %i.f, %bb.d ], [ %.044, %bb.b ]
-  %.2 = phi ptr [ %i.e, %bb.d ], [ null, %bb.b ]  ; 2 uses
-  %.not47 = icmp eq ptr %.2, null
-  br i1 %.not47, label %bb.e, label %.thread52
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 744
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !104
   tail call void @gtk_widget_hide(ptr noundef %i.o) #16
   br label %bb.s
 
-.thread52:                                        ; preds = %bb.c, %2
-  %.257 = phi ptr [ %.2, %2 ], [ %i.e, %bb.c ]    ; 5 uses
-  %.14556 = phi i32 [ %.145, %2 ], [ %i.f, %bb.c ]
-  %i.p = getelementptr inbounds nuw i8, ptr %.257, i64 352 ; 2 uses
+.thread52:                                        ; preds = %bb.c, %bb.d
+  %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 352 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !107
   %.not48 = icmp eq ptr %i.q, null
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 744 ; 2 uses
@@ -261,17 +253,17 @@ bb.g:                                             ; preds = %.thread52
 bb.h:                                             ; preds = %bb.f, %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !85
-  tail call void @dt_bauhaus_combobox_set(ptr noundef %i.w, i32 noundef %.14556) #16
-  %i.x = getelementptr inbounds nuw i8, ptr %.257, i64 216
+  tail call void @dt_bauhaus_combobox_set(ptr noundef %i.w, i32 noundef %i.f) #16
+  %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 216
   tail call void @dt_conf_set_string(ptr noundef nonnull @.str.4, ptr noundef nonnull %i.x) #16
-  store ptr %.257, ptr %i.c, align 8, !tbaa !120
+  store ptr %i.e, ptr %i.c, align 8, !tbaa !120
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   store i32 0, ptr %i.a, align 4, !tbaa !113
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   store i32 0, ptr %i.b, align 4, !tbaa !113
-  %i.y = getelementptr inbounds nuw i8, ptr %.257, i64 112
+  %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 112
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !164
-  %i.aa = call i32 %i.z(ptr noundef nonnull %.257, ptr noundef null, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #16 ; 0 uses
+  %i.aa = call i32 %i.z(ptr noundef nonnull %i.e, ptr noundef null, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #16 ; 0 uses
   %i.ab = call i32 @dt_conf_get_int(ptr noundef nonnull @.str.6) #16 ; 3 uses
   %i.ac = call i32 @dt_conf_get_int(ptr noundef nonnull @.str.7) #16 ; 3 uses
   %i.ad = call i32 @dt_conf_get_int(ptr noundef nonnull @.str.8) #16

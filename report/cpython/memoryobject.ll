@@ -204,13 +204,12 @@ bb.a:
   br i1 %i.c, label %.lr.ph, label %copy_base.exit
 
 .lr.ph:                                           ; preds = %.preheader
-  %.not = icmp eq ptr %5, null                    ; 2 uses
+  %.not = icmp eq ptr %5, null
   %.not45 = icmp eq ptr %8, null                  ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.e = add i64 %1, -1                           ; 2 uses
   %i.f = getelementptr i8, ptr %4, i64 8          ; 2 uses
-  %i.g = getelementptr i8, ptr %5, i64 8          ; 2 uses
-  %10 = select i1 %.not, ptr null, ptr %i.g
+  %i.g = getelementptr i8, ptr %5, i64 8
   %i.h = getelementptr i8, ptr %7, i64 8          ; 2 uses
   %i.i = getelementptr i8, ptr %8, i64 8
   %i.j = select i1 %.not45, ptr null, ptr %i.i    ; 2 uses
@@ -234,7 +233,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph.split.us
   %i.o = phi ptr [ %i.n, %bb.c ], [ %.03950.us, %bb.b ], [ %.03950.us, %.lr.ph.split.us ]
-  tail call fastcc void @copy_rec(ptr noundef %i.d, i64 noundef %i.e, i64 noundef %2, ptr noundef %.03851.us, ptr noundef %i.f, ptr noundef %10, ptr noundef %i.o, ptr noundef %i.h, ptr noundef %i.j, ptr noundef %9)
+  tail call fastcc void @copy_rec(ptr noundef %i.d, i64 noundef %i.e, i64 noundef %2, ptr noundef %.03851.us, ptr noundef %i.f, ptr noundef null, ptr noundef %i.o, ptr noundef %i.h, ptr noundef %i.j, ptr noundef %9)
   %i.p = load i64, ptr %4, align 8, !tbaa !59
   %i.q = getelementptr i8, ptr %.03851.us, i64 %i.p
   %i.r = load i64, ptr %7, align 8, !tbaa !59
@@ -637,13 +636,12 @@ bb.a:
   br i1 %i.c, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %.not = icmp eq ptr %5, null                    ; 2 uses
+  %.not = icmp eq ptr %5, null
   %.not54 = icmp eq ptr %7, null                  ; 3 uses
   %i.d = add i64 %2, -1                           ; 4 uses
   %i.e = getelementptr i8, ptr %3, i64 8          ; 4 uses
   %i.f = getelementptr i8, ptr %4, i64 8          ; 4 uses
-  %i.g = getelementptr i8, ptr %5, i64 8          ; 3 uses
-  %11 = select i1 %.not, ptr null, ptr %i.g       ; 2 uses
+  %i.g = getelementptr i8, ptr %5, i64 8          ; 2 uses
   %i.h = getelementptr i8, ptr %6, i64 8          ; 4 uses
   %i.i = getelementptr i8, ptr %7, i64 8          ; 3 uses
   %i.j = select i1 %.not54, ptr null, ptr %i.i    ; 2 uses
@@ -656,7 +654,7 @@ bb.a:
   %.04457.us.us = phi i64 [ %i.q, %bb.b ], [ 0, %.lr.ph.split.us ]
   %.04656.us.us = phi ptr [ %i.n, %bb.b ], [ %0, %.lr.ph.split.us ] ; 2 uses
   %.04755.us.us = phi ptr [ %i.p, %bb.b ], [ %1, %.lr.ph.split.us ] ; 2 uses
-  %i.k = tail call fastcc i32 @cmp_rec(ptr noundef %.04656.us.us, ptr noundef %.04755.us.us, i64 noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef %11, ptr noundef %i.h, ptr noundef %i.j, i8 noundef signext %8, ptr noundef %9, ptr noundef %10) ; 2 uses
+  %i.k = tail call fastcc i32 @cmp_rec(ptr noundef %.04656.us.us, ptr noundef %.04755.us.us, i64 noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef null, ptr noundef %i.h, ptr noundef %i.j, i8 noundef signext %8, ptr noundef %9, ptr noundef %10) ; 2 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %bb.b, label %.loopexit
 
@@ -685,7 +683,7 @@ bb.c:                                             ; preds = %.lr.ph.split.us.spl
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.split.us.split
   %i.x = phi ptr [ %i.w, %bb.c ], [ %.04755.us, %.lr.ph.split.us.split ]
-  %i.y = tail call fastcc i32 @cmp_rec(ptr noundef %.04656.us, ptr noundef %i.x, i64 noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef %11, ptr noundef %i.h, ptr noundef %i.i, i8 noundef signext %8, ptr noundef %9, ptr noundef %10) ; 2 uses
+  %i.y = tail call fastcc i32 @cmp_rec(ptr noundef %.04656.us, ptr noundef %i.x, i64 noundef %i.d, ptr noundef %i.e, ptr noundef %i.f, ptr noundef null, ptr noundef %i.h, ptr noundef %i.i, i8 noundef signext %8, ptr noundef %9, ptr noundef %10) ; 2 uses
   %i.z = icmp sgt i32 %i.y, 0
   br i1 %i.z, label %bb.e, label %.loopexit
 
@@ -1088,19 +1086,18 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %.lr.ph, label %Py_DECREF.exit.thread
 
 .lr.ph:                                           ; preds = %.preheader
-  %.not = icmp eq ptr %5, null                    ; 2 uses
+  %.not = icmp eq ptr %5, null
   %i.h = add i64 %2, -1                           ; 2 uses
   %i.i = getelementptr i8, ptr %3, i64 8          ; 2 uses
   %i.j = getelementptr i8, ptr %4, i64 8          ; 2 uses
-  %i.k = getelementptr i8, ptr %5, i64 8          ; 2 uses
-  %7 = select i1 %.not, ptr null, ptr %i.k
+  %i.k = getelementptr i8, ptr %5, i64 8
   %i.l = getelementptr i8, ptr %i.d, i64 24       ; 2 uses
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.d
   %.03444.us = phi i64 [ %i.q, %bb.d ], [ 0, %.lr.ph ] ; 2 uses
   %.03643.us = phi ptr [ %i.p, %bb.d ], [ %1, %.lr.ph ] ; 2 uses
-  %i.m = tail call fastcc ptr @tolist_rec(ptr noundef %0, ptr noundef %.03643.us, i64 noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef %7, ptr noundef %6) ; 2 uses
+  %i.m = tail call fastcc ptr @tolist_rec(ptr noundef %0, ptr noundef %.03643.us, i64 noundef %i.h, ptr noundef %i.i, ptr noundef %i.j, ptr noundef null, ptr noundef %6) ; 2 uses
   %.not42.us = icmp eq ptr %i.m, null
   br i1 %.not42.us, label %.split.us, label %bb.d
 

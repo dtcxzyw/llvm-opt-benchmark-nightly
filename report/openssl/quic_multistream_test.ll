@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.preheader1124, %.t
   %.sroa.0281.0 = phi i64 [ %.sroa.0281.1, %.thread987 ], [ 0, %.preheader1124 ]
   %.0567 = phi i64 [ %.2569, %.thread987 ], [ 0, %.preheader1124 ] ; 172 uses
   %.0559 = phi i64 [ %.5564, %.thread987 ], [ 0, %.preheader1124 ]
-  %.0556 = phi i32 [ %.2558, %.thread987 ], [ 0, %.preheader1124 ] ; 86 uses
+  %.0556 = phi i32 [ %.2558, %.thread987 ], [ 0, %.preheader1124 ] ; 71 uses
   %.0546 = phi ptr [ %.8554, %.thread987 ], [ null, %.preheader1124 ] ; 164 uses
   %i.bh = load ptr, ptr %i.ag, align 8, !tbaa !52 ; 2 uses
   %.val822 = load i32, ptr %i.w, align 8, !tbaa !70 ; 2 uses
@@ -251,7 +251,7 @@ bb.k:                                             ; preds = %s_unlock.exit, %bb.
   %.2600 = phi i64 [ %spec.select, %bb.j ], [ %.0598, %s_unlock.exit ] ; 168 uses
   %.1578 = phi i32 [ 0, %bb.j ], [ %.0577, %s_unlock.exit ]
   %.sroa.0281.1 = phi i64 [ %.sroa.03.0.i, %bb.j ], [ %.sroa.0281.0, %s_unlock.exit ] ; 2 uses
-  %.1560 = phi i64 [ 0, %bb.j ], [ %.0559, %s_unlock.exit ] ; 43 uses
+  %.1560 = phi i64 [ 0, %bb.j ], [ %.0559, %s_unlock.exit ] ; 87 uses
   %i.bu = call i64 @ossl_time_now() #14
   %.0.i829 = call range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %i.bu, i64 %.sroa.0281.1)
   %i.bv = call i32 @test_int_le(ptr noundef nonnull @.str.14, i32 noundef 1104, ptr noundef nonnull @.str.70, ptr noundef nonnull @.str.39, i32 noundef %.0.i829, i32 noundef 0) #14
@@ -568,28 +568,28 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.0567
   store i64 %i.eo, ptr %i.ep, align 8, !tbaa !18
   %i.eq = add nuw nsw i64 %.0567, 1
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.ar:                                            ; preds = %bb.ad
   %.not774 = icmp eq ptr %.0566971, null
-  br i1 %.not774, label %bb.as, label %.loopexit1123
+  br i1 %.not774, label %bb.as, label %.thread987
 
 bb.as:                                            ; preds = %bb.ar
   %i.er = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.es = load i64, ptr %i.er, align 8, !tbaa !17
   %i.et = add i64 %i.es, %.2600
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.at:                                            ; preds = %bb.ad
   %i.eu = load i32, ptr %i.an, align 4, !tbaa !38
   %.not773 = icmp eq i32 %i.eu, 0
-  br i1 %.not773, label %.loopexit1123, label %bb.au
+  br i1 %.not773, label %.thread987, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.ev = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.ew = load i64, ptr %i.ev, align 8, !tbaa !17
   %i.ex = add i64 %i.ew, %.2600
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.av:                                            ; preds = %bb.ad
   %i.ey = call i32 @test_size_t_gt(ptr noundef nonnull @.str.14, i32 noundef 1231, ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.39, i64 noundef %.0567, i64 noundef 0) #14
@@ -605,7 +605,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.ez
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !18
   %i.ff = icmp eq i64 %i.fc, %i.fe
-  br i1 %i.ff, label %.loopexit1123, label %bb.ax
+  br i1 %i.ff, label %.thread987, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ez
@@ -666,7 +666,7 @@ bb.be:                                            ; preds = %bb.ay, %bb.az
   %i.ga = zext i1 %i.fz to i32
   %i.gb = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1257, ptr noundef nonnull @.str.78, i32 noundef %i.ga) #14
   %.not771.not = icmp eq i32 %i.gb, 0
-  br i1 %.not771.not, label %.thread987, label %.loopexit1123
+  br i1 %.not771.not, label %.thread1098, label %.thread987
 
 bb.bf:                                            ; preds = %bb.ad
   %i.gc = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
@@ -699,7 +699,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   call void @CRYPTO_free(ptr noundef nonnull %i.gh, ptr noundef nonnull @.str.14, i32 noundef 1277) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.bj:                                            ; preds = %bb.ad
   %i.gr = load ptr, ptr %i.ag, align 8, !tbaa !52
@@ -710,7 +710,7 @@ bb.bj:                                            ; preds = %bb.ad
 
 bb.bk:                                            ; preds = %bb.bj
   %.not762 = icmp eq i32 %i.gs, 1
-  br i1 %.not762, label %.loopexit1123, label %bb.bl
+  br i1 %.not762, label %.thread987, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.gu = load i32, ptr %i.an, align 4, !tbaa !38
@@ -737,12 +737,12 @@ bb.bp:                                            ; preds = %bb.bm, %bb.bl
   %i.gz = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.ha = load i64, ptr %i.gz, align 8, !tbaa !17
   %i.hb = icmp eq i64 %i.ha, 0
-  br i1 %i.hb, label %bb.bq, label %.loopexit1123
+  br i1 %i.hb, label %bb.bq, label %.thread987
 
 bb.bq:                                            ; preds = %bb.bp
   %i.hc = call i32 @test_int_eq(ptr noundef nonnull @.str.14, i32 noundef 1293, ptr noundef nonnull @.str.84, ptr noundef nonnull @.str.85, i32 noundef %i.gs, i32 noundef 1) #14
   %.not766 = icmp eq i32 %i.hc, 0
-  br i1 %.not766, label %.thread1098, label %.loopexit1123
+  br i1 %.not766, label %.thread1098, label %.thread987
 
 bb.br:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
@@ -778,7 +778,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.hp = call i32 @test_size_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1308, ptr noundef nonnull @.str.88, ptr noundef nonnull @.str.77, i64 noundef %i.hn, i64 noundef %i.ho) #14
   %.not760.not = icmp eq i32 %i.hp, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
-  br i1 %.not760.not, label %.thread987, label %.loopexit1123
+  br i1 %.not760.not, label %.thread1098, label %.thread987
 
 bb.bv:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
@@ -816,7 +816,7 @@ bb.by:                                            ; preds = %bb.bx
   %i.ie = call i32 @test_size_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1323, ptr noundef nonnull @.str.88, ptr noundef nonnull @.str.77, i64 noundef %i.ic, i64 noundef %i.id) #14
   %.not756.not = icmp eq i32 %i.ie, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #14
-  br i1 %.not756.not, label %.thread987, label %.loopexit1123
+  br i1 %.not756.not, label %.thread1098, label %.thread987
 
 bb.bz:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #14
@@ -882,7 +882,7 @@ bb.cf:                                            ; preds = %s_lock.exit844
   %i.jc = call i32 @test_size_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1336, ptr noundef nonnull @.str.88, ptr noundef nonnull @.str.77, i64 noundef %i.ja, i64 noundef %i.jb) #14
   %.not752.not = icmp eq i32 %i.jc, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #14
-  br i1 %.not752.not, label %.thread987, label %.loopexit1123
+  br i1 %.not752.not, label %.thread1098, label %.thread987
 
 bb.cg:                                            ; preds = %bb.ad
   %i.jd = call i32 @SSL_stream_conclude(ptr noundef %.0566971, i64 noundef 0) #14
@@ -890,7 +890,7 @@ bb.cg:                                            ; preds = %bb.ad
   %i.jf = zext i1 %i.je to i32
   %i.jg = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1341, ptr noundef nonnull @.str.92, i32 noundef %i.jf) #14
   %.not749 = icmp eq i32 %i.jg, 0
-  br i1 %.not749, label %.thread1098, label %.loopexit1123
+  br i1 %.not749, label %.thread1098, label %.thread987
 
 bb.ch:                                            ; preds = %bb.ad
   %i.jh = call i32 @test_uint64_t_ne(ptr noundef nonnull @.str.14, i32 noundef 1346, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, i64 noundef %.0565973, i64 noundef -1) #14
@@ -934,7 +934,7 @@ bb.cm:                                            ; preds = %bb.ck
 s_lock.exit849:                                   ; preds = %bb.cl, %bb.cm
   %.0.i847 = phi ptr [ %i.js, %bb.cl ], [ %i.jt, %bb.cm ]
   %i.ju = call i32 @ossl_quic_tserver_conclude(ptr noundef %.0.i847, i64 noundef %.0565973) #14 ; 0 uses
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.cn:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
@@ -971,7 +971,7 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.cs:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #14
@@ -1052,7 +1052,7 @@ bb.da:                                            ; preds = %bb.cz
 bb.db:                                            ; preds = %bb.cz, %bb.da
   call void @CRYPTO_free(ptr noundef %.3549, ptr noundef nonnull @.str.14, i32 noundef 1389) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.dc:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #14
@@ -1186,7 +1186,7 @@ bb.dq:                                            ; preds = %bb.dp
 bb.dr:                                            ; preds = %bb.dp, %bb.dq
   call void @CRYPTO_free(ptr noundef %.5551, ptr noundef nonnull @.str.14, i32 noundef 1418) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.ds:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #14
@@ -1244,7 +1244,7 @@ bb.dz:                                            ; preds = %bb.dy
   %.not730.not = icmp eq i32 %i.na, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #14
-  br i1 %.not730.not, label %.thread987, label %.loopexit1123
+  br i1 %.not730.not, label %.thread1098, label %.thread987
 
 bb.ea:                                            ; preds = %bb.ad
   %i.nb = call i32 @test_uint64_t_ne(ptr noundef nonnull @.str.14, i32 noundef 1445, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, i64 noundef %.0565973, i64 noundef -1) #14
@@ -1289,7 +1289,7 @@ s_lock.exit864:                                   ; preds = %bb.ee, %bb.ef
   %.0.i862 = phi ptr [ %i.nm, %bb.ee ], [ %i.nn, %bb.ef ]
   %i.no = call i32 @ossl_quic_tserver_has_read_ended(ptr noundef %.0.i862, i64 noundef %.0565973) #14
   %.not724 = icmp eq i32 %i.no, 0
-  br i1 %.not724, label %bb.eg, label %.loopexit1123
+  br i1 %.not724, label %bb.eg, label %.thread987
 
 bb.eg:                                            ; preds = %s_lock.exit864
   %i.np = load i32, ptr %i.w, align 8, !tbaa !70  ; 2 uses
@@ -1392,7 +1392,7 @@ bb.et:                                            ; preds = %bb.es, %get_stream_
   %.0.i873 = phi i32 [ 1, %bb.es ], [ 0, %get_stream_info.exit.thread.i874 ]
   %i.ot = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1464, ptr noundef nonnull @.str.104, i32 noundef %.0.i873) #14
   %.not722.not = icmp eq i32 %i.ot, 0
-  br i1 %.not722.not, label %.thread987, label %.loopexit1123
+  br i1 %.not722.not, label %.thread1098, label %.thread987
 
 bb.eu:                                            ; preds = %bb.ad
   %i.ou = call i32 @test_ptr(ptr noundef nonnull @.str.14, i32 noundef 1469, ptr noundef nonnull @.str.86, ptr noundef %.0566971) #14
@@ -1462,7 +1462,7 @@ helper_local_set_c_stream.exit880:                ; preds = %get_stream_info.exi
   %.0.i878 = phi i32 [ 1, %bb.fc ], [ 0, %get_stream_info.exit.thread.i879 ]
   %i.pn = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1478, ptr noundef nonnull @.str.106, i32 noundef %.0.i878) #14
   %.not718 = icmp eq i32 %i.pn, 0
-  br i1 %.not718, label %.thread1098, label %.loopexit1123
+  br i1 %.not718, label %.thread1098, label %.thread987
 
 bb.fd:                                            ; preds = %bb.ad
   %i.po = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
@@ -1508,7 +1508,7 @@ bb.fj:                                            ; preds = %bb.fi
   %i.qc = load i64, ptr %i.be, align 8, !tbaa !82
   %i.qd = add i64 %i.qc, 1
   store i64 %i.qd, ptr %i.be, align 8, !tbaa !82
-  br label %.loopexit1123
+  br label %.thread987
 
 .thread1031:                                      ; preds = %bb.fg, %bb.fh
   %i.qe = getelementptr inbounds nuw i8, ptr %i.bx, i64 40 ; 2 uses
@@ -1571,7 +1571,7 @@ helper_local_set_c_stream.exit888:                ; preds = %get_stream_info.exi
   %.0.i886 = phi i32 [ 1, %bb.fq ], [ 0, %get_stream_info.exit.thread.i887 ]
   %i.qu = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1513, ptr noundef nonnull @.str.104, i32 noundef %.0.i886) #14
   %.not713 = icmp eq i32 %i.qu, 0
-  br i1 %.not713, label %.thread1098, label %.loopexit1123
+  br i1 %.not713, label %.thread1098, label %.thread987
 
 bb.fr:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #14
@@ -1656,7 +1656,7 @@ bb.ga:                                            ; preds = %bb.fy, %bb.fz
   %i.rz = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1536, ptr noundef nonnull @.str.114, i32 noundef %i.ry) #14
   %.not707.not = icmp eq i32 %i.rz, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #14
-  br i1 %.not707.not, label %.thread987, label %.loopexit1123
+  br i1 %.not707.not, label %.thread1098, label %.thread987
 
 bb.gb:                                            ; preds = %bb.ad
   %i.sa = call i32 @test_ptr_null(ptr noundef nonnull @.str.14, i32 noundef 1543, ptr noundef nonnull @.str.86, ptr noundef %.0566971) #14
@@ -1732,7 +1732,7 @@ bb.gm:                                            ; preds = %bb.gl, %get_stream_
   %.0.i897 = phi i32 [ 1, %bb.gl ], [ 0, %get_stream_info.exit.thread.i898 ]
   %i.ss = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1553, ptr noundef nonnull @.str.104, i32 noundef %.0.i897) #14
   %.not700.not = icmp eq i32 %i.ss, 0
-  br i1 %.not700.not, label %.thread987, label %.loopexit1123
+  br i1 %.not700.not, label %.thread1098, label %.thread987
 
 bb.gn:                                            ; preds = %bb.ad
   %i.st = call i32 @test_uint64_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1560, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, i64 noundef %.0565973, i64 noundef -1) #14
@@ -1825,14 +1825,14 @@ bb.gy:                                            ; preds = %s_lock.exit904
   %i.ty = call fastcc i32 @helper_set_s_stream(ptr noundef nonnull %0, ptr noundef %i.tx, i64 noundef %i.ti)
   %i.tz = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1570, ptr noundef nonnull @.str.115, i32 noundef %i.ty) #14
   %.not697.not = icmp eq i32 %i.tz, 0
-  br i1 %.not697.not, label %.thread987, label %.loopexit1123
+  br i1 %.not697.not, label %.thread1098, label %.thread987
 
 bb.gz:                                            ; preds = %bb.ad
   %i.ua = load ptr, ptr %i.ag, align 8, !tbaa !52
   %i.ub = call ptr @SSL_accept_stream(ptr noundef %i.ua, i64 noundef 1) #14 ; 2 uses
   %i.uc = call i32 @test_ptr_null(ptr noundef nonnull @.str.14, i32 noundef 1578, ptr noundef nonnull @.str.116, ptr noundef %i.ub) #14
   %.not694.not = icmp eq i32 %i.uc, 0
-  br i1 %.not694.not, label %.thread1050, label %.loopexit1123
+  br i1 %.not694.not, label %.thread1050, label %.thread987
 
 .thread1050:                                      ; preds = %bb.gz
   call void @SSL_free(ptr noundef %i.ub) #14
@@ -1909,7 +1909,7 @@ helper_local_set_c_stream.exit915:                ; preds = %get_stream_info.exi
 
 bb.hj:                                            ; preds = %helper_local_set_c_stream.exit915
   call void @SSL_free(ptr noundef %.0566971) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.hk:                                            ; preds = %bb.ad
   %i.uv = call i32 @test_ptr(ptr noundef nonnull @.str.14, i32 noundef 1600, ptr noundef nonnull @.str.86, ptr noundef %.0566971) #14
@@ -1925,7 +1925,7 @@ bb.hl:                                            ; preds = %bb.hk
   %i.vb = zext i1 %i.va to i32
   %i.vc = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1603, ptr noundef nonnull @.str.118, i32 noundef %i.vb) #14
   %.not688 = icmp eq i32 %i.vc, 0
-  br i1 %.not688, label %.thread1098, label %.loopexit1123
+  br i1 %.not688, label %.thread1098, label %.thread987
 
 bb.hm:                                            ; preds = %bb.ad
   %i.vd = call i32 @test_ptr(ptr noundef nonnull @.str.14, i32 noundef 1608, ptr noundef nonnull @.str.86, ptr noundef %.0566971) #14
@@ -1941,7 +1941,7 @@ bb.hn:                                            ; preds = %bb.hm
   %i.vj = zext i1 %i.vi to i32
   %i.vk = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1612, ptr noundef nonnull @.str.119, i32 noundef %i.vj) #14
   %.not686 = icmp eq i32 %i.vk, 0
-  br i1 %.not686, label %.thread1098, label %.loopexit1123
+  br i1 %.not686, label %.thread1098, label %.thread987
 
 bb.ho:                                            ; preds = %bb.ad
   %i.vl = load ptr, ptr %i.ag, align 8, !tbaa !52
@@ -1968,7 +1968,7 @@ bb.hp:                                            ; preds = %bb.ho
   %i.vu = call i32 @test_int_ge(ptr noundef nonnull @.str.14, i32 noundef 1629, ptr noundef nonnull @.str.84, ptr noundef nonnull @.str.39, i32 noundef %i.vt, i32 noundef 0) #14
   %.not684.not = icmp eq i32 %i.vu, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
-  br i1 %.not684.not, label %.thread987, label %.loopexit1123
+  br i1 %.not684.not, label %.thread1098, label %.thread987
 
 bb.hq:                                            ; preds = %bb.ad
   %i.vv = load ptr, ptr %i.ag, align 8, !tbaa !52
@@ -2013,7 +2013,7 @@ bb.hu:                                            ; preds = %bb.ht
 
 bb.hv:                                            ; preds = %bb.hs
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.hw:                                            ; preds = %bb.ad
   %i.wh = load i32, ptr %i.w, align 8, !tbaa !70  ; 2 uses
@@ -2054,7 +2054,7 @@ s_lock.exit920:                                   ; preds = %bb.hz, %bb.ia
   %i.wt = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   %i.wu = load i64, ptr %i.wt, align 8, !tbaa !17
   %i.wv = call i32 @ossl_quic_tserver_shutdown(ptr noundef %.0.i918, i64 noundef %i.wu) #14 ; 0 uses
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.ib:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #14
@@ -2134,7 +2134,7 @@ bb.ik:                                            ; preds = %bb.ij, %bb.ii, %bb.
 
 bb.il:                                            ; preds = %bb.ij
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.im:                                            ; preds = %bb.ad
   %i.xx = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
@@ -2316,7 +2316,7 @@ bb.jg:                                            ; preds = %bb.jf
   %i.aao = zext nneg i8 %i.aan to i32
   %i.aap = call i32 @test_int_eq(ptr noundef nonnull @.str.14, i32 noundef 1705, ptr noundef nonnull @.str.123, ptr noundef nonnull @.str.131, i32 noundef %i.yc, i32 noundef %i.aao) #14
   %.not671.not = icmp eq i32 %i.aap, 0
-  br i1 %.not671.not, label %.thread987, label %.loopexit1123
+  br i1 %.not671.not, label %.thread1098, label %.thread987
 
 bb.jh:                                            ; preds = %bb.ad
   %i.aaq = call i32 @test_uint64_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1710, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, i64 noundef %.0565973, i64 noundef -1) #14
@@ -2336,7 +2336,7 @@ bb.jj:                                            ; preds = %bb.ji
   %i.aaw = call fastcc i32 @helper_set_s_stream(ptr noundef nonnull %0, ptr noundef %i.aat, i64 noundef %i.aav)
   %i.aax = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1716, ptr noundef nonnull @.str.132, i32 noundef %i.aaw) #14
   %.not666 = icmp eq i32 %i.aax, 0
-  br i1 %.not666, label %.thread1098, label %.loopexit1123
+  br i1 %.not666, label %.thread1098, label %.thread987
 
 bb.jk:                                            ; preds = %bb.ad
   %i.aay = call i32 @test_uint64_t_ne(ptr noundef nonnull @.str.14, i32 noundef 1721, ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.90, i64 noundef %.0565973, i64 noundef -1) #14
@@ -2354,7 +2354,7 @@ bb.jm:                                            ; preds = %bb.jl
   %i.abc = call fastcc i32 @helper_set_s_stream(ptr noundef nonnull %0, ptr noundef %i.abb, i64 noundef -1)
   %i.abd = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1727, ptr noundef nonnull @.str.133, i32 noundef %i.abc) #14
   %.not663 = icmp eq i32 %i.abd, 0
-  br i1 %.not663, label %.thread1098, label %.loopexit1123
+  br i1 %.not663, label %.thread1098, label %.thread987
 
 bb.jn:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #14
@@ -2379,7 +2379,7 @@ bb.jp:                                            ; preds = %bb.jo
   %i.abj = call fastcc i32 @check_consistent_want(ptr noundef %.0566971, i32 noundef %i.abf)
   %.not660.not = icmp eq i32 %i.abj, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #14
-  br i1 %.not660.not, label %.thread987, label %.loopexit1123
+  br i1 %.not660.not, label %.thread1098, label %.thread987
 
 bb.jq:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #14
@@ -2434,7 +2434,7 @@ bb.jw:                                            ; preds = %bb.jv, %bb.ju
   %i.aca = call i32 @test_false(ptr noundef nonnull @.str.14, i32 noundef 1752, ptr noundef nonnull @.str.135, i32 noundef %i.abz) #14
   %.not657.not = icmp eq i32 %i.aca, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #14
-  br i1 %.not657.not, label %.thread987, label %.loopexit1123
+  br i1 %.not657.not, label %.thread1098, label %.thread987
 
 bb.jx:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #14
@@ -2462,7 +2462,7 @@ bb.jz:                                            ; preds = %bb.jy
   %.not655.not = icmp eq i32 %i.acg, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #14
-  br i1 %.not655.not, label %.thread987, label %.loopexit1123
+  br i1 %.not655.not, label %.thread1098, label %.thread987
 
 bb.ka:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #14
@@ -2510,7 +2510,7 @@ bb.kf:                                            ; preds = %bb.ke
 bb.kg:                                            ; preds = %bb.kd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.kh:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #14
@@ -2581,7 +2581,7 @@ bb.ko:                                            ; preds = %s_lock.exit950, %bb
   %.not647.not = icmp eq i32 %i.adn, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #14
-  br i1 %.not647.not, label %.thread987, label %.loopexit1123
+  br i1 %.not647.not, label %.thread1098, label %.thread987
 
 bb.kp:                                            ; preds = %bb.ad, %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #14
@@ -2617,7 +2617,7 @@ bb.ks:                                            ; preds = %bb.kq
 
 bb.kt:                                            ; preds = %bb.kr, %bb.ks
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.ku:                                            ; preds = %bb.ad
   %i.ady = load ptr, ptr %i.ai, align 8, !tbaa !58
@@ -2642,7 +2642,7 @@ bb.kx:                                            ; preds = %bb.kw
   %i.aee = load i64, ptr %i.aea, align 8, !tbaa !17 ; 2 uses
   store i64 %i.aee, ptr %i.az, align 8, !tbaa !59
   %.not1229 = icmp eq i64 %i.aee, 0
-  br i1 %.not1229, label %.loopexit1123, label %.lr.ph
+  br i1 %.not1229, label %.thread987, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.kx
   %i.aef = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
@@ -2652,7 +2652,7 @@ bb.ky:                                            ; preds = %bb.la
   %i.aeg = add nuw i64 %.05401223, 1              ; 2 uses
   %i.aeh = load i64, ptr %i.aea, align 8, !tbaa !17
   %i.aei = icmp ult i64 %i.aeg, %i.aeh
-  br i1 %i.aei, label %bb.kz, label %.loopexit1123, !llvm.loop !125
+  br i1 %i.aei, label %bb.kz, label %.thread987, !llvm.loop !125
 
 bb.kz:                                            ; preds = %.lr.ph, %bb.ky
   %.05401223 = phi i64 [ 0, %.lr.ph ], [ %i.aeg, %bb.ky ] ; 6 uses
@@ -2692,7 +2692,7 @@ bb.lb:                                            ; preds = %bb.ad
   %i.afc = load i32, ptr %i.ay, align 8, !tbaa !35
   %i.afd = call i32 @BIO_closesocket(i32 noundef %i.afc) #14 ; 0 uses
   store i32 -1, ptr %i.ay, align 8, !tbaa !35
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.lc:                                            ; preds = %bb.ad
   %i.afe = call i32 @SSL_get_error(ptr noundef %.0566971, i32 noundef 0) #14
@@ -2707,7 +2707,7 @@ bb.ld:                                            ; preds = %bb.lc
   %i.afj = call i32 @SSL_want(ptr noundef %.0566971) #14
   %i.afk = call i32 @test_int_eq(ptr noundef nonnull @.str.14, i32 noundef 1871, ptr noundef nonnull @.str.100, ptr noundef nonnull @.str.101, i32 noundef %i.afj, i32 noundef 1) #14
   %.not638 = icmp eq i32 %i.afk, 0
-  br i1 %.not638, label %.thread1098, label %.loopexit1123
+  br i1 %.not638, label %.thread1098, label %.thread987
 
 bb.le:                                            ; preds = %bb.ad
   %i.afl = call i64 @ERR_peek_last_error() #14    ; 2 uses
@@ -2719,7 +2719,7 @@ bb.le:                                            ; preds = %bb.ad
   %i.afo = load i64, ptr %i.afn, align 8, !tbaa !17
   %i.afp = call i32 @test_size_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1876, ptr noundef nonnull @.str.143, ptr noundef nonnull @.str.77, i64 noundef %.0.i953, i64 noundef %i.afo) #14
   %.not636 = icmp eq i32 %i.afp, 0
-  br i1 %.not636, label %.thread1098, label %.loopexit1123
+  br i1 %.not636, label %.thread1098, label %.thread987
 
 bb.lf:                                            ; preds = %bb.ad
   %i.afq = call i64 @ERR_peek_last_error() #14    ; 2 uses
@@ -2732,17 +2732,17 @@ bb.lf:                                            ; preds = %bb.ad
   %i.afw = load i64, ptr %i.afv, align 8, !tbaa !17
   %i.afx = call i32 @test_size_t_eq(ptr noundef nonnull @.str.14, i32 noundef 1881, ptr noundef nonnull @.str.144, ptr noundef nonnull @.str.77, i64 noundef %i.afu, i64 noundef %i.afw) #14
   %.not635 = icmp eq i32 %i.afx, 0
-  br i1 %.not635, label %.thread1098, label %.loopexit1123
+  br i1 %.not635, label %.thread1098, label %.thread987
 
 bb.lg:                                            ; preds = %bb.ad
   %i.afy = call i32 @ERR_pop() #14                ; 0 uses
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.lh:                                            ; preds = %bb.ad
   %i.afz = getelementptr inbounds nuw i8, ptr %i.bx, i64 40
   %i.aga = load i64, ptr %i.afz, align 8, !tbaa !19
   call void @OSSL_sleep(i64 noundef %i.aga) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.li:                                            ; preds = %bb.ad
   %i.agb = getelementptr inbounds nuw i8, ptr %i.bx, i64 48
@@ -2756,7 +2756,7 @@ bb.li:                                            ; preds = %bb.ad
   %i.agh = zext i1 %i.agg to i32
   %i.agi = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1898, ptr noundef nonnull @.str.145, i32 noundef %i.agh) #14
   %.not634 = icmp eq i32 %i.agi, 0
-  br i1 %.not634, label %.thread1098, label %.loopexit1123
+  br i1 %.not634, label %.thread1098, label %.thread987
 
 bb.lj:                                            ; preds = %bb.ad
   %i.agj = getelementptr inbounds nuw i8, ptr %i.bx, i64 56
@@ -2770,7 +2770,7 @@ bb.lj:                                            ; preds = %bb.ad
   %i.agp = zext i1 %i.ago to i32
   %i.agq = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1908, ptr noundef nonnull @.str.146, i32 noundef %i.agp) #14
   %.not632 = icmp eq i32 %i.agq, 0
-  br i1 %.not632, label %.thread1098, label %.loopexit1123
+  br i1 %.not632, label %.thread1098, label %.thread987
 
 bb.lk:                                            ; preds = %bb.ad
   %i.agr = getelementptr inbounds nuw i8, ptr %i.bx, i64 64
@@ -2784,7 +2784,7 @@ bb.lk:                                            ; preds = %bb.ad
   %i.agx = zext i1 %i.agw to i32
   %i.agy = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1918, ptr noundef nonnull @.str.147, i32 noundef %i.agx) #14
   %.not630 = icmp eq i32 %i.agy, 0
-  br i1 %.not630, label %.thread1098, label %.loopexit1123
+  br i1 %.not630, label %.thread1098, label %.thread987
 
 bb.ll:                                            ; preds = %bb.ad
   %i.agz = load i32, ptr %i.w, align 8, !tbaa !70 ; 2 uses
@@ -2823,7 +2823,7 @@ s_lock.exit960:                                   ; preds = %s_checked_out_p.exi
   %i.ahm = getelementptr inbounds nuw i8, ptr %i.bx, i64 40
   %i.ahn = load i64, ptr %i.ahm, align 8, !tbaa !19
   store i64 %i.ahn, ptr %i.at, align 8, !tbaa !66
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.lp:                                            ; preds = %bb.ad
   %i.aho = load ptr, ptr %i.ag, align 8, !tbaa !52
@@ -2833,7 +2833,7 @@ bb.lp:                                            ; preds = %bb.ad
   %i.ahs = load i64, ptr %i.ahr, align 8, !tbaa !17
   %i.aht = trunc i64 %i.ahs to i32
   call void @ossl_quic_engine_set_inhibit_tick(ptr noundef %i.ahq, i32 noundef %i.aht) #14
-  br label %.loopexit1123
+  br label %.thread987
 
 bb.lq:                                            ; preds = %bb.ad
   %i.ahu = call i32 @test_ptr(ptr noundef nonnull @.str.14, i32 noundef 1941, ptr noundef nonnull @.str.86, ptr noundef %.0566971) #14
@@ -2848,7 +2848,7 @@ bb.lr:                                            ; preds = %bb.lq
   %i.ahz = zext i1 %i.ahy to i32
   %i.aia = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1944, ptr noundef nonnull @.str.148, i32 noundef %i.ahz) #14
   %.not628 = icmp eq i32 %i.aia, 0
-  br i1 %.not628, label %.thread1098, label %.loopexit1123
+  br i1 %.not628, label %.thread1098, label %.thread987
 
 bb.ls:                                            ; preds = %bb.ad
   %i.aib = load i32, ptr %i.w, align 8, !tbaa !70 ; 2 uses
@@ -2891,36 +2891,29 @@ s_lock.exit965:                                   ; preds = %bb.lv, %bb.lw
   %i.aip = zext i1 %i.aio to i32
   %i.aiq = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1950, ptr noundef nonnull @.str.149, i32 noundef %i.aip) #14
   %.not626 = icmp eq i32 %i.aiq, 0
-  br i1 %.not626, label %.thread1098, label %.loopexit1123
+  br i1 %.not626, label %.thread1098, label %.thread987
 
 bb.lx:                                            ; preds = %bb.ad
   call void (ptr, i32, ptr, ...) @test_error(ptr noundef nonnull @.str.14, i32 noundef 1955, ptr noundef nonnull @.str.150) #14
   br label %.thread1098
 
-.loopexit1123:                                    ; preds = %bb.ky, %bb.kx, %bb.kt, %bb.kg, %bb.il, %bb.hv, %bb.gz, %bb.fj, %helper_local_set_c_stream.exit888, %bb.dr, %bb.db, %bb.cr, %bb.bp, %bb.bq, %bb.bk, %bb.bi, %bb.aw, %s_lock.exit965, %bb.lr, %bb.lk, %bb.lj, %bb.li, %bb.lf, %bb.le, %bb.ld, %bb.ko, %bb.jz, %bb.jw, %bb.jp, %bb.jm, %bb.jj, %bb.jg, %bb.hp, %bb.hn, %bb.hl, %bb.gy, %bb.gm, %bb.ga, %helper_local_set_c_stream.exit880, %bb.et, %s_lock.exit864, %bb.dz, %bb.cg, %bb.cf, %bb.by, %bb.bu, %bb.be, %bb.at, %bb.ar, %bb.lp, %s_lock.exit960, %bb.lh, %bb.lg, %bb.lb, %s_lock.exit920, %bb.hj, %s_lock.exit849, %bb.au, %bb.as, %bb.aq
-  %.3601 = phi i64 [ %.2600, %bb.aq ], [ %.2600, %bb.ar ], [ %i.et, %bb.as ], [ %i.ex, %bb.au ], [ %.2600, %bb.at ], [ %.2600, %s_lock.exit965 ], [ %.2600, %bb.be ], [ %.2600, %bb.bi ], [ %.2600, %bb.aw ], [ %.2600, %bb.bu ], [ %.2600, %bb.by ], [ %.2600, %bb.cf ], [ %.2600, %bb.cg ], [ %.2600, %s_lock.exit849 ], [ %.2600, %bb.cr ], [ %.2600, %bb.db ], [ %.2600, %bb.dr ], [ %.2600, %bb.dz ], [ %.2600, %s_lock.exit864 ], [ %.2600, %bb.et ], [ %.2600, %helper_local_set_c_stream.exit880 ], [ %.2600, %bb.bp ], [ %.2600, %bb.bq ], [ %.2600, %bb.ga ], [ %.2600, %bb.gm ], [ %.2600, %bb.gy ], [ %.2600, %bb.fj ], [ %.2600, %bb.hj ], [ %.2600, %bb.hl ], [ %.2600, %bb.hn ], [ %.2600, %bb.hp ], [ %.2600, %bb.hv ], [ %.2600, %s_lock.exit920 ], [ %.2600, %bb.il ], [ %.2600, %bb.jg ], [ %.2600, %bb.jj ], [ %.2600, %bb.jm ], [ %.2600, %bb.jp ], [ %.2600, %bb.jw ], [ %.2600, %bb.jz ], [ %.2600, %bb.kg ], [ %.2600, %bb.ko ], [ %.2600, %bb.kt ], [ %.2600, %bb.gz ], [ %.2600, %bb.lb ], [ %.2600, %bb.ld ], [ %.2600, %bb.le ], [ %.2600, %bb.lf ], [ %.2600, %bb.lg ], [ %.2600, %bb.lh ], [ %.2600, %bb.li ], [ %.2600, %bb.lj ], [ %.2600, %bb.lk ], [ %.2600, %s_lock.exit960 ], [ %.2600, %bb.lp ], [ %.2600, %bb.lr ], [ %.2600, %bb.bk ], [ %.2600, %helper_local_set_c_stream.exit888 ], [ %.2600, %bb.kx ], [ %.2600, %bb.ky ]
-  %.1568 = phi i64 [ %i.eq, %bb.aq ], [ %.0567, %bb.ar ], [ %.0567, %bb.as ], [ %.0567, %bb.au ], [ %.0567, %bb.at ], [ %.0567, %s_lock.exit965 ], [ %.0567, %bb.be ], [ %.0567, %bb.bi ], [ %i.ez, %bb.aw ], [ %.0567, %bb.bu ], [ %.0567, %bb.by ], [ %.0567, %bb.cf ], [ %.0567, %bb.cg ], [ %.0567, %s_lock.exit849 ], [ %.0567, %bb.cr ], [ %.0567, %bb.db ], [ %.0567, %bb.dr ], [ %.0567, %bb.dz ], [ %.0567, %s_lock.exit864 ], [ %.0567, %bb.et ], [ %.0567, %helper_local_set_c_stream.exit880 ], [ %.0567, %bb.bp ], [ %.0567, %bb.bq ], [ %.0567, %bb.ga ], [ %.0567, %bb.gm ], [ %.0567, %bb.gy ], [ %.0567, %bb.fj ], [ %.0567, %bb.hj ], [ %.0567, %bb.hl ], [ %.0567, %bb.hn ], [ %.0567, %bb.hp ], [ %.0567, %bb.hv ], [ %.0567, %s_lock.exit920 ], [ %.0567, %bb.il ], [ %.0567, %bb.jg ], [ %.0567, %bb.jj ], [ %.0567, %bb.jm ], [ %.0567, %bb.jp ], [ %.0567, %bb.jw ], [ %.0567, %bb.jz ], [ %.0567, %bb.kg ], [ %.0567, %bb.ko ], [ %.0567, %bb.kt ], [ %.0567, %bb.gz ], [ %.0567, %bb.lb ], [ %.0567, %bb.ld ], [ %.0567, %bb.le ], [ %.0567, %bb.lf ], [ %.0567, %bb.lg ], [ %.0567, %bb.lh ], [ %.0567, %bb.li ], [ %.0567, %bb.lj ], [ %.0567, %bb.lk ], [ %.0567, %s_lock.exit960 ], [ %.0567, %bb.lp ], [ %.0567, %bb.lr ], [ %.0567, %bb.bk ], [ %.0567, %helper_local_set_c_stream.exit888 ], [ %.0567, %bb.kx ], [ %.0567, %bb.ky ]
-  %.1557 = phi i32 [ %.0556, %bb.aq ], [ %.0556, %bb.ar ], [ %.0556, %bb.as ], [ %.0556, %bb.au ], [ %.0556, %bb.at ], [ %.0556, %s_lock.exit965 ], [ %.0556, %bb.be ], [ %.0556, %bb.bi ], [ %.0556, %bb.aw ], [ %.0556, %bb.bu ], [ %.0556, %bb.by ], [ %.0556, %bb.cf ], [ %.0556, %bb.cg ], [ %.0556, %s_lock.exit849 ], [ %.0556, %bb.cr ], [ %.0556, %bb.db ], [ %.0556, %bb.dr ], [ %.0556, %bb.dz ], [ %.0556, %s_lock.exit864 ], [ %.0556, %bb.et ], [ %.0556, %helper_local_set_c_stream.exit880 ], [ 1, %bb.bp ], [ 1, %bb.bq ], [ %.0556, %bb.ga ], [ %.0556, %bb.gm ], [ %.0556, %bb.gy ], [ %.0556, %bb.fj ], [ %.0556, %bb.hj ], [ %.0556, %bb.hl ], [ %.0556, %bb.hn ], [ %.0556, %bb.hp ], [ %.0556, %bb.hv ], [ %.0556, %s_lock.exit920 ], [ %.0556, %bb.il ], [ %.0556, %bb.jg ], [ %.0556, %bb.jj ], [ %.0556, %bb.jm ], [ %.0556, %bb.jp ], [ %.0556, %bb.jw ], [ %.0556, %bb.jz ], [ %.0556, %bb.kg ], [ %.0556, %bb.ko ], [ %.0556, %bb.kt ], [ %.0556, %bb.gz ], [ %.0556, %bb.lb ], [ %.0556, %bb.ld ], [ %.0556, %bb.le ], [ %.0556, %bb.lf ], [ %.0556, %bb.lg ], [ %.0556, %bb.lh ], [ %.0556, %bb.li ], [ %.0556, %bb.lj ], [ %.0556, %bb.lk ], [ %.0556, %s_lock.exit960 ], [ %.0556, %bb.lp ], [ %.0556, %bb.lr ], [ 1, %bb.bk ], [ %.0556, %helper_local_set_c_stream.exit888 ], [ %.0556, %bb.kx ], [ %.0556, %bb.ky ]
-  %.7553 = phi ptr [ %.0546, %bb.aq ], [ %.0546, %bb.ar ], [ %.0546, %bb.as ], [ %.0546, %bb.au ], [ %.0546, %bb.at ], [ %.0546, %s_lock.exit965 ], [ %.0546, %bb.be ], [ null, %bb.bi ], [ %.0546, %bb.aw ], [ %.0546, %bb.bu ], [ %.0546, %bb.by ], [ %.0546, %bb.cf ], [ %.0546, %bb.cg ], [ %.0546, %s_lock.exit849 ], [ %.0546, %bb.cr ], [ null, %bb.db ], [ null, %bb.dr ], [ %.0546, %bb.dz ], [ %.0546, %s_lock.exit864 ], [ %.0546, %bb.et ], [ %.0546, %helper_local_set_c_stream.exit880 ], [ %.0546, %bb.bp ], [ %.0546, %bb.bq ], [ %.0546, %bb.ga ], [ %.0546, %bb.gm ], [ %.0546, %bb.gy ], [ %.0546, %bb.fj ], [ %.0546, %bb.hj ], [ %.0546, %bb.hl ], [ %.0546, %bb.hn ], [ %.0546, %bb.hp ], [ %.0546, %bb.hv ], [ %.0546, %s_lock.exit920 ], [ %.0546, %bb.il ], [ %.0546, %bb.jg ], [ %.0546, %bb.jj ], [ %.0546, %bb.jm ], [ %.0546, %bb.jp ], [ %.0546, %bb.jw ], [ %.0546, %bb.jz ], [ %.0546, %bb.kg ], [ %.0546, %bb.ko ], [ %.0546, %bb.kt ], [ %.0546, %bb.gz ], [ %.0546, %bb.lb ], [ %.0546, %bb.ld ], [ %.0546, %bb.le ], [ %.0546, %bb.lf ], [ %.0546, %bb.lg ], [ %.0546, %bb.lh ], [ %.0546, %bb.li ], [ %.0546, %bb.lj ], [ %.0546, %bb.lk ], [ %.0546, %s_lock.exit960 ], [ %.0546, %bb.lp ], [ %.0546, %bb.lr ], [ %.0546, %bb.bk ], [ %.0546, %helper_local_set_c_stream.exit888 ], [ %.0546, %bb.kx ], [ %.0546, %bb.ky ]
-  br label %.thread987
-
-.thread987:                                       ; preds = %s_lock.exit935, %s_lock.exit909, %bb.ge, %bb.bn, %.thread1082, %.thread1061, %.thread1056, %.thread1023, %.thread1016, %.thread1009, %.thread1004, %.thread978, %bb.be, %bb.bu, %bb.by, %bb.cf, %bb.dz, %bb.et, %bb.ga, %bb.gm, %bb.gy, %bb.hp, %bb.jg, %bb.jp, %bb.jw, %bb.jz, %bb.ko, %.loopexit1123, %s_lock.exit869, %bb.ax
-  %.4602 = phi i64 [ %.2600, %bb.gm ], [ %.2600, %bb.gy ], [ %.2600, %s_lock.exit935 ], [ %.2600, %bb.ge ], [ %.3601, %.loopexit1123 ], [ %.2600, %.thread1023 ], [ %.2600, %.thread978 ], [ %i.fh, %bb.ax ], [ %.2600, %bb.jp ], [ %.2600, %bb.be ], [ %.2600, %bb.jw ], [ %.2600, %bb.ga ], [ %.2600, %bb.bu ], [ %.2600, %bb.by ], [ %.2600, %bb.cf ], [ %.2600, %bb.jz ], [ %.2600, %.thread1082 ], [ %.2600, %.thread1004 ], [ %.2600, %.thread1009 ], [ %.2600, %.thread1016 ], [ %.2600, %bb.dz ], [ %.2600, %s_lock.exit869 ], [ %.2600, %bb.hp ], [ %.2600, %bb.et ], [ %.2600, %.thread1056 ], [ %.2600, %.thread1061 ], [ %.2600, %bb.jg ], [ %.2600, %bb.ko ], [ %.2600, %s_lock.exit909 ], [ %.2600, %bb.bn ] ; 2 uses
-  %.18597 = phi i32 [ 0, %bb.gm ], [ 0, %bb.gy ], [ 1, %s_lock.exit935 ], [ 1, %bb.ge ], [ 0, %.loopexit1123 ], [ %.10589.ph, %.thread1023 ], [ 1, %.thread978 ], [ 1, %bb.ax ], [ 0, %bb.jp ], [ 0, %bb.be ], [ 0, %bb.jw ], [ 0, %bb.ga ], [ 0, %bb.bu ], [ 0, %bb.by ], [ 0, %bb.cf ], [ 0, %bb.jz ], [ %.16595.ph, %.thread1082 ], [ %.7586.ph, %.thread1004 ], [ %.8587.ph, %.thread1009 ], [ %.9588.ph, %.thread1016 ], [ 0, %bb.dz ], [ 1, %s_lock.exit869 ], [ 0, %bb.hp ], [ 0, %bb.et ], [ %.13592.ph, %.thread1056 ], [ %.14593.ph, %.thread1061 ], [ 0, %bb.jg ], [ 0, %bb.ko ], [ 1, %s_lock.exit909 ], [ 1, %bb.bn ]
-  %.2569 = phi i64 [ %.0567, %bb.gm ], [ %.0567, %bb.gy ], [ %.0567, %s_lock.exit935 ], [ %.0567, %bb.ge ], [ %.1568, %.loopexit1123 ], [ %.0567, %.thread1023 ], [ %.0567, %.thread978 ], [ %.0567, %bb.ax ], [ %.0567, %bb.jp ], [ %.0567, %bb.be ], [ %.0567, %bb.jw ], [ %.0567, %bb.ga ], [ %.0567, %bb.bu ], [ %.0567, %bb.by ], [ %.0567, %bb.cf ], [ %.0567, %bb.jz ], [ %.0567, %.thread1082 ], [ %.0567, %.thread1004 ], [ %.0567, %.thread1009 ], [ %.0567, %.thread1016 ], [ %.0567, %bb.dz ], [ %.0567, %s_lock.exit869 ], [ %.0567, %bb.hp ], [ %.0567, %bb.et ], [ %.0567, %.thread1056 ], [ %.0567, %.thread1061 ], [ %.0567, %bb.jg ], [ %.0567, %bb.ko ], [ %.0567, %s_lock.exit909 ], [ %.0567, %bb.bn ] ; 2 uses
-  %.5564 = phi i64 [ %.1560, %bb.gm ], [ %.1560, %bb.gy ], [ %.1560, %s_lock.exit935 ], [ %.1560, %bb.ge ], [ %.1560, %.loopexit1123 ], [ %.1560, %.thread1023 ], [ %.1560, %.thread978 ], [ %.1560, %bb.ax ], [ %.1560, %bb.jp ], [ %.1560, %bb.be ], [ %.1560, %bb.jw ], [ %.1560, %bb.ga ], [ %.1560, %bb.bu ], [ %.1560, %bb.by ], [ %.1560, %bb.cf ], [ %.1560, %bb.jz ], [ %.1560, %.thread1082 ], [ %.1560, %.thread1004 ], [ %.2561.ph, %.thread1009 ], [ %.3562.ph, %.thread1016 ], [ %.1560, %bb.dz ], [ %.1560, %s_lock.exit869 ], [ %.1560, %bb.hp ], [ %.1560, %bb.et ], [ %.1560, %.thread1056 ], [ %.1560, %.thread1061 ], [ %.1560, %bb.jg ], [ %.1560, %bb.ko ], [ %.1560, %s_lock.exit909 ], [ %.1560, %bb.bn ]
-  %.2558 = phi i32 [ %.0556, %bb.gm ], [ %.0556, %bb.gy ], [ %.0556, %s_lock.exit935 ], [ %.0556, %bb.ge ], [ %.1557, %.loopexit1123 ], [ %.0556, %.thread1023 ], [ %.0556, %.thread978 ], [ %.0556, %bb.ax ], [ %.0556, %bb.jp ], [ %.0556, %bb.be ], [ %.0556, %bb.jw ], [ %.0556, %bb.ga ], [ %.0556, %bb.bu ], [ %.0556, %bb.by ], [ %.0556, %bb.cf ], [ %.0556, %bb.jz ], [ %.0556, %.thread1082 ], [ %.0556, %.thread1004 ], [ %.0556, %.thread1009 ], [ %.0556, %.thread1016 ], [ %.0556, %bb.dz ], [ %.0556, %s_lock.exit869 ], [ %.0556, %bb.hp ], [ %.0556, %bb.et ], [ %.0556, %.thread1056 ], [ %.0556, %.thread1061 ], [ %.0556, %bb.jg ], [ %.0556, %bb.ko ], [ %.0556, %s_lock.exit909 ], [ 1, %bb.bn ]
-  %.8554 = phi ptr [ %.0546, %bb.gm ], [ %.0546, %bb.gy ], [ %.0546, %s_lock.exit935 ], [ %.0546, %bb.ge ], [ %.7553, %.loopexit1123 ], [ %.0546, %.thread1023 ], [ %.0546, %.thread978 ], [ %.0546, %bb.ax ], [ %.0546, %bb.jp ], [ %.0546, %bb.be ], [ %.0546, %bb.jw ], [ %.0546, %bb.ga ], [ %.0546, %bb.bu ], [ %.0546, %bb.by ], [ %.0546, %bb.cf ], [ %.0546, %bb.jz ], [ %.0546, %.thread1082 ], [ %.0546, %.thread1004 ], [ %.4550.ph, %.thread1009 ], [ %.6552.ph, %.thread1016 ], [ %.0546, %bb.dz ], [ %.0546, %s_lock.exit869 ], [ %.0546, %bb.hp ], [ %.0546, %bb.et ], [ %.0546, %.thread1056 ], [ %.0546, %.thread1061 ], [ %.0546, %bb.jg ], [ %.0546, %bb.ko ], [ %.0546, %s_lock.exit909 ], [ %.0546, %bb.bn ] ; 2 uses
-  %.27 = phi i32 [ 2, %bb.gm ], [ 2, %bb.gy ], [ 4, %s_lock.exit935 ], [ 4, %bb.ge ], [ 0, %.loopexit1123 ], [ %.9.ph, %.thread1023 ], [ 4, %.thread978 ], [ 4, %bb.ax ], [ 2, %bb.jp ], [ 2, %bb.be ], [ 2, %bb.jw ], [ 2, %bb.ga ], [ 2, %bb.bu ], [ 2, %bb.by ], [ 2, %bb.cf ], [ 2, %bb.jz ], [ %.23.ph, %.thread1082 ], [ %.6.ph, %.thread1004 ], [ %.7.ph, %.thread1009 ], [ %.8.ph, %.thread1016 ], [ 2, %bb.dz ], [ 4, %s_lock.exit869 ], [ 2, %bb.hp ], [ 2, %bb.et ], [ %.17.ph, %.thread1056 ], [ %.18.ph, %.thread1061 ], [ 2, %bb.jg ], [ 2, %bb.ko ], [ 4, %s_lock.exit909 ], [ 4, %bb.bn ]
+.thread987:                                       ; preds = %bb.ky, %bb.aq, %bb.as, %bb.au, %s_lock.exit849, %bb.hj, %s_lock.exit920, %bb.lb, %bb.lg, %bb.lh, %s_lock.exit960, %bb.lp, %bb.ar, %bb.at, %bb.be, %bb.bu, %bb.by, %bb.cf, %bb.cg, %bb.dz, %s_lock.exit864, %bb.et, %helper_local_set_c_stream.exit880, %bb.ga, %bb.gm, %bb.gy, %bb.hl, %bb.hn, %bb.hp, %bb.jg, %bb.jj, %bb.jm, %bb.jp, %bb.jw, %bb.jz, %bb.ko, %bb.ld, %bb.le, %bb.lf, %bb.li, %bb.lj, %bb.lk, %bb.lr, %s_lock.exit965, %bb.aw, %bb.bi, %bb.bk, %bb.bq, %bb.bp, %bb.cr, %bb.db, %bb.dr, %helper_local_set_c_stream.exit888, %bb.fj, %bb.gz, %bb.hv, %bb.il, %bb.kg, %bb.kt, %bb.kx, %s_lock.exit935, %s_lock.exit909, %bb.ge, %bb.bn, %.thread1082, %.thread1061, %.thread1056, %.thread1023, %.thread1016, %.thread1009, %.thread1004, %.thread978, %s_lock.exit869, %bb.ax
+  %.4602 = phi i64 [ %.2600, %.thread1056 ], [ %.2600, %.thread1082 ], [ %.2600, %s_lock.exit935 ], [ %.2600, %bb.ge ], [ %.2600, %bb.bn ], [ %.2600, %.thread1023 ], [ %.2600, %.thread978 ], [ %i.fh, %bb.ax ], [ %.2600, %.thread1004 ], [ %.2600, %.thread1009 ], [ %.2600, %.thread1016 ], [ %.2600, %.thread1061 ], [ %.2600, %s_lock.exit869 ], [ %.2600, %s_lock.exit909 ], [ %.2600, %bb.aq ], [ %.2600, %bb.ar ], [ %i.et, %bb.as ], [ %i.ex, %bb.au ], [ %.2600, %bb.at ], [ %.2600, %s_lock.exit965 ], [ %.2600, %bb.be ], [ %.2600, %bb.bi ], [ %.2600, %bb.aw ], [ %.2600, %bb.bu ], [ %.2600, %bb.by ], [ %.2600, %bb.cf ], [ %.2600, %bb.cg ], [ %.2600, %s_lock.exit849 ], [ %.2600, %bb.cr ], [ %.2600, %bb.db ], [ %.2600, %bb.dr ], [ %.2600, %bb.dz ], [ %.2600, %s_lock.exit864 ], [ %.2600, %bb.et ], [ %.2600, %helper_local_set_c_stream.exit880 ], [ %.2600, %bb.bp ], [ %.2600, %bb.bq ], [ %.2600, %bb.ga ], [ %.2600, %bb.gm ], [ %.2600, %bb.gy ], [ %.2600, %bb.fj ], [ %.2600, %bb.hj ], [ %.2600, %bb.hl ], [ %.2600, %bb.hn ], [ %.2600, %bb.hp ], [ %.2600, %bb.hv ], [ %.2600, %s_lock.exit920 ], [ %.2600, %bb.il ], [ %.2600, %bb.jg ], [ %.2600, %bb.jj ], [ %.2600, %bb.jm ], [ %.2600, %bb.jp ], [ %.2600, %bb.jw ], [ %.2600, %bb.jz ], [ %.2600, %bb.kg ], [ %.2600, %bb.ko ], [ %.2600, %bb.kt ], [ %.2600, %bb.gz ], [ %.2600, %bb.lb ], [ %.2600, %bb.ld ], [ %.2600, %bb.le ], [ %.2600, %bb.lf ], [ %.2600, %bb.lg ], [ %.2600, %bb.lh ], [ %.2600, %bb.li ], [ %.2600, %bb.lj ], [ %.2600, %bb.lk ], [ %.2600, %s_lock.exit960 ], [ %.2600, %bb.lp ], [ %.2600, %bb.lr ], [ %.2600, %bb.bk ], [ %.2600, %helper_local_set_c_stream.exit888 ], [ %.2600, %bb.kx ], [ %.2600, %bb.ky ] ; 2 uses
+  %.18597 = phi i32 [ %.13592.ph, %.thread1056 ], [ %.16595.ph, %.thread1082 ], [ 1, %s_lock.exit935 ], [ 1, %bb.ge ], [ 1, %bb.bn ], [ %.10589.ph, %.thread1023 ], [ 1, %.thread978 ], [ 1, %bb.ax ], [ %.7586.ph, %.thread1004 ], [ %.8587.ph, %.thread1009 ], [ %.9588.ph, %.thread1016 ], [ %.14593.ph, %.thread1061 ], [ 1, %s_lock.exit869 ], [ 1, %s_lock.exit909 ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.au ], [ 0, %bb.at ], [ 0, %s_lock.exit965 ], [ 0, %bb.be ], [ 0, %bb.bi ], [ 0, %bb.aw ], [ 0, %bb.bu ], [ 0, %bb.by ], [ 0, %bb.cf ], [ 0, %bb.cg ], [ 0, %s_lock.exit849 ], [ 0, %bb.cr ], [ 0, %bb.db ], [ 0, %bb.dr ], [ 0, %bb.dz ], [ 0, %s_lock.exit864 ], [ 0, %bb.et ], [ 0, %helper_local_set_c_stream.exit880 ], [ 0, %bb.bp ], [ 0, %bb.bq ], [ 0, %bb.ga ], [ 0, %bb.gm ], [ 0, %bb.gy ], [ 0, %bb.fj ], [ 0, %bb.hj ], [ 0, %bb.hl ], [ 0, %bb.hn ], [ 0, %bb.hp ], [ 0, %bb.hv ], [ 0, %s_lock.exit920 ], [ 0, %bb.il ], [ 0, %bb.jg ], [ 0, %bb.jj ], [ 0, %bb.jm ], [ 0, %bb.jp ], [ 0, %bb.jw ], [ 0, %bb.jz ], [ 0, %bb.kg ], [ 0, %bb.ko ], [ 0, %bb.kt ], [ 0, %bb.gz ], [ 0, %bb.lb ], [ 0, %bb.ld ], [ 0, %bb.le ], [ 0, %bb.lf ], [ 0, %bb.lg ], [ 0, %bb.lh ], [ 0, %bb.li ], [ 0, %bb.lj ], [ 0, %bb.lk ], [ 0, %s_lock.exit960 ], [ 0, %bb.lp ], [ 0, %bb.lr ], [ 0, %bb.bk ], [ 0, %helper_local_set_c_stream.exit888 ], [ 0, %bb.kx ], [ 0, %bb.ky ]
+  %.2569 = phi i64 [ %.0567, %.thread1056 ], [ %.0567, %.thread1082 ], [ %.0567, %s_lock.exit935 ], [ %.0567, %bb.ge ], [ %.0567, %bb.bn ], [ %.0567, %.thread1023 ], [ %.0567, %.thread978 ], [ %.0567, %bb.ax ], [ %.0567, %.thread1004 ], [ %.0567, %.thread1009 ], [ %.0567, %.thread1016 ], [ %.0567, %.thread1061 ], [ %.0567, %s_lock.exit869 ], [ %.0567, %s_lock.exit909 ], [ %i.eq, %bb.aq ], [ %.0567, %bb.ar ], [ %.0567, %bb.as ], [ %.0567, %bb.au ], [ %.0567, %bb.at ], [ %.0567, %s_lock.exit965 ], [ %.0567, %bb.be ], [ %.0567, %bb.bi ], [ %i.ez, %bb.aw ], [ %.0567, %bb.bu ], [ %.0567, %bb.by ], [ %.0567, %bb.cf ], [ %.0567, %bb.cg ], [ %.0567, %s_lock.exit849 ], [ %.0567, %bb.cr ], [ %.0567, %bb.db ], [ %.0567, %bb.dr ], [ %.0567, %bb.dz ], [ %.0567, %s_lock.exit864 ], [ %.0567, %bb.et ], [ %.0567, %helper_local_set_c_stream.exit880 ], [ %.0567, %bb.bp ], [ %.0567, %bb.bq ], [ %.0567, %bb.ga ], [ %.0567, %bb.gm ], [ %.0567, %bb.gy ], [ %.0567, %bb.fj ], [ %.0567, %bb.hj ], [ %.0567, %bb.hl ], [ %.0567, %bb.hn ], [ %.0567, %bb.hp ], [ %.0567, %bb.hv ], [ %.0567, %s_lock.exit920 ], [ %.0567, %bb.il ], [ %.0567, %bb.jg ], [ %.0567, %bb.jj ], [ %.0567, %bb.jm ], [ %.0567, %bb.jp ], [ %.0567, %bb.jw ], [ %.0567, %bb.jz ], [ %.0567, %bb.kg ], [ %.0567, %bb.ko ], [ %.0567, %bb.kt ], [ %.0567, %bb.gz ], [ %.0567, %bb.lb ], [ %.0567, %bb.ld ], [ %.0567, %bb.le ], [ %.0567, %bb.lf ], [ %.0567, %bb.lg ], [ %.0567, %bb.lh ], [ %.0567, %bb.li ], [ %.0567, %bb.lj ], [ %.0567, %bb.lk ], [ %.0567, %s_lock.exit960 ], [ %.0567, %bb.lp ], [ %.0567, %bb.lr ], [ %.0567, %bb.bk ], [ %.0567, %helper_local_set_c_stream.exit888 ], [ %.0567, %bb.kx ], [ %.0567, %bb.ky ] ; 2 uses
+  %.5564 = phi i64 [ %.1560, %.thread1056 ], [ %.1560, %.thread1082 ], [ %.1560, %s_lock.exit935 ], [ %.1560, %bb.ge ], [ %.1560, %bb.bn ], [ %.1560, %.thread1023 ], [ %.1560, %.thread978 ], [ %.1560, %bb.ax ], [ %.1560, %.thread1004 ], [ %.2561.ph, %.thread1009 ], [ %.3562.ph, %.thread1016 ], [ %.1560, %.thread1061 ], [ %.1560, %s_lock.exit869 ], [ %.1560, %s_lock.exit909 ], [ %.1560, %bb.aq ], [ %.1560, %bb.ar ], [ %.1560, %bb.as ], [ %.1560, %bb.au ], [ %.1560, %bb.at ], [ %.1560, %s_lock.exit965 ], [ %.1560, %bb.be ], [ %.1560, %bb.bi ], [ %.1560, %bb.aw ], [ %.1560, %bb.bu ], [ %.1560, %bb.by ], [ %.1560, %bb.cf ], [ %.1560, %bb.cg ], [ %.1560, %s_lock.exit849 ], [ %.1560, %bb.cr ], [ %.1560, %bb.db ], [ %.1560, %bb.dr ], [ %.1560, %bb.dz ], [ %.1560, %s_lock.exit864 ], [ %.1560, %bb.et ], [ %.1560, %helper_local_set_c_stream.exit880 ], [ %.1560, %bb.bp ], [ %.1560, %bb.bq ], [ %.1560, %bb.ga ], [ %.1560, %bb.gm ], [ %.1560, %bb.gy ], [ %.1560, %bb.fj ], [ %.1560, %bb.hj ], [ %.1560, %bb.hl ], [ %.1560, %bb.hn ], [ %.1560, %bb.hp ], [ %.1560, %bb.hv ], [ %.1560, %s_lock.exit920 ], [ %.1560, %bb.il ], [ %.1560, %bb.jg ], [ %.1560, %bb.jj ], [ %.1560, %bb.jm ], [ %.1560, %bb.jp ], [ %.1560, %bb.jw ], [ %.1560, %bb.jz ], [ %.1560, %bb.kg ], [ %.1560, %bb.ko ], [ %.1560, %bb.kt ], [ %.1560, %bb.gz ], [ %.1560, %bb.lb ], [ %.1560, %bb.ld ], [ %.1560, %bb.le ], [ %.1560, %bb.lf ], [ %.1560, %bb.lg ], [ %.1560, %bb.lh ], [ %.1560, %bb.li ], [ %.1560, %bb.lj ], [ %.1560, %bb.lk ], [ %.1560, %s_lock.exit960 ], [ %.1560, %bb.lp ], [ %.1560, %bb.lr ], [ %.1560, %bb.bk ], [ %.1560, %helper_local_set_c_stream.exit888 ], [ %.1560, %bb.kx ], [ %.1560, %bb.ky ]
+  %.2558 = phi i32 [ %.0556, %.thread1056 ], [ %.0556, %.thread1082 ], [ %.0556, %s_lock.exit935 ], [ %.0556, %bb.ge ], [ 1, %bb.bn ], [ %.0556, %.thread1023 ], [ %.0556, %.thread978 ], [ %.0556, %bb.ax ], [ %.0556, %.thread1004 ], [ %.0556, %.thread1009 ], [ %.0556, %.thread1016 ], [ %.0556, %.thread1061 ], [ %.0556, %s_lock.exit869 ], [ %.0556, %s_lock.exit909 ], [ %.0556, %bb.aq ], [ %.0556, %bb.ar ], [ %.0556, %bb.as ], [ %.0556, %bb.au ], [ %.0556, %bb.at ], [ %.0556, %s_lock.exit965 ], [ %.0556, %bb.be ], [ %.0556, %bb.bi ], [ %.0556, %bb.aw ], [ %.0556, %bb.bu ], [ %.0556, %bb.by ], [ %.0556, %bb.cf ], [ %.0556, %bb.cg ], [ %.0556, %s_lock.exit849 ], [ %.0556, %bb.cr ], [ %.0556, %bb.db ], [ %.0556, %bb.dr ], [ %.0556, %bb.dz ], [ %.0556, %s_lock.exit864 ], [ %.0556, %bb.et ], [ %.0556, %helper_local_set_c_stream.exit880 ], [ 1, %bb.bp ], [ 1, %bb.bq ], [ %.0556, %bb.ga ], [ %.0556, %bb.gm ], [ %.0556, %bb.gy ], [ %.0556, %bb.fj ], [ %.0556, %bb.hj ], [ %.0556, %bb.hl ], [ %.0556, %bb.hn ], [ %.0556, %bb.hp ], [ %.0556, %bb.hv ], [ %.0556, %s_lock.exit920 ], [ %.0556, %bb.il ], [ %.0556, %bb.jg ], [ %.0556, %bb.jj ], [ %.0556, %bb.jm ], [ %.0556, %bb.jp ], [ %.0556, %bb.jw ], [ %.0556, %bb.jz ], [ %.0556, %bb.kg ], [ %.0556, %bb.ko ], [ %.0556, %bb.kt ], [ %.0556, %bb.gz ], [ %.0556, %bb.lb ], [ %.0556, %bb.ld ], [ %.0556, %bb.le ], [ %.0556, %bb.lf ], [ %.0556, %bb.lg ], [ %.0556, %bb.lh ], [ %.0556, %bb.li ], [ %.0556, %bb.lj ], [ %.0556, %bb.lk ], [ %.0556, %s_lock.exit960 ], [ %.0556, %bb.lp ], [ %.0556, %bb.lr ], [ 1, %bb.bk ], [ %.0556, %helper_local_set_c_stream.exit888 ], [ %.0556, %bb.kx ], [ %.0556, %bb.ky ]
+  %.8554 = phi ptr [ %.0546, %.thread1056 ], [ %.0546, %.thread1082 ], [ %.0546, %s_lock.exit935 ], [ %.0546, %bb.ge ], [ %.0546, %bb.bn ], [ %.0546, %.thread1023 ], [ %.0546, %.thread978 ], [ %.0546, %bb.ax ], [ %.0546, %.thread1004 ], [ %.4550.ph, %.thread1009 ], [ %.6552.ph, %.thread1016 ], [ %.0546, %.thread1061 ], [ %.0546, %s_lock.exit869 ], [ %.0546, %s_lock.exit909 ], [ %.0546, %bb.aq ], [ %.0546, %bb.ar ], [ %.0546, %bb.as ], [ %.0546, %bb.au ], [ %.0546, %bb.at ], [ %.0546, %s_lock.exit965 ], [ %.0546, %bb.be ], [ null, %bb.bi ], [ %.0546, %bb.aw ], [ %.0546, %bb.bu ], [ %.0546, %bb.by ], [ %.0546, %bb.cf ], [ %.0546, %bb.cg ], [ %.0546, %s_lock.exit849 ], [ %.0546, %bb.cr ], [ null, %bb.db ], [ null, %bb.dr ], [ %.0546, %bb.dz ], [ %.0546, %s_lock.exit864 ], [ %.0546, %bb.et ], [ %.0546, %helper_local_set_c_stream.exit880 ], [ %.0546, %bb.bp ], [ %.0546, %bb.bq ], [ %.0546, %bb.ga ], [ %.0546, %bb.gm ], [ %.0546, %bb.gy ], [ %.0546, %bb.fj ], [ %.0546, %bb.hj ], [ %.0546, %bb.hl ], [ %.0546, %bb.hn ], [ %.0546, %bb.hp ], [ %.0546, %bb.hv ], [ %.0546, %s_lock.exit920 ], [ %.0546, %bb.il ], [ %.0546, %bb.jg ], [ %.0546, %bb.jj ], [ %.0546, %bb.jm ], [ %.0546, %bb.jp ], [ %.0546, %bb.jw ], [ %.0546, %bb.jz ], [ %.0546, %bb.kg ], [ %.0546, %bb.ko ], [ %.0546, %bb.kt ], [ %.0546, %bb.gz ], [ %.0546, %bb.lb ], [ %.0546, %bb.ld ], [ %.0546, %bb.le ], [ %.0546, %bb.lf ], [ %.0546, %bb.lg ], [ %.0546, %bb.lh ], [ %.0546, %bb.li ], [ %.0546, %bb.lj ], [ %.0546, %bb.lk ], [ %.0546, %s_lock.exit960 ], [ %.0546, %bb.lp ], [ %.0546, %bb.lr ], [ %.0546, %bb.bk ], [ %.0546, %helper_local_set_c_stream.exit888 ], [ %.0546, %bb.kx ], [ %.0546, %bb.ky ] ; 2 uses
+  %.27 = phi i32 [ %.17.ph, %.thread1056 ], [ %.23.ph, %.thread1082 ], [ 4, %s_lock.exit935 ], [ 4, %bb.ge ], [ 4, %bb.bn ], [ %.9.ph, %.thread1023 ], [ 4, %.thread978 ], [ 4, %bb.ax ], [ %.6.ph, %.thread1004 ], [ %.7.ph, %.thread1009 ], [ %.8.ph, %.thread1016 ], [ %.18.ph, %.thread1061 ], [ 4, %s_lock.exit869 ], [ 4, %s_lock.exit909 ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.au ], [ 0, %bb.at ], [ 0, %s_lock.exit965 ], [ 0, %bb.be ], [ 0, %bb.bi ], [ 0, %bb.aw ], [ 0, %bb.bu ], [ 0, %bb.by ], [ 0, %bb.cf ], [ 0, %bb.cg ], [ 0, %s_lock.exit849 ], [ 0, %bb.cr ], [ 0, %bb.db ], [ 0, %bb.dr ], [ 0, %bb.dz ], [ 0, %s_lock.exit864 ], [ 0, %bb.et ], [ 0, %helper_local_set_c_stream.exit880 ], [ 0, %bb.bp ], [ 0, %bb.bq ], [ 0, %bb.ga ], [ 0, %bb.gm ], [ 0, %bb.gy ], [ 0, %bb.fj ], [ 0, %bb.hj ], [ 0, %bb.hl ], [ 0, %bb.hn ], [ 0, %bb.hp ], [ 0, %bb.hv ], [ 0, %s_lock.exit920 ], [ 0, %bb.il ], [ 0, %bb.jg ], [ 0, %bb.jj ], [ 0, %bb.jm ], [ 0, %bb.jp ], [ 0, %bb.jw ], [ 0, %bb.jz ], [ 0, %bb.kg ], [ 0, %bb.ko ], [ 0, %bb.kt ], [ 0, %bb.gz ], [ 0, %bb.lb ], [ 0, %bb.ld ], [ 0, %bb.le ], [ 0, %bb.lf ], [ 0, %bb.lg ], [ 0, %bb.lh ], [ 0, %bb.li ], [ 0, %bb.lj ], [ 0, %bb.lk ], [ 0, %s_lock.exit960 ], [ 0, %bb.lp ], [ 0, %bb.lr ], [ 0, %bb.bk ], [ 0, %helper_local_set_c_stream.exit888 ], [ 0, %bb.kx ], [ 0, %bb.ky ]
   %i.air = icmp eq i32 %.27, 2
   br i1 %i.air, label %.thread1098, label %bb.f
 
-.thread1098:                                      ; preds = %.thread987, %bb.je, %s_lock.exit940, %bb.jf, %bb.go, %bb.gn, %bb.gc, %bb.gb, %bb.bj, %bb.bq, %bb.kw, %helper_local_set_c_stream.exit888, %bb.fd, %bb.fe, %bb.fi, %bb.fk, %bb.fg, %bb.ek, %bb.el, %bb.em, %bb.bh, %bb.bg, %bb.bf, %s_lock.exit965, %bb.hb, %bb.lr, %bb.lk, %bb.lq, %bb.lj, %bb.li, %bb.lf, %bb.le, %bb.ld, %bb.jm, %bb.lc, %bb.jj, %bb.jk, %bb.jl, %bb.hn, %bb.jh, %bb.ji, %bb.hl, %bb.hm, %helper_local_set_c_stream.exit915, %bb.hk, %helper_local_set_c_stream.exit880, %bb.ha, %bb.hc, %bb.ea, %bb.eu, %bb.ev, %bb.ew, %bb.ch, %bb.cg, %bb.av, %bb.ap, %bb.ao, %bb.la, %bb.kz, %bb.bo, %bb.gf, %bb.kv, %.thread1086, %.thread1078, %.thread1074, %.thread1071, %.thread1052, %.thread1037, %.thread1000, %.thread996, %.thread992, %.thread1090, %.thread1050, %bb.ae, %bb.l, %.loopexit, %bb.lx, %bb.ac, %helper_local_init.exit
-  %.5603 = phi i64 [ %.2600, %.thread1071 ], [ 0, %helper_local_init.exit ], [ %.2600, %bb.ac ], [ %.2600, %bb.lx ], [ %.2600, %.loopexit ], [ %.2600, %bb.l ], [ %.2600, %.thread1074 ], [ %.2600, %bb.ae ], [ %.2600, %.thread1078 ], [ %.2600, %.thread1086 ], [ %.2600, %bb.gf ], [ %.2600, %bb.bo ], [ %.2600, %bb.la ], [ %.2600, %bb.kv ], [ %.2600, %.thread992 ], [ %.2600, %.thread1090 ], [ %.2600, %.thread1050 ], [ %.2600, %.thread996 ], [ %.2600, %.thread1000 ], [ %.2600, %.thread1037 ], [ %.2600, %.thread1052 ], [ %.2600, %bb.kz ], [ %.2600, %bb.jf ], [ %.2600, %bb.go ], [ %.2600, %bb.gn ], [ %.2600, %bb.gc ], [ %.2600, %bb.gb ], [ %.2600, %bb.bj ], [ %.2600, %bb.bq ], [ %.2600, %bb.je ], [ %.2600, %bb.kw ], [ %.2600, %s_lock.exit940 ], [ %.2600, %helper_local_set_c_stream.exit888 ], [ %.2600, %bb.fd ], [ %.2600, %bb.fe ], [ %.2600, %bb.fi ], [ %.2600, %bb.fk ], [ %.2600, %bb.fg ], [ %.2600, %bb.ek ], [ %.2600, %bb.el ], [ %.2600, %bb.em ], [ %.2600, %bb.bh ], [ %.2600, %bb.bg ], [ %.2600, %bb.bf ], [ %.2600, %s_lock.exit965 ], [ %.2600, %bb.hb ], [ %.2600, %bb.lr ], [ %.2600, %bb.lk ], [ %.2600, %bb.lq ], [ %.2600, %bb.lj ], [ %.2600, %bb.li ], [ %.2600, %bb.lf ], [ %.2600, %bb.le ], [ %.2600, %bb.ld ], [ %.2600, %bb.jm ], [ %.2600, %bb.lc ], [ %.2600, %bb.jj ], [ %.2600, %bb.jk ], [ %.2600, %bb.jl ], [ %.2600, %bb.hn ], [ %.2600, %bb.jh ], [ %.2600, %bb.ji ], [ %.2600, %bb.hl ], [ %.2600, %bb.hm ], [ %.2600, %helper_local_set_c_stream.exit915 ], [ %.2600, %bb.hk ], [ %.2600, %helper_local_set_c_stream.exit880 ], [ %.2600, %bb.ha ], [ %.2600, %bb.hc ], [ %.2600, %bb.ea ], [ %.2600, %bb.eu ], [ %.2600, %bb.ev ], [ %.2600, %bb.ew ], [ %.2600, %bb.ch ], [ %.2600, %bb.cg ], [ %.2600, %bb.av ], [ %.2600, %bb.ap ], [ %.2600, %bb.ao ], [ %.4602, %.thread987 ]
-  %.3570 = phi i64 [ %.0567, %.thread1071 ], [ 0, %helper_local_init.exit ], [ %.0567, %bb.ac ], [ %.0567, %bb.lx ], [ %.0567, %.loopexit ], [ %.0567, %bb.l ], [ %.0567, %.thread1074 ], [ %.0567, %bb.ae ], [ %.0567, %.thread1078 ], [ %.0567, %.thread1086 ], [ %.0567, %bb.gf ], [ %.0567, %bb.bo ], [ %.0567, %bb.la ], [ %.0567, %bb.kv ], [ %.0567, %.thread992 ], [ %.0567, %.thread1090 ], [ %.0567, %.thread1050 ], [ %.0567, %.thread996 ], [ %.0567, %.thread1000 ], [ %.0567, %.thread1037 ], [ %.0567, %.thread1052 ], [ %.0567, %bb.kz ], [ %.0567, %bb.jf ], [ %.0567, %bb.go ], [ %.0567, %bb.gn ], [ %.0567, %bb.gc ], [ %.0567, %bb.gb ], [ %.0567, %bb.bj ], [ %.0567, %bb.bq ], [ %.0567, %bb.je ], [ %.0567, %bb.kw ], [ %.0567, %s_lock.exit940 ], [ %.0567, %helper_local_set_c_stream.exit888 ], [ %.0567, %bb.fd ], [ %.0567, %bb.fe ], [ %.0567, %bb.fi ], [ %.0567, %bb.fk ], [ %.0567, %bb.fg ], [ %.0567, %bb.ek ], [ %.0567, %bb.el ], [ %.0567, %bb.em ], [ %.0567, %bb.bh ], [ %.0567, %bb.bg ], [ %.0567, %bb.bf ], [ %.0567, %s_lock.exit965 ], [ %.0567, %bb.hb ], [ %.0567, %bb.lr ], [ %.0567, %bb.lk ], [ %.0567, %bb.lq ], [ %.0567, %bb.lj ], [ %.0567, %bb.li ], [ %.0567, %bb.lf ], [ %.0567, %bb.le ], [ %.0567, %bb.ld ], [ %.0567, %bb.jm ], [ %.0567, %bb.lc ], [ %.0567, %bb.jj ], [ %.0567, %bb.jk ], [ %.0567, %bb.jl ], [ %.0567, %bb.hn ], [ %.0567, %bb.jh ], [ %.0567, %bb.ji ], [ %.0567, %bb.hl ], [ %.0567, %bb.hm ], [ %.0567, %helper_local_set_c_stream.exit915 ], [ %.0567, %bb.hk ], [ %.0567, %helper_local_set_c_stream.exit880 ], [ %.0567, %bb.ha ], [ %.0567, %bb.hc ], [ %.0567, %bb.ea ], [ %.0567, %bb.eu ], [ %.0567, %bb.ev ], [ %.0567, %bb.ew ], [ %.0567, %bb.ch ], [ %.0567, %bb.cg ], [ %.0567, %bb.av ], [ %.0567, %bb.ap ], [ %.0567, %bb.ao ], [ %.2569, %.thread987 ] ; 2 uses
-  %.9555 = phi ptr [ %.0546, %.thread1071 ], [ null, %helper_local_init.exit ], [ %.0546, %bb.ac ], [ %.0546, %bb.lx ], [ %.0546, %.loopexit ], [ %.0546, %bb.l ], [ %.0546, %.thread1074 ], [ %.0546, %bb.ae ], [ %.0546, %.thread1078 ], [ %.0546, %.thread1086 ], [ %.0546, %bb.gf ], [ %.0546, %bb.bo ], [ %.0546, %bb.la ], [ %.0546, %bb.kv ], [ %.0546, %.thread992 ], [ %.0546, %.thread1090 ], [ %.0546, %.thread1050 ], [ %.0546, %.thread996 ], [ %.0546, %.thread1000 ], [ %.0546, %.thread1037 ], [ %.0546, %.thread1052 ], [ %.0546, %bb.kz ], [ %.0546, %bb.jf ], [ %.0546, %bb.go ], [ %.0546, %bb.gn ], [ %.0546, %bb.gc ], [ %.0546, %bb.gb ], [ %.0546, %bb.bj ], [ %.0546, %bb.bq ], [ %.0546, %bb.je ], [ %.0546, %bb.kw ], [ %.0546, %s_lock.exit940 ], [ %.0546, %helper_local_set_c_stream.exit888 ], [ %.0546, %bb.fd ], [ %.0546, %bb.fe ], [ %.0546, %bb.fi ], [ %.0546, %bb.fk ], [ %.0546, %bb.fg ], [ %.0546, %bb.ek ], [ %.0546, %bb.el ], [ %.0546, %bb.em ], [ %i.gh, %bb.bh ], [ %i.gh, %bb.bg ], [ %.0546, %bb.bf ], [ %.0546, %s_lock.exit965 ], [ %.0546, %bb.hb ], [ %.0546, %bb.lr ], [ %.0546, %bb.lk ], [ %.0546, %bb.lq ], [ %.0546, %bb.lj ], [ %.0546, %bb.li ], [ %.0546, %bb.lf ], [ %.0546, %bb.le ], [ %.0546, %bb.ld ], [ %.0546, %bb.jm ], [ %.0546, %bb.lc ], [ %.0546, %bb.jj ], [ %.0546, %bb.jk ], [ %.0546, %bb.jl ], [ %.0546, %bb.hn ], [ %.0546, %bb.jh ], [ %.0546, %bb.ji ], [ %.0546, %bb.hl ], [ %.0546, %bb.hm ], [ %.0546, %helper_local_set_c_stream.exit915 ], [ %.0546, %bb.hk ], [ %.0546, %helper_local_set_c_stream.exit880 ], [ %.0546, %bb.ha ], [ %.0546, %bb.hc ], [ %.0546, %bb.ea ], [ %.0546, %bb.eu ], [ %.0546, %bb.ev ], [ %.0546, %bb.ew ], [ %.0546, %bb.ch ], [ %.0546, %bb.cg ], [ %.0546, %bb.av ], [ %.0546, %bb.ap ], [ %.0546, %bb.ao ], [ %.8554, %.thread987 ]
-  %.not780 = phi i1 [ true, %.thread1071 ], [ true, %helper_local_init.exit ], [ true, %bb.ac ], [ true, %bb.lx ], [ false, %.loopexit ], [ true, %bb.l ], [ true, %.thread1074 ], [ true, %bb.ae ], [ true, %.thread1078 ], [ true, %.thread1086 ], [ true, %bb.gf ], [ true, %bb.bo ], [ true, %bb.la ], [ true, %bb.kv ], [ true, %.thread992 ], [ true, %.thread1090 ], [ true, %.thread1050 ], [ true, %.thread996 ], [ true, %.thread1000 ], [ true, %.thread1037 ], [ true, %.thread1052 ], [ true, %bb.kz ], [ true, %bb.ao ], [ true, %bb.ap ], [ true, %bb.av ], [ true, %bb.cg ], [ true, %bb.ch ], [ true, %bb.ew ], [ true, %bb.ev ], [ true, %bb.eu ], [ true, %bb.ea ], [ true, %bb.hc ], [ true, %bb.ha ], [ true, %helper_local_set_c_stream.exit880 ], [ true, %bb.hk ], [ true, %helper_local_set_c_stream.exit915 ], [ true, %bb.hm ], [ true, %bb.hl ], [ true, %bb.ji ], [ true, %bb.jh ], [ true, %bb.hn ], [ true, %bb.jl ], [ true, %bb.jk ], [ true, %bb.jj ], [ true, %bb.lc ], [ true, %bb.jm ], [ true, %bb.ld ], [ true, %bb.le ], [ true, %bb.lf ], [ true, %bb.li ], [ true, %bb.lj ], [ true, %bb.lq ], [ true, %bb.lk ], [ true, %bb.lr ], [ true, %bb.hb ], [ true, %s_lock.exit965 ], [ true, %bb.bf ], [ true, %bb.bg ], [ true, %bb.bh ], [ true, %bb.em ], [ true, %bb.el ], [ true, %bb.ek ], [ true, %bb.fg ], [ true, %bb.fk ], [ true, %bb.fi ], [ true, %bb.fe ], [ true, %bb.fd ], [ true, %helper_local_set_c_stream.exit888 ], [ true, %bb.kw ], [ true, %bb.bq ], [ true, %bb.bj ], [ true, %bb.gb ], [ true, %bb.gc ], [ true, %bb.gn ], [ true, %bb.go ], [ true, %bb.jf ], [ true, %s_lock.exit940 ], [ true, %bb.je ], [ true, %.thread987 ]
-  %.2545 = phi i32 [ 0, %.thread1071 ], [ 0, %helper_local_init.exit ], [ 0, %bb.ac ], [ 0, %bb.lx ], [ 1, %.loopexit ], [ 0, %bb.l ], [ 0, %.thread1074 ], [ 0, %bb.ae ], [ 0, %.thread1078 ], [ 0, %.thread1086 ], [ 0, %bb.gf ], [ 0, %bb.bo ], [ 0, %bb.la ], [ 0, %bb.kv ], [ 0, %.thread992 ], [ 0, %.thread1090 ], [ 0, %.thread1050 ], [ 0, %.thread996 ], [ 0, %.thread1000 ], [ 0, %.thread1037 ], [ 0, %.thread1052 ], [ 0, %bb.kz ], [ 0, %bb.ao ], [ 0, %bb.ap ], [ 0, %bb.av ], [ 0, %bb.cg ], [ 0, %bb.ch ], [ 0, %bb.ew ], [ 0, %bb.ev ], [ 0, %bb.eu ], [ 0, %bb.ea ], [ 0, %bb.hc ], [ 0, %bb.ha ], [ 0, %helper_local_set_c_stream.exit880 ], [ 0, %bb.hk ], [ 0, %helper_local_set_c_stream.exit915 ], [ 0, %bb.hm ], [ 0, %bb.hl ], [ 0, %bb.ji ], [ 0, %bb.jh ], [ 0, %bb.hn ], [ 0, %bb.jl ], [ 0, %bb.jk ], [ 0, %bb.jj ], [ 0, %bb.lc ], [ 0, %bb.jm ], [ 0, %bb.ld ], [ 0, %bb.le ], [ 0, %bb.lf ], [ 0, %bb.li ], [ 0, %bb.lj ], [ 0, %bb.lq ], [ 0, %bb.lk ], [ 0, %bb.lr ], [ 0, %bb.hb ], [ 0, %s_lock.exit965 ], [ 0, %bb.bf ], [ 0, %bb.bg ], [ 0, %bb.bh ], [ 0, %bb.em ], [ 0, %bb.el ], [ 0, %bb.ek ], [ 0, %bb.fg ], [ 0, %bb.fk ], [ 0, %bb.fi ], [ 0, %bb.fe ], [ 0, %bb.fd ], [ 0, %helper_local_set_c_stream.exit888 ], [ 0, %bb.kw ], [ 0, %bb.bq ], [ 0, %bb.bj ], [ 0, %bb.gb ], [ 0, %bb.gc ], [ 0, %bb.gn ], [ 0, %bb.go ], [ 0, %bb.jf ], [ 0, %s_lock.exit940 ], [ 0, %bb.je ], [ 0, %.thread987 ]
+.thread1098:                                      ; preds = %bb.ko, %bb.jg, %bb.et, %bb.hp, %bb.dz, %bb.jz, %bb.cf, %bb.by, %bb.bu, %bb.ga, %bb.jw, %bb.be, %bb.jp, %bb.gy, %bb.gm, %.thread987, %bb.je, %s_lock.exit940, %bb.jf, %bb.go, %bb.gn, %bb.gc, %bb.gb, %bb.bj, %bb.bq, %bb.kw, %helper_local_set_c_stream.exit888, %bb.fd, %bb.fe, %bb.fi, %bb.fk, %bb.fg, %bb.ek, %bb.el, %bb.em, %bb.bh, %bb.bg, %bb.bf, %s_lock.exit965, %bb.hb, %bb.lr, %bb.lk, %bb.lq, %bb.lj, %bb.li, %bb.lf, %bb.le, %bb.ld, %bb.jm, %bb.lc, %bb.jj, %bb.jk, %bb.jl, %bb.hn, %bb.jh, %bb.ji, %bb.hl, %bb.hm, %helper_local_set_c_stream.exit915, %bb.hk, %helper_local_set_c_stream.exit880, %bb.ha, %bb.hc, %bb.ea, %bb.eu, %bb.ev, %bb.ew, %bb.ch, %bb.cg, %bb.av, %bb.ap, %bb.ao, %bb.la, %bb.kz, %bb.bo, %bb.gf, %bb.kv, %.thread1086, %.thread1078, %.thread1074, %.thread1071, %.thread1052, %.thread1037, %.thread1000, %.thread996, %.thread992, %.thread1090, %.thread1050, %bb.ae, %bb.l, %.loopexit, %bb.lx, %bb.ac, %helper_local_init.exit
+  %.5603 = phi i64 [ %.2600, %.thread1071 ], [ 0, %helper_local_init.exit ], [ %.2600, %bb.ac ], [ %.2600, %bb.lx ], [ %.2600, %.loopexit ], [ %.2600, %bb.l ], [ %.2600, %.thread1074 ], [ %.2600, %bb.ae ], [ %.2600, %.thread1078 ], [ %.2600, %.thread1086 ], [ %.2600, %bb.gf ], [ %.2600, %bb.bo ], [ %.2600, %bb.la ], [ %.2600, %bb.kv ], [ %.2600, %.thread992 ], [ %.2600, %.thread1090 ], [ %.2600, %.thread1050 ], [ %.2600, %.thread996 ], [ %.2600, %.thread1000 ], [ %.2600, %.thread1037 ], [ %.2600, %.thread1052 ], [ %.2600, %bb.kz ], [ %.2600, %bb.et ], [ %.2600, %bb.hp ], [ %.2600, %bb.dz ], [ %.2600, %bb.jz ], [ %.2600, %bb.cf ], [ %.2600, %bb.by ], [ %.2600, %bb.bu ], [ %.2600, %bb.ga ], [ %.2600, %bb.jw ], [ %.2600, %bb.be ], [ %.2600, %bb.jp ], [ %.2600, %bb.gy ], [ %.2600, %bb.gm ], [ %.2600, %bb.ao ], [ %.4602, %.thread987 ], [ %.2600, %bb.jf ], [ %.2600, %bb.go ], [ %.2600, %bb.gn ], [ %.2600, %bb.gc ], [ %.2600, %bb.gb ], [ %.2600, %bb.bj ], [ %.2600, %bb.bq ], [ %.2600, %bb.je ], [ %.2600, %bb.kw ], [ %.2600, %s_lock.exit940 ], [ %.2600, %helper_local_set_c_stream.exit888 ], [ %.2600, %bb.fd ], [ %.2600, %bb.fe ], [ %.2600, %bb.fi ], [ %.2600, %bb.fk ], [ %.2600, %bb.fg ], [ %.2600, %bb.ek ], [ %.2600, %bb.el ], [ %.2600, %bb.em ], [ %.2600, %bb.bh ], [ %.2600, %bb.bg ], [ %.2600, %bb.bf ], [ %.2600, %s_lock.exit965 ], [ %.2600, %bb.hb ], [ %.2600, %bb.lr ], [ %.2600, %bb.lk ], [ %.2600, %bb.lq ], [ %.2600, %bb.lj ], [ %.2600, %bb.li ], [ %.2600, %bb.lf ], [ %.2600, %bb.le ], [ %.2600, %bb.ld ], [ %.2600, %bb.jm ], [ %.2600, %bb.lc ], [ %.2600, %bb.jj ], [ %.2600, %bb.jk ], [ %.2600, %bb.jl ], [ %.2600, %bb.hn ], [ %.2600, %bb.jh ], [ %.2600, %bb.ji ], [ %.2600, %bb.hl ], [ %.2600, %bb.hm ], [ %.2600, %helper_local_set_c_stream.exit915 ], [ %.2600, %bb.hk ], [ %.2600, %helper_local_set_c_stream.exit880 ], [ %.2600, %bb.ha ], [ %.2600, %bb.hc ], [ %.2600, %bb.ea ], [ %.2600, %bb.eu ], [ %.2600, %bb.ev ], [ %.2600, %bb.ew ], [ %.2600, %bb.ch ], [ %.2600, %bb.cg ], [ %.2600, %bb.av ], [ %.2600, %bb.ap ], [ %.2600, %bb.ko ], [ %.2600, %bb.jg ]
+  %.3570 = phi i64 [ %.0567, %.thread1071 ], [ 0, %helper_local_init.exit ], [ %.0567, %bb.ac ], [ %.0567, %bb.lx ], [ %.0567, %.loopexit ], [ %.0567, %bb.l ], [ %.0567, %.thread1074 ], [ %.0567, %bb.ae ], [ %.0567, %.thread1078 ], [ %.0567, %.thread1086 ], [ %.0567, %bb.gf ], [ %.0567, %bb.bo ], [ %.0567, %bb.la ], [ %.0567, %bb.kv ], [ %.0567, %.thread992 ], [ %.0567, %.thread1090 ], [ %.0567, %.thread1050 ], [ %.0567, %.thread996 ], [ %.0567, %.thread1000 ], [ %.0567, %.thread1037 ], [ %.0567, %.thread1052 ], [ %.0567, %bb.kz ], [ %.0567, %bb.et ], [ %.0567, %bb.hp ], [ %.0567, %bb.dz ], [ %.0567, %bb.jz ], [ %.0567, %bb.cf ], [ %.0567, %bb.by ], [ %.0567, %bb.bu ], [ %.0567, %bb.ga ], [ %.0567, %bb.jw ], [ %.0567, %bb.be ], [ %.0567, %bb.jp ], [ %.0567, %bb.gy ], [ %.0567, %bb.gm ], [ %.0567, %bb.ao ], [ %.2569, %.thread987 ], [ %.0567, %bb.jf ], [ %.0567, %bb.go ], [ %.0567, %bb.gn ], [ %.0567, %bb.gc ], [ %.0567, %bb.gb ], [ %.0567, %bb.bj ], [ %.0567, %bb.bq ], [ %.0567, %bb.je ], [ %.0567, %bb.kw ], [ %.0567, %s_lock.exit940 ], [ %.0567, %helper_local_set_c_stream.exit888 ], [ %.0567, %bb.fd ], [ %.0567, %bb.fe ], [ %.0567, %bb.fi ], [ %.0567, %bb.fk ], [ %.0567, %bb.fg ], [ %.0567, %bb.ek ], [ %.0567, %bb.el ], [ %.0567, %bb.em ], [ %.0567, %bb.bh ], [ %.0567, %bb.bg ], [ %.0567, %bb.bf ], [ %.0567, %s_lock.exit965 ], [ %.0567, %bb.hb ], [ %.0567, %bb.lr ], [ %.0567, %bb.lk ], [ %.0567, %bb.lq ], [ %.0567, %bb.lj ], [ %.0567, %bb.li ], [ %.0567, %bb.lf ], [ %.0567, %bb.le ], [ %.0567, %bb.ld ], [ %.0567, %bb.jm ], [ %.0567, %bb.lc ], [ %.0567, %bb.jj ], [ %.0567, %bb.jk ], [ %.0567, %bb.jl ], [ %.0567, %bb.hn ], [ %.0567, %bb.jh ], [ %.0567, %bb.ji ], [ %.0567, %bb.hl ], [ %.0567, %bb.hm ], [ %.0567, %helper_local_set_c_stream.exit915 ], [ %.0567, %bb.hk ], [ %.0567, %helper_local_set_c_stream.exit880 ], [ %.0567, %bb.ha ], [ %.0567, %bb.hc ], [ %.0567, %bb.ea ], [ %.0567, %bb.eu ], [ %.0567, %bb.ev ], [ %.0567, %bb.ew ], [ %.0567, %bb.ch ], [ %.0567, %bb.cg ], [ %.0567, %bb.av ], [ %.0567, %bb.ap ], [ %.0567, %bb.ko ], [ %.0567, %bb.jg ] ; 2 uses
+  %.9555 = phi ptr [ %.0546, %.thread1071 ], [ null, %helper_local_init.exit ], [ %.0546, %bb.ac ], [ %.0546, %bb.lx ], [ %.0546, %.loopexit ], [ %.0546, %bb.l ], [ %.0546, %.thread1074 ], [ %.0546, %bb.ae ], [ %.0546, %.thread1078 ], [ %.0546, %.thread1086 ], [ %.0546, %bb.gf ], [ %.0546, %bb.bo ], [ %.0546, %bb.la ], [ %.0546, %bb.kv ], [ %.0546, %.thread992 ], [ %.0546, %.thread1090 ], [ %.0546, %.thread1050 ], [ %.0546, %.thread996 ], [ %.0546, %.thread1000 ], [ %.0546, %.thread1037 ], [ %.0546, %.thread1052 ], [ %.0546, %bb.kz ], [ %.0546, %bb.et ], [ %.0546, %bb.hp ], [ %.0546, %bb.dz ], [ %.0546, %bb.jz ], [ %.0546, %bb.cf ], [ %.0546, %bb.by ], [ %.0546, %bb.bu ], [ %.0546, %bb.ga ], [ %.0546, %bb.jw ], [ %.0546, %bb.be ], [ %.0546, %bb.jp ], [ %.0546, %bb.gy ], [ %.0546, %bb.gm ], [ %.0546, %bb.ao ], [ %.8554, %.thread987 ], [ %.0546, %bb.jf ], [ %.0546, %bb.go ], [ %.0546, %bb.gn ], [ %.0546, %bb.gc ], [ %.0546, %bb.gb ], [ %.0546, %bb.bj ], [ %.0546, %bb.bq ], [ %.0546, %bb.je ], [ %.0546, %bb.kw ], [ %.0546, %s_lock.exit940 ], [ %.0546, %helper_local_set_c_stream.exit888 ], [ %.0546, %bb.fd ], [ %.0546, %bb.fe ], [ %.0546, %bb.fi ], [ %.0546, %bb.fk ], [ %.0546, %bb.fg ], [ %.0546, %bb.ek ], [ %.0546, %bb.el ], [ %.0546, %bb.em ], [ %i.gh, %bb.bh ], [ %i.gh, %bb.bg ], [ %.0546, %bb.bf ], [ %.0546, %s_lock.exit965 ], [ %.0546, %bb.hb ], [ %.0546, %bb.lr ], [ %.0546, %bb.lk ], [ %.0546, %bb.lq ], [ %.0546, %bb.lj ], [ %.0546, %bb.li ], [ %.0546, %bb.lf ], [ %.0546, %bb.le ], [ %.0546, %bb.ld ], [ %.0546, %bb.jm ], [ %.0546, %bb.lc ], [ %.0546, %bb.jj ], [ %.0546, %bb.jk ], [ %.0546, %bb.jl ], [ %.0546, %bb.hn ], [ %.0546, %bb.jh ], [ %.0546, %bb.ji ], [ %.0546, %bb.hl ], [ %.0546, %bb.hm ], [ %.0546, %helper_local_set_c_stream.exit915 ], [ %.0546, %bb.hk ], [ %.0546, %helper_local_set_c_stream.exit880 ], [ %.0546, %bb.ha ], [ %.0546, %bb.hc ], [ %.0546, %bb.ea ], [ %.0546, %bb.eu ], [ %.0546, %bb.ev ], [ %.0546, %bb.ew ], [ %.0546, %bb.ch ], [ %.0546, %bb.cg ], [ %.0546, %bb.av ], [ %.0546, %bb.ap ], [ %.0546, %bb.ko ], [ %.0546, %bb.jg ]
+  %.not780 = phi i1 [ true, %.thread1071 ], [ true, %helper_local_init.exit ], [ true, %bb.ac ], [ true, %bb.lx ], [ false, %.loopexit ], [ true, %bb.l ], [ true, %.thread1074 ], [ true, %bb.ae ], [ true, %.thread1078 ], [ true, %.thread1086 ], [ true, %bb.gf ], [ true, %bb.bo ], [ true, %bb.la ], [ true, %bb.kv ], [ true, %.thread992 ], [ true, %.thread1090 ], [ true, %.thread1050 ], [ true, %.thread996 ], [ true, %.thread1000 ], [ true, %.thread1037 ], [ true, %.thread1052 ], [ true, %bb.kz ], [ true, %bb.ao ], [ true, %bb.ap ], [ true, %bb.av ], [ true, %bb.cg ], [ true, %bb.ch ], [ true, %bb.ew ], [ true, %bb.ev ], [ true, %bb.eu ], [ true, %bb.ea ], [ true, %bb.hc ], [ true, %bb.ha ], [ true, %helper_local_set_c_stream.exit880 ], [ true, %bb.hk ], [ true, %helper_local_set_c_stream.exit915 ], [ true, %bb.hm ], [ true, %bb.hl ], [ true, %bb.ji ], [ true, %bb.jh ], [ true, %bb.hn ], [ true, %bb.jl ], [ true, %bb.jk ], [ true, %bb.jj ], [ true, %bb.lc ], [ true, %bb.jm ], [ true, %bb.ld ], [ true, %bb.le ], [ true, %bb.lf ], [ true, %bb.li ], [ true, %bb.lj ], [ true, %bb.lq ], [ true, %bb.lk ], [ true, %bb.lr ], [ true, %bb.hb ], [ true, %s_lock.exit965 ], [ true, %bb.bf ], [ true, %bb.bg ], [ true, %bb.bh ], [ true, %bb.em ], [ true, %bb.el ], [ true, %bb.ek ], [ true, %bb.fg ], [ true, %bb.fk ], [ true, %bb.fi ], [ true, %bb.fe ], [ true, %bb.fd ], [ true, %helper_local_set_c_stream.exit888 ], [ true, %bb.kw ], [ true, %bb.bq ], [ true, %bb.bj ], [ true, %bb.gb ], [ true, %bb.gc ], [ true, %bb.gn ], [ true, %bb.go ], [ true, %bb.jf ], [ true, %s_lock.exit940 ], [ true, %bb.je ], [ true, %.thread987 ], [ true, %bb.gm ], [ true, %bb.gy ], [ true, %bb.jp ], [ true, %bb.be ], [ true, %bb.jw ], [ true, %bb.ga ], [ true, %bb.bu ], [ true, %bb.by ], [ true, %bb.cf ], [ true, %bb.jz ], [ true, %bb.dz ], [ true, %bb.hp ], [ true, %bb.et ], [ true, %bb.jg ], [ true, %bb.ko ]
+  %.2545 = phi i32 [ 0, %.thread1071 ], [ 0, %helper_local_init.exit ], [ 0, %bb.ac ], [ 0, %bb.lx ], [ 1, %.loopexit ], [ 0, %bb.l ], [ 0, %.thread1074 ], [ 0, %bb.ae ], [ 0, %.thread1078 ], [ 0, %.thread1086 ], [ 0, %bb.gf ], [ 0, %bb.bo ], [ 0, %bb.la ], [ 0, %bb.kv ], [ 0, %.thread992 ], [ 0, %.thread1090 ], [ 0, %.thread1050 ], [ 0, %.thread996 ], [ 0, %.thread1000 ], [ 0, %.thread1037 ], [ 0, %.thread1052 ], [ 0, %bb.kz ], [ 0, %bb.ao ], [ 0, %bb.ap ], [ 0, %bb.av ], [ 0, %bb.cg ], [ 0, %bb.ch ], [ 0, %bb.ew ], [ 0, %bb.ev ], [ 0, %bb.eu ], [ 0, %bb.ea ], [ 0, %bb.hc ], [ 0, %bb.ha ], [ 0, %helper_local_set_c_stream.exit880 ], [ 0, %bb.hk ], [ 0, %helper_local_set_c_stream.exit915 ], [ 0, %bb.hm ], [ 0, %bb.hl ], [ 0, %bb.ji ], [ 0, %bb.jh ], [ 0, %bb.hn ], [ 0, %bb.jl ], [ 0, %bb.jk ], [ 0, %bb.jj ], [ 0, %bb.lc ], [ 0, %bb.jm ], [ 0, %bb.ld ], [ 0, %bb.le ], [ 0, %bb.lf ], [ 0, %bb.li ], [ 0, %bb.lj ], [ 0, %bb.lq ], [ 0, %bb.lk ], [ 0, %bb.lr ], [ 0, %bb.hb ], [ 0, %s_lock.exit965 ], [ 0, %bb.bf ], [ 0, %bb.bg ], [ 0, %bb.bh ], [ 0, %bb.em ], [ 0, %bb.el ], [ 0, %bb.ek ], [ 0, %bb.fg ], [ 0, %bb.fk ], [ 0, %bb.fi ], [ 0, %bb.fe ], [ 0, %bb.fd ], [ 0, %helper_local_set_c_stream.exit888 ], [ 0, %bb.kw ], [ 0, %bb.bq ], [ 0, %bb.bj ], [ 0, %bb.gb ], [ 0, %bb.gc ], [ 0, %bb.gn ], [ 0, %bb.go ], [ 0, %bb.jf ], [ 0, %s_lock.exit940 ], [ 0, %bb.je ], [ 0, %.thread987 ], [ 0, %bb.gm ], [ 0, %bb.gy ], [ 0, %bb.jp ], [ 0, %bb.be ], [ 0, %bb.jw ], [ 0, %bb.ga ], [ 0, %bb.bu ], [ 0, %bb.by ], [ 0, %bb.cf ], [ 0, %bb.jz ], [ 0, %bb.dz ], [ 0, %bb.hp ], [ 0, %bb.et ], [ 0, %bb.jg ], [ 0, %bb.ko ]
   %.val = load i32, ptr %i.w, align 8, !tbaa !70  ; 2 uses
   %i.ais = icmp slt i32 %.val, 0
   br i1 %i.ais, label %bb.ly, label %bb.lz

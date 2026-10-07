@@ -204,8 +204,7 @@ _ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_6cobalt2i
   %i.v = icmp ne i8 %i.u, 0
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.y = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_recvEiP5iovecmibRNS_6system10error_codeERm(i32 noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.n, i32 noundef %i.r, i1 noundef zeroext %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x) ; 2 uses
-  %2 = zext i1 %i.y to i32
+  %i.y = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_recvEiP5iovecmibRNS_6system10error_codeERm(i32 noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.n, i32 noundef %i.r, i1 noundef zeroext %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x)
   br i1 %i.y, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_6cobalt2io23mutable_buffer_sequenceEEC2ERKS6_.exit
@@ -220,7 +219,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = load i64, ptr %i.b, align 8
   %spec.select13 = select i1 %.not12, i64 1, i64 %i.ac
   %i.ad = icmp ult i64 %i.ab, %spec.select13
-  %spec.select = select i1 %i.ad, i32 2, i32 %2
+  %spec.select = select i1 %i.ad, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_14mutable_bufferENS_6cobalt2io23mutable_buffer_sequenceEEC2ERKS6_.exit
@@ -623,8 +622,7 @@ bb.a:
   %i.i = icmp ne i8 %i.h, 0
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.l = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_recv1EiPvmibRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, i1 noundef zeroext %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.k) ; 2 uses
-  %1 = zext i1 %i.l to i32
+  %i.l = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_recv1EiPvmibRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, i1 noundef zeroext %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.k)
   br i1 %i.l, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -645,7 +643,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.p = phi i64 [ %.sroa.2.0.copyload.i22, %bb.d ], [ 1, %bb.c ]
   %i.q = icmp ult i64 %i.o, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %1
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.b, %bb.a
@@ -1048,8 +1046,7 @@ _ZN5boost4asio6detail23buffer_sequence_adapterINS0_12const_bufferENS_6cobalt2io2
   %i.r = load i32, ptr %i.q, align 8, !tbaa !313
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.u = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.n, i32 noundef %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t) ; 2 uses
-  %2 = zext i1 %i.u to i32
+  %i.u = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.p, ptr noundef nonnull %1, i64 noundef %i.n, i32 noundef %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
   br i1 %i.u, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_12const_bufferENS_6cobalt2io21const_buffer_sequenceEEC2ERKS6_.exit
@@ -1063,7 +1060,7 @@ bb.c:                                             ; preds = %bb.b
   %i.y = load i64, ptr %i.t, align 8, !tbaa !209
   %i.z = load i64, ptr %i.b, align 8, !tbaa !568
   %i.aa = icmp ult i64 %i.y, %i.z
-  %spec.select = select i1 %i.aa, i32 2, i32 %2
+  %spec.select = select i1 %i.aa, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %_ZN5boost4asio6detail23buffer_sequence_adapterINS0_12const_bufferENS_6cobalt2io21const_buffer_sequenceEEC2ERKS6_.exit
@@ -1466,8 +1463,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 8, !tbaa !322
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.h = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_send1EiPKvmiRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 2 uses
-  %1 = zext i1 %i.h to i32
+  %i.h = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_send1EiPKvmiRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.g)
   br i1 %i.h, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -1481,7 +1477,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load i64, ptr %i.g, align 8, !tbaa !209
   %.sroa.2.0.copyload.i19 = load i64, ptr %.sroa.2.0..0..sroa_idx.i, align 8, !tbaa !76
   %i.m = icmp ult i64 %i.l, %.sroa.2.0.copyload.i19
-  %spec.select = select i1 %i.m, i32 2, i32 %1
+  %spec.select = select i1 %i.m, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a

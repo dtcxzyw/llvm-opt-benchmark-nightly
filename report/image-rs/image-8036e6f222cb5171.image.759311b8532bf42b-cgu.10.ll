@@ -205,7 +205,7 @@ switch.lookup:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !1260
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 64 ; 3 uses
   %.val.i.i = load i64, ptr %i.x, align 8, !alias.scope !1261, !noalias !1262, !noundef !5 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 72 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 72 ; 2 uses
   %.val2.i.i = load i64, ptr %i.y, align 8, !alias.scope !1261, !noalias !1262, !noundef !5 ; 2 uses
   %i.z = and i64 %.val.i.i, 4294967295
   %i.aa = and i64 %.val2.i.i, 4294967295
@@ -469,42 +469,41 @@ bb.s:                                             ; preds = %bb.r
   %i.cb = and i8 %i.ca, 16
   %i.cc = icmp eq i8 %i.cb, 0
   %i.cd = and i8 %i.ca, 32
-  %i.ce = icmp eq i8 %i.cd, 0                     ; 3 uses
-  br i1 %i.cc, label %bb.t, label %bb.u
+  %i.ce = icmp eq i8 %i.cd, 0                     ; 2 uses
+  %.old3.i.i = load i64, ptr %i.y, align 8, !alias.scope !1271, !noalias !1272 ; 2 uses
+  %.old4.i.i = icmp ugt i64 %.old3.i.i, 1
+  %or.cond162.i.i = select i1 %i.ce, i1 %.old4.i.i, i1 false ; 2 uses
+  br i1 %i.cc, label %4, label %._crit_edge.i
 
-bb.t:                                             ; preds = %.thread
-  %.old3.i.i.a = load i64, ptr %i.y, align 8, !alias.scope !1271, !noalias !1272 ; 2 uses
-  %.old4.i.i = icmp ugt i64 %.old3.i.i.a, 1
-  %or.cond162.i.i = select i1 %i.ce, i1 %.old4.i.i, i1 false
-  br i1 %or.cond162.i.i, label %._crit_edge.i, label %.loopexit219.i
+4:                                                ; preds = %.thread
+  br i1 %or.cond162.i.i, label %bb.t, label %.loopexit219.i
 
-._crit_edge.i:                                    ; preds = %bb.t
-  %.pre.i = load i64, ptr %i.x, align 8, !alias.scope !1271, !noalias !1272
+bb.t:                                             ; preds = %4
+  %.old3.i.i.a = load i64, ptr %i.x, align 8, !alias.scope !1271, !noalias !1272
   br label %bb.v
 
-bb.u:                                             ; preds = %.thread
-  %.26.i.i = select i1 %i.ce, i64 2, i64 1        ; 2 uses
-  %4 = load i64, ptr %i.y, align 8, !alias.scope !1271, !noalias !1272 ; 2 uses
-  %5 = icmp ugt i64 %4, 1
-  %or.cond5.i.i = select i1 %i.ce, i1 %5, i1 false
-  %.pre247.i = load i64, ptr %i.x, align 8, !alias.scope !1271, !noalias !1272 ; 2 uses
-  br i1 %or.cond5.i.i, label %bb.v, label %.loopexit.i.i
+._crit_edge.i:                                    ; preds = %.thread
+  %.pre.i = load i64, ptr %i.x, align 8, !alias.scope !1271, !noalias !1272 ; 2 uses
+  br i1 %or.cond162.i.i, label %bb.v, label %bb.u
+
+bb.u:                                             ; preds = %._crit_edge.i
+  %.26.i.i = select i1 %i.ce, i64 2, i64 1
+  br label %.loopexit.i.i
 
 .loopexit.i.i:                                    ; preds = %bb.w, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.thread.loopexit.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit27.i.i, %bb.u
-  %i.cf = phi i64 [ %.pre247.i, %bb.u ], [ %6, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit27.i.i ], [ %6, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.thread.loopexit.i.i ], [ %6, %bb.w ] ; 3 uses
+  %i.cf = phi i64 [ %.pre.i, %bb.u ], [ %i.ci, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit27.i.i ], [ %i.ci, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.thread.loopexit.i.i ], [ %i.ci, %bb.w ] ; 3 uses
   %.sroa.0.1.i.i = phi i64 [ %.26.i.i, %bb.u ], [ %.sroa.0.2.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit27.i.i ], [ %.sroa.0.2.i.i, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.thread.loopexit.i.i ], [ %.sroa.0.2.i.i, %bb.w ]
   %i.cg = icmp ne i64 %.sroa.0.1.i.i, 3
   %i.ch = icmp ugt i64 %i.cf, 1
   %or.cond9.i.i = select i1 %i.cg, i1 %i.ch, i1 false
   br i1 %or.cond9.i.i, label %bb.y, label %.loopexit219.i
 
-bb.v:                                             ; preds = %bb.u, %._crit_edge.i
-  %6 = phi i64 [ %.pre.i, %._crit_edge.i ], [ %.pre247.i, %bb.u ] ; 4 uses
-  %i.ci = phi i64 [ %.old3.i.i.a, %._crit_edge.i ], [ %4, %bb.u ]
-  %.sroa.0.2.i.i = phi i64 [ 3, %._crit_edge.i ], [ %.26.i.i, %bb.u ] ; 3 uses
+bb.v:                                             ; preds = %._crit_edge.i, %bb.t
+  %i.ci = phi i64 [ %.old3.i.i.a, %bb.t ], [ %.pre.i, %._crit_edge.i ] ; 4 uses
+  %.sroa.0.2.i.i = phi i64 [ 3, %bb.t ], [ 2, %._crit_edge.i ] ; 3 uses
   %i.cj = load i64, ptr %i.ak, align 8, !alias.scope !1271, !noalias !1272, !noundef !5
-  %i.ck = mul i64 %i.cj, %6                       ; 10 uses
-  %i.cl = lshr i64 %i.ci, 1
+  %i.ck = mul i64 %i.cj, %i.ci                    ; 10 uses
+  %i.cl = lshr i64 %.old3.i.i, 1
   %i.cm = mul i64 %i.ck, %i.cl                    ; 5 uses
   %.not.i.i102.i = icmp ugt i64 %i.cm, %i.ap
   br i1 %.not.i.i102.i, label %.invoke.i, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12split_at_mutCsa5QsYiPB8Gl_5image.exit.i.i, !prof !6
@@ -885,7 +884,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %exitcond.not.i.i.1 = icmp eq i64 %i.gj, %.sroa.784.0.copyload.i.i
   br i1 %exitcond.not.i.i.1, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.thread.loopexit.i.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit48.i.i, !llvm.loop !1215
 
-.loopexit219.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit.thread._crit_edge.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12split_at_mutCsa5QsYiPB8Gl_5image.exit33.us.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit28.i.i, %.loopexit.i.i, %bb.t
+.loopexit219.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEBW_EINtB5_7ZipImplBW_BW_E4nextCsa5QsYiPB8Gl_5image.exit.thread._crit_edge.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12split_at_mutCsa5QsYiPB8Gl_5image.exit33.us.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCsa5QsYiPB8Gl_5image.exit28.i.i, %.loopexit.i.i, %4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !1260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !1260
   %i.gm = load i64, ptr %i.v, align 8, !range !14, !alias.scope !1258, !noalias !1262, !noundef !5

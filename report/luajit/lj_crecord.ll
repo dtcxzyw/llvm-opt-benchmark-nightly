@@ -165,7 +165,7 @@ crec_reassoc_ofs.exit:                            ; preds = %bb.j, %bb.f, %bb.e,
 bb.k:                                             ; preds = %ctype_rawchild.exit, %crec_reassoc_ofs.exit
   %.1 = phi i64 [ %.0252, %crec_reassoc_ofs.exit ], [ %.5255284, %ctype_rawchild.exit ] ; 18 uses
   %.1196 = phi i32 [ %.0195, %crec_reassoc_ofs.exit ], [ %.6201285, %ctype_rawchild.exit ] ; 16 uses
-  %.0192 = phi ptr [ %i.j, %crec_reassoc_ofs.exit ], [ %.2194, %ctype_rawchild.exit ] ; 5 uses
+  %.0192 = phi ptr [ %i.j, %crec_reassoc_ofs.exit ], [ null, %ctype_rawchild.exit ] ; 4 uses
   %.2187 = phi ptr [ %.1186, %crec_reassoc_ofs.exit ], [ %.6191, %ctype_rawchild.exit ] ; 12 uses
   %i.bu = load ptr, ptr %i.b, align 8, !tbaa !30
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
@@ -568,10 +568,9 @@ bb.bm:                                            ; preds = %bb.ar, %bb.bd, %bb.
 
 ctype_rawchild.exit:                              ; preds = %.preheader
   %.mask222 = and i32 %i.mc, -268435456
-  %i.me = icmp ne i32 %.mask222, 268435456        ; 3 uses
+  %i.me = icmp ne i32 %.mask222, 268435456        ; 2 uses
   %i.mf = and i32 %.5287, 520093696
   %i.mg = icmp ne i32 %i.mf, 67108864
-  %.2194 = select i1 %i.me, ptr %.0192, ptr null
   %.6191 = select i1 %i.me, ptr %.4189286, ptr %i.mb ; 2 uses
   %.not299 = select i1 %i.me, i1 true, i1 %i.mg
   br i1 %.not299, label %bb.bn, label %bb.k

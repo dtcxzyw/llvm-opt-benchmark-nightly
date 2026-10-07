@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %st_mult.exit38.i.i,
 
 .lr.ph35.i.i.preheader.i:                         ; preds = %bb.t
   %i.ct = trunc nuw nsw i64 %indvars.iv.next144.i to i32
-  %i.cu = select i1 %i.bw, i32 %i.ct, i32 1       ; 2 uses
+  %i.cu = select i1 %i.bw, i32 %i.ct, i32 1
   %i.cv = load i64, ptr %i.d, align 8, !tbaa !41  ; 6 uses
   %sext.i = shl i64 %i.ci, 32
   %i.cw = ashr exact i64 %sext.i, 32              ; 5 uses
@@ -323,15 +323,14 @@ compute_column_width.exit.thread.i.i:             ; preds = %bb.t
 
 .lr.ph35.i.i.i:                                   ; preds = %.lr.ph35.i.i.i.preheader, %._crit_edge.i.i.split.i
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %._crit_edge.i.i.split.i ], [ 0, %.lr.ph35.i.i.i.preheader ] ; 6 uses
-  %i.ej = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
-  %spec.select95.i = mul nsw i32 %i.cu, %i.ej     ; 3 uses
+  %i.ej = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 3 uses
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %indvars.iv.i.i.i ; 4 uses
-  store i32 %spec.select95.i, ptr %i.ek, align 4, !tbaa !20
+  store i32 %i.ej, ptr %i.ek, align 4, !tbaa !20
   br i1 %i.cx, label %.epil.preheader, label %.lr.ph35.i.i.i.new
 
 .lr.ph35.i.i.i.new:                               ; preds = %.lr.ph35.i.i.i, %bb.ah
   %indvars.iv137.i = phi i64 [ %indvars.iv.next138.i.1, %bb.ah ], [ 0, %.lr.ph35.i.i.i ] ; 3 uses
-  %i.el = phi i32 [ %i.fh, %bb.ah ], [ %spec.select95.i, %.lr.ph35.i.i.i ] ; 3 uses
+  %i.el = phi i32 [ %i.fh, %bb.ah ], [ %i.ej, %.lr.ph35.i.i.i ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %bb.ah ], [ 0, %.lr.ph35.i.i.i ]
   %i.em = mul nsw i64 %indvars.iv137.i, %i.cw
   %i.en = add nsw i64 %i.em, %indvars.iv.i.i.i    ; 3 uses
@@ -386,7 +385,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.split.i.unr-lcssa, %.lr.ph35.i.i.i
   %indvars.iv137.i.epil.init = phi i64 [ 0, %.lr.ph35.i.i.i ], [ %indvars.iv.next138.i.1, %._crit_edge.i.i.split.i.unr-lcssa ]
-  %.epil.init = phi i32 [ %spec.select95.i, %.lr.ph35.i.i.i ], [ %i.fh, %._crit_edge.i.i.split.i.unr-lcssa ]
+  %.epil.init = phi i32 [ %i.ej, %.lr.ph35.i.i.i ], [ %i.fh, %._crit_edge.i.i.split.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod151)
   %i.fi = mul nsw i64 %indvars.iv137.i.epil.init, %i.cw
   %i.fj = add nsw i64 %i.fi, %indvars.iv.i.i.i    ; 3 uses

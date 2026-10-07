@@ -205,9 +205,8 @@ _ZN9grpc_core9Timestamp3NowEv.exit.i.i:           ; preds = %bb.ej, %_ZNSt13unor
   br i1 %i.tf, label %.critedge.i.i146, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.noexc149
-  %.not.i.i.i = icmp eq i64 %.sroa.012.0.copyload.fr.i.i, 9223372036854775807 ; 2 uses
-  %spec.select.i.i.i = select i1 %.not.i.i.i, i64 9223372036854775807, i64 -9223372036854775808 ; 2 uses
-  %.not12.i.i.i = icmp eq i64 %.sroa.012.0.copyload.fr.i.i, -9223372036854775808 ; 3 uses
+  %.not.i.i.i = icmp eq i64 %.sroa.012.0.copyload.fr.i.i, 9223372036854775807
+  %.not12.i.i.i = icmp eq i64 %.sroa.012.0.copyload.fr.i.i, -9223372036854775808 ; 2 uses
   %i.tg = icmp sgt i64 %.sroa.012.0.copyload.fr.i.i, 0
   %i.th = sub nsw i64 -9223372036854775808, %.sroa.012.0.copyload.fr.i.i
   %i.ti = sub nuw nsw i64 9223372036854775807, %.sroa.012.0.copyload.fr.i.i
@@ -218,26 +217,12 @@ _ZN9grpc_core9Timestamp3NowEv.exit.i.i:           ; preds = %bb.ej, %_ZNSt13unor
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i
   %i.tm = phi ptr [ %i.tw, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.td, %.lr.ph.i.i ] ; 2 uses
-  %i.tn = phi ptr [ %storemerge.i.us.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.te, %.lr.ph.i.i ] ; 4 uses
-  %.sroa.011.0.copyload.us.i.i = load i64, ptr %i.tn, align 8, !tbaa !74
-  switch i64 %.sroa.011.0.copyload.us.i.i, label %.thread.i.us.i.i [
-    i64 -9223372036854775808, label %48
-    i64 9223372036854775807, label %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i
-  ]
+  %i.tn = phi ptr [ %storemerge.i.us.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.te, %.lr.ph.i.i ] ; 3 uses
+  %.sroa.011.0.copyload.us.i.i = load i64, ptr %i.sw, align 8, !tbaa !74
+  %.not.i.i148 = icmp eq i64 %.sroa.011.0.copyload.us.i.i, 9223372036854775807
+  br i1 %.not.i.i148, label %.critedge.i.i146, label %bb.ek
 
-48:                                               ; preds = %.lr.ph.split.us.i.i
-  br i1 %.not12.i.i.i, label %.thread.i.us.i.i, label %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i
-
-.thread.i.us.i.i:                                 ; preds = %48, %.lr.ph.split.us.i.i
-  br label %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i
-
-_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i:    ; preds = %.thread.i.us.i.i, %48, %.lr.ph.split.us.i.i
-  %.sroa.04.0.i.us.i.i = phi i64 [ 9223372036854775807, %.thread.i.us.i.i ], [ 9223372036854775807, %48 ], [ %spec.select.i.i.i, %.lr.ph.split.us.i.i ]
-  %.sroa.010.0.copyload.us.i.i = load i64, ptr %i.sw, align 8, !tbaa !74
-  %49 = icmp sgt i64 %.sroa.04.0.i.us.i.i, %.sroa.010.0.copyload.us.i.i
-  br i1 %49, label %bb.ek, label %.critedge.i.i146
-
-bb.ek:                                            ; preds = %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i
+bb.ek:                                            ; preds = %.lr.ph.split.us.i.i
   %i.to = load ptr, ptr %i.tj, align 8, !tbaa !982
   %i.tp = getelementptr inbounds i8, ptr %i.to, i64 -8
   %.not.i14.us.i.i = icmp eq ptr %i.tn, %i.tp
@@ -268,12 +253,12 @@ _ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i: ; preds = %b
   br i1 %i.tx, label %.critedge.i.i146, label %.lr.ph.split.us.i.i, !llvm.loop !934
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i
-  %i.ty = phi ptr [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.td, %.lr.ph.i.i ] ; 5 uses
-  %i.tz = phi ptr [ %storemerge.i.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.te, %.lr.ph.i.i ] ; 7 uses
+  %i.ty = phi ptr [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.td, %.lr.ph.i.i ] ; 6 uses
+  %i.tz = phi ptr [ %storemerge.i.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.te, %.lr.ph.i.i ] ; 8 uses
   %.sroa.011.0.copyload.i.i = load i64, ptr %i.tz, align 8, !tbaa !74 ; 4 uses
   switch i64 %.sroa.011.0.copyload.i.i, label %.thread.i.i.i [
     i64 -9223372036854775808, label %bb.en
-    i64 9223372036854775807, label %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i
+    i64 9223372036854775807, label %.critedge.i.i146
   ]
 
 bb.en:                                            ; preds = %.lr.ph.split.i.i
@@ -302,8 +287,8 @@ bb.es:                                            ; preds = %bb.er, %bb.eq
   %i.ue = sub i64 %.sroa.012.0.copyload.fr.i.i, %.sroa.011.0.copyload.i.i
   br label %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i
 
-_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i:       ; preds = %bb.es, %bb.eq, %.thread.i.i.i, %bb.en, %.lr.ph.split.i.i
-  %.sroa.04.0.i.i.i = phi i64 [ 9223372036854775807, %bb.eq ], [ 9223372036854775807, %bb.en ], [ %i.ue, %bb.es ], [ 9223372036854775807, %.thread.i.i.i ], [ %spec.select.i.i.i, %.lr.ph.split.i.i ]
+_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i:       ; preds = %bb.es, %bb.eq, %.thread.i.i.i, %bb.en
+  %.sroa.04.0.i.i.i = phi i64 [ 9223372036854775807, %bb.eq ], [ 9223372036854775807, %bb.en ], [ %i.ue, %bb.es ], [ 9223372036854775807, %.thread.i.i.i ]
   %.sroa.010.0.copyload.i.i = load i64, ptr %i.sw, align 8, !tbaa !74
   %i.uf = icmp sgt i64 %.sroa.04.0.i.i.i, %.sroa.010.0.copyload.i.i
   br i1 %i.uf, label %bb.et, label %.critedge.i.i146
@@ -338,9 +323,9 @@ _ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i: ; preds = %bb.e
   %i.up = icmp eq ptr %i.uo, %storemerge.i.i.i
   br i1 %i.up, label %.critedge.i.i146, label %.lr.ph.split.i.i, !llvm.loop !934
 
-.critedge.i.i146:                                 ; preds = %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i, %bb.er, %bb.eo, %bb.en, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i, %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i, %.noexc149
-  %50 = phi ptr [ %i.tn, %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i ], [ %i.td, %.noexc149 ], [ %i.tw, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.tz, %bb.eo ], [ %i.tz, %bb.er ], [ %i.tz, %bb.en ], [ %i.tz, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i ]
-  %51 = phi ptr [ %i.tm, %_ZN9grpc_coremiENS_9TimestampES0_.exit.us.i.i ], [ %i.td, %.noexc149 ], [ %i.tw, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.ty, %bb.eo ], [ %i.ty, %bb.er ], [ %i.ty, %bb.en ], [ %i.ty, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i ]
+.critedge.i.i146:                                 ; preds = %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i, %bb.er, %bb.eo, %bb.en, %.lr.ph.split.i.i, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i, %.lr.ph.split.us.i.i, %.noexc149
+  %48 = phi ptr [ %i.tn, %.lr.ph.split.us.i.i ], [ %i.td, %.noexc149 ], [ %i.tw, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.tz, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i ], [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.tz, %bb.eo ], [ %i.tz, %bb.er ], [ %i.tz, %bb.en ], [ %i.tz, %.lr.ph.split.i.i ]
+  %49 = phi ptr [ %i.tm, %.lr.ph.split.us.i.i ], [ %i.td, %.noexc149 ], [ %i.tw, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.us.i.i ], [ %i.ty, %_ZN9grpc_coremiENS_9TimestampES0_.exit.i.i ], [ %i.uo, %_ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit.i.i ], [ %i.ty, %bb.eo ], [ %i.ty, %bb.er ], [ %i.ty, %bb.en ], [ %i.ty, %.lr.ph.split.i.i ]
   %i.uq = getelementptr inbounds nuw i8, ptr %.val125, i64 5080
   %i.ur = getelementptr inbounds nuw i8, ptr %.val125, i64 5208 ; 4 uses
   %i.us = getelementptr inbounds nuw i8, ptr %.val125, i64 5176 ; 2 uses
@@ -443,8 +428,8 @@ _ZNSt5dequeIN9grpc_core9TimestampESaIS1_EE9pop_frontEv.exit25.i.i: ; preds = %bb
   br label %.critedge2.i.i
 
 .critedge2.i.i:                                   ; preds = %.critedge2.loopexit.i.i, %.critedge.i.i146
-  %i.vv = phi ptr [ %50, %.critedge.i.i146 ], [ %.pre66.i.i, %.critedge2.loopexit.i.i ]
-  %i.vw = phi ptr [ %51, %.critedge.i.i146 ], [ %.pre65.i.i, %.critedge2.loopexit.i.i ]
+  %i.vv = phi ptr [ %48, %.critedge.i.i146 ], [ %.pre66.i.i, %.critedge2.loopexit.i.i ]
+  %i.vw = phi ptr [ %49, %.critedge.i.i146 ], [ %.pre65.i.i, %.critedge2.loopexit.i.i ]
   %.lcssa38.i.i = phi ptr [ %i.ut, %.critedge.i.i146 ], [ %.lcssa38.ph.i.i, %.critedge2.loopexit.i.i ]
   %.lcssa37.i.i = phi ptr [ %i.ut, %.critedge.i.i146 ], [ %.lcssa37.ph.i.i, %.critedge2.loopexit.i.i ]
   %i.vx = getelementptr inbounds nuw i8, ptr %.val125, i64 5152

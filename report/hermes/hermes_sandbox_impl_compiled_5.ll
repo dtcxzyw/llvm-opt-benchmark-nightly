@@ -204,17 +204,16 @@ bb.r:                                             ; preds = %bb.q, %.thread2485,
 
 bb.s:                                             ; preds = %bb.r, %bb.n
   %.22049 = phi i32 [ %.02047, %bb.n ], [ 0, %bb.r ] ; 4 uses
-  %.12027 = phi i32 [ 0, %bb.n ], [ %.02026, %bb.r ] ; 11 uses
+  %.12027 = phi i32 [ 0, %bb.n ], [ %.02026, %bb.r ] ; 13 uses
   %.02016 = phi i32 [ 0, %bb.n ], [ %i.dx, %bb.r ] ; 3 uses
   %.2 = phi i32 [ %i.ce, %bb.n ], [ 0, %bb.r ]    ; 2 uses
-  %.not2119 = icmp eq i32 %.22049, 0              ; 5 uses
+  %.not2119 = icmp eq i32 %.22049, 0              ; 4 uses
   %i.dy = select i1 %.not2119, i32 %.12027, i32 %.22049 ; 2 uses
   %i.dz = select i1 %.not2119, i32 %.02016, i32 %.2 ; 4 uses
   %i.ea = icmp eq i32 %i.dy, %i.dz
   br i1 %i.ea, label %.loopexit2508, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %3 = select i1 %.not2119, i32 2, i32 0          ; 2 uses
   br i1 %.not2119, label %.split.us.preheader, label %.split
 
 .split.us.preheader:                              ; preds = %bb.t
@@ -342,14 +341,13 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %.not2121.us, label %bb.ah, label %.loopexit2508
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.af, %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %bb.ae, %bb.ad, %bb.ab, %bb.ab, %bb.ab
-  %i.fc = add i32 %.22028.us, %3                  ; 2 uses
+  %i.fc = add i32 %.22028.us, 2                   ; 2 uses
   %.not2122.us = icmp eq i32 %i.fc, %i.dz
   br i1 %.not2122.us, label %.loopexit2507, label %.split.us, !llvm.loop !40
 
 .split:                                           ; preds = %bb.t, %bb.al
-  %.22038 = phi i32 [ %4, %bb.al ], [ %.22049, %bb.t ] ; 8 uses
-  %.22028 = phi i32 [ %i.fp, %bb.al ], [ %.12027, %bb.t ] ; 4 uses
-  %i.fd = zext i32 %.22038 to i64                 ; 2 uses
+  %.22028 = phi i32 [ %i.fp, %bb.al ], [ %.22049, %bb.t ] ; 8 uses
+  %i.fd = zext i32 %.22028 to i64                 ; 2 uses
   %.val2317 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fe = getelementptr inbounds nuw i8, ptr %.val2317, i64 %i.fd
   %.0.copyload.i2370 = load i8, ptr %i.fe, align 1
@@ -390,15 +388,14 @@ bb.ak:                                            ; preds = %switch.early.test
   br i1 %.not2121, label %bb.al, label %.loopexit2508
 
 bb.al:                                            ; preds = %bb.ak, %switch.early.test, %switch.early.test, %bb.aj
-  %4 = add i32 %.22038, 1                         ; 2 uses
-  %i.fp = add i32 %.22028, %3
-  %.not2122 = icmp eq i32 %4, %i.dz
+  %i.fp = add i32 %.22028, 1                      ; 2 uses
+  %.not2122 = icmp eq i32 %i.fp, %i.dz
   br i1 %.not2122, label %.loopexit2507, label %.split
 
 .loopexit2508:                                    ; preds = %switch.early.test, %switch.early.test, %bb.ak, %bb.ag, %bb.af, %bb.af, %bb.y, %bb.y, %bb.z, %bb.s
-  %.32039 = phi i32 [ %.22049, %bb.s ], [ 0, %bb.y ], [ 0, %bb.z ], [ 0, %bb.y ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.af ], [ %.22038, %bb.ak ], [ %.22038, %switch.early.test ], [ %.22038, %switch.early.test ] ; 3 uses
-  %.32029 = phi i32 [ %.12027, %bb.s ], [ %.12027, %bb.y ], [ %.12027, %bb.z ], [ %.12027, %bb.y ], [ %.22028.us, %bb.ag ], [ %.22028.us, %bb.af ], [ %.22028.us, %bb.af ], [ %.22028, %bb.ak ], [ %.22028, %switch.early.test ], [ %.22028, %switch.early.test ] ; 2 uses
-  %.12015 = phi i32 [ %i.dy, %bb.s ], [ %.12027, %bb.y ], [ %.12027, %bb.z ], [ %.12027, %bb.y ], [ %.22028.us, %bb.ag ], [ %.22028.us, %bb.af ], [ %.22028.us, %bb.af ], [ %.22038, %bb.ak ], [ %.22038, %switch.early.test ], [ %.22038, %switch.early.test ] ; 2 uses
+  %.32039 = phi i32 [ %.22049, %bb.s ], [ 0, %bb.y ], [ 0, %bb.z ], [ 0, %bb.y ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.af ], [ %.22028, %bb.ak ], [ %.22028, %switch.early.test ], [ %.22028, %switch.early.test ] ; 3 uses
+  %.32029 = phi i32 [ %.12027, %bb.s ], [ %.12027, %bb.y ], [ %.12027, %bb.z ], [ %.12027, %bb.y ], [ %.22028.us, %bb.ag ], [ %.22028.us, %bb.af ], [ %.22028.us, %bb.af ], [ %.12027, %bb.ak ], [ %.12027, %switch.early.test ], [ %.12027, %switch.early.test ] ; 2 uses
+  %.12015 = phi i32 [ %i.dy, %bb.s ], [ %.12027, %bb.y ], [ %.12027, %bb.z ], [ %.12027, %bb.y ], [ %.22028.us, %bb.ag ], [ %.22028.us, %bb.af ], [ %.22028.us, %bb.af ], [ %.22028, %bb.ak ], [ %.22028, %switch.early.test ], [ %.22028, %switch.early.test ] ; 2 uses
   %i.fq = icmp eq i32 %.12015, %i.dz
   br i1 %i.fq, label %.loopexit2507, label %.preheader
 
@@ -801,14 +798,13 @@ bb.ag:                                            ; preds = %bb.z, %bb.af, %bb.a
 bb.ah:                                            ; preds = %bb.ag, %bb.y
   %.0560 = phi i32 [ 0, %bb.y ], [ %i.ft, %bb.ag ] ; 2 uses
   %.2 = phi i32 [ %i.er, %bb.y ], [ 0, %bb.ag ]   ; 2 uses
-  %.not602 = icmp eq i32 %.2574, 0                ; 4 uses
+  %.not602 = icmp eq i32 %.2574, 0                ; 3 uses
   %i.fu = select i1 %.not602, i32 %.0558, i32 %.0557 ; 3 uses
   %i.fv = select i1 %.not602, i32 %.2564, i32 %.2574
   %i.fw = icmp eq i32 %i.fu, %i.fv
   br i1 %i.fw, label %.loopexit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %3 = select i1 %.not602, i32 2, i32 0
   br i1 %.not602, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.ai, %bb.am
@@ -849,7 +845,7 @@ bb.am:                                            ; preds = %bb.al
   %i.gg = add i32 %.1561.us, %i.gf
   %i.gh = add i32 %.2571.us, 1
   %i.gi = select i1 %.not603.us, i32 0, i32 %i.gh
-  %i.gj = add i32 %.3565.us, %3                   ; 2 uses
+  %i.gj = add i32 %.3565.us, 2                    ; 2 uses
   %.not605.us = icmp eq i32 %i.gj, %i.fu
   br i1 %.not605.us, label %.loopexit, label %.split.us
 
@@ -1252,7 +1248,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.1778 = phi i32 [ %.0.copyload.i913, %bb.v ], [ %i.db, %bb.w ] ; 5 uses
-  %.not792 = icmp eq i32 %5, 0                    ; 3 uses
+  %.not792 = icmp eq i32 %5, 0                    ; 2 uses
   %i.dc = fcmp ult double %.0, 0.000000e+00       ; 2 uses
   br i1 %.not792, label %bb.y, label %bb.aa
 
@@ -1387,7 +1383,6 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.val809.a = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fb = getelementptr inbounds nuw i8, ptr %.val809.a, i64 %i.x
   store i32 %i.fa, ptr %i.fb, align 1
-  %6 = select i1 %.not792, double 1.000000e+00, double -1.000000e+00 ; 2 uses
   %.not793 = icmp eq i32 %4, 0
   %i.fc = select i1 %.not793, i32 70392, i32 %i.ed ; 2 uses
   %.val896.a = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1466,7 +1461,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.fz = getelementptr inbounds nuw i8, ptr %.val895.a, i64 %i.dp
   %.0.copyload.i931 = load double, ptr %i.fz, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i931) #8, !srcloc !37
-  %i.ga = fadd double %6, %.0.copyload.i931       ; 2 uses
+  %i.ga = fadd double %.0.copyload.i931, -1.000000e+00 ; 2 uses
   %i.gb = bitcast double %i.ga to i64
   %i.gc = fcmp uno double %i.ga, 0.000000e+00
   %i.gd = select i1 %i.gc, i64 9221120237041090560, i64 %i.gb
@@ -1568,7 +1563,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.hl = getelementptr inbounds nuw i8, ptr %.val893, i64 %i.dp
   %.0.copyload.i940 = load double, ptr %i.hl, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i940) #8, !srcloc !37
-  %i.hm = fadd double %6, %.0.copyload.i940       ; 2 uses
+  %i.hm = fadd double %.0.copyload.i940, 1.000000e+00 ; 2 uses
   %i.hn = bitcast double %i.hm to i64
   %i.ho = fcmp uno double %i.hm, 0.000000e+00
   %i.hp = select i1 %i.ho, i64 9221120237041090560, i64 %i.hn
@@ -1971,17 +1966,16 @@ bb.t:                                             ; preds = %bb.s, %.thread1781,
 
 bb.u:                                             ; preds = %bb.t, %bb.p
   %.31475 = phi i32 [ %.11473, %bb.p ], [ 0, %bb.t ] ; 4 uses
-  %.11462 = phi i32 [ 0, %bb.p ], [ %.01461, %bb.t ] ; 9 uses
+  %.11462 = phi i32 [ 0, %bb.p ], [ %.01461, %bb.t ] ; 11 uses
   %.01455 = phi i32 [ 0, %bb.p ], [ %i.eo, %bb.t ] ; 4 uses
   %.2 = phi i32 [ %i.cv, %bb.p ], [ 0, %bb.t ]    ; 3 uses
-  %.not1521 = icmp eq i32 %.31475, 0              ; 4 uses
+  %.not1521 = icmp eq i32 %.31475, 0              ; 3 uses
   %i.ep = select i1 %.not1521, i32 %.01455, i32 %.2 ; 5 uses
   %i.eq = select i1 %.not1521, i32 %.11462, i32 %.31475
   %i.er = icmp eq i32 %i.ep, %i.eq
   br i1 %i.er, label %.loopexit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %5 = select i1 %.not1521, i32 2, i32 0          ; 2 uses
   br i1 %.not1521, label %.split.us.preheader, label %.split
 
 .split.us.preheader:                              ; preds = %bb.v
@@ -2109,14 +2103,13 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not1523.us, label %bb.aj, label %.loopexit
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.ah, %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %bb.ag, %bb.af, %bb.ad, %bb.ad, %bb.ad
-  %i.ft = add i32 %.21463.us, %5                  ; 2 uses
+  %i.ft = add i32 %.21463.us, 2                   ; 2 uses
   %.not1524.us = icmp eq i32 %i.ft, %i.ep
   br i1 %.not1524.us, label %.loopexit, label %.split.us, !llvm.loop !43
 
 .split:                                           ; preds = %bb.v, %bb.an
-  %.21478 = phi i32 [ %6, %bb.an ], [ %.31475, %bb.v ] ; 5 uses
-  %.21463 = phi i32 [ %i.gg, %bb.an ], [ %.11462, %bb.v ] ; 4 uses
-  %i.fu = zext i32 %.21478 to i64                 ; 2 uses
+  %.21463 = phi i32 [ %i.gg, %bb.an ], [ %.31475, %bb.v ] ; 5 uses
+  %i.fu = zext i32 %.21463 to i64                 ; 2 uses
   %.val1669 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fv = getelementptr inbounds nuw i8, ptr %.val1669, i64 %i.fu
   %.0.copyload.i1718 = load i8, ptr %i.fv, align 1
@@ -2157,14 +2150,13 @@ bb.am:                                            ; preds = %switch.early.test
   br i1 %.not1523, label %bb.an, label %.loopexit
 
 bb.an:                                            ; preds = %bb.am, %switch.early.test, %switch.early.test, %bb.al
-  %6 = add i32 %.21478, 1                         ; 2 uses
-  %i.gg = add i32 %.21463, %5
-  %.not1524 = icmp eq i32 %6, %i.ep
+  %i.gg = add i32 %.21463, 1                      ; 2 uses
+  %.not1524 = icmp eq i32 %i.gg, %i.ep
   br i1 %.not1524, label %.loopexit, label %.split
 
 .loopexit:                                        ; preds = %switch.early.test, %switch.early.test, %bb.am, %bb.an, %bb.aj, %bb.ai, %bb.ah, %bb.ah, %bb.aa, %bb.aa, %bb.ab, %bb.ac, %bb.u
-  %.31479 = phi i32 [ %.31475, %bb.u ], [ 0, %bb.aa ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.aj ], [ 0, %bb.ah ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ %.21478, %switch.early.test ], [ %.21478, %bb.am ], [ %i.ep, %bb.an ], [ %.21478, %switch.early.test ] ; 3 uses
-  %.31464 = phi i32 [ %.11462, %bb.u ], [ %.11462, %bb.aa ], [ %.01455, %bb.ac ], [ %.11462, %bb.ab ], [ %.11462, %bb.aa ], [ %i.ep, %bb.aj ], [ %.21463.us, %bb.ai ], [ %.21463.us, %bb.ah ], [ %.21463.us, %bb.ah ], [ %.21463, %switch.early.test ], [ %.21463, %bb.am ], [ %.11462, %bb.an ], [ %.21463, %switch.early.test ] ; 2 uses
+  %.31479 = phi i32 [ %.31475, %bb.u ], [ 0, %bb.aa ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.aj ], [ 0, %bb.ah ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ %.21463, %switch.early.test ], [ %.21463, %bb.am ], [ %i.ep, %bb.an ], [ %.21463, %switch.early.test ] ; 3 uses
+  %.31464 = phi i32 [ %.11462, %bb.u ], [ %.11462, %bb.aa ], [ %.01455, %bb.ac ], [ %.11462, %bb.ab ], [ %.11462, %bb.aa ], [ %i.ep, %bb.aj ], [ %.21463.us, %bb.ai ], [ %.21463.us, %bb.ah ], [ %.21463.us, %bb.ah ], [ %.11462, %bb.an ], [ %.11462, %bb.am ], [ %.11462, %switch.early.test ], [ %.11462, %switch.early.test ] ; 2 uses
   %i.gh = add i32 %3, 5476                        ; 4 uses
   %.not1528 = icmp eq i32 %i.ai, 0                ; 2 uses
   br i1 %i.al, label %bb.ao, label %bb.aw
@@ -2567,14 +2559,13 @@ bb.ce:                                            ; preds = %bb.cd, %bb.bz
   %.21470 = phi i32 [ 0, %bb.bz ], [ %.11469, %bb.cd ] ; 2 uses
   %.11458 = phi i32 [ 0, %bb.bz ], [ %i.qv, %bb.cd ]
   %.10 = phi i32 [ %i.ph, %bb.bz ], [ 0, %bb.cd ]
-  %.not1544 = icmp eq i32 %.51481, 0              ; 4 uses
+  %.not1544 = icmp eq i32 %.51481, 0              ; 3 uses
   %i.qw = select i1 %.not1544, i32 %.11458, i32 %.10 ; 3 uses
   %i.qx = select i1 %.not1544, i32 %.21470, i32 %.51481
   %.not1545 = icmp eq i32 %i.qw, %i.qx
   br i1 %.not1545, label %bb.co, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %7 = select i1 %.not1544, i32 2, i32 0
   br i1 %.not1544, label %.split1802.us, label %.split1802
 
 .split1802.us:                                    ; preds = %bb.cf, %bb.ci
@@ -2619,7 +2610,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %.sp
   %i.ro = getelementptr inbounds nuw i8, ptr %.val1686.us, i64 %i.rm
   store i8 %i.rn, ptr %i.ro, align 1
   %i.rp = add i32 %.21459.us, 1                   ; 2 uses
-  %i.rq = add i32 %.31471.us, %7                  ; 2 uses
+  %i.rq = add i32 %.31471.us, 2                   ; 2 uses
   %.not1548.us = icmp eq i32 %i.rq, %i.qw
   br i1 %.not1548.us, label %.split1804.us, label %.split1802.us
 

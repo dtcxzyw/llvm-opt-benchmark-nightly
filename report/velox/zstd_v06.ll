@@ -205,9 +205,9 @@ bb.bn:                                            ; preds = %ZSTDv06_execSequenc
   %.val68.i191.i = phi i64 [ %i.ky, %FSEv06_initDState.exit105.i ], [ %i.uc, %ZSTDv06_execSequence.exit.i ]
   %.val.i74.i187.i = phi i64 [ %.promoted186.i, %FSEv06_initDState.exit105.i ], [ %.val.i74.i188.i, %ZSTDv06_execSequence.exit.i ]
   %storemerge168180.i = phi i32 [ %.promoted.i, %FSEv06_initDState.exit105.i ], [ %i.uy, %ZSTDv06_execSequence.exit.i ] ; 6 uses
-  %.0127.i = phi ptr [ %i.fq, %FSEv06_initDState.exit105.i ], [ %i.ve, %ZSTDv06_execSequence.exit.i ] ; 4 uses
+  %.0127.i = phi ptr [ %i.fq, %FSEv06_initDState.exit105.i ], [ %i.ve, %ZSTDv06_execSequence.exit.i ] ; 5 uses
   %.0126.i = phi i32 [ %.0.i.i, %FSEv06_initDState.exit105.i ], [ %i.qg, %ZSTDv06_execSequence.exit.i ] ; 3 uses
-  %.068.i = phi ptr [ %1, %FSEv06_initDState.exit105.i ], [ %i.vd, %ZSTDv06_execSequence.exit.i ] ; 5 uses
+  %.068.i = phi ptr [ %1, %FSEv06_initDState.exit105.i ], [ %i.vd, %ZSTDv06_execSequence.exit.i ] ; 6 uses
   %i.pl = icmp ugt i32 %storemerge168180.i, 64
   br i1 %i.pl, label %.loopexit.i, label %bb.bo
 
@@ -259,7 +259,11 @@ BITv06_reloadDStream.exit.i:                      ; preds = %BITv06_reloadDStrea
   %.val.i74.i189.i = phi i64 [ %.val.i74.i187.i, %bb.bq ], [ %.val30.i.sink.i, %BITv06_reloadDStream.exit.sink.split.i ] ; 5 uses
   %storemerge168183.i = phi i32 [ %storemerge168180.i, %bb.bq ], [ %storemerge168183.ph.i, %BITv06_reloadDStream.exit.sink.split.i ] ; 3 uses
   %.not.i21 = icmp eq i32 %.0126.i, 0
-  br i1 %.not.i21, label %.thread267.i, label %bb.bs
+  br i1 %.not.i21, label %.loopexit.thread.i, label %bb.bs
+
+.loopexit.thread.i:                               ; preds = %BITv06_reloadDStream.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
+  br label %bb.ct
 
 bb.bs:                                            ; preds = %BITv06_reloadDStream.exit.i
   %i.qg = add nsw i32 %.0126.i, -1
@@ -662,19 +666,12 @@ ZSTDv06_execSequence.exit.i:                      ; preds = %.lr.ph.i.i, %bb.cs,
 
 .loopexit.i:                                      ; preds = %bb.bn
   %.not279.i = icmp eq i32 %.0126.i, 0
-  br i1 %.not279.i, label %.thread267.i, label %6
-
-.thread267.i:                                     ; preds = %BITv06_reloadDStream.exit.i, %.loopexit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
-  br label %bb.ct
+  br i1 %.not279.i, label %bb.ct, label %ZSTDv06_decompressSequences.exit
 
-6:                                                ; preds = %.loopexit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
-  br label %ZSTDv06_decompressSequences.exit
-
-bb.ct:                                            ; preds = %.thread267.i, %bb.ao, %.thread.i22
-  %.2.i = phi ptr [ %i.fq, %bb.ao ], [ %.0127.i, %.thread267.i ], [ %i.fq, %.thread.i22 ] ; 4 uses
-  %.371.i = phi ptr [ %1, %bb.ao ], [ %.068.i, %.thread267.i ], [ %1, %.thread.i22 ] ; 3 uses
+bb.ct:                                            ; preds = %.loopexit.i, %.loopexit.thread.i, %bb.ao, %.thread.i22
+  %.2.i = phi ptr [ %i.fq, %bb.ao ], [ %.0127.i, %.loopexit.i ], [ %i.fq, %.thread.i22 ], [ %.0127.i, %.loopexit.thread.i ] ; 4 uses
+  %.371.i = phi ptr [ %1, %bb.ao ], [ %.068.i, %.loopexit.i ], [ %1, %.thread.i22 ], [ %.068.i, %.loopexit.thread.i ] ; 3 uses
   %i.zh = ptrtoint ptr %i.fv to i64
   %i.zi = ptrtoint ptr %.2.i to i64
   %i.zj = sub i64 %i.zh, %i.zi                    ; 2 uses
@@ -701,8 +698,8 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   %i.zp = sub i64 %i.zn, %i.zo
   br label %ZSTDv06_decompressSequences.exit
 
-ZSTDv06_decompressSequences.exit:                 ; preds = %.thread.i, %bb.ab, %bb.o, %bb.m, %bb.l, %bb.g, %bb.f, %bb.d, %bb.n, %bb.j, %bb.b, %bb.v, %bb.cx, %bb.cu, %bb.ct, %6, %.thread155.i, %ZSTDv06_decodeSeqHeaders.exit.i, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ag, %bb.ac, %bb.a
-  %.1 = phi i64 [ -20, %bb.am ], [ -72, %bb.a ], [ %i.zp, %bb.cx ], [ %.478.ph.i, %.thread155.i ], [ -20, %6 ], [ %i.hy, %ZSTDv06_decodeSeqHeaders.exit.i ], [ -20, %bb.ct ], [ -70, %bb.cu ], [ -20, %bb.al ], [ -72, %bb.ag ], [ -72, %bb.ai ], [ -72, %bb.ak ], [ -20, %bb.an ], [ -72, %bb.ac ], [ -20, %.thread.i ], [ -20, %bb.ab ], [ -20, %bb.o ], [ -30, %bb.m ], [ -20, %bb.l ], [ -20, %bb.g ], [ -20, %bb.f ], [ -20, %bb.d ], [ -20, %bb.n ], [ -20, %bb.j ], [ -20, %bb.b ], [ -20, %bb.v ]
+ZSTDv06_decompressSequences.exit:                 ; preds = %.thread.i, %bb.ab, %bb.o, %bb.m, %bb.l, %bb.g, %bb.f, %bb.d, %bb.n, %bb.j, %bb.b, %bb.v, %bb.cx, %bb.cu, %bb.ct, %.loopexit.i, %.thread155.i, %ZSTDv06_decodeSeqHeaders.exit.i, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ag, %bb.ac, %bb.a
+  %.1 = phi i64 [ -20, %bb.am ], [ -72, %bb.a ], [ %i.zp, %bb.cx ], [ %.478.ph.i, %.thread155.i ], [ -20, %.loopexit.i ], [ %i.hy, %ZSTDv06_decodeSeqHeaders.exit.i ], [ -20, %bb.ct ], [ -70, %bb.cu ], [ -20, %bb.al ], [ -72, %bb.ag ], [ -72, %bb.ai ], [ -72, %bb.ak ], [ -20, %bb.an ], [ -72, %bb.ac ], [ -20, %.thread.i ], [ -20, %bb.ab ], [ -20, %bb.o ], [ -30, %bb.m ], [ -20, %bb.l ], [ -20, %bb.g ], [ -20, %bb.f ], [ -20, %bb.d ], [ -20, %bb.n ], [ -20, %bb.j ], [ -20, %bb.b ], [ -20, %bb.v ]
   ret i64 %.1
 }
 

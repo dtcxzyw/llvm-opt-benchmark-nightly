@@ -202,13 +202,12 @@ _ZN7QStringD2Ev.exit195:                          ; preds = %bb.aw, %_ZN17QArray
 .critedge:                                        ; preds = %_ZN8QPalette8setColorENS_10ColorGroupENS_9ColorRoleERK6QColor.exit, %_ZN7QStringD2Ev.exit185
   %i.gd = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.ge = load i32, ptr %i.gd, align 8            ; 3 uses
-  %i.gf = and i32 %i.ge, 1                        ; 2 uses
+  %i.gf = and i32 %i.ge, 1
   %.not = icmp eq i32 %i.gf, 0
-  %22 = xor i32 %i.gf, 1
-  %i.gg = and i32 %i.ge, 65536
-  %.not.i196 = icmp eq i32 %i.gg, 0
-  %spec.select154 = select i1 %.not.i196, i32 2, i32 %22
-  %.0116 = select i1 %.not, i32 1, i32 %spec.select154
+  %22 = lshr i32 %i.ge, 15
+  %i.gg = and i32 %22, 2
+  %spec.select156 = xor i32 %i.gg, 2
+  %.0116 = select i1 %.not, i32 1, i32 %spec.select156
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #21
   store i32 0, ptr %16, align 4
   %i.gh = getelementptr inbounds nuw i8, ptr %16, i64 4

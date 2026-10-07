@@ -205,9 +205,8 @@ bb.a:
   %13 = alloca %"class.duckdb::Value", align 8    ; 6 uses
   %14 = alloca %"class.duckdb::optional_idx", align 8 ; 3 uses
   store i64 %1, ptr %14, align 8
-  %15 = icmp ne i8 %3, 2                          ; 2 uses
-  %16 = zext i1 %15 to i8                         ; 2 uses
-  br i1 %15, label %bb.an, label %bb.b
+  %15 = icmp eq i8 %3, 2
+  br i1 %15, label %bb.b, label %bb.an
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
@@ -239,11 +238,10 @@ bb.c:                                             ; preds = %_ZN6duckdb12_GLOBAL
 
 bb.d:                                             ; preds = %bb.c
   %i.l = call noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %14)
-  %17 = xor i8 %16, 1                             ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.03.0.lcssa.i, i64 104 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #37
   %i.n = call noundef nonnull align 8 dereferenceable(128) ptr @_ZNK6duckdb10unique_ptrINS_14BaseStatisticsESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
-  call void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %12, ptr noundef nonnull align 8 dereferenceable(128) %i.n, i8 noundef zeroext %17, i8 noundef zeroext %4)
+  call void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %12, ptr noundef nonnull align 8 dereferenceable(128) %i.n, i8 noundef zeroext 1, i8 noundef zeroext %4)
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.03.0.lcssa.i, i64 96
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1642
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -513,7 +511,7 @@ bb.z:                                             ; preds = %.noexc62.i.a
 _ZN6duckdb12_GLOBAL__N_123GetQualifyingTupleCountERNS_8RowGroupERNS_14BaseStatisticsENS_17OrderByColumnTypeE.exit64.i: ; preds = %.noexc63.i, %.noexc62.i.a, %bb.x, %bb.w
   %.0.i59.i = phi i64 [ %..i60.i, %.noexc63.i ], [ 0, %.noexc62.i.a ], [ %i.bn, %bb.w ], [ 0, %bb.x ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #37
-  invoke void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %13, ptr noundef nonnull align 8 dereferenceable(128) %i.bb, i8 noundef zeroext %17, i8 noundef zeroext %4)
+  invoke void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %13, ptr noundef nonnull align 8 dereferenceable(128) %i.bb, i8 noundef zeroext 1, i8 noundef zeroext %4)
           to label %bb.aa unwind label %bb.ac
 
 bb.aa:                                            ; preds = %_ZN6duckdb12_GLOBAL__N_123GetQualifyingTupleCountERNS_8RowGroupERNS_14BaseStatisticsENS_17OrderByColumnTypeE.exit64.i
@@ -778,12 +776,11 @@ bb.ap:                                            ; preds = %_ZN6duckdb12_GLOBAL
 
 bb.aq:                                            ; preds = %bb.ap
   %i.eg = call noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %14)
-  %18 = xor i8 %16, 1                             ; 2 uses
   %i.eh = call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef %.val.i.in) #42
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 104 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #37
   %i.ej = call noundef nonnull align 8 dereferenceable(128) ptr @_ZNK6duckdb10unique_ptrINS_14BaseStatisticsESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ei)
-  call void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %8, ptr noundef nonnull align 8 dereferenceable(128) %i.ej, i8 noundef zeroext %18, i8 noundef zeroext %4)
+  call void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %8, ptr noundef nonnull align 8 dereferenceable(128) %i.ej, i8 noundef zeroext 0, i8 noundef zeroext %4)
   %i.ek = call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef %.val.i.in) #42
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 96
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !1642
@@ -1057,7 +1054,7 @@ bb.bm:                                            ; preds = %.noexc67.i91
 _ZN6duckdb12_GLOBAL__N_123GetQualifyingTupleCountERNS_8RowGroupERNS_14BaseStatisticsENS_17OrderByColumnTypeE.exit69.i: ; preds = %.noexc68.i, %.noexc67.i91, %bb.bk, %bb.bj
   %.0.i64.i = phi i64 [ %..i65.i, %.noexc68.i ], [ 0, %.noexc67.i91 ], [ %i.gn, %bb.bj ], [ 0, %bb.bk ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #37
-  invoke void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %9, ptr noundef nonnull align 8 dereferenceable(128) %i.gb, i8 noundef zeroext %18, i8 noundef zeroext %4)
+  invoke void @_ZN6duckdb17RowGroupReorderer12RetrieveStatERKNS_14BaseStatisticsENS_17OrderByStatisticsENS_17OrderByColumnTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %9, ptr noundef nonnull align 8 dereferenceable(128) %i.gb, i8 noundef zeroext 0, i8 noundef zeroext %4)
           to label %bb.bn unwind label %bb.bp
 
 bb.bn:                                            ; preds = %_ZN6duckdb12_GLOBAL__N_123GetQualifyingTupleCountERNS_8RowGroupERNS_14BaseStatisticsENS_17OrderByColumnTypeE.exit69.i
@@ -1271,7 +1268,7 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb11SegmentNodeINS1_8RowGroupEEEESaIS5_
   %.not.i104 = icmp eq ptr %i.ix, %.val29
   br i1 %.not.i104, label %_ZN6duckdb12_GLOBAL__N_118InsertAllRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EEvT_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISG_EEE.exit, label %bb.bv, !llvm.loop !4022
 
-_ZN6duckdb12_GLOBAL__N_118InsertAllRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EEvT_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISG_EEE.exit: ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb11SegmentNodeINS1_8RowGroupEEEESaIS5_EE9push_backERKS5_.exit.i, %_ZNSt6vectorISt17reference_wrapperIN6duckdb11SegmentNodeINS1_8RowGroupEEEESaIS5_EE9push_backERKS5_.exit.i103, %_ZN6duckdb12_GLOBAL__N_125SkipOffsetPrunedRowGroupsISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEEESA_EET_SB_T0_m.exit, %_ZN6duckdb12_GLOBAL__N_125SkipOffsetPrunedRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EET_S9_T0_m.exit, %_ZN6duckdb12_GLOBAL__N_112AddRowGroupsISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEEESA_EEvRSt8multimapIS5_S7_St4lessIS5_ESaIS8_EET_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISO_EEEmNS_17OrderByColumnTypeENS_17OrderByStatisticsE.exit, %_ZN6duckdb12_GLOBAL__N_112AddRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EEvRSt8multimapIS4_S6_St4lessIS4_ESaIS7_EET_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISM_EEEmNS_17OrderByColumnTypeENS_17OrderByStatisticsE.exit
+_ZN6duckdb12_GLOBAL__N_118InsertAllRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EEvT_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISG_EEE.exit: ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb11SegmentNodeINS1_8RowGroupEEEESaIS5_EE9push_backERKS5_.exit.i103, %_ZNSt6vectorISt17reference_wrapperIN6duckdb11SegmentNodeINS1_8RowGroupEEEESaIS5_EE9push_backERKS5_.exit.i, %_ZN6duckdb12_GLOBAL__N_125SkipOffsetPrunedRowGroupsISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEEESA_EET_SB_T0_m.exit, %_ZN6duckdb12_GLOBAL__N_125SkipOffsetPrunedRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EET_S9_T0_m.exit, %_ZN6duckdb12_GLOBAL__N_112AddRowGroupsISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEEESA_EEvRSt8multimapIS5_S7_St4lessIS5_ESaIS8_EET_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISO_EEEmNS_17OrderByColumnTypeENS_17OrderByStatisticsE.exit, %_ZN6duckdb12_GLOBAL__N_112AddRowGroupsISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_24RowGroupSegmentNodeEntryEEES8_EEvRSt8multimapIS4_S6_St4lessIS4_ESaIS7_EET_T0_RNS_6vectorISt17reference_wrapperINS_11SegmentNodeINS_8RowGroupEEEELb1ESaISM_EEEmNS_17OrderByColumnTypeENS_17OrderByStatisticsE.exit
   ret void
 }
 

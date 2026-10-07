@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not19, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = select i1 %0, i32 %2, i32 0              ; 2 uses
+  %i.b = select i1 %0, i32 %2, i32 0
   br i1 %0, label %.lr.ph.split.us.split, label %.lr.ph.split
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph
@@ -286,7 +286,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ai, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store i32 %i.b, ptr %i.ag, align 4
+  store i32 0, ptr %i.ag, align 4
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
@@ -689,7 +689,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al
   %i.bp = load i32, ptr %i.au, align 4
-  %i.bq = icmp eq i32 %i.bp, 29                   ; 6 uses
+  %i.bq = icmp eq i32 %i.bp, 29                   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   %i.br = load ptr, ptr %i.ae, align 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 118
@@ -748,7 +748,6 @@ bb.as:                                            ; preds = %.critedge45.i
   br i1 %.not4252.i, label %._crit_edge.i214, label %.lr.ph.i213
 
 .lr.ph.i213:                                      ; preds = %.critedge.i
-  %.in.v.i = select i1 %i.bq, i64 96, i64 80      ; 2 uses
   br i1 %i.bq, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i213, %.critedge47.us.i
@@ -765,7 +764,7 @@ bb.as:                                            ; preds = %.critedge45.i
   br i1 %i.cx, label %bb.at, label %.critedge47.us.i
 
 bb.at:                                            ; preds = %.lr.ph.split.us.i
-  %.in.us.i = getelementptr inbounds nuw i8, ptr %i.cu, i64 %.in.v.i
+  %.in.us.i = getelementptr inbounds nuw i8, ptr %i.cu, i64 96
   %i.cy = load i32, ptr %.in.us.i, align 4        ; 2 uses
   %i.cz = load i32, ptr %i.a, align 8
   %.not43.us.i = icmp eq i32 %i.cz, %i.cy
@@ -803,7 +802,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.dp, label %bb.aw, label %.critedge47.i
 
 bb.aw:                                            ; preds = %.lr.ph.split.i
-  %.in.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 %.in.v.i
+  %.in.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 80
   %i.dq = load i32, ptr %.in.i, align 4           ; 2 uses
   %i.dr = load i32, ptr %i.a, align 8
   %.not43.i = icmp eq i32 %i.dr, %i.dq

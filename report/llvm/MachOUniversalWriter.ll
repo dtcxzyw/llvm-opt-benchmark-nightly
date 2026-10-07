@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %1, align 8, !tbaa !29
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 64
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(360) %1) #20, !inline_history !65 ; 2 uses
+  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(360) %1) #20, !inline_history !65
   %i.h = tail call { ptr, ptr } @_ZNK4llvm6object15MachOObjectFile13load_commandsEv(ptr noundef nonnull align 8 dereferenceable(360) %1) #20 ; 2 uses
   %i.i = extractvalue { ptr, ptr } %i.h, 0        ; 3 uses
   %i.j = extractvalue { ptr, ptr } %i.h, 1        ; 3 uses
@@ -210,7 +210,6 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not65.i.i, label %_ZL18calculateAlignmentRKN4llvm6object15MachOObjectFileE.exit, label %.lr.ph71.i.i
 
 .lr.ph71.i.i:                                     ; preds = %bb.c
-  %8 = select i1 %i.g, i32 25, i32 1              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 48
@@ -224,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   %.06166.i.us.i = phi i32 [ %.162.i.us.i, %bb.g ], [ 15, %.lr.ph71.i.i ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.03167.i.us.i, i64 8
   %i.r = load i32, ptr %i.q, align 8, !tbaa !69
-  %.not32.i.us.i = icmp eq i32 %i.r, %8
+  %.not32.i.us.i = icmp eq i32 %i.r, 25
   br i1 %.not32.i.us.i, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %.lr.ph71.i.split.us.i
@@ -291,7 +290,7 @@ bb.g:                                             ; preds = %.loopexit.i.us.i, %
   %.06166.i.i = phi i32 [ %.162.i.i, %bb.j ], [ 15, %.lr.ph71.i.i ] ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.03167.i.i, i64 8
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !69
-  %.not32.i.i = icmp eq i32 %i.ag, %8
+  %.not32.i.i = icmp eq i32 %i.ag, 1
   br i1 %.not32.i.i, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %.lr.ph71.i.split.i

@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   %i.ah = call i32 @Curl_xfer_send_shutdown(ptr noundef nonnull %0, ptr noundef nonnull %i.f) #6 ; 3 uses
   %.not50 = icmp eq i32 %i.ah, 0
-  br i1 %.not50, label %1, label %bb.q
+  br i1 %.not50, label %bb.v, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ai = load i32, ptr %i.aa, align 1
@@ -237,24 +237,21 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   call void (ptr, ptr, ...) @Curl_infof(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef %i.ah) #6
   br label %.thread77
 
-1:                                                ; preds = %bb.p
-  %.pre71 = load i8, ptr %i.f, align 1, !range !80
-  %2 = trunc nuw i8 %.pre71 to i1
-  br i1 %2, label %.thread77, label %bb.v
-
-.thread77:                                        ; preds = %bb.u, %bb.t, %bb.r, %1
+.thread77:                                        ; preds = %bb.r, %bb.t, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
   br label %bb.w
 
-bb.v:                                             ; preds = %1
+bb.v:                                             ; preds = %bb.p
+  %.pre71 = load i8, ptr %i.f, align 1, !range !80
+  %1 = trunc nuw i8 %.pre71 to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
-  br label %bb.x
+  br i1 %1, label %bb.w, label %bb.x
 
-bb.w:                                             ; preds = %.thread77, %bb.o
+bb.w:                                             ; preds = %.thread77, %bb.v, %bb.o
   %i.as = call fastcc i32 @req_set_upload_done(ptr noundef nonnull %0)
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.v, %.thread, %req_send_buffer_flush.exit, %bb.n, %req_send_buffer_flush.exit.thread59, %bb.a, %bb.b, %bb.m, %bb.w, %bb.k
+bb.x:                                             ; preds = %.thread, %req_send_buffer_flush.exit, %bb.n, %req_send_buffer_flush.exit.thread59, %bb.a, %bb.b, %bb.m, %bb.v, %bb.w, %bb.k
   %.3 = phi i32 [ %i.z, %bb.k ], [ 81, %req_send_buffer_flush.exit.thread59 ], [ %i.as, %bb.w ], [ 81, %bb.v ], [ %i.ad, %bb.m ], [ 2, %bb.a ], [ %i.p, %req_send_buffer_flush.exit ], [ 2, %bb.b ], [ 0, %bb.n ], [ %i.ah, %.thread ]
   ret i32 %.3
 }
