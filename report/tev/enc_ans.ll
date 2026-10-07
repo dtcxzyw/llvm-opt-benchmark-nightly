@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
   %i.hd = shl i64 %i.hc, 16
   %i.he = or disjoint i64 %i.hd, %i.gy            ; 2 uses
   store i64 %i.he, ptr %i.e, align 8, !tbaa !49
-  %i.hf = add i64 %.5, 16
+  %i.hf = add nsw i64 %.5, 16
   br label %"_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit98"
 
 "_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit98": ; preds = %"_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit", %._crit_edge.i95
@@ -351,7 +351,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.kl = shl i64 %i.kk, 16
   %i.km = or disjoint i64 %i.kl, %i.kg            ; 2 uses
   store i64 %i.km, ptr %i.e, align 8, !tbaa !49
-  %i.kn = add i64 %.9, 16
+  %i.kn = add nsw i64 %.9, 16
   br label %"_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit115"
 
 "_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit115": ; preds = %"_ZZN3jxl11WriteTokensERKNSt3__16vectorINS_5TokenENS0_9allocatorIS2_EEEERKNS_19EntropyEncodingDataEmPNS_9BitWriterEENK3$_0clEmm.exit103", %._crit_edge.i112

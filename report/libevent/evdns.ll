@@ -204,11 +204,7 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf
   %i.fa = call fastcc i32 @name_parse(ptr noundef nonnull readonly %i.f, i32 noundef range(i32 0, -2147483648) %.fr, ptr noundef %i.a, ptr noundef %i.d, i32 noundef 64), !inline_history !55
   %i.fb = icmp slt i32 %i.fa, 0
-  br i1 %i.fb, label %.thread.i.thread53, label %bb.bh
-
-.thread.i.thread53:                               ; preds = %bb.bg
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
-  br label %.thread312.i
+  br i1 %i.fb, label %.thread.jt8.i, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.fc = call ptr @event_mm_strdup_(ptr noundef nonnull %i.d) #19, !inline_history !55
@@ -266,17 +262,21 @@ bb.bo:                                            ; preds = %bb.bi
   store i32 %i.fx, ptr %i.a, align 4
   br label %.thread290.i
 
-.thread.i:                                        ; preds = %bb.be, %bb.bf
+.thread.i:                                        ; preds = %bb.bf, %bb.be
   %i.fy = zext i16 %rev.i267.i to i32
   %i.fz = add nsw i32 %i.dr, %i.fy
   store i32 %i.fz, ptr %i.a, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
   br label %.thread290.i
 
+.thread.jt8.i:                                    ; preds = %bb.bg
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
+  br label %.thread312.i
+
 .thread290.i:                                     ; preds = %.thread.i, %bb.bo, %bb.bn, %bb.bk, %bb.bh, %bb.bb, %bb.ay, %bb.av
-  %i.ga = phi i8 [ %i.cz, %bb.bk ], [ %i.cz, %.thread.i ], [ %i.cz, %bb.bb ], [ 1, %bb.ay ], [ %i.cz, %bb.bh ], [ 1, %bb.bn ], [ %i.cz, %bb.bo ], [ %i.cz, %bb.av ] ; 2 uses
-  %i.gb = phi i32 [ %i.da, %bb.bk ], [ %i.da, %.thread.i ], [ %i.da, %bb.bb ], [ %i.en, %bb.ay ], [ %i.da, %bb.bh ], [ %i.fv, %bb.bn ], [ %i.da, %bb.bo ], [ %i.da, %bb.av ] ; 2 uses
-  %.4209293.i = phi i32 [ %.0205338.i, %bb.bk ], [ %.0205338.i, %.thread.i ], [ %.0205338.i, %bb.bb ], [ %i.eh, %bb.ay ], [ %.0205338.i, %bb.bh ], [ %i.fp, %bb.bn ], [ %.0205338.i, %bb.bo ], [ %.0205338.i, %bb.av ] ; 2 uses
+  %i.ga = phi i8 [ %i.cz, %.thread.i ], [ %i.cz, %bb.bk ], [ %i.cz, %bb.bb ], [ 1, %bb.ay ], [ %i.cz, %bb.bh ], [ 1, %bb.bn ], [ %i.cz, %bb.bo ], [ %i.cz, %bb.av ] ; 2 uses
+  %i.gb = phi i32 [ %i.da, %.thread.i ], [ %i.da, %bb.bk ], [ %i.da, %bb.bb ], [ %i.en, %bb.ay ], [ %i.da, %bb.bh ], [ %i.fv, %bb.bn ], [ %i.da, %bb.bo ], [ %i.da, %bb.av ] ; 2 uses
+  %.4209293.i = phi i32 [ %.0205338.i, %.thread.i ], [ %.0205338.i, %bb.bk ], [ %.0205338.i, %bb.bb ], [ %i.eh, %bb.ay ], [ %.0205338.i, %bb.bh ], [ %i.fp, %bb.bn ], [ %.0205338.i, %bb.bo ], [ %.0205338.i, %bb.av ] ; 2 uses
   %i.gc = add nuw nsw i32 %.1202339.i, 1          ; 2 uses
   %exitcond386.not.i = icmp eq i32 %i.gc, %i.cx
   br i1 %exitcond386.not.i, label %..loopexit326_crit_edge.i, label %bb.ao, !llvm.loop !56
@@ -285,8 +285,8 @@ bb.bo:                                            ; preds = %bb.bi
   store i32 %i.gb, ptr %i.t, align 4
   br label %.loopexit326.i
 
-.loopexit326.i.thread:                            ; preds = %bb.ay, %bb.bn
-  %.4209.i.ph = phi i32 [ %i.eh, %bb.ay ], [ %i.fp, %bb.bn ]
+.loopexit326.i.thread:                            ; preds = %bb.bn, %bb.ay
+  %.4209.i.ph = phi i32 [ %i.fp, %bb.bn ], [ %i.eh, %bb.ay ]
   store i32 32, ptr %i.t, align 4
   store i8 1, ptr %i.s, align 4
   br label %.loopexit.i
@@ -408,7 +408,7 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %exitcond388.not.i = icmp eq i32 %i.hr, %i.ge
   br i1 %exitcond388.not.i, label %.loopexit.i, label %.lr.ph354.i, !llvm.loop !57
 
-.loopexit.i:                                      ; preds = %bb.cb, %.loopexit326.i.thread, %.preheader.i, %.loopexit326.i
+.loopexit.i:                                      ; preds = %bb.cb, %.preheader.i, %.loopexit326.i, %.loopexit326.i.thread
   %.10.i = phi i32 [ %.5210.i, %.loopexit326.i ], [ %.5210416.i, %.preheader.i ], [ %.4209.i.ph, %.loopexit326.i.thread ], [ %.9.i, %bb.cb ] ; 2 uses
   %i.hs = icmp eq i32 %.10.i, -1
   %spec.store.select.i = select i1 %i.hs, i32 0, i32 %.10.i
@@ -432,7 +432,7 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   store i32 %.259..3.i46100, ptr %i.a, align 4
   br label %.thread312.i
 
-.thread312.i:                                     ; preds = %bb.aw, %bb.ax, %bb.bl, %bb.bm, %.thread312.i.loopexit65, %.thread312.i.loopexit, %.thread.i.thread53, %.thread286.i, %bb.bc, %bb.m, %bb.l
+.thread312.i:                                     ; preds = %bb.aw, %bb.ax, %bb.bl, %bb.bm, %.thread312.i.loopexit65, %.thread312.i.loopexit, %.thread.jt8.i, %.thread286.i, %bb.bc, %bb.m, %bb.l
   call fastcc void @reply_handle(ptr noundef %.0.i.i, i16 noundef zeroext %rev.i260.i, i32 noundef 0, ptr noundef null), !inline_history !55
   br label %reply_parse.exit
 

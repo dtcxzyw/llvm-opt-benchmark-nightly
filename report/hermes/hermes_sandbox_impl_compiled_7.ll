@@ -204,7 +204,7 @@ bb.a:
   %.0.copyload.i550 = load i32, ptr %i.q, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i550) #13, !srcloc !14
   %i.r = add i32 %.0.copyload.i550, -1            ; 3 uses
-  %.not481 = icmp eq i32 %4, 0
+  %.not485 = icmp ne i32 %4, 0
   %i.s = zext i32 %.0.copyload.i548 to i64
   %.not488.a = icmp eq i64 %i.i, 0                ; 4 uses
   br label %bb.b
@@ -299,11 +299,11 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %.0 = phi i32 [ %i.ak, %bb.i ], [ %i.ap, %bb.j ], [ %.0.copyload.i556, %bb.k ]
-  %5 = icmp ne i32 %.0, 1                         ; 3 uses
-  %6 = select i1 %5, i32 %.0457, i32 %.0459
-  %i.au = select i1 %5, i32 %.0464, i32 1
-  %or.cond = and i1 %.not481, %5
-  br i1 %or.cond, label %bb.m, label %.loopexit
+  %5 = icmp eq i32 %.0, 1                         ; 3 uses
+  %brmerge = or i1 %5, %.not485
+  %i.au = select i1 %5, i32 1, i32 %.0464
+  %.0459.mux = select i1 %5, i32 %.0459, i32 %.0457
+  br i1 %brmerge, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %.val521.a = load ptr, ptr %i.a, align 8, !tbaa !13
@@ -632,9 +632,9 @@ bb.ar:                                            ; preds = %.preheader
   %.not505 = icmp eq i32 %i.er, %i.k
   br i1 %.not505, label %.loopexit584, label %.preheader
 
-.loopexit:                                        ; preds = %.preheader591, %.preheader588, %.preheader585, %.preheader, %bb.q, %bb.z, %bb.ai, %bb.am, %bb.ap, %bb.l
-  %.5 = phi i32 [ %i.au, %bb.l ], [ %.0464, %bb.q ], [ %.0464, %bb.ap ], [ %.0464, %.preheader ], [ %.0464, %bb.am ], [ %.0464, %.preheader588 ], [ %.0464, %bb.ai ], [ %.0464, %.preheader585 ], [ %.0464, %bb.z ], [ %.0464, %.preheader591 ]
-  %.1458 = phi i32 [ %6, %bb.l ], [ %.0457, %bb.q ], [ %.0457, %bb.ap ], [ %.0457, %.preheader ], [ %.0457, %bb.am ], [ %.0457, %.preheader588 ], [ %.0457, %bb.ai ], [ %.0457, %.preheader585 ], [ %.0457, %bb.z ], [ %.0457, %.preheader591 ]
+.loopexit:                                        ; preds = %.preheader591, %.preheader588, %.preheader585, %.preheader, %bb.l, %bb.q, %bb.z, %bb.ai, %bb.am, %bb.ap
+  %.5 = phi i32 [ %i.au, %bb.l ], [ %.0464, %.preheader ], [ %.0464, %bb.q ], [ %.0464, %bb.ap ], [ %.0464, %bb.z ], [ %.0464, %bb.am ], [ %.0464, %.preheader588 ], [ %.0464, %bb.ai ], [ %.0464, %.preheader585 ], [ %.0464, %.preheader591 ]
+  %.1458 = phi i32 [ %.0459.mux, %bb.l ], [ %.0457, %.preheader ], [ %.0457, %bb.q ], [ %.0457, %bb.ap ], [ %.0457, %bb.z ], [ %.0457, %bb.am ], [ %.0457, %.preheader588 ], [ %.0457, %bb.ai ], [ %.0457, %.preheader585 ], [ %.0457, %.preheader591 ]
   %i.es = add i32 %.0460, 1
   %i.et = add i32 %.0459, %.0460
   %i.eu = and i32 %i.et, %i.d
@@ -682,7 +682,7 @@ bb.a:
   %.0.copyload.i552 = load i32, ptr %i.r, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i552) #13, !srcloc !14
   %i.s = add i32 %.0.copyload.i552, -1            ; 3 uses
-  %.not483 = icmp eq i32 %4, 0
+  %.not487 = icmp ne i32 %4, 0
   %i.t = zext i32 %.0.copyload.i550 to i64
   %.not490.a = icmp eq i64 %i.i, 0                ; 4 uses
   br label %bb.b
@@ -777,11 +777,11 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %.0 = phi i32 [ %i.al, %bb.i ], [ %i.aq, %bb.j ], [ %.0.copyload.i558, %bb.k ]
-  %5 = icmp ne i32 %.0, 1                         ; 3 uses
-  %6 = select i1 %5, i32 %.0459, i32 %.0461
-  %i.av = select i1 %5, i32 %.0466, i32 1
-  %or.cond = and i1 %.not483, %5
-  br i1 %or.cond, label %bb.m, label %.loopexit
+  %5 = icmp eq i32 %.0, 1                         ; 3 uses
+  %brmerge = or i1 %5, %.not487
+  %i.av = select i1 %5, i32 1, i32 %.0466
+  %.0461.mux = select i1 %5, i32 %.0461, i32 %.0459
+  br i1 %brmerge, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %.val523.a = load ptr, ptr %i.a, align 8, !tbaa !13
@@ -1110,9 +1110,9 @@ bb.ar:                                            ; preds = %.preheader
   %.not507 = icmp eq i32 %i.es, %i.l
   br i1 %.not507, label %.loopexit586, label %.preheader
 
-.loopexit:                                        ; preds = %.preheader593, %.preheader590, %.preheader587, %.preheader, %bb.q, %bb.z, %bb.ai, %bb.am, %bb.ap, %bb.l
-  %.5 = phi i32 [ %i.av, %bb.l ], [ %.0466, %bb.q ], [ %.0466, %bb.ap ], [ %.0466, %.preheader ], [ %.0466, %bb.am ], [ %.0466, %.preheader590 ], [ %.0466, %bb.ai ], [ %.0466, %.preheader587 ], [ %.0466, %bb.z ], [ %.0466, %.preheader593 ]
-  %.1460 = phi i32 [ %6, %bb.l ], [ %.0459, %bb.q ], [ %.0459, %bb.ap ], [ %.0459, %.preheader ], [ %.0459, %bb.am ], [ %.0459, %.preheader590 ], [ %.0459, %bb.ai ], [ %.0459, %.preheader587 ], [ %.0459, %bb.z ], [ %.0459, %.preheader593 ]
+.loopexit:                                        ; preds = %.preheader593, %.preheader590, %.preheader587, %.preheader, %bb.l, %bb.q, %bb.z, %bb.ai, %bb.am, %bb.ap
+  %.5 = phi i32 [ %i.av, %bb.l ], [ %.0466, %.preheader ], [ %.0466, %bb.q ], [ %.0466, %bb.ap ], [ %.0466, %bb.z ], [ %.0466, %bb.am ], [ %.0466, %.preheader590 ], [ %.0466, %bb.ai ], [ %.0466, %.preheader587 ], [ %.0466, %.preheader593 ]
+  %.1460 = phi i32 [ %.0461.mux, %bb.l ], [ %.0459, %.preheader ], [ %.0459, %bb.q ], [ %.0459, %bb.ap ], [ %.0459, %bb.z ], [ %.0459, %bb.am ], [ %.0459, %.preheader590 ], [ %.0459, %bb.ai ], [ %.0459, %.preheader587 ], [ %.0459, %.preheader593 ]
   %i.et = add i32 %.0462, 1
   %i.eu = add i32 %.0461, %.0462
   %i.ev = and i32 %i.eu, %i.d

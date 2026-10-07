@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %.thread149
 
 .thread149:                                       ; preds = %bb.bh, %bb.bg, %bb.bi, %bb.bk, %bb.aj, %bb.aq, %bb.am, %bb.l, %bb.ba, %bb.ah, %bb.af, %bb.v, %bb.p, %bb.k, %.thread149.loopexit.split.loop.exit314.a, %.thread149.loopexit.split.loop.exit316.a, %.thread149.loopexit.split.loop.exit318.a, %.thread149.loopexit.split.loop.exit320.a, %.thread149.loopexit.split.loop.exit322.a, %.thread149.loopexit.split.loop.exit324, %.thread149.loopexit.split.loop.exit326, %.thread149.loopexit.split.loop.exit328, %bb.av
-  %.5 = phi ptr [ %i.go, %.thread149.loopexit.split.loop.exit318.a ], [ %i.eu, %bb.av ], [ %i.gs, %.thread149.loopexit.split.loop.exit326 ], [ %i.gt, %.thread149.loopexit.split.loop.exit328 ], [ %i.gm, %.thread149.loopexit.split.loop.exit314.a ], [ %i.gn, %.thread149.loopexit.split.loop.exit316.a ], [ %i.gp, %.thread149.loopexit.split.loop.exit320.a ], [ %i.gq, %.thread149.loopexit.split.loop.exit322.a ], [ %i.gr, %.thread149.loopexit.split.loop.exit324 ], [ %i.v, %bb.k ], [ %i.cz, %bb.aq ], [ %i.cz, %bb.aj ], [ %i.fb, %bb.ba ], [ %i.cz, %bb.ah ], [ %i.v, %bb.af ], [ %i.v, %bb.v ], [ %i.cz, %bb.am ], [ %.pre280, %bb.bk ], [ %i.v, %bb.l ], [ %i.v, %bb.p ], [ %.pre267.pre, %bb.bg ], [ %.pre281, %bb.bi ], [ %.pre267, %bb.bh ]
+  %.5 = phi ptr [ %i.eu, %bb.av ], [ %i.gm, %.thread149.loopexit.split.loop.exit314.a ], [ %i.gt, %.thread149.loopexit.split.loop.exit328 ], [ %i.gr, %.thread149.loopexit.split.loop.exit324 ], [ %i.gp, %.thread149.loopexit.split.loop.exit320.a ], [ %i.gq, %.thread149.loopexit.split.loop.exit322.a ], [ %i.gs, %.thread149.loopexit.split.loop.exit326 ], [ %i.go, %.thread149.loopexit.split.loop.exit318.a ], [ %i.gn, %.thread149.loopexit.split.loop.exit316.a ], [ %i.cz, %bb.aq ], [ %i.cz, %bb.aj ], [ %i.fb, %bb.ba ], [ %i.cz, %bb.ah ], [ %i.v, %bb.af ], [ %i.v, %bb.v ], [ %i.cz, %bb.am ], [ %.pre280, %bb.bk ], [ %i.v, %bb.l ], [ %i.v, %bb.p ], [ %.pre267.pre, %bb.bg ], [ %.pre281, %bb.bi ], [ %.pre267, %bb.bh ], [ %i.v, %bb.k ]
   %.not122 = icmp eq ptr %3, null
   br i1 %.not122, label %.loopexit.thread, label %bb.bl
 
@@ -219,7 +219,7 @@ bb.bl:                                            ; preds = %.thread149
   br label %.loopexit.thread
 
 .loopexit.thread:                                 ; preds = %.outer, %bb.j, %.lr.ph226.prol.loopexit, %bb.i, %.preheader, %bb.d, %.thread149, %bb.bl
-  %.0 = phi i32 [ 0, %bb.d ], [ -22, %bb.bl ], [ -22, %.thread149 ], [ 0, %.lr.ph226.prol.loopexit ], [ 0, %bb.j ], [ 0, %.preheader ], [ 0, %bb.i ], [ 0, %.outer ]
+  %.0 = phi i32 [ -22, %.thread149 ], [ -22, %bb.bl ], [ 0, %.lr.ph226.prol.loopexit ], [ 0, %bb.j ], [ 0, %.preheader ], [ 0, %bb.d ], [ 0, %bb.i ], [ 0, %.outer ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.0
 }

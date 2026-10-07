@@ -204,6 +204,9 @@ bb.dl:                                            ; preds = %bb.dk
   %i.ka = call i32 @puts(ptr noundef nonnull dereferenceable(1) @.str.93) ; 0 uses
   br label %.lr.ph142.split.split.i.preheader
 
+.lr.ph142.split.split.i.preheader:                ; preds = %.lr.ph142.split.i, %.lr.ph142.split.i.thread
+  br label %.lr.ph142.split.split.i
+
 .lr.ph.split.us.i:                                ; preds = %bb.dl, %bb.dm
   %indvars.iv178.i = phi i64 [ %indvars.iv.next179.i, %bb.dm ], [ 0, %bb.dl ] ; 3 uses
   %i.kb = trunc nuw i64 %indvars.iv178.i to i16
@@ -254,7 +257,7 @@ bb.dn:                                            ; preds = %.noexc369
 ._crit_edge.i:                                    ; preds = %bb.dn, %bb.dm
   br i1 %i.ji, label %.lr.ph142.split.us.i.preheader, label %.lr.ph142.split.i
 
-.lr.ph142.split.us.i.preheader:                   ; preds = %bb.dl, %._crit_edge.i
+.lr.ph142.split.us.i.preheader:                   ; preds = %._crit_edge.i, %bb.dl
   br label %.lr.ph142.split.us.i
 
 .lr.ph142.split.us.i:                             ; preds = %.lr.ph142.split.us.i.preheader, %._crit_edge135.split.us.us.i
@@ -307,9 +310,6 @@ bb.do:                                            ; preds = %.lr.ph142.split.us.
   %i.lb = call i32 @puts(ptr noundef nonnull dereferenceable(1) @.str.93) ; 0 uses
   %i.lc = icmp ugt i16 %.fr156.i, 1
   br i1 %i.lc, label %.lr.ph142.split.split.us.preheader.i, label %.lr.ph142.split.split.i.preheader
-
-.lr.ph142.split.split.i.preheader:                ; preds = %.lr.ph142.split.i.thread, %.lr.ph142.split.i
-  br label %.lr.ph142.split.split.i
 
 .lr.ph142.split.split.us.preheader.i:             ; preds = %.lr.ph142.split.i
   %i.ld = add nuw nsw i64 %i.jt, 4294967295

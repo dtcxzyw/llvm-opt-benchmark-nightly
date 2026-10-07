@@ -205,8 +205,8 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i8 -2, ptr %0, align 8
   br label %common.ret
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches11ManifestKeyE0Csc93vp1BCDlY_26lance_namespace_datafusion.exit.thread: ; preds = %bb.ar, %bb.aw, %bb.ax, %.thread.a
-  %.sroa.06.0.i178 = phi ptr [ %i.dp, %.thread.a ], [ null, %bb.ax ], [ null, %bb.aw ], [ null, %bb.ar ] ; 2 uses
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches11ManifestKeyE0Csc93vp1BCDlY_26lance_namespace_datafusion.exit.thread: ; preds = %.thread.a, %bb.ar, %bb.aw, %bb.ax
+  %.sroa.06.0.i178 = phi ptr [ %i.dp, %.thread.a ], [ null, %bb.aw ], [ null, %bb.ax ], [ null, %bb.ar ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !29975
   store i8 1, ptr %i.dg, align 8, !noalias !29975
   %.not = icmp eq ptr %.sroa.06.0.i178, null
@@ -609,7 +609,7 @@ begin_hunk_1_@llvm.smax.i32
 !29980 = !{!29855, !29854, !29850, !29849, !29848, !29846}
 !29981 = !{!29854, !29849, !29848, !29846}
 !29982 = !{!29857}
-!29983 = !{!29860, !29859, !29846}
+!29983 = !{!29860, !29859}
 !29984 = !{!29863}
 !29985 = !{!29864}
 !29986 = !{!29863, !29864, !29846}

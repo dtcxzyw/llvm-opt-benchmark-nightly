@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %select.unfold.i
+.lr.ph.i:                                         ; preds = %select.unfold.i, %.lr.ph.i.preheader
   %.0812.i = phi ptr [ %i.s, %select.unfold.i ], [ %i.m, %.lr.ph.i.preheader ] ; 6 uses
   %i.n = load i32, ptr %.0812.i, align 4, !tbaa !312
   %i.o = icmp eq i32 %i.n, %i.i
@@ -608,7 +608,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %select.unfold.i
+.lr.ph.i:                                         ; preds = %select.unfold.i, %.lr.ph.i.preheader
   %.0812.i = phi ptr [ %i.k, %select.unfold.i ], [ %i.e, %.lr.ph.i.preheader ] ; 12 uses
   %i.f = load i32, ptr %.0812.i, align 4, !tbaa !312
   %i.g = icmp eq i32 %i.f, %0

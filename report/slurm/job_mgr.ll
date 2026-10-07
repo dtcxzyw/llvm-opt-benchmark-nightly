@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.l, %.thread68.i
   call void @list_destroy(ptr noundef nonnull %.03156.i) #24
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.a, %.loopexit.thread.i, %bb.m, %.loopexit.i
+bb.n:                                             ; preds = %bb.a, %.loopexit.i, %bb.m, %.loopexit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   store ptr null, ptr %2, align 8

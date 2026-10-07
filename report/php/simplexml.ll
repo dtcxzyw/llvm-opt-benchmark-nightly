@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %.not11.i = icmp eq i32 %i.e, 0
   %.in.v.i = select i1 %.not11.i, i64 16, i64 24  ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.fr120, i64 24
-  %i.k = select i1 %i.i, ptr null, ptr %i.j       ; 2 uses
+  %i.k = select i1 %i.i, ptr null, ptr %i.j
   br i1 %i.i, label %.lr.ph104.split.us, label %.lr.ph104.split
 
 .lr.ph104.split.us:                               ; preds = %.lr.ph104, %match_ns.exit.us
@@ -236,7 +236,7 @@ bb.e:                                             ; preds = %bb.d
 .thread.i.us:                                     ; preds = %bb.e
   %.in.i.us = getelementptr inbounds nuw i8, ptr %i.u, i64 %.in.v.i
   %i.z = load ptr, ptr %.in.i.us, align 8, !tbaa !54
-  %i.aa = tail call i32 @xmlStrEqual(ptr noundef %i.z, ptr noundef %i.k) #13
+  %i.aa = tail call i32 @xmlStrEqual(ptr noundef %i.z, ptr noundef null) #13
   %.not13.i.us = icmp eq i32 %i.aa, 0
   br i1 %.not13.i.us, label %match_ns.exit.us, label %match_ns.exit.thread
 
@@ -254,7 +254,7 @@ match_ns.exit.us:                                 ; preds = %.thread.i.us, %bb.c
   %.not11.i55 = icmp eq i32 %i.e, 0
   %.in.v.i56 = select i1 %.not11.i55, i64 16, i64 24 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.fr120, i64 24
-  %i.af = select i1 %i.ad, ptr null, ptr %i.ae    ; 2 uses
+  %i.af = select i1 %i.ad, ptr null, ptr %i.ae
   br i1 %i.ad, label %.lr.ph110.split.us, label %.lr.ph110.split
 
 .lr.ph110.split.us:                               ; preds = %.lr.ph110, %match_ns.exit60.us
@@ -279,7 +279,7 @@ bb.g:                                             ; preds = %bb.f
 .thread.i54.us:                                   ; preds = %bb.g
   %.in.i57.us = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.in.v.i56
   %i.ap = load ptr, ptr %.in.i57.us, align 8, !tbaa !54
-  %i.aq = tail call i32 @xmlStrEqual(ptr noundef %i.ap, ptr noundef %i.af) #13
+  %i.aq = tail call i32 @xmlStrEqual(ptr noundef %i.ap, ptr noundef null) #13
   %.not13.i58.us = icmp eq i32 %i.aq, 0
   br i1 %.not13.i58.us, label %match_ns.exit60.us, label %match_ns.exit.thread
 
@@ -364,7 +364,7 @@ bb.k:                                             ; preds = %bb.a
   %.not11.i62 = icmp eq i32 %i.e, 0
   %.in.v.i63 = select i1 %.not11.i62, i64 16, i64 24 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.fr120, i64 24
-  %i.bv = select i1 %i.bt, ptr null, ptr %i.bu    ; 2 uses
+  %i.bv = select i1 %i.bt, ptr null, ptr %i.bu
   br i1 %i.bt, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %match_ns.exit67.us
@@ -398,7 +398,7 @@ bb.n:                                             ; preds = %bb.m
 .thread.i61.us:                                   ; preds = %bb.n
   %.in.i64.us = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.in.v.i63
   %i.ck = load ptr, ptr %.in.i64.us, align 8, !tbaa !54
-  %i.cl = tail call i32 @xmlStrEqual(ptr noundef %i.ck, ptr noundef %i.bv) #13
+  %i.cl = tail call i32 @xmlStrEqual(ptr noundef %i.ck, ptr noundef null) #13
   %.not13.i65.us = icmp eq i32 %i.cl, 0
   br i1 %.not13.i65.us, label %match_ns.exit67.us, label %match_ns.exit.thread
 
@@ -452,7 +452,7 @@ bb.q:                                             ; preds = %bb.a, %bb.k
   %.not11.i69 = icmp eq i32 %i.e, 0
   %.in.v.i70 = select i1 %.not11.i69, i64 16, i64 24 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.fr120, i64 24
-  %i.df = select i1 %i.dd, ptr null, ptr %i.de    ; 2 uses
+  %i.df = select i1 %i.dd, ptr null, ptr %i.de
   br i1 %i.dd, label %.lr.ph116.split.us, label %.lr.ph116.split
 
 .lr.ph116.split.us:                               ; preds = %.lr.ph116, %match_ns.exit74.us
@@ -477,7 +477,7 @@ bb.s:                                             ; preds = %bb.r
 .thread.i68.us:                                   ; preds = %bb.s
   %.in.i71.us = getelementptr inbounds nuw i8, ptr %i.dk, i64 %.in.v.i70
   %i.dp = load ptr, ptr %.in.i71.us, align 8, !tbaa !54
-  %i.dq = tail call i32 @xmlStrEqual(ptr noundef %i.dp, ptr noundef %i.df) #13
+  %i.dq = tail call i32 @xmlStrEqual(ptr noundef %i.dp, ptr noundef null) #13
   %.not13.i72.us = icmp eq i32 %i.dq, 0
   br i1 %.not13.i72.us, label %match_ns.exit74.us, label %match_ns.exit.thread
 

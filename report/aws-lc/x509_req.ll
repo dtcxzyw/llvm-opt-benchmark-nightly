@@ -202,7 +202,7 @@ bb.a:
 declare ptr @OBJ_nid2obj(i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define i32 @X509_REQ_get_attr_by_OBJ(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define range(i32 -1, 2147483647) i32 @X509_REQ_get_attr_by_OBJ(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !13
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48

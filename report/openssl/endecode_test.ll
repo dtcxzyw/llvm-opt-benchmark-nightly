@@ -204,15 +204,15 @@ sub_117:                                          ; preds = %sub_016
   %i.p = icmp eq i8 %i.o, 0
   br i1 %i.p, label %.thread, label %.thread26
 
-.thread:                                          ; preds = %.tail15, %bb.a, %.tail.thread, %.tail
-  %.014 = phi i32 [ 28, %.tail ], [ 116, %bb.a ], [ 920, %.tail.thread ], [ 408, %.tail15 ]
+.thread:                                          ; preds = %bb.a, %.tail.thread, %.tail, %.tail15
+  %.014 = phi i32 [ 408, %.tail15 ], [ 116, %bb.a ], [ 920, %.tail.thread ], [ 28, %.tail ]
   %i.q = call ptr @d2i_KeyParams(i32 noundef %.014, ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %4) #7 ; 2 uses
   %i.r = icmp ne ptr %i.q, null
   %i.s = zext i1 %i.r to i32
   call void @EVP_PKEY_free(ptr noundef %i.q) #7
   br label %.thread26
 
-.thread26:                                        ; preds = %sub_117, %sub_016, %.tail15, %.thread
+.thread26:                                        ; preds = %sub_117, %sub_016, %.thread, %.tail15
   %.010 = phi i32 [ %i.s, %.thread ], [ 0, %.tail15 ], [ 0, %sub_016 ], [ 0, %sub_117 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.010

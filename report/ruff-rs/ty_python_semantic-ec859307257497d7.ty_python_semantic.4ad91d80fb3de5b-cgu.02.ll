@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.c, align 4, !range !25, !alias.scope !28615, !noalias !28616, !noundef !6 ; 2 uses
   %i.e = zext nneg i8 %i.d to i64
   %i.f = mul nsw i64 %i.e, -1065810590584100411
-  %i.g = add i64 %i.f, 1452335207727870361        ; 6 uses
+  %i.g = add nsw i64 %i.f, 1452335207727870361    ; 6 uses
   switch i8 %i.d, label %default.unreachable [
     i8 0, label %bb.c
     i8 1, label %bb.d

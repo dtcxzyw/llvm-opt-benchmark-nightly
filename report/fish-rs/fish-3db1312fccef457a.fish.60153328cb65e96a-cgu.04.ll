@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.y, %bb.f
   %.idx = shl nuw nsw i64 %.sroa.5.0.i, 4
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %.idx ; 3 uses
   %.not57.i = icmp eq i8 %.sroa.012.0.extract.trunc.i, -1 ; 2 uses
-  %.sroa.031.0.i = select i1 %.not57.i, i8 0, i8 %.sroa.012.0.extract.trunc.i ; 3 uses
+  %.sroa.031.0.i = select i1 %.not57.i, i8 0, i8 %.sroa.012.0.extract.trunc.i ; 2 uses
   %.not58.i = icmp eq i8 %.sroa.017.0.extract.trunc.i, -1 ; 3 uses
   %.sroa.026.0.i = select i1 %.not58.i, i8 0, i8 %.sroa.017.0.extract.trunc.i ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 6 ; 3 uses
@@ -249,7 +249,7 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !4899
   %.sroa.528.2.us.i = select i1 %.not58.i, i24 %.sroa.528.0.us.i325, i24 %.sroa.418.0.extract.trunc.i ; 2 uses
   store i32 %.sroa.021.0.us.i, ptr %i.bg, align 2, !noalias !4899
-  store i8 %.sroa.031.0.i, ptr %i.bh, align 2, !noalias !4899
+  store i8 0, ptr %i.bh, align 2, !noalias !4899
   store i24 %.sroa.528.0.us.i325, ptr %.sroa.532.0..sroa_idx.i, align 1, !noalias !4899
   store i8 %.sroa.026.0.i, ptr %i.bi, align 2, !noalias !4899
   store i24 %.sroa.528.2.us.i, ptr %.sroa.528.0..sroa_idx29.i, align 1, !noalias !4899

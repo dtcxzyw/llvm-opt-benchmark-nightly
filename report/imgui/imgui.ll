@@ -205,7 +205,7 @@ _Z9ImHashStrPKcmj.exit:                           ; preds = %_Z9ImHashStrPKcmj.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   br label %.lr.ph.i9
 
-.lr.ph.i9:                                        ; preds = %.lr.ph.i9.preheader, %select.unfold.i
+.lr.ph.i9:                                        ; preds = %select.unfold.i, %.lr.ph.i9.preheader
   %.0914.i = phi ptr [ %i.ah, %select.unfold.i ], [ %i.y, %.lr.ph.i9.preheader ] ; 6 uses
   %i.z = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.aa = icmp eq i32 %i.z, %.4.i
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %select.unfold.i
+.lr.ph.i:                                         ; preds = %select.unfold.i, %.lr.ph.i.preheader
   %.0914.i = phi ptr [ %i.w, %select.unfold.i ], [ %i.n, %.lr.ph.i.preheader ] ; 5 uses
   %i.o = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.p = icmp eq i32 %i.o, %i.i
@@ -868,7 +868,7 @@ _Z9ImHashStrPKcmj.exit:                           ; preds = %bb.o, %.critedge
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   br label %.lr.ph.i13
 
-.lr.ph.i13:                                       ; preds = %.lr.ph.i13.preheader, %select.unfold.i
+.lr.ph.i13:                                       ; preds = %select.unfold.i, %.lr.ph.i13.preheader
   %.0914.i = phi ptr [ %i.di, %select.unfold.i ], [ %i.cy, %.lr.ph.i13.preheader ] ; 5 uses
   %i.cz = load i32, ptr %.0914.i, align 4, !tbaa !608
   %i.da = xor i32 %i.cz, %.4.i

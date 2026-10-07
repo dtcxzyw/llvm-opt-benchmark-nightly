@@ -204,16 +204,16 @@ bb.gb:                                            ; preds = %.backedge, %bb.ga
   %.sroa.0558.0 = phi i64 [ %.sroa.0.1.i475, %bb.ga ], [ %.sroa.0558.1615, %.backedge ] ; 2 uses
   %.sroa.8.0563 = phi i64 [ %i.am, %bb.ga ], [ %.sroa.8.1, %.backedge ] ; 2 uses
   %switch = icmp ugt i64 %.sroa.0558.0, -3
-  br i1 %switch, label %.thread611, label %.fold.split
+  br i1 %switch, label %.fold.split, label %.thread611
 
 .fold.split:                                      ; preds = %bb.gb
   br label %.thread611
 
 .thread611:                                       ; preds = %bb.gb, %.fold.split
-  %.sroa.0558.1615 = phi i64 [ -1, %.fold.split ], [ -2, %bb.gb ]
-  %.sroa.8.1 = phi i64 [ %.sroa.8.0563, %.fold.split ], [ -1, %bb.gb ]
-  %.pn5.i = phi i64 [ %.sroa.0558.0, %.fold.split ], [ %.sroa.8.0563, %bb.gb ]
-  %.pn3.i = phi ptr [ %.sroa.4.1.i474, %.fold.split ], [ %i.an, %bb.gb ] ; 3 uses
+  %.sroa.0558.1615 = phi i64 [ -1, %bb.gb ], [ -2, %.fold.split ]
+  %.sroa.8.1 = phi i64 [ %.sroa.8.0563, %bb.gb ], [ -1, %.fold.split ]
+  %.pn5.i = phi i64 [ %.sroa.0558.0, %bb.gb ], [ %.sroa.8.0563, %.fold.split ]
+  %.pn3.i = phi ptr [ %.sroa.4.1.i474, %bb.gb ], [ %i.an, %.fold.split ] ; 3 uses
   switch i64 %.pn5.i, label %.backedge [
     i64 -1, label %.thread617
     i64 43, label %bb.gi

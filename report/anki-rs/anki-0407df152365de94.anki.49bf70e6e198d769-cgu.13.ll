@@ -205,11 +205,11 @@ bb.k:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !nonnull !12, !noundef !12 ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %i.ar = load i64, ptr %i.aq, align 8, !noundef !12 ; 2 uses
-  %.idx.i = mul nuw nsw i64 %i.ar, 24             ; 3 uses
+  %i.ar = load i64, ptr %i.aq, align 8, !noundef !12 ; 3 uses
+  %.idx.i = mul nuw nsw i64 %i.ar, 24             ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.idx.i ; 2 uses
   %i.at = icmp eq i64 %i.ar, 0                    ; 2 uses
-  %.sroa.0.0.idx.i = select i1 %i.at, i64 0, i64 24 ; 2 uses
+  %.sroa.0.0.idx.i = select i1 %i.at, i64 0, i64 24
   %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.sroa.0.0.idx.i
   br i1 %i.at, label %_ZN5alloc3str17join_generic_copy17hb626ae5f2b0ec09cE.exit, label %.lr.ph
 
@@ -305,7 +305,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bs = icmp sgt i64 %i.br, -1
   call void @llvm.assume(i1 %i.bs)
   %i.bt = sub i64 %i.bb, %i.br                    ; 2 uses
-  %i.bu = icmp samesign eq i64 %.sroa.0.0.idx.i, %.idx.i
+  %i.bu = icmp eq i64 %i.ar, 1
   br i1 %i.bu, label %.thread14.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.r
@@ -708,10 +708,10 @@ bb.a:
   %i.k = alloca [48 x i8], align 8                ; 6 uses
   %i.l = alloca [48 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
-  %.idx = mul nuw nsw i64 %2, 24                  ; 3 uses
+  %.idx = mul nuw nsw i64 %2, 24                  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 7 uses
   %i.o = icmp eq i64 %2, 0                        ; 2 uses
-  %.sroa.0.0.idx = select i1 %i.o, i64 0, i64 24  ; 2 uses
+  %.sroa.0.0.idx = select i1 %i.o, i64 0, i64 24
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.idx ; 6 uses
   %.sink.sroa.gep = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sink.sroa.gep419 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
@@ -846,7 +846,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ar = load ptr, ptr %i.ak, align 8, !nonnull !12, !noundef !12
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ap ; 6 uses
   %i.at = sub i64 %i.z, %i.ap                     ; 12 uses
-  %i.au = icmp samesign eq i64 %.sroa.0.0.idx, %.idx ; 6 uses
+  %i.au = icmp eq i64 %2, 1                       ; 6 uses
   switch i64 %4, label %.preheader [
     i64 0, label %.preheader304
     i64 1, label %.preheader306
@@ -1121,10 +1121,10 @@ bb.a:
   %i.k = alloca [48 x i8], align 8                ; 6 uses
   %i.l = alloca [48 x i8], align 8                ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
-  %.idx = shl nuw nsw i64 %2, 4                   ; 3 uses
+  %.idx = shl nuw nsw i64 %2, 4                   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 7 uses
   %i.o = icmp eq i64 %2, 0                        ; 2 uses
-  %.sroa.0.0.idx = select i1 %i.o, i64 0, i64 16  ; 2 uses
+  %.sroa.0.0.idx = select i1 %i.o, i64 0, i64 16
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.idx ; 6 uses
   %.sink.sroa.gep = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sink.sroa.gep419 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
@@ -1258,7 +1258,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aq = load ptr, ptr %i.ak, align 8, !nonnull !12, !noundef !12
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ao ; 6 uses
   %i.as = sub i64 %i.z, %i.ao                     ; 12 uses
-  %i.at = icmp samesign eq i64 %.sroa.0.0.idx, %.idx ; 6 uses
+  %i.at = icmp eq i64 %2, 1                       ; 6 uses
   switch i64 %4, label %.preheader [
     i64 0, label %.preheader304
     i64 1, label %.preheader306

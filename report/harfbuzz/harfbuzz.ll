@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %bb.ci
   store i8 3, ptr %i.sb, align 1, !tbaa !280
   br label %bb.ck
 
-bb.ck:                                            ; preds = %bb.ci, %bb.cj
+bb.ck:                                            ; preds = %bb.cj, %bb.ci
   %i.sc = load i32, ptr %i.ae, align 4, !tbaa !609
   %i.sd = shl nuw i32 1, %i.sc
   %i.se = and i32 %i.sd, 9

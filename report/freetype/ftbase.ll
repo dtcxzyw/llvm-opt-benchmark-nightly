@@ -205,15 +205,15 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.an, i8 0, i64 %i.am, i1 false)
   br label %ft_mem_realloc.exit.thread40.i
 
+ft_mem_realloc.exit.i:                            ; preds = %bb.i
+  store ptr null, ptr %i.a, align 8, !tbaa !160
+  br label %hash_rehash.exit
+
 ft_mem_realloc.exit.thread40.i:                   ; preds = %bb.j, %bb.g
   %.134.i24.i.ph.i = phi ptr [ null, %bb.g ], [ %i.an, %bb.j ]
   store ptr %.134.i24.i.ph.i, ptr %i.a, align 8, !tbaa !160
   %.not30.i = icmp eq i32 %i.af, 0
   br i1 %.not30.i, label %._crit_edge.i, label %.lr.ph.i21
-
-ft_mem_realloc.exit.i:                            ; preds = %bb.i
-  store ptr null, ptr %i.a, align 8, !tbaa !160
-  br label %hash_rehash.exit
 
 .lr.ph.i21:                                       ; preds = %ft_mem_realloc.exit.thread40.i, %bb.o
   %.029.i = phi i32 [ %i.bk, %bb.o ], [ 0, %ft_mem_realloc.exit.thread40.i ]

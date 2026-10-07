@@ -202,7 +202,7 @@ bb.a:
   tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(176) %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
   %i.n = tail call noundef zeroext i1 @_ZNK3gmx26TrajectoryAnalysisSettings6hasPBCEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 2 uses
-  %. = select i1 %i.n, ptr %1, ptr null           ; 4 uses
+  %. = select i1 %i.n, ptr %1, ptr null           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   call void @_ZN3gmx27AnalysisDataParallelOptionsC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
@@ -276,7 +276,7 @@ bb.i:                                             ; preds = %.split
           to label %bb.j unwind label %.split25   ; 2 uses
 
 bb.j:                                             ; preds = %bb.i
-  invoke void @_ZN3gmx19SelectionCollection8evaluateEP10t_trxframeP5t_pbc(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull %i.ag, ptr noundef %.)
+  invoke void @_ZN3gmx19SelectionCollection8evaluateEP10t_trxframeP5t_pbc(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull %i.ag, ptr noundef null)
           to label %bb.k unwind label %.split25
 
 .loopexit.split:                                  ; preds = %.split, %bb.m
@@ -300,7 +300,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ak = load ptr, ptr %i.ai, align 8, !tbaa !21
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %i.am = load ptr, ptr %i.al, align 8
-  invoke void %i.am(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i32 noundef %.018, ptr noundef nonnull align 8 dereferenceable(176) %i.ag, ptr noundef %., ptr noundef %i.aj)
+  invoke void %i.am(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i32 noundef %.018, ptr noundef nonnull align 8 dereferenceable(176) %i.ag, ptr noundef null, ptr noundef %i.aj)
           to label %bb.l unwind label %.split25
 
 bb.l:                                             ; preds = %bb.k

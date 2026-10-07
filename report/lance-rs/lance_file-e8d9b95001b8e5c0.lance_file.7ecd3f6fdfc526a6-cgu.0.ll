@@ -205,7 +205,7 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i8 3, ptr %i.id, align 8, !noalias !29862
   br label %.thread
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtCsaSXGKSfiU2E_10lance_file6reader22ColumnMetadataCacheKeyE0B1f_.exit.thread.i.thread: ; preds = %bb.bv, %bb.bu, %bb.bp
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtCsaSXGKSfiU2E_10lance_file6reader22ColumnMetadataCacheKeyE0B1f_.exit.thread.i.thread: ; preds = %bb.bu, %bb.bv, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !29862
   br label %bb.by
 
@@ -608,7 +608,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !29870 = !{!29452, !29451, !29440, !29439, !29437, !29421, !29420}
 !29871 = !{!29451, !29439, !29437, !29421, !29420}
 !29872 = !{!29454}
-!29873 = !{!29457, !29456, !29437, !29421}
+!29873 = !{!29457, !29456, !29421}
 !29874 = !{!29460}
 !29875 = !{!29461}
 !29876 = !{!29460, !29461, !29437, !29421, !29420}

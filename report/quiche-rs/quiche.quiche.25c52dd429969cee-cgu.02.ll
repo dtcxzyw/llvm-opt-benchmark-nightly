@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ah, label %bb.i, label %bb.j, !dbg !15895
 
 bb.i:                                             ; preds = %bb.h
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 1440, !dbg !15894
-  %2 = load i32, ptr %i.ai, align 8, !dbg !15894, !range !4926
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 1432, !dbg !15894
-  %3 = load i64, ptr %i.aj, align 8, !dbg !15894
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 1432, !dbg !15894
+  %2 = load i64, ptr %i.ai, align 8, !dbg !15894
+  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 1440, !dbg !15894
+  %3 = load i32, ptr %i.aj, align 8, !dbg !15894, !range !4926
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 1352, !dbg !15896
   %i.al = load i64, ptr %i.ak, align 8, !dbg !15896, !noundef !1224
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 1360, !dbg !15896
@@ -219,8 +219,8 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.k,
   %.sroa.012.0.in.v = phi i64 [ 1928, %bb.k ], [ 1256, %bb.h ], [ 1256, %bb.i ], [ 1928, %bb.g ]
   %.sroa.09.0.in.v = phi i64 [ 2176, %bb.k ], [ 1384, %bb.h ], [ 1384, %bb.i ], [ 2176, %bb.g ]
   %.sroa.510.0.in.v = phi i64 [ 2184, %bb.k ], [ 1392, %bb.h ], [ 1392, %bb.i ], [ 2184, %bb.g ]
-  %.sroa.05.045 = phi i64 [ %5, %bb.k ], [ undef, %bb.h ], [ %3, %bb.i ], [ undef, %bb.g ]
-  %.sroa.7.043 = phi i32 [ %4, %bb.k ], [ -1, %bb.h ], [ %2, %bb.i ], [ -1, %bb.g ]
+  %.sroa.05.045 = phi i64 [ %4, %bb.k ], [ undef, %bb.h ], [ %2, %bb.i ], [ undef, %bb.g ]
+  %.sroa.7.043 = phi i32 [ %5, %bb.k ], [ -1, %bb.h ], [ %3, %bb.i ], [ -1, %bb.g ]
   %.sroa.77.0 = phi i32 [ %i.ax, %bb.k ], [ -1, %bb.h ], [ %i.an, %bb.i ], [ -1, %bb.g ], !dbg !15898
   %.sroa.06.0 = phi i64 [ %i.av, %bb.k ], [ undef, %bb.h ], [ %i.al, %bb.i ], [ undef, %bb.g ], !dbg !15898
     #dbg_value(ptr %1, !15771, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !15776)
@@ -242,10 +242,10 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.k,
   br i1 %.not31, label %bb.m, label %bb.l, !dbg !15904
 
 bb.k:                                             ; preds = %bb.g
-  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 2232, !dbg !15892
-  %4 = load i32, ptr %i.as, align 8, !dbg !15892, !range !4926
-  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 2224, !dbg !15892
-  %5 = load i64, ptr %i.at, align 8, !dbg !15892
+  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 2224, !dbg !15892
+  %4 = load i64, ptr %i.as, align 8, !dbg !15892
+  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 2232, !dbg !15892
+  %5 = load i32, ptr %i.at, align 8, !dbg !15892, !range !4926
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 2144, !dbg !15905
   %i.av = load i64, ptr %i.au, align 8, !dbg !15905, !noundef !1224
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 2152, !dbg !15905

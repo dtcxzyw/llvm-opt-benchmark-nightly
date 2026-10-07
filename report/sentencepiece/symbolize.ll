@@ -204,7 +204,7 @@ bb.bm:                                            ; preds = %bb.be
   br label %bb.bn
 
 .thread.i.i:                                      ; preds = %bb.bm, %bb.bk, %bb.bi, %bb.bg
-  %.247.i.i = phi ptr [ %i.hd, %bb.bm ], [ %i.hf, %bb.bg ], [ %i.ho, %bb.bi ], [ %i.hx, %bb.bk ] ; 2 uses
+  %.247.i.i = phi ptr [ %i.hd, %bb.bm ], [ %i.hf, %bb.bg ], [ %i.hx, %bb.bk ], [ %i.ho, %bb.bi ] ; 2 uses
   %i.io = getelementptr inbounds nuw i8, ptr %.247.i.i, i64 16
   %i.ip = load i64, ptr %i.io, align 8, !tbaa !87
   %i.iq = getelementptr inbounds nuw i8, ptr %.247.i.i, i64 8

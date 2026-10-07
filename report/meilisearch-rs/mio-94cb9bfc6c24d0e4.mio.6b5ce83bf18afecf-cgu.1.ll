@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %.noexc8
 
 bb.i:                                             ; preds = %bb.k
   %i.z = load ptr, ptr %i.w, align 8
-  %spec.select6.i = select i1 %i.ad, ptr null, ptr %i.z ; 2 uses
+  %spec.select6.i = select i1 %i.ad, ptr null, ptr %i.z
   %.pre.i = load i64, ptr %i.b, align 8
   %i.aa = trunc nuw i64 %.pre.i to i1
   %i.ab = and i1 %i.ad, %i.aa
@@ -230,7 +230,7 @@ bb.m:                                             ; preds = %bb.j
   unreachable
 
 bb.n:                                             ; preds = %bb.i, %.noexc8, %bb.l
-  %.sroa.0.09.i = phi ptr [ %spec.select6.i, %bb.i ], [ null, %.noexc8 ], [ %spec.select6.i, %bb.l ]
+  %.sroa.0.09.i = phi ptr [ %spec.select6.i, %bb.i ], [ null, %.noexc8 ], [ null, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
