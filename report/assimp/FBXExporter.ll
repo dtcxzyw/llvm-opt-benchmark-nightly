@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.dx = fmul float %i.k, %i.dw
   %i.dy = extractelement <2 x i1> %i.du, i64 0
   %.sroa.12.0 = select i1 %i.dy, float %i.dx, float %i.k
-  %4 = fneg float %.sroa.12.0
-  %5 = tail call noundef float @asinf(float noundef %4) #31 ; 2 uses
+  %4 = tail call float @asinf(float %.sroa.12.0)
+  %5 = fneg float %4                              ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %2, i64 4
   store float %5, ptr %i.dz, align 4
   %i.ea = tail call noundef float @cosf(float noundef %5) #31 ; 2 uses

@@ -205,7 +205,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQDNtB4_4ReadEL_EE0
   %i.m = add i64 %i.l, 9216, !dbg !20734          ; 2 uses
   %.not98 = icmp ult i64 %i.m, %i.i, !dbg !20734
   %.sroa.5.1.i = select i1 %.not98, i64 8192, i64 %i.m, !dbg !20735
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !20735 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !20734 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQDNtB4_4ReadEL_EE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !20736
 
@@ -578,7 +578,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6C
   %i.m = add i64 %i.l, 9216, !dbg !21229          ; 2 uses
   %.not96 = icmp ult i64 %i.m, %i.i, !dbg !21229
   %.sroa.5.1.i = select i1 %.not96, i64 8192, i64 %i.m, !dbg !21230
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !21230 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !21229 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6CursorINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEEEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !21231
 
@@ -935,7 +935,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6C
   %i.m = add i64 %i.l, 9216, !dbg !21717          ; 2 uses
   %.not100 = icmp ult i64 %i.m, %i.i, !dbg !21717
   %.sroa.5.1.i = select i1 %.not100, i64 8192, i64 %i.m, !dbg !21718
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !21718 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !21717 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6CursorRShEEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !21719
 
@@ -1290,7 +1290,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQNtNtB6_2fs4FileEE
   %i.m = add i64 %i.l, 9216, !dbg !22120          ; 2 uses
   %.not98 = icmp ult i64 %i.m, %i.i, !dbg !22120
   %.sroa.5.1.i = select i1 %.not98, i64 8192, i64 %i.m, !dbg !22121
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !22121 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !22120 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQNtNtB6_2fs4FileEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !22122
 
@@ -1657,7 +1657,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCs9VoZUfg37wD_6flate22
   %i.l = add i64 %i.k, 9216, !dbg !22447          ; 2 uses
   %.not91 = icmp ult i64 %i.l, %i.h, !dbg !22447
   %.sroa.5.1.i = select i1 %.not91, i64 8192, i64 %i.l, !dbg !22448
-  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !22448 ; 2 uses
+  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !22447 ; 2 uses
   %i.m = icmp eq i64 %3, 0
   br i1 %i.m, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCs9VoZUfg37wD_6flate22gz7bufread14MultiGzDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !22449
 
@@ -1960,7 +1960,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCs9VoZUfg37wD_6flate24
   %i.l = add i64 %i.k, 9216, !dbg !22745          ; 2 uses
   %.not91 = icmp ult i64 %i.l, %i.h, !dbg !22745
   %.sroa.5.1.i = select i1 %.not91, i64 8192, i64 %i.l, !dbg !22746
-  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !22746 ; 2 uses
+  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !22745 ; 2 uses
   %i.m = icmp eq i64 %3, 0
   br i1 %i.m, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCs9VoZUfg37wD_6flate24zlib7bufread11ZlibDecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !22747
 
@@ -2263,7 +2263,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCsi0YuHEPkLKL_4zstd6st
   %i.l = add i64 %i.k, 9216, !dbg !23043          ; 2 uses
   %.not91 = icmp ult i64 %i.l, %i.h, !dbg !23043
   %.sroa.5.1.i = select i1 %.not91, i64 8192, i64 %i.l, !dbg !23044
-  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !23044 ; 2 uses
+  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !23043 ; 2 uses
   %i.m = icmp eq i64 %3, 0
   br i1 %i.m, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtNtCsi0YuHEPkLKL_4zstd6stream4read7DecoderNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceEE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !23045
 
@@ -2566,7 +2566,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endNtNtNtCslpwjCj2YNBy_9polars_i
   %i.l = add i64 %i.k, 9216, !dbg !23341          ; 2 uses
   %.not91 = icmp ult i64 %i.l, %i.h, !dbg !23341
   %.sroa.5.1.i = select i1 %.not91, i64 8192, i64 %i.l, !dbg !23342
-  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !23342 ; 2 uses
+  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !23341 ; 2 uses
   %i.m = icmp eq i64 %3, 0
   br i1 %i.m, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endNtNtNtCslpwjCj2YNBy_9polars_io5utils17stream_buf_reader12ReaderSourceE0Cs2g09Ig8GZd6_13polars_stream.exit.thread, !dbg !23343
 

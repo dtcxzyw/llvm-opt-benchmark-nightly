@@ -202,7 +202,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !348
   %i.z = trunc nuw i64 %i.x to i1
   %.not.i = icmp ne ptr %i.y, null
-  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvMNtNtBc_2fs8read_dirNtB1w_7ReadDir15poll_next_entry0TINtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque8VecDequeINtNtCs3oUPovFnLWP_4core6result6ResultNtB1w_8DirEntryNtNtNtB3o_2io5error5ErrorEENtNtCsaL1QbXo9JQH_3std2fs7ReadDirbEEBc_.exit.i
@@ -390,7 +390,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.g, align 8, !noalias !399
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvMNtNtNtBa_9scheduler12multi_thread6workerNtB1w_6Launch6launch0uEBc_.exit.i
@@ -580,7 +580,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !441
   %i.z = trunc nuw i64 %i.x to i1
   %.not.i = icmp ne ptr %i.y, null
-  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvMs8_NtNtBc_2fs4fileNtB1z_5Inner19spawn_blocking_read0TNtB1z_9OperationNtNtNtBc_2io8blocking3BufEEBc_.exit.i
@@ -759,7 +759,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !477
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXNtNtBc_2io8blockingINtB1w_8BlockingNtNtNtCsaL1QbXo9JQH_3std2io5stdio5StdinENtNtB1y_10async_read9AsyncRead9poll_read0TINtNtCs3oUPovFnLWP_4core6result6ResultjNtNtNtB3u_2io5error5ErrorENtB1w_3BufB25_EEBc_.exit.i
@@ -943,7 +943,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !519
   %i.z = trunc nuw i64 %i.x to i1
   %.not.i = icmp ne ptr %i.y, null
-  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.z, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs0_NtNtBc_2fs4fileNtB1z_4FileNtNtNtBc_2io10async_seek9AsyncSeek10start_seek0TNtB1z_9OperationNtNtB23_8blocking3BufEEBc_.exit.i
@@ -1122,7 +1122,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !555
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtBc_2io8blockingINtB1y_8BlockingNtNtNtCsaL1QbXo9JQH_3std2io5stdio6StderrENtNtB1A_11async_write10AsyncWrite10poll_flush0TINtNtCs3oUPovFnLWP_4core6result6ResultjNtNtNtB3C_2io5error5ErrorENtB1y_3BufB27_EEBc_.exit.i
@@ -1301,7 +1301,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !591
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtBc_2io8blockingINtB1y_8BlockingNtNtNtCsaL1QbXo9JQH_3std2io5stdio6StderrENtNtB1A_11async_write10AsyncWrite10poll_write0TINtNtCs3oUPovFnLWP_4core6result6ResultjNtNtNtB3C_2io5error5ErrorENtB1y_3BufB27_EEBc_.exit.i
@@ -1480,7 +1480,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !627
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtBc_2io8blockingINtB1y_8BlockingNtNtNtCsaL1QbXo9JQH_3std2io5stdio6StdoutENtNtB1A_11async_write10AsyncWrite10poll_flush0TINtNtCs3oUPovFnLWP_4core6result6ResultjNtNtNtB3C_2io5error5ErrorENtB1y_3BufB27_EEBc_.exit.i
@@ -1659,7 +1659,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !663
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtBc_2io8blockingINtB1y_8BlockingNtNtNtCsaL1QbXo9JQH_3std2io5stdio6StdoutENtNtB1A_11async_write10AsyncWrite10poll_write0TINtNtCs3oUPovFnLWP_4core6result6ResultjNtNtNtB3C_2io5error5ErrorENtB1y_3BufB27_EEBc_.exit.i
@@ -1838,7 +1838,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !699
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXsf_NtNtBc_3net4addreNtNtB1z_6sealed17ToSocketAddrsPriv15to_socket_addrs0INtNtCs3oUPovFnLWP_4core6result6ResultINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtB2L_3net11socket_addr10SocketAddrENtNtNtB2L_2io5error5ErrorEEBc_.exit.i
@@ -2017,7 +2017,7 @@ _RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.q, ptr %i.g, align 8, !noalias !735
   %i.x = trunc nuw i64 %i.v to i1
   %.not.i = icmp ne ptr %i.w, null
-  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.x, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.i, label %bb.o, !prof !10
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXsh_NtNtBc_3net4addrTRetENtNtB1z_6sealed17ToSocketAddrsPriv15to_socket_addrs0INtNtCs3oUPovFnLWP_4core6result6ResultINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtB2P_3net11socket_addr10SocketAddrENtNtNtB2P_2io5error5ErrorEEBc_.exit.i

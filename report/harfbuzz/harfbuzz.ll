@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.an = call noundef zeroext i1 @_ZN21hb_sanitize_context_t9_dispatchIN2OT8OffsetToINS1_6Layout6Common8CoverageENS1_7NumTypeILb1EjLj4EEEvLb1EEEJPKNS1_20MarkGlyphSetsFormat1EEEEDTcldtfp_8sanitizefpTspclsr3stdE7forwardIT0_Efp1_EEERKT_11hb_priorityILj1EEDpOSC_(ptr noundef nonnull align 8 dereferenceable(62) %0, ptr noundef nonnull align 1 dereferenceable(4) %i.am, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp ne i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
-  %or.cond.not = select i1 %i.an, i1 %exitcond.not.i.i.i, i1 false
+  %or.cond.not = select i1 %i.an, i1 %exitcond.not.i.i.i, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph.i.i.i, label %_ZNK2OT20MarkGlyphSetsFormat18sanitizeEP21hb_sanitize_context_t.exit.i.i, !prof !704, !llvm.loop !3721
 
 _ZNK2OT20MarkGlyphSetsFormat18sanitizeEP21hb_sanitize_context_t.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.f, %_ZNK2OT7ArrayOfINS_8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EjLj4EEEvLb1EEENS5_ILb1EtLj2EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i.i.i, %bb.e, %bb.d, %bb.c
@@ -608,7 +608,7 @@ _ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_
   %i.ln = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(49) %i.cf, i32 noundef %i.lg, i32 noundef %i.lk)
   %i.lo = getelementptr inbounds nuw i8, ptr %.01317.i.i, i64 6 ; 2 uses
   %.not.i6.i = icmp ne ptr %i.lo, %i.la
-  %or.cond.not = select i1 %i.ln, i1 %.not.i6.i, i1 false
+  %or.cond.not = select i1 %i.ln, i1 %.not.i6.i, i1 false, !prof !3987
   br i1 %or.cond.not, label %.lr.ph.i5.i.backedge, label %_ZNK2OT8ClassDef13collect_classI8hb_set_tEEbPT_j.exit, !prof !3987
 
 .critedge.i.i:                                    ; preds = %_ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_tEEbPT_.exit.thread.i.i, %.lr.ph.i5.i
@@ -1011,7 +1011,7 @@ _ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_
   %i.va = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(49) %i.ls, i32 noundef %i.ut, i32 noundef %i.ux)
   %i.vb = getelementptr inbounds nuw i8, ptr %.01317.i.i125, i64 6 ; 2 uses
   %.not.i6.i127 = icmp ne ptr %i.vb, %i.un
-  %or.cond578.not = select i1 %i.va, i1 %.not.i6.i127, i1 false
+  %or.cond578.not = select i1 %i.va, i1 %.not.i6.i127, i1 false, !prof !3987
   br i1 %or.cond578.not, label %.lr.ph.i5.i124.backedge, label %_ZNK2OT8ClassDef13collect_classI8hb_set_tEEbPT_j.exit141, !prof !3987
 
 .critedge.i.i126:                                 ; preds = %_ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_tEEbPT_.exit.thread.i.i130, %.lr.ph.i5.i124
@@ -1414,7 +1414,7 @@ _ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_
   %i.aen = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(49) %i.vf, i32 noundef %i.aeg, i32 noundef %i.aek)
   %i.aeo = getelementptr inbounds nuw i8, ptr %.01317.i.i145, i64 6 ; 2 uses
   %.not.i6.i147 = icmp ne ptr %i.aeo, %i.aea
-  %or.cond581.not = select i1 %i.aen, i1 %.not.i6.i147, i1 false
+  %or.cond581.not = select i1 %i.aen, i1 %.not.i6.i147, i1 false, !prof !3987
   br i1 %or.cond581.not, label %.lr.ph.i5.i144.backedge, label %_ZNK2OT8ClassDef13collect_classI8hb_set_tEEbPT_j.exit161, !prof !3987
 
 .critedge.i.i146:                                 ; preds = %_ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_tEEbPT_.exit.thread.i.i150, %.lr.ph.i5.i144
@@ -1817,7 +1817,7 @@ _ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_
   %i.am = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(49) %i.z, i32 noundef %i.af, i32 noundef %i.aj)
   %i.an = getelementptr inbounds nuw i8, ptr %.01217.i.i, i64 6 ; 2 uses
   %.not.i.i = icmp ne ptr %i.an, %i.y
-  %or.cond.not = select i1 %i.am, i1 %.not.i.i, i1 false
+  %or.cond.not = select i1 %i.am, i1 %.not.i.i, i1 false, !prof !4001
   br i1 %or.cond.not, label %.backedge.backedge, label %_ZNK2OT8ClassDef16collect_coverageI8hb_set_tEEbPT_.exit, !prof !4001
 
 .critedge.i.i:                                    ; preds = %_ZNK2OT6Layout6Common11RangeRecordINS0_10SmallTypesEE16collect_coverageI8hb_set_tEEbPT_.exit.thread.i.i, %.backedge
@@ -2220,7 +2220,7 @@ bb.n:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.cs = tail call noundef zeroext i1 @_ZNK2OT18MathKernInfoRecord8sanitizeEP21hb_sanitize_context_tPKv(ptr noundef nonnull align 1 dereferenceable(8) %i.cr, ptr noundef nonnull align 8 dereferenceable(62) %1, ptr noundef nonnull %0) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count
-  %or.cond.not = select i1 %i.cs, i1 %exitcond.not, i1 false
+  %or.cond.not = select i1 %i.cs, i1 %exitcond.not, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph, label %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread12, !prof !704, !llvm.loop !4278
 
 _ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread12: ; preds = %.lr.ph, %bb.n, %_ZNK2OT7ArrayOfINS_18MathKernInfoRecordENS_7NumTypeILb1EtLj2EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, %bb.m, %bb.l, %bb.k, %bb.j, %bb.f, %bb.i, %bb.g, %bb.h, %bb.d, %bb.b, %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit, %bb.a
@@ -2623,11 +2623,11 @@ _ZN2OT13SortedArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumT
 
 bb.ag:                                            ; preds = %"_ZNK13hb_map_iter_tI13hb_zip_iter_tI17hb_sorted_array_tIN2OT11HBGlyphID16EE10hb_array_tIS3_EERK3$_6L24hb_function_sortedness_t1ELPv0EEneERKSD_.exit67.i.i"
   %.not.i.i.i.i.i.i68.not.i.i = icmp ne i32 %.sroa.7.0131.i.i, 0 ; 3 uses
-  %brmerge.not.i = select i1 %.not.i.i.i.i.i.i68.not.i.i, i1 %i.ei, i1 false
-  br i1 %brmerge.not.i, label %bb.ah, label %_ZNK9hb_iter_tI17hb_sorted_array_tIN2OT11HBGlyphID16EERS2_EdeEv.exit.i.i.i.i69.thread.i.i, !prof !4434
+  %brmerge.not.i = select i1 %.not.i.i.i.i.i.i68.not.i.i, i1 %i.ei, i1 false, !prof !4434
+  br i1 %brmerge.not.i, label %bb.ah, label %_ZNK9hb_iter_tI17hb_sorted_array_tIN2OT11HBGlyphID16EERS2_EdeEv.exit.i.i.i.i69.thread.i.i, !prof !4435
 
 _ZNK9hb_iter_tI17hb_sorted_array_tIN2OT11HBGlyphID16EERS2_EdeEv.exit.i.i.i.i69.thread.i.i: ; preds = %bb.ag
-  %_hb_CrapPool.mux.i = select i1 %.not.i.i.i.i.i.i68.not.i.i, ptr %.sroa.084.0132.i.i, ptr @_hb_CrapPool, !prof !4435
+  %_hb_CrapPool.mux.i = select i1 %.not.i.i.i.i.i.i68.not.i.i, ptr %.sroa.084.0132.i.i, ptr @_hb_CrapPool, !prof !4434
   store i16 0, ptr @_hb_CrapPool, align 16
   br label %bb.ah
 
@@ -3030,7 +3030,7 @@ bb.j:                                             ; preds = %_ZNK2OT14UnsizedArr
   %i.by = call noundef zeroext i1 @_ZN21hb_sanitize_context_t9_dispatchIN2OT8OffsetToINS1_9AxisValueENS1_7NumTypeILb1EtLj2EEEvLb1EEEJPKNS1_20AxisValueOffsetArrayEEEEDTcldtfp_8sanitizefpTspclsr3stdE7forwardIT0_Efp1_EEERKT_11hb_priorityILj1EEDpOSA_(ptr noundef nonnull align 8 dereferenceable(62) %1, ptr noundef nonnull align 1 dereferenceable(2) %i.bx, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp ne i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  %or.cond.not = select i1 %i.by, i1 %exitcond.not.i.i, i1 false
+  %or.cond.not = select i1 %i.by, i1 %exitcond.not.i.i, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph.i.i, label %_ZNK2OT8OffsetToINS_14UnsizedArrayOfINS_14StatAxisRecordEEENS_7NumTypeILb1EjLj4EEEvLb0EE8sanitizeIJRKNS4_ILb1EtLj2EEEEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, !prof !704, !llvm.loop !5450
 
 _ZNK2OT8OffsetToINS_14UnsizedArrayOfINS_14StatAxisRecordEEENS_7NumTypeILb1EjLj4EEEvLb0EE8sanitizeIJRKNS4_ILb1EtLj2EEEEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread: ; preds = %.lr.ph.i.i, %bb.g, %bb.h, %bb.i, %_ZNK2OT14UnsizedArrayOfINS_8OffsetToINS_9AxisValueENS_7NumTypeILb1EtLj2EEEvLb1EEEE16sanitize_shallowEP21hb_sanitize_context_tj.exit.i.i, %bb.j, %bb.f, %bb.e, %bb.d, %_ZNK2OT8OffsetToINS_14UnsizedArrayOfINS_14StatAxisRecordEEENS_7NumTypeILb1EjLj4EEEvLb0EE8sanitizeIJRKNS4_ILb1EtLj2EEEEEEbP21hb_sanitize_context_tPKvDpOT_.exit, %bb.c, %bb.b, %bb.a
@@ -3433,7 +3433,7 @@ _ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7Arr
   %i.bu = call noundef zeroext i1 @_ZNK3AAT18LookupSegmentArrayIN2OT8OffsetToINS1_7ArrayOfINS_6AnchorENS1_7NumTypeILb1EjLj4EEEEENS5_ILb1EtLj2EEEvLb0EEEE8sanitizeIJRPKvEEEbP21hb_sanitize_context_tSD_DpOT_(ptr noundef nonnull align 1 dereferenceable(6) %.0.i5, ptr noundef %1, ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
   %i.bv = add nuw i32 %.0.i11, 1                  ; 2 uses
   %exitcond.not = icmp ne i32 %i.bv, %i.ax
-  %or.cond.not = select i1 %i.bu, i1 %exitcond.not, i1 false
+  %or.cond.not = select i1 %i.bu, i1 %exitcond.not, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph, label %_ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7ArrayOfINS1_6AnchorENS_7NumTypeILb1EjLj4EEEEENS6_ILb1EtLj2EEEvLb0EEEEEE8sanitizeIJPKNS1_13LookupFormat4ISA_EERPKvEEEbP21hb_sanitize_context_tDpOT_.exit, !prof !704, !llvm.loop !5737
 
 _ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7ArrayOfINS1_6AnchorENS_7NumTypeILb1EjLj4EEEEENS6_ILb1EtLj2EEEvLb0EEEEEE8sanitizeIJPKNS1_13LookupFormat4ISA_EERPKvEEEbP21hb_sanitize_context_tDpOT_.exit: ; preds = %_ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7ArrayOfINS1_6AnchorENS_7NumTypeILb1EjLj4EEEEENS6_ILb1EtLj2EEEvLb0EEEEEEixEi.exit, %_ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7ArrayOfINS1_6AnchorENS_7NumTypeILb1EjLj4EEEEENS6_ILb1EtLj2EEEvLb0EEEEEE10get_lengthEv.exit, %bb.c, %bb.d, %bb.a, %bb.b, %_ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_8OffsetToINS_7ArrayOfINS1_6AnchorENS_7NumTypeILb1EjLj4EEEEENS6_ILb1EtLj2EEEvLb0EEEEEE16sanitize_shallowEP21hb_sanitize_context_t.exit
@@ -3836,7 +3836,7 @@ bb.aa:                                            ; preds = %_ZNK2OT7ArrayOfINS_
   %i.ga = tail call noundef zeroext i1 @_ZNK2OT23VariationSelectorRecord8sanitizeEP21hb_sanitize_context_tPKv(ptr noundef nonnull align 1 dereferenceable(11) %i.fz, ptr noundef nonnull align 8 dereferenceable(62) %1, ptr noundef nonnull align 1 dereferenceable(21) %0) ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
-  %or.cond.not = select i1 %i.ga, i1 %exitcond.not.i, i1 false
+  %or.cond.not = select i1 %i.ga, i1 %exitcond.not.i, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph.i, label %_ZNK2OT19CmapSubtableFormat48sanitizeEP21hb_sanitize_context_t.exit, !prof !704, !llvm.loop !5822
 
 _ZNK2OT19CmapSubtableFormat48sanitizeEP21hb_sanitize_context_t.exit: ; preds = %.lr.ph.i, %bb.aa, %_ZNK2OT7ArrayOfINS_23VariationSelectorRecordENS_7NumTypeILb1EjLj4EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i, %bb.z, %bb.y, %bb.x, %bb.w, %_ZNK2OT7ArrayOfINS_21CmapSubtableLongGroupENS_7NumTypeILb1EjLj4EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i20, %bb.v, %bb.u, %bb.t, %bb.s, %_ZNK2OT7ArrayOfINS_21CmapSubtableLongGroupENS_7NumTypeILb1EjLj4EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i, %bb.r, %bb.q, %bb.p, %bb.o, %_ZNK2OT7ArrayOfINS_11HBGlyphID16ENS_7NumTypeILb1EjLj4EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i, %bb.n, %bb.m, %bb.l, %bb.k, %_ZNK2OT7ArrayOfINS_11HBGlyphID16ENS_7NumTypeILb1EtLj2EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit.i, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.b, %bb.a, %bb.c
@@ -4239,7 +4239,7 @@ bb.o:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.dz = tail call noundef zeroext i1 @_ZNK2OT16FeatMinMaxRecord8sanitizeEP21hb_sanitize_context_tPKv(ptr noundef nonnull align 1 dereferenceable(8) %i.dy, ptr noundef nonnull align 8 dereferenceable(62) %1, ptr noundef nonnull %0) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count
-  %or.cond.not = select i1 %i.dz, i1 %exitcond.not, i1 false
+  %or.cond.not = select i1 %i.dz, i1 %exitcond.not, i1 false, !prof !704
   br i1 %or.cond.not, label %.lr.ph, label %_ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit5.thread23, !prof !704, !llvm.loop !5992
 
 _ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit5.thread23: ; preds = %.lr.ph, %.split45, %.split44, %.split43, %.split, %bb.o, %_ZNK2OT7ArrayOfINS_16FeatMinMaxRecordENS_7NumTypeILb1EtLj2EEEE16sanitize_shallowEP21hb_sanitize_context_t.exit, %_ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, %bb.n, %bb.m, %bb.k, %bb.i, %bb.j, %_ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit5.thread, %bb.f, %bb.d, %bb.e, %bb.b, %_ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit, %_ZNK2OT8OffsetToINS_9BaseCoordENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit5, %bb.a
@@ -4642,8 +4642,8 @@ begin_hunk_11_@llvm.vector.reduce.smax.v4i32
 !4431 = distinct !{!4431, !305}
 !4432 = !{!4430, !4428}
 !4433 = distinct !{!4433, !305}
-!4434 = !{!"branch_weights", i32 -102759400, i32 4193255}
-!4435 = !{!"branch_weights", i32 2000, i32 1}
+!4434 = !{!"branch_weights", i32 2000, i32 1}
+!4435 = !{!"branch_weights", i32 -102759400, i32 4193255}
 !4436 = distinct !{!4436, !305}
 !4437 = distinct !{!4437, !305}
 !4438 = distinct !{!4438, !305}

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %._crit_edge.split.u
   %i.aw = trunc nuw i16 %.val2.i.us.us63.i to i1, !dbg !6238
   %i.ax = and i16 %.val3.i.us.us64.i, 32767
   %i.ay = icmp samesign ult i16 %i.ax, 31745
-  %or.cond89.not.i = select i1 %i.aw, i1 %i.ay, i1 false, !dbg !6238
+  %or.cond89.not.i = select i1 %i.aw, i1 %i.ay, i1 false, !dbg !6238, !prof !6210
   br i1 %or.cond89.not.i, label %bb.d, label %_RNCINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB8_8RawTableTINtNtCs2mZqlW55729_12polars_utils9total_ord12TotalOrdWrapINtNtCscgRAwXFJnXP_4core6option6OptionNtNtBX_7float164pf16EEINtNtBX_7idx_vec7UnitVecmEEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B2L_E0E0CsePnBjWcsLF5_10polars_ops.exit.thread27.us.us66.i, !dbg !6238, !prof !6210
 
 bb.d:                                             ; preds = %.lr.ph.us.i

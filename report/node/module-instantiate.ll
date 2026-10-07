@@ -205,7 +205,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27Cons
   %i.co = trunc nuw i8 %i.cn to i1
   %i.cp = and i32 %.sroa.0.0.copyload.i27, 16
   %i.cq = icmp eq i32 %i.cp, 0
-  %or.cond.not = select i1 %i.co, i1 %i.cq, i1 false
+  %or.cond.not = select i1 %i.co, i1 %i.cq, i1 false, !prof !33
   br i1 %or.cond.not, label %bb.k, label %.critedge.i, !prof !33
 
 bb.k:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_27ConstantExpressionInterfaceELNS1_12DecodingModeE1EE20is_local_initializedEj.exit.thread
@@ -608,7 +608,7 @@ _ZN2v88internal4wasm11WasmDecoderINS1_7Decoder17FullValidationTagELNS1_12Decodin
   %.sroa.0.0.copyload.i = load i32, ptr %i.ac, align 8 ; 2 uses
   %i.an = and i32 %.sroa.0.0.copyload.i, 16
   %i.ao = icmp eq i32 %i.an, 0
-  %or.cond.not = select i1 %i.af, i1 %i.ao, i1 false
+  %or.cond.not = select i1 %i.af, i1 %i.ao, i1 false, !prof !33
   br i1 %or.cond.not, label %bb.i, label %.critedge.i.i, !prof !33
 
 bb.i:                                             ; preds = %_ZN2v88internal4wasm11WasmDecoderINS1_7Decoder17FullValidationTagELNS1_12DecodingModeE1EE8ValidateEPKhRNS1_20GlobalIndexImmediateE.exit
@@ -1005,7 +1005,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.az = trunc nuw i8 %i.ay to i1
   %i.ba = and i32 %.sroa.05.0, 16
   %i.bb = icmp eq i32 %i.ba, 0
-  %or.cond39.not = select i1 %i.az, i1 %i.bb, i1 false
+  %or.cond39.not = select i1 %i.az, i1 %i.bb, i1 false, !prof !33
   br i1 %or.cond39.not, label %bb.j, label %.critedge.i.i, !prof !33
 
 bb.j:                                             ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit
@@ -1157,7 +1157,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.bf = trunc nuw i8 %i.be to i1
   %i.bg = and i32 %.sroa.0.0.i, 16
   %i.bh = icmp eq i32 %i.bg, 0
-  %or.cond.not = select i1 %i.bf, i1 %i.bh, i1 false
+  %or.cond.not = select i1 %i.bf, i1 %i.bh, i1 false, !prof !33
   br i1 %or.cond.not, label %bb.g, label %.critedge.i.i, !prof !33
 
 bb.g:                                             ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit
@@ -1560,7 +1560,7 @@ bb.e:                                             ; preds = %_ZZN2v88internal4wa
   %i.am = trunc nuw i8 %i.al to i1
   %i.an = and i32 %2, 16
   %i.ao = icmp eq i32 %i.an, 0
-  %or.cond.not = select i1 %i.am, i1 %i.ao, i1 false
+  %or.cond.not = select i1 %i.am, i1 %i.ao, i1 false, !prof !33
   br i1 %or.cond.not, label %bb.f, label %.critedge.i, !prof !33
 
 bb.f:                                             ; preds = %bb.e
@@ -1963,7 +1963,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.cv = trunc nuw i8 %i.cu to i1
   %i.cw = and i32 %.sroa.0.0.i151, 16
   %i.cx = icmp eq i32 %i.cw, 0
-  %or.cond1040.not = select i1 %i.cv, i1 %i.cx, i1 false
+  %or.cond1040.not = select i1 %i.cv, i1 %i.cx, i1 false, !prof !33
   br i1 %or.cond1040.not, label %bb.n, label %.critedge.i, !prof !33
 
 bb.n:                                             ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit
@@ -2217,7 +2217,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.gj = trunc nuw i8 %i.gi to i1
   %i.gk = and i32 %.sroa.0.0.i169, 16
   %i.gl = icmp eq i32 %i.gk, 0
-  %or.cond1043.not = select i1 %i.gj, i1 %i.gl, i1 false
+  %or.cond1043.not = select i1 %i.gj, i1 %i.gl, i1 false, !prof !33
   br i1 %or.cond1043.not, label %bb.x, label %.critedge.i89, !prof !33
 
 bb.x:                                             ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit170
@@ -2620,7 +2620,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.mb = trunc nuw i8 %i.ma to i1
   %i.mc = and i32 %.sroa.0.0.i222, 16
   %i.md = icmp eq i32 %i.mc, 0
-  %or.cond1046.not = select i1 %i.mb, i1 %i.md, i1 false
+  %or.cond1046.not = select i1 %i.mb, i1 %i.md, i1 false, !prof !33
   br i1 %or.cond1046.not, label %bb.br, label %.critedge.i92, !prof !33
 
 bb.br:                                            ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit223
@@ -2836,7 +2836,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.po = trunc nuw i8 %i.pn to i1
   %i.pp = and i32 %.sroa.0.0.i249, 16
   %i.pq = icmp eq i32 %i.pp, 0
-  %or.cond1049.not = select i1 %i.po, i1 %i.pq, i1 false
+  %or.cond1049.not = select i1 %i.po, i1 %i.pq, i1 false, !prof !33
   br i1 %or.cond1049.not, label %bb.ce, label %.critedge.i95, !prof !33
 
 bb.ce:                                            ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit250
@@ -3239,7 +3239,7 @@ _ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_
   %i.acw = trunc nuw i8 %i.acv to i1
   %i.acx = and i32 %.sroa.0.0.i438, 16
   %i.acy = icmp eq i32 %i.acx, 0
-  %or.cond1054.not = select i1 %i.acw, i1 %i.acy, i1 false
+  %or.cond1054.not = select i1 %i.acw, i1 %i.acy, i1 false, !prof !33
   br i1 %or.cond1054.not, label %bb.he, label %.critedge.i98, !prof !33
 
 bb.he:                                            ; preds = %_ZNK2v88internal4wasm9ValueType16AsExactIfEnabledENS1_19WasmEnabledFeaturesENS1_9ExactnessE.exit439

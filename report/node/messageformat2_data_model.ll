@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.e = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i, label %bb.b, label %_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit, !prof !26
 
 bb.b:                                             ; preds = %bb.a
@@ -231,7 +231,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.e = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i, label %bb.b, label %_ZN6icu_788message210data_model7OperandD2Ev.exit, !prof !26
 
 bb.b:                                             ; preds = %bb.a
@@ -445,7 +445,7 @@ _ZN6icu_788message210data_model6OptionC2ERKS2_.exit.i: ; preds = %_ZNSt22_Option
   store i8 0, ptr %i.ac, align 8
   %i.ay = load i8, ptr %i.ad, align 8
   %.not.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.ay, -1
-  %or.cond.not.i.i.i.i.i.i = select i1 %i.ax, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i = select i1 %i.ax, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i.i, label %bb.l, label %_ZN6icu_788message210data_model6OptionD2Ev.exit.i, !prof !26
 
 bb.l:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKS2_.exit.i
@@ -501,7 +501,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bo = getelementptr inbounds i8, ptr %i.bi, i64 -16
   %i.bp = load i8, ptr %i.bo, align 8
   %.not.i.i.i.i.i.i.i.i.i6 = icmp ne i8 %i.bp, -1
-  %or.cond.not.i.i.i.i.i.i7 = select i1 %i.bn, i1 %.not.i.i.i.i.i.i.i.i.i6, i1 false
+  %or.cond.not.i.i.i.i.i.i7 = select i1 %i.bn, i1 %.not.i.i.i.i.i.i.i.i.i6, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i.i7, label %bb.o, label %_ZN6icu_788message210data_model6OptionD2Ev.exit.i8, !prof !26
 
 bb.o:                                             ; preds = %.preheader.i
@@ -660,7 +660,7 @@ _ZN6icu_788message210data_model6OptionC2ERKS2_.exit.i: ; preds = %_ZNSt22_Option
   store i8 0, ptr %i.ac, align 8
   %i.ax = load i8, ptr %i.ad, align 8
   %.not.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.ax, -1
-  %or.cond.not.i.i.i.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i.i, label %bb.k, label %_ZN6icu_788message210data_model6OptionD2Ev.exit.i, !prof !26
 
 bb.k:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKS2_.exit.i
@@ -713,7 +713,7 @@ bb.m:                                             ; preds = %.loopexit
   %i.bm = getelementptr inbounds i8, ptr %i.bg, i64 -16
   %i.bn = load i8, ptr %i.bm, align 8
   %.not.i.i.i.i.i.i.i.i.i4 = icmp ne i8 %i.bn, -1
-  %or.cond.not.i.i.i.i.i.i5 = select i1 %i.bl, i1 %.not.i.i.i.i.i.i.i.i.i4, i1 false
+  %or.cond.not.i.i.i.i.i.i5 = select i1 %i.bl, i1 %.not.i.i.i.i.i.i.i.i.i4, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i.i5, label %bb.n, label %_ZN6icu_788message210data_model6OptionD2Ev.exit.i6, !prof !26
 
 bb.n:                                             ; preds = %.preheader.i
@@ -828,7 +828,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds i8, ptr %i.h, i64 -16
   %i.o = load i8, ptr %i.n, align 8
   %.not.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.o, -1
-  %or.cond.not.i.i.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i.i, label %bb.c, label %_ZN6icu_788message210data_model6OptionD2Ev.exit.i, !prof !26
 
 bb.c:                                             ; preds = %.preheader.i
@@ -1231,7 +1231,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.f = load i8, ptr %i.e, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.f, -1
-  %or.cond.not.i.i.i.i = select i1 %i.d, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.d, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i, label %bb.b, label %_ZN6icu_788message210data_model7OperandD2Ev.exit, !prof !26
 
 bb.b:                                             ; preds = %bb.a
@@ -1262,7 +1262,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.f = load i8, ptr %i.e, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.f, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.d, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.d, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.b, label %_ZN6icu_788message210data_model6OptionD2Ev.exit, !prof !26
 
 bb.b:                                             ; preds = %bb.a
@@ -1420,7 +1420,7 @@ _ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exi
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 160
   %i.y = load i8, ptr %i.x, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.y, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.w, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.w, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.g, label %_ZN6icu_788message210data_model6OptionD2Ev.exit, !prof !26
 
 bb.g:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exit
@@ -1760,7 +1760,7 @@ _ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exi
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 160
   %i.w = load i8, ptr %i.v, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.w, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.f, label %_ZN6icu_788message210data_model6OptionD2Ev.exit, !prof !26
 
 bb.f:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exit
@@ -1842,7 +1842,7 @@ _ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exi
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 160
   %i.w = load i8, ptr %i.v, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.w, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.f, label %_ZN6icu_788message210data_model6OptionD2Ev.exit, !prof !26
 
 bb.f:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exit
@@ -2245,7 +2245,7 @@ _ZN6icu_788message210data_model7OperandC2ERKS2_.exit: ; preds = %bb.a, %_ZNSt22_
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.u = load i8, ptr %i.t, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.u, -1
-  %or.cond.not.i.i.i.i = select i1 %i.s, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.s, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i, label %bb.f, label %_ZN6icu_788message210data_model7OperandD2Ev.exit, !prof !26
 
 bb.f:                                             ; preds = %_ZN6icu_788message210data_model7OperandC2ERKS2_.exit
@@ -2364,7 +2364,7 @@ _ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exi
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 160
   %i.w = load i8, ptr %i.v, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.w, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.u, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.f, label %_ZN6icu_788message210data_model6OptionD2Ev.exit, !prof !26
 
 bb.f:                                             ; preds = %_ZN6icu_788message210data_model6OptionC2ERKNS_13UnicodeStringEONS1_7OperandE.exit
@@ -2767,7 +2767,7 @@ _ZN6icu_788message210data_model9OptionMap7BuilderD2Ev.exit: ; preds = %bb.a, %bb
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.o = load i8, ptr %i.n, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.o, -1
-  %or.cond.not.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i, label %bb.c, label %_ZN6icu_788message210data_model7OperandD2Ev.exit, !prof !26
 
 bb.c:                                             ; preds = %_ZN6icu_788message210data_model9OptionMap7BuilderD2Ev.exit
@@ -2818,7 +2818,7 @@ _ZN6icu_788message210data_model9OptionMap7BuilderD2Ev.exit.i: ; preds = %bb.b, %
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.o = load i8, ptr %i.n, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.o, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.m, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i.i, label %bb.c, label %_ZN6icu_788message210data_model10Expression7BuilderD2Ev.exit, !prof !26
 
 bb.c:                                             ; preds = %_ZN6icu_788message210data_model9OptionMap7BuilderD2Ev.exit.i
@@ -2849,7 +2849,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.g = load i8, ptr %i.f, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.g, -1
-  %or.cond.not.i.i.i.i = select i1 %i.e, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.e, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !26
   br i1 %or.cond.not.i.i.i.i, label %bb.b, label %_ZN6icu_788message210data_model7OperandD2Ev.exit, !prof !26
 
 bb.b:                                             ; preds = %bb.a

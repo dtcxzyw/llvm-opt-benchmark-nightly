@@ -202,7 +202,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endNtNtCsgwyS1EwTFAS_8g
   %i.q = add i64 %i.p, 9216, !dbg !4792           ; 2 uses
   %.not85.i.i = icmp ult i64 %i.q, %i.m, !dbg !4792
   %.sroa.5.1.i.i.i = select i1 %.not85.i.i, i64 8192, i64 %i.q, !dbg !4793
-  %.sroa.053.1.i.i = select i1 %i.o, i64 %i.m, i64 %.sroa.5.1.i.i.i, !dbg !4793 ; 2 uses
+  %.sroa.053.1.i.i = select i1 %i.o, i64 %i.m, i64 %.sroa.5.1.i.i.i, !dbg !4792 ; 2 uses
   %i.r = icmp eq i64 %.val8, 0
   br i1 %i.r, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endNtNtCsgwyS1EwTFAS_8grep_cli7process13CommandReaderE0Cs2NzvFoTxuAy_2rg.exit.thread.i.i, !dbg !4794
 
@@ -605,7 +605,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14e
   %i.m = add i64 %i.l, 9216, !dbg !5456           ; 2 uses
   %.not85 = icmp ult i64 %i.m, %i.i, !dbg !5456
   %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m, !dbg !5457
-  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5457 ; 2 uses
+  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5456 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14encoding_rs_io17DecodeReaderBytesQQNtNtCsgwyS1EwTFAS_8grep_cli10decompress19DecompressionReaderQINtNtB8_3vec3VechEEE0Cs2NzvFoTxuAy_2rg.exit.thread, !dbg !5458
 
@@ -930,7 +930,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14e
   %i.m = add i64 %i.l, 9216, !dbg !5716           ; 2 uses
   %.not85 = icmp ult i64 %i.m, %i.i, !dbg !5716
   %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m, !dbg !5717
-  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5717 ; 2 uses
+  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5716 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14encoding_rs_io17DecodeReaderBytesQQNtNtCsgwyS1EwTFAS_8grep_cli7process13CommandReaderQINtNtB8_3vec3VechEEE0Cs2NzvFoTxuAy_2rg.exit.thread, !dbg !5718
 
@@ -1255,7 +1255,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14e
   %i.m = add i64 %i.l, 9216, !dbg !5976           ; 2 uses
   %.not85 = icmp ult i64 %i.m, %i.i, !dbg !5976
   %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m, !dbg !5977
-  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5977 ; 2 uses
+  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !5976 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14encoding_rs_io17DecodeReaderBytesQQNtNtNtCsG258MDvU3F_3std2io5stdio9StdinLockQINtNtB8_3vec3VechEEE0Cs2NzvFoTxuAy_2rg.exit.thread, !dbg !5978
 
@@ -1580,7 +1580,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14e
   %i.m = add i64 %i.l, 9216, !dbg !6236           ; 2 uses
   %.not85 = icmp ult i64 %i.m, %i.i, !dbg !6236
   %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m, !dbg !6237
-  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !6237 ; 2 uses
+  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !6236 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14encoding_rs_io17DecodeReaderBytesRNtNtCsG258MDvU3F_3std2fs4FileQINtNtB8_3vec3VechEEE0Cs2NzvFoTxuAy_2rg.exit.thread, !dbg !6238
 
@@ -1905,7 +1905,7 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14e
   %i.m = add i64 %i.l, 9216, !dbg !6496           ; 2 uses
   %.not85 = icmp ult i64 %i.m, %i.i, !dbg !6496
   %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m, !dbg !6497
-  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !6497 ; 2 uses
+  %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !6496 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtCs4h1mOclLn8u_14encoding_rs_io17DecodeReaderBytesRShQINtNtB8_3vec3VechEEE0Cs2NzvFoTxuAy_2rg.exit.thread, !dbg !6498
 

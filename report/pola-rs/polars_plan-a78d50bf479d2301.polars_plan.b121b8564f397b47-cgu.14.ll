@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %.noexc6.i
   %i.cw = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
   %i.cx = load ptr, ptr %i.cw, align 8, !noalias !8847
   %.not.i.i.i.i = icmp ne ptr %i.cx, null
-  %or.cond.not.i.i = select i1 %i.cv, i1 %.not.i.i.i.i, i1 false, !dbg !9044
+  %or.cond.not.i.i = select i1 %i.cv, i1 %.not.i.i.i.i, i1 false, !dbg !9044, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.am, !dbg !9044, !prof !2582
 
 bb.al:                                            ; preds = %.noexc6.i
@@ -608,7 +608,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !noalias !9562
   %.not.i.i.i.i = icmp ne ptr %i.fn, null
-  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !9827
+  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !9827, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !9827, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -1011,7 +1011,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !10330
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !10592
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !10592, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !10592, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -1414,7 +1414,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !noalias !11116
   %.not.i.i.i.i = icmp ne ptr %i.fn, null
-  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !11381
+  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !11381, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !11381, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -1817,7 +1817,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !11884
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !12146
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !12146, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !12146, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -2220,7 +2220,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !noalias !12670
   %.not.i.i.i.i = icmp ne ptr %i.fn, null
-  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !12935
+  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !12935, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !12935, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -2623,7 +2623,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !13438
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !13700
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !13700, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !13700, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -3026,7 +3026,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !noalias !14224
   %.not.i.i.i.i = icmp ne ptr %i.fn, null
-  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !14489
+  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !14489, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !14489, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -3429,7 +3429,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !14992
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !15254
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !15254, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !15254, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -3832,7 +3832,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.fm = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.fn = load ptr, ptr %i.fm, align 8, !noalias !15778
   %.not.i.i.i.i = icmp ne ptr %i.fn, null
-  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !16043
+  %or.cond.not.i.i = select i1 %i.fl, i1 %.not.i.i.i.i, i1 false, !dbg !16043, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !16043, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -4235,7 +4235,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !16546
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !16808
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !16808, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !16808, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -4638,7 +4638,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.ex = load ptr, ptr %i.ew, align 8, !noalias !17314
   %.not.i.i.i.i = icmp ne ptr %i.ex, null
-  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !17576
+  %or.cond.not.i.i = select i1 %i.ev, i1 %.not.i.i.i.i, i1 false, !dbg !17576, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !17576, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i
@@ -5041,7 +5041,7 @@ bb.al:                                            ; preds = %.noexc6.i
   %i.gc = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
   %i.gd = load ptr, ptr %i.gc, align 8, !noalias !18119
   %.not.i.i.i.i = icmp ne ptr %i.gd, null
-  %or.cond.not.i.i = select i1 %i.gb, i1 %.not.i.i.i.i, i1 false, !dbg !18384
+  %or.cond.not.i.i = select i1 %i.gb, i1 %.not.i.i.i.i, i1 false, !dbg !18384, !prof !2582
   br i1 %or.cond.not.i.i, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit.i.i.i, label %bb.an, !dbg !18384, !prof !2582
 
 bb.am:                                            ; preds = %.noexc6.i

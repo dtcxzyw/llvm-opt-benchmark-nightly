@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.c, %.split.us.i
 bb.e:                                             ; preds = %bb.d
   %.sroa.05.0.copyload.i.us.i = load i64, ptr %i.a, align 8, !alias.scope !1381, !noalias !1383 ; 2 uses
   %i.w = trunc nuw i64 %.sroa.05.0.copyload.i.us.i to i1
-  %brmerge.not.i.us.i = select i1 %i.w, i1 %.sroa.01.0.not.i.us.i, i1 false
-  br i1 %brmerge.not.i.us.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.us.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.thread.us.i, !prof !26
+  %brmerge.not.i.us.i = select i1 %i.w, i1 %.sroa.01.0.not.i.us.i, i1 false, !prof !26
+  br i1 %brmerge.not.i.us.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.us.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.thread.us.i, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.us.i: ; preds = %bb.e
   %i.x = call noundef align 8 ptr @_RINvNtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfa34skip_empty_utf8_splits_overlappingNCNvMs_B2_NtB2_3DFA26try_search_overlapping_fwd0EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.a, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(720) %0, ptr noalias noundef nonnull align 8 dereferenceable(352) %1), !noalias !1374 ; 2 uses
@@ -260,8 +260,8 @@ bb.j:                                             ; preds = %bb.i, %.split.i
 bb.k:                                             ; preds = %bb.j
   %.sroa.05.0.copyload.i.i = load i64, ptr %i.a, align 8, !alias.scope !1381, !noalias !1383 ; 2 uses
   %i.ak = trunc nuw i64 %.sroa.05.0.copyload.i.i to i1
-  %brmerge.not.i.i = select i1 %i.ak, i1 %.sroa.01.0.not.i.i, i1 false
-  br i1 %brmerge.not.i.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.thread.i, !prof !26
+  %brmerge.not.i.i = select i1 %i.ak, i1 %.sroa.01.0.not.i.i, i1 false, !prof !26
+  br i1 %brmerge.not.i.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.i, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.thread.i, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA26try_search_overlapping_fwd.exit.i: ; preds = %bb.k
   %i.al = call noundef align 8 ptr @_RINvNtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfa34skip_empty_utf8_splits_overlappingNCNvMs_B2_NtB2_3DFA26try_search_overlapping_fwd0EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.a, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(720) %0, ptr noalias noundef nonnull align 8 dereferenceable(352) %1), !noalias !1374 ; 2 uses
@@ -664,7 +664,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3048
   %.val5.i = load ptr, ptr %i.f, align 8, !alias.scope !2453, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.val5.i, i64 16
-  %i.h = load i64, ptr %i.g, align 8, !range !27, !invariant.load !5, !noalias !2453
+  %i.h = load i64, ptr %i.g, align 8, !range !28, !invariant.load !5, !noalias !2453
   %i.i = add nsw i64 %i.h, -1
   %i.j = and i64 %i.i, -16
   %i.k = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.j
@@ -1067,8 +1067,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2567
   %i.s = trunc nuw i64 %i.m to i1
   %i.t = and i1 %i.s, %i.q
-  %i.u = select i1 %i.t, i1 %i.r, i1 false, !prof !28
-  br i1 %i.u, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !26
+  %i.u = select i1 %i.t, i1 %i.r, i1 false, !prof !26
+  br i1 %i.u, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread: ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -1134,8 +1134,8 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.5.0.copyload.i19 = load i64, ptr %.sroa.5.0..sroa_idx.i18, align 8, !noalias !2576
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2576
   %i.al = trunc nuw i64 %i.ah to i1
-  %brmerge34.not = select i1 %i.al, i1 %.sroa.0.0.i17.not, i1 false
-  br i1 %brmerge34.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !26
+  %brmerge34.not = select i1 %i.al, i1 %.sroa.0.0.i17.not, i1 false, !prof !26
+  br i1 %brmerge34.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit: ; preds = %bb.i
   %i.am = ptrtoint ptr %i.ak to i64               ; 2 uses
@@ -1538,8 +1538,8 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2984
   %i.z = trunc nuw i64 %i.t to i1
   %i.aa = and i1 %i.z, %i.x
-  %i.ab = select i1 %i.aa, i1 %i.y, i1 false, !prof !28
-  br i1 %i.ab, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !26
+  %i.ab = select i1 %i.aa, i1 %i.y, i1 false, !prof !26
+  br i1 %i.ab, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread: ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -1605,8 +1605,8 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.5.0.copyload.i5 = load i64, ptr %.sroa.5.0..sroa_idx.i4, align 8, !noalias !2994
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2994
   %i.as = trunc nuw i64 %i.ao to i1
-  %brmerge56.not = select i1 %i.as, i1 %.sroa.0.0.i3.not, i1 false
-  br i1 %brmerge56.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !26
+  %brmerge56.not = select i1 %i.as, i1 %.sroa.0.0.i3.not, i1 false, !prof !26
+  br i1 %brmerge56.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit: ; preds = %bb.j
   %i.at = ptrtoint ptr %i.ar to i64               ; 2 uses
@@ -1695,8 +1695,8 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3004
   %i.bt = trunc nuw i64 %i.bn to i1
   %i.bu = and i1 %i.bt, %i.br
-  %i.bv = select i1 %i.bu, i1 %i.bs, i1 false, !prof !28
-  br i1 %i.bv, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread, !prof !26
+  %i.bv = select i1 %i.bu, i1 %i.bs, i1 false, !prof !26
+  br i1 %i.bv, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit.thread, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_revB9_.exit: ; preds = %bb.r
   %i.bw = ptrtoint ptr %i.bq to i64               ; 2 uses
@@ -1759,8 +1759,8 @@ bb.x:                                             ; preds = %bb.w
   %.sroa.5.0.copyload.i17 = load i64, ptr %.sroa.5.0..sroa_idx.i16, align 8, !noalias !3011
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3011
   %i.co = trunc nuw i64 %i.ck to i1
-  %brmerge62.not = select i1 %i.co, i1 %.sroa.0.0.i15.not, i1 false
-  br i1 %brmerge62.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.exit, label %_RNvMs8_NtNtCs98D8VPWzHuM_14regex_automata4meta8wrappersNtB5_12HybridEngine19try_search_half_rev.exit, !prof !26
+  %brmerge62.not = select i1 %i.co, i1 %.sroa.0.0.i15.not, i1 false, !prof !26
+  br i1 %brmerge62.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.exit, label %_RNvMs8_NtNtCs98D8VPWzHuM_14regex_automata4meta8wrappersNtB5_12HybridEngine19try_search_half_rev.exit, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_rev.exit: ; preds = %bb.x
   %i.cp = ptrtoint ptr %i.cn to i64               ; 2 uses
@@ -2163,7 +2163,7 @@ bb.z:                                             ; preds = %bb.a
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 3592
   %i.cu = load ptr, ptr %i.ct, align 8, !alias.scope !3160, !noalias !3163, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
-  %i.cw = load i64, ptr %i.cv, align 8, !range !27, !invariant.load !5, !noalias !3164
+  %i.cw = load i64, ptr %i.cv, align 8, !range !28, !invariant.load !5, !noalias !3164
   %i.cx = add nsw i64 %i.cw, -1
   %i.cy = and i64 %i.cx, -16
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cy
@@ -2566,7 +2566,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3592
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !range !27, !invariant.load !5
+  %i.g = load i64, ptr %i.f, align 8, !range !28, !invariant.load !5
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.i
@@ -2969,7 +2969,7 @@ bb.ak:                                            ; preds = %bb.b
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 3592
   %i.eb = load ptr, ptr %i.ea, align 8, !alias.scope !3453, !noalias !3454, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 16
-  %i.ed = load i64, ptr %i.ec, align 8, !range !27, !invariant.load !5, !noalias !3455
+  %i.ed = load i64, ptr %i.ec, align 8, !range !28, !invariant.load !5, !noalias !3455
   %i.ee = add nsw i64 %i.ed, -1
   %i.ef = and i64 %i.ee, -16
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.ef
@@ -3372,7 +3372,7 @@ bb.ce:                                            ; preds = %bb.b
   %i.ik = getelementptr inbounds nuw i8, ptr %0, i64 3592
   %i.il = load ptr, ptr %i.ik, align 8, !alias.scope !3509, !noalias !3512, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 16
-  %i.in = load i64, ptr %i.im, align 8, !range !27, !invariant.load !5, !noalias !3513
+  %i.in = load i64, ptr %i.im, align 8, !range !28, !invariant.load !5, !noalias !3513
   %i.io = add nsw i64 %i.in, -1
   %i.ip = and i64 %i.io, -16
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.ip
@@ -3775,7 +3775,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 3592
   %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !3644, !noalias !3647, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
-  %i.ag = load i64, ptr %i.af, align 8, !range !27, !invariant.load !5, !noalias !3648
+  %i.ag = load i64, ptr %i.af, align 8, !range !28, !invariant.load !5, !noalias !3648
   %i.ah = add nsw i64 %i.ag, -1
   %i.ai = and i64 %i.ah, -16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ai
@@ -4178,8 +4178,8 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3743
   %i.aa = trunc nuw i64 %i.u to i1
   %i.ab = and i1 %i.aa, %i.y
-  %i.ac = select i1 %i.ab, i1 %i.z, i1 false, !prof !28
-  br i1 %i.ac, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !26
+  %i.ac = select i1 %i.ab, i1 %i.z, i1 false, !prof !26
+  br i1 %i.ac, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread: ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -4245,8 +4245,8 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.5.0.copyload.i7 = load i64, ptr %.sroa.5.0..sroa_idx.i6, align 8, !noalias !3753
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !3753
   %i.at = trunc nuw i64 %i.ap to i1
-  %brmerge80.not = select i1 %i.at, i1 %.sroa.0.0.i5.not, i1 false
-  br i1 %brmerge80.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !26
+  %brmerge80.not = select i1 %i.at, i1 %.sroa.0.0.i5.not, i1 false, !prof !26
+  br i1 %brmerge80.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit: ; preds = %bb.j
   %i.au = ptrtoint ptr %i.as to i64               ; 2 uses
@@ -4311,7 +4311,7 @@ bb.p:                                             ; preds = %bb.a
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 3592
   %i.bs = load ptr, ptr %i.br, align 8, !alias.scope !3756, !noalias !3759, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
-  %i.bu = load i64, ptr %i.bt, align 8, !range !27, !invariant.load !5, !noalias !3760
+  %i.bu = load i64, ptr %i.bt, align 8, !range !28, !invariant.load !5, !noalias !3760
   %i.bv = add nsw i64 %i.bu, -1
   %i.bw = and i64 %i.bv, -16
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bw
@@ -4714,7 +4714,7 @@ bb.z:                                             ; preds = %bb.a
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 5112
   %i.cp = load ptr, ptr %i.co, align 8, !alias.scope !3894, !noalias !3897, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
-  %i.cr = load i64, ptr %i.cq, align 8, !range !27, !invariant.load !5, !noalias !3898
+  %i.cr = load i64, ptr %i.cq, align 8, !range !28, !invariant.load !5, !noalias !3898
   %i.cs = add nsw i64 %i.cr, -1
   %i.ct = and i64 %i.cs, -16
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cn, i64 %i.ct
@@ -5117,7 +5117,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 5112
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !range !27, !invariant.load !5
+  %i.g = load i64, ptr %i.f, align 8, !range !28, !invariant.load !5
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.i
@@ -5520,7 +5520,7 @@ bb.ak:                                            ; preds = %bb.b
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 5112
   %i.ec = load ptr, ptr %i.eb, align 8, !alias.scope !4151, !noalias !4152, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
-  %i.ee = load i64, ptr %i.ed, align 8, !range !27, !invariant.load !5, !noalias !4153
+  %i.ee = load i64, ptr %i.ed, align 8, !range !28, !invariant.load !5, !noalias !4153
   %i.ef = add nsw i64 %i.ee, -1
   %i.eg = and i64 %i.ef, -16
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.eg
@@ -5908,7 +5908,7 @@ bb.ca:                                            ; preds = %bb.b
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 5112
   %i.gv = load ptr, ptr %i.gu, align 8, !alias.scope !4180, !noalias !4183, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 16
-  %i.gx = load i64, ptr %i.gw, align 8, !range !27, !invariant.load !5, !noalias !4184
+  %i.gx = load i64, ptr %i.gw, align 8, !range !28, !invariant.load !5, !noalias !4184
   %i.gy = add nsw i64 %i.gx, -1
   %i.gz = and i64 %i.gy, -16
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gt, i64 %i.gz
@@ -6311,7 +6311,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 5112
   %i.aa = load ptr, ptr %i.z, align 8, !alias.scope !4294, !noalias !4297, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.ac = load i64, ptr %i.ab, align 8, !range !27, !invariant.load !5, !noalias !4298
+  %i.ac = load i64, ptr %i.ab, align 8, !range !28, !invariant.load !5, !noalias !4298
   %i.ad = add nsw i64 %i.ac, -1
   %i.ae = and i64 %i.ad, -16
   %i.af = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ae
@@ -6714,8 +6714,8 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !4379
   %i.af = trunc nuw i64 %i.z to i1
   %i.ag = and i1 %i.af, %i.ad
-  %i.ah = select i1 %i.ag, i1 %i.ae, i1 false, !prof !28
-  br i1 %i.ah, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !26
+  %i.ah = select i1 %i.ag, i1 %i.ae, i1 false, !prof !26
+  br i1 %i.ah, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton14try_search_fwdB9_.exit.thread: ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
@@ -6781,8 +6781,8 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.5.0.copyload.i9 = load i64, ptr %.sroa.5.0..sroa_idx.i8, align 8, !noalias !4389
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !4389
   %i.ay = trunc nuw i64 %i.au to i1
-  %brmerge103.not = select i1 %i.ay, i1 %.sroa.0.0.i7.not, i1 false
-  br i1 %brmerge103.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !26
+  %brmerge103.not = select i1 %i.ay, i1 %.sroa.0.0.i7.not, i1 false, !prof !26
+  br i1 %brmerge103.not, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit, label %_RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit.thread, !prof !27
 
 _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata6hybrid3dfaNtB4_3DFA14try_search_fwd.exit: ; preds = %bb.j
   %i.az = ptrtoint ptr %i.ax to i64               ; 2 uses
@@ -6847,7 +6847,7 @@ bb.p:                                             ; preds = %bb.a
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 5112
   %i.bx = load ptr, ptr %i.bw, align 8, !alias.scope !4392, !noalias !4395, !nonnull !5, !align !24, !noundef !5 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
-  %i.bz = load i64, ptr %i.by, align 8, !range !27, !invariant.load !5, !noalias !4396
+  %i.bz = load i64, ptr %i.by, align 8, !range !28, !invariant.load !5, !noalias !4396
   %i.ca = add nsw i64 %i.bz, -1
   %i.cb = and i64 %i.ca, -16
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cb
@@ -7250,7 +7250,7 @@ bb.b:                                             ; preds = %_RNvYINtNtNtCs98D8V
 bb.c:                                             ; preds = %.split.split.us
   %.sroa.05.0.copyload.i.us = load i64, ptr %i.a, align 8, !alias.scope !4418, !noalias !4419
   %i.z = trunc nuw i64 %.sroa.05.0.copyload.i.us to i1
-  br i1 %i.z, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.us, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.thread10, !prof !26
+  br i1 %i.z, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.us, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.thread10, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.us: ; preds = %bb.c
   %i.aa = call noundef align 8 ptr @_RINvNtNtCs98D8VPWzHuM_14regex_automata3dfa9automaton34skip_empty_utf8_splits_overlappingNCNvYINtNtB4_5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtB2_9Automaton26try_search_overlapping_fwd0EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %1, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.a, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(800) %0) ; 2 uses
@@ -7272,7 +7272,7 @@ _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc
 bb.d:                                             ; preds = %.split.split
   %.sroa.05.0.copyload.i = load i64, ptr %i.a, align 8, !alias.scope !4418, !noalias !4419
   %i.ad = trunc nuw i64 %.sroa.05.0.copyload.i to i1
-  br i1 %i.ad, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.thread10, !prof !26
+  br i1 %i.ad, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit, label %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit.thread10, !prof !27
 
 _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtNtB7_9automaton9Automaton26try_search_overlapping_fwdB9_.exit: ; preds = %bb.d
   %i.ae = call noundef align 8 ptr @_RINvNtNtCs98D8VPWzHuM_14regex_automata3dfa9automaton34skip_empty_utf8_splits_overlappingNCNvYINtNtB4_5dense3DFAINtNtCscdodAO9FK5_5alloc3vec3VecmEENtB2_9Automaton26try_search_overlapping_fwd0EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %1, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.a, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(800) %0) ; 2 uses
@@ -7675,9 +7675,9 @@ attributes #26 = { nounwind }
 !23 = !{i32 0, i32 2}
 !24 = !{i64 8}
 !25 = !{!"branch_weights", i32 4000000, i32 4001}
-!26 = !{!"branch_weights", i32 1, i32 4001}
-!27 = !{i64 1, i64 536870913}
-!28 = !{!"branch_weights", i32 1, i32 1}
+!26 = !{!"branch_weights", i32 1, i32 1}
+!27 = !{!"branch_weights", i32 1, i32 4001}
+!28 = !{i64 1, i64 536870913}
 !29 = !{!"branch_weights", i32 2000, i32 2001, i32 1}
 !30 = distinct !{!30, i1 false, !"_RINvMNtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB3_5Input8set_spanINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEB7_"}
 !31 = distinct !{!31, !30, !"_RINvMNtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB3_5Input8set_spanINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEB7_: argument 0"}

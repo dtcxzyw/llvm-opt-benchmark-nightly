@@ -205,7 +205,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.x = extractvalue { i64, ptr } %i.s, 1        ; 2 uses
   %i.y = trunc nuw i64 %i.w to i1
   %.not.i = icmp ne ptr %i.x, null
-  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB1v_9GetResult5bytes00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtB1v_5ErrorEECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB1B_9GetResult5bytes00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtB1B_5ErrorEECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -537,7 +537,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.ce = extractvalue { i64, ptr } %i.bz, 1      ; 2 uses
   %i.cf = trunc nuw i64 %i.cd to i1
   %.not.i.i = icmp ne ptr %i.ce, null
-  %or.cond.not.i.i = select i1 %i.cf, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.cf, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.af, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1r_21ReceiverStreamBuilderNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE14spawn_blockingNCNvMB1t_NtB1t_8Snapshot10tombstones0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1x_6errors15DeltaTableErrorEEB1x_.exit.i, !prof !23
 
 bb.af:                                            ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1x_21ReceiverStreamBuilderNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE14spawn_blockingNCNvMB1z_NtB1z_8Snapshot10tombstones0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1D_6errors15DeltaTableErrorEEB1D_.exit.i.i
@@ -940,7 +940,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.ce = extractvalue { i64, ptr } %i.bz, 1      ; 2 uses
   %i.cf = trunc nuw i64 %i.cd to i1
   %.not.i.i = icmp ne ptr %i.ce, null
-  %or.cond.not.i.i = select i1 %i.cf, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.cf, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.af, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1r_21ReceiverStreamBuilderTNtCseo6ZV82fEK1_3url3UrlINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB3i_yEEE14spawn_blockingNCNvXs0_NtNtNtNtNtB1x_16delta_datafusion14table_provider4next4scan6replayINtB50_14ScanFileStreamINtNtB3m_3pin3PinINtNtB3Y_5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB3m_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtB1x_6errors15DeltaTableErrorENtNtB3m_6marker4SendEL_EEEB71_9poll_nexts_0Es_0IB7S_uB93_EEB1x_.exit.i, !prof !23
 
 bb.af:                                            ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1x_21ReceiverStreamBuilderTNtCseo6ZV82fEK1_3url3UrlINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB3o_yEEE14spawn_blockingNCNvXs0_NtNtNtNtNtB1D_16delta_datafusion14table_provider4next4scan6replayINtB56_14ScanFileStreamINtNtB3s_3pin3PinINtNtB44_5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB3s_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtB1D_6errors15DeltaTableErrorENtNtB3s_6marker4SendEL_EEEB77_9poll_nexts_0Es_0IB7Y_uB99_EEB1D_.exit.i.i
@@ -1343,7 +1343,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.dx = extractvalue { i64, ptr } %i.ds, 1      ; 2 uses
   %i.dy = trunc nuw i64 %i.dw to i1
   %.not.i.i.i = icmp ne ptr %i.dx, null
-  %or.cond.not.i.i.i = select i1 %i.dy, i1 %.not.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.dy, i1 %.not.i.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i.i, label %bb.at, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1r_21ReceiverStreamBuilderNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataE14spawn_blockingNCINvMs1_NtB1t_4scanNtB47_4Scan18scan_metadata_fromINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEEs0_0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1x_6errors15DeltaTableErrorEEB1x_.exit.i.i, !prof !23
 
 bb.at:                                            ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1x_21ReceiverStreamBuilderNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataE14spawn_blockingNCINvMs1_NtB1z_4scanNtB4d_4Scan18scan_metadata_fromINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEEs0_0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1D_6errors15DeltaTableErrorEEB1D_.exit.i.i.i
@@ -1746,7 +1746,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol11checkpoints21create_checkpoint_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4J_5error5ErrorEEs_0B3v_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4P_5error5ErrorEEs_0B3B_EB1y_.exit.i
@@ -1937,7 +1937,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol11checkpoints21create_checkpoint_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1s_6errors15DeltaTableErrorEEs_0B3y_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3E_EB1y_.exit.i
@@ -2128,7 +2128,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol11checkpoints21create_checkpoint_for00s2_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3D_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1s_6errors15DeltaTableErrorEEs_0B3y_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s2_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3J_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3E_EB1y_.exit.i
@@ -2319,7 +2319,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol11checkpoints21create_checkpoint_for00s4_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEs_0B3y_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s4_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEs_0B3E_EB1y_.exit.i
@@ -2510,7 +2510,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol14log_compaction16compact_logs_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4H_5error5ErrorEEs_0B3t_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol14log_compaction16compact_logs_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4N_5error5ErrorEEs_0B3z_EB1y_.exit.i
@@ -2701,7 +2701,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1s_8protocol14log_compaction16compact_logs_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3B_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1s_6errors15DeltaTableErrorEEs_0B3w_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol14log_compaction16compact_logs_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3H_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3C_EB1y_.exit.i
@@ -2892,7 +2892,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1q_8snapshotNtB2A_8Snapshot19try_new_with_engine00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4F_5error5ErrorEEs_0B3r_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1w_8snapshotNtB2G_8Snapshot19try_new_with_engine00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4L_5error5ErrorEEs_0B3x_EB1y_.exit.i
@@ -3083,7 +3083,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1q_8snapshotNtB2A_8Snapshot6update00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4r_5error5ErrorEEs_0B3d_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1w_8snapshotNtB2G_8Snapshot6update00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4x_5error5ErrorEEs_0B3j_EB1y_.exit.i
@@ -3274,7 +3274,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB1s_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB3Q_5error5ErrorEEs_0B3a_EB1s_.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB1y_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB3W_5error5ErrorEEs_0B3g_EB1y_.exit.i
@@ -3464,7 +3464,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_10filesystem14list_from_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5k_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5g_NtB2D_8FileMetaNtNtB2D_5error5ErrorENtNtB5k_6marker4SendEL_EEB7S_EE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_10filesystem14list_from_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5q_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5m_NtB2J_8FileMetaNtNtB2J_5error5ErrorENtNtB5q_6marker4SendEL_EEB7Y_EE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -3660,7 +3660,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_10filesystem15read_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5l_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5h_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB2D_5error5ErrorENtNtB5l_6marker4SendEL_EEB8e_EE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_10filesystem15read_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5r_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5n_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB2J_5error5ErrorENtNtB5r_6marker4SendEL_EEB8k_EE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -3856,7 +3856,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_10filesystem16copy_atomic_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2D_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_10filesystem16copy_atomic_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2J_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -4052,7 +4052,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_10filesystem9head_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultNtB2D_8FileMetaNtNtB2D_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_10filesystem9head_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultNtB2J_8FileMetaNtNtB2J_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -4248,7 +4248,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_4json20read_json_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5j_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5f_IB68_DNtNtB2D_11engine_data10EngineDataEL_ENtNtB2D_5error5ErrorENtNtB5j_6marker4SendEL_EEB8j_EE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_4json20read_json_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5p_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5l_IB6e_DNtNtB2J_11engine_data10EngineDataEL_ENtNtB2J_5error5ErrorENtNtB5p_6marker4SendEL_EEB8p_EE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -4444,7 +4444,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_4json20write_json_file_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2D_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_4json20write_json_file_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2J_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -4640,7 +4640,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvNtB2z_7parquet23read_parquet_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5p_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5l_IB6e_DNtNtB2D_11engine_data10EngineDataEL_ENtNtB2D_5error5ErrorENtNtB5p_6marker4SendEL_EEB8p_EE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvNtB2F_7parquet23read_parquet_files_impl0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB5v_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIB5r_IB6k_DNtNtB2J_11engine_data10EngineDataEL_ENtNtB2J_5error5ErrorENtNtB5v_6marker4SendEL_EEB8v_EE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -4836,7 +4836,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvXB2z_INtB2z_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB2D_11engine_data10EngineDataEL_ENtNtB2D_5error5ErrorEB3z_ENtNtNtNtB5h_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5h_6option6OptionB5c_EINtNtB5h_3pin3PinIB5P_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5c_NtNtB5h_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvXB2F_INtB2F_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB2J_11engine_data10EngineDataEL_ENtNtB2J_5error5ErrorEB3F_ENtNtNtNtB5n_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5n_6option6OptionB5i_EINtNtB5n_3pin3PinIB5V_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5i_NtNtB5n_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -5032,7 +5032,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvXB2z_INtB2z_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB2D_8FileMetaNtNtB2D_5error5ErrorEB3z_ENtNtNtNtB5h_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5h_6option6OptionB5c_EINtNtB5h_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5c_NtNtB5h_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvXB2F_INtB2F_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB2J_8FileMetaNtNtB2J_5error5ErrorEB3F_ENtNtNtNtB5n_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5n_6option6OptionB5i_EINtNtB5n_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5i_NtNtB5n_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -5228,7 +5228,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvXB2z_INtB2z_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB2D_5error5ErrorEB3z_ENtNtNtNtB5h_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5h_6option6OptionB5c_EINtNtB5h_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5c_NtNtB5h_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvXB2F_INtB2F_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB2J_5error5ErrorEB3F_ENtNtNtNtB5n_4iter6traits8iterator8Iterator4next0Es_0TINtNtB5n_6option6OptionB5i_EINtNtB5n_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB5i_NtNtB5n_6marker4SendEL_EEEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -5424,7 +5424,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvXs0_NtB2z_7parquetINtB4G_21DefaultParquetHandlerB3z_ENtB2D_14ParquetHandler18write_parquet_file0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2D_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvXs0_NtB2F_7parquetINtB4M_21DefaultParquetHandlerB3F_ENtB2J_14ParquetHandler18write_parquet_file0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB2J_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -5620,7 +5620,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1       ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2v_24TokioMultiThreadExecutorNtB2x_12TaskExecutor8block_onNCNvXs0_NtB2z_7parquetINtB4G_21DefaultParquetHandlerB3z_ENtB2D_14ParquetHandler19read_parquet_footer0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultNtB2D_13ParquetFooterNtNtB2D_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB2B_24TokioMultiThreadExecutorNtB2D_12TaskExecutor8block_onNCNvXs0_NtB2F_7parquetINtB4M_21DefaultParquetHandlerB3F_ENtB2J_14ParquetHandler19read_parquet_footer0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultNtB2J_13ParquetFooterNtNtB2J_5error5ErrorEE00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -5817,7 +5817,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem14list_from_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem14list_from_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6008,7 +6008,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem15read_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem15read_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6199,7 +6199,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem16copy_atomic_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem16copy_atomic_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6390,7 +6390,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem9head_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem9head_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6581,7 +6581,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_4json20read_json_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_4json20read_json_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6772,7 +6772,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_4json20write_json_file_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_4json20write_json_file_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -6963,7 +6963,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_7parquet23read_parquet_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_7parquet23read_parquet_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -7154,7 +7154,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB1E_11engine_data10EngineDataEL_ENtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4h_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB1K_11engine_data10EngineDataEL_ENtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4n_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -7345,7 +7345,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB1E_8FileMetaNtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4h_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB1K_8FileMetaNtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4n_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -7536,7 +7536,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4h_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4n_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -7727,7 +7727,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvXs0_NtB1A_7parquetINtB3G_21DefaultParquetHandlerB2A_ENtB1E_14ParquetHandler18write_parquet_file0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvXs0_NtB1G_7parquetINtB3M_21DefaultParquetHandlerB2G_ENtB1K_14ParquetHandler18write_parquet_file0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -7918,7 +7918,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_23TokioBackgroundExecutorNtB1y_12TaskExecutor8block_onNCNvXs0_NtB1A_7parquetINtB3G_21DefaultParquetHandlerB2A_ENtB1E_14ParquetHandler19read_parquet_footer0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs1_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_23TokioBackgroundExecutorNtB1E_12TaskExecutor8block_onNCNvXs0_NtB1G_7parquetINtB3M_21DefaultParquetHandlerB2G_ENtB1K_14ParquetHandler19read_parquet_footer0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -8109,7 +8109,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem14list_from_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem14list_from_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -8300,7 +8300,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem15read_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem15read_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -8491,7 +8491,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem16copy_atomic_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem16copy_atomic_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -8682,7 +8682,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_10filesystem9head_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_10filesystem9head_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -8873,7 +8873,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_4json20read_json_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_4json20read_json_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -9064,7 +9064,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_4json20write_json_file_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_4json20write_json_file_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -9255,7 +9255,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvNtB1A_7parquet23read_parquet_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvNtB1G_7parquet23read_parquet_files_impl0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -9446,7 +9446,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB1E_11engine_data10EngineDataEL_ENtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4i_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB1K_11engine_data10EngineDataEL_ENtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4o_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -9637,7 +9637,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB1E_8FileMetaNtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4i_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtB1K_8FileMetaNtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4o_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -9828,7 +9828,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvXB1A_INtB1A_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB1E_5error5ErrorEB2A_ENtNtNtNtB4i_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvXB1G_INtB1G_22BlockingStreamIteratorINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtB1K_5error5ErrorEB2G_ENtNtNtNtB4o_4iter6traits8iterator8Iterator4next0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -10019,7 +10019,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvXs0_NtB1A_7parquetINtB3H_21DefaultParquetHandlerB2A_ENtB1E_14ParquetHandler18write_parquet_file0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvXs0_NtB1G_7parquetINtB3N_21DefaultParquetHandlerB2G_ENtB1K_14ParquetHandler18write_parquet_file0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -10210,7 +10210,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1w_24TokioMultiThreadExecutorNtB1y_12TaskExecutor8block_onNCNvXs0_NtB1A_7parquetINtB3H_21DefaultParquetHandlerB2A_ENtB1E_14ParquetHandler19read_parquet_footer0E00uECs14kWLkQVSKO_14deltalake_core.exit, !prof !23
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvXs3_NtNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default8executor5tokioNtB1C_24TokioMultiThreadExecutorNtB1E_12TaskExecutor8block_onNCNvXs0_NtB1G_7parquetINtB3N_21DefaultParquetHandlerB2G_ENtB1K_14ParquetHandler19read_parquet_footer0E00uECs14kWLkQVSKO_14deltalake_core.exit.i
@@ -10613,7 +10613,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.cu = extractvalue { i64, ptr } %i.cp, 1      ; 2 uses
   %i.cv = trunc nuw i64 %i.ct to i1
   %.not.i.i.i = icmp ne ptr %i.cu, null
-  %or.cond.not.i.i.i = select i1 %i.cv, i1 %.not.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.cv, i1 %.not.i.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i.i, label %bb.aj, label %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1r_21ReceiverStreamBuilderNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataE14spawn_blockingNCNvMs1_NtB1t_4scanNtB46_4Scan13scan_metadata0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1x_6errors15DeltaTableErrorEEB1x_.exit.i.i, !prof !23
 
 bb.aj:                                            ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1x_21ReceiverStreamBuilderNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataE14spawn_blockingNCNvMs1_NtB1z_4scanNtB4c_4Scan13scan_metadata0Es_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtB1D_6errors15DeltaTableErrorEEB1D_.exit.i.i.i

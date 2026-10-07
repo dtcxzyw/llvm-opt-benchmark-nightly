@@ -202,8 +202,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
 
 bb.r:                                             ; preds = %bb.q
   %.not57.i.i = icmp eq i64 %.1.i.i, 0
-  %brmerge.not = select i1 %.not57.i.i, i1 %.not33, i1 false
-  br i1 %brmerge.not, label %poll_two_fds.exit.i, label %.critedge63.i.i, !prof !42
+  %brmerge.not = select i1 %.not57.i.i, i1 %.not33, i1 false, !prof !42
+  br i1 %brmerge.not, label %poll_two_fds.exit.i, label %.critedge63.i.i, !prof !43
 
 .critedge63.i.i:                                  ; preds = %bb.r, %.thread.i.i
   %.268.i.i = phi i64 [ %i.bv, %.thread.i.i ], [ %.1.i.i, %bb.r ] ; 2 uses
@@ -440,5 +440,6 @@ attributes #10 = { nounwind willreturn memory(none) }
 !39 = !{!"pollfd", !7, i64 0, !38, i64 4, !38, i64 6}
 !40 = !{!39, !7, i64 0}
 !41 = !{!39, !38, i64 4}
-!42 = !{!"branch_weights", i32 1, i32 4001}
+!42 = !{!"branch_weights", i32 1, i32 1}
+!43 = !{!"branch_weights", i32 1, i32 4001}
 end_hunk_0

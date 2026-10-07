@@ -205,7 +205,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtB4_6cu
   %i.o = add i64 %i.n, 9216, !dbg !48318          ; 2 uses
   %.not102 = icmp ult i64 %i.o, %i.k, !dbg !48318
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.o, !dbg !48319
-  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !48319 ; 2 uses
+  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !48318 ; 2 uses
   %i.p = icmp eq i64 %3, 0
   br i1 %i.p, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtB4_6cursor6CursorQRShEEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !48320
 
@@ -608,7 +608,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtB4_6cu
   %i.o = add i64 %i.n, 9216, !dbg !48849          ; 2 uses
   %.not102 = icmp ult i64 %i.o, %i.k, !dbg !48849
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.o, !dbg !48850
-  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !48850 ; 2 uses
+  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !48849 ; 2 uses
   %i.p = icmp eq i64 %3, 0
   br i1 %i.p, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtB4_6cursor6CursorRShEEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !48851
 
@@ -1011,7 +1011,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtCs2mZq
   %i.m = add i64 %i.l, 9216, !dbg !49291          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !49291
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !49292
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !49292 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !49291 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtCs2mZqlW55729_12polars_utils20chunked_bytes_cursor27FixedSizeChunkedBytesCursorINtNtCsgZ49sUHp3tW_5alloc3vec3VechEEEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !49293
 
@@ -1376,7 +1376,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtCsgZ49
   %i.o = add i64 %i.n, 9216, !dbg !49808          ; 2 uses
   %.not102 = icmp ult i64 %i.o, %i.k, !dbg !49808
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.o, !dbg !49809
-  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !49809 ; 2 uses
+  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !49808 ; 2 uses
   %i.p = icmp eq i64 %3, 0
   br i1 %i.p, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !49810
 
@@ -1779,7 +1779,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtNtB4_8
   %i.o = add i64 %i.n, 9216, !dbg !50347          ; 2 uses
   %.not102 = icmp ult i64 %i.o, %i.k, !dbg !50347
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.o, !dbg !50348
-  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !50348 ; 2 uses
+  %.sroa.050.1 = select i1 %i.m, i64 %i.k, i64 %.sroa.5.1.i, !dbg !50347 ; 2 uses
   %i.p = icmp eq i64 %3, 0
   br i1 %i.p, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQIBN_QQINtNtNtB4_8buffered9bufreader9BufReaderINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCseeLknQCOKOd_13polars_python4file8FileLikeEL_EEEEE0B2l_.exit.thread, !dbg !50349
 
@@ -2182,7 +2182,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6C
   %i.m = add i64 %i.l, 9216, !dbg !51141          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !51141
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !51142
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51142 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51141 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtB4_6cursor6CursorRShEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !51143
 
@@ -2550,7 +2550,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtCsgZ49sUHp3t
   %i.m = add i64 %i.l, 9216, !dbg !51544          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !51544
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !51545
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51545 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51544 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCseeLknQCOKOd_13polars_python4file8FileLikeEL_EEE0B1C_.exit.thread, !dbg !51546
 
@@ -2927,7 +2927,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtCsgZ49sUHp3t
   %i.m = add i64 %i.l, 9216, !dbg !51957          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !51957
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !51958
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51958 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !51957 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !51959
 
@@ -3306,7 +3306,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtB4_8buffer
   %i.m = add i64 %i.l, 9216, !dbg !52349          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !52349
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !52350
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !52350 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !52349 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtB4_8buffered9bufreader9BufReaderINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCseeLknQCOKOd_13polars_python4file8FileLikeEL_EEEE0B2f_.exit.thread, !dbg !52351
 
@@ -3674,7 +3674,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtB4_8buffer
   %i.m = add i64 %i.l, 9216, !dbg !52738          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !52738
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !52739
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !52739 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !52738 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtB4_8buffered9bufreader9BufReaderNtNtB6_2fs4FileEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !52740
 
@@ -4040,7 +4040,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtCs9VoZUfg3
   %i.k = add i64 %i.j, 9216, !dbg !53177          ; 2 uses
   %.not123 = icmp ult i64 %i.k, %i.g, !dbg !53177
   %.sroa.5.1.i = select i1 %.not123, i64 8192, i64 %i.k, !dbg !53178
-  %.sroa.050.1 = select i1 %i.i, i64 %i.g, i64 %.sroa.5.1.i, !dbg !53178 ; 2 uses
+  %.sroa.050.1 = select i1 %i.i, i64 %i.g, i64 %.sroa.5.1.i, !dbg !53177 ; 2 uses
   %i.l = icmp eq i64 %3, 0
   br i1 %i.l, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQINtNtNtCs9VoZUfg37wD_6flate24zlib4read11ZlibDecoderINtNtNtB4_8buffered9bufreader9BufReaderINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCseeLknQCOKOd_13polars_python4file8FileLikeEL_EEEEE0B34_.exit.thread, !dbg !53179
 
@@ -4421,7 +4421,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQNtNtCseeLknQCOKOd
   %i.m = add i64 %i.l, 9216, !dbg !53567          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !53567
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !53568
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !53568 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !53567 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQNtNtCseeLknQCOKOd_13polars_python4file16PyFileLikeObjectEE0B12_.exit.thread, !dbg !53569
 
@@ -4789,7 +4789,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtB4_6cursor6
   %i.m = add i64 %i.l, 9216, !dbg !53933          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !53933
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !53934
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !53934 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !53933 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtB4_6cursor6CursorQRShEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !53935
 
@@ -5159,7 +5159,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtB4_6cursor6
   %i.m = add i64 %i.l, 9216, !dbg !54301          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !54301
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !54302
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !54302 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !54301 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtB4_6cursor6CursorRShEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !54303
 
@@ -5527,7 +5527,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtCs2mZqlW557
   %i.k = add i64 %i.j, 9216, !dbg !54626          ; 2 uses
   %.not86 = icmp ult i64 %i.k, %i.g, !dbg !54626
   %.sroa.5.1.i = select i1 %.not86, i64 8192, i64 %i.k, !dbg !54627
-  %.sroa.050.1 = select i1 %i.i, i64 %i.g, i64 %.sroa.5.1.i, !dbg !54627 ; 2 uses
+  %.sroa.050.1 = select i1 %i.i, i64 %i.g, i64 %.sroa.5.1.i, !dbg !54626 ; 2 uses
   %i.l = icmp eq i64 %3, 0
   br i1 %i.l, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtCs2mZqlW55729_12polars_utils20chunked_bytes_cursor27FixedSizeChunkedBytesCursorINtNtCsgZ49sUHp3tW_5alloc3vec3VechEEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !54628
 
@@ -5771,7 +5771,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtCsgZ49sUHp3
   %i.m = add i64 %i.l, 9216, !dbg !54967          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !54967
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !54968
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !54968 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !54967 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCslpwjCj2YNBy_9polars_io4mmap15MmapBytesReaderEL_EEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !54969
 
@@ -6153,7 +6153,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtNtB4_8buffe
   %i.m = add i64 %i.l, 9216, !dbg !55339          ; 2 uses
   %.not102 = icmp ult i64 %i.m, %i.i, !dbg !55339
   %.sroa.5.1.i = select i1 %.not102, i64 8192, i64 %i.m, !dbg !55340
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !55340 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !55339 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtB4_4TakeQQINtNtNtB4_8buffered9bufreader9BufReaderINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCseeLknQCOKOd_13polars_python4file8FileLikeEL_EEEE0B2g_.exit.thread, !dbg !55341
 
@@ -6523,7 +6523,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtCs2mZqlW55729_12polars_u
   %i.m = add i64 %i.l, 9216, !dbg !55671          ; 2 uses
   %.not75 = icmp ult i64 %i.m, %i.i, !dbg !55671
   %.sroa.5.1.i = select i1 %.not75, i64 8192, i64 %i.m, !dbg !55672
-  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !55672 ; 2 uses
+  %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i, !dbg !55671 ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endINtNtCs2mZqlW55729_12polars_utils20chunked_bytes_cursor27FixedSizeChunkedBytesCursorINtNtCsgZ49sUHp3tW_5alloc3vec3VechEEE0CseeLknQCOKOd_13polars_python.exit.thread, !dbg !55673
 
@@ -6748,7 +6748,7 @@ _RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endNtNtCseeLknQCOKOd_13polars_py
   %i.l = add i64 %i.k, 9216, !dbg !55951          ; 2 uses
   %.not96 = icmp ult i64 %i.l, %i.h, !dbg !55951
   %.sroa.5.1.i = select i1 %.not96, i64 8192, i64 %i.l, !dbg !55952
-  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !55952 ; 2 uses
+  %.sroa.050.1 = select i1 %i.j, i64 %i.h, i64 %.sroa.5.1.i, !dbg !55951 ; 2 uses
   %i.m = icmp eq i64 %3, 0
   br i1 %i.m, label %bb.c, label %_RNCINvNtCsh8eZTKRCwoO_3std2io19default_read_to_endNtNtCseeLknQCOKOd_13polars_python4file16PyFileLikeObjectE0BQ_.exit.thread, !dbg !55953
 
@@ -7151,7 +7151,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fk = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 2 uses
   %i.fl = load ptr, ptr %i.fk, align 8
   %.not.i258 = icmp ne ptr %i.fl, null
-  %or.cond440.not = select i1 %i.fj, i1 %.not.i258, i1 false, !dbg !189001
+  %or.cond440.not = select i1 %i.fj, i1 %.not.i258, i1 false, !dbg !189001, !prof !4833
   br i1 %or.cond440.not, label %_RNvMs0_NtNtCsbm5zPlkZccl_4pyo33err9err_stateNtB5_10PyErrState13as_normalized.exit, label %bb.az, !dbg !189001, !prof !4833
 
 bb.ay:                                            ; preds = %bb.aw
