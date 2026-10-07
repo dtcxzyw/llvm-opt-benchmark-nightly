@@ -205,39 +205,37 @@ bb.g:                                             ; preds = %bb.f
   %i.go = fmul reassoc nsz arcp contract afn float %cos.i, 1.000000e+01 ; 5 uses
   %i.gp = extractelement <2 x float> %i.gn, i64 0 ; 5 uses
   %i.gq = fadd reassoc nsz arcp contract afn float %i.gp, %i.go
+  %i.gr = fmul reassoc nsz arcp contract afn float %sin.i, 1.000000e+01 ; 5 uses
   %6 = extractelement <2 x float> %i.gn, i64 1    ; 5 uses
-  %7 = fmul reassoc nsz arcp contract afn float %sin.i, -1.000000e+01
-  %i.gr = fmul reassoc nsz arcp contract afn float %i.go, %i.go
-  %8 = fmul reassoc nsz arcp contract afn float %sin.i, 1.000000e+01 ; 5 uses
-  %i.gs = fadd reassoc nsz arcp contract afn float %6, %8
-  %i.gt = fsub reassoc nsz arcp contract afn float %6, %8
-  %i.gu = fmul reassoc nsz arcp contract afn float %i.gs, %i.gp
-  %i.gv = fmul reassoc nsz arcp contract afn float %i.gq, %6 ; 2 uses
-  %9 = fsub reassoc nsz arcp contract afn float %i.gu, %i.gv ; 3 uses
+  %i.gs = fadd reassoc nsz arcp contract afn float %6, %i.gr
+  %i.gt = fsub reassoc nsz arcp contract afn float %6, %i.gr
+  %i.gu = fmul reassoc nsz arcp contract afn float %sin.i, -1.000000e+01
+  %i.gv = fmul reassoc nsz arcp contract afn float %i.gs, %i.gp
+  %7 = fmul reassoc nsz arcp contract afn float %i.gq, %6 ; 2 uses
+  %8 = fsub reassoc nsz arcp contract afn float %i.gv, %7 ; 3 uses
+  %9 = fmul reassoc nsz arcp contract afn float %i.gr, %i.gr
+  %i.gw = fmul reassoc nsz arcp contract afn float %i.go, %i.go
+  %i.gx = fadd reassoc nsz arcp contract afn float %i.gw, %9 ; 2 uses
   %10 = fmul reassoc nsz arcp contract afn float %8, %8
-  %11 = fadd reassoc nsz arcp contract afn float %i.gr, %10 ; 2 uses
-  %i.gw = fmul reassoc nsz arcp contract afn float %9, %9
-  %i.gx = fadd reassoc nsz arcp contract afn float %i.gw, %11 ; 2 uses
-  %12 = fcmp reassoc nsz arcp contract afn ogt float %i.gx, 0.000000e+00
-  %13 = fmul reassoc nsz arcp contract afn float %i.gt, %i.gp
-  %14 = fsub reassoc nsz arcp contract afn float %13, %i.gv ; 3 uses
-  %15 = fmul reassoc nsz arcp contract afn float %14, %14
-  %16 = fadd reassoc nsz arcp contract afn float %15, %11 ; 2 uses
-  %17 = insertelement <2 x float> poison, float %i.gx, i64 0
-  %18 = insertelement <2 x float> %17, float %16, i64 1
-  %19 = call reassoc nsz arcp contract afn <2 x float> @llvm.sqrt.v2f32(<2 x float> %18)
-  %20 = fdiv reassoc nsz arcp contract afn <2 x float> splat (float 1.000000e+00), %19 ; 2 uses
-  %21 = extractelement <2 x float> %20, i64 0
-  %22 = select reassoc nsz arcp contract afn i1 %12, float %21, float 1.000000e+00 ; 3 uses
-  %i.gy = fmul reassoc nsz arcp contract afn float %7, %22 ; 2 uses
-  %23 = fmul reassoc nsz arcp contract afn float %22, %i.go ; 2 uses
-  %24 = fmul reassoc nsz arcp contract afn float %22, %9 ; 2 uses
-  %i.gz = fcmp reassoc nsz arcp contract afn ogt float %16, 0.000000e+00
-  %25 = extractelement <2 x float> %20, i64 1
-  %i.ha = select reassoc nsz arcp contract afn i1 %i.gz, float %25, float 1.000000e+00 ; 3 uses
-  %i.hb = fmul reassoc nsz arcp contract afn float %i.ha, %8 ; 2 uses
+  %11 = fadd reassoc nsz arcp contract afn float %10, %i.gx ; 2 uses
+  %12 = call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %11)
+  %13 = fcmp reassoc nsz arcp contract afn ogt float %11, 0.000000e+00
+  %14 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %12
+  %15 = select reassoc nsz arcp contract afn i1 %13, float %14, float 1.000000e+00 ; 3 uses
+  %16 = fmul reassoc nsz arcp contract afn float %i.gu, %15 ; 2 uses
+  %17 = fmul reassoc nsz arcp contract afn float %15, %i.go ; 2 uses
+  %18 = fmul reassoc nsz arcp contract afn float %15, %8 ; 2 uses
+  %19 = fmul reassoc nsz arcp contract afn float %i.gt, %i.gp
+  %20 = fsub reassoc nsz arcp contract afn float %19, %7 ; 3 uses
+  %i.gy = fmul reassoc nsz arcp contract afn float %20, %20
+  %21 = fadd reassoc nsz arcp contract afn float %i.gy, %i.gx ; 2 uses
+  %22 = call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %21)
+  %i.gz = fcmp reassoc nsz arcp contract afn ogt float %21, 0.000000e+00
+  %23 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %22
+  %i.ha = select reassoc nsz arcp contract afn i1 %i.gz, float %23, float 1.000000e+00 ; 3 uses
+  %i.hb = fmul reassoc nsz arcp contract afn float %i.ha, %i.gr ; 2 uses
   %i.hc = fmul reassoc nsz arcp contract afn float %i.ha, %i.go ; 2 uses
-  %i.hd = fmul reassoc nsz arcp contract afn float %i.ha, %14 ; 2 uses
+  %i.hd = fmul reassoc nsz arcp contract afn float %i.ha, %20 ; 2 uses
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.l, %.thread24.i
@@ -249,14 +247,14 @@ bb.g:                                             ; preds = %bb.f
   %i.hh = getelementptr inbounds nuw i8, ptr %i.he, i64 8
   %i.hi = load float, ptr %i.hh, align 4, !tbaa !15 ; 4 uses
   %i.hj = load float, ptr %i.he, align 4, !tbaa !15 ; 4 uses
-  %i.hk = fmul reassoc nsz arcp contract afn float %i.hg, %24
-  %i.hl = fmul reassoc nsz arcp contract afn float %i.hi, %23
+  %i.hk = fmul reassoc nsz arcp contract afn float %i.hg, %18
+  %i.hl = fmul reassoc nsz arcp contract afn float %i.hi, %17
   %i.hm = fsub reassoc nsz arcp contract afn float %i.hk, %i.hl ; 3 uses
-  %i.hn = fmul reassoc nsz arcp contract afn float %i.hi, %i.gy
-  %i.ho = fmul reassoc nsz arcp contract afn float %i.hj, %24
+  %i.hn = fmul reassoc nsz arcp contract afn float %i.hi, %16
+  %i.ho = fmul reassoc nsz arcp contract afn float %i.hj, %18
   %i.hp = fsub reassoc nsz arcp contract afn float %i.hn, %i.ho ; 3 uses
-  %i.hq = fmul reassoc nsz arcp contract afn float %i.hj, %23
-  %i.hr = fmul reassoc nsz arcp contract afn float %i.hg, %i.gy
+  %i.hq = fmul reassoc nsz arcp contract afn float %i.hj, %17
+  %i.hr = fmul reassoc nsz arcp contract afn float %i.hg, %16
   %i.hs = fsub reassoc nsz arcp contract afn float %i.hq, %i.hr ; 3 uses
   %i.ht = fmul reassoc nsz arcp contract afn float %i.hm, %i.hm
   %i.hu = fmul reassoc nsz arcp contract afn float %i.hp, %i.hp
@@ -657,9 +655,6 @@ declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.sqrt.v3f32(<3 x float>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #12
