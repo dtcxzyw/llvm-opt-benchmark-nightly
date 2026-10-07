@@ -39,11 +39,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %4 = and i32 %0, 1
-  %5 = icmp eq i32 %4, 0
-  %6 = icmp sgt i8 %i.b, -1
-  %or.cond14 = or i1 %5, %6
-  br i1 %or.cond14, label %bb.d, label %bb.e
+  %4 = trunc i32 %0 to i1
+  %5 = icmp slt i8 %i.b, 0
+  %or.cond15.not = and i1 %5, %4
+  br i1 %or.cond15.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.f = zext i8 %i.b to i64

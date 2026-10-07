@@ -65,9 +65,8 @@ bb.a:
 .lr.ph150.preheader:                              ; preds = %.preheader
   %i.ad = zext i32 %.2.lcssa to i64               ; 5 uses
   %i.ae = sub nsw i64 %i.k, %i.ad
-  %xtraiter257 = and i64 %i.ae, 1
-  %lcmp.mod258.not = icmp eq i64 %xtraiter257, 0
-  br i1 %lcmp.mod258.not, label %.lr.ph150.prol.loopexit, label %.lr.ph150.prol
+  %lcmp.mod258.not = trunc i64 %i.ae to i1
+  br i1 %lcmp.mod258.not, label %.lr.ph150.prol, label %.lr.ph150.prol.loopexit
 
 .lr.ph150.prol:                                   ; preds = %.lr.ph150.preheader
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ad
@@ -171,9 +170,8 @@ bb.a:
 .lr.ph129.preheader:                              ; preds = %.preheader115
   %i.bx = zext i32 %.6.lcssa to i64               ; 5 uses
   %i.by = sub nsw i64 %i.bf, %i.bx
-  %xtraiter = and i64 %i.by, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph129.prol.loopexit, label %.lr.ph129.prol
+  %lcmp.mod.not = trunc i64 %i.by to i1
+  br i1 %lcmp.mod.not, label %.lr.ph129.prol, label %.lr.ph129.prol.loopexit
 
 .lr.ph129.prol:                                   ; preds = %.lr.ph129.preheader
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bx
@@ -242,9 +240,8 @@ bb.a:
   br i1 %.not.not165, label %.lr.ph171, label %._crit_edge172
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph161
-  %7 = and i32 %.097166, 2
-  %lcmp.mod260.not = icmp eq i32 %7, 0
-  br i1 %lcmp.mod260.not, label %.loopexit, label %.lr.ph161.epil.preheader
+  %lcmp.mod260.not = trunc i32 %i.dn to i1
+  br i1 %lcmp.mod260.not, label %.lr.ph161.epil.preheader, label %.loopexit
 
 .lr.ph161.epil.preheader:                         ; preds = %.lr.ph171, %.loopexit.loopexit.unr-lcssa
   %.1158.epil.init = phi i32 [ %.094168, %.lr.ph171 ], [ %i.ei, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -276,9 +273,9 @@ bb.a:
   %.093169.in = phi i32 [ %.093169, %.loopexit ], [ %5, %.loopexit114 ]
   %.094168 = phi i32 [ %.1.lcssa, %.loopexit ], [ %i.c, %.loopexit114 ] ; 3 uses
   %.095167 = phi i32 [ %.196.lcssa, %.loopexit ], [ 0, %.loopexit114 ] ; 3 uses
-  %.097166 = phi i32 [ %i.dn, %.loopexit ], [ %i.c, %.loopexit114 ] ; 2 uses
+  %.097166 = phi i32 [ %i.dn, %.loopexit ], [ %i.c, %.loopexit114 ]
   %.093169 = add nsw i32 %.093169.in, -1          ; 2 uses
-  %i.dn = lshr i32 %.097166, 1                    ; 4 uses
+  %i.dn = lshr i32 %.097166, 1                    ; 5 uses
   switch i32 %i.dn, label %.lr.ph161.preheader.new [
     i32 0, label %.loopexit
     i32 1, label %.lr.ph161.epil.preheader

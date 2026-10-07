@@ -204,23 +204,22 @@ bb.a:
   %op.rdx45 = and i8 %op.rdx, %i.z
   %i.ah = xor i8 %op.rdx45, -1
   %i.ai = or i8 %i.p, %i.ah
-  %2 = zext i8 %i.ai to i32
-  %3 = add nuw nsw i32 %2, 511
+  %2 = zext i8 %i.ai to i16
+  %3 = add nuw nsw i16 %2, 511
   %i.aj = load i8, ptr %1, align 1                ; 2 uses
-  %4 = zext i8 %i.aj to i32
-  %5 = sub nsw i32 236, %4
+  %4 = zext i8 %i.aj to i16
+  %5 = sub nsw i16 236, %4
   %i.ak = load volatile i8, ptr @optblocker_u8, align 1
   %i.al = lshr i8 %i.n, 7
   %i.am = lshr i8 %i.ak, 2
   %i.an = xor i8 %i.am, %i.al
-  %6 = and i32 %3, %5
-  %7 = lshr i32 %6, 8
+  %6 = and i16 %3, %5
+  %7 = lshr i16 %6, 8
   %i.ao = or i8 %i.an, %i.aj
-  %8 = zext i8 %i.ao to i32
-  %9 = or i32 %7, %8
-  %10 = and i32 %9, 1
-  %.not = icmp eq i32 %10, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %8 = zext i8 %i.ao to i16
+  %9 = or i16 %7, %8
+  %10 = trunc i16 %9 to i1
+  br i1 %10, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.ap = getelementptr i8, ptr %1, i64 6

@@ -202,7 +202,7 @@ bb.am:                                            ; preds = %bb.al
   br label %.preheader206
 
 .preheader206:                                    ; preds = %.preheader206.preheader, %bb.br
-  %.0247 = phi i32 [ %.1.ph, %bb.br ], [ 1, %.preheader206.preheader ]
+  %.0247 = phi i1 [ %.1.ph, %bb.br ], [ true, %.preheader206.preheader ]
   %.2105246 = phi i32 [ %.3.ph, %bb.br ], [ %.0103.lcssa301, %.preheader206.preheader ]
   %.0106245 = phi i32 [ %i.in, %bb.br ], [ 0, %.preheader206.preheader ] ; 2 uses
   %.0110244 = phi i32 [ %.1111.ph, %bb.br ], [ 72, %.preheader206.preheader ]
@@ -334,7 +334,7 @@ bb.ay:                                            ; preds = %._crit_edge226
   %.1111.ph = phi i32 [ %i.il, %._crit_edge239 ], [ %.0110244, %bb.ay ] ; 5 uses
   %.1107.ph = phi i32 [ 0, %._crit_edge239 ], [ %i.ff, %bb.ay ]
   %.3.ph = phi i32 [ %i.im, %._crit_edge239 ], [ %.2105246, %bb.ay ] ; 3 uses
-  %.1.ph = phi i32 [ 0, %._crit_edge239 ], [ %.0247, %bb.ay ] ; 2 uses
+  %.1.ph = phi i1 [ false, %._crit_edge239 ], [ %.0247, %bb.ay ] ; 2 uses
   br label %bb.az
 
 bb.az:                                            ; preds = %.outer, %uv__utf8_decode1.exit184.thread
@@ -513,9 +513,8 @@ bb.bp:                                            ; preds = %._crit_edge233
 
 bb.bq:                                            ; preds = %bb.bp, %._crit_edge233
   %i.ia = lshr i32 %.2108, 1
-  %.not144 = icmp eq i32 %.1.ph, 0
   %i.ib = udiv i32 %.2108, 700
-  %.3109 = select i1 %.not144, i32 %i.ia, i32 %i.ib ; 2 uses
+  %.3109 = select i1 %.1.ph, i32 %i.ib, i32 %i.ia ; 2 uses
   %i.ic = add i32 %.3123.ph, 1                    ; 2 uses
   %i.id = udiv i32 %.3109, %i.ic
   %i.ie = add nuw i32 %i.id, %.3109               ; 3 uses

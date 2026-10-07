@@ -202,14 +202,13 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = load ptr, ptr %i.g, align 8, !tbaa !19, !nonnull !17, !align !18
   %i.ai = tail call noundef zeroext i1 @_ZN3sls7context7is_trueEP4expr(ptr noundef nonnull align 8 dereferenceable(321) %i.ah, ptr noundef %i.ag)
   %i.aj = zext i1 %i.ai to i8
-  %3 = icmp ne i8 %.01415, %i.aj
-  %4 = zext i1 %3 to i8
+  %3 = xor i8 %.01415, %i.aj
   %.pre = load i32, ptr %i.e, align 8, !tbaa !43
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ak = phi i32 [ %.pre, %bb.d ], [ %i.ae, %bb.c ] ; 2 uses
-  %.1 = phi i8 [ %4, %bb.d ], [ %.01415, %bb.c ]  ; 2 uses
+  %.1 = phi i8 [ %3, %bb.d ], [ %.01415, %bb.c ]  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.al = zext i32 %i.ak to i64
   %i.am = icmp samesign ult i64 %indvars.iv.next, %i.al

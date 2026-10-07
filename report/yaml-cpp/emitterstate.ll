@@ -202,12 +202,11 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds i8, ptr %i.d, i64 -8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !44   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !63   ; 2 uses
-  %i.m = add i64 %i.l, 1
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !63
+  %i.m = add i64 %i.l, 1                          ; 2 uses
   store i64 %i.m, ptr %i.k, align 8, !tbaa !63
-  %1 = and i64 %i.l, 1
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.e, label %bb.d
+  %1 = trunc i64 %i.m to i1
+  br i1 %1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 24
@@ -349,12 +348,11 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds i8, ptr %i.d, i64 -8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !44   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !63   ; 2 uses
-  %i.m = add i64 %i.l, 1
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !63
+  %i.m = add i64 %i.l, 1                          ; 2 uses
   store i64 %i.m, ptr %i.k, align 8, !tbaa !63
-  %1 = and i64 %i.l, 1
-  %.not.i = icmp eq i64 %1, 0
-  br i1 %.not.i, label %_ZN4YAML12EmitterState11StartedNodeEv.exit, label %bb.d
+  %1 = trunc i64 %i.m to i1
+  br i1 %1, label %_ZN4YAML12EmitterState11StartedNodeEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 24
@@ -502,12 +500,11 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds i8, ptr %i.d, i64 -8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !44   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !63   ; 2 uses
-  %i.j = add i64 %i.i, 1
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !63
+  %i.j = add i64 %i.i, 1                          ; 2 uses
   store i64 %i.j, ptr %i.h, align 8, !tbaa !63
-  %3 = and i64 %i.i, 1
-  %.not.i = icmp eq i64 %3, 0
-  br i1 %.not.i, label %bb.d, label %bb.c
+  %3 = trunc i64 %i.j to i1
+  br i1 %3, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 24

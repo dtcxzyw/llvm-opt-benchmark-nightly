@@ -205,9 +205,9 @@ bb.x:                                             ; preds = %.lr.ph141, %_ZL21_i
   %i.fi = ptrtoaddr ptr %i.fh to i64
   %i.fj = load i32, ptr %i.w, align 4, !tbaa !22
   %storemerge.i.i82 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 %.048139)
-  %.sroa.speculated.i.i83 = call i32 @llvm.umin.i32(i32 %storemerge.i.i82, i32 %i.ew) ; 6 uses
+  %.sroa.speculated.i.i83 = call i32 @llvm.umin.i32(i32 %storemerge.i.i82, i32 %i.ew) ; 7 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 %i.ez ; 14 uses
-  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 14 uses
+  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 13 uses
   %.not.i87 = icmp eq i32 %.sroa.speculated.i.i83, %.sroa.speculated.i.i
   %.not161.i = icmp eq i32 %.sroa.speculated.i.i67, %.sroa.speculated.i.i
   %or.cond.i = select i1 %.not.i87, i1 %.not161.i, i1 false
@@ -610,7 +610,6 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %.not57.i, label %.preheader.i.preheader, label %.lr.ph49.i
 
 .preheader.i.preheader:                           ; preds = %bb.cg, %bb.ca
-  %xtraiter = and i64 %.sroa.3.8.insert.ext.i.i84, 1
   %i.pm = icmp eq i32 %.sroa.speculated.i.i83, 1
   br i1 %i.pm, label %.preheader.i.epil.preheader, label %.preheader.i.preheader.new
 
@@ -689,8 +688,8 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %._c
   br i1 %exitcond72.not.i, label %.preheader.i.preheader, label %.lr.ph44.i, !llvm.loop !93
 
 _ZN11hb_vector_tIiLb0EED2Ev.exit207.i.unr-lcssa:  ; preds = %bb.ck
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN11hb_vector_tIiLb0EED2Ev.exit207.i, label %.preheader.i.epil.preheader
+  %lcmp.mod.not = trunc i32 %.sroa.speculated.i.i83 to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.epil.preheader, label %_ZN11hb_vector_tIiLb0EED2Ev.exit207.i
 
 .preheader.i.epil.preheader:                      ; preds = %_ZN11hb_vector_tIiLb0EED2Ev.exit207.i.unr-lcssa, %.preheader.i.preheader
   %indvars.iv73.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %indvars.iv.next74.i.1, %_ZN11hb_vector_tIiLb0EED2Ev.exit207.i.unr-lcssa ] ; 3 uses

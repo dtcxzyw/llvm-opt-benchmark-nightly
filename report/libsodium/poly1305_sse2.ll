@@ -205,9 +205,8 @@ bb.a:
   %i.d = and i64 %i.b, 8
   %.not751 = icmp eq i64 %i.d, 0
   %.1718 = select i1 %.not751, <2 x i64> %.0717, <2 x i64> zeroinitializer ; 4 uses
-  %3 = and i64 %i.b, 1
-  %.not752 = icmp eq i64 %3, 0
-  br i1 %.not752, label %bb.b, label %bb.c
+  %.not752 = trunc i64 %i.b to i1
+  br i1 %.not752, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %1, align 1
@@ -610,9 +609,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.325.i = phi ptr [ %i.w, %bb.i ], [ %.224.i, %bb.h ]
   %.3.i = phi ptr [ %i.x, %bb.i ], [ %.2.i, %bb.h ]
-  %4 = and i64 %2, 1
-  %.not29.i = icmp eq i64 %4, 0
-  br i1 %.not29.i, label %poly1305_block_copy31.exit, label %bb.k
+  %.not29.i = trunc i64 %2 to i1
+  br i1 %.not29.i, label %bb.k, label %poly1305_block_copy31.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.y = load i8, ptr %.325.i, align 1
@@ -642,9 +640,8 @@ bb.m:                                             ; preds = %bb.l, %poly1305_blo
 bb.n:                                             ; preds = %bb.m, %bb.a
   %i.af = getelementptr i8, ptr %0, i64 120       ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8            ; 2 uses
-  %5 = and i64 %i.ag, 1
-  %.not32 = icmp eq i64 %5, 0
-  br i1 %.not32, label %bb.p, label %bb.o
+  %.not32 = trunc i64 %i.ag to i1
+  br i1 %.not32, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.ah = add i64 %2, -17

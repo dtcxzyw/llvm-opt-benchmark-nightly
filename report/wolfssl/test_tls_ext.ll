@@ -202,8 +202,7 @@ bb.i:                                             ; preds = %.critedge492.i
 
 test_tls_ems_resumption_server_downgrade_ex.exit: ; preds = %bb.g, %.critedge472.i, %bb.h, %.critedge478.i, %.critedge481.i, %.critedge483.i, %.critedge485.i, %.critedge487.i, %.critedge489.i, %.critedge492.i, %bb.i
   %.0494.i = phi ptr [ %i.v, %.critedge492.i ], [ %i.v, %.critedge489.i ], [ %i.v, %bb.i ], [ %i.v, %.critedge485.i ], [ %i.v, %.critedge481.i ], [ %i.v, %bb.h ], [ %i.v, %bb.g ], [ %.0495.i, %.critedge472.i ], [ %i.v, %.critedge478.i ], [ %i.v, %.critedge483.i ], [ %i.v, %.critedge487.i ]
-  %.not = phi i1 [ false, %.critedge492.i ], [ true, %.critedge489.i ], [ true, %bb.i ], [ true, %.critedge485.i ], [ true, %.critedge481.i ], [ true, %bb.h ], [ true, %bb.g ], [ true, %.critedge472.i ], [ true, %.critedge478.i ], [ true, %.critedge483.i ], [ true, %.critedge487.i ]
-  %.23.i = phi i32 [ 1, %.critedge492.i ], [ 0, %.critedge489.i ], [ 0, %bb.i ], [ 0, %.critedge485.i ], [ 0, %.critedge481.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %.critedge472.i ], [ 0, %.critedge478.i ], [ 0, %.critedge483.i ], [ 0, %.critedge487.i ]
+  %.not = phi i1 [ true, %.critedge492.i ], [ false, %.critedge489.i ], [ false, %bb.i ], [ false, %.critedge485.i ], [ false, %.critedge481.i ], [ false, %bb.h ], [ false, %bb.g ], [ false, %.critedge472.i ], [ false, %.critedge478.i ], [ false, %.critedge483.i ], [ false, %.critedge487.i ]
   call void @wolfSSL_SESSION_free(ptr noundef %.0494.i) #8
   %i.ei = load ptr, ptr %i.c, align 8, !tbaa !13
   call void @wolfSSL_free(ptr noundef %i.ei) #8
@@ -218,7 +217,7 @@ test_tls_ems_resumption_server_downgrade_ex.exit: ; preds = %bb.g, %.critedge472
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
-  br i1 %.not, label %bb.j, label %bb.k
+  br i1 %.not, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %test_tls_ems_resumption_server_downgrade_ex.exit
   %i.em = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, ptr noundef nonnull @.str.1, i32 noundef 307) ; 0 uses
@@ -227,7 +226,7 @@ bb.j:                                             ; preds = %test_tls_ems_resump
   %i.eo = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, ptr noundef nonnull @.str.20, ptr noundef nonnull @.str.21) ; 0 uses
   %i.ep = load ptr, ptr @stdout, align 8, !tbaa !15
   %fwrite35 = call i64 @fwrite(ptr nonnull @.str.6, i64 15, i64 1, ptr %i.ep) ; 0 uses
-  %i.eq = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef %.23.i, i32 noundef 1) ; 0 uses
+  %i.eq = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef 0, i32 noundef 1) ; 0 uses
   %i.er = load ptr, ptr @stdout, align 8, !tbaa !15
   %fwrite36 = call i64 @fwrite(ptr nonnull @.str.8, i64 2, i64 1, ptr %i.er) ; 0 uses
   %i.es = load ptr, ptr @stdout, align 8, !tbaa !15

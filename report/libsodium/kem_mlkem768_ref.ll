@@ -204,9 +204,8 @@ vector.body132:                                   ; preds = %vector.body126, %ve
   %index133 = phi i64 [ %index.next135, %vector.body132 ], [ 0, %vector.body126 ] ; 3 uses
   %i.fs = getelementptr i8, ptr %1, i64 %index133
   %wide.load = load <8 x i8>, ptr %i.fs, align 1  ; 8 uses
-  %14 = and <8 x i8> %wide.load, splat (i8 1)
-  %15 = icmp eq <8 x i8> %14, zeroinitializer
-  %i.ft = select <8 x i1> %15, <8 x i16> zeroinitializer, <8 x i16> splat (i16 1665)
+  %14 = trunc <8 x i8> %wide.load to <8 x i1>
+  %i.ft = select <8 x i1> %14, <8 x i16> splat (i16 1665), <8 x i16> zeroinitializer
   %i.fu = shl nuw nsw i64 %index133, 4
   %i.fv = getelementptr i8, ptr %12, i64 %i.fu
   %i.fw = and <8 x i8> %wide.load, splat (i8 2)
@@ -227,8 +226,8 @@ vector.body132:                                   ; preds = %vector.body126, %ve
   %i.gl = and <8 x i8> %wide.load, splat (i8 64)
   %i.gm = icmp eq <8 x i8> %i.gl, zeroinitializer
   %i.gn = select <8 x i1> %i.gm, <8 x i16> zeroinitializer, <8 x i16> splat (i16 1665)
-  %16 = icmp sgt <8 x i8> %wide.load, splat (i8 -1)
-  %i.go = select <8 x i1> %16, <8 x i16> zeroinitializer, <8 x i16> splat (i16 1665)
+  %15 = icmp slt <8 x i8> %wide.load, zeroinitializer
+  %i.go = select <8 x i1> %15, <8 x i16> splat (i16 1665), <8 x i16> zeroinitializer
   %i.gp = shufflevector <8 x i16> %i.ft, <8 x i16> %i.fy, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.gq = shufflevector <8 x i16> %i.gb, <8 x i16> %i.ge, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.gr = shufflevector <8 x i16> %i.gh, <8 x i16> %i.gk, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
@@ -631,7 +630,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 1 dereferenceable(32) %1, i64 noundef 32, i1 noundef false) #4
-  %.not = icmp eq i32 %2, 0                       ; 6 uses
+  %.not = trunc nuw i32 %2 to i1                  ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 33 ; 3 uses
   br label %.preheader
@@ -640,8 +639,8 @@ bb.a:
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %rej_uniform.exit._crit_edge.2 ] ; 3 uses
   %i.e = trunc i64 %indvars.iv to i8              ; 6 uses
   %i.f = getelementptr [1536 x i8], ptr %0, i64 %indvars.iv ; 5 uses
-  %spec.select = select i1 %.not, i8 0, i8 %i.e
-  %spec.select60 = select i1 %.not, i8 %i.e, i8 0
+  %spec.select = select i1 %.not, i8 %i.e, i8 0
+  %spec.select60 = select i1 %.not, i8 0, i8 %i.e
   store i8 %spec.select, ptr %i.c, align 16
   store i8 %spec.select60, ptr %i.d, align 1
   %i.g = call i32 @crypto_xof_shake128_init(ptr noundef nonnull %3) #4 ; 0 uses
@@ -772,8 +771,8 @@ rej_uniform.exit32:                               ; preds = %bb.k
   br i1 %i.bq, label %.lr.ph, label %rej_uniform.exit._crit_edge, !llvm.loop !53
 
 rej_uniform.exit._crit_edge:                      ; preds = %rej_uniform.exit32, %rej_uniform.exit.preheader
-  %spec.select61 = select i1 %.not, i8 1, i8 %i.e
-  %spec.select62 = select i1 %.not, i8 %i.e, i8 1
+  %spec.select61 = select i1 %.not, i8 %i.e, i8 1
+  %spec.select62 = select i1 %.not, i8 1, i8 %i.e
   store i8 %spec.select61, ptr %i.c, align 16
   store i8 %spec.select62, ptr %i.d, align 1
   %i.br = call i32 @crypto_xof_shake128_init(ptr noundef nonnull %3) #4 ; 0 uses
@@ -905,8 +904,8 @@ rej_uniform.exit32.1:                             ; preds = %bb.u
   br i1 %i.ec, label %.lr.ph.1, label %rej_uniform.exit._crit_edge.1, !llvm.loop !53
 
 rej_uniform.exit._crit_edge.1:                    ; preds = %rej_uniform.exit32.1, %rej_uniform.exit.preheader.1
-  %spec.select63 = select i1 %.not, i8 2, i8 %i.e
-  %spec.select64 = select i1 %.not, i8 %i.e, i8 2
+  %spec.select63 = select i1 %.not, i8 %i.e, i8 2
+  %spec.select64 = select i1 %.not, i8 2, i8 %i.e
   store i8 %spec.select63, ptr %i.c, align 16
   store i8 %spec.select64, ptr %i.d, align 1
   %i.ed = call i32 @crypto_xof_shake128_init(ptr noundef nonnull %3) #4 ; 0 uses

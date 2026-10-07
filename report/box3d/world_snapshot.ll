@@ -205,17 +205,16 @@ b3SnapCheckCount.exit.thread:                     ; preds = %bb.b, %b3SnapCheckC
 bb.c:                                             ; preds = %b3SnapCheckCount.exit
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 4080 ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 4088 ; 2 uses
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !104  ; 7 uses
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !104  ; 8 uses
   %i.t = icmp sgt i32 %i.s, 0                     ; 2 uses
   br i1 %i.t, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.u = zext nneg i32 %i.s to i64                ; 4 uses
+  %i.u = zext nneg i32 %i.s to i64                ; 3 uses
   %i.v = shl nuw nsw i64 %i.u, 3
   %i.w = tail call ptr @b3Alloc(i64 noundef %i.v) #7 ; 5 uses
   %i.x = shl nuw nsw i64 %i.u, 1
   %i.y = tail call ptr @b3Alloc(i64 noundef %i.x) #7 ; 5 uses
-  %xtraiter = and i64 %i.u, 1
   %i.z = icmp eq i32 %i.s, 1
   br i1 %i.z, label %.epil.preheader, label %.new
 
@@ -273,8 +272,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.e, !llvm.loop !269
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.s to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %bb.d
   %indvars.iv.epil.init = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ] ; 4 uses
@@ -677,7 +676,7 @@ bb.a:
   br i1 %i.h, label %.thread.sink.split, label %b3SnapRCheck.exit.i.i
 
 b3SnapRCheck.exit.i.i:                            ; preds = %bb.a
-  %.pre.i.i = load i8, ptr %i.i, align 8, !tbaa !201
+  %.pre.i.i = load i8, ptr %i.i, align 8, !tbaa !201, !range !71
   %i.j = trunc nuw i8 %.pre.i.i to i1
   br i1 %i.j, label %bb.b, label %.thread
 

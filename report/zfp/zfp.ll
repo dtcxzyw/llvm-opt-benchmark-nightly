@@ -204,7 +204,7 @@ define range(i64 0, 2305843009213693952) i64 @zfp_stream_maximum_size(ptr nofree
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 12
   %.val = load i32, ptr %i.a, align 4, !tbaa !36
-  %2 = icmp sgt i32 %.val, -1075                  ; 4 uses
+  %2 = icmp slt i32 %.val, -1074                  ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !14   ; 2 uses
   %.not.i = icmp eq i64 %i.c, 0                   ; 2 uses
@@ -289,19 +289,19 @@ bb.j:                                             ; preds = %zfp_field_blocks.ex
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.ae = select i1 %2, i32 0, i32 5
+  %i.ae = select i1 %2, i32 5, i32 0
   br label %zfp_field_precision.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.af = select i1 %2, i32 0, i32 6
+  %i.af = select i1 %2, i32 6, i32 0
   br label %zfp_field_precision.exit
 
 bb.m:                                             ; preds = %bb.j
-  %i.ag = select i1 %2, i32 9, i32 15
+  %i.ag = select i1 %2, i32 15, i32 9
   br label %zfp_field_precision.exit
 
 bb.n:                                             ; preds = %bb.j
-  %i.ah = select i1 %2, i32 12, i32 19
+  %i.ah = select i1 %2, i32 19, i32 12
   br label %zfp_field_precision.exit
 
 zfp_field_precision.exit:                         ; preds = %bb.n, %bb.l, %bb.k, %bb.m
@@ -572,8 +572,8 @@ bb.n:                                             ; preds = %bb.m
   %spec.select.i = select i1 %i.ar, i32 4, i32 5
   br label %zfp_stream_compression_mode.exit
 
-zfp_stream_compression_mode.exit:                 ; preds = %bb.k, %bb.j, %bb.i, %bb.n, %bb.m, %bb.l
-  %.024 = phi i32 [ %spec.select.i, %bb.n ], [ 1, %bb.l ], [ 0, %bb.i ], [ 1, %bb.j ], [ 2, %bb.k ], [ %.mux.i, %bb.m ]
+zfp_stream_compression_mode.exit:                 ; preds = %bb.k, %bb.j, %bb.n, %bb.m, %bb.l, %bb.i
+  %.024 = phi i32 [ 0, %bb.i ], [ 1, %bb.l ], [ %spec.select.i, %bb.n ], [ 1, %bb.j ], [ 2, %bb.k ], [ %.mux.i, %bb.m ]
   ret i32 %.024
 }
 
@@ -976,9 +976,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.023 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
-  %3 = and i32 %2, 1
-  %.not25 = icmp eq i32 %3, 0
-  br i1 %.not25, label %bb.e, label %bb.d
+  %.not25 = trunc i32 %2 to i1
+  br i1 %.not25, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -1029,9 +1028,8 @@ declare i64 @stream_write_bits(ptr noundef, i64 noundef, i64 noundef) local_unna
 ; Function Attrs: nounwind uwtable
 define range(i64 0, 149) i64 @zfp_read_header(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #12 {
 bb.a:
-  %3 = and i32 %2, 1
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.f, label %bb.b
+  %.not = trunc i32 %2 to i1
+  br i1 %.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -1244,8 +1242,8 @@ bb.w:                                             ; preds = %bb.v
   store i32 %i.cn, ptr %i.cs, align 4, !tbaa !36
   br label %zfp_stream_set_mode.exit
 
-zfp_stream_set_mode.exit:                         ; preds = %bb.w, %bb.g, %bb.v, %bb.m, %bb.b, %bb.c, %bb.d, %bb.e
-  %.3 = phi i64 [ 0, %bb.v ], [ 0, %bb.b ], [ %.231, %bb.m ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.g ], [ %.33246, %bb.w ]
+zfp_stream_set_mode.exit:                         ; preds = %bb.g, %bb.w, %bb.v, %bb.m, %bb.b, %bb.c, %bb.d, %bb.e
+  %.3 = phi i64 [ %.33246, %bb.w ], [ 0, %bb.b ], [ %.231, %bb.m ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.v ], [ 0, %bb.g ]
   ret i64 %.3
 }
 

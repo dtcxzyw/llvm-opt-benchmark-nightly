@@ -202,10 +202,9 @@ bb.x:                                             ; preds = %bb.w, %.thread82
   br i1 %i.bd, label %.lr.ph54.preheader, label %._crit_edge
 
 .lr.ph54.preheader:                               ; preds = %.critedge
-  %i.be = zext nneg i32 %0 to i64                 ; 3 uses
-  %3 = and i64 %i.be, 1
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph54.prol, label %.lr.ph54.prol.loopexit
+  %i.be = zext nneg i32 %0 to i64                 ; 2 uses
+  %3 = trunc i32 %0 to i1
+  br i1 %3, label %.lr.ph54.prol.loopexit, label %.lr.ph54.prol
 
 .lr.ph54.prol:                                    ; preds = %.lr.ph54.preheader
   %indvars.iv.next67.prol = add nsw i64 %i.be, -1 ; 3 uses

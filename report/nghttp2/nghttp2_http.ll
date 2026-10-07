@@ -100,11 +100,11 @@ bb.j:                                             ; preds = %.thread60
 bb.k:                                             ; preds = %.thread60
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 2737
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !56
-  %.not33 = icmp eq i8 %i.ae, 0
+  %6 = icmp ne i8 %i.ae, 0
   br label %.thread
 
 .thread:                                          ; preds = %bb.j, %bb.k
-  %.not91.i = phi i1 [ %.not33, %bb.k ], [ true, %bb.j ]
+  %.not91.i = phi i1 [ %6, %bb.k ], [ false, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !31
@@ -233,9 +233,8 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !58
-  %6 = and i32 %i.cg, 1
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %http_request_on_header.exit, label %bb.x
+  %7 = trunc i32 %i.cg to i1
+  br i1 %7, label %bb.x, label %http_request_on_header.exit
 
 bb.x:                                             ; preds = %bb.w
   %i.ch = or i32 %i.be, 132
@@ -468,7 +467,7 @@ memieq.exit.i:                                    ; preds = %bb.aq, %.preheader.
   br label %memieq.exit154.i
 
 bb.ar:                                            ; preds = %.thread
-  br i1 %.not91.i, label %http_request_on_header.exit, label %bb.as
+  br i1 %.not91.i, label %bb.as, label %http_request_on_header.exit
 
 bb.as:                                            ; preds = %bb.ar
   %i.gc = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
@@ -723,9 +722,8 @@ bb.br:                                            ; preds = %check_header_value.
 bb.bs:                                            ; preds = %bb.br
   %i.kn = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ko = load i32, ptr %i.kn, align 8, !tbaa !58
-  %8 = and i32 %i.ko, 1
-  %.not85.i = icmp eq i32 %8, 0
-  br i1 %.not85.i, label %memieq.exit154.i, label %bb.bt
+  %.not85.i = trunc i32 %i.ko to i1
+  br i1 %.not85.i, label %bb.bt, label %memieq.exit154.i
 
 bb.bt:                                            ; preds = %bb.bs
   %i.kp = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
@@ -799,7 +797,7 @@ memieq.exit154.i:                                 ; preds = %check_header_value.
   br label %http_request_on_header.exit
 
 http_request_on_header.exit:                      ; preds = %.preheader.i.i, %bb.bc, %.lr.ph.i139.i, %bb.av, %bb.ak, %.lr.ph.i.i, %.thread, %.thread, %.thread, %.thread, %.thread, %bb.l, %bb.n, %bb.o, %bb.p, %bb.q, %bb.w, %bb.aa, %bb.ab, %bb.ac, %bb.ah, %bb.ai, %check_scheme.exit.i, %check_scheme.exit.thread172.i, %bb.ar, %bb.as, %bb.at, %lws.exit.i, %bb.aw, %bb.ax, %bb.az, %bb.ba, %bb.bb, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bq, %bb.bx, %check_header_value.exit159.i, %memieq.exit154.i
-  %.0.i = phi i32 [ -531, %bb.be ], [ 0, %memieq.exit154.i ], [ -531, %bb.bx ], [ -105, %bb.bq ], [ -531, %bb.o ], [ -105, %check_header_value.exit159.i ], [ -531, %bb.w ], [ -531, %bb.aa ], [ -531, %bb.ar ], [ -531, %bb.as ], [ -531, %bb.ab ], [ -531, %bb.at ], [ -531, %bb.aw ], [ -531, %bb.ak ], [ -531, %bb.ba ], [ -531, %.lr.ph.i.i ], [ -531, %.thread ], [ -531, %check_scheme.exit.i ], [ -105, %.lr.ph.i139.i ], [ -531, %bb.p ], [ -531, %bb.bb ], [ -531, %check_scheme.exit.thread172.i ], [ -531, %lws.exit.i ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %bb.bf ], [ -531, %bb.l ], [ -531, %bb.n ], [ -531, %bb.az ], [ -531, %bb.q ], [ -531, %bb.ac ], [ -531, %bb.ah ], [ -531, %bb.ai ], [ -531, %bb.ax ], [ -531, %bb.bm ], [ -531, %bb.bl ], [ -531, %bb.bk ], [ -531, %bb.bj ], [ -531, %bb.bi ], [ -531, %bb.bh ], [ -531, %bb.bg ], [ -531, %bb.av ], [ -531, %bb.bc ], [ -531, %.preheader.i.i ]
+  %.0.i = phi i32 [ -531, %bb.be ], [ 0, %memieq.exit154.i ], [ -531, %bb.bx ], [ -105, %bb.bq ], [ -531, %bb.o ], [ -105, %check_header_value.exit159.i ], [ -531, %bb.w ], [ -531, %bb.aa ], [ -531, %bb.ar ], [ -531, %bb.as ], [ -531, %bb.ab ], [ -531, %bb.at ], [ -531, %bb.aw ], [ -531, %bb.ak ], [ -531, %bb.ba ], [ -531, %.lr.ph.i.i ], [ -531, %.thread ], [ -531, %bb.bf ], [ -105, %.lr.ph.i139.i ], [ -531, %bb.p ], [ -531, %bb.bb ], [ -531, %check_scheme.exit.thread172.i ], [ -531, %lws.exit.i ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %.thread ], [ -531, %check_scheme.exit.i ], [ -531, %bb.l ], [ -531, %bb.n ], [ -531, %bb.az ], [ -531, %bb.q ], [ -531, %bb.ac ], [ -531, %bb.ah ], [ -531, %bb.ai ], [ -531, %bb.ax ], [ -531, %bb.bm ], [ -531, %bb.bl ], [ -531, %bb.bk ], [ -531, %bb.bj ], [ -531, %bb.bi ], [ -531, %bb.bh ], [ -531, %bb.bg ], [ -531, %bb.av ], [ -531, %bb.bc ], [ -531, %.preheader.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   br label %http_response_on_header.exit
 
@@ -1094,7 +1092,7 @@ memieq.exit49.i:                                  ; preds = %check_header_value.
   br label %http_response_on_header.exit
 
 http_response_on_header.exit:                     ; preds = %bb.cs, %.preheader.i.i24, %memieq.exit49.i, %check_header_value.exit.i32, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %bb.cv, %bb.cu, %bb.cr, %bb.cq, %bb.cp, %bb.cn, %memieq.exit.i28, %bb.cm, %bb.cl, %bb.ck, %parse_status_code.exit.i, %bb.cd, %bb.cc, %bb.cb, %bb.cb, %bb.cb, %bb.cb, %bb.cb, %bb.f, %bb.d, %bb.e, %http_request_on_header.exit, %bb.g, %bb.b
-  %.0 = phi i32 [ -105, %bb.b ], [ -531, %bb.g ], [ %.0.i, %http_request_on_header.exit ], [ -105, %bb.f ], [ -531, %bb.d ], [ -531, %bb.e ], [ -531, %bb.cu ], [ 0, %memieq.exit49.i ], [ -531, %bb.dd ], [ %i.mz, %parse_status_code.exit.i ], [ -531, %bb.cb ], [ -531, %bb.cm ], [ -106, %memieq.exit.i28 ], [ -531, %bb.ck ], [ -531, %bb.cl ], [ -531, %bb.cn ], [ -106, %bb.cp ], [ -531, %bb.cq ], [ -531, %bb.cv ], [ -105, %check_header_value.exit.i32 ], [ -531, %bb.cc ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cd ], [ -531, %bb.dc ], [ -531, %bb.db ], [ -531, %bb.da ], [ -531, %bb.cz ], [ -531, %bb.cy ], [ -531, %bb.cx ], [ -531, %bb.cw ], [ -531, %bb.cr ], [ -531, %.preheader.i.i24 ], [ -531, %bb.cs ]
+  %.0 = phi i32 [ -105, %bb.b ], [ -531, %bb.g ], [ %.0.i, %http_request_on_header.exit ], [ -105, %bb.f ], [ -531, %bb.d ], [ -531, %bb.e ], [ -531, %bb.cu ], [ 0, %memieq.exit49.i ], [ -531, %bb.dd ], [ -531, %bb.cm ], [ -531, %bb.cb ], [ -531, %bb.cc ], [ -106, %memieq.exit.i28 ], [ -531, %bb.ck ], [ -531, %bb.cl ], [ -531, %bb.cn ], [ -106, %bb.cp ], [ -531, %bb.cq ], [ -531, %bb.cv ], [ -105, %check_header_value.exit.i32 ], [ %i.mz, %parse_status_code.exit.i ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cb ], [ -531, %bb.cd ], [ -531, %bb.dc ], [ -531, %bb.db ], [ -531, %bb.da ], [ -531, %bb.cz ], [ -531, %bb.cy ], [ -531, %bb.cx ], [ -531, %bb.cw ], [ -531, %bb.cr ], [ -531, %.preheader.i.i24 ], [ -531, %bb.cs ]
   ret i32 %.0
 }
 
@@ -1229,8 +1227,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.b = load i8, ptr %i.a, align 1, !tbaa !16
   %i.c = and i8 %i.b, 1
-  %sext = add nsw i8 %i.c, -1
-  %. = sext i8 %sext to i32
+  %2 = xor i8 %i.c, 1
+  %3 = zext nneg i8 %2 to i32
+  %. = sub nsw i32 0, %3
   ret i32 %.
 }
 

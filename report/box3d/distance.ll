@@ -204,7 +204,7 @@ bb.cs:                                            ; preds = %bb.cr
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs, %bb.cr
-  %i.alg = load i32, ptr %i.ae, align 8, !tbaa !19 ; 7 uses
+  %i.alg = load i32, ptr %i.ae, align 8, !tbaa !19 ; 8 uses
   switch i32 %i.alg, label %b3GetMetric.exit.i [
     i32 4, label %bb.cw
     i32 2, label %bb.cu
@@ -319,13 +319,12 @@ b3GetMetric.exit.i:                               ; preds = %bb.ct
 .lr.ph.i727:                                      ; preds = %b3GetMetric.exit.i, %b3GetMetric.exit.thread.i
   %i.anh = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 3 uses
   %i.ani = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 3 uses
-  %wide.trip.count.i728 = zext nneg i32 %i.alg to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i728, 1
   %i.anj = icmp eq i32 %i.alg, 1
   br i1 %i.anj, label %.epil.preheader, label %.lr.ph.i727.new
 
 .lr.ph.i727.new:                                  ; preds = %.lr.ph.i727
-  %unroll_iter = and i64 %wide.trip.count.i728, 2147483646
+  %11 = and i32 %i.alg, 2147483646
+  %unroll_iter = zext nneg i32 %11 to i64
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cx, %.lr.ph.i727.new
@@ -360,8 +359,8 @@ bb.cx:                                            ; preds = %bb.cx, %.lr.ph.i727
   br i1 %niter.ncmp.1, label %b3WriteCache.exit.loopexit.unr-lcssa, label %bb.cx, !llvm.loop !43
 
 b3WriteCache.exit.loopexit.unr-lcssa:             ; preds = %bb.cx
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %b3WriteCache.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.alg to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %b3WriteCache.exit
 
 .epil.preheader:                                  ; preds = %b3WriteCache.exit.loopexit.unr-lcssa, %.lr.ph.i727
   %indvars.iv.i729.epil.init = phi i64 [ 0, %.lr.ph.i727 ], [ %indvars.iv.next.i730.1, %b3WriteCache.exit.loopexit.unr-lcssa ] ; 3 uses
@@ -764,9 +763,8 @@ bb.bp:                                            ; preds = %bb.bo
   %.0341 = phi i32 [ %i.cgd, %bb.bt ], [ 0, %.preheader.preheader ] ; 2 uses
   %.0338 = phi float [ %..0338, %bb.bt ], [ %i.ccp, %.preheader.preheader ] ; 3 uses
   %.0335 = phi float [ %.0335., %bb.bt ], [ %.0.i, %.preheader.preheader ] ; 2 uses
-  %8 = and i32 %.0341, 1
-  %.not = icmp eq i32 %8, 0
-  br i1 %.not, label %bb.br, label %bb.bq
+  %.not = trunc i32 %.0341 to i1
+  br i1 %.not, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %.preheader
   %i.cfu = fsub float %i.ag, %.0338

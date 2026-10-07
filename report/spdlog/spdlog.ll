@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   store atomic i8 1, ptr %i.b monotonic, align 8
-  %i.c = add i64 %1, 1                            ; 6 uses
+  %i.c = add i64 %1, 1                            ; 7 uses
   %i.d = icmp ugt i64 %i.c, 24019198012642645
   br i1 %i.d, label %.noexc.i, label %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
 
@@ -226,9 +226,8 @@ _ZNSt12_Vector_baseIN6spdlog7details14log_msg_bufferESaIS2_EEC2EmRKS3_.exit.i.i:
           to label %.lr.ph.i.i.i.i.i.i.preheader unwind label %bb.e ; 12 uses
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNSt12_Vector_baseIN6spdlog7details14log_msg_bufferESaIS2_EEC2EmRKS3_.exit.i.i
-  %2 = and i64 %1, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
+  %lcmp.mod.not = trunc i64 %i.c to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
@@ -631,7 +630,7 @@ vec.epilog.middle.block161:                       ; preds = %vec.epilog.vector.b
   store i64 %i.bt, ptr %i.e, align 8, !tbaa !69
   %i.bv = load i64, ptr %i.f, align 8, !tbaa !68
   %i.bw = icmp eq i64 %i.bv, %i.bt
-  br i1 %i.bw, label %.lr.ph126, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit30, !llvm.loop !3
+  br i1 %i.bw, label %.lr.ph126, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit30
 
 _ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit30: ; preds = %.lr.ph126, %._crit_edge.i.i28, %.lr.ph34.i.i17
   %.sink164 = phi i64 [ %.pre.i.i18, %.lr.ph34.i.i17 ], [ %i.bt, %._crit_edge.i.i28 ], [ %i.bt, %.lr.ph126 ]
@@ -824,7 +823,7 @@ _ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewI
   store i64 %i.ei, ptr %i.e, align 8, !tbaa !69
   %i.ek = load i64, ptr %i.f, align 8, !tbaa !68
   %i.el = icmp eq i64 %i.ek, %i.ei
-  br i1 %i.el, label %.lr.ph127, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit60.loopexit, !llvm.loop !3
+  br i1 %i.el, label %.lr.ph127, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit60.loopexit
 
 _ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit60.loopexit: ; preds = %.lr.ph127, %._crit_edge.i.i58, %.lr.ph34.i.i47.preheader
   %.sink165 = phi i64 [ %.pre.i.i48, %.lr.ph34.i.i47.preheader ], [ %i.ei, %._crit_edge.i.i58 ], [ %i.ei, %.lr.ph127 ]
@@ -1227,7 +1226,7 @@ bb.f:                                             ; preds = %.lr.ph144
   store i64 %i.ca, ptr %i.f, align 8, !tbaa !69
   %i.cc = load i64, ptr %i.g, align 8, !tbaa !68
   %i.cd = icmp eq i64 %i.cc, %i.ca
-  br i1 %i.cd, label %.lr.ph144, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit33, !llvm.loop !3
+  br i1 %i.cd, label %.lr.ph144, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit33
 
 _ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit33: ; preds = %bb.f, %._crit_edge.i.i30, %.lr.ph34.i.i19
   %.sink210 = phi i64 [ %.pre.i.i20, %.lr.ph34.i.i19 ], [ %i.ca, %._crit_edge.i.i30 ], [ %i.ca, %bb.f ]
@@ -1426,7 +1425,7 @@ bb.j:                                             ; preds = %.lr.ph145
   store i64 %i.ep, ptr %i.f, align 8, !tbaa !69
   %i.er = load i64, ptr %i.g, align 8, !tbaa !68
   %i.es = icmp eq i64 %i.er, %i.ep
-  br i1 %i.es, label %.lr.ph145, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit65.loopexit, !llvm.loop !3
+  br i1 %i.es, label %.lr.ph145, label %_ZN6spdlog7details10fmt_helper18append_string_viewEN3fmt3v1217basic_string_viewIcEERNS3_19basic_memory_bufferIcLm250ENS3_6detail9allocatorIcEEEE.exit65.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph145
   %lpad.loopexit = landingpad { ptr, i32 }

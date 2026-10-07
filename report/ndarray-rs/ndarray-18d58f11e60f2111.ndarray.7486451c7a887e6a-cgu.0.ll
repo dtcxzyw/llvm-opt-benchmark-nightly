@@ -205,9 +205,8 @@ bb.a:
   %.sroa.44.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.i = load ptr, ptr %1, align 8, !nonnull !5   ; 6 uses
   %i.j = load ptr, ptr %i.h, align 8, !nonnull !5, !align !12 ; 6 uses
-  %2 = and i32 %i.f, 1
-  %.not.i.i.peel = icmp eq i32 %2, 0
-  br i1 %.not.i.i.peel, label %.peel.next, label %.split.i.peel
+  %.not.i.i.peel = trunc i32 %i.f to i1
+  br i1 %.not.i.i.peel, label %.split.i.peel, label %.peel.next
 
 .split.i.peel:                                    ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !97
@@ -610,8 +609,8 @@ bb.l:                                             ; preds = %._crit_edge44.i
 
 bb.m:                                             ; preds = %bb.p, %.lr.ph.i
   %.sroa.0.041.i = phi i64 [ %2, %.lr.ph.i ], [ %i.al, %bb.p ] ; 4 uses
-  %i.ad = load i32, ptr %i.b, align 8, !range !9, !noalias !255, !noundef !5 ; 2 uses
-  %i.ae = trunc nuw i32 %i.ad to i1               ; 2 uses
+  %i.ad = load i32, ptr %i.b, align 8, !range !9, !noalias !255, !noundef !5
+  %i.ae = trunc nuw i32 %i.ad to i1               ; 3 uses
   %i.af = load i64, ptr %i.aa, align 8, !noalias !255 ; 3 uses
   %i.ag = load i32, ptr %i.ab, align 4, !noalias !255
   %i.ah = zext i32 %i.ag to i64
@@ -623,10 +622,9 @@ bb.n:                                             ; preds = %bb.q
   %i.aj = landingpad { ptr, i32 }
           cleanup
   tail call void @llvm.experimental.noalias.scope.decl(metadata !263)
-  %3 = icmp eq i32 %i.ad, 0
-  %4 = icmp eq i64 %i.af, 0
-  %or.cond.i = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsa0fWqW2HhWg_7ndarray9dimension12dynindeximpl9IxDynReprjEEBI_.exit.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i
+  %3 = icmp ne i64 %i.af, 0
+  %or.cond.i = select i1 %i.ae, i1 %3, i1 false
+  br i1 %or.cond.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsa0fWqW2HhWg_7ndarray9dimension12dynindeximpl9IxDynReprjEEBI_.exit.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i: ; preds = %bb.n
   %.val.i.i = load ptr, ptr %i.ac, align 8, !alias.scope !263, !noalias !255, !nonnull !5, !noundef !5

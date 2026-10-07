@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.092 = phi ptr [ %i.f, %bb.b ], [ null, %bb.a ] ; 3 uses
   %i.g = call fastcc i32 @chooseGLXFBConfig(ptr noundef %2, ptr noundef %i.b)
-  %.not98 = icmp eq i32 %i.g, 0
-  br i1 %.not98, label %bb.d, label %bb.e
+  %.not98 = trunc nuw i32 %i.g to i1
+  br i1 %.not98, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void (i32, ptr, ...) @_glfwInputError(i32 noundef 65545, ptr noundef nonnull @.str.39) #4
@@ -608,9 +608,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.s
   %i.at = call i32 %i.ar(ptr noundef %i.as, ptr noundef %i.ao, i32 noundef 32785, ptr noundef nonnull %i.q) #4, !inline_history !5 ; 0 uses
   %i.au = load i32, ptr %i.q, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #4
-  %2 = and i32 %i.au, 1
-  %.not73 = icmp eq i32 %2, 0
-  br i1 %.not73, label %bb.s, label %bb.g
+  %.not73 = trunc i32 %i.au to i1
+  br i1 %.not73, label %bb.g, label %bb.s
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #4
@@ -963,8 +962,8 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.b = call fastcc i32 @chooseGLXFBConfig(ptr noundef %2, ptr noundef %i.a)
-  %.not = icmp eq i32 %i.b, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %.not = trunc nuw i32 %i.b to i1
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, ...) @_glfwInputError(i32 noundef 65545, ptr noundef nonnull @.str.39) #4

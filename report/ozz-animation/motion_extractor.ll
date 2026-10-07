@@ -204,8 +204,8 @@ bb.y:                                             ; preds = %.lr.ph, %bb.y
 .lr.ph171:                                        ; preds = %.preheader166
   %i.iy = ptrtoint ptr %i.iw to i64
   %i.iz = ptrtoint ptr %i.ix to i64
-  %i.ja = sub i64 %i.iy, %i.iz                    ; 3 uses
-  %i.jb = ashr exact i64 %i.ja, 4                 ; 2 uses
+  %i.ja = sub i64 %i.iy, %i.iz                    ; 2 uses
+  %i.jb = ashr exact i64 %i.ja, 4                 ; 3 uses
   %i.jc = load ptr, ptr %3, align 8, !tbaa !29    ; 3 uses
   %i.jd = icmp eq i64 %i.ja, 16
   br i1 %i.jd, label %.epil.preheader, label %.lr.ph171.new
@@ -252,9 +252,8 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph171.ne
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.z, !llvm.loop !64
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.z
-  %10 = and i64 %i.ja, 16
-  %lcmp.mod.not = icmp eq i64 %10, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.jb to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph171
   %.081170.epil.init = phi i64 [ 0, %.lr.ph171 ], [ %i.kd, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -544,7 +543,6 @@ bb.a:
   %i.i = fsub float %.sroa.226.0.copyload, %.sroa.224.0.copyload ; 3 uses
   %i.j = uitofp i64 %i.d to float
   %i.k = fadd float %i.j, -1.000000e+00           ; 3 uses
-  %xtraiter = and i64 %i.d, 1
   %unroll_iter = and i64 %i.d, -2
   br label %bb.b
 
@@ -588,8 +586,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !106
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.d to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa
   %lcmp.mod2 = trunc i64 %i.d to i1

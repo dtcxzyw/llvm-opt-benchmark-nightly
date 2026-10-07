@@ -204,8 +204,8 @@ bb.a:
   %i.o = zext i32 %i.n to i64                     ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 29264
   %i.q = load i32, ptr %i.p, align 8, !tbaa !604
-  %.fr157 = freeze i32 %i.q                       ; 4 uses
-  %i.r = zext i32 %.fr157 to i64                  ; 3 uses
+  %.fr157 = freeze i32 %i.q                       ; 5 uses
+  %i.r = zext i32 %.fr157 to i64                  ; 2 uses
   %i.s = zext i32 %i.f to i64                     ; 4 uses
   %i.t = add nsw i64 %i.l, -1                     ; 7 uses
   %i.u = mul nuw nsw i64 %i.o, %i.i               ; 5 uses
@@ -302,10 +302,9 @@ bb.e:                                             ; preds = %bb.k
   br i1 %.not158, label %.lr.ph123.split.split, label %.lr.ph123.split.split.us.preheader
 
 .lr.ph123.split.split.us.preheader:               ; preds = %.lr.ph123.split
-  %xtraiter = and i64 %i.r, 1
   %i.as = icmp eq i32 %.fr157, 1
   %unroll_iter = and i64 %i.r, 4294967294
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = trunc i32 %.fr157 to i1
   %lcmp.mod197 = trunc i32 %.fr157 to i1
   br label %.lr.ph123.split.split.us
 
@@ -479,7 +478,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %niter.ncmp.1, label %._crit_edge118.us.us.unr-lcssa, label %.lr.ph117.us.us.new, !llvm.loop !599
 
 ._crit_edge118.us.us.unr-lcssa:                   ; preds = %.lr.ph117.us.us.new
-  br i1 %lcmp.mod.not, label %._crit_edge118.us.us, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge118.us.us
 
 .epil.preheader:                                  ; preds = %._crit_edge118.us.us.unr-lcssa, %.lr.ph117.us.us
   %.0115.us.us.epil.init = phi i64 [ 0, %.lr.ph117.us.us ], [ %i.dj, %._crit_edge118.us.us.unr-lcssa ]

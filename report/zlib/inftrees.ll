@@ -203,13 +203,12 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not266, label %._crit_edge257, label %.lr.ph256.preheader
 
 .lr.ph256.preheader:                              ; preds = %.preheader234
-  %wide.trip.count295 = zext i32 %2 to i64        ; 2 uses
-  %xtraiter364 = and i64 %wide.trip.count295, 1
   %i.gk = icmp eq i32 %2, 1
   br i1 %i.gk, label %.lr.ph256.epil.preheader, label %.lr.ph256.preheader.new
 
 .lr.ph256.preheader.new:                          ; preds = %.lr.ph256.preheader
-  %unroll_iter368 = and i64 %wide.trip.count295, 4294967294
+  %6 = and i32 %2, -2
+  %unroll_iter368 = zext i32 %6 to i64
   br label %.lr.ph256
 
 .lr.ph256:                                        ; preds = %bb.ah, %.lr.ph256.preheader.new
@@ -258,8 +257,8 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph256.1
   br i1 %niter369.ncmp.1, label %._crit_edge257.loopexit.unr-lcssa, label %.lr.ph256, !llvm.loop !12
 
 ._crit_edge257.loopexit.unr-lcssa:                ; preds = %bb.ah
-  %lcmp.mod366.not = icmp eq i64 %xtraiter364, 0
-  br i1 %lcmp.mod366.not, label %._crit_edge257, label %.lr.ph256.epil.preheader
+  %lcmp.mod366.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod366.not, label %.lr.ph256.epil.preheader, label %._crit_edge257
 
 .lr.ph256.epil.preheader:                         ; preds = %._crit_edge257.loopexit.unr-lcssa, %.lr.ph256.preheader
   %indvars.iv292.epil.init = phi i64 [ 0, %.lr.ph256.preheader ], [ %indvars.iv.next293.1, %._crit_edge257.loopexit.unr-lcssa ] ; 2 uses

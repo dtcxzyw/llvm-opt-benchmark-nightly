@@ -204,9 +204,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.ci = or i64 %1, 1
@@ -515,9 +514,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cr = or i64 %1, 1
@@ -798,9 +796,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cn = or i64 %1, 1
@@ -1203,9 +1200,8 @@ bb.a:
   %i.o = add i64 %1, -1                           ; 3 uses
   %i.p = sub i64 %i.e, %i.g
   %.neg = add i64 %i.g, 1
-  %xtraiter = and i64 %i.p, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i64 %i.p to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %i.q = and i64 %i.g, %i.n

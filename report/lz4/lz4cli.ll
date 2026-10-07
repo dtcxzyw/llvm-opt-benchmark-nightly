@@ -202,26 +202,25 @@ exeNameMatch.exit.thread553:                      ; preds = %bb.k, %bb.k
 
 exeNameMatch.exit.thread:                         ; preds = %bb.k, %bb.j, %exeNameMatch.exit.thread553
   %.0318 = phi i32 [ 1, %exeNameMatch.exit.thread553 ], [ 0, %bb.k ], [ 0, %bb.j ] ; 4 uses
-  %.0295 = phi i32 [ 2, %exeNameMatch.exit.thread553 ], [ 0, %bb.k ], [ 0, %bb.j ]
+  %.0295 = phi i32 [ 2, %exeNameMatch.exit.thread553 ], [ 0, %bb.k ], [ 0, %bb.j ] ; 2 uses
   %.0284 = phi ptr [ @.str.3, %exeNameMatch.exit.thread553 ], [ null, %bb.k ], [ null, %bb.j ] ; 2 uses
   %i.bc = tail call i32 @strncmp(ptr noundef nonnull readonly dereferenceable(1) %.1.i472, ptr noundef nonnull dereferenceable(6) @.str.4, i64 noundef 5) #25
   %.not.i474 = icmp eq i32 %i.bc, 0
-  br i1 %.not.i474, label %bb.l, label %exeNameMatch.exit475.thread
+  br i1 %.not.i474, label %bb.l, label %exeNameMatch.exit475.thread557
 
 bb.l:                                             ; preds = %exeNameMatch.exit.thread
   %i.bd = getelementptr inbounds nuw i8, ptr %.1.i472, i64 5
-  %i.be = load i8, ptr %i.bd, align 1, !tbaa !10
-  %.fr = freeze i8 %i.be
-  switch i8 %.fr, label %exeNameMatch.exit475.thread [
-    i8 0, label %exeNameMatch.exit475.thread557
-    i8 46, label %exeNameMatch.exit475.thread557
-  ]
+  %i.be = load i8, ptr %i.bd, align 1, !tbaa !10  ; 2 uses
+  %3 = icmp eq i8 %i.be, 0
+  br i1 %3, label %exeNameMatch.exit475.thread557, label %exeNameMatch.exit475.thread
 
-exeNameMatch.exit475.thread:                      ; preds = %bb.l, %exeNameMatch.exit.thread
+exeNameMatch.exit475.thread:                      ; preds = %bb.l
+  %4 = icmp eq i8 %i.be, 46
+  %5 = select i1 %4, i32 2, i32 %.0295
   br label %exeNameMatch.exit475.thread557
 
-exeNameMatch.exit475.thread557:                   ; preds = %bb.l, %bb.l, %exeNameMatch.exit475.thread
-  %i.bf = phi i32 [ %.0295, %exeNameMatch.exit475.thread ], [ 2, %bb.l ], [ 2, %bb.l ] ; 2 uses
+exeNameMatch.exit475.thread557:                   ; preds = %exeNameMatch.exit.thread, %bb.l, %exeNameMatch.exit475.thread
+  %i.bf = phi i32 [ %.0295, %exeNameMatch.exit.thread ], [ 2, %bb.l ], [ %5, %exeNameMatch.exit475.thread ] ; 2 uses
   %i.bg = tail call i32 @strncmp(ptr noundef nonnull readonly dereferenceable(1) %.1.i472, ptr noundef nonnull dereferenceable(5) @.str.5, i64 noundef 4) #25
   %.not.i476 = icmp eq i32 %i.bg, 0
   br i1 %.not.i476, label %bb.m, label %exeNameMatch.exit477.thread
@@ -504,8 +503,8 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bf
   %i.dj = call fastcc i32 @longCommandWArg(ptr noundef %i.d, ptr noundef nonnull @.str.35)
-  %.not426 = icmp eq i32 %i.dj, 0
-  br i1 %.not426, label %bb.bs, label %bb.bi
+  %.not426 = trunc nuw i32 %i.dj to i1
+  br i1 %.not426, label %bb.bi, label %bb.bs
 
 bb.bi:                                            ; preds = %bb.bh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
@@ -567,9 +566,9 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.bh
   %i.eb = call fastcc i32 @longCommandWArg(ptr noundef %i.d, ptr noundef nonnull @.str.39)
-  %.not427 = icmp eq i32 %i.eb, 0
+  %.not427 = trunc nuw i32 %i.eb to i1
   %i.ec = load ptr, ptr %i.d, align 8, !tbaa !17  ; 5 uses
-  br i1 %.not427, label %bb.by, label %bb.bt
+  br i1 %.not427, label %bb.bt, label %bb.by
 
 bb.bt:                                            ; preds = %bb.bs
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !10
@@ -972,7 +971,7 @@ bb.ev:                                            ; preds = %bb.bq
 
 ._crit_edge.loopexit:                             ; preds = %.thread566
   %i.mh = icmp eq i32 %.4260602, 0
-  %3 = icmp ne i32 %.1311594, 0
+  %6 = trunc nuw i32 %.1311594 to i1
   %i.mi = icmp eq i32 %.3341587, 0
   br label %._crit_edge
 
@@ -981,7 +980,7 @@ bb.ev:                                            ; preds = %bb.bq
   %.1334.lcssa = phi i32 [ %.0318, %exeNameMatch.exit477.thread ], [ %.4337588, %._crit_edge.loopexit ]
   %.0324.lcssa = phi i32 [ 0, %exeNameMatch.exit477.thread ], [ %.3327590, %._crit_edge.loopexit ] ; 8 uses
   %.1319.lcssa = phi i32 [ %.0318, %exeNameMatch.exit477.thread ], [ %.4322591, %._crit_edge.loopexit ] ; 4 uses
-  %.0310.lcssa = phi i1 [ false, %exeNameMatch.exit477.thread ], [ %3, %._crit_edge.loopexit ]
+  %.0310.lcssa = phi i1 [ false, %exeNameMatch.exit477.thread ], [ %6, %._crit_edge.loopexit ]
   %.0305.lcssa = phi i32 [ %.1.i463, %exeNameMatch.exit477.thread ], [ %.4309595, %._crit_edge.loopexit ]
   %.2297.lcssa = phi i32 [ %i.bf, %exeNameMatch.exit477.thread ], [ %.5300596, %._crit_edge.loopexit ] ; 4 uses
   %.0291.lcssa = phi ptr [ null, %exeNameMatch.exit477.thread ], [ %.2293597, %._crit_edge.loopexit ]
@@ -1088,13 +1087,13 @@ bb.fg:                                            ; preds = %bb.fl, %.lr.ph.i541
   %i.np = load ptr, ptr %i.no, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.nq = call i32 @stat(ptr noundef readonly %i.np, ptr noundef nonnull %2) #22
-  %.not.i.i = icmp ne i32 %i.nq, 0
+  %.not.i.i = icmp eq i32 %i.nq, 0
   %i.nr = load i32, ptr %i.nm, align 8
   %i.ns = and i32 %i.nr, 61440
-  %4 = icmp ne i32 %i.ns, 16384
-  %narrow.i.not.i = select i1 %.not.i.i, i1 true, i1 %4
+  %7 = icmp eq i32 %i.ns, 16384
+  %narrow.i.not.i = select i1 %.not.i.i, i1 %7, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
-  br i1 %narrow.i.not.i, label %bb.fh, label %bb.fk
+  br i1 %narrow.i.not.i, label %bb.fk, label %bb.fh
 
 bb.fh:                                            ; preds = %bb.fg
   %i.nt = load ptr, ptr %i.no, align 8, !tbaa !17 ; 2 uses
@@ -1497,13 +1496,13 @@ bb.e:                                             ; preds = %.tail89.thread
   store i8 0, ptr %i.ad, align 1, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.ae = call i32 @stat(ptr noundef nonnull readonly %i.y, ptr noundef nonnull %4) #22
-  %.not.i = icmp ne i32 %i.ae, 0
+  %.not.i = icmp eq i32 %i.ae, 0
   %i.af = load i32, ptr %i.k, align 8
   %i.ag = and i32 %i.af, 61440
-  %5 = icmp ne i32 %i.ag, 16384
-  %narrow.i.not = select i1 %.not.i, i1 true, i1 %5
+  %5 = icmp eq i32 %i.ag, 16384
+  %narrow.i.not = select i1 %.not.i, i1 %5, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  br i1 %narrow.i.not, label %bb.h, label %bb.f
+  br i1 %narrow.i.not, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = tail call fastcc i32 @UTIL_prepareFileList(ptr noundef nonnull %i.y, ptr noundef %1, ptr noundef %2, ptr noundef %3)

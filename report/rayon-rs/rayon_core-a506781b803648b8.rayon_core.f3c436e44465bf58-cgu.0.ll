@@ -204,9 +204,8 @@ bb.a:
   %i.o = add i64 %1, -1                           ; 3 uses
   %i.p = sub i64 %i.e, %i.g
   %.neg = add i64 %i.g, 1
-  %xtraiter = and i64 %i.p, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i64 %i.p to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %i.q = and i64 %i.g, %i.n
@@ -609,9 +608,8 @@ _RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit: ; preds
   %.lcssa58 = phi i64 [ %i.d, %bb.a ], [ %i.n, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit ]
   %.lcssa57 = phi i64 [ %i.e, %bb.a ], [ %i.o, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit ] ; 4 uses
   %i.q = add i64 %.lcssa61, 2                     ; 2 uses
-  %2 = and i64 %.lcssa61, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.b, label %bb.d
+  %2 = trunc i64 %.lcssa61 to i1
+  br i1 %2, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   fence seq_cst
@@ -684,9 +682,8 @@ _RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10r
   %i.an = getelementptr inbounds nuw i8, ptr %.lcssa59, i64 1496
   %i.ao = getelementptr inbounds nuw i8, ptr %.lcssa59, i64 1512 ; 2 uses
   %i.ap = load atomic i64, ptr %i.ao acquire, align 8
-  %4 = and i64 %i.ap, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.lr.ph.i33, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit
+  %3 = trunc i64 %i.ap to i1
+  br i1 %3, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit, label %.lr.ph.i33
 
 .lr.ph.i33:                                       ; preds = %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE9wait_nextBY_.exit, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i36
   %.sroa.0.02.i34 = phi i32 [ %.sroa.0.1.i37, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i36 ], [ 0, %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE9wait_nextBY_.exit ] ; 5 uses
@@ -713,9 +710,8 @@ _RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10r
 _RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i36: ; preds = %.loopexit.i.thread.i38, %.loopexit.i.i35
   %.sroa.0.1.i37 = phi i32 [ %i.au, %.loopexit.i.thread.i38 ], [ %.sroa.0.02.i34, %.loopexit.i.i35 ]
   %i.av = load atomic i64, ptr %i.ao acquire, align 8
-  %6 = and i64 %i.av, 1
-  %7 = icmp eq i64 %6, 0
-  br i1 %7, label %.lr.ph.i33, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit
+  %4 = trunc i64 %i.av to i1
+  br i1 %4, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit, label %.lr.ph.i33
 
 _RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit: ; preds = %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i36, %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE9wait_nextBY_.exit
   %i.aw = load <2 x ptr>, ptr %i.an, align 8
@@ -726,9 +722,8 @@ bb.g:                                             ; preds = %bb.e
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.ax, i64 %.lcssa57 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16 ; 3 uses
   %i.ba = load atomic i64, ptr %i.az acquire, align 8
-  %8 = and i64 %i.ba, 1
-  %9 = icmp eq i64 %8, 0
-  br i1 %9, label %.lr.ph.i42, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51
+  %5 = trunc i64 %i.ba to i1
+  br i1 %5, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51, label %.lr.ph.i42
 
 .lr.ph.i42:                                       ; preds = %bb.g, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i45
   %.sroa.0.02.i43 = phi i32 [ %.sroa.0.1.i46, %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i45 ], [ 0, %bb.g ] ; 5 uses
@@ -755,9 +750,8 @@ bb.g:                                             ; preds = %bb.e
 _RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i45: ; preds = %.loopexit.i.thread.i47, %.loopexit.i.i44
   %.sroa.0.1.i46 = phi i32 [ %i.bf, %.loopexit.i.thread.i47 ], [ %.sroa.0.02.i43, %.loopexit.i.i44 ]
   %i.bg = load atomic i64, ptr %i.az acquire, align 8
-  %10 = and i64 %i.bg, 1
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %.lr.ph.i42, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51
+  %6 = trunc i64 %i.bg to i1
+  br i1 %6, label %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51, label %.lr.ph.i42
 
 _RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51: ; preds = %_RNvMNtCsfI5zKgsrATz_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i45, %bb.g
   %i.bh = load <2 x ptr>, ptr %i.ay, align 8      ; 2 uses

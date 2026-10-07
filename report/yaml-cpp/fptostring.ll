@@ -202,8 +202,7 @@ bb.j:                                             ; preds = %bb.i
   %i.db = sub nsw i32 64, %i.bu
   %i.dc = zext nneg i32 %i.db to i64
   %i.dd = lshr i64 %i.da, %i.dc
-  %2 = trunc i64 %i.dd to i32
-  %.sroa.0.0.insert.ext.i137 = and i32 %2, 1
+  %2 = trunc i64 %i.dd to i1
   %i.de = sub nsw i32 32, %i.bu
   %i.df = zext nneg i32 %i.de to i64
   %i.dg = shl i64 4294967295, %i.df
@@ -212,10 +211,8 @@ bb.j:                                             ; preds = %bb.i
   %i.dj = and i32 %0, 1
   %.not188.not = icmp eq i32 %i.dj, 0
   %narrow = select i1 %.not188.not, i1 %i.di, i1 false
-  %3 = zext i1 %narrow to i32
-  %4 = or i32 %.sroa.0.0.insert.ext.i137, %3
-  %.not111 = icmp eq i32 %4, 0
-  br i1 %.not111, label %bb.k, label %_ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary32EjiE21remove_trailing_zerosERjRi.exit127
+  %.not111 = or i1 %narrow, %2
+  br i1 %.not111, label %_ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary32EjiE21remove_trailing_zerosERjRi.exit127, label %bb.k
 
 _ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary32EjiE21remove_trailing_zerosERjRi.exit127: ; preds = %bb.j, %bb.g
   %i.dk = mul i32 %i.cl, 184254097                ; 2 uses
@@ -265,9 +262,8 @@ bb.l:                                             ; preds = %bb.k
   %i.er = lshr i64 %i.eo, %i.eq
   %i.es = trunc i64 %i.er to i32
   %i.et = xor i32 %i.ee, %i.es
-  %5 = and i32 %i.et, 1
-  %.not113 = icmp eq i32 %5, 0
-  br i1 %.not113, label %bb.n, label %bb.m
+  %.not113 = trunc i32 %i.et to i1
+  br i1 %.not113, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.eu = add nsw i32 %i.em, -1
@@ -488,18 +484,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ds = sub nsw i32 64, %i.ca
   %i.dt = zext i32 %i.ds to i64                   ; 2 uses
   %i.du = lshr i64 %i.dr, %i.dt
-  %2 = trunc i64 %i.du to i32
-  %.sroa.04.0.insert.ext.i = and i32 %2, 1
+  %2 = trunc i64 %i.du to i1
   %i.dv = shl i64 %i.dr, %i.cf
   %i.dw = lshr i64 %i.dq, %i.dt
   %i.dx = or i64 %i.dw, %i.dv
   %i.dy = icmp eq i64 %i.dx, 0
   %.not185.not = icmp eq i8 %i.bp, 0
   %narrow = select i1 %.not185.not, i1 %i.dy, i1 false
-  %3 = zext i1 %narrow to i32
-  %4 = or i32 %.sroa.04.0.insert.ext.i, %3
-  %.not95 = icmp eq i32 %4, 0
-  br i1 %.not95, label %bb.k, label %_ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary64EmiE21remove_trailing_zerosERmRi.exit108
+  %.not95 = or i1 %narrow, %2
+  br i1 %.not95, label %_ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary64EmiE21remove_trailing_zerosERmRi.exit108, label %bb.k
 
 _ZN4YAML3jkj9dragonbox28remove_trailing_zeros_traitsINS1_6policy13trailing_zero8remove_tENS1_16ieee754_binary64EmiE21remove_trailing_zerosERmRi.exit108: ; preds = %bb.j, %bb.g
   %i.dz = mul i64 %i.cx, 28999941890838049        ; 2 uses
@@ -557,9 +550,8 @@ bb.l:                                             ; preds = %bb.k
   %i.fo = zext i32 %i.fn to i64                   ; 2 uses
   %i.fp = lshr i64 %i.fm, %i.fo
   %i.fq = xor i64 %i.fa, %i.fp
-  %5 = and i64 %i.fq, 1
-  %.not96 = icmp eq i64 %5, 0
-  br i1 %.not96, label %bb.n, label %bb.m
+  %.not96 = trunc i64 %i.fq to i1
+  br i1 %.not96, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.fr = add nsw i64 %i.fg, -1

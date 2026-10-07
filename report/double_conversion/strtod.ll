@@ -65,9 +65,8 @@ bb.h:                                             ; preds = %bb.e
   br label %_ZNK17double_conversion6Double10NextDoubleEv.exit
 
 bb.i:                                             ; preds = %bb.c
-  %3 = and i64 %i.d, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %_ZNK17double_conversion6Double10NextDoubleEv.exit, label %bb.j
+  %3 = trunc i64 %i.d to i1
+  br i1 %3, label %bb.j, label %_ZNK17double_conversion6Double10NextDoubleEv.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.y = icmp slt i64 %i.d, 0
@@ -470,9 +469,8 @@ bb.l:                                             ; preds = %bb.i
   br label %_ZN17double_conversion13StrtodTrimmedENS_6VectorIKcEEi.exit
 
 bb.m:                                             ; preds = %bb.g
-  %3 = and i64 %i.z, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %_ZN17double_conversion13StrtodTrimmedENS_6VectorIKcEEi.exit, label %bb.n
+  %3 = trunc i64 %i.z to i1
+  br i1 %3, label %bb.n, label %_ZN17double_conversion13StrtodTrimmedENS_6VectorIKcEEi.exit
 
 bb.n:                                             ; preds = %bb.m
   %i.au = icmp slt i64 %i.z, 0
@@ -743,9 +741,8 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ax = bitcast float %.0.i51 to i32
-  %3 = and i32 %i.ax, 1
-  %4 = icmp eq i32 %3, 0
-  %..046 = select i1 %4, float %.0.i51, float %.046
+  %3 = trunc i32 %i.ax to i1
+  %..046 = select i1 %3, float %.046, float %.0.i51
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.t, %bb.u, %bb.v, %_ZN17double_conversionL18SanitizedDoubletofEd.exit58, %_ZN17double_conversionL18SanitizedDoubletofEd.exit

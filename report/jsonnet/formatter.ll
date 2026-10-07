@@ -204,9 +204,8 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN7jsonnet8intern
 
 ._crit_edge:                                      ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN7jsonnet8internal11SortImports10ImportElemESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread37, %bb.a
   %.0.lcssa = phi i64 [ %1, %bb.a ], [ %i.x, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN7jsonnet8internal11SortImports10ImportElemESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread37 ] ; 5 uses
-  %5 = and i64 %2, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.d, label %bb.f
+  %5 = trunc i64 %2 to i1
+  br i1 %5, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge
   %i.ac = add nsw i64 %2, -2
@@ -609,8 +608,8 @@ bb.au:                                            ; preds = %bb.at, %._crit_edge
   %i.gs = ptrtoaddr ptr %i.go to i64
   %i.gt = add i64 %i.gr, -40
   %i.gu = sub i64 %i.gt, %i.gs                    ; 4 uses
-  %i.gv = udiv i64 %i.gu, 40                      ; 3 uses
-  %i.gw = add nuw nsw i64 %i.gv, 1                ; 6 uses
+  %i.gv = udiv i64 %i.gu, 40
+  %i.gw = add nuw nsw i64 %i.gv, 1                ; 8 uses
   %min.iters.check = icmp ult i64 %i.gu, 280
   br i1 %min.iters.check, label %.lr.ph.i.i564.preheader1424, label %vector.ph
 
@@ -740,9 +739,8 @@ bb.av:                                            ; preds = %.sink.split.i.i.1, 
   br i1 %niter.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i.unr-lcssa, label %.lr.ph33.i.i
 
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i.unr-lcssa: ; preds = %bb.av
-  %32 = and i64 %i.gv, 1
-  %lcmp.mod.not.not = icmp eq i64 %32, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph33.i.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i
+  %lcmp.mod.not = trunc i64 %i.gw to i1
+  br i1 %lcmp.mod.not, label %.lr.ph33.i.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i
 
 .lr.ph33.i.i.epil.preheader:                      ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i.unr-lcssa, %.lr.ph33.i.i.preheader
   %.032.i.i.epil.init = phi i32 [ 0, %.lr.ph33.i.i.preheader ], [ %.1.i.i.1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i.unr-lcssa ]
@@ -846,9 +844,8 @@ bb.ba:                                            ; preds = %.sink.split.i9.i.1,
   br i1 %niter1440.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit.loopexit.unr-lcssa, label %.lr.ph.i7.i
 
 _ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit.loopexit.unr-lcssa: ; preds = %bb.ba
-  %33 = and i64 %i.gv, 1
-  %lcmp.mod1436.not.not = icmp eq i64 %33, 0
-  br i1 %lcmp.mod1436.not.not, label %.lr.ph.i7.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit
+  %lcmp.mod1436.not = trunc i64 %i.gw to i1
+  br i1 %lcmp.mod1436.not, label %.lr.ph.i7.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit
 
 .lr.ph.i7.i.epil.preheader:                       ; preds = %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit.loopexit.unr-lcssa, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i
   %.06.i.i.epil.init = phi i8 [ 0, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i ], [ %.1.i10.i.1, %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit.loopexit.unr-lcssa ]
@@ -1251,8 +1248,8 @@ bb.ck:                                            ; preds = %bb.cj, %._crit_edge
   %i.qf = ptrtoaddr ptr %i.qb to i64
   %i.qg = add i64 %i.qe, -40
   %i.qh = sub i64 %i.qg, %i.qf                    ; 4 uses
-  %i.qi = udiv i64 %i.qh, 40                      ; 3 uses
-  %i.qj = add nuw nsw i64 %i.qi, 1                ; 4 uses
+  %i.qi = udiv i64 %i.qh, 40
+  %i.qj = add nuw nsw i64 %i.qi, 1                ; 6 uses
   %min.iters.check1364 = icmp ult i64 %i.qh, 280
   br i1 %min.iters.check1364, label %.lr.ph.i.i668.preheader1415, label %vector.ph1365
 
@@ -1382,9 +1379,8 @@ bb.cl:                                            ; preds = %.sink.split.i.i679.
   br i1 %niter1445.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683.unr-lcssa, label %.lr.ph33.i.i675
 
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683.unr-lcssa: ; preds = %bb.cl
-  %34 = and i64 %i.qi, 1
-  %lcmp.mod1442.not.not = icmp eq i64 %34, 0
-  br i1 %lcmp.mod1442.not.not, label %.lr.ph33.i.i675.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683
+  %lcmp.mod1442.not = trunc i64 %i.qj to i1
+  br i1 %lcmp.mod1442.not, label %.lr.ph33.i.i675.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683
 
 .lr.ph33.i.i675.epil.preheader:                   ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683.unr-lcssa, %.lr.ph33.i.i675.preheader
   %.032.i.i676.epil.init = phi i32 [ 0, %.lr.ph33.i.i675.preheader ], [ %.1.i.i681.1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683.unr-lcssa ]
@@ -1406,9 +1402,8 @@ _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementE
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683: ; preds = %.lr.ph33.i.i675.epil.preheader, %.sink.split.i.i679.epil, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683.unr-lcssa
   %.promoted.i.i684 = load i32, ptr %i.mg, align 4 ; 3 uses
   %i.sk = zext i1 %i.px to i8                     ; 2 uses
-  %35 = and i64 %i.qi, 1
-  %lcmp.mod1447.not.not = icmp eq i64 %35, 0
-  br i1 %lcmp.mod1447.not.not, label %.lr.ph.i7.i685.prol, label %.lr.ph.i7.i685.prol.loopexit
+  %lcmp.mod1447.not = trunc i64 %i.qj to i1
+  br i1 %lcmp.mod1447.not, label %.lr.ph.i7.i685.prol, label %.lr.ph.i7.i685.prol.loopexit
 
 .lr.ph.i7.i685.prol:                              ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i683
   %i.sl = load i32, ptr %i.qb, align 8, !tbaa !41
@@ -1706,8 +1701,8 @@ bb.dd:                                            ; preds = %bb.dc, %_ZN7jsonnet
   %i.wk = ptrtoaddr ptr %i.wg to i64
   %i.wl = add i64 %i.wj, -40
   %i.wm = sub i64 %i.wl, %i.wk                    ; 4 uses
-  %i.wn = udiv i64 %i.wm, 40                      ; 3 uses
-  %i.wo = add nuw nsw i64 %i.wn, 1                ; 6 uses
+  %i.wn = udiv i64 %i.wm, 40
+  %i.wo = add nuw nsw i64 %i.wn, 1                ; 8 uses
   %min.iters.check1386 = icmp ult i64 %i.wm, 280
   br i1 %min.iters.check1386, label %.lr.ph.i.i737.preheader1410, label %vector.ph1387
 
@@ -1837,9 +1832,8 @@ bb.de:                                            ; preds = %.sink.split.i.i748.
   br i1 %niter1453.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752.unr-lcssa, label %.lr.ph33.i.i744
 
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752.unr-lcssa: ; preds = %bb.de
-  %36 = and i64 %i.wn, 1
-  %lcmp.mod1450.not.not = icmp eq i64 %36, 0
-  br i1 %lcmp.mod1450.not.not, label %.lr.ph33.i.i744.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752
+  %lcmp.mod1450.not = trunc i64 %i.wo to i1
+  br i1 %lcmp.mod1450.not, label %.lr.ph33.i.i744.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752
 
 .lr.ph33.i.i744.epil.preheader:                   ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752.unr-lcssa, %.lr.ph33.i.i744.preheader
   %.032.i.i745.epil.init = phi i32 [ 0, %.lr.ph33.i.i744.preheader ], [ %.1.i.i750.1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752.unr-lcssa ]
@@ -1868,9 +1862,8 @@ _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementE
   br label %.lr.ph.i7.i754
 
 ._crit_edge.loopexit.i.i763.unr-lcssa:            ; preds = %bb.dl
-  %37 = and i64 %i.wn, 1
-  %lcmp.mod1457.not.not = icmp eq i64 %37, 0
-  br i1 %lcmp.mod1457.not.not, label %.lr.ph.i7.i754.epil.preheader, label %._crit_edge.loopexit.i.i763
+  %lcmp.mod1457.not = trunc i64 %i.wo to i1
+  br i1 %lcmp.mod1457.not, label %.lr.ph.i7.i754.epil.preheader, label %._crit_edge.loopexit.i.i763
 
 .lr.ph.i7.i754.epil.preheader:                    ; preds = %._crit_edge.loopexit.i.i763.unr-lcssa, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752
   %.06.i.i755.epil.init = phi i8 [ 1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i752 ], [ %.1.i10.i761.1, %._crit_edge.loopexit.i.i763.unr-lcssa ] ; 2 uses
@@ -2273,8 +2266,8 @@ bb.a:
   %i.e = ptrtoaddr ptr %i.a to i64
   %i.f = add i64 %i.d, -40
   %i.g = sub i64 %i.f, %i.e                       ; 4 uses
-  %i.h = udiv i64 %i.g, 40                        ; 3 uses
-  %i.i = add nuw nsw i64 %i.h, 1                  ; 4 uses
+  %i.h = udiv i64 %i.g, 40
+  %i.i = add nuw nsw i64 %i.h, 1                  ; 6 uses
   %min.iters.check = icmp ult i64 %i.g, 280
   br i1 %min.iters.check, label %.lr.ph.i.preheader24, label %vector.ph
 
@@ -2405,9 +2398,8 @@ bb.b:                                             ; preds = %.sink.split.i.1, %.
   br i1 %niter.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.unr-lcssa, label %.lr.ph33.i
 
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.unr-lcssa: ; preds = %bb.b
-  %6 = and i64 %i.h, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph33.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit
+  %lcmp.mod.not = trunc i64 %i.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph33.i.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit
 
 .lr.ph33.i.epil.preheader:                        ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.unr-lcssa, %.lr.ph33.i.preheader
   %.032.i.epil.init = phi i32 [ 0, %.lr.ph33.i.preheader ], [ %.1.i.1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.unr-lcssa ]
@@ -2430,9 +2422,8 @@ _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementE
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 5 uses
   %.promoted.i = load i32, ptr %i.bk, align 4     ; 3 uses
   %i.bl = zext i1 %2 to i8                        ; 2 uses
-  %7 = and i64 %i.h, 1
-  %lcmp.mod30.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod30.not.not, label %.lr.ph.i7.prol, label %.lr.ph.i7.prol.loopexit
+  %lcmp.mod30.not = trunc i64 %i.i to i1
+  br i1 %lcmp.mod30.not, label %.lr.ph.i7.prol, label %.lr.ph.i7.prol.loopexit
 
 .lr.ph.i7.prol:                                   ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit
   %i.bm = load i32, ptr %i.a, align 8, !tbaa !41
@@ -2835,8 +2826,8 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge
   %i.eg = ptrtoaddr ptr %i.ec to i64
   %i.eh = add i64 %i.ef, -40
   %i.ei = sub i64 %i.eh, %i.eg                    ; 4 uses
-  %i.ej = udiv i64 %i.ei, 40                      ; 3 uses
-  %i.ek = add nuw nsw i64 %i.ej, 1                ; 6 uses
+  %i.ej = udiv i64 %i.ei, 40
+  %i.ek = add nuw nsw i64 %i.ej, 1                ; 8 uses
   %min.iters.check = icmp ult i64 %i.ei, 280
   br i1 %min.iters.check, label %.lr.ph.i.i69.preheader151, label %vector.ph
 
@@ -2966,9 +2957,8 @@ bb.ab:                                            ; preds = %.sink.split.i.i80.1
   br i1 %niter.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83.unr-lcssa, label %.lr.ph33.i.i76
 
 _ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83.unr-lcssa: ; preds = %bb.ab
-  %7 = and i64 %i.ej, 1
-  %lcmp.mod.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph33.i.i76.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83
+  %lcmp.mod.not = trunc i64 %i.ek to i1
+  br i1 %lcmp.mod.not, label %.lr.ph33.i.i76.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83
 
 .lr.ph33.i.i76.epil.preheader:                    ; preds = %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83.unr-lcssa, %.lr.ph33.i.i76.preheader
   %.032.i.i77.epil.init = phi i32 [ 0, %.lr.ph33.i.i76.preheader ], [ %.1.i.i81.1, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83.unr-lcssa ]
@@ -3072,9 +3062,8 @@ bb.ag:                                            ; preds = %.sink.split.i9.i89.
   br i1 %niter165.ncmp.1, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98.loopexit.unr-lcssa, label %.lr.ph.i7.i85
 
 _ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98.loopexit.unr-lcssa: ; preds = %bb.ag
-  %8 = and i64 %i.ej, 1
-  %lcmp.mod161.not.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod161.not.not, label %.lr.ph.i7.i85.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98
+  %lcmp.mod161.not = trunc i64 %i.ek to i1
+  br i1 %lcmp.mod161.not, label %.lr.ph.i7.i85.epil.preheader, label %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98
 
 .lr.ph.i7.i85.epil.preheader:                     ; preds = %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98.loopexit.unr-lcssa, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83
   %.06.i.i86.epil.init = phi i8 [ 0, %_ZN7jsonnet8internal14FixIndentation10setIndentsERSt6vectorINS0_13FodderElementESaIS3_EEjj.exit.i83 ], [ %.1.i10.i92.1, %_ZN7jsonnet8internal14FixIndentation4fillERSt6vectorINS0_13FodderElementESaIS3_EEbbjj.exit98.loopexit.unr-lcssa ]

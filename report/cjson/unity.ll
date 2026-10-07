@@ -204,15 +204,13 @@ bb.a:
   br i1 %or.cond, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %6 = icmp ne i64 %0, %1                         ; 2 uses
-  %7 = and i32 %2, 1
-  %.not = icmp eq i32 %7, 0                       ; 2 uses
-  %or.cond38 = or i1 %6, %.not
-  br i1 %or.cond38, label %bb.c, label %bb.l
+  %6 = icmp eq i64 %0, %1                         ; 2 uses
+  %.not = trunc i32 %2 to i1                      ; 2 uses
+  %or.cond37 = and i1 %6, %.not
+  br i1 %or.cond37, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not. = xor i1 %6, true
-  %spec.select = zext i1 %not. to i32             ; 2 uses
+  %spec.select = zext i1 %6 to i32                ; 2 uses
   %i.e = and i32 %5, 16
   %.not28 = icmp eq i32 %i.e, 0
   %i.f = and i32 %2, 4
@@ -270,7 +268,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  br i1 %.not, label %bb.k, label %bb.j
+  br i1 %.not, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrOrEqual)
@@ -645,11 +643,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ad = fneg float %i.ab
   %.0.i32 = select i1 %i.ac, float %i.ad, float %i.ab ; 4 uses
   %i.ae = fsub float %.0.i32, %.0.i32
-  %or.cond44.i = fcmp uno float %.0.i32, %i.ae
+  %or.cond44.i = fcmp ord float %.0.i32, %i.ae
   %.035.i = tail call float @llvm.fabs.f32(float %i.o)
-  %6 = fcmp ogt float %.0.i32, %.035.i
-  %or.cond40 = or i1 %6, %or.cond44.i
-  br i1 %or.cond40, label %UnityFloatsWithin.exit.thread37, label %UnityFloatsWithin.exit.thread
+  %6 = fcmp ule float %.0.i32, %.035.i
+  %or.cond40 = and i1 %6, %or.cond44.i
+  br i1 %or.cond40, label %UnityFloatsWithin.exit.thread, label %UnityFloatsWithin.exit.thread37
 
 UnityFloatsWithin.exit.thread37:                  ; preds = %bb.k
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
@@ -720,11 +718,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.r = fneg float %i.p
   %.0.i = select i1 %i.q, float %i.r, float %i.p  ; 4 uses
   %i.s = fsub float %.0.i, %.0.i
-  %or.cond44.i = fcmp uno float %.0.i, %i.s
+  %or.cond44.i = fcmp ord float %.0.i, %i.s
   %.035.i = tail call float @llvm.fabs.f32(float %0)
-  %5 = fcmp ogt float %.0.i, %.035.i
-  %or.cond12 = or i1 %5, %or.cond44.i
-  br i1 %or.cond12, label %UnityFloatsWithin.exit.thread9, label %UnityFloatsWithin.exit.thread
+  %5 = fcmp ule float %.0.i, %.035.i
+  %or.cond12 = and i1 %5, %or.cond44.i
+  br i1 %or.cond12, label %UnityFloatsWithin.exit.thread, label %UnityFloatsWithin.exit.thread9
 
 UnityFloatsWithin.exit.thread9:                   ; preds = %bb.e
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
@@ -749,8 +747,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0
+  %.not = trunc i32 %3 to i1                      ; 2 uses
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
   %i.c = icmp ne i64 %i.b, 0
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 72), align 8
@@ -800,15 +797,14 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.l, %bb.e ]
   %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
-  %5 = trunc i32 %3 to i1
-  %i.n = xor i1 %.035.in, %5
+  %i.n = xor i1 %.035.in, %.not
   br i1 %i.n, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %.thread, %bb.g
   %.0.shrunk43 = phi i64 [ 0, %.thread ], [ %.0.shrunk, %bb.g ]
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %2)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
-  br i1 %.not, label %bb.i, label %bb.j
+  br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrNot)
@@ -923,11 +919,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ad = fneg double %i.ab
   %.0.i32 = select i1 %i.ac, double %i.ad, double %i.ab ; 4 uses
   %i.ae = fsub double %.0.i32, %.0.i32
-  %or.cond44.i = fcmp uno double %.0.i32, %i.ae
+  %or.cond44.i = fcmp ord double %.0.i32, %i.ae
   %.035.i = tail call double @llvm.fabs.f64(double %i.o)
-  %6 = fcmp ogt double %.0.i32, %.035.i
-  %or.cond40 = or i1 %6, %or.cond44.i
-  br i1 %or.cond40, label %UnityDoublesWithin.exit.thread37, label %UnityDoublesWithin.exit.thread
+  %6 = fcmp ule double %.0.i32, %.035.i
+  %or.cond40 = and i1 %6, %or.cond44.i
+  br i1 %or.cond40, label %UnityDoublesWithin.exit.thread, label %UnityDoublesWithin.exit.thread37
 
 UnityDoublesWithin.exit.thread37:                 ; preds = %bb.k
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
@@ -996,11 +992,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.r = fneg double %i.p
   %.0.i = select i1 %i.q, double %i.r, double %i.p ; 4 uses
   %i.s = fsub double %.0.i, %.0.i
-  %or.cond44.i = fcmp uno double %.0.i, %i.s
+  %or.cond44.i = fcmp ord double %.0.i, %i.s
   %.035.i = tail call double @llvm.fabs.f64(double %0)
-  %5 = fcmp ogt double %.0.i, %.035.i
-  %or.cond12 = or i1 %5, %or.cond44.i
-  br i1 %or.cond12, label %UnityDoublesWithin.exit.thread9, label %UnityDoublesWithin.exit.thread
+  %5 = fcmp ule double %.0.i, %.035.i
+  %or.cond12 = and i1 %5, %or.cond44.i
+  br i1 %or.cond12, label %UnityDoublesWithin.exit.thread, label %UnityDoublesWithin.exit.thread9
 
 UnityDoublesWithin.exit.thread9:                  ; preds = %bb.e
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
@@ -1023,8 +1019,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0
+  %.not = trunc i32 %3 to i1                      ; 2 uses
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
   %i.c = icmp ne i64 %i.b, 0
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 72), align 8
@@ -1074,15 +1069,14 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.l, %bb.e ]
   %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
-  %5 = trunc i32 %3 to i1
-  %i.n = xor i1 %.035.in, %5
+  %i.n = xor i1 %.035.in, %.not
   br i1 %i.n, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %.thread, %bb.g
   %.0.shrunk43 = phi i64 [ 0, %.thread ], [ %.0.shrunk, %bb.g ]
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %2)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
-  br i1 %.not, label %bb.i, label %bb.j
+  br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrNot)
@@ -1125,32 +1119,37 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = sub nsw i64 %2, %1
-  br label %bb.h
+  %6 = icmp ugt i64 %i.g, %0                      ; 2 uses
+  %7 = zext i1 %6 to i64
+  store i64 %7, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
+  br i1 %6, label %bb.i, label %bb.j
 
 bb.e:                                             ; preds = %bb.c
   %i.h = sub nsw i64 %1, %2
-  br label %bb.h
+  %8 = icmp ugt i64 %i.h, %0                      ; 2 uses
+  %9 = zext i1 %8 to i64
+  store i64 %9, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
+  br i1 %8, label %bb.i, label %bb.j
 
 bb.f:                                             ; preds = %bb.b
   %i.i = icmp ugt i64 %2, %1
-  br i1 %i.i, label %bb.g, label %6
+  br i1 %i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.j = sub nuw nsw i64 %2, %1
-  br label %bb.h
+  %10 = icmp ugt i64 %i.j, %0                     ; 2 uses
+  %11 = zext i1 %10 to i64
+  store i64 %11, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
+  br i1 %10, label %bb.i, label %bb.j
 
-6:                                                ; preds = %bb.f
-  %7 = sub nuw nsw i64 %1, %2
-  br label %bb.h
-
-bb.h:                                             ; preds = %bb.g, %6, %bb.d, %bb.e
-  %.sink = phi i64 [ %i.j, %bb.g ], [ %7, %6 ], [ %i.g, %bb.d ], [ %i.h, %bb.e ]
-  %i.k = icmp ugt i64 %.sink, %0                  ; 2 uses
+bb.h:                                             ; preds = %bb.f
+  %12 = sub nuw nsw i64 %1, %2
+  %i.k = icmp ugt i64 %12, %0                     ; 2 uses
   %i.l = zext i1 %i.k to i64
   store i64 %i.l, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
   br i1 %i.k, label %bb.i, label %bb.j
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.d, %bb.e, %bb.g, %bb.h
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrDelta)
   tail call void @UnityPrintNumberByStyle(i64 noundef %0, i32 noundef %5)
@@ -1163,7 +1162,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @longjmp(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @Unity, i64 80), i32 noundef 1) #10
   unreachable
 
-bb.j:                                             ; preds = %bb.a, %bb.h
+bb.j:                                             ; preds = %bb.d, %bb.e, %bb.g, %bb.a, %bb.h
   ret void
 }
 
@@ -1392,7 +1391,7 @@ bb.f:                                             ; preds = %bb.e
   %i.h = icmp eq ptr %1, null
   br i1 %i.h, label %bb.g, label %.split.us
 
-bb.g:                                             ; preds = %bb.f, %bb.e
+bb.g:                                             ; preds = %bb.e, %bb.f
   %UnityStrNullPointerForActual.sink.i = phi ptr [ @UnityStrNullPointerForExpected, %bb.e ], [ @UnityStrNullPointerForActual, %bb.f ]
   %i.i = load ptr, ptr @Unity, align 8, !tbaa !20
   tail call fastcc void @UnityTestResultsBegin(ptr noundef %i.i, i64 noundef %4)

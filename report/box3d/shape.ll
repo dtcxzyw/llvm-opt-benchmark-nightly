@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 68
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !290
-  %3 = and i32 %i.ai, 1
-  %.not60 = icmp eq i32 %3, 0
-  br i1 %.not60, label %bb.h, label %bb.g
+  %.not60 = trunc i32 %i.ai to i1
+  br i1 %.not60, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.aj = sext i32 %i.ac to i64
@@ -343,19 +342,18 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.r = load i32, ptr %i.q, align 8, !tbaa !133
-  %i.s = tail call noundef i32 @llvm.smin.i32(i32 %i.r, i32 %2) ; 7 uses
+  %i.s = tail call noundef i32 @llvm.smin.i32(i32 %i.r, i32 %2) ; 8 uses
   %i.t = load ptr, ptr %i.p, align 8, !tbaa !132  ; 3 uses
   %i.u = icmp sgt i32 %i.s, 0
   br i1 %i.u, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %wide.trip.count = zext nneg i32 %i.s to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.v = icmp eq i32 %i.s, 1
   br i1 %i.v, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %3 = and i32 %i.s, 2147483646
+  %unroll_iter = zext nneg i32 %3 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -390,8 +388,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !299
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.s to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -794,8 +792,8 @@ b3Normalize.exit:                                 ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %b3Normalize.exit
   %i.an = getelementptr inbounds nuw i8, ptr %7, i64 268
   %i.ao = load i8, ptr %i.an, align 4, !tbaa !186, !range !98, !noundef !99
-  %12 = icmp eq i8 %i.ao, 0
-  br i1 %12, label %bb.d, label %bb.e
+  %12 = trunc nuw i8 %i.ao to i1
+  br i1 %12, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.ap = fsub float %i.ah, %i.al

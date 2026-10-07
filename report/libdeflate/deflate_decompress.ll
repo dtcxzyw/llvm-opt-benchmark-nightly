@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 5 uses
   %.2620 = phi i32 [ %i.ag, %bb.c ], [ %.0618, %.preheader915 ], [ %i.aq, %bb.f ] ; 3 uses
   %.3614 = phi i64 [ %.0611, %bb.c ], [ %.0611, %.preheader915 ], [ %.2613, %bb.f ] ; 7 uses
-  %7 = and i64 %.3646, 1
-  %.not744 = icmp eq i64 %7, 0
+  %.not744 = trunc i64 %.3646 to i1
   %i.at = trunc i64 %.3646 to i32                 ; 4 uses
   %i.au = lshr i32 %i.at, 1
   %i.av = and i32 %i.au, 3
@@ -296,10 +295,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.4622 = phi i32 [ %i.by, %bb.h ], [ %i.bi, %.preheader908 ], [ %i.ci, %bb.k ]
   %.6617 = phi i64 [ %.3614, %bb.h ], [ %.3614, %.preheader908 ], [ %.5616, %bb.k ]
   %i.cl = and i32 %i.bc, 15
-  %narrow = add nuw nsw i32 %i.cl, 3              ; 2 uses
-  %8 = zext nneg i32 %narrow to i64               ; 2 uses
-  %xtraiter = and i64 %8, 1
-  %unroll_iter = and i64 %8, 30
+  %narrow = add nuw nsw i32 %i.cl, 3              ; 3 uses
+  %7 = and i32 %narrow, 30
+  %unroll_iter = zext nneg i32 %7 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.loopexit909
@@ -332,8 +330,8 @@ bb.l:                                             ; preds = %bb.l, %.loopexit909
 
 .preheader907.unr-lcssa:                          ; preds = %bb.l
   %indvars.iv.next1051 = or disjoint i64 %indvars.iv1050, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader907, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %narrow to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader907
 
 .epil.preheader:                                  ; preds = %.preheader907.unr-lcssa
   %lcmp.mod1190 = trunc i32 %narrow to i1
@@ -736,7 +734,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.33 = phi i64 [ %.30, %bb.cz ], [ 0, %bb.ay ], [ %.20663, %bb.bi ], [ %i.mu, %bb.bl ]
   %.29 = phi i32 [ %.26, %bb.cz ], [ 0, %bb.ay ], [ %.17635, %bb.bi ], [ %i.mv, %bb.bl ] ; 2 uses
   %.21 = phi i64 [ %.19, %bb.cz ], [ 0, %bb.ay ], [ %.15, %bb.bi ], [ %.15, %bb.bl ] ; 3 uses
-  br i1 %.not744, label %bb.b, label %bb.de
+  br i1 %.not744, label %bb.de, label %bb.b
 
 bb.de:                                            ; preds = %.thread869
   %i.zm = lshr i32 %.29, 3
@@ -874,8 +872,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 5 uses
   %.2620 = phi i32 [ %i.ag, %bb.c ], [ %.0618, %.preheader915 ], [ %i.aq, %bb.f ] ; 3 uses
   %.3614 = phi i64 [ %.0611, %bb.c ], [ %.0611, %.preheader915 ], [ %.2613, %bb.f ] ; 7 uses
-  %7 = and i64 %.3646, 1
-  %.not744 = icmp eq i64 %7, 0
+  %.not744 = trunc i64 %.3646 to i1
   %i.at = trunc i64 %.3646 to i32                 ; 4 uses
   %i.au = lshr i32 %i.at, 1
   %i.av = and i32 %i.au, 3
@@ -965,10 +962,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.4622 = phi i32 [ %i.by, %bb.h ], [ %i.bi, %.preheader908 ], [ %i.ci, %bb.k ]
   %.6617 = phi i64 [ %.3614, %bb.h ], [ %.3614, %.preheader908 ], [ %.5616, %bb.k ]
   %i.cl = and i32 %i.bc, 15
-  %narrow = add nuw nsw i32 %i.cl, 3              ; 2 uses
-  %8 = zext nneg i32 %narrow to i64               ; 2 uses
-  %xtraiter = and i64 %8, 1
-  %unroll_iter = and i64 %8, 30
+  %narrow = add nuw nsw i32 %i.cl, 3              ; 3 uses
+  %7 = and i32 %narrow, 30
+  %unroll_iter = zext nneg i32 %7 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.loopexit909
@@ -1001,8 +997,8 @@ bb.l:                                             ; preds = %bb.l, %.loopexit909
 
 .preheader907.unr-lcssa:                          ; preds = %bb.l
   %indvars.iv.next1051 = or disjoint i64 %indvars.iv1050, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader907, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %narrow to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader907
 
 .epil.preheader:                                  ; preds = %.preheader907.unr-lcssa
   %lcmp.mod1190 = trunc i32 %narrow to i1
@@ -1405,7 +1401,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.33 = phi i64 [ %.30, %bb.cz ], [ 0, %bb.ay ], [ %.20663, %bb.bi ], [ %i.mu, %bb.bl ]
   %.29 = phi i32 [ %.26, %bb.cz ], [ 0, %bb.ay ], [ %.17635, %bb.bi ], [ %i.mv, %bb.bl ] ; 2 uses
   %.21 = phi i64 [ %.19, %bb.cz ], [ 0, %bb.ay ], [ %.15, %bb.bi ], [ %.15, %bb.bl ] ; 3 uses
-  br i1 %.not744, label %bb.b, label %bb.de
+  br i1 %.not744, label %bb.de, label %bb.b
 
 bb.de:                                            ; preds = %.thread869
   %i.zm = lshr i32 %.29, 3
@@ -1580,7 +1576,6 @@ bb.c:                                             ; preds = %bb.b, %.critedge
 .lr.ph239.preheader:                              ; preds = %bb.c
   %wide.trip.count293 = zext i32 %.0185.lcssa to i64
   %i.aw = add nsw i64 %wide.trip.count293, -1     ; 3 uses
-  %xtraiter376 = and i64 %i.aw, 1
   %i.ax = icmp eq i32 %.0185.lcssa, 2
   br i1 %i.ax, label %.lr.ph239.epil.preheader, label %.lr.ph239.preheader.new
 
@@ -1614,8 +1609,8 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br i1 %niter382.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph239, !llvm.loop !62
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph239
-  %lcmp.mod378.not = icmp eq i64 %xtraiter376, 0
-  br i1 %lcmp.mod378.not, label %._crit_edge.loopexit, label %.lr.ph239.epil.preheader
+  %lcmp.mod378.not = trunc i64 %i.aw to i1
+  br i1 %lcmp.mod378.not, label %.lr.ph239.epil.preheader, label %._crit_edge.loopexit
 
 .lr.ph239.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph239.preheader
   %.epil.init = phi i32 [ %i.at, %.lr.ph239.preheader ], [ %i.bf, %._crit_edge.loopexit.unr-lcssa ]
@@ -1648,13 +1643,12 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br i1 %.not, label %._crit_edge244, label %.lr.ph243.preheader
 
 .lr.ph243.preheader:                              ; preds = %._crit_edge
-  %wide.trip.count298 = zext i32 %2 to i64        ; 2 uses
-  %xtraiter383 = and i64 %wide.trip.count298, 1
   %i.bx = icmp eq i32 %2, 1
   br i1 %i.bx, label %.lr.ph243.epil.preheader, label %.lr.ph243.preheader.new
 
 .lr.ph243.preheader.new:                          ; preds = %.lr.ph243.preheader
-  %unroll_iter387 = and i64 %wide.trip.count298, 4294967294
+  %8 = and i32 %2, -2
+  %unroll_iter387 = zext i32 %8 to i64
   br label %.lr.ph243
 
 .lr.ph243:                                        ; preds = %.lr.ph243, %.lr.ph243.preheader.new
@@ -1689,8 +1683,8 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br i1 %niter388.ncmp.1, label %._crit_edge244.loopexit.unr-lcssa, label %.lr.ph243, !llvm.loop !63
 
 ._crit_edge244.loopexit.unr-lcssa:                ; preds = %.lr.ph243
-  %lcmp.mod385.not = icmp eq i64 %xtraiter383, 0
-  br i1 %lcmp.mod385.not, label %._crit_edge244.loopexit, label %.lr.ph243.epil.preheader
+  %lcmp.mod385.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod385.not, label %.lr.ph243.epil.preheader, label %._crit_edge244.loopexit
 
 .lr.ph243.epil.preheader:                         ; preds = %._crit_edge244.loopexit.unr-lcssa, %.lr.ph243.preheader
   %indvars.iv295.epil.init = phi i64 [ 0, %.lr.ph243.preheader ], [ %indvars.iv.next296.1, %._crit_edge244.loopexit.unr-lcssa ] ; 2 uses
@@ -1810,9 +1804,8 @@ bb.k:                                             ; preds = %.preheader219, %.th
 .lr.ph258.preheader:                              ; preds = %.preheader
   %i.ek = sub nuw i32 %.0186, %.3162248
   %.neg = add i32 %.3162248, 1
-  %xtraiter391 = and i32 %i.ek, 1
-  %lcmp.mod392.not = icmp eq i32 %xtraiter391, 0
-  br i1 %lcmp.mod392.not, label %.lr.ph258.prol.loopexit, label %.lr.ph258.prol
+  %lcmp.mod392.not = trunc i32 %i.ek to i1
+  br i1 %lcmp.mod392.not, label %.lr.ph258.prol, label %.lr.ph258.prol.loopexit
 
 .lr.ph258.prol:                                   ; preds = %.lr.ph258.preheader
   %i.el = zext i32 %.0150250 to i64               ; 2 uses
