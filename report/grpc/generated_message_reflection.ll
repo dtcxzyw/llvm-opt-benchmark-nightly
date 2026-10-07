@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.s = and i8 %i.g, 16
-  %.not.i.i.i = icmp eq i8 %i.s, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.s, 0
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !59 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -231,8 +231,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ao, label %bb.g, label %_ZNK6google8protobuf10Reflection15ClearOneofFieldEPNS0_7MessageEPKNS0_15FieldDescriptorE.exit
 
 bb.g:                                             ; preds = %bb.f
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.u
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i), !inline_history !568
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.u), !inline_history !568
   br label %_ZNK6google8protobuf10Reflection15ClearOneofFieldEPNS0_7MessageEPKNS0_15FieldDescriptorE.exit
 
 _ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit: ; preds = %bb.e
@@ -635,7 +634,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -661,8 +660,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -1065,7 +1063,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -1091,8 +1089,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -1495,7 +1492,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -1521,8 +1518,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -1925,7 +1921,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -1951,8 +1947,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -2355,7 +2350,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -2381,8 +2376,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -2785,7 +2779,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -2811,8 +2805,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -3215,7 +3208,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -3241,8 +3234,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -3645,7 +3637,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.bg = and i8 %i.g, 16
-  %.not.i.i.i = icmp eq i8 %i.bg, 0               ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.bg, 0
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.bi = load ptr, ptr %i.bh, align 8, !nonnull !59 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -3671,8 +3663,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.cc, label %bb.w, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.bi
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.bi)
   %i.cd = icmp eq ptr %.0.i.i, null
   br i1 %i.cd, label %bb.u, label %bb.v, !prof !47
 
@@ -3765,7 +3756,7 @@ bb.y:                                             ; preds = %_ZNK6google8protobu
 
 bb.z:                                             ; preds = %bb.y
   %i.dm = and i8 %i.g, 16
-  %.not.i.i.i73 = icmp eq i8 %i.dm, 0             ; 2 uses
+  %.not.i.i.i73 = icmp eq i8 %i.dm, 0
   %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.do = load ptr, ptr %i.dn, align 8, !nonnull !59 ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -3791,8 +3782,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ei, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit75, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %.0.i.i.i74 = select i1 %.not.i.i.i73, ptr null, ptr %i.do
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i74)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.do)
   %i.ej = tail call noundef ptr @_ZNK6google8protobuf10Reflection12MutableFieldINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
   store ptr null, ptr %i.ej, align 8, !tbaa !183
   br label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit75
@@ -3807,7 +3797,7 @@ bb.ab:                                            ; preds = %_ZNK6google8protobu
 
 bb.ac:                                            ; preds = %bb.ab
   %i.el = and i8 %i.g, 16
-  %.not.i.i.i80 = icmp eq i8 %i.el, 0             ; 2 uses
+  %.not.i.i.i80 = icmp eq i8 %i.el, 0
   %i.em = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.en = load ptr, ptr %i.em, align 8, !nonnull !59 ; 3 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -3833,8 +3823,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.fh, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit82, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %.0.i.i.i81 = select i1 %.not.i.i.i80, ptr null, ptr %i.en
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i81)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.en)
   %i.fi = tail call noundef ptr @_ZNK6google8protobuf10Reflection12MutableFieldINS0_8internal14ArenaStringPtrEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
   store i64 ptrtoint (ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE to i64), ptr %i.fi, align 8, !tbaa !85
   br label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit82
@@ -4237,7 +4226,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = and i8 %i.g, 16
-  %.not.i.i.i = icmp eq i8 %i.ag, 0               ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.ag, 0
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.ai = load ptr, ptr %i.ah, align 8, !nonnull !59 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -4263,8 +4252,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bc, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.ai
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.ai)
   %i.bd = icmp eq ptr %.0.i.i, null
   br i1 %i.bd, label %bb.o, label %bb.p, !prof !47
 
@@ -4414,7 +4402,7 @@ bb.aa:                                            ; preds = %_ZNK6google8protobu
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ct = and i8 %i.g, 16
-  %.not.i.i.i82 = icmp eq i8 %i.ct, 0             ; 2 uses
+  %.not.i.i.i82 = icmp eq i8 %i.ct, 0
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.cv = load ptr, ptr %i.cu, align 8, !nonnull !59 ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -4440,8 +4428,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.dp, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit84, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %.0.i.i.i83 = select i1 %.not.i.i.i82, ptr null, ptr %i.cv
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i83)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.cv)
   %i.dq = tail call noundef ptr @_ZNK6google8protobuf10Reflection12MutableFieldINS0_8internal11MicroStringEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
   store ptr null, ptr %i.dq, align 8, !tbaa !183
   br label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit84
@@ -4492,7 +4479,7 @@ bb.ae:                                            ; preds = %_ZNK6google8protobu
 
 bb.af:                                            ; preds = %bb.ae
   %i.ed = and i8 %i.g, 16
-  %.not.i.i.i95 = icmp eq i8 %i.ed, 0             ; 2 uses
+  %.not.i.i.i95 = icmp eq i8 %i.ed, 0
   %i.ee = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.ef = load ptr, ptr %i.ee, align 8, !nonnull !59 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -4518,8 +4505,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.ez, label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit97, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %.0.i.i.i96 = select i1 %.not.i.i.i95, ptr null, ptr %i.ef
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i96)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.ef)
   %i.fa = tail call noundef ptr @_ZNK6google8protobuf10Reflection12MutableFieldINS0_8internal14ArenaStringPtrEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
   store i64 ptrtoint (ptr @_ZN6google8protobuf8internal26fixed_address_empty_stringE to i64), ptr %i.fa, align 8, !tbaa !85
   br label %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit97
@@ -4922,7 +4908,7 @@ _ZNK6google8protobuf10Reflection10MutableRawIPNS0_7MessageEEEPT_S4_PKNS0_15Field
 bb.m:                                             ; preds = %_ZNK6google8protobuf10Reflection10MutableRawIPNS0_7MessageEEEPT_S4_PKNS0_15FieldDescriptorE.exit
   %i.ar = load i8, ptr %i.f, align 1
   %i.as = and i8 %i.ar, 16
-  %.not.i.i.i42 = icmp eq i8 %i.as, 0             ; 2 uses
+  %.not.i.i.i42 = icmp eq i8 %i.as, 0
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.au = load ptr, ptr %i.at, align 8, !nonnull !59 ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -4948,8 +4934,7 @@ bb.m:                                             ; preds = %_ZNK6google8protobu
   br i1 %i.bo, label %_ZNK6google8protobuf10Reflection9SetHasBitEPNS0_7MessageEPKNS0_15FieldDescriptorE.exitthread-pre-split, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %.0.i.i.i = select i1 %.not.i.i.i42, ptr null, ptr %i.au
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.au)
   %i.bp = tail call noundef ptr @_ZNK6google8protobuf10Reflection12MutableFieldIPNS0_7MessageEEEPT_S4_PKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) ; 2 uses
   %i.bq = tail call noundef ptr @_ZNK6google8protobuf10Reflection25GetDefaultMessageInstanceEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %2)
   %i.br = tail call noundef ptr @_ZNK6google8protobuf11MessageLite3NewEPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(16) %i.bq, ptr noundef %.0.i.i) ; 2 uses
@@ -5260,7 +5245,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 4 uses
-  %i.g = load i8, ptr %i.f, align 1               ; 3 uses
+  %i.g = load i8, ptr %i.f, align 1               ; 2 uses
   %i.h = and i8 %i.g, 32
   %.not88 = icmp eq i8 %i.h, 0
   br i1 %.not88, label %bb.e, label %bb.d
@@ -5323,19 +5308,12 @@ bb.k:                                             ; preds = %_ZNK6google8protobu
 
 bb.l:                                             ; preds = %bb.k
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 4 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !nonnull !59 ; 2 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !nonnull !59
   %i.ag = icmp eq ptr %2, null
-  br i1 %i.ag, label %4, label %bb.m
-
-4:                                                ; preds = %bb.l
-  %5 = and i8 %i.g, 16
-  %.not.i.i.i = icmp eq i8 %5, 0
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.af
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
-  br label %bb.ag
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.af)
+  br i1 %i.ag, label %bb.ag, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.af)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !89
   %.not.i.i41 = icmp eq i32 %i.ai, -1
@@ -5640,7 +5618,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae, %_ZN
   store ptr %2, ptr %.0.i86, align 8, !tbaa !84
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.j, %bb.af, %_ZNK6google8protobuf10Reflection10MutableRawIPNS0_7MessageEEEPT_S4_PKNS0_15FieldDescriptorE.exit, %4
+bb.ag:                                            ; preds = %bb.l, %bb.j, %bb.af, %_ZNK6google8protobuf10Reflection10MutableRawIPNS0_7MessageEEEPT_S4_PKNS0_15FieldDescriptorE.exit
   ret void
 }
 
@@ -6043,7 +6021,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -6069,8 +6047,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -6375,7 +6352,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -6401,8 +6378,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 
@@ -6707,7 +6683,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   %i.e = load i8, ptr %i.d, align 1               ; 2 uses
   %i.f = and i8 %i.e, 16
-  %.not.i.i.i = icmp eq i8 %i.f, 0                ; 2 uses
+  %.not.i.i.i = icmp eq i8 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !59 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -6733,8 +6709,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.h
-  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef %.0.i.i.i)
+  tail call void @_ZNK6google8protobuf10Reflection10ClearOneofEPNS0_7MessageEPKNS0_15OneofDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.h)
   %.pre18.i.pre = load i8, ptr %i.d, align 1
   br label %bb.d
 

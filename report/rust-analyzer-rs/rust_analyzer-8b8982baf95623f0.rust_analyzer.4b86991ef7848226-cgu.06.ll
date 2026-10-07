@@ -205,16 +205,13 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.h, i64 16
   %.val7.i = load i64, ptr %i.j, align 8, !noalias !10646, !noundef !7 ; 3 uses
   %i.k = call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %5, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val6.i, i64 noundef %.val7.i), !noalias !10647
-  br i1 %i.k, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit, label %bb.b
+  br i1 %i.k, label %.split, label %bb.b
 
-_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit: ; preds = %bb.c
+.split:                                           ; preds = %bb.c
   %6 = extractvalue { ptr, ptr } %i.g, 1          ; 2 uses
-  %.not = icmp eq ptr %6, null
-  br i1 %.not, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread, label %.split
-
-.split:                                           ; preds = %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 %.val7.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
   %i.l = sub nuw i64 %5, %.val7.i
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 %.val7.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %6, ptr %i.d, align 8, !captures !53
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -236,7 +233,7 @@ _RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.d
 
-_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread: ; preds = %bb.b, %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit
+_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread: ; preds = %bb.b
   call void @_RINvMsh_Cs9R0CJ7nmiec_5pathsNtB6_7AbsPath4joinReECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %5)
   br label %bb.d
 
@@ -639,7 +636,7 @@ bb.jh:                                            ; preds = %_RINvNtCshzWfHUSfYa
   invoke void @_RNvMs0_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtNtCsbSS6DM8SDEO_5alloc6string6StringBN_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE4iterCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.acj)
           to label %.noexc829.a unwind label %.loopexit.split-lp.loopexit
 
-.noexc829.a:                                      ; preds = %bb.jh, %.noexc831
+.noexc829.a:                                      ; preds = %bb.jh, %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i
   %i.akf = invoke { ptr, ptr } @_RNvXsG_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBK_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.e)
           to label %.noexc830.a unwind label %.loopexit1157 ; 2 uses
 
@@ -654,19 +651,16 @@ bb.ji:                                            ; preds = %.noexc830.a
   %i.aki = getelementptr i8, ptr %i.akg, i64 16
   %.val7.i.i = load i64, ptr %i.aki, align 8, !noalias !11777, !noundef !7 ; 3 uses
   %i.akj = invoke noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.akc, i64 noundef %i.ake, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val6.i.i, i64 noundef %.val7.i.i)
-          to label %.noexc831 unwind label %.loopexit1157
+          to label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i unwind label %.loopexit1157
 
-.noexc831:                                        ; preds = %bb.ji
-  br i1 %i.akj, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i, label %.noexc829.a
-
-_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i: ; preds = %.noexc831
-  %6 = extractvalue { ptr, ptr } %i.akf, 1        ; 2 uses
-  %.not.i828 = icmp eq ptr %6, null
-  br i1 %.not.i828, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread.i, label %.split.i
+_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i: ; preds = %bb.ji
+  br i1 %i.akj, label %.split.i, label %.noexc829.a
 
 .split.i:                                         ; preds = %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i
-  %7 = getelementptr inbounds nuw i8, ptr %i.akc, i64 %.val7.i.i
+  %6 = extractvalue { ptr, ptr } %i.akf, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
   %i.akk = sub nuw i64 %i.ake, %.val7.i.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.akc, i64 %.val7.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !11776
   store ptr %6, ptr %i.d, align 8, !noalias !11776, !captures !53
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !11776
@@ -690,7 +684,7 @@ _RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !11776
   br label %.noexc461
 
-_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread.i: ; preds = %.noexc830.a, %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.i
+_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterNtNtCsbSS6DM8SDEO_5alloc6string6StringBV_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1B_8find_map5checkTRBV_B37_ETB37_ReENCNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto12resolve_path0E0INtNtNtB1J_3ops12control_flow11ControlFlowB3g_EEB3w_.exit.thread.i: ; preds = %.noexc830.a
   invoke void @_RINvMsh_Cs9R0CJ7nmiec_5pathsNtB6_7AbsPath4joinReECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ao, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.akc, i64 noundef %i.ake)
           to label %.noexc461 unwind label %.loopexit.split-lp.loopexit
 
