@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.j
   br i1 %.not61, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.v = sub nuw i64 %2, %i.u                     ; 7 uses
+  %i.v = sub nuw i64 %2, %i.u                     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtCs2AhGS15tZfv_4bstr4utf88validate(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %i.v)
   %i.w = load i64, ptr %i.b, align 8, !range !11, !noundef !6
@@ -253,10 +253,13 @@ bb.s:                                             ; preds = %bb.r
   br label %_RINvMNtCskKLDkoKarTP_4core3stre11rsplit_oncecECs7gfv9tzbXmh_6yara_x.exit.thread
 
 _RINvMNtCskKLDkoKarTP_4core3stre11rsplit_oncecECs7gfv9tzbXmh_6yara_x.exit.thread: ; preds = %bb.q, %.preheader, %bb.s
+  %.sroa.773.0 = phi ptr [ %i.ah, %bb.s ], [ undef, %.preheader ], [ undef, %bb.q ]
   %.sroa.5.082 = phi i64 [ %i.ab, %bb.s ], [ undef, %.preheader ], [ undef, %bb.q ] ; 5 uses
-  %.sroa.024.0 = phi ptr [ %1, %bb.s ], [ null, %.preheader ], [ null, %bb.q ] ; 5 uses
-  %.sroa.026.0 = phi ptr [ %i.ah, %bb.s ], [ %1, %.preheader ], [ %1, %bb.q ] ; 18 uses
-  %.sroa.12.0 = phi i64 [ %i.ag, %bb.s ], [ %i.v, %.preheader ], [ %i.v, %bb.q ] ; 3 uses
+  %.sroa.024.0 = phi ptr [ %1, %bb.s ], [ null, %.preheader ], [ null, %bb.q ] ; 6 uses
+  %.sroa.974.0 = phi i64 [ %i.ag, %bb.s ], [ undef, %.preheader ], [ undef, %bb.q ]
+  %.not64 = icmp eq ptr %.sroa.024.0, null        ; 2 uses
+  %.sroa.026.0 = select i1 %.not64, ptr %1, ptr %.sroa.773.0 ; 18 uses
+  %.sroa.12.0 = select i1 %.not64, i64 %i.v, i64 %.sroa.974.0 ; 3 uses
   switch i64 %.sroa.12.0, label %.critedge71 [
     i64 3, label %bb.t
     i64 1, label %bb.v

@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %.lr.ph724.i
   store i8 %i.qr, ptr %.013.i.i.i.i.i.i, align 8, !tbaa !85
   %i.qs = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.qt = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i.i, i64 8 ; 2 uses
-  %i.qu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 16 ; 3 uses
+  %i.qu = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 16 ; 4 uses
   store i32 0, ptr %i.qu, align 8, !tbaa !87
   %i.qv = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 20
   store i32 6, ptr %i.qv, align 4, !tbaa !108
@@ -224,7 +224,7 @@ bb.bm:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   %.idx.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %i.rc, 2 ; 2 uses
   %i.rd = getelementptr inbounds nuw i8, ptr %i.qx, i64 %.idx.i.i.i.i.i.i.i.i.i
   %.not11.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.rb, 0
-  br i1 %.not11.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt10_ConstructIN4Luau7CodeGen6IrInstEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader
+  br i1 %.not11.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.thread.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader:       ; preds = %bb.bm
   %i.re = add nsw i64 %.idx.i.i.i.i.i.i.i.i.i, -4 ; 2 uses
@@ -267,6 +267,10 @@ middle.block1693:                                 ; preds = %vector.body1686
   %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.qx, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.rk, %middle.block1693 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i
 
+_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.thread.i.i: ; preds = %bb.bm
+  store i32 0, ptr %i.qu, align 8, !tbaa !87
+  br label %_ZSt10_ConstructIN4Luau7CodeGen6IrInstEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i
+
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader1713, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.013.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.rr, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.013.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader1713 ] ; 2 uses
   %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.rq, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader1713 ] ; 2 uses
@@ -293,7 +297,7 @@ bb.bn:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   store i32 0, ptr %i.rt, align 8, !tbaa !87
   br label %_ZSt10_ConstructIN4Luau7CodeGen6IrInstEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i
 
-_ZSt10_ConstructIN4Luau7CodeGen6IrInstEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i: ; preds = %bb.bn, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i, %bb.bm
+_ZSt10_ConstructIN4Luau7CodeGen6IrInstEJS2_EEvPT_DpOT0_.exit.i.i.i.i.i.i: ; preds = %bb.bn, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i, %_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.thread.i.i
   %i.rv = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i, i64 48
   %i.rw = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i.i, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.rv, ptr noundef nonnull align 8 dereferenceable(11) %i.rw, i64 11, i1 false)
@@ -696,7 +700,7 @@ bb.a:
   store i8 %i.v, ptr %i.t, align 8, !tbaa !85
   %i.w = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 16 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 16 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 24 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 24 ; 4 uses
   store i32 0, ptr %i.y, align 8, !tbaa !87
   %i.z = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 28
   store i32 6, ptr %i.z, align 4, !tbaa !108
@@ -710,12 +714,12 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 24 ; 2 uses
-  %i.af = load i32, ptr %i.ae, align 8, !tbaa !87 ; 3 uses
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !87 ; 4 uses
   %i.ag = zext i32 %i.af to i64
   %.idx.i.i.i.i.i.i.i.i = shl nuw nsw i64 %i.ag, 2 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i.i.i.i.i.i.i
   %.not11.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.af, 0
-  br i1 %.not11.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt10_ConstructIN4Luau7CodeGen17VmExitStoreRecordEJS2_EEvPT_DpOT0_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader
+  br i1 %.not11.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.i.thread, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader:         ; preds = %bb.b
   %i.ai = add nsw i64 %.idx.i.i.i.i.i.i.i.i, -4   ; 2 uses
@@ -758,6 +762,10 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.ab, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ao, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
 
+_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.i.thread: ; preds = %bb.b
+  store i32 %i.af, ptr %i.y, align 8, !tbaa !87
+  br label %_ZSt10_ConstructIN4Luau7CodeGen17VmExitStoreRecordEJS2_EEvPT_DpOT0_.exit.i.i.i.i
+
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader26, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
   %.013.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.av, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.013.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader26 ] ; 2 uses
   %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader26 ] ; 2 uses
@@ -784,7 +792,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   store i32 0, ptr %i.ax, align 8, !tbaa !87
   br label %_ZSt10_ConstructIN4Luau7CodeGen17VmExitStoreRecordEJS2_EEvPT_DpOT0_.exit.i.i.i.i
 
-_ZSt10_ConstructIN4Luau7CodeGen17VmExitStoreRecordEJS2_EEvPT_DpOT0_.exit.i.i.i.i: ; preds = %bb.b, %bb.c, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i
+_ZSt10_ConstructIN4Luau7CodeGen17VmExitStoreRecordEJS2_EEvPT_DpOT0_.exit.i.i.i.i: ; preds = %_ZSt18uninitialized_moveIPN4Luau7CodeGen4IrOpES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i.i.i.thread, %bb.c, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i
   %i.az = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 56
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 56
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.az, ptr noundef nonnull align 8 dereferenceable(11) %i.ba, i64 11, i1 false)

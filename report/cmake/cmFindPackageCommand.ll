@@ -205,7 +205,7 @@ bb.jn:                                            ; preds = %._crit_edge.i.i.i.i
   store i8 0, ptr %i.avs, align 1, !tbaa !41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #31, !noalias !555
   %.pre1147 = load ptr, ptr %62, align 8, !tbaa !40 ; 3 uses
-  %.pre1148 = load i64, ptr %i.avq, align 8, !tbaa !42
+  %.pre1148 = load i64, ptr %i.avq, align 8, !tbaa !42 ; 2 uses
   %i.avt = icmp eq i64 %.pre1148, 1
   br i1 %i.avt, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, label %_ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit
 
@@ -221,6 +221,8 @@ _ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4t
   br i1 %i.avx, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i814, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit815
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i814: ; preds = %_ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit
+  %72 = icmp ult i64 %.pre1148, 16
+  call void @llvm.assume(i1 %72)
   call void @llvm.lifetime.end.p0(ptr nonnull %62) #31
   br i1 %i.avv, label %bb.jo, label %bb.js
 

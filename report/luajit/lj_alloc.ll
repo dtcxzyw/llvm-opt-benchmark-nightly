@@ -204,7 +204,7 @@ bb.cz:                                            ; preds = %bb.cy
 
 bb.da:                                            ; preds = %bb.cz, %bb.cy
   %i.nz = add i64 %.0144, 131136
-  %i.oa = and i64 %i.nz, -131072                  ; 8 uses
+  %i.oa = and i64 %i.nz, -131072                  ; 3 uses
   %i.ob = icmp ugt i64 %i.oa, %.0144
   br i1 %i.ob, label %bb.db, label %alloc_sys.exit, !prof !49
 
@@ -212,7 +212,8 @@ bb.db:                                            ; preds = %bb.da
   %i.oc = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.od = load ptr, ptr %i.oc, align 8, !tbaa !30
   %i.oe = tail call fastcc ptr @mmap_probe(ptr noundef %i.od, i64 noundef %i.oa) ; 11 uses
-  %.not84.i = icmp eq ptr %i.oe, inttoptr (i64 -1 to ptr)
+  %.not84.i = icmp eq ptr %i.oe, inttoptr (i64 -1 to ptr) ; 2 uses
+  %spec.select.i182 = select i1 %.not84.i, i64 0, i64 %i.oa ; 6 uses
   br i1 %.not84.i, label %alloc_sys.exit, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
@@ -244,10 +245,10 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %.critedge.i182
   %i.op = getelementptr inbounds nuw i8, ptr %.074116.i, i64 8
-  %i.oq = add i64 %i.oi, %i.oa
+  %i.oq = add i64 %i.oi, %spec.select.i182
   store i64 %i.oq, ptr %i.op, align 8, !tbaa !32
   %i.or = load i64, ptr %i.nl, align 8, !tbaa !25
-  %i.os = add i64 %i.or, %i.oa                    ; 2 uses
+  %i.os = add i64 %i.or, %spec.select.i182        ; 2 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %i.on, i64 16
   %i.ou = ptrtoint ptr %i.ot to i64
   %i.ov = sub i64 0, %i.ou
@@ -267,7 +268,7 @@ bb.df:                                            ; preds = %.critedge.i182
   br label %add_segment.exit.i
 
 .critedge92.i.a:                                  ; preds = %bb.de, %.critedge.i182
-  %i.pe = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.oa
+  %i.pe = getelementptr inbounds nuw i8, ptr %i.oe, i64 %spec.select.i182
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.dh, %.critedge92.i.a
@@ -286,7 +287,7 @@ bb.dh:                                            ; preds = %bb.dg
   store ptr %i.oe, ptr %.175117.i, align 8, !tbaa !31
   %i.pi = getelementptr inbounds nuw i8, ptr %.175117.i, i64 8 ; 2 uses
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !32
-  %i.pk = add i64 %i.pj, %i.oa
+  %i.pk = add i64 %i.pj, %spec.select.i182
   store i64 %i.pk, ptr %i.pi, align 8, !tbaa !32
   %i.pl = getelementptr inbounds nuw i8, ptr %i.oe, i64 16
   %i.pm = ptrtoint ptr %i.pl to i64
@@ -689,7 +690,7 @@ segment_holding.exit.i.i:                         ; preds = %bb.ex
   %i.wj = select i1 %i.wi, ptr %i.vt, ptr %i.wg   ; 5 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %i.wj, i64 16 ; 2 uses
   %i.wl = getelementptr inbounds nuw i8, ptr %i.wj, i64 32
-  %i.wm = add i64 %i.oa, -64                      ; 2 uses
+  %i.wm = add i64 %spec.select.i182, -64          ; 2 uses
   %i.wn = getelementptr inbounds nuw i8, ptr %i.oe, i64 16
   %i.wo = ptrtoint ptr %i.wn to i64
   %i.wp = sub i64 0, %i.wo
@@ -711,7 +712,7 @@ segment_holding.exit.i.i:                         ; preds = %bb.ex
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.wk, ptr noundef nonnull align 8 dereferenceable(24) %i.of, i64 24, i1 false), !tbaa.struct !65
   store ptr %i.oe, ptr %i.of, align 8, !tbaa !19
   %i.wz = getelementptr inbounds nuw i8, ptr %0, i64 848
-  store i64 %i.oa, ptr %i.wz, align 8, !tbaa !20
+  store i64 %spec.select.i182, ptr %i.wz, align 8, !tbaa !20
   %i.xa = getelementptr inbounds nuw i8, ptr %0, i64 856
   store ptr %i.wk, ptr %i.xa, align 8, !tbaa !66
   br label %bb.ez
@@ -896,7 +897,7 @@ bb.fp:                                            ; preds = %add_segment.exit.i
   br label %alloc_sys.exit
 
 alloc_sys.exit:                                   ; preds = %bb.s, %bb.m, %tmalloc_small.exit, %bb.f, %bb.fp, %add_segment.exit.i, %prepend_alloc.exit.i, %bb.db, %bb.da, %bb.cz, %tmalloc_large.exit, %bb.cx, %bb.cv
-  %.1 = phi ptr [ %i.nk, %bb.cv ], [ %i.nw, %bb.cx ], [ %i.mr, %tmalloc_large.exit ], [ %i.aad, %bb.fp ], [ %i.ny, %bb.cz ], [ null, %bb.db ], [ null, %add_segment.exit.i ], [ null, %bb.da ], [ %i.vr, %prepend_alloc.exit.i ], [ %i.av, %bb.s ], [ %i.av, %bb.m ], [ %i.fr, %tmalloc_small.exit ], [ %i.s, %bb.f ]
+  %.1 = phi ptr [ %i.nk, %bb.cv ], [ %i.nw, %bb.cx ], [ %i.mr, %tmalloc_large.exit ], [ %i.aad, %bb.fp ], [ %i.ny, %bb.cz ], [ null, %bb.da ], [ null, %add_segment.exit.i ], [ null, %bb.db ], [ %i.vr, %prepend_alloc.exit.i ], [ %i.av, %bb.s ], [ %i.av, %bb.m ], [ %i.fr, %tmalloc_small.exit ], [ %i.s, %bb.f ]
   ret ptr %.1
 }
 

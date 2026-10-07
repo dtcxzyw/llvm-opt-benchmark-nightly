@@ -204,8 +204,7 @@ _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRIN
   br i1 %.not6.i, label %bb.e, label %_RINvYINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4KeysINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtBY_15NormalizedSpaceENtNtCs3v5ql5U6hxj_6fontir2ir13GlyphInstanceENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2L_4find5checkRBV_QNCNvMsm_B25_NtB25_5Glyph3new0E0INtNtNtB2T_3ops12control_flow11ControlFlowB4c_EEB27_.exit
 
 _RINvYINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4KeysINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtBY_15NormalizedSpaceENtNtCs3v5ql5U6hxj_6fontir2ir13GlyphInstanceENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2L_4find5checkRBV_QNCNvMsm_B25_NtB25_5Glyph3new0E0INtNtNtB2T_3ops12control_flow11ControlFlowB4c_EEB27_.exit: ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i, %.noexc
-  %.sroa.0.0.i = phi ptr [ null, %.noexc ], [ %..i.i, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i ] ; 2 uses
-  %.not = icmp eq ptr %.sroa.0.0.i, null          ; 2 uses
+  %.sroa.0.0.i = phi ptr [ null, %.noexc ], [ %..i.i, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i ] ; 3 uses
   br label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i22
 
 _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i22: ; preds = %.lr.ph108, %_RINvYINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4KeysINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtBY_15NormalizedSpaceENtNtCs3v5ql5U6hxj_6fontir2ir13GlyphInstanceENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2L_4find5checkRBV_QNCNvMsm_B25_NtB25_5Glyph3new0E0INtNtNtB2T_3ops12control_flow11ControlFlowB4c_EEB27_.exit
@@ -241,10 +240,12 @@ bb.i:                                             ; preds = %.lr.ph108
   br i1 %i.bb, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkRINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtB1g_15NormalizedSpaceEQNCNvMsm_NtCs3v5ql5U6hxj_6fontir2irNtB2v_5Glyph3new0E0B2x_.exit.i22, label %bb.i
 
 _RINvYINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map4KeysINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtBY_15NormalizedSpaceENtNtCs3v5ql5U6hxj_6fontir2ir13GlyphInstanceENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2L_4find5checkRBV_QNCNvMsm_B25_NtB25_5Glyph3new0E0INtNtNtB2T_3ops12control_flow11ControlFlowB4c_EEB27_.exit27: ; preds = %bb.h, %bb.i
-  br i1 %.not, label %bb.l, label %bb.as
+  %.not13 = icmp eq ptr %.sroa.0.0.i, null
+  br i1 %.not13, label %bb.l, label %bb.as
 
 bb.j:                                             ; preds = %.noexc26
-  br i1 %.not, label %bb.l, label %bb.k
+  %.not12 = icmp eq ptr %.sroa.0.0.i, null
+  br i1 %.not12, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)

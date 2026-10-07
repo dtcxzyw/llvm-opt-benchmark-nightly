@@ -204,12 +204,14 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.a
   %i.m = tail call ptr @lookup_tag(ptr noundef %0, ptr noundef %1) #17 ; 3 uses
   %.not = icmp eq ptr %i.m, null
-  br i1 %.not, label %.critedge, label %bb.p
+  br i1 %.not, label %6, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.n = tail call i32 @parse_tag_buffer(ptr noundef %0, ptr noundef nonnull %i.m, ptr noundef %4, i64 noundef %3) #17
   %.not64 = icmp eq i32 %i.n, 0
-  %spec.select = select i1 %.not64, ptr %i.m, ptr null
+  br i1 %.not64, label %6, label %.critedge
+
+6:                                                ; preds = %bb.p, %bb.o
   br label %.critedge
 
 bb.q:                                             ; preds = %bb.a
@@ -227,8 +229,8 @@ _.exit:                                           ; preds = %bb.q, %bb.r
   tail call void (ptr, ...) @warning(ptr noundef %.0.i, ptr noundef %i.q, i32 noundef %2) #17
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.p, %bb.k, %bb.h, %_.exit, %bb.c, %bb.b, %bb.d, %bb.i, %bb.g, %bb.j, %bb.n, %bb.m, %bb.l, %bb.o
-  %.358 = phi ptr [ null, %bb.k ], [ null, %bb.o ], [ null, %bb.h ], [ null, %_.exit ], [ null, %bb.b ], [ %i.b, %bb.i ], [ %i.i, %bb.m ], [ %i.a, %bb.c ], [ null, %bb.d ], [ %i.b, %bb.g ], [ %i.i, %bb.l ], [ null, %bb.j ], [ %i.i, %bb.n ], [ %spec.select, %bb.p ]
+.critedge:                                        ; preds = %bb.p, %bb.k, %bb.h, %_.exit, %bb.c, %bb.b, %bb.d, %bb.i, %bb.g, %bb.j, %bb.n, %bb.m, %bb.l, %6
+  %.358 = phi ptr [ null, %bb.k ], [ %i.i, %bb.l ], [ null, %bb.h ], [ null, %_.exit ], [ null, %bb.b ], [ %i.b, %bb.g ], [ %i.m, %6 ], [ %i.a, %bb.c ], [ null, %bb.d ], [ %i.b, %bb.i ], [ null, %bb.j ], [ %i.i, %bb.n ], [ %i.i, %bb.m ], [ null, %bb.p ]
   ret ptr %.358
 }
 

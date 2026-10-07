@@ -126,7 +126,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
-  %.lcssa239 = phi i64 [ %i.aj, %._crit_edge.unr-lcssa ], [ %i.ao, %.lr.ph.epil ] ; 9 uses
+  %.lcssa239 = phi i64 [ %i.aj, %._crit_edge.unr-lcssa ], [ %i.ao, %.lr.ph.epil ] ; 15 uses
   %.not.i69 = icmp eq i64 %.lcssa239, 0           ; 2 uses
   br i1 %.not.i69, label %.thread.i72, label %bb.f
 
@@ -158,7 +158,6 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph102.preheader:                              ; preds = %bb.h, %.thread.i72
   %i.ax = phi ptr [ %i.ap, %.thread.i72 ], [ %i.as, %bb.h ] ; 10 uses
-  %.060.lcssa183192 = phi i64 [ 0, %.thread.i72 ], [ %.lcssa239, %bb.h ] ; 5 uses
   %wide.trip.count125 = zext nneg i32 %1 to i64
   br label %.lr.ph102
 
@@ -224,7 +223,7 @@ bb.j:                                             ; preds = %.lr.ph93, %bb.j
 ._crit_edge103:                                   ; preds = %._crit_edge94
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %2, i8 0, i64 48, i1 false)
-  br i1 %.not.i69, label %._crit_edge.thread.i, label %bb.k
+  br i1 %.not.i69, label %._crit_edge.thread.i, label %3
 
 ._crit_edge.thread.i:                             ; preds = %.thread.i72.thread, %._crit_edge103
   %i.bx = phi ptr [ %i.k, %.thread.i72.thread ], [ %i.f, %._crit_edge103 ]
@@ -233,8 +232,18 @@ bb.j:                                             ; preds = %.lr.ph93, %bb.j
   tail call void @qsort(ptr noundef %i.bz, i64 noundef 0, i64 noundef 8, ptr noundef nonnull @gt) #18
   br label %.thread104.i
 
-bb.k:                                             ; preds = %._crit_edge103
-  %i.ca = tail call noalias ptr @calloc(i64 noundef %.060.lcssa183192, i64 noundef 8) #17 ; 7 uses
+3:                                                ; preds = %._crit_edge103
+  %mul.ov.i.i = icmp ugt i64 %.lcssa239, 2305843009213693951
+  br i1 %mul.ov.i.i, label %4, label %bb.k
+
+4:                                                ; preds = %3
+  %5 = load ptr, ptr @stderr, align 8, !tbaa !10
+  %6 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %5, ptr noundef nonnull @.str, i64 noundef %.lcssa239, i64 noundef 8) #15 ; 0 uses
+  tail call fastcc void @graphviz_exit() #16
+  unreachable
+
+bb.k:                                             ; preds = %3
+  %i.ca = tail call noalias ptr @calloc(i64 noundef %.lcssa239, i64 noundef 8) #17 ; 7 uses
   %i.cb = icmp eq ptr %i.ca, null
   br i1 %i.cb, label %bb.l, label %.lr.ph.i.preheader
 
@@ -243,7 +252,7 @@ bb.k:                                             ; preds = %._crit_edge103
   br i1 %min.iters.check, label %.lr.ph.i.preheader236, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %.lcssa239, -4                 ; 3 uses
+  %n.vec = and i64 %.lcssa239, 2305843009213693948 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -271,13 +280,13 @@ middle.block:                                     ; preds = %vector.body
 
 bb.l:                                             ; preds = %bb.k
   %i.cf = load ptr, ptr @stderr, align 8, !tbaa !10
-  %i.cg = shl nuw nsw i64 %.060.lcssa183192, 3
+  %i.cg = shl nuw i64 %.lcssa239, 3
   %i.ch = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cf, ptr noundef nonnull @.str.1, i64 noundef %i.cg) #15 ; 0 uses
   tail call fastcc void @graphviz_exit() #16
   unreachable
 
 .lr.ph125.i:                                      ; preds = %.lr.ph.i, %middle.block
-  tail call void @qsort(ptr noundef nonnull %i.ca, i64 noundef %.060.lcssa183192, i64 noundef 8, ptr noundef nonnull @gt) #18
+  tail call void @qsort(ptr noundef nonnull %i.ca, i64 noundef %.lcssa239, i64 noundef 8, ptr noundef nonnull @gt) #18
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -289,7 +298,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %.080115.i
   store ptr %i.cl, ptr %i.cm, align 8, !tbaa !22
   %i.cn = add nuw nsw i64 %.080115.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.cn, %.060.lcssa183192
+  %exitcond.not.i = icmp eq i64 %i.cn, %.lcssa239
   br i1 %exitcond.not.i, label %.lr.ph125.i, label %.lr.ph.i, !llvm.loop !30
 
 bb.m:                                             ; preds = %bb.fk, %.lr.ph125.i
@@ -692,7 +701,7 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
 
 bb.fk:                                            ; preds = %bb.fj
   %i.nk = add nuw nsw i64 %.079123.i, 1           ; 2 uses
-  %exitcond137.not.i = icmp eq i64 %i.nk, %.060.lcssa183192
+  %exitcond137.not.i = icmp eq i64 %i.nk, %.lcssa239
   br i1 %exitcond137.not.i, label %.thread104.i, label %bb.m, !llvm.loop !34
 
 bb.fl:                                            ; preds = %bb.ez, %bb.ey

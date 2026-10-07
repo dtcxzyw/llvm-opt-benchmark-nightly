@@ -202,11 +202,12 @@ zend_string_alloc.exit1225:                       ; preds = %.thread113, %bb.ls
 
 .loopexit.thread530:                              ; preds = %.critedge942, %.loopexit
   %.4728535 = phi ptr [ %.0724166, %.loopexit ], [ %.3727, %.critedge942 ]
+  %.1730534 = phi ptr [ null, %.loopexit ], [ %i.apy, %.critedge942 ]
   %i.aqt = call fastcc ptr @php_stream_http_response_headers_parse(ptr noundef %0, ptr noundef nonnull %.3676, ptr noundef %4, i32 noundef %3, ptr noundef %.4728535, ptr noundef null, ptr noundef null, i32 noundef %.169993, ptr noundef %7, ptr noundef %9) ; 0 uses
   br label %.loopexit.thread
 
 .loopexit.thread:                                 ; preds = %bb.lf, %.loopexit.thread536, %.loopexit.thread530, %.loopexit
-  %.1730529 = phi ptr [ %i.apy, %.loopexit.thread536 ], [ %i.apy, %.loopexit.thread530 ], [ null, %.loopexit ], [ null, %bb.lf ] ; 5 uses
+  %.1730529 = phi ptr [ %i.apy, %.loopexit.thread536 ], [ %.1730534, %.loopexit.thread530 ], [ null, %.loopexit ], [ null, %bb.lf ] ; 5 uses
   br i1 %.1733.shrunk, label %bb.lt, label %bb.lu
 
 bb.lt:                                            ; preds = %.loopexit.thread

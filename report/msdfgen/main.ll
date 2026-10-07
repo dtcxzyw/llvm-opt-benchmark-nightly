@@ -204,8 +204,8 @@ bb.a:
   %i.ap = sext i32 %.08554492 to i64
   %i.aq = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ap ; 13 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !15 ; 5 uses
-  %i.as = load i8, ptr %i.ar, align 1, !tbaa !16
-  %i.at = icmp eq i8 %i.as, 45                    ; 2 uses
+  %i.as = load i8, ptr %i.ar, align 1, !tbaa !16  ; 2 uses
+  %i.at = icmp eq i8 %i.as, 45
   br i1 %i.at, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
@@ -510,7 +510,8 @@ bb.ay:                                            ; preds = %bb.ax
   br label %.backedge, !llvm.loop !32
 
 sub_0:                                            ; preds = %bb.aw, %bb.ax
-  br i1 %i.at, label %sub_1, label %.tail.thread
+  %.not4578 = icmp eq i8 %i.as, 45
+  br i1 %.not4578, label %sub_1, label %.tail.thread
 
 sub_1:                                            ; preds = %sub_0
   %i.ea = getelementptr inbounds nuw i8, ptr %.0875, i64 1
