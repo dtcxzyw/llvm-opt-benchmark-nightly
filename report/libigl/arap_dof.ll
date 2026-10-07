@@ -205,7 +205,7 @@ _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEaSERKS1_.exit: ; preds = %.lr.ph.i.i.
   %i.ul = load i32, ptr %i.jf, align 8, !tbaa !71 ; 3 uses
   %i.um = sext i32 %i.ul to i64
   %i.un = sdiv i64 %i.uk, %i.um                   ; 4 uses
-  %i.uo = trunc i64 %i.un to i32                  ; 5 uses
+  %i.uo = trunc i64 %i.un to i32                  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #25
   %i.up = load i64, ptr %i.kh, align 8, !tbaa !46 ; 6 uses
@@ -289,8 +289,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIN
 bb.bo:                                            ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeINS_5BlockIS2_Lin1ELin1ELb0EEEEEvRKNS_9EigenBaseIT_EE.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #25
-  %i.vo = load i32, ptr %i.jd, align 4, !tbaa !92 ; 5 uses
-  %i.vp = load i32, ptr %i.jf, align 8, !tbaa !71 ; 9 uses
+  %i.vo = load i32, ptr %i.jd, align 4, !tbaa !92 ; 6 uses
+  %i.vp = load i32, ptr %i.jf, align 8, !tbaa !71 ; 11 uses
   %i.vq = getelementptr inbounds nuw i8, ptr %2, i64 216 ; 2 uses
   %i.vr = add i32 %i.vp, 1                        ; 2 uses
   %i.vs = mul nsw i32 %i.vr, %i.vo                ; 2 uses
@@ -347,16 +347,18 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.wj = zext nneg i32 %i.vo to i64              ; 3 uses
   %wide.trip.count113.i = zext i32 %i.vr to i64
   %wide.trip.count103.i = zext nneg i32 %i.vp to i64 ; 2 uses
-  %factor.op.mul308 = mul i32 %i.vp, %i.vo        ; 2 uses
-  %factor.op.mul306 = mul i32 %i.vp, %i.uo        ; 2 uses
+  %factor.op.mul308 = mul i32 %i.vp, %i.vo
+  %factor.op.mul306 = mul i32 %i.vp, %i.uo
   %i.wk = add nsw i64 %i.wi, -1                   ; 3 uses
   %i.wl = shl i64 %i.wf, 3                        ; 2 uses
   %i.wm = mul i64 %i.wf, -8
-  %i.wn = zext i32 %factor.op.mul308 to i64
+  %30 = mul i32 %i.vo, %i.vp
+  %i.wn = zext i32 %30 to i64
   %i.wo = shl i64 %i.wf, 3
+  %31 = mul i32 %i.vp, %i.uo
   %i.wp = mul nuw nsw i64 %i.wi, %wide.trip.count103.i
   %i.wq = shl nuw nsw i64 %i.wj, 3
-  %i.wr = mul i32 %i.vp, %i.vo
+  %i.wr = mul i32 %i.vo, %i.vp
   %i.ws = zext i32 %i.wr to i64
   %i.wt = shl i64 %i.wf, 3
   %i.wu = mul i32 %i.vp, %i.uo
@@ -434,7 +436,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 vector.scevcheck383:                              ; preds = %.preheader58.us.us.us.us.us.us.i
   %i.yb = trunc i64 %indvars.iv100.i to i32
-  %i.yc = mul i32 %factor.op.mul306, %i.yb
+  %i.yc = mul i32 %31, %i.yb
   %i.yd = sext i32 %i.yc to i64
   %i.ye = mul i64 %i.wo, %i.yd
   %scevgep386 = getelementptr i8, ptr %scevgep385, i64 %i.ye ; 4 uses
@@ -837,7 +839,7 @@ _ZN5Eigen6MatrixIfLin1ELin1ELi0ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14sc
   %i.uv = load i32, ptr %i.jf, align 8, !tbaa !164 ; 3 uses
   %i.uw = sext i32 %i.uv to i64
   %i.ux = sdiv i64 %i.uu, %i.uw                   ; 4 uses
-  %i.uy = trunc i64 %i.ux to i32                  ; 5 uses
+  %i.uy = trunc i64 %i.ux to i32                  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
   %i.uz = load i64, ptr %i.kh, align 8, !tbaa !166 ; 6 uses
@@ -921,8 +923,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIN
 bb.bn:                                            ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeINS_5BlockIS2_Lin1ELin1ELb0EEEEEvRKNS_9EigenBaseIT_EE.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25
-  %i.vy = load i32, ptr %i.jd, align 4, !tbaa !174 ; 5 uses
-  %i.vz = load i32, ptr %i.jf, align 8, !tbaa !164 ; 9 uses
+  %i.vy = load i32, ptr %i.jd, align 4, !tbaa !174 ; 6 uses
+  %i.vz = load i32, ptr %i.jf, align 8, !tbaa !164 ; 11 uses
   %i.wa = getelementptr inbounds nuw i8, ptr %2, i64 216 ; 2 uses
   %i.wb = add i32 %i.vz, 1                        ; 2 uses
   %i.wc = mul nsw i32 %i.wb, %i.vy                ; 2 uses
@@ -979,16 +981,18 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.wt = zext nneg i32 %i.vy to i64              ; 3 uses
   %wide.trip.count113.i = zext i32 %i.wb to i64
   %wide.trip.count103.i = zext nneg i32 %i.vz to i64 ; 2 uses
-  %factor.op.mul359 = mul i32 %i.vz, %i.vy        ; 2 uses
-  %factor.op.mul357 = mul i32 %i.vz, %i.uy        ; 2 uses
+  %factor.op.mul359 = mul i32 %i.vz, %i.vy
+  %factor.op.mul357 = mul i32 %i.vz, %i.uy
   %i.wu = add nsw i64 %i.ws, -1                   ; 3 uses
   %i.wv = shl i64 %i.wp, 2                        ; 2 uses
   %i.ww = mul i64 %i.wp, -4
-  %i.wx = zext i32 %factor.op.mul359 to i64
+  %17 = mul i32 %i.vy, %i.vz
+  %i.wx = zext i32 %17 to i64
   %i.wy = shl i64 %i.wp, 2
+  %18 = mul i32 %i.vz, %i.uy
   %i.wz = mul nuw nsw i64 %i.ws, %wide.trip.count103.i
   %i.xa = shl nuw nsw i64 %i.wt, 2
-  %i.xb = mul i32 %i.vz, %i.vy
+  %i.xb = mul i32 %i.vy, %i.vz
   %i.xc = zext i32 %i.xb to i64
   %i.xd = shl i64 %i.wp, 2
   %i.xe = mul i32 %i.vz, %i.uy
@@ -1066,7 +1070,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 vector.scevcheck468:                              ; preds = %.preheader58.us.us.us.us.us.us.i
   %i.yl = trunc i64 %indvars.iv100.i to i32
-  %i.ym = mul i32 %factor.op.mul357, %i.yl
+  %i.ym = mul i32 %18, %i.yl
   %i.yn = sext i32 %i.ym to i64
   %i.yo = mul i64 %i.wy, %i.yn
   %scevgep471 = getelementptr i8, ptr %scevgep470, i64 %i.yo ; 4 uses

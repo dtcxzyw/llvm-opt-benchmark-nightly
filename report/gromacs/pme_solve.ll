@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 760
 inline.NumDeleted: 302
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZNK8PmeSolve25getCoulombEnergyAndVirialEP9PmeOutput:bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 248
   %i.bb = load float, ptr %i.ba, align 8, !tbaa !48
@@ -205,15 +205,15 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 512
   %i.z = load <2 x i32>, ptr %i.m, align 8, !tbaa !28 ; 9 uses
   %i.aa = call noundef i32 @_Z33gmx_parallel_3dfft_complex_limitsP18gmx_parallel_3dfftPiS1_S1_S1_(ptr noundef %i.s, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) ; 0 uses
-  %i.ab = load float, ptr %i.t, align 8, !tbaa !19 ; 11 uses
-  %i.ac = load float, ptr %i.u, align 4, !tbaa !19 ; 11 uses
+  %i.ab = load float, ptr %i.t, align 8, !tbaa !19 ; 13 uses
+  %i.ac = load float, ptr %i.u, align 4, !tbaa !19 ; 13 uses
   %i.ad = load float, ptr %i.v, align 8, !tbaa !19 ; 4 uses
-  %i.ae = load float, ptr %i.w, align 8, !tbaa !19 ; 11 uses
+  %i.ae = load float, ptr %i.w, align 8, !tbaa !19 ; 13 uses
   %i.af = load float, ptr %i.x, align 4, !tbaa !19 ; 4 uses
-  %i.ag = load float, ptr %i.y, align 8, !tbaa !19 ; 11 uses
+  %i.ag = load float, ptr %i.y, align 8, !tbaa !19 ; 13 uses
   %i.ah = add nsw <2 x i32> %i.z, splat (i32 1)
   %i.ai = sdiv <2 x i32> %i.ah, splat (i32 2)     ; 5 uses
-  %i.aj = extractelement <2 x i32> %i.ai, i64 0   ; 8 uses
+  %i.aj = extractelement <2 x i32> %i.ai, i64 0   ; 10 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !36
   %i.am = load ptr, ptr %0, align 8, !tbaa !31    ; 2 uses
@@ -235,14 +235,14 @@ bb.a:
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !14 ; 10 uses
   %i.bd = ptrtoaddr ptr %i.bc to i64              ; 5 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.au, i64 96
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !17 ; 15 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !17 ; 17 uses
   %i.bg = insertelement <4 x ptr> poison, ptr %i.ay, i64 0
   %i.bh = insertelement <4 x ptr> %i.bg, ptr %i.ba, i64 1
   %i.bi = insertelement <4 x ptr> %i.bh, ptr %i.bc, i64 2
   %i.bj = insertelement <4 x ptr> %i.bi, ptr %i.bf, i64 3 ; 3 uses
   %i.bk = ptrtoaddr ptr %i.bf to i64              ; 7 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.au, i64 128
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !17 ; 19 uses
+  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !17 ; 21 uses
   %i.bn = ptrtoaddr ptr %i.bm to i64              ; 11 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.au, i64 192
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !17 ; 11 uses
@@ -290,7 +290,7 @@ bb.a:
   %i.db = icmp slt i32 %i.da, 1                   ; 8 uses
   %i.dc = load i32, ptr %i.b, align 4, !tbaa !28  ; 3 uses
   %i.dd = add i32 %i.dc, %i.da                    ; 3 uses
-  %i.de = fneg float %i.j                         ; 11 uses
+  %i.de = fneg float %i.j                         ; 13 uses
   %i.df = icmp slt i32 %i.aj, %i.dd               ; 2 uses
   %i.dg = add i32 %i.dd, 15                       ; 2 uses
   %i.dh = insertelement <16 x float> poison, float %i.cl, i64 0
@@ -465,7 +465,7 @@ bb.a:
   %or.cond3.not.us = and i1 %i.gc, %i.db          ; 2 uses
   %.0393.idx.us = select i1 %or.cond3.not.us, i64 8, i64 0 ; 2 uses
   %.0393.us = getelementptr i8, ptr %i.fz, i64 %.0393.idx.us ; 6 uses
-  %i.gd = zext i1 %or.cond3.not.us to i32         ; 4 uses
+  %i.gd = zext i1 %or.cond3.not.us to i32         ; 3 uses
   %.0388.us = add nsw i32 %i.da, %i.gd
   %i.ge = icmp slt i32 %.0388.us, %i.aj
   br i1 %i.ge, label %.lr.ph449.us, label %.preheader437.us
@@ -600,7 +600,7 @@ _ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit.us
   br i1 %i.mo, label %.lr.ph457.us.preheader, label %.loopexit.us
 
 .lr.ph457.us.preheader:                           ; preds = %_ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit.us
-  %i.jh = and i1 %i.gb, %i.ga
+  %i.jh = and i1 %i.ga, %i.gb
   %i.ji = and i1 %i.jh, %i.db
   %umin531 = zext i1 %i.ji to i64                 ; 4 uses
   %i.jj = add nsw i64 %i.dl, %umin531             ; 6 uses
@@ -755,7 +755,7 @@ middle.block734:                                  ; preds = %vector.body724
   br i1 %i.mj, label %.lr.ph466.us, label %.loopexit.us, !llvm.loop !224
 
 .lr.ph466.us.preheader:                           ; preds = %.lr.ph457.us, %middle.block734
-  %i.mk = and i1 %i.gb, %i.ga
+  %i.mk = and i1 %i.ga, %i.gb
   %i.ml = and i1 %i.mk, %i.db
   %umin535 = zext i1 %i.ml to i64
   %i.mm = add nsw i64 %i.dl, %umin535
@@ -778,7 +778,7 @@ middle.block734:                                  ; preds = %vector.body724
   br i1 %i.mo, label %iter.check758, label %._crit_edge454.us
 
 iter.check758:                                    ; preds = %.preheader436.us
-  %i.mp = and i1 %i.gb, %i.ga
+  %i.mp = and i1 %i.ga, %i.gb
   %i.mq = and i1 %i.mp, %i.db
   %umin527 = zext i1 %i.mq to i64                 ; 3 uses
   %i.mr = add nsw i64 %i.dl, %umin527             ; 5 uses
@@ -868,17 +868,15 @@ vec.epilog.middle.block768:                       ; preds = %vec.epilog.vector.b
   %i.nr = fmul float %i.ad, %.0387.us             ; 2 uses
   %i.ns = fmul float %i.af, %.0387.us             ; 2 uses
   %i.nt = load ptr, ptr %i.cq, align 8, !tbaa !14 ; 3 uses
-  %i.nu = and i1 %i.gb, %i.ga
+  %i.nu = and i1 %i.ga, %i.gb
   %i.nv = and i1 %i.nu, %i.db                     ; 3 uses
   %umin516 = zext i1 %i.nv to i64
   %i.nw = add nsw i64 %i.dl, %umin516             ; 5 uses
-  %i.nx = zext i1 %i.nv to i32                    ; 2 uses
+  %i.nx = zext i1 %i.nv to i32
   %i.ny = add nsw i32 %i.aj, %i.nx
   %i.nz = sub nsw i32 %i.ny, %i.gd
   %.neg929 = sext i1 %i.nv to i32
-  %.reass954 = add i32 %i.nx, %invariant.op.a
-  %6 = sub i32 %.reass954, %i.gd
-  %i.oa = add i32 %6, %.neg929                    ; 2 uses
+  %i.oa = add i32 %invariant.op.a, %.neg929       ; 2 uses
   %i.ob = zext i32 %i.oa to i64
   %i.oc = add nuw nsw i64 %i.ob, 1                ; 2 uses
   %min.iters.check894 = icmp ult i32 %i.oa, 23
@@ -1066,13 +1064,13 @@ scalar.ph813.preheader:                           ; preds = %vector.memcheck771,
   %i.rb = load float, ptr %i.ra, align 4, !tbaa !19
   %i.rc = fpext float %i.rb to double
   %i.rd = fmul double %i.cp, %i.rc
-  %i.re = fptrunc double %i.rd to float           ; 7 uses
+  %i.re = fptrunc double %i.rd to float           ; 9 uses
   %i.rf = add nsw i32 %i.ct, %.recomposed957      ; 3 uses
-  %i.rg = sitofp i32 %i.rf to float               ; 7 uses
+  %i.rg = sitofp i32 %i.rf to float               ; 9 uses
   %i.rh = sext i32 %i.rf to i64
   %i.ri = load ptr, ptr %i.cu, align 8, !tbaa !14
   %i.rj = getelementptr inbounds nuw [4 x i8], ptr %i.ri, i64 %i.rh
-  %i.rk = load float, ptr %i.rj, align 4, !tbaa !19 ; 7 uses
+  %i.rk = load float, ptr %i.rj, align 4, !tbaa !19 ; 9 uses
   %.reass = mul i32 %factor.op.mul, %i.qt
   %i.rl = sext i32 %.reass to i64                 ; 2 uses
   %i.rm = getelementptr [8 x i8], ptr %2, i64 %i.rl
@@ -1085,30 +1083,28 @@ scalar.ph813.preheader:                           ; preds = %vector.memcheck771,
   %or.cond3.not = and i1 %i.rs, %i.db             ; 2 uses
   %.0393.idx = select i1 %or.cond3.not, i64 8, i64 0 ; 2 uses
   %.0393 = getelementptr i8, ptr %i.rp, i64 %.0393.idx ; 8 uses
-  %i.rt = zext i1 %or.cond3.not to i32            ; 4 uses
+  %i.rt = zext i1 %or.cond3.not to i32            ; 3 uses
   %.0388 = add nsw i32 %i.da, %i.rt
   %i.ru = icmp slt i32 %.0388, %i.aj
   br i1 %i.ru, label %iter.check664, label %.preheader440
 
 iter.check664:                                    ; preds = %.lr.ph482.split
-  %i.rv = fmul float %i.ad, %.0387                ; 3 uses
-  %i.rw = fmul float %i.af, %.0387                ; 3 uses
-  %i.rx = load ptr, ptr %i.cq, align 8, !tbaa !14 ; 4 uses
-  %i.ry = and i1 %i.rr, %i.rq
+  %i.rv = fmul float %i.ad, %.0387                ; 5 uses
+  %i.rw = fmul float %i.af, %.0387                ; 5 uses
+  %i.rx = load ptr, ptr %i.cq, align 8, !tbaa !14 ; 6 uses
+  %i.ry = and i1 %i.rq, %i.rr
   %i.rz = and i1 %i.ry, %i.db                     ; 3 uses
   %umin505 = zext i1 %i.rz to i64
   %i.sa = add nsw i64 %i.dl, %umin505             ; 8 uses
-  %i.sb = zext i1 %i.rz to i32                    ; 2 uses
-  %7 = add nsw i32 %i.aj, %i.sb
-  %8 = sub nsw i32 %7, %i.rt
-  %i.sc = add i32 %i.eq, %i.sb
-  %i.sd = sub i32 %i.sc, %i.rt
+  %i.sb = zext i1 %i.rz to i32
+  %i.sc = add nsw i32 %i.aj, %i.sb
+  %i.sd = sub nsw i32 %i.sc, %i.rt
   %.neg = sext i1 %i.rz to i32
-  %i.se = add i32 %i.sd, %.neg                    ; 3 uses
+  %i.se = add i32 %i.eq, %.neg                    ; 3 uses
   %i.sf = zext i32 %i.se to i64
   %i.sg = add nuw nsw i64 %i.sf, 1                ; 5 uses
   %min.iters.check623 = icmp ult i32 %i.se, 7
-  br i1 %min.iters.check623, label %vec.epilog.scalar.ph665.preheader, label %vector.memcheck616
+  br i1 %min.iters.check623, label %vec.epilog.middle.block699.a, label %vector.memcheck616
 
 vector.memcheck616:                               ; preds = %iter.check664
   %i.sh = ptrtoaddr ptr %i.rx to i64              ; 2 uses
@@ -1118,7 +1114,7 @@ vector.memcheck616:                               ; preds = %iter.check664
   %i.sj = sub i64 %i.sh, %i.bn
   %diff.check620 = icmp ugt i64 %i.sj, -128
   %conflict.rdx621 = or i1 %conflict.rdx619, %diff.check620
-  br i1 %conflict.rdx621, label %vec.epilog.scalar.ph665.preheader, label %vector.main.loop.iter.check624
+  br i1 %conflict.rdx621, label %vec.epilog.middle.block699.a, label %vector.main.loop.iter.check624
 
 vector.main.loop.iter.check624:                   ; preds = %vector.memcheck616
   %min.iters.check625 = icmp ult i32 %i.se, 31
@@ -1234,7 +1230,7 @@ middle.block660:                                  ; preds = %vector.body651
 
 vec.epilog.iter.check666:                         ; preds = %middle.block660
   %min.epilog.iters.check667 = icmp eq i64 %i.sk, 0
-  br i1 %min.epilog.iters.check667, label %vec.epilog.scalar.ph665.preheader, label %vec.epilog.ph668, !prof !22
+  br i1 %min.epilog.iters.check667, label %vec.epilog.middle.block699.a, label %vec.epilog.ph668, !prof !22
 
 vec.epilog.ph668:                                 ; preds = %vector.main.loop.iter.check624, %vec.epilog.iter.check666
   %vec.epilog.resume.val662 = phi i64 [ %n.vec627, %vec.epilog.iter.check666 ], [ 0, %vector.main.loop.iter.check624 ]
@@ -1282,17 +1278,50 @@ vec.epilog.vector.body693:                        ; preds = %vec.epilog.vector.b
   %index.next697 = add nuw i64 %index694, 8       ; 2 uses
   %vec.ind.next698 = add <8 x i32> %vec.ind695, splat (i32 8)
   %i.vp = icmp eq i64 %index.next697, %n.vec669
-  br i1 %i.vp, label %vec.epilog.middle.block699.a, label %vec.epilog.vector.body693, !llvm.loop !231
+  br i1 %i.vp, label %vec.epilog.middle.block699, label %vec.epilog.vector.body693, !llvm.loop !231
 
-vec.epilog.middle.block699.a:                     ; preds = %vec.epilog.vector.body693
-  %cmp.n700.a = icmp eq i64 %i.sg, %n.vec669
-  br i1 %cmp.n700.a, label %.preheader440, label %vec.epilog.scalar.ph665.preheader
+vec.epilog.middle.block699:                       ; preds = %vec.epilog.vector.body693
+  %cmp.n700 = icmp eq i64 %i.sg, %n.vec669
+  br i1 %cmp.n700, label %.preheader440, label %vec.epilog.middle.block699.a
 
-vec.epilog.scalar.ph665.preheader:                ; preds = %iter.check664, %vector.memcheck616, %vec.epilog.iter.check666, %vec.epilog.middle.block699.a
-  %indvars.iv.ph = phi i64 [ %i.sa, %iter.check664 ], [ %i.sa, %vector.memcheck616 ], [ %i.sl, %vec.epilog.iter.check666 ], [ %i.ux, %vec.epilog.middle.block699.a ]
-  br label %vec.epilog.scalar.ph665
+vec.epilog.middle.block699.a:                     ; preds = %iter.check664, %vector.memcheck616, %vec.epilog.iter.check666, %vec.epilog.middle.block699
+  %indvars.iv.ph = phi i64 [ %i.sa, %iter.check664 ], [ %i.sa, %vector.memcheck616 ], [ %i.sl, %vec.epilog.iter.check666 ], [ %i.ux, %vec.epilog.middle.block699 ] ; 7 uses
+  %6 = trunc i64 %indvars.iv.ph to i32            ; 2 uses
+  %7 = sub i32 %i.aj, %6
+  %.neg950 = add i32 %6, 1
+  %xtraiter = and i32 %7, 1
+  %cmp.n700.a = icmp eq i32 %xtraiter, 0
+  br i1 %cmp.n700.a, label %vec.epilog.scalar.ph665.prol.loopexit, label %vec.epilog.scalar.ph665.preheader
 
-.preheader440:                                    ; preds = %vec.epilog.scalar.ph665, %middle.block660, %vec.epilog.middle.block699.a, %.lr.ph482.split
+vec.epilog.scalar.ph665.preheader:                ; preds = %vec.epilog.middle.block699.a
+  %8 = trunc nsw i64 %indvars.iv.ph to i32
+  %9 = sitofp i32 %8 to float                     ; 3 uses
+  %10 = fmul float %i.ab, %9                      ; 2 uses
+  %11 = call float @llvm.fmuladd.f32(float %9, float %i.ac, float %i.rv) ; 2 uses
+  %12 = call float @llvm.fmuladd.f32(float %9, float %i.ae, float %i.rw)
+  %13 = call float @llvm.fmuladd.f32(float %i.rg, float %i.ag, float %12) ; 2 uses
+  %14 = fmul float %11, %11
+  %15 = call float @llvm.fmuladd.f32(float %10, float %10, float %14)
+  %16 = call float @llvm.fmuladd.f32(float %13, float %13, float %15) ; 2 uses
+  %17 = fmul float %i.rk, %16
+  %18 = fmul float %17, %i.re
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.rx, i64 %indvars.iv.ph
+  %20 = load float, ptr %19, align 4, !tbaa !19
+  %21 = fmul float %18, %20
+  %22 = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv.ph
+  store float %21, ptr %22, align 4, !tbaa !19
+  %23 = fmul float %16, %i.de
+  %24 = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %indvars.iv.ph
+  store float %23, ptr %24, align 4, !tbaa !19
+  %indvars.iv.next.prol = add nsw i64 %indvars.iv.ph, 1
+  br label %vec.epilog.scalar.ph665.prol.loopexit
+
+vec.epilog.scalar.ph665.prol.loopexit:            ; preds = %vec.epilog.scalar.ph665.preheader, %vec.epilog.middle.block699.a
+  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %vec.epilog.middle.block699.a ], [ %indvars.iv.next.prol, %vec.epilog.scalar.ph665.preheader ]
+  %25 = icmp eq i32 %i.aj, %.neg950
+  br i1 %25, label %.preheader440, label %vec.epilog.scalar.ph665
+
+.preheader440:                                    ; preds = %vec.epilog.scalar.ph665.prol.loopexit, %vec.epilog.scalar.ph665, %middle.block660, %vec.epilog.middle.block699, %.lr.ph482.split
   br i1 %i.df, label %.lr.ph444, label %._crit_edge
 
 .lr.ph444:                                        ; preds = %.preheader440
@@ -1391,9 +1420,29 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %i.xh = icmp eq i64 %indvars.iv506.ph, %i.ey
   br i1 %i.xh, label %._crit_edge, label %scalar.ph
 
-vec.epilog.scalar.ph665:                          ; preds = %vec.epilog.scalar.ph665.preheader, %vec.epilog.scalar.ph665
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %vec.epilog.scalar.ph665 ], [ %indvars.iv.ph, %vec.epilog.scalar.ph665.preheader ] ; 5 uses
-  %i.xi = trunc nsw i64 %indvars.iv to i32
+vec.epilog.scalar.ph665:                          ; preds = %vec.epilog.scalar.ph665.prol.loopexit, %vec.epilog.scalar.ph665
+  %indvars.iv = phi i64 [ %indvars.iv.next.a, %vec.epilog.scalar.ph665 ], [ %indvars.iv.unr, %vec.epilog.scalar.ph665.prol.loopexit ] ; 6 uses
+  %26 = trunc nsw i64 %indvars.iv to i32
+  %27 = sitofp i32 %26 to float                   ; 3 uses
+  %28 = fmul float %i.ab, %27                     ; 2 uses
+  %29 = call float @llvm.fmuladd.f32(float %27, float %i.ac, float %i.rv) ; 2 uses
+  %30 = call float @llvm.fmuladd.f32(float %27, float %i.ae, float %i.rw)
+  %31 = call float @llvm.fmuladd.f32(float %i.rg, float %i.ag, float %30) ; 2 uses
+  %32 = fmul float %29, %29
+  %33 = call float @llvm.fmuladd.f32(float %28, float %28, float %32)
+  %34 = call float @llvm.fmuladd.f32(float %31, float %31, float %33) ; 2 uses
+  %35 = fmul float %i.rk, %34
+  %36 = fmul float %35, %i.re
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.rx, i64 %indvars.iv
+  %38 = load float, ptr %37, align 4, !tbaa !19
+  %39 = fmul float %36, %38
+  %40 = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv
+  store float %39, ptr %40, align 4, !tbaa !19
+  %41 = fmul float %34, %i.de
+  %42 = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %indvars.iv
+  store float %41, ptr %42, align 4, !tbaa !19
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 4 uses
+  %i.xi = trunc nsw i64 %indvars.iv.next to i32
   %i.xj = sitofp i32 %i.xi to float               ; 3 uses
   %i.xk = fmul float %i.ab, %i.xj                 ; 2 uses
   %i.xl = call float @llvm.fmuladd.f32(float %i.xj, float %i.ac, float %i.rv) ; 2 uses
@@ -1404,17 +1453,17 @@ vec.epilog.scalar.ph665:                          ; preds = %vec.epilog.scalar.p
   %i.xq = call float @llvm.fmuladd.f32(float %i.xn, float %i.xn, float %i.xp) ; 2 uses
   %i.xr = fmul float %i.rk, %i.xq
   %i.xs = fmul float %i.xr, %i.re
-  %i.xt = getelementptr inbounds nuw [4 x i8], ptr %i.rx, i64 %indvars.iv
+  %i.xt = getelementptr inbounds nuw [4 x i8], ptr %i.rx, i64 %indvars.iv.next
   %i.xu = load float, ptr %i.xt, align 4, !tbaa !19
   %i.xv = fmul float %i.xs, %i.xu
-  %i.xw = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv
+  %i.xw = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %indvars.iv.next
   store float %i.xv, ptr %i.xw, align 4, !tbaa !19
   %i.xx = fmul float %i.xq, %i.de
-  %i.xy = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %indvars.iv
+  %i.xy = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %indvars.iv.next
   store float %i.xx, ptr %i.xy, align 4, !tbaa !19
-  %indvars.iv.next.a = add nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv, 2 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next.a to i32
-  %exitcond.not = icmp eq i32 %8, %lftr.wideiv
+  %exitcond.not = icmp eq i32 %i.sd, %lftr.wideiv
   br i1 %exitcond.not, label %.preheader440, label %vec.epilog.scalar.ph665, !llvm.loop !233
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
@@ -1516,7 +1565,7 @@ _ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit413
   br i1 %i.aap, label %iter.check, label %.loopexit439
 
 iter.check:                                       ; preds = %_ZL19calc_exponentials_qiifN3gmx8ArrayRefIKNS_9SimdFloatEEES3_NS0_IS1_EE.exit413
-  %i.aaq = and i1 %i.rr, %i.rq
+  %i.aaq = and i1 %i.rq, %i.rr
   %i.aar = and i1 %i.aaq, %i.db
   %umin511 = zext i1 %i.aar to i64                ; 4 uses
   %i.aas = add nsw i64 %i.dl, %umin511            ; 8 uses

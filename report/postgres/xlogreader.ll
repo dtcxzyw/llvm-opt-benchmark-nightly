@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.d, %bb.e, %bb.a,
 ; Function Attrs: nounwind uwtable
 define dso_local noundef zeroext i1 @RestoreBlockImage(ptr nofree noundef captures(none) %0, i8 noundef zeroext %1, ptr noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
   %3 = alloca %struct.PGAlignedBlock, align 8     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.b = zext i8 %1 to i32                        ; 7 uses
@@ -332,7 +332,7 @@ bb.q:                                             ; preds = %bb.o
   %i.bl = zext i16 %i.bk to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr align 1 %.1, i64 %i.bl, i1 false)
   %i.bm = load i16, ptr %i.bj, align 8
-  %i.bn = zext i16 %i.bm to i64                   ; 3 uses
+  %i.bn = zext i16 %i.bm to i64                   ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 %i.bn ; 2 uses
   %i.bp = load i16, ptr %i.bg, align 2            ; 3 uses
   %i.bq = zext i16 %i.bp to i64                   ; 4 uses
@@ -353,10 +353,11 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not85, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.s
-  %i.bx = add i64 %i.a, %i.bn                     ; 2 uses
-  %i.by = add i64 %i.bx, %i.bq
-  %i.bz = add i64 %i.bx, 8
-  %umax = call i64 @llvm.umax.i64(i64 %i.by, i64 %i.bz)
+  %4 = add i64 %i.a, %i.bq
+  %i.bx = add i64 %4, %i.bn
+  %i.by = add i64 %i.a, %i.bn
+  %i.bz = add i64 %i.by, 8
+  %umax = call i64 @llvm.umax.i64(i64 %i.bx, i64 %i.bz)
   %i.ca = xor i64 %i.a, -1
   %i.cb = add i64 %umax, %i.ca
   %i.cc = sub i64 %i.cb, %i.bn

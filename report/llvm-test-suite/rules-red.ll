@@ -205,12 +205,12 @@ clause_IsEmptyClause.exit:                        ; preds = %bb.c
   br i1 %.not, label %.loopexit, label %clause_IsEmptyClause.exit.thread
 
 clause_IsEmptyClause.exit.thread:                 ; preds = %.clause_IsEmptyClause.exit.thread_crit_edge, %bb.b, %bb.c, %clause_IsEmptyClause.exit
-  %.val138 = phi i32 [ %.val138.pre, %.clause_IsEmptyClause.exit.thread_crit_edge ], [ %.val.i, %bb.b ], [ 0, %bb.c ], [ 0, %clause_IsEmptyClause.exit ] ; 2 uses
+  %.val138 = phi i32 [ %.val138.pre, %.clause_IsEmptyClause.exit.thread_crit_edge ], [ %.val.i, %bb.b ], [ 0, %bb.c ], [ 0, %clause_IsEmptyClause.exit ] ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 64
-  %.val151 = load i32, ptr %i.d, align 8          ; 4 uses
+  %.val151 = load i32, ptr %i.d, align 8          ; 5 uses
   %i.e = add i32 %.val151, -1                     ; 3 uses
   %i.f = add i32 %i.e, %.val138                   ; 3 uses
-  %i.g = add i32 %.val138, %.val151               ; 3 uses
+  %i.g = add nsw i32 %.val138, %.val151           ; 2 uses
   %i.h = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.h, align 8        ; 2 uses
   %i.i = add i32 %i.f, %.val4.i.i
@@ -220,7 +220,8 @@ clause_IsEmptyClause.exit.thread:                 ; preds = %.clause_IsEmptyClau
   br i1 %.not10622, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %clause_IsEmptyClause.exit.thread
-  %i.j = add i32 %i.g, %.val4.i.i                 ; 2 uses
+  %3 = add i32 %.val4.i.i, %.val138
+  %i.j = add i32 %3, %.val151                     ; 2 uses
   %wide.trip.count = zext i32 %i.j to i64
   %.pre = load ptr, ptr %.val149.pre, align 8
   %.phi.trans.insert58 = getelementptr i8, ptr %.pre, i64 4
@@ -623,7 +624,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr i8, ptr %i.q, i64 68      ; 2 uses
   %.val32.i = load i32, ptr %i.ab, align 4        ; 2 uses
   %i.ac = add i32 %.val32.i, %.val31.i            ; 3 uses
-  %i.ad = add i32 %i.ac, -1
+  %i.ad = add i32 %i.ac, -1                       ; 2 uses
   %.not48.i = icmp slt i32 %i.ad, 0
   br i1 %.not48.i, label %._crit_edge.i, label %.lr.ph.i
 
@@ -679,18 +680,19 @@ bb.g:                                             ; preds = %bb.f, %clause_Liter
 ._crit_edge.loopexit.i:                           ; preds = %bb.g
   %.val3.i.i.pre.i = load i32, ptr %i.aa, align 8 ; 2 uses
   %.val.i.i.pre.i = load i32, ptr %i.ab, align 4  ; 2 uses
-  %.pre.a = add i32 %.val3.i.i.pre.i, %.val.i.i.pre.i
+  %.pre = add i32 %.val3.i.i.pre.i, %.val.i.i.pre.i ; 2 uses
+  %.pre.a = add i32 %.pre, -1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.critedge2
-  %.pre-phi = phi i32 [ %.pre.a, %._crit_edge.loopexit.i ], [ %i.ac, %.critedge2 ] ; 2 uses
+  %.pre-phi62 = phi i32 [ %.pre.a, %._crit_edge.loopexit.i ], [ %i.ad, %.critedge2 ]
+  %.pre-phi = phi i32 [ %.pre, %._crit_edge.loopexit.i ], [ %i.ac, %.critedge2 ] ; 2 uses
   %.val.i.i.i = phi i32 [ %.val.i.i.pre.i, %._crit_edge.loopexit.i ], [ %.val32.i, %.critedge2 ]
   %.val3.i.i.i = phi i32 [ %.val3.i.i.pre.i, %._crit_edge.loopexit.i ], [ %.val31.i, %.critedge2 ]
   %.0.lcssa.i = phi ptr [ %.1.i, %._crit_edge.loopexit.i ], [ null, %.critedge2 ] ; 2 uses
   %i.aq = getelementptr i8, ptr %i.q, i64 72
-  %.val4.i.i.i = load i32, ptr %i.aq, align 8
-  %2 = add i32 %.val4.i.i.i, %.pre-phi            ; 2 uses
-  %i.ar = add i32 %2, -1
+  %.val4.i.i.i = load i32, ptr %i.aq, align 8     ; 2 uses
+  %i.ar = add i32 %.pre-phi62, %.val4.i.i.i
   %.not2751.i = icmp sgt i32 %.pre-phi, %i.ar
   br i1 %.not2751.i, label %._crit_edge56.i, label %.lr.ph55.i
 
@@ -699,6 +701,7 @@ bb.g:                                             ; preds = %bb.f, %clause_Liter
   %i.at = sext i32 %.val3.i.i.i to i64
   %i.au = sext i32 %.val.i.i.i to i64
   %i.av = add nsw i64 %i.at, %i.au
+  %2 = add i32 %.pre-phi, %.val4.i.i.i
   %.pre68.i = load i32, ptr @fol_NOT, align 4
   br label %bb.h
 
@@ -1101,10 +1104,10 @@ bb.f:                                             ; preds = %.lr.ph, %bb.c, %bb.
 define internal fastcc ptr @red_ForwardSubsumer(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64
-  %.val122 = load i32, ptr %i.a, align 8          ; 3 uses
+  %.val122 = load i32, ptr %i.a, align 8          ; 4 uses
   %i.b = add i32 %.val122, -1                     ; 2 uses
   %i.c = getelementptr i8, ptr %0, i64 68
-  %.val113 = load i32, ptr %i.c, align 4          ; 2 uses
+  %.val113 = load i32, ptr %i.c, align 4          ; 3 uses
   %i.d = add i32 %i.b, %.val113                   ; 2 uses
   %i.e = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.e, align 8        ; 2 uses
@@ -1113,13 +1116,14 @@ bb.a:
   br i1 %.not35, label %.loopexit14, label %.lr.ph39
 
 .lr.ph39:                                         ; preds = %bb.a
-  %i.g = add i32 %.val113, %.val122               ; 2 uses
+  %i.g = add nsw i32 %.val113, %.val122
   %i.h = getelementptr i8, ptr %0, i64 56         ; 2 uses
   %i.i = sext i32 %i.d to i64                     ; 2 uses
   %i.j = sext i32 %i.b to i64                     ; 2 uses
   %i.k = sext i32 %.val122 to i64                 ; 2 uses
   %i.l = sext i32 %i.g to i64                     ; 2 uses
-  %i.m = add i32 %i.g, %.val4.i.i
+  %2 = add i32 %.val4.i.i, %.val113
+  %i.m = add i32 %2, %.val122
   %wide.trip.count = zext i32 %i.m to i64
   br label %bb.b
 
@@ -1522,13 +1526,13 @@ bb.z:                                             ; preds = %list_Delete.exit
 define internal fastcc range(i32 0, 2) i32 @red_RewriteRedClause(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef nonnull writeonly captures(none) %4, i32 noundef %5) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64
-  %.val3.i = load i32, ptr %i.a, align 8          ; 5 uses
+  %.val3.i = load i32, ptr %i.a, align 8          ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 68
-  %.val.i = load i32, ptr %i.b, align 4           ; 2 uses
+  %.val.i = load i32, ptr %i.b, align 4
   %i.c = add nsw i32 %.val.i, %.val3.i
   %i.d = getelementptr i8, ptr %0, i64 72
-  %.val4.i = load i32, ptr %i.d, align 8          ; 2 uses
-  %i.e = add nsw i32 %i.c, %.val4.i               ; 2 uses
+  %.val4.i = load i32, ptr %i.d, align 8
+  %i.e = add nsw i32 %i.c, %.val4.i               ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
   %i.h = icmp eq i32 %i.e, 1
@@ -1544,8 +1548,6 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 52 ; 2 uses
   %i.l = load i32, ptr @memory_ALIGN, align 4     ; 2 uses
   %i.m = sext i32 %.val3.i to i64
-  %6 = add i32 %.val.i, %.val4.i
-  %7 = add i32 %6, %.val3.i
   br label %bb.az
 
 bb.b:                                             ; preds = %bb.a
@@ -1948,7 +1950,7 @@ bb.cm:                                            ; preds = %clause_LiteralGetIn
   %.10 = phi ptr [ %.0299, %clause_GetLiteralAtom.exit ], [ %.1, %clause_GetLiteralAtom.exit186 ], [ %.3.lcssa, %bb.bb ] ; 10 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %7, %lftr.wideiv
+  %exitcond.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge301, label %bb.az, !llvm.loop !80
 
 ._crit_edge301:                                   ; preds = %.loopexit
@@ -2027,7 +2029,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 56 ; 2 uses
   %i.o = load i32, ptr @memory_ALIGN, align 4     ; 4 uses
   %i.p = sext i32 %.val3.i.i to i64
-  %i.q = add i32 %.val.i.i, %.val4.i.i
+  %i.q = add i32 %.val4.i.i, %.val.i.i
   %i.r = add i32 %i.q, %.val3.i.i
   br label %bb.b
 
@@ -2430,7 +2432,7 @@ bb.a:
 .lr.ph229:                                        ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 56         ; 2 uses
   %i.f = zext nneg i32 %i.d to i64
-  %i.g = add i32 %.val125, %.val126
+  %i.g = add i32 %.val126, %.val125
   %wide.trip.count = zext i32 %i.g to i64
   br label %bb.b
 
@@ -2576,12 +2578,12 @@ bb.m:                                             ; preds = %bb.i, %bb.j, %bb.k,
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.val.i.i = phi i32 [ %.val126, %bb.a ], [ %.val.i.i.pre, %._crit_edge.loopexit ] ; 3 uses
-  %.val3.i.i = phi i32 [ %.val125, %bb.a ], [ %.val3.i.i.pre, %._crit_edge.loopexit ] ; 3 uses
+  %.val.i.i = phi i32 [ %.val126, %bb.a ], [ %.val.i.i.pre, %._crit_edge.loopexit ] ; 4 uses
+  %.val3.i.i = phi i32 [ %.val125, %bb.a ], [ %.val3.i.i.pre, %._crit_edge.loopexit ] ; 4 uses
   %.0.lcssa = phi ptr [ null, %bb.a ], [ %.3, %._crit_edge.loopexit ] ; 2 uses
   %i.an = getelementptr i8, ptr %0, i64 72        ; 2 uses
   %.val4.i.i = load i32, ptr %i.an, align 8       ; 3 uses
-  %i.ao = add i32 %.val.i.i, %.val3.i.i           ; 4 uses
+  %i.ao = add i32 %.val.i.i, %.val3.i.i           ; 3 uses
   %i.ap = add i32 %i.ao, -1
   %i.aq = add i32 %i.ap, %.val4.i.i               ; 3 uses
   %.not98236 = icmp sgt i32 %i.ao, %i.aq
@@ -2593,7 +2595,8 @@ bb.m:                                             ; preds = %bb.i, %bb.j, %bb.k,
   %i.at = sext i32 %.val.i.i to i64
   %i.au = add nsw i64 %i.as, %i.at
   %i.av = sext i32 %i.aq to i64
-  %i.aw = add i32 %i.ao, %.val4.i.i
+  %5 = add i32 %.val4.i.i, %.val3.i.i
+  %i.aw = add i32 %5, %.val.i.i
   br label %bb.n
 
 .loopexit219:                                     ; preds = %bb.v, %.thread263, %clause_LiteralAtom.exit176..loopexit219_crit_edge
