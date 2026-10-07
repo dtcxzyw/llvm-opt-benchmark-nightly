@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.12 = private unnamed_addr constant [28 x i8] c"color saturation adjustment\00", align 1
 @introspection = internal global %struct.dt_introspection_t { i32 8, i32 1, ptr @.str.15, i64 12, ptr getelementptr (i8, ptr @introspection_linear, i64 264), i64 1120, i64 688 }, align 8
@@ -204,7 +204,7 @@ bb.a:
   store float %i.i, ptr %i.j, align 4, !tbaa !32
   %i.k = extractelement <2 x float> %i.d, i64 0
   %i.l = fcmp reassoc nsz arcp contract afn ugt float %i.k, 1.000000e+00
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
   br i1 %i.l, label %vector.ph99, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.a
@@ -258,42 +258,67 @@ vector.ph99:                                      ; preds = %bb.a
   %i.ap = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.ao)
   %i.aq = fmul reassoc nsz arcp contract afn float %i.ap, 5.000000e+01
   %broadcast.splatinsert100 = insertelement <8 x float> poison, float %i.an, i64 0
-  %broadcast.splat101 = shufflevector <8 x float> %broadcast.splatinsert100, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat101 = shufflevector <8 x float> %broadcast.splatinsert100, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert102 = insertelement <8 x float> poison, float %i.aq, i64 0
-  %broadcast.splat103 = shufflevector <8 x float> %broadcast.splatinsert102, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat103 = shufflevector <8 x float> %broadcast.splatinsert102, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body104
 
 vector.body104:                                   ; preds = %vector.body104, %vector.ph99
-  %index105 = phi i64 [ 0, %vector.ph99 ], [ %index.next107.1, %vector.body104 ] ; 3 uses
-  %vec.ind106 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph99 ], [ %vec.ind.next108.1, %vector.body104 ] ; 3 uses
-  %i.ar = uitofp nneg <8 x i32> %vec.ind106 to <8 x float>
-  %i.as = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.ar, splat (float f0x38000000)
-  %4 = fadd reassoc nsz arcp contract afn <8 x float> %i.as, splat (float -1.000000e+00) ; 3 uses
-  %i.at = fmul reassoc nsz arcp contract afn <8 x float> %4, %4
-  %i.au = fmul reassoc nsz arcp contract afn <8 x float> %i.at, %broadcast.splat101
-  %i.av = fadd reassoc nsz arcp contract afn <8 x float> %i.au, splat (float 1.000000e+00)
-  %5 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.sqrt.v8f32(<8 x float> %i.av)
-  %i.aw = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %4
-  %6 = fdiv reassoc nsz arcp contract afn <8 x float> %i.aw, %5
-  %7 = fadd reassoc nsz arcp contract afn <8 x float> %6, splat (float 5.000000e+01)
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %index105
-  store <8 x float> %7, ptr %8, align 4, !tbaa !30
-  %vec.ind.next108 = add <8 x i32> %vec.ind106, splat (i32 8)
-  %9 = uitofp nneg <8 x i32> %vec.ind.next108 to <8 x float>
-  %i.ax = fmul reassoc nnan nsz arcp contract afn <8 x float> %9, splat (float f0x38000000)
-  %i.ay = fadd reassoc nsz arcp contract afn <8 x float> %i.ax, splat (float -1.000000e+00) ; 3 uses
-  %10 = fmul reassoc nsz arcp contract afn <8 x float> %i.ay, %i.ay
-  %11 = fmul reassoc nsz arcp contract afn <8 x float> %10, %broadcast.splat101
-  %i.az = fadd reassoc nsz arcp contract afn <8 x float> %11, splat (float 1.000000e+00)
+  %index105 = phi i64 [ 0, %vector.ph99 ], [ %index.next107.1, %vector.body104 ] ; 2 uses
+  %vec.ind106 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph99 ], [ %vec.ind.next108.1, %vector.body104 ] ; 5 uses
+  %step.add107 = add <8 x i32> %vec.ind106, splat (i32 8)
+  %step.add.2108 = add <8 x i32> %vec.ind106, splat (i32 16)
+  %step.add.3109 = add <8 x i32> %vec.ind106, splat (i32 24)
+  %4 = uitofp nneg <8 x i32> %vec.ind106 to <8 x float>
+  %5 = uitofp nneg <8 x i32> %step.add107 to <8 x float>
+  %6 = uitofp nneg <8 x i32> %step.add.2108 to <8 x float>
+  %i.ar = uitofp nneg <8 x i32> %step.add.3109 to <8 x float>
+  %i.as = fmul reassoc nnan nsz arcp contract afn <8 x float> %4, splat (float f0x38000000)
+  %7 = fmul reassoc nnan nsz arcp contract afn <8 x float> %5, splat (float f0x38000000)
+  %i.at = fmul reassoc nnan nsz arcp contract afn <8 x float> %6, splat (float f0x38000000)
+  %i.au = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.ar, splat (float f0x38000000)
+  %8 = fadd reassoc nsz arcp contract afn <8 x float> %i.as, splat (float -1.000000e+00) ; 3 uses
+  %9 = fadd reassoc nsz arcp contract afn <8 x float> %7, splat (float -1.000000e+00) ; 3 uses
+  %i.av = fadd reassoc nsz arcp contract afn <8 x float> %i.at, splat (float -1.000000e+00) ; 3 uses
+  %10 = fadd reassoc nsz arcp contract afn <8 x float> %i.au, splat (float -1.000000e+00) ; 3 uses
+  %i.aw = fmul reassoc nsz arcp contract afn <8 x float> %8, %8
+  %11 = fmul reassoc nsz arcp contract afn <8 x float> %9, %9
+  %12 = fmul reassoc nsz arcp contract afn <8 x float> %i.av, %i.av
+  %13 = fmul reassoc nsz arcp contract afn <8 x float> %10, %10
+  %14 = fmul reassoc nsz arcp contract afn <8 x float> %i.aw, %broadcast.splat101
+  %15 = fmul reassoc nsz arcp contract afn <8 x float> %11, %broadcast.splat101
+  %16 = fmul reassoc nsz arcp contract afn <8 x float> %12, %broadcast.splat101
+  %i.ax = fmul reassoc nsz arcp contract afn <8 x float> %13, %broadcast.splat101
+  %i.ay = fadd reassoc nsz arcp contract afn <8 x float> %14, splat (float 1.000000e+00)
+  %17 = fadd reassoc nsz arcp contract afn <8 x float> %15, splat (float 1.000000e+00)
+  %18 = fadd reassoc nsz arcp contract afn <8 x float> %16, splat (float 1.000000e+00)
+  %i.az = fadd reassoc nsz arcp contract afn <8 x float> %i.ax, splat (float 1.000000e+00)
+  %19 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.sqrt.v8f32(<8 x float> %i.ay)
+  %20 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.sqrt.v8f32(<8 x float> %17)
+  %21 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.sqrt.v8f32(<8 x float> %18)
   %i.ba = tail call reassoc nsz arcp contract afn <8 x float> @llvm.sqrt.v8f32(<8 x float> %i.az)
-  %i.bb = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %i.ay
+  %22 = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %8
+  %23 = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %9
+  %24 = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %i.av
+  %i.bb = fmul reassoc nsz arcp contract afn <8 x float> %broadcast.splat103, %10
+  %25 = fdiv reassoc nsz arcp contract afn <8 x float> %22, %19
+  %26 = fdiv reassoc nsz arcp contract afn <8 x float> %23, %20
+  %27 = fdiv reassoc nsz arcp contract afn <8 x float> %24, %21
   %i.bc = fdiv reassoc nsz arcp contract afn <8 x float> %i.bb, %i.ba
+  %28 = fadd reassoc nsz arcp contract afn <8 x float> %25, splat (float 5.000000e+01)
+  %29 = fadd reassoc nsz arcp contract afn <8 x float> %26, splat (float 5.000000e+01)
+  %30 = fadd reassoc nsz arcp contract afn <8 x float> %27, splat (float 5.000000e+01)
   %i.bd = fadd reassoc nsz arcp contract afn <8 x float> %i.bc, splat (float 5.000000e+01)
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %index105
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 32
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %index105 ; 4 uses
+  %31 = getelementptr inbounds nuw i8, ptr %i.be, i64 32
+  %32 = getelementptr inbounds nuw i8, ptr %i.be, i64 64
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 96
+  store <8 x float> %28, ptr %i.be, align 4, !tbaa !30
+  store <8 x float> %29, ptr %31, align 4, !tbaa !30
+  store <8 x float> %30, ptr %32, align 4, !tbaa !30
   store <8 x float> %i.bd, ptr %i.bf, align 4, !tbaa !30
-  %index.next107.1 = add nuw nsw i64 %index105, 16 ; 2 uses
-  %vec.ind.next108.1 = add <8 x i32> %vec.ind106, splat (i32 16)
+  %index.next107.1 = add nuw i64 %index105, 32    ; 2 uses
+  %vec.ind.next108.1 = add <8 x i32> %vec.ind106, splat (i32 32)
   %i.bg = icmp eq i64 %index.next107.1, 65536
   br i1 %i.bg, label %.loopexit, label %vector.body104, !llvm.loop !45
 
