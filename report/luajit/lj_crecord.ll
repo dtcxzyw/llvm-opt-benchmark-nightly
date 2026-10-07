@@ -204,16 +204,14 @@ bb.ai:                                            ; preds = %bb.z
   %i.ee = load ptr, ptr %i.cm, align 8, !tbaa !30
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !31
-  %.not222 = icmp eq i32 %i.eg, 0
+  %.not222 = icmp ne i32 %i.eg, 0
   %i.eh = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   %i.ei = load i16, ptr %i.eh, align 8, !tbaa !71 ; 4 uses
-  br i1 %.not222, label %6, label %.loopexit
-
-6:                                                ; preds = %bb.ai
   %.not223272 = icmp eq i16 %i.ei, 0
-  br i1 %.not223272, label %.loopexit, label %.lr.ph
+  %or.cond = select i1 %.not222, i1 true, i1 %.not223272
+  br i1 %or.cond, label %.loopexit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %6
+.lr.ph:                                           ; preds = %bb.ai
   %i.ej = load ptr, ptr %i.d, align 8, !tbaa !56  ; 2 uses
   br label %bb.aj
 
@@ -257,16 +255,15 @@ ctype_rawchild.exit239:                           ; preds = %.preheader267
   %.not223 = icmp eq i16 %i.en, 0
   br i1 %.not223, label %.loopexit, label %bb.aj
 
-.loopexit:                                        ; preds = %.thread248, %bb.ai, %6
-  %7 = phi i16 [ %i.ei, %bb.ai ], [ 0, %6 ], [ %i.ei, %.thread248 ] ; 2 uses
+.loopexit:                                        ; preds = %.thread248, %bb.ai
   %i.ez = trunc i32 %i.bx to i16
   %i.fa = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
-  %.not225325328 = icmp eq i16 %7, 0
+  %.not225325328 = icmp eq i16 %i.ei, 0
   br i1 %.not225325328, label %.thread260, label %.lr.ph327
 
 .lr.ph327:                                        ; preds = %.loopexit, %.split
   %.0187.ph330 = phi i32 [ %.1, %.split ], [ 1, %.loopexit ] ; 4 uses
-  %.1189.in.ph329 = phi i16 [ %i.ff, %.split ], [ %7, %.loopexit ]
+  %.1189.in.ph329 = phi i16 [ %i.ff, %.split ], [ %i.ei, %.loopexit ]
   %i.fb = load ptr, ptr %i.d, align 8, !tbaa !56  ; 2 uses
   br label %bb.al
 

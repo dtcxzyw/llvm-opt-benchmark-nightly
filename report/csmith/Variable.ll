@@ -205,28 +205,26 @@ bb.c:                                             ; preds = %.critedge
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !41
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %3, %bb.c
-  %.1.i.i.in = phi i64 [ %i.k, %bb.c ], [ %.1.i.i, %3 ]
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.c
+  %.1.i.i.in = phi i64 [ %i.k, %bb.c ], [ %.1.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ]
   %.1.i.i = add i64 %.1.i.i.in, -1                ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.1.i.i
   %i.n = load i8, ptr %i.m, align 1, !tbaa !35
-  %memchr.char0cmp.not.a = icmp eq i8 %i.n, 93
-  br i1 %memchr.char0cmp.not.a, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit, label %3
+  %memchr.char0cmp.not = icmp eq i8 %i.n, 93
+  %memchr.char0cmp.not.a = icmp eq i64 %.1.i.i, 0
+  %or.cond = or i1 %memchr.char0cmp.not, %memchr.char0cmp.not.a
+  br i1 %or.cond, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, !llvm.loop !7
 
-3:                                                ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
-  %.not17.i.i = icmp eq i64 %.1.i.i, 0
-  br i1 %.not17.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, !llvm.loop !7
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %3, %.critedge
-  %4 = phi i64 [ 0, %.critedge ], [ 0, %3 ], [ %.1.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ] ; 3 uses
-  %.not.i.i10 = icmp ult i64 %4, %i.k
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %.critedge
+  %3 = phi i64 [ 0, %.critedge ], [ %.1.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ] ; 3 uses
+  %.not.i.i10 = icmp ult i64 %3, %i.k
   br i1 %.not.i.i10, label %.lr.ph.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit
 
 .lr.ph.i.i:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit
   %i.o = load ptr, ptr %i.i, align 8, !tbaa !41   ; 3 uses
-  %i.p = sub nuw i64 %i.k, %4
+  %i.p = sub nuw i64 %i.k, %3
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.k
-  %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %4
+  %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %3
   %i.s = ptrtoint ptr %i.q to i64
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12
 

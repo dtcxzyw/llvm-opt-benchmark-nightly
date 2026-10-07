@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %.thread26
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit: ; preds = %bb.e, %bb.f
   %.sroa.0.0.i = phi ptr [ %i.z, %bb.f ], [ %i.x, %bb.e ]
   %i.aa = zext i32 %2 to i64                      ; 3 uses
-  %i.ab = zext i32 %3 to i64                      ; 5 uses
+  %i.ab = zext i32 %3 to i64                      ; 6 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %i.aa ; 2 uses
   %i.ad = icmp eq i32 %3, 0
   br i1 %i.ad, label %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread.thread, label %bb.g
@@ -296,7 +296,6 @@ _RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.ex
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E17unsafe_subtendrilCsj1ugBVjDER0_8xml5ever.exit
 
 _RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread.thread: ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit, %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread
-  %4 = phi i64 [ %i.ab, %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread ], [ 0, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit ] ; 2 uses
   br i1 %i.f, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread.thread
@@ -324,7 +323,7 @@ bb.p:                                             ; preds = %bb.n, %bb.m
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit.i: ; preds = %.thread, %bb.p, %bb.o
   %i.bt = phi i64 [ %i.aa, %bb.p ], [ %i.aa, %bb.o ], [ 0, %.thread ]
-  %i.bu = phi i64 [ %4, %bb.p ], [ %4, %bb.o ], [ 0, %.thread ] ; 2 uses
+  %i.bu = phi i64 [ %i.ab, %bb.p ], [ %i.ab, %bb.o ], [ 0, %.thread ] ; 2 uses
   %.sroa.0.0.i3.i = phi ptr [ %i.bs, %bb.p ], [ %i.bq, %bb.o ], [ inttoptr (i64 1 to ptr), %.thread ]
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i3.i, i64 %i.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i)

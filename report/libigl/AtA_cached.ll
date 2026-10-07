@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i183: ; preds = %bb.aw, %_ZN
   br label %_ZNSt6vectorIiSaIiEE7reserveEm.exit186
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit186:           ; preds = %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i183, %bb.au
-  %i.mx = phi ptr [ %.pre615, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i183 ], [ %i.ib, %bb.au ] ; 20 uses
+  %i.mx = phi ptr [ %.pre615, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i183 ], [ %i.ib, %bb.au ] ; 15 uses
   %i.my = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 6 uses
   %i.mz = icmp eq ptr %i.mx, null
   br i1 %i.mz, label %bb.ax, label %bb.ay
@@ -468,8 +468,7 @@ middle.block931:                                  ; preds = %vector.body924
   br i1 %exitcond102.not.i.i.i.i220, label %_ZNK5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE8nonZerosEv.exit221, label %.lr.ph94.i.i.i.i217, !llvm.loop !88
 
 _ZNK5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE8nonZerosEv.exit221: ; preds = %.lr.ph89.i.i.i.i200, %.lr.ph94.i.i.i.i217, %middle.block915, %middle.block931, %.preheader.i.i.i.i195, %bb.bf, %bb.ax
-  %6 = phi ptr [ null, %bb.ax ], [ %i.mx, %middle.block931 ], [ %i.mx, %.preheader.i.i.i.i195 ], [ %i.mx, %bb.bf ], [ %i.mx, %middle.block915 ], [ %i.mx, %.lr.ph94.i.i.i.i217 ], [ %i.mx, %.lr.ph89.i.i.i.i200 ]
-  %.0.i199.in = phi i32 [ %i.ng, %bb.ax ], [ %i.qq, %middle.block931 ], [ %.075.lcssa.i.i.i.i196, %.preheader.i.i.i.i195 ], [ %i.qf, %bb.bf ], [ %i.pv, %middle.block915 ], [ %i.qt, %.lr.ph94.i.i.i.i217 ], [ %i.qc, %.lr.ph89.i.i.i.i200 ]
+  %.0.i199.in = phi i32 [ %i.ng, %bb.ax ], [ %i.qt, %.lr.ph94.i.i.i.i217 ], [ %.075.lcssa.i.i.i.i196, %.preheader.i.i.i.i195 ], [ %i.qf, %bb.bf ], [ %i.qq, %middle.block931 ], [ %i.pv, %middle.block915 ], [ %i.qc, %.lr.ph89.i.i.i.i200 ]
   %.0.i199 = sext i32 %.0.i199.in to i64          ; 2 uses
   %i.qv = shl nsw i64 %.0.i199, 1                 ; 3 uses
   %i.qw = icmp ugt i64 %i.qv, 2305843009213693951
@@ -529,7 +528,7 @@ _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i225: ; preds = %bb.bi, %_ZN
   br label %_ZNSt6vectorIiSaIiEE7reserveEm.exit228
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit228:           ; preds = %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i225, %bb.bg
-  %i.rw = phi ptr [ %.pre616, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i225 ], [ %6, %bb.bg ] ; 2 uses
+  %i.rw = phi ptr [ %.pre616, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i225 ], [ %i.mx, %bb.bg ] ; 2 uses
   %i.rx = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.ry = icmp eq ptr %i.rw, null
   br i1 %i.ry, label %bb.bj, label %bb.bk

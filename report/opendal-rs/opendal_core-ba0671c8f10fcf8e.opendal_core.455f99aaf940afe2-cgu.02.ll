@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.s, label %.loopexit, label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i83, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0, ptr %i.t, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8
   store i64 %storemerge, ptr %0, align 8
@@ -287,13 +286,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.s, label %.loopexit, label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i83, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0, ptr %i.t, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8
   store i64 %storemerge, ptr %0, align 8
@@ -361,13 +359,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.q, label %.loopexit, label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i81, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0, ptr %i.r, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8
   store i64 %storemerge, ptr %0, align 8
@@ -435,13 +432,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.q, label %.loopexit, label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i81, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0, ptr %i.r, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8
   store i64 %storemerge, ptr %0, align 8

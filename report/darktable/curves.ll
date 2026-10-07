@@ -202,7 +202,6 @@ bb.c:                                             ; preds = %.preheader189
   br label %.preheader188
 
 .preheader188:                                    ; preds = %.peel.next.epil.preheader, %.preheader188.loopexit.unr-lcssa, %bb.c
-  %4 = phi i32 [ 2, %bb.c ], [ %i.bz, %.preheader188.loopexit.unr-lcssa ], [ %i.bz, %.peel.next.epil.preheader ] ; 2 uses
   %i.fn = add nsw i32 %3, -2                      ; 6 uses
   %i.fo = icmp sgt i32 %3, 3
   br i1 %i.fo, label %.lr.ph203.preheader, label %.preheader186.lr.ph
@@ -289,7 +288,7 @@ bb.c:                                             ; preds = %.preheader189
   br i1 %exitcond247.not, label %.preheader186.lr.ph, label %iter.check424, !llvm.loop !27
 
 .preheader186.lr.ph:                              ; preds = %..loopexit_crit_edge, %.preheader188
-  %i.hj = sext i32 %4 to i64
+  %i.hj = sext i32 %i.bz to i64
   %i.hk = zext i32 %i.fn to i64
   %i.hl = sext i32 %i.fn to i64
   %invariant.op = sub i32 2, %3
@@ -597,7 +596,7 @@ vec.epilog.middle.block481:                       ; preds = %vec.epilog.vector.b
   br label %.split.us
 
 .lr.ph217.us.preheader.loopexit:                  ; preds = %._crit_edge211
-  %i.mb = zext i32 %4 to i64
+  %i.mb = zext i32 %i.bz to i64
   br label %.lr.ph217.us.preheader
 
 .lr.ph217.us.preheader:                           ; preds = %.lr.ph217.us.preheader.loopexit, %.preheader189

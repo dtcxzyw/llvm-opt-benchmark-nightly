@@ -97,7 +97,6 @@ target triple = "x86_64-pc-linux-gnu"
 @__const.IMA_ADPCM_ProcessNibble.index_table_4b = private unnamed_addr constant [16 x i8] c"\FF\FF\FF\FF\02\04\06\08\FF\FF\FF\FF\02\04\06\08", align 16
 @__const.IMA_ADPCM_ProcessNibble.step_table = private unnamed_addr constant [89 x i16] [i16 7, i16 8, i16 9, i16 10, i16 11, i16 12, i16 13, i16 14, i16 16, i16 17, i16 19, i16 21, i16 23, i16 25, i16 28, i16 31, i16 34, i16 37, i16 41, i16 45, i16 50, i16 55, i16 60, i16 66, i16 73, i16 80, i16 88, i16 97, i16 107, i16 118, i16 130, i16 143, i16 157, i16 173, i16 190, i16 209, i16 230, i16 253, i16 279, i16 307, i16 337, i16 371, i16 408, i16 449, i16 494, i16 544, i16 598, i16 658, i16 724, i16 796, i16 876, i16 963, i16 1060, i16 1166, i16 1282, i16 1411, i16 1552, i16 1707, i16 1878, i16 2066, i16 2272, i16 2499, i16 2749, i16 3024, i16 3327, i16 3660, i16 4026, i16 4428, i16 4871, i16 5358, i16 5894, i16 6484, i16 7132, i16 7845, i16 8630, i16 9493, i16 10442, i16 11487, i16 12635, i16 13899, i16 15289, i16 16818, i16 18500, i16 20350, i16 22385, i16 24623, i16 27086, i16 29794, i16 32767], align 16
 @switch.table.SDL_LoadWAV_IO_REAL = private unnamed_addr constant [25 x i16] [i16 8, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 -32752, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 -32736, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 poison, i16 -32736], align 4
-@switch.table.PCM_Init = private unnamed_addr constant [25 x i8] [i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 24, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 2
 
 ; Function Attrs: nounwind uwtable
 define hidden noundef zeroext i1 @SDL_LoadWAV_IO_REAL(ptr noundef %0, i1 noundef zeroext %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
@@ -500,11 +499,14 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %switch.tableidx = add i16 %.pre, -8            ; 3 uses
-  %2 = icmp ult i16 %switch.tableidx, 25
-  br i1 %2, label %switch.hole_check, label %bb.c
+  switch i16 %.pre, label %bb.c [
+    i16 8, label %._crit_edge
+    i16 16, label %._crit_edge
+    i16 24, label %._crit_edge
+    i16 32, label %._crit_edge
+  ]
 
-bb.c:                                             ; preds = %switch.hole_check, %bb.b
+bb.c:                                             ; preds = %bb.b
   %i.c = zext i16 %.pre to i32
   %i.d = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.51, i32 noundef %i.c) #7
   br label %bb.m
@@ -518,25 +520,11 @@ bb.e:                                             ; preds = %bb.d
   %i.f = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.52, i32 noundef %i.e) #7
   br label %bb.m
 
-switch.hole_check:                                ; preds = %bb.b
-  %switch.maskindex = zext nneg i16 %switch.tableidx to i32
-  %switch.shifted = lshr i32 16843009, %switch.maskindex
-  %switch.lobit = trunc i32 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %bb.c
-
-switch.lookup:                                    ; preds = %switch.hole_check
-  %3 = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.PCM_Init, i64 %3
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i16
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %switch.lookup, %bb.a, %bb.d
-  %4 = phi i16 [ %switch.ext, %switch.lookup ], [ 32, %bb.d ], [ %.pre, %bb.a ]
+._crit_edge:                                      ; preds = %bb.a, %bb.d, %bb.b, %bb.b, %bb.b, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.h = load i16, ptr %i.g, align 4
   %i.i = zext i16 %i.h to i32
-  %i.j = zext i16 %4 to i32
+  %i.j = zext i16 %.pre to i32
   %i.k = mul nuw nsw i32 %i.j, %i.i
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.m = load i16, ptr %i.l, align 4              ; 2 uses

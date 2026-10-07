@@ -205,7 +205,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.jo = load i32, ptr %i.gv, align 4, !tbaa !200 ; 2 uses
   %i.jp = load i32, ptr %i.gw, align 8, !tbaa !199 ; 2 uses
   %i.jq = sub nsw i32 %i.jo, %i.jp                ; 2 uses
-  %i.jr = sext i32 %i.jq to i64                   ; 4 uses
+  %i.jr = sext i32 %i.jq to i64                   ; 5 uses
   %.not118.i.i.i.i = icmp eq i32 %i.jo, %i.jp
   br i1 %.not118.i.i.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i, label %bb.bf
 
@@ -245,10 +245,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i: ; pred
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i:       ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i, %bb.be
-  %200 = phi i64 [ %i.jr, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i ], [ 0, %bb.be ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %179) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq) #18
-  store i64 %200, ptr %i.aq, align 8, !tbaa !59
+  store i64 %i.jr, ptr %i.aq, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar) #18
   %.val.i.i.i.i = load ptr, ptr %i.dk, align 8, !tbaa !144 ; 2 uses
   %.val24.i.i.i.i = load ptr, ptr %i.gx, align 8, !tbaa !201 ; 2 uses
@@ -267,7 +266,7 @@ bb.bi:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.ke = sub i64 %i.kc, %i.kd
   %i.kf = sdiv exact i64 %i.ke, 200               ; 2 uses
   store i64 %i.kf, ptr %i.ar, align 8, !tbaa !59
-  %i.kg = icmp eq i64 %200, %i.kf
+  %i.kg = icmp eq i64 %i.kf, %i.jr
   br i1 %i.kg, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i.i.i, label %bb.bj
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i.i.i: ; preds = %bb.bi
@@ -670,7 +669,7 @@ bb.fp:                                            ; preds = %bb.fo
   %i.us = load i32, ptr %i.rp, align 4, !tbaa !200 ; 2 uses
   %i.ut = load i32, ptr %i.rq, align 8, !tbaa !199 ; 2 uses
   %i.uu = sub nsw i32 %i.us, %i.ut                ; 2 uses
-  %i.uv = sext i32 %i.uu to i64                   ; 4 uses
+  %i.uv = sext i32 %i.uu to i64                   ; 5 uses
   %.not118.i.i147.i.i = icmp eq i32 %i.us, %i.ut
   br i1 %.not118.i.i147.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i153.i.i, label %bb.fq
 
@@ -712,10 +711,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i152.i.i: ; p
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i153.i.i:    ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i152.i.i, %bb.fp
   %i.vd = phi ptr [ %i.vc, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i152.i.i ], [ null, %bb.fp ] ; 8 uses
   %i.ve = phi ptr [ %i.uy, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i152.i.i ], [ null, %bb.fp ] ; 10 uses
-  %201 = phi i64 [ %i.uv, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i152.i.i ], [ 0, %bb.fp ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %158) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai) #18
-  store i64 %201, ptr %i.ai, align 8, !tbaa !59
+  store i64 %i.uv, ptr %i.ai, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj) #18
   %.val.i.i154.i.i = load ptr, ptr %i.dk, align 8, !tbaa !144 ; 2 uses
   %.val24.i.i155.i.i = load ptr, ptr %i.rr, align 8, !tbaa !201 ; 2 uses
@@ -734,7 +732,7 @@ bb.ft:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.vk = sub i64 %i.vi, %i.vj
   %i.vl = sdiv exact i64 %i.vk, 200               ; 2 uses
   store i64 %i.vl, ptr %i.aj, align 8, !tbaa !59
-  %i.vm = icmp eq i64 %201, %i.vl
+  %i.vm = icmp eq i64 %i.vl, %i.uv
   br i1 %i.vm, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i250.i.i, label %bb.fu
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i250.i.i: ; preds = %bb.ft
@@ -1137,7 +1135,7 @@ bb.ld:                                            ; preds = %bb.lc
   %i.amw = load i32, ptr %i.akd, align 4, !tbaa !200 ; 2 uses
   %i.amx = load i32, ptr %i.ake, align 8, !tbaa !199 ; 2 uses
   %i.amy = sub nsw i32 %i.amw, %i.amx             ; 2 uses
-  %i.amz = sext i32 %i.amy to i64                 ; 4 uses
+  %i.amz = sext i32 %i.amy to i64                 ; 5 uses
   %.not118.i.i.i.i156 = icmp eq i32 %i.amw, %i.amx
   br i1 %.not118.i.i.i.i156, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i162, label %bb.le
 
@@ -1177,10 +1175,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i161: ; p
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i162
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i162:    ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i161, %bb.ld
-  %202 = phi i64 [ %i.amz, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i.i.i161 ], [ 0, %bb.ld ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %121) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac) #18
-  store i64 %202, ptr %i.ac, align 8, !tbaa !59
+  store i64 %i.amz, ptr %i.ac, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad) #18
   %.val.i.i.i.i163 = load ptr, ptr %i.agx, align 8, !tbaa !144 ; 2 uses
   %.val24.i.i.i.i164 = load ptr, ptr %i.akf, align 8, !tbaa !201 ; 2 uses
@@ -1199,7 +1196,7 @@ bb.lh:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.anm = sub i64 %i.ank, %i.anl
   %i.ann = sdiv exact i64 %i.anm, 200             ; 2 uses
   store i64 %i.ann, ptr %i.ad, align 8, !tbaa !59
-  %i.ano = icmp eq i64 %202, %i.ann
+  %i.ano = icmp eq i64 %i.ann, %i.amz
   br i1 %i.ano, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i.i.i257, label %bb.li
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i.i.i257: ; preds = %bb.lh
@@ -1602,7 +1599,7 @@ bb.po:                                            ; preds = %bb.pn
   %i.aye = load i32, ptr %i.avc, align 4, !tbaa !200 ; 2 uses
   %i.ayf = load i32, ptr %i.avd, align 8, !tbaa !199 ; 2 uses
   %i.ayg = sub nsw i32 %i.aye, %i.ayf             ; 2 uses
-  %i.ayh = sext i32 %i.ayg to i64                 ; 4 uses
+  %i.ayh = sext i32 %i.ayg to i64                 ; 5 uses
   %.not118.i.i146.i.i = icmp eq i32 %i.aye, %i.ayf
   br i1 %.not118.i.i146.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i152.i.i, label %bb.pp
 
@@ -1642,10 +1639,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i151.i.i: ; p
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i152.i.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i152.i.i:    ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i151.i.i, %bb.po
-  %203 = phi i64 [ %i.ayh, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i.i151.i.i ], [ 0, %bb.po ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %99) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #18
-  store i64 %203, ptr %i.u, align 8, !tbaa !59
+  store i64 %i.ayh, ptr %i.u, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #18
   %.val.i.i153.i.i = load ptr, ptr %i.agx, align 8, !tbaa !144 ; 2 uses
   %.val24.i.i154.i.i = load ptr, ptr %i.ave, align 8, !tbaa !201 ; 2 uses
@@ -1664,7 +1660,7 @@ bb.ps:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.ayu = sub i64 %i.ays, %i.ayt
   %i.ayv = sdiv exact i64 %i.ayu, 200             ; 2 uses
   store i64 %i.ayv, ptr %i.v, align 8, !tbaa !59
-  %i.ayw = icmp eq i64 %203, %i.ayv
+  %i.ayw = icmp eq i64 %i.ayv, %i.ayh
   br i1 %i.ayw, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i249.i.i, label %bb.pt
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i.i249.i.i: ; preds = %bb.ps
@@ -2067,7 +2063,7 @@ bb.b:                                             ; preds = %bb.a
   %i.au = getelementptr inbounds nuw i8, ptr %i.ae, i64 24 ; 2 uses
   %i.av = load i32, ptr %i.au, align 8, !tbaa !199 ; 2 uses
   %i.aw = sub nsw i32 %i.at, %i.av                ; 2 uses
-  %i.ax = sext i32 %i.aw to i64                   ; 4 uses
+  %i.ax = sext i32 %i.aw to i64                   ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.not118.i = icmp eq i32 %i.at, %i.av
   br i1 %.not118.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i, label %bb.c
@@ -2109,10 +2105,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i: ; preds = %_
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i, %bb.b
-  %24 = phi i64 [ %i.ax, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
-  store i64 %24, ptr %i.g, align 8, !tbaa !59
+  store i64 %i.ax, ptr %i.g, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   %.val.i = load ptr, ptr %i.ae, align 8, !tbaa !144 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 3 uses
@@ -2132,7 +2127,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.bn = sub i64 %i.bl, %i.bm
   %i.bo = sdiv exact i64 %i.bn, 200               ; 2 uses
   store i64 %i.bo, ptr %i.h, align 8, !tbaa !59
-  %i.bp = icmp eq i64 %24, %i.bo
+  %i.bp = icmp eq i64 %i.bo, %i.ax
   br i1 %i.bp, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i, label %bb.g
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i: ; preds = %bb.f
@@ -2535,7 +2530,7 @@ bb.b:                                             ; preds = %bb.a
   %i.au = getelementptr inbounds nuw i8, ptr %i.ae, i64 24 ; 2 uses
   %i.av = load i32, ptr %i.au, align 8, !tbaa !199 ; 2 uses
   %i.aw = sub nsw i32 %i.at, %i.av                ; 2 uses
-  %i.ax = sext i32 %i.aw to i64                   ; 4 uses
+  %i.ax = sext i32 %i.aw to i64                   ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.not118.i = icmp eq i32 %i.at, %i.av
   br i1 %.not118.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i, label %bb.c
@@ -2577,10 +2572,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i: ; preds = %_
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i, %bb.b
-  %24 = phi i64 [ %i.ax, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
-  store i64 %24, ptr %i.g, align 8, !tbaa !59
+  store i64 %i.ax, ptr %i.g, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   %.val.i = load ptr, ptr %i.ae, align 8, !tbaa !144 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 3 uses
@@ -2600,7 +2594,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.bn = sub i64 %i.bl, %i.bm
   %i.bo = sdiv exact i64 %i.bn, 200               ; 2 uses
   store i64 %i.bo, ptr %i.h, align 8, !tbaa !59
-  %i.bp = icmp eq i64 %24, %i.bo
+  %i.bp = icmp eq i64 %i.bo, %i.ax
   br i1 %i.bp, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i, label %bb.g
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i: ; preds = %bb.f
@@ -3003,7 +2997,7 @@ bb.b:                                             ; preds = %bb.a
   %i.av = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !199 ; 2 uses
   %i.ax = sub nsw i32 %i.au, %i.aw                ; 2 uses
-  %i.ay = sext i32 %i.ax to i64                   ; 4 uses
+  %i.ay = sext i32 %i.ax to i64                   ; 5 uses
   %i.az = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.not118.i = icmp eq i32 %i.au, %i.aw
   br i1 %.not118.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i, label %bb.c
@@ -3045,10 +3039,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i: ; preds = %_
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i, %bb.b
-  %24 = phi i64 [ %i.ay, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
-  store i64 %24, ptr %i.g, align 8, !tbaa !59
+  store i64 %i.ay, ptr %i.g, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   %.val.i = load ptr, ptr %i.af, align 8, !tbaa !144 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 3 uses
@@ -3068,7 +3061,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.bo = sub i64 %i.bm, %i.bn
   %i.bp = sdiv exact i64 %i.bo, 200               ; 2 uses
   store i64 %i.bp, ptr %i.h, align 8, !tbaa !59
-  %i.bq = icmp eq i64 %24, %i.bp
+  %i.bq = icmp eq i64 %i.bp, %i.ay
   br i1 %i.bq, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i, label %bb.g
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i: ; preds = %bb.f
@@ -3471,7 +3464,7 @@ bb.c:                                             ; preds = %_ZNK7xgboost9predic
   %i.bd = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 2 uses
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !199 ; 2 uses
   %i.bf = sub nsw i32 %i.bc, %i.be                ; 2 uses
-  %i.bg = sext i32 %i.bf to i64                   ; 4 uses
+  %i.bg = sext i32 %i.bf to i64                   ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.not123.i = icmp eq i32 %i.bc, %i.be
   br i1 %.not123.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i, label %bb.d
@@ -3513,10 +3506,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i: ; preds = %_
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i, %bb.c
-  %25 = phi i64 [ %i.bg, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i ], [ 0, %bb.c ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
-  store i64 %25, ptr %i.g, align 8, !tbaa !59
+  store i64 %i.bg, ptr %i.g, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   %.val.i = load ptr, ptr %i.aj, align 8, !tbaa !144 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 3 uses
@@ -3536,7 +3528,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.bw = sub i64 %i.bu, %i.bv
   %i.bx = sdiv exact i64 %i.bw, 200               ; 2 uses
   store i64 %i.bx, ptr %i.h, align 8, !tbaa !59
-  %i.by = icmp eq i64 %25, %i.bx
+  %i.by = icmp eq i64 %i.bx, %i.bg
   br i1 %i.by, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i, label %bb.h
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i: ; preds = %bb.g
@@ -3939,7 +3931,7 @@ bb.c:                                             ; preds = %_ZNK7xgboost9predic
   %i.bd = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 2 uses
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !199 ; 2 uses
   %i.bf = sub nsw i32 %i.bc, %i.be                ; 2 uses
-  %i.bg = sext i32 %i.bf to i64                   ; 4 uses
+  %i.bg = sext i32 %i.bf to i64                   ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.not123.i = icmp eq i32 %i.bc, %i.be
   br i1 %.not123.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i, label %bb.d
@@ -3981,10 +3973,9 @@ _ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i: ; preds = %_
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i, %bb.c
-  %25 = phi i64 [ %i.bg, %_ZSt27__uninitialized_default_n_aIPimiET_S1_T0_RSaIT1_E.exit33.i.i ], [ 0, %bb.c ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
-  store i64 %25, ptr %i.g, align 8, !tbaa !59
+  store i64 %i.bg, ptr %i.g, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   %.val.i = load ptr, ptr %i.aj, align 8, !tbaa !144 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 3 uses
@@ -4004,7 +3995,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.bw = sub i64 %i.bu, %i.bv
   %i.bx = sdiv exact i64 %i.bw, 200               ; 2 uses
   store i64 %i.bx, ptr %i.h, align 8, !tbaa !59
-  %i.by = icmp eq i64 %25, %i.bx
+  %i.by = icmp eq i64 %i.bx, %i.bg
   br i1 %i.by, label %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i, label %bb.h
 
 _ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i: ; preds = %bb.g

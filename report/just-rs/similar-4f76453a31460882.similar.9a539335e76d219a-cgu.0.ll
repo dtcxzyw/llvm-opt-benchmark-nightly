@@ -205,7 +205,7 @@ _RNvYNvYeNtNtNtCsdftwklc2oBO_7similar4text11abstraction11DiffableStr14tokenize_l
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !nonnull !5, !noundef !5 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.m = load i64, ptr %i.l, align 8, !noundef !5 ; 6 uses
+  %i.m = load i64, ptr %i.l, align 8, !noundef !5 ; 7 uses
   %i.n = icmp ult i64 %i.m, 576460752303423488
   tail call void @llvm.assume(i1 %i.n)
   %.idx = shl nuw nsw i64 %i.m, 4
@@ -222,7 +222,7 @@ bb.e:                                             ; preds = %_RNvYNvYeNtNtNtCsdf
   br i1 %i.r, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsdftwklc2oBO_7similar.exit.i.i.i.i.thread, label %bb.f
 
 _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsdftwklc2oBO_7similar.exit.i.i.i.i.thread: ; preds = %bb.e
-  store i64 0, ptr %i.a, align 8, !noalias !2352
+  store i64 %i.m, ptr %i.a, align 8, !noalias !2352
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %i.s, align 8, !noalias !2352
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -625,7 +625,7 @@ bb.bv:                                            ; preds = %bb.bt, %bb.br
   ]
 
 .thread147:                                       ; preds = %bb.at, %.outer.jt3, %.outer.jt1, %.outer.jt4, %.outer.jt6, %.outer.jt10, %.outer.jt8, %.outer.jt5, %bb.as, %bb.bf, %bb.az, %bb.az, %bb.bi, %bb.bh, %.thread, %.outer._crit_edge
-  %.sroa.016.1144 = phi i64 [ %.sroa.11.0350655713, %.thread ], [ %.sroa.11.0350640, %.outer._crit_edge ], [ %i.eu, %bb.bh ], [ %.sroa.11.0350659, %bb.at ], [ %.sroa.11.0350659, %bb.as ], [ %.sroa.11.0350653, %.outer.jt5 ], [ %.sroa.11.0350659, %.outer.jt8 ], [ %.sroa.11.0350647, %.outer.jt10 ], [ %.sroa.11.0350649, %.outer.jt6 ], [ %.sroa.11.0350654, %.outer.jt4 ], [ %.sroa.11.0350650, %.outer.jt1 ], [ %.sroa.11.0350651, %.outer.jt3 ], [ %.sroa.11.0350659, %bb.bi ], [ %.sroa.11.0350659, %bb.az ], [ %.sroa.11.0350659, %bb.az ], [ %.sroa.11.0350656, %bb.bf ] ; 7 uses
+  %.sroa.016.1144 = phi i64 [ %.sroa.11.0350655713, %.thread ], [ %.sroa.11.0350640, %.outer._crit_edge ], [ %i.eu, %bb.bh ], [ %.sroa.11.0350659, %bb.at ], [ %.sroa.11.0350659, %bb.as ], [ %.sroa.11.0350653, %.outer.jt5 ], [ %.sroa.11.0350659, %.outer.jt8 ], [ %.sroa.11.0350647, %.outer.jt10 ], [ %.sroa.11.0350649, %.outer.jt6 ], [ %.sroa.11.0350654, %.outer.jt4 ], [ %.sroa.11.0350650, %.outer.jt1 ], [ %.sroa.11.0350651, %.outer.jt3 ], [ %.sroa.11.0350659, %bb.bi ], [ %.sroa.11.0350659, %bb.az ], [ %.sroa.11.0350659, %bb.az ], [ %.sroa.11.0350656, %bb.bf ] ; 11 uses
   %i.fq = icmp eq i64 %.sroa.016.1144, 0
   br i1 %i.fq, label %bb.by, label %bb.bw
 
@@ -644,9 +644,8 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.fu, label %bb.by, label %.split.i.thread
 
 bb.by:                                            ; preds = %bb.bx, %.split.i, %.thread147
-  %.sroa.016.1144729 = phi i64 [ %.sroa.016.1144, %bb.bx ], [ %.sroa.016.1144, %.split.i ], [ 0, %.thread147 ] ; 6 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.016.1144729 ; 4 uses
-  %i.fw = icmp samesign eq i64 %.sroa.016.1144729, %i.d
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.016.1144 ; 4 uses
+  %i.fw = icmp samesign eq i64 %.sroa.016.1144, %i.d
   br i1 %i.fw, label %bb.cb, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
@@ -658,7 +657,7 @@ _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fv, i64 1
   %i.ga = and i8 %i.fx, 31
   %i.gb = zext nneg i8 %i.ga to i32               ; 3 uses
-  %i.gc = add nuw nsw i64 %.sroa.016.1144729, 1
+  %i.gc = add nuw nsw i64 %.sroa.016.1144, 1
   %i.gd = icmp samesign ne i64 %i.gc, %i.d
   call void @llvm.assume(i1 %i.gd)
   %i.ge = load i8, ptr %i.fz, align 1, !noalias !10838, !noundef !5
@@ -671,7 +670,7 @@ _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdftwklc2oBO_7similar.exit14.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdftwklc2oBO_7similar.exit12.i
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fv, i64 2
-  %i.gl = add nuw nsw i64 %.sroa.016.1144729, 2
+  %i.gl = add nuw nsw i64 %.sroa.016.1144, 2
   %i.gm = icmp samesign ne i64 %i.gl, %i.d
   call void @llvm.assume(i1 %i.gm)
   %i.gn = load i8, ptr %i.gk, align 1, !noalias !10838, !noundef !5
@@ -686,7 +685,7 @@ _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdftwklc2oBO_7similar.exit16.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdftwklc2oBO_7similar.exit14.i
   %i.gv = getelementptr inbounds nuw i8, ptr %i.fv, i64 3
-  %i.gw = add nuw nsw i64 %.sroa.016.1144729, 3
+  %i.gw = add nuw nsw i64 %.sroa.016.1144, 3
   %i.gx = icmp samesign ne i64 %i.gw, %i.d
   call void @llvm.assume(i1 %i.gx)
   %i.gy = load i8, ptr %i.gv, align 1, !noalias !10838, !noundef !5
@@ -725,7 +724,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 .thread158:                                       ; preds = %bb.bz, %bb.cc, %bb.cd, %bb.ca
   %.sroa.086.0 = phi i64 [ 2, %bb.cc ], [ %.120, %bb.cd ], [ 1, %bb.ca ], [ 1, %bb.bz ]
-  %i.hk = add i64 %.sroa.086.0, %.sroa.016.1144729
+  %i.hk = add i64 %.sroa.086.0, %.sroa.016.1144
   br label %.thread150
 
 .thread150:                                       ; preds = %bb.br, %bb.bu, %bb.bs, %bb.ba, %bb.bj, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bp, %bb.bg, %bb.bf, %bb.bt, %bb.au, %bb.au, %bb.aq, %bb.ax, %.thread, %.thread, %.thread, %.thread158

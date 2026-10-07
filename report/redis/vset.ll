@@ -206,8 +206,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.y, label %._crit_edge, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.a, %.thread20
-  %2 = phi i32 [ 6, %.thread20 ], [ %.pre, %bb.a ]
-  %i.z = icmp eq i32 %i.f, %2
+  %i.z = icmp eq i32 %i.f, %.pre
   br label %bb.n
 
 bb.g:                                             ; preds = %.thread20

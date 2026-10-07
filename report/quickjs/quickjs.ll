@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %js_bigint_new_ui64.exit
 
 js_bigint_new_ui64.exit:                          ; preds = %bb.an, %bb.al, %bb.am, %bb.ao
-  %.1.i146 = phi ptr [ %i.fc, %bb.am ], [ %i.fe, %bb.ao ], [ null, %bb.al ], [ null, %bb.an ] ; 2 uses
+  %.1.i146 = phi ptr [ %i.fe, %bb.ao ], [ null, %bb.al ], [ %i.fc, %bb.am ], [ null, %bb.an ] ; 2 uses
   %.not.i123 = icmp eq ptr %.1.i146, null
   %i.fi = ptrtoint ptr %.1.i146 to i64
   %.sroa.5.0.i124 = select i1 %.not.i123, i64 6, i64 -9
@@ -608,7 +608,7 @@ bb.n:                                             ; preds = %bb.k, %bb.j, %bb.i
   br label %js_bigint_new_si64.exit
 
 js_bigint_new_si64.exit:                          ; preds = %bb.l, %bb.m, %bb.n
-  %.1.i = phi ptr [ null, %bb.l ], [ %i.ah, %bb.n ], [ null, %bb.m ] ; 2 uses
+  %.1.i = phi ptr [ %i.ah, %bb.n ], [ null, %bb.l ], [ null, %bb.m ] ; 2 uses
   %.not = icmp eq ptr %.1.i, null
   %i.bh = ptrtoint ptr %.1.i to i64
   %.sroa.5.0 = select i1 %.not, i64 6, i64 -9
@@ -857,7 +857,7 @@ bb.z:                                             ; preds = %bb.w, %bb.v, %bb.u
   br label %js_bigint_new_ui64.exit
 
 js_bigint_new_ui64.exit:                          ; preds = %bb.l, %bb.m, %bb.n, %bb.x, %bb.y, %bb.z
-  %.1.i = phi ptr [ null, %bb.l ], [ %i.cg, %bb.z ], [ %i.ai, %bb.n ], [ null, %bb.m ], [ null, %bb.y ], [ null, %bb.x ] ; 2 uses
+  %.1.i = phi ptr [ %i.cg, %bb.z ], [ null, %bb.l ], [ %i.ai, %bb.n ], [ null, %bb.m ], [ null, %bb.y ], [ null, %bb.x ] ; 2 uses
   %.not = icmp eq ptr %.1.i, null
   %i.dh = ptrtoint ptr %.1.i to i64
   %.sroa.5.0 = select i1 %.not, i64 6, i64 -9
@@ -1260,10 +1260,10 @@ bb.a:
   %.sroa.26155.0.ph = phi i64 [ %.sroa.26155.0.copyload, %bb.a ], [ %.sroa.26155.0.ph.be, %.outer.backedge ] ; 17 uses
   %.sroa.0136.0.ph = phi double [ %.sroa.0136.0.copyload, %bb.a ], [ %.sroa.0136.0.ph.be, %.outer.backedge ] ; 18 uses
   %.sroa.26.0.ph.fr = freeze i64 %.sroa.26.0.ph   ; 13 uses
-  %i.c = trunc i64 %.sroa.26.0.ph.fr to i32       ; 23 uses
+  %i.c = trunc i64 %.sroa.26.0.ph.fr to i32       ; 24 uses
   %i.d = add i32 %i.c, 7
   %i.e = icmp ult i32 %i.d, 2
-  %i.f = trunc i64 %.sroa.26155.0.ph to i32       ; 23 uses
+  %i.f = trunc i64 %.sroa.26155.0.ph to i32       ; 25 uses
   br i1 %i.e, label %.outer.split.us.split.us.split.us.preheader, label %.outer.split
 
 .outer.split.us.split.us.split.us.preheader:      ; preds = %.outer
@@ -1407,13 +1407,14 @@ bb.l:                                             ; preds = %bb.i, %bb.j
   br label %JS_FreeValueRT.exit229
 
 .split293.us:                                     ; preds = %.outer.split.split.split.us.preheader, %.outer.split.split.us.split.preheader, %tag_is_number.exit.us365.us.peel, %.outer.split.us.split.us.split.us.preheader
+  %3 = phi i32 [ %i.f, %.outer.split.split.us.split.preheader ], [ %i.c, %.outer.split.us.split.us.split.us.preheader ], [ %i.f, %.outer.split.split.split.us.preheader ], [ %i.c, %tag_is_number.exit.us365.us.peel ]
   %i.ag = bitcast double %.sroa.0136.0.ph to i64  ; 3 uses
   %i.ah = bitcast double %.sroa.096.0.ph to i64   ; 3 uses
   %i.ai = tail call fastcc zeroext i1 @js_strict_eq2(i64 %i.ag, i64 %.sroa.26155.0.ph, i64 %i.ah, i64 %.sroa.26.0.ph.fr, i32 noundef 0)
   %i.aj = zext i1 %i.ai to i32                    ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !232 ; 2 uses
-  %i.am = icmp ugt i32 %i.c, -10
+  %i.am = icmp ugt i32 %3, -10
   br i1 %i.am, label %bb.m, label %JS_FreeValueRT.exit229
 
 bb.m:                                             ; preds = %.split293.us
@@ -1816,7 +1817,7 @@ bb.dk:                                            ; preds = %bb.as
   unreachable
 
 js_bigint_pow.exit:                               ; preds = %bb.dj, %bb.dh, %bb.df, %js_bigint_new_si.exit98.thread179.i, %bb.de, %bb.dd, %bb.dc, %bb.cu, %bb.cr, %bb.cq, %bb.cl, %bb.ck, %js_arena_malloc.exit151.thread.i, %bb.bz, %bb.by, %js_arena_malloc.exit146.thread.i, %bb.bm, %bb.bl, %js_arena_malloc.exit.thread.i, %bb.az, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at
-  %.0192 = phi ptr [ %i.cy, %bb.at ], [ %i.cz, %bb.au ], [ %i.da, %bb.av ], [ %i.db, %bb.aw ], [ %i.dc, %bb.ax ], [ null, %bb.az ], [ null, %bb.cu ], [ null, %js_arena_malloc.exit.thread.i ], [ null, %js_bigint_new_si.exit98.thread179.i ], [ null, %bb.dd ], [ null, %js_arena_malloc.exit151.thread.i ], [ null, %bb.dc ], [ %i.et, %bb.bm ], [ null, %bb.bl ], [ null, %js_arena_malloc.exit146.thread.i ], [ %i.jp, %bb.cl ], [ %i.he, %bb.bz ], [ %i.lg, %bb.cr ], [ null, %bb.cq ], [ null, %bb.by ], [ null, %bb.ck ], [ %i.mk, %bb.de ], [ %.179.i, %bb.dj ], [ null, %bb.dh ], [ null, %bb.df ] ; 5 uses
+  %.0192 = phi ptr [ %i.cy, %bb.at ], [ %i.cz, %bb.au ], [ %i.da, %bb.av ], [ %i.db, %bb.aw ], [ %i.dc, %bb.ax ], [ null, %bb.az ], [ null, %bb.cu ], [ null, %js_arena_malloc.exit.thread.i ], [ null, %js_bigint_new_si.exit98.thread179.i ], [ null, %bb.dd ], [ null, %js_arena_malloc.exit151.thread.i ], [ null, %bb.dc ], [ %i.et, %bb.bm ], [ null, %bb.bl ], [ %i.jp, %bb.cl ], [ null, %js_arena_malloc.exit146.thread.i ], [ %i.he, %bb.bz ], [ %i.lg, %bb.cr ], [ null, %bb.cq ], [ null, %bb.by ], [ null, %bb.ck ], [ %i.mk, %bb.de ], [ %.179.i, %bb.dj ], [ null, %bb.dh ], [ null, %bb.df ] ; 5 uses
   %i.nz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.oa = load ptr, ptr %i.nz, align 8, !tbaa !232 ; 3 uses
   %i.ob = trunc i64 %.sroa.14.0 to i32
@@ -2219,7 +2220,8 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
   br i1 %i.bj, label %bb.o, label %js_bigint_not.exit.thread, !llvm.loop !149
 
 js_bigint_not.exit.thread:                        ; preds = %bb.o, %js_bigint_new.exit, %bb.e, %bb.m, %bb.n
-  %.011.i59 = phi ptr [ null, %bb.e ], [ null, %bb.n ], [ null, %bb.m ], [ %i.aa, %js_bigint_new.exit ], [ %i.aa, %bb.o ] ; 5 uses
+  %.011.i59 = phi ptr [ null, %bb.e ], [ null, %bb.n ], [ null, %bb.m ], [ %i.aa, %js_bigint_new.exit ], [ %i.aa, %bb.o ] ; 4 uses
+  %.not.i6266 = phi i1 [ true, %bb.e ], [ true, %bb.n ], [ true, %bb.m ], [ false, %js_bigint_new.exit ], [ false, %bb.o ] ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !232
   %i.bm = getelementptr inbounds i8, ptr %i.i, i64 -4 ; 2 uses
@@ -2231,13 +2233,12 @@ js_bigint_not.exit.thread:                        ; preds = %bb.o, %js_bigint_ne
 
 bb.p:                                             ; preds = %js_bigint_not.exit.thread
   tail call fastcc void @js_free_value_rt(ptr noundef %i.bl, i64 %i.c, i64 %i.d), !inline_history !370
-  br label %JS_FreeValueRT.exit
+  br i1 %.not.i6266, label %JS_ToInt32Free.exit, label %JS_FreeValueRT.exit.thread
 
-JS_FreeValueRT.exit:                              ; preds = %js_bigint_not.exit.thread, %bb.p
-  %.not38 = icmp eq ptr %.011.i59, null
-  br i1 %.not38, label %JS_ToInt32Free.exit, label %JS_FreeValueRT.exit.thread
+JS_FreeValueRT.exit:                              ; preds = %js_bigint_not.exit.thread
+  br i1 %.not.i6266, label %JS_ToInt32Free.exit, label %JS_FreeValueRT.exit.thread
 
-JS_FreeValueRT.exit.thread:                       ; preds = %JS_FreeValueRT.exit
+JS_FreeValueRT.exit.thread:                       ; preds = %bb.p, %JS_FreeValueRT.exit
   %i.bq = load i32, ptr %.011.i59, align 4, !tbaa !191
   %i.br = icmp eq i32 %i.bq, 1
   br i1 %i.br, label %bb.q, label %bb.r
@@ -2322,7 +2323,7 @@ JS_ToInt32Free.exit.thread68:                     ; preds = %bb.s, %bb.v, %bb.w,
   store i64 %.sroa.0.0.insert.ext.i43, ptr %i.a, align 8, !tbaa !218
   br label %bb.y
 
-JS_ToInt32Free.exit:                              ; preds = %bb.x, %JS_FreeValueRT.exit, %bb.a
+JS_ToInt32Free.exit:                              ; preds = %bb.x, %bb.p, %JS_FreeValueRT.exit, %bb.a
   store i32 0, ptr %i.a, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds i8, ptr %1, i64 -12
   store i32 0, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !218
@@ -2725,7 +2726,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %js_bigint_new_si.exit
 
 js_bigint_new_si.exit:                            ; preds = %bb.ct, %bb.cu, %bb.cv, %bb.cq, %js_mp_neg.exit193, %js_arena_malloc.exit.thread, %bb.bb, %bb.ap, %bb.aq, %bb.ah, %bb.m, %bb.n, %bb.e, %._crit_edge, %js_realloc.exit, %._crit_edge313, %bb.bc, %js_malloc.exit224.thread, %bb.ar, %bb.aa, %bb.c
-  %.0 = phi ptr [ null, %bb.c ], [ %i.fv, %bb.ar ], [ %i.lo, %._crit_edge ], [ null, %bb.m ], [ null, %bb.ap ], [ %i.ai, %._crit_edge313 ], [ null, %js_malloc.exit224.thread ], [ null, %bb.aa ], [ %i.ie, %bb.bc ], [ %spec.select.i, %js_realloc.exit ], [ %i.lo, %bb.cq ], [ null, %bb.e ], [ null, %bb.n ], [ null, %bb.ah ], [ null, %bb.aq ], [ null, %bb.bb ], [ null, %js_arena_malloc.exit.thread ], [ %i.lo, %js_mp_neg.exit193 ], [ %i.lo, %bb.cv ], [ %i.lo, %bb.cu ], [ %i.aaq, %bb.ct ]
+  %.0 = phi ptr [ null, %bb.c ], [ %i.fv, %bb.ar ], [ %i.lo, %._crit_edge ], [ null, %bb.m ], [ %i.ie, %bb.bc ], [ %i.ai, %._crit_edge313 ], [ null, %js_malloc.exit224.thread ], [ null, %bb.aa ], [ null, %bb.ap ], [ %spec.select.i, %js_realloc.exit ], [ %i.lo, %bb.cq ], [ null, %bb.e ], [ null, %bb.n ], [ null, %bb.ah ], [ null, %bb.aq ], [ null, %bb.bb ], [ null, %js_arena_malloc.exit.thread ], [ %i.lo, %js_mp_neg.exit193 ], [ %i.lo, %bb.cv ], [ %i.lo, %bb.cu ], [ %i.aaq, %bb.ct ]
   ret ptr %.0
 }
 
@@ -3128,7 +3129,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %js_bigint_new_si.exit
 
 js_bigint_new_si.exit:                            ; preds = %bb.y, %bb.ai, %bb.ak, %bb.aj, %.preheader86, %.preheader, %js_realloc.exit.thread, %bb.af, %bb.w, %bb.x, %bb.o, %js_arena_malloc.exit.thread, %bb.l, %._crit_edge90, %bb.m
-  %.037 = phi ptr [ %i.ce, %._crit_edge90 ], [ null, %js_arena_malloc.exit.thread ], [ null, %js_realloc.exit.thread ], [ %i.al, %bb.m ], [ null, %bb.w ], [ %i.gl, %bb.ai ], [ null, %bb.l ], [ null, %bb.o ], [ null, %bb.x ], [ %i.fl, %bb.af ], [ %i.ce, %.preheader ], [ %i.ce, %.preheader86 ], [ %i.ce, %bb.aj ], [ %i.ce, %bb.ak ], [ %i.ce, %bb.y ]
+  %.037 = phi ptr [ %i.al, %bb.m ], [ null, %js_arena_malloc.exit.thread ], [ null, %js_realloc.exit.thread ], [ %i.ce, %._crit_edge90 ], [ null, %bb.w ], [ %i.gl, %bb.ai ], [ null, %bb.l ], [ null, %bb.o ], [ null, %bb.x ], [ %i.fl, %bb.af ], [ %i.ce, %.preheader ], [ %i.ce, %.preheader86 ], [ %i.ce, %bb.aj ], [ %i.ce, %bb.ak ], [ %i.ce, %bb.y ]
   ret ptr %.037
 }
 
@@ -3531,8 +3532,8 @@ find_prop_key.exit.thread:                        ; preds = %bb.ai, %.lr.ph227
   br i1 %exitcond277.not, label %._crit_edge, label %.lr.ph227, !llvm.loop !1926
 
 ._crit_edge:                                      ; preds = %find_prop_key.exit.thread, %bb.q, %js_get_length32.exit, %.preheader195
-  %.0132.lcssa310 = phi i32 [ 0, %bb.q ], [ %i.bv, %.preheader195 ], [ 0, %js_get_length32.exit ], [ %i.bv, %find_prop_key.exit.thread ] ; 11 uses
-  %.0138.lcssa308 = phi ptr [ null, %bb.q ], [ %.2140, %.preheader195 ], [ null, %js_get_length32.exit ], [ %.2140, %find_prop_key.exit.thread ] ; 9 uses
+  %.0138.lcssa312 = phi ptr [ null, %bb.q ], [ %.2140, %.preheader195 ], [ null, %js_get_length32.exit ], [ %.2140, %find_prop_key.exit.thread ] ; 9 uses
+  %.0132.lcssa.fr307311 = phi i32 [ 0, %bb.q ], [ %i.bv, %.preheader195 ], [ 0, %js_get_length32.exit ], [ %i.bv, %find_prop_key.exit.thread ] ; 11 uses
   %i.ec = load i64, ptr %.0.i.i, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 8
   %i.ee = load i64, ptr %i.ed, align 8
@@ -3563,8 +3564,8 @@ bb.al:                                            ; preds = %bb.aj
 .lr.ph229:                                        ; preds = %.preheader192
   %i.em = load ptr, ptr %i.b, align 8             ; 2 uses
   %i.en = icmp ne i32 %i.ef, 0                    ; 3 uses
-  %i.eo = icmp sgt i32 %.0132.lcssa310, 0
-  %wide.trip.count.i166 = zext nneg i32 %.0132.lcssa310 to i64
+  %i.eo = icmp sgt i32 %.0132.lcssa.fr307311, 0
+  %wide.trip.count.i166 = zext nneg i32 %.0132.lcssa.fr307311 to i64
   %wide.trip.count286 = zext i32 %i.el to i64     ; 2 uses
   br i1 %i.eo, label %.lr.ph229.split.us, label %.lr.ph229.split
 
@@ -3598,7 +3599,7 @@ bb.an:                                            ; preds = %bb.am
 
 .lr.ph.i167.us:                                   ; preds = %bb.ao, %.lr.ph.preheader.i165.us
   %indvars.iv.i168.us = phi i64 [ 0, %.lr.ph.preheader.i165.us ], [ %indvars.iv.next.i169.us, %bb.ao ] ; 2 uses
-  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %.0138.lcssa308, i64 %indvars.iv.i168.us ; 2 uses
+  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %.0138.lcssa312, i64 %indvars.iv.i168.us ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 4
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !490
   %i.fc = icmp eq i32 %i.fb, %i.ey
@@ -3666,12 +3667,12 @@ bb.at:                                            ; preds = %bb.as
 
 ._crit_edge230:                                   ; preds = %bb.at, %bb.aq, %.preheader192
   %.not154 = icmp eq i32 %i.ef, 0
-  %i.fo = icmp ne i32 %.0132.lcssa310, 0
+  %i.fo = icmp ne i32 %.0132.lcssa.fr307311, 0
   %or.cond242 = and i1 %.not154, %i.fo
   br i1 %or.cond242, label %.lr.ph237.preheader, label %.loopexit
 
 .lr.ph237.preheader:                              ; preds = %._crit_edge230
-  %wide.trip.count291 = zext i32 %.0132.lcssa310 to i64
+  %wide.trip.count291 = zext i32 %.0132.lcssa.fr307311 to i64
   br label %.lr.ph237
 
 bb.au:                                            ; preds = %.lr.ph237
@@ -3681,7 +3682,7 @@ bb.au:                                            ; preds = %.lr.ph237
 
 .lr.ph237:                                        ; preds = %.lr.ph237.preheader, %bb.au
   %indvars.iv288 = phi i64 [ 0, %.lr.ph237.preheader ], [ %indvars.iv.next289, %bb.au ] ; 2 uses
-  %i.fp = getelementptr inbounds nuw [8 x i8], ptr %.0138.lcssa308, i64 %indvars.iv288
+  %i.fp = getelementptr inbounds nuw [8 x i8], ptr %.0138.lcssa312, i64 %indvars.iv288
   %i.fq = load i8, ptr %i.fp, align 4, !tbaa !491, !range !234, !noundef !235
   %i.fr = trunc nuw i8 %i.fq to i1
   br i1 %i.fr, label %bb.au, label %bb.av
@@ -3712,8 +3713,8 @@ bb.ax:                                            ; preds = %bb.aw
   br label %JS_FreeValue.exit173
 
 JS_FreeValue.exit173:                             ; preds = %.loopexit, %bb.aw, %bb.ax
-  store ptr %.0138.lcssa308, ptr %1, align 8, !tbaa !487
-  store i32 %.0132.lcssa310, ptr %2, align 4, !tbaa !191
+  store ptr %.0138.lcssa312, ptr %1, align 8, !tbaa !487
+  store i32 %.0132.lcssa.fr307311, ptr %2, align 4, !tbaa !191
   br label %JS_FreeValue.exit174
 
 js_get_length32.exit.thread.loopexit:             ; preds = %bb.t, %JS_FreeValue.exit161
@@ -3721,8 +3722,8 @@ js_get_length32.exit.thread.loopexit:             ; preds = %bb.t, %JS_FreeValue
   br label %js_get_length32.exit.thread
 
 js_get_length32.exit.thread:                      ; preds = %bb.s, %js_get_length32.exit.thread.loopexit, %bb.ag, %bb.m, %.loopexit193, %bb.al, %._crit_edge, %bb.av, %.split.us, %bb.ak, %find_prop_key.exit, %JS_FreeValue.exit
-  %.3141 = phi ptr [ %.0138.lcssa308, %bb.av ], [ null, %bb.m ], [ %.0138221, %bb.ag ], [ %.0138221, %js_get_length32.exit.thread.loopexit ], [ %.0138221, %JS_FreeValue.exit ], [ %.2140, %find_prop_key.exit ], [ %.0138.lcssa308, %._crit_edge ], [ %.0138.lcssa308, %bb.ak ], [ %.0138.lcssa308, %bb.al ], [ %.0138.lcssa308, %.split.us ], [ %.0138.lcssa308, %.loopexit193 ], [ null, %bb.s ]
-  %.1 = phi i32 [ %.0132.lcssa310, %bb.av ], [ 0, %bb.m ], [ %i.dj, %bb.ag ], [ %i.gc, %js_get_length32.exit.thread.loopexit ], [ %i.ch, %JS_FreeValue.exit ], [ %i.bv, %find_prop_key.exit ], [ %.0132.lcssa310, %._crit_edge ], [ %.0132.lcssa310, %bb.ak ], [ %.0132.lcssa310, %bb.al ], [ %.0132.lcssa310, %.split.us ], [ %.0132.lcssa310, %.loopexit193 ], [ 0, %bb.s ]
+  %.3141 = phi ptr [ %.0138.lcssa312, %bb.av ], [ null, %bb.m ], [ %.0138221, %bb.ag ], [ %.0138221, %js_get_length32.exit.thread.loopexit ], [ %.0138221, %JS_FreeValue.exit ], [ %.2140, %find_prop_key.exit ], [ %.0138.lcssa312, %._crit_edge ], [ %.0138.lcssa312, %bb.ak ], [ %.0138.lcssa312, %bb.al ], [ %.0138.lcssa312, %.split.us ], [ %.0138.lcssa312, %.loopexit193 ], [ null, %bb.s ]
+  %.1 = phi i32 [ %.0132.lcssa.fr307311, %bb.av ], [ 0, %bb.m ], [ %i.dj, %bb.ag ], [ %i.gc, %js_get_length32.exit.thread.loopexit ], [ %i.ch, %JS_FreeValue.exit ], [ %i.bv, %find_prop_key.exit ], [ %.0132.lcssa.fr307311, %._crit_edge ], [ %.0132.lcssa.fr307311, %bb.ak ], [ %.0132.lcssa.fr307311, %bb.al ], [ %.0132.lcssa.fr307311, %.split.us ], [ %.0132.lcssa.fr307311, %.loopexit193 ], [ 0, %bb.s ]
   %i.gd = load ptr, ptr %i.b, align 8, !tbaa !487
   %i.ge = load i32, ptr %i.a, align 4, !tbaa !191
   call fastcc void @js_free_prop_enum(ptr noundef nonnull %0, ptr noundef %i.gd, i32 noundef %i.ge)
@@ -4125,7 +4126,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load i64, ptr %i.o, align 8              ; 3 uses
   %i.q = trunc i64 %i.p to i32
   %i.r = and i32 %i.q, 2147483647                 ; 8 uses
-  %invariant.umin = tail call i32 @llvm.umin.i32(i32 %i.r, i32 127) ; 14 uses
+  %invariant.umin = tail call i32 @llvm.umin.i32(i32 %i.r, i32 127) ; 5 uses
   %.not135 = icmp eq i32 %i.r, 0
   br i1 %.not135, label %._crit_edge, label %.lr.ph
 
@@ -4528,8 +4529,7 @@ bb.c:                                             ; preds = %.lr.ph.split
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %str16.exit.i, %str16.exit.i.us105, %str16.exit.i.us, %middle.block, %vec.epilog.middle.block, %middle.block380, %vec.epilog.middle.block393, %middle.block406, %vec.epilog.middle.block419, %._crit_edge.sink.split, %bb.b
-  %.034.lcssa = phi i32 [ 0, %bb.b ], [ %invariant.umin, %middle.block406 ], [ %invariant.umin, %._crit_edge.sink.split ], [ %invariant.umin, %middle.block380 ], [ %invariant.umin, %middle.block ], [ %invariant.umin, %vec.epilog.middle.block419 ], [ %invariant.umin, %str16.exit.i.us105 ], [ %invariant.umin, %vec.epilog.middle.block393 ], [ %invariant.umin, %str16.exit.i.us ], [ %invariant.umin, %vec.epilog.middle.block ], [ %invariant.umin, %str16.exit.i ]
-  %i.ob = zext nneg i32 %.034.lcssa to i64
+  %i.ob = zext nneg i32 %invariant.umin to i64
   %i.oc = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ob
   store i8 0, ptr %i.oc, align 1, !tbaa !218
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #49
@@ -4932,7 +4932,7 @@ select.unfold:                                    ; preds = %bb.g, %bb.d
   br i1 %i.ac, label %.thread123.thread, label %.thread123
 
 .thread123:                                       ; preds = %bb.e, %select.unfold, %.thread119
-  %.0112125 = phi i64 [ %i.ab, %.thread119 ], [ %.sink.i.i.ph, %select.unfold ], [ 0, %bb.e ] ; 13 uses
+  %.0112125 = phi i64 [ %i.ab, %.thread119 ], [ %.sink.i.i.ph, %select.unfold ], [ 0, %bb.e ] ; 14 uses
   %i.ad = load i64, ptr %i.a, align 8, !tbaa !240 ; 9 uses
   %.not85 = icmp slt i64 %.0112125, %i.ad
   br i1 %.not85, label %bb.i, label %.thread123.thread
@@ -5048,7 +5048,7 @@ js_dup.exit.1:                                    ; preds = %bb.o, %js_dup.exit
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %js_dup.exit.1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.0147.epil.init = phi ptr [ %i.am, %.lr.ph.preheader ], [ %i.ca, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
@@ -5076,16 +5076,10 @@ js_dup.exit.epil:                                 ; preds = %bb.p, %.lr.ph.epil.
   %.sroa.47.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %.0147.epil.init, i64 8
   store i64 %i.ce, ptr %.sroa.47.0..sroa_idx.epil, align 8, !tbaa !240
   %i.cl = getelementptr inbounds nuw i8, ptr %.0147.epil.init, i64 16
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %js_dup.exit.epil
-  %.lcssa193 = phi ptr [ %i.ca, %._crit_edge.loopexit.unr-lcssa ], [ %i.cl, %js_dup.exit.epil ]
-  %5 = add nuw nsw i64 %.0112125, 1
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.077.lcssa = phi i64 [ 1, %.preheader ], [ %5, %._crit_edge.loopexit ] ; 4 uses
-  %.0.lcssa = phi ptr [ %i.am, %.preheader ], [ %.lcssa193, %._crit_edge.loopexit ] ; 5 uses
+._crit_edge:                                      ; preds = %js_dup.exit.epil, %._crit_edge.loopexit.unr-lcssa, %.preheader
+  %.0.lcssa = phi ptr [ %i.am, %.preheader ], [ %i.ca, %._crit_edge.loopexit.unr-lcssa ], [ %i.cl, %js_dup.exit.epil ] ; 5 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.cn = load i64, ptr %i.cm, align 8            ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -5106,7 +5100,8 @@ js_dup.exit90:                                    ; preds = %._crit_edge, %bb.q
   store i64 %i.cn, ptr %.0.lcssa, align 8, !tbaa !218
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
   store i64 %i.cp, ptr %.sroa.45.0..sroa_idx, align 8, !tbaa !240
-  %i.cw = icmp slt i64 %.077.lcssa, %i.ad
+  %.178149 = add nuw nsw i64 %.0112125, 1         ; 3 uses
+  %i.cw = icmp slt i64 %.178149, %i.ad
   br i1 %i.cw, label %.lr.ph152.preheader, label %JS_ToInt64Sat.exit.thread131
 
 .lr.ph152.preheader:                              ; preds = %js_dup.exit90
@@ -5118,7 +5113,7 @@ js_dup.exit90:                                    ; preds = %._crit_edge, %bb.q
 
 .lr.ph152.prol:                                   ; preds = %.lr.ph152.preheader
   %.1.prol = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 16 ; 2 uses
-  %i.da = getelementptr inbounds nuw [16 x i8], ptr %i.az, i64 %.077.lcssa ; 2 uses
+  %i.da = getelementptr inbounds nuw [16 x i8], ptr %i.az, i64 %.178149 ; 2 uses
   %i.db = load i64, ptr %i.da, align 8            ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.da, i64 8
   %i.dd = load i64, ptr %i.dc, align 8            ; 2 uses
@@ -5138,11 +5133,11 @@ js_dup.exit93.prol:                               ; preds = %bb.r, %.lr.ph152.pr
   store i64 %i.db, ptr %.1.prol, align 8, !tbaa !218
   %.sroa.43.0..sroa_idx.prol = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 24
   store i64 %i.dd, ptr %.sroa.43.0..sroa_idx.prol, align 8, !tbaa !240
-  %.178.prol = add nuw nsw i64 %.077.lcssa, 1
+  %.178.prol = add nuw nsw i64 %.0112125, 2
   br label %.lr.ph152.prol.loopexit
 
 .lr.ph152.prol.loopexit:                          ; preds = %js_dup.exit93.prol, %.lr.ph152.preheader
-  %.178151.unr = phi i64 [ %.077.lcssa, %.lr.ph152.preheader ], [ %.178.prol, %js_dup.exit93.prol ]
+  %.178151.unr = phi i64 [ %.178149, %.lr.ph152.preheader ], [ %.178.prol, %js_dup.exit93.prol ]
   %.0.pn150.unr = phi ptr [ %.0.lcssa, %.lr.ph152.preheader ], [ %.1.prol, %js_dup.exit93.prol ]
   %i.dk = icmp eq i64 %i.cx, %.0112125
   br i1 %i.dk, label %JS_ToInt64Sat.exit.thread131, label %.lr.ph152

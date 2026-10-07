@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.thread
   %.pre13.i43 = add i64 %.pre12.i42, %i.v
   br label %bb.l
 
-bb.l:                                             ; preds = %._crit_edge.i38, %.thread
+bb.l:                                             ; preds = %.thread, %._crit_edge.i38
   %.pre-phi.i35 = phi i64 [ %.pre13.i43, %._crit_edge.i38 ], [ %i.ai, %.thread ]
   %i.am = phi i64 [ %.pre12.i42, %._crit_edge.i38 ], [ %i.ab, %.thread ]
   %i.an = phi ptr [ %.pre11.i40, %._crit_edge.i38 ], [ %i.y, %.thread ] ; 2 uses
@@ -221,7 +221,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN9rapidjson19MemoryPoolAllocatorINS_12CrtAllocatorEE6MallocEm.exit
 
 _ZN9rapidjson19MemoryPoolAllocatorINS_12CrtAllocatorEE6MallocEm.exit: ; preds = %bb.k, %bb.j, %bb.e, %bb.d, %bb.b, %bb.m, %bb.l, %bb.g, %bb.f
-  %.2 = phi ptr [ null, %bb.d ], [ %1, %bb.j ], [ null, %bb.f ], [ %1, %bb.g ], [ %i.aq, %bb.l ], [ %i.aq, %bb.m ], [ %i.r, %bb.e ], [ null, %bb.b ], [ null, %bb.k ]
+  %.2 = phi ptr [ %i.aq, %bb.m ], [ %1, %bb.j ], [ null, %bb.f ], [ %1, %bb.g ], [ %i.aq, %bb.l ], [ %i.r, %bb.e ], [ null, %bb.b ], [ null, %bb.d ], [ null, %bb.k ]
   ret ptr %.2
 }
 
@@ -624,7 +624,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.noexc144
 
 .noexc144:                                        ; preds = %bb.ac, %bb.ab, %.noexc183, %bb.z, %bb.w, %.noexc182
-  %.2.i = phi ptr [ null, %.noexc182 ], [ %i.gq, %bb.z ], [ null, %.noexc183 ], [ %i.hi, %bb.w ], [ %i.if, %bb.ab ], [ %i.if, %bb.ac ]
+  %.2.i = phi ptr [ %i.if, %bb.ac ], [ %i.gq, %bb.z ], [ null, %.noexc182 ], [ null, %.noexc183 ], [ %i.if, %bb.ab ], [ %i.hi, %bb.w ]
   %i.ig = and i64 %i.go, -281474976710656
   %i.ih = ptrtoint ptr %.2.i to i64
   %i.ii = or i64 %i.ig, %i.ih
@@ -1027,7 +1027,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN9rapidjson6MallocINS_13GenericMemberINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EEPT_RT0_m.exit.i.i
 
 _ZN9rapidjson6MallocINS_13GenericMemberINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EEPT_RT0_m.exit.i.i: ; preds = %bb.u, %bb.t
-  %.2.i.i.i.i = phi ptr [ null, %bb.t ], [ %i.cg, %bb.u ] ; 2 uses
+  %.2.i.i.i.i = phi ptr [ %i.cg, %bb.u ], [ null, %bb.t ] ; 2 uses
   %i.ch = getelementptr inbounds i8, ptr %i.bn, i64 -8 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8
   %i.cj = ptrtoint ptr %i.ci to i64
@@ -1430,13 +1430,11 @@ _ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericVa
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.l = load i64, ptr %i.k, align 8              ; 3 uses
-  br i1 %2, label %8, label %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit._crit_edge
+  %.not = icmp ne i64 %i.l, 0
+  %or.cond.not = select i1 %2, i1 %.not, i1 false
+  br i1 %or.cond.not, label %bb.d, label %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit._crit_edge
 
-8:                                                ; preds = %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit
-  %.not = icmp eq i64 %i.l, 0
-  br i1 %.not, label %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit._crit_edge, label %bb.d
-
-bb.d:                                             ; preds = %8
+bb.d:                                             ; preds = %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = add i64 %i.l, -1
@@ -1451,8 +1449,7 @@ bb.d:                                             ; preds = %8
   store i32 0, ptr %i.s, align 8
   br label %_ZN9rapidjson14GenericPointerINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES5_EC2ERKS8_.exit
 
-_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit._crit_edge: ; preds = %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit, %8
-  %9 = phi i64 [ 0, %8 ], [ %i.l, %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit ]
+_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit._crit_edge: ; preds = %_ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E25GetInvalidDocumentPointerEv.exit
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %6, i8 0, i64 32, i1 false)
@@ -1460,7 +1457,7 @@ _ZNK9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericVa
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
-  store i64 %9, ptr %i.x, align 8
+  store i64 %i.l, ptr %i.x, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.aa = load i64, ptr %i.z, align 8
   store i64 %i.aa, ptr %i.w, align 8

@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h5b4de4b2cfa380f6E.exit", %bb.z
   %i.es = phi ptr [ %i.ep, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h5b4de4b2cfa380f6E.exit" ], [ %i.cr, %bb.z ]
   %i.et = phi i64 [ %i.er, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h5b4de4b2cfa380f6E.exit" ], [ %i.cs, %bb.z ]
-  %i.eu = load i64, ptr %i.ba, align 8, !range !89, !noundef !69 ; 28 uses
+  %i.eu = load i64, ptr %i.ba, align 8, !range !89, !noundef !69 ; 5 uses
   %i.ev = call i64 @llvm.usub.sat.i64(i64 %i.eu, i64 40)
   switch i64 %i.ev, label %default.unreachable2821 [
     i64 0, label %bb.af
@@ -211,7 +211,6 @@ bb.ae:                                            ; preds = %"_ZN5alloc3vec16Vec
   ]
 
 .body153:                                         ; preds = %.loopexit533, %.loopexit.split-lp534, %bb.fy, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit231", %bb.fc, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit217", %bb.el, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit208", %bb.du, %bb.dr, %bb.dn, %bb.dk, %bb.dg, %bb.dd, %bb.cz, %bb.cu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit162", %bb.cs, %.body156
-  %3 = phi i64 [ %i.eu, %bb.cz ], [ %4, %bb.cs ], [ %4, %.body156 ], [ %i.eu, %bb.fc ], [ %i.eu, %bb.el ], [ %i.eu, %bb.du ], [ %i.eu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit162" ], [ %i.eu, %bb.dn ], [ %i.eu, %bb.dg ], [ %i.eu, %bb.fy ], [ %i.eu, %bb.cu ], [ %i.eu, %bb.dd ], [ %i.eu, %bb.dk ], [ %i.eu, %bb.dr ], [ %i.eu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit208" ], [ %i.eu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit217" ], [ %i.eu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit231" ], [ %i.eu, %.loopexit533 ], [ %i.eu, %.loopexit.split-lp534 ] ; 2 uses
   %.pn114 = phi { ptr, i32 } [ %i.gr, %bb.cz ], [ %.pn112, %bb.cs ], [ %.pn112, %.body156 ], [ %i.iu, %bb.fc ], [ %i.ih, %bb.el ], [ %i.hs, %bb.du ], [ %.pn, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit162" ], [ %i.hj, %bb.dn ], [ %i.ha, %bb.dg ], [ %i.jx, %bb.fy ], [ %i.gn, %bb.cu ], [ %i.gw, %bb.dd ], [ %i.hf, %bb.dk ], [ %i.ho, %bb.dr ], [ %.pn99.pn, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit208" ], [ %.pn103.pn, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit217" ], [ %.pn107.pn, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit231" ], [ %lpad.loopexit535, %.loopexit533 ], [ %lpad.loopexit.split-lp536, %.loopexit.split-lp534 ] ; 2 uses
   %.sroa.066.0 = phi i8 [ 1, %bb.cz ], [ 0, %bb.cs ], [ 0, %.body156 ], [ %.sroa.066.2, %bb.fc ], [ %.sroa.066.2, %bb.el ], [ 1, %bb.du ], [ 0, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit162" ], [ 1, %bb.dn ], [ 1, %bb.dg ], [ %.sroa.066.2, %bb.fy ], [ 1, %bb.cu ], [ 1, %bb.dd ], [ 1, %bb.dk ], [ 1, %bb.dr ], [ %.sroa.066.2, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit208" ], [ %.sroa.066.2, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit217" ], [ %.sroa.066.2, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit231" ], [ %.sroa.066.1.ph, %.loopexit533 ], [ 0, %.loopexit.split-lp534 ] ; 2 uses
   %i.ew = load i64, ptr %i.az, align 8, !range !74, !noundef !69
@@ -314,7 +313,6 @@ bb.aq:                                            ; preds = %bb.ap
           to label %bb.ar unwind label %.loopexit543
 
 .body156:                                         ; preds = %.loopexit543, %.loopexit.split-lp544, %bb.co, %bb.cl, %bb.cd, %bb.ca, %bb.bi, %bb.au, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit"
-  %4 = phi i64 [ %i.eu, %bb.ca ], [ %i.eu, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit" ], [ %i.eu, %bb.cd ], [ %i.eu, %bb.au ], [ %i.eu, %bb.cl ], [ 40, %bb.bi ], [ %i.eu, %bb.co ], [ %i.eu, %.loopexit543 ], [ %i.eu, %.loopexit.split-lp544 ] ; 2 uses
   %.pn112 = phi { ptr, i32 } [ %i.fw, %bb.ca ], [ %.pn110, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit" ], [ %i.fy, %bb.cd ], [ %i.fe, %bb.au ], [ %i.gc, %bb.cl ], [ %i.fm, %bb.bi ], [ %i.gg, %bb.co ], [ %lpad.loopexit545, %.loopexit543 ], [ %lpad.loopexit.split-lp546, %.loopexit.split-lp544 ] ; 2 uses
   %.sroa.064.0 = phi i1 [ %.not96, %bb.ca ], [ true, %"_ZN4core3ptr45drop_in_place$LT$proc_macro2..TokenStream$GT$17h0e47506e1e196136E.exit" ], [ true, %bb.cd ], [ true, %bb.au ], [ %.not96, %bb.cl ], [ true, %bb.bi ], [ %.not96, %bb.co ], [ %.sroa.064.1.ph, %.loopexit543 ], [ true, %.loopexit.split-lp544 ]
   %i.ez = load i64, ptr %i.ax, align 8, !range !75, !noundef !69
@@ -717,7 +715,7 @@ bb.gp:                                            ; preds = %bb.go
           to label %.preheader524 unwind label %.loopexit525.loopexit, !llvm.loop !3847
 
 .body153.thread:                                  ; preds = %..body153.thread_crit_edge, %bb.gq, %.body153
-  %i.lj = phi i64 [ %3, %.body153 ], [ %3, %bb.gq ], [ %.pre1370, %..body153.thread_crit_edge ] ; 2 uses
+  %i.lj = phi i64 [ %i.eu, %.body153 ], [ %i.eu, %bb.gq ], [ %.pre1370, %..body153.thread_crit_edge ] ; 2 uses
   %.sroa.066.0513 = phi i8 [ %.sroa.066.0, %.body153 ], [ %.sroa.066.0, %bb.gq ], [ 1, %..body153.thread_crit_edge ]
   %.pn114512 = phi { ptr, i32 } [ %.pn114, %.body153 ], [ %.pn114, %bb.gq ], [ %i.en, %..body153.thread_crit_edge ]
   %i.lk = icmp samesign ugt i64 %i.lj, 40

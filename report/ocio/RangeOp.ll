@@ -202,10 +202,10 @@ bb.w:                                             ; preds = %bb.i
   call fastcc void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_17RangeOp9rangeDataEv(ptr dead_on_unwind noalias writable align 8 %5, ptr %.val19, ptr %.val20)
   %.val21 = load ptr, ptr %2, align 8, !tbaa !64, !nonnull !65, !noundef !65
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val22 = load ptr, ptr %i.ba, align 8          ; 11 uses
+  %.val22 = load ptr, ptr %i.ba, align 8          ; 10 uses
   %i.bb = tail call ptr @__dynamic_cast(ptr nonnull %.val21, ptr nonnull @_ZTIN16OpenColorIO_v2_52OpE, ptr nonnull @_ZTIN16OpenColorIO_v2_512_GLOBAL__N_17RangeOpE, i64 0) #18, !noalias !182 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bb) ]
-  %.not.i.i.i.i.i27 = icmp eq ptr %.val22, null
+  %.not.i.i.i.i.i27 = icmp eq ptr %.val22, null   ; 2 uses
   br i1 %.not.i.i.i.i.i27, label %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_12_GLOBAL__N_17RangeOpEKNS_2OpEEESt10shared_ptrIT_ERKS6_IT0_E.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -343,8 +343,7 @@ bb.an:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.aj, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i35, %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  %.not.i.i37 = icmp eq ptr %.val22, null
-  br i1 %.not.i.i37, label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_512_GLOBAL__N_17RangeOpELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.ao
+  br i1 %.not.i.i.i.i.i27, label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_512_GLOBAL__N_17RangeOpELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_511RangeOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.cs = getelementptr inbounds nuw i8, ptr %.val22, i64 8 ; 4 uses

@@ -204,8 +204,8 @@ _RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_within
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 528, !dbg !31213
   %i.g = load ptr, ptr %i.f, align 16, !dbg !31213, !alias.scope !31200, !noalias !31201, !nonnull !3009, !align !6984, !noundef !3009
   tail call void @_RNvNtNtNtCs8shshkhJObF_4ring3cpu5intel12featureflags11get_or_init(), !dbg !31214, !noalias !31202
-  %i.h = call { ptr, i64 } @_RNvMs_NtNtCs8shshkhJObF_4ring4aead9algorithmNtB4_9Algorithm11open_within(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.g, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(544) %0, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(12) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef range(i64 0, -9223372036854775808) %4, ptr noalias nofree noundef nonnull readonly align 1 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull %1, i64 noundef range(i64 0, -9223372036854775808) %i.d, i64 noundef 0), !dbg !31215 ; 2 uses
-  %i.i = extractvalue { ptr, i64 } %i.h, 0, !dbg !31212 ; 2 uses
+  %i.h = call { ptr, i64 } @_RNvMs_NtNtCs8shshkhJObF_4ring4aead9algorithmNtB4_9Algorithm11open_within(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.g, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(544) %0, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(12) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef range(i64 0, -9223372036854775808) %4, ptr noalias nofree noundef nonnull readonly align 1 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull %1, i64 noundef range(i64 0, -9223372036854775808) %i.d, i64 noundef 0), !dbg !31215 ; 3 uses
+  %i.i = extractvalue { ptr, i64 } %i.h, 0, !dbg !31212
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !31207
     #dbg_value(ptr %i.i, !31166, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !31184)
     #dbg_value(i64 poison, !31166, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !31184)
@@ -215,10 +215,9 @@ _RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_within
   br label %bb.b, !dbg !31208
 
 bb.b:                                             ; preds = %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit.thread
+  %5 = phi { ptr, i64 } [ %i.h, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit ], [ { ptr null, i64 undef }, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit.thread ]
   %.sroa.3.0 = phi i64 [ %spec.select, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit ], [ undef, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit.thread ], !dbg !31217
-  %.sroa.0.0 = phi ptr [ %i.i, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit ], [ null, %_RINvMNtNtCs8shshkhJObF_4ring4aead13less_safe_keyNtB3_11LessSafeKey11open_withinRShECshovLROGBtMy_11quinn_proto.exit.thread ], !dbg !31217
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !31218
-  %5 = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0, !dbg !31219
   %i.l = insertvalue { ptr, i64 } %5, i64 %.sroa.3.0, 1, !dbg !31219
   ret { ptr, i64 } %i.l, !dbg !31219
 }

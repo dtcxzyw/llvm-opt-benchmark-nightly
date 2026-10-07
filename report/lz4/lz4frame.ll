@@ -202,9 +202,8 @@ LZ4F_createCompressionContext_advanced.exit:      ; preds = %LZ4F_calloc.exit.i
   br label %.sink.split
 
 .sink.split:                                      ; preds = %LZ4F_calloc.exit.i, %LZ4F_createCompressionContext_advanced.exit
-  %.sink = phi ptr [ %i.b, %LZ4F_createCompressionContext_advanced.exit ], [ null, %LZ4F_calloc.exit.i ]
   %.0.ph = phi i64 [ 0, %LZ4F_createCompressionContext_advanced.exit ], [ -9, %LZ4F_calloc.exit.i ]
-  store ptr %.sink, ptr %0, align 8, !tbaa !85
+  store ptr %i.b, ptr %0, align 8, !tbaa !85
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
@@ -607,9 +606,8 @@ LZ4F_createDecompressionContext_advanced.exit:    ; preds = %LZ4F_calloc.exit.i
   br label %.sink.split
 
 .sink.split:                                      ; preds = %LZ4F_calloc.exit.i, %LZ4F_createDecompressionContext_advanced.exit
-  %.sink = phi ptr [ %i.b, %LZ4F_createDecompressionContext_advanced.exit ], [ null, %LZ4F_calloc.exit.i ]
   %.0.ph = phi i64 [ 0, %LZ4F_createDecompressionContext_advanced.exit ], [ -9, %LZ4F_calloc.exit.i ]
-  store ptr %.sink, ptr %0, align 8, !tbaa !92
+  store ptr %i.b, ptr %0, align 8, !tbaa !92
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a

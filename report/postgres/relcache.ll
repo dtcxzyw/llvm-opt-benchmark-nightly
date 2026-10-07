@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not73, label %.outer._crit_edge, label %.lr.ph, !llvm.loop !19
 
 .outer._crit_edge:                                ; preds = %.outer, %bb.d
-  %.055.ph.lcssa = phi ptr [ %.055.ph78, %bb.d ], [ %.156, %.outer ] ; 5 uses
+  %.055.ph.lcssa = phi ptr [ %.055.ph78, %bb.d ], [ %.156, %.outer ] ; 4 uses
   %.053.ph.lcssa = phi ptr [ %.053.ph79, %bb.d ], [ %.154, %.outer ] ; 5 uses
   call void @smgrreleaseall() #13
   %i.ak = getelementptr inbounds nuw i8, ptr %.055.ph.lcssa, i64 4 ; 2 uses
@@ -227,8 +227,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.ar, label %bb.q, label %bb.s
 
 .critedge:                                        ; preds = %bb.w, %.lr.ph84, %.outer._crit_edge
-  %.055.ph.lcssa117 = phi ptr [ %.055.ph.lcssa, %.lr.ph84 ], [ null, %.outer._crit_edge ], [ %.055.ph.lcssa, %bb.w ]
-  call void @list_free(ptr noundef %.055.ph.lcssa117) #13
+  call void @list_free(ptr noundef %.055.ph.lcssa) #13
   %i.as = getelementptr inbounds nuw i8, ptr %.053.ph.lcssa, i64 4 ; 2 uses
   %.not62 = icmp eq ptr %.053.ph.lcssa, null
   br i1 %.not62, label %.critedge67, label %.lr.ph89

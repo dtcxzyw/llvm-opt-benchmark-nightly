@@ -169,7 +169,7 @@ bb.h:                                             ; preds = %.thread, %.split177
   %.0686 = phi ptr [ %i.h, %.split1779 ], [ %.39725, %.thread ] ; 53 uses
   %.0683 = phi ptr [ %i.f, %.split1779 ], [ %.2685, %.thread ] ; 34 uses
   %.0642 = phi i32 [ %i.r, %.split1779 ], [ %.39681, %.thread ] ; 47 uses
-  %.0640 = phi i32 [ %i.p, %.split1779 ], [ %.1641, %.thread ] ; 56 uses
+  %.0640 = phi i32 [ %i.p, %.split1779 ], [ %.1641, %.thread ] ; 36 uses
   %.0599 = phi i64 [ %i.t, %.split1779 ], [ %.39638, %.thread ] ; 34 uses
   %.0590 = phi i32 [ %i.v, %.split1779 ], [ %.39, %.thread ] ; 47 uses
   %.0585 = phi i32 [ %i.p, %.split1779 ], [ %.3588, %.thread ] ; 46 uses
@@ -572,7 +572,6 @@ bb.cx:                                            ; preds = %bb.cv, %bb.cp
 
 .loopexit.loopexit1806:                           ; preds = %bb.h, %.lr.ph1546, %bb.cn, %bb.cf, %bb.am, %bb.w
   %i.aap = phi i32 [ %i.ay, %bb.h ], [ %i.ay, %.lr.ph1546 ], [ 23, %bb.cn ], [ 22, %bb.cf ], [ 14, %bb.am ], [ 11, %bb.w ]
-  %.0640.lcssa2031 = phi i32 [ %.0640, %bb.h ], [ %.0640, %.lr.ph1546 ], [ 0, %bb.cn ], [ 0, %bb.cf ], [ %.0640, %bb.am ], [ %.0640, %bb.w ]
   %.40726.ph = phi ptr [ %.0686, %bb.h ], [ %.0686, %.lr.ph1546 ], [ %.0686, %bb.cn ], [ %.35721, %bb.cf ], [ %.6692, %bb.am ], [ %.0686, %bb.w ]
   %.40682.ph = phi i32 [ %.0642, %bb.h ], [ 0, %.lr.ph1546 ], [ %.0642, %bb.cn ], [ %.35677, %bb.cf ], [ %.6648, %bb.am ], [ %.0642, %bb.w ]
   %.40639.ph = phi i64 [ %.0599, %bb.h ], [ %.0599, %.lr.ph1546 ], [ %.0599, %bb.cn ], [ %.35634, %bb.cf ], [ %.6605, %bb.am ], [ %.0599, %bb.w ]
@@ -639,7 +638,6 @@ bb.cx:                                            ; preds = %bb.cv, %bb.cp
 
 .loopexit:                                        ; preds = %bb.h, %.lr.ph1225, %.loopexit.loopexit2259, %.loopexit.loopexit2258, %.loopexit.loopexit2257, %.loopexit.loopexit2256, %.loopexit.loopexit2255, %.loopexit.loopexit2254, %.loopexit.loopexit2253, %.loopexit.loopexit1806, %.loopexit.loopexit1804, %.loopexit.loopexit1803, %.loopexit.loopexit1795, %.loopexit.loopexit1794, %.loopexit.loopexit1792, %.loopexit.loopexit1791, %.loopexit.loopexit1790, %.loopexit.loopexit, %bb.cx
   %i.abm = phi i1 [ false, %.loopexit.loopexit1792 ], [ false, %.loopexit.loopexit2258 ], [ false, %.loopexit.loopexit2256 ], [ false, %.loopexit.loopexit2257 ], [ false, %.lr.ph1225 ], [ false, %.loopexit.loopexit1790 ], [ false, %.loopexit.loopexit2255 ], [ false, %.loopexit.loopexit1791 ], [ false, %.loopexit.loopexit1803 ], [ %i.aaq, %.loopexit.loopexit1806 ], [ false, %.loopexit.loopexit2259 ], [ true, %.loopexit.loopexit1804 ], [ true, %bb.cx ], [ false, %.loopexit.loopexit1794 ], [ false, %.loopexit.loopexit1795 ], [ false, %.loopexit.loopexit2253 ], [ false, %.loopexit.loopexit2254 ], [ false, %.loopexit.loopexit ], [ true, %bb.h ]
-  %.06402050 = phi i32 [ %.0640, %.loopexit.loopexit1792 ], [ %.0640, %.loopexit.loopexit2258 ], [ %.0640, %.loopexit.loopexit2256 ], [ %.0640, %.loopexit.loopexit2257 ], [ %.0640, %.lr.ph1225 ], [ %.0640, %.loopexit.loopexit1790 ], [ %.0640, %.loopexit.loopexit2255 ], [ %.0640, %.loopexit.loopexit1791 ], [ %.0640, %.loopexit.loopexit1803 ], [ %.0640.lcssa2031, %.loopexit.loopexit1806 ], [ %.0640, %.loopexit.loopexit2259 ], [ %.0640, %.loopexit.loopexit1804 ], [ %.0640, %bb.cx ], [ %.0640, %.loopexit.loopexit1794 ], [ %.0640, %.loopexit.loopexit1795 ], [ %.0640, %.loopexit.loopexit2253 ], [ %.0640, %.loopexit.loopexit2254 ], [ %.0640, %.loopexit.loopexit ], [ %.0640, %bb.h ] ; 2 uses
   %.40726 = phi ptr [ %.167021383, %.loopexit.loopexit1792 ], [ %scevgep2150.le, %.loopexit.loopexit2258 ], [ %scevgep2155.le, %.loopexit.loopexit2256 ], [ %scevgep2152.le, %.loopexit.loopexit2257 ], [ %.96951351, %.lr.ph1225 ], [ %.177031403, %.loopexit.loopexit1790 ], [ %scevgep2159.le, %.loopexit.loopexit2255 ], [ %.157011393, %.loopexit.loopexit1791 ], [ %.76931211.lcssa, %.loopexit.loopexit1803 ], [ %.40726.ph, %.loopexit.loopexit1806 ], [ %scevgep2146.le, %.loopexit.loopexit2259 ], [ %.367221204.lcssa, %.loopexit.loopexit1804 ], [ %.37723, %bb.cx ], [ %.16871769.lcssa, %.loopexit.loopexit1794 ], [ %.56911531.lcssa, %.loopexit.loopexit1795 ], [ %scevgep.le, %.loopexit.loopexit2253 ], [ %scevgep2161.le, %.loopexit.loopexit2254 ], [ %.26881780.lcssa, %.loopexit.loopexit ], [ %.0686, %bb.h ]
   %.40682 = phi i32 [ 0, %.loopexit.loopexit1792 ], [ 0, %.loopexit.loopexit2258 ], [ 0, %.loopexit.loopexit2256 ], [ 0, %.loopexit.loopexit2257 ], [ 0, %.lr.ph1225 ], [ 0, %.loopexit.loopexit1790 ], [ 0, %.loopexit.loopexit2255 ], [ 0, %.loopexit.loopexit1791 ], [ 0, %.loopexit.loopexit1803 ], [ %.40682.ph, %.loopexit.loopexit1806 ], [ 0, %.loopexit.loopexit2259 ], [ 0, %.loopexit.loopexit1804 ], [ %.37679, %bb.cx ], [ 0, %.loopexit.loopexit1794 ], [ 0, %.loopexit.loopexit1795 ], [ 0, %.loopexit.loopexit2253 ], [ 0, %.loopexit.loopexit2254 ], [ 0, %.loopexit.loopexit ], [ %.0642, %bb.h ]
   %.40639 = phi i64 [ %.166151385, %.loopexit.loopexit1792 ], [ %.236221466.lcssa, %.loopexit.loopexit2258 ], [ %.296281492.lcssa, %.loopexit.loopexit2256 ], [ %.266251478.lcssa, %.loopexit.loopexit2257 ], [ %.96081353, %.lr.ph1225 ], [ %.176161405, %.loopexit.loopexit1790 ], [ %.306291511.lcssa, %.loopexit.loopexit2255 ], [ %.156141395, %.loopexit.loopexit1791 ], [ %.76061213.lcssa, %.loopexit.loopexit1803 ], [ %.40639.ph, %.loopexit.loopexit1806 ], [ %.226211447.lcssa, %.loopexit.loopexit2259 ], [ %.366351206.lcssa, %.loopexit.loopexit1804 ], [ %.37636, %bb.cx ], [ %.16001771.lcssa, %.loopexit.loopexit1794 ], [ %.56041533.lcssa, %.loopexit.loopexit1795 ], [ %.136121371.lcssa, %.loopexit.loopexit2253 ], [ %.336321523.lcssa, %.loopexit.loopexit2254 ], [ %.26011782.lcssa, %.loopexit.loopexit ], [ %.0599, %bb.h ]
@@ -647,14 +645,14 @@ bb.cx:                                            ; preds = %bb.cv, %bb.cp
   %.4589 = phi i32 [ %.0585, %.loopexit.loopexit1792 ], [ %.0585, %.loopexit.loopexit2258 ], [ %.0585, %.loopexit.loopexit2256 ], [ %.0585, %.loopexit.loopexit2257 ], [ %.0585, %.lr.ph1225 ], [ %.0585, %.loopexit.loopexit1790 ], [ %.0585, %.loopexit.loopexit2255 ], [ %.0585, %.loopexit.loopexit1791 ], [ %.0585, %.loopexit.loopexit1803 ], [ %.0585, %.loopexit.loopexit1806 ], [ %.0585, %.loopexit.loopexit2259 ], [ %.0585, %.loopexit.loopexit1804 ], [ %.1586, %bb.cx ], [ %.0585, %.loopexit.loopexit1794 ], [ %.0585, %.loopexit.loopexit1795 ], [ %.0585, %.loopexit.loopexit2253 ], [ %.0585, %.loopexit.loopexit2254 ], [ %.0585, %.loopexit.loopexit ], [ %.0585, %bb.h ] ; 4 uses
   %.8 = phi i32 [ %.1, %.loopexit.loopexit1792 ], [ %.2, %.loopexit.loopexit2258 ], [ %.4, %.loopexit.loopexit2256 ], [ %.3, %.loopexit.loopexit2257 ], [ %.0, %.lr.ph1225 ], [ %.1, %.loopexit.loopexit1790 ], [ %.4, %.loopexit.loopexit2255 ], [ %.1, %.loopexit.loopexit1791 ], [ %.0, %.loopexit.loopexit1803 ], [ %.8.ph, %.loopexit.loopexit1806 ], [ %.2, %.loopexit.loopexit2259 ], [ %.0, %.loopexit.loopexit1804 ], [ 1, %bb.cx ], [ %.0, %.loopexit.loopexit1794 ], [ %.0, %.loopexit.loopexit1795 ], [ %.1, %.loopexit.loopexit2253 ], [ %.5, %.loopexit.loopexit2254 ], [ %.0, %.loopexit.loopexit ], [ 1, %bb.h ] ; 2 uses
   store ptr %.0683, ptr %i.e, align 8, !tbaa !38
-  store i32 %.06402050, ptr %i.o, align 4, !tbaa !42
+  store i32 %.0640, ptr %i.o, align 4, !tbaa !42
   store ptr %.40726, ptr %0, align 8, !tbaa !39
   store i32 %.40682, ptr %i.q, align 8, !tbaa !40
   store i64 %.40639, ptr %i.s, align 8, !tbaa !43
   store i32 %.40, ptr %i.u, align 8, !tbaa !44
   %i.abn = load i32, ptr %i.at, align 4, !tbaa !61
   %.not789 = icmp eq i32 %i.abn, 0
-  %.not790 = icmp eq i32 %.4589, %.06402050
+  %.not790 = icmp eq i32 %.4589, %.0640
   %or.cond803 = select i1 %i.abm, i1 true, i1 %.not790
   %or.cond2574 = select i1 %.not789, i1 %or.cond803, i1 false
   br i1 %or.cond2574, label %updatewindow.exit.thread, label %bb.cy

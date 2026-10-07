@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.i, %bb.d
   %i.u = load i64, ptr %i.t, align 8
   %.sink12.i = select i1 %i.s, i64 %i.u, i64 %i.r
   %i.v = shl i64 %.sink12.i, 5                    ; 2 uses
-  %..i = call noundef i64 @llvm.umin.i64(i64 %i.v, i64 4096) ; 3 uses
+  %..i = call noundef i64 @llvm.umin.i64(i64 %i.v, i64 4096) ; 2 uses
   %i.w = shl nuw nsw i64 %..i, 3                  ; 2 uses
   %i.x = icmp eq i64 %i.v, 0
   br i1 %i.x, label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image.exit, label %bb.j
@@ -270,12 +270,9 @@ bb.l:                                             ; preds = %bb.j
 
 _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.e, %bb.k
   %i.ao = phi i64 [ %.pre, %bb.k ], [ %i.r, %bb.e ] ; 2 uses
-  %.sroa.4169.0 = phi i64 [ %..i, %bb.k ], [ 0, %bb.e ] ; 2 uses
   %.sroa.10171.0 = phi i64 [ %i.an, %bb.k ], [ 8, %bb.e ]
   %i.ap = inttoptr i64 %.sroa.10171.0 to ptr
-  %4 = icmp samesign ule i64 %..i, %.sroa.4169.0
-  call void @llvm.assume(i1 %4)
-  store i64 %.sroa.4169.0, ptr %i.h, align 8
+  store i64 %..i, ptr %i.h, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 7 uses
   store ptr %i.ap, ptr %i.aq, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 6 uses
@@ -678,7 +675,7 @@ bb.b:                                             ; preds = %bb.u, %.lr.ph.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i.i.i.i)
   %i.n = load ptr, ptr %.val.i.i.i.i, align 8, !noalias !3021, !nonnull !7, !align !16, !noundef !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !3022
-  %..i.i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.val5.i.i.i, i64 65535) ; 2 uses
+  %..i.i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.val5.i.i.i, i64 65535) ; 3 uses
   %i.o = icmp eq i64 %.val5.i.i.i, 0
   br i1 %i.o, label %.thread17, label %bb.c
 
@@ -891,7 +888,7 @@ bb.u:                                             ; preds = %_RNCINvNtNtNtCsj6eK
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i.i.i, i64 16, i1 false), !noalias !3011
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i.i)
-  store i64 0, ptr %0, align 8
+  store i64 %..i.i.i.i.i.i.i, ptr %0, align 8
   %.sroa.8.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx51, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
   br label %bb.w

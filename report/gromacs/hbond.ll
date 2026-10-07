@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dl = getelementptr inbounds i8, ptr %.val.i, i64 %i.dk ; 2 uses
   %.not16.i.i84 = icmp eq ptr %i.df, %i.db
   %.pre = ptrtoint ptr %i.db to i64
-  %.pre39 = sub i64 %.pre, %i.dj                  ; 6 uses
+  %.pre39 = sub i64 %.pre, %i.dj                  ; 4 uses
   br i1 %.not16.i.i84, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN3gmx15analysismodules12_GLOBAL__N_15HBondESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i85, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -225,8 +225,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN3gmx15analysismodules12_GLOBAL__N_15HBondESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i85
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN3gmx15analysismodules12_GLOBAL__N_15HBondESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i85: ; preds = %bb.u, %bb.y, %bb.x, %bb.w
-  %.pre-phi40 = phi i64 [ %.pre39, %bb.w ], [ 16, %bb.y ], [ %.pre39, %bb.x ], [ %.pre39, %bb.u ]
-  %i.do = getelementptr inbounds i8, ptr %i.di, i64 %.pre-phi40 ; 3 uses
+  %i.do = getelementptr inbounds i8, ptr %i.di, i64 %.pre39 ; 3 uses
   %.not.i.i.i87 = icmp eq ptr %i.db, %i.do
   br i1 %.not.i.i.i87, label %_ZNSt6vectorIN3gmx15analysismodules12_GLOBAL__N_15HBondESaIS3_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS3_S5_EESA_.exit89, label %_ZSt8_DestroyIPN3gmx15analysismodules12_GLOBAL__N_15HBondES3_EvT_S5_RSaIT0_E.exit.i.i.i88
 

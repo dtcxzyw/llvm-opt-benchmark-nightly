@@ -205,7 +205,6 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.qg, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %.thread468, %bb.by
-  %.0327474 = phi ptr [ %.pre437, %.thread468 ], [ null, %bb.by ]
   %.0328472 = phi ptr [ %i.qa, %.thread468 ], [ null, %bb.by ]
   %i.qh = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 2 uses
   %i.qi = add nsw i32 %2, 31
@@ -266,7 +265,7 @@ bb.bz:                                            ; preds = %.thread468, %bb.by
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.by
-  %.0327473 = phi ptr [ %.0327474, %bb.bz ], [ null, %bb.by ] ; 2 uses
+  %.0327473 = phi ptr [ %.pre437, %bb.bz ], [ null, %bb.by ] ; 2 uses
   %.0328471 = phi ptr [ %.0328472, %bb.bz ], [ null, %bb.by ] ; 2 uses
   %i.ry = getelementptr inbounds nuw i8, ptr %i.am, i64 577 ; 2 uses
   %i.rz = load i8, ptr %i.ry, align 1, !tbaa !273, !range !174, !noundef !175
@@ -669,8 +668,8 @@ select.unfold:                                    ; preds = %.lr.ph
   %i.p = icmp eq ptr %i.k, %i.o
   br i1 %i.p, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %select.unfold, %.lr.ph, %bb.a
-  %.08.lcssa = phi ptr [ null, %bb.a ], [ %.0812, %.lr.ph ], [ null, %select.unfold ]
+._crit_edge:                                      ; preds = %.lr.ph, %select.unfold, %bb.a
+  %.08.lcssa = phi ptr [ null, %bb.a ], [ null, %select.unfold ], [ %.0812, %.lr.ph ]
   ret ptr %.08.lcssa
 }
 

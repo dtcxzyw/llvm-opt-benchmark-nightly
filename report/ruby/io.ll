@@ -206,15 +206,11 @@ bb.e:                                             ; preds = %.backedge
   br label %maygvl_read.exit
 
 maygvl_read.exit:                                 ; preds = %bb.d, %bb.c, %bb.e
-  %.024 = phi i64 [ %i.o, %bb.e ], [ %i.i, %bb.c ], [ %i.l, %bb.d ] ; 5 uses
-  %7 = icmp eq i64 %.024, 0
-  br i1 %7, label %.loopexit, label %8
+  %.024 = phi i64 [ %i.o, %bb.e ], [ %i.i, %bb.c ], [ %i.l, %bb.d ] ; 4 uses
+  %7 = icmp slt i64 %.024, 0
+  br i1 %7, label %bb.f, label %.loopexit
 
-8:                                                ; preds = %maygvl_read.exit
-  %9 = icmp slt i64 %.024, 0
-  br i1 %9, label %bb.f, label %.loopexit
-
-bb.f:                                             ; preds = %8
+bb.f:                                             ; preds = %maygvl_read.exit
   %i.p = call ptr @rb_errno_ptr() #28
   %i.q = load i32, ptr %i.p, align 4, !tbaa !16
   switch i32 %i.q, label %bb.k [
@@ -385,8 +381,8 @@ bb.v:                                             ; preds = %bb.k
   store i32 %i.bn, ptr %i.bo, align 4, !tbaa !282
   br label %.loopexit
 
-.loopexit:                                        ; preds = %8, %maygvl_read.exit, %maygvl_copy_stream_wait_read.exit.thread, %bb.v, %bb.u
-  %.2 = phi i64 [ %.024, %bb.u ], [ %.024, %bb.v ], [ %i.bi, %maygvl_copy_stream_wait_read.exit.thread ], [ %.024, %8 ], [ 0, %maygvl_read.exit ]
+.loopexit:                                        ; preds = %maygvl_read.exit, %maygvl_copy_stream_wait_read.exit.thread, %bb.v, %bb.u
+  %.2 = phi i64 [ %.024, %bb.u ], [ %.024, %bb.v ], [ %i.bi, %maygvl_copy_stream_wait_read.exit.thread ], [ %.024, %maygvl_read.exit ]
   ret i64 %.2
 }
 

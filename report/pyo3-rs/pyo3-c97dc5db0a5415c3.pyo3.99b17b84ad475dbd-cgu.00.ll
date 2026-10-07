@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %i.ac = load i64, ptr %i.ab, align 8            ; 6 uses
+  %i.ac = load i64, ptr %i.ab, align 8            ; 5 uses
   br i1 %.not, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %bb.j
@@ -238,7 +238,6 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.j, %bb.n, %bb.o
-  %.sroa.65.0 = phi i64 [ 0, %bb.n ], [ %i.ac, %bb.o ], [ %i.ac, %bb.j ]
   %.sroa.5.0 = phi ptr [ %i.aj, %bb.n ], [ %i.aj, %bb.o ], [ %i.aa, %bb.j ]
   %.sroa.01.0 = phi i64 [ %i.ag, %bb.n ], [ %i.ag, %bb.o ], [ %i.y, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -246,7 +245,7 @@ bb.p:                                             ; preds = %bb.j, %bb.n, %bb.o
   %.sroa.5.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx3, align 8
   %.sroa.65.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.65.0, ptr %.sroa.65.0..sroa_idx6, align 8
+  store i64 %i.ac, ptr %.sroa.65.0..sroa_idx6, align 8
   %i.al = load i64, ptr %i.m, align 8, !noundef !4 ; 2 uses
   %i.am = and i64 %i.al, 2147483648
   %.not.i.i14 = icmp eq i64 %i.am, 0
@@ -649,9 +648,9 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !457)
   %i.d = tail call noundef ptr @PyTuple_GetItem(ptr noundef nonnull %i.c, i64 noundef %2) #15, !noalias !457 ; 2 uses
-  %3 = icmp eq ptr %i.d, null
   tail call void @llvm.experimental.noalias.scope.decl(metadata !458)
-  br i1 %3, label %bb.c, label %bb.b
+  %.not.i.i = icmp eq ptr %i.d, null
+  br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8

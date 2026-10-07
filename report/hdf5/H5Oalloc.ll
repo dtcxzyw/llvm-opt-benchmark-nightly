@@ -204,8 +204,8 @@ bb.fg:                                            ; preds = %bb.ff, %bb.ex, %bb.
   %.0215.lcssa.i.i = phi i64 [ %i.aat, %bb.ev ], [ %.1216.i.i, %bb.fg ] ; 4 uses
   %.lcssa.i.i51 = phi i64 [ 0, %bb.ev ], [ %i.adk, %bb.fg ] ; 2 uses
   %i.ado = icmp eq i32 %i.aaj, 0                  ; 3 uses
-  %i.adp = load i8, ptr %i.w, align 8, !tbaa !30  ; 3 uses
-  %i.adq = icmp eq i8 %i.adp, 1                   ; 2 uses
+  %i.adp = load i8, ptr %i.w, align 8, !tbaa !30  ; 2 uses
+  %i.adq = icmp eq i8 %i.adp, 1                   ; 3 uses
   br i1 %i.ado, label %bb.fh, label %bb.fj
 
 bb.fh:                                            ; preds = %._crit_edge.i.i50
@@ -230,7 +230,6 @@ bb.fj:                                            ; preds = %._crit_edge.i.i50
   br label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj, %bb.fi, %bb.fh
-  %2 = phi i8 [ %i.adp, %bb.fj ], [ %i.adp, %bb.fi ], [ 1, %bb.fh ] ; 2 uses
   %i.aed = phi i32 [ %i.aec, %bb.fj ], [ %i.aeb, %bb.fi ], [ 16, %bb.fh ]
   %i.aee = zext nneg i32 %i.aed to i64
   %i.aef = sub i64 %.0215.lcssa.i.i, %i.aee       ; 2 uses
@@ -252,11 +251,10 @@ bb.fl:                                            ; preds = %bb.fk
   %i.aeo = getelementptr inbounds i8, ptr %i.aen, i64 %.neg.i.i
   %i.aep = getelementptr inbounds nuw i8, ptr %i.aej, i64 32
   store ptr %i.aeo, ptr %i.aep, align 8, !tbaa !52
-  %3 = icmp eq i8 %2, 1
   %i.aeq = sub nuw nsw i64 %i.aaw, %i.aef         ; 2 uses
   %i.aer = add nuw nsw i64 %i.aeq, 7
   %i.aes = and i64 %i.aer, 56
-  %i.aet = select i1 %3, i64 %i.aes, i64 %i.aeq
+  %i.aet = select i1 %i.adq, i64 %i.aes, i64 %i.aeq
   %i.aeu = call i64 @llvm.umax.i64(i64 %i.aet, i64 %i.abc) ; 2 uses
   %i.aev = sub nsw i64 %i.aeu, %i.abc
   %i.aew = getelementptr inbounds nuw i8, ptr %i.aej, i64 40
@@ -268,7 +266,7 @@ bb.fl:                                            ; preds = %bb.fk
 
 bb.fm:                                            ; preds = %bb.fl, %bb.fk
   %.2217.i.i = phi i64 [ %i.aey, %bb.fl ], [ %.0215.lcssa.i.i, %bb.fk ] ; 5 uses
-  %i.aez = icmp ugt i8 %2, 1
+  %i.aez = icmp ugt i8 %i.adp, 1
   %or.cond.i.i = and i1 %i.ado, %i.aez
   br i1 %or.cond.i.i, label %bb.fn, label %bb.fr
 

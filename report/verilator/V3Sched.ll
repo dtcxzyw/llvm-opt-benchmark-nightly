@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %._crit_edge.i
   %i.jp = add nuw nsw i64 %i.it, 1
-  %i.jq = lshr i64 %i.jp, 1                       ; 6 uses
+  %i.jq = lshr i64 %i.jp, 1                       ; 9 uses
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %select.unfold.i.i.i.i.i, %.lr.ph.i.i.i.i.preheader.i
@@ -230,7 +230,6 @@ _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC
   br i1 %i.jx, label %bb.bm, label %bb.bo, !prof !156
 
 bb.bm:                                            ; preds = %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i.thread.i, %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i.i
-  %.sroa.5.0.i.i.ph120.i = phi i64 [ 0, %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i.thread.i ], [ %i.jq, %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i.i ] ; 4 uses
   %.idx84.i = shl nuw nsw i64 %i.jq, 3            ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jc, i64 %.idx84.i ; 3 uses
   invoke fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7V3Sched12_GLOBAL__N_112createStaticEP10AstNetlistRKNS9_12LogicClassesEE3$_0EEEvT_SI_T0_T1_"(ptr nonnull %i.jc, ptr nonnull %i.jy, ptr noundef %i.js, ptr nonnull align 8 dereferenceable(216) %79)
@@ -248,7 +247,7 @@ bb.bm:                                            ; preds = %_ZNSt17_Temporary_b
           to label %"_ZSt22__stable_sort_adaptiveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7V3Sched12_GLOBAL__N_112createStaticEP10AstNetlistRKNS9_12LogicClassesEE3$_0EEEvT_SI_SI_T0_T1_.exit.i.i.i" unwind label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bp, %bb.bo, %.noexc12.i.i.i, %.noexc.i.i.i, %bb.bm
-  %.sroa.5.0.i.i.ph121.i = phi i64 [ %.010.i.i.i.i.i, %bb.bp ], [ 0, %bb.bo ], [ %.sroa.5.0.i.i.ph120.i, %.noexc12.i.i.i ], [ %.sroa.5.0.i.i.ph120.i, %.noexc.i.i.i ], [ %.sroa.5.0.i.i.ph120.i, %bb.bm ]
+  %.sroa.5.0.i.i.ph121.i = phi i64 [ %.010.i.i.i.i.i, %bb.bp ], [ 0, %bb.bo ], [ %i.jq, %.noexc12.i.i.i ], [ %i.jq, %.noexc.i.i.i ], [ %i.jq, %bb.bm ]
   %i.kb = landingpad { ptr, i32 }
           cleanup
   %i.kc = shl nuw nsw i64 %.sroa.5.0.i.i.ph121.i, 3
@@ -264,7 +263,7 @@ bb.bp:                                            ; preds = %_ZNSt17_Temporary_b
           to label %"_ZSt22__stable_sort_adaptiveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7V3Sched12_GLOBAL__N_112createStaticEP10AstNetlistRKNS9_12LogicClassesEE3$_0EEEvT_SI_SI_T0_T1_.exit.i.i.i" unwind label %bb.bn
 
 "_ZSt22__stable_sort_adaptiveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZN7V3Sched12_GLOBAL__N_112createStaticEP10AstNetlistRKNS9_12LogicClassesEE3$_0EEEvT_SI_SI_T0_T1_.exit.i.i.i": ; preds = %bb.bp, %bb.bo, %.noexc12.i.i.i
-  %.sroa.5.0.i.i.ph119.i = phi i64 [ %.010.i.i.i.i.i, %bb.bp ], [ 0, %bb.bo ], [ %.sroa.5.0.i.i.ph120.i, %.noexc12.i.i.i ]
+  %.sroa.5.0.i.i.ph119.i = phi i64 [ %.010.i.i.i.i.i, %bb.bp ], [ 0, %bb.bo ], [ %i.jq, %.noexc12.i.i.i ]
   %i.kd = shl nuw nsw i64 %.sroa.5.0.i.i.ph119.i, 3
   call void @_ZdlPvm(ptr noundef %i.js, i64 noundef %i.kd) #28
   %.pre.i = load ptr, ptr %i.in, align 8, !tbaa !181

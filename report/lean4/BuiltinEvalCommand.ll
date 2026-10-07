@@ -204,8 +204,7 @@ bb.lr:                                            ; preds = %bb.lq
   %i.up = atomicrmw sub ptr %i.ye, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit1060
 
-bb.ls:                                            ; preds = %10, %9, %bb.rv
-  %.0640 = phi i8 [ %i.aet, %9 ], [ %i.aet, %bb.rv ], [ 0, %10 ]
+bb.ls:                                            ; preds = %lean_dec_ref.exit891, %bb.rv
   %i.uq = tail call ptr @lean_st_ref_get(ptr noundef %8) #6 ; 4 uses
   %i.ur = load ptr, ptr %i.y, align 8, !tbaa !10  ; 10 uses
   %i.us = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -602,7 +601,7 @@ lean_alloc_ctor.exit1107:                         ; preds = %lean_inc_ref.exit11
   store ptr %i.vk, ptr %i.yu, align 8, !tbaa !10
   %i.yv = getelementptr inbounds nuw i8, ptr %i.ye, i64 112 ; 2 uses
   store ptr %i.vo, ptr %i.yv, align 8, !tbaa !10
-  store i8 %.0640, ptr %i.yh, align 8, !tbaa !15
+  store i8 %i.aet, ptr %i.yh, align 8, !tbaa !15
   %i.yw = getelementptr inbounds nuw i8, ptr %i.ye, i64 121 ; 2 uses
   store i8 %i.vm, ptr %i.yw, align 1, !tbaa !15
   %i.yx = load ptr, ptr @l_Lean_Compiler_compiler_postponeCompile, align 8, !tbaa !10 ; 4 uses
@@ -921,10 +920,7 @@ bb.qa:                                            ; preds = %bb.pz
   %i.aaz = atomicrmw sub ptr %i.ur, i32 1 monotonic, align 4 ; 0 uses
   br label %lean_dec_ref.exit895
 
-9:                                                ; preds = %lean_dec_ref.exit891
-  br i1 %i.aez, label %.thread1231, label %bb.ls
-
-.thread1231:                                      ; preds = %10, %9
+.thread1231:                                      ; preds = %lean_dec_ref.exit891
   %i.aba = tail call ptr @lean_st_ref_take(ptr noundef %8) #6 ; 17 uses
   %i.abb = getelementptr inbounds nuw i8, ptr %i.aba, i64 8
   %i.abc = load ptr, ptr %i.abb, align 8, !tbaa !10 ; 5 uses
@@ -1288,7 +1284,7 @@ bb.sc:                                            ; preds = %bb.sb
 
 lean_dec.exit820:                                 ; preds = %bb.sc, %bb.sb, %bb.sa
   %i.aes = load ptr, ptr @l_Lean_diagnostics, align 8, !tbaa !10 ; 2 uses
-  %i.aet = tail call zeroext i8 @l_Lean_Option_get___at___00Lean_Elab_addMacroStack___at___00Lean_throwError___at___00__private_Lean_Elab_BuiltinEvalCommand_0__Lean_Elab_Command_elabTermForEval_spec__1_spec__2_spec__5(ptr noundef %.0623, ptr noundef %i.aes) ; 4 uses
+  %i.aet = tail call zeroext i8 @l_Lean_Option_get___at___00Lean_Elab_addMacroStack___at___00Lean_throwError___at___00__private_Lean_Elab_BuiltinEvalCommand_0__Lean_Elab_Command_elabTermForEval_spec__1_spec__2_spec__5(ptr noundef %.0623, ptr noundef %i.aes) ; 3 uses
   %i.aeu = tail call zeroext i8 @l_Lean_Kernel_isDiagnosticsEnabled(ptr noundef nonnull %i.ael) #6
   %i.aev = load i32, ptr %i.ael, align 4, !tbaa !14 ; 3 uses
   %i.aew = icmp sgt i32 %i.aev, 1
@@ -1309,11 +1305,9 @@ bb.sf:                                            ; preds = %bb.se
 
 lean_dec_ref.exit891:                             ; preds = %bb.sd, %bb.se, %bb.sf
   %i.aey = icmp eq i8 %i.aeu, 0
-  %i.aez = icmp eq i8 %i.aet, 0                   ; 2 uses
-  br i1 %i.aey, label %10, label %9
-
-10:                                               ; preds = %lean_dec_ref.exit891
-  br i1 %i.aez, label %bb.ls, label %.thread1231
+  %i.aez = icmp eq i8 %i.aet, 0
+  %9 = xor i1 %i.aey, %i.aez
+  br i1 %9, label %.thread1231, label %bb.ls
 
 bb.sg:                                            ; preds = %lean_obj_tag.exit
   %i.afa = ptrtoint ptr %0 to i64

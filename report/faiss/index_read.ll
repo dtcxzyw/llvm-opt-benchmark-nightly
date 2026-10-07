@@ -204,16 +204,14 @@ bb.oz:                                            ; preds = %bb.oy
   %i.aos = load ptr, ptr %49, align 8, !tbaa !223 ; 3 uses
   %i.aot = getelementptr inbounds nuw i8, ptr %i.aos, i64 40
   %i.aou = load i64, ptr %i.aot, align 8, !tbaa !660 ; 2 uses
-  %.not4080 = icmp eq i64 %i.aou, 0
+  %.not4080 = icmp ne i64 %i.aou, 0
   %i.aov = getelementptr inbounds nuw i8, ptr %i.aos, i64 16
   %i.aow = load i64, ptr %i.aov, align 8, !tbaa !214 ; 2 uses
-  br i1 %.not4080, label %365, label %._crit_edge6020
+  %365 = icmp eq i64 %i.aow, 0
+  %or.cond7307 = select i1 %.not4080, i1 true, i1 %365
+  br i1 %or.cond7307, label %._crit_edge6020, label %bb.pa
 
-365:                                              ; preds = %bb.oz
-  %366 = icmp eq i64 %i.aow, 0
-  br i1 %366, label %._crit_edge6020, label %bb.pa
-
-bb.pa:                                            ; preds = %365
+bb.pa:                                            ; preds = %bb.oz
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #29
   %i.aox = getelementptr inbounds nuw i8, ptr %50, i64 16 ; 4 uses
   store ptr %i.aox, ptr %50, align 8, !tbaa !36
@@ -283,11 +281,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit4371: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #29
   br label %bb.rt
 
-._crit_edge6020:                                  ; preds = %bb.oz, %365
-  %367 = phi i64 [ 0, %365 ], [ %i.aow, %bb.oz ]
+._crit_edge6020:                                  ; preds = %bb.oz
   %i.app = getelementptr inbounds nuw i8, ptr %i.aos, i64 120
   %i.apq = load i64, ptr %i.app, align 8, !tbaa !127
-  %i.apr = invoke noundef i64 @_ZN5faiss15mul_no_overflowEmmPKc(i64 noundef %367, i64 noundef %i.aou, ptr noundef nonnull @.str.228)
+  %i.apr = invoke noundef i64 @_ZN5faiss15mul_no_overflowEmmPKc(i64 noundef %i.aow, i64 noundef %i.aou, ptr noundef nonnull @.str.228)
           to label %bb.pk unwind label %bb.pe
 
 bb.pk:                                            ; preds = %._crit_edge6020
@@ -690,7 +687,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.d, %bb.b
   %.sroa.0.0.in.i.i.i.i = phi ptr [ %i.g, %bb.b ], [ %.sroa.0.0.i.i.i.i, %bb.d ]
-  %.sroa.0.0.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i, align 8, !tbaa !203 ; 4 uses
+  %.sroa.0.0.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i, align 8, !tbaa !203 ; 5 uses
   %i.h = icmp eq ptr %.sroa.0.0.i.i.i.i, null
   br i1 %i.h, label %.loopexit.i.i.i, label %bb.d
 
@@ -701,7 +698,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %.loopexit.i.i.i, label %bb.c, !llvm.loop !816
 
 .loopexit.i.i.i:                                  ; preds = %bb.d, %bb.c, %bb.a
-  %.sroa.019.3.i.i.i.i = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %.sroa.0.0.i.i.i.i, %bb.d ]
+  %.sroa.019.3.i.i.i.i = phi ptr [ null, %bb.a ], [ %.sroa.0.0.i.i.i.i, %bb.c ], [ %.sroa.0.0.i.i.i.i, %bb.d ]
   %i.l = invoke ptr @_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS4_10_Hash_nodeIS2_Lb0EEEmSI_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef %.sroa.019.3.i.i.i.i, i64 noundef %i.d, ptr noundef nonnull %i.a)
           to label %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE7emplaceIJRS0_IllEEEENS4_14_Node_iteratorIS2_Lb0ELb0EEEDpOT_.exit unwind label %_ZNSt10_HashtableIlSt4pairIKllESaIS2_ENSt8__detail10_Select1stESt8equal_toIlESt4hashIlENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE12_Scoped_nodeD2Ev.exit8.i.i.i
 

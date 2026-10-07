@@ -204,7 +204,7 @@ thread-pre-split.thread.thread:                   ; preds = %bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.e, %.lr.ph
   %i.ai = phi i64 [ 9, %.lr.ph ], [ %i.bg, %bb.e ]
-  %.048258 = phi i64 [ 0, %.lr.ph ], [ %i.bf, %bb.e ] ; 8 uses
+  %.048258 = phi i64 [ 0, %.lr.ph ], [ %i.bf, %bb.e ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
   call void @llvm.experimental.noalias.scope.decl(metadata !167)
   %i.aj = sub nuw i64 %i.s, %.048258              ; 3 uses
@@ -501,16 +501,15 @@ bb.s:                                             ; preds = %.noexc10.i.i
   br label %bb.df
 
 bb.t:                                             ; preds = %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83
-  %.048257379383 = phi i64 [ 0, %bb.i ], [ %.048258, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83 ] ; 4 uses
   %i.cz = phi i64 [ %i.s, %bb.i ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31
   call void @llvm.experimental.noalias.scope.decl(metadata !169)
-  %i.da = icmp ugt i64 %.048257379383, %i.cz
+  %i.da = icmp ugt i64 %.048258, %i.cz
   br i1 %i.da, label %bb.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i84
 
 bb.u:                                             ; preds = %bb.t
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.45, i64 noundef %.048257379383, i64 noundef %i.cz) #35
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.45, i64 noundef %.048258, i64 noundef %i.cz) #35
           to label %.noexc88 unwind label %bb.ag
 
 .noexc88:                                         ; preds = %bb.u
@@ -520,8 +519,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i84:
   %i.db = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %i.db, ptr %9, align 8, !tbaa !47, !alias.scope !169
   %i.dc = load ptr, ptr %1, align 8, !tbaa !49, !noalias !169
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 %.048257379383 ; 2 uses
-  %i.de = sub nuw i64 %i.cz, %.048257379383       ; 4 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 %.048258 ; 2 uses
+  %i.de = sub nuw i64 %i.cz, %.048258             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #31, !noalias !169
   store i64 %i.de, ptr %i.c, align 8, !tbaa !51, !noalias !169
   %i.df = icmp ugt i64 %i.de, 15

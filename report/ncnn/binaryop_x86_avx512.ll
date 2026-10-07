@@ -204,14 +204,12 @@ bb.a:
   %i.k = trunc nuw i8 %i.j to i1
   %i.l = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2) ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !18   ; 5 uses
-  br i1 %i.k, label %3, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !18   ; 4 uses
+  %.not.i = icmp ne i32 %i.n, 0
+  %or.cond.not = select i1 %i.k, i1 %.not.i, i1 false
+  br i1 %or.cond.not, label %_ZNK4ncnn3Mat8elembitsEv.exit, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread
 
-3:                                                ; preds = %bb.a
-  %.not.i = icmp eq i32 %i.n, 0
-  br i1 %.not.i, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread, label %_ZNK4ncnn3Mat8elembitsEv.exit
-
-_ZNK4ncnn3Mat8elembitsEv.exit:                    ; preds = %3
+_ZNK4ncnn3Mat8elembitsEv.exit:                    ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.p = load i64, ptr %i.o, align 8, !tbaa !19
   %.tr.i = trunc i64 %i.p to i32
@@ -256,8 +254,7 @@ bb.b:                                             ; preds = %_ZNK4ncnn3Mat8elemb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.c
 
-_ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.a, %3, %_ZNK4ncnn3Mat8elembitsEv.exit
-  %4 = phi i32 [ %i.n, %_ZNK4ncnn3Mat8elembitsEv.exit ], [ 0, %3 ], [ %i.n, %bb.a ]
+_ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.a, %_ZNK4ncnn3Mat8elembitsEv.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.an = load float, ptr %i.am, align 8, !tbaa !54
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -279,7 +276,7 @@ _ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.a, %3, %_ZNK4ncn
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !57
   %i.az = mul nsw i32 %i.aw, %i.ay
-  %i.ba = mul nsw i32 %i.az, %4
+  %i.ba = mul nsw i32 %i.az, %i.n
   store i32 %i.ba, ptr %i.d, align 4, !tbaa !25
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !58

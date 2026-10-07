@@ -204,8 +204,7 @@ bb.at:                                            ; preds = %bb.as
   %i.fx = load i32, ptr %i.fw, align 8, !tbaa !1447 ; 4 uses
   %i.fy = icmp eq i32 %i.fx, 2147483647
   %i.fz = add nsw i32 %i.fx, 1
-  %storemerge18.i = select i1 %i.fy, i32 0, i32 %i.fz
-  %storemerge18.fr.i = freeze i32 %storemerge18.i ; 2 uses
+  %storemerge18.i = select i1 %i.fy, i32 0, i32 %i.fz ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 1584
   %i.gb = load i64, ptr %i.ga, align 8
   %.fr.i = freeze i64 %i.gb
@@ -218,7 +217,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %.not.not.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.at, %.critedge.backedge.us.i
-  %storemerge19.us.i = phi i32 [ %storemerge.us.i, %.critedge.backedge.us.i ], [ %storemerge18.fr.i, %bb.at ] ; 5 uses
+  %storemerge19.us.i = phi i32 [ %storemerge.us.i, %.critedge.backedge.us.i ], [ %storemerge18.i, %bb.at ] ; 5 uses
   %i.gh = icmp eq i32 %storemerge19.us.i, 0
   br i1 %i.gh, label %.critedge.backedge.us.i, label %.preheader.i
 
@@ -241,10 +240,10 @@ bb.au:                                            ; preds = %.preheader.i
   %i.gn = icmp eq i32 %storemerge.us.i, %i.fx
   br i1 %i.gn, label %_ZN6Server11nextSoundIdEv.exit.thread, label %.lr.ph.split.us.i, !llvm.loop !1445
 
-.lr.ph.split.i:                                   ; preds = %bb.at, %.critedge.backedge.thread.i
-  %storemerge19.i = phi i32 [ %7, %.critedge.backedge.thread.i ], [ %storemerge18.fr.i, %bb.at ] ; 9 uses
+.lr.ph.split.i:                                   ; preds = %bb.at, %.critedge.backedge.i
+  %storemerge19.i = phi i32 [ %spec.select.i, %.critedge.backedge.i ], [ %storemerge18.i, %bb.at ] ; 9 uses
   %i.go = icmp eq i32 %storemerge19.i, 0
-  br i1 %i.go, label %.critedge.backedge.thread.i, label %bb.av
+  br i1 %i.go, label %.critedge.backedge.i, label %bb.av
 
 bb.av:                                            ; preds = %.lr.ph.split.i
   %i.gp = sext i32 %storemerge19.i to i64
@@ -282,24 +281,20 @@ bb.ay:                                            ; preds = %.lr.ph.i.i.i.i.i
 ..loopexit_crit_edge21.i.i.i.i.i:                 ; preds = %bb.ay
   br label %_ZN6Server11nextSoundIdEv.exit.thread177.sink.split, !llvm.loop !56
 
-.critedge.backedge.i:                             ; preds = %bb.ax, %bb.aw
+.critedge.backedge.i:                             ; preds = %bb.ax, %bb.aw, %.lr.ph.split.i
   %i.hd = icmp eq i32 %storemerge19.i, 2147483647
-  %i.he = add i32 %storemerge19.i, 1
-  %spec.select.i = select i1 %i.hd, i32 0, i32 %i.he
-  br label %.critedge.backedge.thread.i
-
-.critedge.backedge.thread.i:                      ; preds = %.critedge.backedge.i, %.lr.ph.split.i
-  %7 = phi i32 [ 1, %.lr.ph.split.i ], [ %spec.select.i, %.critedge.backedge.i ] ; 2 uses
-  %8 = icmp eq i32 %7, %i.fx
-  br i1 %8, label %_ZN6Server11nextSoundIdEv.exit.thread, label %.lr.ph.split.i, !llvm.loop !1445
+  %i.he = add nsw i32 %storemerge19.i, 1
+  %spec.select.i = select i1 %i.hd, i32 0, i32 %i.he ; 2 uses
+  %7 = icmp eq i32 %spec.select.i, %i.fx
+  br i1 %7, label %_ZN6Server11nextSoundIdEv.exit.thread, label %.lr.ph.split.i, !llvm.loop !1445
 
 _ZN6Server11nextSoundIdEv.exit.thread177.sink.split: ; preds = %bb.av, %.lr.ph.i.i.i.i.i, %.preheader.i, %..loopexit_crit_edge21.i.i.i.i.i
-  %storemerge17.i.sink288 = phi i32 [ %storemerge19.us.i, %.preheader.i ], [ %storemerge19.i, %.lr.ph.i.i.i.i.i ], [ %storemerge19.i, %..loopexit_crit_edge21.i.i.i.i.i ], [ %storemerge19.i, %bb.av ] ; 2 uses
+  %storemerge17.i.sink288 = phi i32 [ %storemerge19.i, %.lr.ph.i.i.i.i.i ], [ %storemerge19.us.i, %.preheader.i ], [ %storemerge19.i, %..loopexit_crit_edge21.i.i.i.i.i ], [ %storemerge19.i, %bb.av ] ; 2 uses
   store i32 %storemerge17.i.sink288, ptr %i.fw, align 8, !tbaa !1447
   br label %_ZN6Server11nextSoundIdEv.exit.thread177
 
-_ZN6Server11nextSoundIdEv.exit.thread177:         ; preds = %_ZN6Server11nextSoundIdEv.exit.thread177.sink.split, %bb.as
-  %storemerge17.i.sink = phi i32 [ -1, %bb.as ], [ %storemerge17.i.sink288, %_ZN6Server11nextSoundIdEv.exit.thread177.sink.split ] ; 3 uses
+_ZN6Server11nextSoundIdEv.exit.thread177:         ; preds = %bb.as, %_ZN6Server11nextSoundIdEv.exit.thread177.sink.split
+  %storemerge17.i.sink = phi i32 [ %storemerge17.i.sink288, %_ZN6Server11nextSoundIdEv.exit.thread177.sink.split ], [ -1, %bb.as ] ; 3 uses
   store i32 %storemerge17.i.sink, ptr %i.d, align 4, !tbaa !127
   %i.hf = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.hg = load float, ptr %i.hf, align 4, !tbaa !814
@@ -493,8 +488,8 @@ _ZN13NetworkPacketD2Ev.exit120:                   ; preds = %bb.bt, %bb.bs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34
   br label %bb.bw
 
-_ZN6Server11nextSoundIdEv.exit.thread:            ; preds = %.critedge.backedge.thread.i, %.critedge.backedge.us.i, %_ZN13NetworkPacketD2Ev.exit
-  %.1 = phi i32 [ %i.jd, %_ZN13NetworkPacketD2Ev.exit ], [ 0, %.critedge.backedge.us.i ], [ 0, %.critedge.backedge.thread.i ]
+_ZN6Server11nextSoundIdEv.exit.thread:            ; preds = %.critedge.backedge.i, %.critedge.backedge.us.i, %_ZN13NetworkPacketD2Ev.exit
+  %.1 = phi i32 [ %i.jd, %_ZN13NetworkPacketD2Ev.exit ], [ 0, %.critedge.backedge.us.i ], [ 0, %.critedge.backedge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34
   br label %bb.bu
 

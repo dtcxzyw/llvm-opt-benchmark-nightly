@@ -205,13 +205,12 @@ bb.cq:                                            ; preds = %_ZNK11flatbuffers5T
 
 _ZNK10reflection10SchemaFile18included_filenamesEv.exit: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i372, %._ZNK10reflection10SchemaFile18included_filenamesEv.exit_crit_edge, %bb.cq
   %i.aem = phi i32 [ %i.aej, %bb.cq ], [ %.pre653, %._ZNK10reflection10SchemaFile18included_filenamesEv.exit_crit_edge ], [ %i.adz, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i372 ]
-  %17 = phi i16 [ %i.aeg, %bb.cq ], [ %i.aeg, %._ZNK10reflection10SchemaFile18included_filenamesEv.exit_crit_edge ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i372 ] ; 2 uses
   %i.aen = phi ptr [ %i.ael, %bb.cq ], [ null, %._ZNK10reflection10SchemaFile18included_filenamesEv.exit_crit_edge ], [ null, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i372 ]
   %.sroa.0438.0597 = getelementptr inbounds nuw i8, ptr %i.aen, i64 4 ; 2 uses
   call void @llvm.assume(i1 %i.aee)
-  %.not.i.i.i375598 = icmp ne i16 %17, 0
+  %.not.i.i.i375598 = icmp ne i16 %i.aeg, 0
   call void @llvm.assume(i1 %.not.i.i.i375598)
-  %i.aeo = zext i16 %17 to i64
+  %i.aeo = zext i16 %i.aeg to i64
   %i.aep = getelementptr inbounds nuw i8, ptr %i.ady, i64 %i.aeo
   %i.aeq = zext i32 %i.aem to i64
   %i.aer = getelementptr inbounds nuw i8, ptr %i.aep, i64 %i.aeq ; 2 uses

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_RNvXs2K_NtNtCs6JMX
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.sroa.2.3.ph = phi ptr [ %.sroa.2.1, %bb.c ], [ %i.a, %bb.b ] ; 2 uses
-  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 80 uses
+  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 66 uses
   %.not.i.i = icmp sgt i16 %.sroa.6.021, -1
   br i1 %.not.i.i, label %bb.m, label %bb.f
 
@@ -289,8 +289,7 @@ bb.r:                                             ; preds = %bb.m
   ]
 
 .thread121.i.i:                                   ; preds = %bb.ci, %bb.cm, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %.thread137.i.i, %bb.cb, %bb.bn, %bb.ax, %bb.ax, %bb.ax, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.q, %bb.p
-  %spec.select.i17 = phi i32 [ %spec.select.i.ph, %bb.cm ], [ %spec.select.i.ph, %bb.ci ], [ %spec.select.i.ph, %bb.ch ], [ 127988, %bb.cg ], [ %spec.select.i.ph, %bb.cf ], [ %spec.select.i.ph, %bb.ce ], [ %spec.select.i.ph, %bb.cd ], [ %spec.select.i.ph, %.thread137.i.i ], [ %spec.select.i.ph, %bb.cb ], [ %spec.select.i.ph, %bb.bn ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ %spec.select.i.ph, %bb.au ], [ %spec.select.i.ph, %bb.at ], [ %spec.select.i.ph, %bb.as ], [ %spec.select.i.ph, %bb.ar ], [ %spec.select.i.ph, %bb.q ], [ %spec.select.i.ph, %bb.p ]
-  %i.ay = tail call fastcc { i8, i16 } @_RNvNtCs7Zx3WTHCDWk_13unicode_width6tables12lookup_width(i32 noundef range(i32 0, 1114112) %spec.select.i17) #30 ; 2 uses
+  %i.ay = tail call fastcc { i8, i16 } @_RNvNtCs7Zx3WTHCDWk_13unicode_width6tables12lookup_width(i32 noundef range(i32 0, 1114112) %spec.select.i.ph) #30 ; 2 uses
   %i.az = extractvalue { i8, i16 } %i.ay, 0
   %i.ba = extractvalue { i8, i16 } %i.ay, 1
   br label %_RNCNvNtCs7Zx3WTHCDWk_13unicode_width6tables9str_width0Css03989lGqH_5uu_df.exit
@@ -693,7 +692,7 @@ _RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4
   %i.mp = load i64, ptr %i.bt, align 8, !range !16, !noalias !1078, !noundef !6 ; 2 uses
   %.not135.i.i = icmp eq i64 %i.mp, -1
   %i.mq = load ptr, ptr %i.fl, align 8, !noalias !1078 ; 2 uses
-  %i.mr = load i64, ptr %i.fm, align 8, !noalias !1078 ; 8 uses
+  %i.mr = load i64, ptr %i.fm, align 8, !noalias !1078 ; 7 uses
   br i1 %.not135.i.i, label %bb.ce, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCss03989lGqH_5uu_df.exit155.thread218.i.i
 
 bb.ce:                                            ; preds = %_RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4path7PathBufEB4_.exit.thread206.i.i
@@ -722,7 +721,6 @@ bb.ch:                                            ; preds = %_RNvXs_NtCs7tKScEop
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCss03989lGqH_5uu_df.exit155.thread218.i.i: ; preds = %bb.ch, %bb.cf, %_RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4path7PathBufEB4_.exit.thread206.i.i
   %.sroa.0102.0.i.i = phi i64 [ 0, %bb.cf ], [ %i.mr, %bb.ch ], [ %i.mp, %_RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4path7PathBufEB4_.exit.thread206.i.i ]
   %.sroa.3.0.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.cf ], [ %i.mt, %bb.ch ], [ %i.mq, %_RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4path7PathBufEB4_.exit.thread206.i.i ]
-  %.sroa.4105.0.i.i = phi i64 [ 0, %bb.cf ], [ %i.mr, %bb.ch ], [ %i.mr, %_RINvNtCss03989lGqH_5uu_df10filesystem16find_mount_pointRNtNtCs2vKOLqTMYjT_3std4path7PathBufEB4_.exit.thread206.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt), !noalias !1078
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #28, !noalias !1092
   %i.mv = call noundef dereferenceable_or_null(1) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef 1, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !noalias !1092 ; 3 uses
@@ -745,7 +743,7 @@ bb.cj:                                            ; preds = %_RNvMs5_NtCs7tKScEo
   store i64 1, ptr %.sroa.046.sroa.0.sroa.6.sroa.5.0..sroa.046.sroa.0.sroa.6.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1022
   store i64 %.sroa.0102.0.i.i, ptr %.sroa.046.sroa.4.0..sroa_idx.i.i, align 8, !noalias !1022
   store ptr %.sroa.3.0.i.i, ptr %.sroa.046.sroa.5.0..sroa_idx.i.i, align 8, !noalias !1022
-  store i64 %.sroa.4105.0.i.i, ptr %.sroa.046.sroa.6.0..sroa_idx.i.i, align 8, !noalias !1022
+  store i64 %i.mr, ptr %.sroa.046.sroa.6.0..sroa_idx.i.i, align 8, !noalias !1022
   store i64 0, ptr %.sroa.046.sroa.7.0..sroa_idx.i.i, align 8, !noalias !1022
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.046.sroa.7.sroa.4.0..sroa.046.sroa.7.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1022
   store i64 0, ptr %.sroa.046.sroa.7.sroa.5.0..sroa.046.sroa.7.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1022
@@ -1148,7 +1146,7 @@ _RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh0
   %.not.i104.i.i = icmp ult i64 %i.ajb, %i.aqr
   %i.ajc = select i1 %.not.i104.i.i, i64 0, i64 %i.aqr
   %.sroa.0.0.i105.i.i = sub nuw i64 %i.ajb, %i.ajc ; 7 uses
-  %i.ajd = add i64 %i.aiz, -1                     ; 10 uses
+  %i.ajd = add i64 %i.aiz, -1                     ; 11 uses
   %i.aje = icmp ult i64 %i.ajd, %i.aqr
   call void @llvm.assume(i1 %i.aje)
   %i.ajf = getelementptr inbounds nuw [32 x i8], ptr %i.aqq, i64 %i.aja ; 2 uses
@@ -1172,7 +1170,7 @@ bb.iw:                                            ; preds = %_RNvMs4_NtNtCs7tKSc
 
 _RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentE9pop_frontCss03989lGqH_5uu_df.exit.thread.i.i: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentECss03989lGqH_5uu_df.exit142.i.i, %_RINvMsr_NtCs2vKOLqTMYjT_3std4pathNtB6_7PathBuf4pushNtNtNtB8_3ffi6os_str8OsStringECss03989lGqH_5uu_df.exit.i.i, %_RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentE9pop_frontCss03989lGqH_5uu_df.exit.i.i, %_RINvMs2_NtNtCs2vKOLqTMYjT_3std6thread5localINtB6_8LocalKeyINtNtCs6JMX4GRUq9U_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECss03989lGqH_5uu_df.exit.i.i
   %i.ajg = phi i64 [ %.sroa.0.0.i105.i.i, %_RINvMsr_NtCs2vKOLqTMYjT_3std4pathNtB6_7PathBuf4pushNtNtNtB8_3ffi6os_str8OsStringECss03989lGqH_5uu_df.exit.i.i ], [ 0, %_RINvMs2_NtNtCs2vKOLqTMYjT_3std6thread5localINtB6_8LocalKeyINtNtCs6JMX4GRUq9U_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECss03989lGqH_5uu_df.exit.i.i ], [ %.sroa.0.0.i105.i.i, %_RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentE9pop_frontCss03989lGqH_5uu_df.exit.i.i ], [ %.promoted289.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentECss03989lGqH_5uu_df.exit142.i.i ]
-  %i.ajh = phi i64 [ 0, %_RINvMsr_NtCs2vKOLqTMYjT_3std4pathNtB6_7PathBuf4pushNtNtNtB8_3ffi6os_str8OsStringECss03989lGqH_5uu_df.exit.i.i ], [ 0, %_RINvMs2_NtNtCs2vKOLqTMYjT_3std6thread5localINtB6_8LocalKeyINtNtCs6JMX4GRUq9U_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECss03989lGqH_5uu_df.exit.i.i ], [ %i.ajd, %_RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentE9pop_frontCss03989lGqH_5uu_df.exit.i.i ], [ 0, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentECss03989lGqH_5uu_df.exit142.i.i ]
+  %i.ajh = phi i64 [ %i.ajd, %_RINvMsr_NtCs2vKOLqTMYjT_3std4pathNtB6_7PathBuf4pushNtNtNtB8_3ffi6os_str8OsStringECss03989lGqH_5uu_df.exit.i.i ], [ 0, %_RINvMs2_NtNtCs2vKOLqTMYjT_3std6thread5localINtB6_8LocalKeyINtNtCs6JMX4GRUq9U_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECss03989lGqH_5uu_df.exit.i.i ], [ %i.ajd, %_RNvMs4_NtNtCs7tKScEop1B6_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentE9pop_frontCss03989lGqH_5uu_df.exit.i.i ], [ 0, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCsh036I4OHgIr_6uucore8features2fs15OwningComponentECss03989lGqH_5uu_df.exit142.i.i ]
   store i64 %i.ajh, ptr %i.zd, align 8, !noalias !1185
   store i64 %i.ajg, ptr %i.zc, align 8, !noalias !1185
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i.i)

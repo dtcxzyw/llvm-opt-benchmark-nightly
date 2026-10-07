@@ -204,7 +204,7 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit:               ; preds = %_ZN6hermesL24hasAtL
 
 ._crit_edge:                                      ; preds = %bb.e
   %.pre70 = load i32, ptr %i.x, align 8, !tbaa !13 ; 2 uses
-  %i.ag = zext i32 %.pre70 to i64                 ; 2 uses
+  %i.ag = zext i32 %.pre70 to i64                 ; 4 uses
   %.not66 = icmp eq i32 %.pre70, 0
   br i1 %.not66, label %._crit_edge63, label %.lr.ph62
 
@@ -251,13 +251,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %.lr.p
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !83
 
 ._crit_edge63:                                    ; preds = %bb.l, %._crit_edge
-  %3 = phi i64 [ 0, %._crit_edge ], [ %i.ag, %bb.l ] ; 3 uses
   %.035.lcssa = phi i64 [ 0, %._crit_edge ], [ %.1, %bb.l ] ; 7 uses
-  %i.ay = icmp ult i64 %.035.lcssa, %3
+  %i.ay = icmp ult i64 %.035.lcssa, %i.ag
   br i1 %i.ay, label %.sink.split.i, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge63
-  %i.az = icmp ugt i64 %.035.lcssa, %3
+  %i.az = icmp ugt i64 %.035.lcssa, %i.ag
   br i1 %i.az, label %bb.g, label %_ZN4llvh15SmallVectorImplIPN6hermes9ScopeDescEE6resizeEm.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -275,7 +274,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.pre-phi.i = phi i64 [ %.pre15.i, %bb.h ], [ %3, %bb.g ] ; 3 uses
+  %.pre-phi.i = phi i64 [ %.pre15.i, %bb.h ], [ %i.ag, %bb.g ] ; 3 uses
   %.not13.i = icmp samesign eq i64 %.035.lcssa, %.pre-phi.i
   br i1 %.not13.i, label %.sink.split.i, label %.lr.ph.preheader.i
 

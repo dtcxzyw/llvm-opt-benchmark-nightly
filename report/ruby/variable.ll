@@ -205,8 +205,7 @@ bb.i:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.as, label %RCLASS_EXT_WRITABLE.exit.sink.split, label %RCLASS_EXT_WRITABLE.exit
 
 RCLASS_EXT_WRITABLE.exit.sink.split:              ; preds = %bb.i, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i
-  %.sink = phi ptr [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i ], [ %i.ap, %bb.i ]
-  %i.at = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink)
+  %i.at = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.ap)
   br label %RCLASS_EXT_WRITABLE.exit
 
 RCLASS_EXT_WRITABLE.exit:                         ; preds = %RCLASS_EXT_WRITABLE.exit.sink.split, %bb.i, %rb_vm_lock_enter.exit
@@ -235,8 +234,7 @@ bb.j:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.bc, label %RCLASS_WRITE_CONST_TBL.exit.sink.split, label %RCLASS_WRITE_CONST_TBL.exit
 
 RCLASS_WRITE_CONST_TBL.exit.sink.split:           ; preds = %bb.j, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i
-  %.sink64 = phi ptr [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i ], [ %i.az, %bb.j ]
-  %i.bd = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink64)
+  %i.bd = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.az)
   br label %RCLASS_WRITE_CONST_TBL.exit
 
 RCLASS_WRITE_CONST_TBL.exit:                      ; preds = %RCLASS_WRITE_CONST_TBL.exit.sink.split, %bb.j, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i.i
@@ -639,8 +637,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.b, %.split9
-  %.sink = phi i64 [ %i.b, %.split9 ], [ 0, %bb.b ]
-  tail call fastcc void @set_sub_temporary_name_foreach(i64 noundef %0, ptr noundef nonnull %i.a, i64 noundef %.sink)
+  tail call fastcc void @set_sub_temporary_name_foreach(i64 noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.b)
   br label %bb.c
 
 bb.c:                                             ; preds = %.sink.split, %bb.a
@@ -1043,8 +1040,7 @@ bb.h:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.an, label %RCLASS_EXT_WRITABLE.exit.i.us.us.sink.split, label %RCLASS_EXT_WRITABLE.exit.i.us.us
 
 RCLASS_EXT_WRITABLE.exit.i.us.us.sink.split:      ; preds = %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us.us, %bb.h
-  %.sink = phi ptr [ %i.ak, %bb.h ], [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us.us ]
-  %i.ao = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink)
+  %i.ao = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.ak)
   br label %RCLASS_EXT_WRITABLE.exit.i.us.us
 
 RCLASS_EXT_WRITABLE.exit.i.us.us:                 ; preds = %RCLASS_EXT_WRITABLE.exit.i.us.us.sink.split, %bb.h, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i.i.us.us
@@ -1085,8 +1081,7 @@ bb.j:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.bb, label %RCLASS_EXT_WRITABLE.exit.i.us.sink.split, label %RCLASS_EXT_WRITABLE.exit.i.us
 
 RCLASS_EXT_WRITABLE.exit.i.us.sink.split:         ; preds = %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us, %bb.j
-  %.sink29 = phi ptr [ %i.ay, %bb.j ], [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us ]
-  %i.bc = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink29)
+  %i.bc = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.ay)
   br label %RCLASS_EXT_WRITABLE.exit.i.us
 
 RCLASS_EXT_WRITABLE.exit.i.us:                    ; preds = %RCLASS_EXT_WRITABLE.exit.i.us.sink.split, %bb.j, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i.i.us
@@ -1128,8 +1123,7 @@ bb.l:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.bp, label %RCLASS_EXT_WRITABLE.exit.i.us13.sink.split, label %RCLASS_EXT_WRITABLE.exit.i.us13
 
 RCLASS_EXT_WRITABLE.exit.i.us13.sink.split:       ; preds = %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us9, %bb.l
-  %.sink30 = phi ptr [ %i.bm, %bb.l ], [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i.us9 ]
-  %i.bq = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink30)
+  %i.bq = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.bm)
   br label %RCLASS_EXT_WRITABLE.exit.i.us13
 
 RCLASS_EXT_WRITABLE.exit.i.us13:                  ; preds = %RCLASS_EXT_WRITABLE.exit.i.us13.sink.split, %bb.l
@@ -1173,8 +1167,7 @@ bb.n:                                             ; preds = %RCLASS_PRIME_CLASSE
   br i1 %i.cc, label %RCLASS_EXT_WRITABLE.exit.i.sink.split, label %RCLASS_EXT_WRITABLE.exit.i
 
 RCLASS_EXT_WRITABLE.exit.i.sink.split:            ; preds = %bb.n, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i
-  %.sink31 = phi ptr [ null, %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i.i ], [ %i.bm, %bb.n ]
-  %i.cd = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %.sink31)
+  %i.cd = call fastcc ptr @RCLASS_EXT_WRITABLE_LOOKUP(i64 noundef %0, ptr noundef %i.bm)
   br label %RCLASS_EXT_WRITABLE.exit.i
 
 RCLASS_EXT_WRITABLE.exit.i:                       ; preds = %RCLASS_EXT_WRITABLE.exit.i.sink.split, %bb.n

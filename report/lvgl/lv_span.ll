@@ -204,52 +204,40 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.c = icmp slt i32 %1, 0                       ; 2 uses
+  %.lobit = ashr i32 %1, 31                       ; 3 uses
   %spec.select25.v = select i1 %i.c, i64 104, i64 96
   %spec.select25 = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select25.v
-  %.0 = load ptr, ptr %spec.select25, align 8, !tbaa !91 ; 5 uses
-  %.not26.a = icmp eq ptr %.0, null
-  br i1 %.not26.a, label %.loopexit, label %.lr.ph
+  %.0 = load ptr, ptr %spec.select25, align 8, !tbaa !91 ; 4 uses
+  %.not26 = icmp eq ptr %.0, null
+  %.not26.a = icmp eq i32 %.lobit, %1
+  %or.cond27 = or i1 %.not26, %.not26.a
+  br i1 %or.cond27, label %.loopexit, label %.lr.ph.split.us.a
 
-.lr.ph:                                           ; preds = %bb.b
-  %.lobit = ashr i32 %1, 31                       ; 3 uses
-  %2 = icmp eq i32 %.lobit, %1                    ; 2 uses
-  br i1 %i.c, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+.lr.ph.split.us.a:                                ; preds = %bb.b
+  br i1 %i.c, label %.lr.ph48, label %.lr.ph44
 
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  br i1 %2, label %.loopexit, label %.lr.ph44
-
-.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  br i1 %2, label %.loopexit, label %.lr.ph48
-
-.lr.ph.split.us.a:                                ; preds = %.lr.ph48
+.lr.ph48:                                         ; preds = %.lr.ph.split.us.a, %.lr.ph48
+  %.129.us = phi ptr [ %2, %.lr.ph48 ], [ %.0, %.lr.ph.split.us.a ]
+  %.12027.us47 = phi i32 [ %3, %.lr.ph48 ], [ %.lobit, %.lr.ph.split.us.a ]
+  %2 = tail call ptr @lv_ll_get_prev(ptr noundef nonnull %i.b, ptr noundef nonnull %.129.us) #10 ; 3 uses
   %3 = add nsw i32 %.12027.us47, -1               ; 2 uses
-  %4 = icmp eq i32 %3, %1
-  br i1 %4, label %.loopexit, label %.lr.ph48, !llvm.loop !90
+  %.not.us = icmp eq ptr %2, null
+  %.not.us.a = icmp eq i32 %3, %1
+  %or.cond.us = select i1 %.not.us, i1 true, i1 %.not.us.a
+  br i1 %or.cond.us, label %.loopexit, label %.lr.ph48, !llvm.loop !90
 
-.lr.ph48:                                         ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us.a
-  %.12027.us47 = phi i32 [ %3, %.lr.ph.split.us.a ], [ %.lobit, %.lr.ph.split.us.preheader ]
-  %.128.us46 = phi ptr [ %5, %.lr.ph.split.us.a ], [ %.0, %.lr.ph.split.us.preheader ]
-  %5 = tail call ptr @lv_ll_get_prev(ptr noundef nonnull %i.b, ptr noundef nonnull %.128.us46) #10 ; 3 uses
-  %.not.us.a = icmp eq ptr %5, null
-  br i1 %.not.us.a, label %..loopexit.loopexit40_crit_edge, label %.lr.ph.split.us.a, !llvm.loop !90
+.lr.ph44:                                         ; preds = %.lr.ph.split.us.a, %.lr.ph44
+  %.129 = phi ptr [ %4, %.lr.ph44 ], [ %.0, %.lr.ph.split.us.a ]
+  %.1202743 = phi i32 [ %5, %.lr.ph44 ], [ %.lobit, %.lr.ph.split.us.a ]
+  %4 = tail call ptr @lv_ll_get_next(ptr noundef nonnull %i.b, ptr noundef nonnull %.129) #10 ; 3 uses
+  %5 = add nuw nsw i32 %.1202743, 1               ; 2 uses
+  %.not = icmp eq ptr %4, null
+  %.not.a = icmp eq i32 %5, %1
+  %or.cond = select i1 %.not, i1 true, i1 %.not.a
+  br i1 %or.cond, label %.loopexit, label %.lr.ph44, !llvm.loop !90
 
-.lr.ph.split:                                     ; preds = %.lr.ph44
-  %6 = add nuw nsw i32 %.1202743, 1               ; 2 uses
-  %7 = icmp eq i32 %6, %1
-  br i1 %7, label %.loopexit, label %.lr.ph44, !llvm.loop !90
-
-.lr.ph44:                                         ; preds = %.lr.ph.split.preheader, %.lr.ph.split
-  %.1202743 = phi i32 [ %6, %.lr.ph.split ], [ %.lobit, %.lr.ph.split.preheader ]
-  %.12842 = phi ptr [ %8, %.lr.ph.split ], [ %.0, %.lr.ph.split.preheader ]
-  %8 = tail call ptr @lv_ll_get_next(ptr noundef nonnull %i.b, ptr noundef nonnull %.12842) #10 ; 3 uses
-  %.not.a = icmp eq ptr %8, null
-  br i1 %.not.a, label %..loopexit.loopexit40_crit_edge, label %.lr.ph.split, !llvm.loop !90
-
-..loopexit.loopexit40_crit_edge:                  ; preds = %.lr.ph44, %.lr.ph48
-  br label %.loopexit, !llvm.loop !90
-
-.loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us.a, %.lr.ph.split.preheader, %..loopexit.loopexit40_crit_edge, %.lr.ph.split.us.preheader, %bb.b, %bb.a
-  %.123 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ null, %..loopexit.loopexit40_crit_edge ], [ %.0, %.lr.ph.split.us.preheader ], [ %5, %.lr.ph.split.us.a ], [ %.0, %.lr.ph.split.preheader ], [ %8, %.lr.ph.split ]
+.loopexit:                                        ; preds = %.lr.ph44, %.lr.ph48, %bb.b, %bb.a
+  %.123 = phi ptr [ null, %bb.a ], [ %.0, %bb.b ], [ %2, %.lr.ph48 ], [ %4, %.lr.ph44 ]
   ret ptr %.123
 }
 

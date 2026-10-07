@@ -202,21 +202,19 @@ bb.a:
   %i.a = icmp sgt i32 %2, 0
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
-3:                                                ; preds = %.lr.ph
-  %4 = add nuw nsw i32 %.011, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %4, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !37
-
-.lr.ph:                                           ; preds = %bb.a, %3
-  %.011 = phi i32 [ %4, %3 ], [ 0, %bb.a ]
-  %.0710 = phi i64 [ %i.c, %3 ], [ -1, %bb.a ]
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.011 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.a ]
+  %.0710 = phi i64 [ %i.c, %.lr.ph ], [ -1, %bb.a ]
   %i.b = add i64 %.0710, 1
   %i.c = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext %1, i64 noundef %i.b) #18 ; 3 uses
-  %i.d = icmp eq i64 %i.c, -1
-  br i1 %i.d, label %._crit_edge, label %3
+  %3 = icmp eq i64 %i.c, -1
+  %4 = add nuw nsw i32 %.011, 1                   ; 2 uses
+  %i.d = icmp eq i32 %4, %2
+  %or.cond = select i1 %3, i1 true, i1 %i.d
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !37
 
-._crit_edge:                                      ; preds = %3, %.lr.ph, %bb.a
-  %.1 = phi i64 [ -1, %bb.a ], [ -1, %.lr.ph ], [ %i.c, %3 ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.1 = phi i64 [ -1, %bb.a ], [ %i.c, %.lr.ph ]
   ret i64 %.1
 }
 

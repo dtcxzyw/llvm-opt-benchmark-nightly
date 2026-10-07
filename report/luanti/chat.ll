@@ -204,17 +204,15 @@ _ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i: ; preds = %.lr.
   br i1 %.not.i.i, label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit.thread, label %bb.m
 
 _ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit: ; preds = %_ZNSt6vectorI8ChatLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP17ChatFormattedLineSt6vectorIS2_SaIS2_EEEES7_ET0_T_S9_S8_.exit.i.i
-  %.018.lcssa7481 = phi i32 [ %.018.lcssa, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP17ChatFormattedLineSt6vectorIS2_SaIS2_EEEES7_ET0_T_S9_S8_.exit.i.i ], [ 0, %_ZNSt6vectorI8ChatLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit ] ; 2 uses
   br i1 %.not.i.i, label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i, %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit
-  %.018.lcssa748185 = phi i32 [ %.018.lcssa, %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i ], [ %.018.lcssa7481, %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit ]
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 1, ptr %i.cc, align 8, !tbaa !36
   br label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit.thread
 
 _ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit.thread: ; preds = %bb.a, %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i, %bb.m, %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit
-  %.018.lcssa748184 = phi i32 [ %.018.lcssa, %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i ], [ %.018.lcssa748185, %bb.m ], [ %.018.lcssa7481, %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit ], [ 0, %bb.a ]
+  %.018.lcssa748184 = phi i32 [ %.018.lcssa, %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i.i ], [ %.018.lcssa, %bb.m ], [ %.018.lcssa, %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit ], [ 0, %bb.a ]
   br i1 %i.p, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EES7_.exit.thread

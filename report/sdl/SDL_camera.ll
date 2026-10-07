@@ -206,9 +206,8 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not80, label %bb.p, label %bb.u
 
 bb.p:                                             ; preds = %bb.n, %bb.o
-  %2 = phi i32 [ %i.aa, %bb.n ], [ 0, %bb.o ]
   %i.ab = insertelement <2 x i32> poison, i32 %i.y, i64 0
-  %i.ac = insertelement <2 x i32> %i.ab, i32 %2, i64 1
+  %i.ac = insertelement <2 x i32> %i.ab, i32 %i.aa, i64 1
   %i.ad = sitofp <2 x i32> %i.ac to <2 x float>
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.af = load i32, ptr %i.ae, align 4

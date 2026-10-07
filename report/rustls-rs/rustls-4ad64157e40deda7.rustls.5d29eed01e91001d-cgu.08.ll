@@ -202,7 +202,7 @@ bb.a:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.42.0.copyload = load ptr, ptr %.sroa.42.0..sroa_idx, align 8 ; 2 uses
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.53.0.copyload = load i64, ptr %.sroa.53.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.53.0.copyload = load i64, ptr %.sroa.53.0..sroa_idx, align 8 ; 5 uses
   %.not.i.i = icmp eq i64 %.sroa.01.0.copyload, -1
   br i1 %.not.i.i, label %bb.b, label %_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload10into_owned.exit
 
@@ -234,14 +234,13 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload10into_owned.exit
 
 _RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload10into_owned.exit: ; preds = %bb.a, %bb.d, %bb.e
-  %.sroa.6.0.i = phi i64 [ 0, %bb.d ], [ %.sroa.53.0.copyload, %bb.e ], [ %.sroa.53.0.copyload, %bb.a ]
   %.sroa.5.0.i = phi ptr [ %i.h, %bb.d ], [ %i.h, %bb.e ], [ %.sroa.42.0.copyload, %bb.a ]
   %.sroa.0.0.i = phi i64 [ %i.e, %bb.d ], [ %i.e, %bb.e ], [ %.sroa.01.0.copyload, %bb.a ]
   store i64 %.sroa.0.0.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0.i, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.6.0.i, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %.sroa.53.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8
   ret void
 }
 
@@ -533,7 +532,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !485 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !485 ; 6 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !485 ; 5 uses
   br i1 %.not.i, label %bb.b, label %_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload8into_vec.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -564,14 +563,13 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload8into_vec.exit
 
 _RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload8into_vec.exit: ; preds = %bb.a, %bb.d, %bb.e
-  %.sroa.6.0 = phi i64 [ 0, %bb.d ], [ %i.f, %bb.e ], [ %i.f, %bb.a ]
   %.sroa.5.0 = phi ptr [ %i.m, %bb.d ], [ %i.m, %bb.e ], [ %i.d, %bb.a ]
   %.sroa.0.0 = phi i64 [ %i.j, %bb.d ], [ %i.j, %bb.e ], [ %i.b, %bb.a ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.f, ptr %.sroa.6.0..sroa_idx, align 8
   ret void
 }
 

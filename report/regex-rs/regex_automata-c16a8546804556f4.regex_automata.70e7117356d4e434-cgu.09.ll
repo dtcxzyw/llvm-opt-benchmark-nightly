@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.w
   tail call void @llvm.assume(i1 %i.cm), !dbg !9915
   %i.cn = icmp eq i64 %i.cl, 0, !dbg !9916
   %i.co = getelementptr inbounds nuw i8, ptr %i.cj, i64 40 ; 2 uses
-  %i.cp = load i64, ptr %i.co, align 8, !dbg !9917, !alias.scope !9750 ; 5 uses
+  %i.cp = load i64, ptr %i.co, align 8, !dbg !9917, !alias.scope !9750 ; 6 uses
   %i.cq = icmp eq i64 %i.cp, 0, !dbg !9917        ; 2 uses
   br i1 %i.cn, label %bb.ae, label %bb.ab, !dbg !9918
 
@@ -230,7 +230,6 @@ bb.ac:                                            ; preds = %bb.ab
 _RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5State18active_chunk_start.exit.i63: ; preds = %.thread.i66, %bb.ac, %bb.ab
   %.val11.i = phi ptr [ %.val.i58, %bb.ac ], [ %.val.i58, %bb.ab ], [ %.val7.i, %.thread.i66 ]
   %i.cv = phi ptr [ %i.cr, %bb.ac ], [ %i.cr, %bb.ab ], [ %i.de, %.thread.i66 ]
-  %4 = phi i64 [ %i.cp, %bb.ac ], [ %i.cp, %bb.ab ], [ 0, %.thread.i66 ] ; 3 uses
   %.sroa.02.0.i.i.i64 = phi i64 [ %.val.i.i.i62, %bb.ac ], [ 0, %bb.ab ], [ 0, %.thread.i66 ], !dbg !9925
     #dbg_value(i64 %.sroa.02.0.i.i.i64, !9753, !DIExpression(), !9149)
     #dbg_value(ptr %i.cj, !9758, !DIExpression(), !9151)
@@ -244,11 +243,11 @@ _RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5Sta
     #dbg_value(i64 %.sroa.02.0.i.i.i64, !9772, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9160)
     #dbg_value(i64 %i.cl, !9772, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9160)
     #dbg_value(i64 16, !9781, !DIExpression(), !9168)
-    #dbg_value(i64 %4, !9773, !DIExpression(), !9169)
-    #dbg_value(i64 %4, !9789, !DIExpression(), !9172)
+    #dbg_value(i64 %i.cp, !9773, !DIExpression(), !9169)
+    #dbg_value(i64 %i.cp, !9789, !DIExpression(), !9172)
     #dbg_value(ptr %i.cw, !9787, !DIExpression(), !9173)
   %i.cx = load i64, ptr %i.cw, align 8, !dbg !9927, !range !2896, !alias.scope !9792, !noundef !1213
-  %i.cy = icmp eq i64 %4, %i.cx, !dbg !9928
+  %i.cy = icmp eq i64 %i.cp, %i.cx, !dbg !9928
   br i1 %i.cy, label %bb.ad, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTjjEE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit.i, !dbg !9928
 
 bb.ad:                                            ; preds = %_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5State18active_chunk_start.exit.i63
@@ -259,7 +258,7 @@ bb.ad:                                            ; preds = %_RNvMs1_NtNtNtCs9GY
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTjjEE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit.i: ; preds = %bb.ad, %_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5State18active_chunk_start.exit.i63
   %i.cz = phi ptr [ %.val11.i, %_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5State18active_chunk_start.exit.i63 ], [ %.pre.i65, %bb.ad ], !dbg !9930
     #dbg_value(ptr %i.cz, !9790, !DIExpression(), !9172)
-  %i.da = getelementptr inbounds nuw [16 x i8], ptr %i.cz, i64 %4, !dbg !9932 ; 2 uses
+  %i.da = getelementptr inbounds nuw [16 x i8], ptr %i.cz, i64 %i.cp, !dbg !9932 ; 2 uses
     #dbg_value(ptr %i.da, !9774, !DIExpression(), !9182)
     #dbg_value(ptr %i.da, !9793, !DIExpression(), !9185)
     #dbg_value(i64 %.sroa.02.0.i.i.i64, !9796, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9185)
@@ -267,7 +266,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTjjEE8push_mutCs9GYDdpCSJ4S_14regex_
   store i64 %.sroa.02.0.i.i.i64, ptr %i.da, align 8, !dbg !9933
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 8, !dbg !9933
   store i64 %i.cl, ptr %i.db, align 8, !dbg !9933
-  %i.dc = add i64 %4, 1, !dbg !9934
+  %i.dc = add i64 %i.cp, 1, !dbg !9934
   store i64 %i.dc, ptr %i.co, align 8, !dbg !9934, !alias.scope !9792
   br label %_RNvMs1_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trieNtB5_5State9add_match.exit, !dbg !9935
 
@@ -670,8 +669,7 @@ _RNvXsj_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6ConfigNtNtCsj6eKBz9Db
   br i1 %i.cu, label %bb.v, label %bb.h, !dbg !14623
 
 bb.h:                                             ; preds = %_RNvXsj_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6ConfigNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i, %bb.v
-  %.sroa.52.0.i.i.i = phi i64 [ undef, %_RNvXsj_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6ConfigNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %i.fd, %bb.v ], !dbg !14624
-  %.sroa.01.0.i.i.i = phi i64 [ %i.ct, %_RNvXsj_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6ConfigNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ 1, %bb.v ], !dbg !14624
+  %.sroa.01.0.i.i.i = phi i64 [ undef, %_RNvXsj_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6ConfigNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %i.fd, %bb.v ], !dbg !14624
     #dbg_value(ptr %i.cn, !13913, !DIExpression(DW_OP_plus_uconst, 20, DW_OP_stack_value), !13134)
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 164, !dbg !14625
   %i.cw = load i8, ptr %i.cv, align 4, !dbg !14625, !range !3680, !noalias !13905, !noundef !1213
@@ -1074,9 +1072,9 @@ bb.bb:                                            ; preds = %_RNvMst_NtCsj6eKBz9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !dbg !14680
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(592) %i.ab, ptr noundef nonnull align 16 dereferenceable(144) %i.u, i64 144, i1 false), !dbg !14769, !noalias !13870
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ab, i64 144, !dbg !14769 ; 5 uses
-  store i64 %.sroa.01.0.i.i.i, ptr %i.ib, align 16, !dbg !14769, !alias.scope !13874, !noalias !13870
+  store i64 %i.ct, ptr %i.ib, align 16, !dbg !14769, !alias.scope !13874, !noalias !13870
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 152, !dbg !14769
-  store i64 %.sroa.52.0.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !14769, !alias.scope !13874, !noalias !13870
+  store i64 %.sroa.01.0.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !14769, !alias.scope !13874, !noalias !13870
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 160, !dbg !14769
   store i8 %i.da, ptr %.sroa.5.0..sroa_idx.i.i, align 16, !dbg !14769, !alias.scope !13874, !noalias !13870
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 161, !dbg !14769

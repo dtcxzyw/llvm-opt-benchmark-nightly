@@ -204,13 +204,12 @@ bb.aw:                                            ; preds = %.thread136, %synony
   br i1 %.not69, label %.preheader, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.aw, %.thread145
-  %.not69155 = phi i1 [ %.not69, %.thread145 ], [ false, %bb.aw ]
   %i.dp = phi i32 [ %i.dm, %.thread145 ], [ %i.do, %bb.aw ]
   %.152152 = phi i16 [ %.152.ph, %.thread145 ], [ 0, %bb.aw ]
   %.158138142151 = phi i16 [ %.057113, %.thread145 ], [ %.158138.ph, %bb.aw ]
   %.155143150 = phi i16 [ %.054114, %.thread145 ], [ %.155.ph, %bb.aw ]
   %i.dq = icmp ne i32 %i.dp, 3
-  %or.cond3 = select i1 %.not69155, i1 true, i1 %i.dq
+  %or.cond3 = select i1 %.not69, i1 true, i1 %i.dq
   br i1 %or.cond3, label %.thread, label %bb.ax
 
 bb.ax:                                            ; preds = %.loopexit

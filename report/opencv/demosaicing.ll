@@ -205,10 +205,9 @@ bb.p:                                             ; preds = %.thread, %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %.sink446 = phi i32 [ %i.e, %bb.p ], [ 3, %bb.o ]
   %.sink442 = phi i64 [ 2, %bb.p ], [ 1, %bb.o ]
   %i.qo = load i32, ptr %i.al, align 8, !tbaa !166
-  %i.qp = mul nsw i32 %i.qo, %.sink446
+  %i.qp = mul nsw i32 %i.qo, %i.e
   %i.qq = sext i32 %i.qp to i64
   %i.qr = getelementptr i8, ptr %.0336402, i64 %i.qq ; 2 uses
   %i.qs = getelementptr i8, ptr %i.qr, i64 -2

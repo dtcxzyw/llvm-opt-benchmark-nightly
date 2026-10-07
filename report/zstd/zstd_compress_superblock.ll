@@ -204,7 +204,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i64 5, 1) i64 @ZSTD_compressSubBlock(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4, i64 noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr nofree noundef readonly captures(none) %9, ptr noundef %10, i64 noundef %11, i32 noundef %12, i32 noundef range(i32 0, 2) %13, i32 noundef range(i32 0, 2) %14, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 4)) %15, ptr nofree noundef nonnull writeonly captures(none) %16, i32 noundef %17) unnamed_addr #0 {
 bb.a:
+  %18 = getelementptr i8, ptr %10, i64 %11
   %i.a = getelementptr inbounds nuw i8, ptr %10, i64 3 ; 10 uses
+  %19 = ptrtoint ptr %18 to i64                   ; 3 uses
   %gepdiff = add i64 %11, -3                      ; 5 uses
   %.not.i = icmp ne i32 %13, 0                    ; 4 uses
   %i.b = select i1 %.not.i, i64 200, i64 0        ; 2 uses
@@ -215,7 +217,6 @@ bb.a:
   %i.f = icmp uge i64 %5, %i.e
   %i.g = zext i1 %i.f to i64
   %i.h = add nuw nsw i64 %i.d, %i.g               ; 4 uses
-  %18 = getelementptr i8, ptr %10, i64 %11        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.h ; 3 uses
   %.not103.i = icmp eq i64 %i.h, 3
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -264,7 +265,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.094.i = phi i64 [ %i.t, %bb.h ], [ 0, %bb.g ]
   %.not100.i = icmp ne i32 %12, 0
   %i.v = zext i1 %.not100.i to i32                ; 2 uses
-  %19 = ptrtoint ptr %18 to i64
   %i.w = ptrtoint ptr %.095.i to i64
   %i.x = sub i64 %19, %i.w                        ; 2 uses
   br i1 %.not103.i, label %bb.j, label %bb.k
@@ -362,15 +362,12 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   br label %ZSTD_compressSubBlock_literal.exit
 
 ZSTD_compressSubBlock_literal.exit:               ; preds = %bb.e, %bb.f, %bb.n, %bb.p, %bb.u
-  %.1.i = phi i64 [ %i.n, %bb.e ], [ %i.o, %bb.f ], [ %i.bl, %bb.u ], [ %i.al, %bb.p ], [ %i.ae, %bb.n ] ; 6 uses
-  %i.bm = icmp ult i64 %.1.i, -119
-  br i1 %i.bm, label %20, label %.thread69
+  %.1.i = phi i64 [ %i.n, %bb.e ], [ %i.o, %bb.f ], [ %i.bl, %bb.u ], [ %i.al, %bb.p ], [ %i.ae, %bb.n ] ; 5 uses
+  %20 = add i64 %.1.i, 119
+  %i.bm = icmp ult i64 %20, 120
+  br i1 %i.bm, label %.thread69, label %bb.v
 
-20:                                               ; preds = %ZSTD_compressSubBlock_literal.exit
-  %21 = icmp eq i64 %.1.i, 0
-  br i1 %21, label %.thread69, label %bb.v
-
-bb.v:                                             ; preds = %20
+bb.v:                                             ; preds = %ZSTD_compressSubBlock_literal.exit
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 %.1.i ; 9 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 2064 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 144
@@ -381,7 +378,6 @@ bb.v:                                             ; preds = %20
   %i.bs = icmp ugt i32 %.val, 57
   %i.bt = zext i1 %i.bs to i32                    ; 2 uses
   store i32 0, ptr %16, align 4, !tbaa !17
-  %22 = ptrtoint ptr %18 to i64                   ; 2 uses
   %i.bu = icmp slt i64 %gepdiff95, 4
   br i1 %i.bu, label %.thread69, label %bb.w
 
@@ -429,7 +425,7 @@ bb.aa:                                            ; preds = %bb.w
 bb.ab:                                            ; preds = %.thread.i
   store i8 -4, ptr %.0712.i, align 1, !tbaa !19
   %i.cl = ptrtoint ptr %i.ck to i64
-  %i.cm = sub i64 %22, %i.cl
+  %i.cm = sub i64 %19, %i.cl
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 2836
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 4288
   %i.cp = tail call i64 @ZSTD_encodeSequences(ptr noundef nonnull %i.ck, i64 noundef %i.cm, ptr noundef nonnull %i.cn, ptr noundef %7, ptr noundef nonnull %i.bo, ptr noundef %8, ptr noundef nonnull %i.co, ptr noundef %6, ptr noundef %2, i64 noundef %3, i32 noundef %i.bt, i32 noundef %12) #5 ; 3 uses
@@ -456,7 +452,7 @@ bb.ab:                                            ; preds = %.thread.i
   %i.df = load i64, ptr %i.dd, align 8, !tbaa !22
   %i.dg = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.df ; 3 uses
   %i.dh = ptrtoint ptr %i.dg to i64
-  %i.di = sub i64 %22, %i.dh
+  %i.di = sub i64 %19, %i.dh
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 2836
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 4288
   %i.dl = tail call i64 @ZSTD_encodeSequences(ptr noundef nonnull %i.dg, i64 noundef %i.di, ptr noundef nonnull %i.dj, ptr noundef %7, ptr noundef nonnull %i.bo, ptr noundef %8, ptr noundef nonnull %i.dk, ptr noundef %6, ptr noundef %2, i64 noundef %3, i32 noundef %i.bt, i32 noundef %12) #5 ; 4 uses
@@ -511,8 +507,8 @@ ZSTD_compressSubBlock_sequences.exit.thread.thread91: ; preds = %bb.aa, %ZSTD_co
   store i8 %i.ei, ptr %i.ej, align 1, !tbaa !19
   br label %.thread69
 
-.thread69:                                        ; preds = %bb.v, %bb.ab, %.thread10.i, %bb.ae, %bb.ad, %ZSTD_compressSubBlock_sequences.exit.thread, %ZSTD_compressSubBlock_sequences.exit, %bb.l, %20, %ZSTD_compressSubBlock_literal.exit, %ZSTD_compressSubBlock_sequences.exit.thread.thread91
-  %.4 = phi i64 [ %i.ec, %ZSTD_compressSubBlock_sequences.exit.thread.thread91 ], [ 0, %bb.l ], [ %.1.i, %ZSTD_compressSubBlock_literal.exit ], [ 0, %20 ], [ 0, %bb.ae ], [ 0, %ZSTD_compressSubBlock_sequences.exit.thread ], [ %i.dy, %ZSTD_compressSubBlock_sequences.exit ], [ 0, %bb.ad ], [ -70, %bb.v ], [ %i.cp, %bb.ab ], [ %i.dl, %.thread10.i ]
+.thread69:                                        ; preds = %bb.v, %bb.ab, %.thread10.i, %bb.ae, %bb.ad, %ZSTD_compressSubBlock_sequences.exit.thread, %ZSTD_compressSubBlock_sequences.exit, %bb.l, %ZSTD_compressSubBlock_literal.exit, %ZSTD_compressSubBlock_sequences.exit.thread.thread91
+  %.4 = phi i64 [ %i.ec, %ZSTD_compressSubBlock_sequences.exit.thread.thread91 ], [ 0, %bb.l ], [ %.1.i, %ZSTD_compressSubBlock_literal.exit ], [ 0, %bb.ae ], [ 0, %ZSTD_compressSubBlock_sequences.exit.thread ], [ %i.dy, %ZSTD_compressSubBlock_sequences.exit ], [ 0, %bb.ad ], [ -70, %bb.v ], [ %i.cp, %bb.ab ], [ %i.dl, %.thread10.i ]
   ret i64 %.4
 }
 

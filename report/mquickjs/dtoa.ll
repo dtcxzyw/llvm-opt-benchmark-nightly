@@ -202,7 +202,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
 
 bb.bn:                                            ; preds = %bb.bm
   %cond = icmp eq i32 %i.an, 10
-  %i.eh = load i8, ptr %i.dw, align 1, !tbaa !17  ; 7 uses
+  %i.eh = load i8, ptr %i.dw, align 1, !tbaa !17  ; 4 uses
   br i1 %cond, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bn
@@ -227,12 +227,11 @@ bb.br:                                            ; preds = %bb.bq
   ]
 
 bb.bs:                                            ; preds = %bb.br, %bb.br, %bb.bo, %bb.bo, %bb.bp
-  %5 = phi i8 [ %i.eh, %bb.br ], [ %i.eh, %bb.br ], [ %i.eh, %bb.bo ], [ %i.eh, %bb.bo ], [ 64, %bb.bp ]
   %i.ek = icmp ugt ptr %i.dw, %i.h
   br i1 %i.ek, label %bb.bt, label %.thread373
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.el = and i8 %5, -33
+  %i.el = and i8 %i.eh, -33
   %narrow = icmp ne i8 %i.el, 80
   %i.em = getelementptr inbounds nuw i8, ptr %i.dw, i64 1 ; 3 uses
   store ptr %i.em, ptr %i.a, align 8, !tbaa !38

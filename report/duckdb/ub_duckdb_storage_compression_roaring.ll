@@ -204,7 +204,7 @@ bb.a:
   %i.e = and i8 %.sroa.0.0.copyload, 1
   %i.f = icmp eq i8 %i.e, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.h = load i16, ptr %i.g, align 8, !tbaa !86   ; 3 uses
+  %i.h = load i16, ptr %i.g, align 8, !tbaa !86   ; 2 uses
   br i1 %i.f, label %bb.b, label %._crit_edge
 
 bb.b:                                             ; preds = %bb.a
@@ -218,7 +218,6 @@ bb.c:                                             ; preds = %bb.b
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a, %bb.b, %bb.c
-  %2 = phi i16 [ %i.h, %bb.c ], [ 0, %bb.b ], [ %i.h, %bb.a ]
   %i.l = phi i16 [ %i.k, %bb.c ], [ 1, %bb.b ], [ 0, %bb.a ]
   %i.m = zext i8 %.sroa.7.0.copyload to i16
   %i.n = add nuw nsw i16 %i.l, %i.m
@@ -242,7 +241,7 @@ bb.c:                                             ; preds = %bb.b
   %.lobit = and i8 %i.aa, 1
   store i8 %.lobit, ptr %i.z, align 2, !tbaa !183
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ac = add i16 %2, 8
+  %i.ac = add i16 %i.h, 8
   store i16 %i.ac, ptr %i.ab, align 8, !tbaa !86
   ret void
 }

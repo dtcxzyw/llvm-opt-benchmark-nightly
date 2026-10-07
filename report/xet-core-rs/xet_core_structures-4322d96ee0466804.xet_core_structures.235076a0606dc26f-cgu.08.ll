@@ -204,13 +204,13 @@ bb.a:
   %i.g = alloca [8 x i8], align 8                 ; 8 uses
   %i.h = alloca [24 x i8], align 8                ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  %i.i = zext i32 %1 to i64                       ; 2 uses
+  %i.i = zext i32 %1 to i64                       ; 3 uses
   %i.j = shl nuw nsw i64 %i.i, 6                  ; 2 uses
   %i.k = icmp eq i32 %1, 0
   br i1 %i.k, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs31YAwBA1AlL_19xet_core_structures.exit.thread, label %bb.b
 
 _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs31YAwBA1AlL_19xet_core_structures.exit.thread: ; preds = %bb.a
-  store i64 0, ptr %i.h, align 8
+  store i64 %i.i, ptr %i.h, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   store ptr inttoptr (i64 8 to ptr), ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 16
@@ -613,7 +613,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -633,7 +632,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread28:                                        ; preds = %.noexc, %bb.g
   %.sroa.03.011.i30.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i30.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i30.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i30.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i30.off16, ptr %i.q, align 1

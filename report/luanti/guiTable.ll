@@ -204,20 +204,17 @@ bb.az:                                            ; preds = %.thread142
   %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 40
   %i.kd = load ptr, ptr %i.kc, align 8
   %i.ke = call noundef zeroext i1 %i.kd(ptr noundef nonnull align 8 dereferenceable(308) %0, ptr noundef nonnull align 4 dereferenceable(8) %7)
-  %.pr = load i32, ptr %i.gh, align 4, !tbaa !123 ; 2 uses
-  br i1 %i.ke, label %thread-pre-split, label %8
+  %.pr = load i32, ptr %i.gh, align 4, !tbaa !123 ; 4 uses
+  %8 = icmp eq i32 %.pr, 8
+  %or.cond185 = select i1 %i.ke, i1 true, i1 %8
+  br i1 %or.cond185, label %thread-pre-split, label %_ZN8GUITable14sendTableEventEib.exit128.thread
 
-8:                                                ; preds = %bb.az
-  %9 = icmp eq i32 %.pr, 8
-  br i1 %9, label %thread-pre-split, label %_ZN8GUITable14sendTableEventEib.exit128.thread
-
-thread-pre-split:                                 ; preds = %bb.az, %8
-  %10 = phi i32 [ 8, %8 ], [ %.pr, %bb.az ]       ; 3 uses
-  %i.kf = icmp eq i32 %10, 10                     ; 3 uses
+thread-pre-split:                                 ; preds = %bb.az
+  %i.kf = icmp eq i32 %.pr, 10                    ; 3 uses
   br i1 %.not106148, label %.thread150, label %bb.ba
 
 bb.ba:                                            ; preds = %thread-pre-split
-  switch i32 %10, label %.thread150 [
+  switch i32 %.pr, label %.thread150 [
     i32 13, label %bb.bb
     i32 10, label %bb.bb
     i32 0, label %bb.bb
@@ -232,7 +229,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba, %bb.
   br i1 %i.kk, label %bb.bc, label %.thread150
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.kl = icmp eq i32 %10, 0
+  %i.kl = icmp eq i32 %.pr, 0
   br i1 %i.kl, label %bb.bd, label %_ZN8GUITable14sendTableEventEib.exit128.thread
 
 bb.bd:                                            ; preds = %bb.bc
@@ -292,7 +289,7 @@ bb.bg:                                            ; preds = %_ZN8GUITable14sendT
   call void @_ZN8GUITable17toggleVisibleTreeEiib(ptr noundef nonnull align 8 dereferenceable(608) %0, i32 noundef %i.lg, i32 noundef 0, i1 noundef zeroext false)
   br label %_ZN8GUITable14sendTableEventEib.exit128.thread
 
-_ZN8GUITable14sendTableEventEib.exit128.thread:   ; preds = %.thread150, %.thread142, %8, %_ZN8GUITable14sendTableEventEib.exit128, %bb.bg, %bb.bc, %bb.bd, %bb.ao
+_ZN8GUITable14sendTableEventEib.exit128.thread:   ; preds = %bb.az, %.thread150, %.thread142, %_ZN8GUITable14sendTableEventEib.exit128, %bb.bg, %bb.bc, %bb.bd, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
   br label %_ZN3gui11IGUIElement7OnEventERK6SEvent.exit
 

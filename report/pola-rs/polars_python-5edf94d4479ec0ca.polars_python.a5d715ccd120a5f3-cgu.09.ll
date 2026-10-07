@@ -205,11 +205,11 @@ bb.i:                                             ; preds = %bb.a
 bb.j:                                             ; preds = %bb.l, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !dbg !167517
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ab, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !dbg !167518
-  %.not131 = icmp eq ptr %1, null, !dbg !167519   ; 10 uses
+  %.not131 = icmp eq ptr %1, null, !dbg !167519   ; 12 uses
   br i1 %.not131, label %bb.n, label %bb.m, !dbg !167520
 
 .body:                                            ; preds = %bb.df, %bb.k, %bb.bu
-  %.sroa.091.0 = phi i1 [ %.sroa.091.4, %bb.bu ], [ %.sroa.091.4, %bb.df ], [ %.sroa.091.1, %bb.k ], !dbg !167521 ; 2 uses
+  %.sroa.091.0 = phi i1 [ %.not131, %bb.bu ], [ %.not131, %bb.df ], [ %.sroa.091.1, %bb.k ], !dbg !167521 ; 2 uses
   %.sroa.090.0 = phi i1 [ false, %bb.bu ], [ false, %bb.df ], [ %.sroa.090.1, %bb.k ], !dbg !167518 ; 2 uses
   %.sroa.084.0 = phi i8 [ %.sroa.084.7, %bb.bu ], [ %.sroa.084.7, %bb.df ], [ 1, %bb.k ], !dbg !167488 ; 2 uses
   %.sroa.082.0 = phi i8 [ %.sroa.082.7, %bb.bu ], [ %.sroa.082.7, %bb.df ], [ 1, %bb.k ], !dbg !167488 ; 2 uses
@@ -612,7 +612,6 @@ bb.bt:                                            ; preds = %bb.bs
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl12scan_sources11ScanSourcesECseeLknQCOKOd_13polars_python.exit201 unwind label %bb.bv, !dbg !167717
 
 bb.bu:                                            ; preds = %bb.de, %bb.bv, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils7pl_path9PlRefPathECseeLknQCOKOd_13polars_python.exit209
-  %.sroa.091.4 = phi i1 [ false, %bb.bv ], [ false, %bb.de ], [ true, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils7pl_path9PlRefPathECseeLknQCOKOd_13polars_python.exit209 ], !dbg !167521 ; 2 uses
   %.sroa.084.7 = phi i8 [ %.sroa.078.6, %bb.bv ], [ %.sroa.084.2250, %bb.de ], [ %.sroa.084.2, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils7pl_path9PlRefPathECseeLknQCOKOd_13polars_python.exit209 ], !dbg !167488 ; 2 uses
   %.sroa.082.7 = phi i8 [ %.sroa.078.6, %bb.bv ], [ %.sroa.082.2251, %bb.de ], [ %.sroa.082.2, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils7pl_path9PlRefPathECseeLknQCOKOd_13polars_python.exit209 ], !dbg !167488 ; 2 uses
   %.sroa.080.7 = phi i8 [ %.sroa.078.6, %bb.bv ], [ %.sroa.080.2252, %bb.de ], [ %.sroa.080.2, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils7pl_path9PlRefPathECseeLknQCOKOd_13polars_python.exit209 ], !dbg !167488 ; 2 uses

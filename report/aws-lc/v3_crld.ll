@@ -89,7 +89,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define internal ptr @v2i_crld(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
-  %i.a = tail call ptr @OPENSSL_sk_new_null() #5  ; 12 uses
+  %i.a = tail call ptr @OPENSSL_sk_new_null() #5  ; 6 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %.loopexit84.sink.split, label %.preheader
 
@@ -258,10 +258,9 @@ bb.u:                                             ; preds = %bb.t, %.loopexit
 .loopexit84.sink.split:                           ; preds = %bb.n, %bb.o, %bb.p, %bb.q, %bb.s, %bb.b, %.split.sink.split, %bb.a
   %.238.ph.sink = phi ptr [ null, %bb.a ], [ null, %.split.sink.split ], [ %i.ak, %bb.o ], [ null, %bb.n ], [ null, %bb.s ], [ null, %bb.b ], [ null, %bb.q ], [ %i.ak, %bb.p ]
   %.241.ph.sink = phi ptr [ null, %bb.a ], [ %.241.ph.ph, %.split.sink.split ], [ null, %bb.o ], [ null, %bb.n ], [ %i.al, %bb.s ], [ null, %bb.b ], [ %i.al, %bb.q ], [ %i.al, %bb.p ]
-  %.sink = phi ptr [ null, %bb.a ], [ %i.a, %.split.sink.split ], [ %i.a, %bb.b ], [ %i.a, %bb.s ], [ %i.a, %bb.q ], [ %i.a, %bb.p ], [ %i.a, %bb.o ], [ %i.a, %bb.n ]
   tail call void @GENERAL_NAME_free(ptr noundef %.238.ph.sink) #5
   tail call void @GENERAL_NAMES_free(ptr noundef %.241.ph.sink) #5
-  tail call void @OPENSSL_sk_pop_free_ex(ptr noundef %.sink, ptr noundef nonnull @sk_DIST_POINT_call_free_func, ptr noundef nonnull @DIST_POINT_free) #5
+  tail call void @OPENSSL_sk_pop_free_ex(ptr noundef %i.a, ptr noundef nonnull @sk_DIST_POINT_call_free_func, ptr noundef nonnull @DIST_POINT_free) #5
   br label %.loopexit84
 
 .loopexit84:                                      ; preds = %bb.u, %.loopexit84.sink.split, %.preheader
@@ -431,7 +430,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal ptr @v2i_idp(ptr nofree readnone captures(none) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
-  %i.a = tail call ptr @ASN1_item_new(ptr noundef nonnull @ISSUING_DIST_POINT_it) #5 ; 16 uses
+  %i.a = tail call ptr @ASN1_item_new(ptr noundef nonnull @ISSUING_DIST_POINT_it) #5 ; 10 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %.loopexit.sink.split, label %.preheader
 
@@ -530,8 +529,7 @@ bb.o:                                             ; preds = %bb.e, %bb.i, %bb.m,
   br i1 %i.ag, label %bb.b, label %.loopexit, !llvm.loop !34
 
 .loopexit.sink.split:                             ; preds = %bb.m, %bb.e, %bb.g, %bb.i, %bb.k, %bb.c, %bb.n, %bb.a
-  %.sink = phi ptr [ null, %bb.a ], [ %i.a, %bb.n ], [ %i.a, %bb.c ], [ %i.a, %bb.k ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.e ], [ %i.a, %bb.m ]
-  tail call void @ASN1_item_free(ptr noundef %.sink, ptr noundef nonnull @ISSUING_DIST_POINT_it) #5
+  tail call void @ASN1_item_free(ptr noundef %i.a, ptr noundef nonnull @ISSUING_DIST_POINT_it) #5
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.o, %.loopexit.sink.split, %.preheader

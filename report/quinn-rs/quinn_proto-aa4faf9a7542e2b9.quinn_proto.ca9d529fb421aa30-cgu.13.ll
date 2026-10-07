@@ -204,14 +204,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not9, label %bb.b, label %bb.d, !dbg !37059
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterINtCs9Srk37lQfcB_4slab5EntryNtNtCshovLROGBtMy_11quinn_proto8endpoint14ConnectionMetaEEENtNtNtB8_6traits8iterator8Iterator4nextB23_.exit.thread: ; preds = %bb.b, %bb.d
-  %i.k = phi { i64, ptr } [ %i.l, %bb.d ], [ { i64 undef, ptr poison }, %bb.b ]
-  %.sroa.3.0 = phi ptr [ %i.e, %bb.d ], [ null, %bb.b ], !dbg !36993
-  %1 = insertvalue { i64, ptr } %i.k, ptr %.sroa.3.0, 1, !dbg !37060
-  ret { i64, ptr } %1, !dbg !37060
+  %i.k = phi { i64, ptr } [ %1, %bb.d ], [ { i64 undef, ptr null }, %bb.b ]
+  ret { i64, ptr } %i.k, !dbg !37060
 
 bb.d:                                             ; preds = %bb.c
   %i.l = insertvalue { i64, ptr } poison, i64 %i.d, 0, !dbg !37061
-    #dbg_value(ptr %i.e, !36986, !DIExpression(), !37051)
+  %1 = insertvalue { i64, ptr } %i.l, ptr %i.e, 1, !dbg !37061
+    #dbg_value(ptr poison, !36986, !DIExpression(), !37051)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !37062 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !dbg !37062, !noundef !2579
   %i.o = add i64 %i.n, -1, !dbg !37062

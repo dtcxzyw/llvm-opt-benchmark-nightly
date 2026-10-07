@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %._crit_edge259
 bb.o:                                             ; preds = %bb.m
   %i.au = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.av = load ptr, ptr %i.au, align 8, !nonnull !5, !noundef !5
-  %i.aw = sub nuw i64 %i.as, %.sroa.02.08.i       ; 4 uses
+  %i.aw = sub nuw i64 %i.as, %.sroa.02.08.i       ; 7 uses
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %.sroa.02.08.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1534)
   %i.ay = shl nuw nsw i64 %i.aw, 3                ; 3 uses
@@ -242,7 +242,6 @@ bb.r:                                             ; preds = %bb.p
 
 _RINvXs_NvMNtCs87CvPiUlf0m_5alloc5sliceSp9to_vec_injNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core.exit: ; preds = %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i, %bb.r
   %i.bg = phi ptr [ inttoptr (i64 8 to ptr), %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i ], [ %i.bc, %bb.r ]
-  %11 = phi i64 [ 0, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i ], [ %i.aw, %bb.r ] ; 4 uses
   %i.bh = phi i64 [ %i.aj, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i ], [ %.pre310, %bb.r ] ; 3 uses
   %i.bi = icmp ult i64 %0, %i.bh
   br i1 %i.bi, label %bb.t, label %bb.u
@@ -281,11 +280,11 @@ bb.x:                                             ; preds = %bb.t
   br i1 %.not394, label %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i, label %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i.i, !prof !9
 
 _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i.i: ; preds = %bb.x
-  invoke fastcc void @_RINvNvMs2_NtCs87CvPiUlf0m_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b, i64 noundef %11, i64 noundef range(i64 0, 2305843009213693952) %.sroa.02.08.i, i64 noundef 8, i64 noundef 8)
+  invoke fastcc void @_RINvNvMs2_NtCs87CvPiUlf0m_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b, i64 noundef %i.aw, i64 noundef range(i64 0, 2305843009213693952) %.sroa.02.08.i, i64 noundef 8, i64 noundef 8)
           to label %bb.y unwind label %bb.bl
 
 _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i: ; preds = %bb.x
-  %i.bq = icmp ult i64 %11, 1152921504606846976
+  %i.bq = icmp ult i64 %i.aw, 1152921504606846976
   tail call void @llvm.assume(i1 %i.bq)
   br label %bb.z
 
@@ -304,8 +303,8 @@ bb.y:                                             ; preds = %_RNvMs_NtCs87CvPiUl
 bb.z:                                             ; preds = %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i, %bb.y
   %i.bu = phi i64 [ %.pre314, %bb.y ], [ %i.bh, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ] ; 2 uses
   %.sroa.6155.0.copyload = phi ptr [ %.pre311, %bb.y ], [ %i.bg, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ] ; 3 uses
-  %.sroa.0152.0.copyload = phi i64 [ %.sroa.0152.0.copyload.pre.pre, %bb.y ], [ %11, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ] ; 3 uses
-  %i.bv = phi i64 [ %i.br, %bb.y ], [ %11, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ]
+  %.sroa.0152.0.copyload = phi i64 [ %.sroa.0152.0.copyload.pre.pre, %bb.y ], [ %i.aw, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ] ; 3 uses
+  %i.bv = phi i64 [ %i.br, %bb.y ], [ %i.aw, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i ]
   %i.bw = add nuw nsw i64 %i.bv, %.sroa.02.08.i
   %.not115 = icmp ult i64 %0, %i.bu
   br i1 %.not115, label %bb.aa, label %bb.ac
@@ -361,7 +360,7 @@ bb.af:                                            ; preds = %_RINvNtCslwFuT2d6EC
 bb.ag:                                            ; preds = %bb.ae
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !nonnull !5, !noundef !5
-  %i.cp = sub nuw i64 %i.cl, %.sroa.02.08.i       ; 4 uses
+  %i.cp = sub nuw i64 %i.cl, %.sroa.02.08.i       ; 7 uses
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %.sroa.02.08.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1541)
   %i.cr = shl nuw nsw i64 %i.cp, 3                ; 3 uses
@@ -402,7 +401,6 @@ bb.aj:                                            ; preds = %bb.ae
 
 _RINvXs_NvMNtCs87CvPiUlf0m_5alloc5sliceSp9to_vec_injNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core.exit138: ; preds = %bb.ai, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i136
   %i.cz = phi ptr [ %i.cv, %bb.ai ], [ inttoptr (i64 8 to ptr), %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i136 ]
-  %12 = phi i64 [ %i.cp, %bb.ai ], [ 0, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i136 ] ; 4 uses
   %i.da = phi i64 [ %.pre315, %bb.ai ], [ %i.cg, %_RNvMs5_NtCs87CvPiUlf0m_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i136 ] ; 3 uses
   %i.db = icmp ult i64 %0, %i.da
   br i1 %i.db, label %bb.ak, label %bb.al
@@ -432,11 +430,11 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %.not394, label %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139, label %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i.i141, !prof !9
 
 _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.thread.i.i141: ; preds = %bb.an
-  invoke fastcc void @_RINvNvMs2_NtCs87CvPiUlf0m_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %12, i64 noundef range(i64 0, 2305843009213693952) %.sroa.02.08.i, i64 noundef 8, i64 noundef 8)
+  invoke fastcc void @_RINvNvMs2_NtCs87CvPiUlf0m_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsbNMRYq9Xj9a_14rustworkx_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.cp, i64 noundef range(i64 0, 2305843009213693952) %.sroa.02.08.i, i64 noundef 8, i64 noundef 8)
           to label %bb.ao unwind label %bb.bi
 
 _RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139: ; preds = %bb.an
-  %i.dj = icmp ult i64 %12, 1152921504606846976
+  %i.dj = icmp ult i64 %i.cp, 1152921504606846976
   tail call void @llvm.assume(i1 %i.dj)
   br label %bb.ap
 
@@ -455,8 +453,8 @@ bb.ao:                                            ; preds = %_RNvMs_NtCs87CvPiUl
 bb.ap:                                            ; preds = %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139, %bb.ao
   %i.dn = phi i64 [ %.pre320, %bb.ao ], [ %i.da, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ] ; 2 uses
   %.sroa.6167.0.copyload = phi ptr [ %.pre317, %bb.ao ], [ %i.cz, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ] ; 3 uses
-  %.sroa.0164.0.copyload = phi i64 [ %.sroa.0164.0.copyload.pre.pre, %bb.ao ], [ %12, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ] ; 3 uses
-  %i.do = phi i64 [ %i.dk, %bb.ao ], [ %12, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ]
+  %.sroa.0164.0.copyload = phi i64 [ %.sroa.0164.0.copyload.pre.pre, %bb.ao ], [ %i.cp, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ] ; 3 uses
+  %i.do = phi i64 [ %i.dk, %bb.ao ], [ %i.cp, %_RNvMs_NtCs87CvPiUlf0m_5alloc3vecINtB4_3VecjE7reserveCsbNMRYq9Xj9a_14rustworkx_core.exit.i.i139 ]
   %i.dp = add nuw nsw i64 %i.do, %.sroa.02.08.i
   %.not119 = icmp ult i64 %0, %i.dn
   br i1 %.not119, label %bb.aq, label %bb.as

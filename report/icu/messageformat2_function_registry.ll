@@ -204,13 +204,12 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.k
 
 _ZN6icu_788message217StandardFunctions6Plural7integerERKNS_6LocaleER10UErrorCode.exit: ; preds = %bb.d, %bb.f, %bb.g, %bb.c
-  %.018 = phi ptr [ %i.f, %bb.g ], [ null, %bb.c ], [ null, %bb.f ], [ %i.f, %bb.d ] ; 2 uses
   %i.j = load i32, ptr %2, align 4, !tbaa !20
   %i.k = icmp slt i32 %i.j, 1
   br i1 %i.k, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %_ZN6icu_788message217StandardFunctions6Plural7integerERKNS_6LocaleER10UErrorCode.exit
-  %i.l = icmp eq ptr %.018, null
+  %i.l = icmp eq ptr %i.f, null
   br i1 %i.l, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
@@ -223,7 +222,7 @@ bb.k:                                             ; preds = %bb.h, %bb.e
   resume { ptr, i32 } %.pn
 
 bb.l:                                             ; preds = %_ZN6icu_788message217StandardFunctions6Plural7integerERKNS_6LocaleER10UErrorCode.exit, %bb.j, %bb.i, %bb.a
-  %.1 = phi ptr [ null, %bb.a ], [ null, %_ZN6icu_788message217StandardFunctions6Plural7integerERKNS_6LocaleER10UErrorCode.exit ], [ null, %bb.j ], [ %.018, %bb.i ]
+  %.1 = phi ptr [ null, %bb.a ], [ null, %_ZN6icu_788message217StandardFunctions6Plural7integerERKNS_6LocaleER10UErrorCode.exit ], [ null, %bb.j ], [ %i.f, %bb.i ]
   ret ptr %.1
 }
 

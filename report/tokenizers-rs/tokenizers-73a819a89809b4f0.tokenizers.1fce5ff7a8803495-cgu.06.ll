@@ -205,7 +205,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 bb.e:                                             ; preds = %._crit_edge, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i
   %.pre-phi = phi i64 [ %.pre629, %._crit_edge ], [ %i.aj, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ]
-  %.sroa.26.1 = phi i64 [ %.sroa.26.0, %._crit_edge ], [ %i.al, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 15 uses
+  %.sroa.26.1 = phi i64 [ %.sroa.26.0, %._crit_edge ], [ %i.al, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 16 uses
   %.sroa.12.1 = phi ptr [ %.sroa.12.0, %._crit_edge ], [ %.sroa.12.2, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 5 uses
   %.sroa.8.0 = phi i64 [ %.sroa.9.0, %._crit_edge ], [ %.sroa.26.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i ] ; 17 uses
   %.not = icmp eq ptr %.sroa.12.1, %i.q           ; 2 uses
@@ -324,8 +324,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.i, %.split7.i, %bb.l
-  %.sroa.26.1.pn = phi i64 [ 0, %bb.i ], [ %.sroa.26.1, %bb.l ], [ %.sroa.26.1, %.split7.i ] ; 3 uses
-  %storemerge = sub nuw i64 %.sroa.26.1.pn, %.sroa.8.0 ; 3 uses
+  %storemerge = sub nuw i64 %.sroa.26.1, %.sroa.8.0 ; 3 uses
   %storemerge647 = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.8.0
   store ptr %storemerge647, ptr %i.r, align 8
   store i64 %storemerge, ptr %i.s, align 8
@@ -339,7 +338,7 @@ bb.p:                                             ; preds = %.thread648, %bb.o
   %storemerge670 = phi i64 [ %storemerge654, %.thread648 ], [ %storemerge, %bb.o ] ; 2 uses
   %.sroa.26.3246667 = phi i64 [ %.sroa.26.1, %.thread648 ], [ %i.ax, %bb.o ] ; 2 uses
   %.sroa.12.5249664 = phi ptr [ %i.q, %.thread648 ], [ %.sroa.12.4, %bb.o ] ; 2 uses
-  %.sroa.3.0.i.i.i252661 = phi i64 [ undef, %.thread648 ], [ %.sroa.26.1.pn, %bb.o ] ; 2 uses
+  %.sroa.3.0.i.i.i252661 = phi i64 [ undef, %.thread648 ], [ %.sroa.26.1, %bb.o ] ; 2 uses
   %.sroa.0.0.i.i.i255658 = phi i64 [ 0, %.thread648 ], [ 1, %bb.o ] ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.pre624.pre627672, i64 48 ; 2 uses
   %i.bq = load i64, ptr %i.bp, align 8, !range !15, !noundef !4
@@ -440,7 +439,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs
 
 .thread701:                                       ; preds = %bb.o, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172, %bb.aa, %bb.q
   %.sroa.0.0.i.i.i255659698 = phi i64 [ %.sroa.0.0.i.i.i255659699, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %.sroa.0.0.i.i.i255659699, %bb.aa ], [ %.sroa.0.0.i.i.i255658, %bb.q ], [ 1, %bb.o ] ; 2 uses
-  %.sroa.3.0.i.i.i252662696 = phi i64 [ %.sroa.3.0.i.i.i252662697, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %.sroa.3.0.i.i.i252662697, %bb.aa ], [ %.sroa.3.0.i.i.i252661, %bb.q ], [ %.sroa.26.1.pn, %bb.o ] ; 2 uses
+  %.sroa.3.0.i.i.i252662696 = phi i64 [ %.sroa.3.0.i.i.i252662697, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %.sroa.3.0.i.i.i252662697, %bb.aa ], [ %.sroa.3.0.i.i.i252661, %bb.q ], [ %.sroa.26.1, %bb.o ] ; 2 uses
   %.sroa.12.5249665694 = phi ptr [ %.sroa.12.5249665695, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %.sroa.12.5249665695, %bb.aa ], [ %.sroa.12.5249664, %bb.q ], [ %.sroa.12.4, %bb.o ] ; 2 uses
   %.sroa.26.3246668692 = phi i64 [ %.sroa.26.3246668693, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %.sroa.26.3246668693, %bb.aa ], [ %.sroa.26.3246667, %bb.q ], [ %i.ax, %bb.o ] ; 2 uses
   %storemerge671690 = phi i64 [ %storemerge671691, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs2JiOgHzbbc7_10tokenizers.exit172 ], [ %storemerge671691, %bb.aa ], [ %storemerge670, %bb.q ], [ %storemerge, %bb.o ] ; 4 uses

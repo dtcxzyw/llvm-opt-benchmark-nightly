@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_Z11dtVisfinitePKf.
   br i1 %i.aq, label %bb.f, label %bb.g
 
 ._crit_edge.thread:                               ; preds = %bb.d
-  %i.ar = call noundef zeroext i1 @_Z24dtDistancePtPolyEdgesSqrPKfS0_iPfS1_(ptr noundef nonnull %2, ptr noundef nonnull %i.c, i32 noundef 0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #15 ; 0 uses
-  br label %bb.f
+  %i.ar = call noundef zeroext i1 @_Z24dtDistancePtPolyEdgesSqrPKfS0_iPfS1_(ptr noundef nonnull %2, ptr noundef nonnull %i.c, i32 noundef %i.x, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #15
+  br i1 %i.ar, label %bb.f, label %._crit_edge48
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.e ] ; 4 uses
@@ -291,14 +291,13 @@ bb.g:                                             ; preds = %._crit_edge
   %.1.epil = select i1 %i.by, i32 %i.bz, i32 %.03144.epil.init
   br label %._crit_edge48
 
-._crit_edge48:                                    ; preds = %.lr.ph47.epil.preheader, %._crit_edge48.loopexit.unr-lcssa, %bb.g
-  %.035.lcssa6365 = phi i32 [ 1, %bb.g ], [ %i.x, %._crit_edge48.loopexit.unr-lcssa ], [ %i.x, %.lr.ph47.epil.preheader ]
-  %.031.lcssa = phi i32 [ 0, %bb.g ], [ %.1.1, %._crit_edge48.loopexit.unr-lcssa ], [ %.1.epil, %.lr.ph47.epil.preheader ] ; 3 uses
+._crit_edge48:                                    ; preds = %.lr.ph47.epil.preheader, %._crit_edge48.loopexit.unr-lcssa, %._crit_edge.thread, %bb.g
+  %.031.lcssa = phi i32 [ 0, %bb.g ], [ 0, %._crit_edge.thread ], [ %.1.1, %._crit_edge48.loopexit.unr-lcssa ], [ %.1.epil, %.lr.ph47.epil.preheader ] ; 3 uses
   %i.ca = mul nuw nsw i32 %.031.lcssa, 3
   %i.cb = zext nneg i32 %i.ca to i64
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.cb ; 2 uses
   %i.cd = add nuw nsw i32 %.031.lcssa, 1
-  %i.ce = urem i32 %i.cd, %.035.lcssa6365
+  %i.ce = urem i32 %i.cd, %i.x
   %i.cf = mul nuw nsw i32 %i.ce, 3
   %i.cg = zext nneg i32 %i.cf to i64
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.cg ; 2 uses

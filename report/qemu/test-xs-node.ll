@@ -202,8 +202,7 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 xs_node_ref.exit:                                 ; preds = %bb.o, %bb.s
-  %2 = phi i32 [ %i.aj, %bb.s ], [ 1, %bb.o ]
-  %i.am = add nuw nsw i32 %2, 1
+  %i.am = add nuw nsw i32 %i.aj, 1
   store i32 %i.am, ptr %i.af, align 8
   %i.an = load i8, ptr %i.m, align 1, !range !9, !noundef !10
   %i.ao = and i8 %i.an, %i.ab

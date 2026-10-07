@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.u, label %.lr.ph.i89.preheader, label %split_to_dyn_array.exit
 
 split_to_dyn_array.exit:                          ; preds = %.thread, %bb.h, %._crit_edge.i
-  %.3.i = phi i64 [ %i.t, %bb.h ], [ %.066.i.ph, %._crit_edge.i ], [ %.1.i, %.thread ] ; 16 uses
+  %.3.i = phi i64 [ %i.t, %bb.h ], [ %.066.i.ph, %._crit_edge.i ], [ %.1.i, %.thread ] ; 10 uses
   %.not158 = icmp eq i64 %.3.i, 0
   br i1 %.not158, label %pair_array_free.exit.thread217, label %.lr.ph
 
@@ -333,10 +333,9 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   %.not79 = icmp eq i32 %.6, 0
   br i1 %.not79, label %bb.t, label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %bb.n, %bb.k, %bb.o, %.lr.ph152.peel.next, %bb.t, %bb.x, %bb.s, %bb.r
-  %.164206 = phi i64 [ %.3.i, %.lr.ph152.peel.next ], [ 1, %bb.s ], [ %.3.i, %bb.r ], [ %.3.i, %bb.x ], [ %.3.i, %bb.t ], [ %i.ah, %bb.o ], [ %i.ah, %bb.k ], [ %i.ah, %bb.n ]
-  %.7205 = phi i32 [ %i.ba, %.lr.ph152.peel.next ], [ 0, %bb.s ], [ %.6.peel, %bb.r ], [ 0, %bb.t ], [ %.6, %bb.x ], [ %i.ap, %bb.n ], [ %i.ai, %bb.k ], [ %i.aq, %bb.o ]
-  %.3.i194204 = phi i64 [ %.3.i, %.lr.ph152.peel.next ], [ 1, %bb.s ], [ %.3.i, %bb.r ], [ %.3.i, %bb.x ], [ %.3.i, %bb.t ], [ %.3.i, %bb.o ], [ %.3.i, %bb.k ], [ %.3.i, %bb.n ]
+.preheader.preheader:                             ; preds = %bb.n, %bb.k, %bb.o, %bb.t, %.lr.ph152.peel.next, %bb.x, %bb.r, %bb.s
+  %.164206 = phi i64 [ %.3.i, %bb.t ], [ %.3.i, %bb.r ], [ 1, %bb.s ], [ %.3.i, %bb.x ], [ %.3.i, %.lr.ph152.peel.next ], [ %i.ah, %bb.o ], [ %i.ah, %bb.k ], [ %i.ah, %bb.n ]
+  %.7205 = phi i32 [ 0, %bb.t ], [ %.6.peel, %bb.r ], [ 0, %bb.s ], [ %.6, %bb.x ], [ %i.ba, %.lr.ph152.peel.next ], [ %i.ap, %bb.n ], [ %i.ai, %bb.k ], [ %i.aq, %bb.o ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -351,7 +350,7 @@ bb.x:                                             ; preds = %bb.v, %bb.w
 
 pair_array_free.exit:                             ; preds = %bb.d, %.preheader, %bb.g
   %.7130 = phi i32 [ %i.s, %bb.g ], [ %.7205, %.preheader ], [ %i.h, %bb.d ] ; 2 uses
-  %.3.i112129 = phi i64 [ %.066.i.ph, %bb.g ], [ %.3.i194204, %.preheader ], [ %.066.i.ph, %bb.d ] ; 2 uses
+  %.3.i112129 = phi i64 [ %.066.i.ph, %bb.g ], [ %.3.i, %.preheader ], [ %.066.i.ph, %bb.d ] ; 2 uses
   %.not.i88 = icmp eq i64 %.3.i112129, 0
   br i1 %.not.i88, label %dyn_array_free.exit, label %.lr.ph.i89.preheader
 

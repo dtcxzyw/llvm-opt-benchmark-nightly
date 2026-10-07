@@ -204,22 +204,19 @@ bb.as:                                            ; preds = %bb.ar
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !15 ; 5 uses
   %i.qn = getelementptr inbounds nuw i8, ptr %i.qm, i64 336
   %i.qo = load ptr, ptr %i.qn, align 8, !tbaa !102 ; 2 uses
-  br i1 %.05428.i.i, label %2, label %.lr.ph._crit_edge.i.i
+  %.not68.i.i = icmp ne ptr %i.qo, null           ; 3 uses
+  %or.cond.not.i = select i1 %.05428.i.i, i1 %.not68.i.i, i1 false
+  br i1 %or.cond.not.i, label %.critedge.i.i, label %.lr.ph._crit_edge.i.i
 
-2:                                                ; preds = %.lr.ph.i34.i
-  %.not68.i.i = icmp eq ptr %i.qo, null
-  br i1 %.not68.i.i, label %.lr.ph._crit_edge.i.i, label %.critedge.i.i
-
-.lr.ph._crit_edge.i.i:                            ; preds = %2, %.lr.ph.i34.i
-  %3 = phi ptr [ null, %2 ], [ %i.qo, %.lr.ph.i34.i ] ; 3 uses
+.lr.ph._crit_edge.i.i:                            ; preds = %.lr.ph.i34.i
   %i.qp = load ptr, ptr %i.qh, align 8, !tbaa !102 ; 2 uses
-  %.not27.i.i.i = icmp eq ptr %i.qp, %3           ; 2 uses
+  %.not27.i.i.i = icmp eq ptr %i.qp, %i.qo        ; 2 uses
   br i1 %.b.i.i.i, label %bb.ay, label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph._crit_edge.i.i
   %.not25.i.i.i = icmp eq ptr %i.qp, null
-  %.not26.i.i.i = icmp eq ptr %3, null
-  %i.qq = or i1 %.not26.i.i.i, %.not25.i.i.i
+  %.not68.i.not.i = xor i1 %.not68.i.i, true
+  %i.qq = or i1 %.not25.i.i.i, %.not68.i.not.i
   %or.cond29.i.i.i = or i1 %.not27.i.i.i, %i.qq
   br i1 %or.cond29.i.i.i, label %bb.az, label %bb.au
 
@@ -304,12 +301,11 @@ left2right.exit.thread.i.i:                       ; preds = %left2right.exit.i.i
   br i1 %i.sj, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %left2right.exit.thread.i.i
-  %.not69.i.i = icmp ne ptr %3, null
-  %spec.select.i.i = or i1 %.05428.i.i, %.not69.i.i
+  %spec.select.i.i = or i1 %.05428.i.i, %.not68.i.i
   br label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %bb.bc, %2
-  %.1.i.i = phi i1 [ true, %2 ], [ %spec.select.i.i, %bb.bc ]
+.critedge.i.i:                                    ; preds = %bb.bc, %.lr.ph.i34.i
+  %.1.i.i = phi i1 [ true, %.lr.ph.i34.i ], [ %spec.select.i.i, %bb.bc ]
   %.057.i.i = getelementptr inbounds nuw i8, ptr %.05729.i.i, i64 8 ; 2 uses
   %i.sk = icmp ult ptr %.057.i.i, %.05536.i.i
   br i1 %i.sk, label %.lr.ph.i34.i, label %.critedge.thread.i.i, !llvm.loop !169

@@ -204,11 +204,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit37.i.i.i: ; preds 
   %i.cx = load i16, ptr %i.cw, align 2, !tbaa !62
   %i.cy = icmp ugt i16 %i.cx, 6                   ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cw, i64 6
-  %i.da = load i16, ptr %i.cz, align 2, !tbaa !62 ; 5 uses
+  %i.da = load i16, ptr %i.cz, align 2, !tbaa !62 ; 4 uses
   br i1 %i.cy, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i, label %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i
 
 ._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit37.i.i.i
-  %.phi.trans.insert12.i.i.i.i = zext i16 %i.da to i64
+  %.phi.trans.insert12.i.i.i.i = zext i16 %i.da to i64 ; 2 uses
   %.phi.trans.insert13.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val2, i64 %.phi.trans.insert12.i.i.i.i
   %.pre14.i.i.i.i = load i32, ptr %.phi.trans.insert13.i.i.i.i, align 4, !tbaa !60
   br label %_ZNK10reflection4Enum6valuesEv.exit.i.i.i.i
@@ -218,23 +218,22 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i: ; preds = 
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNK10reflection4Enum6valuesEv.exit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i
-  %i.db = zext i16 %i.da to i64
+  %i.db = zext i16 %i.da to i64                   ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.val2, i64 %i.db ; 2 uses
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !60 ; 2 uses
   %i.de = zext i32 %i.dd to i64
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.de
   br label %_ZNK10reflection4Enum6valuesEv.exit.i.i.i.i
 
-_ZNK10reflection4Enum6valuesEv.exit.i.i.i.i:      ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i, %bb.l, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i
-  %11 = phi i32 [ %i.dd, %bb.l ], [ %.pre14.i.i.i.i, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ %i.ct, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ]
-  %12 = phi i16 [ %i.da, %bb.l ], [ %i.da, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %i.dg = phi ptr [ %i.df, %bb.l ], [ null, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ null, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ]
+_ZNK10reflection4Enum6valuesEv.exit.i.i.i.i:      ; preds = %bb.l, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i
+  %.pre-phi.i.i.i = phi i64 [ %.phi.trans.insert12.i.i.i.i, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ %i.db, %bb.l ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ]
+  %11 = phi i32 [ %.pre14.i.i.i.i, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ %i.dd, %bb.l ], [ %i.ct, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ]
+  %i.dg = phi ptr [ null, %._ZNK10reflection4Enum6valuesEv.exit_crit_edge.i.i.i.i ], [ %i.df, %bb.l ], [ null, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i.i.i.i ]
   %.sroa.05.08.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dg, i64 4 ; 2 uses
   call void @llvm.assume(i1 %i.cy)
-  %.not.i.i.i39.i.i.i.i = icmp ne i16 %12, 0
+  %.not.i.i.i39.i.i.i.i = icmp ne i16 %i.da, 0
   call void @llvm.assume(i1 %.not.i.i.i39.i.i.i.i)
-  %13 = zext i16 %12 to i64
-  %i.dh = getelementptr inbounds nuw i8, ptr %.val2, i64 %13
+  %i.dh = getelementptr inbounds nuw i8, ptr %.val2, i64 %.pre-phi.i.i.i
   %i.di = zext i32 %11 to i64
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 %i.di ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 4

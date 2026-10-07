@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.a
   br label %stbi__ldr_to_hdr.exit
 
 stbi__ldr_to_hdr.exit:                            ; preds = %.loopexit.i, %stbi__malloc_mad4.exit.thread.i, %bb.h
-  %.0 = phi ptr [ null, %bb.h ], [ null, %stbi__malloc_mad4.exit.thread.i ], [ %i.q, %.loopexit.i ]
+  %.0 = phi ptr [ null, %bb.h ], [ %i.q, %.loopexit.i ], [ null, %stbi__malloc_mad4.exit.thread.i ]
   ret ptr %.0
 }
 
@@ -608,7 +608,7 @@ bb.a:
 define internal ptr @stbir__decode_float_linear(ptr noundef %0, i32 noundef %1, ptr noundef %2) #24 {
 bb.a:
   %.not = icmp eq ptr %0, %2
-  %.pre = sext i32 %1 to i64                      ; 5 uses
+  %.pre = sext i32 %1 to i64                      ; 2 uses
   br i1 %.not, label %stbir_simd_memcpy.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -719,8 +719,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %bb.j, !llvm.loop !5
 
 stbir_simd_memcpy.exit:                           ; preds = %bb.k, %bb.g, %.preheader.i, %bb.a, %bb.d
-  %.pre-phi = phi i64 [ %.pre, %bb.g ], [ %.pre, %bb.a ], [ %.pre, %.preheader.i ], [ 0, %bb.d ], [ %.pre, %bb.k ]
-  %i.az = getelementptr inbounds [4 x i8], ptr %0, i64 %.pre-phi
+  %i.az = getelementptr inbounds [4 x i8], ptr %0, i64 %.pre
   ret ptr %i.az
 }
 

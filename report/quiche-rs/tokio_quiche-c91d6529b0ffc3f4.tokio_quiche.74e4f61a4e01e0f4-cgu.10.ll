@@ -205,7 +205,7 @@ _RNvMs0_NtNtCs3f36owOmepS_6quiche6stream8send_bufINtB5_7SendBufNtNtCsa2e0UnRrdBM
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !11042, !noalias !10672
   %.not.i.i.i = icmp ult i64 %.sroa.0.0.i.i.i.i, %i.dk, !dbg !11043
   %i.ee = ptrtoint ptr %i.am to i64, !dbg !11044
-  %spec.select.i.i = select i1 %.not.i.i.i, i64 %.sroa.0.0.i.i.i, i64 0, !dbg !11043 ; 9 uses
+  %spec.select.i.i = select i1 %.not.i.i.i, i64 %.sroa.0.0.i.i.i, i64 0, !dbg !11043 ; 8 uses
     #dbg_value(i64 %i.ee, !10378, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10059)
     #dbg_value(i64 %spec.select.i.i, !10378, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10059)
     #dbg_value(i8 %.sroa.04.0.shrunk.i.i.i, !10378, !DIExpression(DW_OP_LLVM_fragment, 128, 8), !10059)
@@ -214,7 +214,7 @@ _RNvMs0_NtNtCs3f36owOmepS_6quiche6stream8send_bufINtB5_7SendBufNtNtCsa2e0UnRrdBM
   store i64 %spec.select.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !11045, !noalias !10636
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !11045
   store i8 %.sroa.04.0.shrunk.i.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !11045, !noalias !10636
-  %i.ef = icmp eq i64 %spec.select.i.i, 0, !dbg !11046
+  %i.ef = icmp eq i64 %spec.select.i.i, 0, !dbg !11046 ; 2 uses
   br i1 %i.ef, label %bb.as, label %.preheader.i.i, !dbg !11046
 
 bb.ac:                                            ; preds = %bb.ab
@@ -617,9 +617,8 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bu, %bb.
   br i1 %.not108, label %bb.by, label %bb.bz, !dbg !11165
 
 bb.by:                                            ; preds = %bb.bw, %bb.bv, %bb.cd, %bb.bx
-  %6 = icmp eq i64 %spec.select.i.i, 0, !dbg !11166
   %i.im = icmp ne i64 %., 0
-  %or.cond8 = and i1 %i.im, %6, !dbg !11166
+  %or.cond8 = and i1 %i.im, %i.ef, !dbg !11166
   br i1 %or.cond8, label %bb.ch, label %bb.cg, !dbg !11166
 
 bb.bz:                                            ; preds = %bb.bx

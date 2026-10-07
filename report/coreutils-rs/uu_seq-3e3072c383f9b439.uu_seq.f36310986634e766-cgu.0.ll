@@ -204,10 +204,9 @@ _RINvNtCs6JMX4GRUq9U_4core5slice20copy_from_slice_implhECskTxFPE6q5z6_6uu_seq.ex
   %i.eh = sub nuw i64 %..i.i, %7
   %..i54.i = call noundef i64 @llvm.umin.i64(i64 %i.eh, i64 %i.ed) ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !470
-  %i.ei = call { ptr, i64 } @_RNvMsf_NtNtNtCs6JMX4GRUq9U_4core3fmt3num3impy4__fmt(i64 noundef %.sroa.3.0, ptr noalias nofree noundef nonnull %i.p, i64 noundef 20) #19, !noalias !475
-  %.fr154.i = freeze { ptr, i64 } %i.ei           ; 2 uses
-  %i.ej = extractvalue { ptr, i64 } %.fr154.i, 0
-  %i.ek = extractvalue { ptr, i64 } %.fr154.i, 1  ; 8 uses
+  %i.ei = call { ptr, i64 } @_RNvMsf_NtNtNtCs6JMX4GRUq9U_4core3fmt3num3impy4__fmt(i64 noundef %.sroa.3.0, ptr noalias nofree noundef nonnull %i.p, i64 noundef 20) #19, !noalias !475 ; 2 uses
+  %i.ej = extractvalue { ptr, i64 } %i.ei, 0
+  %i.ek = extractvalue { ptr, i64 } %i.ei, 1      ; 8 uses
   %.not.i55.i = icmp slt i64 %i.ek, 0
   br i1 %.not.i55.i, label %bb.ad, label %bb.ac, !prof !15
 
@@ -610,7 +609,6 @@ _RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.i.i.
 
 _RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i: ; preds = %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.i.i.i, %bb.bt
   %.sroa.7.029.i.i.i = phi i64 [ %i.jp, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.i.i.i ], [ %i.jo, %bb.bt ]
-  %.sroa.11.028.i.i.i = phi i64 [ -1, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.i.i.i ], [ %i.ji, %bb.bt ]
   %i.jr = trunc nuw i64 %.sroa.7.029.i.i.i to i1
   br i1 %i.jr, label %_RNvXsi_NtCsioiJd4mgmsb_10num_bigint6bigintNtB5_6BigIntNtNtCs2PbPfIYQJQA_10num_traits4sign6Signed3abs.exit.i.i, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i
 
@@ -651,7 +649,7 @@ bb.by:                                            ; preds = %bb.bq
 
 _RNvXsi_NtCsioiJd4mgmsb_10num_bigint6bigintNtB5_6BigIntNtNtCs2PbPfIYQJQA_10num_traits4sign6Signed3abs.exit.i.i: ; preds = %bb.by, %bb.bx, %bb.bv, %bb.bu, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i, %.split.i.i.i, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i
   %.sroa.10.0.i.i = phi i8 [ 2, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i ], [ 1, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i ], [ 2, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i ], [ 2, %.split.i.i.i ], [ %i.jg, %bb.by ], [ %i.jg, %bb.bx ], [ %i.jg, %bb.bv ], [ %i.jg, %bb.bu ]
-  %.sroa.8.0.i.i = phi i64 [ %i.jk, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i ], [ undef, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i ], [ %.sroa.11.028.i.i.i, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i ], [ %i.ji, %.split.i.i.i ], [ %i.ji, %bb.by ], [ %i.ji, %bb.bx ], [ %i.jt, %bb.bv ], [ undef, %bb.bu ]
+  %.sroa.8.0.i.i = phi i64 [ %i.jk, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i ], [ undef, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i ], [ %i.ji, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i ], [ %i.ji, %.split.i.i.i ], [ %i.ji, %bb.by ], [ %i.ji, %bb.bx ], [ %i.jt, %bb.bv ], [ undef, %bb.bu ]
   %.sroa.6.0.i.i = phi i64 [ 1, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i ], [ 0, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i ], [ 1, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i ], [ %i.jp, %.split.i.i.i ], [ %i.jy, %bb.by ], [ %i.jx, %bb.bx ], [ 1, %bb.bv ], [ %i.ji, %bb.bu ]
   %.sroa.0.019.i.i = phi i64 [ -1, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.thread43.i.i.i ], [ -1, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i.i.i ], [ -1, %_RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.thread.i.i.i ], [ %i.ji, %.split.i.i.i ], [ -1, %bb.by ], [ %i.ji, %bb.bx ], [ -1, %bb.bv ], [ -1, %bb.bu ]
   %i.jz = load i64, ptr %i.ax, align 8, !alias.scope !540, !noalias !541, !noundef !4

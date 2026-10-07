@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %i.q, label %_ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.sink.split, label %_ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
 
 _ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.sink.split: ; preds = %bb.e, %_ZNSt12_Vector_baseIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE11_M_allocateEm.exit.i
-  %.sink = phi i64 [ %i.f, %_ZNSt12_Vector_baseIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE11_M_allocateEm.exit.i ], [ 16, %bb.e ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.o, ptr noundef nonnull align 8 dereferenceable(1) %i.c, i64 %.sink, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %i.c, i64 %i.f, i1 false)
   br label %_ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit
 
 _ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit: ; preds = %_ZNSt6vectorIN6duckdb26SortedRunPartitionBoundaryESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.sink.split, %bb.e

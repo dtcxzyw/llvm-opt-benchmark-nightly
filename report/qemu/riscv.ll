@@ -202,8 +202,7 @@ g_string_append_c_inline.exit:                    ; preds = %bb.ti
   br label %bb.tj
 
 .critedge.i471.thread:                            ; preds = %g_string_append_len_inline.exit260, %g_string_append_len_inline.exit260.thread518
-  %.sink = phi ptr [ %i.c, %g_string_append_len_inline.exit260.thread518 ], [ null, %g_string_append_len_inline.exit260 ]
-  %i.abc = tail call ptr @g_string_insert_c(ptr noundef %.sink, i64 noundef -1, i8 noundef signext 44) #10 ; 0 uses
+  %i.abc = tail call ptr @g_string_insert_c(ptr noundef %i.c, i64 noundef -1, i8 noundef signext 44) #10 ; 0 uses
   %i.abd = tail call ptr @g_string_append_len(ptr noundef %i.c, ptr noundef nonnull %i.yo, i64 noundef -1) #10 ; 0 uses
   %i.abe = tail call ptr @g_string_insert_c(ptr noundef %i.c, i64 noundef -1, i8 noundef signext 44) #10 ; 0 uses
   %i.abf = tail call ptr @g_string_append_len(ptr noundef %i.c, ptr noundef nonnull %i.yq, i64 noundef -1) #10 ; 0 uses

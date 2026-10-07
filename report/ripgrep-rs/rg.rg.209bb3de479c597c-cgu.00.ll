@@ -202,8 +202,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !18625
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !18626
 
 bb.i:                                             ; preds = %bb.f
@@ -458,8 +457,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !18816
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !18817
 
 bb.i:                                             ; preds = %bb.f
@@ -714,8 +712,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !19007
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !19008
 
 bb.i:                                             ; preds = %bb.f
@@ -970,8 +967,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !19198
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !19199
 
 bb.i:                                             ; preds = %bb.f
@@ -1226,8 +1222,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !19389
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !19390
 
 bb.i:                                             ; preds = %bb.f
@@ -1482,8 +1477,7 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %.sroa.0.0, !dbg !19580
 
 .invoke:                                          ; preds = %bb.u, %bb.f
-  %2 = phi i64 [ 0, %bb.f ], [ %i.m, %bb.u ]
-  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %2)
+  %i.u = invoke noundef nonnull ptr @_RNvNtCshqpdr3wwzuw_13grep_searcher11line_buffer11alloc_error(i64 noundef %i.m)
           to label %.loopexit37 unwind label %.loopexit.split-lp, !dbg !19581
 
 bb.i:                                             ; preds = %bb.f

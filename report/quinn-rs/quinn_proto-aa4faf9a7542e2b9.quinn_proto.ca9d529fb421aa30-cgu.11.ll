@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.k, label %.loopexit, label %bb.e, !dbg !14240
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i100, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ], !dbg !14118
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14118
   store ptr %.sroa.0.0, ptr %i.l, align 8, !dbg !14118
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14118
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14118
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14118
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !14118
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8, !dbg !14118
   store i64 %storemerge, ptr %0, align 8, !dbg !14118
@@ -359,13 +358,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.k, label %.loopexit, label %bb.e, !dbg !14471
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i100, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ], !dbg !14349
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14349
   store ptr %.sroa.0.0, ptr %i.l, align 8, !dbg !14349
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14349
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14349
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14349
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !14349
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8, !dbg !14349
   store i64 %storemerge, ptr %0, align 8, !dbg !14349
@@ -515,13 +513,12 @@ bb.d:                                             ; preds = %_RNvXs_NtNtNtCskKLD
   br i1 %i.k, label %.loopexit, label %bb.e, !dbg !14637
 
 .loopexit:                                        ; preds = %.loopexit.loopexit.i, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IteryEENtNtNtB8_6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i
-  %.sink = phi i64 [ %.sroa.3.0, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IteryEENtNtNtB8_6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i ], [ 0, %.loopexit.loopexit.i ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i100, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IteryEENtNtNtB8_6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i ], [ %.sroa.4.0.i.ph, %.loopexit.loopexit.i ]
   %storemerge = phi i64 [ 0, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IteryEENtNtNtB8_6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i ], [ 1, %.loopexit.loopexit.i ], !dbg !14561
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14561
   store ptr %.sroa.0.0, ptr %i.l, align 8, !dbg !14561
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14561
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14561
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8, !dbg !14561
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !14561
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8, !dbg !14561
   store i64 %storemerge, ptr %0, align 8, !dbg !14561

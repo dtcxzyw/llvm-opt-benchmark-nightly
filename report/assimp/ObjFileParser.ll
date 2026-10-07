@@ -204,23 +204,20 @@ _ZNSt6vectorIcSaIcEE6resizeEm.exit:               ; preds = %bb.b, %bb.c, %bb.d,
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 10 uses
   %i.n = load i64, ptr %i.m, align 8              ; 2 uses
   %i.o = load i64, ptr %i.a, align 8
-  %.not = icmp ult i64 %i.n, %i.o
+  %.not = icmp uge i64 %i.n, %i.o
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.q = load i64, ptr %i.p, align 8              ; 2 uses
-  br i1 %.not, label %3, label %_ZNSt6vectorIcSaIcEE6resizeEm.exit._crit_edge
+  %3 = icmp eq i64 %i.q, 0
+  %or.cond = select i1 %.not, i1 true, i1 %3
+  br i1 %or.cond, label %_ZNSt6vectorIcSaIcEE6resizeEm.exit._crit_edge, label %bb.g
 
-3:                                                ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit
-  %4 = icmp eq i64 %i.q, 0
-  br i1 %4, label %_ZNSt6vectorIcSaIcEE6resizeEm.exit._crit_edge, label %bb.g
-
-_ZNSt6vectorIcSaIcEE6resizeEm.exit._crit_edge:    ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit, %3
-  %5 = phi i64 [ 0, %3 ], [ %i.q, %_ZNSt6vectorIcSaIcEE6resizeEm.exit ]
+_ZNSt6vectorIcSaIcEE6resizeEm.exit._crit_edge:    ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit
   %i.r = load ptr, ptr %0, align 8                ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.t = load ptr, ptr %i.r, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.v = load ptr, ptr %i.u, align 8
-  %i.w = tail call noundef i32 %i.v(ptr noundef nonnull align 8 dereferenceable(8) %i.r, i64 noundef %5, i32 noundef 0), !inline_history !24 ; 0 uses
+  %i.w = tail call noundef i32 %i.v(ptr noundef nonnull align 8 dereferenceable(8) %i.r, i64 noundef %i.q, i32 noundef 0), !inline_history !24 ; 0 uses
   %i.x = load ptr, ptr %0, align 8                ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.z = load ptr, ptr %i.y, align 8
@@ -253,8 +250,8 @@ _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread: ; preds = %bb.e, %bb
   store i64 %i.am, ptr %i.ak, align 8
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread, %3
-  %i.an = phi i64 [ 0, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.n, %3 ]
+bb.g:                                             ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread
+  %i.an = phi i64 [ 0, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.n, %_ZNSt6vectorIcSaIcEE6resizeEm.exit ]
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses

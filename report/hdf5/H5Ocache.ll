@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.thread465, %bb.s, 
 
 bb.z:                                             ; preds = %.lr.ph, %bb.cy
   %.0357592 = phi i1 [ false, %.lr.ph ], [ %.6363, %bb.cy ] ; 3 uses
-  %.0365591 = phi i32 [ 0, %.lr.ph ], [ %.2367, %bb.cy ]
+  %.0365591 = phi i32 [ 0, %.lr.ph ], [ %spec.select456, %bb.cy ]
   %.0368590 = phi i32 [ 0, %.lr.ph ], [ %.1369, %bb.cy ] ; 2 uses
   %.2373589 = phi ptr [ %.1372, %.lr.ph ], [ %.6377, %bb.cy ] ; 6 uses
   %i.dy = load i8, ptr %i.da, align 8, !tbaa !35
@@ -405,7 +405,7 @@ bb.bd:                                            ; preds = %bb.az, %bb.bc, %bb.
   %.0 = phi i32 [ 0, %bb.ay ], [ %i.hd, %bb.bc ], [ 0, %bb.az ]
   %i.hf = icmp eq i32 %.0345, 0                   ; 2 uses
   %i.hg = zext i1 %i.hf to i32
-  %spec.select456 = add i32 %.0365591, %i.hg      ; 4 uses
+  %spec.select456 = add i32 %.0365591, %i.hg      ; 2 uses
   %i.hh = load i32, ptr %i.di, align 8, !tbaa !96
   %i.hi = trunc i32 %i.hh to i1
   %or.cond10 = and i1 %i.hf, %i.hi
@@ -773,7 +773,6 @@ bb.cx:                                            ; preds = %bb.cv
 
 bb.cy:                                            ; preds = %.thread496, %bb.cr, %bb.ct, %bb.cx
   %.6377 = phi ptr [ %i.lw, %bb.cr ], [ %i.lw, %.thread496 ], [ %i.ms, %bb.cx ], [ %i.lw, %bb.ct ] ; 3 uses
-  %.2367 = phi i32 [ %spec.select456, %bb.cr ], [ %spec.select456, %.thread496 ], [ 0, %bb.cx ], [ %spec.select456, %bb.ct ]
   %i.mt = icmp ult ptr %.6377, %i.dd
   br i1 %i.mt, label %bb.z, label %._crit_edge.loopexit
 

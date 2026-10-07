@@ -204,7 +204,6 @@ Vec_PtrSort.exit.thread:                          ; preds = %._crit_edge44
   %i.av = load ptr, ptr %i.l, align 8, !tbaa !47
   %i.aw = zext nneg i32 %.promoted55 to i64
   tail call void @qsort(ptr noundef %i.av, i64 noundef %i.aw, i64 noundef 8, ptr noundef nonnull @Npn_ManCompareEntries) #22
-  %2 = zext nneg i32 %.promoted55 to i64
   br label %.lr.ph46
 
 Vec_PtrSort.exit:                                 ; preds = %._crit_edge44
@@ -212,8 +211,8 @@ Vec_PtrSort.exit:                                 ; preds = %._crit_edge44
   br i1 %i.ax, label %.lr.ph46, label %.critedge
 
 .lr.ph46:                                         ; preds = %Vec_PtrSort.exit.thread, %Vec_PtrSort.exit
-  %wide.trip.count = phi i64 [ %2, %Vec_PtrSort.exit.thread ], [ 1, %Vec_PtrSort.exit ]
   %.val29 = load ptr, ptr %i.l, align 8, !tbaa !47
+  %wide.trip.count = zext nneg i32 %.promoted55 to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph46, %bb.o
