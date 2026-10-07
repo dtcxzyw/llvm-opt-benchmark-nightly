@@ -205,14 +205,14 @@ bb.cd:                                            ; preds = %_ZN11duckdb_zstdL19
   br i1 %i.wf, label %bb.ce, label %bb.df
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.wg = ptrtoint ptr %i.we to i64               ; 3 uses
-  %i.wh = ptrtoint ptr %i.vy to i64               ; 4 uses
+  %i.wg = ptrtoint ptr %i.we to i64               ; 2 uses
+  %i.wh = ptrtoint ptr %i.vy to i64               ; 3 uses
   %i.wi = sub i64 %i.wg, %i.wh                    ; 9 uses
   %.not273.i.i = icmp eq ptr %i.we, %i.vy
   br i1 %.not273.i.i, label %thread-pre-split.i, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.wj = ptrtoint ptr %.0230.i754.i to i64       ; 7 uses
+  %i.wj = ptrtoint ptr %.0230.i754.i to i64       ; 6 uses
   %i.wk = sub i64 %i.hu, %i.wj
   %i.wl = icmp ugt i64 %i.wi, %i.wk
   br i1 %i.wl, label %.thread677.i, label %bb.cg
@@ -350,14 +350,11 @@ bb.ck:                                            ; preds = %bb.ck, %bb.cj
 iter.check67:                                     ; preds = %.thread.i292.i, %bb.ch
   %.148.i.i = phi ptr [ %i.xl, %.thread.i292.i ], [ %.0230.i754.i, %bb.ch ] ; 7 uses
   %.13047.i.i = phi ptr [ %i.xu, %.thread.i292.i ], [ %i.vy, %bb.ch ] ; 6 uses
-  %.143.i.i = ptrtoaddr ptr %.148.i.i to i64      ; 3 uses
+  %.143.i.i = ptrtoaddr ptr %.148.i.i to i64      ; 2 uses
   %i.xv = add i64 %i.wi, %i.wj
-  %i.xw = sub i64 %i.xv, %.143.i.i
+  %i.xw = sub i64 %i.xv, %.143.i.i                ; 8 uses
   %scevgep.i.i = getelementptr i8, ptr %.148.i.i, i64 %i.xw
-  %14 = add i64 %i.wj, %i.wg
-  %15 = add i64 %.143.i.i, %i.wh
-  %16 = sub i64 %14, %15                          ; 7 uses
-  %min.iters.check51 = icmp ult i64 %16, 8
+  %min.iters.check51 = icmp ult i64 %i.xw, 8
   %.13047.i.i49 = ptrtoaddr ptr %.13047.i.i to i64
   %i.xx = sub i64 %.13047.i.i49, %.143.i.i
   %diff.check50 = icmp ugt i64 %i.xx, -32
@@ -365,12 +362,12 @@ iter.check67:                                     ; preds = %.thread.i292.i, %bb
   br i1 %or.cond153, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check52
 
 vector.main.loop.iter.check52:                    ; preds = %iter.check67
-  %min.iters.check53 = icmp ult i64 %16, 32
+  %min.iters.check53 = icmp ult i64 %i.xw, 32
   br i1 %min.iters.check53, label %vec.epilog.ph71, label %vector.ph54
 
 vector.ph54:                                      ; preds = %vector.main.loop.iter.check52
-  %i.xy = and i64 %16, 24
-  %n.vec55 = and i64 %16, -32                     ; 5 uses
+  %i.xy = and i64 %i.xw, 24
+  %n.vec55 = and i64 %i.xw, -32                   ; 5 uses
   %i.xz = getelementptr i8, ptr %.148.i.i, i64 %n.vec55
   %i.ya = getelementptr i8, ptr %.13047.i.i, i64 %n.vec55
   br label %vector.body56
@@ -390,7 +387,7 @@ vector.body56:                                    ; preds = %vector.ph54, %vecto
   br i1 %i.yd, label %middle.block63, label %vector.body56, !llvm.loop !128
 
 middle.block63:                                   ; preds = %vector.body56
-  %cmp.n64 = icmp eq i64 %16, %n.vec55
+  %cmp.n64 = icmp eq i64 %i.xw, %n.vec55
   br i1 %cmp.n64, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit.i, label %vec.epilog.iter.check69
 
 vec.epilog.iter.check69:                          ; preds = %middle.block63
@@ -399,7 +396,7 @@ vec.epilog.iter.check69:                          ; preds = %middle.block63
 
 vec.epilog.ph71:                                  ; preds = %vector.main.loop.iter.check52, %vec.epilog.iter.check69
   %vec.epilog.resume.val65 = phi i64 [ %n.vec55, %vec.epilog.iter.check69 ], [ 0, %vector.main.loop.iter.check52 ]
-  %n.vec72 = and i64 %16, -8                      ; 4 uses
+  %n.vec72 = and i64 %i.xw, -8                    ; 4 uses
   %i.ye = getelementptr i8, ptr %.148.i.i, i64 %n.vec72
   %i.yf = getelementptr i8, ptr %.13047.i.i, i64 %n.vec72
   br label %vec.epilog.vector.body73
@@ -415,7 +412,7 @@ vec.epilog.vector.body73:                         ; preds = %vec.epilog.vector.b
   br i1 %i.yg, label %vec.epilog.middle.block79, label %vec.epilog.vector.body73, !llvm.loop !129
 
 vec.epilog.middle.block79:                        ; preds = %vec.epilog.vector.body73
-  %cmp.n80 = icmp eq i64 %16, %n.vec72
+  %cmp.n80 = icmp eq i64 %i.xw, %n.vec72
   br i1 %cmp.n80, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %iter.check67, %vec.epilog.iter.check69, %vec.epilog.middle.block79
@@ -818,14 +815,14 @@ bb.ex:                                            ; preds = %bb.ew
   br i1 %i.ajc, label %bb.ey, label %bb.fy
 
 bb.ey:                                            ; preds = %bb.ex
-  %i.ajd = ptrtoint ptr %i.ajb to i64             ; 3 uses
-  %i.aje = ptrtoint ptr %i.aiy to i64             ; 4 uses
+  %i.ajd = ptrtoint ptr %i.ajb to i64             ; 2 uses
+  %i.aje = ptrtoint ptr %i.aiy to i64             ; 3 uses
   %i.ajf = sub i64 %i.ajd, %i.aje                 ; 9 uses
   %.not270.i.i = icmp eq ptr %i.ajb, %i.aiy
   br i1 %.not270.i.i, label %thread-pre-split658.i, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
-  %i.ajg = ptrtoint ptr %.7237.i765.i to i64      ; 7 uses
+  %i.ajg = ptrtoint ptr %.7237.i765.i to i64      ; 6 uses
   %i.ajh = sub i64 %i.aim, %i.ajg
   %i.aji = icmp ugt i64 %i.ajf, %i.ajh
   br i1 %i.aji, label %.thread677.i, label %bb.fa
@@ -963,14 +960,11 @@ bb.fe:                                            ; preds = %bb.fe, %bb.fd
 iter.check137:                                    ; preds = %.thread.i310.i, %bb.fb
   %.148.i296.i = phi ptr [ %i.aki, %.thread.i310.i ], [ %.7237.i765.i, %bb.fb ] ; 7 uses
   %.13047.i297.i = phi ptr [ %i.akr, %.thread.i310.i ], [ %i.aiy, %bb.fb ] ; 6 uses
-  %.143.i298.i = ptrtoaddr ptr %.148.i296.i to i64 ; 3 uses
+  %.143.i298.i = ptrtoaddr ptr %.148.i296.i to i64 ; 2 uses
   %i.aks = add i64 %i.ajf, %i.ajg
-  %i.akt = sub i64 %i.aks, %.143.i298.i
+  %i.akt = sub i64 %i.aks, %.143.i298.i           ; 8 uses
   %scevgep.i299.i = getelementptr i8, ptr %.148.i296.i, i64 %i.akt
-  %17 = add i64 %i.ajg, %i.ajd
-  %18 = add i64 %.143.i298.i, %i.aje
-  %19 = sub i64 %17, %18                          ; 7 uses
-  %min.iters.check121 = icmp ult i64 %19, 8
+  %min.iters.check121 = icmp ult i64 %i.akt, 8
   %.13047.i297.i119 = ptrtoaddr ptr %.13047.i297.i to i64
   %i.aku = sub i64 %.13047.i297.i119, %.143.i298.i
   %diff.check120 = icmp ugt i64 %i.aku, -32
@@ -978,12 +972,12 @@ iter.check137:                                    ; preds = %.thread.i310.i, %bb
   br i1 %or.cond155, label %.lr.ph.i300.i.preheader, label %vector.main.loop.iter.check122
 
 vector.main.loop.iter.check122:                   ; preds = %iter.check137
-  %min.iters.check123 = icmp ult i64 %19, 32
+  %min.iters.check123 = icmp ult i64 %i.akt, 32
   br i1 %min.iters.check123, label %vec.epilog.ph141, label %vector.ph124
 
 vector.ph124:                                     ; preds = %vector.main.loop.iter.check122
-  %i.akv = and i64 %19, 24
-  %n.vec125 = and i64 %19, -32                    ; 5 uses
+  %i.akv = and i64 %i.akt, 24
+  %n.vec125 = and i64 %i.akt, -32                 ; 5 uses
   %i.akw = getelementptr i8, ptr %.148.i296.i, i64 %n.vec125
   %i.akx = getelementptr i8, ptr %.13047.i297.i, i64 %n.vec125
   br label %vector.body126
@@ -1003,7 +997,7 @@ vector.body126:                                   ; preds = %vector.ph124, %vect
   br i1 %i.ala, label %middle.block133, label %vector.body126, !llvm.loop !134
 
 middle.block133:                                  ; preds = %vector.body126
-  %cmp.n134 = icmp eq i64 %19, %n.vec125
+  %cmp.n134 = icmp eq i64 %i.akt, %n.vec125
   br i1 %cmp.n134, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit315.i, label %vec.epilog.iter.check139
 
 vec.epilog.iter.check139:                         ; preds = %middle.block133
@@ -1012,7 +1006,7 @@ vec.epilog.iter.check139:                         ; preds = %middle.block133
 
 vec.epilog.ph141:                                 ; preds = %vector.main.loop.iter.check122, %vec.epilog.iter.check139
   %vec.epilog.resume.val135 = phi i64 [ %n.vec125, %vec.epilog.iter.check139 ], [ 0, %vector.main.loop.iter.check122 ]
-  %n.vec142 = and i64 %19, -8                     ; 4 uses
+  %n.vec142 = and i64 %i.akt, -8                  ; 4 uses
   %i.alb = getelementptr i8, ptr %.148.i296.i, i64 %n.vec142
   %i.alc = getelementptr i8, ptr %.13047.i297.i, i64 %n.vec142
   br label %vec.epilog.vector.body143
@@ -1028,7 +1022,7 @@ vec.epilog.vector.body143:                        ; preds = %vec.epilog.vector.b
   br i1 %i.ald, label %vec.epilog.middle.block149, label %vec.epilog.vector.body143, !llvm.loop !135
 
 vec.epilog.middle.block149:                       ; preds = %vec.epilog.vector.body143
-  %cmp.n150 = icmp eq i64 %19, %n.vec142
+  %cmp.n150 = icmp eq i64 %i.akt, %n.vec142
   br i1 %cmp.n150, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit315.i, label %.lr.ph.i300.i.preheader
 
 .lr.ph.i300.i.preheader:                          ; preds = %iter.check137, %vec.epilog.iter.check139, %vec.epilog.middle.block149
@@ -1431,15 +1425,15 @@ bb.bx:                                            ; preds = %_ZN11duckdb_zstdL19
   %i.rk = phi i64 [ %i.lw, %bb.bx ], [ %i.hf, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread.i ]
   %i.rl = phi ptr [ %i.no, %bb.bx ], [ %i.ns, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread.i ] ; 11 uses
   %i.rm = phi ptr [ %i.nq, %bb.bx ], [ %i.nu, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread.i ] ; 2 uses
-  %i.rn = ptrtoint ptr %i.rm to i64               ; 3 uses
-  %i.ro = ptrtoint ptr %i.rl to i64               ; 4 uses
+  %i.rn = ptrtoint ptr %i.rm to i64               ; 2 uses
+  %i.ro = ptrtoint ptr %i.rl to i64               ; 3 uses
   %i.rp = sub i64 %i.rn, %i.ro                    ; 9 uses
   %.not181.i.i = icmp eq ptr %i.rm, %i.rl
   br i1 %.not181.i.i, label %bb.ce, label %bb.by
 
 bb.by:                                            ; preds = %.thread412.i
   %i.rq = ptrtoint ptr %i.d to i64
-  %i.rr = ptrtoint ptr %.0144.i314.i to i64       ; 7 uses
+  %i.rr = ptrtoint ptr %.0144.i314.i to i64       ; 6 uses
   %i.rs = sub i64 %i.rq, %i.rr
   %i.rt = icmp ugt i64 %i.rp, %i.rs
   br i1 %i.rt, label %.thread263.i, label %bb.bz
@@ -1577,14 +1571,11 @@ bb.cd:                                            ; preds = %bb.cd, %bb.cc
 iter.check:                                       ; preds = %.thread.i68.i, %bb.ca
   %.148.i.i = phi ptr [ %i.st, %.thread.i68.i ], [ %.0144.i314.i, %bb.ca ] ; 7 uses
   %.13047.i.i = phi ptr [ %i.tc, %.thread.i68.i ], [ %i.rl, %bb.ca ] ; 6 uses
-  %.143.i.i = ptrtoaddr ptr %.148.i.i to i64      ; 3 uses
+  %.143.i.i = ptrtoaddr ptr %.148.i.i to i64      ; 2 uses
   %i.td = add i64 %i.rp, %i.rr
-  %i.te = sub i64 %i.td, %.143.i.i
+  %i.te = sub i64 %i.td, %.143.i.i                ; 8 uses
   %scevgep.i.i = getelementptr i8, ptr %.148.i.i, i64 %i.te
-  %10 = add i64 %i.rr, %i.rn
-  %11 = add i64 %.143.i.i, %i.ro
-  %12 = sub i64 %10, %11                          ; 7 uses
-  %min.iters.check = icmp ult i64 %12, 8
+  %min.iters.check = icmp ult i64 %i.te, 8
   %.13047.i.i106 = ptrtoaddr ptr %.13047.i.i to i64
   %i.tf = sub i64 %.13047.i.i106, %.143.i.i
   %diff.check = icmp ugt i64 %i.tf, -32
@@ -1592,12 +1583,12 @@ iter.check:                                       ; preds = %.thread.i68.i, %bb.
   br i1 %or.cond154, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check107 = icmp ult i64 %12, 32
+  %min.iters.check107 = icmp ult i64 %i.te, 32
   br i1 %min.iters.check107, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.tg = and i64 %12, 24
-  %n.vec = and i64 %12, -32                       ; 5 uses
+  %i.tg = and i64 %i.te, 24
+  %n.vec = and i64 %i.te, -32                     ; 5 uses
   %i.th = getelementptr i8, ptr %.148.i.i, i64 %n.vec
   %i.ti = getelementptr i8, ptr %.13047.i.i, i64 %n.vec
   br label %vector.body
@@ -1617,7 +1608,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.tl, label %middle.block, label %vector.body, !llvm.loop !144
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %12, %n.vec
+  %cmp.n = icmp eq i64 %i.te, %n.vec
   br i1 %cmp.n, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -1626,7 +1617,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec111 = and i64 %12, -8                     ; 4 uses
+  %n.vec111 = and i64 %i.te, -8                   ; 4 uses
   %i.tm = getelementptr i8, ptr %.148.i.i, i64 %n.vec111
   %i.tn = getelementptr i8, ptr %.13047.i.i, i64 %n.vec111
   br label %vec.epilog.vector.body
@@ -1642,7 +1633,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.to, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !145
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n117 = icmp eq i64 %12, %n.vec111
+  %cmp.n117 = icmp eq i64 %i.te, %n.vec111
   br i1 %cmp.n117, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -2045,14 +2036,14 @@ bb.cb:                                            ; preds = %_ZN11duckdb_zstdL19
   br i1 %i.we, label %bb.cc, label %bb.dd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.wf = ptrtoint ptr %i.wd to i64               ; 3 uses
-  %i.wg = ptrtoint ptr %i.vx to i64               ; 4 uses
+  %i.wf = ptrtoint ptr %i.wd to i64               ; 2 uses
+  %i.wg = ptrtoint ptr %i.vx to i64               ; 3 uses
   %i.wh = sub i64 %i.wf, %i.wg                    ; 9 uses
   %.not273.i = icmp eq ptr %i.wd, %i.vx
   br i1 %.not273.i, label %thread-pre-split, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.wi = ptrtoint ptr %.0230.i754 to i64         ; 7 uses
+  %i.wi = ptrtoint ptr %.0230.i754 to i64         ; 6 uses
   %i.wj = sub i64 %i.hv, %i.wi
   %i.wk = icmp ugt i64 %i.wh, %i.wj
   br i1 %i.wk, label %.thread677, label %bb.ce
@@ -2190,14 +2181,11 @@ bb.ci:                                            ; preds = %bb.ci, %bb.ch
 iter.check60:                                     ; preds = %bb.cf, %.thread.i292
   %.148.i = phi ptr [ %i.xk, %.thread.i292 ], [ %.0230.i754, %bb.cf ] ; 7 uses
   %.13047.i = phi ptr [ %i.xt, %.thread.i292 ], [ %i.vx, %bb.cf ] ; 6 uses
-  %.143.i = ptrtoaddr ptr %.148.i to i64          ; 3 uses
+  %.143.i = ptrtoaddr ptr %.148.i to i64          ; 2 uses
   %i.xu = add i64 %i.wh, %i.wi
-  %i.xv = sub i64 %i.xu, %.143.i
+  %i.xv = sub i64 %i.xu, %.143.i                  ; 8 uses
   %scevgep.i = getelementptr i8, ptr %.148.i, i64 %i.xv
-  %14 = add i64 %i.wi, %i.wf
-  %15 = add i64 %.143.i, %i.wg
-  %16 = sub i64 %14, %15                          ; 7 uses
-  %min.iters.check44 = icmp ult i64 %16, 8
+  %min.iters.check44 = icmp ult i64 %i.xv, 8
   %.13047.i42 = ptrtoaddr ptr %.13047.i to i64
   %i.xw = sub i64 %.13047.i42, %.143.i
   %diff.check43 = icmp ugt i64 %i.xw, -32
@@ -2205,12 +2193,12 @@ iter.check60:                                     ; preds = %bb.cf, %.thread.i29
   br i1 %or.cond147, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check45
 
 vector.main.loop.iter.check45:                    ; preds = %iter.check60
-  %min.iters.check46 = icmp ult i64 %16, 32
+  %min.iters.check46 = icmp ult i64 %i.xv, 32
   br i1 %min.iters.check46, label %vec.epilog.ph64, label %vector.ph47
 
 vector.ph47:                                      ; preds = %vector.main.loop.iter.check45
-  %i.xx = and i64 %16, 24
-  %n.vec48 = and i64 %16, -32                     ; 5 uses
+  %i.xx = and i64 %i.xv, 24
+  %n.vec48 = and i64 %i.xv, -32                   ; 5 uses
   %i.xy = getelementptr i8, ptr %.148.i, i64 %n.vec48
   %i.xz = getelementptr i8, ptr %.13047.i, i64 %n.vec48
   br label %vector.body49
@@ -2230,7 +2218,7 @@ vector.body49:                                    ; preds = %vector.ph47, %vecto
   br i1 %i.yc, label %middle.block56, label %vector.body49, !llvm.loop !161
 
 middle.block56:                                   ; preds = %vector.body49
-  %cmp.n57 = icmp eq i64 %16, %n.vec48
+  %cmp.n57 = icmp eq i64 %i.xv, %n.vec48
   br i1 %cmp.n57, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit, label %vec.epilog.iter.check62
 
 vec.epilog.iter.check62:                          ; preds = %middle.block56
@@ -2239,7 +2227,7 @@ vec.epilog.iter.check62:                          ; preds = %middle.block56
 
 vec.epilog.ph64:                                  ; preds = %vector.main.loop.iter.check45, %vec.epilog.iter.check62
   %vec.epilog.resume.val58 = phi i64 [ %n.vec48, %vec.epilog.iter.check62 ], [ 0, %vector.main.loop.iter.check45 ]
-  %n.vec65 = and i64 %16, -8                      ; 4 uses
+  %n.vec65 = and i64 %i.xv, -8                    ; 4 uses
   %i.yd = getelementptr i8, ptr %.148.i, i64 %n.vec65
   %i.ye = getelementptr i8, ptr %.13047.i, i64 %n.vec65
   br label %vec.epilog.vector.body66
@@ -2255,7 +2243,7 @@ vec.epilog.vector.body66:                         ; preds = %vec.epilog.vector.b
   br i1 %i.yf, label %vec.epilog.middle.block72, label %vec.epilog.vector.body66, !llvm.loop !162
 
 vec.epilog.middle.block72:                        ; preds = %vec.epilog.vector.body66
-  %cmp.n73 = icmp eq i64 %16, %n.vec65
+  %cmp.n73 = icmp eq i64 %i.xv, %n.vec65
   br i1 %cmp.n73, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %iter.check60, %vec.epilog.iter.check62, %vec.epilog.middle.block72
@@ -2658,14 +2646,14 @@ bb.ev:                                            ; preds = %bb.eu
   br i1 %i.ajb, label %bb.ew, label %bb.fw
 
 bb.ew:                                            ; preds = %bb.ev
-  %i.ajc = ptrtoint ptr %i.aja to i64             ; 3 uses
-  %i.ajd = ptrtoint ptr %i.aix to i64             ; 4 uses
+  %i.ajc = ptrtoint ptr %i.aja to i64             ; 2 uses
+  %i.ajd = ptrtoint ptr %i.aix to i64             ; 3 uses
   %i.aje = sub i64 %i.ajc, %i.ajd                 ; 9 uses
   %.not270.i = icmp eq ptr %i.aja, %i.aix
   br i1 %.not270.i, label %thread-pre-split658, label %bb.ex
 
 bb.ex:                                            ; preds = %bb.ew
-  %i.ajf = ptrtoint ptr %.7237.i765 to i64        ; 7 uses
+  %i.ajf = ptrtoint ptr %.7237.i765 to i64        ; 6 uses
   %i.ajg = sub i64 %i.ail, %i.ajf
   %i.ajh = icmp ugt i64 %i.aje, %i.ajg
   br i1 %i.ajh, label %.thread677, label %bb.ey
@@ -2803,14 +2791,11 @@ bb.fc:                                            ; preds = %bb.fc, %bb.fb
 iter.check130:                                    ; preds = %bb.ez, %.thread.i310
   %.148.i296 = phi ptr [ %i.akh, %.thread.i310 ], [ %.7237.i765, %bb.ez ] ; 7 uses
   %.13047.i297 = phi ptr [ %i.akq, %.thread.i310 ], [ %i.aix, %bb.ez ] ; 6 uses
-  %.143.i298 = ptrtoaddr ptr %.148.i296 to i64    ; 3 uses
+  %.143.i298 = ptrtoaddr ptr %.148.i296 to i64    ; 2 uses
   %i.akr = add i64 %i.aje, %i.ajf
-  %i.aks = sub i64 %i.akr, %.143.i298
+  %i.aks = sub i64 %i.akr, %.143.i298             ; 8 uses
   %scevgep.i299 = getelementptr i8, ptr %.148.i296, i64 %i.aks
-  %17 = add i64 %i.ajf, %i.ajc
-  %18 = add i64 %.143.i298, %i.ajd
-  %19 = sub i64 %17, %18                          ; 7 uses
-  %min.iters.check114 = icmp ult i64 %19, 8
+  %min.iters.check114 = icmp ult i64 %i.aks, 8
   %.13047.i297112 = ptrtoaddr ptr %.13047.i297 to i64
   %i.akt = sub i64 %.13047.i297112, %.143.i298
   %diff.check113 = icmp ugt i64 %i.akt, -32
@@ -2818,12 +2803,12 @@ iter.check130:                                    ; preds = %bb.ez, %.thread.i31
   br i1 %or.cond149, label %.lr.ph.i300.preheader, label %vector.main.loop.iter.check115
 
 vector.main.loop.iter.check115:                   ; preds = %iter.check130
-  %min.iters.check116 = icmp ult i64 %19, 32
+  %min.iters.check116 = icmp ult i64 %i.aks, 32
   br i1 %min.iters.check116, label %vec.epilog.ph134, label %vector.ph117
 
 vector.ph117:                                     ; preds = %vector.main.loop.iter.check115
-  %i.aku = and i64 %19, 24
-  %n.vec118 = and i64 %19, -32                    ; 5 uses
+  %i.aku = and i64 %i.aks, 24
+  %n.vec118 = and i64 %i.aks, -32                 ; 5 uses
   %i.akv = getelementptr i8, ptr %.148.i296, i64 %n.vec118
   %i.akw = getelementptr i8, ptr %.13047.i297, i64 %n.vec118
   br label %vector.body119
@@ -2843,7 +2828,7 @@ vector.body119:                                   ; preds = %vector.ph117, %vect
   br i1 %i.akz, label %middle.block126, label %vector.body119, !llvm.loop !167
 
 middle.block126:                                  ; preds = %vector.body119
-  %cmp.n127 = icmp eq i64 %19, %n.vec118
+  %cmp.n127 = icmp eq i64 %i.aks, %n.vec118
   br i1 %cmp.n127, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit315, label %vec.epilog.iter.check132
 
 vec.epilog.iter.check132:                         ; preds = %middle.block126
@@ -2852,7 +2837,7 @@ vec.epilog.iter.check132:                         ; preds = %middle.block126
 
 vec.epilog.ph134:                                 ; preds = %vector.main.loop.iter.check115, %vec.epilog.iter.check132
   %vec.epilog.resume.val128 = phi i64 [ %n.vec118, %vec.epilog.iter.check132 ], [ 0, %vector.main.loop.iter.check115 ]
-  %n.vec135 = and i64 %19, -8                     ; 4 uses
+  %n.vec135 = and i64 %i.aks, -8                  ; 4 uses
   %i.ala = getelementptr i8, ptr %.148.i296, i64 %n.vec135
   %i.alb = getelementptr i8, ptr %.13047.i297, i64 %n.vec135
   br label %vec.epilog.vector.body136
@@ -2868,7 +2853,7 @@ vec.epilog.vector.body136:                        ; preds = %vec.epilog.vector.b
   br i1 %i.alc, label %vec.epilog.middle.block142, label %vec.epilog.vector.body136, !llvm.loop !168
 
 vec.epilog.middle.block142:                       ; preds = %vec.epilog.vector.body136
-  %cmp.n143 = icmp eq i64 %19, %n.vec135
+  %cmp.n143 = icmp eq i64 %i.aks, %n.vec135
   br i1 %cmp.n143, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit315, label %.lr.ph.i300.preheader
 
 .lr.ph.i300.preheader:                            ; preds = %iter.check130, %vec.epilog.iter.check132, %vec.epilog.middle.block142
@@ -3271,15 +3256,15 @@ bb.bv:                                            ; preds = %_ZN11duckdb_zstdL19
   %i.rl = phi i64 [ %i.lx, %bb.bv ], [ %i.hg, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread ]
   %i.rm = phi ptr [ %i.np, %bb.bv ], [ %i.nt, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread ] ; 11 uses
   %i.rn = phi ptr [ %i.nr, %bb.bv ], [ %i.nv, %_ZN11duckdb_zstdL19ZSTD_decodeSequenceEPNS_10seqState_tENS_17ZSTD_longOffset_eEi.exit199.i.thread ] ; 2 uses
-  %i.ro = ptrtoint ptr %i.rn to i64               ; 3 uses
-  %i.rp = ptrtoint ptr %i.rm to i64               ; 4 uses
+  %i.ro = ptrtoint ptr %i.rn to i64               ; 2 uses
+  %i.rp = ptrtoint ptr %i.rm to i64               ; 3 uses
   %i.rq = sub i64 %i.ro, %i.rp                    ; 9 uses
   %.not181.i = icmp eq ptr %i.rn, %i.rm
   br i1 %.not181.i, label %bb.cc, label %bb.bw
 
 bb.bw:                                            ; preds = %.thread412
   %i.rr = ptrtoint ptr %i.b to i64
-  %i.rs = ptrtoint ptr %.0144.i314 to i64         ; 7 uses
+  %i.rs = ptrtoint ptr %.0144.i314 to i64         ; 6 uses
   %i.rt = sub i64 %i.rr, %i.rs
   %i.ru = icmp ugt i64 %i.rq, %i.rt
   br i1 %i.ru, label %.thread263, label %bb.bx
@@ -3417,14 +3402,11 @@ bb.cb:                                            ; preds = %bb.cb, %bb.ca
 iter.check:                                       ; preds = %bb.by, %.thread.i68
   %.148.i = phi ptr [ %i.su, %.thread.i68 ], [ %.0144.i314, %bb.by ] ; 7 uses
   %.13047.i = phi ptr [ %i.td, %.thread.i68 ], [ %i.rm, %bb.by ] ; 6 uses
-  %.143.i = ptrtoaddr ptr %.148.i to i64          ; 3 uses
+  %.143.i = ptrtoaddr ptr %.148.i to i64          ; 2 uses
   %i.te = add i64 %i.rq, %i.rs
-  %i.tf = sub i64 %i.te, %.143.i
+  %i.tf = sub i64 %i.te, %.143.i                  ; 8 uses
   %scevgep.i = getelementptr i8, ptr %.148.i, i64 %i.tf
-  %10 = add i64 %i.rs, %i.ro
-  %11 = add i64 %.143.i, %i.rp
-  %12 = sub i64 %10, %11                          ; 7 uses
-  %min.iters.check = icmp ult i64 %12, 8
+  %min.iters.check = icmp ult i64 %i.tf, 8
   %.13047.i76 = ptrtoaddr ptr %.13047.i to i64
   %i.tg = sub i64 %.13047.i76, %.143.i
   %diff.check = icmp ugt i64 %i.tg, -32
@@ -3432,12 +3414,12 @@ iter.check:                                       ; preds = %bb.by, %.thread.i68
   br i1 %or.cond125, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check77 = icmp ult i64 %12, 32
+  %min.iters.check77 = icmp ult i64 %i.tf, 32
   br i1 %min.iters.check77, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.th = and i64 %12, 24
-  %n.vec = and i64 %12, -32                       ; 5 uses
+  %i.th = and i64 %i.tf, 24
+  %n.vec = and i64 %i.tf, -32                     ; 5 uses
   %i.ti = getelementptr i8, ptr %.148.i, i64 %n.vec
   %i.tj = getelementptr i8, ptr %.13047.i, i64 %n.vec
   br label %vector.body
@@ -3457,7 +3439,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.tm, label %middle.block, label %vector.body, !llvm.loop !196
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %12, %n.vec
+  %cmp.n = icmp eq i64 %i.tf, %n.vec
   br i1 %cmp.n, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -3466,7 +3448,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec81 = and i64 %12, -8                      ; 4 uses
+  %n.vec81 = and i64 %i.tf, -8                    ; 4 uses
   %i.tn = getelementptr i8, ptr %.148.i, i64 %n.vec81
   %i.to = getelementptr i8, ptr %.13047.i, i64 %n.vec81
   br label %vec.epilog.vector.body
@@ -3482,7 +3464,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.tp, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !197
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n87 = icmp eq i64 %12, %n.vec81
+  %cmp.n87 = icmp eq i64 %i.tf, %n.vec81
   br i1 %cmp.n87, label %_ZN11duckdb_zstdL25ZSTD_safecopyDstBeforeSrcEPhPKhl.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

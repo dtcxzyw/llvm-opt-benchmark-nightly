@@ -162,11 +162,9 @@ scalar.ph855:                                     ; preds = %scalar.ph855.prehea
   store i64 %.sroa.0185.0.copyload, ptr %4, align 8
   %wide.trip.count40.i = zext nneg i32 %i.aq to i64 ; 15 uses
   %i.ax = trunc i64 %.sroa.0185.0.copyload to i32 ; 5 uses
-  %8 = zext nneg i32 %i.ag to i64                 ; 4 uses
-  %9 = zext nneg i32 %i.ad to i64                 ; 4 uses
-  %umax = call i64 @llvm.umax.i64(i64 %8, i64 %9)
+  %8 = call i32 @llvm.umax.i32(i32 %i.ad, i32 %i.ag) ; 4 uses
   %xtraiter = and i64 %wide.trip.count40.i, 3     ; 3 uses
-  %i.ay = icmp samesign ult i64 %umax, 3
+  %i.ay = icmp samesign ult i32 %8, 3
   br i1 %i.ay, label %.epil.preheader, label %.lr.ph29.i.new
 
 .lr.ph29.i.new:                                   ; preds = %.lr.ph29.i
@@ -310,9 +308,8 @@ scalar.ph841:                                     ; preds = %scalar.ph841.prehea
 .lr.ph29.i288:                                    ; preds = %.lr.ph.i293, %.preheader.i286
   store i64 %.sroa.0184.0.copyload, ptr %5, align 8
   %i.da = trunc i64 %.sroa.0184.0.copyload to i32 ; 2 uses
-  %umax871 = call i64 @llvm.umax.i64(i64 %8, i64 %9)
   %xtraiter872 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.db = icmp samesign ult i64 %umax871, 3
+  %i.db = icmp samesign ult i32 %8, 3
   br i1 %i.db, label %.epil.preheader870, label %.lr.ph29.i288.new
 
 .lr.ph29.i288.new:                                ; preds = %.lr.ph29.i288
@@ -456,9 +453,8 @@ scalar.ph827:                                     ; preds = %scalar.ph827.prehea
 .lr.ph29.i305:                                    ; preds = %.lr.ph.i310, %.preheader.i303
   store i64 %.sroa.0183.0.copyload, ptr %6, align 8
   %i.fd = trunc i64 %.sroa.0183.0.copyload to i32 ; 5 uses
-  %umax879 = call i64 @llvm.umax.i64(i64 %8, i64 %9)
   %xtraiter880 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.fe = icmp samesign ult i64 %umax879, 3
+  %i.fe = icmp samesign ult i32 %8, 3
   br i1 %i.fe, label %.epil.preheader878, label %.lr.ph29.i305.new
 
 .lr.ph29.i305.new:                                ; preds = %.lr.ph29.i305
@@ -603,9 +599,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph29.i322:                                    ; preds = %.lr.ph.i327, %.preheader.i320
   store i64 %.sroa.0.0.copyload, ptr %7, align 8
   %i.hh = trunc i64 %.sroa.0.0.copyload to i32    ; 2 uses
-  %umax887 = call i64 @llvm.umax.i64(i64 %8, i64 %9)
   %xtraiter888 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.hi = icmp samesign ult i64 %umax887, 3
+  %i.hi = icmp samesign ult i32 %8, 3
   br i1 %i.hi, label %.epil.preheader886, label %.lr.ph29.i322.new
 
 .lr.ph29.i322.new:                                ; preds = %.lr.ph29.i322
@@ -1008,11 +1003,9 @@ scalar.ph688:                                     ; preds = %scalar.ph688.prehea
   store i64 %.sroa.0124.0.copyload, ptr %8, align 8
   %wide.trip.count40.i = zext nneg i32 %i.dx to i64 ; 14 uses
   %i.ee = trunc i64 %.sroa.0124.0.copyload to i32
-  %12 = zext nneg i32 %i.dn to i64                ; 4 uses
-  %13 = zext nneg i32 %i.dk to i64                ; 4 uses
-  %umax = call i64 @llvm.umax.i64(i64 %12, i64 %13)
+  %12 = call i32 @llvm.umax.i32(i32 %i.dk, i32 %i.dn) ; 4 uses
   %xtraiter = and i64 %wide.trip.count40.i, 3     ; 3 uses
-  %i.ef = icmp samesign ult i64 %umax, 3
+  %i.ef = icmp samesign ult i32 %12, 3
   br i1 %i.ef, label %.epil.preheader, label %.lr.ph29.i.new
 
 .lr.ph29.i.new:                                   ; preds = %.lr.ph29.i
@@ -1156,9 +1149,8 @@ scalar.ph674:                                     ; preds = %scalar.ph674.prehea
 .lr.ph29.i230:                                    ; preds = %.lr.ph.i235, %.preheader.i228
   store i64 %.sroa.0123.0.copyload, ptr %9, align 8
   %i.gh = trunc i64 %.sroa.0123.0.copyload to i32
-  %umax716 = call i64 @llvm.umax.i64(i64 %12, i64 %13)
   %xtraiter717 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.gi = icmp samesign ult i64 %umax716, 3
+  %i.gi = icmp samesign ult i32 %12, 3
   br i1 %i.gi, label %.epil.preheader715, label %.lr.ph29.i230.new
 
 .lr.ph29.i230.new:                                ; preds = %.lr.ph29.i230
@@ -1302,9 +1294,8 @@ scalar.ph660:                                     ; preds = %scalar.ph660.prehea
 .lr.ph29.i248:                                    ; preds = %.lr.ph.i253, %.preheader.i246
   store i64 %.sroa.0122.0.copyload, ptr %10, align 8
   %i.ik = trunc i64 %.sroa.0122.0.copyload to i32 ; 2 uses
-  %umax724 = call i64 @llvm.umax.i64(i64 %12, i64 %13)
   %xtraiter725 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.il = icmp samesign ult i64 %umax724, 3
+  %i.il = icmp samesign ult i32 %12, 3
   br i1 %i.il, label %.epil.preheader723, label %.lr.ph29.i248.new
 
 .lr.ph29.i248.new:                                ; preds = %.lr.ph29.i248
@@ -1449,9 +1440,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph29.i266:                                    ; preds = %.lr.ph.i271, %.preheader.i264
   store i64 %.sroa.0.0.copyload, ptr %11, align 8
   %i.ko = trunc i64 %.sroa.0.0.copyload to i32
-  %umax732 = call i64 @llvm.umax.i64(i64 %12, i64 %13)
   %xtraiter733 = and i64 %wide.trip.count40.i, 3  ; 3 uses
-  %i.kp = icmp samesign ult i64 %umax732, 3
+  %i.kp = icmp samesign ult i32 %12, 3
   br i1 %i.kp, label %.epil.preheader731, label %.lr.ph29.i266.new
 
 .lr.ph29.i266.new:                                ; preds = %.lr.ph29.i266
@@ -1853,9 +1843,6 @@ declare <16 x i8> @llvm.umin.v16i8(<16 x i8>, <16 x i8>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i8> @llvm.umin.v8i8(<8 x i8>, <8 x i8>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

@@ -205,7 +205,7 @@ bb.a:
   %.val2.i.i.i = load ptr, ptr %i.a, align 8, !alias.scope !268551, !nonnull !3448
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.val.i.i.i = load ptr, ptr %i.m, align 8, !alias.scope !268551, !nonnull !3448
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i, i64 %i.l), !dbg !268560 ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %.promoted.i), !dbg !268560 ; 2 uses
   %exitcond.not.i1.not = icmp ult i64 %.promoted.i, %i.l, !dbg !268561
   br i1 %exitcond.not.i1.not, label %.lr.ph, label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter4IterNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_value8AnyValueEBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2m_3all5checkTRB1h_B3q_ENCNvXs_NtNtB1n_5frame3rowNtB3H_11AnyValueRowNtNtCs2mZqlW55729_12polars_utils9total_ord7TotalEq6tot_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB1n_.exit, !dbg !268561
 

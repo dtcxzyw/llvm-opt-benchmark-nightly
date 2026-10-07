@@ -205,8 +205,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.le = shl i64 %i.ku, 3                        ; 2 uses
   %i.lf = getelementptr i8, ptr %i.kw, i64 %i.le  ; 2 uses
   %i.lg = shl nsw i64 %i.kx, 3                    ; 2 uses
-  %i.lh = getelementptr i8, ptr %i.kw, i64 %i.lg
-  %i.li = getelementptr i8, ptr %i.lh, i64 %i.le
+  %i.lh = getelementptr i8, ptr %i.kw, i64 %i.le
+  %i.li = getelementptr i8, ptr %i.lh, i64 %i.lg
   %i.lj = getelementptr i8, ptr %i.lc, i64 %i.lg
   %i.lk = getelementptr i8, ptr %i.lj, i64 8
   %bound0 = icmp ult ptr %i.kw, %i.li
@@ -609,7 +609,7 @@ middle.block502:                                  ; preds = %vector.body495
   %.020.i.ph = phi i64 [ 0, %.lr.ph.i314.preheader ], [ %n.vec494, %middle.block502 ] ; 4 uses
   %.01019.i.ph = phi ptr [ %i.uc, %.lr.ph.i314.preheader ], [ %i.uh, %middle.block502 ] ; 2 uses
   %.01218.i.ph = phi ptr [ %i.tu, %.lr.ph.i314.preheader ], [ %i.ui, %middle.block502 ] ; 2 uses
-  %i.un = add i64 %i.tz, %i.tx                    ; 2 uses
+  %i.un = add i64 %i.tx, %i.tz                    ; 2 uses
   %i.uo = sub i64 %i.un, %.020.i.ph
   %xtraiter541 = and i64 %i.uo, 7                 ; 2 uses
   %lcmp.mod542.not = icmp eq i64 %xtraiter541, 0
@@ -1012,12 +1012,12 @@ bb.k:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %3, ptr %i.dm, align 8, !tbaa !272
   %i.dn = getelementptr inbounds nuw i8, ptr %9, i64 24
   store ptr %i.dk, ptr %i.dn, align 8, !tbaa !273
-  %i.do = add i64 %i.dh, %i.cv                    ; 2 uses
+  %i.do = add nsw i64 %i.dh, %i.cv                ; 2 uses
   %i.dp = icmp slt i64 %i.do, 1
   br i1 %i.dp, label %_ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.k
-  %i.dq = shl i64 %i.do, 3
+  %i.dq = shl nuw nsw i64 %i.do, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.df, i8 0, i64 %i.dq, i1 false), !tbaa !209
   %.pre = load i64, ptr %i.cx, align 8, !tbaa !214
   br label %_ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit

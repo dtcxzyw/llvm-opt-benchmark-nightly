@@ -205,9 +205,9 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %i.cu = getelementptr i8, ptr %scevgep, i64 %i.cp
+  %i.cu = getelementptr i8, ptr %scevgep, i64 %i.cf
   %i.cv = getelementptr i8, ptr %i.cu, i64 %i.ck
-  %scevgep11 = getelementptr i8, ptr %i.cv, i64 %i.cf
+  %scevgep11 = getelementptr i8, ptr %i.cv, i64 %i.cp
   %i.cw = getelementptr i8, ptr %i.ct, i64 %i.be
   %scevgep12 = getelementptr i8, ptr %i.cw, i64 %wide.trip.count.i.i.i
   %bound0 = icmp ult ptr %i.cs, %scevgep12
@@ -610,9 +610,9 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %i.cu = getelementptr i8, ptr %scevgep, i64 %i.cq
+  %i.cu = getelementptr i8, ptr %scevgep, i64 %i.cg
   %i.cv = getelementptr i8, ptr %i.cu, i64 %i.cl
-  %scevgep11 = getelementptr i8, ptr %i.cv, i64 %i.cg
+  %scevgep11 = getelementptr i8, ptr %i.cv, i64 %i.cq
   %scevgep12 = getelementptr i8, ptr %.pre22.i.i.i, i64 %i.bp
   %bound0 = icmp ult ptr %i.ct, %scevgep12
   %bound1 = icmp ult ptr %invariant.gep.i.i.i, %scevgep11
@@ -1015,8 +1015,8 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %i.cu = add i64 %i.cq, %i.cl
-  %i.cv = add i64 %i.cu, %i.cg                    ; 2 uses
+  %i.cu = add i64 %i.cg, %i.cl
+  %i.cv = add i64 %i.cu, %i.cq                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.cv
   %scevgep13 = getelementptr i8, ptr %scevgep12, i64 %i.cv
   %scevgep14 = getelementptr i8, ptr %.pre22.i.i.i, i64 %i.bp
@@ -1419,9 +1419,9 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %i.cv = getelementptr i8, ptr %scevgep, i64 %i.cr
+  %i.cv = getelementptr i8, ptr %scevgep, i64 %i.ch
   %i.cw = getelementptr i8, ptr %i.cv, i64 %i.cm
-  %scevgep11 = getelementptr i8, ptr %i.cw, i64 %i.ch
+  %scevgep11 = getelementptr i8, ptr %i.cw, i64 %i.cr
   %scevgep12 = getelementptr i8, ptr %.pre22.i.i.i, i64 %i.bp
   %bound0 = icmp ult ptr %i.cu, %scevgep12
   %bound1 = icmp ult ptr %invariant.gep.i.i.i, %scevgep11
@@ -1824,9 +1824,9 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %i.cv = getelementptr i8, ptr %scevgep, i64 %i.cq
+  %i.cv = getelementptr i8, ptr %scevgep, i64 %i.cg
   %i.cw = getelementptr i8, ptr %i.cv, i64 %i.cl
-  %scevgep11 = getelementptr i8, ptr %i.cw, i64 %i.cg
+  %scevgep11 = getelementptr i8, ptr %i.cw, i64 %i.cq
   %i.cx = getelementptr i8, ptr %i.cu, i64 %i.be
   %scevgep12 = getelementptr i8, ptr %i.cx, i64 %wide.trip.count.i.i.i
   %bound0 = icmp ult ptr %i.ct, %scevgep12

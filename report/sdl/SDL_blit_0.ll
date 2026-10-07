@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader12.lr.ph:                               ; preds = %.preheader13
   %i.z = sext i32 %i.t to i64
   %i.aa = sext i32 %i.l to i64
-  %i.ab = add i32 %i.p, %i.b
-  %i.ac = add i32 %i.p, %i.b
+  %i.ab = add i32 %i.b, %i.p
+  %i.ac = add i32 %i.b, %i.p
   br label %.preheader12
 
 .preheader9:                                      ; preds = %bb.b
@@ -212,8 +212,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader8.lr.ph:                                ; preds = %.preheader9
   %i.ad = sext i32 %i.t to i64
   %i.ae = sext i32 %i.l to i64
-  %i.af = add i32 %i.p, %i.b
-  %i.ag = add i32 %i.p, %i.b
+  %i.af = add i32 %i.b, %i.p
+  %i.ag = add i32 %i.b, %i.p
   br label %.preheader8
 
 .preheader8:                                      ; preds = %.preheader8.lr.ph, %._crit_edge42
@@ -561,8 +561,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.dx = sext i32 %i.t to i64
   %i.dy = sext i32 %i.l to i64
-  %i.dz = add i32 %i.p, %i.b
-  %i.ea = add i32 %i.p, %i.b
+  %i.dz = add i32 %i.b, %i.p
+  %i.ea = add i32 %i.b, %i.p
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.o
@@ -571,8 +571,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.eb = sext i32 %i.t to i64
   %i.ec = sext i32 %i.l to i64
-  %i.ed = add i32 %i.p, %i.b
-  %i.ee = add i32 %i.p, %i.b
+  %i.ed = add i32 %i.b, %i.p
+  %i.ee = add i32 %i.b, %i.p
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78
@@ -936,8 +936,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -946,8 +946,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -1350,8 +1350,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -1360,8 +1360,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -1764,8 +1764,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.ch = sext i32 %i.v to i64
   %i.ci = sext i32 %i.l to i64
-  %i.cj = add i32 %i.r, %i.b
-  %i.ck = add i32 %i.r, %i.b
+  %i.cj = add i32 %i.b, %i.r
+  %i.ck = add i32 %i.b, %i.r
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.o
@@ -1774,8 +1774,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.cl = sext i32 %i.v to i64
   %i.cm = sext i32 %i.l to i64
-  %i.cn = add i32 %i.r, %i.b
-  %i.co = add i32 %i.r, %i.b
+  %i.cn = add i32 %i.b, %i.r
+  %i.co = add i32 %i.b, %i.r
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78
@@ -2178,8 +2178,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader12.lr.ph:                               ; preds = %.preheader13
   %i.z = sext i32 %i.t to i64
   %i.aa = sext i32 %i.l to i64
-  %i.ab = add i32 %i.p, %i.b
-  %i.ac = add i32 %i.p, %i.b
+  %i.ab = add i32 %i.b, %i.p
+  %i.ac = add i32 %i.b, %i.p
   br label %.preheader12
 
 .preheader9:                                      ; preds = %bb.b
@@ -2188,8 +2188,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader8.lr.ph:                                ; preds = %.preheader9
   %i.ad = sext i32 %i.t to i64
   %i.ae = sext i32 %i.l to i64
-  %i.af = add i32 %i.p, %i.b
-  %i.ag = add i32 %i.p, %i.b
+  %i.af = add i32 %i.b, %i.p
+  %i.ag = add i32 %i.b, %i.p
   br label %.preheader8
 
 .preheader8:                                      ; preds = %.preheader8.lr.ph, %._crit_edge42
@@ -2537,8 +2537,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.dx = sext i32 %i.t to i64
   %i.dy = sext i32 %i.l to i64
-  %i.dz = add i32 %i.p, %i.b
-  %i.ea = add i32 %i.p, %i.b
+  %i.dz = add i32 %i.b, %i.p
+  %i.ea = add i32 %i.b, %i.p
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.o
@@ -2547,8 +2547,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.eb = sext i32 %i.t to i64
   %i.ec = sext i32 %i.l to i64
-  %i.ed = add i32 %i.p, %i.b
-  %i.ee = add i32 %i.p, %i.b
+  %i.ed = add i32 %i.b, %i.p
+  %i.ee = add i32 %i.b, %i.p
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78
@@ -2912,8 +2912,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -2922,8 +2922,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -3326,8 +3326,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -3336,8 +3336,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -3740,8 +3740,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.ch = sext i32 %i.v to i64
   %i.ci = sext i32 %i.l to i64
-  %i.cj = add i32 %i.r, %i.b
-  %i.ck = add i32 %i.r, %i.b
+  %i.cj = add i32 %i.b, %i.r
+  %i.ck = add i32 %i.b, %i.r
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.o
@@ -3750,8 +3750,8 @@ bb.o:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.cl = sext i32 %i.v to i64
   %i.cm = sext i32 %i.l to i64
-  %i.cn = add i32 %i.r, %i.b
-  %i.co = add i32 %i.r, %i.b
+  %i.cn = add i32 %i.b, %i.r
+  %i.co = add i32 %i.b, %i.r
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78
@@ -4154,8 +4154,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader12.lr.ph:                               ; preds = %.preheader13
   %i.z = sext i32 %i.t to i64
   %i.aa = sext i32 %i.l to i64
-  %i.ab = add i32 %i.p, %i.b
-  %i.ac = add i32 %i.p, %i.b
+  %i.ab = add i32 %i.b, %i.p
+  %i.ac = add i32 %i.b, %i.p
   br label %.preheader12
 
 .preheader9:                                      ; preds = %bb.b
@@ -4164,8 +4164,8 @@ bb.b:                                             ; preds = %bb.a
 .preheader8.lr.ph:                                ; preds = %.preheader9
   %i.ad = sext i32 %i.t to i64
   %i.ae = sext i32 %i.l to i64
-  %i.af = add i32 %i.p, %i.b
-  %i.ag = add i32 %i.p, %i.b
+  %i.af = add i32 %i.b, %i.p
+  %i.ag = add i32 %i.b, %i.p
   br label %.preheader8
 
 .preheader8:                                      ; preds = %.preheader8.lr.ph, %._crit_edge42
@@ -4481,8 +4481,8 @@ bb.m:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.dr = sext i32 %i.t to i64
   %i.ds = sext i32 %i.l to i64
-  %i.dt = add i32 %i.p, %i.b
-  %i.du = add i32 %i.p, %i.b
+  %i.dt = add i32 %i.b, %i.p
+  %i.du = add i32 %i.b, %i.p
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.m
@@ -4491,8 +4491,8 @@ bb.m:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.dv = sext i32 %i.t to i64
   %i.dw = sext i32 %i.l to i64
-  %i.dx = add i32 %i.p, %i.b
-  %i.dy = add i32 %i.p, %i.b
+  %i.dx = add i32 %i.b, %i.p
+  %i.dy = add i32 %i.b, %i.p
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78
@@ -4824,8 +4824,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -4834,8 +4834,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -5238,8 +5238,8 @@ bb.a:
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.aa = sext i32 %i.u to i64
   %i.ab = sext i32 %i.m to i64
-  %i.ac = add i32 %i.q, %i.b
-  %i.ad = add i32 %i.q, %i.b
+  %i.ac = add i32 %i.b, %i.q
+  %i.ad = add i32 %i.b, %i.q
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.a
@@ -5248,8 +5248,8 @@ bb.a:
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.ae = sext i32 %i.u to i64
   %i.af = sext i32 %i.m to i64
-  %i.ag = add i32 %i.q, %i.b
-  %i.ah = add i32 %i.q, %i.b
+  %i.ag = add i32 %i.b, %i.q
+  %i.ah = add i32 %i.b, %i.q
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge34
@@ -5652,8 +5652,8 @@ bb.m:                                             ; preds = %bb.a
 .preheader4.lr.ph:                                ; preds = %.preheader5
   %i.cb = sext i32 %i.v to i64
   %i.cc = sext i32 %i.l to i64
-  %i.cd = add i32 %i.r, %i.b
-  %i.ce = add i32 %i.r, %i.b
+  %i.cd = add i32 %i.b, %i.r
+  %i.ce = add i32 %i.b, %i.r
   br label %.preheader4
 
 .preheader2:                                      ; preds = %bb.m
@@ -5662,8 +5662,8 @@ bb.m:                                             ; preds = %bb.a
 .preheader1.lr.ph:                                ; preds = %.preheader2
   %i.cf = sext i32 %i.v to i64
   %i.cg = sext i32 %i.l to i64
-  %i.ch = add i32 %i.r, %i.b
-  %i.ci = add i32 %i.r, %i.b
+  %i.ch = add i32 %i.b, %i.r
+  %i.ci = add i32 %i.b, %i.r
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge78

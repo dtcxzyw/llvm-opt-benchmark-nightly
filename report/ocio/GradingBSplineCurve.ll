@@ -202,8 +202,8 @@ bb.ae:                                            ; preds = %.lr.ph248.i
   br i1 %.not256.i, label %._crit_edge259.i, label %.lr.ph258.i.preheader
 
 .lr.ph258.i.preheader:                            ; preds = %.critedge.i
-  %i.ev = add i64 %.061.i, 1
-  %i.ew = add i64 %.060.lcssa.i, 1
+  %i.ev = add i64 %.060.lcssa.i, 1
+  %i.ew = add i64 %.061.i, 1
   %i.ex = tail call i64 @llvm.umax.i64(i64 %i.ev, i64 %i.ew)
   %i.ey = sub i64 %i.ex, %.061.i                  ; 3 uses
   %min.iters.check = icmp ult i64 %i.ey, 8

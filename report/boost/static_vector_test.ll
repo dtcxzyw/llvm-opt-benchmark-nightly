@@ -205,20 +205,19 @@ bb.ap:                                            ; preds = %.sink.split185, %bb
 
 iter.check:                                       ; preds = %bb.ap
   %i.bf = add i64 %.idx.i, -4
-  %i.bg = lshr exact i64 %i.bf, 2                 ; 2 uses
+  %i.bg = lshr exact i64 %i.bf, 2
   %i.bh = add i64 %.idx153, -4
-  %i.bi = lshr exact i64 %i.bh, 2                 ; 2 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 %i.bi)
+  %i.bi = lshr exact i64 %i.bh, 2
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 %i.bi) ; 4 uses
   %i.bj = shl nuw i64 %umin, 2
   %i.bk = add i64 %i.bj, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.bk, i1 false), !tbaa !41
-  %umin192 = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 %i.bi) ; 3 uses
-  %i.bl = add nuw nsw i64 %umin192, 1             ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %umin192, 3
+  %i.bl = add nuw nsw i64 %umin, 1                ; 5 uses
+  %min.iters.check = icmp samesign ult i64 %umin, 3
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check193 = icmp samesign ult i64 %umin192, 31
+  %min.iters.check193 = icmp samesign ult i64 %umin, 31
   br i1 %min.iters.check193, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -621,20 +620,19 @@ bb.ar:                                            ; preds = %.sink.split174, %bb
 
 iter.check:                                       ; preds = %bb.ar
   %i.be = add i64 %.idx.i, -4
-  %i.bf = lshr exact i64 %i.be, 2                 ; 2 uses
+  %i.bf = lshr exact i64 %i.be, 2
   %i.bg = add i64 %.idx147, -4
-  %i.bh = lshr exact i64 %i.bg, 2                 ; 2 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.bf, i64 %i.bh)
+  %i.bh = lshr exact i64 %i.bg, 2
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.bf, i64 %i.bh) ; 4 uses
   %i.bi = shl nuw i64 %umin, 2
   %i.bj = add i64 %i.bi, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.bj, i1 false), !tbaa !41
-  %umin179 = tail call i64 @llvm.umin.i64(i64 %i.bf, i64 %i.bh) ; 3 uses
-  %i.bk = add nuw nsw i64 %umin179, 1             ; 5 uses
-  %min.iters.check = icmp samesign ult i64 %umin179, 3
+  %i.bk = add nuw nsw i64 %umin, 1                ; 5 uses
+  %min.iters.check = icmp samesign ult i64 %umin, 3
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check180 = icmp samesign ult i64 %umin179, 31
+  %min.iters.check180 = icmp samesign ult i64 %umin, 31
   br i1 %min.iters.check180, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

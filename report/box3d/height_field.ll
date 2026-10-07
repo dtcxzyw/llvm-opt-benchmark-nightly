@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not66110.fr, label %.critedge69, label %.lr.ph116.split.preheader
 
 .lr.ph116.split.preheader:                        ; preds = %.lr.ph116
-  %smax = call i32 @llvm.smax.i32(i32 %i.v, i32 %i.y)
+  %smax = call i32 @llvm.smax.i32(i32 %i.y, i32 %i.v)
   br label %.lr.ph116.split
 
 .lr.ph116.split:                                  ; preds = %.lr.ph116.split.preheader, %.critedge
@@ -452,7 +452,7 @@ bb.a:
   br i1 %.not148212.fr, label %._crit_edge, label %.lr.ph217.split.preheader
 
 .lr.ph217.split.preheader:                        ; preds = %.lr.ph217
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.w, i32 %i.y)
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.y, i32 %i.w)
   br label %.lr.ph217.split
 
 ._crit_edge:                                      ; preds = %..loopexit_crit_edge, %.lr.ph217, %bb.a
@@ -725,7 +725,7 @@ bb.a:
   br i1 %.not189296.fr, label %.thread289, label %.lr.ph306.split.preheader
 
 .lr.ph306.split.preheader:                        ; preds = %.lr.ph306
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.av, i32 %i.ay)
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ay, i32 %i.av)
   br label %.lr.ph306.split
 
 .lr.ph306.split:                                  ; preds = %.lr.ph306.split.preheader, %..loopexit_crit_edge

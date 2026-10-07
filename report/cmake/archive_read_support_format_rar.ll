@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
 .lr.ph.i.i.i.i:                                   ; preds = %bb.ap
   %i.hd = load i64, ptr %i.q, align 8, !tbaa !151 ; 2 uses
   %.promoted13.i.i.i.i = load i64, ptr %i.p, align 8, !tbaa !155 ; 4 uses
-  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i.i.i, i64 %i.hd) ; 2 uses
+  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.hd, i64 %.promoted13.i.i.i.i) ; 2 uses
   %.promoted.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 8 ; 2 uses
   %exitcond.not.i.i61.not.i.i = icmp ult i64 %.promoted13.i.i.i.i, %i.hd
   br i1 %exitcond.not.i.i61.not.i.i, label %.lr.ph62.i.i, label %membr_fill.exit.thread.i.i.i
@@ -372,7 +372,7 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not.i153.i.i, label %.lr.ph.i.i154.i.i, label %membr_bits.exit159.i.i
 
 .lr.ph.i.i154.i.i:                                ; preds = %bb.bi
-  %umax.i.i156.i.i = tail call i64 @llvm.umax.i64(i64 %.lcssa7295.i.i, i64 %i.io) ; 2 uses
+  %umax.i.i156.i.i = tail call i64 @llvm.umax.i64(i64 %i.io, i64 %.lcssa7295.i.i) ; 2 uses
   %exitcond.not.i.i15776.not.i.i = icmp ult i64 %.lcssa7295.i.i, %i.io
   br i1 %exitcond.not.i.i15776.not.i.i, label %.lr.ph77.i.i, label %membr_bits.exit159.i.i
 
@@ -561,7 +561,7 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not.i41.i.i.i, label %.lr.ph.i.i42.i.i.i, label %membr_bits.exit47.i.i.i
 
 .lr.ph.i.i42.i.i.i:                               ; preds = %bb.bo
-  %umax.i.i44.i.i.i = tail call i64 @llvm.umax.i64(i64 %.lcssa748990.i.i.i, i64 %i.kq) ; 2 uses
+  %umax.i.i44.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.kq, i64 %.lcssa748990.i.i.i) ; 2 uses
   %exitcond.not.i.i4578.not.i.i.i = icmp ult i64 %.lcssa748990.i.i.i, %i.kq
   br i1 %exitcond.not.i.i4578.not.i.i.i, label %.lr.ph79.i.i.i, label %membr_bits.exit47.i.i.i
 
@@ -680,7 +680,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %.not.i168.i.i, label %.lr.ph.i.i169.i.i, label %membr_bits.exit174.i.i
 
 .lr.ph.i.i169.i.i:                                ; preds = %bb.bw
-  %umax.i.i171.i.i = tail call i64 @llvm.umax.i64(i64 %.lcssa101123.i.i, i64 %i.mb) ; 2 uses
+  %umax.i.i171.i.i = tail call i64 @llvm.umax.i64(i64 %i.mb, i64 %.lcssa101123.i.i) ; 2 uses
   %exitcond.not.i.i172105.not.i.i = icmp ult i64 %.lcssa101123.i.i, %i.mb
   br i1 %exitcond.not.i.i172105.not.i.i, label %.lr.ph106.i.i, label %membr_bits.exit174.i.i
 
@@ -1083,7 +1083,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i64, ptr %i.g, align 8, !tbaa !151
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted13.i.i = load i64, ptr %i.f, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i, i64 %i.h)
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %.promoted13.i.i)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
@@ -1150,7 +1150,7 @@ membr_bits.exit.thread.thread:                    ; preds = %membr_fill.exit.thr
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !151
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.promoted13.i.i17 = load i64, ptr %i.af, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i18 = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i17, i64 %i.ah)
+  %umax.i.i18 = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %.promoted13.i.i17)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.i.i16
@@ -1210,7 +1210,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !151
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.promoted13.i.i29 = load i64, ptr %i.bg, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i30 = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i29, i64 %i.bi)
+  %umax.i.i30 = tail call i64 @llvm.umax.i64(i64 %i.bi, i64 %.promoted13.i.i29)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.j, %.lr.ph.i.i28
@@ -1270,7 +1270,7 @@ bb.k:                                             ; preds = %membr_bits.exit33.t
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !151
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.promoted13.i.i41 = load i64, ptr %i.ci, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i42 = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i41, i64 %i.ck)
+  %umax.i.i42 = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %.promoted13.i.i41)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.m, %.lr.ph.i.i40
@@ -1332,7 +1332,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dm = load i64, ptr %i.dl, align 8, !tbaa !151
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.promoted13.i.i53 = load i64, ptr %i.dk, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i54 = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i53, i64 %i.dm)
+  %umax.i.i54 = tail call i64 @llvm.umax.i64(i64 %i.dm, i64 %.promoted13.i.i53)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %.lr.ph.i.i52
@@ -1391,7 +1391,7 @@ bb.s:                                             ; preds = %bb.r
   %i.em = load i64, ptr %i.el, align 8, !tbaa !151
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.promoted13.i.i65 = load i64, ptr %i.ek, align 8, !tbaa !155 ; 2 uses
-  %umax.i.i66 = tail call i64 @llvm.umax.i64(i64 %.promoted13.i.i65, i64 %i.em)
+  %umax.i.i66 = tail call i64 @llvm.umax.i64(i64 %i.em, i64 %.promoted13.i.i65)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %.lr.ph.i.i64

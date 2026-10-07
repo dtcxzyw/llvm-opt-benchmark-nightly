@@ -205,8 +205,8 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.preheader
   %i.db = shl i64 %i.bd, 4                        ; 2 uses
-  %i.dc = shl nsw i64 %i.ao, 3
-  %i.dd = shl i64 %.0.i.i.i.i.i.i.i.i, 3          ; 2 uses
+  %i.dc = shl i64 %.0.i.i.i.i.i.i.i.i, 3          ; 2 uses
+  %i.dd = shl nsw i64 %i.ao, 3
   %i.de = getelementptr i8, ptr %i.p, i64 %i.db
   %i.df = getelementptr i8, ptr %i.de, i64 %i.dc
   %scevgep = getelementptr i8, ptr %i.df, i64 %i.dd
@@ -214,7 +214,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.
   %i.dh = shl i64 %i.dg, 3
   %scevgep30 = getelementptr i8, ptr %i.p, i64 %i.dh
   %i.di = getelementptr i8, ptr %i.aw, i64 %i.db
-  %scevgep31 = getelementptr i8, ptr %i.di, i64 %i.dd
+  %scevgep31 = getelementptr i8, ptr %i.di, i64 %i.dc
   %i.dj = shl i64 %i.au, 3
   %scevgep32 = getelementptr i8, ptr %i.aw, i64 %i.dj
   %bound0 = icmp ult ptr %scevgep, %scevgep32

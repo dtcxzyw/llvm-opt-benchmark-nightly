@@ -205,8 +205,8 @@ scalar.ph197.preheader:                           ; preds = %.lr.ph.i, %middle.b
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph7.i
-  %i.da = shl nsw i64 %i.ci, 2
-  %i.db = mul i64 %i.da, %i.cc
+  %i.da = shl nsw i64 %i.cc, 2
+  %i.db = mul i64 %i.da, %i.ci
   %scevgep = getelementptr i8, ptr %i.bx, i64 %i.db
   %bound0 = icmp ult ptr %i.bx, %scevgep194
   %bound1 = icmp ult ptr %i.cz, %scevgep
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %.lr.ph113
   br i1 %min.iters.check168, label %.lr.ph102.preheader235, label %vector.memcheck161
 
 vector.memcheck161:                               ; preds = %.lr.ph102.preheader
-  %i.bl = shl nsw i64 %i.be, 2
-  %i.bm = mul i64 %i.bl, %i.ay
+  %i.bl = shl nsw i64 %i.ay, 2
+  %i.bm = mul i64 %i.bl, %i.be
   %scevgep162 = getelementptr i8, ptr %i.bi, i64 %i.bm
   %scevgep163 = getelementptr i8, ptr %.073109, i64 %i.bf
   %bound0164 = icmp ult ptr %i.bi, %scevgep163
@@ -686,8 +686,8 @@ middle.block178:                                  ; preds = %vector.body171
   br i1 %min.iters.check, label %.lr.ph107.preheader234, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph107.preheader
-  %i.cd = shl nsw i64 %i.be, 2
-  %i.ce = mul i64 %i.cd, %i.ay
+  %i.cd = shl nsw i64 %i.ay, 2
+  %i.ce = mul i64 %i.cd, %i.be
   %scevgep = getelementptr i8, ptr %i.bi, i64 %i.ce
   %scevgep156 = getelementptr i8, ptr %.073109, i64 %i.bf
   %bound0 = icmp ult ptr %i.bi, %scevgep156

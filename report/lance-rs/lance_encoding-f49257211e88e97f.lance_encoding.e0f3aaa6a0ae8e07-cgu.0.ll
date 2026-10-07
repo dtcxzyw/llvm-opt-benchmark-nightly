@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %_RNvXs0_NtCsdxgIq2b
   br i1 %i.fg, label %.split.us.thread60.i.i, label %.lr.ph38.i.preheader.i
 
 .lr.ph38.i.preheader.i:                           ; preds = %.lr.ph.split.split.i.i
-  %umax.i = call i64 @llvm.umax.i64(i64 %i.ff, i64 %i.ez)
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.ez, i64 %i.ff)
   br label %.lr.ph38.i.i
 
 .lr.ph38.i.i:                                     ; preds = %.thread.i.i, %.lr.ph38.i.preheader.i

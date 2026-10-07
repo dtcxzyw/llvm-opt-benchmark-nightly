@@ -204,7 +204,7 @@ select.unfold:                                    ; preds = %select.unfold.outer
 
 .lr.ph:                                           ; preds = %select.unfold
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.q = tail call i32 @llvm.smin.i32(i32 %.064, i32 %.066)
+  %i.q = tail call i32 @llvm.smin.i32(i32 %.066, i32 %.064)
   %smin = sext i32 %i.q to i64
   %i.r = sext i32 %i.n to i64
   br label %bb.a
@@ -232,8 +232,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.ac = add nsw i32 %.05993, 1
-  %4 = icmp slt i64 %indvars.iv.next, %i.r
-  br i1 %4, label %bb.a, label %.thread149, !llvm.loop !16
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.r
+  br i1 %exitcond.not, label %.thread149, label %bb.a, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %bb.b
   %i.ad = trunc nsw i64 %indvars.iv to i32        ; 2 uses
@@ -279,7 +279,7 @@ select.unfold.1:                                  ; preds = %bb.d, %.thread149.1
 
 .lr.ph.1:                                         ; preds = %select.unfold.1
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %i.ax = tail call i32 @llvm.smin.i32(i32 %.064.1, i32 %.066.1)
+  %i.ax = tail call i32 @llvm.smin.i32(i32 %.066.1, i32 %.064.1)
   %smin.1 = sext i32 %i.ax to i64
   %i.ay = sext i32 %i.au to i64
   br label %bb.e
@@ -315,8 +315,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %indvars.iv.next.1 = add nsw i64 %indvars.iv.1, 1 ; 2 uses
   %i.bl = add nsw i32 %.05993.1, 1
-  %5 = icmp slt i64 %indvars.iv.next.1, %i.ay
-  br i1 %5, label %bb.e, label %.thread149.1, !llvm.loop !16
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %i.ay
+  br i1 %exitcond.not.1, label %.thread149.1, label %bb.e, !llvm.loop !16
 
 .split153.thread.loopexit.1:                      ; preds = %bb.e
   %i.bm = trunc nsw i64 %indvars.iv.1 to i32

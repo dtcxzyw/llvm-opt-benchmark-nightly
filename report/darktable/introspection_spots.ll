@@ -205,13 +205,13 @@ dt_masks_get_mask.exit:                           ; preds = %bb.r, %bb.s, %bb.t
   %i.ml = phi float [ %i.bh, %bb.r ], [ %i.bh, %bb.s ], [ %.pre371, %bb.t ] ; 7 uses
   %i.mm = phi float [ 0.000000e+00, %bb.r ], [ 0.000000e+00, %bb.s ], [ %i.me, %bb.t ]
   %i.mn = fmul reassoc nsz arcp contract afn float %i.ml, %i.mm
-  %i.mo = fptosi float %i.mn to i32               ; 4 uses
+  %i.mo = fptosi float %i.mn to i32               ; 3 uses
   %i.mp = fmul reassoc nsz arcp contract afn float %i.ml, %i.mk
-  %i.mq = fptosi float %i.mp to i32               ; 2 uses
+  %i.mq = fptosi float %i.mp to i32
   %i.mr = fmul reassoc nsz arcp contract afn float %i.ml, %i.mj
-  %i.ms = fptosi float %i.mr to i32               ; 4 uses
+  %i.ms = fptosi float %i.mr to i32               ; 3 uses
   %i.mt = fmul reassoc nsz arcp contract afn float %i.ml, %i.mi
-  %i.mu = fptosi float %i.mt to i32               ; 2 uses
+  %i.mu = fptosi float %i.mt to i32
   %i.mv = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %i.mw = load i32, ptr %i.mv, align 8, !tbaa !43 ; 3 uses
   %i.mx = and i32 %i.mw, 2
@@ -344,7 +344,7 @@ bb.w:                                             ; preds = %masks_get_delta.exi
 
 .preheader306:                                    ; preds = %bb.w
   %i.pq = add i32 %i.mo, -1
-  %i.pr = add i32 %i.pq, %i.mq
+  %i.pr = add i32 %i.pq, %i.mq                    ; 2 uses
   %.0223327 = add nsw i32 %i.mo, 1                ; 2 uses
   %i.ps = icmp slt i32 %.0223327, %i.pr
   %.pre376 = load ptr, ptr %i.i, align 8          ; 3 uses
@@ -353,7 +353,7 @@ bb.w:                                             ; preds = %masks_get_delta.exi
 .lr.ph330:                                        ; preds = %.preheader306
   %i.pt = load i32, ptr %i.ad, align 4, !tbaa !93 ; 2 uses
   %i.pu = add i32 %i.ms, -1
-  %i.pv = add i32 %i.pu, %i.mu
+  %i.pv = add i32 %i.pu, %i.mu                    ; 2 uses
   %.0222324 = add i32 %i.ms, 1                    ; 2 uses
   %i.pw = icmp sge i32 %.0222324, %i.pv
   %i.px = load i32, ptr %i.l, align 4
@@ -361,14 +361,10 @@ bb.w:                                             ; preds = %masks_get_delta.exi
   %i.pz = extractelement <2 x i32> %i.pl, i64 0
   %i.qa = sext i32 %i.pz to i64                   ; 2 uses
   %i.qb = sext i32 %.0222324 to i64
-  %7 = add i32 %i.mu, -1
-  %8 = add i32 %7, %i.ms
   %i.qc = sext i32 %.0223327 to i64
   %i.qd = sext i32 %i.pt to i64                   ; 2 uses
   %i.qe = extractelement <2 x i32> %i.pl, i64 1   ; 2 uses
   %i.qf = sext i32 %i.qe to i64
-  %9 = add i32 %i.mq, -1
-  %10 = add i32 %9, %i.mo
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph330, %.loopexit303
@@ -623,13 +619,13 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ..loopexit_crit_edge.us:                          ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.ad, %bb.ac, %bb.ab, %.lr.ph326.split.us
   %indvars.iv.next359 = add nsw i64 %indvars.iv358, 1 ; 2 uses
   %lftr.wideiv361 = trunc i64 %indvars.iv.next359 to i32
-  %exitcond362.not = icmp eq i32 %8, %lftr.wideiv361
+  %exitcond362.not = icmp eq i32 %i.pv, %lftr.wideiv361
   br i1 %exitcond362.not, label %.loopexit303, label %.lr.ph326.split.us
 
 .loopexit303:                                     ; preds = %..loopexit_crit_edge.us, %.lr.ph326, %bb.aa, %bb.z, %bb.x, %bb.y
   %indvars.iv.next364 = add nsw i64 %indvars.iv363, 1 ; 2 uses
   %lftr.wideiv366 = trunc i64 %indvars.iv.next364 to i32
-  %exitcond367.not = icmp eq i32 %10, %lftr.wideiv366
+  %exitcond367.not = icmp eq i32 %i.pr, %lftr.wideiv366
   br i1 %exitcond367.not, label %.loopexit307, label %bb.x
 
 .loopexit307:                                     ; preds = %.loopexit303, %.preheader306, %..loopexit307_crit_edge, %masks_get_delta.exit.thread

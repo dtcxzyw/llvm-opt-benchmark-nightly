@@ -204,7 +204,7 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterat
   %.sroa.8265.0.copyload = load i64, ptr %.sroa.8265.0..sroa_idx, align 8 ; 2 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 14 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.6264.0.copyload, i64 %.sroa.8265.0.copyload)
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.8265.0.copyload, i64 %.sroa.6264.0.copyload)
   %exitcond.not452.not = icmp ult i64 %.sroa.6264.0.copyload, %.sroa.8265.0.copyload
   br i1 %exitcond.not452.not, label %.lr.ph.preheader, label %.thread329
 
@@ -329,7 +329,7 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterat
   %.sroa.6270.0.copyload = load i64, ptr %.sroa.6270.0..sroa_idx, align 8 ; 3 uses
   %.sroa.8271.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   %.sroa.8271.0.copyload = load i64, ptr %.sroa.8271.0..sroa_idx, align 8 ; 2 uses
-  %umax403 = call i64 @llvm.umax.i64(i64 %.sroa.6270.0.copyload, i64 %.sroa.8271.0.copyload)
+  %umax403 = call i64 @llvm.umax.i64(i64 %.sroa.8271.0.copyload, i64 %.sroa.6270.0.copyload)
   %exitcond404.not454.not = icmp ult i64 %.sroa.6270.0.copyload, %.sroa.8271.0.copyload
   br i1 %exitcond404.not454.not, label %.lr.ph456.preheader, label %.thread334
 
@@ -410,7 +410,7 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterat
   %.sroa.6276.0.copyload = load i64, ptr %.sroa.6276.0..sroa_idx, align 8 ; 3 uses
   %.sroa.8277.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %.sroa.8277.0.copyload = load i64, ptr %.sroa.8277.0..sroa_idx, align 8 ; 2 uses
-  %umax405 = call i64 @llvm.umax.i64(i64 %.sroa.6276.0.copyload, i64 %.sroa.8277.0.copyload)
+  %umax405 = call i64 @llvm.umax.i64(i64 %.sroa.8277.0.copyload, i64 %.sroa.6276.0.copyload)
   %exitcond406.not457.not = icmp ult i64 %.sroa.6276.0.copyload, %.sroa.8277.0.copyload
   br i1 %exitcond406.not457.not, label %.lr.ph459.preheader, label %.thread339
 

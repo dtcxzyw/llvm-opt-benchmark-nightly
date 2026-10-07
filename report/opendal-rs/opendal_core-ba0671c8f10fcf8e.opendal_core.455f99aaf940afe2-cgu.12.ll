@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   %.promoted.i.i.i.i.i = load i64, ptr %i.ac, align 8, !alias.scope !204, !noalias !202 ; 3 uses
   %.val2.i.i.i.i.i.i.i = load ptr, ptr %i.a, align 8, !alias.scope !203, !noalias !202, !nonnull !9
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.ae, align 8, !alias.scope !203, !noalias !202, !nonnull !9
-  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i, i64 %i.bi)
+  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bi, i64 %.promoted.i.i.i.i.i)
   %exitcond.not.i3.not.i.i.i.i = icmp ult i64 %.promoted.i.i.i.i.i, %i.bi
   br i1 %exitcond.not.i3.not.i.i.i.i, label %.lr.ph.i.i.i.i, label %.loopexit.sink.split.i.i
 
@@ -607,7 +607,7 @@ bb.af:                                            ; preds = %bb.ae
   %.promoted.i.i.i.i.i = load i64, ptr %i.ae, align 8, !alias.scope !392, !noalias !390 ; 3 uses
   %.val2.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !391, !noalias !390, !nonnull !9
   %.val.i.i.i.i.i.i.i = load ptr, ptr %i.ag, align 8, !alias.scope !391, !noalias !390, !nonnull !9
-  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i, i64 %i.dp)
+  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.dp, i64 %.promoted.i.i.i.i.i)
   %exitcond.not.i3.not.i.i.i.i = icmp ult i64 %.promoted.i.i.i.i.i, %i.dp
   br i1 %exitcond.not.i3.not.i.i.i.i, label %.lr.ph.i.i.i.i, label %.loopexit107.sink.split.i.i
 
@@ -1010,7 +1010,7 @@ bb.a:
   %.sroa.518.0.copyload.i.us = load ptr, ptr %.sroa.518.0..sroa_idx.i, align 8, !noalias !524 ; 2 uses
   %.sroa.619.0.copyload.i.us = load i64, ptr %.sroa.619.0..sroa_idx.i, align 8, !noalias !524 ; 3 uses
   %.sroa.8.0.copyload.i.us = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !524 ; 2 uses
-  %umax.i.us = tail call i64 @llvm.umax.i64(i64 %.sroa.619.0.copyload.i.us, i64 %.sroa.8.0.copyload.i.us)
+  %umax.i.us = tail call i64 @llvm.umax.i64(i64 %.sroa.8.0.copyload.i.us, i64 %.sroa.619.0.copyload.i.us)
   %exitcond.not.i.us17.not = icmp ult i64 %.sroa.619.0.copyload.i.us, %.sroa.8.0.copyload.i.us
   br i1 %exitcond.not.i.us17.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs5XgW7KoffLW_12opendal_core.exit.i.us.preheader, label %_RNvNtNtCsgxBkk5gSRhY_4core3str7pattern14small_slice_eq.exit.thread5
 

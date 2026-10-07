@@ -203,10 +203,10 @@ bb.cu:                                            ; preds = %bb.ct
   %i.avm = zext i32 %i.avl to i64
   %i.avn = shl nuw nsw i64 %i.avm, 3
   %i.avo = zext nneg i32 %i.avk to i64
-  %16 = shl nuw nsw i64 %i.avo, 3
   %scevgep2131 = getelementptr i8, ptr %14, i64 %i.avn
-  %i.avp = zext nneg i32 %i.avi to i64
-  %i.avq = mul nuw nsw i64 %16, %i.avp
+  %16 = shl nuw nsw i32 %i.avi, 3
+  %i.avp = zext nneg i32 %16 to i64
+  %i.avq = mul nuw nsw i64 %i.avp, %i.avo
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep2131, i8 0, i64 %i.avq, i1 false), !tbaa !106
   br label %._crit_edge1845.split
 

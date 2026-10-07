@@ -47,12 +47,12 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = getelementptr i8, ptr %0, i64 64
-  %.val.i.i = load i32, ptr %i.c, align 8         ; 2 uses
+  %.val.i.i = load i32, ptr %i.c, align 8         ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 68
-  %.val3.i.i = load i32, ptr %i.d, align 4        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.d, align 4        ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.e, align 8        ; 2 uses
-  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 3 uses
+  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 2 uses
   %i.g = add i32 %i.f, -1
   %i.h = add i32 %i.g, %.val4.i.i
   %.not189 = icmp sgt i32 %i.f, %i.h
@@ -66,7 +66,8 @@ bb.a:
   %i.l = sext i32 %.val.i.i to i64
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = add nsw i64 %i.l, %i.m
-  %i.o = add i32 %i.f, %.val4.i.i
+  %6 = add i32 %.val4.i.i, %.val.i.i
+  %i.o = add i32 %6, %.val3.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph193, %clause_LiteralIsSort.exit.thread
@@ -469,12 +470,12 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = getelementptr i8, ptr %0, i64 64
-  %.val.i.i = load i32, ptr %i.c, align 8         ; 2 uses
+  %.val.i.i = load i32, ptr %i.c, align 8         ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 68
-  %.val3.i.i = load i32, ptr %i.d, align 4        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.d, align 4        ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.e, align 8        ; 2 uses
-  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 3 uses
+  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 2 uses
   %i.g = add i32 %i.f, -1
   %i.h = add i32 %i.g, %.val4.i.i
   %.not227 = icmp sgt i32 %i.f, %i.h
@@ -488,7 +489,8 @@ bb.a:
   %i.l = sext i32 %.val.i.i to i64
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = add nsw i64 %i.l, %i.m
-  %i.o = add i32 %i.f, %.val4.i.i
+  %6 = add i32 %.val4.i.i, %.val.i.i
+  %i.o = add i32 %6, %.val3.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph231, %clause_LiteralIsSort.exit.thread
@@ -891,7 +893,7 @@ clause_GetLiteralAtom.exit228.i:                  ; preds = %bb.s, %.lr.ph331.i
   %i.gf = getelementptr i8, ptr %.val188.i, i64 68 ; 2 uses
   %.val214.i = load i32, ptr %i.gf, align 4       ; 2 uses
   %i.gg = add i32 %.val214.i, %.val213.i          ; 3 uses
-  %i.gh = add i32 %i.gg, -1
+  %i.gh = add i32 %i.gg, -1                       ; 2 uses
   %.not177334.i = icmp sgt i32 %.val213.i, %i.gh
   br i1 %.not177334.i, label %._crit_edge339.i, label %.lr.ph338.preheader.i
 
@@ -935,18 +937,19 @@ clause_GetLiteralAtom.exit235.i:                  ; preds = %bb.t, %.lr.ph338.i
 ._crit_edge339.loopexit.i:                        ; preds = %clause_GetLiteralAtom.exit235.i
   %.val.i.i.pre.i = load i32, ptr %i.fu, align 8  ; 2 uses
   %.val3.i.i.pre.i = load i32, ptr %i.gf, align 4 ; 2 uses
-  %.pre279.a = add i32 %.val.i.i.pre.i, %.val3.i.i.pre.i
+  %.pre281 = add i32 %.val.i.i.pre.i, %.val3.i.i.pre.i ; 2 uses
+  %.pre279.a = add i32 %.pre281, -1
   br label %._crit_edge339.i
 
 ._crit_edge339.i:                                 ; preds = %._crit_edge339.loopexit.i, %._crit_edge332.i
-  %.pre-phi280.a = phi i32 [ %.pre279.a, %._crit_edge339.loopexit.i ], [ %i.gg, %._crit_edge332.i ] ; 2 uses
+  %.pre-phi284 = phi i32 [ %.pre279.a, %._crit_edge339.loopexit.i ], [ %i.gh, %._crit_edge332.i ]
+  %.pre-phi280.a = phi i32 [ %.pre281, %._crit_edge339.loopexit.i ], [ %i.gg, %._crit_edge332.i ] ; 2 uses
   %.val3.i.i.i = phi i32 [ %.val3.i.i.pre.i, %._crit_edge339.loopexit.i ], [ %.val214.i, %._crit_edge332.i ]
   %.val.i.i.i154 = phi i32 [ %.val.i.i.pre.i, %._crit_edge339.loopexit.i ], [ %.val213.i, %._crit_edge332.i ]
   %.2145.lcssa.i = phi ptr [ %i.gr, %._crit_edge339.loopexit.i ], [ %.1144353.i, %._crit_edge332.i ] ; 2 uses
   %i.gt = getelementptr i8, ptr %.val188.i, i64 72
-  %.val4.i.i.i = load i32, ptr %i.gt, align 8
-  %7 = add i32 %.val4.i.i.i, %.pre-phi280.a       ; 2 uses
-  %i.gu = add i32 %7, -1
+  %.val4.i.i.i = load i32, ptr %i.gt, align 8     ; 2 uses
+  %i.gu = add i32 %.pre-phi284, %.val4.i.i.i
   %.not178341.i = icmp sgt i32 %.pre-phi280.a, %i.gu
   br i1 %.not178341.i, label %._crit_edge346.i, label %.lr.ph345.preheader.i
 
@@ -954,6 +957,7 @@ clause_GetLiteralAtom.exit235.i:                  ; preds = %bb.t, %.lr.ph338.i
   %i.gv = sext i32 %.val.i.i.i154 to i64
   %i.gw = sext i32 %.val3.i.i.i to i64
   %i.gx = add nsw i64 %i.gv, %i.gw
+  %7 = add i32 %.pre-phi280.a, %.val4.i.i.i
   br label %.lr.ph345.i
 
 .lr.ph345.i:                                      ; preds = %bb.w, %.lr.ph345.preheader.i
@@ -1119,7 +1123,7 @@ bb.aa:                                            ; preds = %list_PointerMember.
   %.3141.lcssa.i = phi ptr [ %.1139.lcssa.i, %._crit_edge358.i ], [ %.4142.i, %._crit_edge373.loopexit.i ] ; 3 uses
   %.val212.i = load i32, ptr %i.bb, align 4       ; 2 uses
   %i.in = add i32 %.val212.i, %.val211.i          ; 3 uses
-  %i.io = add i32 %i.in, -1
+  %i.io = add i32 %i.in, -1                       ; 2 uses
   %.not172377.i = icmp sgt i32 %.val211.i, %i.io
   br i1 %.not172377.i, label %._crit_edge382.i, label %.lr.ph381.preheader.i
 
@@ -1163,17 +1167,18 @@ clause_GetLiteralAtom.exit257.i:                  ; preds = %bb.ab, %.lr.ph381.i
 ._crit_edge382.loopexit.i:                        ; preds = %clause_GetLiteralAtom.exit257.i
   %.val.i.i258.pre.i = load i32, ptr %i.ba, align 8 ; 2 uses
   %.val3.i.i259.pre.i = load i32, ptr %i.bb, align 4 ; 2 uses
-  %.pre278.a = add i32 %.val.i.i258.pre.i, %.val3.i.i259.pre.i
+  %.pre278 = add i32 %.val.i.i258.pre.i, %.val3.i.i259.pre.i ; 2 uses
+  %.pre278.a = add i32 %.pre278, -1
   br label %._crit_edge382.i
 
 ._crit_edge382.i:                                 ; preds = %._crit_edge382.loopexit.i, %._crit_edge373.i
-  %.pre-phi = phi i32 [ %.pre278.a, %._crit_edge382.loopexit.i ], [ %i.in, %._crit_edge373.i ] ; 2 uses
+  %.pre-phi280 = phi i32 [ %.pre278.a, %._crit_edge382.loopexit.i ], [ %i.io, %._crit_edge373.i ]
+  %.pre-phi = phi i32 [ %.pre278, %._crit_edge382.loopexit.i ], [ %i.in, %._crit_edge373.i ] ; 2 uses
   %.val3.i.i259.i = phi i32 [ %.val3.i.i259.pre.i, %._crit_edge382.loopexit.i ], [ %.val212.i, %._crit_edge373.i ]
   %.val.i.i258.i = phi i32 [ %.val.i.i258.pre.i, %._crit_edge382.loopexit.i ], [ %.val211.i, %._crit_edge373.i ]
   %.3146.lcssa.i = phi ptr [ %i.iy, %._crit_edge382.loopexit.i ], [ %.1144.lcssa.i, %._crit_edge373.i ] ; 3 uses
-  %.val4.i.i260.i = load i32, ptr %i.bc, align 8
-  %8 = add i32 %.val4.i.i260.i, %.pre-phi         ; 2 uses
-  %i.ja = add i32 %8, -1
+  %.val4.i.i260.i = load i32, ptr %i.bc, align 8  ; 2 uses
+  %i.ja = add i32 %.pre-phi280, %.val4.i.i260.i
   %.not173384.i = icmp sgt i32 %.pre-phi, %i.ja
   br i1 %.not173384.i, label %._crit_edge389.i, label %.lr.ph388.preheader.i
 
@@ -1181,6 +1186,7 @@ clause_GetLiteralAtom.exit257.i:                  ; preds = %bb.ab, %.lr.ph381.i
   %i.jb = sext i32 %.val.i.i258.i to i64
   %i.jc = sext i32 %.val3.i.i259.i to i64
   %i.jd = add nsw i64 %i.jb, %i.jc
+  %8 = add i32 %.pre-phi, %.val4.i.i260.i
   br label %.lr.ph388.i
 
 .lr.ph388.i:                                      ; preds = %clause_GetLiteralAtom.exit267.i, %.lr.ph388.preheader.i
@@ -1583,12 +1589,12 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = getelementptr i8, ptr %0, i64 64         ; 2 uses
-  %.val.i.i = load i32, ptr %i.c, align 8         ; 2 uses
+  %.val.i.i = load i32, ptr %i.c, align 8         ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 68
-  %.val3.i.i = load i32, ptr %i.d, align 4        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.d, align 4        ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.e, align 8        ; 2 uses
-  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 3 uses
+  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 2 uses
   %i.g = add i32 %i.f, -1
   %i.h = add i32 %i.g, %.val4.i.i
   %.not155 = icmp sgt i32 %i.f, %i.h
@@ -1601,7 +1607,8 @@ bb.a:
   %i.l = sext i32 %.val.i.i to i64
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = add nsw i64 %i.l, %i.m
-  %i.o = add i32 %i.f, %.val4.i.i
+  %5 = add i32 %.val4.i.i, %.val.i.i
+  %i.o = add i32 %5, %.val3.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph159, %clause_LiteralIsSort.exit.thread
@@ -2004,12 +2011,12 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = getelementptr i8, ptr %0, i64 64         ; 2 uses
-  %.val.i.i = load i32, ptr %i.c, align 8         ; 2 uses
+  %.val.i.i = load i32, ptr %i.c, align 8         ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 68
-  %.val3.i.i = load i32, ptr %i.d, align 4        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.d, align 4        ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.e, align 8        ; 2 uses
-  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 3 uses
+  %i.f = add i32 %.val3.i.i, %.val.i.i            ; 2 uses
   %i.g = add i32 %i.f, -1
   %i.h = add i32 %i.g, %.val4.i.i
   %.not190 = icmp sgt i32 %i.f, %i.h
@@ -2022,7 +2029,8 @@ bb.a:
   %i.l = sext i32 %.val.i.i to i64
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = add nsw i64 %i.l, %i.m
-  %i.o = add i32 %i.f, %.val4.i.i
+  %5 = add i32 %.val4.i.i, %.val.i.i
+  %i.o = add i32 %5, %.val3.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph194, %clause_LiteralIsSort.exit.thread

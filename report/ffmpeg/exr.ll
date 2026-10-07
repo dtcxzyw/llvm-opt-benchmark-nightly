@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.i:                                         ; preds = %.preheader636.i
   %i.bz = load i32, ptr %i.bi, align 8, !tbaa !121 ; 2 uses
   %.promoted.i = load i32, ptr %i.ao, align 8, !tbaa !122 ; 3 uses
-  %smax.i = call i32 @llvm.smax.i32(i32 %.promoted.i, i32 %i.bz)
+  %smax.i = call i32 @llvm.smax.i32(i32 %i.bz, i32 %.promoted.i)
   %exitcond.not.i366.not = icmp slt i32 %.promoted.i, %i.bz
   br i1 %exitcond.not.i366.not, label %.lr.ph, label %.critedge.loopexit.i
 
@@ -608,7 +608,7 @@ bb.bd:                                            ; preds = %._crit_edge453.spli
   %i.zc = mul i64 %i.zb, %i.yw
   %scevgep = getelementptr i8, ptr %i.yq, i64 %i.zc ; 2 uses
   %scevgep566 = getelementptr i8, ptr %i.yt, i64 %i.yu
-  %i.zd = mul nuw nsw i64 %wide.trip.count506, %i.yw ; 2 uses
+  %i.zd = mul nuw nsw i64 %i.yw, %wide.trip.count506 ; 2 uses
   %i.ze = getelementptr i8, ptr %i.yt, i64 %i.yu
   %scevgep567 = getelementptr i8, ptr %i.ze, i64 %i.zd
   %scevgep568 = getelementptr i8, ptr %i.yt, i64 %i.zd

@@ -204,7 +204,7 @@ middle.block351:                                  ; preds = %vector.body348
   br i1 %exitcond24.not.i125.3, label %._crit_edge19.i, label %.preheader.i118, !llvm.loop !68
 
 ._crit_edge19.i:                                  ; preds = %.preheader.i118.prol.loopexit, %.preheader.i118, %middle.block351
-  %i.ke = add i32 %i.f, %.promoted20.i
+  %i.ke = add i32 %.promoted20.i, %i.f
   store i32 %i.ke, ptr %i.cy, align 8, !tbaa !40
   br label %_ZN9btMatrixXIfE12setSubMatrixEiiiif.exit
 
@@ -607,7 +607,7 @@ _ZN9btMatrixXIfEC2Eii.exit.preheader:             ; preds = %bb.a
   %i.ab = add i64 %i.aa, %wide.trip.count
   %i.ac = shl i64 %i.ab, 2
   %scevgep = getelementptr i8, ptr %i.t, i64 %i.ac
-  %i.ad = mul nuw nsw i64 %wide.trip.count21, %wide.trip.count
+  %i.ad = mul nuw nsw i64 %wide.trip.count, %wide.trip.count21
   %i.ae = shl nuw i64 %i.ad, 2
   %scevgep24 = getelementptr i8, ptr %i.w, i64 %i.ae
   %min.iters.check = icmp ult i32 %i.r, 8

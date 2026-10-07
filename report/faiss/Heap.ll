@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not37, label %._crit_edge47, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph46.split.us.split.us
-  %smax = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j)
+  %smax = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k)
   %xtraiter150 = and i64 %i.q, 3                  ; 3 uses
   %i.r = icmp ult i64 %i.q, 4
   %unroll_iter154 = and i64 %i.q, -4
@@ -280,7 +280,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %.not37, label %._crit_edge47, label %.lr.ph46.split.us.split.split.preheader
 
 .lr.ph46.split.us.split.split.preheader:          ; preds = %.lr.ph46.split.us.split
-  %smax93 = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j) ; 2 uses
+  %smax93 = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k) ; 2 uses
   %i.aq = add i64 %smax93, 1
   %i.ar = sub i64 %i.aq, %i.k                     ; 3 uses
   %min.iters.check = icmp ult i64 %i.ar, 8
@@ -683,7 +683,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not37, label %._crit_edge47, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph46.split.us.split.us
-  %smax = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j)
+  %smax = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k)
   %xtraiter150 = and i64 %i.q, 3                  ; 3 uses
   %i.r = icmp ult i64 %i.q, 4
   %unroll_iter154 = and i64 %i.q, -4
@@ -759,7 +759,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %.not37, label %._crit_edge47, label %.lr.ph46.split.us.split.split.preheader
 
 .lr.ph46.split.us.split.split.preheader:          ; preds = %.lr.ph46.split.us.split
-  %smax93 = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j) ; 2 uses
+  %smax93 = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k) ; 2 uses
   %i.aq = add i64 %smax93, 1
   %i.ar = sub i64 %i.aq, %i.k                     ; 3 uses
   %min.iters.check = icmp ult i64 %i.ar, 8
@@ -1162,7 +1162,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not37, label %._crit_edge48, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph47.split.us.split.us
-  %smax = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j)
+  %smax = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k)
   %min.iters.check = icmp ult i64 %i.q, 8
   %n.vec = and i64 %i.q, -8                       ; 3 uses
   %cmp.n = icmp eq i64 %i.q, %n.vec
@@ -1220,7 +1220,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not37, label %._crit_edge48, label %.lr.ph47.split.us.split.split.preheader
 
 .lr.ph47.split.us.split.split.preheader:          ; preds = %.lr.ph47.split.us.split
-  %smax94 = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j) ; 2 uses
+  %smax94 = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k) ; 2 uses
   %i.ae = add i64 %smax94, 1
   %i.af = sub i64 %i.ae, %i.k                     ; 3 uses
   %min.iters.check125 = icmp ult i64 %i.af, 8
@@ -1623,7 +1623,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not37, label %._crit_edge48, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph47.split.us.split.us
-  %smax = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j)
+  %smax = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k)
   %min.iters.check = icmp ult i64 %i.q, 8
   %n.vec = and i64 %i.q, -8                       ; 3 uses
   %cmp.n = icmp eq i64 %i.q, %n.vec
@@ -1681,7 +1681,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not37, label %._crit_edge48, label %.lr.ph47.split.us.split.split.preheader
 
 .lr.ph47.split.us.split.split.preheader:          ; preds = %.lr.ph47.split.us.split
-  %smax94 = call i64 @llvm.smax.i64(i64 %i.k, i64 %i.j) ; 2 uses
+  %smax94 = call i64 @llvm.smax.i64(i64 %i.j, i64 %i.k) ; 2 uses
   %i.ae = add i64 %smax94, 1
   %i.af = sub i64 %i.ae, %i.k                     ; 3 uses
   %min.iters.check125 = icmp ult i64 %i.af, 8

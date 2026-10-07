@@ -204,7 +204,7 @@ bb.by:                                            ; preds = %bb.bv
   %i.jm = add i64 %i.jg, 1                        ; 4 uses
   store i64 %i.jm, ptr %i.bg, align 8, !alias.scope !4930, !noalias !4893
   call void @llvm.experimental.noalias.scope.decl(metadata !4931)
-  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.jm, i64 %i.jf) ; 2 uses
+  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.jf, i64 %i.jm) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4932)
   %exitcond.not.i53.not.i.i.i.i.i.i.i = icmp ult i64 %i.jm, %i.jf
   br i1 %exitcond.not.i53.not.i.i.i.i.i.i.i, label %bb.bz, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i.i.i.i.i.i.i.i
@@ -267,7 +267,7 @@ bb.ce:                                            ; preds = %bb.bv
   %i.jy = add i64 %i.jg, 1                        ; 4 uses
   store i64 %i.jy, ptr %i.bg, align 8, !alias.scope !4943, !noalias !4893
   call void @llvm.experimental.noalias.scope.decl(metadata !4944)
-  %umax.i56.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.jy, i64 %i.jf) ; 2 uses
+  %umax.i56.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.jf, i64 %i.jy) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4945)
   %exitcond.not.i58.not.i.i.i.i.i.i.i = icmp ult i64 %i.jy, %i.jf
   br i1 %exitcond.not.i58.not.i.i.i.i.i.i.i, label %bb.cf, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i62.i.i.i.i.i.i.i
@@ -330,7 +330,7 @@ bb.ck:                                            ; preds = %bb.bv
   %i.kk = add i64 %i.jg, 1                        ; 4 uses
   store i64 %i.kk, ptr %i.bg, align 8, !alias.scope !4956, !noalias !4893
   call void @llvm.experimental.noalias.scope.decl(metadata !4957)
-  %umax.i65.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.kk, i64 %i.jf) ; 3 uses
+  %umax.i65.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.jf, i64 %i.kk) ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4958)
   %exitcond.not.i67.not.i.i.i.i.i.i.i = icmp ult i64 %i.kk, %i.jf
   br i1 %exitcond.not.i67.not.i.i.i.i.i.i.i, label %bb.cl, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i71.i.i.i.i.i.i.i
@@ -733,7 +733,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.aa, ptr %i.r, align 8, !alias.scope !5251
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5252)
   %i.ab = load ptr, ptr %i.q, align 8, !alias.scope !5252, !noalias !5253, !nonnull !15 ; 3 uses
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.u)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.aa)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5254)
   %exitcond.not.i.not = icmp ult i64 %i.aa, %i.u
   br i1 %exitcond.not.i.not, label %bb.e, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i
@@ -791,7 +791,7 @@ bb.k:                                             ; preds = %bb.b
   store i64 %i.an, ptr %i.r, align 8, !alias.scope !5265
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5266)
   %i.ao = load ptr, ptr %i.q, align 8, !alias.scope !5266, !noalias !5267, !nonnull !15 ; 3 uses
-  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.u)
+  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.an)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5268)
   %exitcond.not.i26.not = icmp ult i64 %i.an, %i.u
   br i1 %exitcond.not.i26.not, label %bb.l, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i29
@@ -849,7 +849,7 @@ bb.r:                                             ; preds = %bb.b
   store i64 %i.ba, ptr %i.r, align 8, !alias.scope !5279
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5280)
   %i.bb = load ptr, ptr %i.q, align 8, !alias.scope !5280, !noalias !5281, !nonnull !15 ; 4 uses
-  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.u) ; 2 uses
+  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5282)
   %exitcond.not.i34.not = icmp ult i64 %i.ba, %i.u
   br i1 %exitcond.not.i34.not, label %bb.s, label %_RNvXs5_NtCsiWcPrHiWZDL_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i37

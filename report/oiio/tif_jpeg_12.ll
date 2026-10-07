@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.thread144, %bb.e
   br i1 %.not139165, label %.preheader157.us.preheader, label %.lr.ph175.split.split
 
 .preheader157.us.preheader:                       ; preds = %.lr.ph175.split
-  %i.cq = mul i32 %i.bb, %i.az
+  %i.cq = mul i32 %i.az, %i.bb
   %i.cr = add i32 %.0122190, %i.cq
   br label %._crit_edge176
 
@@ -212,7 +212,7 @@ bb.g:                                             ; preds = %.thread144, %bb.e
   br i1 %i.bh, label %.preheader157.us182.preheader, label %.preheader157.preheader
 
 .preheader157.preheader:                          ; preds = %.lr.ph175.split.split
-  %i.cs = mul i32 %i.bb, %i.az
+  %i.cs = mul i32 %i.az, %i.bb
   %i.ct = add i32 %.0122190, %i.cs
   br label %._crit_edge176
 

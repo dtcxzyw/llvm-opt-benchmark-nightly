@@ -204,11 +204,10 @@ iter.check1055:                                   ; preds = %..preheader8_crit_e
 
 vector.memcheck1030:                              ; preds = %iter.check1055
   %i.wu = ptrtoaddr ptr %.lcssa257 to i64
-  %reass.sub1294 = sub i64 %i.wu, %.010023.us.i1031
-  %op.rdx = add i64 %.010023.us.i1031, -1
-  %op.rdx1297 = add i64 %reass.sub1293, %reass.sub1294
-  %op.rdx1298 = add i64 %op.rdx, %op.rdx1297
-  %diff.check1034 = icmp ult i64 %op.rdx1298, 255
+  %op.rdx = add i64 %reass.sub1293, %.010023.us.i1031
+  %op.rdx1297 = add i64 %op.rdx, %i.wu
+  %12 = sub i64 %.010023.us.i1031, %op.rdx1297
+  %diff.check1034 = icmp ugt i64 %12, -256
   br i1 %diff.check1034, label %.lr.ph15.us.i.preheader, label %vector.main.loop.iter.check1036
 
 vector.main.loop.iter.check1036:                  ; preds = %vector.memcheck1030
@@ -611,11 +610,10 @@ iter.check1169:                                   ; preds = %bb.j, %iter.check11
 
 vector.memcheck1144:                              ; preds = %iter.check1169
   %i.acu = ptrtoaddr ptr %.lcssa1343 to i64
-  %reass.sub1320 = sub i64 %i.acu, %.08823.us30.us.i1145
-  %op.rdx = add i64 %.08823.us30.us.i1145, -1
-  %op.rdx1330 = add i64 %reass.sub, %reass.sub1320
-  %op.rdx1331 = add i64 %op.rdx, %op.rdx1330
-  %diff.check1148 = icmp ult i64 %op.rdx1331, 255
+  %op.rdx = add i64 %reass.sub, %.08823.us30.us.i1145
+  %op.rdx1330 = add i64 %op.rdx, %i.acu
+  %10 = sub i64 %.08823.us30.us.i1145, %op.rdx1330
+  %diff.check1148 = icmp ugt i64 %10, -256
   br i1 %diff.check1148, label %..preheader8_crit_edge.us35.us.i.preheader, label %vector.main.loop.iter.check1150
 
 vector.main.loop.iter.check1150:                  ; preds = %vector.memcheck1144

@@ -204,8 +204,8 @@ generateWord.exit.peel.i.i:                       ; preds = %bb.bj, %bb.bn, %bb.
   br i1 %exitcond.peel.not.i.i, label %generateSentence.exit.i, label %.peel.next.i.preheader.i
 
 .peel.next.i.preheader.i:                         ; preds = %generateWord.exit.peel.i.i
-  %i.pt = add nsw i32 %i.mg, -1
-  %i.pu = sub nsw i32 0, %i.lz
+  %i.pt = add nsw i32 %i.lz, -1
+  %i.pu = sub nsw i32 0, %i.mg
   %.not.i13 = icmp eq i32 %i.pt, %i.pu
   br i1 %.not.i13, label %generateSentence.exit.loopexit.peel.begin.i, label %.peel.next.i.preheader.split.i
 

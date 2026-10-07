@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d
   %i.ar = add i64 %i.al, 1                        ; 4 uses
   store i64 %i.ar, ptr %i.w, align 8, !alias.scope !6627, !noalias !6615
   call void @llvm.experimental.noalias.scope.decl(metadata !6628)
-  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ar, i64 %i.ak) ; 2 uses
+  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ak, i64 %i.ar) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6629)
   %exitcond.not.i67.not.i.i.i.i = icmp ult i64 %i.ar, %i.ak
   br i1 %exitcond.not.i67.not.i.i.i.i, label %bb.h, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i.i.i"
@@ -268,7 +268,7 @@ bb.m:                                             ; preds = %bb.d
   %i.bd = add i64 %i.al, 1                        ; 4 uses
   store i64 %i.bd, ptr %i.w, align 8, !alias.scope !6640, !noalias !6615
   call void @llvm.experimental.noalias.scope.decl(metadata !6641)
-  %umax.i69.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bd, i64 %i.ak) ; 2 uses
+  %umax.i69.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ak, i64 %i.bd) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6642)
   %exitcond.not.i71.not.i.i.i.i = icmp ult i64 %i.bd, %i.ak
   br i1 %exitcond.not.i71.not.i.i.i.i, label %bb.n, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i74.i.i.i.i"
@@ -331,7 +331,7 @@ bb.s:                                             ; preds = %bb.d
   %i.bp = add i64 %i.al, 1                        ; 4 uses
   store i64 %i.bp, ptr %i.w, align 8, !alias.scope !6653, !noalias !6615
   call void @llvm.experimental.noalias.scope.decl(metadata !6654)
-  %umax.i77.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bp, i64 %i.ak) ; 3 uses
+  %umax.i77.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ak, i64 %i.bp) ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6655)
   %exitcond.not.i79.not.i.i.i.i = icmp ult i64 %i.bp, %i.ak
   br i1 %exitcond.not.i79.not.i.i.i.i, label %bb.t, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i82.i.i.i.i"
@@ -734,7 +734,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ac = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ac, ptr %i.s, align 8, !alias.scope !7195
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7196)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ac, i64 %i.v)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ac)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7197)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7198)
   %exitcond.not.i.not = icmp ult i64 %i.ac, %i.v
@@ -794,7 +794,7 @@ bb.k:                                             ; preds = %bb.b
   %i.ao = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ao, ptr %i.s, align 8, !alias.scope !7212
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7213)
-  %umax.i20 = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.v)
+  %umax.i20 = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ao)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7214)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7215)
   %exitcond.not.i22.not = icmp ult i64 %i.ao, %i.v
@@ -854,7 +854,7 @@ bb.r:                                             ; preds = %bb.b
   %i.ba = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ba, ptr %i.s, align 8, !alias.scope !7229
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7230)
-  %umax.i28 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.v) ; 2 uses
+  %umax.i28 = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7231)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7232)
   %exitcond.not.i30.not = icmp ult i64 %i.ba, %i.v
@@ -1257,7 +1257,7 @@ bb.hh:                                            ; preds = %bb.he
   %i.adk = add i64 %i.ade, 1                      ; 4 uses
   store i64 %i.adk, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i.i, align 8, !alias.scope !12285, !noalias !12276
   call void @llvm.experimental.noalias.scope.decl(metadata !12286)
-  %umax.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.adk, i64 %i.add) ; 2 uses
+  %umax.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.add, i64 %i.adk) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !12287)
   call void @llvm.experimental.noalias.scope.decl(metadata !12288)
   %exitcond.not.i67.not.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.adk, %i.add
@@ -1323,7 +1323,7 @@ bb.hn:                                            ; preds = %bb.he
   %i.adw = add i64 %i.ade, 1                      ; 4 uses
   store i64 %i.adw, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i.i, align 8, !alias.scope !12301, !noalias !12276
   call void @llvm.experimental.noalias.scope.decl(metadata !12302)
-  %umax.i69.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.adw, i64 %i.add) ; 2 uses
+  %umax.i69.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.add, i64 %i.adw) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !12303)
   call void @llvm.experimental.noalias.scope.decl(metadata !12304)
   %exitcond.not.i71.not.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.adw, %i.add
@@ -1389,7 +1389,7 @@ bb.ht:                                            ; preds = %bb.he
   %i.aei = add i64 %i.ade, 1                      ; 4 uses
   store i64 %i.aei, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i.i, align 8, !alias.scope !12317, !noalias !12276
   call void @llvm.experimental.noalias.scope.decl(metadata !12318)
-  %umax.i77.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.aei, i64 %i.add) ; 3 uses
+  %umax.i77.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.add, i64 %i.aei) ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !12319)
   call void @llvm.experimental.noalias.scope.decl(metadata !12320)
   %exitcond.not.i79.not.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.aei, %i.add

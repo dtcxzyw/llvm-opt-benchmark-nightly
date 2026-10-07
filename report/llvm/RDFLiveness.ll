@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.o = sub i64 %i.l, %i.n                       ; 5 uses
-  %i.p = ashr exact i64 %i.o, 2                   ; 4 uses
+  %i.o = sub i64 %i.l, %i.n                       ; 6 uses
+  %i.p = ashr exact i64 %i.o, 2                   ; 3 uses
   %i.q = icmp ugt i64 %i.p, %i.f
   br i1 %i.q, label %bb.d, label %_ZSt9__advanceISt16reverse_iteratorIPjElEvRT_T0_St26random_access_iterator_tag.exit
 
@@ -333,8 +333,8 @@ _ZSt9__advanceISt16reverse_iteratorIPjElEvRT_T0_St26random_access_iterator_tag.e
   %i.bj = sub nsw i64 0, %i.p
   %i.bk = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.bj ; 6 uses
   %i.bl = ptrtoint ptr %i.bk to i64               ; 2 uses
-  %i.bm = sub i64 %i.bl, %i.d                     ; 3 uses
-  %i.bn = ashr exact i64 %i.bm, 2                 ; 7 uses
+  %i.bm = sub i64 %i.bl, %i.d                     ; 2 uses
+  %i.bn = ashr exact i64 %i.bm, 2                 ; 8 uses
   %i.bo = icmp sgt i64 %i.bn, 0
   br i1 %i.bo, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIPjES1_jET0_T_S4_S3_RSaIT1_E.exit
 
@@ -344,8 +344,8 @@ _ZSt9__advanceISt16reverse_iteratorIPjElEvRT_T0_St26random_access_iterator_tag.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %i.bp = getelementptr i8, ptr %i.j, i64 %i.bm
-  %i.bq = mul i64 %i.p, -4
-  %i.br = sub i64 %i.bq, %i.bm
+  %i.bq = mul nsw i64 %i.bn, -4
+  %i.br = sub i64 %i.bq, %i.o
   %i.bs = getelementptr i8, ptr %i.a, i64 %i.br
   %bound0 = icmp ult ptr %i.j, %i.bk
   %bound1 = icmp ult ptr %i.bs, %i.bp

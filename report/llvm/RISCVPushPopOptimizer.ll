@@ -202,10 +202,10 @@ bb.y:                                             ; preds = %bb.u
   br i1 %i.lf, label %.lr.ph.preheader.i, label %_ZN12_GLOBAL__N_115RISCVPushPopOpt9usePopRetERN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEES5_b.exit
 
 .lr.ph.preheader.i:                               ; preds = %.loopexit
+  %3 = zext i8 %i.kz to i64
   %i.lg = zext i16 %i.ks to i64
   %i.lh = zext i8 %i.kv to i64
   %i.li = add nuw nsw i64 %i.lh, %i.lg
-  %3 = zext i8 %i.kz to i64
   %i.lj = add nuw nsw i64 %i.li, %3
   br label %.lr.ph.i48
 

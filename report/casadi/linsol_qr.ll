@@ -205,7 +205,7 @@ _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit:       ; preds = %.lr.ph.i.prol.loope
   br i1 %min.iters.check229, label %.lr.ph.i40.preheader342, label %vector.memcheck226
 
 vector.memcheck226:                               ; preds = %.lr.ph.i40.preheader
-  %i.dd = add i64 %i.aq, %i.cs
+  %i.dd = add i64 %i.cs, %i.aq
   %i.de = add i64 %i.dd, %i.ao
   %i.df = shl i64 %i.de, 3
   %i.dg = add i64 %i.df, %spec.select.i221
@@ -331,8 +331,8 @@ _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit47:     ; preds = %.lr.ph.i40.prol.loo
   br i1 %min.iters.check247, label %.lr.ph.i52.preheader341, label %vector.memcheck244
 
 vector.memcheck244:                               ; preds = %.lr.ph.i52.preheader
-  %i.ff = add i64 %i.aq, %i.cs
-  %i.fg = add i64 %i.ff, %i.ev
+  %i.ff = add i64 %i.ev, %i.cs
+  %i.fg = add i64 %i.ff, %i.aq
   %i.fh = add i64 %i.fg, %i.ao
   %i.fi = shl i64 %i.fh, 3
   %i.fj = add i64 %i.fi, %spec.select.i221
@@ -735,7 +735,7 @@ middle.block294:                                  ; preds = %vector.body287
   br i1 %min.iters.check302, label %.lr.ph.i102.preheader337, label %vector.memcheck299
 
 vector.memcheck299:                               ; preds = %.lr.ph.i102.preheader
-  %i.po = add i64 %i.nh, %i.pg
+  %i.po = add i64 %i.pg, %i.nh
   %i.pp = shl i64 %i.po, 3
   %i.pq = add i64 %i.pp, %.1142146263
   %i.pr = sub i64 %i.pj, %i.pq
@@ -868,8 +868,8 @@ middle.block312:                                  ; preds = %vector.body305
   br i1 %min.iters.check320, label %.lr.ph.i114.preheader336, label %vector.memcheck317
 
 vector.memcheck317:                               ; preds = %.lr.ph.i114.preheader
-  %i.ro = add i64 %i.nh, %i.pg
-  %i.rp = add i64 %i.ro, %i.rg
+  %i.ro = add i64 %i.rg, %i.pg
+  %i.rp = add i64 %i.ro, %i.nh
   %i.rq = shl i64 %i.rp, 3
   %i.rr = add i64 %i.rq, %.1142146263
   %i.rs = sub i64 %i.rj, %i.rr

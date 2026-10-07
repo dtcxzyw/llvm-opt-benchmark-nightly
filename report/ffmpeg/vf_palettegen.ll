@@ -204,24 +204,22 @@ bb.d:                                             ; preds = %.lr.ph145
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph145
   %i.cj = phi i32 [ %i.ci, %bb.d ], [ %i.bw, %.lr.ph145 ]
-  %i.ck = phi i32 [ %.pre, %bb.d ], [ %i.bt, %.lr.ph145 ] ; 3 uses
+  %i.ck = phi i32 [ %.pre, %bb.d ], [ %i.bt, %.lr.ph145 ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.073106143, i64 24
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !65
   %i.cn = add nsw i64 %i.cm, 1
   %i.co = ashr i64 %i.cn, 1
   %i.cp = getelementptr inbounds nuw i8, ptr %.073106143, i64 40 ; 2 uses
-  %i.cq = load i32, ptr %i.cp, align 8, !tbaa !64 ; 5 uses
+  %i.cq = load i32, ptr %i.cp, align 8, !tbaa !64 ; 4 uses
   %i.cr = add i32 %i.cq, -2
-  %i.cs = add i32 %i.cr, %i.ck
+  %i.cs = add i32 %i.cr, %i.ck                    ; 3 uses
   %i.ct = icmp slt i32 %i.cq, %i.cs
   br i1 %i.ct, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.e
   %i.cu = load ptr, ptr %i.ax, align 8, !tbaa !57
   %i.cv = sext i32 %i.cq to i64
-  %1 = add i32 %i.ck, -2
-  %2 = add i32 %1, %i.cq                          ; 2 uses
-  %wide.trip.count = sext i32 %2 to i64
+  %wide.trip.count = sext i32 %i.cs to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.g
@@ -245,7 +243,7 @@ bb.g:                                             ; preds = %bb.f
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit138, %bb.e
-  %.072.lcssa = phi i32 [ %i.cq, %bb.e ], [ %i.dc, %._crit_edge.loopexit.split.loop.exit138 ], [ %2, %bb.g ] ; 2 uses
+  %.072.lcssa = phi i32 [ %i.cq, %bb.e ], [ %i.dc, %._crit_edge.loopexit.split.loop.exit138 ], [ %i.cs, %bb.g ] ; 2 uses
   %i.dd = load i32, ptr %i.bi, align 8, !tbaa !103 ; 2 uses
   %i.de = add nsw i32 %i.dd, 1
   store i32 %i.de, ptr %i.bi, align 8, !tbaa !103

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_RINvYINtNtCs40k4W9
   %i.ai = load ptr, ptr %i.ah, align 8, !noundef !18 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !546)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !547
-  %umin.i.i.i = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.ad) ; 5 uses
+  %umin.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %i.ag) ; 5 uses
   %i.aj = shl nuw i64 %umin.i.i.i, 2              ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.ai, i64 %i.aj ; 3 uses
   %i.ak = sub nuw nsw i64 %i.ag, %umin.i.i.i      ; 4 uses
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %_RINvYINtNtCs40k4W9
   %i.ai = load ptr, ptr %i.ah, align 8, !noundef !18 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !645)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !646
-  %umin.i.i.i = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.ad) ; 5 uses
+  %umin.i.i.i = call i64 @llvm.umin.i64(i64 %i.ad, i64 %i.ag) ; 5 uses
   %i.aj = shl nuw i64 %umin.i.i.i, 3              ; 2 uses
   %scevgep.i.i.i = getelementptr i8, ptr %i.ai, i64 %i.aj ; 3 uses
   %i.ak = sub nuw nsw i64 %i.ag, %umin.i.i.i      ; 4 uses
@@ -1011,12 +1011,12 @@ bb.e:                                             ; preds = %.split5, %_RNvNtNtC
   %i.at = add nsw i64 %i.p, -1
   %i.au = tail call i64 @llvm.umin.i64(i64 %i.as, i64 %i.t)
   %i.av = tail call i64 @llvm.umin.i64(i64 %i.au, i64 %i.r)
-  %i.aw = tail call i64 @llvm.umin.i64(i64 %i.av, i64 %i.v)
-  %i.ax = tail call i64 @llvm.umin.i64(i64 %i.aw, i64 %i.x)
+  %i.aw = tail call i64 @llvm.umin.i64(i64 %i.av, i64 %i.x)
+  %i.ax = tail call i64 @llvm.umin.i64(i64 %i.aw, i64 %i.v)
   %i.ay = tail call i64 @llvm.umin.i64(i64 %i.ax, i64 %i.z)
   %i.az = tail call i64 @llvm.umin.i64(i64 %i.ay, i64 %i.ab)
-  %i.ba = tail call i64 @llvm.umin.i64(i64 %i.az, i64 %i.ad)
-  %i.bb = tail call i64 @llvm.umin.i64(i64 %i.ba, i64 %i.af)
+  %i.ba = tail call i64 @llvm.umin.i64(i64 %i.az, i64 %i.af)
+  %i.bb = tail call i64 @llvm.umin.i64(i64 %i.ba, i64 %i.ad)
   %i.bc = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.ah)
   %i.bd = tail call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.aj)
   %i.be = tail call i64 @llvm.umin.i64(i64 %i.bd, i64 %i.al)

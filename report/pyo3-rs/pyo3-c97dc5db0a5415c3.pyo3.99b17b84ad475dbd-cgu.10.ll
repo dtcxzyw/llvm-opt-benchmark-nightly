@@ -204,7 +204,7 @@ bb.a:
   %.val.i.i.i.i.i = load ptr, ptr %1, align 8, !alias.scope !236, !noalias !235, !nonnull !4
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val1.i.i.i.i.i = load ptr, ptr %i.j, align 8, !alias.scope !236, !noalias !235, !nonnull !4
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i.i, i64 %i.i)
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %.promoted.i.i.i)
   %exitcond.not.i.i.i32.not = icmp ult i64 %.promoted.i.i.i, %i.i
   br i1 %exitcond.not.i.i.i32.not, label %.lr.ph, label %._crit_edge
 
@@ -334,7 +334,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsdc6yCHiM2ZJ_4pyo3.exit.i
   %i.au = load i64, ptr %i.ac, align 8, !alias.scope !262, !noalias !248, !noundef !4 ; 2 uses
   %.promoted.i.i.i.i.i = load i64, ptr %i.ab, align 8, !alias.scope !262, !noalias !248 ; 3 uses
   %.val1.i.i.i.i.i.i.i = load ptr, ptr %i.ad, align 8, !alias.scope !263, !noalias !248, !nonnull !4
-  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i, i64 %i.au)
+  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.au, i64 %.promoted.i.i.i.i.i)
   %exitcond.not.i.i.i.i.i33.not = icmp ult i64 %.promoted.i.i.i.i.i, %i.au
   br i1 %exitcond.not.i.i.i.i.i33.not, label %.lr.ph35, label %._crit_edge36
 

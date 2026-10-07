@@ -205,13 +205,13 @@ bb.g:                                             ; preds = %.lr.ph
 define dso_local void @clause_SetMaxLitFlags(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64
-  %.val.i = load i32, ptr %i.a, align 8           ; 4 uses
+  %.val.i = load i32, ptr %i.a, align 8           ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 68
-  %.val3.i = load i32, ptr %i.b, align 4          ; 2 uses
+  %.val3.i = load i32, ptr %i.b, align 4
   %i.c = add i32 %.val3.i, %.val.i
   %i.d = getelementptr i8, ptr %0, i64 72
-  %.val4.i = load i32, ptr %i.d, align 8          ; 2 uses
-  %i.e = add i32 %i.c, %.val4.i                   ; 7 uses
+  %.val4.i = load i32, ptr %i.d, align 8
+  %i.e = add i32 %i.c, %.val4.i                   ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8              ; 2 uses
   %i.h = and i32 %i.g, 2
@@ -380,8 +380,6 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.bd = getelementptr i8, ptr %0, i64 56        ; 2 uses
   %i.be = sext i32 %.val.i to i64                 ; 2 uses
   %i.bf = sext i32 %i.e to i64
-  %3 = add i32 %.val3.i, %.val4.i
-  %4 = add i32 %3, %.val.i
   br label %.lr.ph83.split.us
 
 .lr.ph83.split.us:                                ; preds = %.lr.ph83.split.us.preheader, %bb.m
@@ -450,7 +448,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k, %._crit_edge79.us, %.lr.ph83.split.us
   %indvars.iv.next96 = add nsw i64 %indvars.iv95, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next96 to i32
-  %exitcond98.not = icmp eq i32 %4, %lftr.wideiv
+  %exitcond98.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond98.not, label %._crit_edge84, label %.lr.ph83.split.us, !llvm.loop !63
 
 .preheader.us:                                    ; preds = %.lr.ph83.split.us
@@ -770,8 +768,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr i8, ptr %0, i64 56
-  %i.h = add i32 %.val.i.i, %.val3.i.i
-  %i.i = add i32 %i.h, %.val4.i.i
+  %i.h = add i32 %.val4.i.i, %.val3.i.i
+  %i.i = add i32 %i.h, %.val.i.i
   %wide.trip.count = zext i32 %i.i to i64
   br label %bb.b
 
@@ -1174,17 +1172,17 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr i8, ptr %0, i64 64
   %.val.i.i = load i32, ptr %i.h, align 8         ; 5 uses
-  %i.i = add i32 %.val.i.i, %.val26
+  %i.i = add nsw i32 %.val.i.i, %.val26
   %i.j = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.j, align 8        ; 2 uses
-  %i.k = add i32 %i.i, %.val4.i.i
+  %i.k = add nsw i32 %i.i, %.val4.i.i
   %i.l = icmp ult i32 %.val.i.i, %i.k
   br i1 %i.l, label %.lr.ph.i, label %clause_NumberOfMaxLits.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.m = getelementptr i8, ptr %0, i64 56
   %.val.i = load ptr, ptr %i.m, align 8           ; 6 uses
-  %i.n = add i32 %.val26, %.val4.i.i              ; 3 uses
+  %i.n = add i32 %.val4.i.i, %.val26              ; 3 uses
   %i.o = add i32 %i.n, -1
   %xtraiter = and i32 %i.n, 3                     ; 3 uses
   %i.p = icmp ult i32 %i.o, 3

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.noexc
 
 .noexc:                                           ; preds = %.noexc.preheader, %._crit_edge2529.split
-  %indvars.iv = phi i64 [ %i.aa, %.noexc.preheader ], [ %indvars.iv.next, %._crit_edge2529.split ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.aa, %.noexc.preheader ], [ %indvars.iv.next, %._crit_edge2529.split ] ; 4 uses
   %i.ac = load i32, ptr %i.l, align 8, !tbaa !15
   %.fr = freeze i32 %i.ac                         ; 5 uses
   %i.ad = load i32, ptr %i.m, align 8, !tbaa !16
@@ -287,10 +287,10 @@ bb.d:                                             ; preds = %bb.c
 .noexc1013:                                       ; preds = %bb.c, %bb.d
   %.02205 = phi nsz <16 x float> [ zeroinitializer, %bb.c ], [ %i.br, %bb.d ] ; 3 uses
   %i.bs = load ptr, ptr %6, align 8, !tbaa !19, !noalias !318 ; 2 uses
-  %i.bt = load i64, ptr %i.u, align 8, !tbaa !17, !noalias !318
+  %i.bt = load i64, ptr %i.u, align 8, !tbaa !17, !noalias !318 ; 2 uses
   %i.bu = mul i64 %i.bt, %indvars.iv
-  %i.bv = load i64, ptr %i.v, align 8, !tbaa !24, !noalias !318
-  %i.bw = mul i64 %i.bu, %i.bv                    ; 2 uses
+  %i.bv = load i64, ptr %i.v, align 8, !tbaa !24, !noalias !318 ; 2 uses
+  %i.bw = mul i64 %i.bu, %i.bv
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bw ; 2 uses
   br i1 %i.an, label %.preheader2299.lr.ph, label %.preheader2303
 
@@ -304,8 +304,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bz, label %.preheader2299.lr.ph.split.us, label %.preheader2299.preheader
 
 .preheader2299.preheader:                         ; preds = %.preheader2299.lr.ph
+  %19 = mul i64 %indvars.iv, %i.bv
+  %20 = mul i64 %19, %i.bt
   %i.cd = mul nsw i64 %i.bg, %i.cc
-  %i.ce = getelementptr i8, ptr %i.bs, i64 %i.bw
+  %i.ce = getelementptr i8, ptr %i.bs, i64 %20
   %scevgep = getelementptr i8, ptr %i.ce, i64 %i.cd
   br label %.preheader2303
 
