@@ -204,8 +204,8 @@ bb.a:
   %i.d = icmp slt i64 %i.a, 0
   %i.e = select i1 %i.d, i64 %i.c, i64 6
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val69 = load ptr, ptr %i.f, align 8
-  %.val68 = load ptr, ptr %1, align 8             ; 35 uses
+  %.val69 = load ptr, ptr %i.f, align 8, !nonnull !13, !noundef !13
+  %.val68 = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 35 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.val69, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !13, !noalias !13, !nonnull !13 ; 35 uses
   switch i64 %i.e, label %bb.b [
@@ -528,8 +528,8 @@ bb.a:
 define noundef zeroext i1 @"_ZN65_$LT$anki..error..CardTypeError$u20$as$u20$core..fmt..Display$GT$3fmt17ha084ebf614686a14E"(ptr noalias readonly align 8 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !13, !noalias !10696, !nonnull !13
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @935, i64 noundef 13), !noalias !10696, !inline_history !7
@@ -884,8 +884,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i64 2, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.k, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.k, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.l = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -1288,8 +1288,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 2, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.k, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.k, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.l = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -1475,8 +1475,8 @@ bb.a:
   %i.d = icmp slt i64 %i.a, 0
   %i.e = select i1 %i.d, i64 %i.c, i64 2
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11 = load ptr, ptr %i.f, align 8
-  %.val10 = load ptr, ptr %1, align 8             ; 6 uses
+  %.val11 = load ptr, ptr %i.f, align 8, !nonnull !13, !noundef !13
+  %.val10 = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.val11, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !13, !noalias !13, !nonnull !13 ; 6 uses
   switch i64 %i.e, label %bb.b [
@@ -1761,8 +1761,8 @@ bb.b:                                             ; preds = %bb.a
 
 .split6:                                          ; preds = %.split5, %.split, %"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$usize$GT$3fmt17h70ecac23f49aed3dE.exit"
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.j, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.j, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.k = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !13, !noalias !10833, !nonnull !13
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @1269, i64 noundef 2), !noalias !10833, !inline_history !7
@@ -1838,8 +1838,8 @@ bb.a:
   %i.d = icmp slt i64 %i.a, 0
   %i.e = select i1 %i.d, i64 %i.c, i64 3
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val9 = load ptr, ptr %i.f, align 8
-  %.val8 = load ptr, ptr %1, align 8              ; 5 uses
+  %.val9 = load ptr, ptr %i.f, align 8, !nonnull !13, !noundef !13
+  %.val8 = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.val9, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !13, !noalias !13, !nonnull !13 ; 5 uses
   switch i64 %i.e, label %bb.b [
@@ -2119,8 +2119,8 @@ bb.a:
 define noundef zeroext i1 @"_ZN73_$LT$anki..error..network..NetworkError$u20$as$u20$core..fmt..Display$GT$3fmt17h2f69417bd4708caeE"(ptr noalias readonly align 8 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !13, !noalias !10912, !nonnull !13
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @941, i64 noundef 12), !noalias !10912, !inline_history !7
@@ -2523,8 +2523,8 @@ bb.a:
   %i.a = load i8, ptr %0, align 1, !range !19, !noundef !13
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val2 = load ptr, ptr %1, align 8              ; 2 uses
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !13, !noundef !13
+  %.val2 = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.val3, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !invariant.load !13, !noalias !13, !nonnull !13 ; 2 uses
   br i1 %i.b, label %_ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit, label %_ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit8
@@ -2656,8 +2656,8 @@ define noundef zeroext i1 @"_ZN79_$LT$anki..error..filtered..FilteredDeckError$u
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !24, !noundef !13
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.b, align 8
-  %.val6 = load ptr, ptr %1, align 8              ; 4 uses
+  %.val7 = load ptr, ptr %i.b, align 8, !nonnull !13, !noundef !13
+  %.val6 = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val7, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !13, !noalias !13, !nonnull !13 ; 4 uses
   switch i8 %i.a, label %default.unreachable23 [
@@ -3060,8 +3060,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 2, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.h, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.h, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.i = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -3092,8 +3092,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 2, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.h, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.h, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.i = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -3124,8 +3124,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 2, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.h, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.h, align 8, !nonnull !13, !noundef !13
+  %.val = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13
   %i.i = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

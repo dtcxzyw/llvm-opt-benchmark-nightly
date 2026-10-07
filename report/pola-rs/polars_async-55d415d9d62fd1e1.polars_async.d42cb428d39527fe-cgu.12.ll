@@ -204,23 +204,23 @@ _RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4i
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.preheader.i.i.i.i: ; preds = %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.thread.i.i.i.i, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i
   %.sroa.0.026.i.i.i.i = phi i64 [ %.sroa.0.0.i.i19.i.i, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.thread.i.i.i.i ], [ -1, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i ]
   %i.bt = phi i1 [ true, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.thread.i.i.i.i ], [ false, %_RNvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipQINtNtNtBb_5slice4iter14ChunksExactMuthEQINtB10_4ItermEEINtB5_7ZipImplBW_B1A_E9size_hintCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i ]
-  br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i, !dbg !787
+  br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i, !dbg !788
 
 ._crit_edge.i.i.i.i:                              ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i
-  br i1 %i.bt, label %_RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipQINtNtNtBc_5slice4iter14ChunksExactMuthEQINtB11_4ItermEEINtB6_7ZipImplBX_B1B_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQShRmENCNvMs3_NtCs53V80GKKPEw_9rand_core5blockINtB3r_8BlockRngNtNtNtCsci2cbTAlhZn_4rand4rngs6thread13ReseedingCoreE10fill_bytes0E0ECsidoPH4Qgqxm_12polars_async.exit.i.i, label %bb.k, !dbg !788
+  br i1 %i.bt, label %_RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipQINtNtNtBc_5slice4iter14ChunksExactMuthEQINtB11_4ItermEEINtB6_7ZipImplBX_B1B_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQShRmENCNvMs3_NtCs53V80GKKPEw_9rand_core5blockINtB3r_8BlockRngNtNtNtCsci2cbTAlhZn_4rand4rngs6thread13ReseedingCoreE10fill_bytes0E0ECsidoPH4Qgqxm_12polars_async.exit.i.i, label %bb.k, !dbg !789
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i: ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.preheader.i.i.i.i
   %.sroa.01.023.i.i.i.i = phi i64 [ %i.bu, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.i.i.i.i ], [ 0, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async.exit.preheader.i.i.i.i ]
-  %i.bu = add nuw i64 %.sroa.01.023.i.i.i.i, 1, !dbg !789 ; 2 uses
-  %i.bv = load i64, ptr %i.bj, align 8, !dbg !790, !alias.scope !668, !noalias !602, !noundef !13 ; 2 uses
-  %i.bw = load i64, ptr %i.bk, align 8, !dbg !791, !alias.scope !668, !noalias !602, !noundef !13 ; 4 uses
-  %.not.i.i.i.i.i.i = icmp ule i64 %i.bw, %i.bv, !dbg !792
-  call void @llvm.assume(i1 %.not.i.i.i.i.i.i), !dbg !792, !noalias !602
-  %i.bx = load ptr, ptr %i.bl, align 8, !dbg !790, !alias.scope !668, !noalias !602, !nonnull !13, !noundef !13 ; 2 uses
+  %i.bu = add nuw i64 %.sroa.01.023.i.i.i.i, 1, !dbg !790 ; 2 uses
+  %i.bv = load i64, ptr %i.bj, align 8, !dbg !791, !alias.scope !670, !noalias !602, !noundef !13 ; 2 uses
+  %i.bw = load i64, ptr %i.bk, align 8, !dbg !792, !alias.scope !670, !noalias !602, !noundef !13 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp ule i64 %i.bw, %i.bv, !dbg !788
+  call void @llvm.assume(i1 %.not.i.i.i.i.i.i), !dbg !788, !noalias !602
+  %i.bx = load ptr, ptr %i.bl, align 8, !dbg !791, !alias.scope !670, !noalias !602, !nonnull !13, !noundef !13 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.bw, !dbg !793
   %i.bz = sub nuw i64 %i.bv, %i.bw, !dbg !794
-  store ptr %i.by, ptr %i.bl, align 8, !dbg !795, !alias.scope !668, !noalias !602
-  store i64 %i.bz, ptr %i.bj, align 8, !dbg !795, !alias.scope !668, !noalias !602
+  store ptr %i.by, ptr %i.bl, align 8, !dbg !795, !alias.scope !670, !noalias !602
+  store i64 %i.bz, ptr %i.bj, align 8, !dbg !795, !alias.scope !670, !noalias !602
   %i.ca = load ptr, ptr %.val13.i.i.i.i, align 8, !dbg !796, !alias.scope !672, !noalias !602, !nonnull !13, !noundef !13 ; 3 uses
   %i.cb = load ptr, ptr %i.bm, align 8, !dbg !797, !alias.scope !672, !noalias !602, !nonnull !13, !noundef !13
   %i.cc = icmp ne ptr %i.ca, %i.cb, !dbg !798
@@ -623,35 +623,35 @@ begin_hunk_1_@llvm.umin.i64
 !413 = distinct !DILocation(line: 673, column: 22, scope: !664, inlinedAt: !400)
 !414 = distinct !DILocation(line: 866, column: 14, scope: !410, inlinedAt: !413)
 !415 = distinct !DILocation(line: 781, column: 12, scope: !409, inlinedAt: !414)
-!416 = distinct !DISubprogram(name: "unchecked_add", linkageName: "_RNvMs9_NtCscgRAwXFJnXP_4core3numj13unchecked_add", scope: !666, file: !665, line: 886, type: !18, scopeLine: 886, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!417 = distinct !DISubprogram(name: "forward_unchecked", linkageName: "_RNvXsF_NtNtCscgRAwXFJnXP_4core4iter5rangejNtB5_4Step17forward_unchecked", scope: !667, file: !660, line: 212, type: !18, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!418 = distinct !DILexicalBlock(scope: !409, file: !660, line: 782, column: 13)
-!419 = distinct !DILocation(line: 784, column: 35, scope: !418, inlinedAt: !414)
-!420 = distinct !DILocation(line: 214, column: 28, scope: !417, inlinedAt: !419)
-!421 = distinct !{!421, i1 false, !"_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async"}
-!422 = distinct !{!422, !421, !"_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async: argument 0"}
-!423 = distinct !DISubprogram(name: "next<u8>", linkageName: "_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !669, file: !618, line: 2051, type: !18, scopeLine: 2051, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!424 = distinct !DISubprogram(name: "next<core::slice::iter::ChunksExactMut<u8>>", linkageName: "_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !670, file: !636, line: 4265, type: !14, scopeLine: 4265, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!425 = distinct !DILocation(line: 677, column: 38, scope: !412, inlinedAt: !400)
-!426 = distinct !DILocation(line: 4266, column: 18, scope: !424, inlinedAt: !425)
-!427 = distinct !DISubprogram(name: "split_at_mut_checked<u8>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core5sliceSh20split_at_mut_checkedCsidoPH4Qgqxm_12polars_async", scope: !622, file: !621, line: 2192, type: !18, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!428 = distinct !DILocation(line: 2053, column: 33, scope: !423, inlinedAt: !426)
+!416 = distinct !DISubprogram(name: "split_at_mut_checked<u8>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core5sliceSh20split_at_mut_checkedCsidoPH4Qgqxm_12polars_async", scope: !622, file: !621, line: 2192, type: !18, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!417 = distinct !DISubprogram(name: "next<u8>", linkageName: "_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !665, file: !618, line: 2051, type: !18, scopeLine: 2051, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!418 = distinct !DISubprogram(name: "next<core::slice::iter::ChunksExactMut<u8>>", linkageName: "_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter14ChunksExactMuthENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !666, file: !636, line: 4265, type: !14, scopeLine: 4265, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!419 = distinct !DILocation(line: 677, column: 38, scope: !412, inlinedAt: !400)
+!420 = distinct !DILocation(line: 4266, column: 18, scope: !418, inlinedAt: !419)
+!421 = distinct !DILocation(line: 2053, column: 33, scope: !417, inlinedAt: !420)
+!422 = distinct !DISubprogram(name: "unchecked_add", linkageName: "_RNvMs9_NtCscgRAwXFJnXP_4core3numj13unchecked_add", scope: !668, file: !667, line: 886, type: !18, scopeLine: 886, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!423 = distinct !DISubprogram(name: "forward_unchecked", linkageName: "_RNvXsF_NtNtCscgRAwXFJnXP_4core4iter5rangejNtB5_4Step17forward_unchecked", scope: !669, file: !660, line: 212, type: !18, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!424 = distinct !DILexicalBlock(scope: !409, file: !660, line: 782, column: 13)
+!425 = distinct !DILocation(line: 784, column: 35, scope: !424, inlinedAt: !414)
+!426 = distinct !DILocation(line: 214, column: 28, scope: !423, inlinedAt: !425)
+!427 = distinct !{!427, i1 false, !"_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async"}
+!428 = distinct !{!428, !427, !"_RNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async: argument 0"}
 !429 = distinct !DISubprogram(name: "add<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr7mut_ptrOh3addCsidoPH4Qgqxm_12polars_async", scope: !17, file: !15, line: 927, type: !18, scopeLine: 927, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !430 = distinct !DISubprogram(name: "split_at_mut_unchecked<u8>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core5sliceSh22split_at_mut_uncheckedCsidoPH4Qgqxm_12polars_async", scope: !622, file: !621, line: 2092, type: !14, scopeLine: 2092, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !431 = distinct !DILexicalBlock(scope: !430, file: !621, line: 2093, column: 9)
 !432 = distinct !DILexicalBlock(scope: !431, file: !621, line: 2094, column: 9)
-!433 = distinct !DILocation(line: 2196, column: 32, scope: !427, inlinedAt: !428)
+!433 = distinct !DILocation(line: 2196, column: 32, scope: !416, inlinedAt: !421)
 !434 = distinct !DILocation(line: 2109, column: 40, scope: !432, inlinedAt: !433)
 !435 = distinct !DISubprogram(name: "{closure#0}<u8>", linkageName: "_RNCNvXs1y_NtNtCscgRAwXFJnXP_4core5slice4iterINtB8_14ChunksExactMuthENtNtNtNtBc_4iter6traits8iterator8Iterator4next0CsidoPH4Qgqxm_12polars_async", scope: !671, file: !618, line: 2053, type: !18, scopeLine: 2053, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !436 = distinct !DILexicalBlock(scope: !435, file: !618, line: 2053, column: 96)
 !437 = distinct !DISubprogram(name: "and_then<(&mut [u8], &mut [u8]), &mut [u8], core::slice::iter::{impl#98}::next::{closure_env#0}<u8>>", linkageName: "_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionTQShBJ_EE8and_thenBJ_NCNvXs1y_NtNtB5_5slice4iterINtB1c_14ChunksExactMuthENtNtNtNtB5_4iter6traits8iterator8Iterator4next0ECsidoPH4Qgqxm_12polars_async", scope: !23, file: !21, line: 1541, type: !18, scopeLine: 1541, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !438 = distinct !DILexicalBlock(scope: !437, file: !21, line: 1546, column: 13)
-!439 = distinct !DILocation(line: 2053, column: 71, scope: !423, inlinedAt: !426)
+!439 = distinct !DILocation(line: 2053, column: 71, scope: !417, inlinedAt: !420)
 !440 = distinct !DILocation(line: 1546, column: 24, scope: !438, inlinedAt: !439)
 !441 = distinct !{!441, i1 false, !"_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4ItermENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async"}
 !442 = distinct !{!442, !441, !"_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4ItermENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async: argument 0"}
 !443 = distinct !DISubprogram(name: "next<u32>", linkageName: "_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4ItermENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !674, file: !673, line: 157, type: !18, scopeLine: 157, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
-!444 = distinct !DISubprogram(name: "next<core::slice::iter::Iter<u32>>", linkageName: "_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter4ItermENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !670, file: !636, line: 4265, type: !14, scopeLine: 4265, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!444 = distinct !DISubprogram(name: "next<core::slice::iter::Iter<u32>>", linkageName: "_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter6traits8iteratorQINtNtNtBb_5slice4iter4ItermENtB5_8Iterator4nextCsidoPH4Qgqxm_12polars_async", scope: !666, file: !636, line: 4265, type: !14, scopeLine: 4265, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !445 = distinct !DILocation(line: 677, column: 72, scope: !412, inlinedAt: !400)
 !446 = distinct !DILocation(line: 4266, column: 18, scope: !444, inlinedAt: !445)
 !447 = distinct !DILexicalBlock(scope: !443, file: !673, line: 161, column: 17)
@@ -683,7 +683,7 @@ begin_hunk_1_@llvm.umin.i64
 !473 = distinct !DILocation(line: 185, column: 40, scope: !470, inlinedAt: !467)
 !474 = distinct !DILexicalBlock(scope: !466, file: !586, line: 296, column: 17)
 !475 = distinct !DILexicalBlock(scope: !474, file: !586, line: 297, column: 17)
-!476 = distinct !DISubprogram(name: "checked_sub", linkageName: "_RNvMs9_NtCscgRAwXFJnXP_4core3numj11checked_sub", scope: !666, file: !665, line: 971, type: !18, scopeLine: 971, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
+!476 = distinct !DISubprogram(name: "checked_sub", linkageName: "_RNvMs9_NtCscgRAwXFJnXP_4core3numj11checked_sub", scope: !668, file: !667, line: 971, type: !18, scopeLine: 971, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !477 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs2_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range5RangejEINtB5_10SliceIndexShE5indexCsidoPH4Qgqxm_12polars_async", scope: !686, file: !31, line: 435, type: !18, scopeLine: 435, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !478 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs4_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range7RangeTojEINtB5_10SliceIndexShE5indexCsidoPH4Qgqxm_12polars_async", scope: !687, file: !31, line: 528, type: !18, scopeLine: 528, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
 !479 = distinct !DISubprogram(name: "index<u8, core::ops::range::RangeTo<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range7RangeTojEE5indexCsidoPH4Qgqxm_12polars_async", scope: !623, file: !31, line: 18, type: !18, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !13)
@@ -872,13 +872,13 @@ begin_hunk_1_@llvm.umin.i64
 !662 = !DINamespace(name: "{impl#5}", scope: !661)
 !663 = !DINamespace(name: "{impl#6}", scope: !661)
 !664 = !DILexicalBlockFile(scope: !412, file: !630, discriminator: 2)
-!665 = !DIFile(filename: "library/core/src/num/uint_macros.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "7da08fe6de751b90c62a398311fb672e")
-!666 = !DINamespace(name: "{impl#11}", scope: !50)
-!667 = !DINamespace(name: "{impl#43}", scope: !661)
-!668 = !{!422}
-!669 = !DINamespace(name: "{impl#98}", scope: !619)
-!670 = !DINamespace(name: "{impl#2}", scope: !638)
-!671 = !DINamespace(name: "next", scope: !669)
+!665 = !DINamespace(name: "{impl#98}", scope: !619)
+!666 = !DINamespace(name: "{impl#2}", scope: !638)
+!667 = !DIFile(filename: "library/core/src/num/uint_macros.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "7da08fe6de751b90c62a398311fb672e")
+!668 = !DINamespace(name: "{impl#11}", scope: !50)
+!669 = !DINamespace(name: "{impl#43}", scope: !661)
+!670 = !{!428}
+!671 = !DINamespace(name: "next", scope: !665)
 !672 = !{!442}
 !673 = !DIFile(filename: "library/core/src/slice/iter/macros.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "87d1f0c2746f51593d75ddf4c9271f14")
 !674 = !DINamespace(name: "{impl#171}", scope: !619)
@@ -995,11 +995,11 @@ begin_hunk_1_@llvm.umin.i64
 !785 = !DILocation(line: 0, scope: !399, inlinedAt: !400)
 !786 = !DILocation(line: 1917, column: 50, scope: !408, inlinedAt: !415)
 !787 = !DILocation(line: 781, column: 12, scope: !409, inlinedAt: !414)
-!788 = !DILocation(line: 681, column: 17, scope: !411, inlinedAt: !400)
-!789 = !DILocation(line: 898, column: 17, scope: !416, inlinedAt: !420)
-!790 = !DILocation(line: 2053, column: 18, scope: !423, inlinedAt: !426)
-!791 = !DILocation(line: 2053, column: 54, scope: !423, inlinedAt: !426)
-!792 = !DILocation(line: 2193, column: 12, scope: !427, inlinedAt: !428)
+!788 = !DILocation(line: 2193, column: 12, scope: !416, inlinedAt: !421)
+!789 = !DILocation(line: 681, column: 17, scope: !411, inlinedAt: !400)
+!790 = !DILocation(line: 898, column: 17, scope: !422, inlinedAt: !426)
+!791 = !DILocation(line: 2053, column: 18, scope: !417, inlinedAt: !420)
+!792 = !DILocation(line: 2053, column: 54, scope: !417, inlinedAt: !420)
 !793 = !DILocation(line: 961, column: 18, scope: !429, inlinedAt: !434)
 !794 = !DILocation(line: 2109, column: 50, scope: !432, inlinedAt: !433)
 !795 = !DILocation(line: 2054, column: 13, scope: !436, inlinedAt: !440)

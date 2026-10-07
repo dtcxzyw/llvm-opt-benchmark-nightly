@@ -205,7 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.val9 = load ptr, ptr %i.e, align 8, !nonnull !16, !align !23, !noundef !16 ; 2 uses
-  %.val = load ptr, ptr %3, align 8
+  %.val = load ptr, ptr %3, align 8, !nonnull !16
   %.val.i.pre14 = load ptr, ptr %.val9, align 8
   br label %bb.b
 

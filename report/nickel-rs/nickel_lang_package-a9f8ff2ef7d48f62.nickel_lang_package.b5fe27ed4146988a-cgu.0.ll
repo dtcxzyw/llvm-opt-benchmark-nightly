@@ -206,8 +206,8 @@ bb.a:
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17h032ce202775dc989E", ptr %.sroa.46.0..sroa_idx.i, align 8, !noalias !47730
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7.i = load ptr, ptr %i.m, align 8, !alias.scope !47729, !noalias !47728
-  %.val.i = load ptr, ptr %1, align 8, !alias.scope !47729, !noalias !47728
+  %.val7.i = load ptr, ptr %i.m, align 8, !alias.scope !47729, !noalias !47728, !nonnull !41, !noundef !41
+  %.val.i = load ptr, ptr %1, align 8, !alias.scope !47729, !noalias !47728, !nonnull !41, !noundef !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !47731
   store ptr @2664, ptr %i.a, align 8, !noalias !47730
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -610,8 +610,8 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.a
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val185 = load ptr, ptr %i.cw, align 8
-  %.val184 = load ptr, ptr %1, align 8
+  %.val185 = load ptr, ptr %i.cw, align 8, !nonnull !41, !noundef !41
+  %.val184 = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   %i.cx = getelementptr inbounds nuw i8, ptr %.val185, i64 24
   %i.cy = load ptr, ptr %i.cx, align 8, !invariant.load !41, !noalias !79108, !nonnull !41
   %i.cz = tail call noundef zeroext i1 %i.cy(ptr noundef nonnull align 1 %.val184, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @1934, i64 noundef 56), !noalias !79108, !inline_history !8
@@ -1014,8 +1014,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit242: ; preds = %bb.a
 
 .split:                                           ; preds = %bb.a
   %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val163 = load ptr, ptr %i.hj, align 8
-  %.val162 = load ptr, ptr %1, align 8
+  %.val163 = load ptr, ptr %i.hj, align 8, !nonnull !41, !noundef !41
+  %.val162 = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   %i.hk = getelementptr inbounds nuw i8, ptr %.val163, i64 24
   %i.hl = load ptr, ptr %i.hk, align 8, !invariant.load !41, !noalias !79142, !nonnull !41
   %i.hm = tail call noundef zeroext i1 %i.hl(ptr noundef nonnull align 1 %.val162, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @1967, i64 noundef 35), !noalias !79142, !inline_history !8
@@ -1161,8 +1161,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit267: ; preds = %bb.d
 
 bb.s:                                             ; preds = %bb.d
   %i.il = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val153 = load ptr, ptr %i.il, align 8
-  %.val152 = load ptr, ptr %1, align 8
+  %.val153 = load ptr, ptr %i.il, align 8, !nonnull !41, !noundef !41
+  %.val152 = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   %i.im = getelementptr inbounds nuw i8, ptr %.val153, i64 24
   %i.in = load ptr, ptr %i.im, align 8, !invariant.load !41, !noalias !79147, !nonnull !41
   %i.io = tail call noundef zeroext i1 %i.in(ptr noundef nonnull align 1 %.val152, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @1933, i64 noundef 33), !noalias !79147, !inline_history !8
@@ -1565,8 +1565,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val26 = load ptr, ptr %i.p, align 8
-  %.val25 = load ptr, ptr %1, align 8
+  %.val26 = load ptr, ptr %i.p, align 8, !nonnull !41, !noundef !41
+  %.val25 = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   %i.q = getelementptr inbounds nuw i8, ptr %.val26, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !invariant.load !41, !noalias !79803, !nonnull !41
   %i.s = tail call noundef zeroext i1 %i.r(ptr noundef nonnull align 1 %.val25, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @2109, i64 noundef 17), !noalias !79803, !inline_history !8
@@ -1969,8 +1969,8 @@ default.unreachable52:                            ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val18 = load ptr, ptr %i.k, align 8
-  %.val17 = load ptr, ptr %1, align 8
+  %.val18 = load ptr, ptr %i.k, align 8, !nonnull !41, !noundef !41
+  %.val17 = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   %i.l = getelementptr inbounds nuw i8, ptr %.val18, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !41, !noalias !80801, !nonnull !41
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull align 1 %.val17, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @2189, i64 noundef 55), !noalias !80801, !inline_history !8
@@ -2373,8 +2373,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17h032ce202775dc989E", ptr %.sroa.46.0..sroa_idx, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.l, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.l, align 8, !nonnull !41, !noundef !41
+  %.val = load ptr, ptr %1, align 8, !nonnull !41, !noundef !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !96882
   store ptr @2664, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

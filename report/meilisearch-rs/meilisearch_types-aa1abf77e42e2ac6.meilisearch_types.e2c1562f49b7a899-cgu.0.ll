@@ -205,8 +205,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1463
   store ptr @46, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -609,8 +609,8 @@ _ZN4core4iter6traits8iterator8Iterator8try_fold17h8e19e6e12b83adabE.exit.i: ; pr
 define noundef zeroext i1 @"_ZN157_$LT$$LT$meilisearch_types..settings..RankingRuleView$u20$as$u20$serde_core..de..Deserialize$GT$..deserialize..Visitor$u20$as$u20$serde_core..de..Visitor$GT$9expecting17h5c47b4592b092aa9E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !4561, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @116, i64 noundef 41), !noalias !4561, !inline_history !61
@@ -1013,8 +1013,8 @@ switch.lookup:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error105_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidSimilarId$GT$3fmt17h39a9b632aed2d788E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6071, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @153, i64 noundef 210), !noalias !6071, !inline_history !61
@@ -1025,8 +1025,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error106_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidNetworkUrl$GT$3fmt17h5472012286d8a193E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6074, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @154, i64 noundef 49), !noalias !6074, !inline_history !61
@@ -1037,8 +1037,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error113_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidMultiSearchWeight$GT$3fmt17h78867e2745f949acE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6077, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @155, i64 noundef 69), !noalias !6077, !inline_history !61
@@ -1049,8 +1049,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error113_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidSearchPersonalize$GT$3fmt17h2bd791646b3aa80eE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6080, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @156, i64 noundef 88), !noalias !6080, !inline_history !61
@@ -1061,8 +1061,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error115_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidNetworkSearchApiKey$GT$3fmt17h706b1981db53eab7E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6083, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @157, i64 noundef 58), !noalias !6083, !inline_history !61
@@ -1073,8 +1073,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error115_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidSearchSemanticRatio$GT$3fmt17h6092b1b938ca8971E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6086, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @158, i64 noundef 82), !noalias !6086, !inline_history !61
@@ -1085,8 +1085,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error123_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidSearchRankingScoreThreshold$GT$3fmt17h7278510052d2d5fcE"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6089, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @159, i64 noundef 90), !noalias !6089, !inline_history !61
@@ -1097,8 +1097,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
 define noundef zeroext i1 @"_ZN17meilisearch_types5error124_$LT$impl$u20$core..fmt..Display$u20$for$u20$meilisearch_types..error..deserr_codes..InvalidSearchPersonalizeUserContext$GT$3fmt17h0eefb3a56a27ecd8E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6092, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @160, i64 noundef 57), !noalias !6092, !inline_history !61
@@ -1110,8 +1110,8 @@ define noundef zeroext i1 @"_ZN17meilisearch_types5error124_$LT$impl$u20$core..f
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6097)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1.i = load ptr, ptr %i.a, align 8, !alias.scope !6097
-  %.val.i = load ptr, ptr %1, align 8, !alias.scope !6097
+  %.val1.i = load ptr, ptr %i.a, align 8, !alias.scope !6097, !nonnull !21, !noundef !21
+  %.val.i = load ptr, ptr %1, align 8, !alias.scope !6097, !nonnull !21, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %.val1.i, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !21, !noalias !6098, !nonnull !21
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @159, i64 noundef 90), !noalias !6098, !inline_history !6099
@@ -1514,8 +1514,8 @@ define noundef zeroext i1 @"_ZN69_$LT$meilisearch_types..tasks..Kind$u20$as$u20$
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !77, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val35 = load ptr, ptr %i.b, align 8
-  %.val34 = load ptr, ptr %1, align 8             ; 18 uses
+  %.val35 = load ptr, ptr %i.b, align 8, !nonnull !21, !noundef !21
+  %.val34 = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21 ; 18 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val35, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !21, !noalias !21, !nonnull !21 ; 18 uses
   switch i8 %i.a, label %default.unreachable223 [
@@ -1918,8 +1918,8 @@ define noundef zeroext i1 @"_ZN71_$LT$meilisearch_types..tasks..Status$u20$as$u2
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !78, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val9 = load ptr, ptr %i.b, align 8
-  %.val8 = load ptr, ptr %1, align 8              ; 5 uses
+  %.val9 = load ptr, ptr %i.b, align 8, !nonnull !21, !noundef !21
+  %.val8 = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val9, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !21, !noalias !21, !nonnull !21 ; 5 uses
   switch i8 %i.a, label %default.unreachable54 [
@@ -2322,8 +2322,8 @@ define noundef zeroext i1 @"_ZN74_$LT$meilisearch_types..error..ErrorType$u20$as
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !38, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.b, align 8
-  %.val6 = load ptr, ptr %1, align 8              ; 4 uses
+  %.val7 = load ptr, ptr %i.b, align 8, !nonnull !21, !noundef !21
+  %.val6 = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val7, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !21, !noalias !21, !nonnull !21 ; 4 uses
   switch i8 %i.a, label %default.unreachable41 [
@@ -2623,8 +2623,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN58_$LT$std..io..error..Error$u20$as$u20$core..fmt..Debug$GT$3fmt17h62ceb23194058131E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !26585
   store ptr @1251, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3027,8 +3027,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$std..io..error..Error$u20$as$u20$core..fmt..Display$GT$3fmt17he762dae0cbfe0e23E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !27060
   store ptr @1282, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3431,8 +3431,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !28802
   store ptr @1902, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3835,8 +3835,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !29160
   store ptr @1914, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -3863,8 +3863,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !29163
   store ptr @1916, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -4267,8 +4267,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !32184
   store ptr @2024, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -4671,8 +4671,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !32645
   store ptr @2038, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

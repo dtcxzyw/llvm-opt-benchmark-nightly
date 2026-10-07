@@ -205,8 +205,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN58_$LT$std..io..error..Error$u20$as$u20$core..fmt..Debug$GT$3fmt17h62ceb23194058131E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !34, !noundef !34
+  %.val = load ptr, ptr %1, align 8, !nonnull !34, !noundef !34
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !62989
   store ptr @1105, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

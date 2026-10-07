@@ -204,8 +204,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
   br label %.thread121
 
-.thread121:                                       ; preds = %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit51, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit31, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.019.7 = phi i8 [ %i.ad, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit ], [ 0, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit31 ], [ 1, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit51 ]
+.thread121:                                       ; preds = %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit31, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit51, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.019.7 = phi i8 [ %i.ad, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit31 ], [ 1, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit51 ], [ 0, %_ZN4test20OperandsHaveSameType14getODSOperandsEj.exit ]
   ret i8 %.sroa.019.7
 }
 
