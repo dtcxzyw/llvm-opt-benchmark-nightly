@@ -204,7 +204,12 @@ bb.a:
   store ptr null, ptr @client_ready_mutex, align 8, !tbaa !14
   %i.b = tail call i32 @SSL_get_blocking_mode(ptr noundef %1) #10
   %i.c = icmp sgt i32 %i.b, 0                     ; 2 uses
-  br i1 %i.c, label %bb.b, label %.split.a
+  br i1 %i.c, label %bb.b, label %.split.preheader
+
+.split.preheader:                                 ; preds = %bb.a
+  %2 = tail call i32 @SSL_shutdown(ptr noundef %1) #10 ; 2 uses
+  %3 = icmp eq i32 %2, 1
+  br i1 %3, label %.thread, label %.split.a
 
 bb.b:                                             ; preds = %bb.a
   store ptr %0, ptr @globtserv, align 8, !tbaa !16
@@ -225,21 +230,19 @@ bb.c:                                             ; preds = %.split.us
   %i.j = icmp sgt i32 %i.h, -1
   br i1 %i.j, label %.split.us, label %.thread
 
-.split.a:                                         ; preds = %bb.a, %bb.d
-  %2 = tail call i32 @SSL_shutdown(ptr noundef %1) #10 ; 2 uses
-  %3 = icmp eq i32 %2, 1
-  br i1 %3, label %.thread, label %4
-
-4:                                                ; preds = %.split.a
-  %5 = icmp sgt i32 %2, -1
+.split.a:                                         ; preds = %.split.preheader, %bb.d
+  %4 = phi i32 [ %6, %bb.d ], [ %2, %.split.preheader ]
+  %5 = icmp sgt i32 %4, -1
   br i1 %5, label %bb.d, label %.thread
 
-bb.d:                                             ; preds = %4
+bb.d:                                             ; preds = %.split.a
   %i.k = tail call i32 @ossl_quic_tserver_tick(ptr noundef %0) #10 ; 0 uses
-  br label %.split.a
+  %6 = tail call i32 @SSL_shutdown(ptr noundef %1) #10 ; 2 uses
+  %7 = icmp eq i32 %6, 1
+  br i1 %7, label %.thread, label %.split.a
 
-.thread:                                          ; preds = %.split.a, %4, %.split.us, %bb.c
-  %.us-phi = phi i32 [ 1, %.split.us ], [ 0, %bb.c ], [ 0, %4 ], [ 1, %.split.a ] ; 2 uses
+.thread:                                          ; preds = %bb.d, %.split.a, %.split.us, %bb.c, %.split.preheader
+  %.us-phi = phi i32 [ 1, %.split.preheader ], [ 1, %.split.us ], [ 0, %bb.c ], [ 0, %.split.a ], [ 1, %bb.d ] ; 2 uses
   store atomic i32 1, ptr @shutdowndone monotonic, align 4
   br i1 %i.c, label %bb.e, label %bb.f
 

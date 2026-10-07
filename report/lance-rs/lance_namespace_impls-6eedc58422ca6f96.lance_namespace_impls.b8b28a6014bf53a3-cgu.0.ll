@@ -205,18 +205,24 @@ bb.u:                                             ; preds = %bb.q
   store ptr %spec.select.i, ptr %i.cd, align 8, !alias.scope !130345, !noalias !130346
   store ptr %spec.select2.i, ptr %i.l, align 8, !alias.scope !130345, !noalias !130346
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  br i1 %i.cc, label %bb.v, label %bb.x
+  br i1 %i.cc, label %.thread, label %bb.x
 
-bb.v:                                             ; preds = %bb.u, %bb.x, %bb.aa
-  %.sink58 = phi i64 [ 40, %bb.x ], [ 40, %bb.aa ], [ 32, %bb.u ]
-  %2 = phi ptr [ %i.az, %bb.x ], [ %.pre.pre, %bb.aa ], [ null, %bb.u ] ; 2 uses
-  %.sroa.06.0 = phi ptr [ null, %bb.x ], [ null, %bb.aa ], [ %i.az, %bb.u ]
+.thread:                                          ; preds = %bb.u
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = load ptr, ptr %2, align 8, !nonnull !416, !align !417, !noundef !416
+  %.val28 = load ptr, ptr %3, align 8, !nonnull !416, !noundef !416
+  %4 = getelementptr inbounds nuw i8, ptr %.val28, i64 32
+  %5 = atomicrmw add ptr %4, i64 1 monotonic, align 8 ; 0 uses
+  br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit
+
+bb.v:                                             ; preds = %bb.x, %bb.aa
+  %.pre = phi ptr [ %.pre.pre, %bb.aa ], [ %i.az, %bb.x ] ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cf = load ptr, ptr %i.ce, align 8, !nonnull !416, !align !417, !noundef !416
   %.val27 = load ptr, ptr %i.cf, align 8, !nonnull !416, !noundef !416
-  %i.cg = getelementptr inbounds nuw i8, ptr %.val27, i64 %.sink58
+  %i.cg = getelementptr inbounds nuw i8, ptr %.val27, i64 40
   %i.ch = atomicrmw add ptr %i.cg, i64 1 monotonic, align 8 ; 0 uses
-  %.not16 = icmp eq ptr %2, null
+  %.not16 = icmp eq ptr %.pre, null
   br i1 %.not16, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit, label %bb.ab
 
 bb.w:                                             ; preds = %bb.j, %bb.af
@@ -287,7 +293,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.v
 
 bb.ab:                                            ; preds = %bb.v
-  %i.cq = atomicrmw sub ptr %2, i64 1 release, align 8, !noalias !130350
+  %i.cq = atomicrmw sub ptr %.pre, i64 1 release, align 8, !noalias !130350
   %i.cr = icmp eq i64 %i.cq, 1
   br i1 %i.cr, label %bb.ac, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit
 
@@ -296,7 +302,8 @@ bb.ac:                                            ; preds = %bb.ab
   invoke void @_RNvMsn_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcDNtNtCscI6d9CVNmLh_4core3any3AnyNtNtBL_6marker4SyncNtB1e_4SendEL_E9drop_slowCsDbzj4lZ5l5_11goosefs_sdk(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.l)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit unwind label %bb.ad
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit: ; preds = %bb.ab, %bb.ac, %bb.v
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit: ; preds = %.thread, %bb.ab, %bb.ac, %bb.v
+  %.sroa.06.060 = phi ptr [ %i.az, %.thread ], [ null, %bb.ab ], [ null, %bb.ac ], [ null, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %bb.ae
 
@@ -311,7 +318,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.body39
 
 bb.ae:                                            ; preds = %bb.ag, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit
-  %.sroa.06.1 = phi ptr [ %.sroa.06.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit ], [ null, %bb.ag ]
+  %.sroa.06.1 = phi ptr [ %.sroa.06.060, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs9KQ7US1M400_11lance_table6format8manifest8ManifestEIBY_DNtNtB4_3any3AnyNtNtB4_6marker4SyncNtB2O_4SendEL_EEECsfR8GmIBoxTX_21lance_namespace_impls.exit ], [ null, %bb.ag ]
   store i8 1, ptr %i.o, align 8
   %i.ct = insertvalue { i64, ptr } { i64 0, ptr poison }, ptr %.sroa.06.1, 1
   br label %common.ret
@@ -714,8 +721,8 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i64 -3, ptr %0, align 8
   br label %common.ret
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches14TransactionKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread: ; preds = %bb.y, %bb.ad, %bb.ae, %.thread.a
-  %.sroa.06.0.i105 = phi ptr [ %i.bz, %.thread.a ], [ null, %bb.ae ], [ null, %bb.ad ], [ null, %bb.y ] ; 5 uses
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches14TransactionKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread: ; preds = %.thread.a, %bb.y, %bb.ad, %bb.ae
+  %.sroa.06.0.i105 = phi ptr [ %i.bz, %.thread.a ], [ null, %bb.ad ], [ null, %bb.ae ], [ null, %bb.y ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !156032
   store i8 1, ptr %i.bq, align 8, !noalias !156032
   %.not = icmp eq ptr %.sroa.06.0.i105, null
@@ -1118,8 +1125,8 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i8 -2, ptr %0, align 8
   br label %common.ret
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches15DeletionFileKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread: ; preds = %bb.ac, %bb.ah, %bb.ai, %.thread.a
-  %.sroa.06.0.i195 = phi ptr [ %i.cq, %.thread.a ], [ null, %bb.ai ], [ null, %bb.ah ], [ null, %bb.ac ] ; 2 uses
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session6caches15DeletionFileKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread: ; preds = %.thread.a, %bb.ac, %bb.ah, %bb.ai
+  %.sroa.06.0.i195 = phi ptr [ %i.cq, %.thread.a ], [ null, %bb.ah ], [ null, %bb.ai ], [ null, %bb.ac ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !181532
   store i8 1, ptr %i.ch, align 8, !noalias !181532
   %.not7 = icmp eq ptr %.sroa.06.0.i195, null
@@ -1522,7 +1529,7 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i8 3, ptr %i.gc, align 8, !noalias !182859
   br label %bb.im
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session12index_caches21ScalarIndexDetailsKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread.i.thread: ; preds = %bb.al, %bb.ak, %bb.af
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtCshkPeWWG1flk_5lance7session12index_caches21ScalarIndexDetailsKeyE0CsfR8GmIBoxTX_21lance_namespace_impls.exit.thread.i.thread: ; preds = %bb.ak, %bb.al, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bn), !noalias !182859
   br label %bb.ao
 
@@ -1925,7 +1932,7 @@ begin_hunk_4_@llvm.vector.reduce.umax.v4i16
 !156037 = !{!155991, !155990, !155986, !155985, !155984, !155982}
 !156038 = !{!155990, !155985, !155984, !155982}
 !156039 = !{!155993}
-!156040 = !{!155996, !155995, !155982}
+!156040 = !{!155996, !155995}
 !156041 = !{!155998}
 !156042 = !{!155999}
 !156043 = !{!155998, !155999, !155982}
@@ -2328,7 +2335,7 @@ begin_hunk_5_@llvm.vector.reduce.umax.v4i16
 !181537 = !{!181431, !181430, !181426, !181425, !181424, !181422}
 !181538 = !{!181430, !181425, !181424, !181422}
 !181539 = !{!181433}
-!181540 = !{!181436, !181435, !181422}
+!181540 = !{!181436, !181435}
 !181541 = !{!181438}
 !181542 = !{!181439}
 !181543 = !{!181438, !181439, !181422}
@@ -2731,7 +2738,7 @@ begin_hunk_6_@llvm.vector.reduce.umax.v4i16
 !182864 = !{!182432, !182431, !182427, !182426, !182425, !182423, !182421, !182420}
 !182865 = !{!182431, !182426, !182425, !182423, !182421, !182420}
 !182866 = !{!182434}
-!182867 = !{!182437, !182436, !182423, !182421}
+!182867 = !{!182437, !182436, !182421}
 !182868 = !{!182439}
 !182869 = !{!182440}
 !182870 = !{!182439, !182440, !182423, !182421, !182420}

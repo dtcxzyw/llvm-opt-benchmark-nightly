@@ -205,8 +205,8 @@ bb.la:                                            ; preds = %bb.kz
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
-  %i.atv = phi ptr [ %36, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.pre2571, %.lr.ph.i.preheader ] ; 5 uses
-  %i.atw = phi ptr [ %37, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.pre2570, %.lr.ph.i.preheader ] ; 2 uses
+  %i.atv = phi ptr [ %40, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.pre2571, %.lr.ph.i.preheader ] ; 5 uses
+  %i.atw = phi ptr [ %41, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.pre2570, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.0569.2 = phi ptr [ %.sroa.0569.4, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.sroa.0569.1, %.lr.ph.i.preheader ] ; 3 uses
   %.sroa.19572.2 = phi ptr [ %.sroa.19572.4, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %.sroa.19572.1, %.lr.ph.i.preheader ] ; 3 uses
   %i.atx = phi ptr [ %i.awt, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i ], [ %i.ath, %.lr.ph.i.preheader ] ; 5 uses
@@ -400,37 +400,34 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS
   br label %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i
 
 _ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i: ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i, %bb.lh
-  %i.aws = phi ptr [ %.pre150.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avk, %bb.lh ] ; 3 uses
+  %i.aws = phi ptr [ %.pre150.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avk, %bb.lh ] ; 4 uses
   %.sroa.0569.4 = phi ptr [ %i.awo, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %.sroa.0569.3, %bb.lh ] ; 3 uses
   %.pn730 = phi ptr [ %i.awp, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avn, %bb.lh ]
   %.sroa.19572.4 = phi ptr [ %i.awr, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %.sroa.19572.3, %bb.lh ] ; 3 uses
   %.pre2.i.i64.pre-phi.i = phi i64 [ %.pre162.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %.pre2.i.i49.pre-phi.i, %bb.lh ]
   %.pre.i.i63.pre-phi.i = phi i64 [ %.pre161.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %.pre.i.i48.pre-phi.i, %bb.lh ]
   %i.awt = phi ptr [ %i.awr, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avl, %bb.lh ] ; 4 uses
-  %i.awu = phi ptr [ %.pre149.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avo, %bb.lh ] ; 5 uses
+  %i.awu = phi ptr [ %.pre149.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avo, %bb.lh ] ; 6 uses
   %i.awv = phi ptr [ %i.awr, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avm, %bb.lh ] ; 6 uses
   %i.aww = phi ptr [ %i.awo, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i ], [ %i.avp, %bb.lh ] ; 4 uses
   %.sroa.11571.2 = getelementptr inbounds nuw i8, ptr %.pn730, i64 8 ; 5 uses
-  %i.awx = load ptr, ptr %i.je, align 8, !tbaa !155, !noalias !790 ; 4 uses
+  %i.awx = load ptr, ptr %i.je, align 8, !tbaa !155, !noalias !790 ; 5 uses
   %i.awy = icmp eq ptr %i.awu, %i.aws
+  %.pre4.i.i65.i = sub i64 %.pre.i.i63.pre-phi.i, %.pre2.i.i64.pre-phi.i ; 2 uses
   br i1 %i.awy, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
 
 _ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i: ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i
-  %i.awz = load ptr, ptr %i.awu, align 8, !tbaa !158, !noalias !790 ; 2 uses
-  %i.axa = ptrtoint ptr %i.awz to i64             ; 2 uses
+  %.not122.i = icmp eq i64 %.pre4.i.i65.i, 72
+  %i.awz = load ptr, ptr %i.awu, align 8, !tbaa !158, !noalias !790 ; 3 uses
+  %i.axa = ptrtoint ptr %i.awz to i64             ; 3 uses
   %i.axb = ptrtoint ptr %i.awx to i64
-  %i.axc = sub i64 %i.axa, %i.axb                 ; 2 uses
+  %i.axc = sub i64 %i.axa, %i.axb                 ; 4 uses
   %i.axd = getelementptr i8, ptr %i.awu, i64 16
   %i.axe = load i8, ptr %i.axd, align 8, !tbaa !161, !range !162, !noalias !790, !noundef !163
-  %i.axf = trunc nuw i8 %i.axe to i1
-  %28 = getelementptr i8, ptr %i.awu, i64 8
-  %29 = load ptr, ptr %28, align 8, !noalias !790 ; 2 uses
-  %30 = ptrtoint ptr %29 to i64
-  %31 = sub i64 %30, %i.axa
-  br i1 %i.axf, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
+  %i.axf = trunc nuw i8 %i.axe to i1              ; 2 uses
+  br i1 %.not122.i, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i
 
 _ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i: ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i
-  %.pre4.i.i65.i = sub i64 %.pre.i.i63.pre-phi.i, %.pre2.i.i64.pre-phi.i
   %i.axg = getelementptr i8, ptr %i.awu, i64 %.pre4.i.i65.i ; 3 uses
   %i.axh = getelementptr i8, ptr %i.axg, i64 -72
   %i.axi = load ptr, ptr %i.axh, align 8, !tbaa !158, !noalias !790 ; 2 uses
@@ -446,37 +443,54 @@ _ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i: ; preds 
   %i.axs = sub i64 %i.axr, %i.axj
   br i1 %i.axo, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
 
-_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
-  %32 = phi ptr [ %i.axq, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %29, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ] ; 7 uses
-  %33 = phi ptr [ %i.axi, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.awz, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ]
-  %34 = phi i64 [ %i.axs, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %31, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ] ; 2 uses
-  %35 = phi i64 [ %i.axl, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ] ; 2 uses
-  %i.axt = icmp eq ptr %33, %32
+_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
+  br i1 %i.axf, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
+
+_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
+  %28 = getelementptr inbounds nuw i8, ptr %i.awu, i64 8
+  %29 = load ptr, ptr %28, align 8, !noalias !790 ; 2 uses
+  %30 = ptrtoint ptr %29 to i64
+  %31 = sub i64 %30, %i.axa
+  br i1 %i.axf, label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
+
+_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i
+  %32 = getelementptr i8, ptr %i.awu, i64 8
+  %33 = load ptr, ptr %32, align 8, !noalias !790 ; 2 uses
+  %34 = ptrtoint ptr %33 to i64
+  %35 = sub i64 %34, %i.axa
+  br label %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
+
+_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i
+  %36 = phi ptr [ %i.axq, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %33, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %29, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ] ; 7 uses
+  %37 = phi ptr [ %i.axi, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.awz, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %i.awz, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ]
+  %38 = phi i64 [ %i.axs, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %35, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %31, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ] ; 2 uses
+  %39 = phi i64 [ %i.axl, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ] ; 2 uses
+  %i.axt = icmp eq ptr %37, %36
   %.pre153.i = load ptr, ptr %i.jg, align 8, !tbaa !793, !noalias !790 ; 3 uses
   br i1 %i.axt, label %bb.ll, label %bb.lo
 
 bb.ll:                                            ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
-  %i.axu = icmp eq ptr %32, %.pre153.i
+  %i.axu = icmp eq ptr %36, %.pre153.i
   br i1 %i.axu, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.thread.i, label %bb.lm
 
 bb.lm:                                            ; preds = %bb.ll
   %i.axv = load ptr, ptr %i.jc, align 8, !tbaa !794, !noalias !790
   %i.axw = load i32, ptr %i.jh, align 8, !tbaa !795, !noalias !790
   %i.axx = or i32 %i.axw, 96
-  %i.axy = invoke noundef zeroext i1 @_ZNSt8__detail17__regex_algo_implIPKcSaINSt7__cxx119sub_matchIS2_EEEcNS3_12regex_traitsIcEEEEbT_S9_RNS3_13match_resultsIS9_T0_EERKNS3_11basic_regexIT1_T2_EENSt15regex_constants15match_flag_typeENS_20_RegexExecutorPolicyEb(ptr noundef %32, ptr noundef %.pre153.i, ptr noundef nonnull align 8 dereferenceable(32) %i.jd, ptr noundef nonnull align 8 dereferenceable(32) %i.axv, i32 noundef %i.axx, i32 noundef 0, i1 noundef zeroext false)
+  %i.axy = invoke noundef zeroext i1 @_ZNSt8__detail17__regex_algo_implIPKcSaINSt7__cxx119sub_matchIS2_EEEcNS3_12regex_traitsIcEEEEbT_S9_RNS3_13match_resultsIS9_T0_EERKNS3_11basic_regexIT1_T2_EENSt15regex_constants15match_flag_typeENS_20_RegexExecutorPolicyEb(ptr noundef %36, ptr noundef %.pre153.i, ptr noundef nonnull align 8 dereferenceable(32) %i.jd, ptr noundef nonnull align 8 dereferenceable(32) %i.axv, i32 noundef %i.axx, i32 noundef 0, i1 noundef zeroext false)
           to label %.noexc80.i unwind label %bb.lg, !noalias !790
 
 .noexc80.i:                                       ; preds = %bb.lm
   br i1 %i.axy, label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i, label %bb.ln
 
 bb.ln:                                            ; preds = %.noexc80.i
-  %i.axz = getelementptr inbounds nuw i8, ptr %32, i64 1
+  %i.axz = getelementptr inbounds nuw i8, ptr %36, i64 1
   %.pre152.i = load ptr, ptr %i.jg, align 8, !tbaa !793, !noalias !790
   br label %bb.lo
 
 bb.lo:                                            ; preds = %bb.ln, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
   %i.aya = phi ptr [ %.pre152.i, %bb.ln ], [ %.pre153.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
-  %.016.i.i = phi ptr [ %i.axz, %bb.ln ], [ %32, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
+  %.016.i.i = phi ptr [ %i.axz, %bb.ln ], [ %36, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
   %i.ayb = load i32, ptr %i.jh, align 8, !tbaa !164, !noalias !790
   %i.ayc = or i32 %i.ayb, 128                     ; 2 uses
   store i32 %i.ayc, ptr %i.jh, align 8, !tbaa !164, !noalias !790
@@ -489,7 +503,7 @@ bb.lo:                                            ; preds = %bb.ln, %_ZNKSt7__cx
 
 _ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.thread.i: ; preds = %.noexc81.i, %bb.ll
   store ptr null, ptr %i.jc, align 8, !tbaa !794, !noalias !790
-  %i.ayf = add nsw i64 %35, %34
+  %i.ayf = add nsw i64 %39, %38
   br label %_ZNKSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEneERKS5_.exit.i
 
 _ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i: ; preds = %.noexc81.i, %.noexc80.i
@@ -500,10 +514,10 @@ _ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i: 
   %i.ayk = sub i64 %i.ayi, %i.ayj
   %i.ayl = getelementptr i8, ptr %i.ayh, i64 %i.ayk ; 3 uses
   %i.aym = getelementptr i8, ptr %i.ayl, i64 -48
-  store ptr %32, ptr %i.aym, align 8, !tbaa !158, !noalias !790
+  store ptr %36, ptr %i.aym, align 8, !tbaa !158, !noalias !790
   %i.ayn = getelementptr i8, ptr %i.ayl, i64 -40
   %i.ayo = load ptr, ptr %i.ayn, align 8, !tbaa !165, !noalias !790
-  %i.ayp = icmp ne ptr %32, %i.ayo
+  %i.ayp = icmp ne ptr %36, %i.ayo
   %i.ayq = getelementptr i8, ptr %i.ayl, i64 -32
   %i.ayr = zext i1 %i.ayp to i8
   store i8 %i.ayr, ptr %i.ayq, align 8, !tbaa !161, !noalias !790
@@ -511,11 +525,11 @@ _ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i: 
   store ptr %i.ays, ptr %i.je, align 8, !tbaa !796, !noalias !790
   br label %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i
 
-_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
-  %36 = phi ptr [ %i.aws, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.aws, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %i.ayg, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
-  %37 = phi ptr [ %i.awx, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.awx, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %i.ays, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
-  %.ph.i = phi i64 [ 0, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %34, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
-  %.ph201.i = phi i64 [ %i.axl, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %35, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
+_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.i: ; preds = %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
+  %40 = phi ptr [ %i.aws, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.aws, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.aws, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %i.ayg, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
+  %41 = phi ptr [ %i.awx, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.awx, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.awx, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %i.ays, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
+  %.ph.i = phi i64 [ 0, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %38, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
+  %.ph201.i = phi i64 [ %i.axl, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.axc, %_ZNKSt7__cxx1113match_resultsIPKcSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %39, %_ZNSt7__cxx1114regex_iteratorIPKccNS_12regex_traitsIcEEEppEv.exit.sink.split.i ]
   %.pr.i249 = load ptr, ptr %i.jc, align 8, !tbaa !794, !noalias !790
   %i.ayt = add nsw i64 %.ph201.i, %.ph.i          ; 2 uses
   %i.ayu = icmp eq ptr %.pr.i249, null
@@ -918,8 +932,8 @@ bb.od:                                            ; preds = %bb.oc
   br label %.lr.ph.i368
 
 .lr.ph.i368:                                      ; preds = %.lr.ph.i368.preheader, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
-  %i.bkx = phi ptr [ %45, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.pre2574, %.lr.ph.i368.preheader ] ; 5 uses
-  %i.bky = phi ptr [ %46, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.pre2573, %.lr.ph.i368.preheader ] ; 2 uses
+  %i.bkx = phi ptr [ %53, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.pre2574, %.lr.ph.i368.preheader ] ; 5 uses
+  %i.bky = phi ptr [ %54, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.pre2573, %.lr.ph.i368.preheader ] ; 2 uses
   %.sroa.0565.2 = phi ptr [ %.sroa.0565.4, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.sroa.0565.1, %.lr.ph.i368.preheader ] ; 3 uses
   %.sroa.19.2 = phi ptr [ %.sroa.19.4, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %.sroa.19.1, %.lr.ph.i368.preheader ] ; 3 uses
   %i.bkz = phi ptr [ %i.bnw, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i ], [ %i.bkj, %.lr.ph.i368.preheader ] ; 5 uses
@@ -1114,38 +1128,35 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS
   br label %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i378
 
 _ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i378: ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418, %bb.ok
-  %i.bnv = phi ptr [ %.pre151.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmm, %bb.ok ] ; 3 uses
+  %i.bnv = phi ptr [ %.pre151.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmm, %bb.ok ] ; 4 uses
   %.sroa.0565.4 = phi ptr [ %i.bnr, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %.sroa.0565.3, %bb.ok ] ; 3 uses
   %.pn729 = phi ptr [ %i.bns, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmp, %bb.ok ]
   %.sroa.19.4 = phi ptr [ %i.bnu, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %.sroa.19.3, %bb.ok ] ; 3 uses
   %.pre2.i.i64.pre-phi.i379 = phi i64 [ %.pre163.i, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %.pre2.i.i49.pre-phi.i372, %bb.ok ]
   %.pre.i.i63.pre-phi.i380 = phi i64 [ %.pre162.i420, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %.pre.i.i48.pre-phi.i373, %bb.ok ]
   %i.bnw = phi ptr [ %i.bnu, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmn, %bb.ok ] ; 4 uses
-  %i.bnx = phi ptr [ %.pre150.i419, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmq, %bb.ok ] ; 5 uses
+  %i.bnx = phi ptr [ %.pre150.i419, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmq, %bb.ok ] ; 6 uses
   %i.bny = phi ptr [ %i.bnu, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmo, %bb.ok ] ; 6 uses
   %i.bnz = phi ptr [ %i.bnr, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i59.i418 ], [ %i.bmr, %bb.ok ] ; 4 uses
   %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.pn729, i64 8 ; 5 uses
-  %i.boa = load ptr, ptr %i.jx, align 8, !tbaa !189, !noalias !807 ; 4 uses
+  %i.boa = load ptr, ptr %i.jx, align 8, !tbaa !189, !noalias !807 ; 5 uses
   %i.bob = icmp eq ptr %i.bnx, %i.bnv
+  %.pre4.i.i65.i381 = sub i64 %.pre.i.i63.pre-phi.i380, %.pre2.i.i64.pre-phi.i379 ; 2 uses
   br i1 %i.bob, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
 
 _ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i: ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i378
-  %i.boc = load ptr, ptr %i.bnx, align 8, !tbaa !192, !noalias !807 ; 2 uses
-  %i.bod = ptrtoint ptr %i.boc to i64             ; 2 uses
+  %.not122.i382 = icmp eq i64 %.pre4.i.i65.i381, 72
+  %i.boc = load ptr, ptr %i.bnx, align 8, !tbaa !192, !noalias !807 ; 3 uses
+  %i.bod = ptrtoint ptr %i.boc to i64             ; 3 uses
   %i.boe = ptrtoint ptr %i.boa to i64
   %i.bof = sub i64 %i.bod, %i.boe
-  %i.bog = ashr exact i64 %i.bof, 2               ; 2 uses
+  %i.bog = ashr exact i64 %i.bof, 2               ; 4 uses
   %i.boh = getelementptr i8, ptr %i.bnx, i64 16
   %i.boi = load i8, ptr %i.boh, align 8, !tbaa !194, !range !162, !noalias !807, !noundef !163
-  %i.boj = trunc nuw i8 %i.boi to i1
-  %38 = getelementptr i8, ptr %i.bnx, i64 8
-  %39 = load ptr, ptr %38, align 8, !noalias !807 ; 2 uses
-  %40 = ptrtoint ptr %39 to i64
-  %41 = sub i64 %40, %i.bod
-  br i1 %i.boj, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
+  %i.boj = trunc nuw i8 %i.boi to i1              ; 2 uses
+  br i1 %.not122.i382, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i
 
 _ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i: ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJlEEERmDpOT_.exit62.i378
-  %.pre4.i.i65.i381 = sub i64 %.pre.i.i63.pre-phi.i380, %.pre2.i.i64.pre-phi.i379
   %i.bok = getelementptr i8, ptr %i.bnx, i64 %.pre4.i.i65.i381 ; 3 uses
   %i.bol = getelementptr i8, ptr %i.bok, i64 -72
   %i.bom = load ptr, ptr %i.bol, align 8, !tbaa !192, !noalias !807 ; 2 uses
@@ -1162,38 +1173,55 @@ _ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i: ; preds 
   %i.box = sub i64 %i.bow, %i.bon
   br i1 %i.bot, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
 
-_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
-  %42 = phi ptr [ %i.bov, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %39, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ] ; 7 uses
-  %43 = phi ptr [ %i.bom, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.boc, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ]
-  %.in = phi i64 [ %i.box, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %41, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ]
-  %44 = phi i64 [ %i.boq, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ] ; 2 uses
+_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
+  br i1 %i.boj, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
+
+_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i
+  %42 = getelementptr inbounds nuw i8, ptr %i.bnx, i64 8
+  %43 = load ptr, ptr %42, align 8, !noalias !807 ; 2 uses
+  %44 = ptrtoint ptr %43 to i64
+  %45 = sub i64 %44, %i.bod
+  br i1 %i.boj, label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
+
+_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i
+  %46 = getelementptr i8, ptr %i.bnx, i64 8
+  %47 = load ptr, ptr %46, align 8, !noalias !807 ; 2 uses
+  %48 = ptrtoint ptr %47 to i64
+  %49 = sub i64 %48, %i.bod
+  br label %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
+
+_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i
+  %50 = phi ptr [ %i.bov, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %47, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %43, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ] ; 7 uses
+  %51 = phi ptr [ %i.bom, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.boc, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %i.boc, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ]
+  %.in = phi i64 [ %i.box, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %49, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %45, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ]
+  %52 = phi i64 [ %i.boq, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i22._ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.thread.i41_crit_edge.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ] ; 2 uses
   %i.boy = ashr exact i64 %.in, 2                 ; 2 uses
-  %i.boz = icmp eq ptr %43, %42
+  %i.boz = icmp eq ptr %51, %50
   %.pre154.i = load ptr, ptr %i.jz, align 8, !tbaa !810, !noalias !807 ; 3 uses
   br i1 %i.boz, label %bb.oo, label %bb.or
 
 bb.oo:                                            ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
-  %i.bpa = icmp eq ptr %42, %.pre154.i
+  %i.bpa = icmp eq ptr %50, %.pre154.i
   br i1 %i.bpa, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.thread.i, label %bb.op
 
 bb.op:                                            ; preds = %bb.oo
   %i.bpb = load ptr, ptr %i.jv, align 8, !tbaa !811, !noalias !807
   %i.bpc = load i32, ptr %i.ka, align 8, !tbaa !812, !noalias !807
   %i.bpd = or i32 %i.bpc, 96
-  %i.bpe = invoke noundef zeroext i1 @_ZNSt8__detail17__regex_algo_implIPKwSaINSt7__cxx119sub_matchIS2_EEEwNS3_12regex_traitsIwEEEEbT_S9_RNS3_13match_resultsIS9_T0_EERKNS3_11basic_regexIT1_T2_EENSt15regex_constants15match_flag_typeENS_20_RegexExecutorPolicyEb(ptr noundef %42, ptr noundef %.pre154.i, ptr noundef nonnull align 8 dereferenceable(32) %i.jw, ptr noundef nonnull align 8 dereferenceable(32) %i.bpb, i32 noundef %i.bpd, i32 noundef 0, i1 noundef zeroext false)
+  %i.bpe = invoke noundef zeroext i1 @_ZNSt8__detail17__regex_algo_implIPKwSaINSt7__cxx119sub_matchIS2_EEEwNS3_12regex_traitsIwEEEEbT_S9_RNS3_13match_resultsIS9_T0_EERKNS3_11basic_regexIT1_T2_EENSt15regex_constants15match_flag_typeENS_20_RegexExecutorPolicyEb(ptr noundef %50, ptr noundef %.pre154.i, ptr noundef nonnull align 8 dereferenceable(32) %i.jw, ptr noundef nonnull align 8 dereferenceable(32) %i.bpb, i32 noundef %i.bpd, i32 noundef 0, i1 noundef zeroext false)
           to label %.noexc80.i409 unwind label %bb.oj, !noalias !807
 
 .noexc80.i409:                                    ; preds = %bb.op
   br i1 %i.bpe, label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i, label %bb.oq
 
 bb.oq:                                            ; preds = %.noexc80.i409
-  %i.bpf = getelementptr inbounds nuw i8, ptr %42, i64 4
+  %i.bpf = getelementptr inbounds nuw i8, ptr %50, i64 4
   %.pre153.i410 = load ptr, ptr %i.jz, align 8, !tbaa !810, !noalias !807
   br label %bb.or
 
 bb.or:                                            ; preds = %bb.oq, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i
   %i.bpg = phi ptr [ %.pre153.i410, %bb.oq ], [ %.pre154.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
-  %.016.i.i407 = phi ptr [ %i.bpf, %bb.oq ], [ %42, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
+  %.016.i.i407 = phi ptr [ %i.bpf, %bb.oq ], [ %50, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit42.i.i ]
   %i.bph = load i32, ptr %i.ka, align 8, !tbaa !164, !noalias !807
   %i.bpi = or i32 %i.bph, 128                     ; 2 uses
   store i32 %i.bpi, ptr %i.ka, align 8, !tbaa !164, !noalias !807
@@ -1206,7 +1234,7 @@ bb.or:                                            ; preds = %bb.oq, %_ZNKSt7__cx
 
 _ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.thread.i: ; preds = %.noexc81.i408, %bb.oo
   store ptr null, ptr %i.jv, align 8, !tbaa !811, !noalias !807
-  %i.bpl = add nsw i64 %44, %i.boy
+  %i.bpl = add nsw i64 %52, %i.boy
   br label %_ZNKSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEneERKS5_.exit.i
 
 _ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i: ; preds = %.noexc81.i408, %.noexc80.i409
@@ -1217,10 +1245,10 @@ _ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i: 
   %i.bpq = sub i64 %i.bpo, %i.bpp
   %i.bpr = getelementptr i8, ptr %i.bpn, i64 %i.bpq ; 3 uses
   %i.bps = getelementptr i8, ptr %i.bpr, i64 -48
-  store ptr %42, ptr %i.bps, align 8, !tbaa !192, !noalias !807
+  store ptr %50, ptr %i.bps, align 8, !tbaa !192, !noalias !807
   %i.bpt = getelementptr i8, ptr %i.bpr, i64 -40
   %i.bpu = load ptr, ptr %i.bpt, align 8, !tbaa !195, !noalias !807
-  %i.bpv = icmp ne ptr %42, %i.bpu
+  %i.bpv = icmp ne ptr %50, %i.bpu
   %i.bpw = getelementptr i8, ptr %i.bpr, i64 -32
   %i.bpx = zext i1 %i.bpv to i8
   store i8 %i.bpx, ptr %i.bpw, align 8, !tbaa !194, !noalias !807
@@ -1228,11 +1256,11 @@ _ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i: 
   store ptr %i.bpy, ptr %i.jx, align 8, !tbaa !813, !noalias !807
   br label %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i
 
-_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i: ; preds = %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
-  %45 = phi ptr [ %i.bnv, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bnv, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %i.bpm, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
-  %46 = phi ptr [ %i.boa, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.boa, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %i.bpy, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
-  %.ph.i383 = phi i64 [ 0, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %i.boy, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
-  %.ph203.i = phi i64 [ %i.boq, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEE4sizeEv.exit.i.i66.i ], [ %44, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
+_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.i: ; preds = %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i
+  %53 = phi ptr [ %i.bnv, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bnv, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.bnv, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %i.bpm, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
+  %54 = phi ptr [ %i.boa, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.boa, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.boa, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %i.bpy, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
+  %.ph.i383 = phi i64 [ 0, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ 0, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %i.boy, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
+  %.ph203.i = phi i64 [ %i.boq, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread46.i.i ], [ %i.bog, %_ZNKSt7__cxx1113match_resultsIPKwSaINS_9sub_matchIS2_EEEEixEm.exit.thread.i.i ], [ %52, %_ZNSt7__cxx1114regex_iteratorIPKwwNS_12regex_traitsIwEEEppEv.exit.sink.split.i ]
   %.pr.i384 = load ptr, ptr %i.jv, align 8, !tbaa !811, !noalias !807
   %i.bpz = add nsw i64 %.ph203.i, %.ph.i383       ; 2 uses
   %i.bqa = icmp eq ptr %.pr.i384, null

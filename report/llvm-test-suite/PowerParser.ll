@@ -205,7 +205,6 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit, %bb.a
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit ], [ %i.k, %bb.a ]
-  %.028 = phi i32 [ %.1, %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit ], [ -1, %bb.a ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 5 uses
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !133  ; 2 uses
   %i.m = load ptr, ptr %i.g, align 8, !tbaa !133  ; 2 uses
@@ -260,14 +259,17 @@ _ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit:           ; preds = %bb.d, %bb.e
   %i.as = call noundef zeroext i1 @_ZN2PP3Cmd19find_matching_enddoERiRb(ptr noundef nonnull align 8 dereferenceable(432) %storemerge.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 1 dereferenceable(1) %i.b) ; 2 uses
   %i.at = load i8, ptr %i.b, align 1, !range !258
   %i.au = trunc nuw i8 %i.at to i1
-  %7 = trunc nsw i64 %indvars.iv.next to i32
-  %.1 = select i1 %i.as, i32 %7, i32 %.028        ; 2 uses
   %i.av = select i1 %i.as, i1 true, i1 %i.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
-  br i1 %i.av, label %bb.f, label %bb.b, !llvm.loop !921
+  br i1 %i.av, label %.split.loop.exit59, label %bb.b, !llvm.loop !921
 
-bb.f:                                             ; preds = %bb.b, %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit
-  %.2 = phi i32 [ %.1, %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit ], [ %.028, %bb.b ] ; 2 uses
+.split.loop.exit59:                               ; preds = %_ZNSt5dequeIN2PP3CmdESaIS1_EEixEm.exit
+  %7 = trunc nsw i64 %indvars.iv.next to i32
+  %.1.le = select i1 %i.as, i32 %7, i32 -1
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.b, %.split.loop.exit59
+  %.2 = phi i32 [ %.1.le, %.split.loop.exit59 ], [ -1, %bb.b ] ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 72

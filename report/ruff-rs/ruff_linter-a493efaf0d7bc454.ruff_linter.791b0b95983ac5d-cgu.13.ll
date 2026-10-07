@@ -205,7 +205,7 @@ select.unfold.i.i.i.i.i:                          ; preds = %.sink.split.i.i.i.i
 bb.d:                                             ; preds = %select.unfold.i.i.i.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   store ptr %i.l, ptr %i.g, align 8, !alias.scope !5959, !noalias !5958
-  br label %.thread36
+  br label %select.unfold.i.i.i.i.i16
 
 bb.e:                                             ; preds = %bb.a
   br i1 %.not.i.i.i11, label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEQIBO_INtNtNtBa_5slice4iter4IterB1s_EB2j_EENtNtNtB8_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit, label %..thread36_crit_edge
@@ -214,9 +214,9 @@ bb.e:                                             ; preds = %bb.a
   %.pre = load ptr, ptr %.sroa.12.0.copyload, align 8, !alias.scope !5960, !noalias !5961
   br label %.thread36
 
-.thread36:                                        ; preds = %..thread36_crit_edge, %.sink.split.i.i.i.i.i.i, %bb.d
-  %1 = phi ptr [ %.pre, %..thread36_crit_edge ], [ %i.f, %.sink.split.i.i.i.i.i.i ], [ null, %bb.d ] ; 4 uses
-  %.sroa.0.0.i2.i.ph3539 = phi ptr [ %.sroa.8.0.copyload, %..thread36_crit_edge ], [ %i.b, %.sink.split.i.i.i.i.i.i ], [ %i.h, %bb.d ] ; 2 uses
+.thread36:                                        ; preds = %..thread36_crit_edge, %.sink.split.i.i.i.i.i.i
+  %1 = phi ptr [ %.pre, %..thread36_crit_edge ], [ %i.f, %.sink.split.i.i.i.i.i.i ] ; 4 uses
+  %.sroa.0.0.i2.i.ph3539 = phi ptr [ %.sroa.8.0.copyload, %..thread36_crit_edge ], [ %i.b, %.sink.split.i.i.i.i.i.i ] ; 3 uses
   %.not.i.i.i.i.i.i12 = icmp eq ptr %1, null
   br i1 %.not.i.i.i.i.i.i12, label %select.unfold.i.i.i.i.i16, label %.sink.split.i.i.i.i.i.i13
 
@@ -229,7 +229,8 @@ bb.e:                                             ; preds = %bb.a
   store ptr %spec.select.i.i.i.i.i.i14, ptr %.sroa.12.0.copyload, align 8, !alias.scope !5960, !noalias !5961
   br i1 %i.o, label %select.unfold.i.i.i.i.i16, label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEQIBO_INtNtNtBa_5slice4iter4IterB1s_EB2j_EENtNtNtB8_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit
 
-select.unfold.i.i.i.i.i16:                        ; preds = %.sink.split.i.i.i.i.i.i13, %.thread36
+select.unfold.i.i.i.i.i16:                        ; preds = %bb.d, %.sink.split.i.i.i.i.i.i13, %.thread36
+  %.sroa.0.0.i2.i.ph353949 = phi ptr [ %i.h, %bb.d ], [ %.sroa.0.0.i2.i.ph3539, %.sink.split.i.i.i.i.i.i13 ], [ %.sroa.0.0.i2.i.ph3539, %.thread36 ]
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 16 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !alias.scope !5963, !noalias !5964, !noundef !4 ; 4 uses
   %.not.i.i.i.i.i.i.i17 = icmp eq ptr %i.r, null
@@ -246,7 +247,7 @@ bb.f:                                             ; preds = %select.unfold.i.i.i
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtNtB8_7sources4once4OnceRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEQIBO_INtNtNtBa_5slice4iter4IterB1s_EB2j_EENtNtNtB8_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit: ; preds = %select.unfold.i.i.i.i.i16, %bb.e, %.sink.split.i.i.i.i.i.i13, %bb.f, %bb.b, %select.unfold.i.i.i.i.i
   %.sroa.4.0 = phi ptr [ undef, %bb.b ], [ %i.r, %bb.f ], [ undef, %select.unfold.i.i.i.i.i ], [ %1, %.sink.split.i.i.i.i.i.i13 ], [ undef, %bb.e ], [ undef, %select.unfold.i.i.i.i.i16 ]
-  %.sroa.0.1 = phi ptr [ null, %bb.b ], [ %.sroa.0.0.i2.i.ph3539, %bb.f ], [ null, %select.unfold.i.i.i.i.i ], [ %.sroa.0.0.i2.i.ph3539, %.sink.split.i.i.i.i.i.i13 ], [ null, %bb.e ], [ null, %select.unfold.i.i.i.i.i16 ]
+  %.sroa.0.1 = phi ptr [ null, %bb.b ], [ %.sroa.0.0.i2.i.ph353949, %bb.f ], [ null, %select.unfold.i.i.i.i.i ], [ %.sroa.0.0.i2.i.ph3539, %.sink.split.i.i.i.i.i.i13 ], [ null, %bb.e ], [ null, %select.unfold.i.i.i.i.i16 ]
   %i.w = insertvalue { ptr, ptr } poison, ptr %.sroa.0.1, 0
   %i.x = insertvalue { ptr, ptr } %i.w, ptr %.sroa.4.0, 1
   ret { ptr, ptr } %i.x
@@ -293,7 +294,7 @@ bb.b:                                             ; preds = %select.unfold.i.i
   br i1 %i.n, label %select.unfold.i.i15, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQINtNtNtB9_8adapters5chain5ChainINtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5CmpOpEB1l_ENtB5_8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit
 
 select.unfold.i.i15:                              ; preds = %bb.b, %.sink.split.i.i.i12
-  %.sroa.0.0.i2.i.i.ph32 = phi ptr [ %i.a, %.sink.split.i.i.i12 ], [ %i.g, %bb.b ]
+  %.sroa.0.0.i2.i.i.ph32 = phi ptr [ %i.g, %bb.b ], [ %i.a, %.sink.split.i.i.i12 ]
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !alias.scope !6003, !noalias !6004, !noundef !4 ; 4 uses
   %.not.i.i.i.i16 = icmp eq ptr %i.q, null

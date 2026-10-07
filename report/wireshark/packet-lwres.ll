@@ -202,27 +202,28 @@ bb.a:
   %i.j = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 4)
   %i.k = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 6)
   %i.l = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 8) ; 3 uses
-  %i.m = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 12) ; 3 uses
+  %i.m = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 12) ; 4 uses
   %i.n = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 16) ; 3 uses
   %i.o = tail call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef 20)
   %i.p = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 24)
   %i.q = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 26)
   %i.r = zext i16 %i.k to i32                     ; 2 uses
-  %i.s = and i32 %i.r, 1                          ; 2 uses
+  %i.s = and i32 %i.r, 1
   %.not = icmp eq i32 %i.s, 0                     ; 4 uses
-  %4 = add nuw nsw i32 %i.s, 1
   %i.t = load ptr, ptr %i.g, align 8              ; 2 uses
-  %5 = tail call ptr @val_to_str_const(i32 noundef %4, ptr noundef nonnull @message_types_values, ptr noundef nonnull @.str.136) ; 2 uses
-  %6 = tail call ptr @val_to_str_const(i32 noundef %i.m, ptr noundef nonnull @opcode_values, ptr noundef nonnull @.str.136) ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %4 = tail call ptr @val_to_str_const(i32 noundef 2, ptr noundef nonnull @message_types_values, ptr noundef nonnull @.str.136)
+  %5 = tail call ptr @val_to_str_const(i32 noundef %i.m, ptr noundef nonnull @opcode_values, ptr noundef nonnull @.str.136)
   %i.u = tail call ptr @val_to_str_const(i32 noundef %i.n, ptr noundef nonnull @result_values, ptr noundef nonnull @.str.136)
-  tail call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.t, i32 noundef 25, ptr noundef nonnull @.str.135, ptr noundef %5, ptr noundef %6, i32 noundef %i.l, ptr noundef %i.u)
+  tail call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.t, i32 noundef 25, ptr noundef nonnull @.str.135, ptr noundef %4, ptr noundef %5, i32 noundef %i.l, ptr noundef %i.u)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  tail call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.t, i32 noundef 25, ptr noundef nonnull @.str.137, ptr noundef %5, ptr noundef %6, i32 noundef %i.l)
+  %6 = tail call ptr @val_to_str_const(i32 noundef 1, ptr noundef nonnull @message_types_values, ptr noundef nonnull @.str.136)
+  %7 = tail call ptr @val_to_str_const(i32 noundef %i.m, ptr noundef nonnull @opcode_values, ptr noundef nonnull @.str.136)
+  tail call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.t, i32 noundef 25, ptr noundef nonnull @.str.137, ptr noundef %6, ptr noundef %7, i32 noundef %i.l)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

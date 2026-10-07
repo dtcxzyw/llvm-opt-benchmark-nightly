@@ -202,7 +202,8 @@ bb.bh:                                            ; preds = %bb.ay, %bb.az, %_bt
   %or.cond10 = select i1 %i.al, i1 %i.ff, i1 false
   %or.cond394 = select i1 %or.cond8, i1 true, i1 %or.cond10
   %.1206.ph = zext i1 %or.cond394 to i8
-  %.not223252 = icmp eq i32 %i.fd, 0              ; 2 uses
+  %.not223252 = icmp eq i32 %i.fd, 0              ; 3 uses
+  %.0198.mux254 = zext i1 %.not223252 to i8
   %.0194.mux255 = select i1 %.not223252, i1 %.0194379, i1 false
   br label %bb.bj
 
@@ -212,10 +213,10 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %.thread, %bb.bi
   %.0194.mux259 = phi i1 [ %.0194.mux255, %.thread ], [ %.0194379, %bb.bi ] ; 8 uses
-  %.0198.mux258.in = phi i1 [ %.not223252, %.thread ], [ true, %bb.bi ] ; 2 uses
+  %.0198.mux258 = phi i8 [ %.0198.mux254, %.thread ], [ 1, %bb.bi ] ; 8 uses
+  %.0198.mux258.in = phi i1 [ %.not223252, %.thread ], [ true, %bb.bi ]
   %i.fg = phi i1 [ %i.ff, %.thread ], [ false, %bb.bi ] ; 2 uses
   %.1206256 = phi i8 [ %.1206.ph, %.thread ], [ 0, %bb.bi ] ; 8 uses
-  %.0198.mux258 = zext i1 %.0198.mux258.in to i8  ; 8 uses
   br i1 %i.bl, label %bb.bk, label %bb.cf
 
 bb.bk:                                            ; preds = %bb.bj

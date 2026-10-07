@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rmodels?download=true
 inline.NumInlined: 1421
 inline.NumDeleted: 227
-loop-unroll.NumCompletelyUnrolled: 83
+loop-unroll.NumCompletelyUnrolled: 84
 loop-unroll.NumRuntimeUnrolled: 99
-loop-unroll.NumUnrolled: 188
+loop-unroll.NumUnrolled: 189
 begin_hunk_0_@GetModelBoundingBox:bb.a
   %indvars.iv.next.i46 = add nuw nsw i64 %indvars.iv.i32, 1 ; 2 uses
   %exitcond.not.i47 = icmp eq i64 %indvars.iv.next.i46, %wide.trip.count.i30
@@ -205,9 +205,9 @@ bb.a:
   %7 = alloca %struct.Matrix, align 16            ; 5 uses
   %i.c = alloca i32, align 4                      ; 8 uses
   %i.d = alloca [4 x float], align 16             ; 4 uses
-  %8 = alloca %struct.Matrix, align 16            ; 11 uses
-  %9 = alloca %struct.Matrix, align 8             ; 2 uses
-  %10 = alloca %struct.Matrix, align 16           ; 5 uses
+  %8 = alloca %struct.Matrix, align 16            ; 15 uses
+  %9 = alloca %struct.Matrix, align 8             ; 4 uses
+  %10 = alloca %struct.Matrix, align 16           ; 7 uses
   %i.e = load i32, ptr %1, align 8
   tail call void @rlEnableShader(i32 noundef %i.e) #54
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -365,13 +365,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.cn = shufflevector <16 x float> %i.bq, <16 x float> poison, <4 x i32> <i32 14, i32 14, i32 14, i32 14>
   %i.co = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bf, <4 x float> %i.cn, <4 x float> %i.cm)
   %i.cp = shufflevector <16 x float> %i.bq, <16 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
-  %i.cq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cp, <4 x float> %i.bw) ; 8 uses
+  %i.cq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cp, <4 x float> %i.bw) ; 12 uses
   %i.cr = shufflevector <16 x float> %i.bq, <16 x float> poison, <4 x i32> <i32 7, i32 7, i32 7, i32 7>
-  %i.cs = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cr, <4 x float> %i.cc) ; 8 uses
+  %i.cs = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cr, <4 x float> %i.cc) ; 12 uses
   %i.ct = shufflevector <16 x float> %i.bq, <16 x float> poison, <4 x i32> <i32 11, i32 11, i32 11, i32 11>
-  %i.cu = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.ct, <4 x float> %i.ci) ; 8 uses
+  %i.cu = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.ct, <4 x float> %i.ci) ; 12 uses
   %i.cv = shufflevector <16 x float> %i.bq, <16 x float> poison, <4 x i32> <i32 15, i32 15, i32 15, i32 15>
-  %i.cw = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cv, <4 x float> %i.co) ; 8 uses
+  %i.cw = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bn, <4 x float> %i.cv, <4 x float> %i.co) ; 12 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.cy = load i32, ptr %i.cx, align 4            ; 2 uses
   %.not35 = icmp eq i32 %i.cy, -1
@@ -683,37 +683,126 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge, %bb.af, %bb.ag
-  %.not43 = phi i1 [ %i.hy, %._crit_edge ], [ true, %bb.af ], [ false, %bb.ag ] ; 2 uses
+  %.not43 = phi i1 [ %i.hy, %._crit_edge ], [ true, %bb.af ], [ false, %bb.ag ] ; 3 uses
   %i.kg = phi ptr [ %.pre360, %._crit_edge ], [ %i.iv, %bb.af ], [ %i.iv, %bb.ag ]
-  %i.kh = call zeroext i1 @rlIsStereoRenderEnabled() #54 ; 2 uses
-  %spec.select = select i1 %i.kh, i32 2, i32 1    ; 2 uses
-  %.sroa.7276.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %.sroa.11280.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %.sroa.15284.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %.sroa.763.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
-  %.sroa.1167.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
-  %.sroa.1571.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 2 uses
-  %.sroa.7340.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %.sroa.11344.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %.sroa.15348.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %i.ki = getelementptr inbounds nuw i8, ptr %i.kg, i64 24 ; 2 uses
+  %i.kh = call zeroext i1 @rlIsStereoRenderEnabled() #54
+  %.sroa.763.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
+  %.sroa.1167.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
+  %.sroa.1571.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 3 uses
+  %.sroa.7340.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
+  %.sroa.11344.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
+  %.sroa.15348.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 48 ; 2 uses
+  %i.ki = getelementptr inbounds nuw i8, ptr %i.kg, i64 24 ; 3 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.kk = load i32, ptr %i.kj, align 4
-  %i.kl = mul nsw i32 %i.kk, 3                    ; 2 uses
-  %i.km = load i32, ptr %0, align 8               ; 2 uses
-  br i1 %i.kh, label %.split.us.a, label %.split
+  %i.kl = mul nsw i32 %i.kk, 3                    ; 3 uses
+  %i.km = load i32, ptr %0, align 8               ; 3 uses
+  br i1 %i.kh, label %.split.us, label %.split
 
-.split.us.a:                                      ; preds = %bb.ah, %bb.ak
-  %.021354.us = phi i32 [ %12, %bb.ak ], [ 0, %bb.ah ] ; 4 uses
+.split.us:                                        ; preds = %bb.ah
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #54
+  %11 = call i32 @rlGetFramebufferWidth() #54     ; 0 uses
+  %12 = call i32 @rlGetFramebufferWidth() #54
+  %13 = sdiv i32 %12, 2
+  %14 = call i32 @rlGetFramebufferHeight() #54
+  call void @rlViewport(i32 noundef 0, i32 noundef 0, i32 noundef %13, i32 noundef %14) #54
+  call void @rlGetMatrixViewOffsetStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %9, i32 noundef 0) #54
+  %15 = load <16 x float>, ptr %9, align 8        ; 16 uses
+  %16 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %17 = fmul <4 x float> %i.cs, %16
+  %18 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> zeroinitializer
+  %19 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> %18, <4 x float> %17)
+  %20 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %21 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %20, <4 x float> %19)
+  %22 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %23 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %22, <4 x float> %21) ; 4 uses
+  %24 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 5, i32 5, i32 5, i32 5>
+  %25 = fmul <4 x float> %i.cs, %24
+  %26 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 4, i32 4, i32 4, i32 4>
+  %27 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> %26, <4 x float> %25)
+  %28 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 6, i32 6, i32 6, i32 6>
+  %29 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %28, <4 x float> %27)
+  %30 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 7, i32 7, i32 7, i32 7>
+  %31 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %30, <4 x float> %29) ; 4 uses
+  %32 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 9, i32 9, i32 9, i32 9>
+  %33 = fmul <4 x float> %i.cs, %32
+  %34 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 8, i32 8, i32 8, i32 8>
+  %35 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> %34, <4 x float> %33)
+  %36 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 10, i32 10, i32 10, i32 10>
+  %37 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %36, <4 x float> %35)
+  %38 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 11, i32 11, i32 11, i32 11>
+  %39 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %38, <4 x float> %37) ; 4 uses
+  %40 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 13, i32 13, i32 13, i32 13>
+  %41 = fmul <4 x float> %i.cs, %40
+  %42 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 12, i32 12, i32 12, i32 12>
+  %43 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cq, <4 x float> %42, <4 x float> %41)
+  %44 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 14, i32 14, i32 14, i32 14>
+  %45 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %44, <4 x float> %43)
+  %46 = shufflevector <16 x float> %15, <16 x float> poison, <4 x i32> <i32 15, i32 15, i32 15, i32 15>
+  %47 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %46, <4 x float> %45) ; 4 uses
+  call void @rlGetMatrixProjectionStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %10, i32 noundef 0) #54
+  %48 = load <4 x float>, ptr %10, align 16       ; 4 uses
+  %49 = shufflevector <4 x float> %48, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %50 = fmul <4 x float> %31, %49
+  %51 = shufflevector <4 x float> %48, <4 x float> poison, <4 x i32> zeroinitializer
+  %52 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %51, <4 x float> %50)
+  %53 = shufflevector <4 x float> %48, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %54 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %39, <4 x float> %53, <4 x float> %52)
+  %55 = shufflevector <4 x float> %48, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %56 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %47, <4 x float> %55, <4 x float> %54)
+  store <4 x float> %56, ptr %8, align 16
+  %57 = load <4 x float>, ptr %.sroa.7340.0..sroa_idx, align 16 ; 4 uses
+  %58 = shufflevector <4 x float> %57, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %59 = fmul <4 x float> %31, %58
+  %60 = shufflevector <4 x float> %57, <4 x float> poison, <4 x i32> zeroinitializer
+  %61 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %60, <4 x float> %59)
+  %62 = shufflevector <4 x float> %57, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %63 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %39, <4 x float> %62, <4 x float> %61)
+  %64 = shufflevector <4 x float> %57, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %65 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %47, <4 x float> %64, <4 x float> %63)
+  store <4 x float> %65, ptr %.sroa.763.0..sroa_idx, align 16
+  %66 = load <4 x float>, ptr %.sroa.11344.0..sroa_idx, align 16 ; 4 uses
+  %67 = shufflevector <4 x float> %66, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %68 = fmul <4 x float> %31, %67
+  %69 = shufflevector <4 x float> %66, <4 x float> poison, <4 x i32> zeroinitializer
+  %70 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %69, <4 x float> %68)
+  %71 = shufflevector <4 x float> %66, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %72 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %39, <4 x float> %71, <4 x float> %70)
+  %73 = shufflevector <4 x float> %66, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %74 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %47, <4 x float> %73, <4 x float> %72)
+  store <4 x float> %74, ptr %.sroa.1167.0..sroa_idx, align 16
+  %75 = load <4 x float>, ptr %.sroa.15348.0..sroa_idx, align 16 ; 4 uses
+  %76 = shufflevector <4 x float> %75, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %77 = fmul <4 x float> %31, %76
+  %78 = shufflevector <4 x float> %75, <4 x float> poison, <4 x i32> zeroinitializer
+  %79 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %23, <4 x float> %78, <4 x float> %77)
+  %80 = shufflevector <4 x float> %75, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %81 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %39, <4 x float> %80, <4 x float> %79)
+  %82 = shufflevector <4 x float> %75, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %83 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %47, <4 x float> %82, <4 x float> %81)
+  store <4 x float> %83, ptr %.sroa.1571.0..sroa_idx, align 16
+  %84 = load i32, ptr %i.ki, align 4
+  call void @rlSetUniformMatrix(i32 noundef %84, ptr noundef nonnull byval(%struct.Matrix) align 8 %8) #54
+  br i1 %.not43, label %86, label %85
+
+85:                                               ; preds = %.split.us
+  call void @rlDrawVertexArrayElements(i32 noundef 0, i32 noundef %i.kl, ptr noundef null) #54
+  br label %.split.us.a
+
+86:                                               ; preds = %.split.us
+  call void @rlDrawVertexArray(i32 noundef 0, i32 noundef %i.km) #54
+  br label %.split.us.a
+
+.split.us.a:                                      ; preds = %86, %85
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #54
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #54
   %i.kn = call i32 @rlGetFramebufferWidth() #54
-  %11 = mul nuw nsw i32 %i.kn, %.021354.us
-  %i.ko = sdiv i32 %11, 2
+  %i.ko = sdiv i32 %i.kn, 2
   %i.kp = call i32 @rlGetFramebufferWidth() #54
   %i.kq = sdiv i32 %i.kp, 2
   %i.kr = call i32 @rlGetFramebufferHeight() #54
   call void @rlViewport(i32 noundef %i.ko, i32 noundef 0, i32 noundef %i.kq, i32 noundef %i.kr) #54
-  call void @rlGetMatrixViewOffsetStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %9, i32 noundef %.021354.us) #54
+  call void @rlGetMatrixViewOffsetStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %9, i32 noundef 1) #54
   %i.ks = load <16 x float>, ptr %9, align 8      ; 16 uses
   %i.kt = shufflevector <16 x float> %i.ks, <16 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.ku = fmul <4 x float> %i.cs, %i.kt
@@ -747,7 +836,7 @@ bb.ah:                                            ; preds = %._crit_edge, %bb.af
   %i.lw = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %i.lv, <4 x float> %i.lu)
   %i.lx = shufflevector <16 x float> %i.ks, <16 x float> poison, <4 x i32> <i32 15, i32 15, i32 15, i32 15>
   %i.ly = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %i.lx, <4 x float> %i.lw) ; 4 uses
-  call void @rlGetMatrixProjectionStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %10, i32 noundef %.021354.us) #54
+  call void @rlGetMatrixProjectionStereo(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %10, i32 noundef 1) #54
   %i.lz = load <4 x float>, ptr %10, align 16     ; 4 uses
   %i.ma = shufflevector <4 x float> %i.lz, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.mb = fmul <4 x float> %i.li, %i.ma
@@ -794,26 +883,30 @@ bb.ah:                                            ; preds = %._crit_edge, %bb.af
 
 bb.ai:                                            ; preds = %.split.us.a
   call void @rlDrawVertexArrayElements(i32 noundef 0, i32 noundef %i.kl, ptr noundef null) #54
-  br label %bb.ak
+  br label %.preheader.loopexit
 
 bb.aj:                                            ; preds = %.split.us.a
   call void @rlDrawVertexArray(i32 noundef 0, i32 noundef %i.km) #54
-  br label %bb.ak
+  br label %.preheader.loopexit
 
-bb.ak:                                            ; preds = %bb.aj, %bb.ai
+.preheader.loopexit:                              ; preds = %bb.aj, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #54
-  %12 = add nuw nsw i32 %.021354.us, 1            ; 2 uses
-  %exitcond357.not = icmp eq i32 %12, %spec.select
-  br i1 %exitcond357.not, label %.preheader, label %.split.us.a
+  br label %.preheader
 
-.preheader:                                       ; preds = %13, %bb.ak
+bb.ak:                                            ; preds = %bb.al, %bb.am
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #54
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit, %bb.ak
   %i.nk = load ptr, ptr %i.ht, align 8            ; 12 uses
   %i.nl = load i32, ptr %i.nk, align 4
   %.not42 = icmp eq i32 %i.nl, 0
   br i1 %.not42, label %bb.ao, label %bb.an
 
-.split:                                           ; preds = %bb.ah, %13
-  %.021354 = phi i32 [ %14, %13 ], [ 0, %bb.ah ]
+.split:                                           ; preds = %bb.ah
+  %.sroa.15284.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %.sroa.11280.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %.sroa.7276.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #54
   %i.nm = load <4 x float>, ptr %5, align 16      ; 4 uses
   %i.nn = shufflevector <4 x float> %i.nm, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -861,17 +954,11 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
 
 bb.al:                                            ; preds = %.split
   call void @rlDrawVertexArrayElements(i32 noundef 0, i32 noundef %i.kl, ptr noundef null) #54
-  br label %13
+  br label %bb.ak
 
 bb.am:                                            ; preds = %.split
   call void @rlDrawVertexArray(i32 noundef 0, i32 noundef %i.km) #54
-  br label %13
-
-13:                                               ; preds = %bb.am, %bb.al
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #54
-  %14 = add nuw nsw i32 %.021354, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %14, %spec.select
-  br i1 %exitcond.not, label %.preheader, label %.split
+  br label %bb.ak
 
 bb.an:                                            ; preds = %.preheader
   call void @rlActiveTextureSlot(i32 noundef 0) #54

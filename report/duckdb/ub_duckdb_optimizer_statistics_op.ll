@@ -202,7 +202,6 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not100120, label %.critedge.thread, label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %bb.y, %.critedge
-  %.1122 = phi i8 [ %spec.select59, %.critedge ], [ 1, %bb.y ]
   %.sroa.079.0121 = phi ptr [ %i.es, %.critedge ], [ %i.ci, %bb.y ] ; 3 uses
   %i.cl = call noundef ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.079.0121)
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 9
@@ -311,14 +310,18 @@ _ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisti
 .critedge:                                        ; preds = %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit
   %i.eq = call noundef ptr @_ZNK6duckdb10unique_ptrINS_14BaseStatisticsESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.eo)
   %i.er = call noundef zeroext i1 @_ZNK6duckdb14BaseStatistics11CanHaveNullEv(ptr noundef nonnull align 8 dereferenceable(128) %i.eq) ; 2 uses
-  %spec.select59 = select i1 %i.er, i8 0, i8 %.1122 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.sroa.079.0121, i64 8 ; 2 uses
   %.not100 = icmp eq ptr %i.es, %i.ck
   %or.cond = select i1 %i.er, i1 true, i1 %.not100
-  br i1 %or.cond, label %.critedge.thread, label %.lr.ph123
+  br i1 %or.cond, label %.critedge.thread.loopexit165.split.loop.exit174, label %.lr.ph123
 
-.critedge.thread:                                 ; preds = %.critedge, %.lr.ph123, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit, %bb.ad, %bb.ag, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i, %bb.ab, %bb.y
-  %.5.ph = phi i8 [ 1, %bb.y ], [ 0, %bb.ag ], [ 0, %bb.ab ], [ 0, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i ], [ 0, %.lr.ph123 ], [ 0, %bb.ad ], [ 0, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit ], [ %spec.select59, %.critedge ] ; 2 uses
+.critedge.thread.loopexit165.split.loop.exit174:  ; preds = %.critedge
+  %not..le = xor i1 %i.er, true
+  %spec.select59.le = zext i1 %not..le to i8
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %bb.ad, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit, %.lr.ph123, %bb.ag, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i, %bb.ab, %.critedge.thread.loopexit165.split.loop.exit174, %bb.y
+  %.5.ph = phi i8 [ 1, %bb.y ], [ %spec.select59.le, %.critedge.thread.loopexit165.split.loop.exit174 ], [ 0, %bb.ag ], [ 0, %bb.ab ], [ 0, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_10unique_ptrINS1_14BaseStatisticsESt14default_deleteIS6_ELb1EEEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueISA_Lb1EEE.exit.thread.i.i.i.i ], [ 0, %.lr.ph123 ], [ 0, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_10unique_ptrINS0_14BaseStatisticsESt14default_deleteIS3_ELb1EEENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S6_EEE4findERSA_.exit ], [ 0, %bb.ad ] ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.sroa.083.0132, i64 8 ; 2 uses
   %.not99 = icmp eq ptr %i.et, %.lcssa113
   br i1 %.not99, label %._crit_edge, label %bb.w
