@@ -161,10 +161,11 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.al, ptr %i.x, align 8, !tbaa !78
   %i.ar = and i32 %.val84, -268431361
   %.masked.masked.i = zext i32 %i.ar to i64
-  %.not.i86 = icmp eq i8 %i.ab, 0
-  %8 = select i1 %.not.i86, i64 243277824, i64 17592429322240
-  %i.as = or disjoint i64 %8, %.masked.masked.i
-  %i.at = or i64 %i.as, %i.an
+  %8 = or i64 %i.an, %.masked.masked.i
+  %9 = zext nneg i8 %i.ab to i64
+  %10 = shl nuw nsw i64 %9, 44
+  %i.as = or disjoint i64 %8, %10
+  %i.at = or disjoint i64 %i.as, 243277824
   store i64 %i.at, ptr %i.d, align 8, !tbaa !75
   br label %bb.i
 
@@ -224,10 +225,11 @@ bb.m:                                             ; preds = %bb.l
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 32
   store i64 %i.bm, ptr %i.bp, align 8, !tbaa !78
   %i.bq = and i32 %.val, -268431361
-  %.masked.masked.i87 = zext i32 %i.bq to i64
-  %.not.i88 = icmp eq i8 %i.ab, 0
-  %9 = select i1 %.not.i88, i64 243277824, i64 17592429322240
-  %i.br = or disjoint i64 %9, %.masked.masked.i87
+  %.masked.masked.i86 = zext i32 %i.bq to i64
+  %.masked.masked.i87 = zext nneg i8 %i.ab to i64
+  %11 = shl nuw nsw i64 %.masked.masked.i87, 44
+  %12 = or disjoint i64 %11, %.masked.masked.i86
+  %i.br = or disjoint i64 %12, 243277824
   store i64 %i.br, ptr %7, align 8, !tbaa !75
   %i.bs = call zeroext i1 @je_extent_purge_forced_wrapper(ptr noundef %0, ptr noundef %i.bl, ptr noundef nonnull %7, i64 noundef 0, i64 noundef %3) #6
   br i1 %i.bs, label %bb.n, label %bb.o

@@ -202,8 +202,10 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs3Kwr
   br i1 %min.iters.check, label %.lr.ph.i.preheader6, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.r, 1152921504606846974      ; 4 uses
-  %i.s = shl nuw i64 %n.vec, 4
+  %2 = add nuw nsw i64 %i.r, 1                    ; 2 uses
+  %.neg = or i64 %2, -2
+  %n.vec = add nsw i64 %.neg, %2                  ; 4 uses
+  %i.s = shl i64 %n.vec, 4
   %i.t = getelementptr i8, ptr %i.d, i64 %i.s
   %i.u = sub i64 %i.i, %n.vec
   br label %vector.body

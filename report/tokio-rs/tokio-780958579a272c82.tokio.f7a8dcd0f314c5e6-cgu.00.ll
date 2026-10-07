@@ -22,8 +22,8 @@ define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6re
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = load i64, ptr %0, align 8, !range !5, !noundef !6
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %bb.b, label %bb.g
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -136,8 +136,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1.i = load ptr, ptr %i.c, align 8, !alias.scope !31 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !31
@@ -273,8 +273,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1.i = load ptr, ptr %i.c, align 8, !alias.scope !37 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !37
@@ -410,8 +410,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1.i = load ptr, ptr %i.c, align 8, !alias.scope !43 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !43
@@ -681,8 +681,8 @@ bb.c:                                             ; preds = %bb.b
   %.val.i.i = load i64, ptr %i.e, align 8, !range !5, !alias.scope !87, !noundef !6
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i.i = load ptr, ptr %i.f, align 8, !alias.scope !87 ; 4 uses
-  %1 = icmp eq i64 %.val.i.i, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i, label %bb.d
+  %1 = trunc nuw i64 %.val.i.i to i1
+  br i1 %1, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !87
@@ -724,8 +724,8 @@ bb.g:                                             ; preds = %bb.b
   %.val2.i.i = load i64, ptr %i.e, align 8, !range !5, !alias.scope !87, !noundef !6
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val3.i.i = load ptr, ptr %i.n, align 8, !alias.scope !87 ; 4 uses
-  %2 = icmp eq i64 %.val2.i.i, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i, label %bb.h
+  %2 = trunc nuw i64 %.val2.i.i to i1
+  br i1 %2, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !87
@@ -1128,8 +1128,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1385)
   %i.a = load i64, ptr %0, align 8, !range !5, !alias.scope !1386, !noundef !6
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1387)
@@ -1532,8 +1532,8 @@ _RNCNvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1436
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1437)
   %i.j = load i64, ptr %1, align 8, !range !5, !alias.scope !1437, !noundef !6
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCslghKHtsL3a4_5tokio7runtime4task5error9JoinErrorEEEB1v_.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCslghKHtsL3a4_5tokio7runtime4task5error9JoinErrorEEEB1v_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskINtNtCs1xwejQucwHj_5alloc5boxed3BoxNCNvMNtNtNtBb_9scheduler12multi_thread6workerNtB2g_6Launch6launch0EENtNtB15_8schedule16BlockingScheduleE11take_output0Bd_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1590,6 +1590,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCs3oU
   ret void
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1992,8 +1993,8 @@ _RNCNvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1814
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1815)
   %i.l = load i64, ptr %1, align 8, !range !5, !alias.scope !1815, !noundef !6
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCslghKHtsL3a4_5tokio7runtime4task5error9JoinErrorEEEB1v_.exit
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCslghKHtsL3a4_5tokio7runtime4task5error9JoinErrorEEEB1v_.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCslghKHtsL3a4_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskNCNvMNtNtNtBb_9scheduler12multi_thread6workerNtB1H_6Launch6launch0ENtNtB15_8schedule16BlockingScheduleE11take_output0Bd_.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -2050,6 +2051,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCs3oU
   ret void
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 

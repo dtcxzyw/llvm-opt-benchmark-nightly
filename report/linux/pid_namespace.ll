@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
 
 __ns_ref_put.exit:                                ; preds = %bb.d
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !17
-  br label %bb.b
+  br label %bb.b, !llvm.loop !25
 
 .critedge:                                        ; preds = %bb.c, %bb.b, %bb.f, %bb.e
   ret void
@@ -411,4 +411,5 @@ attributes #15 = { noredzone noreturn nounwind "no-builtin-wcslen" }
 !22 = !{i64 2149170510, i64 2149170549, i64 2149170570, i64 2149170607, i64 2149170630, i64 2149170501}
 !23 = !{i64 2148822247, i64 2148822287, i64 2148822404, i64 2148822425, i64 2148822468, i64 2148822483, i64 2148822516, i64 2148822550, i64 2148822574}
 !24 = !{i64 2158448635}
+!25 = distinct !{!25, !16}
 end_hunk_0
