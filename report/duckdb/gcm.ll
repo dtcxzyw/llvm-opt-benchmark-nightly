@@ -205,7 +205,7 @@ vec.epilog.middle.block185:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph107.preheader:                              ; preds = %iter.check174, %vector.memcheck156, %vec.epilog.middle.block185
   %.1.i106.ph = phi i64 [ %.0.i.lcssa, %vector.memcheck156 ], [ %.0.i.lcssa, %iter.check174 ], [ %i.gm, %vec.epilog.middle.block185 ] ; 4 uses
-  %i.gs = sub i64 %.147.lcssa, %.1.i106.ph
+  %i.gs = sub nsw i64 %.147.lcssa, %.1.i106.ph
   %xtraiter193 = and i64 %i.gs, 3                 ; 2 uses
   %lcmp.mod194.not = icmp eq i64 %xtraiter193, 0
   br i1 %lcmp.mod194.not, label %.lr.ph107.prol.loopexit, label %.lr.ph107.prol
@@ -226,7 +226,7 @@ vec.epilog.middle.block185:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph107.prol.loopexit:                          ; preds = %.lr.ph107.prol, %.lr.ph107.preheader
   %.1.i106.unr = phi i64 [ %.1.i106.ph, %.lr.ph107.preheader ], [ %i.gy, %.lr.ph107.prol ]
-  %i.gz = sub i64 %.1.i106.ph, %.147.lcssa
+  %i.gz = sub nsw i64 %.1.i106.ph, %.147.lcssa
   %i.ha = icmp ugt i64 %i.gz, -4
   br i1 %i.ha, label %_ZL11mbedtls_xorPhPKhS1_m.exit, label %.lr.ph107
 

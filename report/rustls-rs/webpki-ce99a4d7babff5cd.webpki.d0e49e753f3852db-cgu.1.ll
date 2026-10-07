@@ -204,13 +204,13 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.v = icmp eq i64 %.sroa.021.0, 0
-  %i.w = add i64 %.sroa.021.0, 1                  ; 2 uses
+  %i.w = add nsw i64 %.sroa.021.0, 1              ; 2 uses
   %i.x = icmp ugt i64 %i.w, 63
-  %or.cond71 = or i1 %i.v, %i.x
+  %or.cond71 = select i1 %i.v, i1 true, i1 %i.x
   br i1 %or.cond71, label %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit87.thread, label %bb.o
 
 bb.m:                                             ; preds = %bb.j
-  %.old = add i64 %.sroa.021.0, 1                 ; 2 uses
+  %.old = add nsw i64 %.sroa.021.0, 1             ; 2 uses
   %.old67 = icmp ugt i64 %.old, 63
   br i1 %.old67, label %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit87.thread, label %bb.o
 
@@ -233,7 +233,7 @@ bb.p:                                             ; preds = %bb.k
   %i.ab = and i8 %i.t, -33
   %i.ac = add i8 %i.ab, -91
   %or.cond63 = icmp ult i8 %i.ac, -26
-  %i.ad = add i64 %.sroa.021.0, 1                 ; 2 uses
+  %i.ad = add nsw i64 %.sroa.021.0, 1             ; 2 uses
   %i.ae = icmp ugt i64 %i.ad, 63
   %or.cond68 = select i1 %or.cond63, i1 true, i1 %i.ae
   br i1 %or.cond68, label %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit87.thread, label %bb.o
@@ -241,7 +241,7 @@ bb.p:                                             ; preds = %bb.k
 bb.q:                                             ; preds = %bb.k
   %i.af = icmp eq i64 %.sroa.021.0, 0
   %spec.select = select i1 %i.af, i1 true, i1 %.sroa.032.0
-  %i.ag = add i64 %.sroa.021.0, 1                 ; 2 uses
+  %i.ag = add nsw i64 %.sroa.021.0, 1             ; 2 uses
   %i.ah = icmp ugt i64 %i.ag, 63
   br i1 %i.ah, label %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit87.thread, label %bb.o
 

@@ -205,12 +205,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   br i1 %i.v, label %.lr.ph.peel.newph, label %._crit_edge
 
 .lr.ph.peel.newph:                                ; preds = %bb.j
-  %i.w = add i32 %.2.peel, 1                      ; 2 uses
+  %i.w = add nsw i32 %.2.peel, 1                  ; 2 uses
   %i.x = zext i32 %i.w to i64
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %i.x
   %i.z = zext i32 %.2.peel to i64
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %i.z ; 2 uses
-  %i.ab = sub i32 1, %.2.peel
+  %i.ab = sub nsw i32 1, %.2.peel
   %i.ac = zext i32 %i.ab to i64
   %i.ad = mul nuw nsw i64 %i.ac, 24
   %i.ae = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #68

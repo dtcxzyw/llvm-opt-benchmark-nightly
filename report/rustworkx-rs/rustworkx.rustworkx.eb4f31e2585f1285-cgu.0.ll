@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %.split.us.i.i
   br label %.sink.split.i.i.i
 
 bb.av:                                            ; preds = %.split.us.i.i
-  %i.kl = add i64 %i.in, 1                        ; 2 uses
+  %i.kl = add nsw i64 %i.in, 1                    ; 2 uses
   %i.km = icmp ugt i64 %i.kl, 4
   br i1 %i.km, label %bb.aw, label %.sink.split.i.i.i
 
@@ -608,7 +608,7 @@ bb.au:                                            ; preds = %.split.us.i.i
   br label %.sink.split.i.i.i
 
 bb.av:                                            ; preds = %.split.us.i.i
-  %i.km = add i64 %i.io, 1                        ; 2 uses
+  %i.km = add nsw i64 %i.io, 1                    ; 2 uses
   %i.kn = icmp ugt i64 %i.km, 4
   br i1 %i.kn, label %bb.aw, label %.sink.split.i.i.i
 

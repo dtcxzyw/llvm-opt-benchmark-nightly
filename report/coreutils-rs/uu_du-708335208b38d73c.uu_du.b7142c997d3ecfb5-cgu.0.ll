@@ -205,7 +205,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i40, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i
-  %i.eu = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i ; 2 uses
+  %i.eu = mul nuw nsw i32 %.sroa.0.03.i, %.sroa.0.03.i ; 2 uses
   %xtraiter = and i32 %i.eu, 7                    ; 3 uses
   %i.ev = icmp ult i32 %.sroa.0.03.i, 3
   br i1 %i.ev, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
@@ -608,7 +608,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i53, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i
-  %i.ev = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i ; 2 uses
+  %i.ev = mul nuw nsw i32 %.sroa.0.03.i, %.sroa.0.03.i ; 2 uses
   %xtraiter = and i32 %i.ev, 7                    ; 3 uses
   %i.ew = icmp ult i32 %.sroa.0.03.i, 3
   br i1 %i.ew, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
@@ -1011,7 +1011,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i: ; preds = %bb.
   br i1 %.not.i.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i
-  %i.gk = mul nuw i32 %.sroa.0.038.i.i.i, %.sroa.0.038.i.i.i ; 2 uses
+  %i.gk = mul nuw nsw i32 %.sroa.0.038.i.i.i, %.sroa.0.038.i.i.i ; 2 uses
   %xtraiter672 = and i32 %i.gk, 7                 ; 3 uses
   %i.gl = icmp ult i32 %.sroa.0.038.i.i.i, 3
   br i1 %i.gl, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.new
@@ -1350,7 +1350,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i19.i: ; preds = %b
   br i1 %.not.i.i.i20.i, label %.backedge.i.i.i, label %.lr.ph.i.i.i23.i.preheader
 
 .lr.ph.i.i.i23.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i19.i
-  %i.ig = mul nuw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
+  %i.ig = mul nuw nsw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
   %xtraiter654 = and i32 %i.ig, 7                 ; 3 uses
   %i.ih = icmp ult i32 %.sroa.0.043.i.i.i, 3
   br i1 %i.ih, label %.lr.ph.i.i.i23.i.epil.preheader, label %.lr.ph.i.i.i23.i.preheader.new
@@ -1475,7 +1475,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i19.i.i.i: ; preds = %b
   br i1 %.not.i20.i.i.i, label %.backedge.i.i.i, label %.lr.ph.i23.i.i.i.preheader
 
 .lr.ph.i23.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i19.i.i.i
-  %i.iw = mul nuw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
+  %i.iw = mul nuw nsw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
   %xtraiter648 = and i32 %i.iw, 7                 ; 3 uses
   %i.ix = icmp ult i32 %.sroa.0.043.i.i.i, 3
   br i1 %i.ix, label %.lr.ph.i23.i.i.i.epil.preheader, label %.lr.ph.i23.i.i.i.preheader.new
@@ -1551,7 +1551,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i.i: ; preds = %.
   br i1 %.not.i.i.i.i10.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i.i
-  %i.jf = mul nuw i32 %.sroa.0.02.i.i.i.i, %.sroa.0.02.i.i.i.i ; 2 uses
+  %i.jf = mul nuw nsw i32 %.sroa.0.02.i.i.i.i, %.sroa.0.02.i.i.i.i ; 2 uses
   %xtraiter660 = and i32 %i.jf, 7                 ; 3 uses
   %i.jg = icmp ult i32 %.sroa.0.02.i.i.i.i, 3
   br i1 %i.jg, label %.lr.ph.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.preheader.new
@@ -1638,7 +1638,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i10.i.i: ; preds = 
   br i1 %.not.i.i.i11.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i, label %.lr.ph.i.i.i14.i.i.preheader
 
 .lr.ph.i.i.i14.i.i.preheader:                     ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i10.i.i
-  %i.jx = mul nuw i32 %.sroa.0.02.i.i7.i.i, %.sroa.0.02.i.i7.i.i ; 2 uses
+  %i.jx = mul nuw nsw i32 %.sroa.0.02.i.i7.i.i, %.sroa.0.02.i.i7.i.i ; 2 uses
   %xtraiter666 = and i32 %i.jx, 7                 ; 3 uses
   %i.jy = icmp ult i32 %.sroa.0.02.i.i7.i.i, 3
   br i1 %i.jy, label %.lr.ph.i.i.i14.i.i.epil.preheader, label %.lr.ph.i.i.i14.i.i.preheader.new
@@ -2041,7 +2041,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i39.i: ; preds = 
   br i1 %.not.i.i.i8.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i, label %.lr.ph.i.i.i.i42.i.preheader
 
 .lr.ph.i.i.i.i42.i.preheader:                     ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i39.i
-  %i.ol = mul nuw i32 %.sroa.0.03.i.i.i36.i, %.sroa.0.03.i.i.i36.i ; 2 uses
+  %i.ol = mul nuw nsw i32 %.sroa.0.03.i.i.i36.i, %.sroa.0.03.i.i.i36.i ; 2 uses
   %xtraiter = and i32 %i.ol, 7                    ; 3 uses
   %i.om = icmp ult i32 %.sroa.0.03.i.i.i36.i, 3
   br i1 %i.om, label %.lr.ph.i.i.i.i42.i.epil.preheader, label %.lr.ph.i.i.i.i42.i.preheader.new
@@ -2444,7 +2444,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i: ; preds = %bb.f
   br i1 %.not.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i
-  %i.be = mul nuw i32 %.sroa.0.03842.i.i, %.sroa.0.03842.i.i ; 2 uses
+  %i.be = mul nuw nsw i32 %.sroa.0.03842.i.i, %.sroa.0.03842.i.i ; 2 uses
   %xtraiter155 = and i32 %i.be, 7                 ; 3 uses
   %i.bf = icmp ult i32 %.sroa.0.03842.i.i, 3
   br i1 %i.bf, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i.preheader.new
@@ -2795,7 +2795,7 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i8: ; preds = %bb.x
   br i1 %.not.i.i.i9, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, label %.lr.ph.i.i.i12.preheader
 
 .lr.ph.i.i.i12.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i8
-  %i.dj = mul nuw i32 %.sroa.0.047.i.i, %.sroa.0.047.i.i ; 2 uses
+  %i.dj = mul nuw nsw i32 %.sroa.0.047.i.i, %.sroa.0.047.i.i ; 2 uses
   %xtraiter149 = and i32 %i.dj, 7                 ; 3 uses
   %i.dk = icmp ult i32 %.sroa.0.047.i.i, 3
   br i1 %i.dk, label %.lr.ph.i.i.i12.epil.preheader, label %.lr.ph.i.i.i12.preheader.new

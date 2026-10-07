@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.h, %init_genrand
   %i.ah = add i32 %i.af, %i.ag
   %i.ai = add i32 %i.ah, %i.ad
   store i32 %i.ai, ptr %i.w, align 4, !tbaa !9
-  %i.aj = add i64 %.04046.i.i, 1                  ; 2 uses
+  %i.aj = add nsw i64 %.04046.i.i, 1              ; 2 uses
   %i.ak = add i64 %.03947.i.i, 1                  ; 2 uses
   %i.al = icmp ugt i64 %i.aj, 623
   br i1 %i.al, label %bb.g, label %bb.h
@@ -232,10 +232,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.at = xor i32 %i.as, %i.ar
   %i.au = mul i32 %i.at, 1566083941
   %i.av = xor i32 %i.au, %i.ap
-  %i.aw = trunc i64 %.249.i.i to i32
+  %i.aw = trunc nsw i64 %.249.i.i to i32
   %i.ax = sub i32 %i.av, %i.aw
   store i32 %i.ax, ptr %i.ao, align 4, !tbaa !9
-  %i.ay = add i64 %.249.i.i, 1                    ; 2 uses
+  %i.ay = add nsw i64 %.249.i.i, 1                ; 2 uses
   %i.az = icmp ugt i64 %i.ay, 623
   br i1 %i.az, label %bb.i, label %bb.j
 
@@ -340,7 +340,7 @@ bb.p:                                             ; preds = %bb.r, %init_genrand
   %i.cl = add i32 %i.cj, %i.ck
   %i.cm = add i32 %i.cl, %i.ch
   store i32 %i.cm, ptr %i.ca, align 4, !tbaa !9
-  %i.cn = add i64 %.04046.i.i51, 1                ; 2 uses
+  %i.cn = add nsw i64 %.04046.i.i51, 1            ; 2 uses
   %i.co = add i64 %.03947.i.i50, 1                ; 2 uses
   %i.cp = icmp ugt i64 %i.cn, 623
   br i1 %i.cp, label %bb.q, label %bb.r
@@ -369,10 +369,10 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.cx = xor i32 %i.cw, %i.cv
   %i.cy = mul i32 %i.cx, 1566083941
   %i.cz = xor i32 %i.cy, %i.ct
-  %i.da = trunc i64 %.249.i.i58 to i32
+  %i.da = trunc nsw i64 %.249.i.i58 to i32
   %i.db = sub i32 %i.cz, %i.da
   store i32 %i.db, ptr %i.cs, align 4, !tbaa !9
-  %i.dc = add i64 %.249.i.i58, 1                  ; 2 uses
+  %i.dc = add nsw i64 %.249.i.i58, 1              ; 2 uses
   %i.dd = icmp ugt i64 %i.dc, 623
   br i1 %i.dd, label %bb.s, label %bb.t
 
@@ -517,7 +517,7 @@ bb.ai:                                            ; preds = %bb.ak, %init_genran
   %i.fh = add i32 %i.ff, %i.fg
   %i.fi = add i32 %i.fh, %i.fd
   store i32 %i.fi, ptr %i.ew, align 4, !tbaa !9
-  %i.fj = add i64 %.04046.i, 1                    ; 2 uses
+  %i.fj = add nsw i64 %.04046.i, 1                ; 2 uses
   %i.fk = add i64 %.03947.i, 1                    ; 2 uses
   %i.fl = icmp ugt i64 %i.fj, 623
   br i1 %i.fl, label %bb.aj, label %bb.ak
@@ -546,10 +546,10 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.ft = xor i32 %i.fs, %i.fr
   %i.fu = mul i32 %i.ft, 1566083941
   %i.fv = xor i32 %i.fu, %i.fp
-  %i.fw = trunc i64 %.249.i to i32
+  %i.fw = trunc nsw i64 %.249.i to i32
   %i.fx = sub i32 %i.fv, %i.fw
   store i32 %i.fx, ptr %i.fo, align 4, !tbaa !9
-  %i.fy = add i64 %.249.i, 1                      ; 2 uses
+  %i.fy = add nsw i64 %.249.i, 1                  ; 2 uses
   %i.fz = icmp ugt i64 %i.fy, 623
   br i1 %i.fz, label %bb.al, label %bb.am
 

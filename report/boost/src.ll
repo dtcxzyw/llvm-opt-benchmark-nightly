@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %.0115 = phi ptr [ %i.g, %bb.c ], [ %i.an, %._crit_edge ] ; 9 uses
-  %.0 = phi i64 [ 0, %bb.c ], [ %.1.lcssa, %._crit_edge ] ; 4 uses
+  %.0 = phi i64 [ 0, %bb.c ], [ %.1.lcssa, %._crit_edge ] ; 6 uses
   %i.j = ptrtoaddr ptr %.0115 to i64
   %i.k = icmp eq ptr %.0115, %i.b
   br i1 %i.k, label %_ZN5boost4json6detail16count_whitespaceEPKcS3_.exit, label %bb.e
@@ -291,13 +291,13 @@ bb.h:                                             ; preds = %_ZN5boost4json6deta
   ], !prof !946
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %5 = add i64 %.0, 1                             ; 2 uses
-  %i.am = icmp ugt i64 %5, 2147483646
+  %umax = tail call i64 @llvm.umax.i64(i64 %.0, i64 2147483646)
+  %i.am = icmp ugt i64 %.0, 2147483645
   br i1 %i.am, label %.lr.ph.preheader._crit_edge, label %.lr.ph351, !prof !357
 
 ._crit_edge:                                      ; preds = %bb.t, %bb.h
   %.1116.lcssa = phi ptr [ %.3.i, %bb.h ], [ %.3.i40, %bb.t ]
-  %.1.lcssa = phi i64 [ %.0, %bb.h ], [ %i.ar, %bb.t ] ; 2 uses
+  %.1.lcssa = phi i64 [ %.0, %bb.h ], [ %5, %bb.t ] ; 2 uses
   %i.an = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE13parse_commentILb1EEEPKcS7_St17integral_constantIbXT_EEb(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef nonnull %.1116.lcssa, i1 noundef zeroext false) ; 2 uses
   %i.ao = icmp eq ptr %i.an, %i.i
   br i1 %i.ao, label %bb.i, label %bb.d, !prof !252
@@ -307,9 +307,8 @@ bb.i:                                             ; preds = %._crit_edge
   br label %bb.x
 
 .lr.ph:                                           ; preds = %bb.t
-  %6 = add nuw nsw i64 %i.ar, 1
-  %7 = icmp ugt i64 %i.ar, 2147483645
-  br i1 %7, label %.lr.ph.preheader._crit_edge, label %.lr.ph351, !prof !353
+  %exitcond = icmp eq i64 %5, %umax
+  br i1 %exitcond, label %.lr.ph.preheader._crit_edge, label %.lr.ph351, !prof !353
 
 .lr.ph.preheader._crit_edge:                      ; preds = %.lr.ph.preheader, %.lr.ph
   %.1116175.lcssa = phi ptr [ %.3.i40, %.lr.ph ], [ %.3.i, %.lr.ph.preheader ]
@@ -317,14 +316,15 @@ bb.i:                                             ; preds = %._crit_edge
   br label %bb.x
 
 .lr.ph351:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.ar = phi i64 [ %6, %.lr.ph ], [ %5, %.lr.ph.preheader ] ; 9 uses
+  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.0, %.lr.ph.preheader ]
   %.1116175350 = phi ptr [ %.3.i40, %.lr.ph ], [ %.3.i, %.lr.ph.preheader ]
+  %5 = add i64 %i.ar, 1                           ; 9 uses
   %i.as = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE11parse_valueILb1ELb1EEEPKcS7_St17integral_constantIbXT_EES8_IbXT0_EEbbb(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef nonnull %.1116175350, i1 noundef zeroext %2, i1 noundef zeroext %3, i1 noundef zeroext %4) ; 2 uses
   %i.at = icmp eq ptr %i.as, %i.i
   br i1 %i.at, label %bb.j, label %.preheader, !prof !252
 
 bb.j:                                             ; preds = %.lr.ph351
-  %i.au = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE15suspend_or_failENS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, i8 noundef signext 34, i64 noundef %i.ar)
+  %i.au = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE15suspend_or_failENS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, i8 noundef signext 34, i64 noundef %5)
   br label %bb.x
 
 .preheader:                                       ; preds = %.lr.ph351, %bb.u
@@ -402,7 +402,7 @@ _ZN5boost4json6detail16count_whitespaceEPKcS3_.exit30: ; preds = %.lr.ph.i24, %b
   br i1 %i.bv, label %bb.n, label %bb.m, !prof !251
 
 bb.m:                                             ; preds = %_ZN5boost4json6detail16count_whitespaceEPKcS3_.exit30
-  %i.bw = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE13maybe_suspendEPKcNS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef %.3.i27, i8 noundef signext 35, i64 noundef %i.ar)
+  %i.bw = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE13maybe_suspendEPKcNS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef %.3.i27, i8 noundef signext 35, i64 noundef %5)
   br label %bb.x
 
 bb.n:                                             ; preds = %_ZN5boost4json6detail16count_whitespaceEPKcS3_.exit30
@@ -488,7 +488,7 @@ _ZN5boost4json6detail16count_whitespaceEPKcS3_.exit43: ; preds = %.lr.ph.i37, %b
   br i1 %i.cz, label %bb.s, label %bb.r, !prof !251
 
 bb.r:                                             ; preds = %_ZN5boost4json6detail16count_whitespaceEPKcS3_.exit43
-  %i.da = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE13maybe_suspendEPKcNS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef %.3.i40, i8 noundef signext 36, i64 noundef %i.ar)
+  %i.da = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE13maybe_suspendEPKcNS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef %.3.i40, i8 noundef signext 36, i64 noundef %5)
   br label %bb.x
 
 bb.s:                                             ; preds = %_ZN5boost4json6detail16count_whitespaceEPKcS3_.exit43
@@ -507,7 +507,7 @@ bb.u:                                             ; preds = %bb.n
   br i1 %i.dd, label %bb.v, label %.preheader, !prof !252
 
 bb.v:                                             ; preds = %bb.u
-  %i.de = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE15suspend_or_failENS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, i8 noundef signext 37, i64 noundef %i.ar)
+  %i.de = tail call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE15suspend_or_failENS4_5stateEm(ptr noundef nonnull align 8 dereferenceable(274) %0, i8 noundef signext 37, i64 noundef %5)
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.n
@@ -516,7 +516,7 @@ bb.w:                                             ; preds = %bb.n
 
 .loopexit:                                        ; preds = %bb.h, %bb.s, %bb.n
   %.3 = phi ptr [ %.3.i27, %bb.n ], [ %.3.i40, %bb.s ], [ %.3.i, %bb.h ]
-  %.2 = phi i64 [ %i.ar, %bb.n ], [ %i.ar, %bb.s ], [ %.0, %bb.h ]
+  %.2 = phi i64 [ %5, %bb.n ], [ %5, %bb.s ], [ %.0, %bb.h ]
   tail call void @_ZN5boost4json11value_stack10push_arrayEm(ptr noundef nonnull align 8 dereferenceable(64) %0, i64 noundef %.2)
   %i.dg = load i64, ptr %i.c, align 8, !tbaa !221
   %i.dh = add i64 %i.dg, 1

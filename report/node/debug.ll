@@ -204,16 +204,16 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = lshr i64 %i.aa, %i.ac
   %i.ae = trunc i64 %i.ad to i32
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 %.03957
-  %i.ag = sub i64 512, %.03957
+  %i.ag = sub nsw i64 512, %.03957
   %i.ah = and i32 %i.ae, 255
   %i.ai = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.af, i64 noundef %i.ag, ptr noundef nonnull @.str.4, i32 noundef %i.ah) #8 ; 0 uses
-  %i.aj = add i64 %.03957, 3                      ; 3 uses
+  %i.aj = add nsw i64 %.03957, 3                  ; 3 uses
   %i.ak = icmp ugt i64 %i.aj, 47
   br i1 %i.ak, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.aj
-  %i.am = sub i64 509, %.03957
+  %i.am = sub nsw i64 509, %.03957
   %i.an = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.al, i64 noundef %i.am, ptr noundef nonnull @.str.9) #8 ; 0 uses
   %.val49 = load ptr, ptr %0, align 8, !tbaa !18  ; 2 uses
   %i.ao = getelementptr i8, ptr %.val49, i64 40

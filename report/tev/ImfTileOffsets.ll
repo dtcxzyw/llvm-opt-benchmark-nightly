@@ -204,11 +204,11 @@ bb.ab:                                            ; preds = %_ZNSt3__119__alloca
   %.pre14.i = load ptr, ptr %i.dq, align 8, !tbaa !30 ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.dy ; 4 uses
   %i.et = getelementptr inbounds nuw [24 x i8], ptr %i.er, i64 %.0.i.i94
-  %.idx.i8.i97 = mul nuw i64 %i.eb, 24
+  %.idx.i8.i97 = mul nuw nsw i64 %i.eb, 24
   %i.eu = add nsw i64 %.idx.i8.i97, -24           ; 2 uses
   %i.ev = urem i64 %i.eu, 24
-  %i.ew = sub nuw i64 %i.eu, %i.ev
-  %i.ex = add i64 %i.ew, 24                       ; 2 uses
+  %i.ew = sub nuw nsw i64 %i.eu, %i.ev
+  %i.ex = add nsw i64 %i.ew, 24                   ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.es, i8 0, i64 %i.ex, i1 false)
   %scevgep.i9.i = getelementptr i8, ptr %i.es, i64 %i.ex
   %.not12.i.i.i = icmp eq ptr %.pre.i95, %.pre14.i
@@ -611,8 +611,8 @@ _ZNSt3__16vectorIN7Imf_3_412_GLOBAL__N_17tileposENS_9allocatorIS3_EEEC2Em.exit: 
 
 scalar.ph198.preheader:                           ; preds = %vector.body209, %vector.memcheck, %.lr.ph132
   %.0131.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph132 ], [ %n.vec208, %vector.body209 ] ; 7 uses
-  %i.el = sub i64 %.071.lcssa181, %.0131.ph
-  %.neg = add i64 %.0131.ph, 1
+  %i.el = sub nsw i64 %.071.lcssa181, %.0131.ph
+  %.neg = add nsw i64 %.0131.ph, 1
   %xtraiter233 = and i64 %i.el, 1
   %lcmp.mod234.not = icmp eq i64 %xtraiter233, 0
   br i1 %lcmp.mod234.not, label %scalar.ph198.prol.loopexit, label %scalar.ph198.prol
@@ -629,7 +629,7 @@ scalar.ph198.prol:                                ; preds = %scalar.ph198.prehea
   %i.et = sdiv i32 %i.eo, %i.es
   %i.eu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.0131.ph
   store i32 %i.et, ptr %i.eu, align 4, !tbaa !24
-  %i.ev = add nuw i64 %.0131.ph, 1
+  %i.ev = add nuw nsw i64 %.0131.ph, 1
   br label %scalar.ph198.prol.loopexit
 
 scalar.ph198.prol.loopexit:                       ; preds = %scalar.ph198.prol, %scalar.ph198.preheader
@@ -707,8 +707,8 @@ vector.body209:                                   ; preds = %vector.body209, %ve
 
 .lr.ph134.preheader226:                           ; preds = %vector.body221, %.lr.ph134.preheader
   %.066133.ph = phi i64 [ 0, %.lr.ph134.preheader ], [ %n.vec220, %vector.body221 ] ; 7 uses
-  %i.gb = sub i64 %.071.lcssa181, %.066133.ph
-  %.neg237 = add i64 %.066133.ph, 1
+  %i.gb = sub nsw i64 %.071.lcssa181, %.066133.ph
+  %.neg237 = add nsw i64 %.066133.ph, 1
   %xtraiter235 = and i64 %i.gb, 1
   %lcmp.mod236.not = icmp eq i64 %xtraiter235, 0
   br i1 %lcmp.mod236.not, label %.lr.ph134.prol.loopexit, label %.lr.ph134.prol
@@ -721,7 +721,7 @@ vector.body209:                                   ; preds = %vector.body209, %ve
   store i32 %i.ge, ptr %i.gf, align 4, !tbaa !24
   %i.gg = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.066133.ph
   store i32 %i.ge, ptr %i.gg, align 4, !tbaa !24
-  %i.gh = add nuw i64 %.066133.ph, 1
+  %i.gh = add nuw nsw i64 %.066133.ph, 1
   br label %.lr.ph134.prol.loopexit
 
 .lr.ph134.prol.loopexit:                          ; preds = %.lr.ph134.prol, %.lr.ph134.preheader226

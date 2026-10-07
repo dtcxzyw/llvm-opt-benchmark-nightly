@@ -204,7 +204,7 @@ _ZN2v84base7ReallocEPvm.exit.i.i.i35:             ; preds = %.lr.ph.i.i.i34
   %.pre.i.i36 = load i64, ptr %i.a, align 8
   br label %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i
 
-_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i: ; preds = %_ZN2v84base7ReallocEPvm.exit.i.i.i35, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i32
+_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i: ; preds = %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i32, %_ZN2v84base7ReallocEPvm.exit.i.i.i35
   %i.bm = phi ptr [ %.pre2.i.i33, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i32 ], [ %i.bl, %_ZN2v84base7ReallocEPvm.exit.i.i.i35 ]
   %i.bn = phi i64 [ %i.bd, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i32 ], [ %.pre.i.i36, %_ZN2v84base7ReallocEPvm.exit.i.i.i35 ]
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bn
@@ -607,7 +607,7 @@ _ZN2v84base7ReallocEPvm.exit.i.i.i48:             ; preds = %.lr.ph.i.i.i47
   %.pre.i.i49 = load i64, ptr %i.a, align 8
   br label %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i46
 
-_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i46: ; preds = %_ZN2v84base7ReallocEPvm.exit.i.i.i48, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i44
+_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i46: ; preds = %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i44, %_ZN2v84base7ReallocEPvm.exit.i.i.i48
   %i.bz = phi ptr [ %.pre2.i.i45, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i44 ], [ %i.by, %_ZN2v84base7ReallocEPvm.exit.i.i.i48 ]
   %i.ca = phi i64 [ %i.bq, %._ZN2v88internal15GDBJITInterface6Writer6EnsureEm.exit_crit_edge.i.i44 ], [ %.pre.i.i49, %_ZN2v84base7ReallocEPvm.exit.i.i.i48 ]
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.ca

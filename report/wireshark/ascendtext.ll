@@ -176,7 +176,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.u
 
 bb.c:                                             ; preds = %.preheader.preheader
-  %i.j = add i64 %.sroa.0.0103, 1                 ; 2 uses
+  %i.j = add nsw i64 %.sroa.0.0103, 1             ; 2 uses
   %.not63 = icmp ult i64 %i.j, 9
   br i1 %.not63, label %.preheader.1, label %bb.d
 
@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.m, %bb.l, %bb.k,
   br i1 %i.s, label %bb.e, label %.preheader.2
 
 bb.e:                                             ; preds = %.preheader.1
-  %i.t = add i64 %.sroa.6.0104, 1                 ; 2 uses
+  %i.t = add nsw i64 %.sroa.6.0104, 1             ; 2 uses
   %.not63.1 = icmp ult i64 %i.t, 8
   br i1 %.not63.1, label %.preheader.2, label %bb.d
 
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %.preheader.1
   br i1 %i.x, label %bb.f, label %.preheader.3
 
 bb.f:                                             ; preds = %.preheader.2
-  %i.y = add i64 %.sroa.9.0105, 1                 ; 2 uses
+  %i.y = add nsw i64 %.sroa.9.0105, 1             ; 2 uses
   %.not63.2 = icmp ult i64 %i.y, 5
   br i1 %.not63.2, label %.preheader.3, label %bb.d
 
@@ -228,7 +228,7 @@ bb.f:                                             ; preds = %.preheader.2
   br i1 %i.ac, label %bb.g, label %.preheader.4
 
 bb.g:                                             ; preds = %.preheader.3
-  %i.ad = add i64 %.sroa.12.0106, 1               ; 2 uses
+  %i.ad = add nsw i64 %.sroa.12.0106, 1           ; 2 uses
   %.not63.3 = icmp ult i64 %i.ad, 5
   br i1 %.not63.3, label %.preheader.4, label %bb.d
 
@@ -241,7 +241,7 @@ bb.g:                                             ; preds = %.preheader.3
   br i1 %i.ah, label %bb.h, label %.preheader.5
 
 bb.h:                                             ; preds = %.preheader.4
-  %i.ai = add i64 %.sroa.15.0107, 1               ; 2 uses
+  %i.ai = add nsw i64 %.sroa.15.0107, 1           ; 2 uses
   %.not63.4 = icmp ult i64 %i.ai, 5
   br i1 %.not63.4, label %.preheader.5, label %bb.d
 
@@ -254,7 +254,7 @@ bb.h:                                             ; preds = %.preheader.4
   br i1 %i.am, label %bb.i, label %.preheader.6
 
 bb.i:                                             ; preds = %.preheader.5
-  %i.an = add i64 %.sroa.18.0108, 1               ; 2 uses
+  %i.an = add nsw i64 %.sroa.18.0108, 1           ; 2 uses
   %.not63.5 = icmp ult i64 %i.an, 5
   br i1 %.not63.5, label %.preheader.6, label %bb.d
 
@@ -267,7 +267,7 @@ bb.i:                                             ; preds = %.preheader.5
   br i1 %i.ar, label %bb.j, label %.preheader.7
 
 bb.j:                                             ; preds = %.preheader.6
-  %i.as = add i64 %.sroa.21.0109, 1               ; 2 uses
+  %i.as = add nsw i64 %.sroa.21.0109, 1           ; 2 uses
   %.not63.6 = icmp ult i64 %i.as, 7
   br i1 %.not63.6, label %.preheader.7, label %bb.d
 
@@ -280,7 +280,7 @@ bb.j:                                             ; preds = %.preheader.6
   br i1 %i.aw, label %bb.k, label %.preheader.8
 
 bb.k:                                             ; preds = %.preheader.7
-  %i.ax = add i64 %.sroa.24.0110, 1               ; 2 uses
+  %i.ax = add nsw i64 %.sroa.24.0110, 1           ; 2 uses
   %.not63.7 = icmp ult i64 %i.ax, 6
   br i1 %.not63.7, label %.preheader.8, label %bb.d
 
@@ -293,7 +293,7 @@ bb.k:                                             ; preds = %.preheader.7
   br i1 %i.bb, label %bb.l, label %.preheader.9
 
 bb.l:                                             ; preds = %.preheader.8
-  %i.bc = add i64 %.sroa.27.0111, 1               ; 2 uses
+  %i.bc = add nsw i64 %.sroa.27.0111, 1           ; 2 uses
   %.not63.8 = icmp ult i64 %i.bc, 16
   br i1 %.not63.8, label %.preheader.9, label %bb.d
 
@@ -306,7 +306,7 @@ bb.l:                                             ; preds = %.preheader.8
   br i1 %i.bg, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.preheader.9
-  %i.bh = add i64 %.sroa.30.0112, 1               ; 2 uses
+  %i.bh = add nsw i64 %.sroa.30.0112, 1           ; 2 uses
   %.not63.9 = icmp ult i64 %i.bh, 5
   br i1 %.not63.9, label %bb.n, label %bb.d
 
@@ -319,7 +319,7 @@ bb.n:                                             ; preds = %.preheader.9, %bb.m
   br i1 %i.bl, label %bb.o, label %bb.s
 
 bb.o:                                             ; preds = %bb.n
-  %i.bm = add i64 %.04576113, 1                   ; 2 uses
+  %i.bm = add nsw i64 %.04576113, 1               ; 2 uses
   %i.bn = icmp ugt i64 %i.bm, 4
   br i1 %i.bn, label %bb.p, label %bb.s
 

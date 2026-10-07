@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k
   %i.cs = sub nsw i32 0, %i.cr
   %i.ct = xor i32 %.091172, %i.cs
   %i.cu = add nsw i32 %i.ct, %i.cr
-  %i.cv = trunc i32 %i.cu to i16
+  %i.cv = trunc nsw i32 %i.cu to i16
   %i.cw = zext i8 %i.cd to i64
   %i.cx = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.cw
   store i16 %i.cv, ptr %i.cx, align 2, !tbaa !62
@@ -267,7 +267,7 @@ bb.p:                                             ; preds = %bb.n
   %i.ef = sub nsw i32 0, %i.ee
   %i.eg = xor i32 %.091172, %i.ef
   %i.eh = add nsw i32 %i.eg, %i.ee
-  %i.ei = trunc i32 %i.eh to i16
+  %i.ei = trunc nsw i32 %i.eh to i16
   %i.ej = zext i8 %i.dq to i64
   %i.ek = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.ej
   store i16 %i.ei, ptr %i.ek, align 2, !tbaa !62
@@ -329,7 +329,7 @@ bb.s:                                             ; preds = %bb.q
   %i.fs = sub nsw i32 0, %i.fr
   %i.ft = xor i32 %.091172, %i.fs
   %i.fu = add nsw i32 %i.ft, %i.fr
-  %i.fv = trunc i32 %i.fu to i16
+  %i.fv = trunc nsw i32 %i.fu to i16
   %i.fw = zext i8 %i.fd to i64
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.fw
   store i16 %i.fv, ptr %i.fx, align 2, !tbaa !62
@@ -389,7 +389,7 @@ bb.v:                                             ; preds = %bb.t
   %i.he = sub nsw i32 0, %i.hd
   %i.hf = xor i32 %.091172, %i.he
   %i.hg = add nsw i32 %i.hf, %i.hd
-  %i.hh = trunc i32 %i.hg to i16
+  %i.hh = trunc nsw i32 %i.hg to i16
   %i.hi = zext i8 %i.gp to i64
   %i.hj = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.hi
   store i16 %i.hh, ptr %i.hj, align 2, !tbaa !62
@@ -440,7 +440,7 @@ bb.w:                                             ; preds = %bb.h
   %i.im = sub nsw i32 0, %i.il
   %i.in = xor i32 %.091172, %i.im
   %i.io = add nsw i32 %i.in, %i.il
-  %i.ip = trunc i32 %i.io to i16
+  %i.ip = trunc nsw i32 %i.io to i16
   %i.iq = zext i8 %i.hx to i64
   %i.ir = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.iq
   store i16 %i.ip, ptr %i.ir, align 2, !tbaa !62

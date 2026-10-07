@@ -205,7 +205,7 @@ _ZN4llvm23SmallVectorTemplateBaseIiLb1EE28reserveForParamAndGetAddressERim.exit.
   %.pre.i.i.i670 = load i32, ptr %i.do, align 8, !tbaa !371
   %i.azv = add i32 %.pre.i.i.i670, %i.axt
   store i32 %i.azv, ptr %i.do, align 8, !tbaa !371
-  %i.azw = add i64 %.sroa.10.0.lcssa1431, -1
+  %i.azw = add nsw i64 %.sroa.10.0.lcssa1431, -1
   %xtraiter1636 = and i64 %.sroa.10.0.lcssa1431, 3 ; 3 uses
   %i.azx = icmp ult i64 %i.azw, 3
   br i1 %i.azx, label %.epil.preheader1635, label %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE28reserveForParamAndGetAddressERim.exit.i.i.i667.new

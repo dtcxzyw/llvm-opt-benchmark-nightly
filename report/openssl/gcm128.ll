@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %bb.m
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.cy = add i64 %.4150, -1                      ; 2 uses
+  %i.cy = add nsw i64 %.4150, -1                  ; 2 uses
   %i.cz = trunc i64 %i.cy to i32
   %i.da = xor i32 %.3163, -1
   %i.db = icmp ult i32 %i.da, %i.cz
@@ -608,7 +608,7 @@ iter.check:                                       ; preds = %.loopexit185
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.cv = add i64 %.4148, -1                      ; 2 uses
+  %i.cv = add nsw i64 %.4148, -1                  ; 2 uses
   %i.cw = trunc i64 %i.cv to i32
   %i.cx = xor i32 %.3161, -1
   %i.cy = icmp ult i32 %i.cx, %i.cw
@@ -989,8 +989,8 @@ iter.check:                                       ; preds = %bb.l
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.cb = add i64 %.3129, -1                      ; 2 uses
-  %i.cc = trunc i64 %i.cb to i32
+  %i.cb = add nsw i64 %.3129, -1                  ; 2 uses
+  %i.cc = trunc nsw i64 %i.cb to i32
   %i.cd = xor i32 %.3138, -1
   %i.ce = icmp ult i32 %i.cd, %i.cc
   %i.cf = icmp ugt i64 %i.cb, 4294967295
@@ -1364,8 +1364,8 @@ iter.check:                                       ; preds = %bb.l
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.cb = add i64 %.3129, -1                      ; 2 uses
-  %i.cc = trunc i64 %i.cb to i32
+  %i.cb = add nsw i64 %.3129, -1                  ; 2 uses
+  %i.cc = trunc nsw i64 %i.cb to i32
   %i.cd = xor i32 %.3138, -1
   %i.ce = icmp ult i32 %i.cd, %i.cc
   %i.cf = icmp ugt i64 %i.cb, 4294967295

@@ -205,11 +205,11 @@ bb.cn:                                            ; preds = %bb.cm
   %i.kn = phi i8 [ %i.ku, %bb.co ], [ %i.hh, %.lr.ph.split.i.preheader ]
   %.021.i = phi i64 [ %i.kr, %bb.co ], [ 0, %.lr.ph.split.i.preheader ]
   %.01320.i = phi ptr [ %i.kt, %bb.co ], [ %i.hg, %.lr.ph.split.i.preheader ]
-  %i.ko = mul i64 %.021.i, 10
+  %i.ko = mul nuw nsw i64 %.021.i, 10
   %i.kp = zext nneg i8 %i.kn to i64
   %i.kq = add nsw i64 %i.kp, -48
-  %i.kr = add nsw i64 %i.kq, %i.ko                ; 4 uses
-  %i.ks = icmp ult i64 %i.kr, 2147483647
+  %i.kr = add nuw nsw i64 %i.kq, %i.ko            ; 4 uses
+  %i.ks = icmp samesign ult i64 %i.kr, 2147483647
   br i1 %i.ks, label %bb.co, label %parse_digits.exit505.thread
 
 bb.co:                                            ; preds = %.lr.ph.split.i

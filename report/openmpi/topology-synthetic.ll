@@ -204,12 +204,12 @@ bb.cm:                                            ; preds = %bb.ci, %bb.ch
   br i1 %i.fv, label %.lr.ph448.i.preheader, label %.thread537.i
 
 .lr.ph448.i.preheader:                            ; preds = %.preheader.i
-  %i.fw = add i64 %.0287432.i, -2                 ; 3 uses
+  %i.fw = add nsw i64 %.0287432.i, -2             ; 3 uses
   %min.iters.check = icmp ult i64 %i.fw, 12
   br i1 %min.iters.check, label %.lr.ph448.i.preheader156, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph448.i.preheader
-  %i.fx = add i64 %.0287432.i, -3                 ; 2 uses
+  %i.fx = add nsw i64 %.0287432.i, -3             ; 2 uses
   %i.fy = and i64 %i.fx, 4294967294
   %i.fz = icmp eq i64 %i.fy, 4294967294
   %i.ga = icmp ugt i64 %i.fx, 4294967295
@@ -348,7 +348,7 @@ bb.cu:                                            ; preds = %bb.ct
   %i.ip = sub nsw i32 %i.ij, %i.io
   %i.iq = icmp ne i32 %i.ij, %i.io                ; 2 uses
   %.neg.i = sext i1 %i.iq to i32
-  %i.ir = add i32 %i.ip, %.neg.i                  ; 7 uses
+  %i.ir = add nsw i32 %i.ip, %.neg.i              ; 7 uses
   %i.is = call i32 @llvm.umin.i32(i32 %i.ir, i32 4) ; 2 uses
   %i.it = sub nuw i32 %i.ir, %i.is                ; 7 uses
   %.not462.i = icmp ult i32 %i.ir, 5
