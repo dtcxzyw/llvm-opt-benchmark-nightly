@@ -205,7 +205,7 @@ define range(i32 0, 2) i32 @dt_lightroom_import(i32 noundef %0, ptr noundef %1, 
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 27 uses
   %i.b = alloca i32, align 4                      ; 21 uses
-  %3 = alloca %struct.lr_data_t, align 8          ; 97 uses
+  %3 = alloca %struct.lr_data_t, align 8          ; 96 uses
   %i.c = alloca [50 x i8], align 16               ; 36 uses
   %4 = alloca %struct.dt_iop_colorin_params_v1_t, align 4 ; 4 uses
   %5 = alloca %struct.dt_image_geoloc_t, align 16 ; 5 uses
@@ -608,31 +608,30 @@ scalar.ph.preheader:                              ; preds = %.lr.ph329, %middle.
 .thread:                                          ; preds = %.preheader320.preheader
   store <2 x float> zeroinitializer, ptr %i.kp, align 4, !tbaa !49
   %i.ll = getelementptr inbounds nuw i8, ptr %3, i64 1348
-  %6 = load float, ptr %i.ll, align 4, !tbaa !49  ; 2 uses
-  %7 = fmul reassoc nsz arcp contract afn float %6, 5.000000e-01 ; 2 uses
-  %i.lm = getelementptr inbounds nuw i8, ptr %3, i64 828
-  store float %7, ptr %i.lm, align 4, !tbaa !163
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 1352
-  %9 = load float, ptr %8, align 8, !tbaa !49     ; 3 uses
-  %10 = fpext reassoc nsz arcp contract afn float %9 to double ; 2 uses
-  %11 = fsub reassoc nsz arcp contract afn float %9, %6
-  %12 = fpext reassoc nsz arcp contract afn float %11 to double
-  %13 = fmul reassoc nsz arcp contract afn double %12, 5.000000e-01
-  %14 = fsub reassoc nsz arcp contract afn double %10, %13
-  %15 = fptrunc reassoc nsz arcp contract afn double %14 to float ; 2 uses
-  %i.ln = getelementptr inbounds nuw i8, ptr %3, i64 836
-  store float %15, ptr %i.ln, align 4, !tbaa !163
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 1356
-  %17 = load float, ptr %16, align 4, !tbaa !49   ; 2 uses
-  %18 = fsub reassoc nsz arcp contract afn float %17, %9
-  %19 = fpext reassoc nsz arcp contract afn float %18 to double
-  %20 = fmul reassoc nsz arcp contract afn double %19, 5.000000e-01
-  %21 = fadd reassoc nsz arcp contract afn double %20, %10
-  %22 = fptrunc reassoc nsz arcp contract afn double %21 to float ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %3, i64 844
-  store float %22, ptr %23, align 4, !tbaa !163
-  %24 = fpext reassoc nsz arcp contract afn float %17 to double
-  %i.lo = fmul reassoc nsz arcp contract afn double %24, 5.000000e-01
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 828
+  %i.lm = getelementptr inbounds nuw i8, ptr %3, i64 1352
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 836
+  %8 = load <2 x float>, ptr %i.ll, align 4, !tbaa !49 ; 2 uses
+  %9 = extractelement <2 x float> %8, i64 0
+  %10 = fmul reassoc nsz arcp contract afn float %9, 5.000000e-01 ; 2 uses
+  store float %10, ptr %6, align 4, !tbaa !163
+  %11 = load <2 x float>, ptr %i.lm, align 8, !tbaa !49 ; 2 uses
+  %12 = fsub reassoc nsz arcp contract afn <2 x float> %11, %8
+  %13 = fpext <2 x float> %12 to <2 x double>
+  %14 = fmul reassoc nsz arcp contract afn <2 x double> %13, splat (double 5.000000e-01) ; 2 uses
+  %i.ln = getelementptr inbounds nuw i8, ptr %3, i64 844
+  %15 = fpext <2 x float> %11 to <2 x double>     ; 2 uses
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %17 = fadd reassoc nsz arcp contract afn <2 x double> %16, %14
+  %18 = fsub reassoc nsz arcp contract afn <2 x double> %16, %14
+  %19 = shufflevector <2 x double> %18, <2 x double> %17, <2 x i32> <i32 0, i32 3>
+  %20 = fptrunc <2 x double> %19 to <2 x float>   ; 3 uses
+  %21 = extractelement <2 x float> %20, i64 0
+  store float %21, ptr %7, align 4, !tbaa !163
+  %22 = extractelement <2 x float> %20, i64 1
+  store float %22, ptr %i.ln, align 4, !tbaa !163
+  %23 = extractelement <2 x double> %15, i64 1
+  %i.lo = fmul reassoc nsz arcp contract afn double %23, 5.000000e-01
   %i.lp = fadd reassoc nsz arcp contract afn double %i.lo, 5.000000e-01
   %i.lq = fptrunc reassoc nsz arcp contract afn double %i.lp to float ; 2 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %3, i64 852
@@ -663,21 +662,22 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.phi.trans.insert366 = getelementptr inbounds nuw i8, ptr %3, i64 848
   %.phi.trans.insert368 = getelementptr inbounds nuw i8, ptr %3, i64 856
   %.pre = load float, ptr %.phi.trans.insert, align 8, !tbaa !164
-  %.pre365 = load float, ptr %.phi.trans.insert364, align 8, !tbaa !164
-  %.pre367 = load float, ptr %.phi.trans.insert366, align 8, !tbaa !164
-  %.pre369 = load float, ptr %.phi.trans.insert368, align 8, !tbaa !164
+  %24 = load <4 x float>, ptr %.phi.trans.insert364, align 8
+  %25 = shufflevector <4 x float> %24, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %.pre365 = load float, ptr %.phi.trans.insert366, align 8, !tbaa !164
+  %.pre367 = load float, ptr %.phi.trans.insert368, align 8, !tbaa !164
+  %26 = insertelement <2 x float> %25, float %.pre365, i64 1
   br label %bb.bi
 
 bb.bi:                                            ; preds = %._crit_edge._crit_edge, %.thread
-  %25 = phi float [ %.pre369, %._crit_edge._crit_edge ], [ %i.lq, %.thread ]
-  %i.lz = phi float [ %.pre367, %._crit_edge._crit_edge ], [ %22, %.thread ]
-  %i.ma = phi float [ %.pre365, %._crit_edge._crit_edge ], [ %15, %.thread ]
-  %26 = phi float [ %.pre, %._crit_edge._crit_edge ], [ %7, %.thread ]
+  %i.lz = phi float [ %.pre367, %._crit_edge._crit_edge ], [ %i.lq, %.thread ]
+  %i.ma = phi float [ %.pre, %._crit_edge._crit_edge ], [ %10, %.thread ]
+  %27 = phi <2 x float> [ %26, %._crit_edge._crit_edge ], [ %20, %.thread ]
   %i.mb = getelementptr inbounds nuw i8, ptr %3, i64 832 ; 2 uses
-  %i.mc = insertelement <4 x float> poison, float %26, i64 0
-  %27 = insertelement <4 x float> %i.mc, float %i.ma, i64 1
-  %28 = insertelement <4 x float> %27, float %i.lz, i64 2
-  %i.md = insertelement <4 x float> %28, float %25, i64 3
+  %i.mc = insertelement <4 x float> poison, float %i.ma, i64 0
+  %28 = shufflevector <2 x float> %27, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %29 = shufflevector <4 x float> %i.mc, <4 x float> %28, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.md = insertelement <4 x float> %29, float %i.lz, i64 3
   %i.me = fpext <4 x float> %i.md to <4 x double> ; 2 uses
   %i.mf = sitofp <4 x i32> %i.ju to <4 x float>
   %i.mg = getelementptr inbounds nuw i8, ptr %3, i64 856
