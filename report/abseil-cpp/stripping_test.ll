@@ -202,8 +202,8 @@ _ZN4absl12lts_202605266StatusaSEOS1_.exit.thread: ; preds = %bb.e, %bb.h, %_ZN4a
   %i.u = icmp ne i64 %.pre120, 1
   %i.v = load volatile i8, ptr @_ZL10kReallyDie, align 1, !tbaa !114, !range !37, !noundef !38
   %i.w = trunc nuw i8 %i.v to i1
-  %or.cond.not = select i1 %i.w, i1 %i.u, i1 false
-  br i1 %or.cond.not, label %bb.l, label %bb.p, !prof !368
+  %or.cond.not = select i1 %i.w, i1 %i.u, i1 false, !prof !368
+  br i1 %or.cond.not, label %bb.l, label %bb.p, !prof !369
 
 bb.l:                                             ; preds = %_ZN4absl12lts_202605266StatusaSEOS1_.exit.thread
   %i.x = call noundef ptr @_ZN4absl12lts_2026052615status_internal19MakeCheckFailStringEPKNS0_6StatusEPKc(ptr noundef nonnull %3, ptr noundef nonnull @.str.97) #39
@@ -397,17 +397,17 @@ bb.af:                                            ; preds = %_ZNKSt14default_del
           to label %bb.ag unwind label %bb.ap
 
 bb.ag:                                            ; preds = %bb.af
-  call void @llvm.experimental.noalias.scope.decl(metadata !369)
+  call void @llvm.experimental.noalias.scope.decl(metadata !370)
   %i.bj = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !45, !noalias !369
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !45, !noalias !370
   %i.bl = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !26, !noalias !369
-  store ptr null, ptr %i.bj, align 8, !tbaa !45, !noalias !369
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !26, !noalias !370
+  store ptr null, ptr %i.bj, align 8, !tbaa !45, !noalias !370
   %i.bn = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
-  store ptr %i.bk, ptr %i.bn, align 8, !tbaa !45, !alias.scope !369
+  store ptr %i.bk, ptr %i.bn, align 8, !tbaa !45, !alias.scope !370
   %i.bo = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
-  store i64 %i.bm, ptr %i.bo, align 8, !tbaa !26, !alias.scope !369
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN7testing7MatcherIP8_IO_FILEEE, i64 16), ptr %12, align 8, !tbaa !19, !alias.scope !369
+  store i64 %i.bm, ptr %i.bo, align 8, !tbaa !26, !alias.scope !370
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN7testing7MatcherIP8_IO_FILEEE, i64 16), ptr %12, align 8, !tbaa !19, !alias.scope !370
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #31
   %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !47
@@ -623,17 +623,17 @@ _ZN7testing15AssertionResultD2Ev.exit74:          ; preds = %bb.bb, %_ZNKSt14def
           to label %bb.bd unwind label %bb.bm
 
 bb.bd:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit74
-  call void @llvm.experimental.noalias.scope.decl(metadata !370)
+  call void @llvm.experimental.noalias.scope.decl(metadata !371)
   %i.ds = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 4 uses
-  %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !45, !noalias !370
+  %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !45, !noalias !371
   %i.du = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 3 uses
-  %i.dv = load i64, ptr %i.du, align 8, !tbaa !26, !noalias !370
-  store ptr null, ptr %i.ds, align 8, !tbaa !45, !noalias !370
+  %i.dv = load i64, ptr %i.du, align 8, !tbaa !26, !noalias !371
+  store ptr null, ptr %i.ds, align 8, !tbaa !45, !noalias !371
   %i.dw = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
-  store ptr %i.dt, ptr %i.dw, align 8, !tbaa !45, !alias.scope !370
+  store ptr %i.dt, ptr %i.dw, align 8, !tbaa !45, !alias.scope !371
   %i.dx = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 3 uses
-  store i64 %i.dv, ptr %i.dx, align 8, !tbaa !26, !alias.scope !370
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN7testing7MatcherIP8_IO_FILEEE, i64 16), ptr %17, align 8, !tbaa !19, !alias.scope !370
+  store i64 %i.dv, ptr %i.dx, align 8, !tbaa !26, !alias.scope !371
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN7testing7MatcherIP8_IO_FILEEE, i64 16), ptr %17, align 8, !tbaa !19, !alias.scope !371
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #31
   %i.dy = load ptr, ptr %i.bp, align 8, !tbaa !47
   store ptr %i.dy, ptr %i.d, align 8, !tbaa !47
@@ -1036,7 +1036,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.q, align 8, !tbaa !51
   store i8 0, ptr %i.n, align 8, !tbaa !26
   %i.ab = getelementptr inbounds nuw i8, ptr %28, i64 32
-  store i32 256, ptr %i.ab, align 8, !tbaa !372
+  store i32 256, ptr %i.ab, align 8, !tbaa !373
   %i.ac = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 256)
           to label %bb.c unwind label %bb.h
 
@@ -1138,7 +1138,7 @@ common.resume:                                    ; preds = %common.resume.sink.
   resume { ptr, i32 } %common.resume.op
 
 __cxx_global_var_init.exit:                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12.i
-  store ptr %i.af, ptr @_ZN12_GLOBAL__N_126StrippingTest_Control_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.af, ptr @_ZN12_GLOBAL__N_126StrippingTest_Control_Test10test_info_E, align 8, !tbaa !375
   %i.bg = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_126StrippingTest_Control_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %27)
   call void @llvm.lifetime.end.p0(ptr nonnull %28)
@@ -1199,7 +1199,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.bn, align 8, !tbaa !51
   store i8 0, ptr %i.bk, align 8, !tbaa !26
   %i.by = getelementptr inbounds nuw i8, ptr %25, i64 32
-  store i32 273, ptr %i.by, align 8, !tbaa !372
+  store i32 273, ptr %i.by, align 8, !tbaa !373
   %i.bz = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 273)
           to label %bb.j unwind label %bb.o
 
@@ -1289,7 +1289,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.3.exit:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i6, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i
-  store ptr %i.cc, ptr @_ZN12_GLOBAL__N_126StrippingTest_Literal_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.cc, ptr @_ZN12_GLOBAL__N_126StrippingTest_Literal_Test10test_info_E, align 8, !tbaa !375
   %i.dc = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_126StrippingTest_Literal_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %24)
   call void @llvm.lifetime.end.p0(ptr nonnull %25)
@@ -1350,7 +1350,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.dj, align 8, !tbaa !51
   store i8 0, ptr %i.dg, align 8, !tbaa !26
   %i.du = getelementptr inbounds nuw i8, ptr %22, i64 32
-  store i32 289, ptr %i.du, align 8, !tbaa !372
+  store i32 289, ptr %i.du, align 8, !tbaa !373
   %i.dv = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 289)
           to label %bb.q unwind label %bb.v
 
@@ -1440,7 +1440,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.5.exit:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i26, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i27
-  store ptr %i.dy, ptr @_ZN12_GLOBAL__N_138StrippingTest_LiteralInExpression_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.dy, ptr @_ZN12_GLOBAL__N_138StrippingTest_LiteralInExpression_Test10test_info_E, align 8, !tbaa !375
   %i.ey = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_138StrippingTest_LiteralInExpression_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %21)
   call void @llvm.lifetime.end.p0(ptr nonnull %22)
@@ -1501,7 +1501,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.ff, align 8, !tbaa !51
   store i8 0, ptr %i.fc, align 8, !tbaa !26
   %i.fq = getelementptr inbounds nuw i8, ptr %19, i64 32
-  store i32 307, ptr %i.fq, align 8, !tbaa !372
+  store i32 307, ptr %i.fq, align 8, !tbaa !373
   %i.fr = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 307)
           to label %bb.x unwind label %bb.ac
 
@@ -1591,7 +1591,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.7.exit:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i48, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i49
-  store ptr %i.fu, ptr @_ZN12_GLOBAL__N_124StrippingTest_Fatal_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.fu, ptr @_ZN12_GLOBAL__N_124StrippingTest_Fatal_Test10test_info_E, align 8, !tbaa !375
   %i.gu = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_124StrippingTest_Fatal_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %18)
   call void @llvm.lifetime.end.p0(ptr nonnull %19)
@@ -1652,7 +1652,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.hb, align 8, !tbaa !51
   store i8 0, ptr %i.gy, align 8, !tbaa !26
   %i.hm = getelementptr inbounds nuw i8, ptr %16, i64 32
-  store i32 326, ptr %i.hm, align 8, !tbaa !372
+  store i32 326, ptr %i.hm, align 8, !tbaa !373
   %i.hn = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 326)
           to label %bb.ae unwind label %bb.aj
 
@@ -1742,7 +1742,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.9.exit:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i70, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i71
-  store ptr %i.hq, ptr @_ZN12_GLOBAL__N_125StrippingTest_DFatal_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.hq, ptr @_ZN12_GLOBAL__N_125StrippingTest_DFatal_Test10test_info_E, align 8, !tbaa !375
   %i.iq = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_125StrippingTest_DFatal_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %16)
@@ -1803,7 +1803,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.ix, align 8, !tbaa !51
   store i8 0, ptr %i.iu, align 8, !tbaa !26
   %i.ji = getelementptr inbounds nuw i8, ptr %13, i64 32
-  store i32 369, ptr %i.ji, align 8, !tbaa !372
+  store i32 369, ptr %i.ji, align 8, !tbaa !373
   %i.jj = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 369)
           to label %bb.al unwind label %bb.aq
 
@@ -1893,7 +1893,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.11.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i92, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i93
-  store ptr %i.jm, ptr @_ZN12_GLOBAL__N_124StrippingTest_Level_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.jm, ptr @_ZN12_GLOBAL__N_124StrippingTest_Level_Test10test_info_E, align 8, !tbaa !375
   %i.km = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_124StrippingTest_Level_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
@@ -1954,7 +1954,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.kt, align 8, !tbaa !51
   store i8 0, ptr %i.kq, align 8, !tbaa !26
   %i.le = getelementptr inbounds nuw i8, ptr %10, i64 32
-  store i32 392, ptr %i.le, align 8, !tbaa !372
+  store i32 392, ptr %i.le, align 8, !tbaa !373
   %i.lf = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 392)
           to label %bb.as unwind label %bb.ax
 
@@ -2044,7 +2044,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.13.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i114, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i115
-  store ptr %i.li, ptr @_ZN12_GLOBAL__N_124StrippingTest_Check_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.li, ptr @_ZN12_GLOBAL__N_124StrippingTest_Check_Test10test_info_E, align 8, !tbaa !375
   %i.mi = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_124StrippingTest_Check_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
@@ -2105,7 +2105,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.mp, align 8, !tbaa !51
   store i8 0, ptr %i.mm, align 8, !tbaa !26
   %i.na = getelementptr inbounds nuw i8, ptr %7, i64 32
-  store i32 418, ptr %i.na, align 8, !tbaa !372
+  store i32 418, ptr %i.na, align 8, !tbaa !373
   %i.nb = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 418)
           to label %bb.az unwind label %bb.be
 
@@ -2195,7 +2195,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.15.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i136, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i137
-  store ptr %i.ne, ptr @_ZN12_GLOBAL__N_126StrippingTest_CheckOp_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.ne, ptr @_ZN12_GLOBAL__N_126StrippingTest_CheckOp_Test10test_info_E, align 8, !tbaa !375
   %i.oe = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_126StrippingTest_CheckOp_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
@@ -2256,7 +2256,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.ol, align 8, !tbaa !51
   store i8 0, ptr %i.oi, align 8, !tbaa !26
   %i.ow = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store i32 446, ptr %i.ow, align 8, !tbaa !372
+  store i32 446, ptr %i.ow, align 8, !tbaa !373
   %i.ox = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 446)
           to label %bb.bg unwind label %bb.bl
 
@@ -2346,7 +2346,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.17.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i158, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i159
-  store ptr %i.pa, ptr @_ZN12_GLOBAL__N_129StrippingTest_CheckStrOp_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.pa, ptr @_ZN12_GLOBAL__N_129StrippingTest_CheckStrOp_Test10test_info_E, align 8, !tbaa !375
   %i.qa = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_129StrippingTest_CheckStrOp_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
@@ -2407,7 +2407,7 @@ _ZN7testing8internal12CodeLocationC2ENSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 0, ptr %i.qh, align 8, !tbaa !51
   store i8 0, ptr %i.qe, align 8, !tbaa !26
   %i.qs = getelementptr inbounds nuw i8, ptr %1, i64 32
-  store i32 475, ptr %i.qs, align 8, !tbaa !372
+  store i32 475, ptr %i.qs, align 8, !tbaa !373
   %i.qt = invoke fastcc noundef ptr @_ZN7testing8internal16SuiteApiResolverIN12_GLOBAL__N_113StrippingTestEE19GetSetUpCaseOrSuiteEPKci(i32 noundef 475)
           to label %bb.bn unwind label %bb.bs
 
@@ -2497,7 +2497,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i19
   br label %common.resume.sink.split
 
 __cxx_global_var_init.19.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i180, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10.i181
-  store ptr %i.qw, ptr @_ZN12_GLOBAL__N_126StrippingTest_CheckOk_Test10test_info_E, align 8, !tbaa !374
+  store ptr %i.qw, ptr @_ZN12_GLOBAL__N_126StrippingTest_CheckOk_Test10test_info_E, align 8, !tbaa !375
   %i.rw = call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN12_GLOBAL__N_126StrippingTest_CheckOk_Test10test_info_E) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
@@ -2900,11 +2900,12 @@ begin_hunk_2_@llvm.umax.i64
 !365 = distinct !{!365, !364, !"_ZN7testing8internal33MakePredicateFormatterFromMatcherINS_7MatcherIP8_IO_FILEEEEENS0_29PredicateFormatterFromMatcherIT_EES7_: argument 0"}
 !366 = !{!357}
 !367 = !{!361, !359}
-!368 = !{!"branch_weights", i32 1073206, i32 2146410442}
-!369 = !{!363}
-!370 = !{!365}
-!371 = !{!"_ZTSN7testing8internal12CodeLocationE", !24, i64 0, !15, i64 32}
-!372 = !{!371, !15, i64 32}
-!373 = !{!"p1 _ZTSN7testing8TestInfoE", !20, i64 0}
-!374 = !{!373, !373, i64 0}
+!368 = !{!"branch_weights", i32 1, i32 4001}
+!369 = !{!"branch_weights", i32 1073206, i32 2146410442}
+!370 = !{!363}
+!371 = !{!365}
+!372 = !{!"_ZTSN7testing8internal12CodeLocationE", !24, i64 0, !15, i64 32}
+!373 = !{!372, !15, i64 32}
+!374 = !{!"p1 _ZTSN7testing8TestInfoE", !20, i64 0}
+!375 = !{!374, !374, i64 0}
 end_hunk_2
