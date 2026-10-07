@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.52.0.copyload.i.i = load ptr, ptr %.sroa.52.0..sroa_idx.i.i, align 8, !noalias !3669 ; 2 uses
   %.sroa.64.0.copyload.i.i = load i64, ptr %.sroa.64.0..sroa_idx.i.i, align 8, !noalias !3669 ; 3 uses
   %.sroa.8.0.copyload.i.i = load i64, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !noalias !3669 ; 2 uses
-  %umax.i.i = call i64 @llvm.umax.i64(i64 %.sroa.64.0.copyload.i.i, i64 %.sroa.8.0.copyload.i.i)
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %.sroa.8.0.copyload.i.i, i64 %.sroa.64.0.copyload.i.i)
   %exitcond.not.i.i1290.not = icmp ult i64 %.sroa.64.0.copyload.i.i, %.sroa.8.0.copyload.i.i
   br i1 %exitcond.not.i.i1290.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj2_EIBX_hEEINtB5_7ZipImplBW_B1s_E4nextCs7gfv9tzbXmh_6yara_x.exit.i.i.preheader, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM21try_match_literal_fwd.exit.thread432.i
 
@@ -291,7 +291,7 @@ bb.an:                                            ; preds = %bb.al
   %.sroa.940.0.copyload.i = load i64, ptr %.sroa.940.0..sroa_idx.i, align 8, !noalias !3672 ; 3 uses
   %.sroa.1041.0.copyload.i = load i64, ptr %.sroa.1041.0..sroa_idx.i, align 8, !noalias !3672 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3672
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.940.0.copyload.i, i64 %.sroa.1041.0.copyload.i)
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.1041.0.copyload.i, i64 %.sroa.940.0.copyload.i)
   %exitcond.not.i1288.not = icmp ult i64 %.sroa.940.0.copyload.i, %.sroa.1041.0.copyload.i
   br i1 %exitcond.not.i1288.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBN_BW_BW_EEINtB5_7ZipImplBW_B1o_E4nextCs7gfv9tzbXmh_6yara_x.exit.i.preheader, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_fwd.exit
 
@@ -526,7 +526,7 @@ bb.bd:                                            ; preds = %bb.bc
   %.sroa.52.0.copyload.i291.us.us.i = load ptr, ptr %.sroa.52.0..sroa_idx.i290.i, align 8, !noalias !3690 ; 2 uses
   %.sroa.64.0.copyload.i293.us.us.i = load i64, ptr %.sroa.64.0..sroa_idx.i292.i, align 8, !noalias !3690 ; 3 uses
   %.sroa.8.0.copyload.i295.us.us.i = load i64, ptr %.sroa.8.0..sroa_idx.i294.i, align 8, !noalias !3690 ; 2 uses
-  %umax.i296.us.us.i = call i64 @llvm.umax.i64(i64 %.sroa.64.0.copyload.i293.us.us.i, i64 %.sroa.8.0.copyload.i295.us.us.i)
+  %umax.i296.us.us.i = call i64 @llvm.umax.i64(i64 %.sroa.8.0.copyload.i295.us.us.i, i64 %.sroa.64.0.copyload.i293.us.us.i)
   %exitcond.not.i298.us.us.i1286.not = icmp ult i64 %.sroa.64.0.copyload.i293.us.us.i, %.sroa.8.0.copyload.i295.us.us.i
   br i1 %exitcond.not.i298.us.us.i1286.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj2_EIBX_hEEINtB5_7ZipImplBW_B1s_E4nextCs7gfv9tzbXmh_6yara_x.exit.i299.us.us.i.preheader, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM21try_match_literal_fwd.exit301.thread435.us.us.i
 
@@ -634,7 +634,7 @@ bb.bj:                                            ; preds = %bb.bi
   %.sroa.940.0.copyload.i.us.i = load i64, ptr %.sroa.940.0..sroa_idx.i.i, align 8, !noalias !3681 ; 3 uses
   %.sroa.1041.0.copyload.i.us.i = load i64, ptr %.sroa.1041.0..sroa_idx.i.i, align 8, !noalias !3681 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !3681
-  %umax.i302.us.i = call i64 @llvm.umax.i64(i64 %.sroa.940.0.copyload.i.us.i, i64 %.sroa.1041.0.copyload.i.us.i)
+  %umax.i302.us.i = call i64 @llvm.umax.i64(i64 %.sroa.1041.0.copyload.i.us.i, i64 %.sroa.940.0.copyload.i.us.i)
   %exitcond.not.i303.us.i1284.not = icmp ult i64 %.sroa.940.0.copyload.i.us.i, %.sroa.1041.0.copyload.i.us.i
   br i1 %exitcond.not.i303.us.i1284.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBN_BW_BW_EEINtB5_7ZipImplBW_B1o_E4nextCs7gfv9tzbXmh_6yara_x.exit.i.us.i.preheader, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_fwd.exit.us.i.loopexit
 
@@ -1037,7 +1037,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.655.0.copyload.i = load i64, ptr %.sroa.655.0..sroa_idx.i, align 8, !noalias !6159 ; 3 uses
   %.sroa.856.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.856.0.copyload.i = load i64, ptr %.sroa.856.0..sroa_idx.i, align 8, !noalias !6159 ; 2 uses
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %.sroa.655.0.copyload.i, i64 %.sroa.856.0.copyload.i)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %.sroa.856.0.copyload.i, i64 %.sroa.655.0.copyload.i)
   %exitcond.not.i48.not = icmp ult i64 %.sroa.655.0.copyload.i, %.sroa.856.0.copyload.i
   br i1 %exitcond.not.i48.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj8_EBW_EINtB5_7ZipImplBW_BW_E4nextCs7gfv9tzbXmh_6yara_x.exit.i.preheader, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj8_EBW_EINtB5_7ZipImplBW_BW_E4nextCs7gfv9tzbXmh_6yara_x.exit.thread.i
 
@@ -1064,7 +1064,7 @@ bb.l:                                             ; preds = %bb.j
   %.sroa.641.0.copyload.i = load i64, ptr %.sroa.641.0..sroa_idx.i, align 8, !noalias !6159 ; 3 uses
   %.sroa.842.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %.sroa.842.0.copyload.i = load i64, ptr %.sroa.842.0..sroa_idx.i, align 8, !noalias !6159 ; 2 uses
-  %umax85.i = tail call i64 @llvm.umax.i64(i64 %.sroa.641.0.copyload.i, i64 %.sroa.842.0.copyload.i)
+  %umax85.i = tail call i64 @llvm.umax.i64(i64 %.sroa.842.0.copyload.i, i64 %.sroa.641.0.copyload.i)
   %exitcond86.not.i50.not = icmp ult i64 %.sroa.641.0.copyload.i, %.sroa.842.0.copyload.i
   br i1 %exitcond86.not.i50.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj4_EBW_EINtB5_7ZipImplBW_BW_E4nextCs7gfv9tzbXmh_6yara_x.exit.i.preheader, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAhj4_EBW_EINtB5_7ZipImplBW_BW_E4nextCs7gfv9tzbXmh_6yara_x.exit.thread.i
 
@@ -1101,7 +1101,7 @@ _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.val1.i.i.i.i = load ptr, ptr %i.a, align 8, !alias.scope !6160, !noalias !6162, !nonnull !10
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.val.i.i.i.i = load ptr, ptr %i.at, align 8, !alias.scope !6160, !noalias !6162, !nonnull !10
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i, i64 %i.as)
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.as, i64 %.promoted.i.i)
   %exitcond.not.i69.not.i = icmp ult i64 %.promoted.i.i, %i.as
   br i1 %exitcond.not.i69.not.i, label %.lr.ph.i, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter4IterhEBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1n_3all5checkTRhB2r_ENCNvNtNtCs7gfv9tzbXmh_6yara_x7scanner7context13xor_slices_eqs_0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB2G_.exit.i.thread
 
@@ -1163,7 +1163,7 @@ _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.val1.i.i.i25.i = load ptr, ptr %i.c, align 8, !alias.scope !6164, !noalias !6166, !nonnull !10
   %i.bi = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.val.i.i.i26.i = load ptr, ptr %i.bi, align 8, !alias.scope !6164, !noalias !6166, !nonnull !10
-  %umax.i27.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i24.i, i64 %i.bh)
+  %umax.i27.i = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %.promoted.i24.i)
   %exitcond.not.i2875.not.i = icmp ult i64 %.promoted.i24.i, %i.bh
   br i1 %exitcond.not.i2875.not.i, label %.lr.ph76.i, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x7scanner7context13xor_slices_eq.exit.thread14
 
@@ -1566,7 +1566,7 @@ bb.d:                                             ; preds = %bb.c
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 5 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.5141.0.copyload, i64 %.sroa.7.0.copyload)
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.7.0.copyload, i64 %.sroa.5141.0.copyload)
   %exitcond.not308.not = icmp ult i64 %.sroa.5141.0.copyload, %.sroa.7.0.copyload
   br i1 %exitcond.not308.not, label %.lr.ph311.preheader, label %.thread
 
@@ -1969,7 +1969,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.543.0.copyload, i64 %.sroa.7.0.copyload)
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.7.0.copyload, i64 %.sroa.543.0.copyload)
   %exitcond.not63.not = icmp ult i64 %.sroa.543.0.copyload, %.sroa.7.0.copyload
   br i1 %exitcond.not63.not, label %.lr.ph.preheader, label %.thread48
 

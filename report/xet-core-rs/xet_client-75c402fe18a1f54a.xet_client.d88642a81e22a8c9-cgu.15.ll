@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %.promoted.i.i.i.i.i.i.i.i = load i64, ptr %i.ac, align 8, !alias.scope !262, !noalias !260 ; 3 uses
   %.val1.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.a, align 8, !alias.scope !261, !noalias !260, !nonnull !11
   %.val.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.ae, align 8, !alias.scope !261, !noalias !260, !nonnull !11
-  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i.i.i.i, i64 %i.bi)
+  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bi, i64 %.promoted.i.i.i.i.i.i.i.i)
   %exitcond.not.i3.not.i.i.i.i.i.i.i = icmp ult i64 %.promoted.i.i.i.i.i.i.i.i, %i.bi
   br i1 %exitcond.not.i3.not.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, label %.loopexit.sink.split.i.i.i.i.i
 
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %bb.y
   %.promoted.i.i.i.i.i.i.i.i = load i64, ptr %i.bk, align 8, !alias.scope !2577, !noalias !2575 ; 3 uses
   %.val1.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !2576, !noalias !2575, !nonnull !11
   %.val.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.bm, align 8, !alias.scope !2576, !noalias !2575, !nonnull !11
-  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i.i.i.i, i64 %i.dj)
+  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.dj, i64 %.promoted.i.i.i.i.i.i.i.i)
   %exitcond.not.i3.not.i.i.i.i.i.i.i = icmp ult i64 %.promoted.i.i.i.i.i.i.i.i, %i.dj
   br i1 %exitcond.not.i3.not.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, label %.loopexit51.sink.split.i.i.i.i.i
 

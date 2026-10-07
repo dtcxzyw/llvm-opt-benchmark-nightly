@@ -130,11 +130,11 @@ bb.a:
   br i1 %i.g, label %._crit_edge, label %.lr.ph38
 
 .lr.ph38:                                         ; preds = %.lr.ph.preheader
-  %i.h = add i64 %i.c, -4
-  %i.i = sub i64 %i.h, %i.e
+  %i.h = add i64 %i.b, -4
+  %i.i = sub i64 %i.h, %i.a
   %i.j = lshr i64 %i.i, 2
-  %i.k = add i64 %i.b, -4
-  %i.l = sub i64 %i.k, %i.a
+  %i.k = add i64 %i.c, -4
+  %i.l = sub i64 %i.k, %i.e
   %i.m = lshr i64 %i.l, 2
   %i.n = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.m) ; 2 uses
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses

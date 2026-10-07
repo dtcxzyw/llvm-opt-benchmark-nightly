@@ -205,7 +205,7 @@ _RNCINvNtCsdEEMmLUVy6d_5rav1e3lrf20setup_integral_imagehE0Cs2mu2Cb9JdUH_5ravif.e
 
 .lr.ph:                                           ; preds = %_RNCINvNtCsdEEMmLUVy6d_5rav1e3lrf20setup_integral_imagehE0Cs2mu2Cb9JdUH_5ravif.exit
   %i.bv = add i64 %i.o, -1
-  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.1094.32.copyload, i64 %.sroa.1195.32.copyload)
+  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.1195.32.copyload, i64 %.sroa.1094.32.copyload)
   br label %bb.j
 
 bb.i:                                             ; preds = %_RNvMs0_NtCsdEEMmLUVy6d_5rav1e3lrfINtB5_14VertPaddedIterhE3newCs2mu2Cb9JdUH_5ravif.exit
@@ -353,7 +353,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSm12split_at_mutCs2mu2Cb9JdUH_5ravif.exit51: ; p
   br i1 %i.bu, label %.lr.ph259.preheader, label %._crit_edge260
 
 .lr.ph259.preheader:                              ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSm12split_at_mutCs2mu2Cb9JdUH_5ravif.exit51
-  %umax297 = call i64 @llvm.umax.i64(i64 %.sroa.18173.32.copyload, i64 %.sroa.19.32.copyload)
+  %umax297 = call i64 @llvm.umax.i64(i64 %.sroa.19.32.copyload, i64 %.sroa.18173.32.copyload)
   br label %.lr.ph259
 
 ._crit_edge269:                                   ; preds = %._crit_edge260, %._crit_edge
@@ -548,7 +548,7 @@ _RNCINvNtCsdEEMmLUVy6d_5rav1e3lrf20setup_integral_imagetE0Cs2mu2Cb9JdUH_5ravif.e
 
 .lr.ph:                                           ; preds = %_RNCINvNtCsdEEMmLUVy6d_5rav1e3lrf20setup_integral_imagetE0Cs2mu2Cb9JdUH_5ravif.exit
   %i.bv = add i64 %i.o, -1
-  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.1094.32.copyload, i64 %.sroa.1195.32.copyload)
+  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.1195.32.copyload, i64 %.sroa.1094.32.copyload)
   br label %bb.j
 
 bb.i:                                             ; preds = %_RNvMs0_NtCsdEEMmLUVy6d_5rav1e3lrfINtB5_14VertPaddedItertE3newCs2mu2Cb9JdUH_5ravif.exit
@@ -696,7 +696,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSm12split_at_mutCs2mu2Cb9JdUH_5ravif.exit51: ; p
   br i1 %i.bu, label %.lr.ph259.preheader, label %._crit_edge260
 
 .lr.ph259.preheader:                              ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSm12split_at_mutCs2mu2Cb9JdUH_5ravif.exit51
-  %umax297 = call i64 @llvm.umax.i64(i64 %.sroa.18173.32.copyload, i64 %.sroa.19.32.copyload)
+  %umax297 = call i64 @llvm.umax.i64(i64 %.sroa.19.32.copyload, i64 %.sroa.18173.32.copyload)
   br label %.lr.ph259
 
 ._crit_edge269:                                   ; preds = %._crit_edge260, %._crit_edge

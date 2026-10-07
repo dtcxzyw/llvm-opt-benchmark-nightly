@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8300)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8303)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8303)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.ad), !dbg !9082 ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.ao), !dbg !9082 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !8303)
     #dbg_value(ptr poison, !3920, !DIExpression(), !8304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8728), !dbg !9083
@@ -289,7 +289,7 @@ bb.l:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8322)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8325)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8325)
-  %umax.i60 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.ad), !dbg !9098 ; 2 uses
+  %umax.i60 = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.ba), !dbg !9098 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !8325)
     #dbg_value(ptr poison, !3920, !DIExpression(), !8326)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8742), !dbg !9099
@@ -374,7 +374,7 @@ bb.s:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 4, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8344)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8347)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8347)
-  %umax.i69 = tail call i64 @llvm.umax.i64(i64 %i.bm, i64 %i.ad), !dbg !9114 ; 3 uses
+  %umax.i69 = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.bm), !dbg !9114 ; 3 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !8347)
     #dbg_value(ptr poison, !3920, !DIExpression(), !8348)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8756), !dbg !9115
@@ -777,7 +777,7 @@ bb.bs:                                            ; preds = %bb.bp
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11502)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11505)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11505)
-  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.gu, i64 %i.gn), !dbg !12844 ; 2 uses
+  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.gn, i64 %i.gu), !dbg !12844 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !11505)
     #dbg_value(ptr poison, !3920, !DIExpression(), !11506)
   call void @llvm.experimental.noalias.scope.decl(metadata !12466), !dbg !12845
@@ -868,7 +868,7 @@ bb.by:                                            ; preds = %bb.bp
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11524)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11527)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11527)
-  %umax.i87.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.hg, i64 %i.gn), !dbg !12860 ; 2 uses
+  %umax.i87.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.gn, i64 %i.hg), !dbg !12860 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !11527)
     #dbg_value(ptr poison, !3920, !DIExpression(), !11528)
   call void @llvm.experimental.noalias.scope.decl(metadata !12479), !dbg !12861
@@ -959,7 +959,7 @@ bb.ce:                                            ; preds = %bb.bp
     #dbg_value(i64 4, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11546)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11549)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11549)
-  %umax.i96.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.hs, i64 %i.gn), !dbg !12876 ; 3 uses
+  %umax.i96.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.gn, i64 %i.hs), !dbg !12876 ; 3 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !11549)
     #dbg_value(ptr poison, !3920, !DIExpression(), !11550)
   call void @llvm.experimental.noalias.scope.decl(metadata !12492), !dbg !12877
@@ -1362,7 +1362,7 @@ bb.e:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14084)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14087)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14087)
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.af, i64 %i.u), !dbg !14380 ; 2 uses
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.af), !dbg !14380 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !14087)
     #dbg_value(ptr poison, !3920, !DIExpression(), !14088)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14277), !dbg !14381
@@ -1447,7 +1447,7 @@ bb.l:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14106)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14109)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14109)
-  %umax.i60.i = tail call i64 @llvm.umax.i64(i64 %i.ar, i64 %i.u), !dbg !14396 ; 2 uses
+  %umax.i60.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.ar), !dbg !14396 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !14109)
     #dbg_value(ptr poison, !3920, !DIExpression(), !14110)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14291), !dbg !14397
@@ -1532,7 +1532,7 @@ bb.s:                                             ; preds = %_RNvMs3_NtCsenfyI6F
     #dbg_value(i64 4, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14128)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14131)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14131)
-  %umax.i69.i = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 %i.u), !dbg !14412 ; 3 uses
+  %umax.i69.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.bd), !dbg !14412 ; 3 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !14131)
     #dbg_value(ptr poison, !3920, !DIExpression(), !14132)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14305), !dbg !14413
@@ -1935,7 +1935,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !1364
   %.promoted = load i64, ptr %i.d, align 8        ; 2 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 %i.f), !dbg !14627
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %.promoted), !dbg !14627
     #dbg_value(ptr %1, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14608)
     #dbg_value(ptr undef, !14550, !DIExpression(), !14567)
     #dbg_value(ptr %1, !14561, !DIExpression(), !14609)
@@ -2338,7 +2338,7 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15855)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !15855)
   %i.ab = load ptr, ptr %i.q, align 8, !alias.scope !15986, !noalias !15987, !nonnull !1364 ; 3 uses
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.u), !dbg !16057
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.aa), !dbg !16057
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !15855)
     #dbg_value(ptr poison, !3920, !DIExpression(), !15857)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15988), !dbg !16058
@@ -2424,7 +2424,7 @@ bb.k:                                             ; preds = %bb.b
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15877)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !15877)
   %i.ao = load ptr, ptr %i.q, align 8, !alias.scope !16000, !noalias !16001, !nonnull !1364 ; 3 uses
-  %umax.i33 = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.u), !dbg !16073
+  %umax.i33 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.an), !dbg !16073
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !15877)
     #dbg_value(ptr poison, !3920, !DIExpression(), !15879)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16002), !dbg !16074
@@ -2510,7 +2510,7 @@ bb.r:                                             ; preds = %bb.b
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15899)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !15899)
   %i.bb = load ptr, ptr %i.q, align 8, !alias.scope !16014, !noalias !16015, !nonnull !1364 ; 4 uses
-  %umax.i41 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.u), !dbg !16089 ; 2 uses
+  %umax.i41 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.ba), !dbg !16089 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !15899)
     #dbg_value(ptr poison, !3920, !DIExpression(), !15901)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16016), !dbg !16090
@@ -2913,7 +2913,7 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(i64 3, !3917, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16378)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !16381)
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16381)
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.p, i64 %i.g), !dbg !16463 ; 2 uses
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.p), !dbg !16463 ; 2 uses
     #dbg_value(ptr poison, !3918, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !16381)
     #dbg_value(ptr poison, !3920, !DIExpression(), !16382)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16438), !dbg !16464

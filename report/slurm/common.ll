@@ -167,7 +167,7 @@ bb.b:                                             ; preds = %bb.a
   %switch.selectcmp.case2 = icmp eq i8 %i.a, 39   ; 2 uses
   %switch.selectcmp = or i1 %switch.selectcmp.case1, %switch.selectcmp.case2 ; 2 uses
   %.neg = sext i1 %switch.selectcmp to i32
-  %i.b = or i1 %switch.selectcmp.case2, %switch.selectcmp.case1
+  %i.b = or i1 %switch.selectcmp.case1, %switch.selectcmp.case2
   %umax = zext i1 %i.b to i64
   br label %bb.c
 

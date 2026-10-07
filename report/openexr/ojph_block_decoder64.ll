@@ -205,8 +205,8 @@ _ZN4ojph5localL8mel_initEPNS0_10dec_mel_stEPhii.exit: ; preds = %bb.q, %bb.n, %b
   %i.cj = add i32 %6, 9
   %i.ck = and i32 %i.cj, -8                       ; 13 uses
   %i.cl = add i32 %2, 2                           ; 2 uses
-  %i.cm = or disjoint i32 %i.v, %i.z
-  %i.cn = add nuw nsw i32 %i.cm, %i.as
+  %i.cm = or disjoint i32 %i.v, %i.as
+  %i.cn = add nuw nsw i32 %i.cm, %i.z
   %i.co = add nsw i32 %i.cn, -5
   store i32 %i.co, ptr %i.ap, align 4, !tbaa !18
   store ptr %.lcssa1927, ptr %10, align 8, !tbaa !19

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   %i.bk = add i64 %i.be, 1                        ; 4 uses
   store i64 %i.bk, ptr %i.ay, align 8, !alias.scope !35863
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35864)
-  %umax.i40 = tail call i64 @llvm.umax.i64(i64 %i.bk, i64 %i.ba) ; 2 uses
+  %umax.i40 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.bk) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35865)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35866)
   %exitcond.not.i42.not = icmp ult i64 %i.bk, %i.ba
@@ -265,7 +265,7 @@ bb.l:                                             ; preds = %bb.b
   %i.bw = add i64 %i.be, 1                        ; 4 uses
   store i64 %i.bw, ptr %i.ay, align 8, !alias.scope !35880
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35881)
-  %umax.i31 = tail call i64 @llvm.umax.i64(i64 %i.bw, i64 %i.ba) ; 2 uses
+  %umax.i31 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.bw) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35882)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35883)
   %exitcond.not.i33.not = icmp ult i64 %i.bw, %i.ba
@@ -325,7 +325,7 @@ bb.s:                                             ; preds = %bb.b
   %i.ci = add i64 %i.be, 1                        ; 4 uses
   store i64 %i.ci, ptr %i.ay, align 8, !alias.scope !35897
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35898)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ci, i64 %i.ba) ; 3 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.ci) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35899)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35900)
   %exitcond.not.i.not = icmp ult i64 %i.ci, %i.ba
@@ -728,7 +728,7 @@ bb.a:
   %.val2.i.i = load ptr, ptr %0, align 8, !nonnull !44
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val.i.i = load ptr, ptr %i.d, align 8, !nonnull !44
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 %i.c)
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.c, i64 %.promoted)
   %exitcond.not17.not = icmp ult i64 %.promoted, %i.c
   br i1 %exitcond.not17.not, label %.lr.ph, label %"_ZN4core4iter6traits8iterator8Iterator3all5check28_$u7b$$u7b$closure$u7d$$u7d$17h027beda9eeb0c1ecE.exit.thread"
 

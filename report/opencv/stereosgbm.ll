@@ -205,7 +205,7 @@ iter.check:
   %i.k = tail call i32 @llvm.smin.i32(i32 %9, i32 %i.h)
   %i.l = select i1 %i.j, i32 %i.h, i32 %i.k       ; 3 uses
   %i.m = add i32 %i.l, %.sroa.speculated469       ; 3 uses
-  %i.n = add nuw i32 %i.i, %.sroa.speculated469   ; 4 uses
+  %i.n = add nuw nsw i32 %i.i, %.sroa.speculated469 ; 4 uses
   %i.o = sub i32 %i.n, %4                         ; 5 uses
   %i.p = sub i32 %i.m, %3                         ; 3 uses
   %.sroa.speculated431 = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.p) ; 4 uses
@@ -608,7 +608,7 @@ begin_hunk_1_@_ZN2cvL15calcPixelCostBTERKNS_3MatES2_iiiPsPhPKhii:iter.check
   %i.ro = sext i32 %i.q to i64                    ; 2 uses
   %i.rp = sext i32 %i.ri to i64
   %i.rq = sext i32 %3 to i64                      ; 9 uses
-  %i.rr = zext i32 %i.n to i64                    ; 3 uses
+  %i.rr = zext nneg i32 %i.n to i64               ; 3 uses
   %i.rs = sext i32 %i.ey to i64                   ; 4 uses
   %i.rt = sext i32 %i.m to i64                    ; 2 uses
   %invariant.gep625 = getelementptr i8, ptr %i.rc, i64 %i.ro

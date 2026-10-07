@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_RNvMs3_NtCsbbTh99n
   %i.ax = add i64 %i.aq, 1                        ; 4 uses
   store i64 %i.ax, ptr %i.ak, align 8, !alias.scope !1134, !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1135)
-  %umax.i45 = tail call i64 @llvm.umax.i64(i64 %i.ax, i64 %i.am) ; 2 uses
+  %umax.i45 = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.ax) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1136), !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1137), !noalias !1123
   %exitcond.not.i47.not = icmp ult i64 %i.ax, %i.am
@@ -264,7 +264,7 @@ bb.l:                                             ; preds = %_RNvMs3_NtCsbbTh99n
   %i.bj = add i64 %i.aq, 1                        ; 4 uses
   store i64 %i.bj, ptr %i.ak, align 8, !alias.scope !1151, !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1152)
-  %umax.i36 = tail call i64 @llvm.umax.i64(i64 %i.bj, i64 %i.am) ; 2 uses
+  %umax.i36 = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.bj) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1153), !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1154), !noalias !1123
   %exitcond.not.i38.not = icmp ult i64 %i.bj, %i.am
@@ -324,7 +324,7 @@ bb.s:                                             ; preds = %_RNvMs3_NtCsbbTh99n
   %i.bv = add i64 %i.aq, 1                        ; 4 uses
   store i64 %i.bv, ptr %i.ak, align 8, !alias.scope !1168, !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1169)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.bv, i64 %i.am) ; 3 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.bv) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1170), !noalias !1123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1171), !noalias !1123
   %exitcond.not.i.not = icmp ult i64 %i.bv, %i.am

@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ao
 
 .lr.ph.i:                                         ; preds = %bb.ap
   %i.fa = add nuw i64 %i.er, %i.ex                ; 2 uses
-  %umax.i192 = tail call i64 @llvm.umax.i64(i64 %i.er, i64 %.val156) ; 3 uses
+  %umax.i192 = tail call i64 @llvm.umax.i64(i64 %.val156, i64 %i.er) ; 3 uses
   %i.fb = add i64 %.val166, %i.p
   %i.fc = sub i64 %i.fb, %i.eu
   %i.fd = tail call i64 @llvm.umax.i64(i64 %.val156, i64 %i.fc)
@@ -579,7 +579,7 @@ bb.ae:                                            ; preds = %bb.aa
 .lr.ph.i.i:                                       ; preds = %bb.ae
   %i.bs = load i64, ptr %i.c, align 8, !alias.scope !199, !noalias !194, !noundef !6 ; 5 uses
   %i.bt = load ptr, ptr %3, align 8, !alias.scope !199, !noalias !194, !nonnull !6 ; 4 uses
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.val.i236, i64 %i.bs) ; 3 uses
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.bs, i64 %.val.i236) ; 3 uses
   %i.bu = sub i64 %.val.i236, %i.an
   %i.bv = tail call i64 @llvm.umax.i64(i64 %i.bs, i64 %i.bu)
   %i.bw = add i64 %i.bv, %i.an
@@ -854,7 +854,7 @@ bb.bf:                                            ; preds = %bb.bd
 .lr.ph.i:                                         ; preds = %bb.bf
   %i.ey = load i64, ptr %i.c, align 8, !alias.scope !217, !noundef !6 ; 5 uses
   %i.ez = load ptr, ptr %3, align 8, !alias.scope !217, !nonnull !6 ; 4 uses
-  %umax.i258 = tail call i64 @llvm.umax.i64(i64 %.val217, i64 %i.ey) ; 3 uses
+  %umax.i258 = tail call i64 @llvm.umax.i64(i64 %i.ey, i64 %.val217) ; 3 uses
   %i.fa = add i64 %.sroa.032.0.fr, -1
   %i.fb = sub i64 %.val217, %i.ek
   %i.fc = tail call i64 @llvm.umax.i64(i64 %i.ey, i64 %i.fb)
@@ -1225,7 +1225,7 @@ bb.v:                                             ; preds = %_RNvXs_NtCs6f1wo00z
   br i1 %i.cu, label %.lr.ph168.preheader, label %._crit_edge169
 
 .lr.ph168.preheader:                              ; preds = %bb.v
-  %umax = call i64 @llvm.umax.i64(i64 %i.ch, i64 %i.w) ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.w, i64 %i.ch) ; 2 uses
   br label %.lr.ph168
 
 ._crit_edge169:                                   ; preds = %_RNvXs_NtCs6f1wo00zwKs_8lz4_flex4sinkNtB4_9SliceSinkNtB4_4Sink4push.exit57, %bb.v
@@ -1278,7 +1278,7 @@ bb.y:                                             ; preds = %_RNvXs_NtCs6f1wo00z
   br i1 %i.di, label %.lr.ph174.preheader, label %._crit_edge175
 
 .lr.ph174.preheader:                              ; preds = %bb.y
-  %umax280 = call i64 @llvm.umax.i64(i64 %i.cn, i64 %i.cl) ; 2 uses
+  %umax280 = call i64 @llvm.umax.i64(i64 %i.cl, i64 %i.cn) ; 2 uses
   br label %.lr.ph174
 
 ._crit_edge175:                                   ; preds = %_RNvXs_NtCs6f1wo00zwKs_8lz4_flex4sinkNtB4_9SliceSinkNtB4_4Sink4push.exit59, %bb.y
@@ -1651,7 +1651,7 @@ bb.aa:                                            ; preds = %_RNvXs_NtCs6f1wo00z
   br i1 %i.da, label %.lr.ph223.preheader, label %._crit_edge224
 
 .lr.ph223.preheader:                              ; preds = %bb.aa
-  %umax = call i64 @llvm.umax.i64(i64 %i.cn, i64 %i.ab) ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.cn) ; 2 uses
   br label %.lr.ph223
 
 ._crit_edge224:                                   ; preds = %_RNvXs_NtCs6f1wo00zwKs_8lz4_flex4sinkNtB4_9SliceSinkNtB4_4Sink4push.exit65, %bb.aa
@@ -1704,7 +1704,7 @@ bb.ad:                                            ; preds = %_RNvXs_NtCs6f1wo00z
   br i1 %i.do, label %.lr.ph229.preheader, label %._crit_edge230
 
 .lr.ph229.preheader:                              ; preds = %bb.ad
-  %umax365 = call i64 @llvm.umax.i64(i64 %i.ct, i64 %i.cr) ; 2 uses
+  %umax365 = call i64 @llvm.umax.i64(i64 %i.cr, i64 %i.ct) ; 2 uses
   br label %.lr.ph229
 
 ._crit_edge230:                                   ; preds = %_RNvXs_NtCs6f1wo00zwKs_8lz4_flex4sinkNtB4_9SliceSinkNtB4_4Sink4push.exit67, %bb.ad
@@ -1793,7 +1793,7 @@ bb.d:                                             ; preds = %_RNvXs_NtCs6f1wo00z
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %i.e) ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.l) ; 2 uses
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_RNvXs_NtCs6f1wo00zwKs_8lz4_flex4sinkNtB4_9SliceSinkNtB4_4Sink4push.exit8, %bb.d

@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %._crit_edge124, %bb
   %i.bc = sext i16 %.sroa.7.0.extract.trunc to i32 ; 2 uses
   %i.bd = add nsw i32 %i.bb, 1
   %i.be = sub nsw i32 %i.bd, %i.aj
-  %smax122 = call i32 @llvm.smax.i32(i32 %i.bc, i32 %.pre-phi)
+  %smax122 = call i32 @llvm.smax.i32(i32 %.pre-phi, i32 %i.bc)
   br label %.lr.ph108
 
 ._crit_edge114.split:                             ; preds = %._crit_edge, %.lr.ph113, %bb.h
@@ -605,7 +605,7 @@ bb.j:                                             ; preds = %._crit_edge137, %bb
   %i.bd = sext i16 %.sroa.7.0.extract.trunc to i32 ; 2 uses
   %i.be = add nsw i32 %i.bc, 1
   %i.bf = sub nsw i32 %i.be, %i.ak
-  %smax133 = call i32 @llvm.smax.i32(i32 %i.bd, i32 %.pre-phi)
+  %smax133 = call i32 @llvm.smax.i32(i32 %.pre-phi, i32 %i.bd)
   br label %.lr.ph118
 
 ._crit_edge126.split:                             ; preds = %._crit_edge, %.lr.ph125, %bb.j
@@ -1008,7 +1008,7 @@ bb.k:                                             ; preds = %._crit_edge129, %bb
 .preheader89.preheader:                           ; preds = %.preheader89.lr.ph
   %i.ay = add nsw i32 %i.g, 1
   %i.az = sub nsw i32 %i.ay, %i.h
-  %smax127 = call i32 @llvm.smax.i32(i32 %.pre-phi, i32 %.pre-phi131)
+  %smax127 = call i32 @llvm.smax.i32(i32 %.pre-phi131, i32 %.pre-phi)
   br label %.preheader89
 
 .preheader89:                                     ; preds = %.preheader89.preheader, %._crit_edge108.split
@@ -1411,7 +1411,7 @@ bb.m:                                             ; preds = %bb.l, %bb.g
   %i.bl = sext i16 %.sroa.9.0.extract.trunc to i32
   %i.bm = add nsw i32 %i.bk, 1
   %i.bn = sub nsw i32 %i.bm, %i.ap
-  %i.bo = call i16 @llvm.smax.i16(i16 %.sroa.9.0.extract.trunc, i16 %.sroa.7.0.extract.trunc)
+  %i.bo = call i16 @llvm.smax.i16(i16 %.sroa.7.0.extract.trunc, i16 %.sroa.9.0.extract.trunc)
   %smax128 = sext i16 %i.bo to i32
   br label %.lr.ph112
 

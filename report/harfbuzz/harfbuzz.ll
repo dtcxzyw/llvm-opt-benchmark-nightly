@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %"_ZNK9hb_iter_tI15m
   %.1.tr212.i = trunc i32 %.1.i to i8
   %i.hp = shl i8 %.1.tr212.i, 4
   %i.hq = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i312.i to i64
-  %umax2437.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i312.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i318.i)
+  %umax2437.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i318.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i312.i)
   %wide.trip.count2438.i = zext i32 %umax2437.i to i64
   br label %bb.q
 
@@ -382,7 +382,7 @@ bb.x:                                             ; preds = %"_ZNK9hb_iter_tI15m
   %i.jx = shl i8 %.1.tr211.i, 4
   %i.jy = or disjoint i8 %i.jx, 1
   %i.jz = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i354.i to i64
-  %umax2431.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i354.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i360.i)
+  %umax2431.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i360.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i354.i)
   %wide.trip.count2432.i = zext i32 %umax2431.i to i64
   br label %bb.y
 
@@ -559,7 +559,7 @@ bb.af:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.mg = shl i8 %.1.tr210.i, 4
   %i.mh = or disjoint i8 %i.mg, 2
   %i.mi = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i396.i to i64
-  %umax2425.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i396.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i402.i)
+  %umax2425.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i402.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i396.i)
   %wide.trip.count2426.i = zext i32 %umax2425.i to i64
   br label %bb.ag
 
@@ -736,7 +736,7 @@ bb.an:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.op = shl i8 %.1.tr209.i, 4
   %i.oq = or disjoint i8 %i.op, 3
   %i.or = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i438.i to i64
-  %umax2419.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i438.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i444.i)
+  %umax2419.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i444.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i438.i)
   %wide.trip.count2420.i = zext i32 %umax2419.i to i64
   br label %bb.ao
 
@@ -913,7 +913,7 @@ bb.av:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.qy = shl i8 %.1.tr208.i, 4
   %i.qz = or disjoint i8 %i.qy, 4
   %i.ra = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i480.i to i64
-  %umax2413.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i480.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i486.i)
+  %umax2413.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i486.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i480.i)
   %wide.trip.count2414.i = zext i32 %umax2413.i to i64
   br label %bb.aw
 
@@ -1090,7 +1090,7 @@ bb.bd:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.th = shl i8 %.1.tr207.i, 4
   %i.ti = or disjoint i8 %i.th, 5
   %i.tj = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i522.i to i64
-  %umax2407.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i522.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i528.i)
+  %umax2407.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i528.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i522.i)
   %wide.trip.count2408.i = zext i32 %umax2407.i to i64
   br label %bb.be
 
@@ -1267,7 +1267,7 @@ bb.bl:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.vq = shl i8 %.1.tr206.i, 4
   %i.vr = or disjoint i8 %i.vq, 6
   %i.vs = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i564.i to i64
-  %umax2401.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i564.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i570.i)
+  %umax2401.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i570.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i564.i)
   %wide.trip.count2402.i = zext i32 %umax2401.i to i64
   br label %bb.bm
 
@@ -1444,7 +1444,7 @@ bb.bt:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.xz = shl i8 %.1.tr205.i, 4
   %i.ya = or disjoint i8 %i.xz, 7
   %i.yb = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i606.i to i64
-  %umax2395.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i606.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i612.i)
+  %umax2395.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i612.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i606.i)
   %wide.trip.count2396.i = zext i32 %umax2395.i to i64
   br label %bb.bu
 
@@ -1626,7 +1626,7 @@ bb.cb:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.aam = shl i8 %.1.tr204.i, 4
   %i.aan = or disjoint i8 %i.aam, 8
   %i.aao = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i648.i to i64
-  %umax2389.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i648.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i654.i)
+  %umax2389.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i654.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i648.i)
   %wide.trip.count2390.i = zext i32 %umax2389.i to i64
   br label %bb.cc
 
@@ -1782,7 +1782,7 @@ bb.ck:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %.1.tr203.i = trunc i32 %.1.i to i8
   %i.ack = shl i8 %.1.tr203.i, 4
   %i.acl = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i665.i to i64
-  %umax2383.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i665.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i671.i)
+  %umax2383.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i671.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i665.i)
   %wide.trip.count2384.i = zext i32 %umax2383.i to i64
   br label %bb.cl
 
@@ -1939,7 +1939,7 @@ bb.ct:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.aeh = shl i8 %.1.tr202.i, 4
   %i.aei = or disjoint i8 %i.aeh, 1
   %i.aej = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i705.i to i64
-  %umax2377.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i705.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i711.i)
+  %umax2377.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i711.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i705.i)
   %wide.trip.count2378.i = zext i32 %umax2377.i to i64
   br label %bb.cu
 
@@ -2096,7 +2096,7 @@ bb.dc:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.agf = shl i8 %.1.tr201.i, 4
   %i.agg = or disjoint i8 %i.agf, 2
   %i.agh = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i745.i to i64
-  %umax2371.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i745.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i751.i)
+  %umax2371.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i751.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i745.i)
   %wide.trip.count2372.i = zext i32 %umax2371.i to i64
   br label %bb.dd
 
@@ -2253,7 +2253,7 @@ bb.dl:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.aid = shl i8 %.1.tr200.i, 4
   %i.aie = or disjoint i8 %i.aid, 3
   %i.aif = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i785.i to i64
-  %umax2365.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i785.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i791.i)
+  %umax2365.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i791.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i785.i)
   %wide.trip.count2366.i = zext i32 %umax2365.i to i64
   br label %bb.dm
 
@@ -2410,7 +2410,7 @@ bb.du:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.akb = shl i8 %.1.tr199.i, 4
   %i.akc = or disjoint i8 %i.akb, 4
   %i.akd = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i825.i to i64
-  %umax2359.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i825.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i831.i)
+  %umax2359.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i831.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i825.i)
   %wide.trip.count2360.i = zext i32 %umax2359.i to i64
   br label %bb.dv
 
@@ -2567,7 +2567,7 @@ bb.ed:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.alz = shl i8 %.1.tr198.i, 4
   %i.ama = or disjoint i8 %i.alz, 5
   %i.amb = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i865.i to i64
-  %umax2353.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i865.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i871.i)
+  %umax2353.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i871.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i865.i)
   %wide.trip.count2354.i = zext i32 %umax2353.i to i64
   br label %bb.ee
 
@@ -2724,7 +2724,7 @@ bb.em:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.anx = shl i8 %.1.tr197.i, 4
   %i.any = or disjoint i8 %i.anx, 6
   %i.anz = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i905.i to i64
-  %umax2347.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i905.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i911.i)
+  %umax2347.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i911.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i905.i)
   %wide.trip.count2348.i = zext i32 %umax2347.i to i64
   br label %bb.en
 
@@ -2881,7 +2881,7 @@ bb.ev:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.apv = shl i8 %.1.tr196.i, 4
   %i.apw = or disjoint i8 %i.apv, 7
   %i.apx = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i945.i to i64
-  %umax2341.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i945.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i951.i)
+  %umax2341.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i951.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i945.i)
   %wide.trip.count2342.i = zext i32 %umax2341.i to i64
   br label %bb.ew
 
@@ -3043,7 +3043,7 @@ bb.fe:                                            ; preds = %"_ZN9hb_iter_tI15ma
   %i.arx = shl i8 %.1.tr195.i, 4
   %i.ary = or disjoint i8 %i.arx, 8
   %i.arz = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i985.i to i64
-  %umax2335.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i985.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i991.i)
+  %umax2335.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i991.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i985.i)
   %wide.trip.count2336.i = zext i32 %umax2335.i to i64
   br label %bb.ff
 
@@ -3223,7 +3223,7 @@ bb.fn:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.aue = shl i8 %.1.tr194.i, 4
   %i.auf = or disjoint i8 %i.aue, 5
   %i.aug = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1016.i to i64
-  %umax2329.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1016.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1022.i)
+  %umax2329.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1022.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1016.i)
   %wide.trip.count2330.i = zext i32 %umax2329.i to i64
   br label %bb.fo
 
@@ -3409,7 +3409,7 @@ bb.fx:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.awl = shl i8 %.1.tr193.i, 4
   %i.awm = or disjoint i8 %i.awl, 8
   %i.awn = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1059.i to i64
-  %umax2323.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1059.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1065.i)
+  %umax2323.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1065.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1059.i)
   %wide.trip.count2324.i = zext i32 %umax2323.i to i64
   br label %bb.fy
 
@@ -3589,7 +3589,7 @@ bb.gg:                                            ; preds = %"_ZNK9hb_iter_tI15m
   %i.ays = shl i8 %.1.tr.i, 4
   %i.ayt = or disjoint i8 %i.ays, 7
   %i.ayu = zext i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1102.i to i64
-  %umax.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1102.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1108.i)
+  %umax.i = call i32 @llvm.umax.i32(i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1108.i, i32 %.val.i.i.i.i.i.i.i.i.i.i.i.i1102.i)
   %wide.trip.count.i = zext i32 %umax.i to i64
   br label %bb.gh
 

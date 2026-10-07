@@ -205,7 +205,7 @@ debug_dump_PFM.exit.i:                            ; preds = %bb.al, %bb.ak, %pre
 
 .preheader.i:                                     ; preds = %variance_stabilizing_xform.exit.i, %debug_dump_PFM.exit.i
   %.0181.lcssa.i = phi ptr [ %i.aht, %debug_dump_PFM.exit.i ], [ %.018041.i, %variance_stabilizing_xform.exit.i ] ; 13 uses
-  %i.aif = shl i64 %i.qr, 2                       ; 8 uses
+  %i.aif = shl i64 %i.qr, 2                       ; 9 uses
   %.not46.i = icmp eq i64 %i.aif, 0
   br i1 %.not46.i, label %._crit_edge.i, label %vector.memcheck152
 
@@ -531,7 +531,7 @@ bb.au:                                            ; preds = %bb.as
   %i.aop = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.tc
   %i.aoq = fmul reassoc nsz arcp contract afn float %i.aol, %i.aop ; 2 uses
   %i.aor = shl nsw i64 %i.qp, 2
-  %i.aos = mul i64 %i.aor, %i.qq                  ; 3 uses
+  %i.aos = mul i64 %i.aor, %i.qq                  ; 2 uses
   %.not.i218.i = icmp eq i64 %i.aos, 0
   br i1 %.not.i218.i, label %backtransform_Y0U0V0.exit.i, label %.preheader49.preheader.i.preheader.i
 
@@ -546,7 +546,7 @@ bb.au:                                            ; preds = %bb.as
   %factor.op.fmul91 = fmul reassoc nsz arcp contract afn float %.sroa.51.0.i, %i.xh ; 2 uses
   %factor.op.fmul93 = fmul reassoc nsz arcp contract afn float %.sroa.41.0.i, %i.xh ; 2 uses
   %factor.op.fmul95 = fmul reassoc nsz arcp contract afn float %.sroa.46.0.i, %i.xh ; 2 uses
-  %i.aou = add i64 %i.aos, -4                     ; 2 uses
+  %i.aou = add i64 %i.aif, -4                     ; 2 uses
   %min.iters.check179 = icmp ult i64 %i.aou, 32
   br i1 %min.iters.check179, label %.preheader49.preheader.i.i.preheader, label %vector.ph180
 

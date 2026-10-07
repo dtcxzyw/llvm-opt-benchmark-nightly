@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   %.promoted.i.i.i.i.i.i.i.i = load i64, ptr %i.hc, align 8, !alias.scope !7784, !noalias !7782 ; 3 uses
   %.val2.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.a, align 8, !alias.scope !7783, !noalias !7782, !nonnull !4698
   %.val.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.he, align 8, !alias.scope !7783, !noalias !7782, !nonnull !4698
-  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i.i.i.i.i, i64 %i.ii), !dbg !7952
+  %umax.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ii, i64 %.promoted.i.i.i.i.i.i.i.i), !dbg !7952
   %exitcond.not.i3.not.i.i.i.i.i.i.i = icmp ult i64 %.promoted.i.i.i.i.i.i.i.i, %i.ii, !dbg !7953
   br i1 %exitcond.not.i3.not.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, label %.loopexit.sink.split.i.i.i.i.i, !dbg !7953
 
@@ -608,7 +608,7 @@ bb.a:
   %.sroa.522.0.copyload.i.us = load ptr, ptr %.sroa.522.0..sroa_idx.i, align 8, !dbg !109243, !noalias !109227 ; 2 uses
   %.sroa.623.0.copyload.i.us = load i64, ptr %.sroa.623.0..sroa_idx.i, align 8, !dbg !109243, !noalias !109227 ; 3 uses
   %.sroa.8.0.copyload.i.us = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !dbg !109243, !noalias !109227 ; 2 uses
-  %umax.i.us = tail call i64 @llvm.umax.i64(i64 %.sroa.623.0.copyload.i.us, i64 %.sroa.8.0.copyload.i.us), !dbg !109244
+  %umax.i.us = tail call i64 @llvm.umax.i64(i64 %.sroa.8.0.copyload.i.us, i64 %.sroa.623.0.copyload.i.us), !dbg !109244
   %exitcond.not.i.us18.not = icmp ult i64 %.sroa.623.0.copyload.i.us, %.sroa.8.0.copyload.i.us, !dbg !109245
   br i1 %exitcond.not.i.us18.not, label %_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCsfcROwRM8ZtH_11polars_plan.exit.i.us.preheader, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern14small_slice_eq.exit.thread6, !dbg !109245
 

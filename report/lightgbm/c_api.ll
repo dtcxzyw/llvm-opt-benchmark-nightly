@@ -205,7 +205,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPdmdET_
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.i.i
-  %i.u = mul nsw i64 %i.p, %i.q
+  %i.u = mul nsw i64 %i.q, %i.p
   %i.v = shl i64 %i.u, 3
   %i.w = add i64 %i.v, %i.o
   %i.x = sub i64 %i.w, %i.g

@@ -205,7 +205,7 @@ bb.bp:                                            ; preds = %bb.bi
   unreachable
 
 bb.bq:                                            ; preds = %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EE8push_mutCsc2V0exE7CWf_11lance_arrow.exit119.i, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EE8push_mutCsc2V0exE7CWf_11lance_arrow.exit.i
-  %umax.i.i = call i64 @llvm.umax.i64(i64 %i.ec, i64 %.sroa.0.0.i.i.i95.i)
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i.i95.i, i64 %i.ec)
   %exitcond.not.i.i203.not = icmp ult i64 %i.ec, %.sroa.0.0.i.i.i95.i
   br i1 %exitcond.not.i.i203.not, label %.lr.ph205, label %._crit_edge206
 
@@ -608,7 +608,7 @@ bb.fh:                                            ; preds = %bb.fa
   unreachable
 
 bb.fi:                                            ; preds = %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EE8push_mutCsc2V0exE7CWf_11lance_arrow.exit119.i55, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EE8push_mutCsc2V0exE7CWf_11lance_arrow.exit.i54
-  %umax.i.i45 = call i64 @llvm.umax.i64(i64 %i.nd, i64 %.sroa.0.0.i.i.i95.i43)
+  %umax.i.i45 = call i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i.i95.i43, i64 %i.nd)
   %exitcond.not.i.i46198.not = icmp ult i64 %i.nd, %.sroa.0.0.i.i.i95.i43
   br i1 %exitcond.not.i.i46198.not, label %.lr.ph, label %._crit_edge
 
@@ -1011,7 +1011,7 @@ vector.body21:                                    ; preds = %vector.body21, %vec
 .split.i.preheader.i:                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.z = load i64, ptr %i.y, align 8, !alias.scope !13453
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i, i64 %i.z) ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.z, i64 %.promoted.i.i) ; 2 uses
   %i.aa = sub i64 %umax.i, %.promoted.i.i
   %i.ab = add i64 %1, -1
   %.fr = freeze i64 %i.aa
@@ -1180,7 +1180,7 @@ vector.body21:                                    ; preds = %vector.body21, %vec
 .split.i.preheader.i:                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.z = load i64, ptr %i.y, align 8, !alias.scope !13477
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i, i64 %i.z) ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.z, i64 %.promoted.i.i) ; 2 uses
   %i.aa = sub i64 %umax.i, %.promoted.i.i
   %i.ab = add i64 %1, -1
   %.fr = freeze i64 %i.aa

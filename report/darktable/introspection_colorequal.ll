@@ -205,7 +205,7 @@ _init_covariance.exit.i274:                       ; preds = %.lr.ph.i.i281, %mid
   br i1 %i.bgt, label %._crit_edge.i, label %.lr.ph.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %i.bgu = mul nsw i64 %i.atl, %i.atm             ; 3 uses
+  %i.bgu = mul nsw i64 %i.atm, %i.atl             ; 3 uses
   %i.bgv = shl i64 %i.bgu, 4
   %i.bgw = getelementptr i8, ptr %i.bft, i64 %i.bgv ; 3 uses
   %i.bgx = shl i64 %i.bgu, 3                      ; 2 uses
@@ -430,7 +430,7 @@ middle.block946:                                  ; preds = %vector.body934
   br label %.lr.ph475.i
 
 vector.memcheck967:                               ; preds = %.lr.ph475.i.preheader
-  %i.bix = mul nsw i64 %i.atl, %i.atm             ; 3 uses
+  %i.bix = mul nsw i64 %i.atm, %i.atl             ; 3 uses
   %i.biy = shl i64 %i.bix, 4
   %i.biz = getelementptr i8, ptr %i.bft, i64 %i.biy ; 3 uses
   %i.bja = shl i64 %i.bix, 3                      ; 2 uses
@@ -616,7 +616,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph478.i.prehead
   br i1 %i.bmv, label %.lr.ph478.i.preheader1365, label %vector.memcheck1061
 
 vector.memcheck1061:                              ; preds = %vector.scevcheck
-  %i.bmw = mul nsw i64 %i.atl, %i.atm             ; 3 uses
+  %i.bmw = mul nsw i64 %i.atm, %i.atl             ; 3 uses
   %i.bmx = shl i64 %i.bmw, 4                      ; 3 uses
   %i.bmy = getelementptr i8, ptr %i.blv, i64 %i.bmx ; 6 uses
   %i.bmz = shl i64 %i.bmw, 3                      ; 3 uses
@@ -1019,7 +1019,7 @@ bb.bh:                                            ; preds = %dt_gaussian_mean_bl
 
 vector.memcheck1291:                              ; preds = %.lr.ph490.i.preheader
   %i.ccy = getelementptr i8, ptr %i.asr, i64 4    ; 4 uses
-  %i.ccz = mul nsw i64 %i.ar, %i.aq               ; 3 uses
+  %i.ccz = mul nsw i64 %i.aq, %i.ar               ; 3 uses
   %i.cda = shl i64 %i.ccz, 3                      ; 3 uses
   %i.cdb = getelementptr i8, ptr %i.asr, i64 %i.cda ; 4 uses
   %i.cdc = shl i64 %i.ccz, 2

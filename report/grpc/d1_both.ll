@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %_ZN4bsslL16dtls1_up
   %i.av = load i8, ptr %i.au, align 8, !tbaa !136 ; 4 uses
   %i.aw = zext i8 %i.av to i64                    ; 9 uses
   %umin = call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aq) ; 8 uses
-  %i.ax = zext i8 %i.ap to i64
-  %i.ay = zext i8 %i.av to i64
+  %i.ax = zext i8 %i.av to i64
+  %i.ay = zext i8 %i.ap to i64
   %i.az = add nuw nsw i64 %i.ax, %i.ay
   %i.ba = sub nsw i64 %i.az, %umin
   %i.bb = and i64 %i.ba, 31
@@ -223,8 +223,8 @@ scalar.ph.preheader:                              ; preds = %vector.ph, %vector.
   br label %scalar.ph
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i
-  %i.bh = trunc i8 %i.ap to i5
-  %i.bi = trunc i8 %i.av to i5
+  %i.bh = trunc i8 %i.av to i5
+  %i.bi = trunc i8 %i.ap to i5
   %i.bj = add i5 %i.bh, %i.bi
   %i.bk = trunc i64 %umin to i5
   %i.bl = sub i5 %i.bj, %i.bk                     ; 2 uses
@@ -241,8 +241,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i
   br i1 %i.bt, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.bu = zext i8 %i.ap to i64
-  %i.bv = zext i8 %i.av to i64
+  %i.bu = zext i8 %i.av to i64
+  %i.bv = zext i8 %i.ap to i64
   %i.bw = add nuw nsw i64 %i.bu, %i.bv
   %i.bx = sub nsw i64 %i.bw, %umin
   %i.by = shl nsw i64 %i.bx, 3

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ac = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ac, ptr %i.s, align 8, !alias.scope !781
   tail call void @llvm.experimental.noalias.scope.decl(metadata !782)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ac, i64 %i.v)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ac)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !783)
   %exitcond.not.i.not = icmp ult i64 %i.ac, %i.v
   br i1 %exitcond.not.i.not, label %bb.e, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i"
@@ -262,7 +262,7 @@ bb.k:                                             ; preds = %bb.b
   %i.ao = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ao, ptr %i.s, align 8, !alias.scope !795
   tail call void @llvm.experimental.noalias.scope.decl(metadata !796)
-  %umax.i20 = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.v)
+  %umax.i20 = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ao)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !797)
   %exitcond.not.i22.not = icmp ult i64 %i.ao, %i.v
   br i1 %exitcond.not.i22.not, label %bb.l, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i25"
@@ -319,7 +319,7 @@ bb.r:                                             ; preds = %bb.b
   %i.ba = add nuw i64 %i.t, 1                     ; 4 uses
   store i64 %i.ba, ptr %i.s, align 8, !alias.scope !809
   tail call void @llvm.experimental.noalias.scope.decl(metadata !810)
-  %umax.i28 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.v) ; 2 uses
+  %umax.i28 = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !811)
   %exitcond.not.i30.not = icmp ult i64 %i.ba, %i.v
   br i1 %exitcond.not.i30.not, label %bb.s, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i33"
@@ -722,7 +722,7 @@ bb.f:                                             ; preds = %bb.b
   %i.s = add i64 %i.j, 1                          ; 4 uses
   store i64 %i.s, ptr %i.d, align 8, !alias.scope !8376, !noalias !8377
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8378)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.s, i64 %i.f) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %i.s) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8379)
   %exitcond.not.i9.not.i.i = icmp ult i64 %i.s, %i.f
   br i1 %exitcond.not.i9.not.i.i, label %bb.g, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i"
@@ -1125,7 +1125,7 @@ bb.ag:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ec = add i64 %i.dx, 1                        ; 4 uses
   store i64 %i.ec, ptr %i.bk, align 8, !alias.scope !8689, !noalias !8637
   call void @llvm.experimental.noalias.scope.decl(metadata !8690)
-  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ec, i64 %i.dm) ; 2 uses
+  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.dm, i64 %i.ec) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !8691)
   %exitcond.not.i17.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.ec, %i.dm
   br i1 %exitcond.not.i17.not.i.i.i.i.i.i.i.i.i.i, label %bb.ah, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i.i.i.i.i.i.i.i.i"
@@ -1528,7 +1528,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ch = add i64 %i.cb, 1                        ; 4 uses
   store i64 %i.ch, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9052, !noalias !9053
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9054)
-  %umax.i.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ch, i64 %2) ; 2 uses
+  %umax.i.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ch) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9055)
   %exitcond.not.i66.not.i.i.i.i.i.i = icmp ult i64 %i.ch, %2
   br i1 %exitcond.not.i66.not.i.i.i.i.i.i, label %bb.f, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i.i.i.i.i"
@@ -1591,7 +1591,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ct = add i64 %i.cb, 1                        ; 4 uses
   store i64 %i.ct, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9066, !noalias !9053
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9067)
-  %umax.i68.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ct, i64 %2) ; 2 uses
+  %umax.i68.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ct) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9068)
   %exitcond.not.i70.not.i.i.i.i.i.i = icmp ult i64 %i.ct, %2
   br i1 %exitcond.not.i70.not.i.i.i.i.i.i, label %bb.m, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i73.i.i.i.i.i.i"
@@ -1654,7 +1654,7 @@ bb.s:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.df = add i64 %i.cb, 1                        ; 4 uses
   store i64 %i.df, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9079, !noalias !9053
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9080)
-  %umax.i76.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.df, i64 %2) ; 3 uses
+  %umax.i76.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.df) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9081)
   %exitcond.not.i78.not.i.i.i.i.i.i = icmp ult i64 %i.df, %2
   br i1 %exitcond.not.i78.not.i.i.i.i.i.i, label %bb.t, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i81.i.i.i.i.i.i"
@@ -2057,7 +2057,7 @@ bb.jb:                                            ; preds = %.lr.ph.i.i.i.i
   %i.aaw = add i64 %i.bw, 1                       ; 4 uses
   store i64 %i.aaw, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9183, !noalias !9184
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9185)
-  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.aaw, i64 %2) ; 2 uses
+  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.aaw) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9186)
   %exitcond.not.i9.not.i.i.i = icmp ult i64 %i.aaw, %2
   br i1 %exitcond.not.i9.not.i.i.i, label %bb.jc, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i.i"
@@ -2460,7 +2460,7 @@ bb.di:                                            ; preds = %bb.df
   %i.me = add i64 %i.ly, 1                        ; 4 uses
   store i64 %i.me, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9785, !noalias !9749
   call void @llvm.experimental.noalias.scope.decl(metadata !9786)
-  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.me, i64 %i.lx) ; 2 uses
+  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lx, i64 %i.me) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9787)
   %exitcond.not.i67.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.me, %i.lx
   br i1 %exitcond.not.i67.not.i.i.i.i.i.i.i.i.i.i, label %bb.dj, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i.i.i.i.i.i.i.i.i"
@@ -2523,7 +2523,7 @@ bb.do:                                            ; preds = %bb.df
   %i.mq = add i64 %i.ly, 1                        ; 4 uses
   store i64 %i.mq, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9798, !noalias !9749
   call void @llvm.experimental.noalias.scope.decl(metadata !9799)
-  %umax.i69.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.mq, i64 %i.lx) ; 2 uses
+  %umax.i69.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lx, i64 %i.mq) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9800)
   %exitcond.not.i71.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.mq, %i.lx
   br i1 %exitcond.not.i71.not.i.i.i.i.i.i.i.i.i.i, label %bb.dp, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i74.i.i.i.i.i.i.i.i.i.i"
@@ -2586,7 +2586,7 @@ bb.du:                                            ; preds = %bb.df
   %i.nc = add i64 %i.ly, 1                        ; 4 uses
   store i64 %i.nc, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !9811, !noalias !9749
   call void @llvm.experimental.noalias.scope.decl(metadata !9812)
-  %umax.i77.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.nc, i64 %i.lx) ; 3 uses
+  %umax.i77.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lx, i64 %i.nc) ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9813)
   %exitcond.not.i79.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.nc, %i.lx
   br i1 %exitcond.not.i79.not.i.i.i.i.i.i.i.i.i.i, label %bb.dv, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i82.i.i.i.i.i.i.i.i.i.i"
@@ -2989,7 +2989,7 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   %i.ba = add i64 %i.au, 1                        ; 4 uses
   store i64 %i.ba, ptr %i.ah, align 8, !alias.scope !10392, !noalias !10391
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10393)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.aj) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10394)
   %exitcond.not.i66.not.i.i = icmp ult i64 %i.ba, %i.aj
   br i1 %exitcond.not.i66.not.i.i, label %bb.h, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i.i.i"
@@ -3046,7 +3046,7 @@ bb.n:                                             ; preds = %"_ZN10serde_json2de
   %i.bm = add i64 %i.au, 1                        ; 4 uses
   store i64 %i.bm, ptr %i.ah, align 8, !alias.scope !10406, !noalias !10391
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10407)
-  %umax.i68.i.i = tail call i64 @llvm.umax.i64(i64 %i.bm, i64 %i.aj) ; 2 uses
+  %umax.i68.i.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.bm) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10408)
   %exitcond.not.i70.not.i.i = icmp ult i64 %i.bm, %i.aj
   br i1 %exitcond.not.i70.not.i.i, label %bb.o, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i73.i.i"
@@ -3103,7 +3103,7 @@ bb.u:                                             ; preds = %"_ZN10serde_json2de
   %i.by = add i64 %i.au, 1                        ; 4 uses
   store i64 %i.by, ptr %i.ah, align 8, !alias.scope !10420, !noalias !10391
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10421)
-  %umax.i76.i.i = tail call i64 @llvm.umax.i64(i64 %i.by, i64 %i.aj) ; 3 uses
+  %umax.i76.i.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.by) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10422)
   %exitcond.not.i78.not.i.i = icmp ult i64 %i.by, %i.aj
   br i1 %exitcond.not.i78.not.i.i, label %bb.v, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i81.i.i"
@@ -3506,7 +3506,7 @@ bb.bz:                                            ; preds = %bb.b
   %i.fs = add i64 %i.an, 1                        ; 4 uses
   store i64 %i.fs, ptr %i.ah, align 8, !alias.scope !10466
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10467)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.fs, i64 %i.aj) ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.fs) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10468)
   %exitcond.not.i9.not = icmp ult i64 %i.fs, %i.aj
   br i1 %exitcond.not.i9.not, label %bb.ca, label %"_ZN70_$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$4next17h683ee20a732f842eE.exit.i"

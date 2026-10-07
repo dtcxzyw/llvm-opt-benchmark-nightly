@@ -202,8 +202,8 @@ bb.o:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN2v88platform15DefaultJobStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.k, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.o
   %i.bp = add nuw i64 %.018, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bp, %i.u
-  br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !26
+  %3 = icmp ult i64 %i.bp, %i.u
+  br i1 %3, label %bb.c, label %.loopexit, !llvm.loop !26
 
 .loopexit:                                        ; preds = %_ZNSt12__shared_ptrIN2v88platform15DefaultJobStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.thread, %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, %bb.a
   ret void
@@ -483,8 +483,8 @@ bb.o:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN2v88platform15DefaultJobStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.k, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.o
   %i.ci = add nuw i64 %.043, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ci, %i.ak
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !37
+  %4 = icmp ult i64 %i.ci, %i.ak
+  br i1 %4, label %bb.c, label %._crit_edge, !llvm.loop !37
 
 bb.p:                                             ; preds = %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit30, %._crit_edge
   %i.cj = load ptr, ptr %i.i, align 8             ; 2 uses
@@ -851,8 +851,8 @@ bb.o:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN2v88platform15DefaultJobStateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.k, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.o
   %i.bs = add nuw i64 %.030, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bs, %i.x
-  br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !45
+  %3 = icmp ult i64 %i.bs, %i.x
+  br i1 %3, label %bb.c, label %.loopexit, !llvm.loop !45
 
 .loopexit.sink.split:                             ; preds = %bb.b, %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.thread
   %cond28.ph = xor i1 %or.cond, true

@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %.noexc33.us.i
   %.us-phi.i8386.i = phi i64 [ %i.fp, %.lr.ph.i.i ], [ 0, %.lr.ph13.i.lr.ph.i ] ; 2 uses
   %i.fn = phi <4 x double> [ %i.gm, %.lr.ph.i.i ], [ <double +inf, double +inf, double -inf, double -inf>, %.lr.ph13.i.lr.ph.i ] ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3170)
-  %umax.i.i = call i64 @llvm.umax.i64(i64 %.us-phi.i8386.i, i64 %i.ev) ; 2 uses
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %i.ev, i64 %.us-phi.i8386.i) ; 2 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtB4_6result6ResultNtNtNtCsfC1H8tYQGpK_14geoarrow_array6scalar5point5PointNtNtCs84Wnv3hhsUu_15geoarrow_schema5error13GeoArrowErrorEEECscSToqyP0NyK_9lance_geo.exit6.i.i, %.lr.ph13.i.i
@@ -607,7 +607,7 @@ _RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox12add_geometryNtNtNtCsfC1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bx), !noalias !3212
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i54)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bu), !noalias !3212
-  %umax.i.i86 = call i64 @llvm.umax.i64(i64 %.us-phi101.i, i64 %i.km)
+  %umax.i.i86 = call i64 @llvm.umax.i64(i64 %i.km, i64 %.us-phi101.i)
   %exitcond.not.i69.not.i = icmp ult i64 %.us-phi101.i, %i.km
   br i1 %exitcond.not.i69.not.i, label %.lr.ph.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters7flatten7FlattenINtNtBG_3map3MapINtNtNtB4_3ops5range5RangejENCNvYNtNtNtCsfC1H8tYQGpK_14geoarrow_array5array10multipoint15MultiPointArrayNtNtB2a_6trait_21GeoArrowArrayAccessor4iter0EEECscSToqyP0NyK_9lance_geo.exit.i
 
@@ -1010,7 +1010,7 @@ bb.ce:                                            ; preds = %.noexc8.i194
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba), !noalias !3264
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i171)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax), !noalias !3264
-  %umax.i.i199 = call i64 @llvm.umax.i64(i64 %.us-phi54.i, i64 %i.qw)
+  %umax.i.i199 = call i64 @llvm.umax.i64(i64 %i.qw, i64 %.us-phi54.i)
   %exitcond.not.i42.not.i = icmp ult i64 %.us-phi54.i, %i.qw
   br i1 %exitcond.not.i42.not.i, label %.lr.ph.i178, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters7flatten7FlattenINtNtBG_3map3MapINtNtNtB4_3ops5range5RangejENCNvYNtNtNtCsfC1H8tYQGpK_14geoarrow_array5array18geometrycollection23GeometryCollectionArrayNtNtB2a_6trait_21GeoArrowArrayAccessor4iter0EEECscSToqyP0NyK_9lance_geo.exit.i
 
@@ -1124,7 +1124,7 @@ _RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox12add_geometryNtNtNtCsfC1
 .lr.ph14.i.i213:                                  ; preds = %.lr.ph14.i.i213.preheader, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox12add_geometryNtNtNtCsfC1H8tYQGpK_14geoarrow_array6scalar4rect4RectEB5_.exit.i
   %.us-phi.i6063.i = phi i64 [ %i.sz, %_RINvMNtCscSToqyP0NyK_9lance_geo4bboxNtB3_11BoundingBox12add_geometryNtNtNtCsfC1H8tYQGpK_14geoarrow_array6scalar4rect4RectEB5_.exit.i ], [ 0, %.lr.ph14.i.i213.preheader ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3283)
-  %umax.i.i214 = call i64 @llvm.umax.i64(i64 %.us-phi.i6063.i, i64 %i.sp) ; 2 uses
+  %umax.i.i214 = call i64 @llvm.umax.i64(i64 %i.sp, i64 %.us-phi.i6063.i) ; 2 uses
   br label %bb.cj
 
 bb.cj:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option8IntoIterINtNtB4_6result6ResultNtNtNtCsfC1H8tYQGpK_14geoarrow_array6scalar4rect4RectNtNtCs84Wnv3hhsUu_15geoarrow_schema5error13GeoArrowErrorEEECscSToqyP0NyK_9lance_geo.exit6.i.i, %.lr.ph14.i.i213
@@ -1527,7 +1527,7 @@ bb.em:                                            ; preds = %bb.ek
 .lr.ph.i.i319:                                    ; preds = %bb.em
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !3341
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !3341
-  %umax.i.i320 = call i64 @llvm.umax.i64(i64 %.us-phi54.i315, i64 %i.we)
+  %umax.i.i320 = call i64 @llvm.umax.i64(i64 %i.we, i64 %.us-phi54.i315)
   %exitcond.not.i42.not.i321 = icmp ult i64 %.us-phi54.i315, %i.we
   br i1 %exitcond.not.i42.not.i321, label %.lr.ph.i297, label %.noexc16._crit_edge.i
 
@@ -1930,7 +1930,7 @@ bb.fu:                                            ; preds = %.split.us.i445
 .lr.ph.i.i450:                                    ; preds = %bb.fu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !3398
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3398
-  %umax.i.i451 = call i64 @llvm.umax.i64(i64 %.us-phi54.i446, i64 %i.aci)
+  %umax.i.i451 = call i64 @llvm.umax.i64(i64 %i.aci, i64 %.us-phi54.i446)
   %exitcond.not.i42.not.i452 = icmp ult i64 %.us-phi54.i446, %i.aci
   br i1 %exitcond.not.i42.not.i452, label %.lr.ph.i429, label %.noexc16._crit_edge.i444
 

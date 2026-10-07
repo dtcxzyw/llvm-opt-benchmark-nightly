@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %_ZNK12hb_bit_set_t8
 
 "_ZNR9hb_iter_tI16hb_filter_iter_tIS0_IS0_I10hb_array_tIKN2OT10NameRecordEER8hb_set_tMS3_NS2_7NumTypeILb1EtLj2EEELPv0EES7_SA_LSB_0EEZNKS2_4name6subsetEP19hb_subset_context_tEUlRS4_E_RK4$_19LSB_0EESH_EppEv.exit.loopexit.i": ; preds = %"_ZNK4$_23clIRZNK2OT4name6subsetEP19hb_subset_context_tEUlRKNS1_10NameRecordEE_S7_EEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSB_OSC_.exit.backedge.i.i.i", %_ZNR9hb_iter_tI10hb_array_tIKN2OT10NameRecordEERS3_EppEv.exit.i.i.i.i
   %.lcssa215 = phi ptr [ %i.kb, %_ZNR9hb_iter_tI10hb_array_tIKN2OT10NameRecordEERS3_EppEv.exit.i.i.i.i ], [ %i.jz, %"_ZNK4$_23clIRZNK2OT4name6subsetEP19hb_subset_context_tEUlRKNS1_10NameRecordEE_S7_EEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSB_OSC_.exit.backedge.i.i.i" ] ; 2 uses
-  %i.nm = add i32 %.promoted99.i, %.promoted96100.i
+  %i.nm = add i32 %.promoted96100.i, %.promoted99.i
   store i32 0, ptr %i.ih, align 8, !tbaa !646
   store i32 %i.nm, ptr %i.il, align 4, !tbaa !647
   store ptr %.lcssa215, ptr %4, align 8, !tbaa !648
@@ -608,7 +608,7 @@ _ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i: ; preds
 
 "_ZN16hb_filter_iter_tIS_I17hb_sorted_array_tIK9hb_pair_tIjjEEZNK2OT4cmap6subsetEP19hb_subset_context_tEUlS2_E_RK4$_19LPv0EERK8hb_set_tRK3$_6LSD_0EEC2ERKSE_SH_SK_.exit.loopexit": ; preds = %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i.preheader, %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i
   store ptr %.lcssa575661, ptr %9, align 8
-  %i.ge = add i32 %.lcssa319336, %.lcssa321339
+  %i.ge = add i32 %.lcssa321339, %.lcssa319336
   %scevgep.le = getelementptr i8, ptr %.val5.i, i64 8
   %i.gf = add i32 %.lcssa319336, -1
   %i.gg = zext i32 %i.gf to i64
@@ -1011,7 +1011,7 @@ _ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146: ; pr
 
 "_ZN16hb_filter_iter_tIS_I17hb_sorted_array_tIK9hb_pair_tIjjEEZNK2OT4cmap6subsetEP19hb_subset_context_tEUlS2_E_RK4$_19LPv0EERK8hb_set_tRK3$_6LSD_0EEC2ERKSE_SH_SK_.exit164.loopexit": ; preds = %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146.preheader, %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146
   store ptr %.lcssa651668, ptr %10, align 8
-  %i.ys = add i32 %.lcssa341359, %.lcssa343363
+  %i.ys = add i32 %.lcssa343363, %.lcssa341359
   %scevgep479.le = getelementptr i8, ptr %.val5.i133, i64 8
   %i.yt = add i32 %.lcssa341359, -1
   %i.yu = zext i32 %i.yt to i64

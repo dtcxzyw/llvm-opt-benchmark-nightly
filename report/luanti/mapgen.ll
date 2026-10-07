@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not18.i, label %.preheader.us23.preheader, label %.preheader.lr.ph.split.split
 
 .preheader.us23.preheader:                        ; preds = %.preheader.lr.ph.split
-  %i.s = add i16 %.sroa.09.0.extract.trunc, 1
-  %i.t = add i16 %.sroa.0.0.extract.trunc, 1
+  %i.s = add i16 %.sroa.0.0.extract.trunc, 1
+  %i.t = add i16 %.sroa.09.0.extract.trunc, 1
   %smax = tail call i16 @llvm.smax.i16(i16 %i.s, i16 %i.t)
   %i.u = xor i16 %.sroa.09.0.extract.trunc, -1
   %i.v = add i16 %smax, %i.u                      ; 3 uses
@@ -609,9 +609,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 .preheader.lr.ph.split.split:                     ; preds = %.preheader.lr.ph.split
   %i.aj = getelementptr inbounds nuw i8, ptr %i.u, i64 32
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !103 ; 9 uses
-  %i.al = call i16 @llvm.smax.i16(i16 %.sroa.237.0.extract.trunc, i16 %.sroa.2.0.extract.trunc)
+  %i.al = call i16 @llvm.smax.i16(i16 %.sroa.2.0.extract.trunc, i16 %.sroa.237.0.extract.trunc)
   %smax51 = sext i16 %i.al to i32
-  %smax53 = call i32 @llvm.smax.i32(i32 %i.s, i32 %i.q)
+  %smax53 = call i32 @llvm.smax.i32(i32 %i.q, i32 %i.s)
   %i.am = add nsw i32 %i.m, 1
   %i.an = sub nsw i32 %i.am, %i.n
   %i.ao = sub nsw i32 %i.m, %i.n
@@ -1014,9 +1014,9 @@ bb.a:
   br i1 %.not2138.fr, label %._crit_edge53.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
-  %i.ad = tail call i16 @llvm.smax.i16(i16 %.sroa.034.0.extract.trunc, i16 %.sroa.033.0.extract.trunc)
+  %i.ad = tail call i16 @llvm.smax.i16(i16 %.sroa.033.0.extract.trunc, i16 %.sroa.034.0.extract.trunc)
   %smax = sext i16 %i.ad to i32
-  %smax82 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 %i.e)
+  %smax82 = tail call i32 @llvm.smax.i32(i32 %i.e, i32 %i.g)
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge.split
@@ -1135,7 +1135,7 @@ bb.a:
 
 .preheader135.preheader:                          ; preds = %.preheader135.lr.ph
   %i.s = sext i16 %.sroa.13.0.copyload to i32
-  %i.t = call i16 @llvm.smax.i16(i16 %.sroa.13.0.copyload, i16 %.sroa.26.6.copyload)
+  %i.t = call i16 @llvm.smax.i16(i16 %.sroa.26.6.copyload, i16 %.sroa.13.0.copyload)
   %smax155 = sext i16 %i.t to i32
   br label %.preheader135
 

@@ -205,7 +205,7 @@ _RNvMs4_NtNtCs807GXlIGG3x_7zkgroup6crypto11credentialsNtB5_12SystemParams13get_h
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.5.0.copyload, i64 %.sroa.0.sroa.6.0.copyload) ; 4 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.6.0.copyload, i64 %.sroa.0.sroa.5.0.copyload) ; 4 uses
   %exitcond.not.not = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %exitcond.not.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit.thread
 
@@ -430,7 +430,7 @@ _RNvMs4_NtNtCs807GXlIGG3x_7zkgroup6crypto11credentialsNtB5_12SystemParams13get_h
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.5.0.copyload, i64 %.sroa.0.sroa.6.0.copyload)
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.6.0.copyload, i64 %.sroa.0.sroa.5.0.copyload)
   %exitcond.not.not = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %exitcond.not.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit.thread
 
@@ -802,7 +802,7 @@ _RNvMs4_NtNtCs807GXlIGG3x_7zkgroup6crypto11credentialsNtB5_12SystemParams13get_h
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.5.0.copyload, i64 %.sroa.0.sroa.6.0.copyload) ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.6.0.copyload, i64 %.sroa.0.sroa.5.0.copyload) ; 2 uses
   %exitcond.not.not = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %exitcond.not.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit.thread
 
@@ -1005,7 +1005,7 @@ _RNvMs4_NtNtCs807GXlIGG3x_7zkgroup6crypto11credentialsNtB5_12SystemParams13get_h
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.5.0.copyload, i64 %.sroa.0.sroa.6.0.copyload) ; 3 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.6.0.copyload, i64 %.sroa.0.sroa.5.0.copyload) ; 3 uses
   %exitcond.not.not = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %exitcond.not.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit.thread
 
@@ -1219,7 +1219,7 @@ _RNvMs4_NtNtCs807GXlIGG3x_7zkgroup6crypto11credentialsNtB5_12SystemParams13get_h
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.5.0.copyload, i64 %.sroa.0.sroa.6.0.copyload) ; 3 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.sroa.6.0.copyload, i64 %.sroa.0.sroa.5.0.copyload) ; 3 uses
   %exitcond.not.not = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %exitcond.not.not, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsdRrpXuHtjOb_16curve25519_dalek6scalar6ScalarEIBX_NtNtB1q_9ristretto14RistrettoPointEEINtB5_7ZipImplBW_B2b_E4nextCs807GXlIGG3x_7zkgroup.exit.thread
 

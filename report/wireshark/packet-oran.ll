@@ -205,16 +205,16 @@ add_beam_id_to_tap.exit.i:                        ; preds = %bb.ic, %proto_item_
 
 iter.check3412:                                   ; preds = %add_beam_id_to_tap.exit.i
   %i.bds = getelementptr i8, ptr %i.bcd, i64 36   ; 21 uses
-  %i.bdt = add i32 %i.bbv, 1
-  %i.bdu = add i32 %i.bbx, 1
+  %i.bdt = add i32 %i.bbx, 1
+  %i.bdu = add i32 %i.bbv, 1
   %umax3365 = call i32 @llvm.umax.i32(i32 %i.bdt, i32 %i.bdu)
   %i.bdv = sub i32 %umax3365, %i.bbv              ; 7 uses
   %min.iters.check3366 = icmp ult i32 %i.bdv, 4
   br i1 %min.iters.check3366, label %vec.epilog.scalar.ph3413.preheader, label %vector.scevcheck3364
 
 vector.scevcheck3364:                             ; preds = %iter.check3412
-  %i.bdw = add i32 %i.bbv, 1
-  %i.bdx = add i32 %i.bbx, 1
+  %i.bdw = add i32 %i.bbx, 1
+  %i.bdx = add i32 %i.bbv, 1
   %umax = call i32 @llvm.umax.i32(i32 %i.bdw, i32 %i.bdx)
   %i.bdy = add i32 %umax, -1
   %i.bdz = icmp ult i32 %i.bdy, %i.bbv
