@@ -206,7 +206,8 @@ bb.h:                                             ; preds = %"_ZN63_$LT$alloc..a
   br label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3nth17h6ebd0752c497f95dE.exit"
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = extractvalue { ptr, ptr } %i.k, 1
+  %i.u = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %.sroa.610.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %.sroa.610.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(7) %.sroa.105.i.i, i64 7, i1 false), !noalias !1490
   store i64 %i.j, ptr %0, align 8, !alias.scope !1489, !noalias !1490
@@ -609,8 +610,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !98854)
   %i.b = load i8, ptr %i.a, align 1, !range !63, !alias.scope !98853, !noalias !98854, !noundef !57
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11.i = load ptr, ptr %i.c, align 8, !alias.scope !98854, !noalias !98853
-  %.val10.i = load ptr, ptr %1, align 8, !alias.scope !98854, !noalias !98853 ; 6 uses
+  %.val11.i = load ptr, ptr %i.c, align 8, !alias.scope !98854, !noalias !98853, !nonnull !57, !noundef !57
+  %.val10.i = load ptr, ptr %1, align 8, !alias.scope !98854, !noalias !98853, !nonnull !57, !noundef !57 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.val11.i, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !invariant.load !57, !noalias !98855, !nonnull !57 ; 6 uses
   switch i8 %i.b, label %default.unreachable [
@@ -1013,8 +1014,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17he874e2b73ef12367E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.e, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.e, align 8, !nonnull !57, !noundef !57
+  %.val = load ptr, ptr %1, align 8, !nonnull !57, !noundef !57
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !182539
   store ptr @4029, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1417,8 +1418,8 @@ define noundef zeroext i1 @"_ZN72_$LT$index_scheduler..error..DateField$u20$as$u
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !63, !noundef !57
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11 = load ptr, ptr %i.b, align 8
-  %.val10 = load ptr, ptr %1, align 8             ; 6 uses
+  %.val11 = load ptr, ptr %i.b, align 8, !nonnull !57, !noundef !57
+  %.val10 = load ptr, ptr %1, align 8, !nonnull !57, !noundef !57 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val11, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !57, !noalias !57, !nonnull !57 ; 6 uses
   switch i8 %i.a, label %default.unreachable67 [
@@ -1821,8 +1822,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17he874e2b73ef12367E", ptr %.sroa.410.0..sroa_idx, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11 = load ptr, ptr %i.v, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val11 = load ptr, ptr %i.v, align 8, !nonnull !57, !noundef !57
+  %.val = load ptr, ptr %1, align 8, !nonnull !57, !noundef !57
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !192419
   store ptr @4814, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCs2AWtUsOyxgP_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #28
   unreachable
 
-bb.ae:                                            ; preds = %bb.aa, %bb.z, %bb.y
+bb.ae:                                            ; preds = %bb.y, %bb.z, %bb.aa
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   ret ptr %i.cm
 }

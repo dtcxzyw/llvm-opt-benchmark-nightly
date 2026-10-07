@@ -204,7 +204,8 @@ bb.l:                                             ; preds = %_RNvMs_NtCs2KzzoC5e
   br i1 %.not.i5, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bj = extractvalue { ptr, i64 } %i.bd, 0
+  %i.bj = extractvalue { ptr, i64 } %i.bd, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bj) ]
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 72
   %i.bl = load ptr, ptr %i.bk, align 8, !alias.scope !152, !nonnull !3, !noundef !3
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bh
@@ -607,7 +608,8 @@ bb.n:                                             ; preds = %_RNvMs_NtCs2KzzoC5e
   br i1 %.not.i6, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.bq = extractvalue { ptr, i64 } %i.bm, 0
+  %i.bq = extractvalue { ptr, i64 } %i.bm, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bq) ]
   %i.br = load ptr, ptr %i.bi, align 8, !alias.scope !324, !nonnull !3, !noundef !3
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bo
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bs, ptr nonnull readonly align 1 %i.bq, i64 %i.bn, i1 false)
@@ -1010,7 +1012,8 @@ bb.n:                                             ; preds = %_RNvMs_NtCs2KzzoC5e
   br i1 %.not.i5, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.bk = extractvalue { ptr, i64 } %i.be, 0
+  %i.bk = extractvalue { ptr, i64 } %i.be, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i, i64 96
   %i.bm = load ptr, ptr %i.bl, align 8, !alias.scope !349, !nonnull !3, !noundef !3
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bi
@@ -1413,7 +1416,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = extractvalue { ptr, i64 } %i.an, 0
+  %i.ar = extractvalue { ptr, i64 } %i.an, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ]
   %i.as = load ptr, ptr %i.aj, align 8, !alias.scope !395, !nonnull !3, !noundef !3
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ap
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.at, ptr nonnull readonly align 1 %i.ar, i64 %i.ao, i1 false)
@@ -1718,7 +1722,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = extractvalue { ptr, i64 } %i.an, 0
+  %i.ar = extractvalue { ptr, i64 } %i.an, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ]
   %i.as = load ptr, ptr %i.aj, align 8, !alias.scope !415, !nonnull !3, !noundef !3
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ap
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.at, ptr nonnull readonly align 1 %i.ar, i64 %i.ao, i1 false)
@@ -2121,7 +2126,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ax = extractvalue { ptr, i64 } %i.at, 0
+  %i.ax = extractvalue { ptr, i64 } %i.at, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ax) ]
   %i.ay = load ptr, ptr %i.ap, align 8, !alias.scope !469, !nonnull !3, !noundef !3
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.av
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.az, ptr nonnull readonly align 1 %i.ax, i64 %i.au, i1 false)
@@ -2524,7 +2530,8 @@ bb.fy:                                            ; preds = %bb.fw, %_RNvMs_NtCs
   br i1 %.not.i26.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE15append_elementsCs2KzzoC5ewhj_8markdown.exit.i, label %bb.fz
 
 bb.fz:                                            ; preds = %bb.fy
-  %i.tz = extractvalue { ptr, i64 } %i.tt, 0
+  %i.tz = extractvalue { ptr, i64 } %i.tt, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tz) ]
   %i.ua = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i, i64 96
   %i.ub = load ptr, ptr %i.ua, align 8, !alias.scope !725, !noalias !710, !nonnull !3, !noundef !3
   %i.uc = getelementptr inbounds nuw i8, ptr %i.ub, i64 %i.tx

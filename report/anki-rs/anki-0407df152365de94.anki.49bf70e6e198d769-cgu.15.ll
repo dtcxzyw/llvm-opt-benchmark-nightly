@@ -205,8 +205,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 2, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load ptr, ptr %i.k, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val7 = load ptr, ptr %i.k, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.l = call noundef zeroext i1 @_ZN4core3fmt5write17h1d2246b072ea91ebE(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val7, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -609,8 +609,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define noundef zeroext i1 @"_ZN76_$LT$anki..error..not_found..NotFoundError$u20$as$u20$core..fmt..Display$GT$3fmt17h42006abe26028724E"(ptr nofree noundef nonnull readnone align 8 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !6, !noalias !16947, !nonnull !6
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @626, i64 noundef 53), !noalias !16947, !inline_history !16946

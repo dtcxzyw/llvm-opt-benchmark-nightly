@@ -205,8 +205,8 @@ bb.a:
 
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit: ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val26 = load ptr, ptr %i.j, align 8
-  %.val25 = load ptr, ptr %1, align 8
+  %.val26 = load ptr, ptr %i.j, align 8, !nonnull !5, !noundef !5
+  %.val25 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %.val26, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !2975, !nonnull !5
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val25, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @110, i64 noundef 3), !noalias !2975, !inline_history !0
@@ -502,8 +502,8 @@ default.unreachable:                              ; preds = %bb.a
 
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit: ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val16 = load ptr, ptr %i.j, align 8
-  %.val15 = load ptr, ptr %1, align 8
+  %.val16 = load ptr, ptr %i.j, align 8, !nonnull !5, !noundef !5
+  %.val15 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %.val16, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !2981, !nonnull !5
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val15, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @123, i64 noundef 18), !noalias !2981, !inline_history !0
@@ -587,8 +587,8 @@ bb.c:                                             ; preds = %_ZN4core3fmt9Format
 define noundef zeroext i1 @"_ZN80_$LT$regex_automata..hybrid..error..CacheError$u20$as$u20$core..fmt..Display$GT$3fmt17h479377ba1bbe1dd9E"(ptr noalias noundef nonnull readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5
+  %.val = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !5, !noalias !2984, !nonnull !5
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @130, i64 noundef 46), !noalias !2984, !inline_history !0
@@ -619,8 +619,8 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit: ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val16 = load ptr, ptr %i.j, align 8
-  %.val15 = load ptr, ptr %1, align 8
+  %.val16 = load ptr, ptr %i.j, align 8, !nonnull !5, !noundef !5
+  %.val15 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %.val16, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !2992, !nonnull !5
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val15, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @131, i64 noundef 57), !noalias !2992, !inline_history !0
@@ -667,8 +667,8 @@ bb.d:                                             ; preds = %_ZN4core3fmt9Format
 
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit26: ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val12 = load ptr, ptr %i.v, align 8
-  %.val11 = load ptr, ptr %1, align 8
+  %.val12 = load ptr, ptr %i.v, align 8, !nonnull !5, !noundef !5
+  %.val11 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.w = getelementptr inbounds nuw i8, ptr %.val12, i64 24
   %i.x = load ptr, ptr %i.w, align 8, !invariant.load !5, !noalias !2993, !nonnull !5
   %i.y = tail call noundef zeroext i1 %i.x(ptr noundef nonnull align 1 %.val11, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @135, i64 noundef 84), !noalias !2993, !inline_history !0
@@ -676,8 +676,8 @@ _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit26: ; preds = %bb.c
 
 _ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE.exit31: ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val10 = load ptr, ptr %i.z, align 8
-  %.val9 = load ptr, ptr %1, align 8
+  %.val10 = load ptr, ptr %i.z, align 8, !nonnull !5, !noundef !5
+  %.val9 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.aa = getelementptr inbounds nuw i8, ptr %.val10, i64 24
   %i.ab = load ptr, ptr %i.aa, align 8, !invariant.load !5, !noalias !2994, !nonnull !5
   %i.ac = tail call noundef zeroext i1 %i.ab(ptr noundef nonnull align 1 %.val9, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @136, i64 noundef 82), !noalias !2994, !inline_history !0

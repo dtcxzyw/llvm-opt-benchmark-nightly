@@ -204,7 +204,8 @@ _RNCNCNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal28dy
   %i.w = icmp ugt i8 %i.o, -49
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 80 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !7923, !noalias !7922
-  %.sroa.01.0.i.i.i.i.i = select i1 %i.w, ptr %i.y, ptr %i.x ; 2 uses
+  %.sroa.01.0.i.i.i.i.i = select i1 %i.w, ptr %i.y, ptr %i.x ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i) ]
   %i.z = load i32, ptr %.sroa.01.0.i.i.i.i.i, align 1
   %i.aa = xor i32 %i.z, 1702060386
   %i.ab = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i, i64 4
@@ -607,7 +608,8 @@ _RNCNCNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal28dy
   %i.ao = icmp ugt i8 %i.ag, -49
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ad, i64 80 ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !alias.scope !8907, !noalias !8906
-  %.sroa.01.0.i.i.i.i.i.i.i = select i1 %i.ao, ptr %i.aq, ptr %i.ap ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i = select i1 %i.ao, ptr %i.aq, ptr %i.ap ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.i.i) ]
   %i.ar = load i32, ptr %.sroa.01.0.i.i.i.i.i.i.i, align 1
   %i.as = xor i32 %i.ar, 1702060386
   %i.at = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i.i.i, i64 4

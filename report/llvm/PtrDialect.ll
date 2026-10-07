@@ -206,8 +206,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   br label %.thread161
 
-.thread161:                                       ; preds = %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit75, %.thread, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit48, %bb.l, %_ZL40__mlir_ods_local_prop_constraint_PtrOps3PN4mlir9OperationENS_3ptr12PtrDiffFlagsEN4llvm9StringRefE.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.033.11 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit48 ], [ 0, %_ZL40__mlir_ods_local_prop_constraint_PtrOps3PN4mlir9OperationENS_3ptr12PtrDiffFlagsEN4llvm9StringRefE.exit ], [ 0, %.thread ], [ 0, %bb.l ], [ 1, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit75 ]
+.thread161:                                       ; preds = %.thread, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit48, %bb.l, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit75, %_ZL40__mlir_ods_local_prop_constraint_PtrOps3PN4mlir9OperationENS_3ptr12PtrDiffFlagsEN4llvm9StringRefE.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.033.11 = phi i8 [ %i.cd, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit75 ], [ 0, %_ZL40__mlir_ods_local_prop_constraint_PtrOps3PN4mlir9OperationENS_3ptr12PtrDiffFlagsEN4llvm9StringRefE.exit ], [ 0, %_ZN4mlir3ptr9PtrDiffOp14getODSOperandsEj.exit48 ], [ 0, %bb.l ], [ 0, %.thread ]
   ret i8 %.sroa.033.11
 }
 

@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbzNSmZPCnTx_10tgrep_core.exit.i: ; preds = %bb.b
-  %i.o = extractvalue { ptr, ptr } %i.d, 1
+  %i.o = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = load ptr, ptr %i.m, align 8, !noalias !690, !nonnull !7, !noundef !7 ; 3 uses
   %i.q = icmp ule i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.q)
@@ -607,7 +608,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbzNSmZPCnTx_10tgrep_core.exit: ; preds = %bb.b
-  %i.o = extractvalue { ptr, ptr } %i.d, 1
+  %i.o = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = load ptr, ptr %i.m, align 8, !nonnull !7, !noundef !7 ; 3 uses
   %i.q = icmp ule i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.q)

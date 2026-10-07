@@ -204,7 +204,8 @@ _RNCNvMNtCsEhZmuQNqkz_11ruff_linter8importerNtB4_8Importer23find_last_future_imp
   %i.ak = icmp ugt i8 %i.ac, -49
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 32 ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8, !alias.scope !3318, !noalias !3317
-  %.sroa.01.0.i.i.i.i.i.i.i.i.i = select i1 %i.ak, ptr %i.am, ptr %i.al ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i.i.i = select i1 %i.ak, ptr %i.am, ptr %i.al ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.i.i.i.i) ]
   %i.an = load i64, ptr %.sroa.01.0.i.i.i.i.i.i.i.i.i, align 1
   %i.ao = xor i64 %i.an, 7310034288222035807
   %i.ap = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i.i.i.i.i, i64 8
@@ -251,7 +252,8 @@ _RNCNvMNtCsEhZmuQNqkz_11ruff_linter8importerNtB4_8Importer23find_last_future_imp
   %i.bm = icmp ugt i8 %i.be, -49
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.42.0.copyload.i, i64 32 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !alias.scope !3320, !noalias !3319
-  %.sroa.01.0.i.i.i.i.i.i.i.i = select i1 %i.bm, ptr %i.bo, ptr %i.bn ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i.i = select i1 %i.bm, ptr %i.bo, ptr %i.bn ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.i.i.i) ]
   %i.bp = load i64, ptr %.sroa.01.0.i.i.i.i.i.i.i.i, align 1
   %i.bq = xor i64 %i.bp, 7310034288222035807
   %i.br = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i.i.i.i, i64 8
@@ -654,7 +656,8 @@ _RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i238
 bb.ah:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i32 92, ptr %i.h, align 4
-  %i.er = extractvalue { ptr, i64 } %i.dn, 0
+  %i.er = extractvalue { ptr, i64 } %i.dn, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.er) ]
   %i.es = extractvalue { ptr, i64 } %i.dn, 1
   %i.et = invoke noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.er, i64 noundef %i.es, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef 1)
           to label %bb.ai unwind label %.loopexit580.loopexit.loopexit
@@ -832,7 +835,8 @@ bb.au:                                            ; preds = %.lr.ph
 bb.av:                                            ; preds = %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i32 92, ptr %i.h, align 4
-  %i.gb = extractvalue { ptr, i64 } %i.ga, 0
+  %i.gb = extractvalue { ptr, i64 } %i.ga, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gb) ]
   %i.gc = extractvalue { ptr, i64 } %i.ga, 1
   %i.gd = invoke noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.gb, i64 noundef %i.gc, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef 1)
           to label %bb.aw unwind label %.loopexit580.loopexit.loopexit.split-lp
@@ -1235,7 +1239,7 @@ bb.a:
   %i.a = alloca [184 x i8], align 8               ; 20 uses
   %i.b = alloca [144 x i8], align 8               ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 3 uses
-  %i.d = tail call noundef ptr @_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtE8data_rawCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.c)
+  %i.d = tail call noundef ptr @_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtE8data_rawCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.c) ; 2 uses
   %i.e = load ptr, ptr %i.c, align 8, !nonnull !13, !noundef !13
   %i.f = load i64, ptr %i.e, align 8, !noundef !13
   switch i64 %i.f, label %bb.e [
@@ -1248,6 +1252,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.m
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.g = getelementptr i8, ptr %i.d, i64 84
   %i.h = load i8, ptr %i.g, align 4, !range !19, !noundef !13
   %i.i = icmp eq i8 %i.h, 3

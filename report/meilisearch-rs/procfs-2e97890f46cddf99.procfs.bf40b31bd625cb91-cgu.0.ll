@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.noexc17, %bb.f
   %i.p = phi ptr [ %i.h, %bb.f ], [ %.pre, %.noexc17 ]
   %i.q = phi i64 [ %i.j, %bb.f ], [ %.pre.i.i, %.noexc17 ] ; 3 uses
-  %i.r = extractvalue { ptr, i64 } %i.k, 0
+  %i.r = extractvalue { ptr, i64 } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = icmp sgt i64 %i.q, -1
   call void @llvm.assume(i1 %i.s)
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.q
@@ -608,8 +609,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr @"_ZN67_$LT$procfs_core..process..FDTarget$u20$as$u20$core..fmt..Debug$GT$3fmt17hcc95d50e6c68b389E", ptr %.sroa.410.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11 = load ptr, ptr %i.h, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val11 = load ptr, ptr %i.h, align 8, !nonnull !4, !noundef !4
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5695
   store ptr @141, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1012,8 +1013,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @"_ZN4core3fmt3num3imp52_$LT$impl$u20$core..fmt..Display$u20$for$u20$i32$GT$3fmt17h1d34aa19ad65fef9E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.f, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.f, align 8, !nonnull !4, !noundef !4
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5993
   store ptr @70, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1416,7 +1417,8 @@ bb.k:                                             ; preds = %.body.i
 bb.l:                                             ; preds = %.noexc17.i.i.i, %bb.f
   %i.aa = phi ptr [ %i.n, %bb.f ], [ %.pre.i.i.i, %.noexc17.i.i.i ]
   %i.ab = phi i64 [ %i.p, %bb.f ], [ %.pre.i.i.i.i.i, %.noexc17.i.i.i ] ; 3 uses
-  %i.ac = extractvalue { ptr, i64 } %i.q, 0
+  %i.ac = extractvalue { ptr, i64 } %i.q, 0       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = icmp sgt i64 %i.ab, -1
   call void @llvm.assume(i1 %i.ad)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ab
@@ -1819,8 +1821,8 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN45_$LT$$RF$T$u20$as$u20$core..fmt..LowerHex$GT$3fmt17hfdc736df203e66ecE", ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !24390
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1.i.i.i = load ptr, ptr %i.au, align 8, !alias.scope !24391, !noalias !24392
-  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !24391, !noalias !24392
+  %.val1.i.i.i = load ptr, ptr %i.au, align 8, !alias.scope !24391, !noalias !24392, !nonnull !4, !noundef !4
+  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !24391, !noalias !24392, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !24393
   store ptr @70, ptr %i.a, align 8, !noalias !24390
   %.sroa.5.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -2223,8 +2225,8 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN45_$LT$$RF$T$u20$as$u20$core..fmt..LowerHex$GT$3fmt17hfdc736df203e66ecE", ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !24836
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1.i.i.i = load ptr, ptr %i.ci, align 8, !alias.scope !24837, !noalias !24838
-  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !24837, !noalias !24838
+  %.val1.i.i.i = load ptr, ptr %i.ci, align 8, !alias.scope !24837, !noalias !24838, !nonnull !4, !noundef !4
+  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !24837, !noalias !24838, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !24839
   store ptr @70, ptr %i.a, align 8, !noalias !24836
   %.sroa.5.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -2627,8 +2629,8 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN45_$LT$$RF$T$u20$as$u20$core..fmt..LowerHex$GT$3fmt17h8b4338ae57529e35E", ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !28523
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1.i.i.i = load ptr, ptr %i.ay, align 8, !alias.scope !28524, !noalias !28525
-  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !28524, !noalias !28525
+  %.val1.i.i.i = load ptr, ptr %i.ay, align 8, !alias.scope !28524, !noalias !28525, !nonnull !4, !noundef !4
+  %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !28524, !noalias !28525, !nonnull !4, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !28526
   store ptr @70, ptr %i.a, align 8, !noalias !28523
   %.sroa.5.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8

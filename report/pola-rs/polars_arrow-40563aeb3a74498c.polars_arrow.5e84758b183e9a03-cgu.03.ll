@@ -205,7 +205,8 @@ bb.cw:                                            ; preds = %bb.j
   %.not.i153 = icmp ne i64 %.val76, 0, !dbg !20728
   call void @llvm.assume(i1 %.not.i153), !dbg !20728
   %i.th = getelementptr [4 x i8], ptr %.val75, i64 %.val76, !dbg !20729
-  %i.ti = getelementptr i8, ptr %i.th, i64 -4, !dbg !20729
+  %i.ti = getelementptr i8, ptr %i.th, i64 -4, !dbg !20729 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ti) ]
   %i.tj = load i32, ptr %i.ti, align 4, !dbg !20730, !noundef !1205
   %i.tk = sub i32 %i.tj, %.val70, !dbg !20731
   %i.tl = sext i32 %i.tk to i64, !dbg !20732
@@ -370,7 +371,8 @@ bb.dm:                                            ; preds = %bb.l
   %.not.i169 = icmp ne i64 %.val82, 0, !dbg !20785
   call void @llvm.assume(i1 %.not.i169), !dbg !20785
   %i.vz = getelementptr [8 x i8], ptr %.val81, i64 %.val82, !dbg !20786
-  %i.wa = getelementptr i8, ptr %i.vz, i64 -8, !dbg !20786
+  %i.wa = getelementptr i8, ptr %i.vz, i64 -8, !dbg !20786 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wa) ]
   %i.wb = load i64, ptr %i.wa, align 8, !dbg !20787, !noundef !1205
   %i.wc = sub i64 %i.wb, %.val72, !dbg !20788
   %i.wd = getelementptr inbounds nuw i8, ptr %i.vw, i64 160, !dbg !20781
@@ -773,7 +775,8 @@ bb.dz:                                            ; preds = %bb.dw, %bb.du
   %.not.i181 = icmp ne i64 %.val5.i, 0, !dbg !22552
   call void @llvm.assume(i1 %.not.i181), !dbg !22552, !noalias !21928
   %i.qi = getelementptr [4 x i8], ptr %.val4.i, i64 %.val5.i, !dbg !22553
-  %i.qj = getelementptr i8, ptr %i.qi, i64 -4, !dbg !22553
+  %i.qj = getelementptr i8, ptr %i.qi, i64 -4, !dbg !22553 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qj) ], !noalias !21928
   %i.qk = load i32, ptr %i.qj, align 4, !dbg !22554, !noalias !21928, !noundef !1205
   %i.ql = sub i32 %i.qk, %.val3.i, !dbg !22555
   %i.qm = sext i32 %i.ql to i64, !dbg !22556
@@ -994,7 +997,8 @@ bb.fb:                                            ; preds = %bb.ey, %bb.ew
   %.not.i190 = icmp ne i64 %.val5.i129, 0, !dbg !22624
   call void @llvm.assume(i1 %.not.i190), !dbg !22624, !noalias !21945
   %i.ry = getelementptr [8 x i8], ptr %.val4.i128, i64 %.val5.i129, !dbg !22625
-  %i.rz = getelementptr i8, ptr %i.ry, i64 -8, !dbg !22625
+  %i.rz = getelementptr i8, ptr %i.ry, i64 -8, !dbg !22625 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.rz) ], !noalias !21945
   %i.sa = load i64, ptr %i.rz, align 8, !dbg !22626, !noalias !21945, !noundef !1205
   %i.sb = sub i64 %i.sa, %.val3.i130, !dbg !22627
   %i.sc = getelementptr inbounds nuw i8, ptr %i.rw, i64 160, !dbg !22619
@@ -1296,7 +1300,8 @@ bb.go:                                            ; preds = %bb.gk, %bb.gi
   %.not.i143 = icmp ne i64 %.val109, 0, !dbg !22719
   call void @llvm.assume(i1 %.not.i143), !dbg !22719
   %i.ul = getelementptr [4 x i8], ptr %.val108, i64 %.val109, !dbg !22720
-  %i.um = getelementptr i8, ptr %i.ul, i64 -4, !dbg !22720
+  %i.um = getelementptr i8, ptr %i.ul, i64 -4, !dbg !22720 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.um) ]
   %i.un = load i32, ptr %i.um, align 4, !dbg !22721, !noundef !1205
   %i.uo = sub i32 %i.un, %i.uj, !dbg !22722
   %i.up = sext i32 %i.uo to i64, !dbg !22723

@@ -206,8 +206,8 @@ define noundef zeroext i1 @"_ZN74_$LT$dump..reader..v4..errors..ErrorType$u20$as
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !30, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val5 = load ptr, ptr %i.b, align 8
-  %.val4 = load ptr, ptr %1, align 8              ; 3 uses
+  %.val5 = load ptr, ptr %i.b, align 8, !nonnull !21, !noundef !21
+  %.val4 = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val5, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !21, !noalias !21, !nonnull !21 ; 3 uses
   switch i8 %i.a, label %default.unreachable28 [
@@ -241,8 +241,8 @@ define noundef zeroext i1 @"_ZN74_$LT$dump..reader..v5..errors..ErrorType$u20$as
 bb.a:
   %i.a = load i8, ptr %0, align 1, !range !30, !noundef !21
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val5 = load ptr, ptr %i.b, align 8
-  %.val4 = load ptr, ptr %1, align 8              ; 3 uses
+  %.val5 = load ptr, ptr %i.b, align 8, !nonnull !21, !noundef !21
+  %.val4 = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val5, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !invariant.load !21, !noalias !21, !nonnull !21 ; 3 uses
   switch i8 %i.a, label %default.unreachable28 [
@@ -645,8 +645,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !90018
   store ptr @1750, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -673,8 +673,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !21, !noundef !21
+  %.val = load ptr, ptr %1, align 8, !nonnull !21, !noundef !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !90021
   store ptr @1750, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

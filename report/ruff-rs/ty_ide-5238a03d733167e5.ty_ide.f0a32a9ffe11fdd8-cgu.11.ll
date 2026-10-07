@@ -204,9 +204,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.f, label %bb.c
 
-_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread45: ; preds = %bb.j, %.lr.ph.i.i, %.split.i37, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit, %.preheader.i.i, %bb.c, %.split.i, %bb.e, %bb.a
-  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ %i.j, %.split.i ], [ %i.r, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit ], [ %i.r, %.preheader.i.i ], [ %i.j, %bb.e ], [ 0, %bb.c ], [ %i.r, %.split.i37 ], [ %i.r, %.lr.ph.i.i ], [ %i.r, %bb.j ]
-  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %i.b, %.split.i ], [ %spec.select49, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit ], [ %i.b, %.preheader.i.i ], [ %i.b, %bb.e ], [ %i.b, %bb.c ], [ %i.b, %.split.i37 ], [ %i.b, %bb.j ], [ null, %.lr.ph.i.i ]
+_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread45: ; preds = %bb.j, %.lr.ph.i.i, %.preheader.i.i.thread, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit, %.preheader.i.i, %bb.c, %.split.i, %bb.e, %bb.a
+  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ %i.j, %.split.i ], [ %i.r, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit ], [ %i.r, %.preheader.i.i ], [ %i.j, %bb.e ], [ 0, %bb.c ], [ %i.r, %.preheader.i.i.thread ], [ %i.r, %.lr.ph.i.i ], [ %i.r, %bb.j ]
+  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ %i.b, %.split.i ], [ %spec.select49, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit ], [ %i.b, %.preheader.i.i ], [ %i.b, %bb.e ], [ %i.b, %bb.c ], [ %i.b, %.preheader.i.i.thread ], [ %i.b, %bb.j ], [ null, %.lr.ph.i.i ]
   %i.f = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.g = insertvalue { ptr, i64 } %i.f, i64 %.sroa.4.0, 1
   ret { ptr, i64 } %i.g
@@ -233,7 +233,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread45, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread
 
 bb.f:                                             ; preds = %bb.b
-  %i.p = tail call { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre18trim_start_matchescECskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.c, i32 noundef 96) ; 2 uses
+  %i.p = tail call { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre18trim_start_matchescECskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.c, i32 noundef 96) ; 3 uses
   %i.q = extractvalue { ptr, i64 } %i.p, 1        ; 6 uses
   %i.r = sub i64 %i.c, %i.q                       ; 10 uses
   %i.s = icmp eq i64 %i.r, 0
@@ -245,7 +245,12 @@ bb.g:                                             ; preds = %bb.f
 
 .split.i37:                                       ; preds = %bb.g
   %i.t = icmp eq i64 %i.q, 0
-  br i1 %i.t, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread45, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread
+  br i1 %i.t, label %.preheader.i.i.thread, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread
+
+.preheader.i.i.thread:                            ; preds = %.split.i37
+  %2 = extractvalue { ptr, i64 } %i.p, 0
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  br label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.thread45
 
 bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.r
@@ -259,7 +264,8 @@ _RNvXs8_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB
   unreachable
 
 bb.i:                                             ; preds = %bb.h, %bb.f
-  %i.x = extractvalue { ptr, i64 } %i.p, 0        ; 2 uses
+  %i.x = extractvalue { ptr, i64 } %i.p, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   %i.y = icmp samesign ult i64 %i.q, 16
   br i1 %i.y, label %.preheader.i.i, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit
 
@@ -662,7 +668,8 @@ _RNvXs8_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB
   unreachable
 
 bb.db:                                            ; preds = %bb.da, %.noexc18.i.i.i
-  %i.nn = extractvalue { ptr, i64 } %i.nf, 0      ; 2 uses
+  %i.nn = extractvalue { ptr, i64 } %i.nf, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nn) ], !noalias !1249
   %i.no = icmp samesign ult i64 %i.ng, 16
   br i1 %i.no, label %.preheader.i.i.i.i.i.i, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.i.i.i.i
 

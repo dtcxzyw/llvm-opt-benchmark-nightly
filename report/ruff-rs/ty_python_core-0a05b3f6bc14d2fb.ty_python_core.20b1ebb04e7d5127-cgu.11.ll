@@ -202,7 +202,8 @@ bb.f:                                             ; preds = %bb.e
   %i.y = and i64 %i.o, -8
   %i.z = getelementptr i8, ptr %i.c, i64 %i.y
   %i.aa = sub i64 0, %i.o
-  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa
+  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.d
   %i.ad = load i64, ptr %i.ac, align 8, !noalias !546, !noundef !5
   %i.ae = sub nuw nsw i64 64, %i.e
@@ -315,7 +316,8 @@ bb.a:
   br i1 %.not.i, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingE15append_elementsBJ_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = extractvalue { ptr, i64 } %i.c, 0
+  %i.h = extractvalue { ptr, i64 } %i.c, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !556, !nonnull !5, !noundef !5
   %i.k = getelementptr inbounds nuw [12 x i8], ptr %i.j, i64 %i.f
@@ -718,7 +720,8 @@ bb.f:                                             ; preds = %bb.g, %bb.i, %bb.h,
   %i.w = and i64 %i.a, -8
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   %i.y = sub i64 0, %i.a
-  %i.z = getelementptr i8, ptr %i.x, i64 %i.y
+  %i.z = getelementptr i8, ptr %i.x, i64 %i.y     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   tail call void %.sroa.0.0(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.z, i64 noundef %i.j, i8 noundef %i.f, i8 noundef %.sroa.4.0.i)
   ret void
 
@@ -974,7 +977,8 @@ bb.f:                                             ; preds = %bb.g, %bb.i, %bb.h,
   %i.w = and i64 %i.a, -8
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   %i.y = sub i64 0, %i.a
-  %i.z = getelementptr i8, ptr %i.x, i64 %i.y
+  %i.z = getelementptr i8, ptr %i.x, i64 %i.y     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   tail call void %.sroa.0.0(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.z, i64 noundef %i.j, i8 noundef %i.f, i8 noundef %.sroa.4.0.i)
   ret void
 
@@ -1377,7 +1381,8 @@ bb.i:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RNvMs8_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_9UseDefMap17bindings_iterator.exit: ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCs2O29vuvTAEJ_14ty_python_core7use_def23DefinitionsAtDefinitionNtBM_18InternedBindingsIdNtBM_22InternedDeclarationsIdEE11map_or_elseRSNtNtBM_11place_state11LiveBindingNCNvMs8_BM_NtBM_9UseDefMap22bindings_at_definition0NCB3x_s_0EBO_.exit, %bb.i
   %i.am = extractvalue { ptr, i64 } %.pn.i, 1
-  %.sroa.02.0.i = extractvalue { ptr, i64 } %.pn.i, 0 ; 2 uses
+  %.sroa.02.0.i = extractvalue { ptr, i64 } %.pn.i, 0 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i) ]
   %.not.i.i = icmp eq ptr %i.aj, null
   %spec.select.i.i.i = select i1 %.not.i.i, ptr @_RNvNtCs2O29vuvTAEJ_14ty_python_core7use_def23EMPTY_CONSTRAINT_TABLES, ptr %i.aj
   %i.an = getelementptr inbounds nuw [12 x i8], ptr %.sroa.02.0.i, i64 %i.am
@@ -1532,7 +1537,8 @@ bb.k:                                             ; preds = %_RINvMNtCs4NRVxsYgn
 
 _RNvMs8_NtCs2O29vuvTAEJ_14ty_python_core7use_defNtB5_9UseDefMap21declarations_iterator.exit: ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCs2O29vuvTAEJ_14ty_python_core7use_def23DefinitionsAtDefinitionNtBM_18InternedBindingsIdNtBM_22InternedDeclarationsIdEE11map_or_elseRSNtNtBM_11place_state15LiveDeclarationNCNvMs8_BM_NtBM_9UseDefMap23declarations_at_binding0NCB3B_s_0EBO_.exit, %bb.k
   %i.an = extractvalue { ptr, i64 } %.pn.i, 1
-  %.sroa.02.0.i = extractvalue { ptr, i64 } %.pn.i, 0 ; 2 uses
+  %.sroa.02.0.i = extractvalue { ptr, i64 } %.pn.i, 0 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i) ]
   %.not.i.i1 = icmp eq ptr %i.ak, null
   %spec.select.i.i.i = select i1 %.not.i.i1, ptr @_RNvNtCs2O29vuvTAEJ_14ty_python_core7use_def23EMPTY_CONSTRAINT_TABLES, ptr %i.ak
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %.sroa.02.0.i, i64 %i.an

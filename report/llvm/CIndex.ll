@@ -205,6 +205,7 @@ _ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit: ; preds = %bb.a
   br i1 %.not, label %bb.h, label %_ZN5clang8cxcursor13CursorVisitorC2EP21CXTranslationUnitImplPF18CXChildVisitResult8CXCursorS5_PvES6_bbNS_11SourceRangeEbPFbS5_S6_E.exit
 
 _ZN5clang8cxcursor13CursorVisitorC2EP21CXTranslationUnitImplPF18CXChildVisitResult8CXCursorS5_PvES6_bbNS_11SourceRangeEbPFbS5_S6_E.exit: ; preds = %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38
   %i.k = load ptr, ptr %i.d, align 8, !tbaa !110
   store i32 %i.j, ptr %3, align 8, !tbaa !84

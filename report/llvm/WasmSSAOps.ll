@@ -204,8 +204,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4EqOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -608,8 +608,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4GeOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -1012,8 +1012,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6GeSIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -1416,8 +1416,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6GeUIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -1820,8 +1820,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4GtOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -2224,8 +2224,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6GtSIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -2628,8 +2628,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6GtUIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -3032,8 +3032,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4LeOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -3436,8 +3436,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6LeSIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -3840,8 +3840,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6LeUIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -4244,8 +4244,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4LtOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -4648,8 +4648,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6LtSIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -5052,8 +5052,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa6LtUIOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -5456,8 +5456,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit70, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7wasmssa4NeOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 

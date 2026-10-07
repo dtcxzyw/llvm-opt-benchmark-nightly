@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 _RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i: ; preds = %bb.ac, %bb.ab
   %.sroa.01.0.i.i = phi i64 [ %i.cf, %bb.ac ], [ %.sroa.0.0.i.i.i, %bb.ab ], !dbg !136912
-  %.sroa.0.0.i.i = phi ptr [ %i.cd, %bb.ac ], [ %i.bu, %bb.ab ], !dbg !136913 ; 2 uses
+  %.sroa.0.0.i.i = phi ptr [ %i.cd, %bb.ac ], [ %i.bu, %bb.ab ], !dbg !136913 ; 3 uses
   %i.cg = icmp eq i64 %.sroa.01.0.i.i, 3, !dbg !136914
   br i1 %i.cg, label %bb.ad, label %bb.ae, !dbg !136914
 
@@ -227,6 +227,7 @@ switch.lookup:                                    ; preds = %bb.ad, %bb.z
   br i1 %i.ck, label %bb.ak, label %bb.af, !dbg !136920
 
 bb.ad:                                            ; preds = %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i) ]
   %i.cl = load i16, ptr %.sroa.0.0.i.i, align 1, !dbg !136921
   %i.cm = xor i16 %i.cl, 21589, !dbg !136921
   %i.cn = getelementptr i8, ptr %.sroa.0.0.i.i, i64 2, !dbg !136921

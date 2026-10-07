@@ -205,7 +205,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %.sroa.432.0.copyload, i64 %i.ao
   %i.az = sub nuw i64 %i.ao, %i.af
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %.sroa.6.0.copyload, i64 %i.az
-  %.sroa.0.0.i.i.prol = select i1 %i.ax, ptr %i.ay, ptr %i.ba ; 2 uses
+  %.sroa.0.0.i.i.prol = select i1 %i.ax, ptr %i.ay, ptr %i.ba ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i.prol) ]
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.prol, i64 16
   %i.bc = load i64, ptr %i.bb, align 8, !noundef !5
   %i.bd = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload, i64 %i.ao ; 2 uses
@@ -342,7 +343,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.co = getelementptr inbounds nuw [24 x i8], ptr %.sroa.432.0.copyload, i64 %.sroa.733.041
   %i.cp = sub nuw i64 %.sroa.733.041, %i.af
   %i.cq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.6.0.copyload, i64 %i.cp
-  %.sroa.0.0.i.i = select i1 %i.cn, ptr %i.co, ptr %i.cq ; 2 uses
+  %.sroa.0.0.i.i = select i1 %i.cn, ptr %i.co, ptr %i.cq ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i) ]
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 16
   %i.cs = load i64, ptr %i.cr, align 8, !noundef !5
   %i.ct = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload, i64 %.sroa.733.041 ; 2 uses
@@ -356,7 +358,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.cz = getelementptr inbounds nuw [24 x i8], ptr %.sroa.432.0.copyload, i64 %i.cu
   %i.da = sub nuw i64 %i.cu, %i.af
   %i.db = getelementptr inbounds nuw [24 x i8], ptr %.sroa.6.0.copyload, i64 %i.da
-  %.sroa.0.0.i.i.1 = select i1 %i.cy, ptr %i.cz, ptr %i.db ; 2 uses
+  %.sroa.0.0.i.i.1 = select i1 %i.cy, ptr %i.cz, ptr %i.db ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i.1) ]
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.1, i64 16
   %i.dd = load i64, ptr %i.dc, align 8, !noundef !5
   %i.de = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload, i64 %i.cu ; 2 uses
