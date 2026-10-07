@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.noexc15
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ay = load i8, ptr %i.ax, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.ay, -1
-  %or.cond.not.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i.i, label %bb.i, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_5EpeckEEENS1_9Segment_3IS3_EENS1_10Triangle_3IS3_EESt6vectorIS4_SaIS4_EEEELb0ELb0EED2Ev.exit, !prof !386
 
 bb.i:                                             ; preds = %bb.h
@@ -608,7 +608,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJN4CGAL7Point_3INS1_5EpeckEEENS1_9Segment_3IS3_EENS1_10Triangle_3IS3_EESt6vectorIS4_SaIS4_EEEELb0ELb0ELb0EED2Ev.exit, !prof !386
 
 bb.b:                                             ; preds = %bb.a
@@ -1011,7 +1011,7 @@ _ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_5EpeckEEENS1_9Segment_3IS3_
   %i.ei = getelementptr inbounds nuw i8, ptr %18, i64 576
   %i.ej = load i8, ptr %i.ei, align 16
   %.not.i.i.i.i.i.i37 = icmp ne i8 %i.ej, -1
-  %or.cond.not.i.i.i38 = select i1 %i.eh, i1 %.not.i.i.i.i.i.i37, i1 false
+  %or.cond.not.i.i.i38 = select i1 %i.eh, i1 %.not.i.i.i.i.i.i37, i1 false, !prof !386
   br i1 %or.cond.not.i.i.i38, label %bb.bf, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_3ISH_EENS1_10Triangle_3ISH_EESt6vectorISI_SaISI_EEEELb0ELb0EED2Ev.exit, !prof !386
 
 bb.bf:                                            ; preds = %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_5EpeckEEENS1_9Segment_3IS3_EENS1_10Triangle_3IS3_EESt6vectorIS4_SaIS4_EEEELb0ELb0EED2Ev.exit36
@@ -1226,7 +1226,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 576
   %i.e = load i8, ptr %i.d, align 16
   %.not.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJN4CGAL7Point_3INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_3ISH_EENS1_10Triangle_3ISH_EESt6vectorISI_SaISI_EEEELb0ELb0ELb0EED2Ev.exit, !prof !386
 
 bb.b:                                             ; preds = %bb.a
@@ -1629,7 +1629,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 752
   %i.i = load i8, ptr %i.h, align 16
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.i, -1
-  %or.cond.not.i.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i.i.i, label %bb.d, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_3ISH_EENS1_10Triangle_3ISH_EESt6vectorISI_SaISI_EEEELb0ELb0EED2Ev.exit.i, !prof !386
 
 bb.d:                                             ; preds = %bb.c
@@ -1846,7 +1846,7 @@ _ZN4CGAL10AT_ET_wrapISt8optionalISt7variantIJNS_7Point_3INS_16Simple_cartesianIN
   %i.ae = trunc nuw i8 %.pre to i1
   store i8 0, ptr %i.u, align 16, !tbaa !413
   %.not.i.i.i.i.i.i = icmp ne i8 %i.ad, -1
-  %or.cond.not.i.i.i = select i1 %i.ae, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.ae, i1 %.not.i.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i.i, label %bb.m, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_3ISH_EENS1_10Triangle_3ISH_EESt6vectorISI_SaISI_EEEELb0ELb0EED2Ev.exit, !prof !2749
 
 bb.m:                                             ; preds = %_ZN4CGAL10AT_ET_wrapISt8optionalISt7variantIJNS_7Point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS_9Segment_3IS7_EENS_10Triangle_3IS7_EESt6vectorIS8_SaIS8_EEEEES1_IS2_IJNS3_INS4_IN5boost14multiprecision6numberINSJ_8backends16rational_adaptorINSL_15cpp_int_backendILm0ELm0ELNSJ_16cpp_integer_typeE1ELNSJ_18cpp_int_check_typeE0ESaIyEEEEELNSJ_26expression_template_optionE1EEEEEEENS9_ISV_EENSB_ISV_EESD_ISW_SaISW_EEEEEEC2EOS12_.exit
@@ -2249,7 +2249,7 @@ bb.h:                                             ; preds = %.noexc15
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ay = load i8, ptr %i.ax, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.ay, -1
-  %or.cond.not.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i, i1 false, !prof !386
   br i1 %or.cond.not.i.i.i, label %bb.i, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_3INS1_5EpeckEEENS1_9Segment_3IS3_EENS1_10Triangle_3IS3_EESt6vectorIS4_SaIS4_EEEELb0ELb0EED2Ev.exit, !prof !386
 
 bb.i:                                             ; preds = %bb.h

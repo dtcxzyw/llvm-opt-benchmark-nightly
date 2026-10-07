@@ -205,7 +205,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.r, ptr %i.f, align 8
   %i.x = trunc nuw i64 %i.v to i1
   %.not = icmp ne ptr %i.w, null
-  %or.cond.not = select i1 %i.x, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.x, i1 %.not, i1 false, !prof !23
   br i1 %or.cond.not, label %bb.j, label %bb.i, !prof !23
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB1B_9GetResult5bytes00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtB1B_5ErrorEECs7p2uQeJxui2_9deltalake.exit
@@ -354,7 +354,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !348
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4P_5error5ErrorEEs_0B3B_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -600,7 +600,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !401
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3E_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -849,7 +849,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !454
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s2_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3J_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3E_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -1098,7 +1098,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !507
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol11checkpoints21create_checkpoint_for00s4_0INtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEs_0B3E_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -1344,7 +1344,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !560
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol14log_compaction16compact_logs_for000INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4N_5error5ErrorEEs_0B3z_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -1590,7 +1590,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !613
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNCNvNtNtB1y_8protocol14log_compaction16compact_logs_for00s0_0INtNtCsbvkFyIu7lgC_4core6result6ResultTINtNtB3H_6option6OptionNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtNtCs8ulvy0Wg6Ot_12delta_kernel21action_reconciliation10log_replay28ActionReconciliationIteratorENtNtB1y_6errors15DeltaTableErrorEEs_0B3C_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -1839,7 +1839,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !666
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1w_8snapshotNtB2G_8Snapshot19try_new_with_engine00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB4L_5error5ErrorEEs_0B3x_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -2085,7 +2085,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.ab, ptr %i.f, align 8, !noalias !719
   %i.ah = trunc nuw i64 %i.af to i1
   %.not.i.i = icmp ne ptr %i.ag, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %.not.i.i, i1 false, !prof !23
   br i1 %or.cond.not.i.i, label %bb.m, label %bb.s, !prof !23
 
 bb.m:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvMNtB1w_8snapshotNtB2G_8Snapshot31application_transaction_version00INtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB3O_6option6OptionxENtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEs_0B3J_ECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -2488,7 +2488,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.v, ptr %i.f, align 8, !noalias !5471
   %i.ab = trunc nuw i64 %i.z to i1
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !23
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB1x_21ReceiverStreamBuilderTNtCseo6ZV82fEK1_3url3UrlINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB3o_yEEE14spawn_blockingNCNvXs0_NtNtNtNtNtB1D_16delta_datafusion14table_provider4next4scan6replayINtB56_14ScanFileStreamINtNtB3s_3pin3PinINtNtB44_5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB3s_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtB1D_6errors15DeltaTableErrorENtNtB3s_6marker4SendEL_EEEB77_9poll_nexts_0Es_0IB7Y_uB99_EECs7p2uQeJxui2_9deltalake.exit.i
@@ -2672,7 +2672,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.e, align 8, !noalias !5510
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !23
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNvMsg_NtCs7p2uQeJxui2_9deltalake10filesystemNtB2A_22DeltaFileSystemHandler15open_input_file0INtNtCsbvkFyIu7lgC_4core6result6ResultNtB2A_15ObjectInputFileNtCsjyY8HP3IvQ6_12object_store5ErrorEE00uEB2C_.exit.i
@@ -2862,7 +2862,7 @@ _RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.e, align 8, !noalias !5549
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !23
   br i1 %or.cond.not.i, label %bb.j, label %bb.p, !prof !23
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNvXNtCs7p2uQeJxui2_9deltalake6readerNtB2x_21StreamToReaderAdapterNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4next0INtNtB3F_6option6OptionINtNtB3F_6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEEE00uEB2z_.exit.i

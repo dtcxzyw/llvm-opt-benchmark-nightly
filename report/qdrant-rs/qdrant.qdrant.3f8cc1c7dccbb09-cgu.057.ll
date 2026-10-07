@@ -93,7 +93,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.f, align 8
   %i.y = trunc nuw i64 %i.w to i1
   %.not = icmp ne ptr %i.x, null
-  %or.cond.not = select i1 %i.y, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.y, i1 %.not, i1 false, !prof !10
   br i1 %or.cond.not, label %bb.k, label %bb.j, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtCsPYQCUnoTxQ_10collection10collection3mmr27mmr_from_points_with_vectorINtNtNtNtCskKLDkoKarTP_4core4iter8adapters7flatten7FlattenINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtB3L_3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEEEE0s_0INtNtB2T_6result6ResultB4u_NtNtNtB4J_6common15operation_error14OperationErrorEECsl8OoimOLbh_6qdrant.exit
@@ -216,7 +216,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.f, align 8
   %i.y = trunc nuw i64 %i.w to i1
   %.not = icmp ne ptr %i.x, null
-  %or.cond.not = select i1 %i.y, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.y, i1 %.not, i1 false, !prof !10
   br i1 %or.cond.not, label %bb.k, label %bb.j, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard6scrollNtB1C_10LocalShard25internal_scroll_by_id_raw000INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types15ExtendedPointIdENtNtNtB4v_6common15operation_error14OperationErrorEECsl8OoimOLbh_6qdrant.exit
@@ -339,7 +339,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.f, align 8
   %i.y = trunc nuw i64 %i.w to i1
   %.not = icmp ne ptr %i.x, null
-  %or.cond.not = select i1 %i.y, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.y, i1 %.not, i1 false, !prof !10
   br i1 %or.cond.not, label %bb.k, label %bb.j, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtCsPYQCUnoTxQ_10collection14update_handlerNtB1y_13UpdateHandler23store_clocks_if_changed00uECsl8OoimOLbh_6qdrant.exit
@@ -462,7 +462,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.f, align 8
   %i.y = trunc nuw i64 %i.w to i1
   %.not = icmp ne ptr %i.x, null
-  %or.cond.not = select i1 %i.y, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.y, i1 %.not, i1 false, !prof !10
   br i1 %or.cond.not, label %bb.k, label %bb.j, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection18collection_manager17segments_searcherNtB1y_16SegmentsSearcher12retrieve_raw00INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsyIGusAaLFh_5ahash8hash_map8AHashMapNtNtCs607s0NAIaWN_7segment5types15ExtendedPointIdNtNtNtB4E_10data_types14segment_record16SegmentRecordRawENtNtNtB4E_6common15operation_error14OperationErrorEECsl8OoimOLbh_6qdrant.exit
@@ -585,7 +585,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.s, ptr %i.f, align 8
   %i.y = trunc nuw i64 %i.w to i1
   %.not = icmp ne ptr %i.x, null
-  %or.cond.not = select i1 %i.y, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.y, i1 %.not, i1 false, !prof !10
   br i1 %or.cond.not, label %bb.k, label %bb.j, !prof !10
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsl8OoimOLbh_6qdrant6common9telemetryNtB1y_18TelemetryCollector12prepare_data00INtNtCskKLDkoKarTP_4core6result6ResultNtNtNtB1A_13telemetry_ops21collections_telemetry20CollectionsTelemetryNtNtNtCsPYQCUnoTxQ_10collection10operations5types15CollectionErrorEEB1C_.exit
@@ -988,7 +988,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.y, ptr %i.e, align 8, !noalias !1156
   %i.ae = trunc nuw i64 %i.ac to i1
   %.not.i = icmp ne ptr %i.ad, null
-  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtCsPYQCUnoTxQ_10collection6shards11local_shardNtB1x_10LocalShard16do_with_segmentsjNCNCNvB1w_23local_update_queue_info00E0jECsl8OoimOLbh_6qdrant.exit.i
@@ -1179,7 +1179,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1196
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB1x_15ShardReplicaSet8wait_forNCNCNvB1w_14wait_for_local00E0bECsl8OoimOLbh_6qdrant.exit.i
@@ -1380,7 +1380,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1241
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB1x_15ShardReplicaSet8wait_forNCNCNvB1w_20wait_for_local_state00E0bECsl8OoimOLbh_6qdrant.exit.i
@@ -1582,7 +1582,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1280
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvMs7_NtCslmvYCXbQjWR_6common7tar_extINtB1C_10BuilderExtINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtB1C_9WriteSeekNtNtCskKLDkoKarTP_4core6marker4SendEL_EE9run_asyncuNtNtNtB3k_2io5error5ErrorNCNCNvB1y_11append_data00E00INtNtB3k_6result6ResultuB45_EECsl8OoimOLbh_6qdrant.exit.i
@@ -1773,7 +1773,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1315
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtCscmBEibYz9XM_6cancel8blocking20spawn_cancel_on_dropINtNtCskKLDkoKarTP_4core6result6ResultINtNtB2v_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringENtNtNtCsgGgPqgSfnMH_7storage15content_manager6errors12StorageErrorENCNCNvNtNtB46_9snapshots12download_tar23download_and_unpack_tar00E00B2q_ECsl8OoimOLbh_6qdrant.exit.i
@@ -1964,7 +1964,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1350
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtCscmBEibYz9XM_6cancel8blocking20spawn_cancel_on_dropINtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCsgGgPqgSfnMH_7storage5audit10AuditEventENtNtNtB3D_15content_manager6errors12StorageErrorENCNCNvNtNtCsl8OoimOLbh_6qdrant6common5audit24fetch_cluster_audit_logs00E00B2q_EB5f_.exit.i
@@ -2155,7 +2155,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1385
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtCscmBEibYz9XM_6cancel8blocking20spawn_cancel_on_dropINtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCsgGgPqgSfnMH_7storage5audit10AuditEventENtNtNtB3D_15content_manager6errors12StorageErrorENCNCNvXs_NtNtNtCsl8OoimOLbh_6qdrant5tonic3api19qdrant_internal_apiNtB5e_21QdrantInternalServiceNtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant22qdrant_internal_server14QdrantInternal13get_audit_log0s1_0E00B2q_EB5k_.exit.i
@@ -2346,7 +2346,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1420
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtCscmBEibYz9XM_6cancel8blocking20spawn_cancel_on_dropINtNtCskKLDkoKarTP_4core6result6ResultNtNtNtCs5QaNqjAn6vc_5shard9snapshots17snapshot_manifest16SnapshotManifestNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard8snapshotNtB5t_10LocalShard17snapshot_manifest00E00B2q_ECsl8OoimOLbh_6qdrant.exit.i
@@ -2537,7 +2537,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1455
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtCscmBEibYz9XM_6cancel8blocking21spawn_cancel_on_tokenINtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtCsPYQCUnoTxQ_10collection10operations5types15CollectionErrorENCNCNvMNtNtB3a_6shards12shard_holderNtB4g_11ShardHolder22restore_shard_snapshot00E00B2r_ECsl8OoimOLbh_6qdrant.exit.i
@@ -2728,7 +2728,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1490
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs10create_dir10create_dirRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2K_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -2919,7 +2919,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1525
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs11remove_file11remove_fileRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2M_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -3110,7 +3110,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1560
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14create_dir_all14create_dir_allRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2S_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -3301,7 +3301,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1595
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14read_to_string14read_to_stringRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtB2S_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -3492,7 +3492,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1630
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14remove_dir_all14remove_dir_allRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2S_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -3683,7 +3683,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1665
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs4copy4copyRNtNtCsG258MDvU3F_3std4path4PathB1S_E00INtNtCskKLDkoKarTP_4core6result6ResultyNtNtNtB2A_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -3874,7 +3874,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1700
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs8metadata8metadataRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultNtNtB25_2fs8MetadataNtNtNtB2E_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -4065,7 +4065,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1735
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs8read_dir8read_dirRNtNtCsG258MDvU3F_3std4path4PathE00INtNtCskKLDkoKarTP_4core6result6ResultNtB1y_7ReadDirNtNtNtB2E_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -4256,7 +4256,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1770
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtCsPYQCUnoTxQ_10collection6common10file_utils8move_dirNtNtCsG258MDvU3F_3std4path7PathBufB2t_E00INtNtCskKLDkoKarTP_4core6result6ResultyNtNtNtB1C_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -4447,7 +4447,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1811
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1C_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead17read_bytes_stream0s0_000INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VechENtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1I_.exit.i
@@ -4648,7 +4648,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1850
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11local_shardNtB1A_10LocalShard4load0s4_00INtNtCskKLDkoKarTP_4core6result6ResultINtNtB2V_6option6OptionNtNtCs607s0NAIaWN_7segment7segment7SegmentENtNtNtB1E_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -4839,7 +4839,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1885
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard8snapshotNtB1C_10LocalShard20get_snapshot_creator000INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB1G_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -5030,7 +5030,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1920
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set9snapshotsNtB1C_15ShardReplicaSet26restore_local_replica_from0s_00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB3y_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -5221,7 +5221,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1955
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set9snapshotsNtB1C_15ShardReplicaSet26restore_local_replica_from0s_0s_0INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB3A_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -5412,7 +5412,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !1990
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtBc_2fs12open_optionsNtB1y_11OpenOptions8std_open00INtNtCskKLDkoKarTP_4core6result6ResultNtNtCsG258MDvU3F_3std2fs4FileNtNtNtB2v_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -5602,7 +5602,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.x, ptr %i.e, align 8, !noalias !2029
   %i.ad = trunc nuw i64 %i.ab to i1
   %.not.i = icmp ne ptr %i.ac, null
-  %or.cond.not.i = select i1 %i.ad, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ad, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtBc_2fs4fileNtB1y_4File8sync_all00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2e_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -5799,7 +5799,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2064
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14shard_transferNtB1A_10Collection23initiate_shard_transfer00bECsl8OoimOLbh_6qdrant.exit.i
@@ -5991,7 +5991,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.y, ptr %i.e, align 8, !noalias !2097
   %i.ae = trunc nuw i64 %i.ac to i1
   %.not.i = icmp ne ptr %i.ad, null
-  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11local_shardNtB1y_10LocalShard13memory_report00INtNtCskKLDkoKarTP_4core6result6ResultNtNtNtB1C_6common15memory_reporter22CollectionMemoryReportNtNtNtB1C_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -6183,7 +6183,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.y, ptr %i.e, align 8, !noalias !2129
   %i.ae = trunc nuw i64 %i.ac to i1
   %.not.i = icmp ne ptr %i.ad, null
-  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11local_shardNtB1y_10LocalShard18local_shard_status00INtNtCskKLDkoKarTP_4core6option6OptionTNtNtNtB1C_10operations5types11ShardStatusNtB3E_16OptimizersStatusEEECsl8OoimOLbh_6qdrant.exit.i
@@ -6374,7 +6374,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2163
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11local_shardNtB1y_10LocalShard20estimate_cardinality00INtNtCskKLDkoKarTP_4core6result6ResultNtNtNtCs607s0NAIaWN_7segment5index11field_index21CardinalityEstimationNtNtNtB3J_6common15operation_error14OperationErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -6565,7 +6565,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2198
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB1y_15ShardReplicaSet27calculate_local_shard_stats0s_0TjjjEECsl8OoimOLbh_6qdrant.exit.i
@@ -6756,7 +6756,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2233
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtCsgGgPqgSfnMH_7storage15content_manager3tocNtB1y_14TableOfContent22create_collection_path00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB3a_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -6947,7 +6947,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2268
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard14resolve_submitNtB1A_10LocalShard30submit_update_filter_resolving0s_0INtNtCskKLDkoKarTP_4core6result6ResultNtNtCs5QaNqjAn6vc_5shard10operations26CollectionUpdateOperationsNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -7138,7 +7138,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2303
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard18disk_usage_watcherNtB1y_16DiskUsageWatcher20get_free_space_bytes00INtNtCskKLDkoKarTP_4core6option6OptionyEECsl8OoimOLbh_6qdrant.exit.i
@@ -7329,7 +7329,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2338
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard9telemetryNtB1A_10LocalShard14get_size_stats00INtNtCskKLDkoKarTP_4core6result6ResultNtNtCs607s0NAIaWN_7segment5types9SizeStatsNtNtNtB1E_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -7520,7 +7520,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2373
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard9telemetryNtB1A_10LocalShard18get_telemetry_data00INtNtCskKLDkoKarTP_4core6result6ResultTINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment9telemetry16SegmentTelemetryEINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtB3T_6string6StringjEENtNtNtB1E_10operations5types15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -7711,7 +7711,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2408
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard9telemetryNtB1A_10LocalShard23get_optimization_status00INtNtCskKLDkoKarTP_4core6result6ResultNtNtNtB1E_10operations5types16OptimizersStatusNtB3U_15CollectionErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -7902,7 +7902,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2443
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set6updateNtB1A_15ShardReplicaSet11update_impl0s9_0bECsl8OoimOLbh_6qdrant.exit.i
@@ -8093,7 +8093,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2478
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtCsgGgPqgSfnMH_7storage15content_manager3toc19collection_meta_opsNtB1A_14TableOfContent17delete_collection00uECsl8OoimOLbh_6qdrant.exit.i
@@ -8284,7 +8284,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2513
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs7_NtCslmvYCXbQjWR_6common7tar_extINtB1B_10BuilderExtINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtB1B_9WriteSeekNtNtCskKLDkoKarTP_4core6marker4SendEL_EE6finish00INtNtB3j_6result6ResultuNtNtNtB3j_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -8475,7 +8475,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2554
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs_NtNtCsgGgPqgSfnMH_7storage15content_manager17consensus_managerINtB1A_16ConsensusManagerNtNtB1C_3toc14TableOfContentE31propose_consensus_op_with_await00bECsl8OoimOLbh_6qdrant.exit.i
@@ -8676,7 +8676,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2593
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtBc_2fs10try_exists25try_exists_spawn_blocking00INtNtCskKLDkoKarTP_4core6result6ResultbNtNtNtB2r_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -8867,7 +8867,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2628
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtBc_2fs6rename15rename_blocking00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtNtB2c_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -9058,7 +9058,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2663
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtCsgGgPqgSfnMH_7storage15content_manager9snapshots24__do_create_full_snapshot0s_0INtNtCskKLDkoKarTP_4core6result6ResultuNtNtB1z_6errors12StorageErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -9249,7 +9249,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2698
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtNtCsgGgPqgSfnMH_7storage15content_manager9snapshots7recover25__do_recover_from_snapshot00INtNtCskKLDkoKarTP_4core6result6ResultuNtNtB1B_6errors12StorageErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -9440,7 +9440,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2733
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead10list_files00INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtB2V_5types10ListedFileENtNtB2V_5error16UniversalIoErrorEEB1E_.exit.i
@@ -9631,7 +9631,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2768
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead10read_batch0s_0INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecIB5W_hEENtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -9822,7 +9822,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2803
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead10read_bytes00INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VechENtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -10013,7 +10013,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2838
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead10read_whole00INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VechENtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -10204,7 +10204,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2873
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead11file_exists00INtNtCskKLDkoKarTP_4core6result6ResultbNtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -10395,7 +10395,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2908
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead11file_length00INtNtCskKLDkoKarTP_4core6result6ResultyNtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -10586,7 +10586,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !2943
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtNtNtCsl8OoimOLbh_6qdrant5tonic3api16storage_read_apiINtB1y_18StorageReadServiceNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileENtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19storage_read_server11StorageRead17read_bytes_stream00INtNtCskKLDkoKarTP_4core6result6ResultTB2R_NtNtB2V_5types9ReadRangeENtNtCsgOCJwUSa4vG_5tonic6status6StatusEEB1E_.exit.i
@@ -10778,7 +10778,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.y, ptr %i.e, align 8, !noalias !2984
   %i.ae = trunc nuw i64 %i.ac to i1
   %.not.i = icmp ne ptr %i.ad, null
-  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ae, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXs_NtNtNtCsl8OoimOLbh_6qdrant5tonic3api8raft_apiNtB1A_11RaftServiceNtNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11raft_server4Raft17add_peer_to_known0s3_0bEB1G_.exit.i
@@ -10975,7 +10975,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !3019
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs0_NtNtCs6EFb6a2W5dE_10actix_http8encoding7encoderINtB1z_7EncoderNtNtNtB1D_4body5boxed7BoxBodyENtNtB2D_12message_body11MessageBody9poll_nexts_0INtNtCskKLDkoKarTP_4core6result6ResultNtB1z_14ContentEncoderNtNtNtB3U_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i
@@ -11166,7 +11166,7 @@ _RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   store ptr %i.w, ptr %i.f, align 8, !noalias !3055
   %i.ac = trunc nuw i64 %i.aa to i1
   %.not.i = icmp ne ptr %i.ab, null
-  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.ac, i1 %.not.i, i1 false, !prof !10
   br i1 %or.cond.not.i, label %bb.k, label %bb.q, !prof !10
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsjZG7hsAZr3B_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtCs6EFb6a2W5dE_10actix_http8encoding7decoderINtB1y_7DecoderINtNtB1C_7payload7PayloadINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs3aP4uAeNgCL_12futures_core6stream6Streamp4ItemINtNtB32_6result6ResultNtNtCs14kzo5Se9zC_5bytes5bytes5BytesNtNtB1C_5error12PayloadErrorEEL_EEEEB43_9poll_nexts_0IB4U_TINtNtB32_6option6OptionB5g_ENtB1y_14ContentDecoderENtNtNtB32_2io5error5ErrorEECsl8OoimOLbh_6qdrant.exit.i

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ai = icmp ne ptr %i.ah, null
-  %or.cond.not.i = select i1 %i.af, i1 %i.ai, i1 false
+  %or.cond.not.i = select i1 %i.af, i1 %i.ai, i1 false, !prof !179
   br i1 %or.cond.not.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit3
@@ -316,7 +316,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !776 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIaEEPKT_i.exit3.i
@@ -442,7 +442,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !783 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_i.exit3.i
@@ -568,7 +568,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !790 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIsEEPKT_i.exit3.i
@@ -696,7 +696,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !797 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesItEEPKT_i.exit3.i
@@ -824,7 +824,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !804 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit3.i
@@ -952,7 +952,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !811 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIjEEPKT_i.exit3.i
@@ -1080,7 +1080,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !818 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit3.i
@@ -1208,7 +1208,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !825 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesImEEPKT_i.exit3.i
@@ -1387,7 +1387,7 @@ bb.g:                                             ; preds = %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.ba = load ptr, ptr %i.az, align 8, !noalias !842 ; 2 uses
   %i.bb = icmp ne ptr %i.ba, null
-  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ay, i1 %i.bb, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ay, i1 %i.bb, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.k, label %.thread.i.i.i.i.i.i.i.i, !prof !179
 
 .thread.i.i.i.i.i.i.i.i:                          ; preds = %bb.g, %bb.f
@@ -1552,7 +1552,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dv = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.dw = load ptr, ptr %i.dv, align 8, !noalias !842 ; 2 uses
   %i.dx = icmp ne ptr %i.dw, null
-  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.du, i1 %i.dx, i1 false
+  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.du, i1 %i.dx, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i.i.i.i, label %bb.s, label %.thread.i.i.i5.i.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i.i.i.i:                         ; preds = %bb.o, %bb.n
@@ -1730,7 +1730,7 @@ bb.x:                                             ; preds = %bb.w
   %i.gv = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.gw = load ptr, ptr %i.gv, align 8, !noalias !842 ; 2 uses
   %i.gx = icmp ne ptr %i.gw, null
-  %or.cond.not.i.i.i.i28.i.i.i.i = select i1 %i.gu, i1 %i.gx, i1 false
+  %or.cond.not.i.i.i.i28.i.i.i.i = select i1 %i.gu, i1 %i.gx, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i28.i.i.i.i, label %bb.aa, label %.thread.i.i.i.i29.i.i.i.i, !prof !179
 
 .thread.i.i.i.i29.i.i.i.i:                        ; preds = %bb.x, %bb.w
@@ -1887,7 +1887,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.jp = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.jq = load ptr, ptr %i.jp, align 8, !noalias !842 ; 2 uses
   %i.jr = icmp ne ptr %i.jq, null
-  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.jo, i1 %i.jr, i1 false
+  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.jo, i1 %i.jr, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i7.i.i.i.i, label %bb.ag, label %.thread.i.i.i5.i8.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i8.i.i.i.i:                        ; preds = %bb.ad, %bb.ac
@@ -2069,7 +2069,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.mu = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.mv = load ptr, ptr %i.mu, align 8, !noalias !842 ; 2 uses
   %i.mw = icmp ne ptr %i.mv, null
-  %or.cond.not.i.i.i.i.i10.i.i.i = select i1 %i.mt, i1 %i.mw, i1 false
+  %or.cond.not.i.i.i.i.i10.i.i.i = select i1 %i.mt, i1 %i.mw, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i10.i.i.i, label %bb.ao, label %.thread.i.i.i.i.i11.i.i.i, !prof !179
 
 .thread.i.i.i.i.i11.i.i.i:                        ; preds = %bb.al, %bb.ak
@@ -2319,7 +2319,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.qq = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.qr = load ptr, ptr %i.qq, align 8, !noalias !842 ; 2 uses
   %i.qs = icmp ne ptr %i.qr, null
-  %or.cond.not.i.i.i4.i.i6.i.i.i = select i1 %i.qp, i1 %i.qs, i1 false
+  %or.cond.not.i.i.i4.i.i6.i.i.i = select i1 %i.qp, i1 %i.qs, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i6.i.i.i, label %bb.aw, label %.thread.i.i.i5.i.i7.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i7.i.i.i:                        ; preds = %bb.as, %bb.ar
@@ -2485,7 +2485,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.sx = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.sy = load ptr, ptr %i.sx, align 8, !noalias !842 ; 2 uses
   %i.sz = icmp ne ptr %i.sy, null
-  %or.cond.not.i.i.i.i21.i.i.i.i = select i1 %i.sw, i1 %i.sz, i1 false
+  %or.cond.not.i.i.i.i21.i.i.i.i = select i1 %i.sw, i1 %i.sz, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i21.i.i.i.i, label %bb.bg, label %.thread.i.i.i.i22.i.i.i.i, !prof !179
 
 .thread.i.i.i.i22.i.i.i.i:                        ; preds = %bb.bc, %bb.bb
@@ -2624,7 +2624,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.uy = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.uz = load ptr, ptr %i.uy, align 8, !noalias !842 ; 2 uses
   %i.va = icmp ne ptr %i.uz, null
-  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.ux, i1 %i.va, i1 false
+  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.ux, i1 %i.va, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i6.i.i.i.i, label %bb.bo, label %.thread.i.i.i5.i7.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i7.i.i.i.i:                        ; preds = %bb.bl, %bb.bk
@@ -2865,7 +2865,7 @@ bb.g:                                             ; preds = %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.ba = load ptr, ptr %i.az, align 8, !noalias !880 ; 2 uses
   %i.bb = icmp ne ptr %i.ba, null
-  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ay, i1 %i.bb, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ay, i1 %i.bb, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.j, label %.thread.i.i.i.i.i.i.i.i, !prof !179
 
 .thread.i.i.i.i.i.i.i.i:                          ; preds = %bb.g, %bb.f
@@ -3109,7 +3109,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ey = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.ez = load ptr, ptr %i.ey, align 8, !noalias !880 ; 2 uses
   %i.fa = icmp ne ptr %i.ez, null
-  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.ex, i1 %i.fa, i1 false
+  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.ex, i1 %i.fa, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i.i.i.i, label %bb.r, label %.thread.i.i.i5.i.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i.i.i.i:                         ; preds = %bb.n, %bb.m
@@ -3398,7 +3398,7 @@ bb.x:                                             ; preds = %bb.w
   %i.jt = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.ju = load ptr, ptr %i.jt, align 8, !noalias !880 ; 2 uses
   %i.jv = icmp ne ptr %i.ju, null
-  %or.cond.not.i.i.i.i17.i.i.i.i = select i1 %i.js, i1 %i.jv, i1 false
+  %or.cond.not.i.i.i.i17.i.i.i.i = select i1 %i.js, i1 %i.jv, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i17.i.i.i.i, label %bb.y, label %.thread.i.i.i.i18.i.i.i.i, !prof !179
 
 .thread.i.i.i.i18.i.i.i.i:                        ; preds = %bb.x, %bb.w
@@ -3602,7 +3602,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.nc = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.nd = load ptr, ptr %i.nc, align 8, !noalias !880 ; 2 uses
   %i.ne = icmp ne ptr %i.nd, null
-  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.nb, i1 %i.ne, i1 false
+  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.nb, i1 %i.ne, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i7.i.i.i.i, label %bb.ad, label %.thread.i.i.i5.i8.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i8.i.i.i.i:                        ; preds = %bb.aa, %bb.z
@@ -3875,7 +3875,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ro = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.rp = load ptr, ptr %i.ro, align 8, !noalias !880 ; 2 uses
   %i.rq = icmp ne ptr %i.rp, null
-  %or.cond.not.i.i.i.i.i31.i.i.i = select i1 %i.rn, i1 %i.rq, i1 false
+  %or.cond.not.i.i.i.i.i31.i.i.i = select i1 %i.rn, i1 %i.rq, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i31.i.i.i, label %bb.ak, label %.thread.i.i.i.i.i32.i.i.i, !prof !179
 
 .thread.i.i.i.i.i32.i.i.i:                        ; preds = %bb.aj, %bb.ai
@@ -4081,7 +4081,7 @@ bb.am:                                            ; preds = %bb.al
   %i.uw = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.ux = load ptr, ptr %i.uw, align 8, !noalias !880 ; 2 uses
   %i.uy = icmp ne ptr %i.ux, null
-  %or.cond.not.i.i.i4.i.i21.i.i.i = select i1 %i.uv, i1 %i.uy, i1 false
+  %or.cond.not.i.i.i4.i.i21.i.i.i = select i1 %i.uv, i1 %i.uy, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i21.i.i.i, label %bb.ap, label %.thread.i.i.i5.i.i22.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i22.i.i.i:                       ; preds = %bb.am, %bb.al
@@ -4332,7 +4332,7 @@ bb.au:                                            ; preds = %bb.at
   %i.yy = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.yz = load ptr, ptr %i.yy, align 8, !noalias !880 ; 2 uses
   %i.za = icmp ne ptr %i.yz, null
-  %or.cond.not.i.i.i.i16.i.i.i.i = select i1 %i.yx, i1 %i.za, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i = select i1 %i.yx, i1 %i.za, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i, label %bb.av, label %.thread.i.i.i.i17.i.i.i.i, !prof !179
 
 .thread.i.i.i.i17.i.i.i.i:                        ; preds = %bb.au, %bb.at
@@ -4514,7 +4514,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.abm = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.abn = load ptr, ptr %i.abm, align 8, !noalias !880 ; 2 uses
   %i.abo = icmp ne ptr %i.abn, null
-  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.abl, i1 %i.abo, i1 false
+  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.abl, i1 %i.abo, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i6.i.i.i.i, label %bb.ay, label %.thread.i.i.i5.i7.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i7.i.i.i.i:                        ; preds = %bb.ax, %bb.aw
@@ -4817,7 +4817,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.az = load ptr, ptr %i.ay, align 8, !noalias !914 ; 2 uses
   %i.ba = icmp ne ptr %i.az, null
-  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ax, i1 %i.ba, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.ax, i1 %i.ba, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.k, label %.thread.i.i.i.i.i.i.i.i, !prof !179
 
 .thread.i.i.i.i.i.i.i.i:                          ; preds = %bb.g, %bb.f
@@ -4947,7 +4947,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cw = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.cx = load ptr, ptr %i.cw, align 8, !noalias !914 ; 2 uses
   %i.cy = icmp ne ptr %i.cx, null
-  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.cv, i1 %i.cy, i1 false
+  %or.cond.not.i.i.i4.i.i.i.i.i = select i1 %i.cv, i1 %i.cy, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i.i.i.i, label %bb.u, label %.thread.i.i.i5.i.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i.i.i.i:                         ; preds = %bb.p, %bb.o
@@ -5170,7 +5170,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gl = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.gm = load ptr, ptr %i.gl, align 8, !noalias !914 ; 2 uses
   %i.gn = icmp ne ptr %i.gm, null
-  %or.cond.not.i.i.i.i17.i.i.i.i = select i1 %i.gk, i1 %i.gn, i1 false
+  %or.cond.not.i.i.i.i17.i.i.i.i = select i1 %i.gk, i1 %i.gn, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i17.i.i.i.i, label %bb.ab, label %.thread.i.i.i.i18.i.i.i.i, !prof !179
 
 .thread.i.i.i.i18.i.i.i.i:                        ; preds = %bb.aa, %bb.z
@@ -5374,7 +5374,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ju = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.jv = load ptr, ptr %i.ju, align 8, !noalias !914 ; 2 uses
   %i.jw = icmp ne ptr %i.jv, null
-  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.jt, i1 %i.jw, i1 false
+  %or.cond.not.i.i.i4.i7.i.i.i.i = select i1 %i.jt, i1 %i.jw, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i7.i.i.i.i, label %bb.ag, label %.thread.i.i.i5.i8.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i8.i.i.i.i:                        ; preds = %bb.ad, %bb.ac
@@ -5647,7 +5647,7 @@ bb.am:                                            ; preds = %bb.al
   %i.og = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.oh = load ptr, ptr %i.og, align 8, !noalias !914 ; 2 uses
   %i.oi = icmp ne ptr %i.oh, null
-  %or.cond.not.i.i.i.i.i31.i.i.i = select i1 %i.of, i1 %i.oi, i1 false
+  %or.cond.not.i.i.i.i.i31.i.i.i = select i1 %i.of, i1 %i.oi, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i.i31.i.i.i, label %bb.an, label %.thread.i.i.i.i.i32.i.i.i, !prof !179
 
 .thread.i.i.i.i.i32.i.i.i:                        ; preds = %bb.am, %bb.al
@@ -5853,7 +5853,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ro = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.rp = load ptr, ptr %i.ro, align 8, !noalias !914 ; 2 uses
   %i.rq = icmp ne ptr %i.rp, null
-  %or.cond.not.i.i.i4.i.i21.i.i.i = select i1 %i.rn, i1 %i.rq, i1 false
+  %or.cond.not.i.i.i4.i.i21.i.i.i = select i1 %i.rn, i1 %i.rq, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i.i21.i.i.i, label %bb.as, label %.thread.i.i.i5.i.i22.i.i.i, !prof !179
 
 .thread.i.i.i5.i.i22.i.i.i:                       ; preds = %bb.ap, %bb.ao
@@ -6104,7 +6104,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.vq = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.vr = load ptr, ptr %i.vq, align 8, !noalias !914 ; 2 uses
   %i.vs = icmp ne ptr %i.vr, null
-  %or.cond.not.i.i.i.i16.i.i.i.i = select i1 %i.vp, i1 %i.vs, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i = select i1 %i.vp, i1 %i.vs, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i, label %bb.ay, label %.thread.i.i.i.i17.i.i.i.i, !prof !179
 
 .thread.i.i.i.i17.i.i.i.i:                        ; preds = %bb.ax, %bb.aw
@@ -6286,7 +6286,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.ye = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i4.i.i.i, i64 16
   %i.yf = load ptr, ptr %i.ye, align 8, !noalias !914 ; 2 uses
   %i.yg = icmp ne ptr %i.yf, null
-  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.yd, i1 %i.yg, i1 false
+  %or.cond.not.i.i.i4.i6.i.i.i.i = select i1 %i.yd, i1 %i.yg, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i4.i6.i.i.i.i, label %bb.bb, label %.thread.i.i.i5.i7.i.i.i.i, !prof !179
 
 .thread.i.i.i5.i7.i.i.i.i:                        ; preds = %bb.ba, %bb.az
@@ -6596,7 +6596,7 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
   %i.bh = load ptr, ptr %i.bg, align 8, !noalias !924 ; 2 uses
   %i.bi = icmp ne ptr %i.bh, null
-  %or.cond.not.i.i.i = select i1 %i.bf, i1 %i.bi, i1 false
+  %or.cond.not.i.i.i = select i1 %i.bf, i1 %i.bi, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i, label %bb.h, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i: ; preds = %bb.f, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit5.i.i
@@ -6773,7 +6773,7 @@ bb.n:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ey = getelementptr inbounds nuw i8, ptr %i.eu, i64 16
   %i.ez = load ptr, ptr %i.ey, align 8, !noalias !924 ; 2 uses
   %i.fa = icmp ne ptr %i.ez, null
-  %or.cond.not.i.i8.i = select i1 %i.ex, i1 %i.fa, i1 false
+  %or.cond.not.i.i8.i = select i1 %i.ex, i1 %i.fa, i1 false, !prof !179
   br i1 %or.cond.not.i.i8.i, label %bb.p, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i: ; preds = %bb.n, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit6.i.i
@@ -6947,7 +6947,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8            ; 2 uses
   %i.as = icmp ne ptr %i.ar, null
-  %or.cond.not.i = select i1 %i.ap, i1 %i.as, i1 false
+  %or.cond.not.i = select i1 %i.ap, i1 %i.as, i1 false, !prof !179
   br i1 %or.cond.not.i, label %bb.g, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesINS_14BinaryViewType6c_typeEEEPKT_i.exit3
@@ -7210,7 +7210,7 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
   %i.bh = load ptr, ptr %i.bg, align 8, !noalias !939 ; 2 uses
   %i.bi = icmp ne ptr %i.bh, null
-  %or.cond.not.i.i.i = select i1 %i.bf, i1 %i.bi, i1 false
+  %or.cond.not.i.i.i = select i1 %i.bf, i1 %i.bi, i1 false, !prof !179
   br i1 %or.cond.not.i.i.i, label %bb.h, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i: ; preds = %bb.f, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit5.i.i
@@ -7381,7 +7381,7 @@ bb.n:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 16
   %i.et = load ptr, ptr %i.es, align 8, !noalias !939 ; 2 uses
   %i.eu = icmp ne ptr %i.et, null
-  %or.cond.not.i.i8.i = select i1 %i.er, i1 %i.eu, i1 false
+  %or.cond.not.i.i8.i = select i1 %i.er, i1 %i.eu, i1 false, !prof !179
   br i1 %or.cond.not.i.i8.i, label %bb.p, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i: ; preds = %bb.n, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit6.i.i
@@ -7548,7 +7548,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i: ; preds = %bb.d, %bb.c
@@ -7641,7 +7641,7 @@ bb.i:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
   %i.cr = load ptr, ptr %i.cq, align 8            ; 2 uses
   %i.cs = icmp ne ptr %i.cr, null
-  %or.cond.not.i7 = select i1 %i.cp, i1 %i.cs, i1 false
+  %or.cond.not.i7 = select i1 %i.cp, i1 %i.cs, i1 false, !prof !179
   br i1 %or.cond.not.i7, label %bb.j, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i8, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i8: ; preds = %bb.i, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit5.thread
@@ -7738,7 +7738,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !951 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit3.i
@@ -7866,7 +7866,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !958 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit3.i
@@ -7994,7 +7994,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !965 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit3.i
@@ -8122,7 +8122,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !972 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit3.i
@@ -8250,7 +8250,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !979 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit3.i
@@ -8378,7 +8378,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !986 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit3.i
@@ -8506,7 +8506,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !993 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesINS_24MonthDayNanoIntervalType13MonthDayNanosEEEPKT_i.exit3.i
@@ -8634,7 +8634,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !1000 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit3.i
@@ -8762,7 +8762,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !1007 ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
-  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false
+  %or.cond.not.i.i = select i1 %i.ah, i1 %i.ak, i1 false, !prof !179
   br i1 %or.cond.not.i.i, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i: ; preds = %bb.d, %_ZNK5arrow9ArrayData9GetValuesINS_19DayTimeIntervalType15DayMillisecondsEEEPKT_i.exit3.i
@@ -8903,7 +8903,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.au = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   %i.av = load ptr, ptr %i.au, align 8, !noalias !1017 ; 2 uses
   %i.aw = icmp ne ptr %i.av, null
-  %or.cond.not = select i1 %i.at, i1 %i.aw, i1 false
+  %or.cond.not = select i1 %i.at, i1 %i.aw, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.f, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread: ; preds = %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit5.i, %bb.d
@@ -9138,7 +9138,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.au = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   %i.av = load ptr, ptr %i.au, align 8, !noalias !1027 ; 2 uses
   %i.aw = icmp ne ptr %i.av, null
-  %or.cond.not = select i1 %i.at, i1 %i.aw, i1 false
+  %or.cond.not = select i1 %i.at, i1 %i.aw, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.f, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread: ; preds = %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit5.i, %bb.d
@@ -9407,7 +9407,7 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bt = load ptr, ptr %i.bs, align 8, !noalias !1038 ; 2 uses
   %i.bu = icmp ne ptr %i.bt, null
-  %or.cond.not = select i1 %i.br, i1 %i.bu, i1 false
+  %or.cond.not = select i1 %i.br, i1 %i.bu, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.j, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.i.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.i.thread: ; preds = %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit, %bb.f
@@ -9744,7 +9744,7 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bt = load ptr, ptr %i.bs, align 8, !noalias !1049 ; 2 uses
   %i.bu = icmp ne ptr %i.bt, null
-  %or.cond.not = select i1 %i.br, i1 %i.bu, i1 false
+  %or.cond.not = select i1 %i.br, i1 %i.bu, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.j, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.i.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.i.thread: ; preds = %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit, %bb.f
@@ -9989,7 +9989,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
   %i.s = icmp ne ptr %i.r, null
-  %or.cond.not = select i1 %i.p, i1 %i.s, i1 false
+  %or.cond.not = select i1 %i.p, i1 %i.s, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.c, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread: ; preds = %bb.a, %bb.b
@@ -10139,7 +10139,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %i.t = icmp ne ptr %i.s, null
-  %or.cond.not = select i1 %i.q, i1 %i.t, i1 false
+  %or.cond.not = select i1 %i.q, i1 %i.t, i1 false, !prof !179
   br i1 %or.cond.not, label %bb.e, label %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread, !prof !179
 
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread: ; preds = %bb.a, %bb.b

@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %"_ZZN9grpc_core10Cl
   store i8 0, ptr %i.ba, align 8, !tbaa !130
   %i.bd = load i8, ptr %i.az, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.bd, -1
-  %or.cond.not.i.i.i.i = select i1 %i.bc, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.bc, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i, label %bb.t, label %bb.w, !prof !131
 
 bb.t:                                             ; preds = %bb.s
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %_ZN9grpc_core8chann
   store i8 0, ptr %i.an, align 8, !tbaa !130
   %i.as = load i8, ptr %i.aj, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.as, -1
-  %or.cond.not.i.i.i = select i1 %i.ar, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.ar, i1 %.not.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i, label %bb.i, label %_ZNSt14_Optional_baseISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0EED2Ev.exit, !prof !131
 
 bb.i:                                             ; preds = %bb.h
@@ -700,7 +700,7 @@ bb.c:                                             ; preds = %_ZN9grpc_core8chann
   store i8 0, ptr %i.d, align 8, !tbaa !130
   %i.i = load i8, ptr %i.c, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.i, -1
-  %or.cond.not.i.i.i = select i1 %i.h, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.h, i1 %.not.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i, label %bb.d, label %_ZNSt14_Optional_baseISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0EED2Ev.exit, !prof !131
 
 bb.d:                                             ; preds = %bb.c
@@ -1103,7 +1103,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0ELb0EED2Ev.exit, !prof !131
 
 bb.b:                                             ; preds = %bb.a
@@ -1506,7 +1506,7 @@ bb.g:                                             ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.ai, align 8, !tbaa !130, !noalias !953
   %i.an = load i8, ptr %i.ag, align 8, !noalias !953
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.an, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.am, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.am, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i, label %bb.h, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyINS_14promise_detail11PromiseLikeIZNS4_18PromiseFactoryImplIZNS_10ClientCall15CancelWithErrorEN4absl12lts_202505126StatusEE3$_0EEDaNSt9enable_ifIXaaaantsr14IsVoidCallableINS4_9ResultOfTIFT_vEvE1TEEE5valuentclsr10PollTraitsISH_EE7is_pollEsr3stdE9is_same_vISH_vEENS4_9OnceTokenEE4typeEOSE_EUlvE_vEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEESE_.exit.i", !prof !131
 
 bb.h:                                             ; preds = %bb.g
@@ -1861,7 +1861,7 @@ bb.c:                                             ; preds = %_ZN9grpc_core8chann
   store i8 0, ptr %i.c, align 8, !tbaa !130
   %i.h = load i8, ptr %i.b, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.h, -1
-  %or.cond.not.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i, label %bb.d, label %_ZNSt14_Optional_baseISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0EED2Ev.exit, !prof !131
 
 bb.d:                                             ; preds = %bb.c
@@ -2264,7 +2264,7 @@ bb.w:                                             ; preds = %bb.v
   store i8 0, ptr %i.gb, align 8, !tbaa !130, !noalias !1141
   %i.ge = load i8, ptr %i.ga, align 8, !noalias !1141
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.ge, -1
-  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gd, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gd, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.x, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.x:                                             ; preds = %bb.w
@@ -2322,7 +2322,7 @@ bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.gk, align 8, !tbaa !130, !noalias !1141
   %i.gn = load i8, ptr %i.gj, align 8, !noalias !1141
   %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.gn, -1
-  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gm, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gm, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.ad, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.ad:                                            ; preds = %bb.ac
@@ -2369,7 +2369,7 @@ bb.ah:                                            ; preds = %bb.ag
   store i8 0, ptr %i.gs, align 8, !tbaa !130, !noalias !1141
   %i.gv = load i8, ptr %i.gr, align 8, !noalias !1141
   %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.gv, -1
-  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gu, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.gu, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.ai, label %bb.al, !prof !131
 
 bb.ai:                                            ; preds = %bb.ah
@@ -2614,7 +2614,7 @@ bb.as:                                            ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.jq, align 8, !tbaa !130, !noalias !1141
   %i.jv = load i8, ptr %i.jo, align 8, !noalias !1141
   %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.jv, -1
-  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ju, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ju, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.at, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyIKNS_14promise_detail11PromiseLikeINS_3MapINS6_INS6_IZNS_11CallFilters26PullServerTrailingMetadataEvEUlvE_ZNS7_26PullServerTrailingMetadataEvEUlNS_5EmptyEE_EEZNS_9CallSpine26PullServerTrailingMetadataEvEUlSt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE_EEZZNS_10ClientCall11CommitBatchEPK7grpc_opmPvbENK3$_5clEvEUlSH_E_EEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", !prof !131
 
 bb.at:                                            ; preds = %bb.as
@@ -2914,7 +2914,7 @@ bb.bl:                                            ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.mz, align 8, !tbaa !130, !noalias !1138
   %i.ne = load i8, ptr %i.mx, align 8, !noalias !1138
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.ne, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.nd, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.nd, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i, label %bb.bm, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyINS_14promise_detail11PromiseLikeINS_15PollBatchLoggerINS4_3SeqINS_3MapINS4_5AllOkINS_10StatusFlagEJNS4_6TrySeqINS_13OpHandlerImplIZZNS_10ClientCall11CommitBatchEPK7grpc_opmPvbENK3$_0clERSF_EUlvE_L12grpc_op_type1EEEJNSC_IZZNSD_11CommitBatchESG_mSH_bENK3$_1clESJ_EUlvE_LSL_2EEEEEENSB_INSC_IZZNSD_11CommitBatchESG_mSH_bENK3$_3clESJ_EUlvE_LSL_4EEEJNSC_IZNS_15MessageReceiver11MakeBatchOpINS_13CallInitiatorEEEDaSJ_PT_EUlvE_LSL_5EEEEEEEEEZNSD_11CommitBatchESG_mSH_bE3$_4EEJNSC_IZNS_15OnCancelFactoryIZNSD_11CommitBatchESG_mSH_bE3$_5ZNSD_11CommitBatchESG_mSH_bE3$_6EEDaOSX_OT0_EUlvE_LSL_6EEEZZNS_15InfallibleBatchIS14_S1C_EEDaS18_S1A_bSH_P21grpc_completion_queueENUlvE_clEvEUlvE_EEEEEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEESX_.exit.i", !prof !131
 
 bb.bm:                                            ; preds = %bb.bl
@@ -3317,7 +3317,7 @@ bb.x:                                             ; preds = %bb.w
   store i8 0, ptr %i.hw, align 8, !tbaa !130
   %i.hz = load i8, ptr %i.hv, align 8
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.hz, -1
-  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.hy, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.hy, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.y, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.y:                                             ; preds = %bb.x
@@ -3375,7 +3375,7 @@ bb.ad:                                            ; preds = %bb.ac
   store i8 0, ptr %i.if, align 8, !tbaa !130
   %i.ii = load i8, ptr %i.ie, align 8
   %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.ii, -1
-  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ih, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ih, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.ae, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.ae:                                            ; preds = %bb.ad
@@ -3422,7 +3422,7 @@ bb.ai:                                            ; preds = %bb.ah
   store i8 0, ptr %i.in, align 8, !tbaa !130
   %i.iq = load i8, ptr %i.im, align 8
   %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.iq, -1
-  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ip, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ip, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.aj, label %bb.am, !prof !131
 
 bb.aj:                                            ; preds = %bb.ai
@@ -3466,7 +3466,7 @@ bb.an:                                            ; preds = %.noexc31.i.i.i.i.i.
   %i.iy = getelementptr inbounds nuw i8, ptr %38, i64 32
   %i.iz = load i8, ptr %i.iy, align 8
   %.not.i.i.i.i.i.i.i28.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.iz, -1
-  %or.cond.not.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ix, i1 %.not.i.i.i.i.i.i.i28.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ix, i1 %.not.i.i.i.i.i.i.i28.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.ao, label %_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyIKNS_14promise_detail11PromiseLikeINS_3MapIZNS_11CallFilters25PushClientToServerMessageESt10unique_ptrINS_7MessageENS_5Arena13PooledDeleterEEEUlvE_ZNS7_25PushClientToServerMessageESC_EUlNS_10StatusFlagEE_EEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.ao:                                            ; preds = %bb.an
@@ -3869,7 +3869,7 @@ bb.bk:                                            ; preds = %bb.bj
   store i8 0, ptr %i.nq, align 8, !tbaa !130
   %i.nt = load i8, ptr %i.np, align 8
   %.not.i.i.i.i.i.i.i.i.i.i.i100.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.nt, -1
-  %or.cond.not.i.i.i.i.i.i.i.i101.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ns, i1 %.not.i.i.i.i.i.i.i.i.i.i.i100.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i101.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ns, i1 %.not.i.i.i.i.i.i.i.i.i.i.i100.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i101.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.bl, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i102.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.bl:                                            ; preds = %bb.bk
@@ -3927,7 +3927,7 @@ bb.bq:                                            ; preds = %bb.bp
   store i8 0, ptr %i.nz, align 8, !tbaa !130
   %i.oc = load i8, ptr %i.ny, align 8
   %.not.i.i.i.i.i.i.i15.i.i.i.i95.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.oc, -1
-  %or.cond.not.i.i.i.i16.i.i.i.i96.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ob, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i95.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i96.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.ob, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i95.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i96.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.br, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit20.i.i.i.i97.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !131
 
 bb.br:                                            ; preds = %bb.bq
@@ -3974,7 +3974,7 @@ bb.bv:                                            ; preds = %bb.bu
   store i8 0, ptr %i.oh, align 8, !tbaa !130
   %i.ok = load i8, ptr %i.og, align 8
   %.not.i.i.i.i.i.i.i22.i.i.i.i63.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.ok, -1
-  %or.cond.not.i.i.i.i23.i.i.i.i64.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.oj, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i63.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i23.i.i.i.i64.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.oj, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i63.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i23.i.i.i.i64.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.bw, label %bb.bz, !prof !131
 
 bb.bw:                                            ; preds = %bb.bv
@@ -4097,7 +4097,7 @@ bb.cc:                                            ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.pp, align 8, !tbaa !130
   %i.pu = load i8, ptr %i.pn, align 8
   %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.pu, -1
-  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.pt, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.pt, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.cd, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyIKNS_14promise_detail11PromiseLikeIZNS4_18PromiseFactoryImplIZZNS_10ClientCall11CommitBatchEPK7grpc_opmPvbENK3$_1clERS9_EUlvE_EEDaNSt9enable_ifIXaaaantsr14IsVoidCallableINS4_9ResultOfTIFT_vEvE1TEEE5valuentclsr10PollTraitsISK_EE7is_pollEntsr3stdE9is_same_vISK_vEENS4_9OnceTokenEE4typeEOSH_EUlvE_vEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEESH_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", !prof !131
 
 bb.cd:                                            ; preds = %bb.cc
@@ -4500,7 +4500,7 @@ bb.de:                                            ; preds = %bb.dd
   store i8 0, ptr %i.xi, align 8, !tbaa !130
   %i.xl = load i8, ptr %i.xh, align 8
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i147.i.i.i.i.i.i.i.i = icmp ne i8 %i.xl, -1
-  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i148.i.i.i.i.i.i.i.i = select i1 %i.xk, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i147.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i148.i.i.i.i.i.i.i.i = select i1 %i.xk, i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i147.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i.i.i.i.i.i148.i.i.i.i.i.i.i.i, label %bb.df, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i149.i.i.i.i.i.i.i.i, !prof !131
 
 bb.df:                                            ; preds = %bb.de
@@ -4558,7 +4558,7 @@ bb.dk:                                            ; preds = %bb.dj
   store i8 0, ptr %i.xr, align 8, !tbaa !130
   %i.xu = load i8, ptr %i.xq, align 8
   %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i142.i.i.i.i.i.i.i.i = icmp ne i8 %i.xu, -1
-  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i143.i.i.i.i.i.i.i.i = select i1 %i.xt, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i142.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i143.i.i.i.i.i.i.i.i = select i1 %i.xt, i1 %.not.i.i.i.i.i.i.i15.i.i.i.i.i.i.i.i.i142.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i16.i.i.i.i.i.i.i.i.i143.i.i.i.i.i.i.i.i, label %bb.dl, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit20.i.i.i.i.i.i.i.i.i144.i.i.i.i.i.i.i.i, !prof !131
 
 bb.dl:                                            ; preds = %bb.dk
@@ -4605,7 +4605,7 @@ bb.dp:                                            ; preds = %bb.do
   store i8 0, ptr %i.xz, align 8, !tbaa !130
   %i.yc = load i8, ptr %i.xy, align 8
   %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i104.i.i.i.i.i.i.i.i = icmp ne i8 %i.yc, -1
-  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i105.i.i.i.i.i.i.i.i = select i1 %i.yb, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i104.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i105.i.i.i.i.i.i.i.i = select i1 %i.yb, i1 %.not.i.i.i.i.i.i.i22.i.i.i.i.i.i.i.i.i104.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i23.i.i.i.i.i.i.i.i.i105.i.i.i.i.i.i.i.i, label %bb.dq, label %bb.dt, !prof !131
 
 bb.dq:                                            ; preds = %bb.dp
@@ -4852,7 +4852,7 @@ bb.ea:                                            ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.aaw, align 8, !tbaa !130
   %i.abb = load i8, ptr %i.aau, align 8
   %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i109.i.i.i.i.i.i.i.i = icmp ne i8 %i.abb, -1
-  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i110.i.i.i.i.i.i.i.i = select i1 %i.aba, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i109.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i110.i.i.i.i.i.i.i.i = select i1 %i.aba, i1 %.not.i.i.i.i.i.i.i29.i.i.i.i.i.i.i.i.i109.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i30.i.i.i.i.i.i.i.i.i110.i.i.i.i.i.i.i.i, label %bb.eb, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyIKNS_14promise_detail11PromiseLikeINS_3MapINS4_3SeqIZNS_11CallFilters25PullServerInitialMetadataEvEUlvE_JZNS8_25PullServerInitialMetadataEvEUlbE_EEEZZZNS_10ClientCall11CommitBatchEPK7grpc_opmPvbENK3$_3clERSE_ENKUlvE_clEvEUlNS_14ValueOrFailureISt8optionalISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEEEEE_EEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", !prof !131
 
 bb.eb:                                            ; preds = %bb.ea
@@ -5255,7 +5255,7 @@ bb.i:                                             ; preds = %bb.h
   store i8 0, ptr %i.au, align 8, !tbaa !130
   %i.ax = load i8, ptr %i.at, align 8
   %.not.i.i.i.i.i.i.i = icmp ne i8 %i.ax, -1
-  %or.cond.not.i.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.aw, i1 %.not.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i, label %bb.j, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit, !prof !131
 
 bb.j:                                             ; preds = %bb.i
@@ -5313,7 +5313,7 @@ bb.o:                                             ; preds = %bb.n
   store i8 0, ptr %i.bd, align 8, !tbaa !130
   %i.bg = load i8, ptr %i.bc, align 8
   %.not.i.i.i.i.i.i.i15 = icmp ne i8 %i.bg, -1
-  %or.cond.not.i.i.i.i16 = select i1 %i.bf, i1 %.not.i.i.i.i.i.i.i15, i1 false
+  %or.cond.not.i.i.i.i16 = select i1 %i.bf, i1 %.not.i.i.i.i.i.i.i15, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i16, label %bb.p, label %_ZN9grpc_core8channelz12PropertyList3SetIPKcEERS1_St17basic_string_viewIcSt11char_traitsIcEET_.exit20, !prof !131
 
 bb.p:                                             ; preds = %bb.o
@@ -5360,7 +5360,7 @@ bb.t:                                             ; preds = %bb.s
   store i8 0, ptr %i.bl, align 8, !tbaa !130
   %i.bo = load i8, ptr %i.bk, align 8
   %.not.i.i.i.i.i.i.i22 = icmp ne i8 %i.bo, -1
-  %or.cond.not.i.i.i.i23 = select i1 %i.bn, i1 %.not.i.i.i.i.i.i.i22, i1 false
+  %or.cond.not.i.i.i.i23 = select i1 %i.bn, i1 %.not.i.i.i.i.i.i.i22, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i23, label %bb.u, label %bb.x, !prof !131
 
 bb.u:                                             ; preds = %bb.t
@@ -5404,7 +5404,7 @@ bb.y:                                             ; preds = %.noexc31
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.bx = load i8, ptr %i.bw, align 8
   %.not.i.i.i.i.i.i.i28 = icmp ne i8 %i.bx, -1
-  %or.cond.not.i.i.i.i29 = select i1 %i.bv, i1 %.not.i.i.i.i.i.i.i28, i1 false
+  %or.cond.not.i.i.i.i29 = select i1 %i.bv, i1 %.not.i.i.i.i.i.i.i28, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i29, label %bb.z, label %_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyIKNS_14promise_detail11PromiseLikeINS_3MapINS4_6TrySeqIZNS_11CallFilters25PullServerToClientMessageEvEUlvE_JZNS8_25PullServerToClientMessageEvEUlbE_EEEZZNS_15MessageReceiver11MakeBatchOpINS_13CallInitiatorEEEDaRK7grpc_opPT_ENUlvE_clEvEUlONS_14filters_detail11NextMessageIXadL_ZNS_9CallState31FinishPullServerToClientMessageEvEEEEE_EEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEESI_.exit, !prof !131
 
 bb.z:                                             ; preds = %bb.y
@@ -5807,7 +5807,7 @@ bb.c:                                             ; preds = %bb.b
   store i8 0, ptr %i.e, align 8, !tbaa !130
   %i.h = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp ne i8 %i.h, -1
-  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i = select i1 %i.g, i1 %.not.i.i.i.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i, label %bb.d, label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_21__deduce_visit_resultIvEEOZNK9grpc_core14WaitForCqEndOp7ToProtoEP24grpc_channelz_v2_PromiseP9upb_ArenaEUlRKT_E_RKSt7variantIJNS6_10NotStartedENS6_7StartedENS6_7InvalidEEEEJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESF_SM_.exit, !prof !131
 
 bb.d:                                             ; preds = %bb.c
@@ -5864,7 +5864,7 @@ bb.i:                                             ; preds = %bb.h
   store i8 0, ptr %i.n, align 8, !tbaa !130
   %i.q = load i8, ptr %i.m, align 8
   %.not.i.i.i.i.i.i.i.i.i.i.i9 = icmp ne i8 %i.q, -1
-  %or.cond.not.i.i.i.i.i.i.i.i10 = select i1 %i.p, i1 %.not.i.i.i.i.i.i.i.i.i.i.i9, i1 false
+  %or.cond.not.i.i.i.i.i.i.i.i10 = select i1 %i.p, i1 %.not.i.i.i.i.i.i.i.i.i.i.i9, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i.i.i.i10, label %bb.j, label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_21__deduce_visit_resultIvEEOZNK9grpc_core14WaitForCqEndOp7ToProtoEP24grpc_channelz_v2_PromiseP9upb_ArenaEUlRKT_E_RKSt7variantIJNS6_10NotStartedENS6_7StartedENS6_7InvalidEEEEJEEESt16integer_sequenceImJLm2EEEE14__visit_invokeESF_SM_.exit, !prof !131
 
 bb.j:                                             ; preds = %bb.i
@@ -5922,7 +5922,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.c, align 8, !tbaa !130
   %i.f = load i8, ptr %i.b, align 8
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.f, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.e, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.e, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i, label %bb.c, label %_ZZNK9grpc_core14WaitForCqEndOp7ToProtoEP24grpc_channelz_v2_PromiseP9upb_ArenaENKUlRKT_E_clINS0_7StartedEEEDaS7_.exit, !prof !131
 
 bb.c:                                             ; preds = %bb.b
@@ -6325,7 +6325,7 @@ bb.q:                                             ; preds = %"_ZN9grpc_core8chan
   store i8 0, ptr %i.eb, align 8, !tbaa !130, !noalias !1492
   %i.eg = load i8, ptr %i.dz, align 8, !noalias !1492
   %.not.i.i.i.i.i.i.i.i = icmp ne i8 %i.eg, -1
-  %or.cond.not.i.i.i.i.i = select i1 %i.ef, i1 %.not.i.i.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.ef, i1 %.not.i.i.i.i.i.i.i.i, i1 false, !prof !131
   br i1 %or.cond.not.i.i.i.i.i, label %bb.r, label %"_ZN9grpc_core8channelz12PropertyList3SetINS_15PromisePropertyINS_14promise_detail11PromiseLikeINS_15PollBatchLoggerINS4_3SeqINS_3MapINS4_5AllOkINS_10StatusFlagEJNS4_6TrySeqINS_13OpHandlerImplIZZNS_10ClientCall11CommitBatchEPK7grpc_opmPvbENK3$_0clERSF_EUlvE_L12grpc_op_type1EEEJNSC_IZZNSD_11CommitBatchESG_mSH_bENK3$_1clESJ_EUlvE_LSL_2EEEEEENSB_INSC_IZZNSD_11CommitBatchESG_mSH_bENK3$_3clESJ_EUlvE_LSL_4EEEJNSC_IZNS_15MessageReceiver11MakeBatchOpINS_13CallInitiatorEEEDaSJ_PT_EUlvE_LSL_5EEEEEEEEEZNSD_11CommitBatchESG_mSH_bE3$_4EEJZZNS_13FallibleBatchIS14_EEDaOSX_bSH_P21grpc_completion_queueENUlvE_clEvEUlSA_E_EEEEEvEEEEEERS1_St17basic_string_viewIcSt11char_traitsIcEESX_.exit.i", !prof !131
 
 bb.r:                                             ; preds = %bb.q

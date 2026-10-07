@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_ZN9grpc_core8chann
   store i8 0, ptr %i.d, align 8, !tbaa !116
   %i.i = load i8, ptr %i.c, align 8
   %.not.i.i.i.i.i.i = icmp ne i8 %i.i, -1
-  %or.cond.not.i.i.i = select i1 %i.h, i1 %.not.i.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i = select i1 %i.h, i1 %.not.i.i.i.i.i.i, i1 false, !prof !117
   br i1 %or.cond.not.i.i.i, label %bb.d, label %_ZNSt14_Optional_baseISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0EED2Ev.exit, !prof !117
 
 bb.d:                                             ; preds = %bb.c
@@ -605,7 +605,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i8, ptr %i.d, align 8
   %.not.i.i.i.i.i = icmp ne i8 %i.e, -1
-  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false
+  %or.cond.not.i.i = select i1 %i.c, i1 %.not.i.i.i.i.i, i1 false, !prof !117
   br i1 %or.cond.not.i.i, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJSt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS3_SaIcEEElmdbN9grpc_core8DurationENS9_9TimestampEN4absl12lts_202505126StatusENSD_4TimeESt10shared_ptrINS9_8channelz18OtherPropertyValueEEEELb0ELb0ELb0EED2Ev.exit, !prof !117
 
 bb.b:                                             ; preds = %bb.a

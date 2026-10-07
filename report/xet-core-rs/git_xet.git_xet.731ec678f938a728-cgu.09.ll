@@ -204,7 +204,7 @@ _RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blo
   %i.p = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   %i.q = trunc nuw i64 %i.o to i1
   %.not = icmp ne ptr %i.p, null
-  %or.cond.not = select i1 %i.q, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.q, i1 %.not, i1 false, !prof !15
   br i1 %or.cond.not, label %bb.j, label %bb.i, !prof !15
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCsarFSTFZzLuM_11xet_runtime4core7runtime6nativeNtB1w_10XetRuntime14spawn_blockingNCINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory23merge_shards_backgroundRNtNtCsG258MDvU3F_3std4path7PathBufB4B_E0INtNtCskKLDkoKarTP_4core6result6ResultNtB30_16ShardMergeResultNtNtB34_5error9CoreErrorEE0B5g_ECs9SMuO7kbZ2K_7git_xet.exit
@@ -316,7 +316,7 @@ _RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blo
   %i.p = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   %i.q = trunc nuw i64 %i.o to i1
   %.not = icmp ne ptr %i.p, null
-  %or.cond.not = select i1 %i.q, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.q, i1 %.not, i1 false, !prof !15
   br i1 %or.cond.not, label %bb.j, label %bb.i, !prof !15
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCsarFSTFZzLuM_11xet_runtime4core7runtime6nativeNtB1w_10XetRuntime14spawn_blockingNCNCINvMNtNtCsjHtSR7YjKD4_8xet_data10processing6sha256NtB33_15Sha256Generator6updateNtNtCslc8SwK8fohf_5bytes5bytes5BytesE00INtNtCskKLDkoKarTP_4core6result6ResultNtCs6rZvBWPOMOk_4sha26Sha256NtNtNtBa_4task5error9JoinErrorEE0B4U_ECs9SMuO7kbZ2K_7git_xet.exit
@@ -428,7 +428,7 @@ _RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blo
   %i.p = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   %i.q = trunc nuw i64 %i.o to i1
   %.not = icmp ne ptr %i.p, null
-  %or.cond.not = select i1 %i.q, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.q, i1 %.not, i1 false, !prof !15
   br i1 %or.cond.not, label %bb.j, label %bb.i, !prof !15
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCsarFSTFZzLuM_11xet_runtime4core7runtime6nativeNtB1w_10XetRuntime14spawn_blockingNCNCNCNvMNtNtCsjHtSR7YjKD4_8xet_data10processing19file_upload_sessionNtB34_17FileUploadSession17register_new_xorb000INtNtCskKLDkoKarTP_4core6result6ResultNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_format20SerializedXorbObjectNtNtB5v_5error9CoreErrorEE0B4N_ECs9SMuO7kbZ2K_7git_xet.exit
@@ -540,7 +540,7 @@ _RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blo
   %i.p = extractvalue { i64, ptr } %i.j, 1        ; 2 uses
   %i.q = trunc nuw i64 %i.o to i1
   %.not = icmp ne ptr %i.p, null
-  %or.cond.not = select i1 %i.q, i1 %.not, i1 false
+  %or.cond.not = select i1 %i.q, i1 %.not, i1 false, !prof !15
   br i1 %or.cond.not, label %bb.j, label %bb.i, !prof !15
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCINvMNtNtNtCsarFSTFZzLuM_11xet_runtime4core7runtime6nativeNtB1w_10XetRuntime14spawn_blockingNCNCNCNvMs0_NtNtCsjHtSR7YjKD4_8xet_data10processing12file_cleanerNtB37_17SingleFileCleaner19add_data_chunk_impl000TINtNtCsexYYUdYSQU6_5alloc4sync3ArcSNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object5chunk5ChunkENtNtNtB3b_13deduplication8chunking7ChunkerEE0B4L_ECs9SMuO7kbZ2K_7git_xet.exit
@@ -943,7 +943,7 @@ _RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blo
   %i.z = extractvalue { i64, ptr } %i.r, 1        ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !prof !15
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMs0_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard18shard_file_managerNtB1u_16ShardFileManager15register_shards0s_0INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecTyTmmEEENtNtB1y_5error9CoreErrorEECs9SMuO7kbZ2K_7git_xet.exit, !prof !15
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCsUrhh0HcRih_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs0_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard18shard_file_managerNtB1A_16ShardFileManager15register_shards0s_0INtNtCskKLDkoKarTP_4core6result6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecTyTmmEEENtNtB1E_5error9CoreErrorEECs9SMuO7kbZ2K_7git_xet.exit.i

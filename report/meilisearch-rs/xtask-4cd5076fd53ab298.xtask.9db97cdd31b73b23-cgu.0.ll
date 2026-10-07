@@ -205,7 +205,7 @@ _ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17hf8bd7aea96802850
   %i.kr = extractvalue { i64, ptr } %i.km, 1      ; 2 uses
   %i.ks = trunc nuw i64 %i.kq to i1
   %.not.i.i.i.i.i = icmp ne ptr %i.kr, null
-  %or.cond.not.i.i.i.i.i = select i1 %i.ks, i1 %.not.i.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i.i = select i1 %i.ks, i1 %.not.i.i.i.i.i, i1 false, !prof !62
   br i1 %or.cond.not.i.i.i.i.i, label %bb.cj, label %_ZN5tokio7runtime8blocking4pool7Spawner14spawn_blocking17hffbf23a1fbee65cdE.exit.i.i.i.i, !prof !62
 
 bb.cj:                                            ; preds = %_ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17hf8bd7aea96802850E.exit.i.i.i.i.i
@@ -608,7 +608,7 @@ _ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17ha67b2a850c6d2bb8
   %i.mp = extractvalue { i64, ptr } %i.mk, 1      ; 2 uses
   %i.mq = trunc nuw i64 %i.mo to i1
   %.not.i.i.i.i116 = icmp ne ptr %i.mp, null
-  %or.cond.not.i.i.i.i = select i1 %i.mq, i1 %.not.i.i.i.i116, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.mq, i1 %.not.i.i.i.i116, i1 false, !prof !62
   br i1 %or.cond.not.i.i.i.i, label %bb.eb, label %_ZN5tokio7runtime8blocking4pool7Spawner14spawn_blocking17he8119a84bb67ece3E.exit.i.i.i, !prof !62
 
 bb.eb:                                            ; preds = %_ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17ha67b2a850c6d2bb8E.exit.i.i.i.i
@@ -1011,7 +1011,7 @@ _ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17hd78285a52d2bf0cd
   %i.si = extractvalue { i64, ptr } %i.sd, 1      ; 2 uses
   %i.sj = trunc nuw i64 %i.sh to i1
   %.not.i.i.i.i169 = icmp ne ptr %i.si, null
-  %or.cond.not.i.i.i.i170 = select i1 %i.sj, i1 %.not.i.i.i.i169, i1 false
+  %or.cond.not.i.i.i.i170 = select i1 %i.sj, i1 %.not.i.i.i.i169, i1 false, !prof !62
   br i1 %or.cond.not.i.i.i.i170, label %bb.hk, label %_ZN5tokio7runtime8blocking4pool7Spawner14spawn_blocking17hadefcc03d6c47828E.exit.i.i.i, !prof !62
 
 bb.hk:                                            ; preds = %_ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17hd78285a52d2bf0cdE.exit.i.i.i.i
@@ -1414,7 +1414,7 @@ _ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17h6b1e5debebf3e72b
   %i.az = extractvalue { i64, ptr } %i.au, 1      ; 2 uses
   %i.ba = trunc nuw i64 %i.ay to i1
   %.not.i.i.i.i = icmp ne ptr %i.az, null
-  %or.cond.not.i.i.i.i = select i1 %i.ba, i1 %.not.i.i.i.i, i1 false
+  %or.cond.not.i.i.i.i = select i1 %i.ba, i1 %.not.i.i.i.i, i1 false, !prof !62
   br i1 %or.cond.not.i.i.i.i, label %bb.aa, label %_ZN5tokio7runtime8blocking4pool7Spawner14spawn_blocking17he8b8bd303e448ae1E.exit.i.i.i, !prof !62
 
 bb.aa:                                            ; preds = %_ZN5tokio7runtime8blocking4pool7Spawner20spawn_blocking_inner17h6b1e5debebf3e72bE.exit.i.i.i.i

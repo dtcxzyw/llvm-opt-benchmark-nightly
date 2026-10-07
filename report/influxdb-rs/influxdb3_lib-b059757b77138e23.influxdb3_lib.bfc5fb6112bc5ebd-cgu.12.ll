@@ -204,7 +204,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.t = extractvalue { i64, ptr } %i.n, 1        ; 2 uses
   %i.u = trunc nuw i64 %i.s to i1
   %.not.i = icmp ne ptr %i.t, null
-  %or.cond.not.i = select i1 %i.u, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.u, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.i, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMs0_Cs1LivM9IBWqb_12object_storeNtB1v_9GetResult5bytes00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCsuxFxh2mtOX_5bytes5bytes5BytesNtB1v_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.i:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs0_Cs1LivM9IBWqb_12object_storeNtB1B_9GetResult5bytes00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCsuxFxh2mtOX_5bytes5bytes5BytesNtB1B_5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -607,7 +607,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14create_dir_all14create_dir_allRNtNtCs2AWtUsOyxgP_3std4path4PathE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2d_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14create_dir_all14create_dir_allRNtNtCs2AWtUsOyxgP_3std4path4PathE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2j_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -792,7 +792,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14create_dir_all14create_dir_allRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2d_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14create_dir_all14create_dir_allRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2j_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -977,7 +977,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14read_to_string14read_to_stringRNtNtCs2AWtUsOyxgP_3std4path4PathE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtB2d_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14read_to_string14read_to_stringRNtNtCs2AWtUsOyxgP_3std4path4PathE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtB2j_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -1162,7 +1162,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14read_to_string14read_to_stringRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtB2d_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14read_to_string14read_to_stringRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtB2j_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -1347,7 +1347,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14remove_dir_all14remove_dir_allNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2c_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14remove_dir_all14remove_dir_allNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2i_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -1532,7 +1532,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs14remove_dir_all14remove_dir_allRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2d_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs14remove_dir_all14remove_dir_allRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtB2j_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -1717,7 +1717,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs8metadata8metadataRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtB1Z_2fs8MetadataNtNtNtB1Z_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs8metadata8metadataRNtNtCs2AWtUsOyxgP_3std4path7PathBufE00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtB25_2fs8MetadataNtNtNtB25_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -1902,7 +1902,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1
   %.not.i = icmp ne ptr %i.v, null
-  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.w, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtBc_2fs12open_optionsNtB1s_11OpenOptions8std_open00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs2AWtUsOyxgP_3std2fs4FileNtNtNtB30_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtBc_2fs12open_optionsNtB1y_11OpenOptions8std_open00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs2AWtUsOyxgP_3std2fs4FileNtNtNtB36_2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -2092,7 +2092,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.x = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.y = trunc nuw i64 %i.w to i1
   %.not.i = icmp ne ptr %i.x, null
-  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMs6_Csh4GC5dvIChH_27influxdb3_processing_engineNtB1v_27ProcessingEngineManagerImpl18dry_run_wal_plugin00NtNtCs9h7Hq22ZyhR_15influxdb3_types4http21WalPluginTestResponseECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs6_Csh4GC5dvIChH_27influxdb3_processing_engineNtB1B_27ProcessingEngineManagerImpl18dry_run_wal_plugin00NtNtCs9h7Hq22ZyhR_15influxdb3_types4http21WalPluginTestResponseECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -2282,7 +2282,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.x = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.y = trunc nuw i64 %i.w to i1
   %.not.i = icmp ne ptr %i.x, null
-  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMs6_Csh4GC5dvIChH_27influxdb3_processing_engineNtB1v_27ProcessingEngineManagerImpl20test_schedule_plugin00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs9h7Hq22ZyhR_15influxdb3_types4http26SchedulePluginTestResponseNtNtB1v_7plugins11PluginErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs6_Csh4GC5dvIChH_27influxdb3_processing_engineNtB1B_27ProcessingEngineManagerImpl20test_schedule_plugin00INtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs9h7Hq22ZyhR_15influxdb3_types4http26SchedulePluginTestResponseNtNtB1B_7plugins11PluginErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -2472,7 +2472,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.x = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.y = trunc nuw i64 %i.w to i1
   %.not.i = icmp ne ptr %i.x, null
-  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvNtNtBc_2fs5write20write_spawn_blocking00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtBc_2fs5write20write_spawn_blocking00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -2662,7 +2662,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.x = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.y = trunc nuw i64 %i.w to i1
   %.not.i = icmp ne ptr %i.x, null
-  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.y, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvNtNtBc_2fs6rename15rename_blocking00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtBc_2fs6rename15rename_blocking00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i
@@ -2835,7 +2835,7 @@ _RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.u = extractvalue { i64, ptr } %i.p, 1        ; 2 uses
   %i.v = trunc nuw i64 %i.t to i1
   %.not.i = icmp ne ptr %i.u, null
-  %or.cond.not.i = select i1 %i.v, i1 %.not.i, i1 false
+  %or.cond.not.i = select i1 %i.v, i1 %.not.i, i1 false, !prof !28
   br i1 %or.cond.not.i, label %bb.g, label %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNvCsdcTKIql9anY_14jemalloc_stats26dump_heap_profile_blockingINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs2AWtUsOyxgP_3std2fs4FileNtB1n_13HeapDumpErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit, !prof !28
 
 bb.g:                                             ; preds = %_RINvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNvCsdcTKIql9anY_14jemalloc_stats26dump_heap_profile_blockingINtNtCs4NRVxsYgnAr_4core6result6ResultNtNtCs2AWtUsOyxgP_3std2fs4FileNtB1t_13HeapDumpErrorEECsgsNUVCRJO2f_13influxdb3_lib.exit.i

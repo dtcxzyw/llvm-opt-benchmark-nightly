@@ -205,7 +205,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5178 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5179
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5179
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5179, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNCNCNvMNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources10multi_scan10components13row_deletionsNtB1w_21DeletionFilesProvider24spawn_row_deletions_inits0_0000INtNtCscgRAwXFJnXP_4core6result6ResultINtNtB49_6option6OptionINtNtNtCs8774dFTUdNv_12polars_arrow5array4list9ListArrayxEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit, !dbg !5179, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNCNCNvMNtNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources10multi_scan10components13row_deletionsNtB1C_21DeletionFilesProvider24spawn_row_deletions_inits0_0000INtNtCscgRAwXFJnXP_4core6result6ResultINtNtB4f_6option6OptionINtNtNtCs8774dFTUdNv_12polars_arrow5array4list9ListArrayxEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1M_.exit.i
@@ -331,7 +331,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5276 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5277
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5277
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5277, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtCs2g09Ig8GZd6_13polars_stream10expressionNtB1s_10StreamExpr18evaluate_on_groups00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtCskY9G75ZWc4U_11polars_expr11expressions18AggregationContextNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1u_.exit, !dbg !5277, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtCs2g09Ig8GZd6_13polars_stream10expressionNtB1y_10StreamExpr18evaluate_on_groups00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtCskY9G75ZWc4U_11polars_expr11expressions18AggregationContextNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit.i
@@ -457,7 +457,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5373 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5374
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5374
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5374, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtCs2g09Ig8GZd6_13polars_stream10expressionNtB1s_10StreamExpr8evaluate00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1u_.exit, !dbg !5374, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtCs2g09Ig8GZd6_13polars_stream10expressionNtB1y_10StreamExpr8evaluate00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame6column6ColumnNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit.i
@@ -583,7 +583,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5470 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5471
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5471
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5471, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3csv17line_batch_sourceNtB1s_15LineBatchSource9run_async00INtNtCscgRAwXFJnXP_4core6result6ResultjNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit, !dbg !5471, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3csv17line_batch_sourceNtB1y_15LineBatchSource9run_async00INtNtCscgRAwXFJnXP_4core6result6ResultjNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit.i
@@ -709,7 +709,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5567 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5568
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5568
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5568, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources5batch15get_batch_stateNtB1s_13GetBatchState4next00INtNtCscgRAwXFJnXP_4core6result6ResultTB2I_INtNtB3f_6option6OptionNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit, !dbg !5568, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources5batch15get_batch_stateNtB1y_13GetBatchState4next00INtNtCscgRAwXFJnXP_4core6result6ResultTB2O_INtNtB3l_6option6OptionNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit.i
@@ -835,7 +835,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5664 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5665
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5665
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5665, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources5batch15get_batch_stateNtB1s_13GetBatchState4peek00INtNtCscgRAwXFJnXP_4core6result6ResultTB2I_INtNtB3f_6option6OptionNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit, !dbg !5665, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources5batch15get_batch_stateNtB1y_13GetBatchState4peek00INtNtCscgRAwXFJnXP_4core6result6ResultTB2O_INtNtB3l_6option6OptionNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameEENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit.i
@@ -961,7 +961,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5761 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5762
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5762
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5762, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources6ndjson22line_batch_distributorNtB1s_20LineBatchDistributor9run_async00INtNtCscgRAwXFJnXP_4core6result6ResultjNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit, !dbg !5762, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources6ndjson22line_batch_distributorNtB1y_20LineBatchDistributor9run_async00INtNtCscgRAwXFJnXP_4core6result6ResultjNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit.i
@@ -1087,7 +1087,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5858 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5859
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5859
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5859, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components13file_providerNtB1s_12FileProvider9open_file00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl7options13file_provider18FileProviderReturnNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1A_.exit, !dbg !5859, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components13file_providerNtB1y_12FileProvider9open_file00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl7options13file_provider18FileProviderReturnNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1G_.exit.i
@@ -1213,7 +1213,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !5955 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !5956
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5956
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !5956, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components21sinked_path_info_list26call_sinked_paths_callback0s_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1z_.exit, !dbg !5956, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes8io_sinks10components21sinked_path_info_list26call_sinked_paths_callback0s_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1F_.exit.i
@@ -1339,7 +1339,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !6053 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !6054
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6054
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6054, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvXNtCskAlUH1kY1DR_10polars_ooc11spill_frameNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1u_9Spillable7unspill00B27_ECs2g09Ig8GZd6_13polars_stream.exit, !dbg !6054, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXNtCskAlUH1kY1DR_10polars_ooc11spill_frameNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtB1A_9Spillable7unspill00B2d_ECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -1465,7 +1465,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !6150 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !6151
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6151
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6151, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvXs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes13callback_sinkNtB1u_16CallbackSinkNodeNtB1w_11ComputeNode12update_state00INtNtCscgRAwXFJnXP_4core6result6ResultbNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1y_.exit, !dbg !6151, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes13callback_sinkNtB1A_16CallbackSinkNodeNtB1C_11ComputeNode12update_state00INtNtCscgRAwXFJnXP_4core6result6ResultbNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1E_.exit.i
@@ -1591,7 +1591,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !6247 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !6248
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6248
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !6248, !prof !3854
   br i1 %or.cond.not.i, label %bb.j, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvXs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes13callback_sinkNtB1u_16CallbackSinkNodeNtB1w_11ComputeNode5spawn0s_0INtNtCscgRAwXFJnXP_4core6result6ResultbNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1y_.exit, !dbg !6248, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvXs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes13callback_sinkNtB1A_16CallbackSinkNodeNtB1C_11ComputeNode5spawn0s_0INtNtCscgRAwXFJnXP_4core6result6ResultbNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1E_.exit.i
@@ -1994,7 +1994,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.q, 1, !dbg !19371 ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1, !dbg !19372
   %.not = icmp ne ptr %i.v, null
-  %or.cond.not = select i1 %i.w, i1 %.not, i1 false, !dbg !19372
+  %or.cond.not = select i1 %i.w, i1 %.not, i1 false, !dbg !19372, !prof !3854
   br i1 %or.cond.not, label %bb.k, label %bb.j, !dbg !19372, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMs1_Cs8RKTHBS4OBx_12object_storeNtB1B_9GetResult5bytes00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtCshK0ivY6saku_5bytes5bytes5BytesNtB1B_5ErrorEECs2g09Ig8GZd6_13polars_stream.exit
@@ -2118,7 +2118,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.v = extractvalue { i64, ptr } %i.q, 1, !dbg !19452 ; 2 uses
   %i.w = trunc nuw i64 %i.u to i1, !dbg !19453
   %.not = icmp ne ptr %i.v, null
-  %or.cond.not = select i1 %i.w, i1 %.not, i1 false, !dbg !19453
+  %or.cond.not = select i1 %i.w, i1 %.not, i1 false, !dbg !19453, !prof !3854
   br i1 %or.cond.not, label %bb.k, label %bb.j, !dbg !19453, !prof !3854
 
 bb.j:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNvXs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3csvNtB1y_13CsvFileReaderNtNtNtB1A_10multi_scan16reader_interface10FileReader10begin_reads0_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEB1E_.exit
@@ -2521,7 +2521,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !104926 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !104927
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !104927
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !104927, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvMNtNtBc_2fs11dir_builderNtB1t_10DirBuilder6createReE00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !104927, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvMNtNtBc_2fs11dir_builderNtB1z_10DirBuilder6createReE00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -2713,7 +2713,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !105071 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !105072
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !105072
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !105072, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvMNtNtBc_2fs12open_optionsNtB1t_11OpenOptions8std_openRNtNtCsh8eZTKRCwoO_3std4path4PathE00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtB2o_2fs4FileNtNtNtB2o_2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !105072, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvMNtNtBc_2fs12open_optionsNtB1z_11OpenOptions8std_openRNtNtCsh8eZTKRCwoO_3std4path4PathE00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtB2u_2fs4FileNtNtNtB2u_2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -2905,7 +2905,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !105216 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !105217
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !105217
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !105217, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtBc_2fs12canonicalize12canonicalizeReE00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtCsh8eZTKRCwoO_3std4path7PathBufNtNtNtB2P_2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !105217, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtBc_2fs12canonicalize12canonicalizeReE00INtNtCscgRAwXFJnXP_4core6result6ResultNtNtCsh8eZTKRCwoO_3std4path7PathBufNtNtNtB2V_2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -3096,7 +3096,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !105372 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !105373
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105373
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105373, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onINtNtB2s_8executor10JoinHandleINtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEs_0B43_E00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !105373, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onINtNtB2y_8executor10JoinHandleINtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEs_0B49_E00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -3293,7 +3293,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !105532 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !105533
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105533
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105533, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onINtNtB2s_8executor17AbortOnDropHandleINtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEs_0B4a_E00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !105533, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onINtNtB2y_8executor17AbortOnDropHandleINtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEs_0B4g_E00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -3490,7 +3490,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !105692 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !105693
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105693
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105693, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNCNvMs0_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins9equi_joinNtB3J_10BuildState18finalize_unordereds_0s_0Es_0uE00uEB3P_.exit, !dbg !105693, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNCNvMs0_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins9equi_joinNtB3P_10BuildState18finalize_unordereds_0s_0Es_0uE00uEB3V_.exit.i
@@ -3687,7 +3687,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !105852 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !105853
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105853
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !105853, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes8group_byNtB3I_16GroupBySinkState14combine_localss1_0s_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3M_.exit, !dbg !105853, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtCs2g09Ig8GZd6_13polars_stream5nodes8group_byNtB3O_16GroupBySinkState14combine_localss1_0s_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3S_.exit.i
@@ -3884,7 +3884,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106012 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106013
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106013
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106013, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins14semi_anti_joinNtB3I_10BuildState8finalizes_0s_0Es_0uE00uEB3O_.exit, !dbg !106013, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins14semi_anti_joinNtB3O_10BuildState8finalizes_0s_0Es_0uE00uEB3U_.exit.i
@@ -4081,7 +4081,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106172 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106173
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106173
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106173, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins9equi_joinNtB3I_11SampleState23try_transition_to_builds_00Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3O_.exit, !dbg !106173, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNCNvMs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5joins9equi_joinNtB3O_11SampleState23try_transition_to_builds_00Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3U_.exit.i
@@ -4278,7 +4278,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106332 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106333
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106333
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106333, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNCNvNtCs2g09Ig8GZd6_13polars_stream7execute12run_subgraphs_0s0_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3H_.exit, !dbg !106333, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNCNvNtCs2g09Ig8GZd6_13polars_stream7execute12run_subgraphs_0s0_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3N_.exit.i
@@ -4475,7 +4475,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106492 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106493
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106493
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106493, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB3H_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE11pin_or_lock0Es_0INtNtCscgRAwXFJnXP_4core6option6OptionINtB3H_9PinnedRefB4K_EEE00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !106493, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB3N_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE11pin_or_lock0Es_0INtNtCscgRAwXFJnXP_4core6option6OptionINtB3N_9PinnedRefB4Q_EEE00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -4672,7 +4672,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106652 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106653
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106653
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106653, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graph0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3F_.exit, !dbg !106653, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graph0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3L_.exit.i
@@ -4869,7 +4869,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106812 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106813
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106813
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106813, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graphs0_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3F_.exit, !dbg !106813, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graphs0_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3L_.exit.i
@@ -5066,7 +5066,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !106972 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !106973
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106973
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !106973, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2s_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graphs_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3F_.exit, !dbg !106973, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCINvMCsidoPH4Qgqxm_12polars_asyncNtB2y_14RuntimeManager17block_in_place_onNCNvNtCs2g09Ig8GZd6_13polars_stream7execute13execute_graphs_0Es_0INtNtCscgRAwXFJnXP_4core6result6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEE00uEB3L_.exit.i
@@ -5263,7 +5263,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !107132 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !107133
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107133
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107133, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2v_13AsyncWritable5close00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107133, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2B_13AsyncWritable5close00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -5460,7 +5460,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !107292 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !107293
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107293
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107293, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2v_13AsyncWritable8sync_all00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107293, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2B_13AsyncWritable8sync_all00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -5657,7 +5657,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !107452 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !107453
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107453
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107453, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2v_13AsyncWritable9sync_data00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107453, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCINvNtNtNtBa_9scheduler12multi_thread6worker14block_in_placeNCNCNvMs_NtNtNtCslpwjCj2YNBy_9polars_io5utils4file14async_writableNtB2B_13AsyncWritable9sync_data00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEE00uECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -5854,7 +5854,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !107612 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !107613
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107613
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107613, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtBc_2fs4fileNtB1s_4File8sync_all00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107613, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtBc_2fs4fileNtB1y_4File8sync_all00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -6051,7 +6051,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.aa = extractvalue { i64, ptr } %i.v, 1, !dbg !107772 ; 2 uses
   %i.ab = trunc nuw i64 %i.z to i1, !dbg !107773
   %.not.i = icmp ne ptr %i.aa, null
-  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107773
+  %or.cond.not.i = select i1 %i.ab, i1 %.not.i, i1 false, !dbg !107773, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvMNtNtBc_2fs4fileNtB1s_4File9sync_data00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107773, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvMNtNtBc_2fs4fileNtB1y_4File9sync_data00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
@@ -6249,7 +6249,7 @@ _RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_bl
   %i.z = extractvalue { i64, ptr } %i.u, 1, !dbg !107921 ; 2 uses
   %i.aa = trunc nuw i64 %i.y to i1, !dbg !107922
   %.not.i = icmp ne ptr %i.z, null
-  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !107922
+  %or.cond.not.i = select i1 %i.aa, i1 %.not.i, i1 false, !dbg !107922, !prof !3854
   br i1 %or.cond.not.i, label %bb.k, label %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner14spawn_blockingNCNCNvNtNtBc_2fs5write20write_spawn_blocking00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit, !dbg !107922, !prof !3854
 
 bb.k:                                             ; preds = %_RINvMs4_NtNtNtCskmDBXs7hs3c_5tokio7runtime8blocking4poolNtB6_7Spawner20spawn_blocking_innerNCNCNvNtNtBc_2fs5write20write_spawn_blocking00INtNtCscgRAwXFJnXP_4core6result6ResultuNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorEECs2g09Ig8GZd6_13polars_stream.exit.i
