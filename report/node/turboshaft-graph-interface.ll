@@ -205,11 +205,8 @@ _ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_21SelectL
 
 bb.m:                                             ; preds = %.lr.ph, %bb.s
   %i.ej = phi i32 [ %i.ed, %.lr.ph ], [ %i.fl, %bb.s ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 6 uses
   %i.ek = load ptr, ptr %i.ee, align 8
-  %3 = and i64 %indvars.iv, 2147483648
-  %4 = icmp eq i64 %3, 0
-  call void @llvm.assume(i1 %4)
   %i.el = lshr i64 %indvars.iv, 6
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el
   %i.en = load i64, ptr %i.em, align 8
