@@ -205,9 +205,9 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit.i92:       ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i100, %bb.l
   %.sroa.0102.17 = phi ptr [ %i.bv, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i100 ], [ %.sroa.0102.16, %bb.l ] ; 5 uses
-  %.pn = phi ptr [ %i.bw, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i100 ], [ %i.bk, %bb.l ] ; 3 uses
+  %.pn = phi ptr [ %i.bw, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i100 ], [ %i.bk, %bb.l ] ; 4 uses
   %.sroa.50.17 = phi ptr [ %i.by, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i100 ], [ %i.bj, %bb.l ] ; 4 uses
-  %.sroa.20.17 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 4 uses
+  %.sroa.20.17 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 3 uses
   %i.bz = ashr i64 %.0.i89, 6
   %.off.i93 = add nsw i64 %i.bz, -1
   %switch.i94 = icmp ult i64 %.off.i93, -2
@@ -223,6 +223,7 @@ _ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit101: ; preds = %_ZNSt6vectorIhS
 
 bb.p:                                             ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit101
   store i8 -128, ptr %.sroa.20.17, align 1, !tbaa !348
+  %5 = getelementptr inbounds nuw i8, ptr %.pn, i64 2
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77
 
 bb.q:                                             ; preds = %_ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit101
@@ -245,7 +246,7 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i80: ; preds = %bb.q
   %.not.i.i.i.i.i82 = icmp ne i64 %i.ck, 0
   call void @llvm.assume(i1 %.not.i.i.i.i.i82)
   %i.cl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ck) #34 ; 4 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cf ; 3 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cf ; 2 uses
   store i8 -128, ptr %i.cm, align 1, !tbaa !348
   %i.cn = icmp sgt i64 %i.cf, 0
   br i1 %i.cn, label %bb.s, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85
@@ -255,19 +256,19 @@ bb.s:                                             ; preds = %_ZNKSt6vectorIhSaIh
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85: ; preds = %bb.s, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i80
+  %6 = getelementptr inbounds nuw i8, ptr %i.cm, i64 1
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0102.17, i64 noundef %i.cf) #31
   %i.co = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.ck
-  %.pre147 = load i8, ptr %i.cm, align 1, !tbaa !348
-  %5 = and i8 %.pre147, 127
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77
 
-_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77:       ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85, %bb.p
-  %6 = phi i8 [ %5, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85 ], [ 0, %bb.p ]
+_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77:       ; preds = %bb.p, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85
   %.sroa.0102.15 = phi ptr [ %i.cl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85 ], [ %.sroa.0102.17, %bb.p ] ; 3 uses
-  %.pn129.a = phi ptr [ %i.cm, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85 ], [ %.sroa.20.17, %bb.p ] ; 2 uses
+  %.pn129.a = phi ptr [ %6, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85 ], [ %5, %bb.p ] ; 4 uses
   %.sroa.50.15 = phi ptr [ %i.co, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i85 ], [ %.sroa.50.17, %bb.p ] ; 3 uses
-  %.sroa.20.15 = getelementptr inbounds nuw i8, ptr %.pn129.a, i64 1 ; 3 uses
-  store i8 %6, ptr %.pn129.a, align 1, !tbaa !348
+  %.sroa.20.15 = getelementptr inbounds i8, ptr %.pn129.a, i64 -1 ; 2 uses
+  %7 = load i8, ptr %.sroa.20.15, align 1, !tbaa !348
+  %8 = and i8 %7, 127
+  store i8 %8, ptr %.sroa.20.15, align 1, !tbaa !348
   %i.cp = icmp eq ptr %i.bc, %i.bb
   br i1 %i.cp, label %_ZN4moldL14encode_androidINS_6X86_64EEESt6vectorIhSaIhEESt4spanINS_6ElfRelIT_EELm18446744073709551615EE.exit, label %bb.t
 
@@ -560,7 +561,7 @@ _ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_
 
 .lr.ph68.i:                                       ; preds = %.lr.ph68.i.preheader, %._crit_edge.i
   %.sroa.0102.0 = phi ptr [ %.sroa.0102.4, %._crit_edge.i ], [ %.sroa.0102.15, %.lr.ph68.i.preheader ]
-  %.sroa.20.0 = phi ptr [ %.sroa.20.4, %._crit_edge.i ], [ %.sroa.20.15, %.lr.ph68.i.preheader ]
+  %.sroa.20.0 = phi ptr [ %.sroa.20.4, %._crit_edge.i ], [ %.pn129.a, %.lr.ph68.i.preheader ]
   %.sroa.50.0 = phi ptr [ %.sroa.50.4, %._crit_edge.i ], [ %.sroa.50.15, %.lr.ph68.i.preheader ]
   %.03267.i = phi i64 [ %.031.lcssa.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ] ; 7 uses
   %.03366.i = phi i64 [ %.1.lcssa.i, %._crit_edge.i ], [ 0, %.lr.ph68.i.preheader ] ; 2 uses
@@ -944,7 +945,7 @@ _ZN4moldL13write_sleb128ERSt6vectorIhSaIhEEl.exit.i: ; preds = %_ZNSt6vectorIhSa
 
 _ZN4moldL14encode_androidINS_6X86_64EEESt6vectorIhSaIhEESt4spanINS_6ElfRelIT_EELm18446744073709551615EE.exit: ; preds = %._crit_edge.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i
   %.sroa.0102.5 = phi ptr [ %.sroa.0102.15, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77 ], [ %.sroa.0102.15, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i ], [ %.sroa.0102.4, %._crit_edge.i ] ; 2 uses
-  %.sroa.20.5 = phi ptr [ %.sroa.20.15, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77 ], [ %.sroa.20.15, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i ], [ %.sroa.20.4, %._crit_edge.i ] ; 2 uses
+  %.sroa.20.5 = phi ptr [ %.pn129.a, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77 ], [ %.pn129.a, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i ], [ %.sroa.20.4, %._crit_edge.i ] ; 2 uses
   %.sroa.50.5 = phi ptr [ %.sroa.50.15, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i77 ], [ %.sroa.50.15, %_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt4spanIN4mold6ElfRelINS3_6X86_64EEELm18446744073709551615EENS_4lessEZNS3_L14encode_androidIS5_EESt6vectorIhSaIhEES2_INS4_IT_EELm18446744073709551615EEEUlRKS6_E0_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISL_NS_8danglingEEEOSE_SM_SN_.exit.i ], [ %.sroa.50.4, %._crit_edge.i ]
   %i.lf = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 5 uses
   %i.lg = load ptr, ptr %i.lf, align 8, !tbaa !587 ; 3 uses
