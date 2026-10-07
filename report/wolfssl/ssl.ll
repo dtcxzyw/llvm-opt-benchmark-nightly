@@ -205,35 +205,33 @@ bb.b:                                             ; preds = %bb.a
   %i.i = icmp ne ptr %i.f, null                   ; 2 uses
   %i.j = icmp ne ptr %i.h, null                   ; 2 uses
   %or.cond5.not = select i1 %i.i, i1 %i.j, i1 false
-  br i1 %or.cond5.not, label %bb.c, label %5
+  br i1 %or.cond5.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr nonnull align 1 %1, i64 %i.e, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull align 1 %3, i64 %i.g, i1 false)
-  %i.k = tail call fastcc i32 @wolfssl_set_tmp_dh(ptr noundef nonnull %0, ptr noundef nonnull %i.f, i32 noundef %2, ptr noundef nonnull %i.h, i32 noundef %4)
-  br label %5
+  %i.k = tail call fastcc i32 @wolfssl_set_tmp_dh(ptr noundef nonnull %0, ptr noundef nonnull %i.f, i32 noundef %2, ptr noundef nonnull %i.h, i32 noundef %4) ; 2 uses
+  %.not71 = icmp eq i32 %i.k, 1
+  br i1 %.not71, label %.thread65, label %bb.e
 
-5:                                                ; preds = %bb.c, %bb.b
-  %.2 = phi i32 [ %i.k, %bb.c ], [ -125, %bb.b ]  ; 3 uses
-  %.not71 = icmp eq i32 %.2, 1
-  br i1 %.not71, label %.thread65, label %bb.d
-
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.27983 = phi i32 [ -125, %bb.d ], [ %i.k, %bb.c ]
   tail call void @wolfSSL_Free(ptr noundef nonnull %i.f) #23
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %.27982 = phi i32 [ %.27983, %bb.e ], [ -125, %bb.d ] ; 2 uses
   br i1 %i.j, label %bb.g, label %.thread65
 
 bb.g:                                             ; preds = %bb.f
   tail call void @wolfSSL_Free(ptr noundef nonnull %i.h) #23
   br label %.thread65
 
-.thread65:                                        ; preds = %bb.a, %bb.f, %bb.g, %5
-  %.256 = phi i32 [ 1, %5 ], [ %.2, %bb.f ], [ %.2, %bb.g ], [ 0, %bb.a ]
+.thread65:                                        ; preds = %bb.a, %bb.f, %bb.g, %bb.c
+  %.256 = phi i32 [ 1, %bb.c ], [ %.27982, %bb.f ], [ %.27982, %bb.g ], [ 0, %bb.a ]
   ret i32 %.256
 }
 

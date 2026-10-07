@@ -161,8 +161,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph115, label %._crit_edge116
 
 .lr.ph115:                                        ; preds = %bb.a
-  %.not = icmp ne i32 %1, 0                       ; 3 uses
-  %5 = select i1 %.not, i64 0, i64 3              ; 4 uses
+  %.not = icmp ne i32 %1, 0                       ; 2 uses
   %i.c = zext i1 %.not to i64                     ; 4 uses
   %i.d = sext i32 %4 to i64                       ; 4 uses
   %.not100106 = icmp slt i32 %2, 4                ; 2 uses
@@ -193,10 +192,9 @@ bb.a:
 
 .preheader.us.us:                                 ; preds = %.preheader.us.us.preheader, %._crit_edge.us.us
   %i.m = phi i32 [ %i.cb, %._crit_edge.us.us ], [ %i.a, %.preheader.us.us.preheader ] ; 2 uses
-  %.0112.us.us = phi ptr [ %i.ca, %._crit_edge.us.us ], [ %0, %.preheader.us.us.preheader ] ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.0112.us.us, i64 %5 ; 3 uses
+  %.0112.us.us = phi ptr [ %i.ca, %._crit_edge.us.us ], [ %0, %.preheader.us.us.preheader ] ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.0112.us.us, i64 %i.c ; 10 uses
-  %i.o = load i8, ptr %6, align 1, !tbaa !8       ; 2 uses
+  %i.o = load i8, ptr %.0112.us.us, align 1, !tbaa !8 ; 2 uses
   %.not101.us.us = icmp eq i8 %i.o, -1
   br i1 %.not101.us.us, label %bb.c, label %bb.b
 
@@ -229,7 +227,7 @@ bb.c:                                             ; preds = %bb.b, %.preheader.u
   br i1 %exitcond151.not, label %._crit_edge.us.us, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.ai = getelementptr inbounds nuw i8, ptr %.0112.us.us, i64 4
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !8   ; 2 uses
   %.not101.us.us.1 = icmp eq i8 %i.aj, -1
   br i1 %.not101.us.us.1, label %bb.f, label %bb.e
@@ -264,7 +262,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %exitcond151.not.1, label %._crit_edge.us.us, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.be = getelementptr inbounds nuw i8, ptr %.0112.us.us, i64 8
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !8   ; 2 uses
   %.not101.us.us.2 = icmp eq i8 %i.bf, -1
   br i1 %.not101.us.us.2, label %._crit_edge.us.us, label %bb.h
@@ -337,7 +335,7 @@ bb.i:                                             ; preds = %.preheader.us, %bb.
 bb.j:                                             ; preds = %.lr.ph111.us, %bb.l
   %indvars.iv144 = phi i64 [ %i.j, %.lr.ph111.us ], [ %indvars.iv.next145, %bb.l ] ; 2 uses
   %i.cx = shl nuw nsw i64 %indvars.iv144, 2       ; 2 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 %i.cx
+  %i.cy = getelementptr inbounds nuw i8, ptr %.0112.us, i64 %i.cx
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !8   ; 2 uses
   %.not101.us = icmp eq i8 %i.cz, -1
   br i1 %.not101.us, label %bb.l, label %bb.k
@@ -384,7 +382,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.k, label %.lr.ph111.us, label %._crit_edge.us
 
 .lr.ph111.us:                                     ; preds = %..loopexit_crit_edge.us
-  %7 = getelementptr inbounds nuw i8, ptr %.0112.us, i64 %5
   %i.dz = getelementptr inbounds nuw i8, ptr %.0112.us, i64 %i.c
   br label %bb.j
 
@@ -413,30 +410,30 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 .preheader102.us:                                 ; preds = %.preheader102.us.preheader, %._crit_edge.us121
   %i.ei = phi i32 [ %i.gy, %._crit_edge.us121 ], [ %i.a, %.preheader102.us.preheader ] ; 2 uses
-  %.0112.us117 = phi ptr [ %i.gx, %._crit_edge.us121 ], [ %0, %.preheader102.us.preheader ] ; 3 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 %5 ; 3 uses
-  %i.ek = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 %i.c ; 10 uses
-  %i.el = load i8, ptr %i.ej, align 1, !tbaa !8   ; 2 uses
+  %.0112.us117 = phi ptr [ %i.gx, %._crit_edge.us121 ], [ %0, %.preheader102.us.preheader ] ; 5 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 %i.c ; 10 uses
+  %i.ek = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 3
+  %i.el = load i8, ptr %i.ek, align 1, !tbaa !8   ; 2 uses
   %.not101.us120 = icmp eq i8 %i.el, -1
   br i1 %.not101.us120, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.preheader102.us
   %i.em = zext i8 %i.el to i32
   %i.en = mul nuw nsw i32 %i.em, 32897            ; 3 uses
-  %i.eo = load i8, ptr %i.ek, align 1, !tbaa !8
+  %i.eo = load i8, ptr %i.ej, align 1, !tbaa !8
   %i.ep = zext i8 %i.eo to i32
   %i.eq = mul nuw nsw i32 %i.en, %i.ep
   %i.er = lshr i32 %i.eq, 23
   %i.es = trunc nuw i32 %i.er to i8
-  store i8 %i.es, ptr %i.ek, align 1, !tbaa !8
-  %i.et = getelementptr inbounds nuw i8, ptr %i.ek, i64 1 ; 2 uses
+  store i8 %i.es, ptr %i.ej, align 1, !tbaa !8
+  %i.et = getelementptr inbounds nuw i8, ptr %i.ej, i64 1 ; 2 uses
   %i.eu = load i8, ptr %i.et, align 1, !tbaa !8
   %i.ev = zext i8 %i.eu to i32
   %i.ew = mul nuw nsw i32 %i.en, %i.ev
   %i.ex = lshr i32 %i.ew, 23
   %i.ey = trunc nuw i32 %i.ex to i8
   store i8 %i.ey, ptr %i.et, align 1, !tbaa !8
-  %i.ez = getelementptr inbounds nuw i8, ptr %i.ek, i64 2 ; 2 uses
+  %i.ez = getelementptr inbounds nuw i8, ptr %i.ej, i64 2 ; 2 uses
   %i.fa = load i8, ptr %i.ez, align 1, !tbaa !8
   %i.fb = zext i8 %i.fa to i32
   %i.fc = mul nuw nsw i32 %i.en, %i.fb
@@ -449,7 +446,7 @@ bb.n:                                             ; preds = %bb.m, %.preheader10
   br i1 %exitcond.not, label %._crit_edge.us121, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ff = getelementptr inbounds nuw i8, ptr %i.ej, i64 4
+  %i.ff = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 7
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !8   ; 2 uses
   %.not101.us120.1 = icmp eq i8 %i.fg, -1
   br i1 %.not101.us120.1, label %bb.q, label %bb.p
@@ -457,21 +454,21 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.fh = zext i8 %i.fg to i32
   %i.fi = mul nuw nsw i32 %i.fh, 32897            ; 3 uses
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.ek, i64 4 ; 2 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.ej, i64 4 ; 2 uses
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !8
   %i.fl = zext i8 %i.fk to i32
   %i.fm = mul nuw nsw i32 %i.fi, %i.fl
   %i.fn = lshr i32 %i.fm, 23
   %i.fo = trunc nuw i32 %i.fn to i8
   store i8 %i.fo, ptr %i.fj, align 1, !tbaa !8
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.ek, i64 5 ; 2 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.ej, i64 5 ; 2 uses
   %i.fq = load i8, ptr %i.fp, align 1, !tbaa !8
   %i.fr = zext i8 %i.fq to i32
   %i.fs = mul nuw nsw i32 %i.fi, %i.fr
   %i.ft = lshr i32 %i.fs, 23
   %i.fu = trunc nuw i32 %i.ft to i8
   store i8 %i.fu, ptr %i.fp, align 1, !tbaa !8
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.ek, i64 6 ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.ej, i64 6 ; 2 uses
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !8
   %i.fx = zext i8 %i.fw to i32
   %i.fy = mul nuw nsw i32 %i.fi, %i.fx
@@ -484,7 +481,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %exitcond.not.1, label %._crit_edge.us121, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.gb = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
+  %i.gb = getelementptr inbounds nuw i8, ptr %.0112.us117, i64 11
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !8   ; 2 uses
   %.not101.us120.2 = icmp eq i8 %i.gc, -1
   br i1 %.not101.us120.2, label %._crit_edge.us121, label %bb.s
@@ -492,21 +489,21 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.gd = zext i8 %i.gc to i32
   %i.ge = mul nuw nsw i32 %i.gd, 32897            ; 3 uses
-  %i.gf = getelementptr inbounds nuw i8, ptr %i.ek, i64 8 ; 2 uses
+  %i.gf = getelementptr inbounds nuw i8, ptr %i.ej, i64 8 ; 2 uses
   %i.gg = load i8, ptr %i.gf, align 1, !tbaa !8
   %i.gh = zext i8 %i.gg to i32
   %i.gi = mul nuw nsw i32 %i.ge, %i.gh
   %i.gj = lshr i32 %i.gi, 23
   %i.gk = trunc nuw i32 %i.gj to i8
   store i8 %i.gk, ptr %i.gf, align 1, !tbaa !8
-  %i.gl = getelementptr inbounds nuw i8, ptr %i.ek, i64 9 ; 2 uses
+  %i.gl = getelementptr inbounds nuw i8, ptr %i.ej, i64 9 ; 2 uses
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !8
   %i.gn = zext i8 %i.gm to i32
   %i.go = mul nuw nsw i32 %i.ge, %i.gn
   %i.gp = lshr i32 %i.go, 23
   %i.gq = trunc nuw i32 %i.gp to i8
   store i8 %i.gq, ptr %i.gl, align 1, !tbaa !8
-  %i.gr = getelementptr inbounds nuw i8, ptr %i.ek, i64 10 ; 2 uses
+  %i.gr = getelementptr inbounds nuw i8, ptr %i.ej, i64 10 ; 2 uses
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !8
   %i.gt = zext i8 %i.gs to i32
   %i.gu = mul nuw nsw i32 %i.ge, %i.gt
@@ -558,7 +555,7 @@ bb.t:                                             ; preds = %.preheader102, %bb.
   br i1 %i.eg, label %.lr.ph111, label %._crit_edge
 
 .lr.ph111:                                        ; preds = %..loopexit103_crit_edge
-  %i.hu = getelementptr inbounds nuw i8, ptr %.0112, i64 %5
+  %i.hu = getelementptr inbounds nuw i8, ptr %.0112, i64 3
   %i.hv = getelementptr inbounds nuw i8, ptr %.0112, i64 %i.c
   br label %bb.u
 

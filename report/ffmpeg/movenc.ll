@@ -205,19 +205,15 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !225
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.k = load i32, ptr %i.j, align 8, !tbaa !227
-  %i.l = add i32 %i.k, -1
-  %switch.i = icmp ult i32 %i.l, 2                ; 2 uses
+  %i.l = add i32 %i.k, -3
+  %switch.i = icmp ult i32 %i.l, -2               ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  %or.cond164.i = select i1 %switch.i, i1 true, i1 %exitcond.not.i
-  br i1 %or.cond164.i, label %._crit_edge.loopexit.i, label %bb.b, !llvm.loop !389
+  %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
+  %or.cond164.i = select i1 %switch.i, i1 %exitcond.not.i, i1 false
+  br i1 %or.cond164.i, label %bb.b, label %._crit_edge.i, !llvm.loop !389
 
-._crit_edge.loopexit.i:                           ; preds = %bb.b
-  %2 = xor i1 %switch.i, true
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a
-  %.2.i = phi i1 [ true, %bb.a ], [ %2, %._crit_edge.loopexit.i ]
+._crit_edge.i:                                    ; preds = %bb.b, %bb.a
+  %.2.i = phi i1 [ true, %bb.a ], [ %switch.i, %bb.b ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !165  ; 2 uses
   %i.o = icmp sgt i32 %i.n, 0

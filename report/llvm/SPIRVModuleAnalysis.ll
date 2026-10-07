@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZN4llvm11SmallVect
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 456
   %i.s = load i64, ptr %i.r, align 8, !tbaa !140, !noalias !679
   %.fr33 = freeze i64 %i.s
-  %i.t = icmp eq i64 %.fr33, 0                    ; 4 uses
+  %i.t = icmp eq i64 %.fr33, 0                    ; 3 uses
   %spec.select.idx.i = select i1 %i.t, i64 0, i64 56
   %spec.select.i = getelementptr inbounds nuw i8, ptr %i.q, i64 %spec.select.idx.i
   %.sink1.i = load ptr, ptr %spec.select.i, align 8, !tbaa !57, !noalias !679 ; 3 uses
@@ -220,14 +220,12 @@ bb.h:                                             ; preds = %_ZN4llvm11SmallVect
   br i1 %.not31, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
-  %.idx.i = select i1 %i.t, i64 0, i64 32         ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   br i1 %i.t, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN4llvm11SmallVectorINS_5SPIRV10Capability10CapabilityELj8EED2Ev.exit19.us
   %.sroa.020.032.us = phi ptr [ %i.ae, %_ZN4llvm11SmallVectorINS_5SPIRV10Capability10CapabilityELj8EED2Ev.exit19.us ], [ %.sink1.i, %.lr.ph ] ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.020.032.us, i64 %.idx.i
-  %i.ab = load i32, ptr %6, align 4, !tbaa !319
+  %i.ab = load i32, ptr %.sroa.020.032.us, align 4, !tbaa !319
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @_ZN4llvm33getCapabilitiesEnabledByExtensionENS_5SPIRV9Extension9ExtensionE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::SmallVector.34") align 8 %5, i32 noundef %i.ab) #23
   call void @_ZN4llvm5SPIRV18RequirementHandler16addAvailableCapsERKNS_11SmallVectorINS0_10Capability10CapabilityELj8EEE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef nonnull align 8 dereferenceable(48) %5)
@@ -253,7 +251,7 @@ _ZN4llvm11SmallVectorINS_5SPIRV10Capability10CapabilityELj8EED2Ev.exit19.us: ; p
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN4llvm11SmallVectorINS_5SPIRV10Capability10CapabilityELj8EED2Ev.exit19
   %.sroa.020.032 = phi ptr [ %i.am, %_ZN4llvm11SmallVectorINS_5SPIRV10Capability10CapabilityELj8EED2Ev.exit19 ], [ %.sink1.i, %.lr.ph ] ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.020.032, i64 %.idx.i
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.020.032, i64 32
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !319
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @_ZN4llvm33getCapabilitiesEnabledByExtensionENS_5SPIRV9Extension9ExtensionE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::SmallVector.34") align 8 %5, i32 noundef %i.aj) #23

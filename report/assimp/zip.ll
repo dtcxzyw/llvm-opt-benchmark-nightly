@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.lr.ph
 bb.x:                                             ; preds = %bb.v
   %bcmp = tail call i32 @bcmp(ptr %2, ptr nonnull %i.db, i64 %i.bu)
   %.not147 = icmp eq i32 %bcmp, 0
-  br i1 %.not147, label %.thread129, label %bb.ad
+  br i1 %.not147, label %.thread129, label %.thread143
 
 .thread129:                                       ; preds = %bb.w, %.preheader150, %bb.x, %bb.t
   %i.do = icmp ne i16 %i.ck, 0
@@ -286,8 +286,6 @@ bb.ac:                                            ; preds = %.lr.ph158
 mz_zip_string_equal.exit:                         ; preds = %bb.ac, %.preheader, %bb.ab
   %.023.i = phi i1 [ %i.dy, %bb.ab ], [ false, %.preheader ], [ false, %bb.ac ] ; 2 uses
   %brmerge = or i1 %.not, %.023.i
-  %not..023.i = xor i1 %.023.i, true
-  %.mux = zext i1 %not..023.i to i32
   br i1 %brmerge, label %bb.ad, label %.thread145
 
 .thread145:                                       ; preds = %mz_zip_string_equal.exit
@@ -295,14 +293,10 @@ mz_zip_string_equal.exit:                         ; preds = %bb.ac, %.preheader,
   store i32 %i.el, ptr %4, align 4
   br label %.split
 
-bb.ad:                                            ; preds = %mz_zip_string_equal.exit, %bb.x
-  %.181 = phi i32 [ 4, %bb.x ], [ %.mux, %mz_zip_string_equal.exit ]
-  switch i32 %.181, label %.split [
-    i32 0, label %.thread143
-    i32 4, label %.thread143
-  ]
+bb.ad:                                            ; preds = %mz_zip_string_equal.exit
+  br i1 %.023.i, label %.thread143, label %.split
 
-.thread143:                                       ; preds = %.lr.ph, %.lr.ph158, %bb.u, %bb.z, %bb.s, %bb.ad, %bb.ad
+.thread143:                                       ; preds = %.lr.ph, %.lr.ph158, %bb.ad, %bb.x, %bb.u, %bb.z, %bb.s
   %indvars.iv.next179 = add nuw nsw i64 %indvars.iv178, 1 ; 2 uses
   %exitcond182.not = icmp eq i64 %indvars.iv.next179, %wide.trip.count181
   br i1 %exitcond182.not, label %mz_zip_set_error.exit108, label %bb.s

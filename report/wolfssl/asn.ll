@@ -205,8 +205,8 @@ DecodeGeneralName.exit.i:                         ; preds = %bb.bh, %bb.bg, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   br label %DecodeAltNames.exit
 
-DecodeAltNames.exit:                              ; preds = %DecodeGeneralName.exit.i, %GetASN_Sequence.exit.i, %bb.p, %bb.q, %bb.u, %bb.w, %.thread69.i.i.i, %._crit_edge.i.i.i, %bb.x, %.loopexit.sink.split.i
-  %.5.i = phi i32 [ -140, %bb.w ], [ %.5.ph.i, %.loopexit.sink.split.i ], [ -140, %bb.p ], [ -140, %GetASN_Sequence.exit.i ], [ -140, %bb.q ], [ -140, %bb.u ], [ -140, %.thread69.i.i.i ], [ -140, %._crit_edge.i.i.i ], [ -140, %bb.x ], [ 0, %DecodeGeneralName.exit.i ]
+DecodeAltNames.exit:                              ; preds = %DecodeGeneralName.exit.i, %bb.p, %bb.q, %bb.u, %bb.w, %.thread69.i.i.i, %._crit_edge.i.i.i, %bb.x, %GetASN_Sequence.exit.i, %.loopexit.sink.split.i
+  %.5.i = phi i32 [ -140, %.thread69.i.i.i ], [ %.5.ph.i, %.loopexit.sink.split.i ], [ -140, %bb.u ], [ -140, %._crit_edge.i.i.i ], [ -140, %GetASN_Sequence.exit.i ], [ -140, %bb.p ], [ -140, %bb.q ], [ -140, %bb.w ], [ -140, %bb.x ], [ 0, %DecodeGeneralName.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #24
   br label %bb.de
 

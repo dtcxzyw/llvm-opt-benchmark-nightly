@@ -204,7 +204,7 @@ sdslen.exit.thread107:                            ; preds = %bb.f
   br label %sdsHdrSize.exit
 
 sdsHdrSize.exit:                                  ; preds = %bb.f, %sdslen.exit.thread107, %sdslen.exit.thread104, %sdslen.exit.thread101, %sdslen.exit.thread98, %sdslen.exit.thread
-  %.0.i5697 = phi i64 [ %i.ag, %sdslen.exit.thread98 ], [ %i.aj, %sdslen.exit.thread101 ], [ %i.ad, %sdslen.exit.thread ], [ %i.ao, %sdslen.exit.thread107 ], [ %i.am, %sdslen.exit.thread104 ], [ 0, %bb.f ] ; 15 uses
+  %.0.i5697 = phi i64 [ %i.ag, %sdslen.exit.thread98 ], [ %i.aj, %sdslen.exit.thread101 ], [ %i.ad, %sdslen.exit.thread ], [ %i.ao, %sdslen.exit.thread107 ], [ %i.am, %sdslen.exit.thread104 ], [ 0, %bb.f ] ; 13 uses
   %.0.i57.neg = phi i64 [ -3, %sdslen.exit.thread98 ], [ -5, %sdslen.exit.thread101 ], [ -1, %sdslen.exit.thread ], [ -17, %sdslen.exit.thread107 ], [ -9, %sdslen.exit.thread104 ], [ 0, %bb.f ]
   %i.ap = getelementptr inbounds i8, ptr %0, i64 %.0.i57.neg ; 5 uses
   %i.aq = add i64 %.0.i5697, %1                   ; 6 uses
@@ -274,7 +274,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bf, label %sdssetalloc.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.az ; 4 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.az ; 6 uses
   %i.bh = load i64, ptr %i.a, align 8, !tbaa !15
   %i.bi = xor i32 %.0.i59, -1
   %i.bj = sext i32 %i.bi to i64
@@ -309,23 +309,12 @@ adjustTypeIfNeeded.exit:                          ; preds = %bb.s
   %i.bt = icmp ult i64 %i.bk, 4294967287          ; 3 uses
   %..i.i = select i1 %i.bt, i8 3, i8 4
   %i.bu = select i1 %i.bt, i64 9, i64 17
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bu ; 6 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bu ; 4 uses
   %i.bw = add nuw i64 %.0.i5697, 1
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bv, ptr noundef nonnull align 1 dereferenceable(1) %i.bg, i64 %i.bw, i1 false)
   %i.bx = getelementptr inbounds i8, ptr %i.bv, i64 -1
   store i8 %..i.i, ptr %i.bx, align 1, !tbaa !17
-  br i1 %i.bt, label %3, label %6
-
-3:                                                ; preds = %adjustTypeIfNeeded.exit
-  %4 = trunc i64 %.0.i5697 to i32
-  %5 = getelementptr inbounds i8, ptr %i.bv, i64 -9
-  store i32 %4, ptr %5, align 1, !tbaa !12
-  br label %adjustTypeIfNeeded.exit.thread
-
-6:                                                ; preds = %adjustTypeIfNeeded.exit
-  %7 = getelementptr inbounds i8, ptr %i.bv, i64 -17
-  store i64 %.0.i5697, ptr %7, align 1, !tbaa !15
-  br label %adjustTypeIfNeeded.exit.thread
+  br i1 %i.bt, label %adjustTypeIfNeeded.exit.thread.thread176, label %adjustTypeIfNeeded.exit.thread.thread180
 
 bb.t:                                             ; preds = %bb.p
   %i.by = call ptr @zmalloc_usable(i64 noundef %i.bb, ptr noundef nonnull %i.a) #21 ; 6 uses
@@ -349,7 +338,7 @@ adjustTypeIfNeeded.exit73.thread128:              ; preds = %bb.u
   store i8 %.0.i58153, ptr %i.ch, align 1, !tbaa !17
   %i.ci = xor i32 %.0.i59, -1
   %i.cj = sext i32 %i.ci to i64
-  br label %adjustTypeIfNeeded.exit.thread.thread176
+  br label %adjustTypeIfNeeded.exit.thread.thread180
 
 switch.lookup191:                                 ; preds = %bb.u
   %i.ck = zext nneg i8 %.0.i58153 to i64
@@ -385,11 +374,11 @@ sdsReqType.exit.i67:                              ; preds = %bb.v
 
 adjustTypeIfNeeded.exit73.thread161:              ; preds = %sdsReqType.exit.i67
   store i8 4, ptr %i.cu, align 1, !tbaa !17
-  br label %adjustTypeIfNeeded.exit.thread.thread176
+  br label %adjustTypeIfNeeded.exit.thread.thread180
 
 adjustTypeIfNeeded.exit73.thread165:              ; preds = %sdsReqType.exit.i67
   store i8 3, ptr %i.cu, align 1, !tbaa !17
-  br label %adjustTypeIfNeeded.exit.thread.thread180
+  br label %adjustTypeIfNeeded.exit.thread.thread176
 
 adjustTypeIfNeeded.exit73:                        ; preds = %switch.lookup191
   %i.cv = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.az ; 6 uses
@@ -399,7 +388,7 @@ adjustTypeIfNeeded.exit73:                        ; preds = %switch.lookup191
   %i.cx = getelementptr inbounds i8, ptr %i.cv, i64 -1
   store i8 %.0.i58153, ptr %i.cx, align 1, !tbaa !17
   switch i8 %.0.i58153, label %default.unreachable151 [
-    i8 3, label %adjustTypeIfNeeded.exit.thread.thread180
+    i8 3, label %adjustTypeIfNeeded.exit.thread.thread176
     i8 1, label %adjustTypeIfNeeded.exit.thread.thread185
     i8 2, label %bb.w
   ]
@@ -424,43 +413,40 @@ bb.w:                                             ; preds = %adjustTypeIfNeeded.
   %i.di = sext i32 %i.dh to i64
   br label %adjustTypeIfNeeded.exit.thread.thread170
 
-adjustTypeIfNeeded.exit.thread.thread180:         ; preds = %adjustTypeIfNeeded.exit73, %adjustTypeIfNeeded.exit73.thread165
-  %8 = phi ptr [ %i.cs, %adjustTypeIfNeeded.exit73.thread165 ], [ %i.cv, %adjustTypeIfNeeded.exit73 ] ; 2 uses
-  %.2169 = phi i32 [ 9, %adjustTypeIfNeeded.exit73.thread165 ], [ %.0.i59, %adjustTypeIfNeeded.exit73 ]
-  %9 = trunc i64 %.0.i5697 to i32
-  %i.dj = getelementptr inbounds i8, ptr %8, i64 -9
-  store i32 %9, ptr %i.dj, align 1, !tbaa !12
+adjustTypeIfNeeded.exit.thread.thread180:         ; preds = %adjustTypeIfNeeded.exit73.thread128, %adjustTypeIfNeeded.exit73.thread161, %adjustTypeIfNeeded.exit
+  %.sink196 = phi ptr [ %i.bv, %adjustTypeIfNeeded.exit ], [ %i.cf, %adjustTypeIfNeeded.exit73.thread128 ], [ %i.cs, %adjustTypeIfNeeded.exit73.thread161 ] ; 2 uses
+  %.092.ph = phi i64 [ -18, %adjustTypeIfNeeded.exit ], [ %i.cj, %adjustTypeIfNeeded.exit73.thread128 ], [ -18, %adjustTypeIfNeeded.exit73.thread161 ]
+  %i.dj = getelementptr inbounds i8, ptr %.sink196, i64 -17
+  store i64 %.0.i5697, ptr %i.dj, align 1, !tbaa !15
   %i.dk = load i64, ptr %i.a, align 8, !tbaa !15
-  %10 = xor i32 %.2169, -1
-  %11 = sext i32 %10 to i64
-  %i.dl = add i64 %i.dk, %11
-  br label %sdsTypeMaxSize.exit
-
-adjustTypeIfNeeded.exit.thread.thread176:         ; preds = %adjustTypeIfNeeded.exit73.thread128, %adjustTypeIfNeeded.exit73.thread161
-  %12 = phi ptr [ %i.cf, %adjustTypeIfNeeded.exit73.thread128 ], [ %i.cs, %adjustTypeIfNeeded.exit73.thread161 ] ; 2 uses
-  %.2132 = phi i64 [ %i.cj, %adjustTypeIfNeeded.exit73.thread128 ], [ -18, %adjustTypeIfNeeded.exit73.thread161 ]
-  %i.dm = getelementptr inbounds i8, ptr %12, i64 -17
-  store i64 %.0.i5697, ptr %i.dm, align 1, !tbaa !15
-  %i.dn = load i64, ptr %i.a, align 8, !tbaa !15
-  %i.do = add i64 %i.dn, %.2132
+  %i.dl = add i64 %i.dk, %.092.ph
   br label %.critedge
 
-adjustTypeIfNeeded.exit.thread.thread170:         ; preds = %bb.w, %adjustTypeIfNeeded.exit.thread114
-  %.092.ph.a = phi i64 [ -6, %adjustTypeIfNeeded.exit.thread114 ], [ %i.di, %bb.w ]
-  %.047.ph = phi ptr [ %i.bp, %adjustTypeIfNeeded.exit.thread114 ], [ %i.de, %bb.w ]
+adjustTypeIfNeeded.exit.thread.thread176:         ; preds = %adjustTypeIfNeeded.exit73.thread165, %adjustTypeIfNeeded.exit73, %adjustTypeIfNeeded.exit
+  %.sink198 = phi ptr [ %i.bv, %adjustTypeIfNeeded.exit ], [ %i.cs, %adjustTypeIfNeeded.exit73.thread165 ], [ %i.cv, %adjustTypeIfNeeded.exit73 ] ; 2 uses
+  %.092.ph175 = phi i32 [ 9, %adjustTypeIfNeeded.exit ], [ 9, %adjustTypeIfNeeded.exit73.thread165 ], [ %.0.i59, %adjustTypeIfNeeded.exit73 ]
+  %3 = trunc i64 %.0.i5697 to i32
+  %i.dm = getelementptr inbounds i8, ptr %.sink198, i64 -9
+  store i32 %3, ptr %i.dm, align 1, !tbaa !12
+  %i.dn = load i64, ptr %i.a, align 8, !tbaa !15
+  %4 = xor i32 %.092.ph175, -1
+  %5 = sext i32 %4 to i64
+  %i.do = add i64 %i.dn, %5
+  br label %sdsTypeMaxSize.exit
+
+adjustTypeIfNeeded.exit.thread.thread170:         ; preds = %adjustTypeIfNeeded.exit.thread114, %bb.w
+  %.092.ph.a = phi i64 [ %i.di, %bb.w ], [ -6, %adjustTypeIfNeeded.exit.thread114 ]
+  %.047.ph = phi ptr [ %i.de, %bb.w ], [ %i.bp, %adjustTypeIfNeeded.exit.thread114 ]
   %i.dp = load i64, ptr %i.a, align 8, !tbaa !15
   %i.dq = add i64 %i.dp, %.092.ph.a
   br label %sdsTypeMaxSize.exit
 
-adjustTypeIfNeeded.exit.thread:                   ; preds = %switch.lookup, %3, %6
-  %.093 = phi i8 [ 3, %3 ], [ 4, %6 ], [ %i.c, %switch.lookup ]
-  %.092 = phi i32 [ 9, %3 ], [ 17, %6 ], [ %.0.i59, %switch.lookup ]
-  %.047 = phi ptr [ %i.bv, %3 ], [ %i.bv, %6 ], [ %i.bg, %switch.lookup ] ; 4 uses
+adjustTypeIfNeeded.exit.thread:                   ; preds = %switch.lookup
   %i.dr = load i64, ptr %i.a, align 8, !tbaa !15
-  %i.ds = xor i32 %.092, -1
+  %i.ds = xor i32 %.0.i59, -1
   %i.dt = sext i32 %i.ds to i64
-  %i.du = add i64 %i.dr, %i.dt                    ; 4 uses
-  switch i8 %.093, label %.critedge [
+  %i.du = add i64 %i.dr, %i.dt                    ; 3 uses
+  switch i8 %i.c, label %default.unreachable [
     i8 3, label %bb.y
     i8 1, label %sdsTypeMaxSize.exit
     i8 2, label %bb.x
@@ -472,10 +458,10 @@ bb.x:                                             ; preds = %adjustTypeIfNeeded.
 bb.y:                                             ; preds = %adjustTypeIfNeeded.exit.thread
   br label %sdsTypeMaxSize.exit
 
-sdsTypeMaxSize.exit:                              ; preds = %adjustTypeIfNeeded.exit.thread.thread180, %adjustTypeIfNeeded.exit.thread.thread170, %adjustTypeIfNeeded.exit.thread.thread185, %adjustTypeIfNeeded.exit.thread, %bb.x, %bb.y
-  %i.dv = phi i64 [ %i.du, %bb.x ], [ %i.dd, %adjustTypeIfNeeded.exit.thread.thread185 ], [ %i.du, %adjustTypeIfNeeded.exit.thread ], [ %i.dq, %adjustTypeIfNeeded.exit.thread.thread170 ], [ %i.dl, %adjustTypeIfNeeded.exit.thread.thread180 ], [ %i.du, %bb.y ] ; 2 uses
-  %.047175 = phi ptr [ %.047, %bb.x ], [ %i.cv, %adjustTypeIfNeeded.exit.thread.thread185 ], [ %.047, %adjustTypeIfNeeded.exit.thread ], [ %.047.ph, %adjustTypeIfNeeded.exit.thread.thread170 ], [ %8, %adjustTypeIfNeeded.exit.thread.thread180 ], [ %.047, %bb.y ]
-  %.0.i77 = phi i64 [ 65535, %bb.x ], [ 255, %adjustTypeIfNeeded.exit.thread.thread185 ], [ 255, %adjustTypeIfNeeded.exit.thread ], [ 65535, %adjustTypeIfNeeded.exit.thread.thread170 ], [ 4294967295, %adjustTypeIfNeeded.exit.thread.thread180 ], [ 4294967295, %bb.y ]
+sdsTypeMaxSize.exit:                              ; preds = %adjustTypeIfNeeded.exit.thread.thread176, %adjustTypeIfNeeded.exit.thread.thread170, %adjustTypeIfNeeded.exit.thread.thread185, %adjustTypeIfNeeded.exit.thread, %bb.x, %bb.y
+  %i.dv = phi i64 [ %i.du, %bb.x ], [ %i.dd, %adjustTypeIfNeeded.exit.thread.thread185 ], [ %i.du, %adjustTypeIfNeeded.exit.thread ], [ %i.dq, %adjustTypeIfNeeded.exit.thread.thread170 ], [ %i.do, %adjustTypeIfNeeded.exit.thread.thread176 ], [ %i.du, %bb.y ] ; 2 uses
+  %.047175 = phi ptr [ %i.bg, %bb.x ], [ %i.cv, %adjustTypeIfNeeded.exit.thread.thread185 ], [ %i.bg, %adjustTypeIfNeeded.exit.thread ], [ %.047.ph, %adjustTypeIfNeeded.exit.thread.thread170 ], [ %.sink198, %adjustTypeIfNeeded.exit.thread.thread176 ], [ %i.bg, %bb.y ]
+  %.0.i77 = phi i64 [ 65535, %bb.x ], [ 255, %adjustTypeIfNeeded.exit.thread.thread185 ], [ 255, %adjustTypeIfNeeded.exit.thread ], [ 65535, %adjustTypeIfNeeded.exit.thread.thread170 ], [ 4294967295, %adjustTypeIfNeeded.exit.thread.thread176 ], [ 4294967295, %bb.y ]
   %.not141 = icmp ugt i64 %i.dv, %.0.i77
   br i1 %.not141, label %bb.z, label %.critedge, !prof !30
 
@@ -484,9 +470,12 @@ bb.z:                                             ; preds = %sdsTypeMaxSize.exit
   call void @abort() #22
   unreachable
 
-.critedge:                                        ; preds = %bb.r, %adjustTypeIfNeeded.exit.thread.thread176, %adjustTypeIfNeeded.exit.thread, %sdsTypeMaxSize.exit
-  %13 = phi i64 [ %i.dv, %sdsTypeMaxSize.exit ], [ %i.du, %adjustTypeIfNeeded.exit.thread ], [ %i.bk, %bb.r ], [ %i.do, %adjustTypeIfNeeded.exit.thread.thread176 ] ; 4 uses
-  %.047137 = phi ptr [ %.047175, %sdsTypeMaxSize.exit ], [ %.047, %adjustTypeIfNeeded.exit.thread ], [ %i.bg, %bb.r ], [ %12, %adjustTypeIfNeeded.exit.thread.thread176 ] ; 10 uses
+default.unreachable:                              ; preds = %adjustTypeIfNeeded.exit.thread
+  unreachable
+
+.critedge:                                        ; preds = %bb.r, %adjustTypeIfNeeded.exit.thread.thread180, %sdsTypeMaxSize.exit
+  %6 = phi i64 [ %i.dv, %sdsTypeMaxSize.exit ], [ %i.dl, %adjustTypeIfNeeded.exit.thread.thread180 ], [ %i.bk, %bb.r ] ; 4 uses
+  %.047137 = phi ptr [ %.047175, %sdsTypeMaxSize.exit ], [ %.sink196, %adjustTypeIfNeeded.exit.thread.thread180 ], [ %i.bg, %bb.r ] ; 10 uses
   %i.dw = getelementptr i8, ptr %.047137, i64 -1
   %.val.i78 = load i8, ptr %i.dw, align 1, !tbaa !17
   %i.dx = and i8 %.val.i78, 7
@@ -498,26 +487,26 @@ bb.z:                                             ; preds = %sdsTypeMaxSize.exit
   ]
 
 bb.aa:                                            ; preds = %.critedge
-  %i.dy = trunc i64 %13 to i8
+  %i.dy = trunc i64 %6 to i8
   %i.dz = getelementptr inbounds i8, ptr %.047137, i64 -2
   store i8 %i.dy, ptr %i.dz, align 1, !tbaa !17
   br label %sdssetalloc.exit
 
 bb.ab:                                            ; preds = %.critedge
-  %i.ea = trunc i64 %13 to i16
+  %i.ea = trunc i64 %6 to i16
   %i.eb = getelementptr inbounds i8, ptr %.047137, i64 -3
   store i16 %i.ea, ptr %i.eb, align 1, !tbaa !19
   br label %sdssetalloc.exit
 
 bb.ac:                                            ; preds = %.critedge
-  %i.ec = trunc i64 %13 to i32
+  %i.ec = trunc i64 %6 to i32
   %i.ed = getelementptr inbounds i8, ptr %.047137, i64 -5
   store i32 %i.ec, ptr %i.ed, align 1, !tbaa !12
   br label %sdssetalloc.exit
 
 bb.ad:                                            ; preds = %.critedge
   %i.ee = getelementptr inbounds i8, ptr %.047137, i64 -9
-  store i64 %13, ptr %i.ee, align 1, !tbaa !15
+  store i64 %6, ptr %i.ee, align 1, !tbaa !15
   br label %sdssetalloc.exit
 
 sdssetalloc.exit:                                 ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.aa, %.critedge, %bb.t, %bb.q, %sdsavail.exit

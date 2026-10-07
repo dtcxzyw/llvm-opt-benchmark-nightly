@@ -205,7 +205,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.kc, i64 noundef 32) #27
   br label %bb.cx
 
-bb.cx:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i311, %.critedge154
+bb.cx:                                            ; preds = %.critedge154, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i311
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #26
   %i.ki = load ptr, ptr %i.af, align 8, !tbaa !80
   %i.kj = load ptr, ptr %i.ae, align 8, !tbaa !81
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4entt8internal16view_placeholderITkNS_17cvref_unqualifiedENS_16basic_sparse_setINS_6entityESaIS3_EEEEEPKT_vE11placeholder) #26
   br label %.lr.ph.preheader.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.c, %bb.b, %bb.a
+.lr.ph.preheader.i:                               ; preds = %bb.a, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr @_ZZN4entt8internal16view_placeholderITkNS_17cvref_unqualifiedENS_16basic_sparse_setINS_6entityESaIS3_EEEEEPKT_vE11placeholder, ptr %i.f, align 8, !tbaa !230
@@ -703,7 +703,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4entt8internal16view_placeholderITkNS_17cvref_unqualifiedENS_16basic_sparse_setINS_6entityESaIS3_EEEEEPKT_vE11placeholder) #26
   br label %.lr.ph.preheader.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.c, %bb.b, %bb.a
+.lr.ph.preheader.i:                               ; preds = %bb.a, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr @_ZZN4entt8internal16view_placeholderITkNS_17cvref_unqualifiedENS_16basic_sparse_setINS_6entityESaIS3_EEEEEPKT_vE11placeholder, ptr %i.f, align 8, !tbaa !230

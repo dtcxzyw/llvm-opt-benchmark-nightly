@@ -205,13 +205,12 @@ bb.b:                                             ; preds = %bb.a
   store i32 %3, ptr %i.g, align 8, !tbaa !248
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
-  %6 = select i1 %4, i32 4, i32 0                 ; 2 uses
   br i1 %4, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.b, %bb.d
   store ptr %i.e, ptr %i.h, align 8, !tbaa !249
   store i32 16384, ptr %i.i, align 8, !tbaa !250
-  %i.j = call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef %6)
+  %i.j = call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef 4)
   %i.k = load i32, ptr %i.i, align 8, !tbaa !250
   %i.l = sub i32 16384, %i.k                      ; 2 uses
   %i.m = icmp sgt i32 %i.l, 0
@@ -230,7 +229,7 @@ bb.d:                                             ; preds = %bb.c, %.split.us
 .split:                                           ; preds = %bb.b, %bb.i
   store ptr %i.e, ptr %i.h, align 8, !tbaa !249
   store i32 16384, ptr %i.i, align 8, !tbaa !250
-  %i.o = call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef %6)
+  %i.o = call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef 0)
   %i.p = load i32, ptr %i.i, align 8, !tbaa !250
   %i.q = sub i32 16384, %i.p                      ; 2 uses
   %i.r = icmp sgt i32 %i.q, 0

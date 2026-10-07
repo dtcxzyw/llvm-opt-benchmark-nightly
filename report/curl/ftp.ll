@@ -204,7 +204,7 @@ ftp_port_parse_string.exit.thread:                ; preds = %.thread.thread.i, %
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #10
   br label %bb.s
 
-ftp_port_parse_string.exit:                       ; preds = %bb.n, %bb.g, %bb.a, %bb.b, %.thread.i
+ftp_port_parse_string.exit:                       ; preds = %bb.n, %bb.a, %bb.b, %bb.g, %.thread.i
   %.099 = phi i16 [ 0, %bb.g ], [ %spec.select.i, %.thread.i ], [ 0, %bb.b ], [ 0, %bb.a ], [ %spec.select115.i, %bb.n ]
   %.098 = phi i16 [ 0, %bb.g ], [ %spec.select89.i, %.thread.i ], [ 0, %bb.b ], [ 0, %bb.a ], [ %spec.select89116.i, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #10

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.loopexit25.i, %bb.b
   %.sroa.6.0 = phi i64 [ %.sroa.6.0.copyload, %bb.b ], [ %i.eh, %.loopexit25.i ] ; 3 uses
   %.sroa.01.0.i = phi i64 [ 0, %bb.b ], [ %i.ei, %.loopexit25.i ] ; 2 uses
-  %i.ar = getelementptr inbounds nuw [192 x i8], ptr %i.j, i64 %.sroa.01.0.i ; 6 uses
+  %i.ar = getelementptr inbounds nuw [192 x i8], ptr %i.j, i64 %.sroa.01.0.i ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2607)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !2608)
@@ -214,9 +214,10 @@ bb.c:                                             ; preds = %.loopexit25.i, %bb.
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
   %i.av = load i64, ptr %i.au, align 8, !alias.scope !2609, !noalias !2610, !noundef !12 ; 5 uses
   %i.aw = invoke noundef zeroext i1 @_RINvMs1_NtCsfKiFC1ztrmh_9hashbrown3mapINtB6_7HashMapReuNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE12contains_keyeECs2bNgeUs5Jlc_6diesel(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.01.0.copyload, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.at, i64 noundef %i.av)
-          to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !2611
+          to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !2611 ; 2 uses
 
 .noexc.i:                                         ; preds = %bb.c
+  %..i.i.i.i = select i1 %i.aw, ptr null, ptr %i.ar
   br i1 %i.aw, label %.loopexit25.i, label %bb.d
 
 bb.d:                                             ; preds = %.noexc.i
@@ -433,6 +434,7 @@ _RNCNCNCNCNvNtCs2bNgeUs5Jlc_6diesel12print_schema13output_schemas_00s_00Bb_.exit
   br i1 %.not8.i.i.i.i.i.i, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeE6filterNCNCNCNvNtBP_12print_schema13output_schemas_00s_0EBP_.exit.thread8.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeE6filterNCNCNCNvNtBP_12print_schema13output_schemas_00s_0EBP_.exit.thread8.i.i.i: ; preds = %.backedge.i.i.i.i.i.i, %bb.d
+  %.sroa.02.0.i.i.i.i = phi ptr [ %i.ar, %bb.d ], [ %..i.i.i.i, %.backedge.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !2612
   call void @llvm.experimental.noalias.scope.decl(metadata !2619)
@@ -441,7 +443,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs2bNgeUs5Jlc_6diesel22inf
   br i1 %i.dp, label %.split.i.i.i.i, label %.invoke.i
 
 .invoke.i:                                        ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeE6filterNCNCNCNvNtBP_12print_schema13output_schemas_00s_0EBP_.exit.thread8.i.i.i
-  invoke fastcc void @_RNvXsa_NtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structuresNtB5_10ColumnTypeNtNtCscI6d9CVNmLh_4core5clone5Clone5clone(ptr noalias noundef nonnull align 8 captures(none) dereferenceable(120) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.ar)
+  invoke fastcc void @_RNvXsa_NtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structuresNtB5_10ColumnTypeNtNtCscI6d9CVNmLh_4core5clone5Clone5clone(ptr noalias noundef nonnull align 8 captures(none) dereferenceable(120) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.i.i.i.i)
           to label %.invoke.i._RNCNCNCNvNtCs2bNgeUs5Jlc_6diesel12print_schema13output_schemas_00s0_0B9_.exit.i.i.i_crit_edge unwind label %.loopexit.split-lp.loopexit.i, !noalias !2611
 
 .invoke.i._RNCNCNCNvNtCs2bNgeUs5Jlc_6diesel12print_schema13output_schemas_00s0_0B9_.exit.i.i.i_crit_edge: ; preds = %.invoke.i
@@ -452,7 +454,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs2bNgeUs5Jlc_6diesel22inf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2620
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2620
   %i.dq = getelementptr inbounds nuw i8, ptr %i.ar, i64 144
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
+  %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i.i.i.i, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2620
   store ptr %i.aq, ptr %i.b, align 8, !noalias !2620
   store ptr @_RNvXsq_NtCs40k4W9msRzi_5alloc6stringNtB5_6StringNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt, ptr %.sroa.42.0..sroa_idx.i.i.i.i, align 8, !noalias !2620
@@ -482,7 +484,7 @@ bb.s:                                             ; preds = %_RINvNtCscI6d9CVNmL
 
 bb.t:                                             ; preds = %.noexc23.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2620
-  invoke fastcc void @_RNvXsa_NtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structuresNtB5_10ColumnTypeNtNtCscI6d9CVNmLh_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(120) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.ar)
+  invoke fastcc void @_RNvXsa_NtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structuresNtB5_10ColumnTypeNtNtCscI6d9CVNmLh_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(120) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.i.i.i.i)
           to label %bb.v unwind label %bb.u, !noalias !2622
 
 bb.u:                                             ; preds = %bb.t

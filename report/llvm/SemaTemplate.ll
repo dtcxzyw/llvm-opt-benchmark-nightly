@@ -205,8 +205,7 @@ _ZN5clang9FixItHintD2Ev.exit:                     ; preds = %bb.d, %_ZNKSt7__cxx
 
 bb.e:                                             ; preds = %_ZN5clang9FixItHintD2Ev.exit, %bb.c
   %i.bi = phi i32 [ %i.bh, %_ZN5clang9FixItHintD2Ev.exit ], [ %i.i, %bb.c ] ; 3 uses
-  %i.bj = icmp eq i32 %2, 0                       ; 2 uses
-  %38 = select i1 %i.bj, i32 4, i32 3             ; 7 uses
+  %i.bj = icmp eq i32 %2, 0
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !864, !nonnull !865, !align !866
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 17712
@@ -424,12 +423,12 @@ bb.q:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.q, %_ZNK5clang4Decl7getAttrINS_13DLLImportAttrEEEPT_v.exit
   %.3 = phi i1 [ %i.es, %_ZNK5clang4Decl7getAttrINS_13DLLImportAttrEEEPT_v.exit ], [ %spec.select, %bb.q ]
   %cond.fr = freeze i1 %.3                        ; 2 uses
-  %spec.select463 = select i1 %cond.fr, i32 3, i32 %38
+  %spec.select463 = select i1 %cond.fr, i32 3, i32 4
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.k, %.lr.ph, %._crit_edge, %_ZN5clangneENS_22specific_attr_iteratorINS_13DLLExportAttrEN4llvm11SmallVectorIPNS_4AttrELj4EEEEES7_.exit.i.i, %bb.j, %.loopexit373, %bb.f, %_ZNK5clang4Decl7getAttrINS_13DLLExportAttrEEEPT_v.exit, %.critedge253
   %.1220 = phi i1 [ false, %.lr.ph ], [ false, %.critedge253 ], [ false, %_ZN5clangneENS_22specific_attr_iteratorINS_13DLLExportAttrEN4llvm11SmallVectorIPNS_4AttrELj4EEEEES7_.exit.i.i ], [ false, %_ZNK5clang4Decl7getAttrINS_13DLLExportAttrEEEPT_v.exit ], [ false, %bb.f ], [ false, %.loopexit373 ], [ false, %bb.j ], [ %cond.fr, %._crit_edge ], [ false, %bb.k ] ; 2 uses
-  %.1218 = phi i32 [ %38, %.lr.ph ], [ 4, %.critedge253 ], [ %38, %_ZN5clangneENS_22specific_attr_iteratorINS_13DLLExportAttrEN4llvm11SmallVectorIPNS_4AttrELj4EEEEES7_.exit.i.i ], [ %38, %_ZNK5clang4Decl7getAttrINS_13DLLExportAttrEEEPT_v.exit ], [ 3, %bb.f ], [ %38, %.loopexit373 ], [ %38, %bb.j ], [ %spec.select463, %._crit_edge ], [ %38, %bb.k ] ; 12 uses
+  %.1218 = phi i32 [ 4, %.lr.ph ], [ 4, %.critedge253 ], [ 3, %_ZN5clangneENS_22specific_attr_iteratorINS_13DLLExportAttrEN4llvm11SmallVectorIPNS_4AttrELj4EEEEES7_.exit.i.i ], [ 3, %_ZNK5clang4Decl7getAttrINS_13DLLExportAttrEEEPT_v.exit ], [ 3, %bb.f ], [ 3, %.loopexit373 ], [ 3, %bb.j ], [ %spec.select463, %._crit_edge ], [ 3, %bb.k ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #28
   %i.fi = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 2 uses
   store ptr %i.fi, ptr %26, align 8, !tbaa !84

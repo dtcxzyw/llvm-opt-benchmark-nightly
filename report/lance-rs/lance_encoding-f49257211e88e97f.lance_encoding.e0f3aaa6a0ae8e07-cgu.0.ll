@@ -205,8 +205,8 @@ _RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNt
   store i8 -2, ptr %0, align 8
   br label %common.ret
 
-_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17FieldDataCacheKeyE0B1j_.exit.thread: ; preds = %bb.y, %bb.ad, %bb.ae, %.thread.a
-  %.sroa.06.0.i217 = phi ptr [ %i.ca, %.thread.a ], [ null, %bb.ae ], [ null, %bb.ad ], [ null, %bb.y ] ; 6 uses
+_RNCINvMs1_NtCs63DIHKhvmTb_10lance_core5cacheNtB8_10LanceCache12get_with_keyNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17FieldDataCacheKeyE0B1j_.exit.thread: ; preds = %.thread.a, %bb.y, %bb.ad, %bb.ae
+  %.sroa.06.0.i217 = phi ptr [ %i.ca, %.thread.a ], [ null, %bb.ad ], [ null, %bb.ae ], [ null, %bb.y ] ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !28178
   store i8 1, ptr %i.br, align 8, !noalias !28178
   %.not = icmp eq ptr %.sroa.06.0.i217, null
@@ -609,7 +609,7 @@ begin_hunk_1_@llvm.umax.i128
 !28177 = distinct !{!28177, !28176, !"_RNvXsD_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive15CachedFieldDataENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropBO_: argument 0"}
 !28178 = !{!27922}
 !28179 = !{!27924}
-!28180 = !{!27927, !27926, !27922}
+!28180 = !{!27927, !27926}
 !28181 = !{!27930}
 !28182 = !{!27931}
 !28183 = !{!27930, !27931, !27922}

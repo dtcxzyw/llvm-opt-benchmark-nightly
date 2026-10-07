@@ -204,7 +204,6 @@ b3GetHullFaces.exit:                              ; preds = %b3GetHullEdgesWrite
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %.split.us1074
-  %.0250.us1075 = phi i32 [ -1, %.split.us1074 ], [ %.1251.us, %bb.p ]
   %.0248.us1076 = phi i32 [ %i.bg, %.split.us1074 ], [ %.1249.us, %bb.p ] ; 3 uses
   %i.bh = zext nneg i32 %.0248.us1076 to i64      ; 2 uses
   %i.bi = shl nuw nsw i64 %i.bh, 2
@@ -217,15 +216,18 @@ bb.p:                                             ; preds = %bb.o
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !76  ; 2 uses
   %i.bm = zext i8 %i.bl to i32
   %i.bn = icmp eq i8 %i.bl, %i.bf                 ; 3 uses
-  %.1251.us = select i1 %i.bn, i32 %.0248.us1076, i32 %.0250.us1075 ; 2 uses
   %.1249.us = select i1 %i.bn, i32 %.0248.us1076, i32 %i.bm ; 2 uses
   %.not304.us = icmp eq i32 %.1249.us, %i.bg
   %or.cond.us = or i1 %i.bn, %.not304.us
-  br i1 %or.cond.us, label %.preheader422.us, label %bb.o, !llvm.loop !257
+  br i1 %or.cond.us, label %.preheader422.us.preheader, label %bb.o, !llvm.loop !257
 
-.preheader422.us:                                 ; preds = %bb.p, %bb.t
-  %.2252.us = phi i32 [ %.2.us, %bb.t ], [ %.1251.us, %bb.p ]
-  %.2.us = phi i32 [ %i.cg, %bb.t ], [ %i.bg, %bb.p ] ; 3 uses
+.preheader422.us.preheader:                       ; preds = %bb.p
+  %.1251.us = select i1 %i.bn, i32 %.0248.us1076, i32 -1
+  br label %.preheader422.us
+
+.preheader422.us:                                 ; preds = %.preheader422.us.preheader, %bb.t
+  %.2252.us = phi i32 [ %.2.us, %bb.t ], [ %.1251.us, %.preheader422.us.preheader ]
+  %.2.us = phi i32 [ %i.cg, %bb.t ], [ %i.bg, %.preheader422.us.preheader ] ; 3 uses
   %i.bo = zext nneg i32 %.2.us to i64             ; 2 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %.0.i, i64 %i.bo ; 4 uses
   %i.bq = shl nuw nsw i64 %i.bo, 2

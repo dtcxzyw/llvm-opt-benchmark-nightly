@@ -205,7 +205,7 @@ bb.fi:                                            ; preds = %bb.fi, %.epil.prehe
   %i.vk = getelementptr inbounds nuw i8, ptr %i.vj, i64 192 ; 2 uses
   %i.vl = load i32, ptr %i.vk, align 8, !tbaa !71
   %i.vm = icmp eq i32 %i.vl, 3                    ; 4 uses
-  %spec.select = select i1 %i.vm, i32 1, i32 3    ; 3 uses
+  %spec.select = select i1 %i.vm, i32 1, i32 3
   store i32 %spec.select, ptr %i.ao, align 4, !tbaa !39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap) #23
   %i.vn = select i1 %i.vm, i32 1, i32 32
@@ -247,7 +247,7 @@ bb.fj:                                            ; preds = %.loopexit
 
 bb.fk:                                            ; preds = %.thread605, %bb.fj
   %.0127609 = phi i32 [ %i.vq, %.thread605 ], [ %i.vv, %bb.fj ]
-  %i.wc = phi i32 [ 1, %.thread605 ], [ %spec.select, %bb.fj ]
+  %i.wc = phi i32 [ 1, %.thread605 ], [ 3, %bb.fj ]
   %i.wd = load i32, ptr %i.vk, align 8, !tbaa !71
   %i.we = icmp ne i32 %i.wd, 3
   %i.wf = zext i1 %i.we to i8
@@ -255,7 +255,7 @@ bb.fk:                                            ; preds = %.thread605, %bb.fj
 
 bb.fl:                                            ; preds = %bb.fj, %bb.fk
   %.0127608 = phi i32 [ %i.vv, %bb.fj ], [ %.0127609, %bb.fk ] ; 2 uses
-  %i.wg = phi i32 [ %spec.select, %bb.fj ], [ %i.wc, %bb.fk ] ; 2 uses
+  %i.wg = phi i32 [ 3, %bb.fj ], [ %i.wc, %bb.fk ] ; 2 uses
   %i.wh = phi i8 [ 0, %bb.fj ], [ %i.wf, %bb.fk ] ; 2 uses
   store i8 %i.wh, ptr %i.at, align 1, !tbaa !107
   call void @llvm.lifetime.start.p0(ptr nonnull %i.au) #23

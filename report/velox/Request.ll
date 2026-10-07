@@ -205,7 +205,7 @@ _ZN5folly14RequestContext5State13insertNewDataEPNS1_8CombinedERKNS_12RequestToke
   store ptr null, ptr %2, align 8, !tbaa !264
   %i.ez = tail call noundef zeroext i1 @_ZN5folly24SingleWriterFixedHashMapINS_12RequestTokenEPNS_11RequestDataEE6insertES1_S3_(ptr noundef nonnull align 8 dereferenceable(32) %i.ey, i32 %.sroa.0.0.copyload.i59, ptr noundef %i.ex) ; 0 uses
   %.not39.i24 = icmp eq ptr %.016.i, null
-  br i1 %.not39.i24, label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33, label %bb.af
+  br i1 %.not39.i24, label %_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit, label %bb.af
 
 bb.af:                                            ; preds = %_ZN5folly14RequestContext5State13insertNewDataEPNS1_8CombinedERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS8_EEb.exit
   %i.fa = ptrtoint ptr %0 to i64
@@ -213,7 +213,7 @@ bb.af:                                            ; preds = %_ZN5folly14RequestC
   %i.fc = getelementptr inbounds nuw i8, ptr %.016.i, i64 16
   store i64 %i.fb, ptr %i.fc, align 8, !tbaa !151
   store atomic ptr %.016.i, ptr %i.c release, align 8
-  br label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
+  br label %bb.cd
 
 bb.ag:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
@@ -616,7 +616,7 @@ bb.bt:                                            ; preds = %.noexc68
 
 .noexc7:                                          ; preds = %.noexc68.thread
   %.not39.i = icmp eq ptr %.016.i60, null         ; 2 uses
-  %spec.select43.i = select i1 %.not39.i, ptr %.1.i2223, ptr %.131.i221 ; 2 uses
+  %spec.select43.i = select i1 %.not39.i, ptr %.1.i2223, ptr %.131.i221 ; 3 uses
   %.not40.i = icmp eq ptr %spec.select43.i, null
   br i1 %.not40.i, label %bb.bv, label %bb.bu
 
@@ -639,12 +639,12 @@ bb.bw:                                            ; preds = %bb.bv
   store atomic i64 %i.nk, ptr %i.nl release, align 8
   %i.nm = load i8, ptr %i.ff, align 8, !tbaa !82, !range !88, !noundef !87
   %i.nn = trunc nuw i8 %i.nm to i1
-  br i1 %i.nn, label %bb.bx, label %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
+  br i1 %i.nn, label %bb.bx, label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
 
 bb.bx:                                            ; preds = %bb.bw
   %i.no = load ptr, ptr %i.fd, align 8, !tbaa !81 ; 3 uses
   %.not.i.i.i156 = icmp eq ptr %i.no, null
-  br i1 %.not.i.i.i156, label %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit, label %bb.by
+  br i1 %.not.i.i.i156, label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
@@ -661,7 +661,7 @@ bb.bz:                                            ; preds = %bb.by
 
 _ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE6unlockEv.exit.i.i.i: ; preds = %bb.bz, %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  br label %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
+  br label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ns = landingpad { ptr, i32 }
@@ -677,10 +677,6 @@ bb.cb:                                            ; preds = %bb.bv
   call void @__clang_call_terminate(ptr %i.nv) #38
   unreachable
 
-_ZN5folly14RequestContext5State9LockGuardD2Ev.exit: ; preds = %bb.bw, %bb.bx, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE6unlockEv.exit.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  br label %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
-
 bb.cc:                                            ; preds = %.noexc68.thread, %.noexc67, %bb.bs, %bb.br, %.noexc63.thread, %.noexc48.thread, %bb.aq, %bb.ap, %bb.ai
   %i.nw = landingpad { ptr, i32 }
           cleanup
@@ -692,12 +688,13 @@ bb.cc:                                            ; preds = %.noexc68.thread, %.
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   resume { ptr, i32 } %eh.lpad-body
 
-_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33: ; preds = %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit, %_ZN5folly14RequestContext5State13insertNewDataEPNS1_8CombinedERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS8_EEb.exit, %bb.af
-  %spec.select43.i26.pn = phi ptr [ %spec.select43.i, %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit ], [ null, %_ZN5folly14RequestContext5State13insertNewDataEPNS1_8CombinedERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS8_EEb.exit ], [ %.0.i35, %bb.af ] ; 9 uses
-  %.not25.i = icmp eq ptr %spec.select43.i26.pn, null
+_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33: ; preds = %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE6unlockEv.exit.i.i.i, %bb.bx, %bb.bw
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
+  %.not25.i = icmp eq ptr %spec.select43.i, null
   br i1 %.not25.i, label %_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit, label %bb.cd
 
-bb.cd:                                            ; preds = %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
+bb.cd:                                            ; preds = %bb.af, %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
+  %spec.select43.i26.pn308 = phi ptr [ %.0.i35, %bb.af ], [ %spec.select43.i, %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33 ] ; 8 uses
   %i.nx = load atomic ptr, ptr @_ZZN5folly6detail30StaticSingletonManagerWithRtti6globalINS0_26default_hazptr_domain_implISt6atomicEEvNS1_9ArgCreateILb1EEEEERT1_vE3arg acquire, align 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.nx, null
   br i1 %.not.i.i, label %bb.ce, label %_ZN5folly6detail30StaticSingletonManagerWithRtti6createINS0_26default_hazptr_domain_implISt6atomicEEJELb1EEERT_RNS1_9ArgCreateIXT1_EEE.exit.i, !prof !89
@@ -708,18 +705,18 @@ bb.ce:                                            ; preds = %bb.cd
 
 _ZN5folly6detail30StaticSingletonManagerWithRtti6createINS0_26default_hazptr_domain_implISt6atomicEEJELb1EEERT_RNS1_9ArgCreateIXT1_EEE.exit.i: ; preds = %bb.ce, %bb.cd
   %i.nz = phi ptr [ %i.ny, %bb.ce ], [ %i.nx, %bb.cd ]
-  %i.oa = getelementptr inbounds nuw i8, ptr %spec.select43.i26.pn, i64 8 ; 2 uses
+  %i.oa = getelementptr inbounds nuw i8, ptr %spec.select43.i26.pn308, i64 8 ; 2 uses
   %i.ob = load ptr, ptr %i.oa, align 8, !tbaa !139
-  %.not.i.i.i164 = icmp eq ptr %i.ob, %spec.select43.i26.pn
+  %.not.i.i.i164 = icmp eq ptr %i.ob, %spec.select43.i26.pn308
   br i1 %.not.i.i.i164, label %_ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE10pre_retireES6_.exit.i, label %bb.cf
 
 bb.cf:                                            ; preds = %_ZN5folly6detail30StaticSingletonManagerWithRtti6createINS0_26default_hazptr_domain_implISt6atomicEEJELb1EEERT_RNS1_9ArgCreateIXT1_EEE.exit.i
-  call void @_ZN5folly10hazptr_objISt6atomicE21pre_retire_check_failEv(ptr noundef nonnull align 8 dereferenceable(24) %spec.select43.i26.pn) #12
+  call void @_ZN5folly10hazptr_objISt6atomicE21pre_retire_check_failEv(ptr noundef nonnull align 8 dereferenceable(24) %spec.select43.i26.pn308) #12
   br label %_ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE10pre_retireES6_.exit.i
 
 _ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE10pre_retireES6_.exit.i: ; preds = %bb.cf, %_ZN5folly6detail30StaticSingletonManagerWithRtti6createINS0_26default_hazptr_domain_implISt6atomicEEJELb1EEERT_RNS1_9ArgCreateIXT1_EEE.exit.i
-  store ptr @_ZZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE11set_reclaimEvENUlPNS_10hazptr_objIS4_EERNS_15hazptr_obj_listIS4_EEE_8__invokeESA_SD_, ptr %spec.select43.i26.pn, align 8, !tbaa !140
-  %i.oc = getelementptr inbounds nuw i8, ptr %spec.select43.i26.pn, i64 16
+  store ptr @_ZZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE11set_reclaimEvENUlPNS_10hazptr_objIS4_EERNS_15hazptr_obj_listIS4_EEE_8__invokeESA_SD_, ptr %spec.select43.i26.pn308, align 8, !tbaa !140
+  %i.oc = getelementptr inbounds nuw i8, ptr %spec.select43.i26.pn308, i64 16
   %i.od = load i64, ptr %i.oc, align 8, !tbaa !151
   %i.oe = and i64 %i.od, -2                       ; 2 uses
   %.not.i.i165 = icmp eq i64 %i.oe, 0
@@ -727,14 +724,14 @@ _ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14defau
 
 bb.cg:                                            ; preds = %_ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE10pre_retireES6_.exit.i
   %i.of = inttoptr i64 %i.oe to ptr
-  call void @_ZN5folly17hazptr_obj_cohortISt6atomicE8push_objEPNS_10hazptr_objIS1_EE(ptr noundef nonnull align 8 dereferenceable(32) %i.of, ptr noundef nonnull align 8 dereferenceable(24) %spec.select43.i26.pn)
+  call void @_ZN5folly17hazptr_obj_cohortISt6atomicE8push_objEPNS_10hazptr_objIS1_EE(ptr noundef nonnull align 8 dereferenceable(32) %i.of, ptr noundef nonnull align 8 dereferenceable(24) %spec.select43.i26.pn308)
   br label %_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit
 
 bb.ch:                                            ; preds = %_ZN5folly15hazptr_obj_baseINS_14RequestContext5State8CombinedESt6atomicSt14default_deleteIS3_EE10pre_retireES6_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
-  store ptr %spec.select43.i26.pn, ptr %4, align 8, !tbaa !142
+  store ptr %spec.select43.i26.pn308, ptr %4, align 8, !tbaa !142
   %i.og = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %spec.select43.i26.pn, ptr %i.og, align 8, !tbaa !166
+  store ptr %spec.select43.i26.pn308, ptr %i.og, align 8, !tbaa !166
   %i.oh = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 1, ptr %i.oh, align 8, !tbaa !168
   store ptr null, ptr %i.oa, align 8, !tbaa !139
@@ -752,7 +749,7 @@ _ZN5folly10hazptr_objISt6atomicE15push_to_retiredERNS_13hazptr_domainIS1_EE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit
 
-_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit: ; preds = %_ZN5folly10hazptr_objISt6atomicE15push_to_retiredERNS_13hazptr_domainIS1_EE.exit.i.i, %bb.cg, %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
+_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit: ; preds = %_ZN5folly14RequestContext5State13insertNewDataEPNS1_8CombinedERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS8_EEb.exit, %_ZN5folly10hazptr_objISt6atomicE15push_to_retiredERNS_13hazptr_domainIS1_EE.exit.i.i, %bb.cg, %_ZN5folly14RequestContext5State22doSetContextDataHelperERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit33
   ret void
 }
 

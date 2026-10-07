@@ -202,16 +202,11 @@ bb.e:                                             ; preds = %bb.d
 
 .preheader:                                       ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.j
-  br label %1
+  br label %bb.f
 
-1:                                                ; preds = %.preheader, %3
-  %.036 = phi ptr [ %.137, %3 ], [ %i.a, %.preheader ] ; 5 uses
-  %.031 = phi i1 [ %.334, %3 ], [ false, %.preheader ] ; 2 uses
-  %2 = icmp ult ptr %.036, %i.l
-  br i1 %2, label %bb.f, label %5
-
-bb.f:                                             ; preds = %1
-  %i.m = getelementptr inbounds nuw i8, ptr %.036, i64 12 ; 2 uses
+bb.f:                                             ; preds = %.preheader, %bb.i
+  %.03679 = phi ptr [ %i.a, %.preheader ], [ %i.w, %bb.i ] ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.03679, i64 12 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
   %.not45 = icmp eq i32 %i.n, 0
   br i1 %.not45, label %bb.i, label %bb.g
@@ -224,33 +219,24 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 1
-  %i.r = getelementptr inbounds nuw i8, ptr %.036, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %.03679, i64 16
   %i.s = call i32 @SDL_strcmp_REAL(ptr noundef nonnull %i.q, ptr noundef nonnull %i.r) #7
   %.not71 = icmp eq i32 %i.s, 0
-  br i1 %.not71, label %3, label %._crit_edge
+  br i1 %.not71, label %bb.j, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.h
   %.pre = load i32, ptr %i.m, align 4
   %i.t = zext i32 %.pre to i64
   br label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge, %bb.f
+bb.i:                                             ; preds = %bb.f, %._crit_edge
   %i.u = phi i64 [ %i.t, %._crit_edge ], [ 0, %bb.f ]
-  %i.v = getelementptr inbounds nuw i8, ptr %.036, i64 %i.u
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  br label %3
+  %i.v = getelementptr inbounds nuw i8, ptr %.03679, i64 %i.u
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 2 uses
+  %1 = icmp ult ptr %i.w, %i.l
+  br i1 %1, label %bb.f, label %.sink.split
 
-3:                                                ; preds = %bb.h, %bb.i
-  %.137 = phi ptr [ %i.w, %bb.i ], [ %.036, %bb.h ]
-  %.334 = phi i1 [ %.031, %bb.i ], [ true, %bb.h ] ; 2 uses
-  %4 = phi i1 [ true, %bb.i ], [ false, %bb.h ]
-  br i1 %4, label %1, label %5
-
-5:                                                ; preds = %3, %1
-  %.435 = phi i1 [ %.334, %3 ], [ %.031, %1 ]
-  br i1 %.435, label %bb.j, label %.sink.split
-
-bb.j:                                             ; preds = %5
+bb.j:                                             ; preds = %bb.h
   %i.x = load ptr, ptr @ibus_addr_file, align 8
   %i.y = call fastcc ptr @IBus_ReadAddressFromFile(ptr noundef %i.x) ; 3 uses
   %.not47 = icmp eq ptr %i.y, null
@@ -261,8 +247,8 @@ bb.k:                                             ; preds = %bb.j
   call void @SDL_free_REAL(ptr noundef nonnull %i.y) #7
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.g, %bb.k, %bb.j, %5, %bb.e
-  %.10.ph = phi i1 [ false, %bb.j ], [ false, %bb.e ], [ false, %5 ], [ %i.z, %bb.k ], [ false, %bb.g ]
+.sink.split:                                      ; preds = %bb.i, %bb.g, %bb.k, %bb.j, %bb.e
+  %.10.ph = phi i1 [ false, %bb.j ], [ false, %bb.e ], [ %i.z, %bb.k ], [ false, %bb.g ], [ false, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %bb.l
 

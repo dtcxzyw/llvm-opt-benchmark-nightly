@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/choicfmt?download=true
-inline.NumInlined: 72
+inline.NumInlined: 73
 inline.NumDeleted: 34
 begin_hunk_0_@_ZN6icu_7812ChoiceFormatC2EPKdPKaPKNS_13UnicodeStringEi:bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge2:                                       ; preds = %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %.033, i64 1
-  br label %bb.b, !llvm.loop !42
+  br label %bb.b, !llvm.loop !45
 
 .critedge:                                        ; preds = %bb.c
   switch i8 %i.c, label %bb.d [
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %.critedge
 
 bb.e:                                             ; preds = %.critedge.thread
   %i.h = getelementptr inbounds nuw i8, ptr %.2, i64 1
-  br label %.critedge.thread, !llvm.loop !43
+  br label %.critedge.thread, !llvm.loop !46
 
 bb.f:                                             ; preds = %.critedge.thread
   %i.i = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 2 uses
@@ -257,7 +257,7 @@ bb.i:                                             ; preds = %bb.j, %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.m = getelementptr inbounds nuw i8, ptr %.4, i64 1
-  br label %bb.i, !llvm.loop !44
+  br label %bb.i, !llvm.loop !47
 
 bb.k:                                             ; preds = %bb.i
   %.not45 = icmp eq ptr %.3, %.4
@@ -272,7 +272,7 @@ bb.k:                                             ; preds = %bb.i
   store i8 %i.n, ptr %.056, align 1, !tbaa !28
   %.pr = load i8, ptr %i.o, align 1, !tbaa !28    ; 2 uses
   %.not46 = icmp eq i8 %.pr, 0
-  br i1 %.not46, label %._crit_edge, label %.lr.ph, !llvm.loop !45
+  br i1 %.not46, label %._crit_edge, label %.lr.ph, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %.lr.ph
   store i8 0, ptr %i.p, align 1, !tbaa !28
@@ -438,7 +438,7 @@ bb.h:                                             ; preds = %bb.e, %_ZN6icu_7813
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %7, align 8, !tbaa !9
   store i16 2, ptr %i.r, align 8, !tbaa !28
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv99 ; 3 uses
-  %i.z = load double, ptr %i.y, align 8, !tbaa !49
+  %i.z = load double, ptr %i.y, align 8, !tbaa !52
   %i.aa = invoke signext i8 @uprv_isPositiveInfinity_78(double noundef %i.z)
           to label %bb.i unwind label %bb.k
 
@@ -462,7 +462,7 @@ bb.k:                                             ; preds = %bb.t, %bb.s, %bb.q,
   br label %bb.ag
 
 bb.l:                                             ; preds = %bb.i
-  %i.ad = load double, ptr %i.y, align 8, !tbaa !49
+  %i.ad = load double, ptr %i.y, align 8, !tbaa !52
   %i.ae = invoke signext i8 @uprv_isNegativeInfinity_78(double noundef %i.ad)
           to label %bb.m unwind label %bb.k
 
@@ -488,7 +488,7 @@ _ZN6icu_7813UnicodeStringpLEDs.exit73:            ; preds = %bb.o
   br label %_ZN6icu_7813UnicodeStringpLERKS0_.exit
 
 bb.p:                                             ; preds = %bb.m
-  %i.ah = load double, ptr %i.y, align 8, !tbaa !49
+  %i.ah = load double, ptr %i.y, align 8, !tbaa !52
   %i.ai = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7812ChoiceFormat4dtosEdRNS_13UnicodeStringE(double noundef %i.ah, ptr noundef nonnull align 8 dereferenceable(64) %7)
           to label %bb.q unwind label %bb.k       ; 0 uses
 
@@ -555,7 +555,7 @@ bb.u:                                             ; preds = %_ZN6icu_7813Unicode
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
   %exitcond103.not = icmp eq i64 %indvars.iv.next100, %wide.trip.count102
-  br i1 %exitcond103.not, label %._crit_edge97, label %bb.e, !llvm.loop !46
+  br i1 %exitcond103.not, label %._crit_edge97, label %bb.e, !llvm.loop !49
 
 bb.v:                                             ; preds = %.lr.ph, %bb.af
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.af ] ; 3 uses
@@ -659,7 +659,7 @@ bb.af:                                            ; preds = %_ZN6icu_7813Unicode
   %.2 = phi i32 [ 0, %_ZN6icu_7813UnicodeString6appendEDs.exit78 ], [ %.1, %_ZN6icu_7813UnicodeString6appendEDs.exit79 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.v, !llvm.loop !47
+  br i1 %exitcond.not, label %._crit_edge, label %bb.v, !llvm.loop !50
 
 bb.ag:                                            ; preds = %bb.x, %bb.k
   %.pn.pn = phi { ptr, i32 } [ %i.ac, %bb.k ], [ %i.bw, %bb.x ]
@@ -824,7 +824,7 @@ _ZN6icu_7812ChoiceFormat14findSubMessageERKNS_14MessagePatternEid.exit: ; preds 
   %i.ay = phi ptr [ %i.f, %bb.b ], [ %i.f, %.lr.ph.i ], [ %i.y, %bb.c ], [ %i.y, %bb.d ], [ %i.y, %_ZNK6icu_7813UnicodeString6charAtEi.exit.thread.i ], [ %i.y, %bb.e ] ; 2 uses
   %.023.lcssa.i = phi i32 [ 2, %bb.b ], [ 2, %.lr.ph.i ], [ %i.x, %bb.e ], [ %.02331.i13, %_ZNK6icu_7813UnicodeString6charAtEi.exit.thread.i ], [ %.02331.i13, %bb.d ], [ %i.x, %bb.c ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.ba = load i32, ptr %i.az, align 8, !tbaa !50
+  %i.ba = load i32, ptr %i.az, align 8, !tbaa !53
   %.not = icmp eq i32 %i.ba, 1
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -989,7 +989,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c, %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !51
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !54
 
 .loopexit.sink.split:                             ; preds = %bb.b, %bb.a
   %.sink = phi i32 [ 1, %bb.a ], [ 27, %bb.b ]
@@ -1005,9 +1005,83 @@ declare noundef double @_ZNK6icu_7811Formattable9getDoubleER10UErrorCode(ptr nou
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK6icu_7812ChoiceFormat5parseERKNS_13UnicodeStringERNS_11FormattableERNS_13ParsePositionE(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(112) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %3) unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %4 = tail call noundef double @_ZN6icu_7812ChoiceFormat13parseArgumentERKNS_14MessagePatternEiRKNS_13UnicodeStringERNS_13ParsePositionE(ptr noundef nonnull align 8 dereferenceable(127) %i.a, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(16) %3)
-  tail call void @_ZN6icu_7811Formattable9setDoubleEd(ptr noundef nonnull align 8 dereferenceable(112) %2, double noundef %4)
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %5 = load i32, ptr %4, align 8, !tbaa !43       ; 5 uses
+  %6 = tail call double @uprv_getNaN_78()         ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %8 = load i32, ptr %7, align 8, !tbaa !33       ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %12 = icmp sgt i32 %8, 0
+  br i1 %12, label %.lr.ph, label %.critedge.i.thread
+
+.lr.ph:                                           ; preds = %bb.a, %37
+  %.036.i6 = phi double [ %.3.i, %37 ], [ %6, %bb.a ] ; 3 uses
+  %.038.i5 = phi i32 [ %.341.i, %37 ], [ %5, %bb.a ] ; 4 uses
+  %.044.i4 = phi i32 [ %38, %37 ], [ 0, %bb.a ]   ; 2 uses
+  %13 = load ptr, ptr %9, align 8, !tbaa !34
+  %14 = zext nneg i32 %.044.i4 to i64
+  %15 = getelementptr inbounds nuw [16 x i8], ptr %13, i64 %14 ; 2 uses
+  %16 = load i32, ptr %15, align 4, !tbaa !39
+  %.not.i = icmp eq i32 %16, 6
+  br i1 %.not.i, label %.critedge.i, label %17
+
+17:                                               ; preds = %.lr.ph
+  %18 = tail call noundef double @_ZNK6icu_7814MessagePattern15getNumericValueERKNS0_4PartE(ptr noundef nonnull align 8 dereferenceable(127) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %15) ; 2 uses
+  %19 = add nuw nsw i32 %.044.i4, 2               ; 3 uses
+  %20 = load ptr, ptr %9, align 8, !tbaa !34
+  %21 = zext nneg i32 %19 to i64
+  %22 = getelementptr inbounds nuw [16 x i8], ptr %20, i64 %21
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 12
+  %24 = load i32, ptr %23, align 4, !tbaa !38
+  %..i.i = tail call noundef i32 @llvm.smax.i32(i32 %24, i32 %19) ; 2 uses
+  %25 = tail call noundef i32 @_ZN6icu_7812ChoiceFormat25matchStringUntilLimitPartERKNS_14MessagePatternEiiRKNS_13UnicodeStringEi(ptr noundef nonnull align 8 dereferenceable(127) %i.a, i32 noundef %19, i32 noundef %..i.i, ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %5) ; 2 uses
+  %26 = icmp sgt i32 %25, -1
+  br i1 %26, label %27, label %37
+
+27:                                               ; preds = %17
+  %28 = add nsw i32 %25, %5                       ; 4 uses
+  %29 = icmp sgt i32 %28, %.038.i5
+  br i1 %29, label %30, label %37
+
+30:                                               ; preds = %27
+  %31 = load i16, ptr %10, align 8, !tbaa !28     ; 2 uses
+  %32 = icmp slt i16 %31, 0
+  %33 = ashr i16 %31, 5
+  %34 = sext i16 %33 to i32
+  %35 = load i32, ptr %11, align 4
+  %36 = select i1 %32, i32 %35, i32 %34
+  %.not54.i = icmp eq i32 %28, %36
+  br i1 %.not54.i, label %.critedge.i, label %37
+
+37:                                               ; preds = %30, %27, %17
+  %.341.i = phi i32 [ %28, %30 ], [ %.038.i5, %17 ], [ %.038.i5, %27 ] ; 2 uses
+  %.3.i = phi double [ %18, %30 ], [ %.036.i6, %17 ], [ %.036.i6, %27 ] ; 2 uses
+  %38 = add nuw nsw i32 %..i.i, 1                 ; 2 uses
+  %39 = icmp slt i32 %38, %8
+  br i1 %39, label %.lr.ph, label %.critedge.i
+
+.critedge.i:                                      ; preds = %37, %.lr.ph, %30
+  %.543.i = phi i32 [ %.038.i5, %.lr.ph ], [ %.341.i, %37 ], [ %28, %30 ] ; 2 uses
+  %.5.i = phi double [ %.036.i6, %.lr.ph ], [ %.3.i, %37 ], [ %18, %30 ] ; 2 uses
+  %40 = icmp eq i32 %.543.i, %5
+  br i1 %40, label %.critedge.i.thread, label %42
+
+.critedge.i.thread:                               ; preds = %bb.a, %.critedge.i
+  %.5.i21 = phi double [ %.5.i, %.critedge.i ], [ %6, %bb.a ]
+  %41 = getelementptr inbounds nuw i8, ptr %3, i64 12
+  store i32 %5, ptr %41, align 4, !tbaa !44
+  br label %_ZN6icu_7812ChoiceFormat13parseArgumentERKNS_14MessagePatternEiRKNS_13UnicodeStringERNS_13ParsePositionE.exit
+
+42:                                               ; preds = %.critedge.i
+  store i32 %.543.i, ptr %4, align 8, !tbaa !43
+  br label %_ZN6icu_7812ChoiceFormat13parseArgumentERKNS_14MessagePatternEiRKNS_13UnicodeStringERNS_13ParsePositionE.exit
+
+_ZN6icu_7812ChoiceFormat13parseArgumentERKNS_14MessagePatternEiRKNS_13UnicodeStringERNS_13ParsePositionE.exit: ; preds = %.critedge.i.thread, %42
+  %.5.i20 = phi double [ %.5.i21, %.critedge.i.thread ], [ %.5.i, %42 ]
+  tail call void @_ZN6icu_7811Formattable9setDoubleEd(ptr noundef nonnull align 8 dereferenceable(112) %2, double noundef %.5.i20)
   ret void
 }
 
@@ -1017,25 +1091,22 @@ declare void @_ZN6icu_7811Formattable9setDoubleEd(ptr noundef nonnull align 8 de
 define noundef double @_ZN6icu_7812ChoiceFormat13parseArgumentERKNS_14MessagePatternEiRKNS_13UnicodeStringERNS_13ParsePositionE(ptr noundef nonnull align 8 dereferenceable(127) %0, i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(64) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %3) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !53   ; 5 uses
-  %i.c = tail call double @uprv_getNaN_78()
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !43   ; 6 uses
+  %i.c = tail call double @uprv_getNaN_78()       ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !33
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !33   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 12
-  br label %4
+  %4 = icmp slt i32 %1, %i.e
+  br i1 %4, label %bb.b, label %.critedge
 
-4:                                                ; preds = %bb.f, %bb.a
-  %.044 = phi i32 [ %1, %bb.a ], [ %.145, %bb.f ] ; 3 uses
-  %.038 = phi i32 [ %i.b, %bb.a ], [ %.442, %bb.f ] ; 5 uses
-  %.036 = phi double [ %i.c, %bb.a ], [ %.4, %bb.f ] ; 4 uses
-  %5 = icmp slt i32 %.044, %i.e
-  br i1 %5, label %bb.b, label %.critedge
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a, %bb.f
+  %.03663 = phi double [ %.3, %bb.f ], [ %i.c, %bb.a ] ; 3 uses
+  %.03862 = phi i32 [ %.341, %bb.f ], [ %i.b, %bb.a ] ; 4 uses
+  %.04461 = phi i32 [ %5, %bb.f ], [ %1, %bb.a ]  ; 2 uses
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !34
-  %i.j = sext i32 %.044 to i64
+  %i.j = sext i32 %.04461 to i64
   %i.k = getelementptr inbounds [16 x i8], ptr %i.i, i64 %i.j ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !39
   %.not = icmp eq i32 %i.l, 6
@@ -1043,7 +1114,7 @@ bb.b:                                             ; preds = %4
 
 bb.c:                                             ; preds = %bb.b
   %i.m = tail call noundef double @_ZNK6icu_7814MessagePattern15getNumericValueERKNS0_4PartE(ptr noundef nonnull align 8 dereferenceable(127) %0, ptr noundef nonnull align 4 dereferenceable(16) %i.k) ; 2 uses
-  %i.n = add nsw i32 %.044, 2                     ; 4 uses
+  %i.n = add nsw i32 %.04461, 2                   ; 3 uses
   %i.o = load ptr, ptr %i.f, align 8, !tbaa !34
   %i.p = sext i32 %i.n to i64
   %i.q = getelementptr inbounds [16 x i8], ptr %i.o, i64 %i.p
@@ -1052,12 +1123,12 @@ bb.c:                                             ; preds = %bb.b
   %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.s, i32 %i.n) ; 2 uses
   %i.t = tail call noundef i32 @_ZN6icu_7812ChoiceFormat25matchStringUntilLimitPartERKNS_14MessagePatternEiiRKNS_13UnicodeStringEi(ptr noundef nonnull align 8 dereferenceable(127) %0, i32 noundef %i.n, i32 noundef %..i, ptr noundef nonnull align 8 dereferenceable(64) %2, i32 noundef %i.b) ; 2 uses
   %i.u = icmp sgt i32 %i.t, -1
-  br i1 %i.u, label %bb.d, label %.thread
+  br i1 %i.u, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.v = add nsw i32 %i.t, %i.b                   ; 4 uses
-  %i.w = icmp sgt i32 %i.v, %.038
-  br i1 %i.w, label %bb.e, label %.thread
+  %i.w = icmp sgt i32 %i.v, %.03862
+  br i1 %i.w, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.x = load i16, ptr %i.g, align 8, !tbaa !28   ; 2 uses
@@ -1067,34 +1138,28 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = load i32, ptr %i.h, align 4
   %i.ac = select i1 %i.y, i32 %i.ab, i32 %i.aa
   %.not54 = icmp eq i32 %i.v, %i.ac
-  br i1 %.not54, label %bb.f, label %.thread
+  br i1 %.not54, label %.critedge, label %bb.f
 
-.thread:                                          ; preds = %bb.d, %bb.e, %bb.c
-  %.341 = phi i32 [ %i.v, %bb.e ], [ %.038, %bb.c ], [ %.038, %bb.d ]
-  %.3 = phi double [ %i.m, %bb.e ], [ %.036, %bb.c ], [ %.036, %bb.d ]
-  %6 = add nsw i32 %..i, 1
-  br label %bb.f
+bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
+  %.341 = phi i32 [ %i.v, %bb.e ], [ %.03862, %bb.c ], [ %.03862, %bb.d ] ; 2 uses
+  %.3 = phi double [ %i.m, %bb.e ], [ %.03663, %bb.c ], [ %.03663, %bb.d ] ; 2 uses
+  %5 = add nsw i32 %..i, 1                        ; 2 uses
+  %6 = icmp slt i32 %5, %i.e
+  br i1 %6, label %bb.b, label %.critedge
 
-bb.f:                                             ; preds = %bb.e, %.thread
-  %.145 = phi i32 [ %6, %.thread ], [ %i.n, %bb.e ]
-  %.442 = phi i32 [ %.341, %.thread ], [ %i.v, %bb.e ] ; 2 uses
-  %.4 = phi double [ %.3, %.thread ], [ %i.m, %bb.e ] ; 2 uses
-  %7 = phi i1 [ true, %.thread ], [ false, %bb.e ]
-  br i1 %7, label %4, label %.critedge
-
-.critedge:                                        ; preds = %bb.f, %4, %bb.b
-  %.543 = phi i32 [ %.442, %bb.f ], [ %.038, %bb.b ], [ %.038, %4 ] ; 2 uses
-  %.5 = phi double [ %.4, %bb.f ], [ %.036, %bb.b ], [ %.036, %4 ]
+.critedge:                                        ; preds = %bb.b, %bb.f, %bb.e, %bb.a
+  %.543 = phi i32 [ %i.b, %bb.a ], [ %.03862, %bb.b ], [ %.341, %bb.f ], [ %i.v, %bb.e ] ; 2 uses
+  %.5 = phi double [ %i.c, %bb.a ], [ %.03663, %bb.b ], [ %.3, %bb.f ], [ %i.m, %bb.e ]
   %i.ad = icmp eq i32 %.543, %i.b
   br i1 %i.ad, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %.critedge
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 12
-  store i32 %i.b, ptr %i.ae, align 4, !tbaa !54
+  store i32 %i.b, ptr %i.ae, align 4, !tbaa !44
   br label %bb.i
 
 bb.h:                                             ; preds = %.critedge
-  store i32 %.543, ptr %i.a, align 8, !tbaa !53
+  store i32 %.543, ptr %i.a, align 8, !tbaa !43
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -1362,19 +1427,19 @@ attributes #10 = { nounwind }
 !39 = !{!37, !35, i64 0}
 !40 = !{!37, !5, i64 4}
 !41 = !{!37, !36, i64 8}
-!42 = distinct !{!42, !29}
-!43 = distinct !{!43, !29}
-!44 = distinct !{!44, !29}
+!42 = !{!"_ZTSN6icu_7813ParsePositionE", !12, i64 0, !5, i64 8, !5, i64 12}
+!43 = !{!42, !5, i64 8}
+!44 = !{!42, !5, i64 12}
 !45 = distinct !{!45, !29}
 !46 = distinct !{!46, !29}
 !47 = distinct !{!47, !29}
-!48 = !{!"double", !4, i64 0}
-!49 = !{!48, !48, i64 0}
-!50 = !{!25, !17, i64 8}
-!51 = distinct !{!51, !29}
-!52 = !{!"_ZTSN6icu_7813ParsePositionE", !12, i64 0, !5, i64 8, !5, i64 12}
-!53 = !{!52, !5, i64 8}
-!54 = !{!52, !5, i64 12}
+!48 = distinct !{!48, !29}
+!49 = distinct !{!49, !29}
+!50 = distinct !{!50, !29}
+!51 = !{!"double", !4, i64 0}
+!52 = !{!51, !51, i64 0}
+!53 = !{!25, !17, i64 8}
+!54 = distinct !{!54, !29}
 !55 = distinct !{!55, !29}
 !56 = !{!16, !4, i64 109}
 end_hunk_0

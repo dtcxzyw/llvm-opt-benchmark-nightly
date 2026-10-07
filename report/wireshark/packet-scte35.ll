@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = and i8 %.fr153, 16
   tail call void @proto_tree_add_bitmask_list(ptr noundef %i.n, ptr noundef %0, i32 noundef 5, i32 noundef 1, ptr noundef nonnull @dissect_scte35_splice_insert.new_event_fields, i32 noundef 0)
   %i.aa = icmp eq i8 %i.v, 0                      ; 2 uses
-  %i.ab = icmp ne i8 %i.z, 0                      ; 4 uses
+  %i.ab = icmp ne i8 %i.z, 0                      ; 3 uses
   %or.cond = or i1 %i.aa, %i.ab
   br i1 %or.cond, label %bb.j, label %bb.f
 
@@ -260,7 +260,6 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not152, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %4 = select i1 %i.ab, i32 1, i32 2              ; 2 uses
   br i1 %i.ab, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.q
@@ -269,7 +268,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ba = call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef %.2148.us) ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.bb = call i32 @tvb_reported_length(ptr noundef %i.ba) ; 2 uses
-  %i.bc = icmp slt i32 %i.bb, %4
+  %i.bc = icmp slt i32 %i.bb, 2
   br i1 %i.bc, label %dissect_component.exit, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.split.us
@@ -317,7 +316,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bw = call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef %.2148) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.bx = call i32 @tvb_reported_length(ptr noundef %i.bw)
-  %i.by = icmp slt i32 %i.bx, %4
+  %i.by = icmp slt i32 %i.bx, 1
   br i1 %i.by, label %dissect_component.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %.lr.ph.split

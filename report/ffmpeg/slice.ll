@@ -205,13 +205,13 @@ bb.a:
   store i32 0, ptr %i.e, align 8, !tbaa !47
   %i.f = icmp eq i32 %6, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br i1 %i.f, label %.split.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
   %i.h = mul nsw i32 %2, 3
   %i.i = sext i32 %i.h to i64                     ; 2 uses
   %i.j = tail call noalias ptr @av_calloc(i64 noundef %i.i, i64 noundef 8) #8 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.j, ptr %7, align 8, !tbaa !21
   %.not.not = icmp eq ptr %i.j, null
   br i1 %.not.not, label %.critedge, label %.split.1
@@ -219,7 +219,8 @@ bb.a:
 .split.us.preheader:                              ; preds = %bb.a
   %i.k = sext i32 %2 to i64                       ; 2 uses
   %i.l = tail call noalias ptr @av_calloc(i64 noundef %i.k, i64 noundef 8) #8 ; 2 uses
-  store ptr %i.l, ptr %7, align 8, !tbaa !21
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store ptr %i.l, ptr %8, align 8, !tbaa !21
   %.not.not.us = icmp eq ptr %i.l, null
   br i1 %.not.not.us, label %.critedge, label %.split.us.1
 

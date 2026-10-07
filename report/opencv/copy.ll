@@ -205,7 +205,8 @@ bb.az:                                            ; preds = %.lr.ph212.split.i
   br i1 %exitcond249.not.i, label %._crit_edge.i, label %.lr.ph212.split.i, !llvm.loop !210
 
 ._crit_edge.i:                                    ; preds = %.loopexit181.i, %.loopexit178.us.i, %._crit_edge195.i
-  %i.lu = shl i32 %i.gm, %i.gr                    ; 2 uses
+  %.pre-phi.i = phi i32 [ 2, %.loopexit178.us.i ], [ %i.gr, %._crit_edge195.i ], [ 0, %.loopexit181.i ]
+  %i.lu = shl i32 %i.gm, %.pre-phi.i              ; 2 uses
   %i.lv = icmp sgt i32 %.0, 0
   br i1 %i.lv, label %.lr.ph215.i, label %.preheader.i
 

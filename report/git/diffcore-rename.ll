@@ -204,7 +204,7 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.ao
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fg, i64 76
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !59
-  %.not45.i.i = icmp eq i32 %i.fx, 0              ; 2 uses
+  %.not45.i.i = icmp eq i32 %i.fx, 0              ; 3 uses
   %i.fy = zext i1 %.not45.i.i to i32
   br i1 %.not45.i.i, label %bb.ar, label %bb.aq
 
@@ -235,7 +235,6 @@ bb.as:                                            ; preds = %.lr.ph544
   br i1 %i.gk, label %.lr.ph544, label %._crit_edge545, !llvm.loop !86
 
 .lr.ph544:                                        ; preds = %bb.ar, %bb.as
-  %.020.i.i.i542 = phi i32 [ %.1.i.i.i, %bb.as ], [ undef, %bb.ar ]
   %indvars.iv.i.i.i541 = phi i64 [ %indvars.iv.next.i.i.i, %bb.as ], [ %i.gd, %bb.ar ]
   %indvars.iv14.i.i.i540 = phi i64 [ %indvars.iv.next15.i.i.i, %bb.as ], [ %i.ge, %bb.ar ]
   %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i541, -1 ; 4 uses
@@ -245,9 +244,7 @@ bb.as:                                            ; preds = %.lr.ph544
   %i.gn = getelementptr inbounds i8, ptr %.val50.i.i, i64 %indvars.iv.next15.i.i.i
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !65
   %.not.i52.i.i = icmp eq i8 %i.gm, %i.go         ; 2 uses
-  %i.gp = icmp ne i8 %i.gm, 47                    ; 2 uses
-  %..020.i.i.i = select i1 %i.gp, i32 %.020.i.i.i542, i32 1
-  %.1.i.i.i = select i1 %.not.i52.i.i, i32 %..020.i.i.i, i32 0 ; 2 uses
+  %i.gp = icmp ne i8 %i.gm, 47
   %cond.i.i.i = and i1 %i.gp, %.not.i52.i.i
   br i1 %cond.i.i.i, label %bb.as, label %basename_same.exit.i.i, !llvm.loop !86
 
@@ -264,7 +261,6 @@ bb.at:                                            ; preds = %._crit_edge545
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !65
   %i.gt = icmp eq i8 %i.gs, 47                    ; 2 uses
   %brmerge.not.i.i.i = select i1 %i.gt, i1 %.lcssa532, i1 false
-  %.mux.i.i.i = zext i1 %i.gt to i32
   br i1 %brmerge.not.i.i.i, label %bb.av, label %basename_same.exit.i.i
 
 bb.au:                                            ; preds = %._crit_edge545
@@ -275,18 +271,18 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %i.gv = getelementptr i8, ptr %i.gu, i64 -1
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !65
   %i.gx = icmp eq i8 %i.gw, 47
-  %24 = zext i1 %i.gx to i32
   br label %basename_same.exit.i.i
 
 basename_same.exit.i.i:                           ; preds = %.lr.ph544, %bb.av, %bb.au, %bb.at
-  %.2.i.i.i = phi i32 [ %24, %bb.av ], [ %.mux.i.i.i, %bb.at ], [ 1, %bb.au ], [ %.1.i.i.i, %.lr.ph544 ]
-  %i.gy = add nsw i32 %.2.i.i.i, %i.fy            ; 3 uses
+  %.2.shrunk.i.i.i = phi i1 [ %i.gx, %bb.av ], [ %i.gt, %bb.at ], [ true, %bb.au ], [ %.not.i52.i.i, %.lr.ph544 ] ; 2 uses
+  %.2.i.i.i = zext i1 %.2.shrunk.i.i.i to i32
+  %i.gy = add nuw nsw i32 %.2.i.i.i, %i.fy        ; 2 uses
   %i.gz = icmp sgt i32 %i.gy, %.03271.i.i
   br i1 %i.gz, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %basename_same.exit.i.i
-  %25 = icmp eq i32 %i.gy, 2
-  br i1 %25, label %select.unfold.i.i, label %bb.ax
+  %24 = and i1 %.not45.i.i, %.2.shrunk.i.i.i
+  br i1 %24, label %select.unfold.i.i, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %basename_same.exit.i.i
   %.136.i.i = phi ptr [ %.03867.i.i, %bb.aw ], [ %.03569.i.i, %basename_same.exit.i.i ] ; 2 uses
@@ -689,7 +685,6 @@ bb.ff:                                            ; preds = %.lr.ph553
   br i1 %i.aal, label %.lr.ph553, label %._crit_edge554, !llvm.loop !86
 
 .lr.ph553:                                        ; preds = %bb.fe, %bb.ff
-  %.020.i551 = phi i32 [ %.1.i, %bb.ff ], [ undef, %bb.fe ]
   %indvars.iv.i315550 = phi i64 [ %indvars.iv.next.i316, %bb.ff ], [ %i.aae, %bb.fe ]
   %indvars.iv14.i549 = phi i64 [ %indvars.iv.next15.i, %bb.ff ], [ %i.aaf, %bb.fe ]
   %indvars.iv.next.i316 = add nsw i64 %indvars.iv.i315550, -1 ; 4 uses
@@ -699,9 +694,7 @@ bb.ff:                                            ; preds = %.lr.ph553
   %i.aao = getelementptr inbounds i8, ptr %.val256, i64 %indvars.iv.next15.i
   %i.aap = load i8, ptr %i.aao, align 1, !tbaa !65
   %.not.i317 = icmp eq i8 %i.aan, %i.aap          ; 2 uses
-  %i.aaq = icmp ne i8 %i.aan, 47                  ; 2 uses
-  %..020.i = select i1 %i.aaq, i32 %.020.i551, i32 1
-  %.1.i = select i1 %.not.i317, i32 %..020.i, i32 0 ; 2 uses
+  %i.aaq = icmp ne i8 %i.aan, 47
   %cond.i = and i1 %i.aaq, %.not.i317
   br i1 %cond.i, label %bb.ff, label %basename_same.exit, !llvm.loop !86
 
@@ -718,7 +711,6 @@ bb.fg:                                            ; preds = %._crit_edge554
   %i.aat = load i8, ptr %i.aas, align 1, !tbaa !65
   %i.aau = icmp eq i8 %i.aat, 47                  ; 2 uses
   %brmerge.not.i = select i1 %i.aau, i1 %.lcssa, i1 false
-  %.mux.i = zext i1 %i.aau to i32
   br i1 %brmerge.not.i, label %bb.fi, label %basename_same.exit
 
 bb.fh:                                            ; preds = %._crit_edge554
@@ -729,12 +721,11 @@ bb.fi:                                            ; preds = %bb.fh, %bb.fg
   %i.aaw = getelementptr i8, ptr %i.aav, i64 -1
   %i.aax = load i8, ptr %i.aaw, align 1, !tbaa !65
   %i.aay = icmp eq i8 %i.aax, 47
-  %26 = zext i1 %i.aay to i32
   br label %basename_same.exit
 
 basename_same.exit:                               ; preds = %.lr.ph553, %bb.fg, %bb.fh, %bb.fi
-  %.2.i = phi i32 [ %26, %bb.fi ], [ %.mux.i, %bb.fg ], [ 1, %bb.fh ], [ %.1.i, %.lr.ph553 ] ; 2 uses
-  %27 = trunc i32 %.2.i to i16
+  %.2.shrunk.i = phi i1 [ %i.aay, %bb.fi ], [ %i.aau, %bb.fg ], [ true, %bb.fh ], [ %.not.i317, %.lr.ph553 ] ; 2 uses
+  %25 = zext i1 %.2.shrunk.i to i16
   %i.aaz = load i32, ptr %i.zc, align 4, !tbaa !78
   %i.aba = icmp slt i32 %i.aaz, 0
   %i.abb = load i32, ptr %i.yv, align 4, !tbaa !78 ; 3 uses
@@ -890,12 +881,11 @@ bb.fy:                                            ; preds = %score_compare.exit.
   br i1 %i.adn, label %bb.fz, label %bb.ga
 
 bb.fz:                                            ; preds = %bb.fy
-  %sext = shl i32 %.2.i, 16
-  %28 = ashr exact i32 %sext, 16
+  %26 = zext i1 %.2.shrunk.i to i32
   %i.ado = getelementptr inbounds nuw i8, ptr %.phi.trans.insert28.i, i64 10
   %i.adp = load i16, ptr %i.ado, align 2, !tbaa !80
   %i.adq = sext i16 %i.adp to i32
-  %i.adr = sub nsw i32 %28, %i.adq
+  %i.adr = sub nsw i32 %26, %i.adq
   br label %score_compare.exit14.i
 
 bb.ga:                                            ; preds = %bb.fy
@@ -918,7 +908,7 @@ score_compare.exit14.i.thread:                    ; preds = %score_compare.exit.
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.adw, i64 8
   store i16 %i.aaa, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !167
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.adw, i64 10
-  store i16 %27, ptr %.sroa.9.0..sroa_idx, align 2, !tbaa !167
+  store i16 %25, ptr %.sroa.9.0..sroa_idx, align 2, !tbaa !167
   br label %record_if_better.exit
 
 record_if_better.exit:                            ; preds = %score_compare.exit14.i, %score_compare.exit14.i.thread

@@ -202,8 +202,7 @@ io_sqd_update_thread_idle.exit:                   ; preds = %.lr.ph.i, %get_cred
 bb.r:                                             ; preds = %io_sqd_update_thread_idle.exit
   %i.br = getelementptr i8, ptr %.0.i80, i64 48
   %i.bs = load ptr, ptr %i.br, align 8
-  %.fr136 = freeze ptr %i.bs
-  %.not70 = icmp eq ptr %.fr136, null
+  %.not70 = icmp eq ptr %i.bs, null
   tail call void @io_sq_thread_unpark(ptr noundef %.0.i80) #16
   br i1 %.not70, label %.thread116, label %fdput.exit.thread
 
@@ -312,13 +311,13 @@ bb.ab:                                            ; preds = %bb.x, %.thread105
   call void @complete(ptr noundef %i.dd) #15
   br label %.thread116
 
-.thread116:                                       ; preds = %bb.r, %bb.z, %io_get_sq_data.exit.thread, %bb.aa, %bb.ab
+.thread116:                                       ; preds = %bb.z, %bb.r, %io_get_sq_data.exit.thread, %bb.aa, %bb.ab
   %.361 = phi i32 [ %.260, %bb.ab ], [ -22, %bb.aa ], [ %i.cy, %bb.z ], [ -6, %bb.r ], [ %i.av, %io_get_sq_data.exit.thread ]
   call void @io_sq_thread_finish(ptr noundef %0) #16
   br label %fdput.exit.thread
 
-fdput.exit.thread:                                ; preds = %bb.r, %bb.z, %.thread109, %bb.e, %bb.b, %bb.aa, %.split, %fdput.exit, %.thread116
-  %.3 = phi i32 [ -6, %bb.b ], [ -22, %.split ], [ %.361, %.thread116 ], [ -22, %fdput.exit ], [ 0, %bb.aa ], [ 0, %bb.z ], [ %i.m, %bb.e ], [ 0, %bb.r ], [ 0, %.thread109 ]
+fdput.exit.thread:                                ; preds = %bb.z, %.thread109, %bb.r, %bb.e, %bb.b, %bb.aa, %.split, %fdput.exit, %.thread116
+  %.3 = phi i32 [ -6, %bb.b ], [ -22, %.split ], [ %.361, %.thread116 ], [ -22, %fdput.exit ], [ 0, %bb.aa ], [ 0, %bb.r ], [ %i.m, %bb.e ], [ 0, %.thread109 ], [ 0, %bb.z ]
   ret i32 %.3
 }
 

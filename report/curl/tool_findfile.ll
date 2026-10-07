@@ -18,7 +18,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define ptr @findfile(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !tbaa !10
+  %i.a = load i8, ptr %0, align 1, !tbaa !9
   %.not = icmp eq i8 %i.a, 0
   br i1 %.not, label %checkhome.exit, label %.preheader
 
@@ -30,13 +30,13 @@ bb.b:                                             ; preds = %.preheader, %.threa
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.thread83 ] ; 3 uses
   %.043102 = phi i32 [ %1, %.preheader ], [ %.44788, %.thread83 ] ; 4 uses
   %i.c = getelementptr inbounds nuw [24 x i8], ptr @conf_list, i64 %indvars.iv ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !15
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !14
   %i.e = tail call ptr @curl_getenv(ptr noundef %i.d) #5 ; 6 uses
   %.not64 = icmp eq ptr %i.e, null
   br i1 %.not64, label %.thread83, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !10
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !9
   %.not65 = icmp eq i8 %i.f, 0
   br i1 %.not65, label %.thread83.sink.split, label %bb.d
 
@@ -46,7 +46,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !16
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !15
   %i.i = tail call ptr (ptr, ...) @curl_maprintf(ptr noundef nonnull @.str, ptr noundef nonnull %i.e, ptr noundef %i.h) #5 ; 2 uses
   tail call void @curl_free(ptr noundef nonnull %i.e) #5
   %.not67.not = icmp eq ptr %i.i, null
@@ -55,7 +55,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1 = phi ptr [ %i.i, %bb.e ], [ %i.e, %bb.d ]  ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.k = load i8, ptr %i.j, align 8, !tbaa !17, !range !18, !noundef !19
+  %i.k = load i8, ptr %i.j, align 8, !tbaa !16, !range !17, !noundef !18
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.g, label %bb.h
 
@@ -83,7 +83,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.44788 = phi i32 [ %.043102, %bb.b ], [ %.144, %bb.h ], [ %.44788.ph, %.thread83.sink.split ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not60 = icmp eq i64 %indvars.iv.next, 5
-  br i1 %.not60, label %bb.i, label %bb.b, !llvm.loop !9
+  br i1 %.not60, label %bb.i, label %bb.b, !llvm.loop !8
 
 bb.i:                                             ; preds = %.thread83
   %i.o = tail call i32 @geteuid() #5
@@ -98,7 +98,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not62, label %checkhome.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !10
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !9
   %.not63 = icmp eq i8 %i.s, 0
   br i1 %.not63, label %checkhome.exit, label %.split.i.preheader
 
@@ -117,13 +117,13 @@ bb.l:                                             ; preds = %.split.i.preheader
   %i.x = tail call i32 @close(i32 noundef %i.u) #5 ; 0 uses
   br label %checkhome.exit.sink.split
 
-checkhome.exit.sink.split:                        ; preds = %bb.l, %.split30.us.i
+checkhome.exit.sink.split:                        ; preds = %.split30.us.i, %bb.l
   %.9.ph = phi ptr [ %i.w, %.split30.us.i ], [ null, %bb.l ]
   tail call void @curl_free(ptr noundef nonnull %i.t) #5
   br label %checkhome.exit
 
-checkhome.exit:                                   ; preds = %bb.h, %bb.e, %checkhome.exit.sink.split, %.split.i.preheader, %bb.i, %bb.j, %bb.k, %bb.a
-  %.9 = phi ptr [ null, %bb.k ], [ null, %bb.a ], [ %.9.ph, %checkhome.exit.sink.split ], [ null, %.split.i.preheader ], [ null, %bb.i ], [ null, %bb.j ], [ %.fr, %bb.h ], [ null, %bb.e ]
+checkhome.exit:                                   ; preds = %bb.h, %bb.e, %.split.i.preheader, %checkhome.exit.sink.split, %bb.i, %bb.j, %bb.k, %bb.a
+  %.9 = phi ptr [ null, %bb.k ], [ null, %bb.a ], [ %.9.ph, %checkhome.exit.sink.split ], [ null, %.split.i.preheader ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.e ], [ %.fr, %bb.h ]
   ret ptr %.9
 }
 
@@ -136,7 +136,6 @@ declare ptr @curl_maprintf(ptr noundef, ...) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc noalias ptr @checkhome(ptr noundef nonnull %0, ptr noundef %1, i1 noundef zeroext %2) unnamed_addr #0 {
 bb.a:
-  %3 = select i1 %2, i32 2, i32 1
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   br i1 %2, label %.split.us, label %.split
 
@@ -168,36 +167,31 @@ bb.e:                                             ; preds = %bb.d
   tail call void @curl_free(ptr noundef nonnull %i.e) #5
   br label %.loopexit
 
-.split:                                           ; preds = %bb.a, %bb.g
-  %.02328 = phi i32 [ %5, %bb.g ], [ 0, %bb.a ]
+.split:                                           ; preds = %bb.a
   %i.h = tail call ptr (ptr, ...) @curl_maprintf(ptr noundef nonnull @.str.7, ptr noundef nonnull %0, ptr noundef %1) #5 ; 4 uses
   %.not = icmp eq ptr %i.h, null
-  br i1 %.not, label %bb.g, label %bb.f
+  br i1 %.not, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.split
   %i.i = tail call i32 (ptr, i32, ...) @open(ptr noundef nonnull %i.h, i32 noundef 0) #5 ; 2 uses
   %i.j = icmp slt i32 %i.i, 0
-  br i1 %i.j, label %4, label %.split30.us
+  br i1 %i.j, label %bb.g, label %.split30.us
 
-4:                                                ; preds = %bb.f
-  tail call void @curl_free(ptr noundef nonnull %i.h) #5
-  br label %bb.g
-
-.split30.us:                                      ; preds = %bb.f, %bb.b, %bb.d
-  %.us-phi = phi i32 [ %i.f, %bb.d ], [ %i.c, %bb.b ], [ %i.i, %bb.f ]
-  %.us-phi31 = phi ptr [ %i.e, %bb.d ], [ %i.b, %bb.b ], [ %i.h, %bb.f ] ; 2 uses
+.split30.us:                                      ; preds = %bb.b, %bb.d, %bb.f
+  %.us-phi = phi i32 [ %i.i, %bb.f ], [ %i.c, %bb.b ], [ %i.f, %bb.d ]
+  %.us-phi31 = phi ptr [ %i.h, %bb.f ], [ %i.b, %bb.b ], [ %i.e, %bb.d ] ; 2 uses
   %i.k = tail call noalias ptr @strdup(ptr noundef nonnull %.us-phi31) #5
   %i.l = tail call i32 @close(i32 noundef %.us-phi) #5 ; 0 uses
-  tail call void @curl_free(ptr noundef nonnull %.us-phi31) #5
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %.split30.us
+  %.sink = phi ptr [ %.us-phi31, %.split30.us ], [ %i.h, %bb.f ]
+  %.4.ph = phi ptr [ %i.k, %.split30.us ], [ null, %bb.f ]
+  tail call void @curl_free(ptr noundef nonnull %.sink) #5
   br label %.loopexit
 
-bb.g:                                             ; preds = %.split, %4
-  %5 = add nuw nsw i32 %.02328, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %5, %3
-  br i1 %exitcond.not, label %.loopexit, label %.split, !llvm.loop !22
-
-.loopexit:                                        ; preds = %bb.g, %.split.us.1, %bb.e, %.split30.us
-  %.4 = phi ptr [ %i.k, %.split30.us ], [ null, %.split.us.1 ], [ null, %bb.e ], [ null, %bb.g ]
+.loopexit:                                        ; preds = %.split.us.1, %bb.e, %bb.g, %.split
+  %.4 = phi ptr [ %.4.ph, %bb.g ], [ null, %.split ], [ null, %bb.e ], [ null, %.split.us.1 ]
   ret ptr %.4
 }
 
@@ -233,19 +227,18 @@ attributes #5 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = distinct !{!9, !8}
-!10 = !{!4, !4, i64 0}
-!11 = !{!"any pointer", !4, i64 0}
-!12 = !{!"p1 omnipotent char", !11, i64 0}
-!13 = !{!"_Bool", !4, i64 0}
-!14 = !{!"finder", !12, i64 0, !12, i64 8, !13, i64 16}
-!15 = !{!14, !12, i64 0}
-!16 = !{!14, !12, i64 8}
-!17 = !{!14, !13, i64 16}
-!18 = !{i8 0, i8 2}
-!19 = !{}
-!20 = !{!"passwd", !12, i64 0, !12, i64 8, !5, i64 16, !5, i64 20, !12, i64 24, !12, i64 32, !12, i64 40}
-!21 = !{!20, !12, i64 32}
-!22 = distinct !{!22, !8}
+!8 = distinct !{!8, !19}
+!9 = !{!4, !4, i64 0}
+!10 = !{!"any pointer", !4, i64 0}
+!11 = !{!"p1 omnipotent char", !10, i64 0}
+!12 = !{!"_Bool", !4, i64 0}
+!13 = !{!"finder", !11, i64 0, !11, i64 8, !12, i64 16}
+!14 = !{!13, !11, i64 0}
+!15 = !{!13, !11, i64 8}
+!16 = !{!13, !12, i64 16}
+!17 = !{i8 0, i8 2}
+!18 = !{}
+!19 = !{!"llvm.loop.mustprogress"}
+!20 = !{!"passwd", !11, i64 0, !11, i64 8, !5, i64 16, !5, i64 20, !11, i64 24, !11, i64 32, !11, i64 40}
+!21 = !{!20, !11, i64 32}
 end_hunk_0

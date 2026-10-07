@@ -205,9 +205,8 @@ bb.u:                                             ; preds = %bb.a
 bb.v:                                             ; preds = %bb.t, %bb.s, %bb.u, %bb.q, %bb.p, %bb.k, %bb.f
   %.sroa.081.12 = phi i64 [ 4, %bb.u ], [ %.sroa.081.2, %bb.f ], [ %.sroa.081.5, %bb.k ], [ %.sroa.081.8, %bb.p ], [ 3, %bb.q ], [ 4, %bb.t ], [ 1, %bb.s ]
   %.sroa.11.12 = phi i64 [ 0, %bb.u ], [ %.sroa.11.2, %bb.f ], [ %.sroa.11.5, %bb.k ], [ %.sroa.11.8, %bb.p ], [ 0, %bb.q ], [ 0, %bb.t ], [ 0, %bb.s ]
-  %.sroa.11.0.insert.ext = and i64 %.sroa.11.12, 1095216660480
-  %.sroa.081.0.insert.ext = and i64 %.sroa.081.12, 4294967295
-  %.sroa.081.0.insert.insert = or disjoint i64 %.sroa.11.0.insert.ext, %.sroa.081.0.insert.ext
+  %.sroa.081.0.insert.ext = and i64 %.sroa.11.12, 1095216660480
+  %.sroa.081.0.insert.insert = or disjoint i64 %.sroa.081.0.insert.ext, %.sroa.081.12
   ret i64 %.sroa.081.0.insert.insert
 }
 
@@ -610,9 +609,8 @@ bb.u:                                             ; preds = %bb.a
 bb.v:                                             ; preds = %bb.t, %bb.s, %bb.u, %bb.q, %bb.p, %bb.k, %bb.f
   %.sroa.081.12 = phi i64 [ 4, %bb.u ], [ %.sroa.081.2, %bb.f ], [ %.sroa.081.5, %bb.k ], [ %.sroa.081.8, %bb.p ], [ 3, %bb.q ], [ 4, %bb.t ], [ 1, %bb.s ]
   %.sroa.11.12 = phi i64 [ 0, %bb.u ], [ %.sroa.11.2, %bb.f ], [ %.sroa.11.5, %bb.k ], [ %.sroa.11.8, %bb.p ], [ 0, %bb.q ], [ 0, %bb.t ], [ 0, %bb.s ]
-  %.sroa.11.0.insert.ext = and i64 %.sroa.11.12, 1095216660480
-  %.sroa.081.0.insert.ext = and i64 %.sroa.081.12, 4294967295
-  %.sroa.081.0.insert.insert = or disjoint i64 %.sroa.11.0.insert.ext, %.sroa.081.0.insert.ext
+  %.sroa.081.0.insert.ext = and i64 %.sroa.11.12, 1095216660480
+  %.sroa.081.0.insert.insert = or disjoint i64 %.sroa.081.0.insert.ext, %.sroa.081.12
   ret i64 %.sroa.081.0.insert.insert
 }
 

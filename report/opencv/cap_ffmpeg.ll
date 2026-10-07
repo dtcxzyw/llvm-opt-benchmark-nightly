@@ -204,8 +204,7 @@ bb.nr:                                            ; preds = %bb.nd, %_ZNSt7__cxx
   br i1 %.not78.i.a, label %.thread1128, label %.lr.ph79.i
 
 .lr.ph79.i:                                       ; preds = %.noexc933
-  %i.avs = icmp eq i32 %i.atw, 2                  ; 2 uses
-  %spec.store.select.i = select i1 %i.avs, i32 117, i32 -1
+  %i.avs = icmp eq i32 %i.atw, 2
   br i1 %i.avs, label %.lr.ph79.split.i, label %.lr.ph79.split.us.i
 
 .lr.ph79.split.us.i:                              ; preds = %.lr.ph79.i, %.noexc939
@@ -324,21 +323,19 @@ bb.nz:                                            ; preds = %bb.ny
 
 bb.oa:                                            ; preds = %.noexc942
   %i.awu = getelementptr inbounds nuw i8, ptr %i.awl, i64 40 ; 2 uses
-  %i.awv = load ptr, ptr %i.awu, align 8, !tbaa !174 ; 3 uses
+  %i.awv = load ptr, ptr %i.awu, align 8, !tbaa !174 ; 2 uses
   %.not56.i = icmp eq ptr %i.awv, null
-  br i1 %.not56.i, label %.thread.i, label %.preheader.i
+  br i1 %.not56.i, label %.thread.i, label %.lr.ph.i.a
 
-.preheader.i:                                     ; preds = %bb.oa
-  %53 = load i32, ptr %i.awv, align 4, !tbaa !175 ; 2 uses
-  %.not5773.i = icmp eq i32 %53, -1
-  br i1 %.not5773.i, label %.thread.i, label %.lr.ph.i.a
-
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.oc
-  %i.aww = phi ptr [ %i.awy, %bb.oc ], [ %i.awv, %.preheader.i ]
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.oc ], [ 0, %.preheader.i ]
-  %54 = phi i32 [ %57, %bb.oc ], [ %53, %.preheader.i ]
-  %55 = icmp eq i32 %54, %spec.store.select.i
-  br i1 %55, label %bb.ob, label %bb.oc
+.lr.ph.i.a:                                       ; preds = %bb.oa, %bb.oc
+  %i.aww = phi ptr [ %i.awy, %bb.oc ], [ %i.awv, %bb.oa ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.oc ], [ 0, %bb.oa ] ; 2 uses
+  %53 = getelementptr inbounds nuw [4 x i8], ptr %i.aww, i64 %indvars.iv.i
+  %54 = load i32, ptr %53, align 4, !tbaa !175
+  switch i32 %54, label %bb.oc [
+    i32 -1, label %.thread.i
+    i32 117, label %bb.ob
+  ]
 
 bb.ob:                                            ; preds = %.lr.ph.i.a
   %i.awx = invoke fastcc noundef zeroext i1 @_ZL14hw_check_codecP7AVCodec14AVHWDeviceTypePKc(ptr noundef %i.awl, i32 noundef 2, ptr noundef readonly %i.avq)
@@ -352,14 +349,11 @@ bb.ob:                                            ; preds = %.lr.ph.i.a
   br label %bb.oc
 
 bb.oc:                                            ; preds = %._crit_edge.i, %.lr.ph.i.a
-  %i.awy = phi ptr [ %.pre.i.a, %._crit_edge.i ], [ %i.aww, %.lr.ph.i.a ] ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %56 = getelementptr inbounds nuw [4 x i8], ptr %i.awy, i64 %indvars.iv.next.i
-  %57 = load i32, ptr %56, align 4, !tbaa !175    ; 2 uses
-  %.not57.i = icmp eq i32 %57, -1
-  br i1 %.not57.i, label %.thread.i, label %.lr.ph.i.a, !llvm.loop !7
+  %i.awy = phi ptr [ %.pre.i.a, %._crit_edge.i ], [ %i.aww, %.lr.ph.i.a ]
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  br label %.lr.ph.i.a, !llvm.loop !7
 
-.thread.i:                                        ; preds = %bb.oc, %.preheader.i, %bb.oa, %.noexc942
+.thread.i:                                        ; preds = %.lr.ph.i.a, %bb.oa, %.noexc942
   %i.awz = invoke ptr @avcodec_get_hw_config(ptr noundef nonnull %i.awl, i32 noundef 0)
           to label %.noexc944 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
 
@@ -762,8 +756,7 @@ bb.kt:                                            ; preds = %bb.ks
   br i1 %.not78.i.a, label %.thread1313, label %.lr.ph79.i
 
 .lr.ph79.i:                                       ; preds = %.noexc1180
-  %i.aho = icmp eq i32 %i.ahi, 2                  ; 2 uses
-  %spec.store.select.i = select i1 %i.aho, i32 117, i32 -1
+  %i.aho = icmp eq i32 %i.ahi, 2
   br i1 %i.aho, label %.lr.ph79.split.i, label %.lr.ph79.split.us.i
 
 .lr.ph79.split.us.i:                              ; preds = %.lr.ph79.i, %.noexc1186
@@ -882,21 +875,19 @@ bb.lb:                                            ; preds = %bb.la
 
 bb.lc:                                            ; preds = %.noexc1189
   %i.aiq = getelementptr inbounds nuw i8, ptr %i.aih, i64 40 ; 2 uses
-  %i.air = load ptr, ptr %i.aiq, align 8, !tbaa !174 ; 3 uses
+  %i.air = load ptr, ptr %i.aiq, align 8, !tbaa !174 ; 2 uses
   %.not56.i = icmp eq ptr %i.air, null
-  br i1 %.not56.i, label %.thread.i, label %.preheader.i
+  br i1 %.not56.i, label %.thread.i, label %.lr.ph.i.a
 
-.preheader.i:                                     ; preds = %bb.lc
-  %36 = load i32, ptr %i.air, align 4, !tbaa !175 ; 2 uses
-  %.not5773.i = icmp eq i32 %36, -1
-  br i1 %.not5773.i, label %.thread.i, label %.lr.ph.i.a
-
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.le
-  %i.ais = phi ptr [ %i.aiu, %bb.le ], [ %i.air, %.preheader.i ]
-  %indvars.iv.i1178 = phi i64 [ %indvars.iv.next.i1179, %bb.le ], [ 0, %.preheader.i ]
-  %37 = phi i32 [ %40, %bb.le ], [ %36, %.preheader.i ]
-  %38 = icmp eq i32 %37, %spec.store.select.i
-  br i1 %38, label %bb.ld, label %bb.le
+.lr.ph.i.a:                                       ; preds = %bb.lc, %bb.le
+  %i.ais = phi ptr [ %i.aiu, %bb.le ], [ %i.air, %bb.lc ] ; 2 uses
+  %indvars.iv.i1178 = phi i64 [ %indvars.iv.next.i1179, %bb.le ], [ 0, %bb.lc ] ; 2 uses
+  %36 = getelementptr inbounds nuw [4 x i8], ptr %i.ais, i64 %indvars.iv.i1178
+  %37 = load i32, ptr %36, align 4, !tbaa !175
+  switch i32 %37, label %bb.le [
+    i32 -1, label %.thread.i
+    i32 117, label %bb.ld
+  ]
 
 bb.ld:                                            ; preds = %.lr.ph.i.a
   %i.ait = invoke fastcc noundef zeroext i1 @_ZL14hw_check_codecP7AVCodec14AVHWDeviceTypePKc(ptr noundef %i.aih, i32 noundef 2, ptr noundef readonly %i.ahm)
@@ -910,14 +901,11 @@ bb.ld:                                            ; preds = %.lr.ph.i.a
   br label %bb.le
 
 bb.le:                                            ; preds = %._crit_edge.i, %.lr.ph.i.a
-  %i.aiu = phi ptr [ %.pre.i.a, %._crit_edge.i ], [ %i.ais, %.lr.ph.i.a ] ; 2 uses
-  %indvars.iv.next.i1179 = add nuw nsw i64 %indvars.iv.i1178, 1 ; 2 uses
-  %39 = getelementptr inbounds nuw [4 x i8], ptr %i.aiu, i64 %indvars.iv.next.i1179
-  %40 = load i32, ptr %39, align 4, !tbaa !175    ; 2 uses
-  %.not57.i = icmp eq i32 %40, -1
-  br i1 %.not57.i, label %.thread.i, label %.lr.ph.i.a, !llvm.loop !7
+  %i.aiu = phi ptr [ %.pre.i.a, %._crit_edge.i ], [ %i.ais, %.lr.ph.i.a ]
+  %indvars.iv.next.i1179 = add nuw nsw i64 %indvars.iv.i1178, 1
+  br label %.lr.ph.i.a, !llvm.loop !7
 
-.thread.i:                                        ; preds = %bb.le, %.preheader.i, %bb.lc, %.noexc1189
+.thread.i:                                        ; preds = %.lr.ph.i.a, %bb.lc, %.noexc1189
   %i.aiv = invoke ptr @avcodec_get_hw_config(ptr noundef nonnull %i.aih, i32 noundef 0)
           to label %.noexc1191 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
 

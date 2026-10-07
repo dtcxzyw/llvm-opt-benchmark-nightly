@@ -204,7 +204,7 @@ declare ptr @Gia_ObjComputeTruthTable(ptr noundef, ptr noundef) local_unnamed_ad
 ; Function Attrs: nofree nounwind uwtable
 define internal fastcc void @IoCommandWriteTruthsPlaNames(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #17 {
 bb.a:
-  %.not = icmp eq i32 %2, 0                       ; 3 uses
+  %.not = icmp eq i32 %2, 0                       ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -255,7 +255,6 @@ IoCommandWriteTruthsPlaDigits.exit:               ; preds = %bb.d
   %.0.lcssa.i44 = phi i32 [ %i.k, %IoCommandWriteTruthsPlaDigits.exit.thread ], [ 2, %IoCommandWriteTruthsPlaDigits.exit ] ; 2 uses
   %i.o = getelementptr i8, ptr %1, i64 648
   %i.p = getelementptr i8, ptr %1, i64 640
-  %3 = select i1 %.not, ptr @.str.430, ptr @.str.429 ; 2 uses
   %wide.trip.count38 = zext nneg i32 %i.h to i64  ; 2 uses
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -279,7 +278,7 @@ bb.e:                                             ; preds = %Gia_ObjCoName.exit.
 
 Gia_ObjCoName.exit.thread.us:                     ; preds = %Gia_ObjCoName.exit.us, %.lr.ph.split.us
   %i.u = trunc nuw nsw i64 %indvars.iv35 to i32
-  %i.v = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.428, ptr noundef nonnull %3, i32 noundef %.0.lcssa.i44, i32 noundef %i.u) #22 ; 0 uses
+  %i.v = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.428, ptr noundef nonnull @.str.430, i32 noundef %.0.lcssa.i44, i32 noundef %i.u) #22 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %Gia_ObjCoName.exit.thread.us, %bb.e
@@ -307,7 +306,7 @@ bb.g:                                             ; preds = %Gia_ObjCoName.exit
 
 Gia_ObjCoName.exit.thread:                        ; preds = %.lr.ph.split, %Gia_ObjCoName.exit
   %i.aa = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ab = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.428, ptr noundef nonnull %3, i32 noundef %.0.lcssa.i44, i32 noundef %i.aa) #22 ; 0 uses
+  %i.ab = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.428, ptr noundef nonnull @.str.429, i32 noundef %.0.lcssa.i44, i32 noundef %i.aa) #22 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %Gia_ObjCoName.exit.thread, %bb.g

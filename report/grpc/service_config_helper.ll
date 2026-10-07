@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %_ZN9grpc_core12expe
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   br label %bb.av
 
-.thread144:                                       ; preds = %bb.aj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113, %.critedge79
+.thread144:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113, %bb.aj, %.critedge79
   %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.0141.0169, i64 104 ; 2 uses
   %.not150 = icmp eq ptr %i.fa, %.val82
   br i1 %.not150, label %.critedge81, label %bb.w

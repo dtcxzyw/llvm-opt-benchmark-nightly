@@ -205,8 +205,7 @@ bb.ay:                                            ; preds = %.thread.i, %.lr.ph.
   %.fr39.i = freeze i64 %i.hg                     ; 2 uses
   store ptr %i.a, ptr %i.gz, align 8, !tbaa !196
   store i64 %.fr39.i, ptr %i.ha, align 8, !tbaa !197
-  %i.hh = icmp eq i64 %.fr39.i, 0                 ; 2 uses
-  %5 = select i1 %i.hh, i32 4, i32 0              ; 2 uses
+  %i.hh = icmp eq i64 %.fr39.i, 0
   br i1 %i.hh, label %.split.us.i, label %.split.i
 
 .split.us.i:                                      ; preds = %bb.ay, %bb.az
@@ -221,7 +220,7 @@ bb.ay:                                            ; preds = %.thread.i, %.lr.ph.
 bb.az:                                            ; preds = %.split.us.i, %.split.us.i
   store ptr %i.b, ptr %i.hb, align 8, !tbaa !198
   store i64 16384, ptr %i.hc, align 8, !tbaa !199
-  %i.hj = call i32 @git_deflate(ptr noundef nonnull %4, i32 noundef %5) #21
+  %i.hj = call i32 @git_deflate(ptr noundef nonnull %4, i32 noundef 4) #21
   %i.hk = load ptr, ptr %i.hb, align 8, !tbaa !198
   %i.hl = ptrtoint ptr %i.hk to i64
   %i.hm = sub i64 %i.hl, %i.hd
@@ -245,7 +244,7 @@ bb.az:                                            ; preds = %.split.us.i, %.spli
 bb.ba:                                            ; preds = %.split.i, %.split.i
   store ptr %i.b, ptr %i.hb, align 8, !tbaa !198
   store i64 16384, ptr %i.hc, align 8, !tbaa !199
-  %i.hs = call i32 @git_deflate(ptr noundef nonnull %4, i32 noundef %5) #21
+  %i.hs = call i32 @git_deflate(ptr noundef nonnull %4, i32 noundef 0) #21
   %i.ht = load ptr, ptr %i.hb, align 8, !tbaa !198
   %i.hu = ptrtoint ptr %i.ht to i64
   %i.hv = sub i64 %i.hu, %i.hd

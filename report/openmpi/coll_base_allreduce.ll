@@ -204,8 +204,8 @@ bb.u:                                             ; preds = %ompi_datatype_copy_
 
 bb.v:                                             ; preds = %bb.q, %bb.t, %bb.u
   %.2255 = phi i32 [ %i.bs, %bb.u ], [ %i.br, %bb.t ], [ -1, %bb.q ] ; 3 uses
-  %7 = sext i32 %.0.i to i64                      ; 2 uses
-  %i.bt = shl nsw i64 %7, 2                       ; 4 uses
+  %7 = zext nneg i32 %.0.i to i64                 ; 2 uses
+  %i.bt = shl nuw nsw i64 %7, 2                   ; 4 uses
   %i.bu = tail call noalias ptr @malloc(i64 noundef %i.bt) #10 ; 7 uses
   %i.bv = tail call noalias ptr @malloc(i64 noundef %i.bt) #10 ; 7 uses
   %i.bw = tail call noalias ptr @malloc(i64 noundef %i.bt) #10 ; 5 uses

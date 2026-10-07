@@ -80,7 +80,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   %sext = shl i64 %.132.ph, 32
   %i.s = ashr exact i64 %sext, 32
   %i.t = select i1 %i.r, i64 %i.s, i64 1024
-  %.030 = select i1 %i.q, i64 %i.t, i64 1280      ; 2 uses
+  %.030 = select i1 %i.q, i64 %i.t, i64 1280
   br i1 %i.q, label %.outer.split.us, label %.outer42
 
 bb.j:                                             ; preds = %.outer.split.us
@@ -122,7 +122,7 @@ bb.l:                                             ; preds = %.outer.split.us, %b
   br label %bb.m
 
 bb.m:                                             ; preds = %.outer42, %bb.o
-  %i.ah = call i64 @fread(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef %.030, ptr noundef nonnull %i.c)
+  %i.ah = call i64 @fread(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 1280, ptr noundef nonnull %i.c)
   %i.ai = trunc i64 %i.ah to i32                  ; 5 uses
   %i.aj = call i32 @ferror(ptr noundef nonnull %i.c) #9
   %.not = icmp eq i32 %i.aj, 0

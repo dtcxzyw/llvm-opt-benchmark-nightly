@@ -202,9 +202,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.2.0.copyload.i = load i8, ptr %.sroa.2.0..sroa_idx.i, align 8
-  %i.g = trunc nuw i8 %.sroa.2.0.copyload.i to i1 ; 2 uses
+  %i.g = trunc nuw i8 %.sroa.2.0.copyload.i to i1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
-  %3 = select i1 %i.g, i64 8, i64 16              ; 2 uses
   br i1 %i.g, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit
 
 _ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us: ; preds = %.lr.ph, %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us
@@ -231,7 +230,7 @@ _ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJE
   br label %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us
 
 _ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit.us: ; preds = %_ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJEEEPS2_NS_9StringRefERT_DpOT0_.exit.i.i.i.us, %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us
-  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.021.026.us, i64 %3 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.021.026.us, i64 8 ; 2 uses
   %.not.us = icmp eq ptr %i.t, %.sroa.0.0.copyload.i11
   br i1 %.not.us, label %._crit_edge, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit.us
 
@@ -278,7 +277,7 @@ _ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJE
   br label %_ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit
 
 _ZN4llvm9StringSetINS_15MallocAllocatorEE6insertENS_9StringRefE.exit: ; preds = %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit, %_ZN4llvm14StringMapEntryINS_17EmptyStringSetTagEE6createINS_15MallocAllocatorEJEEEPS2_NS_9StringRefERT_DpOT0_.exit.i.i.i
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.021.026, i64 %3 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.021.026, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.ah, %.sroa.0.0.copyload.i11
   br i1 %.not, label %._crit_edge, label %_ZNK4llvm10sampleprof22SampleProfileNameTable8iteratordeEv.exit
 }

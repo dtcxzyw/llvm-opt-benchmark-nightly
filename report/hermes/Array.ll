@@ -202,7 +202,6 @@ _ZN6hermes2vm13MutableHandleINS0_8JSObjectEEC2ERNS0_15HandleRootOwnerEPS2_.exit:
   %i.ct = load i32, ptr %i.k, align 8, !tbaa !35  ; 3 uses
   %i.cu = zext i32 %i.ct to i64                   ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
-  %7 = select i1 %2, double -1.000000e+00, double 1.000000e+00 ; 2 uses
   %i.cw = load ptr, ptr %i.d, align 8, !tbaa !32
   %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.cu
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !36
@@ -241,7 +240,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.dj = load double, ptr %.0.i.i.i.i.i.i54, align 8, !tbaa !10
-  %i.dk = fadd double %7, %i.dj                   ; 2 uses
+  %i.dk = fadd double %i.dj, -1.000000e+00        ; 2 uses
   %i.dl = fcmp uno double %i.dk, 0.000000e+00
   %i.dm = bitcast double %i.dk to i64
   %spec.select.i64.us = select i1 %i.dl, i64 9221120237041090560, i64 %i.dm, !prof !7 ; 2 uses
@@ -291,7 +290,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.eb = load double, ptr %.0.i.i.i.i.i.i54, align 8, !tbaa !10
-  %i.ec = fadd double %7, %i.eb                   ; 2 uses
+  %i.ec = fadd double %i.eb, 1.000000e+00         ; 2 uses
   %i.ed = fcmp uno double %i.ec, 0.000000e+00
   %i.ee = bitcast double %i.ec to i64
   %spec.select.i64 = select i1 %i.ed, i64 9221120237041090560, i64 %i.ee, !prof !7 ; 2 uses

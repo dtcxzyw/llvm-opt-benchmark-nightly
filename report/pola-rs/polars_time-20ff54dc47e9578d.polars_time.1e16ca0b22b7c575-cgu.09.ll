@@ -205,8 +205,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %bb.n
   br i1 %i.bs, label %.lr.ph, label %.preheader, !dbg !2596
 
 .lr.ph:                                           ; preds = %bb.p
-  %i.bt = icmp samesign ugt i32 %i.av, 191        ; 2 uses
-  %spec.select76 = select i1 %i.bt, i64 366, i64 365 ; 2 uses
+  %i.bt = icmp samesign ugt i32 %i.av, 191
   %i.bu = icmp samesign ult i32 %i.av, 192        ; 3 uses
   %.mux = select i1 %i.bu, i64 365, i64 366       ; 2 uses
   %i.bv = select i1 %i.bu, i64 366, i64 365       ; 2 uses
@@ -216,34 +215,29 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %bb.n
   %.sroa.08.0106.us = phi i64 [ %i.bw, %bb.v ], [ %i.an, %.lr.ph ]
   %.sroa.022.1105.us = phi i64 [ %i.ch, %bb.v ], [ %spec.select75, %.lr.ph ] ; 2 uses
   %.sroa.028.0104.us = phi i64 [ %i.cg, %bb.v ], [ %i.br, %.lr.ph ]
-  %.sroa.041.1103.us = phi i8 [ %.sroa.032.3.us, %bb.v ], [ %.sroa.041.0, %.lr.ph ] ; 2 uses
+  %.sroa.041.1103.us = phi i8 [ %.sroa.032.3.us, %bb.v ], [ %.sroa.041.0, %.lr.ph ]
   %i.bw = add nsw i64 %.sroa.08.0106.us, -1, !dbg !2597 ; 3 uses
   %i.bx = trunc i64 %i.bw to i32, !dbg !2597      ; 3 uses
   %i.by = and i32 %i.bx, 3, !dbg !2598
   %i.bz = icmp eq i32 %i.by, 0, !dbg !2598
-  br i1 %i.bz, label %bb.q, label %5, !dbg !2598
-
-5:                                                ; preds = %.lr.ph.split.us
-  %6 = trunc nuw i8 %.sroa.041.1103.us to i1, !dbg !2599
-  %spec.select = select i1 %6, i64 %spec.select76, i64 365, !dbg !2599
-  br label %bb.v, !dbg !2599
+  br i1 %i.bz, label %bb.q, label %bb.v, !dbg !2598
 
 bb.q:                                             ; preds = %.lr.ph.split.us
-  %i.ca = srem i32 %i.bx, 100, !dbg !2600
-  %i.cb = icmp eq i32 %i.ca, 0, !dbg !2600
-  br i1 %i.cb, label %bb.r, label %bb.u, !dbg !2600
+  %i.ca = srem i32 %i.bx, 100, !dbg !2599
+  %i.cb = icmp eq i32 %i.ca, 0, !dbg !2599
+  br i1 %i.cb, label %bb.r, label %bb.u, !dbg !2599
 
 bb.r:                                             ; preds = %bb.q
-  %i.cc = srem i32 %i.bx, 400, !dbg !2601
-  %i.cd = icmp eq i32 %i.cc, 0, !dbg !2601        ; 3 uses
-  %i.ce = trunc nuw i8 %.sroa.041.1103.us to i1, !dbg !2599
-  br i1 %i.ce, label %bb.t, label %bb.s, !dbg !2599
+  %i.cc = srem i32 %i.bx, 400, !dbg !2600
+  %i.cd = icmp eq i32 %i.cc, 0, !dbg !2600        ; 3 uses
+  %i.ce = trunc nuw i8 %.sroa.041.1103.us to i1, !dbg !2601
+  br i1 %i.ce, label %bb.t, label %bb.s, !dbg !2601
 
 bb.s:                                             ; preds = %bb.r
   br i1 %i.cd, label %bb.u, label %bb.v, !dbg !2602
 
 bb.t:                                             ; preds = %bb.r
-  %i.cf = zext i1 %i.cd to i8, !dbg !2601         ; 2 uses
+  %i.cf = zext i1 %i.cd to i8, !dbg !2600         ; 2 uses
   %brmerge.not.us = and i1 %i.bu, %i.cd, !dbg !2603
   br i1 %brmerge.not.us, label %bb.u, label %bb.v, !dbg !2603
 
@@ -251,9 +245,9 @@ bb.u:                                             ; preds = %bb.q, %bb.t, %bb.s
   %.sroa.032.2.us = phi i8 [ 1, %bb.s ], [ %i.cf, %bb.t ], [ 1, %bb.q ], !dbg !2604
   br label %bb.v, !dbg !2605
 
-bb.v:                                             ; preds = %5, %bb.u, %bb.t, %bb.s
-  %.sroa.034.0.us = phi i64 [ %.mux, %bb.t ], [ %i.bv, %bb.u ], [ %spec.select, %5 ], [ 365, %bb.s ], !dbg !2606
-  %.sroa.032.3.us = phi i8 [ %i.cf, %bb.t ], [ %.sroa.032.2.us, %bb.u ], [ 0, %5 ], [ 0, %bb.s ], !dbg !2601 ; 2 uses
+bb.v:                                             ; preds = %.lr.ph.split.us, %bb.u, %bb.t, %bb.s
+  %.sroa.034.0.us = phi i64 [ %.mux, %bb.t ], [ %i.bv, %bb.u ], [ 365, %bb.s ], [ 365, %.lr.ph.split.us ], !dbg !2606
+  %.sroa.032.3.us = phi i8 [ %i.cf, %bb.t ], [ %.sroa.032.2.us, %bb.u ], [ 0, %bb.s ], [ 0, %.lr.ph.split.us ], !dbg !2600 ; 2 uses
   %i.cg = add i64 %.sroa.034.0.us, %.sroa.028.0104.us, !dbg !2607 ; 2 uses
   %i.ch = add nsw i64 %.sroa.022.1105.us, -12, !dbg !2608 ; 2 uses
   %i.ci = icmp sgt i64 %.sroa.022.1105.us, 24, !dbg !2596
@@ -271,30 +265,30 @@ bb.v:                                             ; preds = %5, %bb.u, %bb.t, %b
   br i1 %i.cm, label %bb.x, label %bb.w, !dbg !2598
 
 bb.w:                                             ; preds = %.lr.ph.split.split.us
-  %i.cn = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2599
-  %spec.select137 = select i1 %i.cn, i64 %spec.select76, i64 365, !dbg !2599
-  br label %bb.ad, !dbg !2599
+  %i.cn = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2601
+  %spec.select137 = select i1 %i.cn, i64 366, i64 365, !dbg !2601
+  br label %bb.ad, !dbg !2601
 
 bb.x:                                             ; preds = %.lr.ph.split.split.us
-  %i.co = srem i32 %i.ck, 100, !dbg !2600
-  %i.cp = icmp eq i32 %i.co, 0, !dbg !2600
-  br i1 %i.cp, label %bb.z, label %bb.y, !dbg !2600
+  %i.co = srem i32 %i.ck, 100, !dbg !2599
+  %i.cp = icmp eq i32 %i.co, 0, !dbg !2599
+  br i1 %i.cp, label %bb.z, label %bb.y, !dbg !2599
 
 bb.y:                                             ; preds = %bb.x
-  %i.cq = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2599
-  br i1 %i.cq, label %bb.ad, label %bb.ac, !dbg !2599
+  %i.cq = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2601
+  br i1 %i.cq, label %bb.ad, label %bb.ac, !dbg !2601
 
 bb.z:                                             ; preds = %bb.x
-  %i.cr = srem i32 %i.ck, 400, !dbg !2601
-  %i.cs = icmp eq i32 %i.cr, 0, !dbg !2601        ; 2 uses
-  %i.ct = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2599
-  br i1 %i.ct, label %bb.ab, label %bb.aa, !dbg !2599
+  %i.cr = srem i32 %i.ck, 400, !dbg !2600
+  %i.cs = icmp eq i32 %i.cr, 0, !dbg !2600        ; 2 uses
+  %i.ct = trunc nuw i8 %.sroa.041.1103.us116 to i1, !dbg !2601
+  br i1 %i.ct, label %bb.ab, label %bb.aa, !dbg !2601
 
 bb.aa:                                            ; preds = %bb.z
   br i1 %i.cs, label %bb.ac, label %bb.ad, !dbg !2602
 
 bb.ab:                                            ; preds = %bb.z
-  %i.cu = zext i1 %i.cs to i8, !dbg !2601
+  %i.cu = zext i1 %i.cs to i8, !dbg !2600
   br label %bb.ad, !dbg !2603
 
 bb.ac:                                            ; preds = %bb.aa, %bb.y
@@ -302,7 +296,7 @@ bb.ac:                                            ; preds = %bb.aa, %bb.y
 
 bb.ad:                                            ; preds = %bb.w, %bb.ab, %bb.ac, %bb.aa, %bb.y
   %.sroa.034.0.us119 = phi i64 [ %.mux, %bb.ab ], [ %i.bv, %bb.ac ], [ 365, %bb.aa ], [ 366, %bb.y ], [ %spec.select137, %bb.w ], !dbg !2606
-  %.sroa.032.3.us120 = phi i8 [ %i.cu, %bb.ab ], [ 1, %bb.ac ], [ 0, %bb.aa ], [ 1, %bb.y ], [ 0, %bb.w ], !dbg !2601 ; 2 uses
+  %.sroa.032.3.us120 = phi i8 [ %i.cu, %bb.ab ], [ 1, %bb.ac ], [ 0, %bb.aa ], [ 1, %bb.y ], [ 0, %bb.w ], !dbg !2600 ; 2 uses
   %i.cv = add i64 %.sroa.034.0.us119, %.sroa.028.0104.us115, !dbg !2607 ; 2 uses
   %i.cw = add nsw i64 %.sroa.022.1105.us114, -12, !dbg !2608 ; 2 uses
   %i.cx = icmp sgt i64 %.sroa.022.1105.us114, 24, !dbg !2596
@@ -624,8 +618,7 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %bb.p
   br i1 %i.bq, label %.lr.ph, label %.preheader, !dbg !2853
 
 .lr.ph:                                           ; preds = %bb.r
-  %i.br = icmp samesign ugt i32 %i.at, 191        ; 2 uses
-  %spec.select76 = select i1 %i.br, i64 366, i64 365 ; 2 uses
+  %i.br = icmp samesign ugt i32 %i.at, 191
   %i.bs = icmp samesign ult i32 %i.at, 192        ; 3 uses
   %.mux = select i1 %i.bs, i64 365, i64 366       ; 2 uses
   %i.bt = select i1 %i.bs, i64 366, i64 365       ; 2 uses
@@ -635,34 +628,29 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %bb.p
   %.sroa.08.0100.us = phi i64 [ %i.bu, %bb.x ], [ %i.al, %.lr.ph ]
   %.sroa.022.199.us = phi i64 [ %i.cf, %bb.x ], [ %spec.select75, %.lr.ph ] ; 2 uses
   %.sroa.028.098.us = phi i64 [ %i.ce, %bb.x ], [ %i.bp, %.lr.ph ]
-  %.sroa.041.197.us = phi i8 [ %.sroa.032.3.us, %bb.x ], [ %.sroa.041.0, %.lr.ph ] ; 2 uses
+  %.sroa.041.197.us = phi i8 [ %.sroa.032.3.us, %bb.x ], [ %.sroa.041.0, %.lr.ph ]
   %i.bu = add nsw i64 %.sroa.08.0100.us, -1, !dbg !2854 ; 3 uses
   %i.bv = trunc i64 %i.bu to i32, !dbg !2854      ; 3 uses
   %i.bw = and i32 %i.bv, 3, !dbg !2855
   %i.bx = icmp eq i32 %i.bw, 0, !dbg !2855
-  br i1 %i.bx, label %bb.s, label %5, !dbg !2855
-
-5:                                                ; preds = %.lr.ph.split.us
-  %6 = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !2856
-  %spec.select = select i1 %6, i64 %spec.select76, i64 365, !dbg !2856
-  br label %bb.x, !dbg !2856
+  br i1 %i.bx, label %bb.s, label %bb.x, !dbg !2855
 
 bb.s:                                             ; preds = %.lr.ph.split.us
-  %i.by = srem i32 %i.bv, 100, !dbg !2857
-  %i.bz = icmp eq i32 %i.by, 0, !dbg !2857
-  br i1 %i.bz, label %bb.t, label %bb.w, !dbg !2857
+  %i.by = srem i32 %i.bv, 100, !dbg !2856
+  %i.bz = icmp eq i32 %i.by, 0, !dbg !2856
+  br i1 %i.bz, label %bb.t, label %bb.w, !dbg !2856
 
 bb.t:                                             ; preds = %bb.s
-  %i.ca = srem i32 %i.bv, 400, !dbg !2858
-  %i.cb = icmp eq i32 %i.ca, 0, !dbg !2858        ; 3 uses
-  %i.cc = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !2856
-  br i1 %i.cc, label %bb.v, label %bb.u, !dbg !2856
+  %i.ca = srem i32 %i.bv, 400, !dbg !2857
+  %i.cb = icmp eq i32 %i.ca, 0, !dbg !2857        ; 3 uses
+  %i.cc = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !2858
+  br i1 %i.cc, label %bb.v, label %bb.u, !dbg !2858
 
 bb.u:                                             ; preds = %bb.t
   br i1 %i.cb, label %bb.w, label %bb.x, !dbg !2859
 
 bb.v:                                             ; preds = %bb.t
-  %i.cd = zext i1 %i.cb to i8, !dbg !2858         ; 2 uses
+  %i.cd = zext i1 %i.cb to i8, !dbg !2857         ; 2 uses
   %brmerge.not.us = and i1 %i.bs, %i.cb, !dbg !2860
   br i1 %brmerge.not.us, label %bb.w, label %bb.x, !dbg !2860
 
@@ -670,9 +658,9 @@ bb.w:                                             ; preds = %bb.s, %bb.v, %bb.u
   %.sroa.032.2.us = phi i8 [ 1, %bb.u ], [ %i.cd, %bb.v ], [ 1, %bb.s ], !dbg !2861
   br label %bb.x, !dbg !2862
 
-bb.x:                                             ; preds = %5, %bb.w, %bb.v, %bb.u
-  %.sroa.034.0.us = phi i64 [ %.mux, %bb.v ], [ %i.bt, %bb.w ], [ %spec.select, %5 ], [ 365, %bb.u ], !dbg !2863
-  %.sroa.032.3.us = phi i8 [ %i.cd, %bb.v ], [ %.sroa.032.2.us, %bb.w ], [ 0, %5 ], [ 0, %bb.u ], !dbg !2858 ; 2 uses
+bb.x:                                             ; preds = %.lr.ph.split.us, %bb.w, %bb.v, %bb.u
+  %.sroa.034.0.us = phi i64 [ %.mux, %bb.v ], [ %i.bt, %bb.w ], [ 365, %bb.u ], [ 365, %.lr.ph.split.us ], !dbg !2863
+  %.sroa.032.3.us = phi i8 [ %i.cd, %bb.v ], [ %.sroa.032.2.us, %bb.w ], [ 0, %bb.u ], [ 0, %.lr.ph.split.us ], !dbg !2857 ; 2 uses
   %i.ce = add i64 %.sroa.034.0.us, %.sroa.028.098.us, !dbg !2864 ; 2 uses
   %i.cf = add nsw i64 %.sroa.022.199.us, -12, !dbg !2865 ; 2 uses
   %i.cg = icmp sgt i64 %.sroa.022.199.us, 24, !dbg !2853
@@ -690,30 +678,30 @@ bb.x:                                             ; preds = %5, %bb.w, %bb.v, %b
   br i1 %i.ck, label %bb.z, label %bb.y, !dbg !2855
 
 bb.y:                                             ; preds = %.lr.ph.split.split.us
-  %i.cl = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2856
-  %spec.select131 = select i1 %i.cl, i64 %spec.select76, i64 365, !dbg !2856
-  br label %bb.af, !dbg !2856
+  %i.cl = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2858
+  %spec.select131 = select i1 %i.cl, i64 366, i64 365, !dbg !2858
+  br label %bb.af, !dbg !2858
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.cm = srem i32 %i.ci, 100, !dbg !2857
-  %i.cn = icmp eq i32 %i.cm, 0, !dbg !2857
-  br i1 %i.cn, label %bb.ab, label %bb.aa, !dbg !2857
+  %i.cm = srem i32 %i.ci, 100, !dbg !2856
+  %i.cn = icmp eq i32 %i.cm, 0, !dbg !2856
+  br i1 %i.cn, label %bb.ab, label %bb.aa, !dbg !2856
 
 bb.aa:                                            ; preds = %bb.z
-  %i.co = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2856
-  br i1 %i.co, label %bb.af, label %bb.ae, !dbg !2856
+  %i.co = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2858
+  br i1 %i.co, label %bb.af, label %bb.ae, !dbg !2858
 
 bb.ab:                                            ; preds = %bb.z
-  %i.cp = srem i32 %i.ci, 400, !dbg !2858
-  %i.cq = icmp eq i32 %i.cp, 0, !dbg !2858        ; 2 uses
-  %i.cr = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2856
-  br i1 %i.cr, label %bb.ad, label %bb.ac, !dbg !2856
+  %i.cp = srem i32 %i.ci, 400, !dbg !2857
+  %i.cq = icmp eq i32 %i.cp, 0, !dbg !2857        ; 2 uses
+  %i.cr = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !2858
+  br i1 %i.cr, label %bb.ad, label %bb.ac, !dbg !2858
 
 bb.ac:                                            ; preds = %bb.ab
   br i1 %i.cq, label %bb.ae, label %bb.af, !dbg !2859
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.cs = zext i1 %i.cq to i8, !dbg !2858
+  %i.cs = zext i1 %i.cq to i8, !dbg !2857
   br label %bb.af, !dbg !2860
 
 bb.ae:                                            ; preds = %bb.ac, %bb.aa
@@ -721,7 +709,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.aa
 
 bb.af:                                            ; preds = %bb.y, %bb.ad, %bb.ae, %bb.ac, %bb.aa
   %.sroa.034.0.us113 = phi i64 [ %.mux, %bb.ad ], [ %i.bt, %bb.ae ], [ 365, %bb.ac ], [ 366, %bb.aa ], [ %spec.select131, %bb.y ], !dbg !2863
-  %.sroa.032.3.us114 = phi i8 [ %i.cs, %bb.ad ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.aa ], [ 0, %bb.y ], !dbg !2858 ; 2 uses
+  %.sroa.032.3.us114 = phi i8 [ %i.cs, %bb.ad ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.aa ], [ 0, %bb.y ], !dbg !2857 ; 2 uses
   %i.ct = add i64 %.sroa.034.0.us113, %.sroa.028.098.us109, !dbg !2864 ; 2 uses
   %i.cu = add nsw i64 %.sroa.022.199.us108, -12, !dbg !2865 ; 2 uses
   %i.cv = icmp sgt i64 %.sroa.022.199.us108, 24, !dbg !2853
@@ -1040,8 +1028,7 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %bb.p
   br i1 %i.bs, label %.lr.ph, label %.preheader, !dbg !3109
 
 .lr.ph:                                           ; preds = %bb.r
-  %i.bt = icmp samesign ugt i32 %i.av, 191        ; 2 uses
-  %spec.select76 = select i1 %i.bt, i64 366, i64 365 ; 2 uses
+  %i.bt = icmp samesign ugt i32 %i.av, 191
   %i.bu = icmp samesign ult i32 %i.av, 192        ; 3 uses
   %.mux = select i1 %i.bu, i64 365, i64 366       ; 2 uses
   %i.bv = select i1 %i.bu, i64 366, i64 365       ; 2 uses
@@ -1051,34 +1038,29 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %bb.p
   %.sroa.08.0100.us = phi i64 [ %i.bw, %bb.x ], [ %i.an, %.lr.ph ]
   %.sroa.022.199.us = phi i64 [ %i.ch, %bb.x ], [ %spec.select75, %.lr.ph ] ; 2 uses
   %.sroa.028.098.us = phi i64 [ %i.cg, %bb.x ], [ %i.br, %.lr.ph ]
-  %.sroa.041.197.us = phi i8 [ %.sroa.032.3.us, %bb.x ], [ %.sroa.041.0, %.lr.ph ] ; 2 uses
+  %.sroa.041.197.us = phi i8 [ %.sroa.032.3.us, %bb.x ], [ %.sroa.041.0, %.lr.ph ]
   %i.bw = add nsw i64 %.sroa.08.0100.us, -1, !dbg !3110 ; 3 uses
   %i.bx = trunc i64 %i.bw to i32, !dbg !3110      ; 3 uses
   %i.by = and i32 %i.bx, 3, !dbg !3111
   %i.bz = icmp eq i32 %i.by, 0, !dbg !3111
-  br i1 %i.bz, label %bb.s, label %5, !dbg !3111
-
-5:                                                ; preds = %.lr.ph.split.us
-  %6 = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !3112
-  %spec.select = select i1 %6, i64 %spec.select76, i64 365, !dbg !3112
-  br label %bb.x, !dbg !3112
+  br i1 %i.bz, label %bb.s, label %bb.x, !dbg !3111
 
 bb.s:                                             ; preds = %.lr.ph.split.us
-  %i.ca = srem i32 %i.bx, 100, !dbg !3113
-  %i.cb = icmp eq i32 %i.ca, 0, !dbg !3113
-  br i1 %i.cb, label %bb.t, label %bb.w, !dbg !3113
+  %i.ca = srem i32 %i.bx, 100, !dbg !3112
+  %i.cb = icmp eq i32 %i.ca, 0, !dbg !3112
+  br i1 %i.cb, label %bb.t, label %bb.w, !dbg !3112
 
 bb.t:                                             ; preds = %bb.s
-  %i.cc = srem i32 %i.bx, 400, !dbg !3114
-  %i.cd = icmp eq i32 %i.cc, 0, !dbg !3114        ; 3 uses
-  %i.ce = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !3112
-  br i1 %i.ce, label %bb.v, label %bb.u, !dbg !3112
+  %i.cc = srem i32 %i.bx, 400, !dbg !3113
+  %i.cd = icmp eq i32 %i.cc, 0, !dbg !3113        ; 3 uses
+  %i.ce = trunc nuw i8 %.sroa.041.197.us to i1, !dbg !3114
+  br i1 %i.ce, label %bb.v, label %bb.u, !dbg !3114
 
 bb.u:                                             ; preds = %bb.t
   br i1 %i.cd, label %bb.w, label %bb.x, !dbg !3115
 
 bb.v:                                             ; preds = %bb.t
-  %i.cf = zext i1 %i.cd to i8, !dbg !3114         ; 2 uses
+  %i.cf = zext i1 %i.cd to i8, !dbg !3113         ; 2 uses
   %brmerge.not.us = and i1 %i.bu, %i.cd, !dbg !3116
   br i1 %brmerge.not.us, label %bb.w, label %bb.x, !dbg !3116
 
@@ -1086,9 +1068,9 @@ bb.w:                                             ; preds = %bb.s, %bb.v, %bb.u
   %.sroa.032.2.us = phi i8 [ 1, %bb.u ], [ %i.cf, %bb.v ], [ 1, %bb.s ], !dbg !3117
   br label %bb.x, !dbg !3118
 
-bb.x:                                             ; preds = %5, %bb.w, %bb.v, %bb.u
-  %.sroa.034.0.us = phi i64 [ %.mux, %bb.v ], [ %i.bv, %bb.w ], [ %spec.select, %5 ], [ 365, %bb.u ], !dbg !3119
-  %.sroa.032.3.us = phi i8 [ %i.cf, %bb.v ], [ %.sroa.032.2.us, %bb.w ], [ 0, %5 ], [ 0, %bb.u ], !dbg !3114 ; 2 uses
+bb.x:                                             ; preds = %.lr.ph.split.us, %bb.w, %bb.v, %bb.u
+  %.sroa.034.0.us = phi i64 [ %.mux, %bb.v ], [ %i.bv, %bb.w ], [ 365, %bb.u ], [ 365, %.lr.ph.split.us ], !dbg !3119
+  %.sroa.032.3.us = phi i8 [ %i.cf, %bb.v ], [ %.sroa.032.2.us, %bb.w ], [ 0, %bb.u ], [ 0, %.lr.ph.split.us ], !dbg !3113 ; 2 uses
   %i.cg = add i64 %.sroa.034.0.us, %.sroa.028.098.us, !dbg !3120 ; 2 uses
   %i.ch = add nsw i64 %.sroa.022.199.us, -12, !dbg !3121 ; 2 uses
   %i.ci = icmp sgt i64 %.sroa.022.199.us, 24, !dbg !3109
@@ -1106,30 +1088,30 @@ bb.x:                                             ; preds = %5, %bb.w, %bb.v, %b
   br i1 %i.cm, label %bb.z, label %bb.y, !dbg !3111
 
 bb.y:                                             ; preds = %.lr.ph.split.split.us
-  %i.cn = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3112
-  %spec.select131 = select i1 %i.cn, i64 %spec.select76, i64 365, !dbg !3112
-  br label %bb.af, !dbg !3112
+  %i.cn = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3114
+  %spec.select131 = select i1 %i.cn, i64 366, i64 365, !dbg !3114
+  br label %bb.af, !dbg !3114
 
 bb.z:                                             ; preds = %.lr.ph.split.split.us
-  %i.co = srem i32 %i.ck, 100, !dbg !3113
-  %i.cp = icmp eq i32 %i.co, 0, !dbg !3113
-  br i1 %i.cp, label %bb.ab, label %bb.aa, !dbg !3113
+  %i.co = srem i32 %i.ck, 100, !dbg !3112
+  %i.cp = icmp eq i32 %i.co, 0, !dbg !3112
+  br i1 %i.cp, label %bb.ab, label %bb.aa, !dbg !3112
 
 bb.aa:                                            ; preds = %bb.z
-  %i.cq = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3112
-  br i1 %i.cq, label %bb.af, label %bb.ae, !dbg !3112
+  %i.cq = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3114
+  br i1 %i.cq, label %bb.af, label %bb.ae, !dbg !3114
 
 bb.ab:                                            ; preds = %bb.z
-  %i.cr = srem i32 %i.ck, 400, !dbg !3114
-  %i.cs = icmp eq i32 %i.cr, 0, !dbg !3114        ; 2 uses
-  %i.ct = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3112
-  br i1 %i.ct, label %bb.ad, label %bb.ac, !dbg !3112
+  %i.cr = srem i32 %i.ck, 400, !dbg !3113
+  %i.cs = icmp eq i32 %i.cr, 0, !dbg !3113        ; 2 uses
+  %i.ct = trunc nuw i8 %.sroa.041.197.us110 to i1, !dbg !3114
+  br i1 %i.ct, label %bb.ad, label %bb.ac, !dbg !3114
 
 bb.ac:                                            ; preds = %bb.ab
   br i1 %i.cs, label %bb.ae, label %bb.af, !dbg !3115
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.cu = zext i1 %i.cs to i8, !dbg !3114
+  %i.cu = zext i1 %i.cs to i8, !dbg !3113
   br label %bb.af, !dbg !3116
 
 bb.ae:                                            ; preds = %bb.ac, %bb.aa
@@ -1137,7 +1119,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.aa
 
 bb.af:                                            ; preds = %bb.y, %bb.ad, %bb.ae, %bb.ac, %bb.aa
   %.sroa.034.0.us113 = phi i64 [ %.mux, %bb.ad ], [ %i.bv, %bb.ae ], [ 365, %bb.ac ], [ 366, %bb.aa ], [ %spec.select131, %bb.y ], !dbg !3119
-  %.sroa.032.3.us114 = phi i8 [ %i.cu, %bb.ad ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.aa ], [ 0, %bb.y ], !dbg !3114 ; 2 uses
+  %.sroa.032.3.us114 = phi i8 [ %i.cu, %bb.ad ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.aa ], [ 0, %bb.y ], !dbg !3113 ; 2 uses
   %i.cv = add i64 %.sroa.034.0.us113, %.sroa.028.098.us109, !dbg !3120 ; 2 uses
   %i.cw = add nsw i64 %.sroa.022.199.us108, -12, !dbg !3121 ; 2 uses
   %i.cx = icmp sgt i64 %.sroa.022.199.us108, 24, !dbg !3109
@@ -1540,9 +1522,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2596 = !DILocation(line: 791, column: 15, scope: !2463)
 !2597 = !DILocation(line: 792, column: 55, scope: !2463)
 !2598 = !DILocation(line: 8, column: 5, scope: !2455, inlinedAt: !2519)
-!2599 = !DILocation(line: 794, column: 18, scope: !2464)
-!2600 = !DILocation(line: 8, column: 23, scope: !2455, inlinedAt: !2519)
-!2601 = !DILocation(line: 8, column: 42, scope: !2455, inlinedAt: !2519)
+!2599 = !DILocation(line: 8, column: 23, scope: !2455, inlinedAt: !2519)
+!2600 = !DILocation(line: 8, column: 42, scope: !2455, inlinedAt: !2519)
+!2601 = !DILocation(line: 794, column: 18, scope: !2464)
 !2602 = !DILocation(line: 794, column: 50, scope: !2464)
 !2603 = !DILocation(line: 794, column: 35, scope: !2464)
 !2604 = !DILocation(line: 8, scope: !2455, inlinedAt: !2519)
@@ -1797,9 +1779,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2853 = !DILocation(line: 791, column: 15, scope: !2727)
 !2854 = !DILocation(line: 792, column: 55, scope: !2727)
 !2855 = !DILocation(line: 8, column: 5, scope: !2719, inlinedAt: !2779)
-!2856 = !DILocation(line: 794, column: 18, scope: !2728)
-!2857 = !DILocation(line: 8, column: 23, scope: !2719, inlinedAt: !2779)
-!2858 = !DILocation(line: 8, column: 42, scope: !2719, inlinedAt: !2779)
+!2856 = !DILocation(line: 8, column: 23, scope: !2719, inlinedAt: !2779)
+!2857 = !DILocation(line: 8, column: 42, scope: !2719, inlinedAt: !2779)
+!2858 = !DILocation(line: 794, column: 18, scope: !2728)
 !2859 = !DILocation(line: 794, column: 50, scope: !2728)
 !2860 = !DILocation(line: 794, column: 35, scope: !2728)
 !2861 = !DILocation(line: 8, scope: !2719, inlinedAt: !2779)
@@ -2053,9 +2035,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !3109 = !DILocation(line: 791, column: 15, scope: !2983)
 !3110 = !DILocation(line: 792, column: 55, scope: !2983)
 !3111 = !DILocation(line: 8, column: 5, scope: !2975, inlinedAt: !3035)
-!3112 = !DILocation(line: 794, column: 18, scope: !2984)
-!3113 = !DILocation(line: 8, column: 23, scope: !2975, inlinedAt: !3035)
-!3114 = !DILocation(line: 8, column: 42, scope: !2975, inlinedAt: !3035)
+!3112 = !DILocation(line: 8, column: 23, scope: !2975, inlinedAt: !3035)
+!3113 = !DILocation(line: 8, column: 42, scope: !2975, inlinedAt: !3035)
+!3114 = !DILocation(line: 794, column: 18, scope: !2984)
 !3115 = !DILocation(line: 794, column: 50, scope: !2984)
 !3116 = !DILocation(line: 794, column: 35, scope: !2984)
 !3117 = !DILocation(line: 8, scope: !2975, inlinedAt: !3035)

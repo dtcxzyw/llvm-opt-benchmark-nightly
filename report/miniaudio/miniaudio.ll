@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge.i, %.pr
   %i.dn = trunc i32 %i.dm to i8                   ; 2 uses
   %i.do = lshr i32 %spec.select79.i, 16
   %i.dp = trunc i32 %i.do to i8                   ; 2 uses
-  %spec.select.i = select i1 %i.ct, i8 0, i8 %i.dk ; 2 uses
+  %spec.select.i = select i1 %i.ct, i8 0, i8 %i.dk
   br i1 %i.ct, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
 .lr.ph.i.split.us:                                ; preds = %.lr.ph.i, %ma_pcm_convert.exit.i.us
@@ -238,7 +238,7 @@ bb.h:                                             ; preds = %.lr.ph.i.split.us
   br label %ma_pcm_convert.exit.i.us
 
 ma_dither_f32.exit.i.preheader.i.us:              ; preds = %.lr.ph.i.split.us
-  store i8 %spec.select.i, ptr %i.dr, align 1, !tbaa !119
+  store i8 0, ptr %i.dr, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i.us
 
 ma_pcm_convert.exit.loopexit.i.us:                ; preds = %.lr.ph.i.split.us
@@ -641,7 +641,7 @@ bb.l:                                             ; preds = %._crit_edge.i67, %.
   %i.jw = trunc i32 %i.jv to i8                   ; 2 uses
   %i.jx = lshr i32 %spec.select79.i61, 16
   %i.jy = trunc i32 %i.jx to i8                   ; 2 uses
-  %spec.select.i62 = select i1 %i.jc, i8 0, i8 %i.jt ; 2 uses
+  %spec.select.i62 = select i1 %i.jc, i8 0, i8 %i.jt
   br i1 %i.jc, label %.lr.ph.i60.split.us, label %.lr.ph.i60.split
 
 .lr.ph.i60.split.us:                              ; preds = %.lr.ph.i60, %ma_pcm_convert.exit.i66.us
@@ -674,7 +674,7 @@ bb.m:                                             ; preds = %.lr.ph.i60.split.us
   br label %ma_pcm_convert.exit.i66.us
 
 ma_dither_f32.exit.i.preheader.i78.us:            ; preds = %.lr.ph.i60.split.us
-  store i8 %spec.select.i62, ptr %i.ka, align 1, !tbaa !119
+  store i8 0, ptr %i.ka, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i66.us
 
 ma_pcm_convert.exit.loopexit.i79.us:              ; preds = %.lr.ph.i60.split.us
@@ -1066,7 +1066,7 @@ bb.p:                                             ; preds = %._crit_edge.i118, %
   %i.pn = trunc i32 %i.pm to i8                   ; 2 uses
   %i.po = lshr i32 %spec.select79.i112, 16
   %i.pp = trunc i32 %i.po to i8                   ; 2 uses
-  %spec.select.i113 = select i1 %i.ot, i8 0, i8 %i.pk ; 2 uses
+  %spec.select.i113 = select i1 %i.ot, i8 0, i8 %i.pk
   br i1 %i.ot, label %.lr.ph.i111.split.us, label %.lr.ph.i111.split
 
 .lr.ph.i111.split.us:                             ; preds = %.lr.ph.i111, %ma_pcm_convert.exit.i117.us
@@ -1099,7 +1099,7 @@ bb.q:                                             ; preds = %.lr.ph.i111.split.u
   br label %ma_pcm_convert.exit.i117.us
 
 ma_dither_f32.exit.i.preheader.i129.us:           ; preds = %.lr.ph.i111.split.us
-  store i8 %spec.select.i113, ptr %i.pr, align 1, !tbaa !119
+  store i8 0, ptr %i.pr, align 1, !tbaa !119
   br label %ma_pcm_convert.exit.i117.us
 
 ma_pcm_convert.exit.loopexit.i130.us:             ; preds = %.lr.ph.i111.split.us
@@ -1502,14 +1502,14 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.az = icmp eq i64 %i.aw, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #55
-  br i1 %i.az, label %bb.x, label %.thread
+  br i1 %i.az, label %bb.y, label %.thread
 
 .thread:                                          ; preds = %bb.n, %.thread66, %bb.q
-  %.164 = phi i1 [ %i.ay, %.thread66 ], [ false, %bb.q ], [ true, %bb.n ]
+  %.164 = phi i1 [ %i.ay, %.thread66 ], [ false, %bb.q ], [ true, %bb.n ] ; 2 uses
   %.13763 = phi i64 [ %2, %.thread66 ], [ %i.aw, %bb.q ], [ %2, %bb.n ]
   %i.ba = load atomic i32, ptr %i.d seq_cst, align 4
   %i.bb = icmp eq i32 %i.ba, 0
-  br i1 %i.bb, label %ma_resource_manager_data_buffer_get_connector.exit55, label %bb.r
+  br i1 %i.bb, label %bb.x, label %bb.r
 
 bb.r:                                             ; preds = %.thread
   %i.bc = load ptr, ptr %i.al, align 8, !tbaa !906
@@ -1523,15 +1523,15 @@ bb.r:                                             ; preds = %.thread
 
 bb.s:                                             ; preds = %bb.r
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 128
-  br label %ma_resource_manager_data_buffer_get_connector.exit55
+  br label %bb.x
 
 bb.t:                                             ; preds = %bb.r
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 128
-  br label %ma_resource_manager_data_buffer_get_connector.exit55
+  br label %bb.x
 
 bb.u:                                             ; preds = %bb.r
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 128
-  br label %ma_resource_manager_data_buffer_get_connector.exit55
+  br label %bb.x
 
 bb.v:                                             ; preds = %bb.r
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -1547,20 +1547,16 @@ bb.w:                                             ; preds = %bb.v
 ma_resource_manager_get_log.exit.i53:             ; preds = %bb.w, %bb.v
   %.0.i.i54 = phi ptr [ %i.bm, %bb.w ], [ null, %bb.v ]
   %i.bn = call i32 (ptr, i32, ptr, ...) @ma_log_postf(ptr noundef %.0.i.i54, i32 noundef 1, ptr noundef nonnull @.str.503) ; 0 uses
-  br label %ma_resource_manager_data_buffer_get_connector.exit55
-
-ma_resource_manager_data_buffer_get_connector.exit55: ; preds = %.thread, %bb.s, %bb.t, %bb.u, %ma_resource_manager_get_log.exit.i53
-  %.0.i52 = phi ptr [ %i.bh, %bb.u ], [ null, %ma_resource_manager_get_log.exit.i53 ], [ %i.bf, %bb.s ], [ %i.bg, %bb.t ], [ null, %.thread ]
-  %4 = call i32 @ma_data_source_read_pcm_frames(ptr noundef %.0.i52, ptr noundef %1, i64 noundef %.13763, ptr noundef nonnull %i.a)
   br label %bb.x
 
-bb.x:                                             ; preds = %ma_resource_manager_data_buffer_get_connector.exit55, %bb.q
-  %.165 = phi i1 [ %.164, %ma_resource_manager_data_buffer_get_connector.exit55 ], [ false, %bb.q ]
-  %.3 = phi i32 [ %4, %ma_resource_manager_data_buffer_get_connector.exit55 ], [ -17, %bb.q ] ; 2 uses
-  %i.bo = icmp eq i32 %.3, -17
+bb.x:                                             ; preds = %ma_resource_manager_get_log.exit.i53, %bb.u, %bb.t, %bb.s, %.thread
+  %.0.i52 = phi ptr [ %i.bh, %bb.u ], [ null, %ma_resource_manager_get_log.exit.i53 ], [ %i.bf, %bb.s ], [ %i.bg, %bb.t ], [ null, %.thread ]
+  %4 = call i32 @ma_data_source_read_pcm_frames(ptr noundef %.0.i52, ptr noundef %1, i64 noundef %.13763, ptr noundef nonnull %i.a) ; 2 uses
+  %i.bo = icmp eq i32 %4, -17
   br i1 %i.bo, label %bb.y, label %bb.z
 
-bb.y:                                             ; preds = %bb.x
+bb.y:                                             ; preds = %bb.q, %bb.x
+  %.16581 = phi i1 [ %.164, %bb.x ], [ false, %bb.q ]
   %i.bp = load ptr, ptr %i.al, align 8, !tbaa !906
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %i.br = load atomic i32, ptr %i.bq seq_cst, align 8
@@ -1569,8 +1565,9 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %.4 = phi i32 [ %.3, %bb.x ], [ %spec.select49, %bb.y ]
-  %spec.select50 = select i1 %.165, i32 %.4, i32 -19 ; 2 uses
+  %.16580 = phi i1 [ %.164, %bb.x ], [ %.16581, %bb.y ]
+  %.4 = phi i32 [ %4, %bb.x ], [ %spec.select49, %bb.y ]
+  %spec.select50 = select i1 %.16580, i32 %.4, i32 -19 ; 2 uses
   %.pre = load i64, ptr %i.a, align 8             ; 2 uses
   br i1 %.not, label %bb.ab, label %bb.aa
 

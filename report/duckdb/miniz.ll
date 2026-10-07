@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.lr.ph
 bb.x:                                             ; preds = %bb.v
   %bcmp = tail call i32 @bcmp(ptr %2, ptr nonnull %i.db, i64 %i.bu)
   %.not149 = icmp eq i32 %bcmp, 0
-  br i1 %.not149, label %.thread131, label %bb.ad
+  br i1 %.not149, label %.thread131, label %.thread145
 
 .thread131:                                       ; preds = %bb.w, %.preheader152, %bb.x, %bb.t
   %i.do = icmp ne i16 %i.ck, 0
@@ -286,8 +286,6 @@ bb.ac:                                            ; preds = %.lr.ph160
 _ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit: ; preds = %bb.ac, %.preheader, %bb.ab
   %.023.i = phi i1 [ %i.dy, %bb.ab ], [ false, %.preheader ], [ false, %bb.ac ] ; 2 uses
   %brmerge = or i1 %.not, %.023.i
-  %not..023.i = xor i1 %.023.i, true
-  %.mux = zext i1 %not..023.i to i32
   br i1 %brmerge, label %bb.ad, label %.thread147
 
 .thread147:                                       ; preds = %_ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit
@@ -295,14 +293,10 @@ _ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit: ; preds = %bb.ac, %.prehe
   store i32 %i.el, ptr %4, align 4, !tbaa !17
   br label %.split
 
-bb.ad:                                            ; preds = %_ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit, %bb.x
-  %.183 = phi i32 [ 4, %bb.x ], [ %.mux, %_ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit ]
-  switch i32 %.183, label %.split [
-    i32 0, label %.thread145
-    i32 4, label %.thread145
-  ]
+bb.ad:                                            ; preds = %_ZN12duckdb_minizL19mz_zip_string_equalEPKcS1_jj.exit
+  br i1 %.023.i, label %.thread145, label %.split
 
-.thread145:                                       ; preds = %.lr.ph, %.lr.ph160, %bb.u, %bb.z, %bb.s, %bb.ad, %bb.ad
+.thread145:                                       ; preds = %.lr.ph, %.lr.ph160, %bb.ad, %bb.x, %bb.u, %bb.z, %bb.s
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
   %exitcond184.not = icmp eq i64 %indvars.iv.next181, %wide.trip.count183
   br i1 %exitcond184.not, label %_ZN12duckdb_minizL16mz_zip_set_errorEPNS_14mz_zip_archiveENS_12mz_zip_errorE.exit110, label %bb.s, !llvm.loop !292

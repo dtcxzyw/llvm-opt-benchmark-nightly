@@ -204,9 +204,9 @@ bb.at:                                            ; preds = %bb.ac
   br i1 %i.gc, label %bb.ax, label %bb.av
 
 .thread295.i:                                     ; preds = %bb.at, %.split.i
-  %i.gf = phi i32 [ %i.dj, %.split.i ], [ 15, %bb.at ]
-  %i.gg = phi i32 [ %i.dk, %.split.i ], [ 1, %bb.at ] ; 3 uses
-  %i.gh = add nuw nsw i32 %i.gg, %.3188260.i      ; 2 uses
+  %i.gf = phi i32 [ %i.dk, %.split.i ], [ 1, %bb.at ] ; 3 uses
+  %i.gg = phi i32 [ %i.dj, %.split.i ], [ 15, %bb.at ]
+  %i.gh = add nuw nsw i32 %i.gf, %.3188260.i      ; 2 uses
   %i.gi = icmp ult i32 %i.gh, 7
   br i1 %i.gi, label %bb.au, label %bb.av
 
@@ -217,8 +217,8 @@ bb.au:                                            ; preds = %.thread295.i
 
 bb.av:                                            ; preds = %.thread295.i, %.split._crit_edge.i, %.thread243.i
   %i.gl = phi i32 [ %i.da, %.split._crit_edge.i ], [ %i.da, %.thread295.i ], [ %.pre277.i, %.thread243.i ]
-  %i.gm = phi i32 [ %i.fy, %.split._crit_edge.i ], [ %i.gg, %.thread295.i ], [ %i.dq, %.thread243.i ]
-  %i.gn = phi i32 [ %i.fz, %.split._crit_edge.i ], [ %i.gf, %.thread295.i ], [ %i.dp, %.thread243.i ]
+  %i.gm = phi i32 [ %i.fy, %.split._crit_edge.i ], [ %i.gf, %.thread295.i ], [ %i.dq, %.thread243.i ]
+  %i.gn = phi i32 [ %i.fz, %.split._crit_edge.i ], [ %i.gg, %.thread295.i ], [ %i.dp, %.thread243.i ]
   %i.go = phi i1 [ %i.ga, %.split._crit_edge.i ], [ false, %.thread295.i ], [ false, %.thread243.i ]
   %i.gp = lshr i32 %i.gl, 16
   %i.gq = and i32 %i.gp, 15
@@ -241,7 +241,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.au, %.split._crit_edge.i
-  %i.gz = phi i32 [ %i.gm, %bb.aw ], [ %i.fy, %.split._crit_edge.i ], [ %i.gg, %bb.au ]
+  %i.gz = phi i32 [ %i.gm, %bb.aw ], [ %i.fy, %.split._crit_edge.i ], [ %i.gf, %bb.au ]
   %i.ha = phi i1 [ %i.go, %bb.aw ], [ %i.ga, %.split._crit_edge.i ], [ false, %bb.au ]
   %.6191.i = phi i32 [ %.3188260.i, %bb.aw ], [ %.3188260.i, %.split._crit_edge.i ], [ %i.gh, %bb.au ] ; 3 uses
   %.3183.i = phi i32 [ %i.gv, %bb.aw ], [ %.0180261.i, %.split._crit_edge.i ], [ %.0180261.i, %bb.au ] ; 3 uses

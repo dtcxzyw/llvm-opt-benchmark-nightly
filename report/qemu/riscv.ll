@@ -202,9 +202,10 @@ define internal fastcc range(i32 1, 0) i32 @print_insn_riscv(i64 noundef %0, ptr
 
 bb.a:                                             ; preds = %.peel.begin
   %.val.peel = load i16, ptr %i.a, align 2
-  %i.e = zext i16 %.val.peel to i64               ; 4 uses
+  %i.e = zext i16 %.val.peel to i64               ; 5 uses
   %i.f = and i64 %i.e, 3
   %.not97 = icmp eq i64 %i.f, 3                   ; 3 uses
+  %4 = select i1 %.not97, i32 4, i32 2
   br i1 %.not97, label %.peel.next, label %.loopexit
 
 .peel.next:                                       ; preds = %bb.a
@@ -212,7 +213,7 @@ bb.a:                                             ; preds = %.peel.begin
   %i.h = add i64 %0, 2
   %i.i = call i32 %i.g(i64 noundef %i.h, ptr noundef nonnull %i.a, i32 noundef 2, ptr noundef nonnull %1) #10
   %.not = icmp eq i32 %i.i, 0
-  br i1 %.not, label %.loopexit.loopexit.loopexit, label %.loopexit
+  br i1 %.not, label %.loopexit.loopexit.loopexit, label %.loopexit.thread
 
 .loopexit74:                                      ; preds = %.peel.begin
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 88
@@ -227,22 +228,40 @@ bb.a:                                             ; preds = %.peel.begin
   %i.n = or disjoint i64 %i.m, %i.e
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.peel.next, %bb.a, %.loopexit.loopexit.loopexit
-  %.04056 = phi i64 [ %i.n, %.loopexit.loopexit.loopexit ], [ %i.e, %bb.a ], [ %i.e, %.peel.next ] ; 2 uses
+.loopexit:                                        ; preds = %bb.a, %.loopexit.loopexit.loopexit
+  %.04056 = phi i64 [ %i.n, %.loopexit.loopexit.loopexit ], [ %i.e, %bb.a ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.p = load i8, ptr %i.o, align 8, !range !7, !noundef !8
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %.sink.split, label %bb.b
+  br i1 %i.q, label %8, label %bb.b
 
-.sink.split:                                      ; preds = %.loopexit
+.loopexit.thread:                                 ; preds = %.peel.next
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 184
+  %6 = load i8, ptr %5, align 8, !range !7, !noundef !8
+  %7 = trunc nuw i8 %6 to i1
+  br i1 %7, label %.sink.split, label %bb.b
+
+8:                                                ; preds = %.loopexit
+  br i1 %.not97, label %.sink.split, label %9
+
+9:                                                ; preds = %8
+  %10 = load ptr, ptr %1, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %12 = load ptr, ptr %11, align 8
+  %13 = call i32 (ptr, ptr, ...) %10(ptr noundef %12, ptr noundef nonnull @.str.1062, i64 noundef %.04056) #10 ; 0 uses
+  br label %bb.b
+
+.sink.split:                                      ; preds = %.loopexit.thread, %8
+  %.0405695101 = phi i64 [ %.04056, %8 ], [ %i.e, %.loopexit.thread ] ; 2 uses
   %i.r = load ptr, ptr %1, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.t = load ptr, ptr %i.s, align 8
-  %.str.1062..str.1063 = select i1 %.not97, ptr @.str.1063, ptr @.str.1062
-  %i.u = call i32 (ptr, ptr, ...) %i.r(ptr noundef %i.t, ptr noundef nonnull %.str.1062..str.1063, i64 noundef %.04056) #10 ; 0 uses
+  %i.u = call i32 (ptr, ptr, ...) %i.r(ptr noundef %i.t, ptr noundef nonnull @.str.1063, i64 noundef %.0405695101) #10 ; 0 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.sink.split, %.loopexit
+bb.b:                                             ; preds = %.loopexit.thread, %9, %.sink.split, %.loopexit
+  %.0395497 = phi i32 [ 4, %.loopexit.thread ], [ 2, %9 ], [ 4, %.sink.split ], [ %4, %.loopexit ]
+  %.0405694 = phi i64 [ %i.e, %.loopexit.thread ], [ %.04056, %9 ], [ %.0405695101, %.sink.split ], [ %.04056, %.loopexit ]
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.w = load ptr, ptr %i.v, align 8              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
@@ -251,7 +270,7 @@ bb.b:                                             ; preds = %.sink.split, %.loop
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %0, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store i64 %.04056, ptr %i.z, align 8
+  store i64 %.0405694, ptr %i.z, align 8
   store ptr %i.w, ptr %3, align 8
   %.not41.i = icmp eq ptr %i.w, null
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 10 uses
@@ -654,12 +673,11 @@ glib_autoptr_cleanup_GString.exit:                ; preds = %bb.dh, %decode_inst
   %i.apk = load ptr, ptr %i.apj, align 8
   %i.apl = load ptr, ptr %i.aph, align 8
   %i.apm = call i32 (ptr, ptr, ...) %i.api(ptr noundef %i.apk, ptr noundef nonnull @.str.1066, ptr noundef %i.apl) #10 ; 0 uses
-  %4 = select i1 %.not97, i32 4, i32 2
   %i.apn = call ptr @g_string_free(ptr noundef nonnull %i.aph, i32 noundef 1) #10 ; 0 uses
   br label %bb.di
 
 bb.di:                                            ; preds = %glib_autoptr_cleanup_GString.exit, %.loopexit74
-  %.041 = phi i32 [ %4, %glib_autoptr_cleanup_GString.exit ], [ %i.d, %.loopexit74 ]
+  %.041 = phi i32 [ %.0395497, %glib_autoptr_cleanup_GString.exit ], [ %i.d, %.loopexit74 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.041
 }

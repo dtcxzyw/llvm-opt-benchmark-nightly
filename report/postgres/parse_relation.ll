@@ -139,7 +139,7 @@ bb.e:                                             ; preds = %bb.d
   %i.b = tail call i32 @get_relname_relid(ptr noundef %2, i32 noundef %i.a) #10
   %.125.fr = freeze i32 %i.b                      ; 4 uses
   %.not38.not = icmp eq i32 %.125.fr, 0
-  br i1 %.not38.not, label %.critedge, label %.split.a
+  br i1 %.not38.not, label %.critedge, label %.split
 
 .split.us:                                        ; preds = %bb.c, %bb.n
   %.028.us = phi ptr [ %.129.us, %bb.n ], [ %0, %bb.c ] ; 7 uses
@@ -233,11 +233,14 @@ bb.n:                                             ; preds = %bb.m, %scanNameSpac
     i32 3, label %.critedge
   ], !llvm.loop !13
 
-.split.a:                                         ; preds = %bb.e
-  br i1 %.not, label %.split.split.us, label %.split.split
+.split:                                           ; preds = %bb.e
+  %.not39.us59 = icmp eq ptr %0, null             ; 2 uses
+  br i1 %.not, label %.split.split.us, label %.split.a
 
-.split.split.us:                                  ; preds = %.split.a
-  %.not39.us59 = icmp eq ptr %0, null
+.split.a:                                         ; preds = %.split
+  br i1 %.not39.us59, label %.critedge, label %bb.x
+
+.split.split.us:                                  ; preds = %.split
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 64
   br i1 %.not39.us59, label %.critedge, label %.split.split.us.split
 
@@ -320,14 +323,9 @@ bb.w:                                             ; preds = %bb.v, %bb.t, %bb.s,
   %i.bp = icmp slt i64 %indvars.iv.next.i.us, %i.bo
   br i1 %i.bp, label %.lr.ph37.i.us, label %.critedge
 
-.split.split:                                     ; preds = %.split.a, %5
-  %.028 = phi ptr [ %.129, %5 ], [ %0, %.split.a ] ; 7 uses
-  %.2 = phi ptr [ %.3, %5 ], [ null, %.split.a ]
-  %.not39 = icmp eq ptr %.028, null
-  br i1 %.not39, label %.critedge, label %bb.x
-
-bb.x:                                             ; preds = %.split.split
-  %i.bq = getelementptr inbounds nuw i8, ptr %.028, i64 56
+bb.x:                                             ; preds = %.split.a, %scanNameSpaceForRelid.exit.thread
+  %.028122 = phi ptr [ %i.dj, %scanNameSpaceForRelid.exit.thread ], [ %0, %.split.a ] ; 5 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.028122, i64 56
   %i.br = load ptr, ptr %i.bq, align 8            ; 3 uses
   %.not.i = icmp eq ptr %i.br, null
   br i1 %.not.i, label %scanNameSpaceForRelid.exit.thread, label %.lr.ph.i
@@ -335,7 +333,7 @@ bb.x:                                             ; preds = %.split.split
 .lr.ph.i:                                         ; preds = %bb.x
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 4 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  %i.bu = getelementptr inbounds nuw i8, ptr %.028, i64 64
+  %i.bu = getelementptr inbounds nuw i8, ptr %.028122, i64 64
   %i.bv = load i32, ptr %i.bs, align 4            ; 2 uses
   %i.bw = icmp sgt i32 %i.bv, 0
   br i1 %i.bw, label %.lr.ph37.i, label %scanNameSpaceForRelid.exit.thread
@@ -394,7 +392,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not28.i, label %bb.af, label %.split.i
 
 .split.i:                                         ; preds = %bb.ae, %bb.u
-  %.us-phi = phi ptr [ %0, %bb.u ], [ %.028, %bb.ae ]
+  %.us-phi = phi ptr [ %0, %bb.u ], [ %.028122, %bb.ae ]
   %i.cw = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #12 ; 0 uses
   %i.cx = tail call i32 @errcode(i32 noundef 151126148) #10 ; 0 uses
   %i.cy = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.70, i32 noundef range(i32 1, 0) %.125.fr) #10 ; 0 uses
@@ -403,7 +401,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.ae
-  tail call fastcc void @check_lateral_ref_ok(ptr noundef nonnull %.028, ptr noundef nonnull %i.ca, i32 noundef %3)
+  tail call fastcc void @check_lateral_ref_ok(ptr noundef nonnull %.028122, ptr noundef nonnull %i.ca, i32 noundef %3)
   %.pre.i = load i32, ptr %i.bs, align 4
   br label %bb.ag
 
@@ -425,26 +423,21 @@ bb.ag:                                            ; preds = %bb.af, %bb.ad, %bb.
 
 scanNameSpaceForRelid.exit:                       ; preds = %bb.ag
   %.not41.not = icmp eq ptr %.2.i, null
-  br i1 %.not41.not, label %scanNameSpaceForRelid.exit.thread, label %5
+  br i1 %.not41.not, label %scanNameSpaceForRelid.exit.thread, label %.critedge
 
 scanNameSpaceForRelid.exit.thread:                ; preds = %bb.x, %.lr.ph.i, %scanNameSpaceForRelid.exit
   %i.dh = load i32, ptr %4, align 4
   %i.di = add i32 %i.dh, 1
   store i32 %i.di, ptr %4, align 4
-  %i.dj = load ptr, ptr %.028, align 8
-  br label %5
-
-5:                                                ; preds = %scanNameSpaceForRelid.exit, %scanNameSpaceForRelid.exit.thread
-  %.129 = phi ptr [ %.028, %scanNameSpaceForRelid.exit ], [ %i.dj, %scanNameSpaceForRelid.exit.thread ]
-  %.3 = phi ptr [ %.2.i, %scanNameSpaceForRelid.exit ], [ %.2, %scanNameSpaceForRelid.exit.thread ] ; 2 uses
-  %cond = phi i1 [ false, %scanNameSpaceForRelid.exit ], [ true, %scanNameSpaceForRelid.exit.thread ]
-  br i1 %cond, label %.split.split, label %.critedge
+  %i.dj = load ptr, ptr %.028122, align 8         ; 2 uses
+  %.not39 = icmp eq ptr %i.dj, null
+  br i1 %.not39, label %.critedge, label %bb.x
 
 .critedge.loopexit116:                            ; preds = %bb.n
   br label %.critedge
 
-.critedge:                                        ; preds = %5, %.split.split, %bb.w, %bb.n, %.split.us, %.critedge.loopexit116, %.lr.ph.i.us, %.split.split.us, %.split.split.us.split, %bb.d, %bb.e
-  %.4 = phi ptr [ null, %bb.d ], [ null, %.lr.ph.i.us ], [ null, %bb.e ], [ null, %.split.split.us.split ], [ %.2.i.us, %bb.w ], [ null, %.split.split.us ], [ null, %bb.n ], [ %.3.us, %.critedge.loopexit116 ], [ null, %.split.us ], [ %.3, %5 ], [ null, %.split.split ]
+.critedge:                                        ; preds = %scanNameSpaceForRelid.exit, %scanNameSpaceForRelid.exit.thread, %bb.w, %bb.n, %.split.us, %.critedge.loopexit116, %.split.a, %.lr.ph.i.us, %.split.split.us, %.split.split.us.split, %bb.d, %bb.e
+  %.4 = phi ptr [ null, %bb.d ], [ %.3.us, %.critedge.loopexit116 ], [ null, %bb.e ], [ null, %.split.split.us.split ], [ null, %.lr.ph.i.us ], [ null, %.split.split.us ], [ null, %bb.n ], [ %.2.i.us, %bb.w ], [ null, %.split.a ], [ null, %.split.us ], [ %.2.i, %scanNameSpaceForRelid.exit ], [ null, %scanNameSpaceForRelid.exit.thread ]
   ret ptr %.4
 }
 

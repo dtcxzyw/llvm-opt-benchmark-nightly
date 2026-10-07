@@ -14,7 +14,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.020 = phi ptr [ %1, %bb.a ], [ %i.m, %bb.c ]  ; 2 uses
-  %.018 = phi i32 [ undef, %bb.a ], [ %.2, %bb.c ]
   %.017 = phi i64 [ %i.b, %bb.a ], [ %i.n, %bb.c ] ; 3 uses
   %.not = icmp eq i64 %.017, 0
   br i1 %.not, label %bb.d, label %bb.c
@@ -34,16 +33,14 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.l, ptr %2, align 8, !tbaa !14
   %i.m = getelementptr inbounds nuw i8, ptr %.020, i64 %i.j
   %i.n = sub i64 %.017, %i.j
-  %.not22 = icmp eq i32 %i.h, 0                   ; 2 uses
-  %i.o = icmp ne i32 %i.i, 0                      ; 2 uses
-  %..018. = select i1 %i.o, i32 %.018, i32 0
-  %.2 = select i1 %.not22, i32 %..018., i32 %i.h  ; 2 uses
+  %.not22 = icmp eq i32 %i.h, 0
+  %i.o = icmp ne i32 %i.i, 0
   %cond1 = select i1 %.not22, i1 %i.o, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   br i1 %cond1, label %bb.b, label %bb.d, !llvm.loop !0
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.3 = phi i32 [ %.2, %bb.c ], [ 0, %bb.b ]
+  %.3 = phi i32 [ %i.h, %bb.c ], [ 0, %bb.b ]
   ret i32 %.3
 }
 
@@ -62,7 +59,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.c ]     ; 2 uses
   %.020.i = phi ptr [ %1, %bb.a ], [ %i.m, %bb.c ] ; 2 uses
-  %.018.i = phi i32 [ undef, %bb.a ], [ %.2.i, %bb.c ]
   %.017.i = phi i64 [ %2, %bb.a ], [ %i.n, %bb.c ] ; 3 uses
   %.not.i = icmp eq i64 %.017.i, 0
   br i1 %.not.i, label %_Z10ReadStreamP19ISequentialInStreamPvPm.exit.thread, label %bb.c
@@ -86,19 +82,15 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.020.i, i64 %i.k
   %i.n = sub i64 %.017.i, %i.k
   %.not22.i = icmp eq i32 %i.i, 0                 ; 2 uses
-  %i.o = icmp ne i32 %i.j, 0                      ; 2 uses
-  %..018..i = select i1 %i.o, i32 %.018.i, i32 0
-  %..018..i.fr = freeze i32 %..018..i
-  %.2.i = select i1 %.not22.i, i32 %..018..i.fr, i32 %i.i ; 3 uses
+  %i.o = icmp ne i32 %i.j, 0
   %cond1.i = select i1 %.not22.i, i1 %i.o, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   br i1 %cond1.i, label %bb.b, label %_Z10ReadStreamP19ISequentialInStreamPvPm.exit, !llvm.loop !0
 
 _Z10ReadStreamP19ISequentialInStreamPvPm.exit:    ; preds = %bb.c
-  %.not = icmp eq i32 %.2.i, 0
   %i.p = icmp ne i64 %2, %i.l
   %i.q = zext i1 %i.p to i32
-  %spec.select = select i1 %.not, i32 %i.q, i32 %.2.i
+  %spec.select = select i1 %.not22.i, i32 %i.q, i32 %i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %_Z10ReadStreamP19ISequentialInStreamPvPm.exit, %_Z10ReadStreamP19ISequentialInStreamPvPm.exit.thread
@@ -115,7 +107,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.l, %bb.c ]     ; 2 uses
   %.020.i = phi ptr [ %1, %bb.a ], [ %i.m, %bb.c ] ; 2 uses
-  %.018.i = phi i32 [ undef, %bb.a ], [ %.2.i, %bb.c ]
   %.017.i = phi i64 [ %2, %bb.a ], [ %i.n, %bb.c ] ; 3 uses
   %.not.i = icmp eq i64 %.017.i, 0
   br i1 %.not.i, label %_Z10ReadStreamP19ISequentialInStreamPvPm.exit.thread, label %bb.c
@@ -139,19 +130,15 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.020.i, i64 %i.k
   %i.n = sub i64 %.017.i, %i.k
   %.not22.i = icmp eq i32 %i.i, 0                 ; 2 uses
-  %i.o = icmp ne i32 %i.j, 0                      ; 2 uses
-  %..018..i = select i1 %i.o, i32 %.018.i, i32 0
-  %..018..i.fr = freeze i32 %..018..i
-  %.2.i = select i1 %.not22.i, i32 %..018..i.fr, i32 %i.i ; 3 uses
+  %i.o = icmp ne i32 %i.j, 0
   %cond1.i = select i1 %.not22.i, i1 %i.o, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   br i1 %cond1.i, label %bb.b, label %_Z10ReadStreamP19ISequentialInStreamPvPm.exit, !llvm.loop !0
 
 _Z10ReadStreamP19ISequentialInStreamPvPm.exit:    ; preds = %bb.c
-  %.not = icmp eq i32 %.2.i, 0
   %i.p = icmp eq i64 %2, %i.l
   %i.q = select i1 %i.p, i32 0, i32 -2147467259
-  %spec.select = select i1 %.not, i32 %i.q, i32 %.2.i
+  %spec.select = select i1 %.not22.i, i32 %i.q, i32 %i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %_Z10ReadStreamP19ISequentialInStreamPvPm.exit, %_Z10ReadStreamP19ISequentialInStreamPvPm.exit.thread
@@ -166,7 +153,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %.015 = phi i32 [ undef, %bb.a ], [ %.2, %bb.c ]
   %.014 = phi ptr [ %1, %bb.a ], [ %i.j, %bb.c ]  ; 2 uses
   %.013 = phi i64 [ %2, %bb.a ], [ %i.k, %bb.c ]  ; 3 uses
   %.not = icmp eq i64 %.013, 0
@@ -185,15 +171,17 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.014, i64 %i.i
   %i.k = sub i64 %.013, %i.i
   %.not18 = icmp eq i32 %i.g, 0                   ; 2 uses
-  %i.l = icmp ne i32 %i.h, 0                      ; 2 uses
-  %..015. = select i1 %i.l, i32 %.015, i32 -2147467259
-  %.2 = select i1 %.not18, i32 %..015., i32 %i.g  ; 2 uses
+  %i.l = icmp ne i32 %i.h, 0
   %.1.not = select i1 %.not18, i1 %i.l, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
-  br i1 %.1.not, label %bb.b, label %bb.d
+  br i1 %.1.not, label %bb.b, label %.split.loop.exit
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.3 = phi i32 [ %.2, %bb.c ], [ 0, %bb.b ]
+.split.loop.exit:                                 ; preds = %bb.c
+  %.2.le = select i1 %.not18, i32 -2147467259, i32 %i.g
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.b, %.split.loop.exit
+  %.3 = phi i32 [ %.2.le, %.split.loop.exit ], [ 0, %bb.b ]
   ret i32 %.3
 }
 

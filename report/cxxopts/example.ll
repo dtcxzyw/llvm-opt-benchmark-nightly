@@ -205,10 +205,13 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.k = load i64, ptr %i.j, align 8, !tbaa !71
   %.fr = freeze i64 %i.k
-  %.not.not = icmp eq i64 %.fr, 0                 ; 2 uses
-  %spec.select = select i1 %i.c, i32 -2147483648, i32 2147483647 ; 4 uses
-  %4 = select i1 %.not.not, i32 10, i32 16        ; 4 uses
-  br i1 %.not.not, label %.lr.ph.split.us, label %.lr.ph.split
+  %.not.not = icmp eq i64 %.fr, 0
+  %spec.select = select i1 %i.c, i32 -2147483648, i32 2147483647 ; 3 uses
+  br i1 %.not.not, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %4 = lshr i32 %spec.select, 4
+  br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.d
   %.sroa.063.078.us = phi ptr [ %i.t, %bb.d ], [ %i.f, %.lr.ph ] ; 2 uses
@@ -220,12 +223,11 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.us
   %i.n = zext nneg i8 %i.m to i32                 ; 2 uses
-  %5 = udiv i32 %spec.select, %4
-  %i.o = icmp ugt i32 %.07177.us, %5
+  %i.o = icmp ugt i32 %.07177.us, 214748364
   br i1 %i.o, label %.split80.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = mul nuw i32 %.07177.us, %4               ; 2 uses
+  %i.p = mul nuw nsw i32 %.07177.us, 10           ; 2 uses
   %i.q = sub nuw i32 %spec.select, %i.n
   %i.r = icmp ugt i32 %i.p, %i.q
   br i1 %i.r, label %.split82.us, label %bb.d
@@ -242,9 +244,9 @@ bb.d:                                             ; preds = %bb.c
   invoke void @_ZN7cxxopts6values6detail11SignedCheckIiLb1EEclIjEEvbT_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 1 dereferenceable(1) %2, i1 noundef zeroext %i.c, i32 noundef %.071.lcssa, ptr noundef nonnull align 8 dereferenceable(32) %0)
           to label %bb.p unwind label %bb.q
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.o
-  %.sroa.063.078 = phi ptr [ %i.ap, %bb.o ], [ %i.f, %.lr.ph ] ; 2 uses
-  %.07177 = phi i32 [ %i.ao, %bb.o ], [ 0, %.lr.ph ] ; 2 uses
+.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.o
+  %.sroa.063.078 = phi ptr [ %i.ap, %bb.o ], [ %i.f, %.lr.ph.split.preheader ] ; 2 uses
+  %.07177 = phi i32 [ %i.ao, %bb.o ], [ 0, %.lr.ph.split.preheader ] ; 2 uses
   %i.u = load i8, ptr %.sroa.063.078, align 1, !tbaa !70 ; 4 uses
   %i.v = sext i8 %i.u to i32
   %i.w = add i8 %i.u, -48
@@ -287,8 +289,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f, %bb.e, %.lr.ph.split
   %.sink = phi i32 [ -48, %.lr.ph.split ], [ -87, %bb.e ], [ -55, %bb.f ]
   %i.ae = add nsw i32 %.sink, %i.v                ; 2 uses
-  %6 = udiv i32 %spec.select, %4
-  %i.af = icmp ugt i32 %.07177, %6
+  %i.af = icmp ugt i32 %.07177, %4
   br i1 %i.af, label %.split80.us, label %bb.m
 
 bb.k:                                             ; preds = %.invoke
@@ -308,9 +309,9 @@ bb.l:                                             ; preds = %.split80.us
   br label %.body
 
 bb.m:                                             ; preds = %bb.j
-  %7 = mul nuw i32 %.07177, %4                    ; 2 uses
+  %5 = shl nuw i32 %.07177, 4                     ; 2 uses
   %i.aj = sub nuw i32 %spec.select, %i.ae
-  %i.ak = icmp ugt i32 %7, %i.aj
+  %i.ak = icmp ugt i32 %5, %i.aj
   br i1 %i.ak, label %.split82.us, label %bb.o
 
 .split82.us:                                      ; preds = %bb.m, %bb.c
@@ -333,7 +334,7 @@ bb.n:                                             ; preds = %.split82.us
   br label %.body
 
 bb.o:                                             ; preds = %bb.m
-  %i.ao = add nuw i32 %i.ae, %7                   ; 2 uses
+  %i.ao = add nuw i32 %i.ae, %5                   ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.063.078, i64 1 ; 2 uses
   %.not72 = icmp eq ptr %i.ap, %i.i
   br i1 %.not72, label %._crit_edge, label %.lr.ph.split

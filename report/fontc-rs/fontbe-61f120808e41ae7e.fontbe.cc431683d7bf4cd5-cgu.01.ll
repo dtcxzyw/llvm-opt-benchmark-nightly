@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 .sink.split.i.i.i.i:                              ; preds = %bb.b
   %i.h = icmp eq ptr %spec.select.i19.i.i.i, %.sroa.6.0.copyload ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %spec.select.i19.i.i.i, i64 6 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %spec.select.i19.i.i.i, i64 6 ; 3 uses
   %spec.select.i.i.i.i = select i1 %i.h, ptr null, ptr %i.i
   store ptr %spec.select.i.i.i.i, ptr %i.c, align 8, !alias.scope !9446, !noalias !9445
-  br i1 %i.h, label %select.unfold.i.i.i, label %.loopexit
+  br i1 %i.h, label %select.unfold.i.i.i, label %bb.f
 
 select.unfold.i.i.i:                              ; preds = %.sink.split.i.i.i.i, %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9447)
@@ -244,25 +244,21 @@ bb.e:                                             ; preds = %bb.c, %select.unfol
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 6
   %spec.select.i9.i.i.i = select i1 %i.s, ptr null, ptr %i.t
   store ptr %spec.select.i9.i.i.i, ptr %i.o, align 8, !alias.scope !9451, !noalias !9445
-  br i1 %i.s, label %bb.m, label %.loopexit
+  br i1 %i.s, label %bb.m, label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4glyf10CurvePointEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i
 
-.loopexit:                                        ; preds = %.sink.split.i.i.i.i, %.sink.split.i8.i.i.i
-  %2 = phi ptr [ null, %.sink.split.i8.i.i.i ], [ %i.i, %.sink.split.i.i.i.i ] ; 3 uses
-  %.sroa.0.0.i.i.i = phi ptr [ %i.p, %.sink.split.i8.i.i.i ], [ %spec.select.i19.i.i.i, %.sink.split.i.i.i.i ]
-  %3 = load <2 x i16>, ptr %.sroa.0.0.i.i.i, align 2, !noalias !9453
-  %4 = sitofp <2 x i16> %3 to <2 x double>
-  %.not.i.i.i = icmp eq ptr %2, null
-  br i1 %.not.i.i.i, label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4glyf10CurvePointEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i, label %bb.f
-
-bb.f:                                             ; preds = %.loopexit
+bb.f:                                             ; preds = %.sink.split.i.i.i.i
   %i.u = ptrtoint ptr %.sroa.6.0.copyload to i64
-  %i.v = ptrtoint ptr %2 to i64
+  %i.v = ptrtoint ptr %i.i to i64
   %i.w = sub nuw i64 %i.u, %i.v
   %i.x = udiv exact i64 %i.w, 6
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4glyf10CurvePointEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i
 
-_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4glyf10CurvePointEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i: ; preds = %bb.f, %.loopexit
-  %.sroa.7.0.i.i.i = phi i64 [ %i.x, %bb.f ], [ 0, %.loopexit ]
+_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4glyf10CurvePointEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i: ; preds = %.sink.split.i8.i.i.i, %bb.f
+  %spec.select.i19.i.i.i.pn = phi ptr [ %spec.select.i19.i.i.i, %bb.f ], [ %i.p, %.sink.split.i8.i.i.i ]
+  %2 = phi ptr [ %i.i, %bb.f ], [ null, %.sink.split.i8.i.i.i ]
+  %.sroa.7.0.i.i.i = phi i64 [ %i.x, %bb.f ], [ 0, %.sink.split.i8.i.i.i ]
+  %3 = load <2 x i16>, ptr %spec.select.i19.i.i.i.pn, align 2, !noalias !9453
+  %4 = sitofp <2 x i16> %3 to <2 x double>
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.z = load ptr, ptr %i.y, align 8, !alias.scope !9454, !noalias !9455, !noundef !4 ; 3 uses
   %.not53.i.i.i = icmp eq ptr %i.z, null

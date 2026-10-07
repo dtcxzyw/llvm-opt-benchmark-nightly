@@ -205,7 +205,6 @@ _ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.i.i.i167: ; preds = %.lr
   br i1 %.not273295, label %.critedge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171", %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209"
-  %.0302 = phi i8 [ %.0., %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209" ], [ 1, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ]
   %.sroa.0214.0301 = phi ptr [ %.sroa.0214.4, %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209" ], [ %.sroa.0214.2, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ] ; 4 uses
   %.sroa.11.sroa.0.0300 = phi i32 [ %.sroa.11.sroa.0.4, %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209" ], [ %.sroa.11.sroa.0.2, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ] ; 4 uses
   %.sroa.0228.0298 = phi ptr [ %.sroa.0228.4, %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209" ], [ %.sroa.0228.2, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ] ; 4 uses
@@ -216,8 +215,7 @@ _ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.i.i.i167: ; preds = %.lr
 bb.ai:                                            ; preds = %.lr.ph
   %i.ln = load i16, ptr %.sroa.0228.0298, align 1, !tbaa !56
   %i.lo = load i16, ptr %.sroa.0214.0301, align 1, !tbaa !56
-  %.not = icmp eq i16 %i.ln, %i.lo                ; 2 uses
-  %.0. = select i1 %.not, i8 %.0302, i8 0         ; 2 uses
+  %.not = icmp eq i16 %i.ln, %i.lo
   br i1 %.not, label %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.lr.ph.i.i, label %.critedge
 
 _ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.lr.ph.i.i: ; preds = %bb.ai
@@ -388,18 +386,12 @@ _ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.backedge.i.i205: ; preds
   %.sroa.11.sroa.0.4 = phi i32 [ 0, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.backedge.i.us.preheader.i207 ], [ 0, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.lr.ph.i.i188 ], [ 0, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.backedge.i.i205 ], [ %.sroa.11.sroa.0.3, %_ZNK12hb_hashmap_tIjjLb1EE10fetch_itemERKjj.exit.i.i.i.i.i.i203 ] ; 2 uses
   %.sroa.0214.4 = phi ptr [ %scevgep.i208, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.backedge.i.us.preheader.i207 ], [ %i.nb, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.lr.ph.i.i188 ], [ %scevgep333, %_ZNR9hb_iter_tI10hb_array_tIKN2OT5IndexEERS3_EppEv.exit.backedge.i.i205 ], [ %.sroa.0214.3, %_ZNK12hb_hashmap_tIjjLb1EE10fetch_itemERKjj.exit.i.i.i.i.i.i203 ]
   %.not273 = icmp eq i32 %.sroa.11.sroa.0236.4, 0
-  br i1 %.not273, label %.critedge.thread.loopexit, label %.lr.ph, !llvm.loop !853
+  br i1 %.not273, label %.critedge.thread, label %.lr.ph, !llvm.loop !853
 
-.critedge.thread.loopexit:                        ; preds = %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209"
-  %11 = icmp eq i8 %.0., 0
-  br label %.critedge.thread
-
-.critedge.thread:                                 ; preds = %.critedge.thread.loopexit, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171"
-  %.sroa.11.sroa.0.0.lcssa = phi i32 [ %.sroa.11.sroa.0.2, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ], [ %.sroa.11.sroa.0.4, %.critedge.thread.loopexit ]
-  %.0.lcssa = phi i1 [ false, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ], [ %11, %.critedge.thread.loopexit ]
-  %.old = icmp ne i32 %.sroa.11.sroa.0.0.lcssa, 0
-  %or.cond270 = or i1 %.old, %.0.lcssa
-  br i1 %or.cond270, label %.critedge, label %.thread265
+.critedge.thread:                                 ; preds = %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209", %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171"
+  %.sroa.11.sroa.0.0.lcssa = phi i32 [ %.sroa.11.sroa.0.2, %"_ZorI10hb_array_tIKN2OT5IndexEE24hb_filter_iter_factory_tIRPK8hb_map_tRK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSF_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISF_Efp_EEEOSF_OSL_.exit171" ], [ %.sroa.11.sroa.0.4, %"_ZNR9hb_iter_tI16hb_filter_iter_tI10hb_array_tIKN2OT5IndexEERPK8hb_map_tRK4$_19LPv0EERS4_EppEv.exit209" ]
+  %.old.not = icmp eq i32 %.sroa.11.sroa.0.0.lcssa, 0
+  br i1 %.old.not, label %.thread265, label %.critedge
 
 .thread265:                                       ; preds = %.critedge.thread
   %.val.i175 = load i32, ptr %i.h, align 4, !tbaa !91

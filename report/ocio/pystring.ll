@@ -205,7 +205,8 @@ _ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES
   br label %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread
 
 _ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread: ; preds = %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit50, %bb.i, %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit37, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit
-  %.015 = phi i32 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24 ], [ 0, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit ], [ 1, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit37 ], [ 1, %bb.h ], [ 2, %bb.i ], [ %spec.select, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit50 ] ; 3 uses
+  %.0.i.i113 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24 ], [ false, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit ], [ true, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit37 ], [ true, %bb.i ], [ true, %bb.h ], [ true, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit50 ] ; 2 uses
+  %.015 = phi i32 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24 ], [ 0, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit ], [ 1, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit37 ], [ 2, %bb.i ], [ 1, %bb.h ], [ %spec.select, %_ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit50 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
@@ -223,7 +224,6 @@ _ZN8pystring10startswithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES
 .lr.ph:                                           ; preds = %.preheader
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %9 = icmp eq i32 %.015, 0
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 16
   br label %bb.k
@@ -326,9 +326,9 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit:
 
 bb.q:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %.pre = load ptr, ptr %4, align 8, !tbaa !30    ; 4 uses
-  %10 = icmp eq ptr %.pre, %.pre125
-  %or.cond = select i1 %9, i1 %10, i1 false
-  br i1 %or.cond, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %bb.r
+  %9 = icmp ne ptr %.pre, %.pre125
+  %or.cond = select i1 %.0.i.i113, i1 true, i1 %9
+  br i1 %or.cond, label %bb.r, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
 
 bb.r:                                             ; preds = %bb.q
   %i.bx = icmp eq ptr %.pre, %.pre125
@@ -548,8 +548,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i63
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i63
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
-  %.not = icmp eq i32 %.015, 0
-  br i1 %.not, label %bb.ar, label %bb.ae
+  br i1 %.0.i.i113, label %bb.ae, label %bb.ar
 
 bb.ae:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24

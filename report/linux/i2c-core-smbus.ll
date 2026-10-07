@@ -204,7 +204,7 @@ i2c_smbus_check_pec.exit.i.loopexit.unr-lcssa:    ; preds = %.lr.ph.i5.i.i127.i
 i2c_smbus_check_pec.exit.i:                       ; preds = %i2c_smbus_check_pec.exit.i.loopexit.unr-lcssa, %.lr.ph.i5.i.i127.i.epil, %bb.bj
   %.06.lcssa.i.i.i133.i = phi i8 [ %i.ir, %bb.bj ], [ %i.jp, %i2c_smbus_check_pec.exit.i.loopexit.unr-lcssa ], [ %i.ju, %.lr.ph.i5.i.i127.i.epil ]
   %.not.i134.i = icmp eq i8 %i.il, %.06.lcssa.i.i.i133.i ; 2 uses
-  %..i.i = select i1 %.not.i134.i, i32 0, i32 -74 ; 2 uses
+  %..i.i = select i1 %.not.i134.i, i32 0, i32 -74
   %or.cond4.i = and i1 %.078.i, %.not.i134.i
   br i1 %or.cond4.i, label %bb.bl, label %bb.bt
 
@@ -212,7 +212,6 @@ bb.bk:                                            ; preds = %bb.bi, %switch.earl
   br i1 %.078.i, label %bb.bl, label %bb.bt
 
 bb.bl:                                            ; preds = %bb.bk, %i2c_smbus_check_pec.exit.i
-  %.0.i94 = phi i32 [ %..i.i, %i2c_smbus_check_pec.exit.i ], [ 0, %bb.bk ] ; 6 uses
   switch i32 %5, label %bb.bt [
     i32 1, label %bb.bm
     i32 2, label %bb.bn
@@ -265,7 +264,7 @@ bb.bs:                                            ; preds = %bb.bq
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs, %bb.br, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %i2c_smbus_check_pec.exit.i, %bb.bg, %bb.bf
-  %.1.i = phi i32 [ %i.hw, %bb.bf ], [ 0, %bb.bk ], [ %.0.i94, %bb.bl ], [ %.0.i94, %bb.bm ], [ %.0.i94, %bb.bn ], [ %.0.i94, %bb.bo ], [ %.0.i94, %bb.bp ], [ -71, %bb.br ], [ %.0.i94, %bb.bs ], [ %..i.i, %i2c_smbus_check_pec.exit.i ], [ -5, %bb.bg ] ; 2 uses
+  %.1.i = phi i32 [ %i.hw, %bb.bf ], [ 0, %bb.bk ], [ 0, %bb.bl ], [ 0, %bb.bm ], [ 0, %bb.bn ], [ 0, %bb.bo ], [ 0, %bb.bp ], [ -71, %bb.br ], [ 0, %bb.bs ], [ %..i.i, %i2c_smbus_check_pec.exit.i ], [ -5, %bb.bg ] ; 2 uses
   %i.kj = load i16, ptr %i.ca, align 2
   %i.kk = and i16 %i.kj, 512
   %.not92.i = icmp eq i16 %i.kk, 0

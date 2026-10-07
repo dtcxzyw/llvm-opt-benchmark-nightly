@@ -205,27 +205,27 @@ bb.w:                                             ; preds = %bb.v, %sz_size2inde
   %i.dq = getelementptr inbounds nuw i8, ptr %.0.i132151, i64 16 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ds = getelementptr inbounds nuw i8, ptr %.0.i132151, i64 936
+  %.not231 = icmp eq i64 %1, 0
+  br i1 %.not231, label %.critedge, label %bb.x
+
+bb.x:                                             ; preds = %bb.w
   %5 = insertelement <2 x ptr> poison, ptr %i.dn, i64 0
   %6 = insertelement <2 x ptr> %5, ptr %i.dp, i64 1
   %7 = insertelement <2 x ptr> poison, ptr %i.dq, i64 0
   %8 = insertelement <2 x ptr> %7, ptr %i.ds, i64 1
-  br label %bb.x
+  br label %bb.y
 
-bb.x:                                             ; preds = %select.unfold, %bb.w
-  %.0145 = phi ptr [ null, %bb.w ], [ %.5, %select.unfold ] ; 3 uses
-  %.0103 = phi i64 [ 0, %bb.w ], [ %.6, %select.unfold ] ; 8 uses
-  %.099 = phi ptr [ null, %bb.w ], [ %.3102, %select.unfold ] ; 9 uses
-  %9 = icmp ult i64 %.0103, %1
-  br i1 %9, label %bb.y, label %.critedge
-
-bb.y:                                             ; preds = %bb.x
-  %i.dt = sub nuw i64 %1, %.0103                  ; 6 uses
+bb.y:                                             ; preds = %bb.x, %select.unfold
+  %.099224 = phi ptr [ %.2101, %select.unfold ], [ null, %bb.x ] ; 8 uses
+  %.0103223 = phi i64 [ %.6, %select.unfold ], [ 0, %bb.x ] ; 6 uses
+  %.0145222 = phi ptr [ %.4, %select.unfold ], [ null, %bb.x ] ; 3 uses
+  %i.dt = sub nuw i64 %1, %.0103223               ; 6 uses
   %.not = icmp ult i64 %i.dt, %.098
   %or.cond = select i1 %i.cz, i1 true, i1 %.not, !prof !175
   br i1 %or.cond, label %bb.ac, label %bb.z, !prof !175
 
 bb.z:                                             ; preds = %bb.y
-  %i.du = icmp eq ptr %.0145, null
+  %i.du = icmp eq ptr %.0145222, null
   br i1 %i.du, label %bb.aa, label %arena_get_from_ind.exit.thread169
 
 bb.aa:                                            ; preds = %bb.z
@@ -249,20 +249,20 @@ bb.ab:                                            ; preds = %arena_get.exit
 arena_get_from_ind.exit:                          ; preds = %bb.ab, %bb.aa
   %i.ea = call fastcc ptr @arena_choose(ptr noundef nonnull %.0.i132151, ptr noundef null) ; 2 uses
   %.not200 = icmp eq ptr %i.ea, null
-  br i1 %.not200, label %select.unfold, label %arena_get_from_ind.exit.thread169
+  br i1 %.not200, label %.critedge, label %arena_get_from_ind.exit.thread169
 
 arena_get_from_ind.exit.thread169:                ; preds = %mallocx_arena_get.exit, %arena_get.exit, %arena_get_from_ind.exit, %bb.z
-  %.3147 = phi ptr [ %i.ea, %arena_get_from_ind.exit ], [ %.0145, %bb.z ], [ %i.dx, %arena_get.exit ], [ %i.dv, %mallocx_arena_get.exit ] ; 2 uses
+  %.3147 = phi ptr [ %i.ea, %arena_get_from_ind.exit ], [ %.0145222, %bb.z ], [ %i.dx, %arena_get.exit ], [ %i.dv, %mallocx_arena_get.exit ] ; 2 uses
   %i.eb = urem i64 %i.dt, %.098
   %i.ec = sub nuw i64 %i.dt, %i.eb
-  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0103
+  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0103223
   %i.ee = call i64 @je_arena_fill_small_fresh(ptr noundef nonnull %.0.i132151, ptr noundef nonnull %.3147, i32 noundef %.0.i125, ptr noundef %i.ed, i64 noundef %i.ec, i1 noundef zeroext %.0.i123) #20 ; 2 uses
-  %i.ef = add i64 %i.ee, %.0103
+  %i.ef = add i64 %i.ee, %.0103223
   br label %bb.ac
 
 bb.ac:                                            ; preds = %arena_get_from_ind.exit.thread169, %bb.y
-  %.4 = phi ptr [ %.0145, %bb.y ], [ %.3147, %arena_get_from_ind.exit.thread169 ] ; 2 uses
-  %.1104 = phi i64 [ %.0103, %bb.y ], [ %i.ef, %arena_get_from_ind.exit.thread169 ] ; 8 uses
+  %.4 = phi ptr [ %.0145222, %bb.y ], [ %.3147, %arena_get_from_ind.exit.thread169 ]
+  %.1104 = phi i64 [ %.0103223, %bb.y ], [ %i.ef, %arena_get_from_ind.exit.thread169 ] ; 8 uses
   %.095 = phi i64 [ 0, %bb.y ], [ %i.ee, %arena_get_from_ind.exit.thread169 ] ; 9 uses
   switch i32 %i.di, label %mallocx_tcache_get.exit [
     i32 0, label %mallocx_tcache_get.exit.thread
@@ -323,8 +323,8 @@ bb.ag:                                            ; preds = %tcache_get_from_ind
   br i1 %or.cond120, label %bb.ah, label %.critedge119, !prof !25
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.eu = icmp eq ptr %.099, null
-  %.1100 = select i1 %i.eu, ptr %i.er, ptr %.099  ; 7 uses
+  %i.eu = icmp eq ptr %.099224, null
+  %.1100 = select i1 %i.eu, ptr %i.er, ptr %.099224 ; 7 uses
   %i.ev = sub nuw i64 %i.dt, %.095
   %i.ew = getelementptr [8 x i8], ptr %0, i64 %.1104 ; 10 uses
   %.1100.val = load ptr, ptr %.1100, align 8, !tbaa !108 ; 2 uses
@@ -442,7 +442,7 @@ cache_bin_low_water_adjust.exit:                  ; preds = %bb.ah, %bb.ai
 
 .critedge119:                                     ; preds = %bb.ac, %mallocx_tcache_get.exit.thread, %mallocx_tcache_get.exit, %tcache_get_from_ind.exit.thread178, %tcache_get_from_ind.exit, %.loopexit, %bb.ag
   %.2105 = phi i64 [ %i.gv, %.loopexit ], [ %.1104, %tcache_get_from_ind.exit.thread178 ], [ %.1104, %bb.ag ], [ %.1104, %tcache_get_from_ind.exit ], [ %.1104, %mallocx_tcache_get.exit ], [ %.1104, %mallocx_tcache_get.exit.thread ], [ %.1104, %bb.ac ] ; 4 uses
-  %.2101 = phi ptr [ %.1100, %.loopexit ], [ %.099, %tcache_get_from_ind.exit.thread178 ], [ %.099, %bb.ag ], [ %.099, %tcache_get_from_ind.exit ], [ %.099, %mallocx_tcache_get.exit ], [ %.099, %mallocx_tcache_get.exit.thread ], [ %.099, %bb.ac ] ; 2 uses
+  %.2101 = phi ptr [ %.1100, %.loopexit ], [ %.099224, %tcache_get_from_ind.exit.thread178 ], [ %.099224, %bb.ag ], [ %.099224, %tcache_get_from_ind.exit ], [ %.099224, %mallocx_tcache_get.exit ], [ %.099224, %mallocx_tcache_get.exit.thread ], [ %.099224, %bb.ac ]
   %.196 = phi i64 [ %i.gu, %.loopexit ], [ %.095, %tcache_get_from_ind.exit.thread178 ], [ %.095, %bb.ag ], [ %.095, %tcache_get_from_ind.exit ], [ %.095, %mallocx_tcache_get.exit ], [ %.095, %mallocx_tcache_get.exit.thread ], [ %.095, %bb.ac ] ; 2 uses
   %i.gw = mul i64 %.196, %storemerge.i            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
@@ -477,15 +477,13 @@ bb.al:                                            ; preds = %bb.ak
   store ptr %i.hd, ptr %i.hf, align 8, !tbaa !109
   br label %select.unfold
 
-select.unfold:                                    ; preds = %bb.al, %te_event_advance.exit, %arena_get_from_ind.exit
-  %.5 = phi ptr [ %.4, %bb.al ], [ %.4, %te_event_advance.exit ], [ null, %arena_get_from_ind.exit ]
-  %.6 = phi i64 [ %i.he, %bb.al ], [ %.2105, %te_event_advance.exit ], [ %.0103, %arena_get_from_ind.exit ] ; 2 uses
-  %.3102 = phi ptr [ %.2101, %bb.al ], [ %.2101, %te_event_advance.exit ], [ %.099, %arena_get_from_ind.exit ]
-  %10 = phi i1 [ true, %bb.al ], [ true, %te_event_advance.exit ], [ false, %arena_get_from_ind.exit ]
-  br i1 %10, label %bb.x, label %.critedge
+select.unfold:                                    ; preds = %bb.al, %te_event_advance.exit
+  %.6 = phi i64 [ %i.he, %bb.al ], [ %.2105, %te_event_advance.exit ] ; 3 uses
+  %9 = icmp ult i64 %.6, %1
+  br i1 %9, label %bb.y, label %.critedge
 
-.critedge:                                        ; preds = %bb.ak, %bb.ab, %select.unfold, %bb.x, %sz_s2u_compute.exit28.i, %bb.n, %bb.e, %tsd_fetch_impl.exit, %aligned_usize_get.exit, %tsd_fetch_impl.exit.thread
-  %.7 = phi i64 [ 0, %tsd_fetch_impl.exit.thread ], [ 0, %aligned_usize_get.exit ], [ 0, %bb.e ], [ 0, %bb.n ], [ 0, %tsd_fetch_impl.exit ], [ 0, %sz_s2u_compute.exit28.i ], [ %.2105, %bb.ak ], [ %.0103, %bb.ab ], [ %.6, %select.unfold ], [ %.0103, %bb.x ]
+.critedge:                                        ; preds = %select.unfold, %bb.ab, %bb.ak, %arena_get_from_ind.exit, %bb.w, %sz_s2u_compute.exit28.i, %bb.n, %bb.e, %tsd_fetch_impl.exit, %aligned_usize_get.exit, %tsd_fetch_impl.exit.thread
+  %.7 = phi i64 [ 0, %tsd_fetch_impl.exit.thread ], [ 0, %aligned_usize_get.exit ], [ 0, %bb.e ], [ 0, %bb.n ], [ 0, %tsd_fetch_impl.exit ], [ 0, %sz_s2u_compute.exit28.i ], [ 0, %bb.w ], [ %.0103223, %arena_get_from_ind.exit ], [ %.2105, %bb.ak ], [ %.6, %select.unfold ], [ %.0103223, %bb.ab ]
   ret i64 %.7
 }
 

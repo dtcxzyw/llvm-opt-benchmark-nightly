@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.g, %bb.e
   %.0.i = phi i64 [ 0, %bb.e ], [ %i.ap, %bb.g ]  ; 2 uses
   %.019.i.i = phi ptr [ %i.al, %bb.e ], [ %i.aq, %bb.g ] ; 2 uses
-  %.017.i.i = phi i32 [ undef, %bb.e ], [ %.2.i.i, %bb.g ]
   %.016.i.i = phi i64 [ %i.ah, %bb.e ], [ %i.ar, %bb.g ] ; 3 uses
   %.not.i.i = icmp eq i64 %.016.i.i, 0
   br i1 %.not.i.i, label %FullRead.exit.thread.i, label %bb.g
@@ -219,16 +218,13 @@ bb.g:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 %i.ao
   %i.ar = sub i64 %.016.i.i, %i.ao
   %.not21.i.i = icmp eq i32 %i.an, 0              ; 2 uses
-  %i.as = icmp ne i64 %i.ao, 0                    ; 2 uses
-  %..017..i.i = select i1 %i.as, i32 %.017.i.i, i32 0
-  %.2.i.i = select i1 %.not21.i.i, i32 %..017..i.i, i32 %i.an ; 3 uses
+  %i.as = icmp ne i64 %i.ao, 0
   %cond1.i.i = select i1 %.not21.i.i, i1 %i.as, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br i1 %cond1.i.i, label %bb.f, label %FullRead.exit.i, !llvm.loop !66
 
 FullRead.exit.i:                                  ; preds = %bb.g
-  %.not43.i = icmp eq i32 %.2.i.i, 0
-  br i1 %.not43.i, label %FullRead.exit.thread.i, label %MtThread_Process.exit.thread34
+  br i1 %.not21.i.i, label %FullRead.exit.thread.i, label %MtThread_Process.exit.thread34
 
 FullRead.exit.thread.i:                           ; preds = %bb.f, %FullRead.exit.i
   %.155.i = phi i64 [ %i.ap, %FullRead.exit.i ], [ %.0.i, %bb.f ] ; 2 uses
@@ -293,7 +289,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.cb, label %bb.o, label %MtThread_Process.exit.thread34
 
 MtThread_Process.exit.thread34:                   ; preds = %FullRead.exit.i, %FullRead.exit.thread.i, %bb.i, %bb.j, %bb.l, %bb.h, %bb.k
-  %.2.i.ph = phi i32 [ 9, %bb.k ], [ %i.bh, %bb.h ], [ 12, %bb.l ], [ 11, %bb.j ], [ 12, %bb.i ], [ 12, %FullRead.exit.thread.i ], [ %.2.i.i, %FullRead.exit.i ]
+  %.2.i.ph = phi i32 [ 9, %bb.k ], [ %i.bh, %bb.h ], [ 12, %bb.l ], [ 11, %bb.j ], [ 12, %bb.i ], [ 12, %FullRead.exit.thread.i ], [ %i.an, %FullRead.exit.i ]
   %i.cc = add i32 %i.n, -1
   %i.cd = icmp eq i32 %i.l, %i.cc
   %i.ce = add i32 %i.l, 1

@@ -205,11 +205,10 @@ bb.eg:                                            ; preds = %bb.ed
   %i.qq = zext nneg i32 %.2276563.i to i64
   %i.qr = shl nuw nsw i64 %i.qq, 9
   %i.qs = invoke noundef i32 @_ZN18CMemBlockManagerMt19AllocateSpaceAlwaysEPN8NWindows16NSynchronization8CSynchroEmm(ptr noundef nonnull align 8 dereferenceable(88) %19, ptr noundef nonnull %16, i64 noundef %i.qr, i64 noundef 0)
-          to label %bb.eh unwind label %bb.el     ; 3 uses
+          to label %bb.eh unwind label %bb.el     ; 2 uses
 
 bb.eh:                                            ; preds = %bb.eg
-  %.not392.i = icmp eq i32 %i.qs, 0               ; 2 uses
-  %..i = select i1 %.not392.i, i32 -2147467263, i32 %i.qs
+  %.not392.i = icmp eq i32 %i.qs, 0
   br i1 %.not392.i, label %.preheader607.i, label %.thread575.i
 
 .preheader607.i:                                  ; preds = %bb.eh
@@ -612,7 +611,7 @@ _ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i:        ; preds = %bb.jw, %_ZN8NArchiv
 
 .outer.outer.i:                                   ; preds = %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i, %.preheader.i
   %.promoted.i = phi i64 [ 0, %.preheader.i ], [ %.promoted1249.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ]
-  %.11358.ph.ph.i = phi i32 [ %..i, %.preheader.i ], [ %.11358.ph.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ]
+  %.11358.ph.ph.i = phi i32 [ -2147467263, %.preheader.i ], [ %.11358.ph.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ]
   %.0264.ph.ph.i = phi i32 [ 0, %.preheader.i ], [ %.0264.ph599.lcssa706.split.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ]
   %.0262.ph.ph.i = phi i32 [ 0, %.preheader.i ], [ %.1263.jt0.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ] ; 2 uses
   %.0261.ph.ph.i = phi i32 [ -1, %.preheader.i ], [ %.5.jt0.i, %_ZN8NArchive4NZip5CItemD2Ev.exit540.jt0.i ] ; 4 uses

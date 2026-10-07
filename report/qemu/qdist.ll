@@ -205,13 +205,13 @@ bb.i:                                             ; preds = %qdist_xmin.exit53
   %i.ag = fdiv double %i.ac, %i.k                 ; 2 uses
   %i.ah = fmul double %i.ag, 1.000000e+02
   %.037 = select i1 %.not46, double %i.ag, double %i.ah ; 2 uses
-  %4 = select i1 %3, ptr @.str.6, ptr @.str.7
-  %5 = fsub double %.0, %.037
-  %6 = fadd double %.0, %.037
-  %.039 = select i1 %3, double %.0, double %5
-  %.038 = select i1 %3, double %6, double %.0
+  %4 = fsub double %.0, %.037
+  %5 = fadd double %.0, %.037
+  %.040 = select i1 %3, ptr @.str.6, ptr @.str.7
+  %.039 = select i1 %3, double %.0, double %4
+  %.038 = select i1 %3, double %5, double %.0
   tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.a, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.5, i32 noundef %i.e, double noundef %.039) #12
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.a, ptr noundef nonnull @.str.9, i32 noundef %i.e, double noundef %.038, ptr noundef nonnull %4) #12
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.a, ptr noundef nonnull @.str.9, i32 noundef %i.e, double noundef %.038, ptr noundef nonnull %.040) #12
   br label %bb.j
 
 .critedge:                                        ; preds = %qdist_xmin.exit53

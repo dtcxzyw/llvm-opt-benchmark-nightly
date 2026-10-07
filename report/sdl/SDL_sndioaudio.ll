@@ -202,10 +202,9 @@ define internal noundef zeroext i1 @SNDIO_WaitDevice(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.b = load i8, ptr %i.a, align 4, !range !3, !noundef !4
-  %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
+  %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 8 uses
-  %1 = select i1 %i.c, i32 1, i32 4               ; 2 uses
   br i1 %i.c, label %.split, label %.split.us
 
 .split.us:                                        ; preds = %bb.a, %bb.f
@@ -227,7 +226,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call i32 %i.k(ptr noundef %i.m, ptr noundef %i.o, i32 noundef %1) #6 ; 2 uses
+  %i.p = tail call i32 %i.k(ptr noundef %i.m, ptr noundef %i.o, i32 noundef 4) #6 ; 2 uses
   %i.q = icmp slt i32 %i.p, 1
   br i1 %i.q, label %.thread, label %bb.d
 
@@ -275,7 +274,7 @@ bb.h:                                             ; preds = %bb.g
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.ao = load ptr, ptr %i.an, align 8
-  %i.ap = tail call i32 %i.ak(ptr noundef %i.am, ptr noundef %i.ao, i32 noundef %1) #6 ; 2 uses
+  %i.ap = tail call i32 %i.ak(ptr noundef %i.am, ptr noundef %i.ao, i32 noundef 1) #6 ; 2 uses
   %i.aq = icmp slt i32 %i.ap, 1
   br i1 %i.aq, label %.thread, label %bb.i
 

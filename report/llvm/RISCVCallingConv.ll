@@ -204,8 +204,7 @@ _ZN4llvm7CCState6addLocERKNS_11CCValAssignE.exit216.i: ; preds = %bb.ep, %bb.eo
 .critedge17.thread.sink.split.i:                  ; preds = %bb.ea, %bb.dg
   %i.si = getelementptr inbounds nuw i8, ptr %i.he, i64 656 ; 2 uses
   %i.sj = load i8, ptr %i.si, align 8, !tbaa !324, !range !320, !noundef !58
-  %i.sk = trunc nuw i8 %i.sj to i1                ; 2 uses
-  %24 = select i1 %i.sk, i16 8, i16 7             ; 4 uses
+  %i.sk = trunc nuw i8 %i.sj to i1
   br i1 %i.sk, label %bb.eq, label %.critedge19.i.thread
 
 bb.eq:                                            ; preds = %.critedge17.thread.sink.split.i
@@ -293,7 +292,7 @@ bb.eu:                                            ; preds = %_ZNK4llvm8TypeSizec
   %i.ty = getelementptr inbounds nuw i8, ptr %13, i64 22
   store i16 %1, ptr %i.ty, align 2, !tbaa !56, !alias.scope !385
   %i.tz = getelementptr inbounds nuw i8, ptr %13, i64 24
-  store i16 %24, ptr %i.tz, align 8, !tbaa !56, !alias.scope !385
+  store i16 8, ptr %i.tz, align 8, !tbaa !56, !alias.scope !385
   store i32 %.lcssa167, ptr %13, align 8, !tbaa !40, !alias.scope !385
   call void @_ZN4llvm7CCState6addLocERKNS_11CCValAssignE(ptr noundef nonnull align 8 dereferenceable(420) %7, ptr noundef nonnull align 8 dereferenceable(26) %13)
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #10
@@ -330,7 +329,7 @@ bb.ev:                                            ; preds = %_ZNK4llvm8TypeSizec
 
 .critedge19.i:                                    ; preds = %bb.et, %bb.em, %bb.eg, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i199.i, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit200.i, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit214.i, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit228.i, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i227.i, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i213.i, %.critedge13.thread173.thread.thread.i
   %.pre-phi = phi i32 [ %i.qo, %bb.em ], [ %i.ol, %bb.eg ], [ %.pre, %.critedge13.thread173.thread.thread.i ], [ %i.ol, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i199.i ], [ %i.ol, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit200.i ], [ %i.qo, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit214.i ], [ %i.so, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit228.i ], [ %i.so, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i227.i ], [ %i.qo, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i213.i ], [ %i.so, %bb.et ]
-  %i.uk = phi i16 [ %i.qk, %bb.em ], [ %i.oh, %bb.eg ], [ %i.oc, %.critedge13.thread173.thread.thread.i ], [ %i.oh, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i199.i ], [ %i.oh, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit200.i ], [ %i.qk, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit214.i ], [ %24, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit228.i ], [ %24, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i227.i ], [ %i.qk, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i213.i ], [ %24, %bb.et ] ; 5 uses
+  %i.uk = phi i16 [ %i.qk, %bb.em ], [ %i.oh, %bb.eg ], [ %i.oc, %.critedge13.thread173.thread.thread.i ], [ %i.oh, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i199.i ], [ %i.oh, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit200.i ], [ %i.qk, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit214.i ], [ 8, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit228.i ], [ 8, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i227.i ], [ %i.qk, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i213.i ], [ 8, %bb.et ] ; 5 uses
   %or.cond.i231.i = icmp eq i32 %.pre-phi, 3      ; 2 uses
   %spec.select.i232.i = select i1 %or.cond.i231.i, i64 6, i64 12 ; 7 uses
   %spec.select3.i233.i = select i1 %or.cond.i231.i, ptr @_ZZL16getFastCCArgGPRsN4llvm8RISCVABI3ABIEE11FastCCEGPRs, ptr @_ZZL16getFastCCArgGPRsN4llvm8RISCVABI3ABIEE11FastCCIGPRs ; 7 uses

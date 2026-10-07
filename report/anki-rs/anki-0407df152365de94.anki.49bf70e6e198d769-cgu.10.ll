@@ -204,8 +204,7 @@ bb.ax:                                            ; preds = %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   store ptr %i.ax, ptr %i.t, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
-  %i.gj = icmp ugt i64 %i.ge, 2                   ; 2 uses
-  %.sroa.0220.2 = select i1 %i.gj, i64 3, i64 2   ; 3 uses
+  %i.gj = icmp ugt i64 %i.ge, 2
   br i1 %i.gj, label %bb.ay, label %.thread404.invoke, !prof !35
 
 bb.ay:                                            ; preds = %bb.ax
@@ -228,17 +227,16 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  %3 = icmp ult i64 %.sroa.0220.2, %i.ge          ; 2 uses
-  %4 = zext i1 %3 to i64
-  %.sroa.0220.3 = add nuw nsw i64 %.sroa.0220.2, %4 ; 3 uses
-  br i1 %3, label %bb.ba, label %bb.bb, !prof !35
+  %.not615 = icmp eq i64 %i.ge, 3                 ; 2 uses
+  %.sroa.0220.3 = select i1 %.not615, i64 3, i64 4 ; 3 uses
+  br i1 %.not615, label %bb.bb, label %bb.ba, !prof !15
 
 bb.ba:                                            ; preds = %bb.az
   store ptr %i.gc, ptr %i.p, align 8
   store i64 %i.ge, ptr %.sroa.692.0..sroa_idx93, align 8
   store ptr %i.gg, ptr %.sroa.692.sroa.0.sroa.4.0..sroa.692.0..sroa_idx93.sroa_idx, align 8
   store ptr %i.gi, ptr %.sroa.692.sroa.0.sroa.5.0..sroa.692.0..sroa_idx93.sroa_idx, align 8
-  store i64 %.sroa.0220.2, ptr %.sroa.692.sroa.4.0..sroa.692.0..sroa_idx93.sroa_idx, align 8
+  store i64 3, ptr %.sroa.692.sroa.4.0..sroa.692.0..sroa_idx93.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.gn = load ptr, ptr %i.cb, align 8, !nonnull !13, !noundef !13 ; 2 uses
@@ -446,8 +444,7 @@ bb.bp:                                            ; preds = %bb.bo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak)
   store ptr %i.ax, ptr %i.ak, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj)
-  %i.gy = icmp ugt i64 %i.ff, 2                   ; 2 uses
-  %.sroa.0165.2 = select i1 %i.gy, i64 3, i64 2   ; 3 uses
+  %i.gy = icmp ugt i64 %i.ff, 2
   br i1 %i.gy, label %bb.bq, label %.thread404.invoke, !prof !35
 
 bb.bq:                                            ; preds = %bb.bp
@@ -470,17 +467,16 @@ bb.bq:                                            ; preds = %bb.bp
 bb.br:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
-  %5 = icmp ult i64 %.sroa.0165.2, %i.ff          ; 2 uses
-  %6 = zext i1 %5 to i64
-  %.sroa.0165.3 = add nuw nsw i64 %.sroa.0165.2, %6 ; 3 uses
-  br i1 %5, label %bb.bs, label %bb.bt, !prof !35
+  %.not614 = icmp eq i64 %i.ff, 3                 ; 2 uses
+  %.sroa.0165.3 = select i1 %.not614, i64 3, i64 4 ; 3 uses
+  br i1 %.not614, label %bb.bt, label %bb.bs, !prof !15
 
 bb.bs:                                            ; preds = %bb.br
   store ptr %i.fd, ptr %i.ag, align 8
   store i64 %i.ff, ptr %.sroa.650.0..sroa_idx51, align 8
   store ptr %i.fh, ptr %.sroa.650.sroa.0.sroa.4.0..sroa.650.0..sroa_idx51.sroa_idx, align 8
   store ptr %i.fj, ptr %.sroa.650.sroa.0.sroa.5.0..sroa.650.0..sroa_idx51.sroa_idx, align 8
-  store i64 %.sroa.0165.2, ptr %.sroa.650.sroa.4.0..sroa.650.0..sroa_idx51.sroa_idx, align 8
+  store i64 3, ptr %.sroa.650.sroa.4.0..sroa.650.0..sroa_idx51.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   %i.hc = load ptr, ptr %i.cb, align 8, !nonnull !13, !noundef !13 ; 2 uses

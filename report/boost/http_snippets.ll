@@ -205,8 +205,7 @@ bb.a:
   %i.i = icmp ne i8 %i.h, 0
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.l = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_recv1EiPvmibRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, i1 noundef zeroext %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.k) ; 2 uses
-  %1 = zext i1 %i.l to i32
+  %i.l = tail call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops18non_blocking_recv1EiPvmibRNS_6system10error_codeERm(i32 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i, i64 noundef %.sroa.2.0.copyload.i, i32 noundef %i.e, i1 noundef zeroext %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.k)
   br i1 %i.l, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -227,7 +226,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.p = phi i64 [ %.sroa.2.0.copyload.i22, %bb.d ], [ 1, %bb.c ]
   %i.q = icmp ult i64 %i.o, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %1
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.b, %bb.a
@@ -630,8 +629,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !576
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -646,7 +644,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !831
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -1049,8 +1047,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !592
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -1065,7 +1062,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !844
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -1468,8 +1465,7 @@ bb.a:
   %i.u = load i32, ptr %i.t, align 8, !tbaa !613
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.x = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.r, ptr noundef nonnull %3, i64 noundef %i.s, i32 noundef %i.u, ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %i.w) ; 2 uses
-  %4 = zext i1 %i.x to i32
+  %i.x = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.r, ptr noundef nonnull %3, i64 noundef %i.s, i32 noundef %i.u, ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %i.w)
   br i1 %i.x, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -1484,7 +1480,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 1032
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !852
   %i.ae = icmp ult i64 %i.ab, %i.ad
-  %spec.select = select i1 %i.ae, i32 2, i32 %4
+  %spec.select = select i1 %i.ae, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -1887,8 +1883,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !630
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -1903,7 +1898,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !863
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -2306,8 +2301,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !644
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -2322,7 +2316,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !874
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -2725,8 +2719,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !658
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -2741,7 +2734,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !885
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -3144,8 +3137,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !672
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -3160,7 +3152,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !896
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -3563,8 +3555,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !700
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
-  %2 = zext i1 %i.j to i32
+  %i.j = call noundef zeroext i1 @_ZN5boost4asio6detail10socket_ops17non_blocking_sendEiPK5iovecmiRNS_6system10error_codeERm(i32 noundef %i.c, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i)
   br i1 %i.j, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -3579,7 +3570,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 1032
   %i.p = load i64, ptr %i.o, align 8, !tbaa !907
   %i.q = icmp ult i64 %i.n, %i.p
-  %spec.select = select i1 %i.q, i32 2, i32 %2
+  %spec.select = select i1 %i.q, i32 2, i32 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a

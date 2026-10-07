@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
-  %.fr.i = phi i1 [ false, %bb.bf ], [ %.not57.i, %bb.bg ] ; 2 uses
+  %.fr.i = phi i1 [ false, %bb.bf ], [ %.not57.i, %bb.bg ]
   %i.mt = getelementptr inbounds nuw i8, ptr %i.mn, i64 348
   store i32 1, ptr %i.mt, align 4, !tbaa !101
   call void @ff_metadata_conv_ctx(ptr noundef nonnull %0, ptr noundef nonnull @ff_mkv_metadata_conv, ptr noundef null) #14
@@ -223,7 +223,6 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
 .lr.ph.i115:                                      ; preds = %.preheader73.i
   %i.mz = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.na = getelementptr inbounds nuw i8, ptr %i.mn, i64 120 ; 2 uses
-  %3 = select i1 %.fr.i, i32 36, i32 0            ; 2 uses
   br i1 %.fr.i, label %.lr.ph.split.i, label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i115, %.thread.us.i
@@ -245,7 +244,7 @@ bb.bi:                                            ; preds = %.lr.ph.split.us.i
   %i.nm = load ptr, ptr %i.nl, align 8, !tbaa !78
   %i.nn = getelementptr inbounds nuw i8, ptr %i.nk, i64 8
   %i.no = load i64, ptr %i.nn, align 8, !tbaa !100
-  %i.np = call fastcc i32 @mkv_write_tag(ptr noundef nonnull %i.mn, ptr noundef %i.nm, ptr noundef nonnull %i.mv, i32 noundef %3, i32 noundef 25541, i64 noundef %i.no) ; 2 uses
+  %i.np = call fastcc i32 @mkv_write_tag(ptr noundef nonnull %i.mn, ptr noundef %i.nm, ptr noundef nonnull %i.mv, i32 noundef 0, i32 noundef 25541, i64 noundef %i.no) ; 2 uses
   %i.nq = icmp sgt i32 %i.np, -1
   br i1 %i.nq, label %..thread.us_crit_edge.i, label %mkv_write_tags.exit.thread
 
@@ -279,7 +278,7 @@ bb.bj:                                            ; preds = %.lr.ph.split.i
   %i.of = load ptr, ptr %i.oe, align 8, !tbaa !78
   %i.og = getelementptr inbounds nuw i8, ptr %i.nz, i64 8
   %i.oh = load i64, ptr %i.og, align 8, !tbaa !100
-  %i.oi = call fastcc i32 @mkv_write_tag(ptr noundef nonnull %i.mn, ptr noundef %i.of, ptr noundef nonnull %i.mv, i32 noundef %3, i32 noundef 25541, i64 noundef %i.oh) ; 2 uses
+  %i.oi = call fastcc i32 @mkv_write_tag(ptr noundef nonnull %i.mn, ptr noundef %i.of, ptr noundef nonnull %i.mv, i32 noundef 36, i32 noundef 25541, i64 noundef %i.oh) ; 2 uses
   %i.oj = icmp sgt i32 %i.oi, -1
   br i1 %i.oj, label %bb.bk, label %mkv_write_tags.exit.thread
 

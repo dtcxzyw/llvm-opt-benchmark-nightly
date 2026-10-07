@@ -204,12 +204,12 @@ bb.a:
 define void @_RNvMCs8yaccCKGz54_10ruff_graphNtB2_13ModuleImports6detect(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noundef nonnull align 8 %1, i32 noundef range(i32 1, 0) %2, i32 noundef %3, ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %4, ptr noalias noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %6, ptr noalias noundef readonly captures(address, read_provenance) %7, i64 %8, i64 noundef %9, i1 noundef zeroext %10, i1 noundef zeroext %11) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
-  %i.b = alloca [24 x i8], align 8                ; 4 uses
+  %i.b = alloca [24 x i8], align 8                ; 11 uses
   %i.c = alloca [64 x i8], align 8                ; 5 uses
   %i.d = alloca [32 x i8], align 8                ; 5 uses
   %i.e = alloca [32 x i8], align 8                ; 8 uses
   %i.f = alloca [24 x i8], align 8                ; 4 uses
-  %i.g = alloca [24 x i8], align 8                ; 7 uses
+  %i.g = alloca [24 x i8], align 8                ; 9 uses
   %i.h = alloca [64 x i8], align 8                ; 12 uses
   %i.i = alloca [24 x i8], align 8                ; 8 uses
   %i.j = alloca [24 x i8], align 8                ; 12 uses
@@ -424,8 +424,8 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs8yaccCKGz54_10
           cleanup
   br label %bb.r
 
-bb.r:                                             ; preds = %.loopexit.split-lp, %.loopexit.a
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.a ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.r:                                             ; preds = %.loopexit.split.us, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split, %.loopexit.a, %.loopexit.split-lp
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit.us, %.loopexit.split.us ], [ %lpad.loopexit, %.loopexit.a ], [ %lpad.loopexit.us91, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split ]
   invoke void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs8yaccCKGz54_10ruff_graph9collector15CollectedImportENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBZ_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.e)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCs8yaccCKGz54_10ruff_graph9collector15CollectedImportEEB1s_.exit unwind label %bb.ac
 
@@ -492,63 +492,126 @@ bb.w:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   ret void
 
 bb.x:                                             ; preds = %bb.s
-  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8
+  %.sroa.3.0.copyload.fr = freeze i64 %.sroa.3.0.copyload ; 4 uses
   %.sroa.554.0.copyload = load ptr, ptr %.sroa.554.0..sroa_idx, align 8
+  %.sroa.6.0.copyload.fr = freeze ptr %.sroa.554.0.copyload ; 5 uses
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.855.0.copyload = load ptr, ptr %.sroa.855.0..sroa_idx, align 8
-  br label %bb.y
+  %.sroa.9.0.copyload.fr = freeze ptr %.sroa.855.0.copyload ; 5 uses
+  %.not.jt0.i = icmp eq ptr %.sroa.6.0.copyload.fr, null ; 2 uses
+  %.not.jt2.i = icmp eq ptr %.sroa.9.0.copyload.fr, null
+  br i1 %.not.jt2.i, label %.split.us, label %.split
 
-bb.y:                                             ; preds = %.backedge, %bb.x
-  %.sroa.6.1 = phi i64 [ %.sroa.6.0.copyload, %bb.x ], [ %.sroa.6.2, %.backedge ]
-  %.sroa.3.1 = phi i64 [ %.sroa.3.0.copyload, %bb.x ], [ %.sroa.3.3, %.backedge ]
-  %12 = phi i64 [ %.sroa.6.0.copyload, %bb.x ], [ %.be, %.backedge ] ; 2 uses
-  %spec.store.select.i.i.i13.i = phi i64 [ %.sroa.3.0.copyload, %bb.x ], [ %spec.store.select.i.i.i13.i.be, %.backedge ]
-  switch i64 %spec.store.select.i.i.i13.i, label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split [
+.split.us:                                        ; preds = %bb.x
+  switch i64 %.sroa.3.0.copyload.fr, label %bb.y [
     i64 -1, label %bb.z
-    i64 2, label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
-    i64 1, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i
+    i64 2, label %bb.z
   ]
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split: ; preds = %bb.y
-  br label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
+bb.y:                                             ; preds = %.split.us
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.fr, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.fr, i64 16
+  %14 = icmp ne i64 %.sroa.3.0.copyload.fr, 1
+  %brmerge124 = or i1 %.not.jt0.i, %14
+  br i1 %brmerge124, label %bb.z, label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i: ; preds = %bb.y, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split
-  %.sroa.3.2 = phi i64 [ %.sroa.3.1, %bb.y ], [ 2, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split ]
-  switch i64 %12, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i [
+_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us: ; preds = %bb.y
+  %15 = load i64, ptr %.sroa.6.0.copyload.fr, align 8, !range !13, !noundef !3
+  %16 = icmp eq i64 %15, 0
+  br i1 %16, label %17, label %bb.z
+
+17:                                               ; preds = %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us
+  %18 = load ptr, ptr %12, align 8, !nonnull !3, !noundef !3
+  %19 = load i64, ptr %13, align 8, !noundef !3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  invoke void @_RNvMNtNtCs56aZGHL6Dc6_7ruff_db6system4pathNtB2_10SystemPath11to_path_buf(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %18, i64 noundef %19)
+          to label %20 unwind label %.loopexit.split.us
+
+20:                                               ; preds = %17
+  %21 = invoke noundef zeroext i1 @_RNvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtB7_7set_val9SetValZSTE6insertCs8yaccCKGz54_10ruff_graph(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)
+          to label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit unwind label %.loopexit.split.us ; 0 uses
+
+.loopexit.split.us:                               ; preds = %20, %17
+  %lpad.loopexit.us = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.r
+
+.split:                                           ; preds = %bb.x
+  br i1 %.not.jt0.i, label %.split.split.us.preheader, label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
+
+.split.split.us.preheader:                        ; preds = %.split
+  %22 = getelementptr inbounds nuw i8, ptr %.sroa.9.0.copyload.fr, i64 8
+  %23 = getelementptr inbounds nuw i8, ptr %.sroa.9.0.copyload.fr, i64 16
+  %.not125 = icmp eq i64 %.sroa.3.0.copyload.fr, -1
+  br i1 %.not125, label %bb.z, label %switch.early.test
+
+switch.early.test:                                ; preds = %.split.split.us.preheader
+  switch i64 %.sroa.6.0.copyload, label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us86 [
     i64 2, label %bb.z
     i64 0, label %bb.z
   ]
 
-_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i, %bb.y
-  %.sroa.6.2 = phi i64 [ %.sroa.6.1, %bb.y ], [ 0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ] ; 3 uses
-  %.sroa.3.3 = phi i64 [ 0, %bb.y ], [ %.sroa.3.2, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ] ; 3 uses
-  %i.bm = phi i64 [ %12, %bb.y ], [ 0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ]
-  %spec.store.select.i.i.i11.i = phi i64 [ 0, %bb.y ], [ 2, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ]
-  %.sroa.3.0.i10.i = phi ptr [ %.sroa.554.0.copyload, %bb.y ], [ %.sroa.855.0.copyload, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ] ; 4 uses
-  %.not.i = icmp eq ptr %.sroa.3.0.i10.i, null
-  br i1 %.not.i, label %.backedge, label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit
+_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us86: ; preds = %switch.early.test
+  %24 = load i64, ptr %.sroa.9.0.copyload.fr, align 8, !range !13, !noundef !3
+  %25 = icmp eq i64 %24, 0
+  br i1 %25, label %26, label %bb.z
 
-.backedge:                                        ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit, %_RNvMCs8yaccCKGz54_10ruff_graphNtB2_13ModuleImports6insert.exit
-  %.be = phi i64 [ %i.bm, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i ], [ %.sroa.6.2, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit ], [ %.sroa.6.2, %_RNvMCs8yaccCKGz54_10ruff_graphNtB2_13ModuleImports6insert.exit ]
-  %spec.store.select.i.i.i13.i.be = phi i64 [ %spec.store.select.i.i.i11.i, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i ], [ %.sroa.3.3, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit ], [ %.sroa.3.3, %_RNvMCs8yaccCKGz54_10ruff_graphNtB2_13ModuleImports6insert.exit ]
-  br label %bb.y
+26:                                               ; preds = %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us86
+  %27 = load ptr, ptr %22, align 8, !nonnull !3, !noundef !3
+  %28 = load i64, ptr %23, align 8, !noundef !3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  invoke void @_RNvMNtNtCs56aZGHL6Dc6_7ruff_db6system4pathNtB2_10SystemPath11to_path_buf(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %27, i64 noundef %28)
+          to label %29 unwind label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split
 
-_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit: ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i
-  %13 = load i64, ptr %.sroa.3.0.i10.i, align 8, !range !13, !noundef !3
-  %14 = icmp eq i64 %13, 0
-  br i1 %14, label %bb.aa, label %.backedge
+29:                                               ; preds = %26
+  %30 = invoke noundef zeroext i1 @_RNvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtB7_7set_val9SetValZSTE6insertCs8yaccCKGz54_10ruff_graph(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)
+          to label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit unwind label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split ; 0 uses
 
-bb.z:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i, %bb.y
+_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i.fold.split: ; preds = %29, %26
+  %lpad.loopexit.us91 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.r
+
+_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i: ; preds = %.split, %.backedge
+  %.sroa.7.0 = phi i64 [ %spec.store.select.i.i.i11.i, %.backedge ], [ %.sroa.6.0.copyload, %.split ] ; 2 uses
+  %.sroa.3.2 = phi i64 [ %i.bm, %.backedge ], [ %.sroa.3.0.copyload.fr, %.split ]
+  switch i64 %.sroa.3.2, label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i [
+    i64 -1, label %bb.z
+    i64 1, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i
+  ]
+
+_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
+  %31 = and i64 %.sroa.7.0, 1
+  %or.cond = icmp eq i64 %31, 0
+  br i1 %or.cond, label %bb.z, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i
+
+_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
+  %.sroa.0.0.i67 = phi ptr [ %.sroa.9.0.copyload.fr, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i ], [ %.sroa.6.0.copyload.fr, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ] ; 3 uses
+  %i.bm = phi i64 [ 2, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i ], [ 0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ]
+  %spec.store.select.i.i.i11.i = phi i64 [ 0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i ], [ %.sroa.7.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i ]
+  %32 = load i64, ptr %.sroa.0.0.i67, align 8, !range !13, !noundef !3
+  %.not.i = icmp eq i64 %32, 0
+  br i1 %.not.i, label %bb.aa, label %.backedge
+
+.backedge:                                        ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i, %_RNvMCs8yaccCKGz54_10ruff_graphNtB2_13ModuleImports6insert.exit
+  br label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i
+
+_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit: ; preds = %29, %20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br label %bb.z
+
+bb.z:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.i, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceINtNtB8_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8yaccCKGz54_10ruff_graph.exit.thread.i.i.preheader.i, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit, %.split.split.us.preheader, %switch.early.test, %switch.early.test, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us86, %bb.y, %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit.thread60.us, %.split.us, %.split.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.bn = load ptr, ptr %.sroa.619.0..sroa_idx, align 8, !alias.scope !502, !noalias !500, !nonnull !3, !noundef !3
   %i.bo = load ptr, ptr %.sroa.417.0..sroa_idx, align 8, !alias.scope !502, !noalias !500, !nonnull !3, !noundef !3 ; 2 uses
   %i.bp = icmp eq ptr %i.bo, %i.bn
   br i1 %i.bp, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs8yaccCKGz54_10ruff_graph9collector15CollectedImportENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit.thread, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs8yaccCKGz54_10ruff_graph9collector15CollectedImportENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit
 
-bb.aa:                                            ; preds = %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1v_EINtB20_8IntoIterB2j_EENtNtNtB9_6traits8iterator8Iterator4nextCs8yaccCKGz54_10ruff_graph.exit
-  %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.3.0.i10.i, i64 8
+bb.aa:                                            ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceINtNtBb_6option6OptionRNtNtNtCs56aZGHL6Dc6_7ruff_db5files4path8FilePathEEB1i_EEINtB5_8FuseImplBY_E4nextCs8yaccCKGz54_10ruff_graph.exit.thread7.i
+  %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i67, i64 8
   %i.br = load ptr, ptr %i.bq, align 8, !nonnull !3, !noundef !3
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.3.0.i10.i, i64 16
+  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i67, i64 16
   %i.bt = load i64, ptr %i.bs, align 8, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   invoke void @_RNvMNtNtCs56aZGHL6Dc6_7ruff_db6system4pathNtB2_10SystemPath11to_path_buf(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.br, i64 noundef %i.bt)

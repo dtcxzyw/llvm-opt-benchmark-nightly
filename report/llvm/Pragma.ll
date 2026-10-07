@@ -204,8 +204,7 @@ _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.ag, %bb
   br i1 %i.fh, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit, %bb.ad
-  %i.fi = icmp eq i32 %.2118266, 1                ; 2 uses
-  %spec.store.select = zext i1 %i.fi to i8
+  %i.fi = icmp eq i32 %.2118266, 1
   br i1 %i.fi, label %bb.ah, label %.loopexit
 
 bb.ah:                                            ; preds = %._crit_edge
@@ -228,7 +227,7 @@ bb.ah:                                            ; preds = %._crit_edge
 bb.ai:                                            ; preds = %.lr.ph287
   %.sroa.0184.0.extract.trunc = trunc i64 %i.fo to i32
   %i.fq = load ptr, ptr %i.bz, align 8, !tbaa !282
-  %i.fr = call noundef zeroext i1 @_ZN5clang17DiagnosticsEngine19setSeverityForGroupENS_4diag6FlavorENS1_5GroupENS1_8SeverityENS_14SourceLocationE(ptr noundef nonnull align 8 dereferenceable(15256) %i.fq, i32 noundef 0, i32 noundef %.sroa.0184.0.extract.trunc, i8 noundef zeroext %spec.store.select, i32 %i.d) #23 ; 0 uses
+  %i.fr = call noundef zeroext i1 @_ZN5clang17DiagnosticsEngine19setSeverityForGroupENS_4diag6FlavorENS1_5GroupENS1_8SeverityENS_14SourceLocationE(ptr noundef nonnull align 8 dereferenceable(15256) %i.fq, i32 noundef 0, i32 noundef %.sroa.0184.0.extract.trunc, i8 noundef zeroext 1, i32 %i.d) #23 ; 0 uses
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %.lr.ph287

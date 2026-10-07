@@ -205,10 +205,10 @@ bb.a:
   %i.d = alloca [64 x i8], align 8                ; 10 uses
   %i.e = alloca [16 x i8], align 8                ; 4 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
-  %i.g = alloca [8 x i8], align 8                 ; 4 uses
-  %i.h = alloca [16 x i8], align 8                ; 6 uses
-  %i.i = alloca [1 x i8], align 1                 ; 4 uses
-  %i.j = alloca [8 x i8], align 8                 ; 4 uses
+  %i.g = alloca [8 x i8], align 8                 ; 6 uses
+  %i.h = alloca [16 x i8], align 8                ; 7 uses
+  %i.i = alloca [1 x i8], align 1                 ; 5 uses
+  %i.j = alloca [8 x i8], align 8                 ; 5 uses
   %i.k = alloca [16 x i8], align 8                ; 6 uses
   %i.l = alloca [16 x i8], align 8                ; 5 uses
   %i.m = alloca [1056 x i8], align 8              ; 3 uses
@@ -308,20 +308,23 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_li
   store i8 %storemerge, ptr %i.i, align 1
   br i1 %i.am, label %bb.e, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
 
-bb.e:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit ], [ %i.ao, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit ]
+bb.e:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   store ptr %i.i, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr @18, ptr %i.g, align 8, !captures !4
-  %i.ap = icmp eq i8 %0, 0
+  %i.ap = icmp eq i8 %i.ao, 0
   br i1 %i.ap, label %bb.g, label %bb.f, !prof !21
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
   call void @_RNvXs7_NtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epollNtB5_10EpollGuardNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h) #12
-  br label %bb.e
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
+  store ptr %i.i, ptr %i.j, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
+  store ptr @18, ptr %i.g, align 8, !captures !4
+  br label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsd8n3bqkFlU6_17iceoryx2_bb_linux5epoll10EpollGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.aq = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #12 ; 2 uses
   %spec.select = select i1 %i.aq, ptr @8, ptr inttoptr (i64 1 to ptr)
@@ -392,10 +395,10 @@ bb.a:
   %i.d = alloca [64 x i8], align 8                ; 10 uses
   %i.e = alloca [16 x i8], align 8                ; 4 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
-  %i.g = alloca [8 x i8], align 8                 ; 4 uses
-  %i.h = alloca [16 x i8], align 8                ; 6 uses
-  %i.i = alloca [1 x i8], align 1                 ; 4 uses
-  %i.j = alloca [8 x i8], align 8                 ; 4 uses
+  %i.g = alloca [8 x i8], align 8                 ; 6 uses
+  %i.h = alloca [16 x i8], align 8                ; 7 uses
+  %i.i = alloca [1 x i8], align 1                 ; 5 uses
+  %i.j = alloca [8 x i8], align 8                 ; 5 uses
   %i.k = alloca [16 x i8], align 8                ; 6 uses
   %i.l = alloca [16 x i8], align 8                ; 5 uses
   %i.m = alloca [1056 x i8], align 8              ; 3 uses
@@ -492,20 +495,23 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_po
   store i8 %storemerge, ptr %i.i, align 1
   br i1 %i.am, label %bb.e, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
 
-bb.e:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
-  %0 = phi i8 [ -1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit ], [ %i.ao, %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit ]
+bb.e:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   store ptr %i.i, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr @18, ptr %i.g, align 8, !captures !4
-  %i.ap = icmp eq i8 %0, 0
+  %i.ap = icmp eq i8 %i.ao, 0
   br i1 %i.ap, label %bb.g, label %bb.f, !prof !21
 
 _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorE6unwrapCs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit
   call void @_RNvXs_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_setNtB4_22FileDescriptorSetGuardNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h) #12
-  br label %bb.e
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
+  store ptr %i.i, ptr %i.j, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
+  store ptr @18, ptr %i.g, align 8, !captures !4
+  br label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix19file_descriptor_set22FileDescriptorSetGuardNtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor18ReactorAttachErrorEECs30iCg3ulVG3_37iceoryx2_cal_conformance_tests_common.exit, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.aq = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #12 ; 2 uses
   %spec.select = select i1 %i.aq, ptr @8, ptr inttoptr (i64 1 to ptr)
@@ -908,7 +914,7 @@ attributes #15 = { inlinehint nounwind }
 !18 = !{i32 0, i32 3}
 !19 = !{i32 0, i32 8}
 !20 = !{i64 4}
-!21 = !{!"branch_weights", i32 4000000, i32 4001}
+!21 = !{!"branch_weights", i32 -2147483648, i32 0}
 !22 = !{!"branch_weights", i32 -2146410, i32 2146410}
 !23 = !{i64 0, i64 3}
 !24 = !{!"llvm.loop.unroll.disable"}

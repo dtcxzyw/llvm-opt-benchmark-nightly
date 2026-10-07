@@ -204,7 +204,7 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stri
 bb.ad:                                            ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit97, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit
   %i.fy = add i64 %.028180, 5                     ; 3 uses
   %i.fz = icmp ugt i64 %i.fy, %i.fk
-  br i1 %i.fz, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139, label %bb.ae
+  br i1 %i.fz, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139.thread, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ga = getelementptr i8, ptr %i.fn, i64 %i.fk  ; 2 uses
@@ -274,7 +274,7 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stri
 bb.ak:                                            ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit112
   %i.hb = add i64 %.028180, 5                     ; 3 uses
   %i.hc = icmp ugt i64 %i.hb, %i.fk
-  br i1 %i.hc, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139, label %bb.al
+  br i1 %i.hc, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139.thread, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.hd = getelementptr i8, ptr %i.fn, i64 %i.fk  ; 2 uses
@@ -396,13 +396,13 @@ _ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.
           cleanup
   br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit
 
-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139.thread: ; preds = %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105, %bb.ae, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121, %bb.al, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5eraseEmm.exit126, %bb.as, %.lr.ph.i.i.i128, %bb.ao, %bb.am, %bb.ah, %bb.af
+_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139.thread: ; preds = %bb.ad, %bb.ak, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105, %bb.ae, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121, %bb.al, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5eraseEmm.exit126, %bb.as, %.lr.ph.i.i.i128, %bb.ao, %bb.am, %bb.ah, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br label %._crit_edge182.loopexit
 
-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139: ; preds = %bb.ak, %bb.ad, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105
-  %.129 = phi i64 [ %i.ia, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121 ], [ %i.gx, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105 ], [ %i.jg, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135 ], [ -1, %bb.ad ], [ -1, %bb.ak ] ; 2 uses
+_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit139: ; preds = %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105
+  %.129 = phi i64 [ %i.ia, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i121 ], [ %i.gx, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i105 ], [ %i.jg, %_ZNSt3__118__search_substringB8ne180100IcNS_11char_traitsIcEEEEPKT_S5_S5_S5_S5_.exit.i.i135 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   %.not36 = icmp eq i64 %.129, -1

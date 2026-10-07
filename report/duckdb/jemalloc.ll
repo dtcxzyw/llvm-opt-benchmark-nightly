@@ -205,27 +205,27 @@ bb.q:                                             ; preds = %bb.p, %sz_size2inde
   %i.dh = getelementptr inbounds nuw i8, ptr %.0.i132152, i64 16 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.dj = getelementptr inbounds nuw i8, ptr %.0.i132152, i64 840
+  %.not230 = icmp eq i64 %1, 0
+  br i1 %.not230, label %.critedge, label %bb.r
+
+bb.r:                                             ; preds = %bb.q
   %5 = insertelement <2 x ptr> poison, ptr %i.de, i64 0
   %6 = insertelement <2 x ptr> %5, ptr %i.dg, i64 1
   %7 = insertelement <2 x ptr> poison, ptr %i.dh, i64 0
   %8 = insertelement <2 x ptr> %7, ptr %i.dj, i64 1
-  br label %bb.r
+  br label %bb.s
 
-bb.r:                                             ; preds = %select.unfold, %bb.q
-  %.0146 = phi ptr [ null, %bb.q ], [ %.5, %select.unfold ] ; 3 uses
-  %.0103 = phi i64 [ 0, %bb.q ], [ %.6, %select.unfold ] ; 8 uses
-  %.099 = phi ptr [ null, %bb.q ], [ %.3102, %select.unfold ] ; 9 uses
-  %9 = icmp ult i64 %.0103, %1
-  br i1 %9, label %bb.s, label %.critedge
-
-bb.s:                                             ; preds = %bb.r
-  %i.dk = sub nuw i64 %1, %.0103                  ; 6 uses
+bb.s:                                             ; preds = %bb.r, %select.unfold
+  %.099223 = phi ptr [ %.2101, %select.unfold ], [ null, %bb.r ] ; 8 uses
+  %.0103222 = phi i64 [ %.6, %select.unfold ], [ 0, %bb.r ] ; 6 uses
+  %.0146221 = phi ptr [ %.4, %select.unfold ], [ null, %bb.r ] ; 3 uses
+  %i.dk = sub nuw i64 %1, %.0103222               ; 6 uses
   %.not = icmp ult i64 %i.dk, %.098
   %or.cond = select i1 %i.cn, i1 true, i1 %.not, !prof !160
   br i1 %or.cond, label %bb.ae, label %bb.t, !prof !160
 
 bb.t:                                             ; preds = %bb.s
-  %i.dl = icmp eq ptr %.0146, null
+  %i.dl = icmp eq ptr %.0146221, null
   br i1 %i.dl, label %bb.u, label %arena_get_from_ind.exit.thread168
 
 bb.u:                                             ; preds = %bb.t
@@ -291,20 +291,20 @@ bb.ad:                                            ; preds = %bb.aa
 arena_get_from_ind.exit:                          ; preds = %bb.x, %bb.z, %bb.ab, %bb.ac, %bb.ad
   %.1147 = phi ptr [ %i.dy, %bb.z ], [ %i.dy, %bb.ab ], [ %i.dy, %bb.ac ], [ %i.dy, %bb.ad ], [ %i.dv, %bb.x ] ; 2 uses
   %.not195 = icmp eq ptr %.1147, null
-  br i1 %.not195, label %select.unfold, label %arena_get_from_ind.exit.thread168
+  br i1 %.not195, label %.critedge, label %arena_get_from_ind.exit.thread168
 
 arena_get_from_ind.exit.thread168:                ; preds = %mallocx_arena_get.exit, %bb.y, %bb.w, %arena_get.exit, %arena_get_from_ind.exit, %bb.t
-  %.3148 = phi ptr [ %.1147, %arena_get_from_ind.exit ], [ %.0146, %bb.t ], [ %i.dw, %bb.y ], [ %i.dt, %bb.w ], [ %i.do, %arena_get.exit ], [ %i.dm, %mallocx_arena_get.exit ] ; 2 uses
+  %.3148 = phi ptr [ %.1147, %arena_get_from_ind.exit ], [ %.0146221, %bb.t ], [ %i.dw, %bb.y ], [ %i.dt, %bb.w ], [ %i.do, %arena_get.exit ], [ %i.dm, %mallocx_arena_get.exit ] ; 2 uses
   %i.ec = urem i64 %i.dk, %.098
   %i.ed = sub nuw i64 %i.dk, %i.ec
-  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0103
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0103222
   %i.ef = call i64 @duckdb_je_arena_fill_small_fresh(ptr noundef nonnull %.0.i132152, ptr noundef nonnull %.3148, i32 noundef %.0.i125, ptr noundef %i.ee, i64 noundef %i.ed, i1 noundef zeroext %.0.i123) #21 ; 2 uses
-  %i.eg = add i64 %i.ef, %.0103
+  %i.eg = add i64 %i.ef, %.0103222
   br label %bb.ae
 
 bb.ae:                                            ; preds = %arena_get_from_ind.exit.thread168, %bb.s
-  %.4 = phi ptr [ %.0146, %bb.s ], [ %.3148, %arena_get_from_ind.exit.thread168 ] ; 2 uses
-  %.1104 = phi i64 [ %.0103, %bb.s ], [ %i.eg, %arena_get_from_ind.exit.thread168 ] ; 8 uses
+  %.4 = phi ptr [ %.0146221, %bb.s ], [ %.3148, %arena_get_from_ind.exit.thread168 ]
+  %.1104 = phi i64 [ %.0103222, %bb.s ], [ %i.eg, %arena_get_from_ind.exit.thread168 ] ; 8 uses
   %.095 = phi i64 [ 0, %bb.s ], [ %i.ef, %arena_get_from_ind.exit.thread168 ] ; 9 uses
   switch i32 %i.da, label %mallocx_tcache_get.exit [
     i32 0, label %mallocx_tcache_get.exit.thread
@@ -365,8 +365,8 @@ bb.ai:                                            ; preds = %tcache_get_from_ind
   br i1 %or.cond120, label %bb.aj, label %.critedge119, !prof !13
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.ev = icmp eq ptr %.099, null
-  %.1100 = select i1 %i.ev, ptr %i.es, ptr %.099  ; 7 uses
+  %i.ev = icmp eq ptr %.099223, null
+  %.1100 = select i1 %i.ev, ptr %i.es, ptr %.099223 ; 7 uses
   %i.ew = sub nuw i64 %i.dk, %.095
   %i.ex = getelementptr [8 x i8], ptr %0, i64 %.1104 ; 10 uses
   %.1100.val = load ptr, ptr %.1100, align 8, !tbaa !90 ; 2 uses
@@ -484,7 +484,7 @@ cache_bin_low_water_adjust.exit:                  ; preds = %bb.aj, %bb.ak
 
 .critedge119:                                     ; preds = %bb.ae, %mallocx_tcache_get.exit.thread, %mallocx_tcache_get.exit, %tcache_get_from_ind.exit.thread177, %tcache_get_from_ind.exit, %.loopexit, %bb.ai
   %.2105 = phi i64 [ %i.gw, %.loopexit ], [ %.1104, %tcache_get_from_ind.exit.thread177 ], [ %.1104, %bb.ai ], [ %.1104, %tcache_get_from_ind.exit ], [ %.1104, %mallocx_tcache_get.exit ], [ %.1104, %mallocx_tcache_get.exit.thread ], [ %.1104, %bb.ae ] ; 4 uses
-  %.2101 = phi ptr [ %.1100, %.loopexit ], [ %.099, %tcache_get_from_ind.exit.thread177 ], [ %.099, %bb.ai ], [ %.099, %tcache_get_from_ind.exit ], [ %.099, %mallocx_tcache_get.exit ], [ %.099, %mallocx_tcache_get.exit.thread ], [ %.099, %bb.ae ] ; 2 uses
+  %.2101 = phi ptr [ %.1100, %.loopexit ], [ %.099223, %tcache_get_from_ind.exit.thread177 ], [ %.099223, %bb.ai ], [ %.099223, %tcache_get_from_ind.exit ], [ %.099223, %mallocx_tcache_get.exit ], [ %.099223, %mallocx_tcache_get.exit.thread ], [ %.099223, %bb.ae ]
   %.196 = phi i64 [ %i.gv, %.loopexit ], [ %.095, %tcache_get_from_ind.exit.thread177 ], [ %.095, %bb.ai ], [ %.095, %tcache_get_from_ind.exit ], [ %.095, %mallocx_tcache_get.exit ], [ %.095, %mallocx_tcache_get.exit.thread ], [ %.095, %bb.ae ] ; 2 uses
   %i.gx = mul i64 %.196, %storemerge.i            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
@@ -519,15 +519,13 @@ bb.an:                                            ; preds = %bb.am
   store ptr %i.he, ptr %i.hg, align 8, !tbaa !91
   br label %select.unfold
 
-select.unfold:                                    ; preds = %bb.an, %te_event_advance.exit, %arena_get_from_ind.exit
-  %.5 = phi ptr [ %.4, %bb.an ], [ %.4, %te_event_advance.exit ], [ null, %arena_get_from_ind.exit ]
-  %.6 = phi i64 [ %i.hf, %bb.an ], [ %.2105, %te_event_advance.exit ], [ %.0103, %arena_get_from_ind.exit ] ; 2 uses
-  %.3102 = phi ptr [ %.2101, %bb.an ], [ %.2101, %te_event_advance.exit ], [ %.099, %arena_get_from_ind.exit ]
-  %10 = phi i1 [ true, %bb.an ], [ true, %te_event_advance.exit ], [ false, %arena_get_from_ind.exit ]
-  br i1 %10, label %bb.r, label %.critedge
+select.unfold:                                    ; preds = %bb.an, %te_event_advance.exit
+  %.6 = phi i64 [ %i.hf, %bb.an ], [ %.2105, %te_event_advance.exit ] ; 3 uses
+  %9 = icmp ult i64 %.6, %1
+  br i1 %9, label %bb.s, label %.critedge
 
-.critedge:                                        ; preds = %bb.am, %bb.v, %select.unfold, %bb.r, %sz_s2u_compute.exit29.i, %bb.j, %bb.e, %tsd_fetch_impl.exit, %aligned_usize_get.exit, %tsd_fetch_impl.exit.thread
-  %.7 = phi i64 [ 0, %tsd_fetch_impl.exit.thread ], [ 0, %aligned_usize_get.exit ], [ 0, %bb.e ], [ 0, %bb.j ], [ 0, %tsd_fetch_impl.exit ], [ 0, %sz_s2u_compute.exit29.i ], [ %.2105, %bb.am ], [ %.0103, %bb.v ], [ %.6, %select.unfold ], [ %.0103, %bb.r ]
+.critedge:                                        ; preds = %select.unfold, %bb.v, %bb.am, %arena_get_from_ind.exit, %bb.q, %sz_s2u_compute.exit29.i, %bb.j, %bb.e, %tsd_fetch_impl.exit, %aligned_usize_get.exit, %tsd_fetch_impl.exit.thread
+  %.7 = phi i64 [ 0, %tsd_fetch_impl.exit.thread ], [ 0, %aligned_usize_get.exit ], [ 0, %bb.e ], [ 0, %bb.j ], [ 0, %tsd_fetch_impl.exit ], [ 0, %sz_s2u_compute.exit29.i ], [ 0, %bb.q ], [ %.0103222, %arena_get_from_ind.exit ], [ %.2105, %bb.am ], [ %.6, %select.unfold ], [ %.0103222, %bb.v ]
   ret i64 %.7
 }
 

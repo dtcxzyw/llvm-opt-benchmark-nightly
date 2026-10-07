@@ -204,7 +204,7 @@ bb.a:
   %i.f = alloca i32, align 4                      ; 5 uses
   %i.g = alloca [400 x i8], align 16              ; 6 uses
   %.not = icmp eq i32 %1, 0                       ; 3 uses
-  %i.h = select i1 %.not, ptr @.str.115, ptr @.str.114 ; 12 uses
+  %i.h = select i1 %.not, ptr @.str.115, ptr @.str.114 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   store i32 0, ptr %i.b, align 4, !tbaa !21
@@ -215,13 +215,13 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.116, ptr noundef nonnull %i.h) #16 ; 0 uses
+  %i.l = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.116, ptr noundef nonnull @.str.115) #16 ; 0 uses
   call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef 1) #16
-  %i.m = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.124, ptr noundef nonnull %i.h) #16 ; 0 uses
+  %i.m = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.124, ptr noundef nonnull @.str.115) #16 ; 0 uses
   call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef 0) #16
-  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.125, ptr noundef nonnull %i.h) #16 ; 0 uses
+  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.125, ptr noundef nonnull @.str.115) #16 ; 0 uses
   call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef 0) #16
-  %i.o = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.126, ptr noundef nonnull %i.h) #16 ; 0 uses
+  %i.o = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.126, ptr noundef nonnull @.str.115) #16 ; 0 uses
   call void @dt_conf_set_string(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.127) #16
   br label %bb.n
 

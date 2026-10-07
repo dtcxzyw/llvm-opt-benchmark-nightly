@@ -202,23 +202,23 @@ bb.ae:                                            ; preds = %_RINvNtCs3oUPovFnLW
 bb.af:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultNtNtNtBM_5civil4date4DateNtBK_5ErrorEINtBK_12ErrorContextB1x_B1W_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit.i63
   %i.dl = trunc nuw nsw i32 %i.dj to i16          ; 2 uses
   %i.dm = icmp eq i8 %i.cq, 0
-  br i1 %i.dm, label %bb.ag, label %bb.ah
+  br i1 %i.dm, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %2 = xor i16 %i.cv, 7
-  %3 = add nuw nsw i16 %2, %i.dl                  ; 2 uses
-  %4 = sub nsw i16 8, %3
-  %5 = icmp eq i16 %3, 8
-  br i1 %5, label %bb.ai, label %bb.aj
-
-bb.ah:                                            ; preds = %bb.af
-  %6 = mul nsw i16 %i.ct, 7
-  %reass.sub = sub nsw i16 %6, %i.dl
-  %7 = add nsw i16 %reass.sub, 1
-  %8 = add nsw i16 %7, %i.cv
+  %2 = mul nsw i16 %i.ct, 7
+  %reass.sub = sub nsw i16 %2, %i.dl
+  %3 = add nsw i16 %reass.sub, 1
+  %4 = add nsw i16 %3, %i.cv
   br label %bb.aj
 
-bb.ai:                                            ; preds = %bb.ag
+bb.ah:                                            ; preds = %bb.af
+  %5 = xor i16 %i.cv, 7
+  %6 = add nuw nsw i16 %5, %i.dl                  ; 2 uses
+  %7 = sub nsw i16 8, %6
+  %8 = icmp eq i16 %6, 8
+  br i1 %8, label %bb.ai, label %bb.aj
+
+bb.ai:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !315
   %i.dn = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   store i8 %i.cs, ptr %i.dn, align 1, !noalias !315
@@ -227,8 +227,8 @@ bb.ai:                                            ; preds = %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !315
   br label %bb.aq
 
-bb.aj:                                            ; preds = %bb.ag, %bb.ah
-  %.sroa.068.0.i = phi i16 [ %4, %bb.ag ], [ %8, %bb.ah ]
+bb.aj:                                            ; preds = %bb.ah, %bb.ag
+  %.sroa.068.0.i = phi i16 [ %7, %bb.ah ], [ %4, %bb.ag ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !315
   %.sroa.4112.0.insert.ext.i = zext i16 %.sroa.068.0.i to i32
   %.sroa.4112.0.insert.shift.i = shl nuw i32 %.sroa.4112.0.insert.ext.i, 16
@@ -290,7 +290,7 @@ _RNvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt7strtimeNtB5_14BrokenDownTime21to_date_from_w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %.thread140
 
-bb.aq:                                            ; preds = %bb.ad, %bb.ai, %bb.ap
+bb.aq:                                            ; preds = %bb.ad, %bb.ap, %bb.ai
   %.sroa.15.0.ph = phi ptr [ %i.ec, %bb.ap ], [ %i.do, %bb.ai ], [ %i.cy, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 8

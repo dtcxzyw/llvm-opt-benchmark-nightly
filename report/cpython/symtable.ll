@@ -202,7 +202,7 @@ bb.eu:                                            ; preds = %bb.es
   br i1 %.not94.i, label %.critedge98.i, label %bb.ev
 
 bb.ev:                                            ; preds = %.thread104.i
-  %i.jg = load ptr, ptr %i.b, align 8, !tbaa !43
+  %i.jg = load ptr, ptr %i.b, align 8, !tbaa !43  ; 2 uses
   %i.jh = load ptr, ptr %i.ha, align 8, !tbaa !26 ; 2 uses
   %i.ji = getelementptr i8, ptr %i.jh, i64 16
   %.val17.i.i = load i64, ptr %i.ji, align 8, !tbaa !45
@@ -215,42 +215,38 @@ bb.ew:                                            ; preds = %.lr.ph.i.i
   %i.jm = getelementptr i8, ptr %i.jl, i64 16
   %.val.i.i = load i64, ptr %i.jm, align 8, !tbaa !45
   %i.jn = icmp slt i64 %i.jk, %.val.i.i
-  br i1 %i.jn, label %.lr.ph.i.i, label %.thread106.i, !llvm.loop !179
+  br i1 %i.jn, label %.lr.ph.i.i, label %bb.ex, !llvm.loop !179
 
 .lr.ph.i.i:                                       ; preds = %bb.ev, %bb.ew
   %i.jo = phi ptr [ %i.jl, %bb.ew ], [ %i.jh, %bb.ev ]
   %.01119.i.i = phi i64 [ %i.jk, %bb.ew ], [ 0, %bb.ev ] ; 2 uses
-  %.01218.i.i = phi i32 [ %.113.i.i, %bb.ew ], [ undef, %bb.ev ]
   %i.jp = getelementptr i8, ptr %i.jo, i64 24
   %i.jq = load ptr, ptr %i.jp, align 8, !tbaa !48
   %i.jr = getelementptr [8 x i8], ptr %i.jq, i64 %.01119.i.i
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !43
   %i.jt = call i32 @_PyST_GetScope(ptr noundef %i.js, ptr noundef %i.jg) ; 2 uses
   %i.ju = icmp sgt i32 %i.jt, -1                  ; 2 uses
-  %i.jv = icmp ne i32 %i.jt, 4                    ; 2 uses
-  %..012.i.i = select i1 %i.jv, i32 %.01218.i.i, i32 1 ; 2 uses
-  %.113.i.i = select i1 %i.ju, i32 %..012.i.i, i32 -1 ; 2 uses
+  %i.jv = icmp ne i32 %i.jt, 4
   %cond.i.i = and i1 %i.ju, %i.jv
   br i1 %cond.i.i, label %bb.ew, label %is_free_in_any_child.exit.i
 
 is_free_in_any_child.exit.i:                      ; preds = %.lr.ph.i.i
-  %6 = icmp slt i32 %.113.i.i, 0
-  br i1 %6, label %.loopexit, label %bb.ex
+  br i1 %i.ju, label %.critedge98.i, label %.loopexit
 
-bb.ex:                                            ; preds = %is_free_in_any_child.exit.i
-  %.not95.i = icmp eq i32 %..012.i.i, 0
-  br i1 %.not95.i, label %.thread106.i, label %.critedge98.i
+bb.ex:                                            ; preds = %bb.ew
+  %.pre.i = load ptr, ptr %i.b, align 8, !tbaa !43
+  br label %.thread106.i
 
-.thread106.i:                                     ; preds = %bb.ew, %bb.ex, %bb.ev
-  %7 = load ptr, ptr %i.b, align 8, !tbaa !43
-  %i.jw = call i32 @PySet_Discard(ptr noundef nonnull %i.fy, ptr noundef %7) #7
+.thread106.i:                                     ; preds = %bb.ex, %bb.ev
+  %6 = phi ptr [ %.pre.i, %bb.ex ], [ %i.jg, %bb.ev ]
+  %i.jw = call i32 @PySet_Discard(ptr noundef nonnull %i.fy, ptr noundef %6) #7
   %i.jx = icmp slt i32 %i.jw, 0
   br i1 %i.jx, label %.loopexit, label %.critedge98.i
 
-.critedge98.i:                                    ; preds = %.thread106.i, %bb.ex, %.thread104.i, %bb.eu, %Py_DECREF.exit.i209, %bb.dw, %bb.dv
-  %.463.i = phi i32 [ %.059119.i, %bb.dw ], [ %.059119.i, %bb.dv ], [ %.160.i, %bb.eu ], [ %.160.i, %.thread104.i ], [ %.160.i, %.thread106.i ], [ %.160.i, %bb.ex ], [ %.160.i, %Py_DECREF.exit.i209 ] ; 2 uses
-  %.458.i = phi i32 [ %.054120.i, %bb.dw ], [ %.054120.i, %bb.dv ], [ %.155.i, %bb.eu ], [ %.155.i, %.thread104.i ], [ %.155.i, %.thread106.i ], [ %.155.i, %bb.ex ], [ %.155.i, %Py_DECREF.exit.i209 ] ; 2 uses
-  %.453.i = phi i32 [ %.049121.i, %bb.dw ], [ %.049121.i, %bb.dv ], [ %.150.i, %bb.eu ], [ %.150.i, %.thread104.i ], [ %.150.i, %.thread106.i ], [ %.150.i, %bb.ex ], [ %.150.i, %Py_DECREF.exit.i209 ] ; 2 uses
+.critedge98.i:                                    ; preds = %.thread106.i, %is_free_in_any_child.exit.i, %.thread104.i, %bb.eu, %Py_DECREF.exit.i209, %bb.dw, %bb.dv
+  %.463.i = phi i32 [ %.059119.i, %bb.dw ], [ %.059119.i, %bb.dv ], [ %.160.i, %is_free_in_any_child.exit.i ], [ %.160.i, %bb.eu ], [ %.160.i, %.thread104.i ], [ %.160.i, %.thread106.i ], [ %.160.i, %Py_DECREF.exit.i209 ] ; 2 uses
+  %.458.i = phi i32 [ %.054120.i, %bb.dw ], [ %.054120.i, %bb.dv ], [ %.155.i, %is_free_in_any_child.exit.i ], [ %.155.i, %bb.eu ], [ %.155.i, %.thread104.i ], [ %.155.i, %.thread106.i ], [ %.155.i, %Py_DECREF.exit.i209 ] ; 2 uses
+  %.453.i = phi i32 [ %.049121.i, %bb.dw ], [ %.049121.i, %bb.dv ], [ %.150.i, %is_free_in_any_child.exit.i ], [ %.150.i, %bb.eu ], [ %.150.i, %.thread104.i ], [ %.150.i, %.thread106.i ], [ %.150.i, %Py_DECREF.exit.i209 ] ; 2 uses
   %i.jy = load ptr, ptr %i.gx, align 8, !tbaa !24
   %i.jz = call i32 @PyDict_Next(ptr noundef %i.jy, ptr noundef nonnull %i.d, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #7
   %.not.i206 = icmp eq i32 %i.jz, 0
@@ -286,7 +282,7 @@ bb.fc:                                            ; preds = %bb.fb
   %i.kl = icmp slt i32 %i.kk, 0
   br i1 %i.kl, label %.loopexit, label %bb.ff
 
-.loopexit:                                        ; preds = %bb.fc, %bb.ey, %bb.fa, %bb.dv, %bb.dy, %Py_DECREF.exit.i209, %bb.ea, %bb.et, %bb.eg, %is_free_in_any_child.exit.i, %.thread106.i, %bb.eo, %Py_DECREF.exit101.i, %bb.ek
+.loopexit:                                        ; preds = %bb.fc, %bb.ey, %bb.fa, %bb.dv, %bb.dy, %Py_DECREF.exit.i209, %bb.ea, %bb.et, %bb.eg, %.thread106.i, %bb.eo, %Py_DECREF.exit101.i, %bb.ek, %is_free_in_any_child.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7

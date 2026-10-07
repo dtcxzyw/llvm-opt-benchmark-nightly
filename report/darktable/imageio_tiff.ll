@@ -204,32 +204,15 @@ bb.a:
   br i1 %.not69, label %.thread51, label %.lr.ph65
 
 .lr.ph65:                                         ; preds = %bb.a
-  %i.j = icmp eq i16 %1, 8                        ; 2 uses
+  %i.j = icmp eq i16 %1, 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %2 = select i1 %i.j, float f0x3AC800C8, float f0x3AC8C8C9 ; 20 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
-  br i1 %i.j, label %.lr.ph65.split.us.preheader, label %.lr.ph65.split.preheader
+  br i1 %i.j, label %.lr.ph65.split.us, label %.lr.ph65.split
 
-.lr.ph65.split.preheader:                         ; preds = %.lr.ph65
-  %3 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>, float %2, i64 0
-  %4 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>, float %2, i64 0
-  %5 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>, float %2, i64 0
-  %6 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>, float %2, i64 0
-  %7 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>, float %2, i64 0
-  br label %.lr.ph65.split
-
-.lr.ph65.split.us.preheader:                      ; preds = %.lr.ph65
-  %8 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>, float %2, i64 0
-  %9 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>, float %2, i64 0
-  %10 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>, float %2, i64 0
-  %11 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>, float %2, i64 0
-  %12 = insertelement <4 x float> <float poison, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>, float %2, i64 0
-  br label %.lr.ph65.split.us
-
-.lr.ph65.split.us:                                ; preds = %.lr.ph65.split.us.preheader, %._crit_edge.us
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %._crit_edge.us ], [ 0, %.lr.ph65.split.us.preheader ] ; 3 uses
+.lr.ph65.split.us:                                ; preds = %.lr.ph65, %._crit_edge.us
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %._crit_edge.us ], [ 0, %.lr.ph65 ] ; 3 uses
   %i.o = load ptr, ptr %i.k, align 8, !tbaa !71   ; 5 uses
   %i.p = load ptr, ptr %i.l, align 8, !tbaa !70
   %i.q = shl nuw nsw i64 %indvars.iv80, 2
@@ -284,7 +267,7 @@ bb.a:
   %i.aj = shufflevector <2 x i16> %i.ah, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ak = sitofp <4 x i16> %i.aj to <4 x float>
   %i.al = shufflevector <4 x float> %i.ai, <4 x float> %i.ak, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.am = fmul reassoc nnan nsz arcp contract afn <4 x float> %8, %i.al
+  %i.am = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.al, <float f0x3AC800C8, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>
   store <4 x float> %i.am, ptr %.04456.us59.us, align 4, !tbaa !75
   %i.an = getelementptr inbounds nuw [2 x i8], ptr %.04555.us60.us, i64 %i.ab ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.04456.us59.us, i64 16
@@ -296,7 +279,7 @@ bb.a:
   %i.au = shufflevector <2 x i16> %i.as, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.av = sitofp <4 x i16> %i.au to <4 x float>
   %i.aw = shufflevector <4 x float> %i.at, <4 x float> %i.av, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.ax = fmul reassoc nnan nsz arcp contract afn <4 x float> %9, %i.aw
+  %i.ax = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.aw, <float f0x3AC800C8, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>
   store <4 x float> %i.ax, ptr %i.ao, align 4, !tbaa !75
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.ab ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.04456.us59.us, i64 32
@@ -308,7 +291,7 @@ bb.a:
   %i.bf = shufflevector <2 x i16> %i.bd, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bg = sitofp <4 x i16> %i.bf to <4 x float>
   %i.bh = shufflevector <4 x float> %i.be, <4 x float> %i.bg, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.bi = fmul reassoc nnan nsz arcp contract afn <4 x float> %10, %i.bh
+  %i.bi = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bh, <float f0x3AC800C8, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>
   store <4 x float> %i.bi, ptr %i.az, align 4, !tbaa !75
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr %i.ay, i64 %i.ab ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.04456.us59.us, i64 48
@@ -320,7 +303,7 @@ bb.a:
   %i.bq = shufflevector <2 x i16> %i.bo, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.br = sitofp <4 x i16> %i.bq to <4 x float>
   %i.bs = shufflevector <4 x float> %i.bp, <4 x float> %i.br, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.bt = fmul reassoc nnan nsz arcp contract afn <4 x float> %11, %i.bs
+  %i.bt = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bs, <float f0x3AC800C8, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>
   store <4 x float> %i.bt, ptr %i.bk, align 4, !tbaa !75
   %i.bu = getelementptr inbounds nuw [2 x i8], ptr %i.bj, i64 %i.ab ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.04456.us59.us, i64 64 ; 2 uses
@@ -334,7 +317,7 @@ bb.a:
   %niter114 = phi i32 [ 0, %.lr.ph.split.us.us.preheader.new ], [ %niter114.next.3, %.lr.ph.split.us.us ]
   %i.bw = load i16, ptr %.04555.us.us, align 2, !tbaa !23
   %i.bx = uitofp reassoc nsz arcp contract afn i16 %i.bw to float
-  %i.by = fmul reassoc nnan nsz arcp contract afn float %2, %i.bx
+  %i.by = fmul reassoc nnan nsz arcp contract afn float %i.bx, f0x3AC800C8
   store float %i.by, ptr %.04456.us.us, align 4, !tbaa !75
   %i.bz = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 4
   store <2 x float> zeroinitializer, ptr %i.bz, align 4, !tbaa !75
@@ -344,7 +327,7 @@ bb.a:
   %i.cc = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 16
   %i.cd = load i16, ptr %i.cb, align 2, !tbaa !23
   %i.ce = uitofp reassoc nsz arcp contract afn i16 %i.cd to float
-  %i.cf = fmul reassoc nnan nsz arcp contract afn float %2, %i.ce
+  %i.cf = fmul reassoc nnan nsz arcp contract afn float %i.ce, f0x3AC800C8
   store float %i.cf, ptr %i.cc, align 4, !tbaa !75
   %i.cg = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 20
   store <2 x float> zeroinitializer, ptr %i.cg, align 4, !tbaa !75
@@ -354,7 +337,7 @@ bb.a:
   %i.cj = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 32
   %i.ck = load i16, ptr %i.ci, align 2, !tbaa !23
   %i.cl = uitofp reassoc nsz arcp contract afn i16 %i.ck to float
-  %i.cm = fmul reassoc nnan nsz arcp contract afn float %2, %i.cl
+  %i.cm = fmul reassoc nnan nsz arcp contract afn float %i.cl, f0x3AC800C8
   store float %i.cm, ptr %i.cj, align 4, !tbaa !75
   %i.cn = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 36
   store <2 x float> zeroinitializer, ptr %i.cn, align 4, !tbaa !75
@@ -364,7 +347,7 @@ bb.a:
   %i.cq = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 48
   %i.cr = load i16, ptr %i.cp, align 2, !tbaa !23
   %i.cs = uitofp reassoc nsz arcp contract afn i16 %i.cr to float
-  %i.ct = fmul reassoc nnan nsz arcp contract afn float %2, %i.cs
+  %i.ct = fmul reassoc nnan nsz arcp contract afn float %i.cs, f0x3AC800C8
   store float %i.ct, ptr %i.cq, align 4, !tbaa !75
   %i.cu = getelementptr inbounds nuw i8, ptr %.04456.us.us, i64 52
   store <2 x float> zeroinitializer, ptr %i.cu, align 4, !tbaa !75
@@ -393,7 +376,7 @@ bb.a:
   %epil.iter110 = phi i32 [ %epil.iter110.next, %.lr.ph.split.us.us.epil ], [ 0, %.lr.ph.split.us.us.epil.preheader ]
   %i.cy = load i16, ptr %.04555.us.us.epil, align 2, !tbaa !23
   %i.cz = uitofp reassoc nsz arcp contract afn i16 %i.cy to float
-  %i.da = fmul reassoc nnan nsz arcp contract afn float %2, %i.cz
+  %i.da = fmul reassoc nnan nsz arcp contract afn float %i.cz, f0x3AC800C8
   store float %i.da, ptr %.04456.us.us.epil, align 4, !tbaa !75
   %i.db = getelementptr inbounds nuw i8, ptr %.04456.us.us.epil, i64 4
   store <2 x float> zeroinitializer, ptr %i.db, align 4, !tbaa !75
@@ -428,7 +411,7 @@ bb.a:
   %i.dk = shufflevector <2 x i16> %i.di, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dl = sitofp <4 x i16> %i.dk to <4 x float>
   %i.dm = shufflevector <4 x float> %i.dj, <4 x float> %i.dl, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.dn = fmul reassoc nnan nsz arcp contract afn <4 x float> %12, %i.dm
+  %i.dn = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.dm, <float f0x3AC800C8, float 3.906250e-03, float 3.906250e-03, float 0.000000e+00>
   store <4 x float> %i.dn, ptr %.04456.us59.us.epil, align 4, !tbaa !75
   %i.do = getelementptr inbounds nuw [2 x i8], ptr %.04555.us60.us.epil, i64 %i.ab
   %i.dp = getelementptr inbounds nuw i8, ptr %.04456.us59.us.epil, i64 16
@@ -444,8 +427,8 @@ bb.a:
   %i.ds = icmp samesign ult i64 %indvars.iv.next81, %i.dr
   br i1 %i.ds, label %.lr.ph65.split.us, label %.thread51
 
-.lr.ph65.split:                                   ; preds = %.lr.ph65.split.preheader, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph65.split.preheader ] ; 3 uses
+.lr.ph65.split:                                   ; preds = %.lr.ph65, %._crit_edge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph65 ] ; 3 uses
   %i.dt = load ptr, ptr %i.k, align 8, !tbaa !71  ; 5 uses
   %i.du = load ptr, ptr %i.l, align 8, !tbaa !70
   %i.dv = shl nuw nsw i64 %indvars.iv, 2
@@ -494,7 +477,7 @@ bb.a:
   %niter102 = phi i32 [ 0, %.lr.ph.split.us.preheader.new ], [ %niter102.next.3, %.lr.ph.split.us ]
   %i.ej = load i16, ptr %.04555.us, align 2, !tbaa !23
   %i.ek = uitofp reassoc nsz arcp contract afn i16 %i.ej to float
-  %i.el = fmul reassoc nnan nsz arcp contract afn float %2, %i.ek
+  %i.el = fmul reassoc nnan nsz arcp contract afn float %i.ek, f0x3AC8C8C9
   store float %i.el, ptr %.04456.us, align 4, !tbaa !75
   %i.em = getelementptr inbounds nuw i8, ptr %.04456.us, i64 4
   store <2 x float> zeroinitializer, ptr %i.em, align 4, !tbaa !75
@@ -504,7 +487,7 @@ bb.a:
   %i.ep = getelementptr inbounds nuw i8, ptr %.04456.us, i64 16
   %i.eq = load i16, ptr %i.eo, align 2, !tbaa !23
   %i.er = uitofp reassoc nsz arcp contract afn i16 %i.eq to float
-  %i.es = fmul reassoc nnan nsz arcp contract afn float %2, %i.er
+  %i.es = fmul reassoc nnan nsz arcp contract afn float %i.er, f0x3AC8C8C9
   store float %i.es, ptr %i.ep, align 4, !tbaa !75
   %i.et = getelementptr inbounds nuw i8, ptr %.04456.us, i64 20
   store <2 x float> zeroinitializer, ptr %i.et, align 4, !tbaa !75
@@ -514,7 +497,7 @@ bb.a:
   %i.ew = getelementptr inbounds nuw i8, ptr %.04456.us, i64 32
   %i.ex = load i16, ptr %i.ev, align 2, !tbaa !23
   %i.ey = uitofp reassoc nsz arcp contract afn i16 %i.ex to float
-  %i.ez = fmul reassoc nnan nsz arcp contract afn float %2, %i.ey
+  %i.ez = fmul reassoc nnan nsz arcp contract afn float %i.ey, f0x3AC8C8C9
   store float %i.ez, ptr %i.ew, align 4, !tbaa !75
   %i.fa = getelementptr inbounds nuw i8, ptr %.04456.us, i64 36
   store <2 x float> zeroinitializer, ptr %i.fa, align 4, !tbaa !75
@@ -524,7 +507,7 @@ bb.a:
   %i.fd = getelementptr inbounds nuw i8, ptr %.04456.us, i64 48
   %i.fe = load i16, ptr %i.fc, align 2, !tbaa !23
   %i.ff = uitofp reassoc nsz arcp contract afn i16 %i.fe to float
-  %i.fg = fmul reassoc nnan nsz arcp contract afn float %2, %i.ff
+  %i.fg = fmul reassoc nnan nsz arcp contract afn float %i.ff, f0x3AC8C8C9
   store float %i.fg, ptr %i.fd, align 4, !tbaa !75
   %i.fh = getelementptr inbounds nuw i8, ptr %.04456.us, i64 52
   store <2 x float> zeroinitializer, ptr %i.fh, align 4, !tbaa !75
@@ -548,7 +531,7 @@ bb.a:
   %i.fq = shufflevector <2 x i16> %i.fo, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fr = uitofp <4 x i16> %i.fq to <4 x float>
   %i.fs = shufflevector <4 x float> %i.fp, <4 x float> %i.fr, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.ft = fmul reassoc nnan nsz arcp contract afn <4 x float> %3, %i.fs
+  %i.ft = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.fs, <float f0x3AC8C8C9, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>
   %i.fu = fadd reassoc nsz arcp contract afn <4 x float> %i.ft, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
   store <4 x float> %i.fu, ptr %.04456, align 4, !tbaa !75
   %i.fv = getelementptr inbounds nuw [2 x i8], ptr %.04555, i64 %i.eg ; 3 uses
@@ -561,7 +544,7 @@ bb.a:
   %i.gc = shufflevector <2 x i16> %i.ga, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.gd = uitofp <4 x i16> %i.gc to <4 x float>
   %i.ge = shufflevector <4 x float> %i.gb, <4 x float> %i.gd, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.gf = fmul reassoc nnan nsz arcp contract afn <4 x float> %4, %i.ge
+  %i.gf = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.ge, <float f0x3AC8C8C9, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>
   %i.gg = fadd reassoc nsz arcp contract afn <4 x float> %i.gf, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
   store <4 x float> %i.gg, ptr %i.fw, align 4, !tbaa !75
   %i.gh = getelementptr inbounds nuw [2 x i8], ptr %i.fv, i64 %i.eg ; 3 uses
@@ -574,7 +557,7 @@ bb.a:
   %i.go = shufflevector <2 x i16> %i.gm, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.gp = uitofp <4 x i16> %i.go to <4 x float>
   %i.gq = shufflevector <4 x float> %i.gn, <4 x float> %i.gp, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.gr = fmul reassoc nnan nsz arcp contract afn <4 x float> %5, %i.gq
+  %i.gr = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.gq, <float f0x3AC8C8C9, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>
   %i.gs = fadd reassoc nsz arcp contract afn <4 x float> %i.gr, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
   store <4 x float> %i.gs, ptr %i.gi, align 4, !tbaa !75
   %i.gt = getelementptr inbounds nuw [2 x i8], ptr %i.gh, i64 %i.eg ; 3 uses
@@ -587,7 +570,7 @@ bb.a:
   %i.ha = shufflevector <2 x i16> %i.gy, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.hb = uitofp <4 x i16> %i.ha to <4 x float>
   %i.hc = shufflevector <4 x float> %i.gz, <4 x float> %i.hb, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.hd = fmul reassoc nnan nsz arcp contract afn <4 x float> %6, %i.hc
+  %i.hd = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.hc, <float f0x3AC8C8C9, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>
   %i.he = fadd reassoc nsz arcp contract afn <4 x float> %i.hd, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
   store <4 x float> %i.he, ptr %i.gu, align 4, !tbaa !75
   %i.hf = getelementptr inbounds nuw [2 x i8], ptr %i.gt, i64 %i.eg ; 2 uses
@@ -613,7 +596,7 @@ bb.a:
   %epil.iter98 = phi i32 [ %epil.iter98.next, %.lr.ph.split.us.epil ], [ 0, %.lr.ph.split.us.epil.preheader ]
   %i.hh = load i16, ptr %.04555.us.epil, align 2, !tbaa !23
   %i.hi = uitofp reassoc nsz arcp contract afn i16 %i.hh to float
-  %i.hj = fmul reassoc nnan nsz arcp contract afn float %2, %i.hi
+  %i.hj = fmul reassoc nnan nsz arcp contract afn float %i.hi, f0x3AC8C8C9
   store float %i.hj, ptr %.04456.us.epil, align 4, !tbaa !75
   %i.hk = getelementptr inbounds nuw i8, ptr %.04456.us.epil, i64 4
   store <2 x float> zeroinitializer, ptr %i.hk, align 4, !tbaa !75
@@ -648,7 +631,7 @@ bb.a:
   %i.ht = shufflevector <2 x i16> %i.hr, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.hu = uitofp <4 x i16> %i.ht to <4 x float>
   %i.hv = shufflevector <4 x float> %i.hs, <4 x float> %i.hu, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.hw = fmul reassoc nnan nsz arcp contract afn <4 x float> %7, %i.hv
+  %i.hw = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.hv, <float f0x3AC8C8C9, float 3.906250e-03, float 3.906250e-03, float -0.000000e+00>
   %i.hx = fadd reassoc nsz arcp contract afn <4 x float> %i.hw, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
   store <4 x float> %i.hx, ptr %.04456.epil, align 4, !tbaa !75
   %i.hy = getelementptr inbounds nuw [2 x i8], ptr %.04555.epil, i64 %i.eg

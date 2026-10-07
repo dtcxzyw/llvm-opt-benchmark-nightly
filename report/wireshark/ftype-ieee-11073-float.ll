@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.preheader144
   %i.av = and i32 %i.au, 4095
   %.4109 = select i1 %.not128, i32 %i.av, i32 %.0105 ; 2 uses
   %i.aw = icmp eq i32 %.4109, 0
-  br i1 %i.aw, label %.critedge, label %.lr.ph157.preheader
+  br i1 %i.aw, label %bb.aa, label %.lr.ph157.preheader
 
 .lr.ph157.preheader:                              ; preds = %bb.y
   %i.ax = sext i8 %.0103 to i32
@@ -223,15 +223,17 @@ bb.z:                                             ; preds = %.lr.ph157
   %.not129 = icmp ult i32 %.5110155, 10
   br i1 %.not129, label %.critedge, label %.lr.ph157, !llvm.loop !12
 
-.critedge:                                        ; preds = %bb.z, %.lr.ph157, %bb.y
-  %.5110.lcssa = phi i32 [ 0, %bb.y ], [ %.5110155, %.lr.ph157 ], [ %i.az, %bb.z ]
-  %.6.lcssa = phi i32 [ 0, %bb.y ], [ %.6156, %.lr.ph157 ], [ %i.bc, %bb.z ] ; 2 uses
+.critedge:                                        ; preds = %bb.z, %.lr.ph157
+  %.5110.lcssa = phi i32 [ %.5110155, %.lr.ph157 ], [ %i.az, %bb.z ]
+  %.6.lcssa = phi i32 [ %.6156, %.lr.ph157 ], [ %i.bc, %bb.z ] ; 2 uses
   %i.bd = icmp slt i32 %.6.lcssa, -8
   br i1 %i.bd, label %.loopexit145, label %bb.aa
 
-bb.aa:                                            ; preds = %.critedge
-  %i.be = shl nsw i32 %.6.lcssa, 12
-  %i.bf = or i32 %i.be, %.5110.lcssa
+bb.aa:                                            ; preds = %bb.y, %.critedge
+  %.6.lcssa174 = phi i32 [ %.6.lcssa, %.critedge ], [ 0, %bb.y ]
+  %.5110.lcssa173 = phi i32 [ %.5110.lcssa, %.critedge ], [ 0, %bb.y ]
+  %i.be = shl nsw i32 %.6.lcssa174, 12
+  %i.bf = or i32 %i.be, %.5110.lcssa173
   %i.bg = trunc i32 %i.bf to i16
   br label %.loopexit145.sink.split
 
@@ -634,7 +636,7 @@ bb.y:                                             ; preds = %.preheader144
   %i.aw = and i32 %i.av, 16777215
   %.4109 = select i1 %.not128, i32 %i.aw, i32 %.0105 ; 2 uses
   %i.ax = icmp eq i32 %.4109, 0
-  br i1 %i.ax, label %.critedge, label %.lr.ph157.preheader
+  br i1 %i.ax, label %bb.aa, label %.lr.ph157.preheader
 
 .lr.ph157.preheader:                              ; preds = %bb.y
   %i.ay = sext i16 %.0103 to i32
@@ -655,15 +657,17 @@ bb.z:                                             ; preds = %.lr.ph157
   %.not129 = icmp ult i32 %.5110155, 10
   br i1 %.not129, label %.critedge, label %.lr.ph157, !llvm.loop !39
 
-.critedge:                                        ; preds = %bb.z, %.lr.ph157, %bb.y
-  %.5110.lcssa = phi i32 [ 0, %bb.y ], [ %.5110155, %.lr.ph157 ], [ %i.ba, %bb.z ]
-  %.6.lcssa = phi i32 [ 0, %bb.y ], [ %.6156, %.lr.ph157 ], [ %i.bd, %bb.z ] ; 2 uses
+.critedge:                                        ; preds = %bb.z, %.lr.ph157
+  %.5110.lcssa = phi i32 [ %.5110155, %.lr.ph157 ], [ %i.ba, %bb.z ]
+  %.6.lcssa = phi i32 [ %.6156, %.lr.ph157 ], [ %i.bd, %bb.z ] ; 2 uses
   %i.be = icmp slt i32 %.6.lcssa, -128
   br i1 %i.be, label %.loopexit145, label %bb.aa
 
-bb.aa:                                            ; preds = %.critedge
-  %i.bf = shl i32 %.6.lcssa, 24
-  %i.bg = or i32 %i.bf, %.5110.lcssa
+bb.aa:                                            ; preds = %bb.y, %.critedge
+  %.6.lcssa174 = phi i32 [ %.6.lcssa, %.critedge ], [ 0, %bb.y ]
+  %.5110.lcssa173 = phi i32 [ %.5110.lcssa, %.critedge ], [ 0, %bb.y ]
+  %i.bf = shl i32 %.6.lcssa174, 24
+  %i.bg = or i32 %i.bf, %.5110.lcssa173
   br label %.loopexit145.sink.split
 
 .loopexit145.sink.split:                          ; preds = %bb.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.aa

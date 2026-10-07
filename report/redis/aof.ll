@@ -204,7 +204,7 @@ declare void @dictResetIterator(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @rewriteHashObject(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.hashTypeIterator, align 8   ; 13 uses
+  %3 = alloca %struct.hashTypeIterator, align 8   ; 14 uses
   %i.a = alloca [16 x i8], align 16               ; 5 uses
   %i.b = alloca [22 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
@@ -221,7 +221,9 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
-  br label %4
+  %4 = call i32 @hashTypeNext(ptr noundef nonnull %3, i32 noundef 0) #17
+  %.not42106 = icmp eq i32 %4, -1
+  br i1 %.not42106, label %.thread, label %bb.h
 
 .preheader:                                       ; preds = %bb.a
   %i.k = call i32 @hashTypeNext(ptr noundef nonnull %3, i32 noundef 0) #17
@@ -273,12 +275,7 @@ bb.g:                                             ; preds = %bb.f
   %.not36 = icmp eq i32 %i.z, -1
   br i1 %.not36, label %.thread, label %.lr.ph, !llvm.loop !220
 
-4:                                                ; preds = %.critedge, %.preheader79
-  %5 = call i32 @hashTypeNext(ptr noundef nonnull %3, i32 noundef 0) #17
-  %.not42 = icmp eq i32 %5, -1
-  br i1 %.not42, label %.thread, label %bb.h
-
-bb.h:                                             ; preds = %4
+bb.h:                                             ; preds = %.preheader79, %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 16 dereferenceable(16) @__const.rewriteHashObject.hmsetCmd, i64 16, i1 false)
   %i.aa = load i64, ptr %i.e, align 8, !tbaa !127
@@ -417,16 +414,18 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   br i1 %.not53.not, label %.thread.sink.split, label %.critedge
 
-.critedge:                                        ; preds = %bb.v, %bb.n
+.critedge:                                        ; preds = %bb.n, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  br label %4
+  %5 = call i32 @hashTypeNext(ptr noundef nonnull %3, i32 noundef 0) #17
+  %.not42 = icmp eq i32 %5, -1
+  br i1 %.not42, label %.thread, label %bb.h
 
-.thread.sink.split:                               ; preds = %bb.v, %bb.h, %rioWrite.exit, %bb.l, %bb.m, %.thread.i, %.thread73
+.thread.sink.split:                               ; preds = %bb.h, %rioWrite.exit, %bb.l, %bb.m, %bb.v, %.thread.i, %.thread73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %.thread
 
-.thread:                                          ; preds = %4, %bb.f, %bb.e, %bb.g, %bb.b, %bb.c, %bb.d, %.thread.sink.split, %.preheader
-  %.034 = phi i32 [ 1, %.preheader ], [ 0, %bb.d ], [ 0, %.thread.sink.split ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %bb.g ], [ 0, %bb.e ], [ 0, %bb.f ], [ 1, %4 ]
+.thread:                                          ; preds = %.critedge, %bb.f, %bb.e, %bb.g, %bb.b, %bb.c, %bb.d, %.preheader79, %.thread.sink.split, %.preheader
+  %.034 = phi i32 [ 1, %.preheader ], [ 0, %.thread.sink.split ], [ 0, %bb.f ], [ 1, %.preheader79 ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %bb.g ], [ 0, %bb.e ], [ 1, %.critedge ]
   call void @hashTypeResetIterator(ptr noundef nonnull %3) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   ret i32 %.034

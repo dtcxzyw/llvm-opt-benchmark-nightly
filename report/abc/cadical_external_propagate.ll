@@ -205,26 +205,23 @@ bb.d:                                             ; preds = %bb.c
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !207
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 56
   %i.ah = load ptr, ptr %i.ag, align 8
-  %i.ai = tail call noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(10) %i.ae) #14
+  %i.ai = tail call noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(10) %i.ae) #14 ; 2 uses
   %i.aj = load <2 x i64>, ptr %i.i, align 8, !tbaa !211
   %i.ak = add nsw <2 x i64> %i.aj, splat (i64 1)
   store <2 x i64> %i.ak, ptr %i.i, align 8, !tbaa !211
-  br label %1
+  %.not3491 = icmp eq i32 %i.ai, 0
+  br i1 %.not3491, label %.thread67, label %bb.e
 
-1:                                                ; preds = %2, %bb.d
-  %.028 = phi i32 [ %i.ai, %bb.d ], [ %.129, %2 ] ; 6 uses
-  %.not34 = icmp eq i32 %.028, 0
-  br i1 %.not34, label %.thread67, label %bb.e
-
-bb.e:                                             ; preds = %1
+bb.e:                                             ; preds = %bb.d, %bb.w
+  %1 = phi i32 [ %i.da, %bb.w ], [ %i.ai, %bb.d ] ; 4 uses
   %i.al = load ptr, ptr %i.h, align 8, !tbaa !186
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 64
-  %i.an = tail call i32 @llvm.abs.i32(i32 %.028, i1 true)
+  %i.an = tail call i32 @llvm.abs.i32(i32 %1, i1 true)
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = load ptr, ptr %i.am, align 8, !tbaa !184
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %i.ao
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !14 ; 2 uses
-  %i.as = icmp slt i32 %.028, 0
+  %i.as = icmp slt i32 %1, 0
   %i.at = sub nsw i32 0, %i.ar
   %spec.select = select i1 %i.as, i32 %i.at, i32 %i.ar ; 2 uses
   %i.au = load ptr, ptr %i.j, align 8, !tbaa !173
@@ -246,7 +243,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bb = load i64, ptr %i.n, align 8, !tbaa !216
   %i.bc = add nsw i64 %i.bb, 1
   store i64 %i.bc, ptr %i.n, align 8, !tbaa !216
-  tail call void @_ZN7CaDiCaL8Internal19add_external_clauseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %.028, i1 noundef zeroext false)
+  tail call void @_ZN7CaDiCaL8Internal19add_external_clauseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %1, i1 noundef zeroext false)
   %i.bd = load ptr, ptr %i.l, align 8, !tbaa !184 ; 3 uses
   %i.be = load ptr, ptr %i.m, align 8, !tbaa !209
   store <2 x ptr> %i.ba, ptr %i.l, align 8, !tbaa !215
@@ -302,7 +299,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bw = load <2 x i64>, ptr %i.k, align 8, !tbaa !211
   %i.bx = add nsw <2 x i64> %i.bw, splat (i64 1)
   store <2 x i64> %i.bx, ptr %i.k, align 8, !tbaa !211
-  tail call void @_ZN7CaDiCaL8Internal19add_external_clauseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %.028, i1 noundef zeroext false)
+  tail call void @_ZN7CaDiCaL8Internal19add_external_clauseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %1, i1 noundef zeroext false)
   %i.by = load ptr, ptr %i.l, align 8, !tbaa !184 ; 3 uses
   %i.bz = load ptr, ptr %i.m, align 8, !tbaa !209
   store <2 x ptr> %i.bv, ptr %i.l, align 8, !tbaa !215
@@ -362,31 +359,27 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not42, label %.sink.split, label %.thread67
 
 bb.v:                                             ; preds = %bb.s
-  br i1 %.not41, label %2, label %bb.w
+  br i1 %.not41, label %.thread67, label %bb.w
 
 .sink.split:                                      ; preds = %bb.u, %bb.l
   tail call void @_ZN7CaDiCaL8Internal18notify_assignmentsEv(ptr noundef nonnull align 8 dereferenceable(7296) %0)
   br label %bb.w
 
-bb.w:                                             ; preds = %.sink.split, %bb.m, %bb.v
+bb.w:                                             ; preds = %.sink.split, %bb.v, %bb.m
   %i.cu = load ptr, ptr %i.h, align 8, !tbaa !186
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 424
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !205 ; 2 uses
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !207
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 56
   %i.cz = load ptr, ptr %i.cy, align 8
-  %i.da = tail call noundef i32 %i.cz(ptr noundef nonnull align 8 dereferenceable(10) %i.cw) #14
+  %i.da = tail call noundef i32 %i.cz(ptr noundef nonnull align 8 dereferenceable(10) %i.cw) #14 ; 2 uses
   %i.db = load <2 x i64>, ptr %i.i, align 8, !tbaa !211
   %i.dc = add nsw <2 x i64> %i.db, splat (i64 1)
   store <2 x i64> %i.dc, ptr %i.i, align 8, !tbaa !211
-  br label %2
+  %.not34 = icmp eq i32 %i.da, 0
+  br i1 %.not34, label %.thread67, label %bb.e
 
-2:                                                ; preds = %bb.v, %bb.w
-  %.129 = phi i32 [ %i.da, %bb.w ], [ %.028, %bb.v ]
-  %3 = phi i1 [ true, %bb.w ], [ false, %bb.v ]
-  br i1 %3, label %1, label %.thread67
-
-.thread67:                                        ; preds = %bb.u, %bb.r, %bb.t, %bb.k, %bb.l, %bb.j, %_ZN7CaDiCaL8Internal28learn_external_reason_clauseEiib.exit, %2, %1
+.thread67:                                        ; preds = %bb.w, %_ZN7CaDiCaL8Internal28learn_external_reason_clauseEiib.exit, %bb.j, %bb.l, %bb.k, %bb.t, %bb.r, %bb.u, %bb.v, %bb.d
   %i.dd = load i8, ptr %i.r, align 4, !tbaa !217, !range !182, !noundef !179
   %i.de = trunc nuw i8 %i.dd to i1
   br i1 %i.de, label %.critedge, label %bb.x

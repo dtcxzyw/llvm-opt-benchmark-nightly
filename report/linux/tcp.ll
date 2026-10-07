@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %3 = alloca %struct.msghdr, align 8             ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i32, align 4                      ; 9 uses
+  %i.c = alloca i32, align 4                      ; 10 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   %i.e = alloca i64, align 8                      ; 8 uses
   %i.f = alloca [32 x ptr], align 16              ; 8 uses
@@ -608,7 +608,7 @@ mmap_read_unlock.exit.i:                          ; preds = %bb.ap, %bb.ao
 
 find_tcp_vma.exit:                                ; preds = %bb.af, %bb.an
   %.0.i167 = phi ptr [ %i.ep, %bb.an ], [ %i.dx, %bb.af ] ; 7 uses
-  %i.es = getelementptr i8, ptr %1, i64 8         ; 5 uses
+  %i.es = getelementptr i8, ptr %1, i64 8         ; 6 uses
   %i.et = load i32, ptr %i.es, align 8
   %i.eu = zext i32 %i.et to i64
   %i.ev = getelementptr i8, ptr %.0.i167, i64 8
@@ -641,35 +641,33 @@ bb.as:                                            ; preds = %find_tcp_vma.exit, 
   store i32 %.sink, ptr %i.fg, align 4
   %i.fh = getelementptr i8, ptr %1, i64 12        ; 7 uses
   %i.fi = getelementptr i8, ptr %2, i64 16
-  br label %bb.at
-
-bb.at:                                            ; preds = %bb.bo, %bb.as
-  %.0130 = phi ptr [ null, %bb.as ], [ %.4134, %bb.bo ] ; 5 uses
-  %.0120 = phi i32 [ 0, %bb.as ], [ %.2122, %bb.bo ] ; 12 uses
-  %.0119 = phi ptr [ null, %bb.as ], [ %.3, %bb.bo ]
   %4 = load i32, ptr %i.c, align 4                ; 2 uses
   %5 = zext i32 %4 to i64
   %6 = add nuw nsw i64 %5, 4096
-  %i.fj = load i32, ptr %i.es, align 8
-  %7 = zext i32 %i.fj to i64
-  %.not149 = icmp samesign ugt i64 %6, %7
-  br i1 %.not149, label %.thread202, label %8
+  %7 = load i32, ptr %i.es, align 8
+  %8 = zext i32 %7 to i64
+  %.not149290 = icmp samesign ugt i64 %6, %8
+  br i1 %.not149290, label %.thread202, label %bb.at
 
-8:                                                ; preds = %bb.at
-  %9 = load i32, ptr %i.fh, align 4               ; 3 uses
-  %10 = icmp ult i32 %9, 4096
-  br i1 %10, label %bb.au, label %thread-pre-split
+bb.at:                                            ; preds = %bb.as, %bb.bo
+  %.0120 = phi i32 [ %10, %bb.bo ], [ %4, %bb.as ]
+  %.0119 = phi ptr [ %i.hz, %bb.bo ], [ null, %bb.as ]
+  %.0120292 = phi i32 [ %.2122, %bb.bo ], [ 0, %bb.as ] ; 11 uses
+  %.0130291 = phi ptr [ %.3133, %bb.bo ], [ null, %bb.as ] ; 4 uses
+  %i.fj = load i32, ptr %i.fh, align 4            ; 3 uses
+  %9 = icmp ult i32 %i.fj, 4096
+  br i1 %9, label %bb.au, label %thread-pre-split
 
-bb.au:                                            ; preds = %8
-  %.not150 = icmp eq ptr %.0130, null
+bb.au:                                            ; preds = %bb.at
+  %.not150 = icmp eq ptr %.0130291, null
   br i1 %.not150, label %bb.ax, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %.not151 = icmp eq i32 %9, 0
+  %.not151 = icmp eq i32 %i.fj, 0
   br i1 %.not151, label %bb.aw, label %.thread202
 
 bb.aw:                                            ; preds = %bb.av
-  %i.fk = load ptr, ptr %.0130, align 8           ; 2 uses
+  %i.fk = load ptr, ptr %.0130291, align 8        ; 2 uses
   %i.fl = load i32, ptr %i.g, align 4
   %i.fm = getelementptr i8, ptr %i.fk, i64 40
   %i.fn = load i32, ptr %i.fm, align 8
@@ -767,12 +765,12 @@ bb.bf:                                            ; preds = %.lr.ph.i
 .loopexit:                                        ; preds = %bb.bf, %bb.be
   %.018.i = phi ptr [ %i.gu, %bb.be ], [ %i.gy, %bb.bf ] ; 2 uses
   %.not214 = icmp eq ptr %.018.i, null
-  br i1 %.not214, label %bb.bo, label %thread-pre-split
+  br i1 %.not214, label %.thread202, label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %.loopexit, %8
-  %i.gz = phi i32 [ %9, %8 ], [ %i.gj, %.loopexit ] ; 2 uses
-  %.3133 = phi ptr [ %.0130, %8 ], [ %.1131, %.loopexit ] ; 5 uses
-  %.2 = phi ptr [ %.0119, %8 ], [ %.018.i, %.loopexit ] ; 6 uses
+thread-pre-split:                                 ; preds = %.loopexit, %bb.at
+  %i.gz = phi i32 [ %i.fj, %bb.at ], [ %i.gj, %.loopexit ] ; 2 uses
+  %.3133 = phi ptr [ %.0130291, %bb.at ], [ %.1131, %.loopexit ] ; 5 uses
+  %.2 = phi ptr [ %.0119, %bb.at ], [ %.018.i, %.loopexit ] ; 6 uses
   %i.ha = getelementptr i8, ptr %.2, i64 8
   %.val9.i.i = load i32, ptr %i.ha, align 8
   %.not.i.i171 = icmp eq i32 %.val9.i.i, 4096
@@ -850,16 +848,16 @@ bb.bk:                                            ; preds = %find_next_mappable_
 .critedge:                                        ; preds = %find_next_mappable_frag.exit.thread
   %i.hs = inttoptr i64 %.2.val to ptr             ; 2 uses
   call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09prefetcht0 $1\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 6*32+ 8)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09prefetchw $1\0A775:\0A.popsection\0A", "i,*m,~{dirflag},~{fpsr},~{flags}"(i32 0, ptr nonnull elementtype(i8) %i.hs) #19, !srcloc !164
-  %i.ht = add i32 %.0120, 1                       ; 3 uses
-  %i.hu = zext i32 %.0120 to i64
+  %i.ht = add i32 %.0120292, 1                    ; 3 uses
+  %i.hu = zext i32 %.0120292 to i64
   %i.hv = getelementptr [8 x i8], ptr %i.f, i64 %i.hu
   store ptr %i.hs, ptr %i.hv, align 8
-  %i.hw = add i32 %4, 4096
+  %i.hw = add i32 %.0120, 4096
   store i32 %i.hw, ptr %i.c, align 4
   %i.hx = load i32, ptr %i.fh, align 4
   %i.hy = add i32 %i.hx, -4096                    ; 2 uses
   store i32 %i.hy, ptr %i.fh, align 4
-  %i.hz = getelementptr i8, ptr %.2, i64 16       ; 2 uses
+  %i.hz = getelementptr i8, ptr %.2, i64 16
   %i.ia = icmp eq i32 %i.ht, 32
   br i1 %i.ia, label %.split, label %bb.bm
 
@@ -905,21 +903,24 @@ bb.bn:                                            ; preds = %.split136, %tcp_zer
   %.not155 = icmp eq i32 %phi.call, 0
   br i1 %.not155, label %bb.bo, label %.thread208
 
-bb.bo:                                            ; preds = %bb.bn, %bb.bm, %.loopexit
-  %.4134 = phi ptr [ %.3133, %bb.bm ], [ %.1131, %.loopexit ], [ %.3133, %bb.bn ] ; 2 uses
-  %11 = phi i1 [ true, %bb.bm ], [ false, %.loopexit ], [ true, %bb.bn ]
-  %.2122 = phi i32 [ %i.ht, %bb.bm ], [ %.0120, %.loopexit ], [ 0, %bb.bn ] ; 2 uses
-  %.3 = phi ptr [ %i.hz, %bb.bm ], [ null, %.loopexit ], [ %i.hz, %bb.bn ]
-  br i1 %11, label %bb.at, label %.thread202
+bb.bo:                                            ; preds = %bb.bn, %bb.bm
+  %.2122 = phi i32 [ %i.ht, %bb.bm ], [ 0, %bb.bn ] ; 2 uses
+  %10 = load i32, ptr %i.c, align 4               ; 2 uses
+  %11 = zext i32 %10 to i64
+  %12 = add nuw nsw i64 %11, 4096
+  %13 = load i32, ptr %i.es, align 8
+  %14 = zext i32 %13 to i64
+  %.not149 = icmp samesign ugt i64 %12, %14
+  br i1 %.not149, label %.thread202, label %bb.at
 
-.thread202:                                       ; preds = %bb.bd, %bb.bb, %bb.bc, %bb.bo, %bb.ay, %bb.av, %bb.at, %.lr.ph.i, %bb.bk, %bb.bj
-  %.5135 = phi ptr [ %.3133, %bb.bj ], [ %.3133, %bb.bk ], [ %.1131, %.lr.ph.i ], [ %.1131, %bb.bb ], [ %.1131, %bb.bc ], [ %.1131, %bb.bd ], [ %.1131, %bb.ay ], [ %.0130, %bb.av ], [ %.0130, %bb.at ], [ %.4134, %bb.bo ] ; 2 uses
-  %.3123 = phi i32 [ %.0120, %bb.bj ], [ %.0120, %bb.bk ], [ %.0120, %.lr.ph.i ], [ %.0120, %bb.bb ], [ %.0120, %bb.bc ], [ %.0120, %bb.bd ], [ %.0120, %bb.ay ], [ %.0120, %bb.av ], [ %.0120, %bb.at ], [ %.2122, %bb.bo ] ; 2 uses
-  %.not156 = icmp eq i32 %.3123, 0
+.thread202:                                       ; preds = %bb.bo, %bb.av, %bb.ay, %bb.bc, %bb.bb, %bb.bd, %.loopexit, %.lr.ph.i, %bb.as, %bb.bk, %bb.bj
+  %.0120287 = phi i32 [ %.0120292, %bb.bj ], [ %.0120292, %bb.bk ], [ %.0120292, %.lr.ph.i ], [ 0, %bb.as ], [ %.0120292, %bb.bd ], [ %.0120292, %bb.bb ], [ %.0120292, %bb.bc ], [ %.0120292, %bb.ay ], [ %.0120292, %bb.av ], [ %.2122, %bb.bo ], [ %.0120292, %.loopexit ] ; 2 uses
+  %.5135 = phi ptr [ %.3133, %bb.bj ], [ %.3133, %bb.bk ], [ %.1131, %.lr.ph.i ], [ null, %bb.as ], [ %.1131, %bb.bd ], [ %.1131, %bb.bb ], [ %.1131, %bb.bc ], [ %.1131, %bb.ay ], [ %.0130291, %bb.av ], [ %.3133, %bb.bo ], [ %.1131, %.loopexit ] ; 2 uses
+  %.not156 = icmp eq i32 %.0120287, 0
   br i1 %.not156, label %.thread208, label %bb.bp
 
 bb.bp:                                            ; preds = %.thread202
-  %i.iq = call fastcc i32 @tcp_zerocopy_vm_insert_batch(ptr noundef %.0.i167, ptr noundef nonnull %i.f, i32 noundef %.3123, ptr noundef nonnull %i.e, ptr noundef nonnull %i.c, ptr noundef nonnull %i.g, ptr noundef %1, i32 noundef %i.fb) #21, !srcloc !166
+  %i.iq = call fastcc i32 @tcp_zerocopy_vm_insert_batch(ptr noundef %.0.i167, ptr noundef nonnull %i.f, i32 noundef %.0120287, ptr noundef nonnull %i.e, ptr noundef nonnull %i.c, ptr noundef nonnull %i.g, ptr noundef %1, i32 noundef %i.fb) #21, !srcloc !166
   br label %.thread208
 
 .thread208:                                       ; preds = %bb.bn, %.thread202, %bb.bp
