@@ -202,9 +202,8 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = and i32 %i.b, 1
-  %.not5 = icmp eq i32 %1, 0
-  br i1 %.not5, label %bb.d, label %bb.c
+  %.not5 = trunc i32 %i.b to i1
+  br i1 %.not5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -607,9 +606,8 @@ bb.i:                                             ; preds = %_ZN6google8protobuf
 
 _ZN6google8protobuf2io17CodedOutputStream20WriteVarint64ToArrayEmPh.exit: ; preds = %.preheader, %bb.i, %bb.h, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit
   %.1 = phi ptr [ %.0, %_ZN6google8protobuf2io17CodedOutputStream32WriteVarint32SignExtendedToArrayEiPh.exit ], [ %i.ag, %bb.h ], [ %i.am, %bb.i ], [ %i.ar, %.preheader ] ; 6 uses
-  %3 = and i32 %i.b, 1
-  %.not33 = icmp eq i32 %3, 0
-  br i1 %.not33, label %_ZN6google8protobuf2io19EpsCopyOutputStream23WriteStringMaybeAliasedEjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPh.exit, label %bb.j
+  %.not33 = trunc i32 %i.b to i1
+  br i1 %.not33, label %bb.j, label %_ZN6google8protobuf2io19EpsCopyOutputStream23WriteStringMaybeAliasedEjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPh.exit
 
 bb.j:                                             ; preds = %_ZN6google8protobuf2io17CodedOutputStream20WriteVarint64ToArrayEmPh.exit
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1012,9 +1010,8 @@ _ZNK4i18n12phonenumbers11PhoneNumber30RequiredFieldsByteSizeFallbackEv.exit: ; p
   br i1 %.not, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK4i18n12phonenumbers11PhoneNumber30RequiredFieldsByteSizeFallbackEv.exit
-  %1 = and i32 %i.b, 1
-  %.not21 = icmp eq i32 %1, 0
-  br i1 %.not21, label %bb.h, label %bb.g
+  %.not21 = trunc i32 %i.b to i1
+  br i1 %.not21, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1179,9 +1176,8 @@ bb.a:
   br i1 %.not, label %bb.v, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i32 %i.b, 1
-  %.not30 = icmp eq i32 %2, 0
-  br i1 %.not30, label %bb.e, label %bb.c
+  %.not30 = trunc i32 %i.b to i1
+  br i1 %.not30, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1373,9 +1369,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = and i32 %i.c, 1
-  %.not5.i = icmp eq i32 %2, 0
-  br i1 %.not5.i, label %bb.e, label %bb.d
+  %.not5.i = trunc i32 %i.c to i1
+  br i1 %.not5.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24

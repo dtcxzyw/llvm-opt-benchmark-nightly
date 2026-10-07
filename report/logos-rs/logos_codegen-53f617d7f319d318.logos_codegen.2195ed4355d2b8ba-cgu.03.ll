@@ -203,9 +203,8 @@ bb.m:                                             ; preds = %bb.j, %bb.l, %bb.k
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.q = getelementptr i8, ptr %i.af, i64 8       ; 2 uses
   %i.r = getelementptr i8, ptr %i.ae, i64 8
-  %3 = and i64 %.fr18, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.o, label %bb.n
+  %3 = trunc i64 %.fr18 to i1
+  br i1 %3, label %bb.n, label %bb.o
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %.sroa.0.031.i = phi ptr [ %i.aa, %.lr.ph.i ], [ %i.a, %.lr.ph.preheader.i ] ; 2 uses
@@ -460,9 +459,8 @@ bb.m:                                             ; preds = %bb.j, %bb.l, %bb.k
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.q = getelementptr i8, ptr %i.af, i64 8       ; 2 uses
   %i.r = getelementptr i8, ptr %i.ae, i64 8
-  %3 = and i64 %.fr18, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.o, label %bb.n
+  %3 = trunc i64 %.fr18 to i1
+  br i1 %3, label %bb.n, label %bb.o
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %.sroa.0.031.i = phi ptr [ %i.aa, %.lr.ph.i ], [ %i.a, %.lr.ph.preheader.i ] ; 2 uses
@@ -646,9 +644,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.p, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 3 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 3
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.p, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -730,9 +727,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.p, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 24 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 24
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.p, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -814,9 +810,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.q, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 8 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 8
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.q, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -901,9 +896,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.q, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 8 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 8
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.q, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -988,9 +982,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.p, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 32 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 32
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.p, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -1072,9 +1065,8 @@ bb.a:
   %.sroa.0.0.lcssa = phi ptr [ %2, %bb.a ], [ %i.p, %.lr.ph ]
   %i.g = getelementptr i8, ptr %.sroa.015.0.lcssa, i64 16 ; 2 uses
   %i.h = getelementptr i8, ptr %.sroa.017.0.lcssa, i64 16
-  %4 = and i64 %1, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.b
+  %4 = trunc i64 %1 to i1
+  br i1 %4, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.031 = phi ptr [ %i.p, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
@@ -1477,9 +1469,8 @@ bb.k:                                             ; preds = %bb.j
 ._crit_edge.i:                                    ; preds = %.noexc29
   %i.cy = getelementptr i8, ptr %i.dn, i64 8      ; 2 uses
   %i.cz = getelementptr i8, ptr %i.dm, i64 8
-  %5 = and i64 %1, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.m, label %bb.l
+  %5 = trunc i64 %1 to i1
+  br i1 %5, label %bb.l, label %bb.m
 
 .lr.ph.i:                                         ; preds = %.noexc29, %.lr.ph.preheader.i
   %.sroa.0.031.i = phi ptr [ %i.de, %.noexc29 ], [ %0, %.lr.ph.preheader.i ] ; 2 uses
@@ -1833,9 +1824,8 @@ bb.k:                                             ; preds = %bb.j
 ._crit_edge.i:                                    ; preds = %.noexc29
   %i.cy = getelementptr i8, ptr %i.dn, i64 8      ; 2 uses
   %i.cz = getelementptr i8, ptr %i.dm, i64 8
-  %5 = and i64 %1, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.m, label %bb.l
+  %5 = trunc i64 %1 to i1
+  br i1 %5, label %bb.l, label %bb.m
 
 .lr.ph.i:                                         ; preds = %.noexc29, %.lr.ph.preheader.i
   %.sroa.0.031.i = phi ptr [ %i.de, %.noexc29 ], [ %0, %.lr.ph.preheader.i ] ; 2 uses

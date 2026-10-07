@@ -204,7 +204,6 @@ bb.r:                                             ; preds = %bb.q
   %.promoted5.i = load ptr, ptr %i.bz, align 8    ; 2 uses
   %.promoted6.i = load i32, ptr %i.ca, align 8, !tbaa !31 ; 2 uses
   %.promoted8.i = load ptr, ptr %i.cb, align 8    ; 2 uses
-  %xtraiter = and i32 %2, 1
   %i.cc = icmp eq i32 %2, 1
   br i1 %i.cc, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -271,8 +270,8 @@ _ZNSt6vectorIbSaIbEE8pop_backEv.exit3.i.1:        ; preds = %bb.w, %_ZNSt6vector
   br i1 %niter.ncmp.1, label %_ZN12CVQualifiers17remove_qualifiersEi.exit.unr-lcssa, label %bb.s, !llvm.loop !1
 
 _ZN12CVQualifiers17remove_qualifiersEi.exit.unr-lcssa: ; preds = %_ZNSt6vectorIbSaIbEE8pop_backEv.exit3.i.1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN12CVQualifiers17remove_qualifiersEi.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_ZN12CVQualifiers17remove_qualifiersEi.exit
 
 .epil.preheader:                                  ; preds = %_ZN12CVQualifiers17remove_qualifiersEi.exit.unr-lcssa, %.lr.ph.i
   %.epil.init = phi ptr [ %.promoted8.i, %.lr.ph.i ], [ %i.cz, %_ZN12CVQualifiers17remove_qualifiersEi.exit.unr-lcssa ]
@@ -675,9 +674,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph
   %i.v = load ptr, ptr %i.r, align 8, !tbaa !30
   %i.w = load i64, ptr %i.v, align 8, !tbaa !35
-  %3 = and i64 %i.w, 1
-  %.not60.peel = icmp eq i64 %3, 0
-  br i1 %.not60.peel, label %bb.j, label %bb.d
+  %.not60.peel = trunc i64 %i.w to i1
+  br i1 %.not60.peel, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c
   %i.x = invoke noundef zeroext i1 @_ZN9CGOptions20allow_const_volatileEv()
@@ -1080,7 +1078,6 @@ bb.a:
   %.promoted5 = load ptr, ptr %i.c, align 8       ; 2 uses
   %.promoted6 = load i32, ptr %i.d, align 8, !tbaa !31 ; 2 uses
   %.promoted8 = load ptr, ptr %i.e, align 8       ; 2 uses
-  %xtraiter = and i32 %1, 1
   %i.f = icmp eq i32 %1, 1
   br i1 %i.f, label %.epil.preheader, label %.lr.ph.new
 
@@ -1089,8 +1086,8 @@ bb.a:
   br label %bb.e
 
 ._crit_edge.unr-lcssa:                            ; preds = %_ZNSt6vectorIbSaIbEE8pop_backEv.exit3.1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %.epil.init = phi ptr [ %.promoted8, %.lr.ph ], [ %i.aj, %._crit_edge.unr-lcssa ]
@@ -1260,9 +1257,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %.pre = load i64, ptr %i.g, align 8, !tbaa !35
-  %3 = and i64 %.pre, 1
-  %.not19.peel = icmp eq i64 %3, 0
-  br i1 %.not19.peel, label %bb.d, label %bb.c
+  %.not19.peel = trunc i64 %.pre to i1
+  br i1 %.not19.peel, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.o = tail call noundef zeroext i1 @_ZN9CGOptions6constsEv() ; 0 uses
@@ -1272,9 +1268,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.q = load ptr, ptr %i.n, align 8, !tbaa !30
   %i.r = load i64, ptr %i.q, align 8, !tbaa !35
-  %4 = and i64 %i.r, 1
-  %.not20.peel = icmp eq i64 %4, 0
-  br i1 %.not20.peel, label %bb.f, label %bb.e
+  %.not20.peel = trunc i64 %i.r to i1
+  br i1 %.not20.peel, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.s = tail call noundef zeroext i1 @_ZN9CGOptions9volatilesEv() ; 0 uses
@@ -1677,9 +1672,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = load i64, ptr %i.f, align 8, !tbaa !35
-  %2 = and i64 %i.m, 1
-  %.not4 = icmp eq i64 %2, 0
-  br i1 %.not4, label %bb.d, label %bb.c
+  %.not4 = trunc i64 %i.m to i1
+  br i1 %.not4, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.n = tail call noundef zeroext i1 @_ZN9CGOptions6constsEv() ; 0 uses
@@ -1704,9 +1698,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = load i64, ptr %i.u, align 8, !tbaa !35
-  %3 = and i64 %i.ab, 1
-  %.not5 = icmp eq i64 %3, 0
-  br i1 %.not5, label %bb.g, label %bb.f
+  %.not5 = trunc i64 %i.ab to i1
+  br i1 %.not5, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ac = tail call noundef zeroext i1 @_ZN9CGOptions9volatilesEv() ; 0 uses

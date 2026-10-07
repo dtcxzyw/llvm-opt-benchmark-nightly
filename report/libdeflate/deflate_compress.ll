@@ -205,19 +205,18 @@ bb.c:                                             ; preds = %bb.aq, %matchfinder
   %.1 = phi i32 [ %.055, %matchfinder_init_sse2.exit ], [ %.2, %bb.aq ] ; 4 uses
   %.0160.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.0160.idx ; 12 uses
   %i.ai = ptrtoint ptr %.161 to i64               ; 3 uses
-  %i.aj = sub i64 %i.v, %i.ai                     ; 4 uses
+  %i.aj = sub i64 %i.v, %i.ai                     ; 5 uses
   %i.ak = icmp ult i64 %i.aj, 258
   br i1 %i.ak, label %bb.d, label %bb.f, !prof !39
 
 bb.d:                                             ; preds = %bb.c
-  %i.al = trunc nuw i64 %i.aj to i32              ; 5 uses
+  %i.al = trunc nuw i64 %i.aj to i32              ; 4 uses
   %i.am = icmp samesign ult i64 %i.aj, 5
   br i1 %i.am, label %.preheader199.preheader, label %bb.e
 
 .preheader199.preheader:                          ; preds = %bb.d
-  %xtraiter306 = and i32 %i.al, 1
-  %lcmp.mod307.not = icmp eq i32 %xtraiter306, 0
-  br i1 %lcmp.mod307.not, label %.preheader199.prol.loopexit, label %.preheader199.prol
+  %lcmp.mod307.not = trunc i64 %i.aj to i1
+  br i1 %lcmp.mod307.not, label %.preheader199.prol, label %.preheader199.prol.loopexit
 
 .preheader199.prol:                               ; preds = %.preheader199.preheader
   %i.an = getelementptr inbounds nuw i8, ptr %.161, i64 1 ; 2 uses
@@ -620,9 +619,8 @@ matchfinder_rebase_sse2.exit118:                  ; preds = %.preheader
 bb.ap:                                            ; preds = %matchfinder_rebase_sse2.exit118, %bb.ao
   %.4170 = phi ptr [ %i.kh, %matchfinder_rebase_sse2.exit118 ], [ %.3169, %bb.ao ]
   %.031.i = phi i32 [ %i.ki, %matchfinder_rebase_sse2.exit118 ], [ %i.je, %bb.ao ] ; 3 uses
-  %xtraiter = and i32 %i.iw, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i32 %i.iw to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.ap
   %i.kj = zext nneg i32 %i.cw to i64
@@ -1025,9 +1023,8 @@ bb.a:
   %i.e = zext nneg i32 %i.d to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, i8 0, i64 %i.e, i1 false)
   %i.f = add nsw i32 %0, -1                       ; 4 uses
-  %wide.trip.count.i = zext nneg i32 %0 to i64    ; 6 uses
+  %wide.trip.count.i = zext nneg i32 %0 to i64    ; 5 uses
   %i.g = add nsw i64 %wide.trip.count.i, -1       ; 3 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %.epil.preheader, label %.new
 
@@ -1061,8 +1058,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %niter.ncmp.1, label %.preheader47.i.preheader.unr-lcssa, label %bb.b, !llvm.loop !131
 
 .preheader47.i.preheader.unr-lcssa:               ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader47.i.preheader, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %0 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader47.i.preheader
 
 .epil.preheader:                                  ; preds = %.preheader47.i.preheader.unr-lcssa, %bb.a
   %indvars.iv.i.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %.preheader47.i.preheader.unr-lcssa ]

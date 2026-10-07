@@ -205,18 +205,17 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsIiNSt7__cxx1112
 .lr.ph:                                           ; preds = %.preheader62
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 256 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.cw = icmp eq i32 %1, 1
   br i1 %i.cw, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %4 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %4 to i64
   br label %bb.f
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
@@ -533,13 +532,12 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsIiNSt7__cxx1112
   br i1 %.not.i60, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %_ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEE8transferEmmPSH_PSF_.exit59
-  %i.da = load i8, ptr %i.a, align 1, !tbaa !26   ; 2 uses
+  %i.da = load i8, ptr %i.a, align 1, !tbaa !26   ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 256 ; 9 uses
-  %i.dc = zext i8 %i.da to i64                    ; 5 uses
+  %i.dc = zext i8 %i.da to i64                    ; 4 uses
   %i.dd = sext i32 %1 to i64                      ; 3 uses
-  %4 = and i64 %i.dc, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %4 = trunc i8 %i.da to i1
+  br i1 %4, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.f
   %i.de = add nsw i64 %i.dc, %i.dd                ; 2 uses
@@ -565,13 +563,12 @@ bb.f:                                             ; preds = %_ZN4absl7debian318c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
-  %5 = zext nneg i32 %1 to i64                    ; 2 uses
-  %xtraiter82 = and i64 %5, 1
   %i.dm = icmp eq i32 %1, 1
   br i1 %i.dm, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %5, 2147483646
+  %5 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %5 to i64
   %invariant.op = sub i32 1, %1
   br label %bb.g
 
@@ -638,8 +635,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !359
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.g
-  %lcmp.mod83.not = icmp eq i64 %xtraiter82, 0
-  br i1 %lcmp.mod83.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod83.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod83.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv65.epil.init = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next66.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1042,18 +1039,17 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaI
 .lr.ph:                                           ; preds = %.preheader56
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 256 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.bq = icmp eq i32 %1, 1
   br i1 %i.bq, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %4 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %4 to i64
   br label %bb.b
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
@@ -1336,13 +1332,12 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaI
   br i1 %.not.i52, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %_ZN4absl7debian318container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE10transfer_nEmmmPS8_PS6_.exit
-  %i.cc = load i8, ptr %i.c, align 1, !tbaa !26   ; 2 uses
+  %i.cc = load i8, ptr %i.c, align 1, !tbaa !26   ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 256 ; 9 uses
-  %i.ce = zext i8 %i.cc to i64                    ; 5 uses
+  %i.ce = zext i8 %i.cc to i64                    ; 4 uses
   %i.cf = sext i32 %1 to i64                      ; 3 uses
-  %4 = and i64 %i.ce, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %4 = trunc i8 %i.cc to i1
+  br i1 %4, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.b
   %i.cg = add nsw i64 %i.ce, %i.cf                ; 2 uses
@@ -1368,13 +1363,12 @@ bb.b:                                             ; preds = %_ZN4absl7debian318c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
-  %5 = zext nneg i32 %1 to i64                    ; 2 uses
-  %xtraiter82 = and i64 %5, 1
   %i.co = icmp eq i32 %1, 1
   br i1 %i.co, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %5, 2147483646
+  %5 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %5 to i64
   %invariant.op = sub i32 1, %1
   br label %bb.c
 
@@ -1441,8 +1435,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !379
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.c
-  %lcmp.mod83.not = icmp eq i64 %xtraiter82, 0
-  br i1 %lcmp.mod83.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod83.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod83.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv57.epil.init = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next58.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1845,18 +1839,17 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112b
 .lr.ph:                                           ; preds = %.preheader77
   %i.fd = getelementptr inbounds nuw i8, ptr %2, i64 272 ; 3 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 3 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.ff = icmp eq i32 %1, 1
   br i1 %i.ff, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %4 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %4 to i64
   br label %bb.j
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.j
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
@@ -2259,13 +2252,12 @@ _ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112b
   br i1 %.not.i74, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %_ZN4absl7debian318container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EELi256ELb0EEEE8transferEmmPSH_PSF_.exit73
-  %i.fl = load i8, ptr %i.a, align 1, !tbaa !26   ; 2 uses
+  %i.fl = load i8, ptr %i.a, align 1, !tbaa !26   ; 3 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %2, i64 272 ; 9 uses
-  %i.fn = zext i8 %i.fl to i64                    ; 5 uses
+  %i.fn = zext i8 %i.fl to i64                    ; 4 uses
   %i.fo = sext i32 %1 to i64                      ; 3 uses
-  %4 = and i64 %i.fn, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %4 = trunc i8 %i.fl to i1
+  br i1 %4, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.j
   %i.fp = add nsw i64 %i.fn, %i.fo                ; 2 uses
@@ -2291,13 +2283,12 @@ bb.j:                                             ; preds = %_ZN4absl7debian318c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 3 uses
-  %5 = zext nneg i32 %1 to i64                    ; 2 uses
-  %xtraiter115 = and i64 %5, 1
   %i.fx = icmp eq i32 %1, 1
   br i1 %i.fx, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %5, 2147483646
+  %5 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %5 to i64
   %invariant.op = sub i32 1, %1
   br label %bb.k
 
@@ -2364,8 +2355,8 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.k, !llvm.loop !409
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.k
-  %lcmp.mod116.not = icmp eq i64 %xtraiter115, 0
-  br i1 %lcmp.mod116.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod116.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod116.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv79.epil.init = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next80.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

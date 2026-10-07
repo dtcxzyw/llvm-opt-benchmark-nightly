@@ -60,9 +60,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 40
@@ -157,9 +157,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateResetKeep.exit
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateResetKeep.exit, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 60
@@ -254,9 +254,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateReset.exit
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateReset.exit, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = icmp slt i32 %1, 0
@@ -343,9 +343,9 @@ bb.o:                                             ; preds = %bb.n
 inflateStateCheck.exit.i:                         ; preds = %bb.o
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 8 ; 2 uses
   %i.am = load i32, ptr %i.al, align 8, !tbaa !21
-  %i.an = add i32 %i.am, -16180
-  %or.cond.i.i = icmp ult i32 %i.an, 32
-  br i1 %or.cond.i.i, label %bb.p, label %inflateReset.exit
+  %i.an = add i32 %i.am, -16212
+  %or.cond.i.i = icmp ult i32 %i.an, -32
+  br i1 %or.cond.i.i, label %inflateReset.exit, label %bb.p
 
 bb.p:                                             ; preds = %inflateStateCheck.exit.i
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 60
@@ -592,9 +592,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = icmp eq i32 %1, 0
@@ -677,9 +677,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 59 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !21   ; 3 uses
-  %i.o = add i32 %i.n, -16180
-  %or.cond.i = icmp ult i32 %i.o, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.o = add i32 %i.n, -16212
+  %or.cond.i = icmp ult i32 %i.o, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -937,9 +937,8 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %2 = and i32 %i.cc, 1
-  %.not1251 = icmp eq i32 %2, 0
-  br i1 %.not1251, label %bb.w, label %bb.v
+  %.not1251 = trunc i32 %i.cc to i1
+  br i1 %.not1251, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.df = shl i64 %.1930.lcssa, 8
@@ -1342,9 +1341,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 72
@@ -1406,9 +1405,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 64 ; 3 uses
@@ -1485,9 +1484,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21   ; 2 uses
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -1658,9 +1657,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -1715,9 +1714,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !21   ; 2 uses
-  %i.o = add i32 %i.n, -16180
-  %or.cond.i = icmp ult i32 %i.o, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.o = add i32 %i.n, -16212
+  %or.cond.i = icmp ult i32 %i.o, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -2018,9 +2017,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21   ; 2 uses
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = icmp eq i32 %i.m, 16193
@@ -2206,9 +2205,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 7144
@@ -2252,9 +2251,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %.not7 = icmp eq i32 %1, 0
@@ -2318,9 +2317,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21   ; 2 uses
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 7148
@@ -2388,9 +2387,9 @@ bb.e:                                             ; preds = %bb.d
 inflateStateCheck.exit:                           ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
-  %i.n = add i32 %i.m, -16180
-  %or.cond.i = icmp ult i32 %i.n, 32
-  br i1 %or.cond.i, label %bb.f, label %inflateStateCheck.exit.thread
+  %i.n = add i32 %i.m, -16212
+  %or.cond.i = icmp ult i32 %i.n, -32
+  br i1 %or.cond.i, label %inflateStateCheck.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %inflateStateCheck.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 144

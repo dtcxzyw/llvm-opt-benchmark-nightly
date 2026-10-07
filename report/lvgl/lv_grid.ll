@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   br i1 %i.eu, label %.lr.ph134.i.i, label %._crit_edge135.i.i, !llvm.loop !40
 
 ._crit_edge135.i.i:                               ; preds = %bb.ai, %count_tracks.exit.i37.i
-  %i.ev = phi i32 [ 0, %count_tracks.exit.i37.i ], [ %i.er, %bb.ai ] ; 12 uses
+  %i.ev = phi i32 [ 0, %count_tracks.exit.i37.i ], [ %i.er, %bb.ai ] ; 13 uses
   %.097.lcssa.i.i = phi i32 [ 0, %count_tracks.exit.i37.i ], [ %.198.i.i, %bb.ai ] ; 2 uses
   %.095.lcssa.i.i = phi i32 [ 0, %count_tracks.exit.i37.i ], [ %.196.i.i, %bb.ai ]
   %i.ew = tail call ptr @lv_obj_get_style_prop(ptr noundef %0, i32 noundef 0, i8 noundef zeroext 30) #8
@@ -504,7 +504,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   br i1 %or.cond.i33, label %.lr.ph84.preheader.i, label %grid_align.exit
 
 .lr.ph84.preheader.i:                             ; preds = %._crit_edge81.i
-  %wide.trip.count95.i = zext i32 %i.ev to i64    ; 6 uses
+  %wide.trip.count95.i = zext i32 %i.ev to i64    ; 5 uses
   %min.iters.check103 = icmp ult i32 %i.ev, 8
   br i1 %min.iters.check103, label %.lr.ph84.i.preheader, label %vector.memcheck
 
@@ -549,9 +549,8 @@ middle.block115:                                  ; preds = %vector.body108
 
 .lr.ph84.i.preheader:                             ; preds = %vector.memcheck, %.lr.ph84.preheader.i, %middle.block115
   %indvars.iv92.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph84.preheader.i ], [ %n.vec105, %middle.block115 ] ; 5 uses
-  %xtraiter146 = and i64 %wide.trip.count95.i, 1
-  %lcmp.mod147.not = icmp eq i64 %xtraiter146, 0
-  br i1 %lcmp.mod147.not, label %.lr.ph84.i.prol.loopexit, label %.lr.ph84.i.prol
+  %lcmp.mod147.not = trunc i32 %i.ev to i1
+  br i1 %lcmp.mod147.not, label %.lr.ph84.i.prol, label %.lr.ph84.i.prol.loopexit
 
 .lr.ph84.i.prol:                                  ; preds = %.lr.ph84.i.preheader
   %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %indvars.iv92.i.ph ; 2 uses

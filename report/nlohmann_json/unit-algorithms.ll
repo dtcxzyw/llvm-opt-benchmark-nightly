@@ -205,16 +205,16 @@ bb.a:
   %.sroa.5.03.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ %i.j, %bb.a ] ; 2 uses
   %i.k = shl nuw i64 %.sroa.0.04.i.i, 1           ; 3 uses
   %i.l = add nsw i32 %.sroa.5.03.i.i, -1          ; 3 uses
-  %6 = icmp sgt i64 %i.k, -1
-  br i1 %6, label %.lr.ph.i.i, label %.lr.ph.i32.i, !llvm.loop !884
+  %6 = icmp slt i64 %i.k, 0
+  br i1 %6, label %.lr.ph.i32.i, label %.lr.ph.i.i, !llvm.loop !884
 
 .lr.ph.i32.i:                                     ; preds = %.lr.ph.i.i, %.lr.ph.i32.i
   %.sroa.0.04.i33.i = phi i64 [ %i.m, %.lr.ph.i32.i ], [ %.sroa.037.0.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.5.03.i34.i = phi i32 [ %i.n, %.lr.ph.i32.i ], [ %.sroa.841.0.i, %.lr.ph.i.i ]
   %i.m = shl nuw i64 %.sroa.0.04.i33.i, 1         ; 3 uses
   %i.n = add nsw i32 %.sroa.5.03.i34.i, -1        ; 2 uses
-  %7 = icmp sgt i64 %i.m, -1
-  br i1 %7, label %.lr.ph.i32.i, label %_ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit, !llvm.loop !884
+  %7 = icmp slt i64 %i.m, 0
+  br i1 %7, label %_ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit, label %.lr.ph.i32.i, !llvm.loop !884
 
 _ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit: ; preds = %.lr.ph.i32.i
   %i.o = icmp eq i64 %i.c, 0
@@ -617,9 +617,8 @@ bb.e:                                             ; preds = %bb.b, %_ZNK8nlohman
 
 ._crit_edge:                                      ; preds = %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit, %bb.a
   %.022.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit ] ; 5 uses
-  %15 = and i64 %2, 1
-  %16 = icmp eq i64 %15, 0
-  br i1 %16, label %bb.f, label %bb.k
+  %15 = trunc i64 %2 to i1
+  br i1 %15, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
   %i.ai = add nsw i64 %2, -2
@@ -1022,9 +1021,8 @@ bb.k:                                             ; preds = %"_ZN9__gnu_cxx5__op
 
 ._crit_edge:                                      ; preds = %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit, %bb.a
   %.022.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit ] ; 5 uses
-  %19 = and i64 %2, 1
-  %20 = icmp eq i64 %19, 0
-  br i1 %20, label %bb.l, label %bb.q
+  %19 = trunc i64 %2 to i1
+  br i1 %19, label %bb.q, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge
   %i.bc = add nsw i64 %2, -2

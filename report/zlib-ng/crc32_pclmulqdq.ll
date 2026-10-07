@@ -158,8 +158,8 @@ bb.i:                                             ; preds = %.thread, %bb.c
   br i1 %i.bo, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %4 = icmp eq i32 %.1, 0
-  %i.bp = select i1 %4, <2 x i64> zeroinitializer, <2 x i64> %i.c
+  %4 = trunc nuw i32 %.1 to i1
+  %i.bp = select i1 %4, <2 x i64> %i.c, <2 x i64> zeroinitializer
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.i
@@ -562,9 +562,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
   %i.b = xor i32 %0, -1                           ; 3 uses
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i
   %i.c = add nsw i64 %2, -1

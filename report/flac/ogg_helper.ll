@@ -129,9 +129,8 @@ full_read_.exit:                                  ; preds = %bb.h
 bb.i:                                             ; preds = %full_read_.exit
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 5
   %i.x = load i8, ptr %i.w, align 1, !tbaa !31
-  %6 = and i8 %i.x, 1
-  %.not56 = icmp eq i8 %6, 0
-  br i1 %.not56, label %bb.j, label %bb.l
+  %.not56 = trunc i8 %i.x to i1
+  br i1 %.not56, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 6
@@ -155,8 +154,8 @@ bb.m:                                             ; preds = %bb.k
   %i.af = getelementptr inbounds nuw i8, ptr %i.n, i64 27
   %i.ag = zext i8 %i.ac to i64
   %i.ah = call fastcc i32 @full_read_(ptr noundef %0, ptr noundef nonnull %i.af, i64 noundef %i.ag, ptr noundef %4, ptr noundef %5)
-  %.not59 = icmp eq i32 %i.ah, 0
-  br i1 %.not59, label %bb.s, label %.preheader
+  %.not59 = trunc nuw i32 %i.ah to i1
+  br i1 %.not59, label %.preheader, label %bb.s
 
 .preheader:                                       ; preds = %bb.m
   %i.ai = load ptr, ptr %2, align 8, !tbaa !12    ; 3 uses
@@ -217,8 +216,8 @@ bb.o:                                             ; preds = %._crit_edge
 
 bb.p:                                             ; preds = %._crit_edge
   %i.bg = call fastcc i32 @full_read_(ptr noundef %0, ptr noundef nonnull %i.bc, i64 noundef %i.ba, ptr noundef %4, ptr noundef %5)
-  %.not62 = icmp eq i32 %i.bg, 0
-  br i1 %.not62, label %bb.s, label %bb.q
+  %.not62 = trunc nuw i32 %i.bg to i1
+  br i1 %.not62, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
   %i.bh = load ptr, ptr %2, align 8, !tbaa !12

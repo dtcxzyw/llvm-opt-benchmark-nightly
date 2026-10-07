@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.d
   store ptr %i.o, ptr %.sroa.6.0..sroa_idx, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !1365)
   %i.p = invoke noundef i64 @_RNvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterTRmRNtNtBX_6string6StringEENCNvMs0_NtCsbzNSmZPCnTx_10tgrep_core4liveNtB2d_9LiveIndex17all_paths_ordereds_0ENtNtB7_3zip27TrustedRandomAccessNoCoerce4sizeB2f_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.c)
-          to label %.noexc.i unwind label %bb.g, !noalias !1365 ; 6 uses
+          to label %.lr.ph.i.i.preheader unwind label %bb.g, !noalias !1365 ; 5 uses
 
 bb.f:                                             ; preds = %bb.g
   %i.q = shl nuw i64 %i.m, 4
@@ -217,14 +217,11 @@ bb.g:                                             ; preds = %bb.e
   %i.s = icmp eq i64 %i.m, 0
   br i1 %i.s, label %.body, label %bb.f
 
-.noexc.i:                                         ; preds = %bb.e
-  %.not.i.i = icmp eq i64 %i.p, 0
-  br i1 %.not.i.i, label %.loopexit, label %.lr.ph.i.i.preheader
-
-.lr.ph.i.i.preheader:                             ; preds = %.noexc.i
-  %xtraiter = and i64 %i.p, 1
-  %2 = icmp eq i64 %i.p, 1
-  br i1 %2, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
+.lr.ph.i.i.preheader:                             ; preds = %bb.e
+  switch i64 %i.p, label %.lr.ph.i.i.preheader.new [
+    i64 0, label %.loopexit
+    i64 1, label %.lr.ph.i.i.epil.preheader
+  ]
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
   %unroll_iter = and i64 %i.p, -2
@@ -258,10 +255,10 @@ bb.g:                                             ; preds = %bb.e
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i.i
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.p to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.epil.preheader, label %.loopexit
 
-.lr.ph.i.i.epil.preheader:                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i.i.preheader
+.lr.ph.i.i.epil.preheader:                        ; preds = %.lr.ph.i.i.preheader, %.loopexit.loopexit.unr-lcssa
   %.sroa.0.01.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.ae, %.loopexit.loopexit.unr-lcssa ]
   %lcmp.mod12 = trunc i64 %i.p to i1
   call void @llvm.assume(i1 %lcmp.mod12)
@@ -276,7 +273,7 @@ bb.g:                                             ; preds = %bb.e
   store i64 %.val2.i.i.i.epil, ptr %i.ag, align 8, !noalias !1367
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.noexc.i
+.loopexit:                                        ; preds = %.lr.ph.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.lr.ph.i.i.preheader
   store i64 %i.m, ptr %0, align 8, !alias.scope !1365, !noalias !1369
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.h, ptr %i.ak, align 8, !alias.scope !1365, !noalias !1369

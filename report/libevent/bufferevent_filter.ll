@@ -103,9 +103,8 @@ define internal void @be_filter_unlink(ptr nofree noundef readonly captures(none
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.b = load i32, ptr %i.a, align 8
-  %1 = and i32 %i.b, 1
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %bb.e, label %bb.b
+  %.not = trunc i32 %i.b to i1
+  br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 632
@@ -508,17 +507,16 @@ bb.q:                                             ; preds = %bb.p
   %.not.i66.us = icmp eq i64 %i.co, 0
   br i1 %.not.i66.us, label %.split.us.us.backedge, label %be_underlying_writebuf_full.exit67.us
 
+.split.us.us.backedge:                            ; preds = %bb.q, %be_underlying_writebuf_full.exit67.us
+  br label %.split.us.us, !llvm.loop !6
+
 be_underlying_writebuf_full.exit67.us:            ; preds = %bb.q
   %i.cp = getelementptr inbounds nuw i8, ptr %.val.us, i64 280
   %i.cq = load ptr, ptr %i.cp, align 8
   %i.cr = tail call i64 @evbuffer_get_length(ptr noundef %i.cq) #3
   %i.cs = load i64, ptr %i.cn, align 8
   %.not79.us = icmp ult i64 %i.cr, %i.cs
-  %cond.fr.us = freeze i1 %.not79.us
-  br i1 %cond.fr.us, label %.split.us.us.backedge, label %.critedge61
-
-.split.us.us.backedge:                            ; preds = %be_underlying_writebuf_full.exit67.us, %bb.q
-  br label %.split.us.us, !llvm.loop !6
+  br i1 %.not79.us, label %.split.us.us.backedge, label %.critedge61
 
 .split:                                           ; preds = %.split.preheader, %be_underlying_writebuf_full.exit67.thread
   %i.ct = load ptr, ptr %i.v, align 8

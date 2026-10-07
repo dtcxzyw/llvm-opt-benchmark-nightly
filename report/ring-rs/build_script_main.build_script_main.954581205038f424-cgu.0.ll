@@ -202,10 +202,9 @@ bb.al:                                            ; preds = %bb.ak
   %i.ff = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.fe, ptr %i.ff, align 8
   %i.fg = ptrtoint ptr %i.fe to i64               ; 2 uses
-  %11 = and i64 %i.fg, 1
-  %.not.i = icmp eq i64 %11, 0
+  %11 = trunc i64 %i.fg to i1
   %i.fh = lshr i64 %i.fg, 1
-  %.sroa.0.0.i = select i1 %.not.i, ptr null, ptr %i.fd
+  %.sroa.0.0.i = select i1 %11, ptr %i.fd, ptr null
   invoke void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.o, ptr %.sroa.0.0.i, i64 %i.fh, ptr nonnull align 8 %i.b) #21
           to label %bb.am unwind label %.loopexit.split-lp
 
@@ -608,10 +607,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %2, ptr %i.b, align 8
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1
-  %.sroa.0.0 = select i1 %.not, ptr null, ptr %1
+  %.sroa.0.0 = select i1 %3, ptr %1, ptr null
   call void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3U9i7nQCKwt_15find_msvc_tools(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 %i.d, ptr nonnull align 8 %i.a) #21
   ret void
 }
@@ -911,10 +909,9 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.ax, ptr %i.b, align 8
   store ptr %i.ay, ptr %i.as, align 8
   %i.az = ptrtoint ptr %i.ay to i64               ; 2 uses
-  %10 = and i64 %i.az, 1
-  %.not.i = icmp eq i64 %10, 0
+  %10 = trunc i64 %i.az to i1
   %i.ba = lshr i64 %i.az, 1
-  %.sroa.0.0.i14 = select i1 %.not.i, ptr null, ptr %i.ax
+  %.sroa.0.0.i14 = select i1 %10, ptr %i.ax, ptr null
   invoke void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.h, ptr %.sroa.0.0.i14, i64 %i.ba, ptr nonnull align 8 %i.b) #21
           to label %bb.o unwind label %.loopexit
 
@@ -969,10 +966,9 @@ bb.u:                                             ; preds = %bb.t
   store ptr %i.bg, ptr %i.a, align 8
   store ptr %i.bh, ptr %i.ae, align 8
   %i.bi = ptrtoint ptr %i.bh to i64               ; 2 uses
-  %11 = and i64 %i.bi, 1
-  %.not.i15 = icmp eq i64 %11, 0
+  %11 = trunc i64 %i.bi to i1
   %i.bj = lshr i64 %i.bi, 1
-  %.sroa.0.0.i16 = select i1 %.not.i15, ptr null, ptr %i.bg
+  %.sroa.0.0.i16 = select i1 %11, ptr %i.bg, ptr null
   invoke void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull sret([24 x i8]) align 8 %i.q, ptr %.sroa.0.0.i16, i64 %i.bj, ptr nonnull align 8 %i.a) #21
           to label %bb.w unwind label %.loopexit.split-lp.loopexit
 

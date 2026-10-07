@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %._crit_edge.i
   %i.r = ptrtoint ptr %i.e to i64
   %i.s = ptrtoint ptr %i.p to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 2 uses
-  %i.u = lshr i64 %i.t, 5                         ; 3 uses
+  %i.t = sub i64 %i.r, %i.s
+  %i.u = lshr i64 %i.t, 5                         ; 4 uses
   %i.v = icmp eq i64 %i.u, 1
   br i1 %i.v, label %.epil.preheader, label %.new
 
@@ -252,9 +252,8 @@ _RNCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB7_6Buffer5count0Bb_.ex
   br i1 %niter.ncmp.1, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit.loopexit.unr-lcssa, label %bb.e
 
 _RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit.loopexit.unr-lcssa: ; preds = %_RNCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB7_6Buffer5count0Bb_.exit.i.i.1
-  %1 = and i64 %i.t, 32
-  %lcmp.mod.not = icmp eq i64 %1, 0
-  br i1 %lcmp.mod.not, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.u to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit.loopexit.unr-lcssa, %bb.d
   %.sroa.6.0.i.i.epil.init = phi i64 [ %i.l, %bb.d ], [ %.sroa.3.0.i.i.i.1, %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit.loopexit.unr-lcssa ]
@@ -657,8 +656,8 @@ bb.p:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.experimental.noalias.scope.decl(metadata !1073)
   %i.ar = load i64, ptr %i.f, align 8, !range !33, !alias.scope !1073, !noundef !11
-  %5 = icmp eq i64 %i.ar, 0
-  br i1 %5, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4core11MemoryValueEEB15_.exit, label %bb.q
+  %5 = trunc nuw i64 %i.ar to i1
+  br i1 %5, label %bb.q, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4core11MemoryValueEEB15_.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.as = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -1061,8 +1060,8 @@ bb.i:                                             ; preds = %bb.q, %bb.o, %_RNvM
 bb.j:                                             ; preds = %_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResultINtNtNtNtCs9k3SxhrAWiO_3std4sync6poison5mutex10MutexGuardINtNtNtNtCs6i54tJFfzR_5alloc11collections5btree3map8BTreeMapNtNtB1L_6string6StringNtNtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4core11MemoryValueEEINtBM_11PoisonErrorBH_EE6unwrapB34_.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1137)
   %i.ag = load i64, ptr %i.c, align 8, !range !33, !alias.scope !1137, !noundef !11
-  %4 = icmp eq i64 %i.ag, 0
-  br i1 %4, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4core11MemoryValueEEB15_.exit, label %bb.k
+  %4 = trunc nuw i64 %i.ag to i1
+  br i1 %4, label %bb.k, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core8services6memory4core11MemoryValueEEB15_.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses

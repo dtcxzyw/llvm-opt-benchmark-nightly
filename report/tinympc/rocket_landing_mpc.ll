@@ -205,9 +205,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %._cri
   store i32 %1, ptr %i.cp, align 4, !tbaa !68
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 232
   store i32 %2, ptr %i.cq, align 8, !tbaa !69
-  %10 = and i32 %2, 1
-  %.not = icmp eq i32 %10, 0
-  br i1 %.not, label %bb.w, label %.critedge
+  %.not = trunc i32 %2 to i1
+  br i1 %.not, label %.critedge, label %bb.w
 
 bb.r:                                             ; preds = %.noexc.i29
   %i.cr = landingpad { ptr, i32 }
@@ -610,10 +609,9 @@ bb.e:                                             ; preds = %.noexc6, %_ZN5Eigen
   br i1 %or.cond.i.i.i.i, label %.preheader.i.i.i.i.i.preheader, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE12_set_noaliasINS_9ReplicateINS1_IdLi6ELi1ELi0ELi6ELi1EEELin1ELin1EEEEERS2_RKNS_9DenseBaseIT_EE.exit
 
 .preheader.i.i.i.i.i.preheader:                   ; preds = %bb.e
-  %xtraiter = and i64 %i.w, 1
   %i.ab = icmp eq i64 %i.w, 1
   %unroll_iter = and i64 %i.w, 9223372036854775806
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = trunc i64 %i.w to i1
   %lcmp.mod12 = trunc i64 %i.w to i1
   br label %.preheader.i.i.i.i.i
 
@@ -624,7 +622,7 @@ bb.e:                                             ; preds = %.noexc6, %_ZN5Eigen
   br i1 %i.ab, label %.epil.preheader, label %.preheader.i.i.i.i.i.new
 
 ._crit_edge.i.i.i.i.i.unr-lcssa:                  ; preds = %.preheader.i.i.i.i.i.new
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i.i.i.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i.i.i.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.i.i.i.unr-lcssa, %.preheader.i.i.i.i.i
   %.09.i.i.i.i.i.epil.init = phi i64 [ 0, %.preheader.i.i.i.i.i ], [ %i.ao, %._crit_edge.i.i.i.i.i.unr-lcssa ] ; 2 uses
@@ -1027,7 +1025,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !213, !nonnull !54, !align !56 ; 15 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !25
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !26   ; 18 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !26   ; 19 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !33
   %.not.i = icmp eq i64 %i.h, %i.f
@@ -1166,7 +1164,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i
   br i1 %conflict.rdx78, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.bk = and i64 %i.f, 1                         ; 2 uses
+  %i.bk = and i64 %i.f, 1
   %n.vec = sub i64 %i.ag, %i.bk                   ; 2 uses
   %i.bl = add i64 %i.r, %n.vec
   %i.bm = load double, ptr %i.c, align 16, !tbaa !35, !alias.scope !215
@@ -1222,8 +1220,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cl, label %middle.block, label %vector.body, !llvm.loop !208
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.bk, 0
-  br i1 %cmp.n, label %_ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS3_INS_7ProductINS4_IdLin1ELin1ELi0ELin1ELin1EEENS4_IdLi6ELi1ELi0ELi6ELi1EEELi1EEEEENS0_9assign_opIddEELi0EEELi3ELi0EE3runERSE_.exit, label %scalar.ph.preheader
+  %cmp.n = trunc i64 %i.f to i1
+  br i1 %cmp.n, label %scalar.ph.preheader, label %_ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEENS3_INS_7ProductINS4_IdLin1ELin1ELi0ELin1ELin1EEENS4_IdLi6ELi1ELi0ELi6ELi1EEELi1EEEEENS0_9assign_opIddEELi0EEELi3ELi0EE3runERSE_.exit
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.05.i.i.ph = phi i64 [ %i.r, %vector.memcheck ], [ %i.r, %.lr.ph.i.i ], [ %i.bl, %middle.block ]

@@ -205,11 +205,10 @@ bb.r:                                             ; preds = %bb.bq, %bb.p
   %.133.i.i = phi i64 [ %.0.i.i, %bb.p ], [ %.6.i.i, %bb.bq ]
   %.11532.i.i = phi i32 [ %.01438.i.i, %bb.p ], [ %.216.i.i, %bb.bq ] ; 2 uses
   %.11831.i.i = phi i64 [ %.01737.i.i, %bb.p ], [ %.219.i.i, %bb.bq ] ; 2 uses
-  %.not69.i.i = icmp ne i64 %.05636.i.i, 0
-  %0 = and i64 %.05636.i.i, 1
-  %1 = icmp eq i64 %0, 0
-  %or.cond72.i.i = and i1 %.not69.i.i, %1
-  br i1 %or.cond72.i.i, label %bb.s, label %_mi_memset.exit.i.i
+  %.not69.i.i = icmp eq i64 %.05636.i.i, 0
+  %0 = trunc i64 %.05636.i.i to i1
+  %or.cond71.i.i = or i1 %.not69.i.i, %0
+  br i1 %or.cond71.i.i, label %_mi_memset.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   call void (ptr, ...) @_mi_raw_message(ptr noundef nonnull @.str.28, ptr noundef nonnull %i.b) #17

@@ -141,7 +141,7 @@ bb.f:                                             ; preds = %.thread546
   br i1 %i.aa, label %sub_0, label %.thread546, !llvm.loop !9
 
 sub_0:                                            ; preds = %bb.f, %.outer
-  %.0187444.lcssa = phi i32 [ %.0187444.ph, %.outer ], [ 1, %bb.f ] ; 2 uses
+  %.0187444.lcssa = phi i1 [ %.0187444.ph, %.outer ], [ true, %bb.f ] ; 2 uses
   %.0189443.lcssa = phi i32 [ %.0189443.ph, %.outer ], [ %i.di, %bb.f ] ; 10 uses
   %.lcssa648 = phi i64 [ %i.dd, %.outer ], [ %i.w, %bb.f ]
   %.lcssa646 = phi ptr [ %i.df, %.outer ], [ %i.y, %bb.f ] ; 16 uses
@@ -383,7 +383,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.z
 
 .outer:                                           ; preds = %bb.ae, %.lr.ph
   %.0181445.ph = phi i32 [ %.1182.ph317, %bb.ae ], [ %i.h, %.lr.ph ] ; 2 uses
-  %.0187444.ph = phi i32 [ %.0187444.lcssa, %bb.ae ], [ 0, %.lr.ph ]
+  %.0187444.ph = phi i1 [ %.0187444.lcssa, %bb.ae ], [ false, %.lr.ph ]
   %.0189443.ph = phi i32 [ %i.db, %bb.ae ], [ 0, %.lr.ph ] ; 3 uses
   %.0203442.ph = phi i32 [ %.2205.ph316, %bb.ae ], [ 0, %.lr.ph ] ; 11 uses
   %.0216441.ph = phi i32 [ %.2218.ph, %bb.ae ], [ 0, %.lr.ph ] ; 10 uses
@@ -402,8 +402,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.z
   br i1 %i.dj, label %bb.f, label %._crit_edge.thread557, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %bb.ae
-  %8 = icmp eq i32 %.0187444.lcssa, 0
-  br i1 %8, label %._crit_edge.thread, label %._crit_edge.thread557
+  br i1 %.0187444.lcssa, label %._crit_edge.thread557, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %.preheader382, %._crit_edge
   %.0203.lcssa545 = phi i32 [ %.2205.ph316, %._crit_edge ], [ 0, %.preheader382 ]

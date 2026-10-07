@@ -202,10 +202,10 @@ _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9All
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn2ty3AbiEECs5ZQXtie4Wk1_17lance_test_macros(i64 %.0.val, ptr captures(address) %.8.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %0 = icmp eq i64 %.0.val, 0
-  %1 = icmp eq ptr %.8.val, null
-  %or.cond = select i1 %0, i1 true, i1 %1
-  br i1 %or.cond, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsb2PI9uRnNxu_3syn2ty3AbiECs5ZQXtie4Wk1_17lance_test_macros.exit, label %bb.b
+  %0 = trunc nuw i64 %.0.val to i1
+  %1 = icmp ne ptr %.8.val, null
+  %or.cond = select i1 %0, i1 %1, i1 false
+  br i1 %or.cond, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsb2PI9uRnNxu_3syn2ty3AbiECs5ZQXtie4Wk1_17lance_test_macros.exit
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsb2PI9uRnNxu_3syn2ty3AbiECs5ZQXtie4Wk1_17lance_test_macros.exit: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsb2PI9uRnNxu_3syn3lit6LitStrECs5ZQXtie4Wk1_17lance_test_macros.exit.i.i, %bb.a
   ret void
@@ -608,10 +608,10 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_
   %.val.i = phi i64 [ %.val.i.pre, %._RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn8generics14BoundLifetimesEECs5ZQXtie4Wk1_17lance_test_macros.exit_crit_edge ], [ %i.a, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6.i = load ptr, ptr %i.r, align 8, !alias.scope !996 ; 6 uses
-  %1 = icmp eq i64 %.val.i, 0
-  %2 = icmp eq ptr %.val6.i, null
-  %or.cond.i = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn2ty3AbiEECs5ZQXtie4Wk1_17lance_test_macros.exit, label %bb.h
+  %1 = trunc nuw i64 %.val.i to i1
+  %2 = icmp ne ptr %.val6.i, null
+  %or.cond.i = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i, label %bb.h, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn2ty3AbiEECs5ZQXtie4Wk1_17lance_test_macros.exit
 
 bb.h:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn8generics14BoundLifetimesEECs5ZQXtie4Wk1_17lance_test_macros.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !997)
@@ -1014,10 +1014,10 @@ bb.a:
   %.val = load i64, ptr %0, align 8, !range !59, !noundef !38
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8 = load ptr, ptr %i.a, align 8            ; 6 uses
-  %1 = icmp eq i64 %.val, 0
-  %2 = icmp eq ptr %.val8, null
-  %or.cond.i = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn2ty3AbiEECs5ZQXtie4Wk1_17lance_test_macros.exit, label %bb.b
+  %1 = trunc nuw i64 %.val to i1
+  %2 = icmp ne ptr %.val8, null
+  %or.cond.i = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsb2PI9uRnNxu_3syn2ty3AbiEECs5ZQXtie4Wk1_17lance_test_macros.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2485)
@@ -1420,8 +1420,8 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs7xemmV0rX3c_11proc_macro25GroupECs5Z
   ret void
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp eq i32 %i.a, 0
-  br i1 %1, label %bb.c, label %bb.e
+  %1 = trunc nuw i32 %i.a to i1
+  br i1 %1, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1824,10 +1824,10 @@ bb.a:
   %i.br = alloca [32 x i8], align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br)
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 216
-  %i.bt = load i32, ptr %i.bs, align 8, !range !3620, !noundef !38 ; 2 uses
+  %i.bt = load i32, ptr %i.bs, align 8, !range !3620, !noundef !38
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 220 ; 2 uses
-  %.not = icmp eq i32 %i.bt, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %3 = trunc nuw i32 %i.bt to i1                  ; 3 uses
+  br i1 %3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq)
@@ -2230,7 +2230,6 @@ bb.jx:                                            ; preds = %bb.jw
           to label %.preheader64 unwind label %.loopexit
 
 .preheader64._crit_edge:                          ; preds = %.preheader64, %.preheader64.preheader
-  %3 = trunc nuw i32 %i.bt to i1                  ; 2 uses
   br i1 %3, label %bb.jy, label %bb.jz
 
 bb.jy:                                            ; preds = %.preheader64._crit_edge

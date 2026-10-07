@@ -205,25 +205,24 @@ bb.a:
   %i.t = getelementptr inbounds nuw [156 x i8], ptr %i.f, i64 %indvars.iv69 ; 2 uses
   %i.u = getelementptr inbounds nuw [208 x i8], ptr %i.h, i64 %indvars.iv69 ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 176
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !93   ; 5 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !93   ; 6 uses
   %i.x = icmp sgt i32 %i.w, 0
   br i1 %i.x, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph61
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 80 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.w to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.aa = icmp eq i32 %i.w, 1
   br i1 %i.aa, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %1 = and i32 %i.w, 2147483646
+  %unroll_iter = zext nneg i32 %1 to i64
   br label %bb.b
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.w to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses

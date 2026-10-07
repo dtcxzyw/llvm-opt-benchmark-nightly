@@ -93,11 +93,11 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.j = phi i8 [ %i.g, %.lr.ph ], [ %i.n, %bb.d ] ; 2 uses
   %.pn = phi ptr [ %i.f, %.lr.ph ], [ %i.k, %bb.d ]
-  %.02836 = phi i32 [ 1, %.lr.ph ], [ %spec.select, %bb.d ]
+  %.02836 = phi i1 [ true, %.lr.ph ], [ %spec.select, %bb.d ]
   %i.k = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 2 uses
   %i.l = sext i8 %i.j to i32
-  %3 = icmp eq i32 %i.h, %i.l
-  %spec.select = select i1 %3, i32 0, i32 %.02836 ; 2 uses
+  %3 = icmp ne i32 %i.h, %i.l
+  %spec.select = select i1 %3, i1 %.02836, i1 false ; 2 uses
   %i.m = icmp eq i8 %i.j, 87
   br i1 %i.m, label %bb.c, label %bb.d
 
@@ -111,8 +111,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not31, label %._crit_edge, label %bb.b, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %bb.d
-  %4 = icmp eq i32 %spec.select, 0
-  br i1 %4, label %bb.e, label %._crit_edge.thread
+  br i1 %spec.select, label %._crit_edge.thread, label %bb.e
 
 ._crit_edge.thread:                               ; preds = %.preheader, %._crit_edge
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses

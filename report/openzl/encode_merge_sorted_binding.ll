@@ -98,7 +98,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.m, ptr %4, align 8, !tbaa !17
   %i.n = tail call ptr @ZL_Data_rPtr(ptr noundef %i.e) #7 ; 4 uses
   %i.o = tail call i64 @ZL_Data_numElts(ptr noundef %i.e) #7
-  %.fr = freeze i64 %i.o                          ; 4 uses
+  %.fr = freeze i64 %i.o                          ; 3 uses
   %.idx.i = shl i64 %.fr, 2                       ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx.i ; 3 uses
   %i.q = icmp eq i64 %.fr, 0
@@ -114,7 +114,7 @@ bb.d:                                             ; preds = %bb.c
   %.pre.i = load i32, ptr %i.n, align 4, !tbaa !19 ; 2 uses
   %i.r = add i64 %.idx.i, -8                      ; 2 uses
   %i.s = lshr exact i64 %i.r, 2
-  %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
+  %i.t = add nuw nsw i64 %i.s, 1                  ; 3 uses
   %i.u = icmp eq i64 %i.r, 0
   br i1 %i.u, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -170,9 +170,8 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.1
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !21
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.i
-  %6 = and i64 %.fr, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
+  %lcmp.mod.not = trunc i64 %i.t to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.epil.init = phi i32 [ %.pre.i, %.lr.ph.preheader.i ], [ %i.ab, %._crit_edge.i.loopexit.unr-lcssa ]

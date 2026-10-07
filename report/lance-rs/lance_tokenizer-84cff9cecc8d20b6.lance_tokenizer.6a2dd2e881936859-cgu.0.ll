@@ -205,7 +205,6 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %i.dj = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dh, %i.dj ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dk = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.dk, label %.epil.preheader, label %.lr.ph.i.i.new
 
@@ -214,8 +213,8 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %bb.p
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
   %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.dt, %._crit_edge.i.i.unr-lcssa ]
@@ -560,8 +559,8 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std11collections
 define internal fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCsfUzTxybQDTm_7tinyvec7tinyvec7TinyVecAThcEj4_EECs97bFUy425Ar_15lance_tokenizer(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !range !8, !noundef !3
-  %1 = icmp eq i32 %i.a, 0
-  br i1 %1, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecThcEEECs97bFUy425Ar_15lance_tokenizer.exit, label %bb.b
+  %1 = trunc nuw i32 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecThcEEECs97bFUy425Ar_15lance_tokenizer.exit
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecThcEEECs97bFUy425Ar_15lance_tokenizer.exit: ; preds = %bb.c, %bb.b, %bb.a
   ret void
@@ -964,8 +963,8 @@ bb.p:                                             ; preds = %bb.i
   br label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift10create_runThcENCINvMNtCs40k4W9msRzi_5alloc5sliceSB13_11sort_by_keyhNCNvMs_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB25_14DecompositionsINtNtBa_6option8IntoItercEE12sort_pending0E0ECs97bFUy425Ar_15lance_tokenizer.exit
 
 _RNvMNtCscI6d9CVNmLh_4core5sliceSThcE7reverseCs97bFUy425Ar_15lance_tokenizer.exit.loopexit.unr-lcssa: ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE7reverseCs97bFUy425Ar_15lance_tokenizer.exit, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.an to i1
+  br i1 %lcmp.mod.not, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.i.i.epil.preheader, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE7reverseCs97bFUy425Ar_15lance_tokenizer.exit
 
 _RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.i.i.epil.preheader: ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE7reverseCs97bFUy425Ar_15lance_tokenizer.exit.loopexit.unr-lcssa, %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.preheader.i.i
   %.sroa.0.016.i.i.epil.init = phi i64 [ 0, %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.preheader.i.i ], [ %i.bh, %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE7reverseCs97bFUy425Ar_15lance_tokenizer.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -1001,7 +1000,6 @@ _RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokeniz
   %i.an = phi i64 [ %i.am, %bb.q ], [ 1, %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runThcENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyhNCNvMs_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB24_14DecompositionsINtNtB8_6option8IntoItercEE12sort_pending0E0ECs97bFUy425Ar_15lance_tokenizer.exit.i.thread94 ] ; 4 uses
   %.sroa.0.0.i.i9299103 = phi i64 [ %.sroa.0.0.i.i, %bb.q ], [ 2, %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runThcENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyhNCNvMs_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB24_14DecompositionsINtNtB8_6option8IntoItercEE12sort_pending0E0ECs97bFUy425Ar_15lance_tokenizer.exit.i.thread94 ] ; 3 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.0.0.i.i9299103 ; 3 uses
-  %xtraiter = and i64 %i.an, 1
   %i.ap = icmp eq i64 %i.an, 1
   br i1 %i.ap, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.i.i.epil.preheader, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.preheader.i.i.new
 
@@ -1210,9 +1208,8 @@ bb.aa:                                            ; preds = %._crit_edge
   br label %bb.f
 
 bb.ab:                                            ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not31 = icmp eq i64 %6, 0
-  br i1 %.not31, label %bb.ac, label %bb.ad
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.ej = or i64 %1, 1
@@ -1464,9 +1461,8 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailThcENCI
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   %i.de = getelementptr i8, ptr %i.dt, i64 8      ; 2 uses
   %i.df = getelementptr i8, ptr %i.ds, i64 8
-  %7 = and i64 %.sroa.16.0.lcssa, 1
-  %8 = icmp eq i64 %7, 0
-  br i1 %8, label %bb.l, label %bb.k
+  %7 = trunc i64 %.sroa.16.0.lcssa to i1
+  br i1 %7, label %bb.k, label %bb.l
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.loopexit.1.i
   %.sroa.0.010.i.i = phi ptr [ %i.do, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa119, %.loopexit.1.i ] ; 2 uses
@@ -1869,7 +1865,7 @@ bb.j:                                             ; preds = %_RNvXs9_NtNtNtCscI6
   br i1 %i.by, label %bb.w, label %bb.ac
 
 _RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoItercEEINtB5_8FuseImplBY_E4nextCs97bFUy425Ar_15lance_tokenizer.exit.thread.i: ; preds = %_RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoItercEEINtB5_8FuseImplBY_E4nextCs97bFUy425Ar_15lance_tokenizer.exit.i, %.lr.ph.i
-  %i.ca = load i32, ptr %i.b, align 8, !range !8, !noundef !3
+  %i.ca = load i32, ptr %i.b, align 8, !range !8, !alias.scope !831, !noundef !3
   %i.cb = trunc nuw i32 %i.ca to i1
   br i1 %i.cb, label %bb.k, label %.thread.i
 
@@ -1883,7 +1879,7 @@ bb.k:                                             ; preds = %_RNvXs9_NtNtNtCscI6
 .thread.i:                                        ; preds = %_RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8IntoItercEEINtB5_8FuseImplBY_E4nextCs97bFUy425Ar_15lance_tokenizer.exit.thread.i
   %i.cf = load i16, ptr %.sroa.2.0..sroa_idx, align 4, !alias.scope !831, !noundef !3 ; 3 uses
   %i.cg = icmp eq i16 %i.cf, 0
-  br i1 %i.cg, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42, label %bb.m
+  br i1 %i.cg, label %4, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ch = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !835, !nonnull !3, !noundef !3
@@ -2272,8 +2268,8 @@ _RNvMs_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB4_14DecompositionsIN
   call void @llvm.experimental.noalias.scope.decl(metadata !848)
   call void @llvm.experimental.noalias.scope.decl(metadata !849)
   %i.gc = load i32, ptr %i.b, align 8, !range !8, !alias.scope !850, !noundef !3
-  %3 = icmp eq i32 %i.gc, 0
-  br i1 %3, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit, label %bb.at
+  %3 = trunc nuw i32 %i.gc to i1
+  br i1 %3, label %bb.at, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit
 
 bb.at:                                            ; preds = %.loopexit.split-lp
   %.val.i.i = load i64, ptr %.sroa.358.0..sroa_idx, align 8, !alias.scope !850 ; 2 uses
@@ -2290,9 +2286,12 @@ _RNvXs0_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB5_14DecompositionsI
   %i.gf = icmp samesign ult i32 %i.df, 128
   br i1 %i.gf, label %bb.bf, label %bb.be
 
-bb.av:                                            ; preds = %bb.k
+4:                                                ; preds = %.thread.i
   call void @llvm.experimental.noalias.scope.decl(metadata !851)
   call void @llvm.experimental.noalias.scope.decl(metadata !852)
+  br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42
+
+bb.av:                                            ; preds = %bb.k
   %.val.i.i40 = load i64, ptr %.sroa.358.0..sroa_idx, align 8, !alias.scope !853 ; 2 uses
   %i.gg = icmp eq i64 %.val.i.i40, 0
   br i1 %i.gg, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42, label %bb.aw
@@ -2303,7 +2302,7 @@ bb.aw:                                            ; preds = %bb.av
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i41, i64 noundef %i.gh, i64 noundef range(i64 1, -9223372036854775807) 4) #29, !noalias !853
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42: ; preds = %.thread.i, %bb.av, %bb.aw
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs6g2bDYgB13P_21unicode_normalization9decompose14DecompositionsINtNtB4_6option8IntoItercEEECs97bFUy425Ar_15lance_tokenizer.exit42: ; preds = %4, %bb.av, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.gi = icmp sgt i64 %.ph265, -1
   call void @llvm.assume(i1 %i.gi)

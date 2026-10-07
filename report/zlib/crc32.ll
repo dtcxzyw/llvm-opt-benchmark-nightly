@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   br i1 %.not198250, label %._crit_edge255, label %.lr.ph254.preheader
 
 .lr.ph254.preheader:                              ; preds = %.preheader
-  %xtraiter = and i64 %.2183.lcssa, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph254.prol.loopexit, label %.lr.ph254.prol
+  %lcmp.mod.not = trunc i64 %.2183.lcssa to i1
+  br i1 %lcmp.mod.not, label %.lr.ph254.prol, label %.lr.ph254.prol.loopexit
 
 .lr.ph254.prol:                                   ; preds = %.lr.ph254.preheader
   %i.se = add nsw i64 %.2183.lcssa, -1
@@ -379,9 +378,8 @@ bb.b:                                             ; preds = %bb.a
   %.013.i = phi i64 [ %.1.i, %multmodp.exit.i ], [ 2147483648, %bb.b ] ; 2 uses
   %.0712.i = phi i32 [ %i.q, %multmodp.exit.i ], [ 3, %bb.b ] ; 2 uses
   %.0811.i = phi i64 [ %i.p, %multmodp.exit.i ], [ %0, %bb.b ] ; 2 uses
-  %1 = and i64 %.0811.i, 1
-  %.not9.i = icmp eq i64 %1, 0
-  br i1 %.not9.i, label %multmodp.exit.i, label %bb.c
+  %.not9.i = trunc i64 %.0811.i to i1
+  br i1 %.not9.i, label %bb.c, label %multmodp.exit.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.b = and i32 %.0712.i, 31
@@ -409,11 +407,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1.i.i = phi i64 [ %i.h, %bb.e ], [ %.0.i.i, %bb.d ]
   %i.l = lshr i64 %.011.i.i, 1
-  %2 = and i64 %.012.i.i, 1
-  %.not13.i.i = icmp eq i64 %2, 0
+  %.not13.i.i = trunc i64 %.012.i.i to i1
   %i.m = lshr i64 %.012.i.i, 1                    ; 2 uses
   %i.n = xor i64 %i.m, 3988292384
-  %i.o = select i1 %.not13.i.i, i64 %i.m, i64 %i.n
+  %i.o = select i1 %.not13.i.i, i64 %i.n, i64 %i.m
   br label %bb.d
 
 multmodp.exit.i:                                  ; preds = %bb.e, %.lr.ph.i
@@ -442,9 +439,8 @@ bb.b:                                             ; preds = %bb.a
   %.013.i.i = phi i64 [ %.1.i.i, %multmodp.exit.i.i ], [ 2147483648, %bb.b ] ; 2 uses
   %.0712.i.i = phi i32 [ %i.q, %multmodp.exit.i.i ], [ 3, %bb.b ] ; 2 uses
   %.0811.i.i = phi i64 [ %i.p, %multmodp.exit.i.i ], [ %0, %bb.b ] ; 2 uses
-  %1 = and i64 %.0811.i.i, 1
-  %.not9.i.i = icmp eq i64 %1, 0
-  br i1 %.not9.i.i, label %multmodp.exit.i.i, label %bb.c
+  %.not9.i.i = trunc i64 %.0811.i.i to i1
+  br i1 %.not9.i.i, label %bb.c, label %multmodp.exit.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.b = and i32 %.0712.i.i, 31
@@ -472,11 +468,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1.i.i.i = phi i64 [ %i.h, %bb.e ], [ %.0.i.i.i, %bb.d ]
   %i.l = lshr i64 %.011.i.i.i, 1
-  %2 = and i64 %.012.i.i.i, 1
-  %.not13.i.i.i = icmp eq i64 %2, 0
+  %.not13.i.i.i = trunc i64 %.012.i.i.i to i1
   %i.m = lshr i64 %.012.i.i.i, 1                  ; 2 uses
   %i.n = xor i64 %i.m, 3988292384
-  %i.o = select i1 %.not13.i.i.i, i64 %i.m, i64 %i.n
+  %i.o = select i1 %.not13.i.i.i, i64 %i.n, i64 %i.m
   br label %bb.d
 
 multmodp.exit.i.i:                                ; preds = %bb.e, %.lr.ph.i.i
@@ -519,11 +514,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.1.i = phi i64 [ %i.d, %bb.d ], [ %.0.i, %bb.c ]
   %i.h = lshr i64 %.011.i, 1
-  %3 = and i64 %.012.i, 1
-  %.not13.i = icmp eq i64 %3, 0
+  %.not13.i = trunc i64 %.012.i to i1
   %i.i = lshr i64 %.012.i, 1                      ; 2 uses
   %i.j = xor i64 %i.i, 3988292384
-  %i.k = select i1 %.not13.i, i64 %i.i, i64 %i.j
+  %i.k = select i1 %.not13.i, i64 %i.j, i64 %i.i
   br label %bb.c
 
 multmodp.exit:                                    ; preds = %bb.d
@@ -550,9 +544,8 @@ bb.b:                                             ; preds = %bb.a
   %.013.i.i = phi i64 [ %.1.i.i, %multmodp.exit.i.i ], [ 2147483648, %bb.b ] ; 2 uses
   %.0712.i.i = phi i32 [ %i.q, %multmodp.exit.i.i ], [ 3, %bb.b ] ; 2 uses
   %.0811.i.i = phi i64 [ %i.p, %multmodp.exit.i.i ], [ %2, %bb.b ] ; 2 uses
-  %3 = and i64 %.0811.i.i, 1
-  %.not9.i.i = icmp eq i64 %3, 0
-  br i1 %.not9.i.i, label %multmodp.exit.i.i, label %bb.c
+  %.not9.i.i = trunc i64 %.0811.i.i to i1
+  br i1 %.not9.i.i, label %bb.c, label %multmodp.exit.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.b = and i32 %.0712.i.i, 31
@@ -580,11 +573,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1.i.i.i = phi i64 [ %i.h, %bb.e ], [ %.0.i.i.i, %bb.d ]
   %i.l = lshr i64 %.011.i.i.i, 1
-  %4 = and i64 %.012.i.i.i, 1
-  %.not13.i.i.i = icmp eq i64 %4, 0
+  %.not13.i.i.i = trunc i64 %.012.i.i.i to i1
   %i.m = lshr i64 %.012.i.i.i, 1                  ; 2 uses
   %i.n = xor i64 %i.m, 3988292384
-  %i.o = select i1 %.not13.i.i.i, i64 %i.m, i64 %i.n
+  %i.o = select i1 %.not13.i.i.i, i64 %i.n, i64 %i.m
   br label %bb.d
 
 multmodp.exit.i.i:                                ; preds = %bb.e, %.lr.ph.i.i
@@ -621,11 +613,10 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.1.i.i4 = phi i64 [ %i.u, %bb.h ], [ %.0.i.i, %bb.g ]
   %i.y = lshr i64 %.011.i.i, 1
-  %5 = and i64 %.012.i.i, 1
-  %.not13.i.i = icmp eq i64 %5, 0
+  %.not13.i.i = trunc i64 %.012.i.i to i1
   %i.z = lshr i64 %.012.i.i, 1                    ; 2 uses
   %i.aa = xor i64 %i.z, 3988292384
-  %i.ab = select i1 %.not13.i.i, i64 %i.z, i64 %i.aa
+  %i.ab = select i1 %.not13.i.i, i64 %i.aa, i64 %i.z
   br label %bb.g
 
 multmodp.exit.i:                                  ; preds = %bb.h
@@ -652,9 +643,8 @@ bb.b:                                             ; preds = %bb.a
   %.013.i.i.i = phi i64 [ %.1.i.i.i, %multmodp.exit.i.i.i ], [ 2147483648, %bb.b ] ; 2 uses
   %.0712.i.i.i = phi i32 [ %i.q, %multmodp.exit.i.i.i ], [ 3, %bb.b ] ; 2 uses
   %.0811.i.i.i = phi i64 [ %i.p, %multmodp.exit.i.i.i ], [ %2, %bb.b ] ; 2 uses
-  %3 = and i64 %.0811.i.i.i, 1
-  %.not9.i.i.i = icmp eq i64 %3, 0
-  br i1 %.not9.i.i.i, label %multmodp.exit.i.i.i, label %bb.c
+  %.not9.i.i.i = trunc i64 %.0811.i.i.i to i1
+  br i1 %.not9.i.i.i, label %bb.c, label %multmodp.exit.i.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.b = and i32 %.0712.i.i.i, 31
@@ -682,11 +672,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.1.i.i.i.i = phi i64 [ %i.h, %bb.e ], [ %.0.i.i.i.i, %bb.d ]
   %i.l = lshr i64 %.011.i.i.i.i, 1
-  %4 = and i64 %.012.i.i.i.i, 1
-  %.not13.i.i.i.i = icmp eq i64 %4, 0
+  %.not13.i.i.i.i = trunc i64 %.012.i.i.i.i to i1
   %i.m = lshr i64 %.012.i.i.i.i, 1                ; 2 uses
   %i.n = xor i64 %i.m, 3988292384
-  %i.o = select i1 %.not13.i.i.i.i, i64 %i.m, i64 %i.n
+  %i.o = select i1 %.not13.i.i.i.i, i64 %i.n, i64 %i.m
   br label %bb.d
 
 multmodp.exit.i.i.i:                              ; preds = %bb.e, %.lr.ph.i.i.i
@@ -723,11 +712,10 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.1.i.i4.i = phi i64 [ %i.u, %bb.h ], [ %.0.i.i.i, %bb.g ]
   %i.y = lshr i64 %.011.i.i.i, 1
-  %5 = and i64 %.012.i.i.i, 1
-  %.not13.i.i.i = icmp eq i64 %5, 0
+  %.not13.i.i.i = trunc i64 %.012.i.i.i to i1
   %i.z = lshr i64 %.012.i.i.i, 1                  ; 2 uses
   %i.aa = xor i64 %i.z, 3988292384
-  %i.ab = select i1 %.not13.i.i.i, i64 %i.z, i64 %i.aa
+  %i.ab = select i1 %.not13.i.i.i, i64 %i.aa, i64 %i.z
   br label %bb.g
 
 multmodp.exit.i.i:                                ; preds = %bb.h

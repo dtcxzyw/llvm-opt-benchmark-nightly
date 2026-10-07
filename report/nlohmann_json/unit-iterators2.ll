@@ -204,9 +204,8 @@ bb.hke:                                           ; preds = %.noexc5393, %.lr.ph
 .noexc5392:                                       ; preds = %.noexc5391
   %i.kkf = load i32, ptr %i.a, align 4, !tbaa !66, !noalias !2202
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26, !noalias !2202
-  %1411 = and i32 %i.kkf, 1
-  %1412 = icmp eq i32 %1411, 0
-  br i1 %1412, label %.loopexit6302, label %bb.hkf
+  %1411 = trunc i32 %i.kkf to i1
+  br i1 %1411, label %bb.hkf, label %.loopexit6302
 
 bb.hkf:                                           ; preds = %.noexc5392
   %i.kkg = load ptr, ptr %4, align 8, !tbaa !34, !noalias !2202
@@ -609,16 +608,16 @@ bb.a:
   %.sroa.5.03.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ %i.j, %bb.a ] ; 2 uses
   %i.k = shl nuw i64 %.sroa.0.04.i.i, 1           ; 3 uses
   %i.l = add nsw i32 %.sroa.5.03.i.i, -1          ; 3 uses
-  %6 = icmp sgt i64 %i.k, -1
-  br i1 %6, label %.lr.ph.i.i, label %.lr.ph.i32.i, !llvm.loop !2489
+  %6 = icmp slt i64 %i.k, 0
+  br i1 %6, label %.lr.ph.i32.i, label %.lr.ph.i.i, !llvm.loop !2489
 
 .lr.ph.i32.i:                                     ; preds = %.lr.ph.i.i, %.lr.ph.i32.i
   %.sroa.0.04.i33.i = phi i64 [ %i.m, %.lr.ph.i32.i ], [ %.sroa.037.0.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.5.03.i34.i = phi i32 [ %i.n, %.lr.ph.i32.i ], [ %.sroa.841.0.i, %.lr.ph.i.i ]
   %i.m = shl nuw i64 %.sroa.0.04.i33.i, 1         ; 3 uses
   %i.n = add nsw i32 %.sroa.5.03.i34.i, -1        ; 2 uses
-  %7 = icmp sgt i64 %i.m, -1
-  br i1 %7, label %.lr.ph.i32.i, label %_ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit, !llvm.loop !2489
+  %7 = icmp slt i64 %i.m, 0
+  br i1 %7, label %_ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit, label %.lr.ph.i32.i, !llvm.loop !2489
 
 _ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10boundariesET_.exit: ; preds = %.lr.ph.i32.i
   %i.o = icmp eq i64 %i.c, 0

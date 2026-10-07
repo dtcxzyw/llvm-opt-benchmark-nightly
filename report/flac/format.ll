@@ -204,18 +204,16 @@ bb.e:                                             ; preds = %.lr.ph35
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(none) uwtable
 define hidden range(i32 0, 16) i32 @FLAC__format_get_max_rice_partition_order_from_blocksize(i32 noundef %0) local_unnamed_addr #8 {
 bb.a:
-  %1 = and i32 %0, 1
-  %.not6 = icmp eq i32 %1, 0
-  br i1 %.not6, label %.lr.ph, label %._crit_edge
+  %.not6 = trunc i32 %0 to i1
+  br i1 %.not6, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.08 = phi i32 [ %i.a, %.lr.ph ], [ 0, %bb.a ]
-  %.057 = phi i32 [ %i.b, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
+  %.057 = phi i32 [ %i.b, %.lr.ph ], [ %0, %bb.a ]
   %i.a = add i32 %.08, 1                          ; 2 uses
-  %i.b = lshr exact i32 %.057, 1
-  %2 = and i32 %.057, 2
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !58
+  %i.b = lshr exact i32 %.057, 1                  ; 2 uses
+  %.not = trunc i32 %i.b to i1
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !58
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %i.c = tail call i32 @llvm.umin.i32(i32 %i.a, i32 15)

@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds [64 x i8], ptr %i.b, i64 %i.c ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !109  ; 8 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !109  ; 9 uses
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !91   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 28
   %i.j = load i32, ptr %i.i, align 4, !tbaa !92
@@ -233,7 +233,7 @@ bb.a:
   br i1 %i.af, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %i.g to i64    ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.g to i64    ; 4 uses
   %min.iters.check = icmp ult i32 %i.g, 40
   br i1 %min.iters.check, label %.lr.ph.preheader624, label %vector.memcheck
 
@@ -292,9 +292,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader624:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 8 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %lcmp.mod.not = trunc i32 %i.g to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader624
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.ph

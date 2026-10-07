@@ -202,9 +202,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.h, label %bb.f, label %.preheader
 
 .preheader:                                       ; preds = %bb.e
-  %2 = and i64 %i.g, 1
-  %.not3344 = icmp eq i64 %2, 0
-  %i.i = select i1 %.not3344, i64 1, i64 %i.f     ; 2 uses
+  %.not3344 = trunc i64 %i.g to i1
+  %i.i = select i1 %.not3344, i64 %i.f, i64 1     ; 2 uses
   %i.j = lshr i64 %i.g, 1                         ; 2 uses
   %.not3445 = icmp eq i64 %i.j, 0
   br i1 %.not3445, label %._crit_edge, label %.lr.ph
@@ -226,9 +225,8 @@ bb.g:                                             ; preds = %bb.f
   %spec.select47 = phi i64 [ %spec.select, %.lr.ph ], [ %i.i, %.preheader ]
   %.02546 = phi i64 [ %i.q, %.lr.ph ], [ %i.f, %.preheader ] ; 2 uses
   %i.q = mul nsw i64 %.02546, %.02546             ; 2 uses
-  %3 = and i64 %i.p, 1
-  %.not33 = icmp eq i64 %3, 0
-  %i.r = select i1 %.not33, i64 1, i64 %i.q
+  %.not33 = trunc i64 %i.p to i1
+  %i.r = select i1 %.not33, i64 %i.q, i64 1
   %spec.select = mul nsw i64 %i.r, %spec.select47 ; 2 uses
   %i.s = lshr i64 %i.p, 1                         ; 2 uses
   %.not34 = icmp eq i64 %i.s, 0

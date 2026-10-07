@@ -204,17 +204,14 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5Darts7Details9AutoArrayIcE5resetEPc.exit:     ; preds = %.loopexit30
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !151  ; 5 uses
-  %.not23 = icmp eq i64 %i.r, 0
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !151  ; 4 uses
   %.pre = load ptr, ptr %0, align 8, !tbaa !117   ; 5 uses
-  br i1 %.not23, label %.loopexit, label %.preheader35.preheader
+  switch i64 %i.r, label %.preheader35.preheader.new [
+    i64 0, label %.loopexit
+    i64 1, label %.preheader35.epil.preheader
+  ]
 
-.preheader35.preheader:                           ; preds = %_ZN5Darts7Details9AutoArrayIcE5resetEPc.exit
-  %xtraiter = and i64 %i.r, 1
-  %2 = icmp eq i64 %i.r, 1
-  br i1 %2, label %.preheader35.epil.preheader, label %.preheader35.preheader.new
-
-.preheader35.preheader.new:                       ; preds = %.preheader35.preheader
+.preheader35.preheader.new:                       ; preds = %_ZN5Darts7Details9AutoArrayIcE5resetEPc.exit
   %unroll_iter = and i64 %i.r, -2
   br label %.preheader35
 
@@ -234,11 +231,11 @@ _ZN5Darts7Details9AutoArrayIcE5resetEPc.exit:     ; preds = %.loopexit30
   br i1 %niter.ncmp.1, label %.loopexit.thread.unr-lcssa, label %.preheader35, !llvm.loop !229
 
 .loopexit.thread.unr-lcssa:                       ; preds = %.preheader35
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.thread, label %.preheader35.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.r to i1
+  br i1 %lcmp.mod.not, label %.preheader35.epil.preheader, label %.loopexit.thread
 
-.preheader35.epil.preheader:                      ; preds = %.loopexit.thread.unr-lcssa, %.preheader35.preheader
-  %.031.epil.init = phi i64 [ 0, %.preheader35.preheader ], [ %i.x, %.loopexit.thread.unr-lcssa ] ; 2 uses
+.preheader35.epil.preheader:                      ; preds = %_ZN5Darts7Details9AutoArrayIcE5resetEPc.exit, %.loopexit.thread.unr-lcssa
+  %.031.epil.init = phi i64 [ 0, %_ZN5Darts7Details9AutoArrayIcE5resetEPc.exit ], [ %i.x, %.loopexit.thread.unr-lcssa ] ; 2 uses
   %lcmp.mod36 = trunc i64 %i.r to i1
   tail call void @llvm.assume(i1 %lcmp.mod36)
   %i.y = getelementptr inbounds nuw [12 x i8], ptr %i.g, i64 %.031.epil.init

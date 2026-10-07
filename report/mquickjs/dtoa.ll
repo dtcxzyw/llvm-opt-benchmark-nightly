@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %.not250 = icmp sgt i64 %i.g, -1
-  br i1 %.not250, label %bb.e, label %bb.d
+  %.not250 = icmp slt i64 %i.g, 0
+  br i1 %.not250, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -267,8 +267,8 @@ bb.n:                                             ; preds = %bb.a
 bb.o:                                             ; preds = %bb.m, %bb.n
   %.0233 = phi i64 [ %i.x, %bb.m ], [ %i.y, %bb.n ] ; 9 uses
   %.0232 = phi i32 [ %i.w, %bb.m ], [ %i.j, %bb.n ] ; 7 uses
-  %.not = icmp sgt i64 %i.g, -1
-  br i1 %.not, label %bb.q, label %bb.p
+  %.not = icmp slt i64 %i.g, 0
+  br i1 %.not, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -671,10 +671,9 @@ bb.h:                                             ; preds = %bb.g, %bb.h
   %.234 = phi i64 [ %i.r, %bb.g ], [ %spec.select, %bb.h ] ; 2 uses
   %.03033 = phi i32 [ %i.t, %bb.g ], [ %i.w, %bb.h ] ; 3 uses
   %i.u = mul i64 %.234, %.234
-  %2 = shl nuw i32 1, %.03033
-  %3 = and i32 %2, %1
-  %.not = icmp eq i32 %3, 0
-  %i.v = select i1 %.not, i64 1, i64 %i.r
+  %2 = lshr i32 %1, %.03033
+  %.not = trunc i32 %2 to i1
+  %i.v = select i1 %.not, i64 %i.r, i64 1
   %spec.select = mul i64 %i.u, %i.v               ; 2 uses
   %i.w = add nsw i32 %.03033, -1
   %.not36 = icmp eq i32 %.03033, 0
@@ -980,8 +979,8 @@ bb.h:                                             ; preds = %bb.b
   %i.ab = sdiv i32 %i.aa, %i.g
   %i.ac = shl nsw i32 %i.ab, 5                    ; 2 uses
   %i.ad = add nsw i32 %i.ac, %i.b                 ; 2 uses
-  %.not72 = icmp eq i32 %4, 0
-  br i1 %.not72, label %bb.i, label %bb.k
+  %.not72 = trunc nuw i32 %4 to i1
+  br i1 %.not72, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ae = load i32, ptr %0, align 4, !tbaa !19    ; 2 uses
@@ -1203,10 +1202,9 @@ mpb_get_bit.exit:                                 ; preds = %bb.i
   %i.an = zext nneg i32 %i.ak to i64              ; 2 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !19 ; 2 uses
-  %3 = shl nuw i32 1, %i.al
-  %4 = and i32 %i.ap, %3
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %mpb_get_bit.exit106, label %bb.j
+  %3 = lshr i32 %i.ap, %i.al
+  %.not = trunc i32 %3 to i1
+  br i1 %.not, label %bb.j, label %mpb_get_bit.exit106
 
 bb.j:                                             ; preds = %mpb_get_bit.exit
   %i.aq = icmp eq i32 %2, 1
@@ -1334,8 +1332,8 @@ bb.r:                                             ; preds = %.lr.ph.i109
 
 mpb_renorm.exit110:                               ; preds = %bb.r, %.lr.ph.i109, %bb.p, %mp_shr.exit, %.loopexit
   %i.cb = phi i32 [ 0, %bb.p ], [ %.pr.i108.pr, %mp_shr.exit ], [ %i.bn, %.loopexit ], [ %i.bz, %bb.r ], [ %i.bu, %.lr.ph.i109 ] ; 3 uses
-  %.not100 = icmp eq i32 %.0, 0
-  br i1 %.not100, label %bb.t, label %bb.s
+  %.not100 = trunc nuw i32 %.0 to i1
+  br i1 %.not100, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %mpb_renorm.exit110
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -1525,9 +1523,8 @@ to_digit.exit:                                    ; preds = %.thread322, %bb.r, 
   br i1 %.not238, label %.thread331, label %.thread349
 
 bb.t:                                             ; preds = %bb.c
-  %5 = and i32 %3, 1
-  %.not233 = icmp eq i32 %5, 0
-  br i1 %.not233, label %bb.u, label %.thread320
+  %.not233 = trunc i32 %3 to i1
+  br i1 %.not233, label %.thread320, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.ak = call i32 @strstart(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.2, ptr noundef nonnull %i.a) #14
@@ -1564,8 +1561,7 @@ bb.u:                                             ; preds = %bb.t
   %. = select i1 %i.az, i32 %i.ax, i32 0          ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   store <2 x i32> <i32 1, i32 0>, ptr %4, align 4, !tbaa !19
-  %6 = and i32 %3, 1
-  %.not239 = icmp eq i32 %6, 0                    ; 5 uses
+  %.not239 = trunc i32 %3 to i1                   ; 5 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.ai, %.thread331
@@ -1606,12 +1602,12 @@ bb.aa:                                            ; preds = %bb.y
 
 to_digit.exit276:                                 ; preds = %bb.x, %bb.z, %bb.aa
   %.0.i275 = phi i32 [ %spec.select.i274, %bb.aa ], [ %i.bk, %bb.z ], [ %i.bi, %bb.x ]
-  %7 = icmp slt i32 %.0.i275, %i.am
-  %or.cond255 = and i1 %.not239, %7
-  br i1 %or.cond255, label %bb.ac, label %bb.ae
+  %5 = icmp sge i32 %.0.i275, %i.am
+  %or.cond255 = or i1 %5, %.not239
+  br i1 %or.cond255, label %bb.ae, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.w
-  br i1 %.not239, label %bb.ac, label %bb.ae
+  br i1 %.not239, label %bb.ae, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %to_digit.exit276
   %i.bn = icmp sgt i32 %.0175, -1
@@ -1704,12 +1700,12 @@ bb.ao:                                            ; preds = %bb.am
 
 to_digit.exit282:                                 ; preds = %bb.al, %bb.an, %bb.ao
   %.0.i281 = phi i32 [ %spec.select.i280, %bb.ao ], [ %i.ck, %bb.an ], [ %i.ci, %bb.al ]
-  %8 = icmp slt i32 %.0.i281, %i.am
-  %or.cond259 = and i1 %.not239, %8
-  br i1 %or.cond259, label %bb.aq, label %bb.as
+  %6 = icmp sge i32 %.0.i281, %i.am
+  %or.cond257 = or i1 %6, %.not239
+  br i1 %or.cond257, label %bb.as, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ak
-  br i1 %.not239, label %bb.aq, label %bb.as
+  br i1 %.not239, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %to_digit.exit282
   %i.cn = icmp sgt i32 %.3, -1
@@ -1860,7 +1856,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
-  br i1 %.not239, label %bb.bn, label %.thread373
+  br i1 %.not239, label %.thread373, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
   %cond = icmp eq i32 %i.am, 10
@@ -1895,7 +1891,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.br, %bb.
 
 bb.bt:                                            ; preds = %bb.bs
   %i.ei = and i8 %i.eg, -33
-  %narrow = icmp ne i8 %i.ei, 80
+  %narrow = icmp eq i8 %i.ei, 80
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ds, i64 1 ; 3 uses
   store ptr %i.ej, ptr %i.a, align 8, !tbaa !38
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !17
@@ -2016,7 +2012,7 @@ to_digit.exit312.thread:                          ; preds = %bb.cb, %bb.cc
 .thread373:                                       ; preds = %to_digit.exit312.thread, %bb.bo, %bb.br, %bb.bs, %bb.bq, %bb.bm
   %i.fn = phi ptr [ %i.ds, %bb.bm ], [ %i.ds, %bb.bo ], [ %i.ds, %bb.bs ], [ %i.ds, %bb.br ], [ %i.ds, %bb.bq ], [ %.pn406, %to_digit.exit312.thread ]
   %.4183 = phi i32 [ 0, %bb.bm ], [ 0, %bb.bo ], [ 0, %bb.bs ], [ 0, %bb.br ], [ 0, %bb.bq ], [ %spec.select263.a, %to_digit.exit312.thread ] ; 2 uses
-  %.0170 = phi i1 [ true, %bb.bm ], [ true, %bb.bo ], [ true, %bb.bs ], [ true, %bb.br ], [ true, %bb.bq ], [ %narrow, %to_digit.exit312.thread ]
+  %.0170 = phi i1 [ false, %bb.bm ], [ false, %bb.bo ], [ false, %bb.bs ], [ false, %bb.br ], [ false, %bb.bq ], [ %narrow, %to_digit.exit312.thread ]
   %i.fo = icmp eq ptr %i.fn, %i.h
   br i1 %i.fo, label %.thread349, label %bb.cd
 
@@ -2027,7 +2023,7 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %i.dz, label %bb.cf, label %bb.ci
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.fp = select i1 %.0170, i32 %., i32 1
+  %i.fp = select i1 %.0170, i32 1, i32 %.
   %spec.select266 = mul nsw i32 %i.fp, %.4183
   %i.fq = mul nsw i32 %i.dy, %.
   %i.fr = sub nsw i32 %spec.select266, %i.fq      ; 2 uses

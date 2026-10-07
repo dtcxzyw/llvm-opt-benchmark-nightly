@@ -187,9 +187,8 @@ bb.d:                                             ; preds = %bb.b
   %i.s = inttoptr i64 %i.r to ptr
   %i.t = call ptr @lj_cdata_index(ptr noundef nonnull %i.h, ptr noundef %i.s, ptr noundef nonnull %i.l, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8 ; 2 uses
   %i.u = load i32, ptr %i.a, align 4, !tbaa !46
-  %1 = and i32 %i.u, 1
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %bb.f, label %bb.e
+  %.not = trunc i32 %i.u to i1
+  br i1 %.not, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.v = call fastcc i32 @ffi_index_meta(ptr noundef nonnull %0, ptr noundef nonnull %i.h, ptr noundef %i.t, i32 noundef 0)
@@ -264,9 +263,8 @@ bb.d:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.u = call ptr @lj_cdata_index(ptr noundef nonnull %i.h, ptr noundef %i.s, ptr noundef nonnull %i.t, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8 ; 2 uses
   %i.v = load i32, ptr %i.a, align 4, !tbaa !46   ; 3 uses
-  %1 = and i32 %i.v, 1
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %bb.h, label %bb.e
+  %.not = trunc i32 %i.v to i1
+  br i1 %.not, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.w = and i32 %i.v, 33554432
@@ -669,9 +667,9 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ae, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = icmp eq i32 %3, 0
+  %4 = trunc nuw i32 %3 to i1
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
-  br i1 %4, label %bb.i, label %bb.k
+  br i1 %4, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = tail call ptr @lj_meta_tget(ptr noundef nonnull %0, ptr noundef nonnull %i.g, ptr noundef nonnull %i.af) #8 ; 2 uses

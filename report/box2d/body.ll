@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 75
   %i.i = load i8, ptr %i.h, align 1, !tbaa !179, !range !100, !noundef !101
-  %3 = icmp eq i8 %i.i, 0
-  br i1 %3, label %bb.d, label %._crit_edge
+  %3 = trunc nuw i8 %i.i to i1
+  br i1 %3, label %._crit_edge, label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.c
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 78
@@ -219,8 +219,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %._crit_edge, %bb.d
   %i.m = phi i8 [ %.pre, %._crit_edge ], [ %i.k, %bb.d ]
   %i.n = phi i1 [ false, %._crit_edge ], [ %i.l, %bb.d ]
-  %4 = icmp eq i8 %i.m, 0
-  br i1 %4, label %bb.l, label %bb.f
+  %4 = trunc nuw i8 %i.m to i1
+  br i1 %4, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load i32, ptr %1, align 8, !tbaa !181
@@ -623,9 +623,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
   %i.t = getelementptr inbounds [64 x i8], ptr %i.r, i64 %i.s ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 56
   %i.v = load i32, ptr %i.u, align 4, !tbaa !214
-  %3 = and i32 %i.v, 1
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.e, label %bb.d
+  %.not = trunc i32 %i.v to i1
+  br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.w = load ptr, ptr %i.o, align 8, !tbaa !136  ; 2 uses
@@ -1028,8 +1027,8 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   %i.o = getelementptr inbounds [72 x i8], ptr %i.k, i64 %i.n ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 66
   %i.q = load i8, ptr %i.p, align 2, !tbaa !257, !range !100, !noundef !101
-  %3 = icmp eq i8 %i.q, 0
-  br i1 %3, label %bb.e, label %bb.f
+  %3 = trunc nuw i8 %i.q to i1
+  br i1 %3, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.r = xor i32 %i.m, 1

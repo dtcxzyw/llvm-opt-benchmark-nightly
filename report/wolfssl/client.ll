@@ -204,15 +204,15 @@ mygetopt_long.exit.thread651.sink.split:          ; preds = %.thread1.i, %bb.h, 
 mygetopt_long.exit.thread651:                     ; preds = %bb.p, %bb.v, %mygetopt_long.exit, %mygetopt_long.exit.thread651.sink.split, %bb.i
   store i32 0, ptr @myoptind, align 4, !tbaa !10
   %i.en = icmp eq i32 %.05101675, -99
-  %.not558 = icmp eq i32 %.04951689, 0            ; 2 uses
+  %.not558 = trunc nuw i32 %.04951689 to i1       ; 2 uses
   br i1 %i.en, label %bb.dg, label %bb.dh
 
 bb.dg:                                            ; preds = %mygetopt_long.exit.thread651
-  %spec.select = select i1 %.not558, i32 3, i32 -2
+  %spec.select = select i1 %.not558, i32 -2, i32 3
   br label %.thread
 
 bb.dh:                                            ; preds = %mygetopt_long.exit.thread651
-  br i1 %.not558, label %bb.dk, label %bb.di
+  br i1 %.not558, label %bb.di, label %bb.dk
 
 bb.di:                                            ; preds = %bb.dh
   switch i32 %.05101675, label %bb.dk [
@@ -280,7 +280,7 @@ switch.edge:                                      ; preds = %bb.di
 
 bb.dk:                                            ; preds = %bb.di, %bb.dh
   %i.ep = icmp sgt i32 %.05101675, 3
-  %9 = icmp ne i32 %.04831701, 0                  ; 2 uses
+  %9 = trunc nuw i32 %.04831701 to i1             ; 2 uses
   %or.cond15 = and i1 %i.ep, %9
   %or.cond15.not = xor i1 %or.cond15, true
   %.b550 = load i1, ptr @quieter, align 4
@@ -683,9 +683,8 @@ bb.ik:                                            ; preds = %bb.ij
 
 bb.il:                                            ; preds = %bb.ik, %bb.ij
   %i.kp = load i32, ptr %i.j, align 4, !tbaa !10
-  %10 = and i32 %i.kp, 1
-  %.not601 = icmp eq i32 %10, 0
-  br i1 %.not601, label %bb.im, label %bb.in
+  %.not601 = trunc i32 %i.kp to i1
+  br i1 %.not601, label %bb.in, label %bb.im
 
 bb.im:                                            ; preds = %bb.il
   call fastcc void @err_sys(ptr noundef nonnull @.str.67) #26
@@ -1088,9 +1087,9 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.i, %bb.n
   %.5 = phi i32 [ %i.v, %bb.n ], [ %.3, %bb.i ]   ; 2 uses
-  %5 = icmp ne i32 %4, 0
+  %5 = trunc nuw i32 %4 to i1
   %i.w = icmp ne i32 %.5, 0
-  %or.cond7 = and i1 %5, %i.w
+  %or.cond7 = and i1 %i.w, %5
   br i1 %or.cond7, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p

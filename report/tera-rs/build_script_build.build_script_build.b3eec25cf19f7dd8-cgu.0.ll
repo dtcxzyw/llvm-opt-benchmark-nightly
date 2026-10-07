@@ -205,10 +205,9 @@ bb.ah:                                            ; preds = %bb.ae
   %i.dm = load i8, ptr %i.dl, align 1, !noalias !33
   %i.dn = and i8 %i.dm, 63
   %i.do = zext nneg i8 %i.dn to i64
-  %0 = shl nuw i64 1, %i.do
-  %1 = and i64 %0, %.sroa.559.0.copyload.i
-  %.not.i7.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i7.i.i, label %bb.ai, label %bb.aj
+  %0 = lshr i64 %.sroa.559.0.copyload.i, %i.do
+  %.not.i7.i.i = trunc i64 %0 to i1
+  br i1 %.not.i7.i.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph.i6.i.i
   %i.dp = add i64 %i.dk, %.sroa.1367.0.copyload.i
@@ -307,10 +306,9 @@ bb.ao:                                            ; preds = %bb.ae
   %i.ep = load i8, ptr %i.eo, align 1, !noalias !34
   %i.eq = and i8 %i.ep, 63
   %i.er = zext nneg i8 %i.eq to i64
-  %2 = shl nuw i64 1, %i.er
-  %3 = and i64 %2, %.sroa.559.0.copyload.i
-  %.not.i16.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i16.i.i, label %bb.ap, label %bb.aq
+  %1 = lshr i64 %.sroa.559.0.copyload.i, %i.er
+  %.not.i16.i.i = trunc i64 %1 to i1
+  br i1 %.not.i16.i.i, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %.lr.ph.i15.i.i
   %i.es = add i64 %i.en, %.sroa.1367.0.copyload.i
@@ -404,12 +402,12 @@ bb.au:                                            ; preds = %.noexc31.i
   br label %bb.ba
 
 .loopexit49.i.i:                                  ; preds = %bb.y, %.split.us.i, %.preheader44.i.i.preheader._crit_edge, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i, %bb.z
-  %.sroa.212.2.i = phi i64 [ %i.dg, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.212.0.i, %.split.us.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %.sroa.212.0.i, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ]
-  %.sroa.19.1.i = phi i64 [ %.sroa.19.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %i.fd, %.split.us.i ], [ %.sroa.19.0.i, %bb.z ], [ %i.dx, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.19.0.i, %bb.y ]
-  %.sroa.2921.2.i = phi i64 [ %.sroa.2921.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ -1, %.split.us.i ], [ %.sroa.2921.0.i, %bb.z ], [ 0, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.2921.0.i, %bb.y ]
-  %.sroa.1016.sroa.0.1.i = phi i8 [ %.sroa.1016.sroa.0.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.1016.sroa.0.0.i, %.split.us.i ], [ %i.aw, %bb.z ], [ %.sroa.1016.sroa.0.0.i, %.preheader44.i.i.preheader._crit_edge ], [ %i.aw, %bb.y ]
-  %.sroa.269.1.i = phi i64 [ %i.df, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %i.en, %.split.us.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %i.dk, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ] ; 2 uses
-  %.sroa.770.1.i = phi i64 [ %i.dg, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %i.fd, %.split.us.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %i.dx, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ]
+  %.sroa.212.2.i = phi i64 [ %.sroa.212.0.i, %.split.us.i ], [ %i.dg, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %.sroa.212.0.i, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ]
+  %.sroa.19.1.i = phi i64 [ %i.fd, %.split.us.i ], [ %.sroa.19.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.19.0.i, %bb.z ], [ %i.dx, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.19.0.i, %bb.y ]
+  %.sroa.2921.2.i = phi i64 [ -1, %.split.us.i ], [ %.sroa.2921.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.2921.0.i, %bb.z ], [ 0, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.2921.0.i, %bb.y ]
+  %.sroa.1016.sroa.0.1.i = phi i8 [ %.sroa.1016.sroa.0.0.i, %.split.us.i ], [ %.sroa.1016.sroa.0.0.i, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %i.aw, %bb.z ], [ %.sroa.1016.sroa.0.0.i, %.preheader44.i.i.preheader._crit_edge ], [ %i.aw, %bb.y ]
+  %.sroa.269.1.i = phi i64 [ %i.en, %.split.us.i ], [ %i.df, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %i.dk, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ] ; 2 uses
+  %.sroa.770.1.i = phi i64 [ %i.fd, %.split.us.i ], [ %i.dg, %_RNvNtNtCsf3Ta7LF998c_4core5slice6memchr6memchrCsfrMbUeuvm3s_18build_script_build.exit.thread37.i.i ], [ %.sroa.1165.0.copyload.i, %bb.z ], [ %i.dx, %.preheader44.i.i.preheader._crit_edge ], [ %.sroa.212.1.i, %bb.y ]
   %i.fn = getelementptr inbounds nuw i8, ptr @20, i64 %.sroa.04.0.i
   %gepdiff.i = sub nuw nsw i64 %.sroa.269.1.i, %.sroa.04.0.i ; 3 uses
   invoke void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE7reserveCs3TflR1YWh2n_9addr2line(ptr nonnull align 8 %i.l, i64 %gepdiff.i)

@@ -202,9 +202,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 define hidden void @uv__udp_io(ptr nofree noundef readnone captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %1, i64 -128 ; 4 uses
-  %3 = and i32 %2, 1
-  %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %.not = trunc i32 %2 to i1
+  br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call fastcc void @uv__udp_recvmsg(ptr noundef nonnull %i.a, i32 noundef 0)
@@ -607,9 +606,8 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.t
 
 bb.b:                                             ; preds = %bb.a
-  %4 = and i32 %3, 1
-  %.not40 = icmp eq i32 %4, 0                     ; 2 uses
-  br i1 %.not40, label %bb.d, label %bb.c
+  %.not40 = trunc i32 %3 to i1                    ; 2 uses
+  br i1 %.not40, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i16, ptr %1, align 2
@@ -704,7 +702,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not47, label %bb.o, label %bb.t
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  br i1 %.not40, label %bb.r, label %bb.p
+  br i1 %.not40, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   store i32 1, ptr %i.c, align 4

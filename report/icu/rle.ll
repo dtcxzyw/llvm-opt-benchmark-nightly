@@ -205,7 +205,6 @@ encodeRunShort.exit:                              ; preds = %bb.y, %bb.ab, %bb.a
   br i1 %i.az, label %.lr.ph.split.us.i59.preheader, label %.lr.ph.split.i54.preheader
 
 .lr.ph.split.i54.preheader:                       ; preds = %.lr.ph.i53
-  %xtraiter = and i32 %.036.lcssa8690, 1
   %i.ba = icmp eq i32 %.036.lcssa8690, 1
   br i1 %i.ba, label %.lr.ph.split.i54.epil.preheader, label %.lr.ph.split.i54.preheader.new
 
@@ -214,7 +213,6 @@ encodeRunShort.exit:                              ; preds = %bb.y, %bb.ab, %bb.a
   br label %.lr.ph.split.i54
 
 .lr.ph.split.us.i59.preheader:                    ; preds = %.lr.ph.i53
-  %xtraiter101 = and i32 %.036.lcssa8690, 1
   %i.bb = icmp eq i32 %.036.lcssa8690, 1
   br i1 %i.bb, label %.lr.ph.split.us.i59.epil.preheader, label %.lr.ph.split.us.i59.preheader.new
 
@@ -408,8 +406,8 @@ bb.cd:                                            ; preds = %bb.a
   br label %encodeRunShort.exit65
 
 encodeRunShort.exit65.loopexit.unr-lcssa:         ; preds = %bb.bf
-  %lcmp.mod102.not = icmp eq i32 %xtraiter101, 0
-  br i1 %lcmp.mod102.not, label %encodeRunShort.exit65, label %.lr.ph.split.us.i59.epil.preheader
+  %lcmp.mod102.not = trunc i32 %.036.lcssa8690 to i1
+  br i1 %lcmp.mod102.not, label %.lr.ph.split.us.i59.epil.preheader, label %encodeRunShort.exit65
 
 .lr.ph.split.us.i59.epil.preheader:               ; preds = %encodeRunShort.exit65.loopexit.unr-lcssa, %.lr.ph.split.us.i59.preheader
   %.04046.us.i61.epil.init = phi ptr [ %.039.lcssa8492, %.lr.ph.split.us.i59.preheader ], [ %.2.us.i63.1, %encodeRunShort.exit65.loopexit.unr-lcssa ] ; 4 uses
@@ -442,8 +440,8 @@ bb.ci:                                            ; preds = %bb.cg
   br label %encodeRunShort.exit65
 
 encodeRunShort.exit65.loopexit97.unr-lcssa:       ; preds = %bb.bk
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %encodeRunShort.exit65, label %.lr.ph.split.i54.epil.preheader
+  %lcmp.mod.not = trunc i32 %.036.lcssa8690 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.split.i54.epil.preheader, label %encodeRunShort.exit65
 
 .lr.ph.split.i54.epil.preheader:                  ; preds = %encodeRunShort.exit65.loopexit97.unr-lcssa, %.lr.ph.split.i54.preheader
   %.04046.i56.epil.init = phi ptr [ %.039.lcssa8492, %.lr.ph.split.i54.preheader ], [ %.2.i57.1, %encodeRunShort.exit65.loopexit97.unr-lcssa ] ; 4 uses

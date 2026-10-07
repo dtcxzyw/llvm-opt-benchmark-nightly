@@ -202,8 +202,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.df = phi i8 [ 1, %bb.r ], [ %i.de, %bb.s ]
   %i.dg = load i32, ptr %i.al, align 8
-  %i.dh = trunc i32 %i.dg to i8                   ; 3 uses
-  %i.di = lshr i8 %i.dh, 2
+  %i.dh = trunc i32 %i.dg to i8                   ; 2 uses
+  %i.di = lshr i8 %i.dh, 2                        ; 2 uses
   %i.dj = and i8 %i.di, 3                         ; 3 uses
   br i1 %i.am, label %bb.u, label %bb.v
 
@@ -217,9 +217,8 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   %spec.select.i = phi i8 [ 2, %bb.t ], [ 3, %bb.u ]
   %i.dk = icmp samesign ult i8 %i.dj, 2           ; 3 uses
   %i.dl = select i1 %i.dk, i8 %spec.select.i, i8 0 ; 3 uses
-  %12 = and i8 %i.dh, 4
-  %.not240 = icmp eq i8 %12, 0
-  br i1 %.not240, label %_ZN8facebook4yoga24setChildTrailingPositionEPKNS0_4NodeEPS1_NS0_13FlexDirectionE.exit, label %bb.w
+  %12 = trunc i8 %i.di to i1
+  br i1 %12, label %bb.w, label %_ZN8facebook4yoga24setChildTrailingPositionEPKNS0_4NodeEPS1_NS0_13FlexDirectionE.exit
 
 bb.w:                                             ; preds = %bb.v
   %i.dm = and i8 %i.dh, 8

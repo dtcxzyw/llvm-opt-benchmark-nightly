@@ -205,9 +205,9 @@ bb.l:                                             ; preds = %bb.j
   tail call void @je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %6, ptr noundef nonnull %i.x, i32 noundef %.0.i, i1 noundef zeroext true) #19
   %i.an = call ptr @je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.aj, ptr noundef nonnull %6, ptr noundef nonnull %i.x, i32 noundef %.0.i, ptr noundef nonnull %i.a) #19
   %i.ao = load i8, ptr %i.a, align 1, !tbaa !101, !range !96, !noundef !97
-  %.not = icmp eq i8 %i.ao, 0
+  %7 = trunc nuw i8 %i.ao to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br i1 %.not, label %arena_malloc.exit, label %cache_bin_alloc_impl.exit.thread
+  br i1 %7, label %cache_bin_alloc_impl.exit.thread, label %arena_malloc.exit
 
 cache_bin_alloc_impl.exit.thread:                 ; preds = %bb.i, %bb.g, %bb.l
   %.132.i = phi ptr [ %i.an, %bb.l ], [ %i.z, %bb.g ], [ %i.z, %bb.i ] ; 2 uses
@@ -485,7 +485,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %.0113 = phi ptr [ %7, %bb.a ], [ null, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %.0 = phi i32 [ 0, %bb.a ], [ %i.qx, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %i.z = sub i32 %3, %.0                          ; 2 uses
-  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 8 uses
+  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 9 uses
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !120
   %i.ab = zext i32 %.0 to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.ab ; 6 uses
@@ -493,7 +493,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %i.ad = add nuw nsw i32 %spec.store.select, 1
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %8 = alloca %union.emap_batch_lookup_result_u, i64 %i.ae, align 16 ; 12 uses
-  %i.af = zext nneg i32 %spec.store.select to i64 ; 3 uses
+  %i.af = zext nneg i32 %spec.store.select to i64 ; 2 uses
   %.not = icmp eq i32 %3, %.0
   br i1 %.not, label %emap_edata_lookup_batch.exit, label %.lr.ph
 
@@ -605,7 +605,6 @@ rtree_leaf_elm_lookup.exit.i:                     ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %exitcond.not, label %.lr.ph133.preheader, label %.lr.ph, !llvm.loop !180
 
 .lr.ph133.preheader:                              ; preds = %rtree_leaf_elm_lookup.exit.i
-  %xtraiter = and i64 %i.af, 1
   %i.ce = icmp eq i32 %i.z, 1
   br i1 %i.ce, label %.lr.ph133.epil.preheader, label %.lr.ph133.preheader.new
 
@@ -650,8 +649,8 @@ emap_edata_lookup_batch.exit:                     ; preds = %bb.b
   br i1 %4, label %bb.h, label %._crit_edge143
 
 emap_edata_lookup_batch.exit.thread.unr-lcssa:    ; preds = %.lr.ph133
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %emap_edata_lookup_batch.exit.thread, label %.lr.ph133.epil.preheader
+  %lcmp.mod.not = trunc i32 %spec.store.select to i1
+  br i1 %lcmp.mod.not, label %.lr.ph133.epil.preheader, label %emap_edata_lookup_batch.exit.thread
 
 .lr.ph133.epil.preheader:                         ; preds = %emap_edata_lookup_batch.exit.thread.unr-lcssa, %.lr.ph133.preheader
   %.0.i132.epil.init = phi i64 [ 0, %.lr.ph133.preheader ], [ %i.cy, %emap_edata_lookup_batch.exit.thread.unr-lcssa ]
@@ -1054,9 +1053,9 @@ bb.aj:                                            ; preds = %bb.ah
   tail call void @je_tcache_bin_flush_stashed(ptr noundef %0, ptr noundef nonnull %8, ptr noundef nonnull %i.cy, i32 noundef %.0.i.i, i1 noundef zeroext true) #19
   %i.do = call ptr @je_tcache_alloc_small_hard(ptr noundef %0, ptr noundef nonnull %i.dk, ptr noundef nonnull %8, ptr noundef nonnull %i.cy, i32 noundef %.0.i.i, ptr noundef nonnull %i.a) #19
   %i.dp = load i8, ptr %i.a, align 1, !tbaa !101, !range !96, !noundef !97
-  %.not64.i = icmp eq i8 %i.dp, 0
+  %12 = trunc nuw i8 %i.dp to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br i1 %.not64.i, label %arena_sdalloc.exit, label %cache_bin_alloc_impl.exit.thread.i
+  br i1 %12, label %cache_bin_alloc_impl.exit.thread.i, label %arena_sdalloc.exit
 
 cache_bin_alloc_impl.exit.thread.i:               ; preds = %bb.aj, %bb.ag, %bb.ae
   %.132.i.i = phi ptr [ %i.do, %bb.aj ], [ %i.da, %bb.ae ], [ %i.da, %bb.ag ] ; 2 uses
@@ -1459,9 +1458,9 @@ percpu_arena_ind_limit.exit.i:                    ; preds = %bb.k
   %i.u = load i32, ptr @je_ncpus, align 4         ; 4 uses
   %i.v = icmp ugt i32 %i.u, 1
   %or.cond.i.i = and i1 %i.t, %i.v
-  %2 = and i32 %i.u, 1
-  %3 = lshr i32 %i.u, 1
-  %spec.select.i = add nuw i32 %3, %2
+  %2 = lshr i32 %i.u, 1
+  %3 = and i32 %i.u, 1
+  %spec.select.i = add nuw i32 %2, %3
   %.0.i.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.u
   %i.w = icmp ult i32 %.0.val48.i, %.0.i.i
   br i1 %i.w, label %bb.l, label %arena_choose_impl.exit

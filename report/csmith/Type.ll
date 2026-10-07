@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %.preheader20.prehea
   %i.f = load ptr, ptr @_ZL8AllTypes, align 8, !tbaa !28 ; 8 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 8 uses
-  %i.j = ashr exact i64 %i.i, 3                   ; 5 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 7 uses
+  %i.j = ashr exact i64 %i.i, 3                   ; 6 uses
   %.not = icmp eq ptr %i.e, %i.f
   br i1 %.not, label %._crit_edge.thread, label %.lr.ph.preheader
 
@@ -218,9 +218,8 @@ bb.b:                                             ; preds = %.preheader20.prehea
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.i
-  %1 = and i64 %i.i, 8
-  %lcmp.mod.not = icmp eq i64 %1, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.j to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.epil.init = phi ptr [ null, %.lr.ph.preheader ], [ %i.ak, %._crit_edge.unr-lcssa ] ; 2 uses

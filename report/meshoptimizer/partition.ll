@@ -205,14 +205,13 @@ bb.y:                                             ; preds = %bb.x
   %i.lc = zext i32 %i.lb to i64
   %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.lc ; 4 uses
   %i.le = load i32, ptr %i.kv, align 4, !tbaa !15 ; 2 uses
-  %i.lf = sub i32 %i.le, %i.lb                    ; 4 uses
-  %i.lg = zext i32 %i.lf to i64                   ; 3 uses
+  %i.lf = sub i32 %i.le, %i.lb                    ; 5 uses
+  %i.lg = zext i32 %i.lf to i64                   ; 2 uses
   %i.lh = getelementptr inbounds nuw i8, ptr %i.kr, i64 16
   %.not57.i = icmp eq i32 %i.le, %i.lb
   br i1 %.not57.i, label %_ZN7meshoptL20computeClusterBoundsEPKjmPKfmPf.exit, label %.lr.ph.i214.preheader
 
 .lr.ph.i214.preheader:                            ; preds = %bb.y
-  %xtraiter424 = and i64 %i.lg, 1
   %i.li = icmp eq i32 %i.lf, 1
   br i1 %i.li, label %.lr.ph.i214.epil.preheader, label %.lr.ph.i214.preheader.new
 
@@ -221,8 +220,8 @@ bb.y:                                             ; preds = %bb.x
   br label %.lr.ph.i214
 
 .lr.ph54.preheader.i.unr-lcssa:                   ; preds = %.lr.ph.i214
-  %lcmp.mod426.not = icmp eq i64 %xtraiter424, 0
-  br i1 %lcmp.mod426.not, label %.lr.ph54.preheader.i, label %.lr.ph.i214.epil.preheader
+  %lcmp.mod426.not = trunc i32 %i.lf to i1
+  br i1 %lcmp.mod426.not, label %.lr.ph.i214.epil.preheader, label %.lr.ph54.preheader.i
 
 .lr.ph.i214.epil.preheader:                       ; preds = %.lr.ph54.preheader.i.unr-lcssa, %.lr.ph.i214.preheader
   %.04346.i.epil.init = phi i64 [ 0, %.lr.ph.i214.preheader ], [ %i.mw, %.lr.ph54.preheader.i.unr-lcssa ]
@@ -625,7 +624,6 @@ _ZN7meshoptL8heapPushEPNS_10GroupOrderEmS0_.exit232: ; preds = %.lr.ph.i228, %bb
   br i1 %.not186, label %bb.bc, label %.lr.ph277.preheader
 
 .lr.ph277.preheader:                              ; preds = %._crit_edge274
-  %xtraiter432 = and i64 %4, 1
   %i.xt = icmp eq i64 %4, 1
   br i1 %i.xt, label %.lr.ph277.epil.preheader, label %.lr.ph277.preheader.new
 
@@ -637,8 +635,8 @@ _ZN7meshoptL8heapPushEPNS_10GroupOrderEmS0_.exit232: ; preds = %.lr.ph.i228, %bb
   br i1 %.not186372, label %.lr.ph.i233, label %._crit_edge278
 
 ._crit_edge278.loopexit.unr-lcssa:                ; preds = %bb.bb
-  %lcmp.mod434.not = icmp eq i64 %xtraiter432, 0
-  br i1 %lcmp.mod434.not, label %._crit_edge278, label %.lr.ph277.epil.preheader
+  %lcmp.mod434.not = trunc i64 %4 to i1
+  br i1 %lcmp.mod434.not, label %.lr.ph277.epil.preheader, label %._crit_edge278
 
 .lr.ph277.epil.preheader:                         ; preds = %._crit_edge278.loopexit.unr-lcssa, %.lr.ph277.preheader
   %.0160276.epil.init = phi i64 [ 0, %.lr.ph277.preheader ], [ %i.yn, %._crit_edge278.loopexit.unr-lcssa ] ; 2 uses
@@ -1041,7 +1039,6 @@ bb.n:                                             ; preds = %._crit_edge
   %i.ey = select i1 %or.cond81, i64 %i.ex, i64 0  ; 4 uses
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ey
   %i.fa = load float, ptr %i.ez, align 4, !tbaa !23 ; 3 uses
-  %xtraiter30 = and i64 %.tr8414, 1
   %unroll_iter35 = and i64 %.tr8414, -2
   br label %bb.o
 
@@ -1084,8 +1081,8 @@ bb.o:                                             ; preds = %bb.o, %.new
   br i1 %niter36.ncmp.1, label %_ZN7meshoptL14mergePartitionEPjmPKNS_12ClusterGroupEif.exit.unr-lcssa, label %bb.o, !llvm.loop !73
 
 _ZN7meshoptL14mergePartitionEPjmPKNS_12ClusterGroupEif.exit.unr-lcssa: ; preds = %bb.o
-  %lcmp.mod32.not = icmp eq i64 %xtraiter30, 0
-  br i1 %lcmp.mod32.not, label %_ZN7meshoptL14mergePartitionEPjmPKNS_12ClusterGroupEif.exit, label %.epil.preheader
+  %lcmp.mod32.not = trunc i64 %.tr8414 to i1
+  br i1 %lcmp.mod32.not, label %.epil.preheader, label %_ZN7meshoptL14mergePartitionEPjmPKNS_12ClusterGroupEif.exit
 
 .epil.preheader:                                  ; preds = %_ZN7meshoptL14mergePartitionEPjmPKNS_12ClusterGroupEif.exit.unr-lcssa
   %lcmp.mod34 = trunc i64 %.tr8414 to i1

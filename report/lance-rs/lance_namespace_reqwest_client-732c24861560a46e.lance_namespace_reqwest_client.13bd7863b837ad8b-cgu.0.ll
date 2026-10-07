@@ -205,7 +205,6 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %i.g = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -214,8 +213,8 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br label %bb.b
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
   %.sroa.0.08.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %._crit_edge.i.unr-lcssa ]
@@ -618,7 +617,7 @@ bb.as:                                            ; preds = %bb.aq, %bb.ap
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal fastcc void @_RNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i64 noundef range(i64 32, 121) %2) unnamed_addr #9 {
 bb.a:
-  %i.a = lshr i64 %2, 3                           ; 3 uses
+  %i.a = lshr i64 %2, 3                           ; 4 uses
   %i.b = icmp eq i64 %i.a, 1
   br i1 %i.b, label %.epil.preheader, label %.new
 
@@ -652,9 +651,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %niter.ncmp.1, label %_RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit.unr-lcssa, label %bb.b
 
 _RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit.unr-lcssa: ; preds = %bb.b
-  %3 = and i64 %2, 8
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %_RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.a to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit
 
 .epil.preheader:                                  ; preds = %_RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit.unr-lcssa, %bb.a
   %.sroa.0.04.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.f, %_RINvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit.unr-lcssa ] ; 2 uses
@@ -711,9 +709,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i, %bb.e ], [ %i.t, %bb.f ] ; 2 uses
-  %4 = and i64 %2, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %_RNvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_short.exit, label %bb.h
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %bb.h, label %_RNvNvNtCscI6d9CVNmLh_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_short.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.0.1.i ; 2 uses

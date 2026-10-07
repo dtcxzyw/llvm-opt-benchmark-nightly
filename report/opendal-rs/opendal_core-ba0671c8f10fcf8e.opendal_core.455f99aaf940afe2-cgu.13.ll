@@ -204,8 +204,8 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtN
   tail call void @llvm.experimental.noalias.scope.decl(metadata !227)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !228)
   %i.ak = load i64, ptr %i.aj, align 8, !range !18, !alias.scope !229, !noundef !4
-  %1 = icmp eq i64 %i.ak, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3rps6RpReadEBH_.exit, label %bb.n
+  %1 = trunc nuw i64 %i.ak to i1
+  br i1 %1, label %bb.n, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3rps6RpReadEBH_.exit
 
 bb.n:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio4read3api13ReadStreamDynEL_EEB1k_.exit
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
@@ -429,8 +429,8 @@ define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5Xg
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !310)
   %i.a = load i64, ptr %0, align 8, !range !18, !alias.scope !310, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs5XgW7KoffLW_12opendal_core5types8metadata8MetadataEEB13_.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs5XgW7KoffLW_12opendal_core5types8metadata8MetadataEEB13_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -833,9 +833,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.i = or disjoint i64 %.sroa.0.04.ph, 1
@@ -1238,8 +1237,8 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtN
   call void @llvm.experimental.noalias.scope.decl(metadata !1099)
   call void @llvm.experimental.noalias.scope.decl(metadata !1100)
   %i.da = load i64, ptr %i.cz, align 8, !range !18, !alias.scope !1101, !noundef !4
-  %3 = icmp eq i64 %i.da, 0
-  br i1 %3, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3rps6RpReadEBH_.exit, label %bb.bd
+  %3 = trunc nuw i64 %i.da to i1
+  br i1 %3, label %bb.bd, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core3raw3rps6RpReadEBH_.exit
 
 bb.bd:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio4read3api13ReadStreamDynEL_EEB1k_.exit56
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
@@ -1590,10 +1589,10 @@ bb.a:
   store ptr %1, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load i64, ptr %i.d, align 8, !range !18, !noundef !4
-  %.not = icmp eq i64 %i.e, 0
+  %5 = trunc nuw i64 %i.e to i1
   %i.f = atomicrmw add ptr %1, i64 1 monotonic, align 8
   %i.g = icmp slt i64 %i.f, 0                     ; 2 uses
-  br i1 %.not, label %bb.c, label %bb.b
+  br i1 %5, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.j, label %bb.d
