@@ -1,0 +1,380 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/PredicateInfo.h b/llvm/include/llvm/Transforms/Utils/PredicateInfo.h
+index 06ce720bda6a9f..08aa02e508f50a 100644
+--- a/llvm/include/llvm/Transforms/Utils/PredicateInfo.h
++++ b/llvm/include/llvm/Transforms/Utils/PredicateInfo.h
+@@ -72,7 +72,8 @@ enum PredicateType {
+   PT_Branch,
+   PT_ConditionAssume,
+   PT_BundleAssume,
+-  PT_Switch
++  PT_Select,
++  PT_Switch,
+ };
+ 
+ /// Constraint for a predicate of the form "cmp Pred Op, OtherOp", where Op
+@@ -164,7 +165,8 @@ class PredicateWithEdge : public PredicateBase {
+   BasicBlock *To;
+   PredicateWithEdge() = delete;
+   static bool classof(const PredicateBase *PB) {
+-    return PB->Type == PT_Branch || PB->Type == PT_Switch;
++    return PB->Type == PT_Branch || PB->Type == PT_Switch ||
++           PB->Type == PT_Select;
+   }
+ 
+ protected:
+@@ -188,6 +190,21 @@ class PredicateBranch : public PredicateWithEdge {
+   }
+ };
+ 
++// Provides predicate information along a branch's edges for select instructions
++// in the same block that share the condition of the branch.
++class PredicateSelect : public PredicateWithEdge {
++public:
++  // If true, SplitBB is the true successor, otherwise it's the false successor.
++  bool TrueEdge;
++  SelectInst *Select;
++  PredicateSelect(Value *Op, BasicBlock *BranchBB, BasicBlock *SplitBB,
++                  Value *Condition, bool TakenEdge, SelectInst *SI)
++      : PredicateWithEdge(PT_Select, Op, BranchBB, SplitBB, Condition),
++        TrueEdge(TakenEdge), Select(SI) {}
++  PredicateSelect() = delete;
++  static bool classof(const PredicateBase *PB) { return PB->Type == PT_Select; }
++};
++
+ class PredicateSwitch : public PredicateWithEdge {
+ public:
+   Value *CaseValue;
+diff --git a/llvm/lib/Transforms/Utils/PredicateInfo.cpp b/llvm/lib/Transforms/Utils/PredicateInfo.cpp
+index 7a86d310f0f931..20c61ea32627ff 100644
+--- a/llvm/lib/Transforms/Utils/PredicateInfo.cpp
++++ b/llvm/lib/Transforms/Utils/PredicateInfo.cpp
+@@ -453,6 +453,31 @@ void PredicateInfoBuilder::processBranch(
+           addInfoFor(OpsToRename, V, PB);
+         }
+       }
++
++      if (shouldRename(Cond)) {
++        for (User *U : Cond->users()) {
++          auto *SI = dyn_cast<SelectInst>(U);
++          if (!SI || SI->getCondition() != Cond ||
++              SI->getParent() != BranchBB ||
++              SI->getTrueValue() == SI->getFalseValue() || SI->use_empty())
++            continue;
++
++          // Skip selects that are logically equivalent to and/or, which are
++          // expanded by the worklist above.
++          if (match(SI, m_LogicalAnd()) || match(SI, m_LogicalOr()))
++            continue;
++
++          // The ssa copy is represented as a no-op bitcast, which is not valid
++          // on every type a select can switch over (e.g. aggregates).
++          if (!CastInst::castIsValid(Instruction::BitCast, SI->getType(),
++                                     SI->getType()))
++            continue;
++
++          PredicateSelect *PS = new (Allocator)
++              PredicateSelect(SI, BranchBB, Succ, Cond, TakenEdge, SI);
++          addInfoFor(OpsToRename, SI, PS);
++        }
++      }
+     }
+   }
+ }
+@@ -773,6 +798,12 @@ std::optional<PredicateConstraint> PredicateBase::getConstraint() const {
+ 
+     return {{Pred, OtherOp}};
+   }
++  case PT_Select: {
++    auto *PSelect = cast<PredicateSelect>(this);
++    return {{CmpInst::ICMP_EQ, PSelect->TrueEdge
++                                   ? PSelect->Select->getTrueValue()
++                                   : PSelect->Select->getFalseValue()}};
++  }
+   case PT_Switch:
+     if (Condition != RenamedOp) {
+       // TODO: Make this an assertion once RenamedOp is fully accurate.
+@@ -835,6 +866,13 @@ class PredicateInfoAnnotatedWriter : public AssemblyAnnotationWriter {
+         OS << ",";
+         PB->To->printAsOperand(OS);
+         OS << "]";
++      } else if (const auto *PS = dyn_cast<PredicateSelect>(PI)) {
++        OS << "; select predicate info { TrueEdge: " << PS->TrueEdge
++           << " Comparison:" << *PS->Condition << " Edge: [";
++        PS->From->printAsOperand(OS);
++        OS << ",";
++        PS->To->printAsOperand(OS);
++        OS << "]";
+       } else if (const auto *PS = dyn_cast<PredicateSwitch>(PI)) {
+         OS << "; switch predicate info { CaseValue: " << *PS->CaseValue
+            << " Edge: [";
+diff --git a/llvm/test/Transforms/NewGVN/pr31501.ll b/llvm/test/Transforms/NewGVN/pr31501.ll
+index b2ba42b25ad864..ab500f1e8cb239 100644
+--- a/llvm/test/Transforms/NewGVN/pr31501.ll
++++ b/llvm/test/Transforms/NewGVN/pr31501.ll
+@@ -65,15 +65,14 @@ define weak_odr hidden ptr @quux(ptr %arg, ptr %arg1) local_unnamed_addr align 2
+ ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq ptr [[TMP18:%.*]], [[TMP6]]
+ ; CHECK-NEXT:    br i1 [[TMP10]], label %[[BB19:.*]], label %[[BB11]]
+ ; CHECK:       [[BB11]]:
+-; CHECK-NEXT:    [[TMP12:%.*]] = phi ptr [ [[TMP17:%.*]], %[[BB9]] ], [ undef, %[[BB8]] ]
+ ; CHECK-NEXT:    [[TMP13:%.*]] = phi ptr [ [[TMP18]], %[[BB9]] ], [ [[TMP3]], %[[BB8]] ]
+ ; CHECK-NEXT:    [[TMP15:%.*]] = load ptr, ptr [[TMP13]], align 8, !tbaa [[ANYPTR_TBAA8:![0-9]+]]
+ ; CHECK-NEXT:    [[TMP16:%.*]] = icmp eq ptr [[TMP15]], [[ARG1]]
+-; CHECK-NEXT:    [[TMP17]] = select i1 [[TMP16]], ptr [[TMP13]], ptr [[TMP12]]
++; CHECK-NEXT:    [[TMP17:%.*]] = select i1 [[TMP16]], ptr [[TMP13]], ptr undef
+ ; CHECK-NEXT:    [[TMP18]] = getelementptr inbounds [[STRUCT_FOO:%.*]], ptr [[TMP13]], i64 1
+ ; CHECK-NEXT:    br i1 [[TMP16]], label %[[BB19]], label %[[BB9]]
+ ; CHECK:       [[BB19]]:
+-; CHECK-NEXT:    [[TMP20:%.*]] = phi ptr [ null, %[[BB9]] ], [ [[TMP17]], %[[BB11]] ]
++; CHECK-NEXT:    [[TMP20:%.*]] = phi ptr [ null, %[[BB9]] ], [ [[TMP13]], %[[BB11]] ]
+ ; CHECK-NEXT:    br label %[[BB21]]
+ ; CHECK:       [[BB21]]:
+ ; CHECK-NEXT:    [[TMP22:%.*]] = phi ptr [ null, %[[BB]] ], [ [[TMP20]], %[[BB19]] ]
+diff --git a/llvm/test/Transforms/SCCP/select.ll b/llvm/test/Transforms/SCCP/select.ll
+index dfe44bb108f54c..e3d85d84924373 100644
+--- a/llvm/test/Transforms/SCCP/select.ll
++++ b/llvm/test/Transforms/SCCP/select.ll
+@@ -42,3 +42,155 @@ define i1 @f2(i32 %x, i1 %cmp) {
+   %res.3 = add i1 %res.2, %c.4
+   ret i1 %res.3
+ }
++
++define i1 @f3(i1 %c) {
++; CHECK-LABEL: define i1 @f3(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label %[[T:.*]], label %[[E:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[E]]:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @f3_dangling(i1 %c) {
++; CHECK-LABEL: define i1 @f3_dangling(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[DANGLES:%.*]] = select i1 [[C]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label %[[T:.*]], label %[[F:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[F]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %dangles = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i1 %c, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i1 %c, 1
++  ret i1 %rf
++}
++
++define i1 @f3_cond_and(i1 %c, i1 %d) {
++; CHECK-LABEL: define i1 @f3_cond_and(
++; CHECK-SAME: i1 [[C:%.*]], i1 [[D:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i64 0, i64 1
++; CHECK-NEXT:    [[A:%.*]] = and i1 [[C]], [[D]]
++; CHECK-NEXT:    br i1 [[A]], label %[[T:.*]], label %[[F:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[F]]:
++; CHECK-NEXT:    [[RF:%.*]] = icmp eq i64 [[S]], 1
++; CHECK-NEXT:    ret i1 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  %a = and i1 %c, %d
++  br i1 %a, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @f3_cond_or(i1 %c, i1 %d) {
++; CHECK-LABEL: define i1 @f3_cond_or(
++; CHECK-SAME: i1 [[C:%.*]], i1 [[D:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i64 0, i64 1
++; CHECK-NEXT:    [[O:%.*]] = or i1 [[C]], [[D]]
++; CHECK-NEXT:    br i1 [[O]], label %[[T:.*]], label %[[F:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    [[RT:%.*]] = icmp eq i64 [[S]], 0
++; CHECK-NEXT:    ret i1 [[RT]]
++; CHECK:       [[F]]:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  %o = or i1 %c, %d
++  br i1 %o, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++
++define i32 @f3_aggregate(i1 %c, {i32, i32} %a, {i32, i32} %b) {
++; CHECK-LABEL: define i32 @f3_aggregate(
++; CHECK-SAME: i1 [[C:%.*]], { i32, i32 } [[A:%.*]], { i32, i32 } [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], { i32, i32 } [[A]], { i32, i32 } [[B]]
++; CHECK-NEXT:    br i1 [[C]], label %[[T:.*]], label %[[F:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    [[XT:%.*]] = extractvalue { i32, i32 } [[S]], 0
++; CHECK-NEXT:    ret i32 [[XT]]
++; CHECK:       [[F]]:
++; CHECK-NEXT:    [[XF:%.*]] = extractvalue { i32, i32 } [[S]], 1
++; CHECK-NEXT:    ret i32 [[XF]]
++;
++entry:
++  %s = select i1 %c, {i32, i32} %a, {i32, i32} %b
++  br i1 %c, label %t, label %f
++
++t:
++  %xt = extractvalue {i32, i32} %s, 0
++  ret i32 %xt
++
++f:
++  %xf = extractvalue {i32, i32} %s, 1
++  ret i32 %xf
++}
++
++define i1 @f3_one_use(i1 %c) {
++; CHECK-LABEL: define i1 @f3_one_use(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i64 0, i64 1
++; CHECK-NEXT:    br i1 [[C]], label %[[T:.*]], label %[[F:.*]]
++; CHECK:       [[T]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[F]]:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  ret i1 false
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
+diff --git a/llvm/test/Transforms/Util/PredicateInfo/select.ll b/llvm/test/Transforms/Util/PredicateInfo/select.ll
+new file mode 100644
+index 00000000000000..d9743f39744dd2
+--- /dev/null
++++ b/llvm/test/Transforms/Util/PredicateInfo/select.ll
+@@ -0,0 +1,83 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-inst-comments
++; RUN: opt -passes='print<predicate-info>' -disable-output < %s 2>&1 | FileCheck %s
++
++; REQUIRES: asserts
++
++define i1 @f3(i1 %c) {
++; CHECK-LABEL: @f3(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:  ; select predicate info { TrueEdge: 1 Comparison:i1 [[C]] Edge: [label [[ENTRY:%.*]],label [[T:%.*]]], RenamedOp: [[S]] }
++; CHECK-NEXT:    [[S_0:%.*]] = bitcast i64 [[S]] to i64
++; CHECK-NEXT:  ; select predicate info { TrueEdge: 0 Comparison:i1 [[C]] Edge: [label [[ENTRY]],label [[F:%.*]]], RenamedOp: [[S]] }
++; CHECK-NEXT:    [[S_1:%.*]] = bitcast i64 [[S]] to i64
++; CHECK-NEXT:    br i1 [[C]], label [[T]], label [[F]]
++; CHECK:       t:
++; CHECK-NEXT:    [[RT:%.*]] = icmp eq i64 [[S_0]], 0
++; CHECK-NEXT:    ret i1 [[RT]]
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = icmp eq i64 [[S_1]], 1
++; CHECK-NEXT:    ret i1 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @f3_one_use(i1 %c) {
++; CHECK-LABEL: @f3_one_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 1
++; CHECK-NEXT:  ; select predicate info { TrueEdge: 0 Comparison:i1 [[C]] Edge: [label [[ENTRY:%.*]],label [[F:%.*]]], RenamedOp: [[S]] }
++; CHECK-NEXT:    [[S_0:%.*]] = bitcast i64 [[S]] to i64
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F]]
++; CHECK:       t:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = icmp eq i64 [[S_0]], 1
++; CHECK-NEXT:    ret i1 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 1
++  br i1 %c, label %t, label %f
++
++t:
++  ret i1 false
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
++
++define i1 @f3_same_value(i1 %c) {
++; CHECK-LABEL: @f3_same_value(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i64 0, i64 0
++; CHECK-NEXT:    br i1 [[C]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    [[RT:%.*]] = icmp eq i64 [[S]], 0
++; CHECK-NEXT:    ret i1 [[RT]]
++; CHECK:       f:
++; CHECK-NEXT:    [[RF:%.*]] = icmp eq i64 [[S]], 1
++; CHECK-NEXT:    ret i1 [[RF]]
++;
++entry:
++  %s = select i1 %c, i64 0, i64 0
++  br i1 %c, label %t, label %f
++
++t:
++  %rt = icmp eq i64 %s, 0
++  ret i1 %rt
++
++f:
++  %rf = icmp eq i64 %s, 1
++  ret i1 %rf
++}
