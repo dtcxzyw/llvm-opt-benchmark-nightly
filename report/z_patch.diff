@@ -1,0 +1,100 @@
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index 326f202fd150f..24180b41c5c2c 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -6627,8 +6627,10 @@ VPlanPtr LoopVectorizationPlanner::tryToBuildVPlan(VPlanPtr Plan,
+ 
+   RUN_VPLAN_PASS(VPlanTransforms::makeScalarizationDecisions, *Plan, Range);
+ 
+-  RUN_VPLAN_PASS(VPlanTransforms::makeCallWideningDecisions, *Plan, Range,
+-                 RecipeBuilder, CostCtx);
++  // Widened calls may only use the first lane of some operands.
++  if (RUN_VPLAN_PASS(VPlanTransforms::makeCallWideningDecisions, *Plan, Range,
++                     RecipeBuilder, CostCtx))
++    RUN_VPLAN_PASS(VPlanTransforms::makeScalarizationDecisions, *Plan, Range);
+ 
+   RUN_VPLAN_PASS(VPlanTransforms::narrowInductionTruncates, *Plan, Range, TTI,
+                  PSE);
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 1ca6c754b5136..31d061f940754 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -6100,9 +6100,10 @@ static CallWideningDecision decideCallWidening(VPInstruction &VPI,
+   return CallWideningDecision::KindTy::Scalarize;
+ }
+ 
+-void VPlanTransforms::makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
++bool VPlanTransforms::makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
+                                                 VPRecipeBuilder &RecipeBuilder,
+                                                 VPCostContext &CostCtx) {
++  bool Widened = false;
+   for (VPBasicBlock *VPBB : VPBlockUtils::blocksAs<VPBasicBlock>(
+            vp_depth_first_shallow(Plan.getVectorLoopRegion()->getEntry()))) {
+     for (VPInstruction &VPI :
+@@ -6129,6 +6130,7 @@ void VPlanTransforms::makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
+         Type *ResultTy = VPI.getScalarType();
+         Replacement = new VPWidenIntrinsicRecipe(*CI, ID, Ops, ResultTy, VPI,
+                                                  VPI, VPI.getDebugLoc());
++        Widened = true;
+         break;
+       }
+       case CallWideningDecision::KindTy::VectorVariant: {
+@@ -6141,6 +6143,7 @@ void VPlanTransforms::makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
+         Ops.push_back(VPI.getOperand(VPI.getNumOperandsWithoutMask() - 1));
+         Replacement = new VPWidenCallRecipe(CI, Decision.Variant, Ops, VPI, VPI,
+                                             VPI.getDebugLoc());
++        Widened = true;
+         break;
+       }
+       case CallWideningDecision::KindTy::Scalarize:
+@@ -6153,6 +6156,7 @@ void VPlanTransforms::makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
+       VPI.eraseFromParent();
+     }
+   }
++  return Widened;
+ }
+ 
+ void VPlanTransforms::narrowInductionTruncates(VPlan &Plan, VFRange &Range,
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+index 64f66c1b351ae..98e70b6288b81 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+@@ -643,12 +643,14 @@ struct VPlanTransforms {
+ 
+   /// Make VPlan-based scalarization decision prior to delegating to the ones
+   /// made by the legacy CM. Only transforms "usesFirstLaneOnly` def-use chains
+-  /// enabled by prior widening of consecutive memory operations for now.
++  /// enabled by prior widening of consecutive memory operations and calls for
++  /// now.
+   static void makeScalarizationDecisions(VPlan &Plan, VFRange &Range);
+ 
+   /// Convert call VPInstructions in \p Plan into widened call, vector
+   /// intrinsic or replicate recipes based on a cost comparison via \p CostCtx.
+-  static void makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
++  /// Returns true if any call was widened.
++  static bool makeCallWideningDecisions(VPlan &Plan, VFRange &Range,
+                                         VPRecipeBuilder &RecipeBuilder,
+                                         VPCostContext &CostCtx);
+ 
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/AArch64/scalarize-after-call-widening.ll b/llvm/test/Transforms/LoopVectorize/VPlan/AArch64/scalarize-after-call-widening.ll
+index 3778a54573e86..fef84c5def486 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/AArch64/scalarize-after-call-widening.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/AArch64/scalarize-after-call-widening.ll
+@@ -20,7 +20,7 @@ define void @uniform_arg(ptr noalias %src, ptr noalias %dst, i64 %a, i64 %b) {
+ ; CHECK-NEXT:      CLONE ir<%gep.src> = getelementptr inbounds ir<%src>, ir<%iv>
+ ; CHECK-NEXT:      vp<[[VP4:%[0-9]+]]> = vector-pointer inbounds i64, ir<%gep.src>, ir<1>
+ ; CHECK-NEXT:      WIDEN ir<%l> = load vp<[[VP4]]>
+-; CHECK-NEXT:      EMIT ir<%u> = add ir<%a>, ir<%b>
++; CHECK-NEXT:      CLONE ir<%u> = add ir<%a>, ir<%b>
+ ; CHECK-NEXT:      WIDEN-CALL ir<%call> = call @foo_uniform(ir<%l>, ir<%u>) (using library function: foo_uniform_vec)
+ ; CHECK-NEXT:      CLONE ir<%gep.dst> = getelementptr inbounds ir<%dst>, ir<%iv>
+ ; CHECK-NEXT:      vp<[[VP5:%[0-9]+]]> = vector-pointer inbounds i64, ir<%gep.dst>, ir<1>
+@@ -59,7 +59,7 @@ define void @linear_arg(ptr noalias %dst) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:    vector.body:
+ ; CHECK-NEXT:      ir<%iv> = WIDEN-INDUCTION nuw nsw ir<0>, ir<1>, vp<[[VP0:%[0-9]+]]>
+-; CHECK-NEXT:      EMIT ir<%iv.mul> = mul ir<%iv>, ir<3>
++; CHECK-NEXT:      CLONE ir<%iv.mul> = mul ir<%iv>, ir<3>
+ ; CHECK-NEXT:      WIDEN-CALL ir<%call> = call @foo_linear(ir<%iv.mul>) (using library function: foo_linear_vec)
+ ; CHECK-NEXT:      CLONE ir<%gep.dst> = getelementptr inbounds ir<%dst>, ir<%iv>
+ ; CHECK-NEXT:      vp<[[VP4:%[0-9]+]]> = vector-pointer inbounds i64, ir<%gep.dst>, ir<1>
