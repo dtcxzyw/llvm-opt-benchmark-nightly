@@ -470,7 +470,7 @@
   "reassociate.NumChanged": 8094638,
   "reassociate.NumFactor": 8609,
   "scalar-evolution.NumBruteForceTripCountsComputed": 25899,
-  "scalar-evolution.NumExitCountsComputed": 8704767,
+  "scalar-evolution.NumExitCountsComputed": 8704772,
   "scalar-evolution.NumExitCountsNotComputed": 26707501,
   "sccp.NumArgsElimed": 422561,
   "sccp.NumDeadBlocks": 1176512,
