@@ -204,7 +204,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !10577
 
 .loopexit22.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !10571
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !10571 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !10578
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit22.loopexit.i.i.i.i, %bb.o
@@ -607,7 +608,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !10942
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !10936
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !10936 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !10943
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -1010,7 +1012,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !11307
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !11301
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !11301 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !11308
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -1413,7 +1416,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !11672
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !11666
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !11666 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !11673
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.o
@@ -1816,7 +1820,8 @@ bb.t:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i, !dbg !12062
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12056
+  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12056 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i, !dbg !12063
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.t
@@ -2219,7 +2224,8 @@ bb.t:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !12458
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12452
+  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12452 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !12459
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.t
@@ -2622,7 +2628,8 @@ bb.t:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !12848
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12842
+  %i.ck = extractvalue { i8, ptr } %i.cf, 1, !dbg !12842 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ck) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !12849
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.t
@@ -3025,7 +3032,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13225
 
 .loopexit22.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !13219
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !13219 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13226
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit22.loopexit.i.i.i.i, %bb.o
@@ -3428,7 +3436,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13585
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !13579
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !13579 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13586
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -3831,7 +3840,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13949
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !13943
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !13943 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !13950
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -4234,7 +4244,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !14314
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !14308
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !14308 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !14315
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -4637,7 +4648,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !14679
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !14673
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !14673 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !14680
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.o
@@ -5040,7 +5052,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15039
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !15033
+  %i.cf = extractvalue { i8, ptr } %i.ca, 1, !dbg !15033 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15040
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_max_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -5443,7 +5456,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15407
 
 .loopexit22.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cj = extractvalue { i8, ptr } %i.ce, 1, !dbg !15401
+  %i.cj = extractvalue { i8, ptr } %i.ce, 1, !dbg !15401 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cj) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15408
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRnINtNtNtBc_5slice4iter4IternENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjnEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10Int128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit22.loopexit.i.i.i.i, %bb.o
@@ -5846,7 +5860,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15773
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !15767
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !15767 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !15774
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRtINtNtNtBc_5slice4iter4ItertENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjtEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -6249,7 +6264,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !16139
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16133
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16133 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !16140
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBc_5slice4iter4ItermENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjmEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -6652,7 +6668,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !16505
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16499
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16499 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !16506
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRyINtNtNtBc_5slice4iter4IteryENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjyEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes10UInt64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.o
@@ -7055,7 +7072,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i, !dbg !16885
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16879
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !16879 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i, !dbg !16886
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBc_5slice4iter4IterB2H_ENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjB2H_EENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB53_9datatypes11Float16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB4W_s_0EB53_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -7458,7 +7476,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !17268
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !17262
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !17262 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !17269
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBc_5slice4iter4IterfENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjfEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -7861,7 +7880,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !17648
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !17642
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !17642 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !17649
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBc_5slice4iter4IterdENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjdEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11Float64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.o
@@ -8264,7 +8284,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18026
 
 .loopexit22.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.cj = extractvalue { i8, ptr } %i.ce, 1, !dbg !18020
+  %i.cj = extractvalue { i8, ptr } %i.ce, 1, !dbg !18020 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cj) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18027
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRoINtNtNtBc_5slice4iter4IteroENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjoEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes11UInt128TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit22.loopexit.i.i.i.i, %bb.o
@@ -8667,7 +8688,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18387
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !18381
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !18381 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18388
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRaINtNtNtBc_5slice4iter4IteraENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjaEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes8Int8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -9070,7 +9092,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18752
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !18746
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !18746 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !18753
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRsINtNtNtBc_5slice4iter4ItersENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjsEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int16TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -9473,7 +9496,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19118
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19112
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19112 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19119
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBc_5slice4iter4IterlENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjlEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int32TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o
@@ -9876,7 +9900,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19484
 
 .loopexit20.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19478
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19478 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19485
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBc_5slice4iter4IterxENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjxEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9Int64TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit20.loopexit.i.i.i.i, %bb.o
@@ -10279,7 +10304,8 @@ bb.o:                                             ; preds = %.split.us.i.i.i.i
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19845
 
 .loopexit21.loopexit.i.i.i.i:                     ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i.i.us.i.i.i.i
-  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19839
+  %i.ch = extractvalue { i8, ptr } %i.cc, 1, !dbg !19839 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ch) ]
   br label %_RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i, !dbg !19846
 
 _RINvYINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB8_9enumerate9EnumerateINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRhINtNtNtBc_5slice4iter4IterhENtNtB1w_8iterator10BitmapIterEEINtNtBc_6option6OptionTjhEENCINvNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array11arg_min_max23arg_min_numeric_chunkedNtNtB4f_9datatypes9UInt8TypeE0ENtNtNtBa_6traits8iterator8Iterator6reduceNCB48_s_0EB4f_.exit.i: ; preds = %.loopexit21.loopexit.i.i.i.i, %bb.o

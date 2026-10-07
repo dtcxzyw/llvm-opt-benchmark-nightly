@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %bb.f
   %i.bh = icmp ugt i8 %i.af, -49
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !alias.scope !4497
-  %.sroa.01.0.i.i = select i1 %i.bh, ptr %i.bj, ptr %i.bi ; 2 uses
+  %.sroa.01.0.i.i = select i1 %i.bh, ptr %i.bj, ptr %i.bi ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i) ]
   %i.bk = load i64, ptr %.sroa.01.0.i.i, align 1
   %i.bl = xor i64 %i.bk, 7310034288222035807
   %i.bm = getelementptr i8, ptr %.sroa.01.0.i.i, i64 8
@@ -608,7 +609,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr [88 x i8], ptr %i.ai, i64 %i.aj ; 2 uses
-  %i.ar = getelementptr i8, ptr %i.aq, i64 -72
+  %i.ar = getelementptr i8, ptr %i.aq, i64 -72    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ]
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.at = load ptr, ptr %i.as, align 8, !align !20, !noundef !11 ; 2 uses
   %.not.i.i = icmp eq ptr %i.at, null

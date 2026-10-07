@@ -202,6 +202,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvT
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores1_1__27global_scope_Configuration_E12refresh_memoB15_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.ao, %bb.o ], [ %i.ao, %.noexc14.i.i.i ], [ %i.ao, %.thread.i.i.i.i.i ], [ %i.bf, %.noexc16.i.i.i ] ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bi = load i8, ptr %i.bh, align 2, !range !9, !noalias !307, !noundef !4
@@ -292,7 +293,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 bb.y:                                             ; preds = %.noexc16.i.i.i.i.i, %bb.v
   %i.cc = phi i64 [ %i.by, %.noexc16.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.cc, ptr %i.bp, align 8, !noalias !309
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !307
   %i.cd = load i32, ptr %2, align 8, !range !6, !noalias !307, !noundef !4
@@ -568,6 +568,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNvNtNtCs2O
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNvNtNtCs2O29vuvTAEJ_14ty_python_core2db13TestProgramDb7program1__28program_inner_Configuration_E12refresh_memoB1b_.exit.i.i.i.i.i: ; preds = %.noexc18.i.i.i, %.thread.i.i.i.i.i, %.noexc16.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.ar, %bb.o ], [ %i.ar, %.noexc16.i.i.i ], [ %i.ar, %.thread.i.i.i.i.i ], [ %i.bi, %.noexc18.i.i.i ] ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bl = load i8, ptr %i.bk, align 2, !range !9, !noalias !351, !noundef !4
@@ -658,7 +659,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 bb.y:                                             ; preds = %.noexc16.i.i.i.i.i, %bb.v
   %i.cf = phi i64 [ %i.cb, %.noexc16.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.cf, ptr %i.bs, align 8, !noalias !359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !358
   %i.cg = load i32, ptr %2, align 8, !range !6, !noalias !351, !noundef !4
@@ -1054,7 +1054,7 @@ bb.ad:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCs2AWtUsOyxgP_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #29
   unreachable
 
-bb.ae:                                            ; preds = %bb.aa, %bb.z, %bb.y
+bb.ae:                                            ; preds = %bb.y, %bb.z, %bb.aa
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   ret ptr %i.ck
 }
@@ -1287,6 +1287,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvT
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores_1__26place_table_Configuration_E12refresh_memoB15_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.ao, %bb.o ], [ %i.ao, %.noexc14.i.i.i ], [ %i.ao, %.thread.i.i.i.i.i ], [ %i.bf, %.noexc16.i.i.i ] ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bi = load i8, ptr %i.bh, align 2, !range !9, !noalias !461, !noundef !4
@@ -1377,7 +1378,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 bb.y:                                             ; preds = %.noexc16.i.i.i.i.i, %bb.v
   %i.cc = phi i64 [ %i.by, %.noexc16.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.cc, ptr %i.bp, align 8, !noalias !463
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !461
   %i.cd = load ptr, ptr %2, align 8, !noalias !461, !nonnull !4, !noundef !4
@@ -1646,6 +1646,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvT
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvCs2O29vuvTAEJ_14ty_python_cores0_1__26use_def_map_Configuration_E12refresh_memoB15_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.ao, %bb.o ], [ %i.ao, %.noexc14.i.i.i ], [ %i.ao, %.thread.i.i.i.i.i ], [ %i.bf, %.noexc16.i.i.i ] ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bi = load i8, ptr %i.bh, align 2, !range !9, !noalias !512, !noundef !4
@@ -1736,7 +1737,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 bb.y:                                             ; preds = %.noexc16.i.i.i.i.i, %bb.v
   %i.cc = phi i64 [ %i.by, %.noexc16.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.cc, ptr %i.bp, align 8, !noalias !514
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !512
   %i.cd = load ptr, ptr %2, align 8, !noalias !512, !nonnull !4, !noundef !4
@@ -2005,6 +2005,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs2O29vu
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs2O29vuvTAEJ_14ty_python_core10re_exports1__29exported_names_Configuration_E12refresh_memoB17_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.aq, %bb.o ], [ %i.aq, %.noexc14.i.i.i ], [ %i.aq, %.thread.i.i.i.i.i ], [ %i.bh, %.noexc16.i.i.i ] ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bk = load i8, ptr %i.bj, align 2, !range !9, !noalias !559, !noundef !4
@@ -2095,7 +2096,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 bb.y:                                             ; preds = %.noexc16.i.i.i.i.i, %bb.v
   %i.ce = phi i64 [ %i.ca, %.noexc16.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.ce, ptr %i.br, align 8, !noalias !561
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !559
   %i.cf = load ptr, ptr %2, align 8, !noalias !559, !nonnull !4, !noundef !4
@@ -2498,7 +2498,8 @@ bb.f:                                             ; preds = %bb.e
   %i.y = and i64 %i.o, -8
   %i.z = getelementptr i8, ptr %i.c, i64 %i.y
   %i.aa = sub i64 0, %i.o
-  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa
+  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.d
   %i.ad = load i64, ptr %i.ac, align 8, !noalias !2426, !noundef !4
   %i.ae = sub nuw nsw i64 64, %i.e

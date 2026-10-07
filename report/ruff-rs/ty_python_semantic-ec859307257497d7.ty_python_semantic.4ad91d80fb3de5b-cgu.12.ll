@@ -205,7 +205,8 @@ _RNCNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder9new_classNt
   %i.bg = icmp ugt i8 %i.ay, -49
   %i.bh = getelementptr inbounds nuw i8, ptr %i.av, i64 80 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !alias.scope !10443, !noalias !10442
-  %.sroa.01.0.i.i.i = select i1 %i.bg, ptr %i.bi, ptr %i.bh
+  %.sroa.01.0.i.i.i = select i1 %i.bg, ptr %i.bi, ptr %i.bh ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i) ]
   %i.bj = load i32, ptr %.sroa.01.0.i.i.i, align 1
   %i.bk = icmp ne i32 %i.bj, 1701667182
   %i.bl = zext i1 %i.bk to i32
@@ -307,7 +308,8 @@ _RNCNCNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder9new_class
   %i.cm = icmp ugt i8 %i.ce, -49
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cb, i64 80 ; 2 uses
   %i.co = load ptr, ptr %i.cn, align 8, !alias.scope !10448, !noalias !10447
-  %.sroa.01.0.i.i.i.i.i = select i1 %i.cm, ptr %i.co, ptr %i.cn
+  %.sroa.01.0.i.i.i.i.i = select i1 %i.cm, ptr %i.co, ptr %i.cn ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i) ]
   %i.cp = load i32, ptr %.sroa.01.0.i.i.i.i.i, align 1
   %i.cq = icmp ne i32 %i.cp, 1701667182
   %i.cr = zext i1 %i.cq to i32
@@ -710,7 +712,8 @@ _RNCNCNvMNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder9new_class
   %i.ha = icmp ugt i8 %i.gs, -49
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gp, i64 80 ; 2 uses
   %i.hc = load ptr, ptr %i.hb, align 8, !alias.scope !10463, !noalias !10462
-  %.sroa.01.0.i.i.i.i.i95 = select i1 %i.ha, ptr %i.hc, ptr %i.hb ; 2 uses
+  %.sroa.01.0.i.i.i.i.i95 = select i1 %i.ha, ptr %i.hc, ptr %i.hb ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i95) ]
   %i.hd = load i64, ptr %.sroa.01.0.i.i.i.i.i95, align 1
   %i.he = xor i64 %i.hd, 7237111288036685925
   %i.hf = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i95, i64 8
@@ -1113,7 +1116,8 @@ bb.aa:                                            ; preds = %.lr.ph.i
   %i.dn = icmp ugt i8 %i.df, -49
   %i.do = getelementptr inbounds nuw i8, ptr %i.dc, i64 80 ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8, !alias.scope !11956, !noalias !11955
-  %.sroa.01.0.i.i.i = select i1 %i.dn, ptr %i.dp, ptr %i.do ; 2 uses
+  %.sroa.01.0.i.i.i = select i1 %i.dn, ptr %i.dp, ptr %i.do ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i) ]
   %i.dq = load i64, ptr %.sroa.01.0.i.i.i, align 1
   %i.dr = xor i64 %i.dq, 8314045561195226477
   %i.ds = getelementptr i8, ptr %.sroa.01.0.i.i.i, i64 8
@@ -1516,7 +1520,8 @@ bb.k:                                             ; preds = %bb.j
   %i.fc = icmp ugt i8 %i.eu, -49
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.09.036.us.i, i64 80 ; 2 uses
   %i.fe = load ptr, ptr %i.fd, align 8, !alias.scope !14528
-  %.sroa.01.0.i.us.i = select i1 %i.fc, ptr %i.fe, ptr %i.fd ; 2 uses
+  %.sroa.01.0.i.us.i = select i1 %i.fc, ptr %i.fe, ptr %i.fd ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.us.i) ]
   %i.ff = load i64, ptr %.sroa.01.0.i.us.i, align 1
   %i.fg = xor i64 %i.ff, 8388340653090961509
   %i.fh = getelementptr i8, ptr %.sroa.01.0.i.us.i, i64 3
@@ -1919,7 +1924,8 @@ bb.qh:                                            ; preds = %bb.qg
   %i.bdq = icmp ugt i8 %i.bdh, -49
   %i.bdr = getelementptr inbounds nuw i8, ptr %.sroa.064.0536.i, i64 80 ; 2 uses
   %i.bds = load ptr, ptr %i.bdr, align 8, !alias.scope !16454
-  %.sroa.01.0.i182.i = select i1 %i.bdq, ptr %i.bds, ptr %i.bdr ; 2 uses
+  %.sroa.01.0.i182.i = select i1 %i.bdq, ptr %i.bds, ptr %i.bdr ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i182.i) ]
   %i.bdt = load i64, ptr %.sroa.01.0.i182.i, align 1
   %i.bdu = xor i64 %i.bdt, 8388340653090961509
   %i.bdv = getelementptr i8, ptr %.sroa.01.0.i182.i, i64 3
@@ -2322,7 +2328,8 @@ bb.ty:                                            ; preds = %bb.tx
   %i.bmd = icmp ugt i8 %i.blv, -49
   %i.bme = getelementptr inbounds nuw i8, ptr %i.bim, i64 8 ; 2 uses
   %i.bmf = load ptr, ptr %i.bme, align 8, !alias.scope !16513, !noalias !16488
-  %.sroa.01.0.i.i65.i.i = select i1 %i.bmd, ptr %i.bmf, ptr %i.bme ; 2 uses
+  %.sroa.01.0.i.i65.i.i = select i1 %i.bmd, ptr %i.bmf, ptr %i.bme ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i65.i.i) ]
   %i.bmg = load i64, ptr %.sroa.01.0.i.i65.i.i, align 1
   %i.bmh = xor i64 %i.bmg, 4992314263404042580
   %i.bmi = getelementptr i8, ptr %.sroa.01.0.i.i65.i.i, i64 5
@@ -2725,7 +2732,8 @@ bb.g:                                             ; preds = %bb.f
   %i.cf = icmp ugt i8 %i.bx, -49
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.01.0204, i64 80 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !alias.scope !19369
-  %.sroa.01.0.i = select i1 %i.cf, ptr %i.ch, ptr %i.cg ; 2 uses
+  %.sroa.01.0.i = select i1 %i.cf, ptr %i.ch, ptr %i.cg ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i) ]
   %i.ci = load i64, ptr %.sroa.01.0.i, align 1
   %i.cj = xor i64 %i.ci, 8241992348090792308
   %i.ck = getelementptr i8, ptr %.sroa.01.0.i, i64 3

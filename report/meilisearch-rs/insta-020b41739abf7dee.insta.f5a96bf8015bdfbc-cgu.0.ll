@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.noexc17, %bb.f
   %i.p = phi ptr [ %i.h, %bb.f ], [ %.pre, %.noexc17 ]
   %i.q = phi i64 [ %i.j, %bb.f ], [ %.pre.i.i, %.noexc17 ] ; 3 uses
-  %i.r = extractvalue { ptr, i64 } %i.k, 0
+  %i.r = extractvalue { ptr, i64 } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = icmp sgt i64 %i.q, -1
   call void @llvm.assume(i1 %i.s)
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.q
@@ -407,8 +408,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val12 = load ptr, ptr %i.j, align 8
-  %.val11 = load ptr, ptr %1, align 8
+  %.val12 = load ptr, ptr %i.j, align 8, !nonnull !17, !noundef !17
+  %.val11 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.k = getelementptr inbounds nuw i8, ptr %.val12, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !17, !noalias !5037, !nonnull !17
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val11, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @183, i64 noundef 33), !noalias !5037, !inline_history !8
@@ -811,7 +812,8 @@ bb.dg:                                            ; preds = %bb.df
 "_ZN51_$LT$i64$u20$as$u20$alloc..string..SpecToString$GT$14spec_to_string17h43f0aca62bb23cf4E.exit": ; preds = %bb.dd, %.noexc17.i
   %i.sw = phi ptr [ %i.so, %bb.dd ], [ %.pre.i231, %.noexc17.i ]
   %i.sx = phi i64 [ %i.sq, %bb.dd ], [ %.pre.i.i.i230, %.noexc17.i ] ; 3 uses
-  %i.sy = extractvalue { ptr, i64 } %i.sr, 0
+  %i.sy = extractvalue { ptr, i64 } %i.sr, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.sy) ]
   %i.sz = icmp sgt i64 %i.sx, -1
   call void @llvm.assume(i1 %i.sz)
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sw, i64 %i.sx
@@ -1214,8 +1216,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dv, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dv, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.dw = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dx = load ptr, ptr %i.dw, align 8, !invariant.load !17, !noalias !20444, !nonnull !17
   %i.dy = call noundef zeroext i1 %i.dx(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20444, !inline_history !8
@@ -1618,8 +1620,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dn, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dn, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.do = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dp = load ptr, ptr %i.do, align 8, !invariant.load !17, !noalias !20492, !nonnull !17
   %i.dq = call noundef zeroext i1 %i.dp(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20492, !inline_history !8
@@ -2022,8 +2024,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dn, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dn, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.do = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dp = load ptr, ptr %i.do, align 8, !invariant.load !17, !noalias !20540, !nonnull !17
   %i.dq = call noundef zeroext i1 %i.dp(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20540, !inline_history !8
@@ -2426,8 +2428,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %bb.t
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dq, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dq, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.dr = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.ds = load ptr, ptr %i.dr, align 8, !invariant.load !17, !noalias !20599, !nonnull !17
   %i.dt = call noundef zeroext i1 %i.ds(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20599, !inline_history !8
@@ -2830,8 +2832,8 @@ bb.t:                                             ; preds = %"_ZN66_$LT$alloc..b
 
 .split211:                                        ; preds = %"_ZN66_$LT$alloc..borrow..Cow$LT$B$GT$$u20$as$u20$core..fmt..Display$GT$3fmt17hd11f0cd9c4edbb64E.exit.thread", %bb.t
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dv, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dv, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.dw = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dx = load ptr, ptr %i.dw, align 8, !invariant.load !17, !noalias !20654, !nonnull !17
   %i.dy = call noundef zeroext i1 %i.dx(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20654, !inline_history !8
@@ -3234,8 +3236,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.dt = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dt, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dt, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.du = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dv = load ptr, ptr %i.du, align 8, !invariant.load !17, !noalias !20709, !nonnull !17
   %i.dw = call noundef zeroext i1 %i.dv(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20709, !inline_history !8
@@ -3638,8 +3640,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.do, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.do, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.dp = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dq = load ptr, ptr %i.dp, align 8, !invariant.load !17, !noalias !20757, !nonnull !17
   %i.dr = call noundef zeroext i1 %i.dq(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20757, !inline_history !8
@@ -4042,8 +4044,8 @@ bb.t:                                             ; preds = %.loopexit213
 
 .split211:                                        ; preds = %.loopexit213.thread, %bb.t
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val100 = load ptr, ptr %i.dn, align 8
-  %.val99 = load ptr, ptr %1, align 8
+  %.val100 = load ptr, ptr %i.dn, align 8, !nonnull !17, !noundef !17
+  %.val99 = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   %i.do = getelementptr inbounds nuw i8, ptr %.val100, i64 24
   %i.dp = load ptr, ptr %i.do, align 8, !invariant.load !17, !noalias !20805, !nonnull !17
   %i.dq = call noundef zeroext i1 %i.dp(ptr noundef nonnull align 1 %.val99, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @793, i64 noundef 4), !noalias !20805, !inline_history !8
@@ -4446,8 +4448,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr @"_ZN4core3fmt3num3imp54_$LT$impl$u20$core..fmt..Display$u20$for$u20$usize$GT$3fmt17h47414302a1568dceE", ptr %.sroa.410.0..sroa_idx, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val11 = load ptr, ptr %i.j, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val11 = load ptr, ptr %i.j, align 8, !nonnull !17, !noundef !17
+  %.val = load ptr, ptr %1, align 8, !nonnull !17, !noundef !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !23899
   store ptr @956, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

@@ -206,13 +206,14 @@ bb.l:                                             ; preds = %_RNvMNtNtCs8K4cjrcx
   %.sroa.5.sroa.6.0.copyload.i31 = load i32, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i30, align 8, !noalias !7288
   %i.z = extractvalue { ptr, i64 } %i.r, 0
   %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %i.s
-  %i.ab = getelementptr i8, ptr %i.aa, i64 -8
+  %i.ab = getelementptr i8, ptr %i.aa, i64 -8     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 1424
   %i.ad = load ptr, ptr %i.ac, align 8, !nonnull !9, !noundef !9
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 1432
   %i.af = load ptr, ptr %i.ae, align 8, !nonnull !9, !align !12, !noundef !9
   %i.ag = tail call noundef nonnull align 8 ptr @_RNvMs2j_NtCsileJQcQObtj_7hir_def10signaturesNtB6_12EnumVariants2of(ptr noundef nonnull %i.ad, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(240) %i.af, i32 noundef %.sroa.5.sroa.5.0.copyload.i33, i32 noundef %.sroa.5.sroa.6.0.copyload.i31)
-  %i.ah = tail call { i32, i32 } @_RNvMs3_NtCsileJQcQObtj_7hir_def10signaturesNtB5_12EnumVariants7variant(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ag, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ab) ; 2 uses
+  %i.ah = tail call { i32, i32 } @_RNvMs3_NtCsileJQcQObtj_7hir_def10signaturesNtB5_12EnumVariants7variant(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ag, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ab) ; 2 uses
   %i.ai = extractvalue { i32, i32 } %i.ah, 0      ; 2 uses
   %.not24 = icmp eq i32 %i.ai, 0
   br i1 %.not24, label %_RNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver2tyNtB2_2Ty6as_adt.exit42.thread, label %bb.m

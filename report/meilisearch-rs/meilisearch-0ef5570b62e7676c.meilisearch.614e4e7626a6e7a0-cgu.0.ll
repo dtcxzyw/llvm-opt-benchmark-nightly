@@ -205,7 +205,8 @@ bb.i:                                             ; preds = %._crit_edge, %.noex
   %.sroa.014.0.copyload15 = phi i64 [ %i.ah, %._crit_edge ], [ %.sroa.014.0.copyload15.pre, %.noexc2.i.i.i.i.i.i ]
   %i.ap = phi ptr [ %i.aa, %._crit_edge ], [ %.pre.i.i.i.i.i.i, %.noexc2.i.i.i.i.i.i ]
   %i.aq = phi i64 [ %i.ae, %._crit_edge ], [ %.pre.i.i1.i.i.i.i.i.i, %.noexc2.i.i.i.i.i.i ] ; 3 uses
-  %i.ar = extractvalue { ptr, i64 } %i.af, 0
+  %i.ar = extractvalue { ptr, i64 } %i.af, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ar) ]
   %i.as = icmp sgt i64 %i.aq, -1
   tail call void @llvm.assume(i1 %i.as)
   %i.at = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.aq
@@ -608,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
 
 .split6:                                          ; preds = %.split5, %.split, %"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$usize$GT$3fmt17hfbad01e72c46968eE.exit"
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.j, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.j, align 8, !nonnull !45, !noundef !45
+  %.val = load ptr, ptr %1, align 8, !nonnull !45, !noundef !45
   %i.k = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !45, !noalias !39576, !nonnull !45
   %i.m = tail call noundef zeroext i1 %i.l(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @2032, i64 noundef 2), !noalias !39576, !inline_history !39570

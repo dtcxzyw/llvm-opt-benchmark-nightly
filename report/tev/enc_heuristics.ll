@@ -205,12 +205,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.1.i
   %i.l = zext i32 %i.k to i64
-  %i.m = load ptr, ptr %i.h, align 8, !tbaa !91
+  %i.m = load ptr, ptr %i.h, align 8, !tbaa !91   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 64) ]
   %i.n = load i64, ptr %i.c, align 8, !tbaa !92
   %i.o = mul i64 %i.n, %.011.1.i
-  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.o
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.o ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.p, i64 64) ]
   %i.q = shl nuw nsw i64 %i.l, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.p, i8 0, i64 %i.q, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 64 %i.p, i8 0, i64 %i.q, i1 false)
   %.pre17.i = load i32, ptr %i.a, align 8, !tbaa !88 ; 2 uses
   %.pre19.i = load i32, ptr %i.b, align 4, !tbaa !89
   br label %bb.c
@@ -242,12 +244,14 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.split
 
 bb.d:                                             ; preds = %.lr.ph.split.2.i
   %i.aa = zext i32 %i.z to i64
-  %i.ab = load ptr, ptr %i.w, align 8, !tbaa !91
+  %i.ab = load ptr, ptr %i.w, align 8, !tbaa !91  ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ab, i64 64) ]
   %i.ac = load i64, ptr %i.c, align 8, !tbaa !92
   %i.ad = mul i64 %i.ac, %.011.2.i
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ad
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ad ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ae, i64 64) ]
   %i.af = shl nuw nsw i64 %i.aa, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ae, i8 0, i64 %i.af, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 64 %i.ae, i8 0, i64 %i.af, i1 false)
   %.pre20.i = load i32, ptr %i.a, align 8, !tbaa !88
   %.pre22.i = load i32, ptr %i.b, align 4, !tbaa !89
   br label %bb.e
@@ -270,12 +274,14 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.split
 
 bb.f:                                             ; preds = %.lr.ph.split.i
   %i.an = zext i32 %i.am to i64
-  %i.ao = load ptr, ptr %i.e, align 8, !tbaa !91
+  %i.ao = load ptr, ptr %i.e, align 8, !tbaa !91  ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ao, i64 64) ]
   %i.ap = load i64, ptr %i.c, align 8, !tbaa !92
   %i.aq = mul i64 %i.ap, %.011.i
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ar, i64 64) ]
   %i.as = shl nuw nsw i64 %i.an, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ar, i8 0, i64 %i.as, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 64 %i.ar, i8 0, i64 %i.as, i1 false)
   %.pre.i = load i32, ptr %i.a, align 8, !tbaa !88 ; 2 uses
   %.pre16.i = load i32, ptr %i.b, align 4, !tbaa !89
   br label %bb.g

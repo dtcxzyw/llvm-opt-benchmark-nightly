@@ -205,7 +205,8 @@ _RNvMs4_NtCsb80QtQtK5z0_6bitvec6domainINtB5_6DomainNtNtCs4PlFOFpHNjl_3wyz4comu5C
   %i.ab = and i64 %i.f, -8
   %i.ac = getelementptr i8, ptr %0, i64 %i.ab
   %i.ad = sub i64 0, %i.f
-  %i.ae = getelementptr i8, ptr %i.ac, i64 %i.ad
+  %i.ae = getelementptr i8, ptr %i.ac, i64 %i.ad  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   call void %.sroa.0.0.i(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.d, ptr noundef nonnull readonly %i.ae, i64 noundef %i.n, i8 noundef %i.k, i8 noundef %.sroa.4.0.i.i), !inline_history !1
   %i.af = load ptr, ptr %i.d, align 8, !noundef !10 ; 3 uses
   %.not = icmp eq ptr %i.af, null
@@ -608,7 +609,8 @@ _RNvMs4_NtCsb80QtQtK5z0_6bitvec6domainINtB5_6DomainNtNtCs4PlFOFpHNjl_3wyz4comu5C
   %i.ab = and i64 %i.f, -8
   %i.ac = getelementptr i8, ptr %0, i64 %i.ab
   %i.ad = sub i64 0, %i.f
-  %i.ae = getelementptr i8, ptr %i.ac, i64 %i.ad
+  %i.ae = getelementptr i8, ptr %i.ac, i64 %i.ad  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   call void %.sroa.0.0.i(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.d, ptr noundef nonnull readonly %i.ae, i64 noundef %i.n, i8 noundef %i.k, i8 noundef %.sroa.4.0.i.i), !inline_history !56
   %i.af = load ptr, ptr %i.d, align 8, !noundef !10 ; 3 uses
   %.not = icmp eq ptr %i.af, null
@@ -1011,7 +1013,8 @@ _RNvMs4_NtCsb80QtQtK5z0_6bitvec6domainINtB5_6DomainNtNtCs4PlFOFpHNjl_3wyz4comu5C
   %i.y = and i64 %i.b, -8
   %i.z = getelementptr i8, ptr %0, i64 %i.y
   %i.aa = sub i64 0, %i.b
-  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa
+  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   call void %.sroa.0.0.i(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.a, ptr noundef nonnull readonly %i.ab, i64 noundef %i.k, i8 noundef %i.g, i8 noundef %.sroa.4.0.i.i), !inline_history !1
   %i.ac = load ptr, ptr %i.a, align 8, !noundef !10 ; 3 uses
   %.not = icmp eq ptr %i.ac, null
@@ -1116,10 +1119,10 @@ bb.a:
   br i1 %i.c, label %.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit
 
 .preheader:                                       ; preds = %bb.a, %bb.c
-  %i.d = phi i64 [ %i.ab, %bb.c ], [ %3, %bb.a ]  ; 3 uses
-  %i.e = phi ptr [ %i.ai, %bb.c ], [ %2, %bb.a ]  ; 2 uses
-  %i.f = phi ptr [ %14, %bb.c ], [ %0, %bb.a ]    ; 2 uses
-  %i.g = phi i64 [ %15, %bb.c ], [ %1, %bb.a ]    ; 3 uses
+  %i.d = phi i64 [ %33, %bb.c ], [ %3, %bb.a ]    ; 3 uses
+  %i.e = phi ptr [ %32, %bb.c ], [ %2, %bb.a ]    ; 2 uses
+  %i.f = phi ptr [ %i.ai, %bb.c ], [ %0, %bb.a ]  ; 2 uses
+  %i.g = phi i64 [ %i.ab, %bb.c ], [ %1, %bb.a ]  ; 3 uses
   %i.h = lshr i64 %i.g, 3                         ; 2 uses
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.b
@@ -1142,79 +1145,77 @@ bb.b:                                             ; preds = %.preheader
   store i64 %i.t, ptr %i.b, align 8, !noalias !10902
   %i.u = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10903 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10902
-  %4 = shl nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 3    ; 2 uses
-  %5 = ptrtoint ptr %i.u to i64                   ; 2 uses
-  %6 = and i64 %5, -8
-  %7 = lshr i64 %i.s, 3
-  %8 = and i64 %7, 7
-  %9 = and i64 %i.s, 7
-  %10 = sub i64 %i.g, %4
-  %11 = and i64 %10, -8
-  %12 = sub i64 %8, %5
-  %13 = getelementptr i8, ptr %i.u, i64 %12
-  %14 = getelementptr i8, ptr %13, i64 %6         ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %14) ]
-  %15 = or disjoint i64 %9, %11
   %i.v = lshr i64 %i.d, 3                         ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
-  br i1 %i.w, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Lsb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
+  br i1 %i.w, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.c
 
-_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Lsb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i: ; preds = %bb.b
-  %16 = lshr exact i64 %i.p, 3
-  %17 = ptrtoint ptr %i.n to i64                  ; 2 uses
-  %18 = sub i64 %16, %17
-  %19 = getelementptr i8, ptr %i.n, i64 %18
-  %20 = and i64 %17, -8
-  %21 = getelementptr i8, ptr %19, i64 %20        ; 2 uses
-  %.sroa.0.0.i.i17.i.i.i = call noundef range(i64 0, 2305843009213693952) i64 @llvm.umin.i64(i64 range(i64 1, 2305843009213693952) %i.v, i64 64) ; 2 uses
-  %22 = ptrtoint ptr %i.e to i64                  ; 3 uses
-  %23 = and i64 %22, -8
-  %24 = getelementptr i8, ptr %i.e, i64 %23
-  %25 = sub i64 0, %22
-  %26 = getelementptr i8, ptr %24, i64 %25        ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %26) ]
-  %27 = shl i64 %22, 3
-  %28 = and i64 %27, 56                           ; 2 uses
-  %29 = and i64 %i.d, 7                           ; 2 uses
-  %30 = or disjoint i64 %28, %29
-  %31 = add nuw nsw i64 %30, %.sroa.0.0.i.i17.i.i.i ; 3 uses
-  %32 = lshr i64 %31, 6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10904
-  store i64 %32, ptr %i.a, align 8, !noalias !10904
-  %33 = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %26, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10905 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10904
-  %.not.not.i = icmp eq ptr %21, null
-  br i1 %.not.not.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.c
-
-bb.c:                                             ; preds = %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Lsb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
-  %i.x = and i64 %31, 7
-  %i.y = shl nuw nsw i64 %.sroa.0.0.i.i17.i.i.i, 3 ; 2 uses
-  %i.z = sub i64 %i.d, %i.y
+bb.c:                                             ; preds = %bb.b
+  %i.x = and i64 %i.s, 7
+  %i.y = shl nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 3  ; 2 uses
+  %i.z = sub i64 %i.g, %i.y
   %i.aa = and i64 %i.z, -8
   %i.ab = or disjoint i64 %i.x, %i.aa
-  %i.ac = lshr i64 %31, 3
+  %i.ac = lshr i64 %i.s, 3
   %i.ad = and i64 %i.ac, 7
-  %i.ae = ptrtoint ptr %33 to i64                 ; 2 uses
+  %i.ae = ptrtoint ptr %i.u to i64                ; 2 uses
   %i.af = sub i64 %i.ad, %i.ae
-  %i.ag = getelementptr i8, ptr %33, i64 %i.af
+  %i.ag = getelementptr i8, ptr %i.u, i64 %i.af
   %i.ah = and i64 %i.ae, -8
-  %i.ai = getelementptr i8, ptr %i.ag, i64 %i.ah
-  %i.aj = or disjoint i64 %i.y, %29
-  %i.ak = lshr exact i64 %28, 3
-  %i.al = ptrtoint ptr %26 to i64                 ; 2 uses
-  %i.am = sub i64 %i.ak, %i.al
-  %i.an = getelementptr i8, ptr %26, i64 %i.am
-  %i.ao = and i64 %i.al, -8
-  %i.ap = getelementptr i8, ptr %i.an, i64 %i.ao  ; 2 uses
-  %i.aq = or disjoint i64 %4, %i.q
+  %i.ai = getelementptr i8, ptr %i.ag, i64 %i.ah  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  %i.aj = or disjoint i64 %i.y, %i.q
+  %i.ak = lshr exact i64 %i.p, 3
+  %4 = ptrtoint ptr %i.n to i64                   ; 2 uses
+  %5 = sub i64 %i.ak, %4
+  %6 = getelementptr i8, ptr %i.n, i64 %5
+  %7 = and i64 %4, -8
+  %8 = getelementptr i8, ptr %6, i64 %7           ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %8) ]
+  %.sroa.0.0.i.i17.i.i.i = call noundef range(i64 0, 2305843009213693952) i64 @llvm.umin.i64(i64 range(i64 1, 2305843009213693952) %i.v, i64 64) ; 2 uses
+  %i.al = ptrtoint ptr %i.e to i64                ; 3 uses
+  %9 = and i64 %i.al, -8
+  %10 = getelementptr i8, ptr %i.e, i64 %9
+  %i.am = sub i64 0, %i.al
+  %i.an = getelementptr i8, ptr %10, i64 %i.am    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  %11 = shl i64 %i.al, 3
+  %12 = and i64 %11, 56                           ; 2 uses
+  %13 = and i64 %i.d, 7                           ; 2 uses
+  %14 = or disjoint i64 %12, %13
+  %15 = add nuw nsw i64 %14, %.sroa.0.0.i.i17.i.i.i ; 3 uses
+  %16 = lshr i64 %15, 6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10904
+  store i64 %16, ptr %i.a, align 8, !noalias !10904
+  %17 = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10905 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10904
+  %18 = ptrtoint ptr %i.an to i64                 ; 2 uses
+  %i.ao = and i64 %18, -8
+  %19 = lshr exact i64 %12, 3
+  %20 = shl nuw nsw i64 %.sroa.0.0.i.i17.i.i.i, 3 ; 2 uses
+  %21 = sub i64 %19, %18
+  %22 = getelementptr i8, ptr %i.an, i64 %21
+  %i.ap = getelementptr i8, ptr %22, i64 %i.ao    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
-  %i.ar = call fastcc noundef i64 @_RINvXNtCsb80QtQtK5z0_6bitvec5fieldINtNtB5_5slice8BitSliceyENtB3_8BitField7load_lejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %21, i64 noundef %i.aq), !noalias !10906
-  %i.as = call fastcc noundef i64 @_RINvXNtCsb80QtQtK5z0_6bitvec5fieldINtNtB5_5slice8BitSliceyENtB3_8BitField7load_lejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.aj), !noalias !10906
+  %i.aq = or disjoint i64 %20, %13
+  %23 = ptrtoint ptr %17 to i64                   ; 2 uses
+  %24 = and i64 %23, -8
+  %25 = lshr i64 %15, 3
+  %26 = and i64 %25, 7
+  %27 = and i64 %15, 7
+  %28 = sub i64 %i.d, %20
+  %29 = and i64 %28, -8
+  %30 = sub i64 %26, %23
+  %31 = getelementptr i8, ptr %17, i64 %30
+  %32 = getelementptr i8, ptr %31, i64 %24        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %32) ]
+  %33 = or disjoint i64 %27, %29
+  %i.ar = call fastcc noundef i64 @_RINvXNtCsb80QtQtK5z0_6bitvec5fieldINtNtB5_5slice8BitSliceyENtB3_8BitField7load_lejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %8, i64 noundef %i.aj), !noalias !10906
+  %i.as = call fastcc noundef i64 @_RINvXNtCsb80QtQtK5z0_6bitvec5fieldINtNtB5_5slice8BitSliceyENtB3_8BitField7load_lejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.aq), !noalias !10906
   %.not.i = icmp eq i64 %i.ar, %i.as
   br i1 %.not.i, label %.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit
 
-_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %bb.c, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Lsb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i, %bb.b, %.preheader, %bb.a
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ true, %.preheader ], [ false, %bb.c ], [ true, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Lsb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
+_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Lsb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyEB33_ENCNvMNtNtBW_14specialization4lsb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %bb.c, %bb.b, %.preheader, %bb.a
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ false, %bb.c ], [ true, %.preheader ], [ true, %bb.b ]
   ret i1 %.sroa.0.0
 }
 
@@ -1281,7 +1282,8 @@ _RNvMs4_NtCsb80QtQtK5z0_6bitvec6domainINtB5_6DomainNtNtCs4PlFOFpHNjl_3wyz4comu5C
   %i.y = and i64 %i.b, -8
   %i.z = getelementptr i8, ptr %0, i64 %i.y
   %i.aa = sub i64 0, %i.b
-  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa
+  %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   call void %.sroa.0.0.i(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.a, ptr noundef nonnull readonly %i.ab, i64 noundef %i.k, i8 noundef %i.g, i8 noundef %.sroa.4.0.i.i), !inline_history !56
   %i.ac = load ptr, ptr %i.a, align 8, !noundef !10 ; 3 uses
   %.not = icmp eq ptr %i.ac, null
@@ -1386,10 +1388,10 @@ bb.a:
   br i1 %i.c, label %.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit
 
 .preheader:                                       ; preds = %bb.a, %bb.c
-  %i.d = phi i64 [ %i.ab, %bb.c ], [ %3, %bb.a ]  ; 3 uses
-  %i.e = phi ptr [ %i.ai, %bb.c ], [ %2, %bb.a ]  ; 2 uses
-  %i.f = phi ptr [ %14, %bb.c ], [ %0, %bb.a ]    ; 2 uses
-  %i.g = phi i64 [ %15, %bb.c ], [ %1, %bb.a ]    ; 3 uses
+  %i.d = phi i64 [ %33, %bb.c ], [ %3, %bb.a ]    ; 3 uses
+  %i.e = phi ptr [ %32, %bb.c ], [ %2, %bb.a ]    ; 2 uses
+  %i.f = phi ptr [ %i.ai, %bb.c ], [ %0, %bb.a ]  ; 2 uses
+  %i.g = phi i64 [ %i.ab, %bb.c ], [ %1, %bb.a ]  ; 3 uses
   %i.h = lshr i64 %i.g, 3                         ; 2 uses
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.b
@@ -1412,79 +1414,77 @@ bb.b:                                             ; preds = %.preheader
   store i64 %i.t, ptr %i.b, align 8, !noalias !10929
   %i.u = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10930 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10929
-  %4 = shl nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 3    ; 2 uses
-  %5 = ptrtoint ptr %i.u to i64                   ; 2 uses
-  %6 = and i64 %5, -8
-  %7 = lshr i64 %i.s, 3
-  %8 = and i64 %7, 7
-  %9 = and i64 %i.s, 7
-  %10 = sub i64 %i.g, %4
-  %11 = and i64 %10, -8
-  %12 = sub i64 %8, %5
-  %13 = getelementptr i8, ptr %i.u, i64 %12
-  %14 = getelementptr i8, ptr %13, i64 %6         ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %14) ]
-  %15 = or disjoint i64 %9, %11
   %i.v = lshr i64 %i.d, 3                         ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
-  br i1 %i.w, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Msb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
+  br i1 %i.w, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.c
 
-_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Msb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i: ; preds = %bb.b
-  %16 = lshr exact i64 %i.p, 3
-  %17 = ptrtoint ptr %i.n to i64                  ; 2 uses
-  %18 = sub i64 %16, %17
-  %19 = getelementptr i8, ptr %i.n, i64 %18
-  %20 = and i64 %17, -8
-  %21 = getelementptr i8, ptr %19, i64 %20        ; 2 uses
-  %.sroa.0.0.i.i17.i.i.i = call noundef range(i64 0, 2305843009213693952) i64 @llvm.umin.i64(i64 range(i64 1, 2305843009213693952) %i.v, i64 64) ; 2 uses
-  %22 = ptrtoint ptr %i.e to i64                  ; 3 uses
-  %23 = and i64 %22, -8
-  %24 = getelementptr i8, ptr %i.e, i64 %23
-  %25 = sub i64 0, %22
-  %26 = getelementptr i8, ptr %24, i64 %25        ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %26) ]
-  %27 = shl i64 %22, 3
-  %28 = and i64 %27, 56                           ; 2 uses
-  %29 = and i64 %i.d, 7                           ; 2 uses
-  %30 = or disjoint i64 %28, %29
-  %31 = add nuw nsw i64 %30, %.sroa.0.0.i.i17.i.i.i ; 3 uses
-  %32 = lshr i64 %31, 6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10931
-  store i64 %32, ptr %i.a, align 8, !noalias !10931
-  %33 = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %26, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10932 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10931
-  %.not.not.i = icmp eq ptr %21, null
-  br i1 %.not.not.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit, label %bb.c
-
-bb.c:                                             ; preds = %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Msb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i
-  %i.x = and i64 %31, 7
-  %i.y = shl nuw nsw i64 %.sroa.0.0.i.i17.i.i.i, 3 ; 2 uses
-  %i.z = sub i64 %i.d, %i.y
+bb.c:                                             ; preds = %bb.b
+  %i.x = and i64 %i.s, 7
+  %i.y = shl nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 3  ; 2 uses
+  %i.z = sub i64 %i.g, %i.y
   %i.aa = and i64 %i.z, -8
   %i.ab = or disjoint i64 %i.x, %i.aa
-  %i.ac = lshr i64 %31, 3
+  %i.ac = lshr i64 %i.s, 3
   %i.ad = and i64 %i.ac, 7
-  %i.ae = ptrtoint ptr %33 to i64                 ; 2 uses
+  %i.ae = ptrtoint ptr %i.u to i64                ; 2 uses
   %i.af = sub i64 %i.ad, %i.ae
-  %i.ag = getelementptr i8, ptr %33, i64 %i.af
+  %i.ag = getelementptr i8, ptr %i.u, i64 %i.af
   %i.ah = and i64 %i.ae, -8
-  %i.ai = getelementptr i8, ptr %i.ag, i64 %i.ah
-  %i.aj = or disjoint i64 %i.y, %29
-  %i.ak = lshr exact i64 %28, 3
-  %i.al = ptrtoint ptr %26 to i64                 ; 2 uses
-  %i.am = sub i64 %i.ak, %i.al
-  %i.an = getelementptr i8, ptr %26, i64 %i.am
-  %i.ao = and i64 %i.al, -8
-  %i.ap = getelementptr i8, ptr %i.an, i64 %i.ao  ; 2 uses
-  %i.aq = or disjoint i64 %4, %i.q
+  %i.ai = getelementptr i8, ptr %i.ag, i64 %i.ah  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  %i.aj = or disjoint i64 %i.y, %i.q
+  %i.ak = lshr exact i64 %i.p, 3
+  %4 = ptrtoint ptr %i.n to i64                   ; 2 uses
+  %5 = sub i64 %i.ak, %4
+  %6 = getelementptr i8, ptr %i.n, i64 %5
+  %7 = and i64 %4, -8
+  %8 = getelementptr i8, ptr %6, i64 %7           ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %8) ]
+  %.sroa.0.0.i.i17.i.i.i = call noundef range(i64 0, 2305843009213693952) i64 @llvm.umin.i64(i64 range(i64 1, 2305843009213693952) %i.v, i64 64) ; 2 uses
+  %i.al = ptrtoint ptr %i.e to i64                ; 3 uses
+  %9 = and i64 %i.al, -8
+  %10 = getelementptr i8, ptr %i.e, i64 %9
+  %i.am = sub i64 0, %i.al
+  %i.an = getelementptr i8, ptr %10, i64 %i.am    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  %11 = shl i64 %i.al, 3
+  %12 = and i64 %11, 56                           ; 2 uses
+  %13 = and i64 %i.d, 7                           ; 2 uses
+  %14 = or disjoint i64 %12, %13
+  %15 = add nuw nsw i64 %14, %.sroa.0.0.i.i17.i.i.i ; 3 uses
+  %16 = lshr i64 %15, 6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10931
+  store i64 %16, ptr %i.a, align 8, !noalias !10931
+  %17 = call noundef nonnull ptr @_RINvMs9_NtCs4PlFOFpHNjl_3wyz4comuINtB6_7AddressNtB6_5ConstyE8with_ptryNCNvMs8_B6_Bv_6offset0ECsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull readonly %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6), !noalias !10932 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10931
+  %18 = ptrtoint ptr %i.an to i64                 ; 2 uses
+  %i.ao = and i64 %18, -8
+  %19 = lshr exact i64 %12, 3
+  %20 = shl nuw nsw i64 %.sroa.0.0.i.i17.i.i.i, 3 ; 2 uses
+  %21 = sub i64 %19, %18
+  %22 = getelementptr i8, ptr %i.an, i64 %21
+  %i.ap = getelementptr i8, ptr %22, i64 %i.ao    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
-  %i.ar = call fastcc noundef i64 @_RINvXs_NtCsb80QtQtK5z0_6bitvec5fieldINtNtB7_5slice8BitSliceyNtNtB7_5order4Msb0ENtB5_8BitField7load_bejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %21, i64 noundef %i.aq), !noalias !10933
-  %i.as = call fastcc noundef i64 @_RINvXs_NtCsb80QtQtK5z0_6bitvec5fieldINtNtB7_5slice8BitSliceyNtNtB7_5order4Msb0ENtB5_8BitField7load_bejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.aj), !noalias !10933
+  %i.aq = or disjoint i64 %20, %13
+  %23 = ptrtoint ptr %17 to i64                   ; 2 uses
+  %24 = and i64 %23, -8
+  %25 = lshr i64 %15, 3
+  %26 = and i64 %25, 7
+  %27 = and i64 %15, 7
+  %28 = sub i64 %i.d, %20
+  %29 = and i64 %28, -8
+  %30 = sub i64 %26, %23
+  %31 = getelementptr i8, ptr %17, i64 %30
+  %32 = getelementptr i8, ptr %31, i64 %24        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %32) ]
+  %33 = or disjoint i64 %27, %29
+  %i.ar = call fastcc noundef i64 @_RINvXs_NtCsb80QtQtK5z0_6bitvec5fieldINtNtB7_5slice8BitSliceyNtNtB7_5order4Msb0ENtB5_8BitField7load_bejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %8, i64 noundef %i.aj), !noalias !10933
+  %i.as = call fastcc noundef i64 @_RINvXs_NtCsb80QtQtK5z0_6bitvec5fieldINtNtB7_5slice8BitSliceyNtNtB7_5order4Msb0ENtB5_8BitField7load_bejECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.aq), !noalias !10933
   %.not.i = icmp eq i64 %i.ar, %i.as
   br i1 %.not.i, label %.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit
 
-_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %bb.c, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Msb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i, %bb.b, %.preheader, %bb.a
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ true, %.preheader ], [ false, %bb.c ], [ true, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB4_3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtB12_5order4Msb0EBV_ENtNtNtB8_6traits8iterator8Iterator4nextCsoTR8nlGN3X_18ty_python_semantic.exit.i ]
+_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zip3ZipINtNtNtCsb80QtQtK5z0_6bitvec5slice4iter6ChunksyNtNtBY_5order4Msb0EBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1Z_3all5checkTRINtBW_8BitSliceyB1C_EB33_ENCNvMNtNtBW_14specialization4msb0B34_5sp_eq0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %bb.c, %bb.b, %.preheader, %bb.a
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ false, %bb.c ], [ true, %.preheader ], [ true, %bb.b ]
   ret i1 %.sroa.0.0
 }
 
@@ -1887,7 +1887,8 @@ bb.f:                                             ; preds = %bb.g, %bb.i, %bb.h,
   %i.w = and i64 %i.a, -8
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   %i.y = sub i64 0, %i.a
-  %i.z = getelementptr i8, ptr %i.x, i64 %i.y
+  %i.z = getelementptr i8, ptr %i.x, i64 %i.y     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   tail call void %.sroa.0.0(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.z, i64 noundef %i.j, i8 noundef %i.f, i8 noundef %.sroa.4.0.i)
   ret void
 
@@ -2290,7 +2291,8 @@ bb.h:                                             ; preds = %bb.g
   %i.al = and i64 %i.ac, -8
   %i.am = getelementptr i8, ptr %.val.i.i, i64 %i.al
   %i.an = sub i64 0, %i.ac
-  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an
+  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.s
   %i.aq = load i64, ptr %i.ap, align 8, !noalias !11573, !noundef !10
   %i.ar = sub nuw nsw i64 64, %i.t
@@ -2693,7 +2695,8 @@ bb.h:                                             ; preds = %bb.g
   %i.al = and i64 %i.ac, -8
   %i.am = getelementptr i8, ptr %.val.i.i, i64 %i.al
   %i.an = sub i64 0, %i.ac
-  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an
+  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.s
   %i.aq = load i64, ptr %i.ap, align 8, !noalias !11623, !noundef !10
   %i.ar = sub nuw nsw i64 64, %i.t
@@ -2826,7 +2829,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ak = and i64 %i.ab, -8
   %i.al = getelementptr i8, ptr %.val.i.i, i64 %i.ak
   %i.am = sub i64 0, %i.ab
-  %i.an = getelementptr i8, ptr %i.al, i64 %i.am
+  %i.an = getelementptr i8, ptr %i.al, i64 %i.am  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.r
   %i.ap = load i64, ptr %i.ao, align 8, !noalias !11630, !noundef !10
   %i.aq = sub nuw nsw i64 64, %i.s
@@ -3229,7 +3233,8 @@ bb.j:                                             ; preds = %bb.i
   %i.al = and i64 %i.ac, -8
   %i.am = getelementptr i8, ptr %.val.i.i, i64 %i.al
   %i.an = sub i64 0, %i.ac
-  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an
+  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.s
   %i.aq = load i64, ptr %i.ap, align 8, !noalias !11692, !noundef !10
   %i.ar = sub nuw nsw i64 64, %i.t
@@ -3575,7 +3580,8 @@ bb.h:                                             ; preds = %bb.g
   %i.al = and i64 %i.ac, -8
   %i.am = getelementptr i8, ptr %.val.i.i, i64 %i.al
   %i.an = sub i64 0, %i.ac
-  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an
+  %i.ao = getelementptr i8, ptr %i.am, i64 %i.an  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.s
   %i.aq = load i64, ptr %i.ap, align 8, !noalias !11730, !noundef !10
   %i.ar = sub nuw nsw i64 64, %i.t
@@ -3978,7 +3984,8 @@ bb.x:                                             ; preds = %bb.w
   %i.cc = and i64 %i.bs, -8
   %i.cd = getelementptr i8, ptr %.val.i.i, i64 %i.cc
   %i.ce = sub i64 0, %i.bs
-  %i.cf = getelementptr i8, ptr %i.cd, i64 %i.ce
+  %i.cf = getelementptr i8, ptr %i.cd, i64 %i.ce  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cf) ]
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.bk
   %i.ch = load i64, ptr %i.cg, align 8, !noalias !11859, !noundef !10
   %i.ci = sub nuw nsw i64 64, %i.bl
@@ -4381,7 +4388,8 @@ bb.dc:                                            ; preds = %bb.db
   %i.io = and i64 %i.if, -8
   %i.ip = getelementptr i8, ptr %.val.i.i.i, i64 %i.io
   %i.iq = sub i64 0, %i.if
-  %i.ir = getelementptr i8, ptr %i.ip, i64 %i.iq
+  %i.ir = getelementptr i8, ptr %i.ip, i64 %i.iq  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ir) ]
   %i.is = getelementptr inbounds nuw [8 x i8], ptr %i.ir, i64 %i.hs
   %i.it = load i64, ptr %i.is, align 8, !noalias !15415, !noundef !10
   %i.iu = sub nuw nsw i64 64, %i.ht
@@ -4784,7 +4792,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bf = and i64 %i.av, -8
   %i.bg = getelementptr i8, ptr %.val.i.i, i64 %i.bf
   %i.bh = sub i64 0, %i.av
-  %i.bi = getelementptr i8, ptr %i.bg, i64 %i.bh
+  %i.bi = getelementptr i8, ptr %i.bg, i64 %i.bh  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %i.ak
   %i.bk = load i64, ptr %i.bj, align 8, !noalias !16305, !noundef !10
   %i.bl = sub nuw nsw i64 64, %i.al
@@ -4869,7 +4878,8 @@ bb.q:                                             ; preds = %bb.p
   %i.dg = and i64 %i.cw, -8
   %i.dh = getelementptr i8, ptr %.val.i.i10, i64 %i.dg
   %i.di = sub i64 0, %i.cw
-  %i.dj = getelementptr i8, ptr %i.dh, i64 %i.di
+  %i.dj = getelementptr i8, ptr %i.dh, i64 %i.di  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dj) ]
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %i.cl
   %i.dl = load i64, ptr %i.dk, align 8, !noalias !16308, !noundef !10
   %i.dm = sub nuw nsw i64 64, %i.cm
@@ -5272,7 +5282,8 @@ bb.y:                                             ; preds = %bb.x
   %i.dt = and i64 %i.dk, -8
   %i.du = getelementptr i8, ptr %.val.i.i.i120.i, i64 %i.dt
   %i.dv = sub i64 0, %i.dk
-  %i.dw = getelementptr i8, ptr %i.du, i64 %i.dv
+  %i.dw = getelementptr i8, ptr %i.du, i64 %i.dv  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dw) ], !noalias !16802
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %i.da
   %i.dy = load i64, ptr %i.dx, align 8, !noalias !16805, !noundef !10
   %i.dz = sub nuw nsw i64 64, %i.db
@@ -5381,7 +5392,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.fx = and i64 %i.fo, -8
   %i.fy = getelementptr i8, ptr %.val.i.i.i113.i, i64 %i.fx
   %i.fz = sub i64 0, %i.fo
-  %i.ga = getelementptr i8, ptr %i.fy, i64 %i.fz
+  %i.ga = getelementptr i8, ptr %i.fy, i64 %i.fz  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ga) ], !noalias !16802
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.ga, i64 %i.fe
   %i.gc = load i64, ptr %i.gb, align 8, !noalias !16814, !noundef !10
   %i.gd = sub nuw nsw i64 64, %i.ff
@@ -5583,7 +5595,8 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ig = and i64 %i.hx, -8
   %i.ih = getelementptr i8, ptr %.val.i.i.i106.i, i64 %i.ig
   %i.ii = sub i64 0, %i.hx
-  %i.ij = getelementptr i8, ptr %i.ih, i64 %i.ii
+  %i.ij = getelementptr i8, ptr %i.ih, i64 %i.ii  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ij) ], !noalias !16830
   %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.ij, i64 %i.hn
   %i.il = load i64, ptr %i.ik, align 8, !noalias !16833, !noundef !10
   %i.im = sub nuw nsw i64 64, %i.ho
@@ -5692,7 +5705,8 @@ bb.bg:                                            ; preds = %bb.bf
   %i.kk = and i64 %i.kb, -8
   %i.kl = getelementptr i8, ptr %.val.i.i.i99.i, i64 %i.kk
   %i.km = sub i64 0, %i.kb
-  %i.kn = getelementptr i8, ptr %i.kl, i64 %i.km
+  %i.kn = getelementptr i8, ptr %i.kl, i64 %i.km  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kn) ], !noalias !16830
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %i.kn, i64 %i.jr
   %i.kp = load i64, ptr %i.ko, align 8, !noalias !16842, !noundef !10
   %i.kq = sub nuw nsw i64 64, %i.js
@@ -5940,7 +5954,8 @@ bb.bw:                                            ; preds = %bb.bv
   %i.ne = and i64 %i.mv, -8
   %i.nf = getelementptr i8, ptr %.val.i.i.i92.i, i64 %i.ne
   %i.ng = sub i64 0, %i.mv
-  %i.nh = getelementptr i8, ptr %i.nf, i64 %i.ng
+  %i.nh = getelementptr i8, ptr %i.nf, i64 %i.ng  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nh) ], !noalias !16862
   %i.ni = getelementptr inbounds nuw [8 x i8], ptr %i.nh, i64 %i.ml
   %i.nj = load i64, ptr %i.ni, align 8, !noalias !16865, !noundef !10
   %i.nk = sub nuw nsw i64 64, %i.mm
@@ -6049,7 +6064,8 @@ bb.cf:                                            ; preds = %bb.ce
   %i.pi = and i64 %i.oz, -8
   %i.pj = getelementptr i8, ptr %.val.i.i.i85.i, i64 %i.pi
   %i.pk = sub i64 0, %i.oz
-  %i.pl = getelementptr i8, ptr %i.pj, i64 %i.pk
+  %i.pl = getelementptr i8, ptr %i.pj, i64 %i.pk  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pl) ], !noalias !16862
   %i.pm = getelementptr inbounds nuw [8 x i8], ptr %i.pl, i64 %i.op
   %i.pn = load i64, ptr %i.pm, align 8, !noalias !16874, !noundef !10
   %i.po = sub nuw nsw i64 64, %i.oq
@@ -6246,7 +6262,8 @@ bb.cu:                                            ; preds = %bb.ct
   %i.rq = and i64 %i.rh, -8
   %i.rr = getelementptr i8, ptr %.val.i.i.i78.i, i64 %i.rq
   %i.rs = sub i64 0, %i.rh
-  %i.rt = getelementptr i8, ptr %i.rr, i64 %i.rs
+  %i.rt = getelementptr i8, ptr %i.rr, i64 %i.rs  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.rt) ], !noalias !16890
   %i.ru = getelementptr inbounds nuw [8 x i8], ptr %i.rt, i64 %i.qx
   %i.rv = load i64, ptr %i.ru, align 8, !noalias !16893, !noundef !10
   %i.rw = sub nuw nsw i64 64, %i.qy
@@ -6355,7 +6372,8 @@ bb.dd:                                            ; preds = %bb.dc
   %i.tu = and i64 %i.tl, -8
   %i.tv = getelementptr i8, ptr %.val.i.i.i.i, i64 %i.tu
   %i.tw = sub i64 0, %i.tl
-  %i.tx = getelementptr i8, ptr %i.tv, i64 %i.tw
+  %i.tx = getelementptr i8, ptr %i.tv, i64 %i.tw  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tx) ], !noalias !16890
   %i.ty = getelementptr inbounds nuw [8 x i8], ptr %i.tx, i64 %i.tb
   %i.tz = load i64, ptr %i.ty, align 8, !noalias !16902, !noundef !10
   %i.ua = sub nuw nsw i64 64, %i.tc
@@ -6758,7 +6776,8 @@ _RNvMs4_NtCsb80QtQtK5z0_6bitvec6domainINtB5_6DomainNtNtCs4PlFOFpHNjl_3wyz4comu5C
   %i.ac = and i64 %i.i, -8
   %i.ad = getelementptr i8, ptr %i.d, i64 %i.ac
   %i.ae = sub i64 0, %i.i
-  %i.af = getelementptr i8, ptr %i.ad, i64 %i.ae  ; 4 uses
+  %i.af = getelementptr i8, ptr %i.ad, i64 %i.ae  ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   call void %.sroa.0.0.i.i(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.b, ptr noundef nonnull readonly %i.af, i64 noundef %i.q, i8 noundef %i.n, i8 noundef %.sroa.4.0.i.i.i), !inline_history !19595
   %i.ag = load ptr, ptr %i.b, align 8, !noalias !19599, !noundef !10 ; 3 uses
   %.not.i = icmp eq ptr %i.ag, null

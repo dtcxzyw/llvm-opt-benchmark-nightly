@@ -205,12 +205,12 @@ bb.ch:                                            ; preds = %_RNvMsn_NtNtNtCs40k
   %.us-phi194.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i.us.i.i.i.i.i.i.1, %bb.bv ], [ %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i.us.i.i.i.i.i.i, %bb.br ], [ %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.cc ], [ %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.1, %bb.ch ] ; 2 uses
   %.us-phi195.i.i.i.i.i.i = phi i64 [ %i.pu, %bb.bv ], [ %i.mc, %bb.br ], [ %i.tn, %bb.cc ], [ %i.xh, %bb.ch ]
   %i.aas = getelementptr inbounds nuw [112 x i8], ptr %.us-phi194.i.i.i.i.i.i, i64 %.us-phi195.i.i.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.us-phi194.i.i.i.i.i.i) ]
   %not..i.i.i.i.i.i = xor i1 %.us-phi193.i.i.i.i.i.i, true
   %i.aat = select i1 %not..i.i.i.i.i.i, i1 true, i1 %.us-phi192.i.i.i.i.i.i
   br i1 %i.aat, label %bb.ci, label %.thread141.i.i.i.i.i.i
 
 bb.ci:                                            ; preds = %.split188.us.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.us-phi194.i.i.i.i.i.i) ]
   %i.aau = icmp eq i64 %.us-phi191.i.i.i.i.i.i, 0
   br i1 %i.aau, label %.loopexit160.i.i.i.i.i.i, label %bb.cj
 
@@ -259,7 +259,7 @@ bb.co:                                            ; preds = %bb.cm
 
 _RNvMsn_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker5ImmutINtNtCseeNzlfJOvtk_8rangemap13range_wrapper26RangeInclusiveStartWrapperyETNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentB2P_ENtB1k_14LeafOrInternalE14last_leaf_edgeB2V_.exit.i.i.i.i.i.i.i.i61.i.i.i.i.i.i: ; preds = %.thread.i.i.i.i.i53.i.i.i.i.i.i, %bb.cn
   %.in.i.i.i.i.i.i = phi i64 [ %i.abb, %bb.cn ], [ %.us-phi189.i.i.i.i.i.i, %.thread.i.i.i.i.i53.i.i.i.i.i.i ]
-  %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i57153.i.i.i.i.i.i = phi ptr [ %i.aay, %bb.cn ], [ %.us-phi.i.i.i.i.i.i, %.thread.i.i.i.i.i53.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i57153.i.i.i.i.i.i = phi ptr [ %i.aay, %bb.cn ], [ %.us-phi.i.i.i.i.i.i, %.thread.i.i.i.i.i53.i.i.i.i.i.i ] ; 3 uses
   %i.abd = add nsw i64 %.in.i.i.i.i.i.i, -1       ; 2 uses
   %i.abe = getelementptr inbounds nuw i8, ptr %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i57153.i.i.i.i.i.i, i64 1240
   %i.abf = getelementptr inbounds nuw [24 x i8], ptr %i.abe, i64 %i.abd ; 3 uses
@@ -273,6 +273,7 @@ _RNvMsn_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtNtB7_4node7Node
   %i.abn = icmp ugt i64 %i.abk, %i.abm
   %storemerge.i.i.i.i.not.not4.i.i.i.i65.le.not.i.i.i.i.i.i = select i1 %i.abl, i1 %i.abn, i1 false
   %i.abo = getelementptr inbounds nuw [112 x i8], ptr %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i57153.i.i.i.i.i.i, i64 %i.abd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i57153.i.i.i.i.i.i) ]
   %.sroa.0.0.i.mux.i.i.i.i67.i.i.i.i.i.i = select i1 %storemerge.i.i.i.i.not.not4.i.i.i.i65.le.not.i.i.i.i.i.i, ptr null, ptr %i.abf
   br label %.loopexit160.i.i.i.i.i.i
 

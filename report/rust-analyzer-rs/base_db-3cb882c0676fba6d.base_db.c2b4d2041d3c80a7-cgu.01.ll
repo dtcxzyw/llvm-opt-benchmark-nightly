@@ -205,8 +205,10 @@ bb.by:                                            ; preds = %.noexc86
           to label %bb.bz unwind label %bb.ap
 
 bb.bz:                                            ; preds = %bb.by
-  %i.ll = extractvalue { ptr, ptr } %i.lf, 0
-  %i.lm = extractvalue { ptr, ptr } %i.lf, 1
+  %i.ll = extractvalue { ptr, ptr } %i.lf, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ll) ]
+  %i.lm = extractvalue { ptr, ptr } %i.lf, 1      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lm) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.l, ptr noundef nonnull align 8 dereferenceable(72) %i.y, i64 72, i1 false)
   invoke void @_RINvMs0_NtCsd9Lm8bEdjjY_5salsa5inputINtB6_14IngredientImplNtNtCsgIpRO4v45SJ_7base_db5input5CrateE9set_fieldNtBW_14ExtraCrateDataNCNvXs_NtB6_6setterINtB29_10SetterImplBU_NCINvMs5_NvBW_1__BU_14set_extra_dataDNtBY_14SourceDatabaseEL_E0B1H_ENtB29_6Setter2to0EBY_(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(address) dereferenceable(72) %i.z, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ll, ptr noalias nofree noundef nonnull align 8 dereferenceable(720) %i.lm, i32 noundef %i.ex, i32 noundef %i.ez, i64 noundef 1, i8 noundef 1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.l)
@@ -262,8 +264,10 @@ bb.cg:                                            ; preds = %.noexc94
           to label %bb.ch unwind label %bb.ap
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.ly = extractvalue { ptr, ptr } %i.lx, 0
-  %i.lz = extractvalue { ptr, ptr } %i.lx, 1
+  %i.ly = extractvalue { ptr, ptr } %i.lx, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ly) ]
+  %i.lz = extractvalue { ptr, ptr } %i.lx, 1      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lz) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -320,8 +324,10 @@ bb.cn:                                            ; preds = %.noexc100
           to label %bb.co unwind label %bb.ap
 
 bb.co:                                            ; preds = %bb.cn
-  %i.mm = extractvalue { ptr, ptr } %i.ml, 0
-  %i.mn = extractvalue { ptr, ptr } %i.ml, 1
+  %i.mm = extractvalue { ptr, ptr } %i.ml, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mm) ]
+  %i.mn = extractvalue { ptr, ptr } %i.ml, 1      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mn) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
@@ -389,8 +395,10 @@ bb.cx:                                            ; preds = %.noexc103
   br i1 %i.mz, label %bb.cz, label %bb.cy, !prof !8
 
 bb.cy:                                            ; preds = %bb.cx
-  %i.na = extractvalue { ptr, ptr } %i.ms, 0
-  %i.nb = extractvalue { ptr, ptr } %i.ms, 1
+  %i.na = extractvalue { ptr, ptr } %i.ms, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.na) ]
+  %i.nb = extractvalue { ptr, ptr } %i.ms, 1      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nb) ]
   %i.nc = load ptr, ptr %i.md, align 8, !nonnull !7, !noundef !7
   %i.nd = invoke noundef nonnull ptr @_RINvMs0_NtCsd9Lm8bEdjjY_5salsa5inputINtB6_14IngredientImplNtNtCsgIpRO4v45SJ_7base_db5input5CrateE9set_fieldINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtBY_18CrateWorkspaceDataENCNvXs_NtB6_6setterINtB2O_10SetterImplBU_NCINvMs5_NvBW_1__BU_18set_workspace_dataDNtBY_14SourceDatabaseEL_E0B1H_ENtB2O_6Setter2to0EBY_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.na, ptr noalias nofree noundef nonnull align 8 dereferenceable(720) %i.nb, i32 noundef %i.ex, i32 noundef %i.ez, i64 noundef 2, i8 noundef 1, ptr noundef nonnull %i.nc)
           to label %bb.da unwind label %bb.ap

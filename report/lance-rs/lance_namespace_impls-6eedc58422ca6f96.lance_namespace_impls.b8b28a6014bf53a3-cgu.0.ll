@@ -205,7 +205,7 @@ _RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultNtNtCs4XDKJNDGLq7_5bytes5bytes5By
   br i1 %i.hb, label %bb.ca, label %_RNvXs7_NtNtCscI6d9CVNmLh_4core3cmp5implsRShNtB7_9PartialEq2eqCsfR8GmIBoxTX_21lance_namespace_impls.exit.i
 
 bb.ca:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesNtCs3PfUT229lOd_12object_store5ErrorE7map_errNtNtCs63DIHKhvmTb_10lance_core5error5ErrorNCNCNvMs5_NtCsfR8GmIBoxTX_21lance_namespace_impls3dirNtB2R_18DirectoryNamespace30staging_matches_final_manifest0s0_0EB2T_.exit.thread.i
-  %.val39.i = load ptr, ptr %i.gz, align 8, !noalias !154876, !noundef !416
+  %.val39.i = load ptr, ptr %i.gz, align 8, !noalias !154876, !nonnull !416, !noundef !416
   %bcmp.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.val39.i, ptr nonnull readonly %.sroa.15.sroa.16.0270.ph.i, i64 range(i64 0, -9223372036854775808) %.sroa.15.sroa.18.0268.ph.i), !alias.scope !154903, !noalias !154877
   %i.hc = icmp eq i32 %bcmp.i.i.i.i, 0
   %i.hd = zext i1 %i.hc to i8
@@ -608,7 +608,8 @@ _RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultINtNtCs40k4W9msRzi_5alloc3vec3Vec
   br i1 %.not.i88, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6format5index13IndexMetadataE11is_some_andNvNtBP_12system_index15is_system_indexECsfR8GmIBoxTX_21lance_namespace_impls.exit.thread, label %bb.bf
 
 bb.bf:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs9KQ7US1M400_11lance_table6format5index13IndexMetadataENtNtCs63DIHKhvmTb_10lance_core5error5ErrorE7map_errB2f_NCNCNvXsd_NtCsfR8GmIBoxTX_21lance_namespace_impls3dirNtB3i_18DirectoryNamespaceNtNtCsjqC71KfQTl6_15lance_namespace9namespace14LanceNamespace16drop_table_index0s_0EB3k_.exit.thread
-  %.val55.cast = inttoptr i64 %.sroa.10272.sroa.11.0434.ph to ptr ; 2 uses
+  %.val55.cast = inttoptr i64 %.sroa.10272.sroa.11.0434.ph to ptr ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val55.cast) ]
   %i.eg = getelementptr i8, ptr %.val55.cast, i64 56
   %.val.i90 = load ptr, ptr %i.eg, align 8, !alias.scope !199924, !nonnull !416, !noundef !416 ; 4 uses
   %i.eh = getelementptr i8, ptr %.val55.cast, i64 64
@@ -1011,7 +1012,8 @@ _RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultINtNtCs40k4W9msRzi_5alloc3vec3Vec
   br i1 %.not.i88, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6format5index13IndexMetadataE11is_some_andNvNtBP_12system_index15is_system_indexECsfR8GmIBoxTX_21lance_namespace_impls.exit.thread, label %bb.bf
 
 bb.bf:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6resultINtB3_6ResultINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs9KQ7US1M400_11lance_table6format5index13IndexMetadataENtNtCs63DIHKhvmTb_10lance_core5error5ErrorE7map_errB2f_NCNCNvXsd_NtCsfR8GmIBoxTX_21lance_namespace_impls3dirNtB3i_18DirectoryNamespaceNtNtCsjqC71KfQTl6_15lance_namespace9namespace14LanceNamespace26describe_table_index_stats0s_0EB3k_.exit.thread
-  %.val55.cast = inttoptr i64 %.sroa.10270.sroa.11.0400.ph to ptr ; 2 uses
+  %.val55.cast = inttoptr i64 %.sroa.10270.sroa.11.0400.ph to ptr ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val55.cast) ]
   %i.ek = getelementptr i8, ptr %.val55.cast, i64 56
   %.val.i90 = load ptr, ptr %i.ek, align 8, !alias.scope !205104, !nonnull !416, !noundef !416 ; 4 uses
   %i.el = getelementptr i8, ptr %.val55.cast, i64 64

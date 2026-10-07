@@ -205,11 +205,12 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.body80
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bw = extractvalue { ptr, i64 } %i.bt, 0
+  %i.bw = extractvalue { ptr, i64 } %i.bt, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
   %i.bx = extractvalue { ptr, i64 } %i.bt, 1
   %i.by = extractvalue { i64, ptr } %i.bu, 0
   %i.bz = extractvalue { i64, ptr } %i.bu, 1
-  invoke void @_RNvMs0_NtCs6u1mgJOKDyY_13rust_analyzer11test_runnerNtB5_15CargoTestHandle3new(ptr noalias nofree noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %i.e, ptr noalias nofree noundef readonly captures(address, read_provenance) %.sroa.890.0.copyload, i64 %.sroa.9.0.copyload, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(208) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.br, i64 noundef %i.bs, ptr noalias nofree noundef readonly captures(address, read_provenance) %i.bw, i64 %i.bx, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.c, i64 noundef %i.by, ptr noundef %i.bz)
+  invoke void @_RNvMs0_NtCs6u1mgJOKDyY_13rust_analyzer11test_runnerNtB5_15CargoTestHandle3new(ptr noalias nofree noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %i.e, ptr noalias nofree noundef readonly captures(address, read_provenance) %.sroa.890.0.copyload, i64 %.sroa.9.0.copyload, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(208) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.br, i64 noundef %i.bs, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bw, i64 %i.bx, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.c, i64 noundef %i.by, ptr noundef %i.bz)
           to label %bb.ad unwind label %.thread108
 
 bb.ad:                                            ; preds = %bb.ac

@@ -205,7 +205,6 @@ bb.n:                                             ; preds = %bb.m
   %i.eo = getelementptr inbounds nuw i8, ptr %i.dn, i64 40
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !46 ; 3 uses
   %i.eq = load i64, ptr %i.en, align 8, !tbaa !47 ; 3 uses
-  %invariant.gep.i.i.i = getelementptr [4 x i8], ptr %i.ep, i64 %i.em
   %i.er = add nsw i64 %wide.trip.count.i.i.i.i, -1 ; 2 uses
   %i.es = mul i64 %i.eq, %i.er
   %i.et = shl i64 %i.em, 2                        ; 2 uses
@@ -233,7 +232,9 @@ bb.n:                                             ; preds = %bb.m
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ej, i64 %i.fa ; 7 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 64) ]
   %i.fc = mul i64 %indvars.iv.i.i.i.i, %i.eq
-  %gep.i.i.i = getelementptr i8, ptr %invariant.gep.i.i.i, i64 %i.fc ; 6 uses
+  %gep.i.i.i = getelementptr inbounds nuw i8, ptr %i.ep, i64 %i.fc ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %gep.i.i.i, i64 64) ]
+  %69 = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.em ; 6 uses
   %brmerge = select i1 %min.iters.check, i1 true, i1 %i.ez
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.body
 
@@ -244,7 +245,7 @@ vector.body:                                      ; preds = %.lr.ph.i.i.i.i.i.i,
   %wide.load = load <4 x float>, ptr %i.fd, align 32, !tbaa !49, !alias.scope !251
   %wide.load309 = load <4 x float>, ptr %i.fe, align 16, !tbaa !49, !alias.scope !251
   %i.ff = xor i64 %index, -1
-  %i.fg = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.ff ; 2 uses
+  %i.fg = getelementptr [4 x i8], ptr %69, i64 %i.ff ; 2 uses
   %i.fh = getelementptr i8, ptr %i.fg, i64 -12
   %i.fi = getelementptr i8, ptr %i.fg, i64 -28
   %reverse = shufflevector <4 x float> %wide.load, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -268,7 +269,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.010.i.i.i.i.i.i.prol
   %i.fl = load float, ptr %i.fk, align 4, !tbaa !49
   %i.fm = xor i64 %.010.i.i.i.i.i.i.prol, -1
-  %i.fn = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.fm
+  %i.fn = getelementptr [4 x i8], ptr %69, i64 %i.fm
   store float %i.fl, ptr %i.fn, align 4, !tbaa !49
   %i.fo = add nuw i64 %.010.i.i.i.i.i.i.prol, 1   ; 2 uses
   %prol.iter502.next = add i64 %prol.iter502, 1   ; 2 uses
@@ -286,25 +287,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.fr = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.010.i.i.i.i.i.i
   %i.fs = load float, ptr %i.fr, align 4, !tbaa !49
   %i.ft = xor i64 %.010.i.i.i.i.i.i, -1
-  %i.fu = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.ft
+  %i.fu = getelementptr [4 x i8], ptr %69, i64 %i.ft
   store float %i.fs, ptr %i.fu, align 4, !tbaa !49
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.010.i.i.i.i.i.i
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 4
   %i.fx = load float, ptr %i.fw, align 4, !tbaa !49
   %i.fy = sub i64 -2, %.010.i.i.i.i.i.i
-  %i.fz = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.fy
+  %i.fz = getelementptr [4 x i8], ptr %69, i64 %i.fy
   store float %i.fx, ptr %i.fz, align 4, !tbaa !49
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.010.i.i.i.i.i.i
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !49
   %i.gd = sub i64 -3, %.010.i.i.i.i.i.i
-  %i.ge = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.gd
+  %i.ge = getelementptr [4 x i8], ptr %69, i64 %i.gd
   store float %i.gc, ptr %i.ge, align 4, !tbaa !49
   %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.010.i.i.i.i.i.i
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 12
   %i.gh = load float, ptr %i.gg, align 4, !tbaa !49
   %i.gi = sub i64 -4, %.010.i.i.i.i.i.i
-  %i.gj = getelementptr [4 x i8], ptr %gep.i.i.i, i64 %i.gi
+  %i.gj = getelementptr [4 x i8], ptr %69, i64 %i.gi
   store float %i.gh, ptr %i.gj, align 4, !tbaa !49
   %i.gk = add nuw i64 %.010.i.i.i.i.i.i, 4        ; 2 uses
   %exitcond.not.i.i.i.i.i.i.3 = icmp eq i64 %i.gk, %i.em
@@ -363,7 +364,8 @@ bb.q:                                             ; preds = %.preheader.i18.i.i.
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gz, i64 16
   %i.hd = load i64, ptr %i.hc, align 8, !tbaa !47
   %i.he = mul i64 %i.hd, %indvars.iv.i19.i.i.i
-  %i.hf = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.he ; 2 uses
+  %i.hf = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.he ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.hf, i64 64) ]
   %i.hg = getelementptr [4 x i8], ptr %i.hf, i64 %i.gx ; 7 uses
   %min.iters.check317 = icmp ult i64 %i.gx, 8
   br i1 %min.iters.check317, label %scalar.ph316.preheader, label %vector.memcheck311
@@ -573,10 +575,9 @@ bb.x:                                             ; preds = %bb.w
   %i.jo = getelementptr inbounds nuw i8, ptr %i.dn, i64 40
   %i.jp = load ptr, ptr %i.jo, align 8, !tbaa !46 ; 3 uses
   %i.jq = load i64, ptr %i.jn, align 8, !tbaa !47 ; 4 uses
-  %invariant.gep.i.i137.i = getelementptr [4 x i8], ptr %i.jp, i64 %i.jm
   %i.jr = add i64 %i.jf, -1
   %i.js = mul i64 %i.jq, %i.jr
-  %scevgep331 = getelementptr i8, ptr %i.jp, i64 %i.js
+  %scevgep331 = getelementptr nuw i8, ptr %i.jp, i64 %i.js
   %i.jt = shl i64 %i.jq, 32
   %i.ju = lshr i64 %i.jf, 32
   %i.jv = mul i64 %i.jt, %i.ju
@@ -610,7 +611,9 @@ bb.x:                                             ; preds = %bb.w
   %i.kf = xor i64 %indvars.iv.i.i.i139.i, -1
   %i.kg = add i64 %i.jf, %i.kf
   %i.kh = mul i64 %i.kg, %i.jq
-  %gep.i.i140.i = getelementptr i8, ptr %invariant.gep.i.i137.i, i64 %i.kh ; 6 uses
+  %gep.i.i140.i = getelementptr inbounds nuw i8, ptr %i.jp, i64 %i.kh ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %gep.i.i140.i, i64 64) ]
+  %70 = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.jm ; 6 uses
   %brmerge539 = select i1 %min.iters.check340, i1 true, i1 %i.kc
   br i1 %brmerge539, label %scalar.ph339.preheader, label %vector.body343
 
@@ -621,7 +624,7 @@ vector.body343:                                   ; preds = %.lr.ph.i.i.i.i.i138
   %wide.load345 = load <4 x float>, ptr %i.ki, align 32, !tbaa !49, !alias.scope !257
   %wide.load346 = load <4 x float>, ptr %i.kj, align 16, !tbaa !49, !alias.scope !257
   %i.kk = xor i64 %index344, -1
-  %i.kl = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.kk ; 2 uses
+  %i.kl = getelementptr [4 x i8], ptr %70, i64 %i.kk ; 2 uses
   %i.km = getelementptr i8, ptr %i.kl, i64 -12
   %i.kn = getelementptr i8, ptr %i.kl, i64 -28
   %reverse347 = shufflevector <4 x float> %wide.load345, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -645,7 +648,7 @@ scalar.ph339.prol:                                ; preds = %scalar.ph339.prehea
   %i.kp = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.010.i.i.i.i.i141.i.prol
   %i.kq = load float, ptr %i.kp, align 4, !tbaa !49
   %i.kr = xor i64 %.010.i.i.i.i.i141.i.prol, -1
-  %i.ks = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.kr
+  %i.ks = getelementptr [4 x i8], ptr %70, i64 %i.kr
   store float %i.kq, ptr %i.ks, align 4, !tbaa !49
   %i.kt = add nuw i64 %.010.i.i.i.i.i141.i.prol, 1 ; 2 uses
   %prol.iter496.next = add i64 %prol.iter496, 1   ; 2 uses
@@ -663,25 +666,25 @@ scalar.ph339:                                     ; preds = %scalar.ph339.prol.l
   %i.kw = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.010.i.i.i.i.i141.i
   %i.kx = load float, ptr %i.kw, align 4, !tbaa !49
   %i.ky = xor i64 %.010.i.i.i.i.i141.i, -1
-  %i.kz = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.ky
+  %i.kz = getelementptr [4 x i8], ptr %70, i64 %i.ky
   store float %i.kx, ptr %i.kz, align 4, !tbaa !49
   %i.la = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.010.i.i.i.i.i141.i
   %i.lb = getelementptr inbounds nuw i8, ptr %i.la, i64 4
   %i.lc = load float, ptr %i.lb, align 4, !tbaa !49
   %i.ld = sub i64 -2, %.010.i.i.i.i.i141.i
-  %i.le = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.ld
+  %i.le = getelementptr [4 x i8], ptr %70, i64 %i.ld
   store float %i.lc, ptr %i.le, align 4, !tbaa !49
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.010.i.i.i.i.i141.i
   %i.lg = getelementptr inbounds nuw i8, ptr %i.lf, i64 8
   %i.lh = load float, ptr %i.lg, align 4, !tbaa !49
   %i.li = sub i64 -3, %.010.i.i.i.i.i141.i
-  %i.lj = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.li
+  %i.lj = getelementptr [4 x i8], ptr %70, i64 %i.li
   store float %i.lh, ptr %i.lj, align 4, !tbaa !49
   %i.lk = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.010.i.i.i.i.i141.i
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lk, i64 12
   %i.lm = load float, ptr %i.ll, align 4, !tbaa !49
   %i.ln = sub i64 -4, %.010.i.i.i.i.i141.i
-  %i.lo = getelementptr [4 x i8], ptr %gep.i.i140.i, i64 %i.ln
+  %i.lo = getelementptr [4 x i8], ptr %70, i64 %i.ln
   store float %i.lm, ptr %i.lo, align 4, !tbaa !49
   %i.lp = add nuw i64 %.010.i.i.i.i.i141.i, 4     ; 2 uses
   %exitcond.not.i.i.i.i.i142.i.3 = icmp eq i64 %i.lp, %i.jm
@@ -745,7 +748,8 @@ bb.aa:                                            ; preds = %.preheader.i18.i.i1
   %i.mm = xor i64 %indvars.iv.i19.i.i126.i, -1
   %i.mn = add i64 %i.ml, %i.mm
   %i.mo = mul i64 %i.mn, %i.mi
-  %i.mp = getelementptr inbounds nuw i8, ptr %i.mg, i64 %i.mo ; 2 uses
+  %i.mp = getelementptr inbounds nuw i8, ptr %i.mg, i64 %i.mo ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.mp, i64 64) ]
   %i.mq = getelementptr [4 x i8], ptr %i.mp, i64 %i.mc ; 7 uses
   %min.iters.check359 = icmp ult i64 %i.mc, 8
   br i1 %min.iters.check359, label %scalar.ph358.preheader, label %vector.memcheck353
@@ -1148,7 +1152,8 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.u = load i64, ptr %i.t, align 8, !tbaa !47
   %i.v = mul i64 %i.u, %i.e
-  %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.v ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.v ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.w, i64 64) ]
   %i.x = getelementptr [4 x i8], ptr %i.w, i64 %i.o ; 7 uses
   %min.iters.check = icmp ult i64 %i.o, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -1291,7 +1296,8 @@ bb.b:                                             ; preds = %bb.a
   %i.y = xor i64 %i.e, -1
   %i.z = add i64 %i.x, %i.y
   %i.aa = mul i64 %i.z, %i.u
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.aa ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.aa ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ab, i64 64) ]
   %i.ac = getelementptr [4 x i8], ptr %i.ab, i64 %i.o ; 7 uses
   %min.iters.check = icmp ult i64 %i.o, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck

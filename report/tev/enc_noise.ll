@@ -204,8 +204,6 @@ _ZN3jxl12_GLOBAL__N_113GetNoiseLevelERKNS_6Image3IfEERKNSt3__16vectorIfNS5_9allo
   %i.nr = load <4 x float>, ptr %i.np, align 16, !tbaa !11, !noalias !67
   %i.ns = load <4 x float>, ptr %i.nq, align 16, !tbaa !11, !noalias !67
   %..i.peel = or disjoint i64 %.0149196.i, 6      ; 10 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.kf, i64 %..i.peel
-  %invariant.gep142 = getelementptr [4 x i8], ptr %i.kg, i64 %..i.peel
   br label %.preheader171.i
 
 .preheader171.i:                                  ; preds = %.peel.begin, %.preheader173.i
@@ -219,8 +217,10 @@ _ZN3jxl12_GLOBAL__N_113GetNoiseLevelERKNS_6Image3IfEERKNSt3__16vectorIfNS5_9allo
   %i.ny = add nsw i64 %i.nt, -1
   %i.nz = mul i64 %i.ny, %i.ke                    ; 3 uses
   %i.oa = mul i64 %i.nt, %i.ke                    ; 4 uses
-  %i.ob = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.oa ; 2 uses
-  %i.oc = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.oa ; 2 uses
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.oa ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ob, i64 64) ]
+  %i.oc = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.oa ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.oc, i64 64) ]
   %i.od = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.oa ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.od, i64 64) ]
   %i.oe = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.oa ; 4 uses
@@ -237,8 +237,10 @@ _ZN3jxl12_GLOBAL__N_113GetNoiseLevelERKNS_6Image3IfEERKNSt3__16vectorIfNS5_9allo
   %.223 = select i1 %i.nv, i64 %i.nz, i64 %i.nx   ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %., i64 64) ]
   call void @llvm.assume(i1 true) [ "align"(ptr %.222.a, i64 64) ]
-  %i.ok = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.223
-  %i.ol = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.223
+  %i.ok = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.223 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ok, i64 64) ]
+  %i.ol = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.223 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ol, i64 64) ]
   %.sink221.v = select i1 %i.of, i64 %i.oj, i64 %i.oh
   %.sink221 = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.sink221.v ; 3 uses
   %.sink219.v = select i1 %i.of, i64 %i.oj, i64 %i.oh
@@ -586,10 +588,14 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.yp = load float, ptr %i.yo, align 4, !tbaa !11, !noalias !67
   %i.yq = getelementptr inbounds nuw [4 x i8], ptr %i.oe, i64 %i.kr
   %i.yr = load float, ptr %i.yq, align 4, !tbaa !11, !noalias !67
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %i.yj
-  %i.ys = load float, ptr %gep, align 4, !tbaa !11, !noalias !67
-  %gep143 = getelementptr i8, ptr %invariant.gep142, i64 %i.yj
-  %i.yt = load float, ptr %gep143, align 4, !tbaa !11, !noalias !67
+  %gep = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.yj ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %gep, i64 64) ]
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %gep, i64 %..i.peel
+  %i.ys = load float, ptr %13, align 8, !tbaa !11, !noalias !67
+  %gep143 = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.yj ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %gep143, i64 64) ]
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %gep143, i64 %..i.peel
+  %i.yt = load float, ptr %14, align 8, !tbaa !11, !noalias !67
   %i.yu = load <2 x float>, ptr %i.ym, align 8, !tbaa !11, !noalias !67
   %i.yv = load <2 x float>, ptr %i.yn, align 8, !tbaa !11, !noalias !67
   %i.yw = shufflevector <2 x float> %i.yu, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>

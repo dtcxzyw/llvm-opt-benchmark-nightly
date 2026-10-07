@@ -205,17 +205,23 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.w, label %_ZNK3jxl7Splines10ApplyToRowILb1EEEvPfS2_S2_mmm.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split.i
-  %i.x = load ptr, ptr %i.n, align 8, !tbaa !87
+  %i.x = load ptr, ptr %i.n, align 8, !tbaa !87   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.x, i64 64) ]
   %i.y = add i64 %.022.i, %i.g                    ; 2 uses
   %i.z = load i64, ptr %i.o, align 8, !tbaa !89
   %i.aa = mul i64 %i.z, %i.y                      ; 3 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.aa
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.aa ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ab, i64 64) ]
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.h
-  %i.ad = load ptr, ptr %i.p, align 8, !tbaa !87
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.aa
+  %i.ad = load ptr, ptr %i.p, align 8, !tbaa !87  ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ad, i64 64) ]
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.aa ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ae, i64 64) ]
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.h
-  %i.ag = load ptr, ptr %i.q, align 8, !tbaa !87
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aa
+  %i.ag = load ptr, ptr %i.q, align 8, !tbaa !87  ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ag, i64 64) ]
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aa ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ah, i64 64) ]
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.h
   %i.aj = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN3hwy15GetChosenTargetEv() #27, !noalias !247
   %i.ak = load atomic i64, ptr %i.aj seq_cst, align 8, !noalias !247
@@ -303,14 +309,20 @@ bb.a:
   br i1 %i.s, label %_ZNK3jxl7Splines10ApplyToRowILb0EEEvPfS2_S2_mmm.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.i
-  %i.t = load ptr, ptr %i.k, align 8, !tbaa !87
+  %i.t = load ptr, ptr %i.k, align 8, !tbaa !87   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.t, i64 64) ]
   %i.u = load i64, ptr %i.l, align 8, !tbaa !89
   %i.v = mul i64 %i.u, %.022.i                    ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.v
-  %i.x = load ptr, ptr %i.m, align 8, !tbaa !87
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.v
-  %i.z = load ptr, ptr %i.n, align 8, !tbaa !87
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.v
+  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.w, i64 64) ]
+  %i.x = load ptr, ptr %i.m, align 8, !tbaa !87   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.x, i64 64) ]
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.y, i64 64) ]
+  %i.z = load ptr, ptr %i.n, align 8, !tbaa !87   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.z, i64 64) ]
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.aa, i64 64) ]
   %i.ab = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN3hwy15GetChosenTargetEv() #27, !noalias !262
   %i.ac = load atomic i64, ptr %i.ab seq_cst, align 8, !noalias !262
   %i.ad = and i64 %i.ac, 103425
