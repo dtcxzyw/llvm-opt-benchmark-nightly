@@ -204,13 +204,14 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.f, ptr %.sroa.4.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.i = load i8, ptr %i.h, align 4, !range !22, !noundef !4
-  %or.cond.not = icmp eq i8 %i.i, 0
+  %or.cond.not = icmp ne i8 %i.i, 0
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 29
   %i.k = load i8, ptr %i.j, align 1, !range !22   ; 2 uses
-  br i1 %or.cond.not, label %3, label %._crit_edge
+  %.not = icmp eq i8 %i.k, 1
+  %or.cond = select i1 %or.cond.not, i1 true, i1 %.not
+  br i1 %or.cond, label %._crit_edge, label %bb.l
 
-._crit_edge:                                      ; preds = %3, %bb.c
-  %2 = phi i8 [ %i.k, %bb.c ], [ 1, %3 ]
+._crit_edge:                                      ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.m = load i32, ptr %i.l, align 8, !range !12, !noundef !4 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 30
@@ -288,11 +289,7 @@ bb.k:                                             ; preds = %bb.j
 .noexc:                                           ; preds = %bb.k
   unreachable
 
-3:                                                ; preds = %bb.c
-  %.not = icmp eq i8 %i.k, 1
-  br i1 %.not, label %._crit_edge, label %bb.l
-
-bb.l:                                             ; preds = %3
+bb.l:                                             ; preds = %bb.c
   %i.al = invoke noundef nonnull align 8 ptr @_RINvXs6_NtCs5PtHgSLqj5O_10serde_json5errorNtB6_5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error6customReECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull readonly captures(address, read_provenance) @45, i64 noundef 55)
           to label %bb.n unwind label %bb.m
 
@@ -356,7 +353,7 @@ bb.s:                                             ; preds = %bb.j
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 %i.at, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.827.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 29
-  store i8 %2, ptr %.sroa.827.0..sroa_idx, align 1
+  store i8 %i.k, ptr %.sroa.827.0..sroa_idx, align 1
   %i.au = load i64, ptr %i.b, align 8, !range !11, !alias.scope !1681, !noundef !4
   %i.av = icmp eq i64 %i.au, -1
   br i1 %i.av, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNvXs_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers9metaspaceNtBI_9MetaspaceNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserialize15MetaspaceHelperEBM_.exit, label %bb.t
@@ -425,13 +422,14 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.f, ptr %.sroa.4.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.i = load i8, ptr %i.h, align 4, !range !22, !noundef !4
-  %or.cond.not = icmp eq i8 %i.i, 0
+  %or.cond.not = icmp ne i8 %i.i, 0
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 29
   %i.k = load i8, ptr %i.j, align 1, !range !22   ; 2 uses
-  br i1 %or.cond.not, label %3, label %._crit_edge
+  %.not = icmp eq i8 %i.k, 1
+  %or.cond = select i1 %or.cond.not, i1 true, i1 %.not
+  br i1 %or.cond, label %._crit_edge, label %bb.l
 
-._crit_edge:                                      ; preds = %3, %bb.c
-  %2 = phi i8 [ %i.k, %bb.c ], [ 1, %3 ]
+._crit_edge:                                      ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.m = load i32, ptr %i.l, align 8, !range !12, !noundef !4 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 30
@@ -509,11 +507,7 @@ bb.k:                                             ; preds = %bb.j
 .noexc:                                           ; preds = %bb.k
   unreachable
 
-3:                                                ; preds = %bb.c
-  %.not = icmp eq i8 %i.k, 1
-  br i1 %.not, label %._crit_edge, label %bb.l
-
-bb.l:                                             ; preds = %3
+bb.l:                                             ; preds = %bb.c
   %i.al = invoke noundef nonnull align 8 ptr @_RINvXs6_NtCs5PtHgSLqj5O_10serde_json5errorNtB6_5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error6customReECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull readonly captures(address, read_provenance) @45, i64 noundef 55)
           to label %bb.n unwind label %bb.m
 
@@ -577,7 +571,7 @@ bb.s:                                             ; preds = %bb.j
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 %i.at, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.827.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 29
-  store i8 %2, ptr %.sroa.827.0..sroa_idx, align 1
+  store i8 %i.k, ptr %.sroa.827.0..sroa_idx, align 1
   %i.au = load i64, ptr %i.b, align 8, !range !11, !alias.scope !1722, !noundef !4
   %i.av = icmp eq i64 %i.au, -1
   br i1 %i.av, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNvXs_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers9metaspaceNtBI_9MetaspaceNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserialize15MetaspaceHelperEBM_.exit, label %bb.t

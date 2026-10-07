@@ -204,7 +204,7 @@ _RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecINtNtCsf3Ta7LF998c_4core6option6Optio
   br label %bb.p
 
 bb.c:                                             ; preds = %._crit_edge.i, %.lr.ph.i.i
-  %i.p = phi i8 [ %i.m, %.lr.ph.i.i ], [ %i.z, %._crit_edge.i ] ; 5 uses
+  %i.p = phi i8 [ %i.m, %.lr.ph.i.i ], [ %i.z, %._crit_edge.i ] ; 4 uses
   %i.q = phi i64 [ %.pre.i, %.lr.ph.i.i ], [ %i.aa, %._crit_edge.i ]
   %.val3.i.i = phi i64 [ %i.i, %.lr.ph.i.i ], [ %i.ad, %._crit_edge.i ] ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !117)
@@ -246,7 +246,6 @@ bb.h:                                             ; preds = %bb.g
           to label %.body.thread unwind label %bb.o, !noalias !116
 
 .thread23.i.i:                                    ; preds = %bb.e, %bb.d
-  %.sroa.0.0.i.ph.i.i = phi i8 [ %i.p, %bb.e ], [ -2, %bb.d ]
   %i.v = phi <2 x i64> [ %i.s, %bb.e ], [ undef, %bb.d ]
   store i64 %i.r, ptr %i.n, align 8, !alias.scope !114, !noalias !115
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.8.i.i, ptr noundef nonnull align 1 dereferenceable(23) %i.l, i64 23, i1 false), !noalias !110
@@ -264,7 +263,6 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 .sink.split.i.i:                                  ; preds = %.thread23.i.i, %.thread15.i.i
   %i.w = phi i8 [ %i.p, %.thread23.i.i ], [ -3, %.thread15.i.i ]
   %i.x = phi i64 [ %i.r, %.thread23.i.i ], [ 1, %.thread15.i.i ]
-  %.sroa.0.022.ph.i.i = phi i8 [ %.sroa.0.0.i.ph.i.i, %.thread23.i.i ], [ %i.p, %.thread15.i.i ]
   %i.y = phi <2 x i64> [ %i.v, %.thread23.i.i ], [ %i.t, %.thread15.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !110
   br label %._crit_edge.i
@@ -272,7 +270,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 ._crit_edge.i:                                    ; preds = %bb.i, %.sink.split.i.i
   %i.z = phi i8 [ %i.w, %.sink.split.i.i ], [ %.pre6.i, %bb.i ] ; 2 uses
   %i.aa = phi i64 [ %i.x, %.sink.split.i.i ], [ %i.r, %bb.i ]
-  %.sroa.0.022.i.i = phi i8 [ %.sroa.0.022.ph.i.i, %.sink.split.i.i ], [ %.sroa.0.0.copyload1.i.i.i.i.i, %bb.i ]
+  %.sroa.0.022.i.i = phi i8 [ %i.p, %.sink.split.i.i ], [ %.sroa.0.0.copyload1.i.i.i.i.i, %bb.i ]
   %i.ab = phi <2 x i64> [ %i.y, %.sink.split.i.i ], [ %i.s, %bb.i ]
   %i.ac = getelementptr inbounds nuw [40 x i8], ptr %i.k, i64 %.val3.i.i ; 3 uses
   store i8 %.sroa.0.022.i.i, ptr %i.ac, align 8, !noalias !125

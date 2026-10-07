@@ -201,7 +201,7 @@ bb.bd:                                            ; preds = %bb.aw, %bb.ai, %bb.
   %.0475.lcssa = phi i32 [ %.0475725, %bb.bb ], [ %.2477, %bb.bd ] ; 2 uses
   %.0472.lcssa = phi i32 [ %.0472726, %bb.bb ], [ %.1473, %bb.bd ] ; 4 uses
   %.0470.lcssa = phi i32 [ %.0470727, %bb.bb ], [ %.1471, %bb.bd ] ; 15 uses
-  %.0467.lcssa = phi ptr [ %.0467728, %bb.bb ], [ %.1468, %bb.bd ] ; 3 uses
+  %.0467.lcssa = phi ptr [ %.0467728, %bb.bb ], [ %.1468, %bb.bd ] ; 2 uses
   %i.dt = add nsw i32 %0, -2
   %.not578 = icmp eq i32 %.0505.lcssa, %i.dt
   br i1 %.not578, label %bb.be, label %._crit_edge.thread
@@ -225,7 +225,6 @@ bb.bg:                                            ; preds = %bb.bf
   br label %.thread787
 
 .thread787:                                       ; preds = %bb.bf, %bb.bg, %bb.be
-  %.0467.lcssa786800 = phi ptr [ null, %bb.be ], [ %.0467.lcssa, %bb.bg ], [ %.0467.lcssa, %bb.bf ]
   %.2474 = phi i32 [ %.0472.lcssa, %bb.be ], [ %spec.store.select, %bb.bg ], [ 3, %bb.bf ]
   %i.dx = call ptr @tj3InitVersion(i32 noundef 2, i32 noundef 3002000) #16 ; 39 uses
   %i.dy = icmp eq ptr %i.dx, null
@@ -566,7 +565,7 @@ bb.cz:                                            ; preds = %.thread, %bb.cw
   br i1 %.not579, label %bb.dp, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %i.kg = call noalias ptr @fopen(ptr noundef nonnull %.0467.lcssa786800, ptr noundef nonnull @.str.41) ; 10 uses
+  %i.kg = call noalias ptr @fopen(ptr noundef nonnull %.0467.lcssa, ptr noundef nonnull @.str.41) ; 10 uses
   %i.kh = icmp eq ptr %i.kg, null
   br i1 %i.kh, label %bb.db, label %bb.dc
 

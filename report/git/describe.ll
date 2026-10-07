@@ -205,7 +205,6 @@ lazy_queue_put.exit191:                           ; preds = %bb.bo, %bb.bp
   br label %bb.bq
 
 bb.bq:                                            ; preds = %lazy_queue_put.exit191, %sane_qsort.exit
-  %.2355 = phi ptr [ %.2, %lazy_queue_put.exit191 ], [ null, %sane_qsort.exit ]
   %i.ic = phi i8 [ 0, %lazy_queue_put.exit191 ], [ %.pre301, %sane_qsort.exit ] ; 2 uses
   %.2132 = phi i64 [ %.0130250, %lazy_queue_put.exit191 ], [ %i.ch, %sane_qsort.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
@@ -546,7 +545,7 @@ bb.cs:                                            ; preds = %bb.cr
 _.exit208:                                        ; preds = %bb.cr, %bb.cs
   %.0.i207 = phi ptr [ %i.mv, %bb.cs ], [ @.str.85, %bb.cr ]
   %i.mw = load i32, ptr @max_candidates, align 4, !tbaa !12
-  %i.mx = getelementptr inbounds nuw i8, ptr %.2355, i64 8
+  %i.mx = getelementptr inbounds nuw i8, ptr %.2, i64 8
   %i.my = call ptr @oid_to_hex(ptr noundef nonnull %i.mx) #15
   %i.mz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.mt, ptr noundef %.0.i207, i32 noundef %i.mw, ptr noundef %i.my) #17 ; 0 uses
   br label %bb.ct

@@ -204,7 +204,7 @@ bb.bn:                                            ; preds = %_ZL15canRemoveVerte
   %i.xa = sext i32 %i.ws to i64                   ; 9 uses
   %i.xb = mul i64 %i.wz, %i.xa                    ; 4 uses
   %i.xc = shl i64 %i.xb, 2
-  %i.xd = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.xc, i32 noundef 1) #8 ; 20 uses
+  %i.xd = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.xc, i32 noundef 1) #8 ; 12 uses
   %.not.i444 = icmp eq ptr %i.xd, null
   br i1 %.not.i444, label %_ZL12removeVertexP9rcContextR10rcPolyMeshti.exit.thread, label %bb.bq
 
@@ -607,8 +607,7 @@ bb.dy:                                            ; preds = %.critedge418.i
   br label %bb.dz
 
 bb.dz:                                            ; preds = %.critedge592, %.critedge591, %.critedge590, %.critedge589, %.critedge588, %.critedge587, %.critedge585, %.critedge584, %.critedge583, %_ZL12removeVertexP9rcContextR10rcPolyMeshti.exit.thread
-  %.sink = phi ptr [ %i.xd, %.critedge592 ], [ %i.xd, %.critedge591 ], [ %i.xd, %.critedge590 ], [ %i.xd, %.critedge589 ], [ %i.xd, %.critedge588 ], [ %i.xd, %.critedge587 ], [ %i.xd, %.critedge585 ], [ %i.xd, %.critedge584 ], [ %i.xd, %.critedge583 ], [ null, %_ZL12removeVertexP9rcContextR10rcPolyMeshti.exit.thread ]
-  tail call void @_Z6rcFreePv(ptr noundef %.sink) #8
+  tail call void @_Z6rcFreePv(ptr noundef %i.xd) #8
   tail call void (ptr, i32, ptr, ...) @_ZN9rcContext3logE13rcLogCategoryPKcz(ptr noundef nonnull align 8 dereferenceable(10) %0, i32 noundef 3, ptr noundef nonnull @.str.13, i32 noundef %.0314813) #8
   br label %bb.ev
 

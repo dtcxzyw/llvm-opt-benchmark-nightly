@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 
 .lr.ph.preheader.i105:                            ; preds = %pcf_find_property.exit, %bb.c, %bb.b, %.critedge.i
   %i.z = phi i64 [ 2, %.critedge.i ], [ 2, %pcf_find_property.exit ], [ 2, %bb.b ], [ 3, %bb.c ]
-  %.sroa.10.0 = phi ptr [ null, %.critedge.i ], [ null, %pcf_find_property.exit ], [ null, %bb.b ], [ %i.y, %bb.c ] ; 3 uses
+  %.sroa.10.0 = phi ptr [ null, %.critedge.i ], [ null, %pcf_find_property.exit ], [ null, %bb.b ], [ %i.y, %bb.c ] ; 4 uses
   br label %.lr.ph.i106
 
 .lr.ph.i106:                                      ; preds = %.lr.ph.i106, %.lr.ph.preheader.i105
@@ -283,7 +283,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.lr.ph.preheader.i125
 
 .lr.ph.preheader.i125:                            ; preds = %pcf_find_property.exit123, %bb.g, %bb.f, %bb.f, %bb.f, %.critedge.i122
-  %.sroa.13.0 = phi ptr [ null, %.critedge.i122 ], [ null, %pcf_find_property.exit123 ], [ %i.as, %bb.g ], [ null, %bb.f ], [ null, %bb.f ], [ null, %bb.f ] ; 3 uses
+  %.sroa.13.0 = phi ptr [ null, %.critedge.i122 ], [ null, %pcf_find_property.exit123 ], [ %i.as, %bb.g ], [ null, %bb.f ], [ null, %bb.f ], [ null, %bb.f ] ; 4 uses
   br label %.lr.ph.i126
 
 .lr.ph.i126:                                      ; preds = %.lr.ph.i126, %.lr.ph.preheader.i125
@@ -349,7 +349,6 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.sroa.10.1169179197 = phi ptr [ null, %bb.j ], [ %.sroa.10.0, %bb.k ] ; 2 uses
   %.sroa.9.0 = phi i64 [ 0, %bb.j ], [ %i.bj, %bb.k ] ; 2 uses
   %.174.2 = phi i64 [ %.174.1, %bb.j ], [ %i.bl, %bb.k ] ; 2 uses
   %.not103.3 = icmp eq ptr %.sroa.13.0, null      ; 3 uses
@@ -362,7 +361,6 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.sroa.13.1170178198215 = phi ptr [ null, %bb.l ], [ %.sroa.13.0, %bb.m ] ; 2 uses
   %.sroa.12.0 = phi i64 [ 0, %bb.l ], [ %i.bm, %bb.m ] ; 2 uses
   %.174.3 = phi i64 [ %.174.2, %bb.l ], [ %i.bo, %bb.m ] ; 2 uses
   %i.bp = icmp eq i64 %.174.3, 0
@@ -375,8 +373,8 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.12.0252 = phi i64 [ %.sroa.12.0, %bb.n ], [ %.sroa.12.0, %bb.o ], [ 0, %bb.a ] ; 11 uses
   %.not103.2200213250 = phi i1 [ %.not103.2, %bb.n ], [ %.not103.2, %bb.o ], [ true, %bb.a ]
   %.sroa.6.0199214248 = phi i64 [ %.sroa.6.0, %bb.n ], [ %.sroa.6.0, %bb.o ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.13.1170178198215246 = phi ptr [ %.sroa.13.1170178198215, %bb.n ], [ %.sroa.13.1170178198215, %bb.o ], [ null, %bb.a ]
-  %.sroa.10.1169179197216244 = phi ptr [ %.sroa.10.1169179197, %bb.n ], [ %.sroa.10.1169179197, %bb.o ], [ null, %bb.a ]
+  %.sroa.13.1170178198215246 = phi ptr [ %.sroa.13.0, %bb.n ], [ %.sroa.13.0, %bb.o ], [ null, %bb.a ]
+  %.sroa.10.1169179197216244 = phi ptr [ %.sroa.10.0, %bb.n ], [ %.sroa.10.0, %bb.o ], [ null, %bb.a ]
   %.sroa.7.1168180196217242 = phi ptr [ %.sroa.7.1168180, %bb.n ], [ %.sroa.7.1168180, %bb.o ], [ null, %bb.a ]
   %.not103.1183193220240 = phi i1 [ %.not103.1, %bb.n ], [ %.not103.1, %bb.o ], [ true, %bb.a ]
   %.sroa.9.0221238 = phi i64 [ %.sroa.9.0, %bb.n ], [ %.sroa.9.0, %bb.o ], [ 0, %bb.a ] ; 2 uses

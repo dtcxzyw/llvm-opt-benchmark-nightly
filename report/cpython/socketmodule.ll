@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.s, label %set_herror.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.t = tail call ptr @PyList_New(i64 noundef 0) #11 ; 8 uses
-  %i.u = icmp eq ptr %i.t, null
+  %i.t = tail call ptr @PyList_New(i64 noundef 0) #11 ; 7 uses
+  %i.u = icmp eq ptr %i.t, null                   ; 2 uses
   br i1 %i.u, label %.thread96, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -425,8 +425,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %Py_XDECREF.exit
 
 Py_XDECREF.exit:                                  ; preds = %.thread96, %bb.af, %bb.ag
-  %.not.i81 = icmp eq ptr %i.t, null
-  br i1 %.not.i81, label %set_herror.exit, label %bb.ah
+  br i1 %i.u, label %set_herror.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %Py_XDECREF.exit
   %i.bw = load i32, ptr %i.t, align 8, !tbaa !23  ; 2 uses

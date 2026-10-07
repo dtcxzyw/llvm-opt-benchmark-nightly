@@ -205,7 +205,6 @@ bb.av:                                            ; preds = %bb.au, %bb.ar
   br label %.thread.i
 
 bb.aw:                                            ; preds = %bb.av, %bb.at
-  %.sroa.4.0.i.i.i.i = phi i8 [ %i.cg, %bb.av ], [ 0, %bb.at ]
   %.sroa.0.0.i.i9.i.i = phi i1 [ false, %bb.av ], [ true, %bb.at ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6973
   store i24 0, ptr %i.b, align 4, !noalias !6973
@@ -229,7 +228,7 @@ bb.az:                                            ; preds = %bb.ay
 
 .thread8.i:                                       ; preds = %bb.ap, %bb.ax
   %.sroa.03.011.i10.off8.i = phi i8 [ %i.cd, %bb.ax ], [ 0, %bb.ap ]
-  %.sroa.03.011.i10.off16.i = phi i8 [ %.sroa.4.0.i.i.i.i, %bb.ax ], [ 0, %bb.ap ]
+  %.sroa.03.011.i10.off16.i = phi i8 [ %i.cg, %bb.ax ], [ 0, %bb.ap ]
   store i8 %.sroa.03.011.i10.off8.i, ptr %i.c, align 1, !noalias !6973
   %i.ck = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   store i8 %.sroa.03.011.i10.off16.i, ptr %i.ck, align 1, !noalias !6973
@@ -632,10 +631,10 @@ bb.j:                                             ; preds = %.thread.i.i
   br label %.body
 
 common.ret:                                       ; preds = %bb.k, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i.i, %.noexc
+  %.sroa.0.1.i.i4 = phi ptr [ null, %.noexc ], [ %.sroa.0.1.i.i.ph, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %bb.k ]
   %storemerge = phi i8 [ 3, %.noexc ], [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i.i ], [ 1, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i ], [ 1, %bb.k ]
-  %common.ret.op = phi ptr [ null, %.noexc ], [ %.sroa.0.1.i.i.ph, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsjsY2yM364a4_11lance_tools.exit.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %bb.k ]
   store i8 %storemerge, ptr %i.a, align 8
-  ret ptr %common.ret.op
+  ret ptr %.sroa.0.1.i.i4
 
 bb.k:                                             ; preds = %bb.i, %bb.f
   %i.aa = phi ptr [ %i.m, %bb.f ], [ %i.t, %bb.i ]
@@ -1038,7 +1037,6 @@ bb.g:                                             ; preds = %bb.f, %bb.c
   br label %.thread
 
 bb.h:                                             ; preds = %bb.e, %bb.g
-  %.sroa.4.0.i.i.i = phi i8 [ %i.k, %bb.g ], [ 0, %bb.e ]
   %.sroa.0.0.i.i9.i = phi i1 [ false, %bb.g ], [ true, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -1063,7 +1061,7 @@ bb.k:                                             ; preds = %bb.j
 
 .thread8:                                         ; preds = %bb.a, %bb.i
   %.sroa.03.011.i10.off8 = phi i8 [ %i.h, %bb.i ], [ 0, %bb.a ]
-  %.sroa.03.011.i10.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.i ], [ 0, %bb.a ]
+  %.sroa.03.011.i10.off16 = phi i8 [ %i.k, %bb.i ], [ 0, %bb.a ]
   store i8 %.sroa.03.011.i10.off8, ptr %i.b, align 1
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i10.off16, ptr %i.o, align 1

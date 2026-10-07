@@ -204,22 +204,27 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %bb.b, %bb.d
   %.048.i = phi ptr [ %i.h, %bb.d ], [ %i.d, %bb.b ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.048.i, i64 56
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !39   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !39   ; 3 uses
   %.not26.i = icmp eq ptr %i.f, null
-  br i1 %.not26.i, label %get_object_item.exit, label %bb.c
+  br i1 %.not26.i, label %.critedge.thread35.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.g = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %1, ptr noundef nonnull dereferenceable(1) %i.f) #31
   %.not27.i = icmp eq i32 %i.g, 0
-  br i1 %.not27.i, label %get_object_item.exit, label %bb.d
+  br i1 %.not27.i, label %.critedge.thread35.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %.048.i, align 8, !tbaa !37 ; 2 uses
   %.not25.i = icmp eq ptr %i.h, null
   br i1 %.not25.i, label %get_object_item.exit, label %.lr.ph.i
 
-get_object_item.exit:                             ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.a, %bb.b
-  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.d ], [ %.048.i, %bb.c ], [ null, %.lr.ph.i ]
+.critedge.thread35.i:                             ; preds = %bb.c, %.lr.ph.i
+  %2 = icmp eq ptr %i.f, null
+  %spec.select.i = select i1 %2, ptr null, ptr %.048.i
+  br label %get_object_item.exit
+
+get_object_item.exit:                             ; preds = %bb.d, %bb.a, %bb.b, %.critedge.thread35.i
+  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ %spec.select.i, %.critedge.thread35.i ], [ null, %bb.d ]
   ret ptr %.019.i
 }
 

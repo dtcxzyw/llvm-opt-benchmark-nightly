@@ -204,7 +204,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !14   ; 2 uses
   %.not.i = icmp eq i64 %i.d, 0                   ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !16 ; 4 uses
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !16 ; 3 uses
   br i1 %.not.i, label %zfp_field_dimensionality.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -225,11 +225,10 @@ bb.d:                                             ; preds = %bb.c
   br label %zfp_field_dimensionality.exit
 
 zfp_field_dimensionality.exit:                    ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  %2 = phi i64 [ 0, %bb.b ], [ %.pre, %bb.c ], [ %.pre, %bb.d ], [ %.pre, %bb.a ] ; 2 uses
   %i.j = phi i32 [ 1, %bb.b ], [ 2, %bb.c ], [ %i.i, %bb.d ], [ 0, %bb.a ] ; 2 uses
   %i.k = add i64 %i.d, 3
   %i.l = lshr i64 %i.k, 2                         ; 4 uses
-  %i.m = add i64 %2, 3
+  %i.m = add i64 %.pre, 3
   %i.n = lshr i64 %i.m, 2                         ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.p = load i64, ptr %i.o, align 8, !tbaa !17   ; 2 uses
@@ -240,7 +239,7 @@ zfp_field_dimensionality.exit:                    ; preds = %bb.a, %bb.b, %bb.c,
   br i1 %.not.i, label %zfp_field_blocks.exit, label %bb.e
 
 bb.e:                                             ; preds = %zfp_field_dimensionality.exit
-  %.not4.i.i = icmp eq i64 %2, 0
+  %.not4.i.i = icmp eq i64 %.pre, 0
   br i1 %.not4.i.i, label %zfp_field_blocks.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

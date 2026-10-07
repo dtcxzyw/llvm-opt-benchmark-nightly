@@ -205,11 +205,10 @@ list_Nconc.exit57:                                ; preds = %._crit_edge, %._cri
   br i1 %.not81, label %.critedge._crit_edge, label %.critedge, !llvm.loop !52
 
 .critedge._crit_edge:                             ; preds = %.critedge, %.critedge.preheader
-  %.064.lcssa106 = phi ptr [ null, %.critedge.preheader ], [ %.165, %.critedge ]
   br i1 %.not, label %list_Delete.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.critedge._crit_edge, %.lr.ph.i
-  %.07.i = phi ptr [ %.0.val.i, %.lr.ph.i ], [ %.064.lcssa106, %.critedge._crit_edge ] ; 3 uses
+  %.07.i = phi ptr [ %.0.val.i, %.lr.ph.i ], [ %.165, %.critedge._crit_edge ] ; 3 uses
   %.0.val.i = load ptr, ptr %.07.i, align 8       ; 2 uses
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @memory_ARRAY, i64 128), align 8 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 32

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.x, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %bb.g
-  %.pre.i = zext i32 %i.u to i64                  ; 11 uses
+  %.pre.i = zext i32 %i.u to i64                  ; 5 uses
   switch i8 %i.w, label %.thread.i [
     i8 1, label %bb.i
     i8 2, label %bb.j
@@ -429,12 +429,11 @@ bb.k:                                             ; preds = %bb.h
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.lr.ph.i.epil.preheader, %.thread.i.loopexit714.unr-lcssa, %.lr.ph11.i.epil.preheader, %.thread.i.loopexit713.unr-lcssa, %.lr.ph16.i.epil.preheader, %.thread.i.loopexit.unr-lcssa, %bb.k, %bb.j, %bb.i, %bb.h
-  %.pre-phi.i = phi i64 [ %.pre.i, %.lr.ph11.i.epil.preheader ], [ %.pre.i, %bb.h ], [ %.pre.i, %.lr.ph16.i.epil.preheader ], [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.j ], [ %.pre.i, %.thread.i.loopexit.unr-lcssa ], [ %.pre.i, %.thread.i.loopexit713.unr-lcssa ], [ %.pre.i, %.thread.i.loopexit714.unr-lcssa ], [ %.pre.i, %.lr.ph.i.epil.preheader ]
   store i8 8, ptr %i.v, align 1, !tbaa !75
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 19
   store i8 8, ptr %i.cx, align 1, !tbaa !76
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i64 %.pre-phi.i, ptr %i.cy, align 8, !tbaa !77
+  store i64 %.pre.i, ptr %i.cy, align 8, !tbaa !77
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.g
@@ -837,7 +836,7 @@ bb.iq:                                            ; preds = %png_do_unshift.exit
 
 bb.ir:                                            ; preds = %bb.iq
   %i.cvk = load i32, ptr %1, align 8, !tbaa !74   ; 19 uses
-  %.pre.i254 = zext i32 %i.cvk to i64             ; 10 uses
+  %.pre.i254 = zext i32 %i.cvk to i64             ; 4 uses
   switch i8 %i.cvi, label %.loopexit.i260 [
     i8 1, label %bb.is
     i8 2, label %bb.it
@@ -1059,7 +1058,6 @@ bb.iu:                                            ; preds = %bb.ir
   br label %.loopexit.i260
 
 .loopexit.i260:                                   ; preds = %.lr.ph.i256.epil.preheader, %.loopexit.i260.loopexit672.unr-lcssa, %.lr.ph80.i.epil.preheader, %.loopexit.i260.loopexit671.unr-lcssa, %.lr.ph85.i.epil.preheader, %.loopexit.i260.loopexit.unr-lcssa, %bb.iu, %bb.it, %bb.is, %bb.ir
-  %.pre-phi.i261 = phi i64 [ %.pre.i254, %.lr.ph80.i.epil.preheader ], [ %.pre.i254, %bb.ir ], [ %.pre.i254, %.lr.ph85.i.epil.preheader ], [ 0, %bb.is ], [ 0, %bb.iu ], [ 0, %bb.it ], [ %.pre.i254, %.loopexit.i260.loopexit.unr-lcssa ], [ %.pre.i254, %.loopexit.i260.loopexit671.unr-lcssa ], [ %.pre.i254, %.loopexit.i260.loopexit672.unr-lcssa ], [ %.pre.i254, %.lr.ph.i256.epil.preheader ]
   store i8 8, ptr %i.cvh, align 1, !tbaa !75
   %i.cyj = getelementptr inbounds nuw i8, ptr %1, i64 18
   %i.cyk = load i8, ptr %i.cyj, align 2, !tbaa !78 ; 2 uses
@@ -1067,7 +1065,7 @@ bb.iu:                                            ; preds = %bb.ir
   %i.cym = getelementptr inbounds nuw i8, ptr %1, i64 19
   store i8 %i.cyl, ptr %i.cym, align 1, !tbaa !76
   %i.cyn = zext i8 %i.cyk to i64
-  %i.cyo = mul nuw nsw i64 %.pre-phi.i261, %i.cyn
+  %i.cyo = mul nuw nsw i64 %i.cyn, %.pre.i254
   %i.cyp = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.cyo, ptr %i.cyp, align 8, !tbaa !77
   br label %png_do_unpack.exit

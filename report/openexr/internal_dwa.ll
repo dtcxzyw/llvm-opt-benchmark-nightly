@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !108
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.u = icmp sgt i32 %i.d, 0                     ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
@@ -608,7 +608,7 @@ half_to_float.exit.7:                             ; preds = %bb.cs, %bb.cr, %bb.
   br i1 %exitcond.not.i, label %.lr.ph211.preheader, label %.preheader221, !llvm.loop !235
 
 ._crit_edge212:                                   ; preds = %LossyDctEncoder_rleAc.exit, %.preheader161
-  %.2159.lcssa = phi ptr [ %.1158214, %.preheader161 ], [ %.2.i.a, %LossyDctEncoder_rleAc.exit ] ; 2 uses
+  %.2159.lcssa = phi ptr [ %.1158214, %.preheader161 ], [ %.252.i, %LossyDctEncoder_rleAc.exit ] ; 2 uses
   %indvars.iv.next299 = add nuw nsw i64 %indvars.iv298, 1 ; 2 uses
   %exitcond302.not = icmp eq i64 %indvars.iv.next299, %wide.trip.count301
   br i1 %exitcond302.not, label %._crit_edge216, label %.preheader161, !llvm.loop !236
@@ -617,7 +617,7 @@ half_to_float.exit.7:                             ; preds = %bb.cs, %bb.cr, %bb.
   %indvars.iv293 = phi i64 [ %indvars.iv.next294, %LossyDctEncoder_rleAc.exit ], [ 0, %.lr.ph211.preheader ] ; 2 uses
   %.0119209 = phi ptr [ %i.fy, %LossyDctEncoder_rleAc.exit ], [ %i.fw, %.lr.ph211.preheader ] ; 4 uses
   %.0120208 = phi ptr [ %i.fx, %LossyDctEncoder_rleAc.exit ], [ %i.fv, %.lr.ph211.preheader ] ; 4 uses
-  %.2159207 = phi ptr [ %.2.i.a, %LossyDctEncoder_rleAc.exit ], [ %.1158214, %.lr.ph211.preheader ]
+  %.2159207 = phi ptr [ %.252.i, %LossyDctEncoder_rleAc.exit ], [ %.1158214, %.lr.ph211.preheader ]
   %i.xv = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv293
   %i.xw = load ptr, ptr %i.xv, align 8, !tbaa !82 ; 22 uses
   %i.xx = getelementptr inbounds nuw i8, ptr %i.xw, i64 32 ; 2 uses
@@ -1020,32 +1020,35 @@ quantizeCoeffAndZigXDR.exit:                      ; preds = %half_to_float.exit7
   %i.asr = load i64, ptr %i.t, align 8, !tbaa !260
   %i.ass = add i64 %i.asr, 1
   store i64 %i.ass, ptr %i.t, align 8, !tbaa !260
-  %.promoted = load i64, ptr %i.s, align 8, !tbaa !261
   br label %bb.fc
 
-bb.fc:                                            ; preds = %.critedge.thread.i, %quantizeCoeffAndZigXDR.exit
-  %storemerge.in.i206 = phi i64 [ %.promoted, %quantizeCoeffAndZigXDR.exit ], [ %storemerge.i, %.critedge.thread.i ]
-  %.03345.i = phi ptr [ %.2159207, %quantizeCoeffAndZigXDR.exit ], [ %.2.i.a, %.critedge.thread.i ] ; 2 uses
-  %.03544.i = phi i32 [ 1, %quantizeCoeffAndZigXDR.exit ], [ %10, %.critedge.thread.i ] ; 5 uses
-  %3 = zext nneg i32 %.03544.i to i64
-  %i.ast = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %3
+bb.fc:                                            ; preds = %19, %quantizeCoeffAndZigXDR.exit
+  %.03345.i = phi ptr [ %.2159207, %quantizeCoeffAndZigXDR.exit ], [ %.2.i, %19 ] ; 6 uses
+  %.03544.i = phi i32 [ 1, %quantizeCoeffAndZigXDR.exit ], [ %.136.i, %19 ] ; 5 uses
+  %3 = sext i32 %.03544.i to i64
+  %i.ast = getelementptr inbounds [2 x i8], ptr %i.b, i64 %3
   %i.asu = load i16, ptr %i.ast, align 2, !tbaa !62 ; 2 uses
   %.not.i = icmp eq i16 %i.asu, 0
-  br i1 %.not.i, label %.preheader.i156, label %.critedge.thread.i, !llvm.loop !243
+  br i1 %.not.i, label %.preheader.i156, label %.lr.ph.i.preheader
 
 .preheader.i156:                                  ; preds = %bb.fc
-  %4 = icmp samesign ult i32 %.03544.i, 63
-  br i1 %4, label %.lr.ph.i.preheader, label %.critedge.thread.i
+  %4 = add nsw i32 %.03544.i, 1                   ; 2 uses
+  %5 = icmp slt i32 %.03544.i, 63
+  br i1 %5, label %.lr.ph.i, label %bb.fe
 
-.lr.ph.i.preheader:                               ; preds = %.preheader.i156
-  %i.asv = add nuw nsw i32 %.03544.i, 1
-  br label %.lr.ph.i
+.lr.ph.i.preheader:                               ; preds = %bb.fc
+  store i16 %i.asu, ptr %.03345.i, align 2, !tbaa !62
+  %6 = load i64, ptr %i.s, align 8, !tbaa !261
+  %7 = add i64 %6, 1
+  store i64 %7, ptr %i.s, align 8, !tbaa !261
+  %i.asv = add nsw i32 %.03544.i, 1
+  br label %19, !llvm.loop !243
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.fd
-  %i.asw = phi i32 [ %i.atc, %bb.fd ], [ %i.asv, %.lr.ph.i.preheader ] ; 2 uses
-  %.039.i = phi i16 [ %i.ata, %bb.fd ], [ 1, %.lr.ph.i.preheader ] ; 2 uses
-  %5 = zext nneg i32 %i.asw to i64
-  %i.asx = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %5
+.lr.ph.i:                                         ; preds = %.preheader.i156, %bb.fd
+  %i.asw = phi i32 [ %i.atc, %bb.fd ], [ %4, %.preheader.i156 ] ; 2 uses
+  %.039.i = phi i16 [ %i.ata, %bb.fd ], [ 1, %.preheader.i156 ] ; 2 uses
+  %8 = sext i32 %i.asw to i64
+  %i.asx = getelementptr inbounds [2 x i8], ptr %i.b, i64 %8
   %i.asy = load i16, ptr %i.asx, align 2, !tbaa !62
   %i.asz = icmp eq i16 %i.asy, 0
   br i1 %i.asz, label %bb.fd, label %.critedge.i
@@ -1053,35 +1056,52 @@ bb.fc:                                            ; preds = %.critedge.thread.i,
 bb.fd:                                            ; preds = %.lr.ph.i
   %i.ata = add i16 %.039.i, 1                     ; 3 uses
   %i.atb = zext i16 %i.ata to i32
-  %i.atc = add nuw nsw i32 %.03544.i, %i.atb      ; 3 uses
-  %6 = icmp samesign ult i32 %i.atc, 64
-  br i1 %6, label %.lr.ph.i, label %.critedge.i, !llvm.loop !244
+  %i.atc = add nsw i32 %.03544.i, %i.atb          ; 3 uses
+  %9 = icmp slt i32 %i.atc, 64
+  br i1 %9, label %.lr.ph.i, label %.critedge.i, !llvm.loop !244
 
 .critedge.i:                                      ; preds = %bb.fd, %.lr.ph.i
-  %.0.lcssa.i = phi i16 [ %i.ata, %bb.fd ], [ %.039.i, %.lr.ph.i ] ; 3 uses
-  %.lcssa.i = phi i32 [ %i.atc, %bb.fd ], [ %i.asw, %.lr.ph.i ]
+  %.0.lcssa.i = phi i16 [ %i.ata, %bb.fd ], [ %.039.i, %.lr.ph.i ] ; 2 uses
+  %.lcssa.i = phi i32 [ %i.atc, %bb.fd ], [ %i.asw, %.lr.ph.i ] ; 3 uses
   %i.atd = icmp eq i16 %.0.lcssa.i, 1
-  br i1 %i.atd, label %.critedge.thread.i, label %bb.fe
+  br i1 %i.atd, label %bb.fe, label %12
 
-bb.fe:                                            ; preds = %.critedge.i
-  %7 = icmp eq i32 %.lcssa.i, 64
-  %8 = or i16 %.0.lcssa.i, -256
-  %spec.select.i = select i1 %7, i16 -256, i16 %8
-  %9 = zext i16 %.0.lcssa.i to i32
-  br label %.critedge.thread.i
+bb.fe:                                            ; preds = %.critedge.i, %.preheader.i156
+  %.lcssa49.i = phi i32 [ %.lcssa.i, %.critedge.i ], [ %4, %.preheader.i156 ]
+  store i16 0, ptr %.03345.i, align 2, !tbaa !62
+  %10 = load i64, ptr %i.s, align 8, !tbaa !261
+  %11 = add i64 %10, 1
+  store i64 %11, ptr %i.s, align 8, !tbaa !261
+  br label %19
 
-.critedge.thread.i:                               ; preds = %.preheader.i156, %.critedge.i, %bb.fe, %bb.fc
-  %storemerge53.i = phi i16 [ %i.asu, %bb.fc ], [ 0, %.critedge.i ], [ %spec.select.i, %bb.fe ], [ 0, %.preheader.i156 ]
-  %.sink52.i = phi i32 [ 1, %bb.fc ], [ 1, %.critedge.i ], [ %9, %bb.fe ], [ 1, %.preheader.i156 ]
-  store i16 %storemerge53.i, ptr %.03345.i, align 2, !tbaa !62
-  %storemerge.i = add i64 %storemerge.in.i206, 1  ; 2 uses
-  %10 = add nuw nsw i32 %.sink52.i, %.03544.i     ; 2 uses
-  %.2.i.a = getelementptr inbounds nuw i8, ptr %.03345.i, i64 2 ; 3 uses
-  %11 = icmp samesign ult i32 %10, 64
-  br i1 %11, label %bb.fc, label %LossyDctEncoder_rleAc.exit
+12:                                               ; preds = %.critedge.i
+  %13 = icmp eq i32 %.lcssa.i, 64
+  br i1 %13, label %.critedge.thread.i, label %15
 
-LossyDctEncoder_rleAc.exit:                       ; preds = %.critedge.thread.i
+.critedge.thread.i:                               ; preds = %12
+  store i16 -256, ptr %.03345.i, align 2, !tbaa !62
+  %14 = load i64, ptr %i.s, align 8, !tbaa !261
+  %storemerge.i = add i64 %14, 1
   store i64 %storemerge.i, ptr %i.s, align 8, !tbaa !261
+  %.2.i.a = getelementptr inbounds nuw i8, ptr %.03345.i, i64 2
+  br label %LossyDctEncoder_rleAc.exit
+
+15:                                               ; preds = %12
+  %16 = or i16 %.0.lcssa.i, -256
+  store i16 %16, ptr %.03345.i, align 2, !tbaa !62
+  %17 = load i64, ptr %i.s, align 8, !tbaa !261
+  %18 = add i64 %17, 1
+  store i64 %18, ptr %i.s, align 8, !tbaa !261
+  br label %19
+
+19:                                               ; preds = %15, %bb.fe, %.lr.ph.i.preheader
+  %.136.i = phi i32 [ %i.asv, %.lr.ph.i.preheader ], [ %.lcssa49.i, %bb.fe ], [ %.lcssa.i, %15 ] ; 2 uses
+  %.2.i = getelementptr inbounds nuw i8, ptr %.03345.i, i64 2 ; 2 uses
+  %20 = icmp slt i32 %.136.i, 64
+  br i1 %20, label %bb.fc, label %LossyDctEncoder_rleAc.exit
+
+LossyDctEncoder_rleAc.exit:                       ; preds = %19, %.critedge.thread.i
+  %.252.i = phi ptr [ %.2.i.a, %.critedge.thread.i ], [ %.2.i, %19 ] ; 2 uses
   %indvars.iv.next294 = add nuw nsw i64 %indvars.iv293, 1 ; 2 uses
   %exitcond297.not = icmp eq i64 %indvars.iv.next294, %wide.trip.count296
   br i1 %exitcond297.not, label %._crit_edge212, label %.lr.ph211, !llvm.loop !245

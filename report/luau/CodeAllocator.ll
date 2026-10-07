@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = add i64 %i.q, %i.p
   %i.s = sub i64 0, %i.p
   %i.t = and i64 %i.r, %i.s                       ; 2 uses
-  %i.u = tail call ptr @mmap(ptr noundef null, i64 noundef %i.t, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #8 ; 8 uses
+  %i.u = tail call ptr @mmap(ptr noundef null, i64 noundef %i.t, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #8 ; 7 uses
   %magicptr.i = ptrtoint ptr %i.u to i64
   %magicptr.off.i = add i64 %magicptr.i, -1
   %switch.i = icmp ult i64 %magicptr.off.i, -2
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !27   ; 2 uses
   %.not.i = icmp eq ptr %i.w, null
-  br i1 %.not.i, label %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit, label %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21
+  br i1 %.not.i, label %bb.d, label %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21
 
 _ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21: ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -220,11 +220,7 @@ _ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21: ; preds = %bb.c
   tail call void %i.w(ptr noundef %i.y, ptr noundef null, i64 noundef 0, ptr noundef nonnull %i.u, i64 noundef %i.t), !inline_history !55
   br label %bb.d
 
-_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit: ; preds = %bb.c
-  %.not = icmp eq ptr %i.u, null
-  br i1 %.not, label %_ZNSt6vectorIPvSaIS0_EE9push_backERKS0_.exit, label %bb.d
-
-bb.d:                                             ; preds = %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21, %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit
+bb.d:                                             ; preds = %bb.c, %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit.thread21
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.u, ptr %i.z, align 8, !tbaa !41
   %i.aa = load i64, ptr %i.j, align 8, !tbaa !24
@@ -378,8 +374,8 @@ _ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_itera
   store ptr %i.ch, ptr %i.bl, align 8, !tbaa !32
   br label %_ZNSt6vectorIPvSaIS0_EE9push_backERKS0_.exit
 
-_ZNSt6vectorIPvSaIS0_EE9push_backERKS0_.exit:     ; preds = %bb.b, %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit, %_ZNSt6vectorIPhSaIS0_EE9push_backERKS0_.exit, %bb.l, %_ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.j, %bb.a
-  %.2 = phi i1 [ false, %bb.a ], [ false, %_ZNK4Luau7CodeGen13CodeAllocator13allocatePagesEm.exit ], [ true, %_ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ false, %bb.j ], [ true, %_ZNSt6vectorIPhSaIS0_EE9push_backERKS0_.exit ], [ true, %bb.l ], [ false, %bb.b ]
+_ZNSt6vectorIPvSaIS0_EE9push_backERKS0_.exit:     ; preds = %bb.b, %_ZNSt6vectorIPhSaIS0_EE9push_backERKS0_.exit, %bb.l, %_ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.j, %bb.a
+  %.2 = phi i1 [ false, %bb.a ], [ true, %_ZNSt6vectorIPhSaIS0_EE9push_backERKS0_.exit ], [ true, %_ZNSt6vectorIPvSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ false, %bb.b ], [ true, %bb.l ], [ false, %bb.j ]
   ret i1 %.2
 }
 
@@ -416,11 +412,11 @@ bb.a:
   %i.c = add i64 %i.b, %i.a
   %i.d = sub i64 0, %i.a
   %i.e = and i64 %i.c, %i.d                       ; 2 uses
-  %i.f = tail call ptr @mmap(ptr noundef null, i64 noundef %i.e, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #8 ; 4 uses
-  %magicptr = ptrtoint ptr %i.f to i64
-  %magicptr.off = add i64 %magicptr, -1
-  %switch = icmp ult i64 %magicptr.off, -2
-  br i1 %switch, label %bb.b, label %bb.d
+  %i.f = tail call ptr @mmap(ptr noundef null, i64 noundef %i.e, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #8 ; 3 uses
+  %2 = icmp eq ptr %i.f, inttoptr (i64 -1 to ptr)
+  %3 = select i1 %2, ptr null, ptr %i.f           ; 2 uses
+  %4 = icmp eq ptr %3, null
+  br i1 %4, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -434,9 +430,8 @@ bb.c:                                             ; preds = %bb.b
   tail call void %i.h(ptr noundef %i.j, ptr noundef null, i64 noundef 0, ptr noundef nonnull %i.f, i64 noundef %i.e)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %.0 = phi ptr [ null, %bb.a ], [ %i.f, %bb.c ], [ %i.f, %bb.b ]
-  ret ptr %.0
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+  ret ptr %3
 }
 
 ; Function Attrs: nounwind

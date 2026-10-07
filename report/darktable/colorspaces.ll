@@ -205,7 +205,7 @@ _colorspaces_create_xyz_profile.exit:             ; preds = %_create_profile.exi
   %i.mg = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.36, i32 noundef 5) #26 ; 2 uses
   %i.mh = call i32 @dt_conf_get_bool(ptr noundef nonnull @.str.37) #26
   %.not = icmp eq i32 %i.mh, 0
-  %i.mi = call noalias dereferenceable_or_null(1064) ptr @calloc(i64 noundef 1, i64 noundef 1064) #30 ; 14 uses
+  %i.mi = call noalias dereferenceable_or_null(1064) ptr @calloc(i64 noundef 1, i64 noundef 1064) #30 ; 13 uses
   %.not.i288 = icmp eq ptr %i.mi, null            ; 2 uses
   br i1 %.not, label %.split, label %.split220
 
@@ -242,9 +242,8 @@ bb.aa:                                            ; preds = %.split220
   br label %_create_profile.exit289
 
 _create_profile.exit289:                          ; preds = %bb.aa, %.split220, %bb.z, %.split
-  %phi.call = phi ptr [ %i.mi, %bb.z ], [ null, %.split ], [ null, %.split220 ], [ %i.mi, %bb.aa ]
   %.0216 = phi i32 [ 10, %bb.z ], [ 10, %.split ], [ 11, %.split220 ], [ 11, %bb.aa ] ; 2 uses
-  %i.mu = call ptr @g_list_append(ptr noundef %i.lu, ptr noundef %phi.call) #26 ; 2 uses
+  %i.mu = call ptr @g_list_append(ptr noundef %i.lu, ptr noundef %i.mi) #26 ; 2 uses
   store ptr %i.mu, ptr %i.h, align 8, !tbaa !100
   %i.mv = call ptr @cmsD50_xyY() #26
   %i.mw = call ptr @cmsCreateLab4Profile(ptr noundef %i.mv) #26

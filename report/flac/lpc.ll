@@ -204,20 +204,16 @@ middle.block104:                                  ; preds = %vector.body95
   store double %i.ap, ptr %i.al, align 8, !tbaa !17
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
   %exitcond71.not = icmp eq i64 %indvars.iv.next68, %wide.trip.count70
-  br i1 %exitcond71.not, label %._crit_edge59.loopexit, label %.lr.ph58, !llvm.loop !45
+  br i1 %exitcond71.not, label %._crit_edge59, label %.lr.ph58, !llvm.loop !45
 
-._crit_edge59.loopexit:                           ; preds = %.lr.ph58
-  %4 = zext nneg i32 %i.f to i64
-  br label %._crit_edge59
-
-._crit_edge59:                                    ; preds = %._crit_edge59.loopexit, %._crit_edge
-  %.1.lcssa = phi i64 [ 0, %._crit_edge ], [ %4, %._crit_edge59.loopexit ]
+._crit_edge59:                                    ; preds = %.lr.ph58, %._crit_edge
   %i.aq = and i32 %i.g, 1
   %.not = icmp eq i32 %i.aq, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge59
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1.lcssa ; 2 uses
+  %4 = zext nneg i32 %i.f to i64
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %4 ; 2 uses
   %i.as = load double, ptr %i.ar, align 8, !tbaa !17 ; 2 uses
   %i.at = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.as, double %i.ae, double %i.as)
   store double %i.at, ptr %i.ar, align 8, !tbaa !17

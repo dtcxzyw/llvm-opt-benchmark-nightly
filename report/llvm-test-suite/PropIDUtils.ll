@@ -205,7 +205,7 @@ bb.bo:                                            ; preds = %_ZN11CStringBaseIwE
   %i.pd = icmp sgt i32 %i.nb, 6
   %..i.i186 = select i1 %i.pd, i32 16, i32 4
   %.0.i.i187 = select i1 %i.pb, i32 %i.pc, i32 %..i.i186
-  %.1.i.i188 = tail call i32 @llvm.smax.i32(i32 %.0.i.i187, i32 %i.pa)
+  %.1.i.i188 = tail call i32 @llvm.umax.i32(i32 %.0.i.i187, i32 %i.pa)
   %i.pe = add nsw i32 %.1.i.i188, %i.oq           ; 2 uses
   %i.pf = add nsw i32 %i.pe, 1                    ; 2 uses
   %i.pg = icmp eq i32 %i.pf, %i.oq
@@ -562,9 +562,6 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

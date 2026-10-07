@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !127, !noalias !769, !nonnull !226, !noundef !226 ; 2 uses
   %i.z = getelementptr inbounds i8, ptr %i.y, i64 -32
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !128, !noalias !769 ; 11 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.ab, null
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !128, !noalias !769 ; 10 uses
+  %.not.i.i.i.i.i = icmp eq ptr %i.ab, null       ; 2 uses
   br i1 %.not.i.i.i.i.i, label %_ZNK5osgeo4proj3crs19DerivedProjectedCRS7baseCRSEv.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -232,8 +232,7 @@ _ZNK5osgeo4proj3crs19DerivedProjectedCRS7baseCRSEv.exit: ; preds = %bb.h, %bb.j,
           to label %bb.l unwind label %bb.s
 
 bb.l:                                             ; preds = %_ZNK5osgeo4proj3crs19DerivedProjectedCRS7baseCRSEv.exit
-  %.not.i.i.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i.i.i, label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs12ProjectedCRSEEED2Ev.exit, label %bb.m
+  br i1 %.not.i.i.i.i.i, label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs12ProjectedCRSEEED2Ev.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 4 uses
@@ -636,8 +635,8 @@ bb.l:                                             ; preds = %bb.j, %.critedge
   %i.af = tail call ptr @__dynamic_cast(ptr nonnull %i.ae, ptr nonnull @_ZTIN5osgeo4proj3crs9SingleCRSE, ptr nonnull @_ZTIN5osgeo4proj3crs11GeodeticCRSE, i64 -1) #39, !noalias !1629 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !128, !noalias !1629 ; 11 uses
-  %.not.i.i.i.i.i32 = icmp eq ptr %i.ah, null
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !128, !noalias !1629 ; 10 uses
+  %.not.i.i.i.i.i32 = icmp eq ptr %i.ah, null     ; 2 uses
   br i1 %.not.i.i.i.i.i32, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -673,8 +672,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l
           to label %bb.q unwind label %bb.ac
 
 bb.q:                                             ; preds = %bb.p
-  %.not.i.i.i = icmp eq ptr %i.ah, null
-  br i1 %.not.i.i.i, label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs11GeodeticCRSEEED2Ev.exit, label %bb.r
+  br i1 %.not.i.i.i.i.i32, label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs11GeodeticCRSEEED2Ev.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 4 uses

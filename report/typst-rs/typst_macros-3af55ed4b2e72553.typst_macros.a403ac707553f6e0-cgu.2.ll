@@ -202,11 +202,11 @@ bb.a:
 
 .outer:                                           ; preds = %.outer.backedge, %bb.a
   %.sroa.03.0.ph = phi i1 [ false, %bb.a ], [ %.sroa.03.0.ph.be, %.outer.backedge ]
-  %.sroa.0.0.ph = phi i32 [ 0, %bb.a ], [ %.sroa.0.0.ph.be, %.outer.backedge ]
+  %.sroa.0.0.ph = phi i32 [ 0, %bb.a ], [ %.sroa.0.0, %.outer.backedge ]
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %.outer
-  %.sroa.0.0 = phi i32 [ %.sroa.0.0.ph, %.outer ], [ %i.u, %.backedge ] ; 6 uses
+  %.sroa.0.0 = phi i32 [ %.sroa.0.0.ph, %.outer ], [ %i.u, %.backedge ] ; 3 uses
   %i.n = call { i64, i32 } @_RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4nextCse52LceO7DeS_12typst_macros(ptr nonnull align 8 %i.c) #23 ; 2 uses
   %i.o = extractvalue { i64, i32 } %i.n, 1        ; 4 uses
   switch i32 %i.o, label %.loopexit [
@@ -235,7 +235,6 @@ bb.b:                                             ; preds = %.backedge, %.outer
 
 .outer.backedge:                                  ; preds = %.loopexit, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread, %bb.f, %bb.d
   %.sroa.03.0.ph.be = phi i1 [ true, %bb.d ], [ false, %bb.f ], [ false, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread ], [ false, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit ], [ false, %.loopexit ]
-  %.sroa.0.0.ph.be = phi i32 [ 0, %bb.d ], [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit.thread ], [ %.sroa.0.0, %_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc13is_whitespaceCse52LceO7DeS_12typst_macros.exit ], [ %.sroa.0.0, %.loopexit ]
   br label %.outer
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b

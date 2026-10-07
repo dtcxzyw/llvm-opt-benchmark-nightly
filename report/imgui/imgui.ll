@@ -205,9 +205,8 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %i.vv, label %bb.cq, label %.sink.split767
 
 .sink.split767:                                   ; preds = %bb.co, %bb.cp
-  %.sink768 = phi i32 [ %i.vq, %bb.cp ], [ 0, %bb.co ]
   %i.vw = getelementptr inbounds nuw i8, ptr %i.c, i64 9392
-  store i32 %.sink768, ptr %i.vw, align 8, !tbaa !683
+  store i32 %i.vq, ptr %i.vw, align 8, !tbaa !683
   br label %bb.cq
 
 bb.cq:                                            ; preds = %.sink.split767, %bb.cp
@@ -610,7 +609,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 5320
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !678  ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !289  ; 4 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !289  ; 6 uses
   %i.i = icmp eq ptr %i.f, null
   br i1 %i.i, label %_ZN5ImGui24IsWindowContentHoverableEP11ImGuiWindowi.exit, label %bb.d
 
@@ -623,14 +622,12 @@ bb.e:                                             ; preds = %bb.d
   %i.l = and i32 %0, 8
   %i.m = icmp eq i32 %i.l, 0                      ; 2 uses
   %i.n = and i32 %0, 2
-  %.not.a = icmp eq i32 %i.n, 0
-  br i1 %.not.a, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %1
+  %.not = icmp eq i32 %i.n, 0
+  %.not.a = icmp eq ptr %i.h, null
+  %or.cond = select i1 %.not, i1 true, i1 %.not.a
+  br i1 %or.cond, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %.lr.ph.i
 
-1:                                                ; preds = %bb.e
-  %.not7.i = icmp eq ptr %i.h, null
-  br i1 %.not7.i, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %1
+.lr.ph.i:                                         ; preds = %bb.e
   br i1 %i.m, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.lr.ph.split.us.i
@@ -649,8 +646,7 @@ bb.e:                                             ; preds = %bb.d
   %.not.i = icmp eq ptr %.068.i, %i.t
   br i1 %.not.i, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, label %.lr.ph.split.i, !llvm.loop !44
 
-_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit:   ; preds = %1, %bb.e
-  %.031 = phi ptr [ %i.h, %bb.e ], [ null, %1 ]   ; 3 uses
+_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit:   ; preds = %bb.e
   %i.u = and i32 %0, 1
   %.not36 = icmp eq i32 %i.u, 0
   br i1 %.not36, label %_ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit, label %.lr.ph.i.i
@@ -669,11 +665,11 @@ _ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread: ; preds = %.lr.ph.split.i
   br i1 %i.m, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
 
 .lr.ph.split.i.i.preheader:                       ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, %.lr.ph.i.i
-  %.0317275 = phi ptr [ %.031, %.lr.ph.i.i ], [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ]
+  %.0317275 = phi ptr [ %i.h, %.lr.ph.i.i ], [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ]
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i.preheader:                    ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76, %.lr.ph.i.i
-  %.0317281 = phi ptr [ %.031, %.lr.ph.i.i ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76 ]
+  %.0317281 = phi ptr [ %i.h, %.lr.ph.i.i ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76 ]
   br label %.lr.ph.split.us.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.split.us.i.i.preheader, %.lr.ph.split.us.i.i
@@ -714,7 +710,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i44, label %_ZN5ImGui24IsWindowContentHoverableEP11ImGuiWindowi.exit, label %.lr.ph.i43, !llvm.loop !45
 
 _ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit: ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit
-  %.03171 = phi ptr [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ], [ %.031, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76 ]
+  %.03171 = phi ptr [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ], [ %i.h, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread76 ]
   %i.ai = icmp eq ptr %i.f, %.03171
   br i1 %i.ai, label %_ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit.thread, label %_ZN5ImGui24IsWindowContentHoverableEP11ImGuiWindowi.exit
 
@@ -1117,7 +1113,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8224
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !370  ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !289  ; 4 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !289  ; 6 uses
   %i.f = icmp eq ptr %i.c, null
   br i1 %i.f, label %_ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit, label %bb.b
 
@@ -1130,14 +1126,12 @@ bb.c:                                             ; preds = %bb.b
   %i.h = and i32 %0, 8
   %i.i = icmp eq i32 %i.h, 0                      ; 2 uses
   %i.j = and i32 %0, 2
-  %.not16.a = icmp eq i32 %i.j, 0
-  br i1 %.not16.a, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %1
+  %.not16 = icmp eq i32 %i.j, 0
+  %.not16.a = icmp eq ptr %i.e, null
+  %or.cond = select i1 %.not16, i1 true, i1 %.not16.a
+  br i1 %or.cond, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %.lr.ph.i
 
-1:                                                ; preds = %bb.c
-  %.not7.i = icmp eq ptr %i.e, null
-  br i1 %.not7.i, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %1
+.lr.ph.i:                                         ; preds = %bb.c
   br i1 %i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.lr.ph.split.us.i
@@ -1156,8 +1150,7 @@ bb.c:                                             ; preds = %bb.b
   %.not.i = icmp eq ptr %.068.i, %i.p
   br i1 %.not.i, label %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, label %.lr.ph.split.i, !llvm.loop !44
 
-_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit:   ; preds = %1, %bb.c
-  %.0 = phi ptr [ %i.e, %bb.c ], [ null, %1 ]     ; 3 uses
+_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit:   ; preds = %bb.c
   %i.q = and i32 %0, 1
   %.not17 = icmp eq i32 %i.q, 0
   br i1 %.not17, label %bb.e, label %.lr.ph.i.i
@@ -1176,11 +1169,11 @@ _ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread: ; preds = %.lr.ph.split.i
   br i1 %i.i, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
 
 .lr.ph.split.i.i.preheader:                       ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, %.lr.ph.i.i
-  %.03235 = phi ptr [ %.0, %.lr.ph.i.i ], [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ]
+  %.03235 = phi ptr [ %i.e, %.lr.ph.i.i ], [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ]
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i.preheader:                    ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36, %.lr.ph.i.i
-  %.03241 = phi ptr [ %.0, %.lr.ph.i.i ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36 ]
+  %.03241 = phi ptr [ %i.e, %.lr.ph.i.i ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36 ]
   br label %.lr.ph.split.us.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.split.us.i.i.preheader, %.lr.ph.split.us.i.i
@@ -1219,7 +1212,7 @@ bb.d:                                             ; preds = %.lr.ph.i18
   br i1 %.not.i19, label %_ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit, label %.lr.ph.i18, !llvm.loop !45
 
 bb.e:                                             ; preds = %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit
-  %.031 = phi ptr [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ], [ %.0, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36 ]
+  %.031 = phi ptr [ %.068.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread ], [ %i.e, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit ], [ %.068.us.i, %_ZL21GetCombinedRootWindowP11ImGuiWindowb.exit.thread36 ]
   %i.ae = icmp eq ptr %i.c, %.031
   br label %_ZN5ImGui15IsWindowChildOfEP11ImGuiWindowS1_b.exit
 
@@ -1622,8 +1615,8 @@ select.unfold:                                    ; preds = %.lr.ph, %bb.b
   %i.s = icmp eq ptr %i.n, %i.r
   br i1 %i.s, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %select.unfold, %bb.b, %bb.a
-  %.09.lcssa = phi ptr [ null, %bb.a ], [ %.0914, %bb.b ], [ null, %select.unfold ]
+._crit_edge:                                      ; preds = %bb.b, %select.unfold, %bb.a
+  %.09.lcssa = phi ptr [ null, %bb.a ], [ null, %select.unfold ], [ %.0914, %bb.b ]
   ret ptr %.09.lcssa
 }
 
@@ -1683,7 +1676,7 @@ select.unfold.i:                                  ; preds = %bb.d, %.lr.ph.i
   br i1 %i.ab, label %_ZN5ImGui22FindWindowSettingsByIDEj.exit, label %.lr.ph.i
 
 _ZN5ImGui22FindWindowSettingsByIDEj.exit:         ; preds = %select.unfold.i, %bb.d, %bb.c, %bb.b
-  %.0 = phi ptr [ %i.g, %bb.b ], [ null, %bb.c ], [ null, %select.unfold.i ], [ %.0914.i, %bb.d ]
+  %.0 = phi ptr [ %i.g, %bb.b ], [ null, %bb.c ], [ %.0914.i, %bb.d ], [ null, %select.unfold.i ]
   ret ptr %.0
 }
 

@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.k, label %.loopexit, label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph
-  %.sink = phi i64 [ %.sroa.3.0, %.lr.ph ], [ 0, %._crit_edge ]
   %.sroa.4.0.i.ph.lcssa.sink = phi i64 [ %.sroa.8.0.i82, %.lr.ph ], [ %.sroa.4.0.i.ph, %._crit_edge ]
   %storemerge = phi i64 [ 0, %.lr.ph ], [ 1, %._crit_edge ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0, ptr %i.l, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sink, ptr %.sroa.429.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.4.0.i.ph.lcssa.sink, ptr %.sroa.530.0..sroa_idx, align 8
   store i64 %storemerge, ptr %0, align 8
@@ -614,7 +613,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
   %i.e = phi i64 [ %i.f, %bb.c ], [ %i.b, %bb.b ]
-  %i.f = add nsw i64 %i.e, -1                     ; 9 uses
+  %i.f = add nsw i64 %i.e, -1                     ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.f
   %i.h = load i8, ptr %i.g, align 1, !noalias !706, !noundef !5 ; 2 uses
   switch i8 %i.h, label %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit [
@@ -633,7 +632,7 @@ _RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.t
   br label %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread
 
 _RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit: ; preds = %bb.c, %.lr.ph, %bb.b
-  %i.i = phi i64 [ 0, %bb.b ], [ 0, %bb.c ], [ %i.f, %.lr.ph ]
+  %i.i = phi i64 [ 0, %bb.b ], [ %i.f, %.lr.ph ], [ %i.f, %bb.c ]
   %.sroa.8.0.i = phi i8 [ 0, %bb.b ], [ 0, %bb.c ], [ %i.h, %.lr.ph ] ; 2 uses
   %i.j = icmp eq i8 %.sroa.8.0.i, 0
   br i1 %i.j, label %bb.e, label %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread

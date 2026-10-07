@@ -204,7 +204,7 @@ ZSTD_initDCtx_internal.exit.i:                    ; preds = %bb.g, %ZSTD_cpuid.e
   br label %ZSTD_createDCtx_internal.exit
 
 ZSTD_createDCtx_internal.exit:                    ; preds = %bb.a, %ZSTD_customMalloc.exit.i, %ZSTD_initDCtx_internal.exit.i
-  %.1.i = phi ptr [ null, %bb.a ], [ %.0.i.i, %ZSTD_initDCtx_internal.exit.i ], [ null, %ZSTD_customMalloc.exit.i ]
+  %.1.i = phi ptr [ null, %bb.a ], [ null, %ZSTD_customMalloc.exit.i ], [ %.0.i.i, %ZSTD_initDCtx_internal.exit.i ]
   ret ptr %.1.i
 }
 
@@ -551,7 +551,6 @@ bb.k:                                             ; preds = %bb.j
 
 ZSTD_frameHeaderSize_internal.exit:               ; preds = %bb.g, %ZSTD_frameHeaderSize_internal.exit139
   %.sink166.in = phi ptr [ %i.i, %ZSTD_frameHeaderSize_internal.exit139 ], [ %1, %bb.g ]
-  %.sink154 = phi i64 [ %i.b, %ZSTD_frameHeaderSize_internal.exit139 ], [ 1, %bb.g ]
   %.sink166 = load i8, ptr %.sink166.in, align 1, !tbaa !51
   %i.s = zext i8 %.sink166 to i32                 ; 3 uses
   %i.t = and i32 %i.s, 3
@@ -570,7 +569,7 @@ ZSTD_frameHeaderSize_internal.exit:               ; preds = %bb.g, %ZSTD_frameHe
   %.not15.i136 = icmp eq i32 %i.u, 0
   %narrow.i137 = and i1 %.not.i134, %.not15.i136
   %i.ae = zext i1 %narrow.i137 to i64
-  %i.af = add i64 %i.aa, %.sink154
+  %i.af = add i64 %i.aa, %i.b
   %i.ag = add i64 %i.af, %i.ad
   %i.ah = add i64 %i.ag, %i.x
   %i.ai = add i64 %i.ah, %i.ae                    ; 3 uses
@@ -973,7 +972,7 @@ ZSTD_initDCtx_internal.exit.i:                    ; preds = %bb.g, %ZSTD_cpuid.e
   br label %ZSTD_createDCtx_internal.exit
 
 ZSTD_createDCtx_internal.exit:                    ; preds = %bb.a, %ZSTD_customMalloc.exit.i, %ZSTD_initDCtx_internal.exit.i
-  %.1.i = phi ptr [ null, %bb.a ], [ %.0.i.i, %ZSTD_initDCtx_internal.exit.i ], [ null, %ZSTD_customMalloc.exit.i ]
+  %.1.i = phi ptr [ null, %bb.a ], [ null, %ZSTD_customMalloc.exit.i ], [ %.0.i.i, %ZSTD_initDCtx_internal.exit.i ]
   ret ptr %.1.i
 }
 

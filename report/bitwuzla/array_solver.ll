@@ -205,14 +205,18 @@ bb.gr:                                            ; preds = %bb.gp, %bb.go
 
 .preheader458:                                    ; preds = %bb.gr, %.noexc383
   %.sroa.06.0.in.i.i380 = phi ptr [ %.sroa.06.0.i.i381, %.noexc383 ], [ %i.au, %bb.gr ]
-  %.sroa.06.0.i.i381 = load ptr, ptr %.sroa.06.0.in.i.i380, align 8, !tbaa !69, !nonnull !120, !noundef !120 ; 3 uses
-  %26 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i381, i64 8
-  %27 = load ptr, ptr %26, align 8, !tbaa !130
-  %28 = invoke noundef zeroext i1 @_ZN4bzlaeqERKNS_4NodeES2_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %27)
+  %.sroa.06.0.i.i381 = load ptr, ptr %.sroa.06.0.in.i.i380, align 8, !tbaa !69 ; 4 uses
+  %.not.i.i382 = icmp eq ptr %.sroa.06.0.i.i381, null
+  br i1 %.not.i.i382, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader.loopexit, label %26
+
+26:                                               ; preds = %.preheader458
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i381, i64 8
+  %28 = load ptr, ptr %27, align 8, !tbaa !130
+  %29 = invoke noundef zeroext i1 @_ZN4bzlaeqERKNS_4NodeES2_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %28)
           to label %.noexc383 unwind label %.loopexit459
 
-.noexc383:                                        ; preds = %.preheader458
-  br i1 %28, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader, label %.preheader458, !llvm.loop !376
+.noexc383:                                        ; preds = %26
+  br i1 %29, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader.loopexit, label %.preheader458, !llvm.loop !376
 
 bb.gs:                                            ; preds = %bb.gr
   %i.md = invoke noundef i64 @_ZNKSt4hashIN4bzla4NodeEEclERKS1_(ptr noundef nonnull align 8 dereferenceable(56) %9, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -260,12 +264,15 @@ _ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal
   %i.mu = load ptr, ptr %.015.i.i.i.i394.sink, align 8, !tbaa !69
   br label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader
 
-_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader: ; preds = %.noexc383, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.sink.split
-  %.sroa.0424.0.ph = phi ptr [ %i.mu, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.sink.split ], [ %.sroa.06.0.i.i381, %.noexc383 ]
+_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader.loopexit: ; preds = %.preheader458, %.noexc383
+  br label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader
+
+_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader: ; preds = %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader.loopexit, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.sink.split
+  %.sroa.0424.0.ph = phi ptr [ %i.mu, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.sink.split ], [ %.sroa.06.0.i.i381, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader.loopexit ]
   br label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit
 
-_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit: ; preds = %.noexc405
-  br label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit, !llvm.loop !376
+_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit: ; preds = %.preheader, %.noexc405
+  br label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit
 
 _ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit: ; preds = %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit
   %.sroa.0424.0 = phi ptr [ %.sroa.06.0.i.i403, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit ], [ %.sroa.0424.0.ph, %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.preheader ]
@@ -293,7 +300,7 @@ _ZNK4bzla5array11ArraySolver6Access5arrayEv.exit389: ; preds = %.noexc387, %bb.g
 bb.gw:                                            ; preds = %_ZNK4bzla5array11ArraySolver6Access5arrayEv.exit389
   br i1 %i.mz, label %bb.hb, label %bb.gy
 
-.loopexit459:                                     ; preds = %.preheader458
+.loopexit459:                                     ; preds = %26
   %lpad.loopexit461 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp460
@@ -320,14 +327,18 @@ bb.gy:                                            ; preds = %bb.gw
 
 .preheader:                                       ; preds = %bb.gy, %.noexc405
   %.sroa.06.0.in.i.i402 = phi ptr [ %.sroa.06.0.i.i403, %.noexc405 ], [ %i.au, %bb.gy ]
-  %.sroa.06.0.i.i403 = load ptr, ptr %.sroa.06.0.in.i.i402, align 8, !tbaa !69, !nonnull !120, !noundef !120 ; 3 uses
-  %29 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i403, i64 8
-  %30 = load ptr, ptr %29, align 8, !tbaa !130
-  %31 = invoke noundef zeroext i1 @_ZN4bzlaeqERKNS_4NodeES2_(ptr noundef nonnull align 8 dereferenceable(8) %i.mv, ptr noundef nonnull align 8 dereferenceable(8) %30)
+  %.sroa.06.0.i.i403 = load ptr, ptr %.sroa.06.0.in.i.i402, align 8, !tbaa !69 ; 4 uses
+  %.not.i.i404 = icmp eq ptr %.sroa.06.0.i.i403, null
+  br i1 %.not.i.i404, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit, label %30
+
+30:                                               ; preds = %.preheader
+  %31 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i403, i64 8
+  %32 = load ptr, ptr %31, align 8, !tbaa !130
+  %33 = invoke noundef zeroext i1 @_ZN4bzlaeqERKNS_4NodeES2_(ptr noundef nonnull align 8 dereferenceable(8) %i.mv, ptr noundef nonnull align 8 dereferenceable(8) %32)
           to label %.noexc405 unwind label %.loopexit
 
-.noexc405:                                        ; preds = %.preheader
-  br i1 %31, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit, label %.preheader, !llvm.loop !376
+.noexc405:                                        ; preds = %30
+  br i1 %33, label %_ZNSt13unordered_mapISt17reference_wrapperIKN4bzla4NodeEES2_St4hashIS2_ESt8equal_toIS4_ESaISt4pairIKS4_S2_EEE4findERSA_.exit.loopexit, label %.preheader, !llvm.loop !376
 
 bb.gz:                                            ; preds = %bb.gy
   %i.nc = invoke noundef i64 @_ZNKSt4hashIN4bzla4NodeEEclERKS1_(ptr noundef nonnull align 8 dereferenceable(56) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.mv)
@@ -370,7 +381,7 @@ _ZNKSt8__detail15_Hashtable_baseISt17reference_wrapperIKN4bzla4NodeEESt4pairIKS5
   call void @llvm.assume(i1 %.not19.i.i.i.i398)
   br label %bb.ha
 
-.loopexit:                                        ; preds = %.preheader
+.loopexit:                                        ; preds = %30
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp460

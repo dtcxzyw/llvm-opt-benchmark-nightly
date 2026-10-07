@@ -205,10 +205,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.thread25, %ZSTD_HcFindBestMatch.exit
-  %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fi, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.ge = and i32 %i.fk, 255
-  %i.gf = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.gf = sub i32 %.0155.i.lcssa, %i.fi
   %i.gg = tail call i32 @llvm.umin.i32(i32 %i.gf, i32 %i.ge) ; 4 uses
   %.not86 = icmp eq i32 %i.gg, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
@@ -611,10 +610,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.thread25, %ZSTD_HcFindBestMatch.exit
-  %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fd, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.fz = and i32 %i.ff, 255
-  %i.ga = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.ga = sub i32 %.0155.i.lcssa, %i.fd
   %i.gb = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.fz) ; 4 uses
   %.not86 = icmp eq i32 %i.gb, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
@@ -1017,10 +1015,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.thread25, %ZSTD_HcFindBestMatch.exit
-  %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fd, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.fz = and i32 %i.ff, 255
-  %i.ga = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.ga = sub i32 %.0155.i.lcssa, %i.fd
   %i.gb = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.fz) ; 4 uses
   %.not86 = icmp eq i32 %i.gb, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
@@ -1423,10 +1420,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond127.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lm, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mi = and i32 %i.lo, 255
-  %i.mj = sub i32 %i.lj, %.1104.i.i.lcssa
+  %i.mj = sub i32 %i.lj, %i.lm
   %i.mk = tail call i32 @llvm.umin.i32(i32 %i.mj, i32 %i.mi) ; 4 uses
   %.not104 = icmp eq i32 %i.mk, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -1829,10 +1825,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond130.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lu, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mq = and i32 %i.lw, 255
-  %i.mr = sub i32 %i.lr, %.1104.i.i.lcssa
+  %i.mr = sub i32 %i.lr, %i.lu
   %i.ms = tail call i32 @llvm.umin.i32(i32 %i.mr, i32 %i.mq) ; 4 uses
   %.not104 = icmp eq i32 %i.ms, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -2235,10 +2230,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %exitcond131.not, label %._crit_edge88, label %bb.aa, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.ln, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mj = and i32 %i.lp, 255
-  %i.mk = sub i32 %i.lk, %.1104.i.i.lcssa
+  %i.mk = sub i32 %i.lk, %i.ln
   %i.ml = tail call i32 @llvm.umin.i32(i32 %i.mk, i32 %i.mj) ; 4 uses
   %.not104 = icmp eq i32 %i.ml, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -2641,10 +2635,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond127.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.ln, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mj = and i32 %i.lp, 255
-  %i.mk = sub i32 %i.lk, %.1104.i.i.lcssa
+  %i.mk = sub i32 %i.lk, %i.ln
   %i.ml = tail call i32 @llvm.umin.i32(i32 %i.mk, i32 %i.mj) ; 4 uses
   %.not104 = icmp eq i32 %i.ml, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -3047,10 +3040,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond130.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lv, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mr = and i32 %i.lx, 255
-  %i.ms = sub i32 %i.ls, %.1104.i.i.lcssa
+  %i.ms = sub i32 %i.ls, %i.lv
   %i.mt = tail call i32 @llvm.umin.i32(i32 %i.ms, i32 %i.mr) ; 4 uses
   %.not104 = icmp eq i32 %i.mt, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -3453,10 +3445,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %exitcond131.not, label %._crit_edge88, label %bb.aa, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lo, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mk = and i32 %i.lq, 255
-  %i.ml = sub i32 %i.ll, %.1104.i.i.lcssa
+  %i.ml = sub i32 %i.ll, %i.lo
   %i.mm = tail call i32 @llvm.umin.i32(i32 %i.ml, i32 %i.mk) ; 4 uses
   %.not104 = icmp eq i32 %i.mm, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -3859,10 +3850,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond127.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.ln, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mj = and i32 %i.lp, 255
-  %i.mk = sub i32 %i.lk, %.1104.i.i.lcssa
+  %i.mk = sub i32 %i.lk, %i.ln
   %i.ml = tail call i32 @llvm.umin.i32(i32 %i.mk, i32 %i.mj) ; 4 uses
   %.not104 = icmp eq i32 %i.ml, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -4265,10 +4255,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond130.not, label %._crit_edge88, label %bb.z, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lv, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mr = and i32 %i.lx, 255
-  %i.ms = sub i32 %i.ls, %.1104.i.i.lcssa
+  %i.ms = sub i32 %i.ls, %i.lv
   %i.mt = tail call i32 @llvm.umin.i32(i32 %i.ms, i32 %i.mr) ; 4 uses
   %.not104 = icmp eq i32 %i.mt, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader
@@ -4671,10 +4660,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %exitcond131.not, label %._crit_edge88, label %bb.aa, !llvm.loop !14
 
 ._crit_edge88:                                    ; preds = %.thread31, %._crit_edge78
-  %.1104.i.i.lcssa = phi i32 [ 0, %._crit_edge78 ], [ %i.lo, %.thread31 ]
   %.0100.i.i.lcssa = phi i64 [ %.3261.i, %._crit_edge78 ], [ %.2102.i.i35, %.thread31 ] ; 2 uses
   %i.mk = and i32 %i.lq, 255
-  %i.ml = sub i32 %i.ll, %.1104.i.i.lcssa
+  %i.ml = sub i32 %i.ll, %i.lo
   %i.mm = tail call i32 @llvm.umin.i32(i32 %i.ml, i32 %i.mk) ; 4 uses
   %.not104 = icmp eq i32 %i.mm, 0
   br i1 %.not104, label %ZSTD_RowFindBestMatch.exit, label %.lr.ph93.preheader

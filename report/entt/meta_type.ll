@@ -205,17 +205,17 @@ bb.bc:                                            ; preds = %_ZN7testing7Message
 define hidden void @_ZN18MetaType_Name_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
-  %2 = alloca %"class.std::basic_string_view", align 8 ; 6 uses
+  %2 = alloca %"class.std::basic_string_view", align 8 ; 7 uses
   %3 = alloca %"class.std::basic_string_view", align 8 ; 6 uses
   %4 = alloca %"class.testing::Message", align 8  ; 7 uses
   %5 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %6 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
-  %7 = alloca %"class.std::basic_string_view", align 8 ; 6 uses
+  %7 = alloca %"class.std::basic_string_view", align 8 ; 7 uses
   %8 = alloca %"class.std::basic_string_view", align 8 ; 8 uses
   %9 = alloca %"class.testing::Message", align 8  ; 7 uses
   %10 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %11 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
-  %12 = alloca %"class.std::basic_string_view", align 8 ; 6 uses
+  %12 = alloca %"class.std::basic_string_view", align 8 ; 7 uses
   %13 = alloca %"class.std::basic_string_view", align 8 ; 8 uses
   %14 = alloca %"class.testing::Message", align 8 ; 7 uses
   %15 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -245,12 +245,14 @@ _ZNK4entt9meta_type10fetch_nodeEv.exit.i:         ; preds = %bb.b, %bb.a
   %i.e = phi ptr [ %i.a, %bb.a ], [ %i.b, %bb.b ]
   %i.f = tail call noundef nonnull align 8 dereferenceable(128) ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType4baseEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE(ptr noundef nonnull align 8 dereferenceable(56) %i.e) #29
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !229  ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !229  ; 4 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %_ZNK4entt9meta_type4nameEv.exit.thread, label %_ZNK4entt9meta_type4nameEv.exit
 
 _ZNK4entt9meta_type4nameEv.exit.thread:           ; preds = %_ZNK4entt9meta_type10fetch_nodeEv.exit.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  store i64 0, ptr %2, align 8
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %i.h, ptr %21, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit.i.i
@@ -408,12 +410,14 @@ _ZNK4entt9meta_type10fetch_nodeEv.exit.i36:       ; preds = %bb.q, %bb.p
   %i.ao = phi ptr [ %i.ak, %bb.p ], [ %i.al, %bb.q ]
   %i.ap = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaType7derivedEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE(ptr noundef nonnull align 8 dereferenceable(56) %i.ao) #29
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !229 ; 5 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !229 ; 6 uses
   %i.as = icmp eq ptr %i.ar, null
   br i1 %i.as, label %_ZNK4entt9meta_type4nameEv.exit42.thread, label %_ZNK4entt9meta_type4nameEv.exit42
 
 _ZNK4entt9meta_type4nameEv.exit42.thread:         ; preds = %_ZNK4entt9meta_type10fetch_nodeEv.exit.i36
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
+  store i64 0, ptr %7, align 8
+  %22 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store ptr %i.ar, ptr %22, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #29
   store i64 7, ptr %8, align 8, !tbaa !515
   %i.at = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -587,12 +591,14 @@ _ZNK4entt9meta_type10fetch_nodeEv.exit.i69:       ; preds = %bb.af, %bb.ae
   %i.cj = phi ptr [ %i.cf, %bb.ae ], [ %i.cg, %bb.af ]
   %i.ck = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEjEERKNS0_14meta_type_nodeERKNS0_12meta_contextE(ptr noundef nonnull align 8 dereferenceable(56) %i.cj) #29
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 16
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !229 ; 4 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !229 ; 5 uses
   %i.cn = icmp eq ptr %i.cm, null
   br i1 %i.cn, label %_ZNK4entt9meta_type4nameEv.exit75.thread, label %_ZNK4entt9meta_type4nameEv.exit75
 
 _ZNK4entt9meta_type4nameEv.exit75.thread:         ; preds = %_ZNK4entt9meta_type10fetch_nodeEv.exit.i69
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  store i64 0, ptr %12, align 8
+  %23 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store ptr %i.cm, ptr %23, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
   store i64 4, ptr %13, align 8, !tbaa !515
   %i.co = getelementptr inbounds nuw i8, ptr %13, i64 8

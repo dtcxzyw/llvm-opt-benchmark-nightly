@@ -205,7 +205,7 @@ middle.block511:                                  ; preds = %vector.body502
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !259
   store double %i.ek, ptr %i.em, align 8, !tbaa !155
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 504 ; 5 uses
-  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !248 ; 8 uses
+  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !248 ; 9 uses
   %.not15.i71 = icmp eq ptr %i.eo, null
   br i1 %.not15.i71, label %.lr.ph23.preheader.i79, label %.lr.ph.i73.preheader
 
@@ -320,7 +320,6 @@ middle.block529:                                  ; preds = %vector.body522
   br i1 %exitcond.not.i77.7, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit80, label %.lr.ph.i73, !llvm.loop !419
 
 _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit80:     ; preds = %.lr.ph.i73.prol.loopexit, %.lr.ph.i73, %middle.block529, %.lr.ph23.preheader.i79
-  %3 = phi ptr [ null, %.lr.ph23.preheader.i79 ], [ %i.eo, %middle.block529 ], [ %i.eo, %.lr.ph.i73 ], [ %i.eo, %.lr.ph.i73.prol.loopexit ] ; 4 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 584
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !258 ; 7 uses
   %.not236 = icmp eq ptr %i.gg, null
@@ -664,7 +663,7 @@ _ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split: ; preds = %.prehead
 _ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104: ; preds = %.lr.ph.i99.prol.loopexit, %.lr.ph.i99, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split, %middle.block610, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit96
   %i.le = phi ptr [ %i.la, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split ], [ %i.el, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit96 ], [ %i.el, %middle.block610 ], [ %i.el, %.lr.ph.i99 ], [ %i.el, %.lr.ph.i99.prol.loopexit ]
   %i.lf = phi ptr [ %i.lc, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split ], [ %i.en, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit96 ], [ %i.en, %middle.block610 ], [ %i.en, %.lr.ph.i99 ], [ %i.en, %.lr.ph.i99.prol.loopexit ]
-  %i.lg = phi ptr [ %i.ld, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split ], [ %3, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit96 ], [ %3, %middle.block610 ], [ %3, %.lr.ph.i99 ], [ %3, %.lr.ph.i99.prol.loopexit ]
+  %i.lg = phi ptr [ %i.ld, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit104.sink.split ], [ %i.eo, %_ZN6casadi11casadi_axpyIdEEvxT_PKS1_PS1_.exit96 ], [ %i.eo, %middle.block610 ], [ %i.eo, %.lr.ph.i99 ], [ %i.eo, %.lr.ph.i99.prol.loopexit ]
   tail call void @_ZNK6casadi17Feasiblesqpmethod26anderson_acc_update_memoryEPvPdS2_(ptr noundef nonnull align 8 dereferenceable(2448) %0, ptr noundef nonnull %1, ptr noundef %i.e, ptr noundef %i.lg)
   %i.lh = load i64, ptr %i.g, align 8, !tbaa !158 ; 15 uses
   %i.li = load ptr, ptr %i.d, align 8, !tbaa !246 ; 7 uses

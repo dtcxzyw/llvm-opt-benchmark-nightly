@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %_ZNK7AstNode5widthE
 
 _ZN7AstNode4castI13AstNodeVarRef11AstNodeExprEEPT_PT0_.exit: ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !117  ; 7 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !117  ; 6 uses
   %.not.i115 = icmp eq ptr %i.x, null
   br i1 %.not.i115, label %.thread, label %bb.j
 
@@ -212,7 +212,7 @@ bb.j:                                             ; preds = %_ZN7AstNode4castI13
   %.not229 = icmp eq i16 %.sroa.0.0.copyload.i.i.i116, 121 ; 2 uses
   %i.z = add i16 %.sroa.0.0.copyload.i.i.i116, -279
   %spec.select.i.i121 = icmp ult i16 %i.z, 4
-  %spec.select.i122 = select i1 %spec.select.i.i121, ptr %i.x, ptr null ; 11 uses
+  %spec.select.i122 = select i1 %spec.select.i.i121, ptr %i.x, ptr null ; 3 uses
   br i1 %.not229, label %_ZN7AstNode4castI10AstNodeSel11AstNodeExprEEPT_PT0_.exit123, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -615,7 +615,6 @@ bb.aw:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %bb.ck
 
 _ZNK7AstNode6isSameEPKS_.exit.thread:             ; preds = %bb.u, %bb.p, %bb.q, %bb.r, %bb.t, %_ZNK7AstNode6isSameEPKS_.exit, %bb.v, %bb.w, %bb.y, %bb.aa
-  %17 = phi ptr [ %spec.select.i122, %bb.p ], [ %spec.select.i122, %bb.q ], [ %spec.select.i122, %bb.r ], [ %spec.select.i122, %bb.t ], [ %spec.select.i122, %_ZNK7AstNode6isSameEPKS_.exit ], [ null, %bb.v ], [ %i.x, %bb.w ], [ %spec.select.i122, %bb.y ], [ %spec.select.i122, %bb.aa ], [ %spec.select.i122, %bb.u ]
   %i.fq = tail call noundef i32 @_ZL5debugv()
   %i.fr = icmp sgt i32 %i.fq, 8
   br i1 %i.fr, label %bb.ax, label %bb.bn, !prof !11
@@ -865,7 +864,6 @@ bb.bn:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %_ZN7AstNode4castI10AstNodeSel11AstNodeExprEEPT_PT0_.exit123
-  %18 = phi ptr [ %17, %bb.bn ], [ %spec.select.i122, %_ZN7AstNode4castI10AstNodeSel11AstNodeExprEEPT_PT0_.exit123 ]
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.iq = load ptr, ptr %i.ip, align 8, !tbaa !137 ; 4 uses
@@ -941,7 +939,7 @@ _ZNSt6vectorIP13AstNodeAssignSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.bp, %_
   store ptr %i.jq, ptr %i.jr, align 8, !tbaa !194
   store ptr %i.e, ptr %i.as, align 8, !tbaa !131
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store ptr %18, ptr %i.js, align 8, !tbaa !138
+  store ptr %spec.select.i122, ptr %i.js, align 8, !tbaa !138
   %i.jt = getelementptr inbounds nuw i8, ptr %0, i64 120
   store ptr %i.t, ptr %i.jt, align 8, !tbaa !195
   %i.ju = getelementptr inbounds nuw i8, ptr %0, i64 128

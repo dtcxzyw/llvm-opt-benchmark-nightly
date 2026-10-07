@@ -204,8 +204,8 @@ _ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEEC2IPKlEET_S9_mRKS1_RKS3_RKS4
 
 bb.cg:                                            ; preds = %bb.ch, %.lr.ph695.split.us
   %.sroa.06.0.in.i.i.us = phi ptr [ %i.aeh, %.lr.ph695.split.us ], [ %.sroa.06.0.i.i.us, %bb.ch ]
-  %.sroa.06.0.i.i.us = load ptr, ptr %.sroa.06.0.in.i.i.us, align 8, !tbaa !40 ; 3 uses
-  %i.afd = icmp eq ptr %.sroa.06.0.i.i.us, null   ; 2 uses
+  %.sroa.06.0.i.i.us = load ptr, ptr %.sroa.06.0.in.i.i.us, align 8, !tbaa !40 ; 4 uses
+  %i.afd = icmp eq ptr %.sroa.06.0.i.i.us, null
   br i1 %i.afd, label %_ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit.loopexit.us, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
@@ -215,7 +215,8 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.afg, label %_ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit.loopexit.us, label %bb.cg, !llvm.loop !71
 
 _ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit.loopexit.us: ; preds = %bb.ch, %bb.cg
-  %i.afh = zext i1 %i.afd to i32
+  %13 = icmp eq ptr %.sroa.06.0.i.i.us, null
+  %i.afh = zext i1 %13 to i32
   %spec.select.us = add nuw nsw i32 %.0694.us, %i.afh ; 2 uses
   %i.afi = load ptr, ptr %.sroa.0424.0693.us, align 8, !tbaa !40 ; 2 uses
   %i.afj = icmp eq ptr %i.afi, null
@@ -330,7 +331,7 @@ bb.cn:                                            ; preds = %bb.co
 
 .lr.ph.i.i.i.i335:                                ; preds = %bb.cm, %bb.cn
   %.020.i.i.i.i = phi ptr [ %i.agq, %bb.cn ], [ %i.agl, %bb.cm ]
-  %i.agq = load ptr, ptr %.020.i.i.i.i, align 8, !tbaa !40 ; 4 uses
+  %i.agq = load ptr, ptr %.020.i.i.i.i, align 8, !tbaa !40 ; 5 uses
   %.not18.i.i.i.i = icmp eq ptr %i.agq, null
   br i1 %.not18.i.i.i.i, label %_ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit, label %bb.co
 
@@ -345,7 +346,7 @@ bb.co:                                            ; preds = %.lr.ph.i.i.i.i335
   br label %_ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit, !llvm.loop !73
 
 _ZNSt13unordered_setIlSt4hashIlESt8equal_toIlESaIlEE4findERKl.exit: ; preds = %.lr.ph.i.i.i.i335, %bb.cn, %..loopexit_crit_edge21.i.i.i.i, %bb.cm, %.lr.ph695.split
-  %.sroa.06.1.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i ], [ null, %.lr.ph695.split ], [ %i.agl, %bb.cm ], [ %i.agq, %bb.cn ], [ null, %.lr.ph.i.i.i.i335 ]
+  %.sroa.06.1.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i ], [ null, %.lr.ph695.split ], [ %i.agl, %bb.cm ], [ %i.agq, %bb.cn ], [ %i.agq, %.lr.ph.i.i.i.i335 ]
   %i.agu = icmp eq ptr %.sroa.06.1.i.i, null
   %i.agv = zext i1 %i.agu to i32
   %spec.select = add nuw nsw i32 %.0694, %i.agv   ; 2 uses

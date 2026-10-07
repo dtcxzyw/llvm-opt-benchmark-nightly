@@ -202,17 +202,13 @@ _ZN7rocksdb13AlignedBuffer7ReleaseEv.exit:        ; preds = %_ZN7rocksdb12BlockF
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %34, ptr noundef nonnull align 8 dereferenceable(40) %i.ald, i64 16, i1 false), !tbaa.struct !290
   store ptr %i.alc, ptr %i.ale, align 8, !tbaa !141, !alias.scope !312
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.alb, i8 0, i64 16, i1 false), !noalias !312
-  %i.alf = getelementptr inbounds nuw i8, ptr %34, i64 32 ; 3 uses
+  %i.alf = getelementptr inbounds nuw i8, ptr %34, i64 32 ; 2 uses
   %i.alg = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
   %i.alh = load i64, ptr %i.alg, align 8, !tbaa !140, !noalias !312 ; 3 uses
   store i64 %i.alh, ptr %i.alf, align 8, !tbaa !140, !alias.scope !312
   store ptr null, ptr %i.alg, align 8, !tbaa !140, !noalias !312
   %.not.i380 = icmp eq i64 %i.alh, 0
-  br i1 %.not.i380, label %.thread587, label %bb.jv
-
-.thread587:                                       ; preds = %_ZN7rocksdb13AlignedBuffer7ReleaseEv.exit
-  store ptr null, ptr %i.alf, align 8, !tbaa !140
-  br label %bb.jx
+  br i1 %.not.i380, label %bb.jx, label %bb.jv
 
 _ZN7rocksdb13AlignedBuffer7ReleaseEv.exit.thread: ; preds = %_ZN7rocksdb12BlockFetcher31ReleaseFileSystemProvidedBufferEPNS_13FSReadRequestE.exit
   %i.ali = getelementptr inbounds nuw i8, ptr %34, i64 32 ; 2 uses
@@ -247,17 +243,20 @@ bb.jv:                                            ; preds = %_ZN7rocksdb13Aligne
 bb.jw:                                            ; preds = %bb.jv
   %i.all = getelementptr inbounds nuw i8, ptr %34, i64 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %.pre446 = load ptr, ptr %i.all, align 8, !tbaa !141 ; 2 uses
-  store ptr null, ptr %i.alf, align 8, !tbaa !140
-  %.not.i.i.i.i382 = icmp eq ptr %.pre446, null
-  br i1 %.not.i.i.i.i382, label %_ZNSt10unique_ptrIvSt8functionIFvPvEEED2Ev.exit, label %bb.jx
+  %.pre446 = load ptr, ptr %i.all, align 8, !tbaa !141
+  br label %bb.jx
 
-bb.jx:                                            ; preds = %.thread587, %bb.jw
-  %i.alm = phi ptr [ %i.alc, %.thread587 ], [ %.pre446, %bb.jw ]
-  %35 = invoke noundef zeroext i1 %i.alm(ptr noundef nonnull align 8 dereferenceable(40) %34, ptr noundef nonnull align 8 dereferenceable(40) %34, i32 noundef 3)
+bb.jx:                                            ; preds = %bb.jw, %_ZN7rocksdb13AlignedBuffer7ReleaseEv.exit
+  %i.alm = phi ptr [ %.pre446, %bb.jw ], [ %i.alc, %_ZN7rocksdb13AlignedBuffer7ReleaseEv.exit ] ; 2 uses
+  store ptr null, ptr %i.alf, align 8, !tbaa !140
+  %.not.i.i.i.i382 = icmp eq ptr %i.alm, null
+  br i1 %.not.i.i.i.i382, label %_ZNSt10unique_ptrIvSt8functionIFvPvEEED2Ev.exit, label %35
+
+35:                                               ; preds = %bb.jx
+  %36 = invoke noundef zeroext i1 %i.alm(ptr noundef nonnull align 8 dereferenceable(40) %34, ptr noundef nonnull align 8 dereferenceable(40) %34, i32 noundef 3)
           to label %_ZNSt10unique_ptrIvSt8functionIFvPvEEED2Ev.exit unwind label %bb.jy ; 0 uses
 
-bb.jy:                                            ; preds = %bb.jx
+bb.jy:                                            ; preds = %35
   %i.aln = landingpad { ptr, i32 }
           catch ptr null
   %i.alo = extractvalue { ptr, i32 } %i.aln, 0
@@ -271,7 +270,7 @@ bb.jz:                                            ; preds = %bb.jv, %bb.ju
   call void @__clang_call_terminate(ptr %i.alq) #21
   unreachable
 
-_ZNSt10unique_ptrIvSt8functionIFvPvEEED2Ev.exit:  ; preds = %.thread585, %bb.jw, %bb.jx
+_ZNSt10unique_ptrIvSt8functionIFvPvEEED2Ev.exit:  ; preds = %.thread585, %bb.jx, %35
   %i.alr = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
   %i.als = load ptr, ptr %i.alr, align 8, !tbaa !132 ; 3 uses
   store ptr null, ptr %i.alr, align 8, !tbaa !132

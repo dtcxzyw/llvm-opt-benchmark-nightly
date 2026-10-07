@@ -202,25 +202,22 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.a = tail call i64 @lv_strlen(ptr noundef nonnull %1) #10 ; 3 uses
-  %2 = icmp eq i64 %i.a, 0
+  %2 = icmp ne i64 %i.a, 0
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !28   ; 3 uses
-  br i1 %2, label %3, label %._crit_edge
-
-3:                                                ; preds = %bb.c
   %.not21 = icmp eq ptr %i.c, null
-  br i1 %.not21, label %._crit_edge, label %bb.d
+  %or.cond = select i1 %2, i1 true, i1 %.not21
+  br i1 %or.cond, label %._crit_edge, label %bb.d
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.c
   tail call void @lv_free(ptr noundef nonnull %i.c) #10
   store ptr null, ptr %i.b, align 8, !tbaa !28
   br label %bb.f
 
-._crit_edge:                                      ; preds = %bb.c, %3
-  %4 = phi ptr [ null, %3 ], [ %i.c, %bb.c ]
+._crit_edge:                                      ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.e = add i64 %i.a, 1
-  %i.f = tail call ptr @lv_realloc(ptr noundef %4, i64 noundef %i.e) #10 ; 3 uses
+  %i.f = tail call ptr @lv_realloc(ptr noundef %i.c, i64 noundef %i.e) #10 ; 3 uses
   store ptr %i.f, ptr %i.d, align 8, !tbaa !28
   %.not22 = icmp eq ptr %i.f, null
   br i1 %.not22, label %.preheader24, label %bb.e

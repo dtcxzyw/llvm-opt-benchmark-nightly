@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 .preheader223.i:                                  ; preds = %.noexc.i67, %bb.v
   %.sroa.0.0.in.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i.i.i, %bb.v ], [ %i.e, %.noexc.i67 ]
-  %.sroa.0.0.i.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i.i, align 8, !tbaa !214 ; 4 uses
+  %.sroa.0.0.i.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i.i, align 8, !tbaa !214 ; 5 uses
   %.not27.i.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i.i, null
   br i1 %.not27.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %bb.v
 
@@ -217,7 +217,7 @@ bb.v:                                             ; preds = %.preheader223.i
   br i1 %i.bs, label %.loopexit.i.i.i.i.i, label %.preheader223.i, !llvm.loop !1
 
 .loopexit.i.i.i.i.i:                              ; preds = %bb.v, %.preheader223.i, %.noexc.i67
-  %.sroa.019.3.i.i.i.i.i.i = phi ptr [ null, %.noexc.i67 ], [ null, %.preheader223.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.v ]
+  %.sroa.019.3.i.i.i.i.i.i = phi ptr [ null, %.noexc.i67 ], [ %.sroa.0.0.i.i.i.i.i.i, %.preheader223.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.v ]
   %i.bt = invoke ptr @_ZNSt10_HashtableIiSt4pairIKiSt6vectorIiSaIiEEESaIS5_ENSt8__detail10_Select1stESt8equal_toIiESt4hashIiENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS7_10_Hash_nodeIS5_Lb0EEEmSL_(ptr noundef nonnull align 8 dereferenceable(56) %12, ptr noundef %.sroa.019.3.i.i.i.i.i.i, i64 noundef %indvars.iv.i, ptr noundef nonnull %i.bl)
           to label %_ZNSt6vectorIiSaIiEED2Ev.exit63.i unwind label %bb.w ; 0 uses
 
@@ -620,7 +620,7 @@ bb.bc:                                            ; preds = %bb.az
 
 .preheader218.i:                                  ; preds = %.noexc83.i, %bb.bd
   %.sroa.0.0.in.i.i.i.i.i80.i = phi ptr [ %.sroa.0.0.i.i.i.i.i81.i, %bb.bd ], [ %i.e, %.noexc83.i ]
-  %.sroa.0.0.i.i.i.i.i81.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i80.i, align 8, !tbaa !214 ; 4 uses
+  %.sroa.0.0.i.i.i.i.i81.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i80.i, align 8, !tbaa !214 ; 5 uses
   %.not27.i.i.i.i.i82.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i81.i, null
   br i1 %.not27.i.i.i.i.i82.i, label %.loopexit.i.i.i.i77.i, label %bb.bd
 
@@ -631,7 +631,7 @@ bb.bd:                                            ; preds = %.preheader218.i
   br i1 %i.gh, label %.loopexit.i.i.i.i77.i, label %.preheader218.i, !llvm.loop !1
 
 .loopexit.i.i.i.i77.i:                            ; preds = %bb.bd, %.preheader218.i, %.noexc83.i
-  %.sroa.019.3.i.i.i.i.i78.i = phi ptr [ null, %.noexc83.i ], [ null, %.preheader218.i ], [ %.sroa.0.0.i.i.i.i.i81.i, %bb.bd ] ; 5 uses
+  %.sroa.019.3.i.i.i.i.i78.i = phi ptr [ null, %.noexc83.i ], [ %.sroa.0.0.i.i.i.i.i81.i, %.preheader218.i ], [ %.sroa.0.0.i.i.i.i.i81.i, %bb.bd ] ; 5 uses
   %.sroa.4.3.i.i.i.i.i79.i = sext i32 %.pre38.i.i.i.i.i.i to i64
   %i.gi = load i64, ptr %i.g, align 8, !tbaa !222
   %i.gj = load i64, ptr %i.d, align 8, !tbaa !209
@@ -1034,7 +1034,7 @@ _ZNSt6vectorIiSaIiEEC2IN9__gnu_cxx17__normal_iteratorIPKiS1_EEvEET_S8_RKS0_.exit
 
 .preheader:                                       ; preds = %.noexc, %bb.o
   %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i.i, %bb.o ], [ %i.e, %.noexc ]
-  %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !214 ; 4 uses
+  %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !214 ; 5 uses
   %.not27.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
   br i1 %.not27.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.o
 
@@ -1045,7 +1045,7 @@ bb.o:                                             ; preds = %.preheader
   br i1 %i.bb, label %.loopexit.i.i.i.i, label %.preheader, !llvm.loop !1
 
 .loopexit.i.i.i.i:                                ; preds = %bb.o, %.preheader, %.noexc
-  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc ], [ %.sroa.0.0.i.i.i.i.i, %bb.o ], [ null, %.preheader ]
+  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc ], [ %.sroa.0.0.i.i.i.i.i, %.preheader ], [ %.sroa.0.0.i.i.i.i.i, %bb.o ]
   %.sroa.4.3.i.i.i.i.i = sext i32 %i.ah to i64
   %i.bc = invoke ptr @_ZNSt10_HashtableIiSt4pairIKiSt6vectorIiSaIiEEESaIS5_ENSt8__detail10_Select1stESt8equal_toIiESt4hashIiENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS7_10_Hash_nodeIS5_Lb0EEEmSL_(ptr noundef nonnull align 8 dereferenceable(56) %i.d, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.at)
           to label %_ZNSt6vectorIiSaIiEED2Ev.exit unwind label %.body31.thread ; 0 uses
@@ -1448,8 +1448,7 @@ bb.e:                                             ; preds = %_ZNSt12_Vector_base
   br i1 %i.r, label %_ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit.sink.split, label %_ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit
 
 _ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit.sink.split: ; preds = %bb.e, %_ZNSt12_Vector_baseI16llama_token_dataSaIS0_EE11_M_allocateEm.exit.i
-  %.sink = phi i64 [ %i.f, %_ZNSt12_Vector_baseI16llama_token_dataSaIS0_EE11_M_allocateEm.exit.i ], [ 12, %bb.e ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.p, ptr noundef nonnull align 4 dereferenceable(1) %i.c, i64 %.sink, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.p, ptr align 4 %i.c, i64 %i.f, i1 false)
   br label %_ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit
 
 _ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit: ; preds = %_ZNSt6vectorI16llama_token_dataSaIS0_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS0_S2_EEEEPS0_mT_SA_.exit.sink.split, %bb.e

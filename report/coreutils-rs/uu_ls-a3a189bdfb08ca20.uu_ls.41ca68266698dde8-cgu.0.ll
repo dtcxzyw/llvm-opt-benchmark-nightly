@@ -205,7 +205,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCs5EcwQX7phGK_5uu_
   %i.ar = load i64, ptr %i.f, align 8, !range !15, !noalias !703, !noundef !4 ; 2 uses
   %.not3.i.i.i.i.i.i.i = icmp eq i64 %i.ar, -1
   %i.as = load ptr, ptr %i.aa, align 8, !noalias !706 ; 2 uses
-  %i.at = load i64, ptr %i.ab, align 8, !noalias !706 ; 8 uses
+  %i.at = load i64, ptr %i.ab, align 8, !noalias !706 ; 7 uses
   br i1 %.not3.i.i.i.i.i.i.i, label %bb.l, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread7.i.i.i.i.i.i.i
 
 bb.j:                                             ; preds = %bb.g
@@ -247,7 +247,6 @@ bb.p:                                             ; preds = %bb.n
   br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread7.i.i.i.i.i.i.i
 
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread7.i.i.i.i.i.i.i: ; preds = %bb.p, %bb.m, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCs5EcwQX7phGK_5uu_ls.exit.i.i.i.i.i.i.i
-  %.sroa.6.0.i.i.i.i.i.i = phi i64 [ 0, %bb.m ], [ %i.at, %bb.p ], [ %i.at, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCs5EcwQX7phGK_5uu_ls.exit.i.i.i.i.i.i.i ]
   %.sroa.5.0.i.i.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.m ], [ %i.ax, %bb.p ], [ %i.as, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCs5EcwQX7phGK_5uu_ls.exit.i.i.i.i.i.i.i ]
   %.sroa.01.0.i.i.i.i.i.i = phi i64 [ 0, %bb.m ], [ %i.at, %bb.p ], [ %i.ar, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCs5EcwQX7phGK_5uu_ls.exit.i.i.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !703
@@ -263,7 +262,7 @@ _RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map12map_try_foldNtNtCs5EcwQX7phG
   %.sroa.4.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.015.i.i.i.i.i, i64 8
   store ptr %.sroa.5.0.i.i.i.i.i.i, ptr %.sroa.4.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !711
   %.sroa.4.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.015.i.i.i.i.i, i64 16
-  store i64 %.sroa.6.0.i.i.i.i.i.i, ptr %.sroa.4.sroa.5.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !711
+  store i64 %i.at, ptr %.sroa.4.sroa.5.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !711
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.4.015.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ad, %.sroa.659.0.copyload
   br i1 %.not.i.i.i.i.i, label %_RNvXs0_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB7_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB26_12display_gridB1D_E0EINtB5_18SpecInPlaceCollectNtNtB9_6string6StringBP_E16collect_in_placeB28_.exit.i.i, label %bb.g
@@ -666,7 +665,7 @@ bb.mg:                                            ; preds = %bb.mf, %bb.md
   call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4256.0.ph.i, i64 %i.bbl) #39, !noalias !8256
   unreachable
 
-_RNvXst_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringINtNtNtCs6JMX4GRUq9U_4core3ops5arith3AddReE3add.exit.i: ; preds = %bb.mh, %bb.me
+_RNvXst_NtCs7tKScEop1B6_5alloc6stringNtB5_6StringINtNtNtCs6JMX4GRUq9U_4core3ops5arith3AddReE3add.exit.i: ; preds = %bb.me, %bb.mh
   %i.bbp = phi ptr [ %i.bbn, %bb.mh ], [ inttoptr (i64 1 to ptr), %bb.me ]
   store i64 %i.bbl, ptr %i.bc, align 8, !noalias !8257
   %.sroa.468.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
@@ -1069,7 +1068,7 @@ _RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread.i.i: ; 
   %i.bmx = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.bmy = load ptr, ptr %i.bmx, align 8, !noalias !8329 ; 2 uses
   %i.bmz = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
-  %i.bna = load i64, ptr %i.bmz, align 8, !noalias !8329 ; 8 uses
+  %i.bna = load i64, ptr %i.bmz, align 8, !noalias !8329 ; 7 uses
   br i1 %.not110.i.i, label %bb.ou, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i
 
 _RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread116.i.i: ; preds = %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.i.i, %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.i.i, %.split.i.i740, %.split118.i.i, %.split118.i.i, %bb.ot, %bb.os, %bb.os, %bb.os, %.split122.i.i, %bb.or, %bb.or, %bb.or, %bb.or, %.split123.i.i, %.split121.i.i, %.split121.i.i, %.split124.i.i, %.split125.i.i, %.split120.i.i, %.split119.i.i, %.split119.i.i
@@ -1107,13 +1106,12 @@ bb.oy:                                            ; preds = %bb.ow
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i: ; preds = %bb.oy, %bb.ov, %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread.i.i
   %.sroa.079.0.i.i = phi i64 [ 0, %bb.ov ], [ %i.bna, %bb.oy ], [ %i.bmw, %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread.i.i ]
   %.sroa.3.0.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.ov ], [ %i.bnf, %bb.oy ], [ %i.bmy, %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread.i.i ]
-  %.sroa.483.0.i.i = phi i64 [ 0, %bb.ov ], [ %i.bna, %bb.oy ], [ %i.bna, %_RNvNtCs5EcwQX7phGK_5uu_ls6colors25is_valid_ls_colors_prefix.exit.thread.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !8329
   %i.bnh = ptrtoint ptr %.sroa.3.0.i.i to i64
   br label %.loopexit1332
 
 .loopexit1332:                                    ; preds = %bb.oo, %bb.op, %bb.oz, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i
-  %.sroa.19.1 = phi i64 [ %.sroa.483.0.i.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i ], [ %.sroa.594.0.copyload.i.i, %bb.oz ], [ undef, %bb.op ], [ undef, %bb.oo ]
+  %.sroa.19.1 = phi i64 [ %i.bna, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i ], [ %.sroa.594.0.copyload.i.i, %bb.oz ], [ undef, %bb.op ], [ undef, %bb.oo ]
   %.sroa.151095.1 = phi i64 [ %i.bnh, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i ], [ %i.bnd, %bb.oz ], [ undef, %bb.op ], [ undef, %bb.oo ]
   %.sroa.01094.1 = phi i64 [ %.sroa.079.0.i.i, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs5EcwQX7phGK_5uu_ls.exit.thread131.i.i ], [ %i.bnc, %bb.oz ], [ -1, %bb.op ], [ -1, %bb.oo ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !8329

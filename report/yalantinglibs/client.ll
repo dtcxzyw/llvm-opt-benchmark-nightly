@@ -205,8 +205,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !616  ; 2 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !616
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 2 uses
-  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null    ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 3 uses
+  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.not.i.i.i, label %_ZN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEUlT_E_St10error_codeEC2EOSK_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -234,7 +234,8 @@ bb.c:                                             ; preds = %_ZN4asio6detail7bin
   br i1 %1, label %bb.d, label %_ZN27asio_handler_invoke_helpers6invokeIN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS1_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEUlT_E_St10error_codeEESM_EEvRSJ_RT0_.exit
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %.not.i.i.not.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEUlT_E_St10error_codeEESJ_SK_EEvRSI_PNS2_IT0_T1_EE.exit.i
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.g, null
+  br i1 %.not.i.i.i.i.i.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEEUlT_E_St10error_codeEESJ_SK_EEvRSI_PNS2_IT0_T1_EE.exit.i
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt25__throw_bad_function_callv() #53
@@ -637,8 +638,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !616  ; 2 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !616
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 2 uses
-  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null    ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 3 uses
+  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.not.i.i.i, label %_ZN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E_St10error_codeEC2EOSP_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -669,7 +670,8 @@ bb.c:                                             ; preds = %_ZN4asio6detail7bin
   br i1 %1, label %bb.d, label %_ZN27asio_handler_invoke_helpers6invokeIN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS1_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E_St10error_codeEESR_EEvRSM_RT0_.exit
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %.not.i.i.not.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E_St10error_codeEESO_SP_EEvRSL_PNS2_IT0_T1_EE.exit.i
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.g, null
+  br i1 %.not.i.i.i.i.i.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E_St10error_codeEESO_SP_EEvRSL_PNS2_IT0_T1_EE.exit.i
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt25__throw_bad_function_callv() #53
@@ -1072,8 +1074,8 @@ bb.c:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !616  ; 2 uses
   store ptr %i.i, ptr %i.g, align 8, !tbaa !616
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !617  ; 2 uses
-  %.not.i.i.not.i.i = icmp eq ptr %i.k, null      ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !617  ; 3 uses
+  %.not.i.i.not.i.i = icmp eq ptr %i.k, null
   br i1 %.not.i.i.not.i.i, label %_ZN4asio6detail7binder0ISt8functionIFvvEEEC2EOS5_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -1105,7 +1107,8 @@ _ZN4asio6detail17executor_function4implINS0_7binder0ISt8functionIFvvEEEESaIvEE3p
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, i8 0, i64 24, i1 false)
   store ptr %i.i, ptr %i.t, align 8, !tbaa !616
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  br i1 %.not.i.i.not.i.i, label %bb.g, label %bb.f
+  %.not.i.i.not.i.i.i.i = icmp eq ptr %i.k, null
+  br i1 %.not.i.i.not.i.i.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.noexc
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 24
@@ -1508,8 +1511,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !616  ; 2 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !616
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 2 uses
-  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null    ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !617  ; 3 uses
+  %.not.i.i.not.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.not.i.i.i, label %_ZN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E0_St10error_codeEC2EOSP_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1540,7 +1543,8 @@ bb.c:                                             ; preds = %_ZN4asio6detail7bin
   br i1 %1, label %bb.d, label %_ZN27asio_handler_invoke_helpers6invokeIN4asio6detail7binder1IZN7coro_io15ExecutorWrapperINS1_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E0_St10error_codeEESR_EEvRSM_RT0_.exit
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %.not.i.i.not.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E0_St10error_codeEESO_SP_EEvRSL_PNS2_IT0_T1_EE.exit.i
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.g, null
+  br i1 %.not.i.i.i.i.i.i.i.i, label %bb.e, label %_ZN4asio6detail19asio_handler_invokeINS0_7binder1IZN7coro_io15ExecutorWrapperINS_10io_context19basic_executor_typeISaIvELm0EEEE8scheduleESt8functionIFvvEENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEEmPN12async_simple4SlotEEUlRKT_E0_St10error_codeEESO_SP_EEvRSL_PNS2_IT0_T1_EE.exit.i
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt25__throw_bad_function_callv() #53
@@ -1943,7 +1947,7 @@ bb.o:                                             ; preds = %bb.l
   br label %bb.g, !llvm.loop !4466
 
 .thread134:                                       ; preds = %bb.f, %bb.c, %.thread139, %.thread136, %bb.n
-  %.9 = phi ptr [ %i.v, %bb.f ], [ null, %.thread136 ], [ null, %bb.n ], [ %i.bx, %.thread139 ], [ %i.v, %bb.c ]
+  %.9 = phi ptr [ %i.v, %bb.f ], [ null, %.thread136 ], [ %i.bx, %.thread139 ], [ null, %bb.n ], [ %i.v, %bb.c ]
   ret ptr %.9
 }
 
@@ -2346,7 +2350,7 @@ bb.o:                                             ; preds = %bb.l
   br label %bb.g, !llvm.loop !4636
 
 .thread134:                                       ; preds = %bb.f, %bb.c, %.thread139, %.thread136, %bb.n
-  %.9 = phi ptr [ %i.v, %bb.f ], [ null, %.thread136 ], [ null, %bb.n ], [ %i.bx, %.thread139 ], [ %i.v, %bb.c ]
+  %.9 = phi ptr [ %i.v, %bb.f ], [ null, %.thread136 ], [ %i.bx, %.thread139 ], [ null, %bb.n ], [ %i.v, %bb.c ]
   ret ptr %.9
 }
 
@@ -2749,7 +2753,7 @@ bb.n:                                             ; preds = %_ZN7easylog8record_
   br label %.body
 
 _ZN7easylog8record_tD2Ev.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZN7easylog6loggerILm0EE8instanceEv.exit, %_ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i
-  %i.bl = tail call noalias noundef dereferenceable_or_null(264) ptr @_ZnamRKSt9nothrow_t(i64 noundef 264, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #54, !inline_history !9261 ; 10 uses
+  %i.bl = tail call noalias noundef dereferenceable_or_null(264) ptr @_ZnamRKSt9nothrow_t(i64 noundef 264, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #54, !inline_history !9261 ; 13 uses
   %i.bm = icmp eq ptr %i.bl, null
   br i1 %i.bm, label %._ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit_crit_edge, label %AfterCoroSuspend.i.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i
 
@@ -2780,10 +2784,9 @@ AfterCoroSuspend.i.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvL
 
 _ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit: ; preds = %._ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit_crit_edge, %AfterCoroSuspend.i.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i
   %.reload189 = phi ptr [ %.reload, %AfterCoroSuspend.i.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i ], [ %.reload189.pre, %._ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit_crit_edge ]
-  %.sroa.082.0 = phi ptr [ %i.bl, %AfterCoroSuspend.i.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i ], [ null, %._ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit_crit_edge ] ; 4 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.reload189, i64 16
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !1539
-  %i.br = tail call noalias noundef dereferenceable_or_null(216) ptr @_ZnamRKSt9nothrow_t(i64 noundef 216, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #54, !inline_history !9262 ; 10 uses
+  %i.br = tail call noalias noundef dereferenceable_or_null(216) ptr @_ZnamRKSt9nothrow_t(i64 noundef 216, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #54, !inline_history !9262 ; 13 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %_ZN7coro_io9sleep_forINSt6chrono8durationIlSt5ratioILl1ELl1EEEENS_15ExecutorWrapperIN4asio10io_context19basic_executor_typeISaIvELm0EEEEEEEN12async_simple4coro4LazyIbEET_PT0_.exit, label %AfterCoroSuspend.i35.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i38
 
@@ -2806,7 +2809,6 @@ AfterCoroSuspend.i35.from..from._ZN12async_simple4coro6detail16PromiseAllocatorI
   br label %_ZN7coro_io9sleep_forINSt6chrono8durationIlSt5ratioILl1ELl1EEEENS_15ExecutorWrapperIN4asio10io_context19basic_executor_typeISaIvELm0EEEEEEEN12async_simple4coro4LazyIbEET_PT0_.exit
 
 _ZN7coro_io9sleep_forINSt6chrono8durationIlSt5ratioILl1ELl1EEEENS_15ExecutorWrapperIN4asio10io_context19basic_executor_typeISaIvELm0EEEEEEEN12async_simple4coro4LazyIbEET_PT0_.exit: ; preds = %AfterCoroSuspend.i35.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i38, %_ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit
-  %.sroa.080.0 = phi ptr [ %i.br, %AfterCoroSuspend.i35.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i38 ], [ null, %_ZN7coro_io8async_ioISt4pairISt10error_codemEZNS_6detail24ib_socket_shared_state_t8shutdownEvEUlOT_E_S5_EEN12async_simple4coro4LazyIS6_EET0_RT1_.exit ] ; 4 uses
   %i.bv = tail call noalias noundef dereferenceable_or_null(320) ptr @_ZnamRKSt9nothrow_t(i64 noundef 320, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #54, !inline_history !9263 ; 12 uses
   %i.bw = icmp eq ptr %i.bv, null
   br i1 %i.bw, label %bb.o, label %.from..from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i41
@@ -2818,10 +2820,10 @@ _ZN7coro_io9sleep_forINSt6chrono8durationIlSt5ratioILl1ELl1EEEENS_15ExecutorWrap
   %destroy.addr.i39 = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store ptr @_ZN12async_simple4coro10collectAllILNS_10SignalTypeE1ENS0_4LazyEJSt4pairISt10error_codemEbEEENS3_ISt5tupleIJDpNS_3TryINT0_IT1_E9ValueTypeEEEEEEEDpSB_.destroy, ptr %destroy.addr.i39, align 8
   %.reload.addr92.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
-  %i.by = ptrtoint ptr %.sroa.082.0 to i64
+  %i.by = ptrtoint ptr %i.bl to i64
   %.spill.addr.i40 = getelementptr inbounds nuw i8, ptr %i.bv, i64 288
   store i64 %i.by, ptr %.spill.addr.i40, align 8
-  %i.bz = ptrtoint ptr %.sroa.080.0 to i64
+  %i.bz = ptrtoint ptr %i.br to i64
   %.spill.addr82.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 296
   store i64 %i.bz, ptr %.spill.addr82.i, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 88
@@ -2972,13 +2974,13 @@ _ZN7easylog6loggerILm0EE8instanceEv.exit55:       ; preds = %bb.aa, %bb.y, %_ZN1
 
 _ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57: ; preds = %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.from., %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.from.167
   %.pn19.pn = phi { ptr, i32 } [ %i.cg, %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.from. ], [ %i.cf, %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.from.167 ] ; 2 uses
-  %.not.i58 = icmp eq ptr %.sroa.080.0, null
+  %.not.i58 = icmp eq ptr %i.br, null
   br i1 %.not.i58, label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59, label %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.thread107
 
 _ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.thread107: ; preds = %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57
-  %i.di = getelementptr inbounds nuw i8, ptr %.sroa.080.0, i64 8
+  %i.di = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   %i.dj = load ptr, ptr %i.di, align 8
-  invoke void %i.dj(ptr nonnull %.sroa.080.0)
+  invoke void %i.dj(ptr nonnull %i.br)
           to label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59 unwind label %bb.ab, !inline_history !54
 
 bb.ab:                                            ; preds = %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.thread107
@@ -2989,13 +2991,13 @@ bb.ab:                                            ; preds = %_ZN12async_simple4c
   unreachable
 
 _ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59: ; preds = %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57.thread107, %_ZN12async_simple4coro6detail8LazyBaseISt5tupleIJNS_3TryISt4pairISt10error_codemEEENS4_IbEEEELb0EED2Ev.exit57
-  %.not.i60 = icmp eq ptr %.sroa.082.0, null
+  %.not.i60 = icmp eq ptr %i.bl, null
   br i1 %.not.i60, label %.body, label %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59.thread119
 
 _ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59.thread119: ; preds = %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59
-  %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.082.0, i64 8
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   %i.dn = load ptr, ptr %i.dm, align 8
-  invoke void %i.dn(ptr nonnull %.sroa.082.0)
+  invoke void %i.dn(ptr nonnull %i.bl)
           to label %.body unwind label %bb.ac, !inline_history !53
 
 bb.ac:                                            ; preds = %_ZN12async_simple4coro6detail8LazyBaseIbLb0EED2Ev.exit59.thread119
@@ -3398,8 +3400,8 @@ bb.ad:                                            ; preds = %.noexc51
   br i1 %.not156, label %.thread129, label %bb.z
 
 .thread129:                                       ; preds = %bb.ad, %bb.z, %bb.y
-  %.sroa.0103.2134 = phi i32 [ 0, %bb.y ], [ %.sroa.02.0.copyload.i, %bb.z ], [ 0, %bb.ad ]
-  %.sroa.7104.2133 = phi ptr [ %i.b, %bb.y ], [ %.sroa.5.0.copyload.i, %bb.z ], [ %.sroa.5.0.copyload.i, %bb.ad ]
+  %.sroa.0103.2134 = phi i32 [ %.sroa.02.0.copyload.i, %bb.z ], [ 0, %bb.y ], [ 0, %bb.ad ]
+  %.sroa.7104.2133 = phi ptr [ %.sroa.5.0.copyload.i, %bb.z ], [ %i.b, %bb.y ], [ %.sroa.5.0.copyload.i, %bb.ad ]
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.dz = load i8, ptr %i.dx, align 8, !tbaa !1229 ; 2 uses

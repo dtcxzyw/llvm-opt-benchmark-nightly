@@ -200,7 +200,6 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split, %bb.j, %bb.h
-  %9 = phi i32 [ %i.ad, %bb.j ], [ 0, %bb.h ], [ %i.ad, %.sink.split ] ; 2 uses
   %.042 = phi ptr [ %3, %bb.j ], [ %3, %bb.h ], [ %i.al, %.sink.split ] ; 2 uses
   %i.am = icmp ugt i16 %1, 1
   br i1 %i.am, label %bb.l, label %bb.n
@@ -209,7 +208,7 @@ bb.l:                                             ; preds = %bb.k
   %i.an = add i16 %1, -1
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 264
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !41
-  %i.aq = zext i32 %9 to i64
+  %i.aq = zext i32 %i.ad to i64
   %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.ap, i64 %i.aq
   %i.as = call i32 @H5B2__neighbor_internal(ptr noundef nonnull %0, i16 noundef zeroext %i.an, ptr noundef %i.ar, ptr noundef %.042, i32 noundef %4, ptr noundef nonnull %i.i, ptr noundef %6, ptr noundef %7, ptr noundef %8)
   %i.at = icmp slt i32 %i.as, 0
@@ -224,7 +223,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.k
   %i.ax = getelementptr inbounds nuw i8, ptr %i.i, i64 264
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
-  %i.az = zext i32 %9 to i64
+  %i.az = zext i32 %i.ad to i64
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.ay, i64 %i.az
   %i.bb = call i32 @H5B2__neighbor_leaf(ptr noundef nonnull %0, ptr noundef %i.ba, ptr noundef %.042, i32 noundef %4, ptr noundef nonnull %i.i, ptr noundef %6, ptr noundef %7, ptr noundef %8) #4
   %i.bc = icmp slt i32 %i.bb, 0

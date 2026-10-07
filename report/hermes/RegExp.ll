@@ -205,13 +205,12 @@ _ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit3
 
 .sink.split.i.i:                                  ; preds = %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.thread.i, %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.i
   store i32 %i.g, ptr %i.d, align 8, !tbaa !43
-  %4 = zext i32 %i.g to i64
   br label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit
 
 _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit: ; preds = %bb.a, %.sink.split.i.i
-  %5 = phi i64 [ 0, %bb.a ], [ %4, %.sink.split.i.i ]
+  %4 = zext i32 %i.g to i64
   %i.n = add i64 %i.a, 1
-  %.not = icmp ugt i64 %i.n, %5
+  %.not = icmp ugt i64 %i.n, %4
   br i1 %.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit

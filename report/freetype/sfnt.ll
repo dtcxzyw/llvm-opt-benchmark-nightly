@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge28, %bb.
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
@@ -226,15 +226,11 @@ bb.d:                                             ; preds = %._crit_edge28, %bb.
   %i.bi = or disjoint i32 %i.be, %i.bh
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv.epil.init
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !30
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader
-  %2 = and i64 %i.c, 4294967295
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.d, %._crit_edge.loopexit
-  %.0.lcssa = phi i64 [ %2, %._crit_edge.loopexit ], [ 0, %bb.d ]
-  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.0.lcssa
+._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.d
+  %2 = and i64 %i.c, 4294967295
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %2
   store i32 0, ptr %i.bk, align 4, !tbaa !30
   br label %bb.e
 

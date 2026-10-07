@@ -205,7 +205,7 @@ stbir__float_to_half.exit57:                      ; preds = %bb.t, %bb.v, %bb.w
 define ptr @stbir__decode_float_linear(ptr noundef %0, i32 noundef %1, ptr noundef %2) #0 {
 bb.a:
   %.not = icmp eq ptr %0, %2
-  %.pre = sext i32 %1 to i64                      ; 5 uses
+  %.pre = sext i32 %1 to i64                      ; 2 uses
   br i1 %.not, label %stbir_simd_memcpy.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -316,8 +316,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %bb.j, !llvm.loop !2
 
 stbir_simd_memcpy.exit:                           ; preds = %bb.k, %bb.g, %.preheader.i, %bb.a, %bb.d
-  %.pre-phi = phi i64 [ %.pre, %bb.g ], [ %.pre, %bb.a ], [ %.pre, %.preheader.i ], [ 0, %bb.d ], [ %.pre, %bb.k ]
-  %i.az = getelementptr inbounds [4 x i8], ptr %0, i64 %.pre-phi
+  %i.az = getelementptr inbounds [4 x i8], ptr %0, i64 %.pre
   ret ptr %i.az
 }
 

@@ -205,10 +205,10 @@ bb.j:                                             ; preds = %.thread.i.i
   br label %.body
 
 common.ret:                                       ; preds = %bb.k, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i.i, %.noexc
+  %.sroa.0.1.i.i4 = phi ptr [ null, %.noexc ], [ %.sroa.0.1.i.i.ph, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %bb.k ]
   %storemerge = phi i8 [ 3, %.noexc ], [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i.i ], [ 1, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i ], [ 1, %bb.k ]
-  %common.ret.op = phi ptr [ null, %.noexc ], [ %.sroa.0.1.i.i.ph, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCs9ZJqkc64Jh8_14event_listener13EventListenerECs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %_RNvXs0_NvNtCsjMQ83FLvXnF_10async_lock5mutexs2_1__INtB7_11AcquireSlowRINtB7_5MutexuEuENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCs63DIHKhvmTb_10lance_core.exit.i.i.i.i.i ], [ %.sroa.0.1.i.i.ph, %bb.k ]
   store i8 %storemerge, ptr %i.a, align 8
-  ret ptr %common.ret.op
+  ret ptr %.sroa.0.1.i.i4
 
 bb.k:                                             ; preds = %bb.i, %bb.f
   %i.aa = phi ptr [ %i.m, %bb.f ], [ %i.t, %bb.i ]
@@ -611,7 +611,6 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not9.i, label %_RNvMNtNtNtCs1akgR21QTtx_7roaring6bitmap5store11array_storeNtB2_10ArrayStore6insert.exit, label %bb.q
 
 .thread21.i:                                      ; preds = %bb.j, %_RNvMNtCscI6d9CVNmLh_4core5sliceSNtNtNtNtCs1akgR21QTtx_7roaring6bitmap5store14interval_store8Interval12split_at_mutCs63DIHKhvmTb_10lance_core.exit.i
-  %2 = phi i64 [ %i.bl, %bb.j ], [ 0, %_RNvMNtCscI6d9CVNmLh_4core5sliceSNtNtNtNtCs1akgR21QTtx_7roaring6bitmap5store14interval_store8Interval12split_at_mutCs63DIHKhvmTb_10lance_core.exit.i ]
   %i.bq = getelementptr i8, ptr %i.bk, i64 -2     ; 2 uses
   %i.br = load i16, ptr %i.bq, align 2, !noalias !13975, !noundef !24
   %i.bs = add i16 %i.br, 1
@@ -620,7 +619,7 @@ bb.l:                                             ; preds = %bb.k
 
 .thread.i1:                                       ; preds = %.thread21.i, %bb.j, %bb.h
   %.sroa.4.0.i.i1720.i = phi i64 [ %i.bi, %.thread21.i ], [ 0, %bb.j ], [ %i.av, %bb.h ] ; 2 uses
-  %i.bu = phi i64 [ %2, %.thread21.i ], [ %i.bl, %bb.j ], [ %i.av, %bb.h ]
+  %i.bu = phi i64 [ %i.bl, %.thread21.i ], [ %i.bl, %bb.j ], [ %i.av, %bb.h ]
   %i.bv = icmp ult i64 %i.av, 2305843009213693952
   tail call void @llvm.assume(i1 %i.bv)
   %i.bw = load i64, ptr %i.b, align 8, !range !39, !alias.scope !13978, !noundef !24

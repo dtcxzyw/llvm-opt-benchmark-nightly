@@ -204,10 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_RNvMs5_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_4Fuel27check_fuel_metering_enabled.exit
 
 _RNvMs5_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_4Fuel27check_fuel_metering_enabled.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0 = phi i64 [ 2, %bb.b ], [ 0, %bb.a ]
-  %2 = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
-  %3 = insertvalue { i64, i64 } %2, i64 undef, 1
-  ret { i64, i64 } %3
+  %2 = phi { i64, i64 } [ { i64 2, i64 undef }, %bb.b ], [ { i64 0, i64 undef }, %bb.a ]
+  ret { i64, i64 } %2
 }
 
 ; Function Attrs: nonlazybind uwtable

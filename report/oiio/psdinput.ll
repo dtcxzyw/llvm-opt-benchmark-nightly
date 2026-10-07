@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .preheader83:                                     ; preds = %bb.c
   %i.m = zext i32 %6 to i64                       ; 2 uses
   %.not = icmp eq i32 %6, 0
-  %.pre108 = zext i32 %5 to i64                   ; 3 uses
+  %.pre108 = zext i32 %5 to i64                   ; 2 uses
   br i1 %.not, label %._crit_edge90.split, label %.preheader82.lr.ph
 
 .preheader82.lr.ph:                               ; preds = %.preheader83
@@ -480,8 +480,7 @@ bb.g:                                             ; preds = %bb.g, %.preheader82
   br i1 %i.o, label %._crit_edge, label %.preheader82.new
 
 ._crit_edge90.split:                              ; preds = %._crit_edge, %.preheader83, %.preheader82.lr.ph
-  %.pre-phi = phi i64 [ %.pre108, %.preheader83 ], [ 0, %.preheader82.lr.ph ], [ %.pre108, %._crit_edge ]
-  tail call void @_ZN11OpenImageIO4v3_18PSDInput27float_planar_to_interleavedENS0_4spanIcLm18446744073709551615EEEmm(ptr nonnull align 8 poison, ptr %3, i64 %4, i64 noundef %.pre-phi, i64 noundef %i.m)
+  tail call void @_ZN11OpenImageIO4v3_18PSDInput27float_planar_to_interleavedENS0_4spanIcLm18446744073709551615EEEmm(ptr nonnull align 8 poison, ptr %3, i64 %4, i64 noundef %.pre108, i64 noundef %i.m)
   %i.cc = lshr i64 %4, 2                          ; 4 uses
   %.not.i61 = icmp eq i64 %i.cc, 0
   br i1 %.not.i61, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit, label %.lr.ph.i62.preheader

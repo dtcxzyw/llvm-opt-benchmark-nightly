@@ -200,7 +200,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = tail call i32 @nxrmutex_restorelock(ptr noundef nonnull %i.a, i32 noundef %1) #6 ; 2 uses
-  %2 = sub nsw i32 0, %i.b
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.d, label %pthread_mutex_add.exit
 
@@ -229,8 +228,8 @@ bb.g:                                             ; preds = %bb.e
   br label %pthread_mutex_add.exit
 
 pthread_mutex_add.exit:                           ; preds = %bb.g, %bb.d, %bb.c
-  %.0 = phi i32 [ %2, %bb.c ], [ 0, %bb.d ], [ 0, %bb.g ]
-  ret i32 %.0
+  %2 = sub nsw i32 0, %i.b
+  ret i32 %2
 }
 
 ; Function Attrs: noredzone optsize

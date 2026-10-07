@@ -202,11 +202,10 @@ bb.m:                                             ; preds = %bb.l
   br label %get_netscape_format.exit.i
 
 get_netscape_format.exit.i:                       ; preds = %bb.m, %bb.l, %.lr.ph81.i
-  %2 = phi ptr [ null, %bb.l ], [ %.pre.i.i, %bb.m ], [ %.pre.i.i, %.lr.ph81.i ] ; 2 uses
   %i.ar = phi ptr [ @.str.27, %bb.l ], [ @.str.27, %bb.m ], [ @.str.28, %.lr.ph81.i ]
   %i.as = phi ptr [ @.str.29, %bb.l ], [ %i.aq, %bb.m ], [ @.str.29, %.lr.ph81.i ]
-  %.not20.i.i = icmp eq ptr %2, null
-  %spec.select.i.i = select i1 %.not20.i.i, ptr @.str.40, ptr %2
+  %.not20.i.i = icmp eq ptr %.pre.i.i, null
+  %spec.select.i.i = select i1 %.not20.i.i, ptr @.str.40, ptr %.pre.i.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.al, i64 80
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !86 ; 2 uses
   %.not22.i.i = icmp eq ptr %i.au, null

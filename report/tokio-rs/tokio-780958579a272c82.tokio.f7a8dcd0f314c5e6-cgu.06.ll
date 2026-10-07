@@ -202,7 +202,6 @@ bb.m:                                             ; preds = %bb.l, %_RNvYNCNKNvN
   br label %.thread.i
 
 bb.n:                                             ; preds = %bb.m, %bb.k
-  %.sroa.4.0.i.i.i.i = phi i8 [ %i.ab, %bb.m ], [ 0, %bb.k ]
   %.sroa.0.0.i.i7.i.i = phi i1 [ false, %bb.m ], [ true, %bb.k ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !396
   store i24 0, ptr %i.a, align 4, !noalias !396
@@ -279,7 +278,7 @@ common.resume:                                    ; preds = %bb.ae, %bb.al, %bb.
 
 .thread8.i:                                       ; preds = %.noexc.i, %bb.o
   %.sroa.03.011.i10.off8.i = phi i8 [ %i.y, %bb.o ], [ 0, %.noexc.i ]
-  %.sroa.03.011.i10.off16.i = phi i8 [ %.sroa.4.0.i.i.i.i, %bb.o ], [ 0, %.noexc.i ]
+  %.sroa.03.011.i10.off16.i = phi i8 [ %i.ab, %bb.o ], [ 0, %.noexc.i ]
   store i8 %.sroa.03.011.i10.off8.i, ptr %i.b, align 1, !noalias !396
   store i8 %.sroa.03.011.i10.off16.i, ptr %i.m, align 1, !noalias !396
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
@@ -682,7 +681,6 @@ bb.i:                                             ; preds = %bb.h, %_RNvYNCNKNvN
   br label %.thread.i
 
 bb.j:                                             ; preds = %bb.i, %bb.g
-  %.sroa.4.0.i.i.i.i = phi i8 [ %i.ai, %bb.i ], [ 0, %bb.g ]
   %.sroa.0.0.i.i7.i.i = phi i1 [ false, %bb.i ], [ true, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !557
   store i24 0, ptr %i.a, align 4, !noalias !557
@@ -702,7 +700,7 @@ _RNvXs4_NtNtNtCslghKHtsL3a4_5tokio7runtime4task4joinINtB5_10JoinHandleTINtNtCs3o
 
 .thread8.i:                                       ; preds = %.noexc.i, %bb.k
   %.sroa.03.011.i10.off8.i = phi i8 [ %i.af, %bb.k ], [ 0, %.noexc.i ]
-  %.sroa.03.011.i10.off16.i = phi i8 [ %.sroa.4.0.i.i.i.i, %bb.k ], [ 0, %.noexc.i ]
+  %.sroa.03.011.i10.off16.i = phi i8 [ %i.ai, %bb.k ], [ 0, %.noexc.i ]
   store i8 %.sroa.03.011.i10.off8.i, ptr %i.b, align 1, !noalias !557
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i10.off16.i, ptr %i.al, align 1, !noalias !557
@@ -1105,7 +1103,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -1125,7 +1122,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread28:                                        ; preds = %.noexc, %bb.g
   %.sroa.03.011.i30.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i30.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i30.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i30.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i30.off16, ptr %i.q, align 1
@@ -1233,7 +1230,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -1253,7 +1249,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread8:                                         ; preds = %.noexc, %bb.g
   %.sroa.03.011.i10.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i10.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i10.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i10.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i10.off16, ptr %i.q, align 1
@@ -1361,7 +1357,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -1381,7 +1376,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread8:                                         ; preds = %.noexc, %bb.g
   %.sroa.03.011.i10.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i10.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i10.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i10.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i10.off16, ptr %i.q, align 1
@@ -1489,7 +1484,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -1509,7 +1503,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread28:                                        ; preds = %.noexc, %bb.g
   %.sroa.03.011.i30.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i30.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i30.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i30.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i30.off16, ptr %i.q, align 1

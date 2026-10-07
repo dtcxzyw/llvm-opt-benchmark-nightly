@@ -204,14 +204,13 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit
 
 _ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit: ; preds = %bb.j, %bb.k, %bb.l
-  %2 = phi i32 [ 0, %bb.l ], [ %i.al, %bb.k ], [ %i.al, %bb.j ] ; 2 uses
   %i.ap = load i32, ptr %i.aj, align 4, !tbaa !141 ; 2 uses
   %i.aq = and i32 %i.ap, 4095
   %i.ar = zext nneg i32 %i.aq to i64
   %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ar
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  store i32 %2, ptr %i.at, align 4, !tbaa !140
-  %i.au = and i32 %2, 4095
+  store i32 %i.al, ptr %i.at, align 4, !tbaa !140
+  %i.au = and i32 %i.al, 4095
   %i.av = zext nneg i32 %i.au to i64
   %i.aw = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.av
   store i32 %i.ap, ptr %i.aw, align 4, !tbaa !141
@@ -614,14 +613,13 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit
 
 _ZN5Darts7Details18DoubleArrayBuilder10reserve_idEj.exit: ; preds = %bb.i, %bb.j, %bb.k
-  %2 = phi i32 [ 0, %bb.k ], [ %i.z, %bb.j ], [ %i.z, %bb.i ] ; 2 uses
   %i.ad = load i32, ptr %i.x, align 4, !tbaa !141 ; 2 uses
   %i.ae = and i32 %i.ad, 4095
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = getelementptr inbounds nuw [12 x i8], ptr %i.x, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  store i32 %2, ptr %i.ah, align 4, !tbaa !140
-  %i.ai = and i32 %2, 4095
+  store i32 %i.z, ptr %i.ah, align 4, !tbaa !140
+  %i.ai = and i32 %i.z, 4095
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw [12 x i8], ptr %i.x, i64 %i.aj
   store i32 %i.ad, ptr %i.ak, align 4, !tbaa !141

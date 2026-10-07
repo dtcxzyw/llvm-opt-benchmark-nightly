@@ -28,23 +28,22 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 4, !tbaa !15
   %i.f = zext i32 %i.e to i64
   %i.g = add nuw nsw i64 %.05366, %i.f            ; 2 uses
-  %i.h = add i64 %.067, -1                        ; 5 uses
+  %i.h = add i64 %.067, -1                        ; 9 uses
   %i.i = icmp ne i64 %i.h, 0
   %i.j = icmp samesign ult i64 %i.g, 32
   %i.k = select i1 %i.i, i1 %i.j, i1 false
   br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !11
 
 ._crit_edge75:                                    ; preds = %ZS_wildcopy.exit, %._crit_edge
-  %.0.lcssa94 = phi i64 [ 0, %._crit_edge ], [ %i.h, %ZS_wildcopy.exit ] ; 5 uses
   %.058.lcssa = phi ptr [ %3, %._crit_edge ], [ %i.dj, %ZS_wildcopy.exit ]
   %.057.lcssa = phi ptr [ %0, %._crit_edge ], [ %i.da, %ZS_wildcopy.exit ]
   %.056.lcssa = phi i32 [ 0, %._crit_edge ], [ %i.bm, %ZS_wildcopy.exit ]
   %.054.lcssa = phi ptr [ %3, %._crit_edge ], [ %.05868, %ZS_wildcopy.exit ]
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0.lcssa94
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0.lcssa94
-  %i.n = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.0.lcssa94
-  %i.o = sub i64 %4, %.0.lcssa94
-  %.not.i59 = icmp eq i64 %4, %.0.lcssa94
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.h
+  %i.m = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.h
+  %i.n = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.h
+  %i.o = sub i64 %4, %i.h
+  %.not.i59 = icmp eq i64 %4, %i.h
   br i1 %.not.i59, label %ZS_encodePrefix_fallback.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge75

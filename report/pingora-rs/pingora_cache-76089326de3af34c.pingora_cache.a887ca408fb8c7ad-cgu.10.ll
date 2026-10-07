@@ -202,7 +202,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -227,7 +226,7 @@ bb.i:                                             ; preds = %bb.h
 
 .thread31:                                        ; preds = %.noexc, %bb.g
   %.sroa.03.011.i33.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i33.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i33.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i33.off8, ptr %i.b, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i33.off16, ptr %i.r, align 1
@@ -340,7 +339,6 @@ bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvN
   br label %.thread
 
 bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.n, %bb.e ], [ 0, %bb.c ]
   %.sroa.0.0.i.i7.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
@@ -361,7 +359,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result
 
 .thread28:                                        ; preds = %.noexc, %bb.g
   %.sroa.03.011.i30.off8 = phi i8 [ %i.k, %bb.g ], [ 0, %.noexc ]
-  %.sroa.03.011.i30.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ]
+  %.sroa.03.011.i30.off16 = phi i8 [ %i.n, %bb.g ], [ 0, %.noexc ]
   store i8 %.sroa.03.011.i30.off8, ptr %i.b, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i30.off16, ptr %i.q, align 1
@@ -764,7 +762,7 @@ bb.ao:                                            ; preds = %bb.ai, %bb.ah
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.thread, %bb.ao
-  %.sroa.0.0 = phi i8 [ %i.bb, %bb.ao ], [ 2, %.thread ]
+  %.sroa.0.0 = phi i8 [ 2, %.thread ], [ %i.bb, %bb.ao ]
   call void @_RNvXs4_NtNtCs2awuzAz5vY4_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.c)
   br label %bb.aq
 

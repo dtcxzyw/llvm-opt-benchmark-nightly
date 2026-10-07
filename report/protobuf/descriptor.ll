@@ -205,7 +205,7 @@ bb.a:
   store ptr %4, ptr %6, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i32 %5, ptr %i.a, align 8
-  %i.b = call noundef i64 @_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS7_15FieldDescriptorESt4lessISB_ESaIS5_IKSB_SE_EELi256ELb0EEEEERSI_PSI_EmiENS2_IKSL_RKSI_PSQ_EE(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr %2, i32 %3) ; 9 uses
+  %i.b = call noundef i64 @_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS7_15FieldDescriptorESt4lessISB_ESaIS5_IKSB_SE_EELi256ELb0EEEEERSI_PSI_EmiENS2_IKSL_RKSI_PSQ_EE(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr %2, i32 %3) ; 6 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %._crit_edge, label %bb.b
 
@@ -459,10 +459,9 @@ bb.m:                                             ; preds = %bb.l, %_ZN4absl12lt
   br i1 %i.cx, label %bb.h, label %._crit_edge, !llvm.loop !2371
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.g, %bb.a, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE13remove_valuesEhhPSI_.exit, %_ZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE5clearEv.exit
-  %.sink = phi i64 [ 0, %bb.a ], [ %i.b, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE13remove_valuesEhhPSI_.exit ], [ %i.b, %_ZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE5clearEv.exit ], [ %i.b, %bb.g ], [ %i.b, %bb.m ]
   %.sroa.071.0.lcssa.sink = phi ptr [ %2, %bb.a ], [ %.fca.0.extract17, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE13remove_valuesEhhPSI_.exit ], [ @_ZZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE9EmptyNodeEvE10empty_node, %_ZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE5clearEv.exit ], [ %2, %bb.g ], [ %.sroa.071.1, %bb.m ]
   %.sroa.13.0.lcssa.sink = phi i32 [ %3, %bb.a ], [ %.fca.1.extract18, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE13remove_valuesEhhPSI_.exit ], [ 0, %_ZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsISt4pairIPKN6google8protobuf10DescriptorEiEPKNS6_15FieldDescriptorESt4lessISA_ESaIS4_IKSA_SD_EELi256ELb0EEEE5clearEv.exit ], [ %3, %bb.g ], [ %.sroa.13.1, %bb.m ]
-  store i64 %.sink, ptr %0, align 8, !tbaa !2373
+  store i64 %i.b, ptr %0, align 8, !tbaa !2373
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.071.0.lcssa.sink, ptr %i.cy, align 8
   %.sroa.13.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %0, i64 16

@@ -202,21 +202,18 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.preheader43
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 9 uses
   %i.l = tail call i64 @curlx_dyn_len(ptr noundef nonnull %i.k) #5
-  %.not.i = icmp eq i64 %i.l, 0
+  %.not.i = icmp ne i64 %i.l, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.n = load i32, ptr %i.m, align 8, !tbaa !87   ; 2 uses
-  br i1 %.not.i, label %3, label %._crit_edge.i
+  %3 = icmp eq i32 %i.n, 2
+  %or.cond = select i1 %.not.i, i1 true, i1 %3
+  br i1 %or.cond, label %._crit_edge.i, label %cw_out_buf_flush.exit.thread
 
-3:                                                ; preds = %bb.e
-  %4 = icmp eq i32 %i.n, 2
-  br i1 %4, label %._crit_edge.i, label %cw_out_buf_flush.exit.thread
-
-._crit_edge.i:                                    ; preds = %3, %bb.e
-  %5 = phi i32 [ 2, %3 ], [ %i.n, %bb.e ]
+._crit_edge.i:                                    ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.o = tail call ptr @curlx_dyn_ptr(ptr noundef nonnull %i.k) #5
   %i.p = tail call i64 @curlx_dyn_len(ptr noundef nonnull %i.k) #5
-  %i.q = call fastcc i32 @cw_out_ptr_flush(ptr noundef %0, ptr noundef %1, i32 noundef %5, ptr noundef %i.o, i64 noundef %i.p, ptr noundef %i.a) ; 2 uses
+  %i.q = call fastcc i32 @cw_out_ptr_flush(ptr noundef %0, ptr noundef %1, i32 noundef %i.n, ptr noundef %i.o, i64 noundef %i.p, ptr noundef %i.a) ; 2 uses
   switch i32 %i.q, label %cw_out_buf_flush.exit.thread40 [
     i32 81, label %bb.f
     i32 0, label %bb.f
@@ -252,7 +249,7 @@ cw_out_buf_flush.exit:                            ; preds = %bb.f, %bb.h, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %cw_out_buf_flush.exit.thread
 
-cw_out_buf_flush.exit.thread:                     ; preds = %3, %cw_out_buf_flush.exit
+cw_out_buf_flush.exit.thread:                     ; preds = %bb.e, %cw_out_buf_flush.exit
   %i.x = tail call i64 @curlx_dyn_len(ptr noundef nonnull %i.k) #5
   %.not32 = icmp eq i64 %i.x, 0
   br i1 %.not32, label %bb.j, label %.thread

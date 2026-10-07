@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
 
 .outer:                                           ; preds = %bb.h, %bb.c
   %.023.ph = phi i32 [ %i.q, %bb.h ], [ 0, %bb.c ] ; 3 uses
-  %.0.ph = phi i64 [ %i.n, %bb.h ], [ 0, %bb.c ]  ; 5 uses
+  %.0.ph = phi i64 [ %i.n, %bb.h ], [ 0, %bb.c ]  ; 4 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.outer, %bb.f
@@ -225,8 +225,6 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.m = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.40, ptr noundef %0) #8 ; 0 uses
   call void @slurm_xfree(ptr noundef nonnull %i.a) #8
-  %2 = icmp eq i64 %i.h, -1
-  %3 = select i1 %2, i64 -1, i64 %.0.ph
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.e
@@ -237,7 +235,6 @@ bb.h:                                             ; preds = %bb.e
   br label %.outer, !llvm.loop !13
 
 .loopexit:                                        ; preds = %bb.d, %bb.g
-  %4 = phi i64 [ %3, %bb.g ], [ %.0.ph, %bb.d ]
   %i.r = icmp samesign ugt i32 %.023.ph, 1
   br i1 %i.r, label %bb.i, label %bb.l
 
@@ -260,10 +257,12 @@ bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j,
   %i.w = call i32 @close(i32 noundef %i.b) #8     ; 0 uses
   %i.x = load ptr, ptr %i.a, align 8
   store ptr %i.x, ptr %1, align 8
+  %2 = icmp eq i64 %i.h, -1
+  %3 = select i1 %2, i64 -1, i64 %.0.ph
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.b
-  %.024 = phi i64 [ -1, %bb.b ], [ %4, %bb.l ]
+  %.024 = phi i64 [ -1, %bb.b ], [ %3, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i64 %.024
 }

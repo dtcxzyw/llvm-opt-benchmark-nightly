@@ -204,9 +204,9 @@ bb.bw:                                            ; preds = %bb.br
   store i64 %i.ez, ptr %i.fj, align 8, !dbg !14794
   br label %bb.bs, !dbg !14795
 
-bb.bx:                                            ; preds = %.lr.ph, %5
-  %.sroa.0.0244 = phi i64 [ %4, %.lr.ph ], [ %.sroa.435.0.copyload, %5 ] ; 2 uses
-  %.sroa.2.0243 = phi i64 [ %i.el, %.lr.ph ], [ %i.ft, %5 ]
+bb.bx:                                            ; preds = %bb.ct, %.lr.ph
+  %.sroa.0.0244 = phi i64 [ %4, %.lr.ph ], [ %.sroa.435.0.copyload, %bb.ct ] ; 2 uses
+  %.sroa.2.0243 = phi i64 [ %i.el, %.lr.ph ], [ %i.ft, %bb.ct ]
     #dbg_value(i64 %.sroa.0.0244, !13942, !DIExpression(), !14138)
     #dbg_value(i64 %.sroa.2.0243, !14186, !DIExpression(), !14189)
     #dbg_value(i64 %.sroa.2.0243, !14191, !DIExpression(), !14194)
@@ -232,8 +232,8 @@ bb.bx:                                            ; preds = %.lr.ph, %5
   %i.fv = icmp ult i64 %i.ft, %i.fu, !dbg !14798
   br i1 %i.fv, label %bb.by, label %bb.bz, !dbg !14798
 
-.loopexit174:                                     ; preds = %bb.ct, %5, %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCs3roNzt6HBWW_12regex_syntax3hir3HirNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9GYDdpCSJ4S_14regex_automata.exit
-  %.sroa.0.1 = phi i64 [ %4, %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCs3roNzt6HBWW_12regex_syntax3hir3HirNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9GYDdpCSJ4S_14regex_automata.exit ], [ %.sroa.435.0.copyload, %5 ], [ 0, %bb.ct ]
+.loopexit174:                                     ; preds = %bb.ct, %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCs3roNzt6HBWW_12regex_syntax3hir3HirNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9GYDdpCSJ4S_14regex_automata.exit
+  %.sroa.0.1 = phi i64 [ %4, %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCs3roNzt6HBWW_12regex_syntax3hir3HirNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs9GYDdpCSJ4S_14regex_automata.exit ], [ %.sroa.435.0.copyload, %bb.ct ]
     #dbg_value(i64 %.sroa.0.1, !13942, !DIExpression(), !14138)
     #dbg_value(i64 %.sroa.0.1, !13935, !DIExpression(), !14137)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !14799
@@ -475,9 +475,6 @@ bb.ct:                                            ; preds = %bb.cp
     #dbg_value(i64 %.sroa.435.0.copyload, !13942, !DIExpression(), !14138)
   %i.go = icmp eq i64 %.sroa.435.0.copyload, 0, !dbg !14831
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !dbg !14832
-  br i1 %i.go, label %.loopexit174, label %5, !dbg !14831
-
-5:                                                ; preds = %bb.ct
     #dbg_value(i64 %.sroa.435.0.copyload, !13942, !DIExpression(), !14138)
     #dbg_value(i64 %.sroa.435.0.copyload, !13935, !DIExpression(), !14137)
     #dbg_value(i64 %i.ft, !13943, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14484)
@@ -486,8 +483,9 @@ bb.ct:                                            ; preds = %bb.cp
     #dbg_value(ptr undef, !14132, !DIExpression(), !14134)
     #dbg_value(ptr undef, !14112, !DIExpression(), !14120)
     #dbg_value(ptr undef, !14113, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14485)
-  %.not = icmp eq i64 %i.ft, 0, !dbg !14755
-  br i1 %.not, label %.loopexit174, label %bb.bx, !dbg !14119
+  %.not = icmp eq i64 %i.ft, 0
+  %or.cond = or i1 %i.go, %.not, !dbg !14831
+  br i1 %or.cond, label %.loopexit174, label %bb.bx, !dbg !14831
 
 bb.cu:                                            ; preds = %bb.cs
   %i.gp = landingpad { ptr, i32 }

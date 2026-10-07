@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
 
 ptr_next_token.exit277:                           ; preds = %.critedge2.i270, %.critedge53.i276
   %.5440 = phi ptr [ %.039.i266.lcssa, %.critedge53.i276 ], [ %.140.i268.lcssa, %.critedge2.i270 ] ; 7 uses
-  %.6434 = phi i64 [ %i.o, %.critedge53.i276 ], [ %i.z, %.critedge2.i270 ] ; 20 uses
+  %.6434 = phi i64 [ %i.o, %.critedge53.i276 ], [ %i.z, %.critedge2.i270 ] ; 12 uses
   %.6 = phi i64 [ 0, %.critedge53.i276 ], [ %.0.i269.lcssa, %.critedge2.i270 ] ; 4 uses
   %i.af = load i64, ptr %.0197, align 8, !tbaa !99 ; 6 uses
   %i.ag = trunc i64 %i.af to i8
@@ -429,7 +429,6 @@ bb.ab:                                            ; preds = %bb.aa
   br label %yyjson_mut_obj_add.exit
 
 ptr_mut_obj_get.exit.thread:                      ; preds = %bb.l, %ptr_token_to_idx.exit, %.critedge.i340, %bb.x, %bb.v, %.lr.ph738, %ptr_token_eq.exit.thread, %bb.u, %bb.t, %ptr_token_to_idx.exit.thread, %bb.y
-  %.6434890 = phi i64 [ 1, %bb.y ], [ %.6434, %.lr.ph738 ], [ %.6434, %ptr_token_to_idx.exit.thread ], [ %.6434, %bb.t ], [ 1, %bb.u ], [ %.6434, %ptr_token_eq.exit.thread ], [ %.6434, %bb.v ], [ %.6434, %bb.x ], [ %.6434, %.critedge.i340 ], [ %.6434, %ptr_token_to_idx.exit ], [ %.6434, %bb.l ] ; 2 uses
   %i.dn = phi i8 [ 6, %bb.y ], [ 6, %.lr.ph738 ], [ 6, %ptr_token_to_idx.exit.thread ], [ 6, %bb.t ], [ 6, %bb.u ], [ 7, %ptr_token_eq.exit.thread ], [ %i.ah, %ptr_token_to_idx.exit ], [ %i.ah, %.critedge.i340 ], [ 6, %bb.x ], [ 6, %bb.v ], [ 7, %bb.l ] ; 2 uses
   %.1417.ph = phi i8 [ 1, %bb.y ], [ 0, %.lr.ph738 ], [ 0, %ptr_token_to_idx.exit.thread ], [ 0, %bb.t ], [ %i.bp, %bb.u ], [ %.0416, %ptr_token_eq.exit.thread ], [ %i.ci, %ptr_token_to_idx.exit ], [ 0, %.critedge.i340 ], [ 0, %bb.x ], [ 0, %bb.v ], [ %.0416, %bb.l ] ; 2 uses
   %i.do = icmp eq ptr %.5440, %i.b
@@ -450,7 +449,6 @@ bb.ac:                                            ; preds = %ptr_mut_obj_get.exi
   br i1 %i.dp, label %.loopexit, label %bb.ad, !prof !62
 
 bb.ad:                                            ; preds = %ptr_mut_obj_get.exit.thread, %bb.ac
-  %.6434889 = phi i64 [ %.6434890, %ptr_mut_obj_get.exit.thread ], [ %.6434, %bb.ac ]
   %i.dq = phi i8 [ %i.dn, %ptr_mut_obj_get.exit.thread ], [ %i.ah, %bb.ac ] ; 2 uses
   %.0419468474 = phi ptr [ null, %ptr_mut_obj_get.exit.thread ], [ %.0419, %bb.ac ] ; 2 uses
   %.1417469472 = phi i8 [ %.1417.ph, %ptr_mut_obj_get.exit.thread ], [ %.1417, %bb.ac ] ; 3 uses
@@ -644,7 +642,7 @@ bb.ax:                                            ; preds = %bb.aw
 ptr_next_token.exit265:                           ; preds = %.critedge2.i258, %.critedge53.i264, %bb.ag
   %i.fp = phi i64 [ %i.af, %bb.ag ], [ 7, %.critedge53.i264 ], [ 7, %.critedge2.i258 ]
   %.1436 = phi ptr [ %.5440, %bb.ag ], [ %.039.i254.lcssa, %.critedge53.i264 ], [ %.140.i256.lcssa, %.critedge2.i258 ] ; 2 uses
-  %.1429 = phi i64 [ %.6434889, %bb.ag ], [ %i.ez, %.critedge53.i264 ], [ %i.fk, %.critedge2.i258 ] ; 2 uses
+  %.1429 = phi i64 [ %.6434, %bb.ag ], [ %i.ez, %.critedge53.i264 ], [ %i.fk, %.critedge2.i258 ] ; 2 uses
   %.1424 = phi i64 [ %.6, %bb.ag ], [ 0, %.critedge53.i264 ], [ %.0.i257.lcssa, %.critedge2.i258 ] ; 2 uses
   %.2199 = phi ptr [ %.1198470471, %bb.ag ], [ null, %.critedge53.i264 ], [ null, %.critedge2.i258 ]
   %.0193 = phi ptr [ %i.d, %bb.ag ], [ %i.eo, %.critedge53.i264 ], [ %i.eo, %.critedge2.i258 ] ; 2 uses
@@ -725,7 +723,12 @@ unsafe_yyjson_mut_str_alc.exit.i:                 ; preds = %unsafe_yyjson_mut_s
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 1
   store ptr %i.gk, ptr %i.fq, align 8, !tbaa !77
   %.not.i.i344 = icmp eq ptr %i.gi, null
-  br i1 %.not.i.i344, label %ptr_new_key.exit301.thread, label %ptr_new_key.exit301, !prof !103
+  br i1 %.not.i.i344, label %ptr_new_key.exit301.thread, label %unsafe_yyjson_mut_strncpy.exit.i.thread, !prof !103
+
+unsafe_yyjson_mut_strncpy.exit.i.thread:          ; preds = %unsafe_yyjson_mut_str_alc.exit.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gi, ptr nonnull align 1 %.1194794, i64 %.2430792, i1 false)
+  store i8 0, ptr %i.gj, align 1, !tbaa !100
+  br label %ptr_new_key.exit301.thread519
 
 bb.be:                                            ; preds = %bb.ay
   %i.gl = getelementptr inbounds nuw i8, ptr %.1194794, i64 %.2430792
@@ -804,12 +807,7 @@ unsafe_yyjson_mut_val.exit.i361:                  ; preds = %.unsafe_yyjson_mut_
   %.not.i363.not = icmp eq ptr %i.hk, null
   br i1 %.not.i363.not, label %ptr_new_key.exit301.thread, label %ptr_new_key.exit301.thread519, !prof !452
 
-ptr_new_key.exit301:                              ; preds = %unsafe_yyjson_mut_str_alc.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gi, ptr nonnull align 1 %.1194794, i64 %.2430792, i1 false)
-  store i8 0, ptr %i.gj, align 1, !tbaa !100
-  br label %ptr_new_key.exit301.thread519
-
-ptr_new_key.exit301.thread:                       ; preds = %bb.bd, %unsafe_yyjson_mut_str_alc.exit.i, %bb.bj, %unsafe_yyjson_mut_val.exit.i361, %bb.bf, %bb.bb, %._crit_edge, %bb.az, %unsafe_yyjson_mut_val.exit.i341, %unsafe_yyjson_mut_str_alc.exit
+ptr_new_key.exit301.thread:                       ; preds = %bb.bd, %unsafe_yyjson_mut_str_alc.exit.i, %bb.bj, %unsafe_yyjson_mut_val.exit.i361, %bb.bf, %bb.bb, %unsafe_yyjson_mut_val.exit.i341, %unsafe_yyjson_mut_str_alc.exit, %bb.az, %._crit_edge
   %.not242 = icmp eq ptr %8, null
   br i1 %.not242, label %yyjson_mut_obj_add.exit, label %bb.bk
 
@@ -821,9 +819,9 @@ bb.bk:                                            ; preds = %ptr_new_key.exit301
   store i64 0, ptr %i.hn, align 8, !tbaa !157
   br label %yyjson_mut_obj_add.exit
 
-ptr_new_key.exit301.thread519:                    ; preds = %unsafe_yyjson_mut_val.exit.i361, %ptr_new_key.exit301
-  %.sink1109 = phi ptr [ %i.fz, %ptr_new_key.exit301 ], [ %i.hk, %unsafe_yyjson_mut_val.exit.i361 ] ; 8 uses
-  %.sink1105 = phi ptr [ %i.gi, %ptr_new_key.exit301 ], [ %i.gv, %unsafe_yyjson_mut_val.exit.i361 ]
+ptr_new_key.exit301.thread519:                    ; preds = %unsafe_yyjson_mut_val.exit.i361, %unsafe_yyjson_mut_strncpy.exit.i.thread
+  %.sink1109 = phi ptr [ %i.fz, %unsafe_yyjson_mut_strncpy.exit.i.thread ], [ %i.hk, %unsafe_yyjson_mut_val.exit.i361 ] ; 8 uses
+  %.sink1105 = phi ptr [ %i.gi, %unsafe_yyjson_mut_strncpy.exit.i.thread ], [ %i.gv, %unsafe_yyjson_mut_val.exit.i361 ]
   %i.ho = shl i64 %.2430792, 8
   %i.hp = or disjoint i64 %i.ho, 5
   store i64 %i.hp, ptr %.sink1109, align 8, !tbaa !99
@@ -1031,7 +1029,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.ju = phi i64 [ %i.af, %bb.ac ], [ %i.af, %ptr_mut_obj_get.exit.thread ], [ %i.fp, %ptr_next_token.exit265 ], [ %.pre928, %.loopexit.loopexit ] ; 11 uses
   %.0419468475 = phi ptr [ %.0419, %bb.ac ], [ null, %ptr_mut_obj_get.exit.thread ], [ %.0419468474, %ptr_next_token.exit265 ], [ %.0419468474, %.loopexit.loopexit ] ; 8 uses
   %.1417469473 = phi i8 [ %.1417, %bb.ac ], [ %.1417.ph, %ptr_mut_obj_get.exit.thread ], [ %.1417469472, %ptr_next_token.exit265 ], [ %.1417469472, %.loopexit.loopexit ] ; 2 uses
-  %.3431 = phi i64 [ %.6434, %bb.ac ], [ %.6434890, %ptr_mut_obj_get.exit.thread ], [ %.1429, %ptr_next_token.exit265 ], [ %.4432, %.loopexit.loopexit ] ; 7 uses
+  %.3431 = phi i64 [ %.6434, %bb.ac ], [ %.6434, %ptr_mut_obj_get.exit.thread ], [ %.1429, %ptr_next_token.exit265 ], [ %.4432, %.loopexit.loopexit ] ; 7 uses
   %.3426 = phi i64 [ %.6, %bb.ac ], [ %.6, %ptr_mut_obj_get.exit.thread ], [ %.1424, %ptr_next_token.exit265 ], [ %.4427, %.loopexit.loopexit ] ; 3 uses
   %.4 = phi ptr [ %.1198, %bb.ac ], [ null, %ptr_mut_obj_get.exit.thread ], [ %.2199, %ptr_next_token.exit265 ], [ null, %.loopexit.loopexit ] ; 9 uses
   %.2195 = phi ptr [ %i.d, %bb.ac ], [ %i.d, %ptr_mut_obj_get.exit.thread ], [ %.0193, %ptr_next_token.exit265 ], [ %i.is, %.loopexit.loopexit ] ; 5 uses
@@ -1118,7 +1116,12 @@ unsafe_yyjson_mut_str_alc.exit.i352:              ; preds = %unsafe_yyjson_mut_s
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 1
   store ptr %i.ku, ptr %i.ki, align 8, !tbaa !77
   %.not.i.i354 = icmp eq ptr %i.ks, null
-  br i1 %.not.i.i354, label %ptr_new_key.exit.thread, label %ptr_new_key.exit, !prof !103
+  br i1 %.not.i.i354, label %ptr_new_key.exit.thread, label %unsafe_yyjson_mut_strncpy.exit.i355.thread, !prof !103
+
+unsafe_yyjson_mut_strncpy.exit.i355.thread:       ; preds = %unsafe_yyjson_mut_str_alc.exit.i352
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ks, ptr nonnull align 1 %.2195, i64 %.3431, i1 false)
+  store i8 0, ptr %i.kt, align 1, !tbaa !100
+  br label %ptr_new_key.exit.thread572
 
 bb.ci:                                            ; preds = %bb.cc
   %i.kv = getelementptr inbounds nuw i8, ptr %.2195, i64 %.3431
@@ -1204,12 +1207,7 @@ unsafe_yyjson_mut_val.exit.i365:                  ; preds = %.unsafe_yyjson_mut_
   %.not.i367.not = icmp eq ptr %i.ma, null
   br i1 %.not.i367.not, label %ptr_new_key.exit.thread, label %ptr_new_key.exit.thread572, !prof !103
 
-ptr_new_key.exit:                                 ; preds = %unsafe_yyjson_mut_str_alc.exit.i352
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ks, ptr nonnull align 1 %.2195, i64 %.3431, i1 false)
-  store i8 0, ptr %i.kt, align 1, !tbaa !100
-  br label %ptr_new_key.exit.thread572
-
-ptr_new_key.exit.thread:                          ; preds = %bb.ch, %unsafe_yyjson_mut_str_alc.exit.i352, %bb.cn, %unsafe_yyjson_mut_val.exit.i365, %bb.cj, %bb.cf, %._crit_edge819, %bb.cd, %unsafe_yyjson_mut_val.exit.i347, %unsafe_yyjson_mut_str_alc.exit331
+ptr_new_key.exit.thread:                          ; preds = %bb.ch, %unsafe_yyjson_mut_str_alc.exit.i352, %bb.cn, %unsafe_yyjson_mut_val.exit.i365, %bb.cj, %bb.cf, %unsafe_yyjson_mut_val.exit.i347, %unsafe_yyjson_mut_str_alc.exit331, %bb.cd, %._crit_edge819
   %.not240 = icmp eq ptr %8, null
   br i1 %.not240, label %yyjson_mut_obj_add.exit, label %bb.co
 
@@ -1221,9 +1219,9 @@ bb.co:                                            ; preds = %ptr_new_key.exit.th
   store i64 0, ptr %i.md, align 8, !tbaa !157
   br label %yyjson_mut_obj_add.exit
 
-ptr_new_key.exit.thread572:                       ; preds = %unsafe_yyjson_mut_val.exit.i365, %ptr_new_key.exit
-  %.sink1115 = phi ptr [ %i.kg, %ptr_new_key.exit ], [ %i.ma, %unsafe_yyjson_mut_val.exit.i365 ] ; 7 uses
-  %.sink1111 = phi ptr [ %i.ks, %ptr_new_key.exit ], [ %i.li, %unsafe_yyjson_mut_val.exit.i365 ]
+ptr_new_key.exit.thread572:                       ; preds = %unsafe_yyjson_mut_val.exit.i365, %unsafe_yyjson_mut_strncpy.exit.i355.thread
+  %.sink1115 = phi ptr [ %i.kg, %unsafe_yyjson_mut_strncpy.exit.i355.thread ], [ %i.ma, %unsafe_yyjson_mut_val.exit.i365 ] ; 7 uses
+  %.sink1111 = phi ptr [ %i.ks, %unsafe_yyjson_mut_strncpy.exit.i355.thread ], [ %i.li, %unsafe_yyjson_mut_val.exit.i365 ]
   %i.me = shl i64 %.3431, 8
   %i.mf = or disjoint i64 %i.me, 5
   store i64 %i.mf, ptr %.sink1115, align 8, !tbaa !99
@@ -1626,7 +1624,7 @@ bb.i:                                             ; preds = %bb.h
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !104
   br label %yyjson_mut_is_obj.exit.i.i91.lr.ph
 
-yyjson_mut_is_obj.exit.i.i91.lr.ph:               ; preds = %bb.i, %bb.h
+yyjson_mut_is_obj.exit.i.i91.lr.ph:               ; preds = %bb.h, %bb.i
   %.ph256 = phi ptr [ null, %bb.h ], [ %i.z, %bb.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses

@@ -204,7 +204,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit: ; preds =
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit, %._crit_edge
-  %.sroa.070.0 = phi i64 [ %i.dd, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit ], [ %.pre92, %._crit_edge ] ; 9 uses
+  %.sroa.070.0 = phi i64 [ %i.dd, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit ], [ %.pre92, %._crit_edge ] ; 17 uses
   %.sroa.16.0 = phi ptr [ %i.dc, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit ], [ %.pre, %._crit_edge ] ; 13 uses
   %.not.i = icmp ult i64 %.sroa.070.0, 10
   br i1 %.not.i, label %.critedge, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
@@ -225,13 +225,12 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %bb.f
   br i1 %i.dp, label %_ZL9hasSuffixSt17basic_string_viewIcSt11char_traitsIcEES2_.exit, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1
 
 _ZL9hasSuffixSt17basic_string_viewIcSt11char_traitsIcEES2_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
-  %.sroa.070.0102 = phi i64 [ %.sroa.070.0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ], [ %.sroa.070.0103116, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1 ] ; 2 uses
   %.sroa.068.0.copyload.lcssa = phi i64 [ 10, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ], [ 9, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1 ] ; 2 uses
-  %i.dq = sub nuw i64 %.sroa.070.0102, %.sroa.068.0.copyload.lcssa ; 4 uses
+  %i.dq = sub nuw i64 %.sroa.070.0, %.sroa.068.0.copyload.lcssa ; 4 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.dr, ptr %0, align 8, !tbaa !13
   %i.ds = icmp eq ptr %.sroa.16.0, null
-  %i.dt = icmp ne i64 %.sroa.070.0102, %.sroa.068.0.copyload.lcssa
+  %i.dt = icmp ne i64 %.sroa.070.0, %.sroa.068.0.copyload.lcssa
   %or.cond.i.i.i = and i1 %i.ds, %i.dt
   br i1 %or.cond.i.i.i, label %.noexc, label %bb.g
 
@@ -273,8 +272,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i.1.not, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1, label %.critedge.1
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %.critedge
-  %.sroa.070.0103116 = phi i64 [ 9, %.critedge ], [ %.sroa.070.0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ] ; 3 uses
-  %i.dz = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0103116
+  %i.dz = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0
   %i.ea = getelementptr i8, ptr %i.dz, i64 -9     ; 2 uses
   %i.eb = load i64, ptr %i.ea, align 1
   %i.ec = xor i64 %i.eb, 8461188877442246959
@@ -303,8 +301,7 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.s
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1, %.critedge.1
-  %.sroa.070.0103110128 = phi i64 [ %.sroa.070.0, %.critedge.1 ], [ %.sroa.070.0103116, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.1 ] ; 3 uses
-  %i.ep = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0103110128
+  %i.ep = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0
   %i.eq = getelementptr i8, ptr %i.ep, i64 -5     ; 2 uses
   %i.er = load i32, ptr %i.eq, align 1
   %i.es = xor i32 %i.er, 1635085358
@@ -319,13 +316,12 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43: ; preds = %_ZNSt11char_trait
   br i1 %i.fa, label %_ZL9hasSuffixSt17basic_string_viewIcSt11char_traitsIcEES2_.exit46, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1
 
 _ZL9hasSuffixSt17basic_string_viewIcSt11char_traitsIcEES2_.exit46: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43
-  %.sroa.070.0103110121 = phi i64 [ %.sroa.070.0103110128, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43 ], [ %.sroa.070.0103110120140, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1 ] ; 2 uses
   %.sroa.066.0.copyload.lcssa = phi i64 [ 5, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43 ], [ 4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1 ] ; 2 uses
-  %i.fb = sub nuw i64 %.sroa.070.0103110121, %.sroa.066.0.copyload.lcssa ; 4 uses
+  %i.fb = sub nuw i64 %.sroa.070.0, %.sroa.066.0.copyload.lcssa ; 4 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.fc, ptr %0, align 8, !tbaa !13
   %i.fd = icmp eq ptr %.sroa.16.0, null
-  %i.fe = icmp ne i64 %.sroa.070.0103110121, %.sroa.066.0.copyload.lcssa
+  %i.fe = icmp ne i64 %.sroa.070.0, %.sroa.066.0.copyload.lcssa
   %or.cond.i.i.i50 = and i1 %i.fd, %i.fe
   br i1 %or.cond.i.i.i50, label %.noexc53, label %bb.k
 
@@ -367,8 +363,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %.not.i42.1.not, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1, label %.critedge38.1
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43, %.critedge38
-  %.sroa.070.0103110120140 = phi i64 [ 4, %.critedge38 ], [ %.sroa.070.0103110128, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43 ] ; 3 uses
-  %i.fk = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0103110120140
+  %i.fk = getelementptr i8, ptr %.sroa.16.0, i64 %.sroa.070.0
   %i.fl = getelementptr i8, ptr %i.fk, i64 -4
   %i.fm = load i32, ptr %i.fl, align 1
   %i.fn = icmp ne i32 %i.fm, 1635085358
@@ -377,11 +372,10 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1: ; preds = %_ZNSt11char_tra
   br i1 %i.fp, label %_ZL9hasSuffixSt17basic_string_viewIcSt11char_traitsIcEES2_.exit46, label %.critedge38.1
 
 .critedge38.1:                                    ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1, %.critedge38
-  %.sroa.070.0103110120134 = phi i64 [ %.sroa.070.0, %.critedge38 ], [ %.sroa.070.0103110120140, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i43.1 ] ; 5 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.fq, ptr %0, align 8, !tbaa !13
   %i.fr = icmp eq ptr %.sroa.16.0, null
-  %i.fs = icmp ne i64 %.sroa.070.0103110120134, 0
+  %i.fs = icmp ne i64 %.sroa.070.0, 0
   %or.cond.i.i.i59 = and i1 %i.fs, %i.fr
   br i1 %or.cond.i.i.i59, label %.noexc62, label %bb.o
 
@@ -401,8 +395,8 @@ bb.n:                                             ; preds = %._crit_edge.i.i.i.i
 
 bb.o:                                             ; preds = %.critedge38.1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  store i64 %.sroa.070.0103110120134, ptr %i.a, align 8, !tbaa !18
-  %i.fx = icmp ugt i64 %.sroa.070.0103110120134, 15
+  store i64 %.sroa.070.0, ptr %i.a, align 8, !tbaa !18
+  %i.fx = icmp ugt i64 %.sroa.070.0, 15
   br i1 %i.fx, label %.noexc.i.i.i61, label %._crit_edge.i.i.i.i60
 
 .noexc.i.i.i61:                                   ; preds = %bb.o
@@ -414,7 +408,7 @@ bb.o:                                             ; preds = %.critedge38.1
 
 ._crit_edge.i.i.i.i60:                            ; preds = %.noexc.i.i.i61, %bb.o
   %i.ga = phi ptr [ %i.fy, %.noexc.i.i.i61 ], [ %i.fq, %bb.o ] ; 2 uses
-  switch i64 %.sroa.070.0103110120134, label %bb.q [
+  switch i64 %.sroa.070.0, label %bb.q [
     i64 1, label %bb.p
     i64 0, label %bb.r
   ]
@@ -425,7 +419,7 @@ bb.p:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.r
 
 bb.q:                                             ; preds = %._crit_edge.i.i.i.i60
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ga, ptr align 1 %.sroa.16.0, i64 %.sroa.070.0103110120134, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ga, ptr align 1 %.sroa.16.0, i64 %.sroa.070.0, i1 false)
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge.i.i.i.i60.thread, %bb.q, %bb.p, %._crit_edge.i.i.i.i60

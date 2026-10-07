@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.b, %bb.a
   %i.ae = icmp eq i64 %i.ad, 4
   %.pre = load ptr, ptr %5, align 8, !tbaa !79    ; 6 uses
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !123 ; 6 uses
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !123 ; 4 uses
   br i1 %i.ae, label %bb.k, label %_ZL27replace_denormals_with_zeroPfm.exit
 
 bb.k:                                             ; preds = %bb.j
@@ -300,8 +300,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZL27replace_denormals_with_zeroPfm.exit, label %.lr.ph.i, !llvm.loop !241
 
 _ZL27replace_denormals_with_zeroPfm.exit:         ; preds = %bb.m, %middle.block, %bb.j, %bb.k
-  %6 = phi i32 [ %i.ag, %bb.j ], [ 0, %bb.k ], [ %i.ag, %middle.block ], [ %i.ag, %bb.m ]
-  %i.bg = sext i32 %6 to i64
+  %i.bg = sext i32 %i.ag to i64
   %i.bh = call i64 @fwrite(ptr noundef %.pre, i64 noundef %i.ad, i64 noundef %i.bg, ptr noundef %2) ; 0 uses
   %i.bi = call i64 @ftell(ptr noundef %2)
   %i.bj = sub i64 %i.bi, %i.b

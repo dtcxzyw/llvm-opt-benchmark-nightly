@@ -205,19 +205,17 @@ bb.d:                                             ; preds = %tailrecurse
   %.not79 = icmp eq i64 %i.an, 0
   br i1 %.not79, label %.loopexit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.d, %4
-  %.171 = phi i64 [ %6, %4 ], [ 0, %bb.d ]
-  %.14770 = phi ptr [ %5, %4 ], [ %.tr, %bb.d ]   ; 2 uses
-  %.15169 = phi ptr [ %i.ap, %4 ], [ %.tr56, %bb.d ]
+.lr.ph:                                           ; preds = %bb.d, %.lr.ph
+  %.171 = phi i64 [ %6, %.lr.ph ], [ 0, %bb.d ]
+  %.14770 = phi ptr [ %5, %.lr.ph ], [ %.tr, %bb.d ] ; 2 uses
+  %.15169 = phi ptr [ %i.ap, %.lr.ph ], [ %.tr56, %bb.d ]
   %i.ap = tail call fastcc ptr @GC_push_complex_descriptor(ptr noundef %.14770, ptr noundef %i.al, ptr noundef %.15169, ptr noundef %3) ; 3 uses
-  %i.aq = icmp eq ptr %i.ap, null
-  br i1 %i.aq, label %.loopexit, label %4
-
-4:                                                ; preds = %.lr.ph
+  %4 = icmp eq ptr %i.ap, null
   %5 = getelementptr inbounds nuw i8, ptr %.14770, i64 %i.ao
   %6 = add nuw i64 %.171, 1                       ; 2 uses
-  %exitcond.not = icmp eq i64 %6, %i.an
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !347
+  %i.aq = icmp eq i64 %6, %i.an
+  %or.cond = select i1 %4, i1 true, i1 %i.aq
+  br i1 %or.cond, label %.loopexit, label %.lr.ph, !llvm.loop !347
 
 bb.e:                                             ; preds = %tailrecurse
   %i.ar = getelementptr inbounds nuw i8, ptr %.tr55, i64 8 ; 2 uses
@@ -269,8 +267,8 @@ bb.h:                                             ; preds = %bb.g
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph77.epil, !llvm.loop !348
 
-.loopexit:                                        ; preds = %bb.e, %4, %.lr.ph, %.loopexit.loopexit.unr-lcssa, %.lr.ph77.epil, %bb.d, %bb.c, %bb.g, %bb.b
-  %.2 = phi ptr [ %i.bd, %.lr.ph77.epil ], [ null, %bb.g ], [ null, %bb.b ], [ null, %.lr.ph ], [ %.tr56, %bb.c ], [ %.tr56, %bb.d ], [ %i.ah, %.loopexit.loopexit.unr-lcssa ], [ %i.ap, %4 ], [ null, %bb.e ]
+.loopexit:                                        ; preds = %bb.e, %.lr.ph, %.loopexit.loopexit.unr-lcssa, %.lr.ph77.epil, %bb.d, %bb.c, %bb.g, %bb.b
+  %.2 = phi ptr [ %i.bd, %.lr.ph77.epil ], [ null, %bb.g ], [ null, %bb.b ], [ %i.ap, %.lr.ph ], [ %.tr56, %bb.c ], [ %.tr56, %bb.d ], [ %i.ah, %.loopexit.loopexit.unr-lcssa ], [ null, %bb.e ]
   ret ptr %.2
 }
 

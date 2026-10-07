@@ -202,7 +202,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN11hb_vector_tIPcLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !75     ; 7 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !75     ; 8 uses
   %i.b = icmp slt i32 %i.a, 0
   br i1 %i.b, label %bb.m, label %bb.b, !prof !34
 
@@ -232,7 +232,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %.preheader, label %.thread, !llvm.loop !130
 
 .thread:                                          ; preds = %.preheader, %bb.c
-  %.138 = phi i32 [ %.sroa.speculated, %bb.c ], [ %i.h, %.preheader ] ; 6 uses
+  %.138 = phi i32 [ %.sroa.speculated, %bb.c ], [ %i.h, %.preheader ] ; 5 uses
   %i.j = icmp ugt i32 %.138, 536870911
   br i1 %i.j, label %.critedge, label %bb.e, !prof !34
 
@@ -242,10 +242,10 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.thread
   %.not.i.i = icmp eq i32 %.138, 0
-  %.not49 = icmp eq i32 %i.a, 0                   ; 2 uses
   br i1 %.not.i.i, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
+  %.not49 = icmp eq i32 %i.a, 0
   br i1 %.not49, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -255,18 +255,17 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread
 
 bb.h:                                             ; preds = %bb.e
+  %.not8.i.i = icmp ne i32 %i.a, 0
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !76   ; 2 uses
-  br i1 %.not49, label %3, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit
-
-3:                                                ; preds = %bb.h
   %.not9.i.i = icmp eq ptr %i.o, null
-  br i1 %.not9.i.i, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit, label %bb.i
+  %or.cond.i = select i1 %.not8.i.i, i1 true, i1 %.not9.i.i
+  %3 = shl nuw i32 %.138, 3
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  br i1 %or.cond.i, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit, label %bb.i
 
-bb.i:                                             ; preds = %3
-  %4 = shl nuw i32 %.138, 3
-  %5 = zext i32 %4 to i64
-  %i.p = tail call ptr @hb_malloc(i64 noundef %5) #9 ; 4 uses
+bb.i:                                             ; preds = %bb.h
+  %i.p = tail call ptr @hb_malloc(i64 noundef %4) #9 ; 4 uses
   %.not10.i.i = icmp eq ptr %i.p, null
   br i1 %.not10.i.i, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53, label %bb.j, !prof !34
 
@@ -283,11 +282,8 @@ bb.k:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.p, ptr readonly align 1 %i.u, i64 range(i64 0, 34359738361) %i.t, i1 false), !alias.scope !134
   br label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread
 
-_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit: ; preds = %bb.h, %3
-  %6 = phi ptr [ null, %3 ], [ %i.o, %bb.h ]
-  %7 = shl nuw i32 %.138, 3
-  %8 = zext i32 %7 to i64
-  %i.v = tail call ptr @hb_realloc(ptr noundef %6, i64 noundef %8) #9 ; 2 uses
+_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit: ; preds = %bb.h
+  %i.v = tail call ptr @hb_realloc(ptr noundef %i.o, i64 noundef %4) #9 ; 2 uses
   %.not22 = icmp eq ptr %i.v, null
   br i1 %.not22, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53, label %_ZN11hb_vector_tIPcLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread, !prof !92
 
@@ -690,7 +686,7 @@ declare i32 @pthread_mutex_destroy(ptr noundef) local_unnamed_addr #8
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN11hb_vector_tIjLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !79     ; 7 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !79     ; 8 uses
   %i.b = icmp slt i32 %i.a, 0
   br i1 %i.b, label %bb.m, label %bb.b, !prof !34
 
@@ -720,7 +716,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %.preheader, label %.thread, !llvm.loop !163
 
 .thread:                                          ; preds = %.preheader, %bb.c
-  %.138 = phi i32 [ %.sroa.speculated, %bb.c ], [ %i.h, %.preheader ] ; 6 uses
+  %.138 = phi i32 [ %.sroa.speculated, %bb.c ], [ %i.h, %.preheader ] ; 5 uses
   %i.j = icmp ugt i32 %.138, 1073741823
   br i1 %i.j, label %.critedge, label %bb.e, !prof !34
 
@@ -730,10 +726,10 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.thread
   %.not.i.i = icmp eq i32 %.138, 0
-  %.not49 = icmp eq i32 %i.a, 0                   ; 2 uses
   br i1 %.not.i.i, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
+  %.not49 = icmp eq i32 %i.a, 0
   br i1 %.not49, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -743,18 +739,17 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread
 
 bb.h:                                             ; preds = %bb.e
+  %.not8.i.i = icmp ne i32 %i.a, 0
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !80   ; 2 uses
-  br i1 %.not49, label %3, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit
-
-3:                                                ; preds = %bb.h
   %.not9.i.i = icmp eq ptr %i.o, null
-  br i1 %.not9.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit, label %bb.i
+  %or.cond.i = select i1 %.not8.i.i, i1 true, i1 %.not9.i.i
+  %3 = shl nuw i32 %.138, 2
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  br i1 %or.cond.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit, label %bb.i
 
-bb.i:                                             ; preds = %3
-  %4 = shl nuw i32 %.138, 2
-  %5 = zext i32 %4 to i64
-  %i.p = tail call ptr @hb_malloc(i64 noundef %5) #9 ; 4 uses
+bb.i:                                             ; preds = %bb.h
+  %i.p = tail call ptr @hb_malloc(i64 noundef %4) #9 ; 4 uses
   %.not10.i.i = icmp eq ptr %i.p, null
   br i1 %.not10.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53, label %bb.j, !prof !34
 
@@ -771,11 +766,8 @@ bb.k:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.p, ptr readonly align 1 %i.u, i64 range(i64 0, 34359738361) %i.t, i1 false), !alias.scope !167
   br label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread
 
-_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit: ; preds = %bb.h, %3
-  %6 = phi ptr [ null, %3 ], [ %i.o, %bb.h ]
-  %7 = shl nuw i32 %.138, 2
-  %8 = zext i32 %7 to i64
-  %i.v = tail call ptr @hb_realloc(ptr noundef %6, i64 noundef %8) #9 ; 2 uses
+_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit: ; preds = %bb.h
+  %i.v = tail call ptr @hb_realloc(ptr noundef %i.o, i64 noundef %4) #9 ; 2 uses
   %.not22 = icmp eq ptr %i.v, null
   br i1 %.not22, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread, !prof !92
 
@@ -918,7 +910,7 @@ attributes #9 = { nounwind }
 !89 = !{!88, !6, i64 0}
 !90 = !{!88, !83, i64 8}
 !91 = !{!20, !18, i64 18}
-!92 = !{!"branch_weights", !"expected", i32 1914245, i32 2145569403}
+!92 = !{!"branch_weights", !"expected", i32 2361049, i32 2145122599}
 !93 = !{!55, !6, i64 84}
 !94 = !{!51, !13, i64 0}
 !95 = !{!51, !6, i64 4}

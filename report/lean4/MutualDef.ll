@@ -204,8 +204,7 @@ l_Lean_Option_set___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_elabM
   %i.bq = tail call ptr @l_Lean_Options_set___at___00Lean_Option_set___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_elabMutualDef_finishElab_spec__19_spec__24(ptr noundef nonnull %i.g, ptr noundef %i.bh, i8 noundef zeroext 0)
   br label %lean_inc_ref.exit
 
-bb.u:                                             ; preds = %11, %10, %bb.fr
-  %.0215 = phi i8 [ %i.me, %10 ], [ %i.me, %bb.fr ], [ 0, %11 ]
+bb.u:                                             ; preds = %lean_dec_ref.exit312, %bb.fr
   %i.br = load ptr, ptr @l_Lean_maxRecDepth, align 8, !tbaa !12
   %i.bs = tail call ptr @l_Lean_Option_get___at___00__private_Lean_Util_Trace_0__Lean_withTraceNode_postCallback___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_elabHeaders_spec__6_spec__11(ptr noundef %.1254, ptr noundef %i.br)
   %.val.i.i357 = load i32, ptr %i.ac, align 4, !tbaa !14 ; 3 uses
@@ -521,7 +520,7 @@ lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit39
   store ptr %i.y, ptr %i.el, align 8, !tbaa !12
   %i.em = getelementptr inbounds nuw i8, ptr %i.dv, i64 112
   store ptr %i.ac, ptr %i.em, align 8, !tbaa !12
-  store i8 %.0215, ptr %i.dy, align 8, !tbaa !18
+  store i8 %i.me, ptr %i.dy, align 8, !tbaa !18
   %i.en = getelementptr inbounds nuw i8, ptr %i.dv, i64 121
   store i8 %i.aa, ptr %i.en, align 1, !tbaa !18
   %i.eo = tail call ptr @l___private_Lean_Elab_InfoTree_Main_0__Lean_Elab_withSavedPartialInfoContext___at___00Lean_Elab_withSaveInfoContext___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_elabMutualDef_finishElab_spec__18_spec__22___redArg(ptr noundef %0, ptr noundef nonnull @l_Lean_Elab_withSaveInfoContext___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_elabMutualDef_finishElab_spec__18___redArg___closed__0_value, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef nonnull %i.dv, ptr noundef %9)
@@ -916,10 +915,7 @@ bb.dw:                                            ; preds = %bb.dv
 lean_dec_ref_known.exit:                          ; preds = %lean_dec.exit.i.13, %bb.du, %bb.dv, %bb.dw
   ret ptr %i.eo
 
-10:                                               ; preds = %lean_dec_ref.exit312
-  br i1 %i.mk, label %.thread445, label %bb.u
-
-.thread445:                                       ; preds = %11, %10
+.thread445:                                       ; preds = %lean_dec_ref.exit312
   %i.il = tail call ptr @lean_st_ref_take(ptr noundef %9) #9 ; 17 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 8
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !12 ; 5 uses
@@ -1283,7 +1279,7 @@ bb.fx:                                            ; preds = %bb.fw
 
 lean_dec.exit:                                    ; preds = %bb.fx, %bb.fw, %bb.fv
   %i.md = load ptr, ptr @l_Lean_diagnostics, align 8, !tbaa !12
-  %i.me = tail call zeroext i8 @l_Lean_Option_get___at___00Lean_Elab_addMacroStack___at___00Lean_throwError___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_checkModifiers_spec__0_spec__1_spec__2(ptr noundef %.1254, ptr noundef %i.md) ; 4 uses
+  %i.me = tail call zeroext i8 @l_Lean_Option_get___at___00Lean_Elab_addMacroStack___at___00Lean_throwError___at___00__private_Lean_Elab_MutualDef_0__Lean_Elab_Term_checkModifiers_spec__0_spec__1_spec__2(ptr noundef %.1254, ptr noundef %i.md) ; 3 uses
   %i.mf = tail call zeroext i8 @l_Lean_Kernel_isDiagnosticsEnabled(ptr noundef nonnull %i.lw) #9
   %i.mg = load i32, ptr %i.lw, align 4, !tbaa !14 ; 3 uses
   %i.mh = icmp sgt i32 %i.mg, 1
@@ -1304,11 +1300,9 @@ bb.ga:                                            ; preds = %bb.fz
 
 lean_dec_ref.exit312:                             ; preds = %bb.fy, %bb.fz, %bb.ga
   %i.mj = icmp eq i8 %i.mf, 0
-  %i.mk = icmp eq i8 %i.me, 0                     ; 2 uses
-  br i1 %i.mj, label %11, label %10
-
-11:                                               ; preds = %lean_dec_ref.exit312
-  br i1 %i.mk, label %bb.u, label %.thread445
+  %i.mk = icmp eq i8 %i.me, 0
+  %10 = xor i1 %i.mj, %i.mk
+  br i1 %10, label %.thread445, label %bb.u
 }
 
 declare ptr @l_Lean_Kernel_enableDiag(ptr noundef, i8 noundef zeroext) local_unnamed_addr #2

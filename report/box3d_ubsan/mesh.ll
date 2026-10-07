@@ -204,25 +204,23 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.dq, label %.loopexit.i, label %bb.r
 
 .split1237.us.loopexit:                           ; preds = %.preheader168.i
-  %6 = zext i32 %i.bt to i64
   %i.dr = zext i32 %.0122262.i to i64
   br label %.split1237.us
 
 .split1237.us:                                    ; preds = %.split1237.us.loopexit, %.preheader168.i.us
-  %i.ds = phi i64 [ 2147483648, %.preheader168.i.us ], [ %6, %.split1237.us.loopexit ]
-  %.us-phi1239 = phi i64 [ 4294967295, %.preheader168.i.us ], [ %i.dr, %.split1237.us.loopexit ]
-  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @420, i64 %i.ds, i64 %.us-phi1239) #12, !nosanitize !9
+  %i.ds = phi i64 [ 4294967295, %.preheader168.i.us ], [ %i.dr, %.split1237.us.loopexit ]
+  %6 = zext i32 %i.bt to i64, !nosanitize !9
+  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @420, i64 %6, i64 %i.ds) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
 .split.us.loopexit:                               ; preds = %.preheader.i
-  %7 = zext i32 %i.cb to i64
   %i.dt = zext i32 %.0115261.i to i64
   br label %.split.us
 
 .split.us:                                        ; preds = %.split.us.loopexit, %.preheader.i.us
-  %i.du = phi i64 [ 2147483648, %.preheader.i.us ], [ %7, %.split.us.loopexit ]
-  %.us-phi1086 = phi i64 [ 4294967295, %.preheader.i.us ], [ %i.dt, %.split.us.loopexit ]
-  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @421, i64 %i.du, i64 %.us-phi1086) #12, !nosanitize !9
+  %i.du = phi i64 [ 4294967295, %.preheader.i.us ], [ %i.dt, %.split.us.loopexit ]
+  %7 = zext i32 %i.cb to i64, !nosanitize !9
+  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @421, i64 %7, i64 %i.du) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
 .split1088.us:                                    ; preds = %.loopexit.1.i, %.preheader.i.us

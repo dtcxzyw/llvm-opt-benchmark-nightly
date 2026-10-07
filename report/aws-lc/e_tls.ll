@@ -202,11 +202,10 @@ OPENSSL_memcpy.exit92:                            ; preds = %bb.v
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.u, %OPENSSL_memcpy.exit92
-  %.pre-phi = phi i32 [ %i.ar, %OPENSSL_memcpy.exit92 ], [ 0, %bb.u ]
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 %.zext96
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 %.zext96
   %i.bc = load i32, ptr %i.c, align 4, !tbaa !21
-  %i.bd = sub i32 %i.bc, %.pre-phi
+  %i.bd = sub i32 %i.bc, %i.ar
   %i.be = call i32 @EVP_EncryptUpdate(ptr noundef nonnull %i.i, ptr noundef %i.ba, ptr noundef nonnull %i.d, ptr noundef nonnull %i.bb, i32 noundef %i.bd) #5
   %.not89 = icmp eq i32 %i.be, 0
   br i1 %.not89, label %bb.z, label %bb.w

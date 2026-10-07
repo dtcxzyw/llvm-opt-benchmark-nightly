@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %DataToDerBuffer.exi
 
 bb.m:                                             ; preds = %bb.l
   %i.au = load ptr, ptr %i.m, align 8, !tbaa !22  ; 7 uses
-  %i.av = load i32, ptr %i.n, align 4, !tbaa !41  ; 7 uses
+  %i.av = load i32, ptr %i.n, align 4, !tbaa !41  ; 8 uses
   br i1 %i.u, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -330,7 +330,6 @@ bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v
 
 .thread131.i.i:                                   ; preds = %bb.y, %bb.t
   %i.ci = phi i1 [ true, %bb.y ], [ false, %bb.t ]
-  %.1.i = phi i32 [ 0, %bb.y ], [ %i.av, %bb.t ]  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.cj = call i32 @wc_ecc_init_ex(ptr noundef nonnull %11, ptr noundef %i.s, i32 noundef %.1.i.i.i) #23
@@ -393,7 +392,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ac
   br label %.thread112.i.i
 
 .thread112.i.i:                                   ; preds = %.thread112.fold.split.i.i, %bb.af, %bb.ae, %.thread116.i.i, %bb.z, %bb.t
-  %.2.i88 = phi i32 [ %.1.i, %.thread116.i.i ], [ %i.av, %bb.t ], [ 826901527, %bb.af ], [ 0, %bb.ae ], [ %i.av, %.thread112.fold.split.i.i ], [ 2025223203, %bb.z ] ; 2 uses
+  %.2.i88 = phi i32 [ %i.av, %.thread116.i.i ], [ %i.av, %bb.t ], [ 826901527, %bb.af ], [ 0, %bb.ae ], [ %i.av, %.thread112.fold.split.i.i ], [ 2025223203, %bb.z ] ; 2 uses
   %.2115.i.i = phi i1 [ false, %.thread116.i.i ], [ false, %bb.t ], [ false, %bb.af ], [ false, %bb.ae ], [ true, %.thread112.fold.split.i.i ], [ false, %bb.z ]
   %i.dc = icmp eq i32 %.2.i88, 0
   %or.cond.i.i = or i1 %.2115.i.i, %i.dc
@@ -401,7 +400,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ac
   br label %ProcessBufferPrivateKey.exit
 
 ProcessBufferPrivateKey.exit:                     ; preds = %wolfSSL_CTX_GetDevId.exit.i.i, %bb.y, %bb.z, %bb.ae, %bb.af, %.thread112.i.i
-  %.3.i = phi i32 [ %i.av, %wolfSSL_CTX_GetDevId.exit.i.i ], [ %.2.i88, %.thread112.i.i ], [ 826901527, %bb.af ], [ %.1.i, %bb.ae ], [ 826901527, %bb.z ], [ %i.av, %bb.y ]
+  %.3.i = phi i32 [ %i.av, %wolfSSL_CTX_GetDevId.exit.i.i ], [ %.2.i88, %.thread112.i.i ], [ 826901527, %bb.af ], [ %i.av, %bb.ae ], [ 826901527, %bb.z ], [ %i.av, %bb.y ]
   %.3.i.i = phi i32 [ -173, %wolfSSL_CTX_GetDevId.exit.i.i ], [ %spec.select56.i.i, %.thread112.i.i ], [ -410, %bb.af ], [ %i.co, %bb.ae ], [ -409, %bb.z ], [ %i.bw, %bb.y ] ; 2 uses
   %i.dd = or i32 %.3.i.i, %.3.i
   %or.cond.i = icmp eq i32 %i.dd, 0

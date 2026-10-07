@@ -205,7 +205,7 @@ d_str.exit198.i.i:                                ; preds = %bb.w, %d_str.exit.i
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !57 ; 6 uses
   %.not.i.i = icmp eq ptr %i.eu, null
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.es, i64 32
-  %.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !58 ; 7 uses
+  %.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !58 ; 5 uses
   br i1 %.not.i.i, label %fnv64.exit.i.i, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph.i.i
@@ -279,10 +279,9 @@ fnv64.exit.i.i.loopexit.unr-lcssa:                ; preds = %.lr.ph.i199.i.i
   br i1 %epil.iter.cmp.not, label %fnv64.exit.i.i, label %.lr.ph.i199.i.i.epil, !llvm.loop !111
 
 fnv64.exit.i.i:                                   ; preds = %fnv64.exit.i.i.loopexit.unr-lcssa, %.lr.ph.i199.i.i.epil, %bb.x, %.lr.ph.i.i
-  %34 = phi i64 [ %.pre.i.i, %.lr.ph.i.i ], [ 0, %bb.x ], [ %.pre.i.i, %.lr.ph.i199.i.i.epil ], [ %.pre.i.i, %fnv64.exit.i.i.loopexit.unr-lcssa ]
   %i.ga = phi i64 [ 0, %.lr.ph.i.i ], [ -3750763034362895579, %bb.x ], [ %i.fs, %fnv64.exit.i.i.loopexit.unr-lcssa ], [ %i.fy, %.lr.ph.i199.i.i.epil ]
   %i.gb = trunc nuw i64 %indvars.iv.i.i to i32
-  %i.gc = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, i32 noundef %i.gb, i64 noundef %34, i64 noundef %i.ga) ; 0 uses
+  %i.gc = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, i32 noundef %i.gb, i64 noundef %.pre.i.i, i64 noundef %i.ga) ; 0 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.gd = load i32, ptr %i.m, align 8, !tbaa !134
   %i.ge = zext i32 %i.gd to i64

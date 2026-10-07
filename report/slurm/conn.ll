@@ -201,16 +201,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ops, i64 144), align 8
-  %i.d = tail call i32 %i.c(ptr noundef nonnull %0) #9 ; 4 uses
-  %.not20 = icmp eq i32 %i.d, 0
-  br i1 %.not20, label %.thread, label %1
-
-1:                                                ; preds = %bb.c
-  %2 = add i32 %i.d, -1019
-  %or.cond = icmp ult i32 %2, -2
+  %i.d = tail call i32 %i.c(ptr noundef nonnull %0) #9 ; 3 uses
+  %1 = add i32 %i.d, -1019
+  %or.cond = icmp ult i32 %1, -2
   br i1 %or.cond, label %.thread, label %bb.d
 
-bb.d:                                             ; preds = %1
+bb.d:                                             ; preds = %bb.c
   %cond22 = icmp eq i32 %i.d, 1018
   %spec.select = select i1 %cond22, i16 4, i16 1
   %i.e = load i16, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 816), align 8
@@ -223,8 +219,8 @@ bb.e:                                             ; preds = %bb.d
   %i.h = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.25, ptr noundef nonnull @__func__.conn_blocking_g_shutdown, i32 noundef %i.b) #9 ; 0 uses
   br label %.thread
 
-.thread:                                          ; preds = %1, %bb.c, %bb.e, %bb.a
-  %.2 = phi i32 [ %i.g, %bb.e ], [ 0, %bb.a ], [ %i.d, %1 ], [ 0, %bb.c ]
+.thread:                                          ; preds = %bb.c, %bb.e, %bb.a
+  %.2 = phi i32 [ %i.g, %bb.e ], [ 0, %bb.a ], [ %i.d, %bb.c ]
   ret i32 %.2
 }
 

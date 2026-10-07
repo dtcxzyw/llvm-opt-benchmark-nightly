@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
 bb.g:                                             ; preds = %bb.a
   %i.q = load ptr, ptr %i.d, align 8, !noalias !129 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !noalias !129 ; 12 uses
+  %i.s = load ptr, ptr %i.r, align 8, !noalias !129 ; 13 uses
   %.not.i.i.i.i = icmp eq ptr %i.s, null          ; 2 uses
   br i1 %.not.i.i.i.i, label %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread, label %bb.h
 
@@ -235,7 +235,7 @@ _ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread:    ; preds = %bb.g
   store ptr %i.q, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
-  %.not.i.i.i.i.i47100 = icmp eq ptr %i.ad, null
+  %.not.i.i.i.i.i47100 = icmp eq ptr %i.s, %i.ad
   br i1 %.not.i.i.i.i.i47100, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 bb.k:                                             ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit
@@ -259,7 +259,6 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitth
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i
-  %10 = phi ptr [ %i.s, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ null, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ]
   %i.aj = phi ptr [ %i.z, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.ac, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ]
   %i.ak = phi ptr [ %.pr.i.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.ad, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ] ; 8 uses
   %.not8.i.i.i.i.i = icmp eq ptr %i.ak, null
@@ -310,7 +309,7 @@ bb.s:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i, %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.s
-  store ptr %10, ptr %i.aj, align 8
+  store ptr %i.s, ptr %i.aj, align 8
   br i1 %.not.i.i.i.i, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread102
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread102: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit, %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit
@@ -713,7 +712,7 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
 bb.g:                                             ; preds = %bb.a
   %i.q = load ptr, ptr %i.d, align 8, !noalias !135 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !noalias !135 ; 12 uses
+  %i.s = load ptr, ptr %i.r, align 8, !noalias !135 ; 13 uses
   %.not.i.i.i.i = icmp eq ptr %i.s, null          ; 2 uses
   br i1 %.not.i.i.i.i, label %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread, label %bb.h
 
@@ -746,7 +745,7 @@ _ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread:    ; preds = %bb.g
   store ptr %i.q, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
-  %.not.i.i.i.i.i4796 = icmp eq ptr %i.ad, null
+  %.not.i.i.i.i.i4796 = icmp eq ptr %i.s, %i.ad
   br i1 %.not.i.i.i.i.i4796, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 bb.k:                                             ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit
@@ -770,7 +769,6 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitth
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i
-  %5 = phi ptr [ %i.s, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ null, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ]
   %i.aj = phi ptr [ %i.z, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.ac, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ]
   %i.ak = phi ptr [ %.pr.i.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.ad, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit.thread ] ; 8 uses
   %.not8.i.i.i.i.i = icmp eq ptr %i.ak, null
@@ -821,7 +819,7 @@ bb.s:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i, %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.s
-  store ptr %5, ptr %i.aj, align 8
+  store ptr %i.s, ptr %i.aj, align 8
   br i1 %.not.i.i.i.i, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread98
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread98: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit, %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit
@@ -873,7 +871,7 @@ _ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.br = load ptr, ptr %i.bq, align 8, !noalias !136 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
-  %i.bt = load ptr, ptr %i.bs, align 8, !noalias !136 ; 12 uses
+  %i.bt = load ptr, ptr %i.bs, align 8, !noalias !136 ; 13 uses
   %.not.i.i.i.i48 = icmp eq ptr %i.bt, null       ; 2 uses
   br i1 %.not.i.i.i.i48, label %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread, label %bb.y
 
@@ -906,7 +904,7 @@ _ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread:  ; preds = %_ZNSt12__shared_ptr
   store ptr %i.br, ptr %i.cc, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8            ; 2 uses
-  %.not.i.i.i.i.i5199 = icmp eq ptr %i.ce, null
+  %.not.i.i.i.i.i5199 = icmp eq ptr %i.bt, %i.ce
   br i1 %.not.i.i.i.i.i5199, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit73, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i56
 
 bb.ab:                                            ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50
@@ -930,7 +928,6 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitth
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i56
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i56: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i54
-  %6 = phi ptr [ %i.bt, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i54 ], [ null, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread ]
   %i.ck = phi ptr [ %i.ca, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i54 ], [ %i.cd, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread ]
   %i.cl = phi ptr [ %.pr.i.i.i.i.i55, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i54 ], [ %i.ce, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50.thread ] ; 8 uses
   %.not8.i.i.i.i.i57 = icmp eq ptr %i.cl, null
@@ -981,7 +978,7 @@ bb.aj:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit62
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit62: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i56, %bb.af, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i59, %bb.aj
-  store ptr %6, ptr %i.ck, align 8
+  store ptr %i.bt, ptr %i.ck, align 8
   br i1 %.not.i.i.i.i48, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit73, label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit62.thread102
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit62.thread102: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit50, %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit62

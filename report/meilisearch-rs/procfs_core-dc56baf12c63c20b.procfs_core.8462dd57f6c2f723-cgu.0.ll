@@ -205,9 +205,8 @@ bb.i:                                             ; preds = %.lr.ph.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bl)
   %i.cz = call fastcc { ptr, i64 } @_ZN4core4iter6traits8iterator8Iterator8try_fold17h2c5b0027535d05e2E(ptr noalias noundef align 8 dereferenceable(64) %i.ac) ; 2 uses
   %i.da = extractvalue { ptr, i64 } %i.cz, 0      ; 2 uses
-  %.not401 = icmp eq ptr %i.da, null              ; 2 uses
+  %.not401 = icmp eq ptr %i.da, null
   %i.db = extractvalue { ptr, i64 } %i.cz, 1
-  %.sroa.630.0 = select i1 %.not401, i64 undef, i64 %i.db
   br i1 %.not401, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %"_ZN4core3num21_$LT$impl$u20$u64$GT$16from_ascii_radix17h72ad40eebc575d6aE.exit"
@@ -610,7 +609,7 @@ bb.ag:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad)
   call fastcc void @_ZN4core4iter6traits8iterator8Iterator7collect17hee7a6c659cfbaf0cE(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.ad, ptr noalias noundef align 8 captures(address) dereferenceable(64) %i.ac)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0176)
-  %i.fj = tail call fastcc noundef i32 @_ZN11procfs_core7keyring8KeyFlags8from_str17he0df25ee570e0033E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.da, i64 noundef %.sroa.630.0)
+  %i.fj = tail call fastcc noundef i32 @_ZN11procfs_core7keyring8KeyFlags8from_str17he0df25ee570e0033E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.da, i64 noundef %i.db)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
   invoke fastcc void @_ZN11procfs_core7keyring10KeyTimeout8from_str17h0b4cd66e0b7c5075E(ptr noalias noundef align 8 captures(address) dereferenceable(48) %i.ab, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.em, i64 noundef %i.en)
           to label %bb.aj unwind label %bb.ah
@@ -1013,8 +1012,8 @@ bb.m:                                             ; preds = %"_ZN4core3num21_$LT
   %i.eg = call fastcc { ptr, i64 } @_ZN4core4iter6traits8iterator8Iterator8try_fold17h2c5b0027535d05e2E(ptr noalias noundef align 8 dereferenceable(64) %i.cu) ; 2 uses
   %i.eh = extractvalue { ptr, i64 } %i.eg, 0      ; 11 uses
   %.not566 = icmp eq ptr %i.eh, null              ; 2 uses
-  %i.ei = extractvalue { ptr, i64 } %i.eg, 1      ; 6 uses
-  %.sroa.650.0 = select i1 %.not566, i64 undef, i64 %i.ei ; 6 uses
+  %i.ei = extractvalue { ptr, i64 } %i.eg, 1      ; 11 uses
+  %.sroa.650.0 = select i1 %.not566, i64 undef, i64 %i.ei
   br i1 %.not566, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -1143,13 +1142,13 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.u, %.lr.ph.split.i.i
   %i.ep = phi i64 [ 0, %.lr.ph.split.i.i ], [ %i.fc, %bb.u ] ; 6 uses
-  %i.eq = sub nuw i64 %.sroa.650.0, %i.ep         ; 3 uses
+  %i.eq = sub nuw i64 %i.ei, %i.ep                ; 3 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eh, i64 %i.ep ; 2 uses
   %i.es = icmp ult i64 %i.eq, 16
   br i1 %i.es, label %.preheader.i.i.i, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.s
-  %.not.i.i.i = icmp eq i64 %.sroa.650.0, %i.ep
+  %.not.i.i.i = icmp eq i64 %i.ei, %i.ep
   br i1 %.not.i.i.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$4next17h63b945dbfb19965bE.exit", label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.t
@@ -1196,7 +1195,7 @@ bb.v:                                             ; preds = %_ZN4core5slice6memc
   br label %bb.w
 
 "_ZN4core3str4iter22SplitInternal$LT$P$GT$4next17h63b945dbfb19965bE.exit": ; preds = %bb.u, %.preheader.i.i.i, %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.i.i, %bb.t
-  %storemerge = phi i64 [ %.sroa.650.0, %bb.t ], [ %.sroa.650.0, %.preheader.i.i.i ], [ %.sroa.650.0, %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.i.i ], [ %i.fc, %bb.u ]
+  %storemerge = phi i64 [ %i.ei, %bb.t ], [ %i.ei, %.preheader.i.i.i ], [ %i.ei, %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.i.i ], [ %i.fc, %bb.u ]
   store i64 %storemerge, ptr %.sroa.5388.sroa.5.0..sroa.5388.0..sroa_idx.sroa_idx, align 8
   store i8 1, ptr %.sroa.7390.0..sroa_idx, align 1, !alias.scope !2395
   br label %bb.w

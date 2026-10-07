@@ -205,14 +205,12 @@ bb.bs:                                            ; preds = %bb.bs, %.epil.prehe
 
 .loopexit515:                                     ; preds = %.loopexit515.loopexit920.unr-lcssa, %.preheader523.epil, %._crit_edge616, %.loopexit515.loopexit918.unr-lcssa, %.preheader516.epil, %._crit_edge626, %.loopexit515.loopexit655, %.loopexit515.loopexit652
   %.10 = phi i32 [ %.9.lcssa, %._crit_edge616 ], [ %.1448, %.loopexit515.loopexit918.unr-lcssa ], [ %i.rh, %.loopexit515.loopexit655 ], [ %i.qv, %.loopexit515.loopexit652 ], [ %.5430.lcssa, %._crit_edge626 ], [ %.1448, %.preheader516.epil ], [ %.1448, %.preheader523.epil ], [ %.1448, %.loopexit515.loopexit920.unr-lcssa ]
-  %i.rt = shl i32 %.10, 1                         ; 5 uses
-  br i1 %i.w, label %4, label %.loopexit
+  %i.rt = shl i32 %.10, 1                         ; 3 uses
+  %.not650 = icmp ne i32 %i.rt, 0
+  %or.cond919.not = select i1 %i.w, i1 %.not650, i1 false
+  br i1 %or.cond919.not, label %.lr.ph632.preheader, label %.loopexit
 
-4:                                                ; preds = %.loopexit515
-  %.not650 = icmp eq i32 %i.rt, 0
-  br i1 %.not650, label %.loopexit, label %.lr.ph632.preheader
-
-.lr.ph632.preheader:                              ; preds = %4
+.lr.ph632.preheader:                              ; preds = %.loopexit515
   %i.ru = zext i32 %i.rt to i64
   %i.rv = add nsw i64 %i.ru, -2                   ; 2 uses
   %i.rw = lshr exact i64 %i.rv, 1
@@ -289,9 +287,8 @@ bb.bs:                                            ; preds = %bb.bs, %.epil.prehe
   %epil.iter1035.cmp.not = icmp eq i64 %epil.iter1035.next, %xtraiter1034
   br i1 %epil.iter1035.cmp.not, label %.loopexit, label %.lr.ph632.epil, !llvm.loop !108
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph632.epil, %.loopexit515, %4
-  %.pre-phi = phi i32 [ %i.rt, %.loopexit515 ], [ 0, %4 ], [ %i.rt, %.lr.ph632.epil ], [ %i.rt, %.loopexit.loopexit.unr-lcssa ]
-  %i.sy = zext i32 %.pre-phi to i64
+.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph632.epil, %.loopexit515
+  %i.sy = zext i32 %i.rt to i64
   br label %.loopexit538
 
 bb.bt:                                            ; preds = %bb.bj
@@ -694,14 +691,12 @@ bb.ca:                                            ; preds = %bb.ca, %.epil.prehe
 
 .loopexit545:                                     ; preds = %.preheader544, %.preheader547, %.loopexit545.loopexit665, %.loopexit545.loopexit663
   %.25 = phi i32 [ %i.acz, %.loopexit545.loopexit663 ], [ 0, %.preheader547 ], [ %i.ada, %.loopexit545.loopexit665 ], [ 0, %.preheader544 ]
-  %i.adb = shl i32 %.25, 2                        ; 5 uses
-  br i1 %i.w, label %5, label %.loopexit542
+  %i.adb = shl i32 %.25, 2                        ; 3 uses
+  %.not640 = icmp ne i32 %i.adb, 0
+  %or.cond921.not = select i1 %i.w, i1 %.not640, i1 false
+  br i1 %or.cond921.not, label %.lr.ph.preheader, label %.loopexit542
 
-5:                                                ; preds = %.loopexit545
-  %.not640 = icmp eq i32 %i.adb, 0
-  br i1 %.not640, label %.loopexit542, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %5
+.lr.ph.preheader:                                 ; preds = %.loopexit545
   %i.adc = zext i32 %i.adb to i64
   %i.add = add nsw i64 %i.adc, -4                 ; 3 uses
   %i.ade = lshr exact i64 %i.add, 2
@@ -745,9 +740,8 @@ bb.ca:                                            ; preds = %bb.ca, %.epil.prehe
   store <4 x i8> %i.adr, ptr %i.adp, align 4, !tbaa !13
   br label %.loopexit542
 
-.loopexit542:                                     ; preds = %.lr.ph.epil.preheader, %.loopexit542.loopexit.unr-lcssa, %.loopexit545, %5
-  %.pre-phi881 = phi i32 [ %i.adb, %.loopexit545 ], [ 0, %5 ], [ %i.adb, %.loopexit542.loopexit.unr-lcssa ], [ %i.adb, %.lr.ph.epil.preheader ]
-  %i.ads = zext i32 %.pre-phi881 to i64
+.loopexit542:                                     ; preds = %.lr.ph.epil.preheader, %.loopexit542.loopexit.unr-lcssa, %.loopexit545
+  %i.ads = zext i32 %i.adb to i64
   br label %.loopexit538
 
 bb.cb:                                            ; preds = %bb.bj

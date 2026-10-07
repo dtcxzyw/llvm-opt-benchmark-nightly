@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.critedge4.i.us, %.
   br i1 %exitcond181.not.i.us, label %.lr.ph146.i.us, label %.lr.ph141.i.us, !llvm.loop !44
 
 .lr.ph146.i.us:                                   ; preds = %.preheader125.i.us, %bb.j
-  %i.hv = load i32, ptr %i.d, align 16, !tbaa !35 ; 5 uses
+  %i.hv = load i32, ptr %i.d, align 16, !tbaa !35 ; 7 uses
   %.not113.i.us = icmp eq i32 %i.hv, 0
   br i1 %.not113.i.us, label %bb.l, label %bb.k
 
@@ -222,7 +222,6 @@ bb.k:                                             ; preds = %.lr.ph146.i.us
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph146.i.us
   %i.id = phi i32 [ %i.hz, %bb.k ], [ %i.ga, %.lr.ph146.i.us ] ; 2 uses
-  %.1100.i.us = phi i32 [ %i.hv, %bb.k ], [ 0, %.lr.ph146.i.us ] ; 3 uses
   %.198.i.us = phi i32 [ %i.ib, %bb.k ], [ 0, %.lr.ph146.i.us ] ; 3 uses
   %.2.i.us = phi i32 [ %i.ic, %bb.k ], [ 0, %.lr.ph146.i.us ] ; 3 uses
   br i1 %exitcond186.not.i.us, label %._crit_edge.i.us, label %.lr.ph146.i.us.1
@@ -243,12 +242,12 @@ bb.m:                                             ; preds = %.lr.ph146.i.us.1
   store i32 %i.ii, ptr %i.fq, align 4, !tbaa !35
   %i.im = mul nsw i32 %i.ii, %i.ie
   %i.in = add nsw i32 %i.im, %.2.i.us
-  %i.io = add nsw i32 %i.ie, %.1100.i.us
+  %i.io = add nsw i32 %i.ie, %i.hv
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %.lr.ph146.i.us.1
   %i.ip = phi i32 [ %i.ii, %bb.m ], [ %i.fz, %.lr.ph146.i.us.1 ] ; 4 uses
-  %.1100.i.us.1 = phi i32 [ %i.io, %bb.m ], [ %.1100.i.us, %.lr.ph146.i.us.1 ] ; 3 uses
+  %.1100.i.us.1 = phi i32 [ %i.io, %bb.m ], [ %i.hv, %.lr.ph146.i.us.1 ] ; 3 uses
   %.198.i.us.1 = phi i32 [ %i.il, %bb.m ], [ %.198.i.us, %.lr.ph146.i.us.1 ] ; 3 uses
   %.2.i.us.1 = phi i32 [ %i.in, %bb.m ], [ %.2.i.us, %.lr.ph146.i.us.1 ] ; 3 uses
   br i1 %exitcond186.not.i.us.1, label %._crit_edge.i.us, label %.lr.ph146.i.us.2
@@ -302,7 +301,7 @@ bb.q:                                             ; preds = %.lr.ph146.i.us.3
   %i.jn = phi i32 [ %i.fx, %bb.l ], [ %i.fx, %bb.n ], [ %i.fx, %bb.p ], [ %i.jg, %bb.q ], [ %i.fx, %.lr.ph146.i.us.3 ]
   %i.jo = phi i32 [ %i.fy, %bb.l ], [ %i.fy, %bb.n ], [ %i.jb, %bb.p ], [ %i.jb, %bb.q ], [ %i.jb, %.lr.ph146.i.us.3 ]
   %i.jp = phi i32 [ %i.fz, %bb.l ], [ %i.ip, %bb.n ], [ %i.ip, %bb.p ], [ %i.ip, %bb.q ], [ %i.ip, %.lr.ph146.i.us.3 ]
-  %.1100.i.us.lcssa = phi i32 [ %.1100.i.us, %bb.l ], [ %.1100.i.us.1, %bb.n ], [ %.1100.i.us.2, %bb.p ], [ %i.jm, %bb.q ], [ %.1100.i.us.2, %.lr.ph146.i.us.3 ] ; 2 uses
+  %.1100.i.us.lcssa = phi i32 [ %i.hv, %bb.l ], [ %.1100.i.us.1, %bb.n ], [ %.1100.i.us.2, %bb.p ], [ %i.jm, %bb.q ], [ %.1100.i.us.2, %.lr.ph146.i.us.3 ] ; 2 uses
   %.198.i.us.lcssa = phi i32 [ %.198.i.us, %bb.l ], [ %.198.i.us.1, %bb.n ], [ %.198.i.us.2, %bb.p ], [ %i.jj, %bb.q ], [ %.198.i.us.2, %.lr.ph146.i.us.3 ]
   %.2.i.us.lcssa = phi i32 [ %.2.i.us, %bb.l ], [ %.2.i.us.1, %bb.n ], [ %.2.i.us.2, %bb.p ], [ %i.jl, %bb.q ], [ %.2.i.us.2, %.lr.ph146.i.us.3 ]
   %i.jq = icmp slt i32 %.198.i.us.lcssa, 5

@@ -202,11 +202,10 @@ bb.s:                                             ; preds = %thread-pre-split
 
 bb.t:                                             ; preds = %.thread140, %bb.s, %thread-pre-split
   %.sroa.596.0.copyload146 = phi ptr [ %.sroa.596.0.copyload143, %.thread140 ], [ %.sroa.596.0.copyload, %bb.s ], [ %.sroa.596.0.copyload, %thread-pre-split ] ; 5 uses
-  %.sroa.094.0.copyload145 = phi i64 [ %.sroa.094.0.copyload.pr, %.thread140 ], [ 2, %bb.s ], [ %.sroa.094.0.copyload.pr, %thread-pre-split ] ; 2 uses
   br i1 %i.ac, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  switch i64 %.sroa.094.0.copyload145, label %bb.ad [
+  switch i64 %.sroa.094.0.copyload.pr, label %bb.ad [
     i64 0, label %bb.x
     i64 4, label %bb.y
   ]
@@ -214,7 +213,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !443
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !443
-  store i64 %.sroa.094.0.copyload145, ptr %i.d, align 8, !noalias !444
+  store i64 %.sroa.094.0.copyload.pr, ptr %i.d, align 8, !noalias !444
   %.sroa.596.0..sroa_idx97 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %.sroa.596.0.copyload146, ptr %.sroa.596.0..sroa_idx97, align 8, !noalias !444
   %.sroa.8101.0..sroa_idx102 = getelementptr inbounds nuw i8, ptr %i.d, i64 16

@@ -204,12 +204,12 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %.0 = select i1 %i.s, i64 %i.x, i64 %i.w        ; 2 uses
   %i.y = icmp ugt i64 %.097, 1                    ; 3 uses
   %i.z = tail call i64 @llvm.umin.i64(i64 %.097, i64 %.0)
-  %.1 = select i1 %i.y, i64 %i.z, i64 %.0         ; 3 uses
+  %.1 = select i1 %i.y, i64 %i.z, i64 %.0         ; 2 uses
   %i.aa = icmp ugt i64 %.092, 1                   ; 4 uses
-  %i.ab = tail call i64 @llvm.umin.i64(i64 %.092, i64 %.1) ; 2 uses
+  %i.ab = tail call i64 @llvm.umin.i64(i64 %.092, i64 %.1)
   %.2 = select i1 %i.aa, i64 %i.ab, i64 %.1       ; 4 uses
   %i.ac = icmp ugt i64 %.087, 1                   ; 5 uses
-  %i.ad = tail call i64 @llvm.umin.i64(i64 %.087, i64 %.2) ; 5 uses
+  %i.ad = tail call i64 @llvm.umin.i64(i64 %.087, i64 %.2) ; 3 uses
   %.3 = select i1 %i.ac, i64 %i.ad, i64 %.2       ; 6 uses
   %cond = icmp eq i32 %.093, 0
   br i1 %cond, label %bb.aa, label %.preheader
@@ -442,7 +442,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.sroa.8.0.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %.sroa.8.0.copyload12.us164.us, %.lr.ph.split.split.split.us.split.us ], [ %.sroa.8.0.copyload12.us164, %.lr.ph.split.split.split.us.split ], [ %.sroa.8.0.copyload12.us, %bb.o ], [ %.sroa.8.0.copyload12.us190, %.lr.ph.split.split.split.split.us ], [ %.sroa.8.0.copyload12.us136, %bb.s ], [ %.sroa.8.0.copyload12, %.lr.ph.split.split.split.split ]
   %.sroa.11.0.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %.sroa.11.0.copyload15.us165.us, %.lr.ph.split.split.split.us.split.us ], [ %.sroa.11.0.copyload15.us165, %.lr.ph.split.split.split.us.split ], [ %.sroa.11.0.copyload15.us, %bb.o ], [ %.sroa.11.0.copyload15.us191, %.lr.ph.split.split.split.split.us ], [ %.sroa.11.0.copyload15.us137, %bb.s ], [ %.sroa.11.0.copyload15, %.lr.ph.split.split.split.split ]
   %.sroa.14.0.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %.sroa.14.0.copyload18.us166.us, %.lr.ph.split.split.split.us.split.us ], [ %.sroa.14.0.copyload18.us166, %.lr.ph.split.split.split.us.split ], [ %.sroa.14.0.copyload18.us, %bb.o ], [ %.sroa.14.0.copyload18.us192, %.lr.ph.split.split.split.split.us ], [ %.sroa.14.0.copyload18.us138, %bb.s ], [ %.sroa.14.0.copyload18, %.lr.ph.split.split.split.split ]
-  %.086.lcssa = phi i64 [ 0, %.preheader ], [ %i.ad, %.lr.ph.split.split.split.us.split.us ], [ %i.ab, %.lr.ph.split.split.split.us.split ], [ %.3, %bb.o ], [ %i.ad, %.lr.ph.split.split.split.split.us ], [ %.3, %bb.s ], [ %.1, %.lr.ph.split.split.split.split ] ; 2 uses
   %i.bt = icmp eq i64 %spec.select, 1
   br i1 %i.bt, label %bb.t, label %bb.u
 
@@ -475,7 +474,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z, %bb.i, %bb.d, %bb.a
-  %.088 = phi i64 [ %.3, %bb.i ], [ 0, %bb.a ], [ 0, %bb.d ], [ %.086.lcssa, %bb.z ], [ %.086.lcssa, %bb.y ]
+  %.088 = phi i64 [ %.3, %bb.i ], [ 0, %bb.a ], [ 0, %bb.d ], [ %.3, %bb.z ], [ %.3, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   ret i64 %.088

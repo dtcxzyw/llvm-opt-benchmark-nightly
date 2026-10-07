@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not.i, label %_ZN4pbrt12normalizeArgERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %.lr.ph.i
 
 _ZN4pbrt12normalizeArgERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.e
-  %.pre = load i64, ptr %i.b, align 8, !tbaa !45
+  %.pre = load i64, ptr %i.b, align 8, !tbaa !45  ; 2 uses
   %.pre24.pre = load ptr, ptr %2, align 8, !tbaa !48 ; 4 uses
   %i.ac = icmp eq i64 %.pre, 5
   br i1 %i.ac, label %bb.f, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
@@ -229,6 +229,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ao, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+  %4 = icmp ult i64 %.pre, 16
+  call void @llvm.assume(i1 %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #37
   br i1 %i.an, label %bb.g, label %bb.h
 
@@ -328,7 +330,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not.i8, label %_ZN4pbrt12normalizeArgERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit18, label %.lr.ph.i6
 
 _ZN4pbrt12normalizeArgERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit18: ; preds = %bb.l
-  %.pre25 = load i64, ptr %i.as, align 8, !tbaa !45
+  %.pre25 = load i64, ptr %i.as, align 8, !tbaa !45 ; 2 uses
   %.pre26.pre = load ptr, ptr %3, align 8, !tbaa !48 ; 3 uses
   %i.br = icmp eq i64 %.pre25, 4
   br i1 %i.br, label %bb.m, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20
@@ -346,6 +348,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.bx, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20
+  %5 = icmp ult i64 %.pre25, 16
+  call void @llvm.assume(i1 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #37
   br i1 %i.bw, label %bb.n, label %bb.o
 

@@ -202,11 +202,10 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sink = phi i64 [ %.sroa.03.0.i, %bb.d ], [ -1, %bb.e ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.e ]
+  %.pn = phi { i64, i64 } [ { i64 1, i64 poison }, %bb.d ], [ { i64 0, i64 poison }, %bb.e ]
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store atomic i64 %.sink, ptr %i.i monotonic, align 8
-  %2 = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
-  %i.j = insertvalue { i64, i64 } %2, i64 %.sroa.03.0.i, 1
+  %i.j = insertvalue { i64, i64 } %.pn, i64 %.sroa.03.0.i, 1
   ret { i64, i64 } %i.j
 }
 

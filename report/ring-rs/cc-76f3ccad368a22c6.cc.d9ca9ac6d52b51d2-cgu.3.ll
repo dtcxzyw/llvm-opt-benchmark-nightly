@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d
   %i.ab = xor i8 %i.aa, 1
   store i8 %i.ab, ptr %i.m, align 8, !noalias !32
   %i.ac = load i64, ptr %i.g, align 8, !noalias !32 ; 9 uses
-  %i.ad = load ptr, ptr %i.e, align 8, !noalias !32 ; 8 uses
+  %i.ad = load ptr, ptr %i.e, align 8, !noalias !32 ; 7 uses
   %i.ae = load i64, ptr %i.f, align 8, !noalias !32 ; 5 uses
   %i.af = icmp eq i64 %i.ac, 0
   br i1 %i.af, label %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.i, label %bb.h
@@ -244,8 +244,7 @@ bb.j:                                             ; preds = %_RNvXs9_NtNtCs3oUPo
   br i1 %i.ap, label %bb.k, label %bb.l
 
 _RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.thread.i: ; preds = %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.i, %bb.i, %.split.i.i
-  %.lcssa5 = phi ptr [ null, %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCsiHivYpkJ4Hu_2cc.exit.i ], [ %i.ad, %bb.i ], [ %i.ad, %.split.i.i ]
-  call void @_RNvNtCs3oUPovFnLWP_4core3str16slice_error_fail(ptr %.lcssa5, i64 %i.ae, i64 %i.ac, i64 %i.ae, ptr nonnull align 8 @542) #24, !noalias !32
+  call void @_RNvNtCs3oUPovFnLWP_4core3str16slice_error_fail(ptr %i.ad, i64 %i.ae, i64 %i.ac, i64 %i.ae, ptr nonnull align 8 @542) #24, !noalias !32
   unreachable
 
 bb.k:                                             ; preds = %bb.j

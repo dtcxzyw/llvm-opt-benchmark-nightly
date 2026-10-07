@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = tail call ptr @__dynamic_cast(ptr nonnull %i.g, ptr nonnull @_ZTIN16OpenColorIO_v2_59TransformE, ptr nonnull @_ZTIN16OpenColorIO_v2_514GroupTransformE, i64 0) #21, !noalias !165 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !37, !noalias !165 ; 10 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.j, null
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !37, !noalias !165 ; 9 uses
+  %.not.i.i.i.i.i = icmp eq ptr %i.j, null        ; 2 uses
   br i1 %.not.i.i.i.i.i, label %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -229,9 +229,8 @@ _ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 88
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = tail call noundef i32 %i.r(ptr noundef nonnull align 8 dereferenceable(8) %i.h) #21
-  %.not = icmp eq i32 %i.s, 0
-  %.not.i.i = icmp eq ptr %i.j, null
-  br i1 %.not.i.i, label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_514GroupTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.f
+  %.not.i.i = icmp eq i32 %i.s, 0
+  br i1 %.not.i.i.i.i.i, label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_514GroupTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
@@ -278,7 +277,7 @@ bb.k:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_514GroupTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_514GroupTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.k
-  br i1 %.not, label %bb.m, label %bb.l
+  br i1 %.not.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_514GroupTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.a
   br label %bb.m

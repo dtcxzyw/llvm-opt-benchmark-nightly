@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.g, %.lr.ph.split.us.i
   %.sroa.06.0.in.i.i.i.us.i = phi ptr [ %i.ao, %.lr.ph.split.us.i ], [ %.sroa.06.0.i.i.i.us.i, %bb.g ]
-  %.sroa.06.0.i.i.i.us.i = load ptr, ptr %.sroa.06.0.in.i.i.i.us.i, align 8, !tbaa !91 ; 3 uses
-  %.not.i.i.i.us.not.not.i.not.not.not.not.not = icmp ne ptr %.sroa.06.0.i.i.i.us.i, null ; 2 uses
-  br i1 %.not.i.i.i.us.not.not.i.not.not.not.not.not, label %bb.g, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i
+  %.sroa.06.0.i.i.i.us.i = load ptr, ptr %.sroa.06.0.in.i.i.i.us.i, align 8, !tbaa !91 ; 4 uses
+  %.not.i.i.i.us.i = icmp eq ptr %.sroa.06.0.i.i.i.us.i, null
+  br i1 %.not.i.i.i.us.i, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i.us.i, i64 8
@@ -228,7 +228,8 @@ _ZNSt15_Deque_iteratorI10LuaJobInfoRS0_PS0_EppEv.exit.us.i: ; preds = %_ZNKSt13u
   br i1 %.not.us.i, label %_ZN11AsyncEngine11compareJobsISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEEEEmRKT_.exit, label %.lr.ph.split.us.i
 
 _ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i: ; preds = %bb.g, %bb.f
-  %..i.i.us.i = zext i1 %.not.i.i.i.us.not.not.i.not.not.not.not.not to i64
+  %.not.i.i.us.i = icmp ne ptr %.sroa.06.0.i.i.i.us.i, null
+  %..i.i.us.i = zext i1 %.not.i.i.us.i to i64
   %i.ax = add i64 %.015.us.i, %..i.i.us.i         ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.06.014.us.i, i64 152 ; 2 uses
   %i.az = icmp eq ptr %i.ay, %.sroa.10.013.us.i
@@ -261,7 +262,7 @@ bb.j:                                             ; preds = %bb.k
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.i, %bb.j
   %.020.i.i.i.i.i.i = phi ptr [ %i.bl, %bb.j ], [ %i.bg, %bb.i ]
-  %i.bl = load ptr, ptr %.020.i.i.i.i.i.i, align 8, !tbaa !91 ; 4 uses
+  %i.bl = load ptr, ptr %.020.i.i.i.i.i.i, align 8, !tbaa !91 ; 5 uses
   %.not18.i.i.i.i.i.i = icmp eq ptr %i.bl, null
   br i1 %.not18.i.i.i.i.i.i, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i, label %bb.k
 
@@ -277,7 +278,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   br label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i, !llvm.loop !5
 
 _ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.j, %..loopexit_crit_edge21.i.i.i.i.i.i, %bb.i, %.lr.ph.split.i
-  %.sroa.06.1.i.i.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i.i.i ], [ null, %.lr.ph.split.i ], [ %i.bg, %bb.i ], [ %i.bl, %bb.j ], [ null, %.lr.ph.i.i.i.i.i.i ]
+  %.sroa.06.1.i.i.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i.i.i ], [ null, %.lr.ph.split.i ], [ %i.bg, %bb.i ], [ %i.bl, %bb.j ], [ %i.bl, %.lr.ph.i.i.i.i.i.i ]
   %.not.i.i.i = icmp ne ptr %.sroa.06.1.i.i.i.i, null
   %..i.i.i = zext i1 %.not.i.i.i to i64
   %i.bq = add i64 %.015.i, %..i.i.i               ; 2 uses
@@ -680,9 +681,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.split.us.i
   %.sroa.06.0.in.i.i.i.us.i = phi ptr [ %i.ad, %.lr.ph.split.us.i ], [ %.sroa.06.0.i.i.i.us.i, %bb.f ]
-  %.sroa.06.0.i.i.i.us.i = load ptr, ptr %.sroa.06.0.in.i.i.i.us.i, align 8, !tbaa !91 ; 3 uses
-  %.not.i.i.i.us.not.not.i.not.not.not.not.not = icmp ne ptr %.sroa.06.0.i.i.i.us.i, null ; 2 uses
-  br i1 %.not.i.i.i.us.not.not.i.not.not.not.not.not, label %bb.f, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i
+  %.sroa.06.0.i.i.i.us.i = load ptr, ptr %.sroa.06.0.in.i.i.i.us.i, align 8, !tbaa !91 ; 4 uses
+  %.not.i.i.i.us.i = icmp eq ptr %.sroa.06.0.i.i.i.us.i, null
+  br i1 %.not.i.i.i.us.i, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i.us.i, i64 8
@@ -704,7 +705,8 @@ _ZNSt15_Deque_iteratorI10LuaJobInfoRS0_PS0_EppEv.exit.us.i: ; preds = %_ZNKSt13u
   br i1 %.not.us.i, label %_ZN11AsyncEngine11compareJobsISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEEEEmRKT_.exit, label %.lr.ph.split.us.i
 
 _ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.loopexit.us.i: ; preds = %bb.f, %bb.e
-  %..i.i.us.i = zext i1 %.not.i.i.i.us.not.not.i.not.not.not.not.not to i64
+  %.not.i.i.us.i = icmp ne ptr %.sroa.06.0.i.i.i.us.i, null
+  %..i.i.us.i = zext i1 %.not.i.i.us.i to i64
   %i.am = add i64 %.015.us.i, %..i.i.us.i         ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.06.014.us.i, i64 152 ; 2 uses
   %i.ao = icmp eq ptr %i.an, %.sroa.10.013.us.i
@@ -737,7 +739,7 @@ bb.i:                                             ; preds = %bb.j
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.h, %bb.i
   %.020.i.i.i.i.i.i = phi ptr [ %i.ba, %bb.i ], [ %i.av, %bb.h ]
-  %i.ba = load ptr, ptr %.020.i.i.i.i.i.i, align 8, !tbaa !91 ; 4 uses
+  %i.ba = load ptr, ptr %.020.i.i.i.i.i.i, align 8, !tbaa !91 ; 5 uses
   %.not18.i.i.i.i.i.i = icmp eq ptr %i.ba, null
   br i1 %.not18.i.i.i.i.i.i, label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i, label %bb.j
 
@@ -753,7 +755,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   br label %_ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i, !llvm.loop !5
 
 _ZNKSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE5countERKj.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.i, %..loopexit_crit_edge21.i.i.i.i.i.i, %bb.h, %.lr.ph.split.i
-  %.sroa.06.1.i.i.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i.i.i ], [ null, %.lr.ph.split.i ], [ %i.av, %bb.h ], [ %i.ba, %bb.i ], [ null, %.lr.ph.i.i.i.i.i.i ]
+  %.sroa.06.1.i.i.i.i = phi ptr [ null, %..loopexit_crit_edge21.i.i.i.i.i.i ], [ null, %.lr.ph.split.i ], [ %i.av, %bb.h ], [ %i.ba, %bb.i ], [ %i.ba, %.lr.ph.i.i.i.i.i.i ]
   %.not.i.i.i = icmp ne ptr %.sroa.06.1.i.i.i.i, null
   %..i.i.i = zext i1 %.not.i.i.i to i64
   %i.bf = add i64 %.015.i, %..i.i.i               ; 2 uses

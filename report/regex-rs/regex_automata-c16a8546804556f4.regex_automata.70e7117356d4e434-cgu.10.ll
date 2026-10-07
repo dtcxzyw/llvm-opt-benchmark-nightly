@@ -205,8 +205,7 @@ bb.a:
   br i1 %i.af, label %bb.p, label %bb.b, !dbg !6484
 
 bb.b:                                             ; preds = %bb.a, %bb.p
-  %.sroa.52.0.i = phi i64 [ undef, %bb.a ], [ %i.co, %bb.p ], !dbg !6485
-  %.sroa.01.0.i = phi i64 [ %i.ae, %bb.a ], [ 1, %bb.p ], !dbg !6485
+  %.sroa.01.0.i = phi i64 [ undef, %bb.a ], [ %i.co, %bb.p ], !dbg !6485
     #dbg_value(ptr %i.y, !5874, !DIExpression(DW_OP_plus_uconst, 20, DW_OP_stack_value), !5259)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 164, !dbg !6486
   %i.ah = load i8, ptr %i.ag, align 4, !dbg !6486, !range !2648, !noalias !5852, !noundef !1285
@@ -609,9 +608,9 @@ bb.as:                                            ; preds = %_RNvMst_NtCsj6eKBz9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !6635, !noalias !6382
   %i.fj = getelementptr inbounds nuw i8, ptr %i.v, i64 24, !dbg !6628
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fj, ptr noundef nonnull align 4 dereferenceable(16) %i.t, i64 16, i1 false), !dbg !6628
-  store i64 %.sroa.01.0.i, ptr %i.v, align 8, !dbg !6628, !alias.scope !5852
+  store i64 %i.ae, ptr %i.v, align 8, !dbg !6628, !alias.scope !5852
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8, !dbg !6628
-  store i64 %.sroa.52.0.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !6628, !alias.scope !5852
+  store i64 %.sroa.01.0.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !6628, !alias.scope !5852
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 16, !dbg !6628
   store i8 %i.al, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !6628, !alias.scope !5852
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.v, i64 17, !dbg !6628
@@ -1014,7 +1013,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.d, !dbg !17547, !prof !2658
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterNtNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson12literal_trie5StateENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBX_.exit.thread: ; preds = %bb.a, %bb.c
-  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ], !dbg !17484
+  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ]
   %.sroa.0.0 = phi i32 [ %i.m, %bb.c ], [ undef, %bb.a ]
   %i.j = insertvalue { i32, ptr } poison, i32 %.sroa.0.0, 0, !dbg !17549
   %i.k = insertvalue { i32, ptr } %i.j, ptr %.sroa.2.0, 1, !dbg !17549
@@ -1071,7 +1070,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.d, !dbg !17677, !prof !2658
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterNtNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson3nfa5StateENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBX_.exit.thread: ; preds = %bb.a, %bb.c
-  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ], !dbg !17614
+  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ]
   %.sroa.0.0 = phi i32 [ %i.m, %bb.c ], [ undef, %bb.a ]
   %i.j = insertvalue { i32, ptr } poison, i32 %.sroa.0.0, 0, !dbg !17679
   %i.k = insertvalue { i32, ptr } %i.j, ptr %.sroa.2.0, 1, !dbg !17679
@@ -1128,7 +1127,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.d, !dbg !17807, !prof !2658
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterNtNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson7builder5StateENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBX_.exit.thread: ; preds = %bb.a, %bb.c
-  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ], !dbg !17744
+  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ]
   %.sroa.0.0 = phi i32 [ %i.m, %bb.c ], [ undef, %bb.a ]
   %i.j = insertvalue { i32, ptr } poison, i32 %.sroa.0.0, 0, !dbg !17809
   %i.k = insertvalue { i32, ptr } %i.j, ptr %.sroa.2.0, 1, !dbg !17809
@@ -1531,7 +1530,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.d, !dbg !18795, !prof !2658
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9GYDdpCSJ4S_14regex_automata.exit.thread: ; preds = %bb.a, %bb.c
-  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ], !dbg !18732
+  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ]
   %.sroa.0.0 = phi i32 [ %i.m, %bb.c ], [ undef, %bb.a ]
   %i.j = insertvalue { i32, ptr } poison, i32 %.sroa.0.0, 0, !dbg !18797
   %i.k = insertvalue { i32, ptr } %i.j, ptr %.sroa.2.0, 1, !dbg !18797
@@ -1588,7 +1587,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not14, label %bb.c, label %bb.d, !dbg !18926, !prof !2658
 
 _RNvXs2Q_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_7IterMutTNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives10SmallIndexBT_EENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBZ_.exit.thread: ; preds = %bb.a, %bb.c
-  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ], !dbg !18862
+  %.sroa.2.0 = phi ptr [ %i.a, %bb.c ], [ null, %bb.a ]
   %.sroa.0.0 = phi i32 [ %i.m, %bb.c ], [ undef, %bb.a ]
   %i.j = insertvalue { i32, ptr } poison, i32 %.sroa.0.0, 0, !dbg !18928
   %i.k = insertvalue { i32, ptr } %i.j, ptr %.sroa.2.0, 1, !dbg !18928

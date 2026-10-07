@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f, %bb.g
   %.ph = phi i32 [ 117, %bb.f ], [ 114, %bb.g ]
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ba, i64 12
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !441 ; 2 uses
+  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !441 ; 3 uses
   %.not45 = icmp eq i32 %i.bp, -1
   br i1 %.not45, label %.critedge, label %bb.i
 
@@ -215,9 +215,8 @@ bb.i:                                             ; preds = %bb.h
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.i
-  %.ph50 = phi i32 [ -1, %bb.h ], [ %i.bp, %bb.i ] ; 2 uses
   %.ph51 = phi i32 [ 0, %bb.h ], [ %i.br, %bb.i ]
-  %i.bs = sext i32 %.ph50 to i64
+  %i.bs = sext i32 %i.bp to i64
   %i.bt = getelementptr inbounds i8, ptr %i.az, i64 %i.bs
   %i.bu = load i32, ptr %i.ba, align 4, !tbaa !444
   %i.bv = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
@@ -225,7 +224,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !443
   %i.bz = trunc nuw nsw i64 %indvars.iv to i32
-  call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.37, i32 noundef %.ph, i32 noundef %i.bz, i32 noundef %i.bu, i32 noundef %i.bw, i32 noundef %i.by, i32 noundef %.ph50, i32 noundef %.ph51, ptr noundef nonnull %i.bt)
+  call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.37, i32 noundef %.ph, i32 noundef %i.bz, i32 noundef %i.bu, i32 noundef %i.bw, i32 noundef %i.by, i32 noundef %i.bp, i32 noundef %.ph51, ptr noundef nonnull %i.bt)
   br label %bb.j
 
 bb.j:                                             ; preds = %.critedge, %.thread46

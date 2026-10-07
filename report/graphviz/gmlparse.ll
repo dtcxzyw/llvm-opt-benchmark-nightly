@@ -202,16 +202,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i16, ptr %0, align 8, !tbaa !32
-  %1 = icmp eq i16 %i.a, 289
+  %1 = icmp ne i16 %i.a, 289
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !12   ; 10 uses
-  br i1 %1, label %2, label %._crit_edge
-
-2:                                                ; preds = %bb.b
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !12   ; 9 uses
   %.not8 = icmp eq ptr %i.c, null
-  br i1 %.not8, label %._crit_edge, label %bb.c
+  %or.cond = select i1 %1, i1 true, i1 %.not8
+  br i1 %or.cond, label %._crit_edge, label %bb.c
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %i.c, i64 16       ; 2 uses
   %.val16.i = load i64, ptr %i.d, align 8, !tbaa !44
   %.not.i = icmp eq i64 %.val16.i, 0
@@ -256,9 +254,8 @@ free_attrs.exit:                                  ; preds = %bb.g, %bb.c
   tail call void @gv_list_free_(ptr noundef nonnull %i.c) #18
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %2, %bb.b, %free_attrs.exit
-  %.sink = phi ptr [ %i.c, %free_attrs.exit ], [ null, %2 ], [ %i.c, %bb.b ]
-  tail call void @free(ptr noundef %.sink) #18
+._crit_edge:                                      ; preds = %bb.b, %free_attrs.exit
+  tail call void @free(ptr noundef %i.c) #18
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !33
   tail call void @free(ptr noundef %i.p) #18

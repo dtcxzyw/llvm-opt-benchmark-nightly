@@ -205,28 +205,25 @@ bb.v:                                             ; preds = %bb.d
   unreachable
 
 bb.w:                                             ; preds = %bb.c
-  %4 = zext i1 %i.u to i64
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %4
   %.not157 = icmp eq i16 %2, 0
   %.phi.trans.insert = getelementptr inbounds i8, ptr %i.k, i64 -40
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !48 ; 2 uses
-  br i1 %.not157, label %._crit_edge, label %6
-
-6:                                                ; preds = %bb.w
   %.not158 = icmp eq ptr %.pre, @pk__object_new
-  br i1 %.not158, label %._crit_edge, label %bb.x
+  %or.cond279 = select i1 %.not157, i1 true, i1 %.not158
+  br i1 %or.cond279, label %._crit_edge, label %bb.x
 
-bb.x:                                             ; preds = %6
+bb.x:                                             ; preds = %bb.w
   %i.cy = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.42) #15 ; 0 uses
   br label %bb.ak
 
-._crit_edge:                                      ; preds = %bb.w, %6
-  %7 = phi ptr [ @pk__object_new, %6 ], [ %.pre, %bb.w ]
+._crit_edge:                                      ; preds = %bb.w
+  %4 = zext i1 %i.u to i64
+  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %4
   %not. = xor i1 %i.u, true
   %i.cz = zext i1 %not. to i64
   %i.da = add nuw nsw i64 %i.cz, %i.f
   %i.db = trunc nuw nsw i64 %i.da to i32
-  %i.dc = tail call zeroext i1 %7(i32 noundef %i.db, ptr noundef nonnull %5) #15
+  %i.dc = tail call zeroext i1 %.pre(i32 noundef %i.db, ptr noundef nonnull %5) #15
   store ptr %i.l, ptr %i.a, align 8, !tbaa !51
   %i.dd = zext i1 %i.dc to i32
   br label %bb.ak

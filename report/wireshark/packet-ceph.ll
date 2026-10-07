@@ -202,8 +202,7 @@ c_pkt_data_init.exit:                             ; preds = %bb.l, %bb.u
   br label %.split
 
 .split:                                           ; preds = %c_pkt_data_init.exit, %.split41
-  %.sink = phi i32 [ %.0, %.split41 ], [ 0, %c_pkt_data_init.exit ]
-  %i.co = call fastcc i32 @c_pdu_end(ptr noundef %0, ptr noundef %1, i32 noundef %.sink, ptr noundef nonnull %3) ; 6 uses
+  %i.co = call fastcc i32 @c_pdu_end(ptr noundef %0, ptr noundef %1, i32 noundef %.0, ptr noundef nonnull %3) ; 6 uses
   switch i32 %i.co, label %bb.x [
     i32 0, label %.loopexit
     i32 -1, label %bb.w

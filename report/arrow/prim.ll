@@ -202,22 +202,19 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.08 = phi i32 [ 0, %bb.a ], [ %i.b, %bb.b ]    ; 2 uses
-  %i.b = add nuw nsw i32 %.08, 1                  ; 3 uses
+  %i.b = add nuw nsw i32 %.08, 1                  ; 4 uses
   %i.c = call i32 (ptr, i64, ptr, ...) @_mi_snprintf(ptr noundef nonnull %i.a, i64 noundef 127, ptr noundef nonnull @.str.1, i32 noundef %i.b) #11 ; 0 uses
   %i.d = call i64 (i64, ...) @syscall(i64 noundef 21, ptr noundef nonnull %i.a, i32 noundef 4) #11
   %i.e = and i64 %i.d, 4294967295
   %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %bb.b, label %split, !llvm.loop !25
+  br i1 %.not, label %bb.b, label %._crit_edge, !llvm.loop !25
 
-split:                                            ; preds = %bb.c
-  %0 = add nuw nsw i32 %.08, 1
+._crit_edge:                                      ; preds = %bb.c, %bb.b
+  %.0.lcssa = phi i32 [ %.08, %bb.c ], [ %i.b, %bb.b ]
+  %0 = add nuw nsw i32 %.0.lcssa, 1
   %1 = zext nneg i32 %0 to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.b, %split
-  %.0.lcssa = phi i64 [ %1, %split ], [ 257, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  ret i64 %.0.lcssa
+  ret i64 %1
 }
 
 declare i32 @_mi_snprintf(ptr noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #3

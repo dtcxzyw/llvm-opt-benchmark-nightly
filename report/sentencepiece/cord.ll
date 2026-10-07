@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %_ZN4absl12lts_20260
   %i.co = phi i64 [ %i.ce, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.ey, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 5 uses
   %i.cp = phi i64 [ %i.cf, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.ez, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 3 uses
   %i.cq = phi i64 [ %i.cg, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.fa, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 3 uses
-  %.sroa.032.0 = phi i64 [ %i.ck, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.fh, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 5 uses
+  %.sroa.032.0 = phi i64 [ %i.ck, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.fh, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 4 uses
   %.0 = phi i64 [ %i.cl, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.fd, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ]
   %.sroa.8.0 = phi ptr [ %i.cj, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.fg, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 2 uses
   %.sroa.0.1 = phi i64 [ %i.ci, %_ZNK4absl12lts_202605264Cord11chunk_beginEv.exit.thread ], [ %i.ff, %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit ] ; 2 uses
@@ -371,9 +371,8 @@ _ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11
   br i1 %.not54, label %_ZN4absl12lts_2026052612_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES6_Pm.exit.thread, label %bb.q, !llvm.loop !485
 
 .critedge:                                        ; preds = %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.i, %bb.r, %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.thread27.i
-  %.sroa.032.0.lcssa = phi i64 [ %.sroa.032.0, %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.i ], [ %.sroa.032.0, %bb.r ], [ 0, %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.thread27.i ]
   %.sroa.0.243 = phi i64 [ 0, %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.i ], [ 0, %bb.r ], [ %.sroa.0.2.ph, %_ZN4absl12lts_202605264Cord13ChunkIteratorppEv.exit.thread27.i ]
-  %i.fi = icmp eq i64 %.sroa.032.0.lcssa, 0
+  %i.fi = icmp eq i64 %.sroa.032.0, 0
   %i.fj = zext i1 %i.fi to i32
   %i.fk = icmp eq i64 %.sroa.0.243, 0
   %.neg = sext i1 %i.fk to i32

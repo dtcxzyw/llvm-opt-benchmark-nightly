@@ -205,10 +205,10 @@ _RINvMs0_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB6_16NormalizedSt
   %.sroa.031.1191 = phi i64 [ %.sroa.5139.0.ph, %.split7.i.i ], [ %.sroa.0.0.i.i, %bb.u ], [ %.sroa.5139.0.ph, %bb.ad ], [ %.sroa.5139.0.ph, %bb.ac ], [ %.sroa.5139.0.ph, %bb.aa ], [ %.sroa.5139.0.ph, %bb.w ], [ %.sroa.5139.0.ph, %.split.i.i ], [ %.sroa.0.0.i.i, %bb.aj ], [ %.sroa.0.0.i.i, %bb.ai ], [ %.sroa.0.0.i.i, %bb.ag ], [ %.sroa.0.0.i.i, %bb.v ], [ %.sroa.0.0.i.i, %.split.i11.i ], [ %.sroa.0.0.i.i, %.split7.i15.i ] ; 2 uses
   %.sroa.11131.0165187 = phi i64 [ %.sroa.5.0.i20.i, %.split7.i.i ], [ %.sroa.5.0.i.i, %bb.u ], [ %.sroa.5.0.i20.i, %bb.ad ], [ %.sroa.5.0.i20.i, %bb.ac ], [ %.sroa.5.0.i20.i, %bb.aa ], [ %.sroa.5.0.i20.i, %bb.w ], [ %.sroa.5.0.i20.i, %.split.i.i ], [ %.sroa.5.0.i.i, %bb.aj ], [ %.sroa.5.0.i.i, %bb.ai ], [ %.sroa.5.0.i.i, %bb.ag ], [ %.sroa.5.0.i.i, %bb.v ], [ %.sroa.5.0.i.i, %.split.i11.i ], [ %.sroa.5.0.i.i, %.split7.i15.i ] ; 12 uses
   %.sroa.9.0167185 = phi i64 [ %.sroa.0.0.i18.i, %.split7.i.i ], [ %.sroa.0.0.i.i, %bb.u ], [ %.sroa.0.0.i18.i, %bb.ad ], [ %.sroa.0.0.i18.i, %bb.ac ], [ %.sroa.0.0.i18.i, %bb.aa ], [ %.sroa.0.0.i18.i, %bb.w ], [ %.sroa.0.0.i18.i, %.split.i.i ], [ %.sroa.0.0.i.i, %bb.aj ], [ %.sroa.0.0.i.i, %bb.ai ], [ %.sroa.0.0.i.i, %bb.ag ], [ %.sroa.0.0.i.i, %bb.v ], [ %.sroa.0.0.i.i, %.split.i11.i ], [ %.sroa.0.0.i.i, %.split7.i15.i ] ; 10 uses
-  %.sroa.4.0.i = phi i64 [ undef, %.split7.i.i ], [ undef, %bb.u ], [ %i.cp, %bb.ad ], [ undef, %bb.ac ], [ undef, %bb.aa ], [ undef, %bb.w ], [ undef, %.split.i.i ], [ %i.dc, %bb.aj ], [ undef, %bb.ai ], [ undef, %bb.ag ], [ undef, %bb.v ], [ undef, %.split.i11.i ], [ undef, %.split7.i15.i ] ; 2 uses
+  %.sroa.4.0.i = phi i64 [ undef, %.split7.i.i ], [ undef, %bb.u ], [ %i.cp, %bb.ad ], [ undef, %bb.ac ], [ undef, %bb.aa ], [ undef, %bb.w ], [ undef, %.split.i.i ], [ %i.dc, %bb.aj ], [ undef, %bb.ai ], [ undef, %bb.ag ], [ undef, %bb.v ], [ undef, %.split.i11.i ], [ undef, %.split7.i15.i ]
   %.sroa.0.0.i = phi ptr [ null, %.split7.i.i ], [ null, %bb.u ], [ %i.cq, %bb.ad ], [ null, %bb.ac ], [ null, %bb.aa ], [ null, %bb.w ], [ null, %.split.i.i ], [ %i.dd, %bb.aj ], [ null, %bb.ai ], [ null, %bb.ag ], [ null, %bb.v ], [ null, %.split.i11.i ], [ null, %.split7.i15.i ] ; 2 uses
   %.not43 = icmp eq ptr %.sroa.0.0.i, null        ; 2 uses
-  %.sroa.310.0 = select i1 %.not43, i64 0, i64 %.sroa.4.0.i ; 4 uses
+  %.sroa.310.0 = select i1 %.not43, i64 0, i64 %.sroa.4.0.i ; 5 uses
   %.sroa.09.0 = select i1 %.not43, ptr inttoptr (i64 1 to ptr), ptr %.sroa.0.0.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %.sroa.310.0, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -233,12 +233,11 @@ bb.al:                                            ; preds = %_RINvMs0_NtNtCs2JiO
   br i1 %.not44, label %bb.am, label %bb.bf
 
 bb.am:                                            ; preds = %bb.bf, %bb.al
-  %.sroa.627.0 = phi i64 [ %.sroa.4.0.i, %bb.bf ], [ 0, %bb.al ]
   store i64 %i.di, ptr %i.f, align 8
   %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.dl, ptr %.sroa.426.0..sroa_idx, align 8
   %.sroa.627.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  store i64 %.sroa.627.0, ptr %.sroa.627.0..sroa_idx, align 8
+  store i64 %.sroa.310.0, ptr %.sroa.627.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !327)
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -424,10 +423,10 @@ bb.bg:                                            ; preds = %_RINvNtCs4NRVxsYgnA
   br label %.body
 
 bb.bh:                                            ; preds = %bb.be, %bb.bd, %.split7.i15.i108, %bb.bb, %.split.i11.i104, %bb.az, %.lr.ph.i.i.i.i.preheader.i.i, %bb.ax, %bb.aw, %bb.au, %bb.at, %.split7.i.i121, %bb.ar, %.split.i.i119, %bb.an
-  %.sroa.4.0.i105 = phi i64 [ undef, %bb.aw ], [ undef, %.split7.i.i121 ], [ undef, %.lr.ph.i.i.i.i.preheader.i.i ], [ undef, %bb.ax ], [ %i.dz, %bb.au ], [ undef, %bb.at ], [ undef, %bb.ar ], [ undef, %bb.an ], [ undef, %.split.i.i119 ], [ %i.fc, %bb.be ], [ undef, %bb.bd ], [ undef, %bb.bb ], [ undef, %bb.az ], [ undef, %.split.i11.i104 ], [ undef, %.split7.i15.i108 ] ; 2 uses
+  %.sroa.4.0.i105 = phi i64 [ undef, %bb.aw ], [ undef, %.split7.i.i121 ], [ undef, %.lr.ph.i.i.i.i.preheader.i.i ], [ undef, %bb.ax ], [ %i.dz, %bb.au ], [ undef, %bb.at ], [ undef, %bb.ar ], [ undef, %bb.an ], [ undef, %.split.i.i119 ], [ %i.fc, %bb.be ], [ undef, %bb.bd ], [ undef, %bb.bb ], [ undef, %bb.az ], [ undef, %.split.i11.i104 ], [ undef, %.split7.i15.i108 ]
   %.sroa.0.0.i106 = phi ptr [ null, %bb.aw ], [ null, %.split7.i.i121 ], [ null, %.lr.ph.i.i.i.i.preheader.i.i ], [ null, %bb.ax ], [ %i.ea, %bb.au ], [ null, %bb.at ], [ null, %bb.ar ], [ null, %bb.an ], [ null, %.split.i.i119 ], [ %i.fd, %bb.be ], [ null, %bb.bd ], [ null, %bb.bb ], [ null, %bb.az ], [ null, %.split.i11.i104 ], [ null, %.split7.i15.i108 ] ; 2 uses
   %.not45 = icmp eq ptr %.sroa.0.0.i106, null     ; 2 uses
-  %.sroa.316.0 = select i1 %.not45, i64 0, i64 %.sroa.4.0.i105 ; 4 uses
+  %.sroa.316.0 = select i1 %.not45, i64 0, i64 %.sroa.4.0.i105 ; 5 uses
   %.sroa.015.0 = select i1 %.not45, ptr inttoptr (i64 1 to ptr), ptr %.sroa.0.0.i106
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.sroa.316.0, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -455,12 +454,11 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %.not46, label %bb.bl, label %bb.bm
 
 bb.bl:                                            ; preds = %bb.bm, %bb.bk
-  %.sroa.630.0 = phi i64 [ %.sroa.4.0.i105, %bb.bm ], [ 0, %bb.bk ]
   store i64 %i.fi, ptr %i.e, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.fl, ptr %.sroa.429.0..sroa_idx, align 8
   %.sroa.630.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store i64 %.sroa.630.0, ptr %.sroa.630.0..sroa_idx, align 8
+  store i64 %.sroa.316.0, ptr %.sroa.630.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.fn = icmp ult i64 %.sroa.034.1193, %.sroa.031.1191
@@ -863,7 +861,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not5.i.i, label %bb.k, label %.split.i.i
 
 bb.j:                                             ; preds = %bb.k, %.split.i.i, %bb.h
-  %.val.i3540 = phi i64 [ 0, %bb.h ], [ %.val.pre.i, %bb.k ], [ %.val.pre.i, %.split.i.i ] ; 2 uses
   %i.bu = icmp eq i64 %.val28.pre.i, 0
   br i1 %i.bu, label %bb.n, label %bb.l
 
@@ -878,7 +875,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.by, label %bb.j, label %bb.p
 
 bb.l:                                             ; preds = %.thread42, %bb.j
-  %.val.i354047 = phi i64 [ 0, %.thread42 ], [ %.val.i3540, %bb.j ] ; 4 uses
+  %.val.i354047 = phi i64 [ 0, %.thread42 ], [ %.val.pre.i, %bb.j ] ; 4 uses
   %.val28.i334145 = phi i64 [ %.sroa.02.0, %.thread42 ], [ %.val28.pre.i, %bb.j ] ; 7 uses
   %i.bz = phi i64 [ %i.v, %.thread42 ], [ %.pre.i, %bb.j ] ; 4 uses
   %i.ca = phi ptr [ %i.t, %.thread42 ], [ %.pre, %bb.j ] ; 5 uses
@@ -896,7 +893,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ce, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m, %.split7.i.i, %bb.j
-  %.val.i354048 = phi i64 [ %.val.i354047, %bb.m ], [ %.val.i354047, %.split7.i.i ], [ %.val.i3540, %bb.j ]
+  %.val.i354048 = phi i64 [ %.val.i354047, %bb.m ], [ %.val.i354047, %.split7.i.i ], [ %.val.pre.i, %bb.j ]
   %.val28.i334146 = phi i64 [ %.val28.i334145, %bb.m ], [ %.val28.i334145, %.split7.i.i ], [ 0, %bb.j ]
   %i.cf = phi ptr [ %i.ca, %bb.m ], [ %i.ca, %.split7.i.i ], [ %.pre, %bb.j ] ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.val.i354048

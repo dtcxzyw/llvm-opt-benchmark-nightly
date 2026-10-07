@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.i unwind label %bb.e, !noalias !729
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsddkiMbsmfqo_5yr_ls.exit.i: ; preds = %bb.j, %bb.i, %bb.f
-  %.sroa.10.1.i = phi ptr [ %i.aa, %bb.j ], [ %i.i, %bb.i ], [ %i.i, %bb.f ]
+  %.sroa.10.1.i = phi ptr [ %i.aa, %bb.j ], [ %i.i, %bb.i ], [ %i.i, %bb.f ] ; 2 uses
   %.sroa.0.1.i = phi i64 [ 1, %bb.j ], [ %i.g, %bb.i ], [ %i.g, %bb.f ]
   store i64 0, ptr %i.c, align 8, !alias.scope !728, !noalias !732
   invoke void @_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECsddkiMbsmfqo_5yr_ls(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 3)
@@ -235,15 +235,16 @@ bb.m:                                             ; preds = %bb.e
   resume { ptr, i32 } %i.s
 
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECsddkiMbsmfqo_5yr_ls.exit.i
+  %2 = insertvalue { i64, ptr } poison, i64 %.sroa.0.1.i, 0
+  %3 = insertvalue { i64, ptr } %2, ptr %.sroa.10.1.i, 1
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i8 1, ptr %i.ac, align 8
   br label %_RINvNtNtCs9j2PgAuXC7p_12futures_util2io9read_line18read_line_internalQQINtNtCskKLDkoKarTP_4core3pin3PinQINtNtB4_10buf_reader9BufReaderNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl14TokioPipeStdinEEECsddkiMbsmfqo_5yr_ls.exit.thread
 
 _RINvNtNtCs9j2PgAuXC7p_12futures_util2io9read_line18read_line_internalQQINtNtCskKLDkoKarTP_4core3pin3PinQINtNtB4_10buf_reader9BufReaderNtNtNtCs6m2LFPinx2P_9async_lsp5stdio10tokio_impl14TokioPipeStdinEEECsddkiMbsmfqo_5yr_ls.exit.thread: ; preds = %bb.a, %bb.n
-  %.sroa.02.0 = phi i64 [ %.sroa.0.1.i, %bb.n ], [ 2, %bb.a ]
+  %4 = phi { i64, ptr } [ %3, %bb.n ], [ { i64 2, ptr undef }, %bb.a ]
   %.sroa.5.0 = phi ptr [ %.sroa.10.1.i, %bb.n ], [ undef, %bb.a ]
-  %2 = insertvalue { i64, ptr } poison, i64 %.sroa.02.0, 0
-  %i.ad = insertvalue { i64, ptr } %2, ptr %.sroa.5.0, 1
+  %i.ad = insertvalue { i64, ptr } %4, ptr %.sroa.5.0, 1
   ret { i64, ptr } %i.ad
 }
 

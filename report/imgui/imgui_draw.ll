@@ -205,7 +205,7 @@ _Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread: ; preds = %bb.
   br label %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread25
 
 _Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread25: ; preds = %bb.h, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit, %bb.c
-  %.1 = phi ptr [ %i.a, %bb.c ], [ %.0.i24, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread ], [ null, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit ], [ null, %bb.h ]
+  %.1 = phi ptr [ %i.a, %bb.c ], [ null, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit ], [ %.0.i24, %_Z24ImFontAtlasBakedGetOrAddP11ImFontAtlasP6ImFontff.exit.thread ], [ null, %bb.h ]
   ret ptr %.1
 }
 
@@ -608,7 +608,7 @@ _ZL14stbtt__buf_getP10stbtt__bufi.exit21.i254.i.i: ; preds = %_ZL14stbtt__buf_ge
 
 bb.cr:                                            ; preds = %_ZL14stbtt__buf_getP10stbtt__bufi.exit21.i254.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i238.i.i
   %i.on = phi i32 [ %..i.i22.i256.i.i, %_ZL14stbtt__buf_getP10stbtt__bufi.exit21.i254.i.i ], [ %i.mx, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i238.i.i ] ; 6 uses
-  %i.oo = sub nsw i32 %i.on, %i.mh                ; 14 uses
+  %i.oo = sub nsw i32 %i.on, %i.mh                ; 15 uses
   %i.op = or i32 %i.oo, %i.mh
   %or.cond.not.i.i257.i.i = icmp slt i32 %i.op, 0
   %i.oq = icmp sgt i32 %i.on, %i.jt
@@ -618,33 +618,47 @@ bb.cr:                                            ; preds = %_ZL14stbtt__buf_get
 _ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i: ; preds = %bb.cr
   %i.or = load ptr, ptr %2, align 8, !tbaa !505
   %i.os = zext nneg i32 %i.mh to i64
-  %i.ot = getelementptr inbounds nuw i8, ptr %i.or, i64 %i.os ; 16 uses
+  %i.ot = getelementptr inbounds nuw i8, ptr %i.or, i64 %i.os ; 14 uses
   %.not.i.i.i264.not.i.i = icmp eq i32 %i.oo, 0
-  br i1 %.not.i.i.i264.not.i.i, label %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a
+  br i1 %.not.i.i.i264.not.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a
 
 _ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a: ; preds = %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i
   %i.ou = load i8, ptr %i.ot, align 1, !tbaa !50
   %i.ov = zext i8 %i.ou to i32
-  %i.ow = shl nuw nsw i32 %i.ov, 8                ; 2 uses
-  %.not.i.i.1.i267.not.i.i = icmp eq i32 %i.oo, 1
-  br i1 %.not.i.i.1.i267.not.i.i, label %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a
+  %i.ow = shl nuw nsw i32 %i.ov, 8
+  br label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i
 
-_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a: ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a
-  %i.ox = getelementptr inbounds nuw i8, ptr %i.ot, i64 1
+_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i: ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i
+  %.sroa.6.1.i.i.i = phi i32 [ 1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ] ; 4 uses
+  %.0.i.i.i266.i.i = phi i32 [ %i.ow, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ] ; 2 uses
+  %.not.i.i.1.i267.i.i = icmp samesign ult i32 %.sroa.6.1.i.i.i, %i.oo
+  br i1 %.not.i.i.1.i267.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i
+
+_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a: ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i
+  %4 = add nuw nsw i32 %.sroa.6.1.i.i.i, 1
+  %5 = zext nneg i32 %.sroa.6.1.i.i.i to i64
+  %i.ox = getelementptr inbounds nuw i8, ptr %i.ot, i64 %5
   %i.oy = load i8, ptr %i.ox, align 1, !tbaa !50
   %i.oz = zext i8 %i.oy to i32
-  %i.pa = or disjoint i32 %i.ow, %i.oz            ; 5 uses
-  %.not.i.i270.i.i = icmp samesign ugt i32 %i.oo, 2
+  %i.pa = or disjoint i32 %.0.i.i.i266.i.i, %i.oz
+  br label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i
+
+_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i: ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i
+  %.sroa.6.1.1.i.i.i = phi i32 [ %4, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ %.sroa.6.1.i.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i ] ; 3 uses
+  %.0.i.i.1.i269.i.i = phi i32 [ %i.pa, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ %.0.i.i.i266.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i ] ; 5 uses
+  %.not.i.i270.i.i = icmp samesign ult i32 %.sroa.6.1.1.i.i.i, %i.oo
   br i1 %.not.i.i270.i.i, label %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i, label %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i
 
-_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i:  ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a
-  %i.pb = getelementptr inbounds nuw i8, ptr %i.ot, i64 2
+_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i:  ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i
+  %6 = zext nneg i32 %.sroa.6.1.1.i.i.i to i64
+  %i.pb = getelementptr inbounds nuw i8, ptr %i.ot, i64 %6
   %i.pc = load i8, ptr %i.pb, align 1, !tbaa !50  ; 4 uses
   %i.pd = zext i8 %i.pc to i32                    ; 8 uses
   %.not.i9.i.i.i = icmp eq i8 %i.pc, 0
   br i1 %.not.i9.i.i.i, label %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i, label %.lr.ph.i.i278.i.i.preheader
 
 .lr.ph.i.i278.i.i.preheader:                      ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i
+  %7 = add nuw nsw i32 %.sroa.6.1.1.i.i.i, 1      ; 4 uses
   %i.pe = add nsw i32 %i.pd, -1                   ; 2 uses
   %xtraiter182 = and i32 %i.pd, 1
   %i.pf = icmp eq i32 %i.pe, 0
@@ -655,8 +669,8 @@ _ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i:  ; preds = %_ZL15stbtt__buf_get
   br label %.lr.ph.i.i278.i.i
 
 .lr.ph.i.i278.i.i:                                ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1, %.lr.ph.i.i278.i.i.preheader.new
-  %.sroa.6.3.i.i.i = phi i32 [ 3, %.lr.ph.i.i278.i.i.preheader.new ], [ %.sroa.6.4.i.i.i.1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ]
-  %i.pg = phi i32 [ 3, %.lr.ph.i.i278.i.i.preheader.new ], [ %i.pw, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ] ; 4 uses
+  %.sroa.6.3.i.i.i = phi i32 [ %7, %.lr.ph.i.i278.i.i.preheader.new ], [ %.sroa.6.4.i.i.i.1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ]
+  %i.pg = phi i32 [ %7, %.lr.ph.i.i278.i.i.preheader.new ], [ %i.pw, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ] ; 4 uses
   %.056.i12.i.i.i = phi i32 [ 0, %.lr.ph.i.i278.i.i.preheader.new ], [ %.0.i.i15.i.i.i.1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ]
   %niter190 = phi i32 [ 0, %.lr.ph.i.i278.i.i.preheader.new ], [ %niter190.next.1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1 ]
   %i.ph = shl i32 %.056.i12.i.i.i, 8              ; 2 uses
@@ -702,8 +716,8 @@ _ZL15stbtt__buf_get8P10stbtt__buf.exit.i14.i.i.i.1: ; preds = %bb.ct, %_ZL15stbt
   br i1 %lcmp.mod185.not, label %.lr.ph.i19.i.i.i.preheader, label %.lr.ph.i.i278.i.i.epil.preheader
 
 .lr.ph.i.i278.i.i.epil.preheader:                 ; preds = %.lr.ph.i19.i.i.i.preheader.unr-lcssa, %.lr.ph.i.i278.i.i.preheader
-  %.sroa.6.3.i.i.i.epil.init = phi i32 [ 3, %.lr.ph.i.i278.i.i.preheader ], [ %.sroa.6.4.i.i.i.1, %.lr.ph.i19.i.i.i.preheader.unr-lcssa ]
-  %.epil.init184 = phi i32 [ 3, %.lr.ph.i.i278.i.i.preheader ], [ %i.pw, %.lr.ph.i19.i.i.i.preheader.unr-lcssa ] ; 3 uses
+  %.sroa.6.3.i.i.i.epil.init = phi i32 [ %7, %.lr.ph.i.i278.i.i.preheader ], [ %.sroa.6.4.i.i.i.1, %.lr.ph.i19.i.i.i.preheader.unr-lcssa ]
+  %.epil.init184 = phi i32 [ %7, %.lr.ph.i.i278.i.i.preheader ], [ %i.pw, %.lr.ph.i19.i.i.i.preheader.unr-lcssa ] ; 3 uses
   %.056.i12.i.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.i278.i.i.preheader ], [ %.0.i.i15.i.i.i.1, %.lr.ph.i19.i.i.i.preheader.unr-lcssa ]
   %lcmp.mod188 = trunc i8 %i.pc to i1
   tail call void @llvm.assume(i1 %lcmp.mod188)
@@ -792,13 +806,13 @@ bb.cx:                                            ; preds = %.lr.ph.i19.i.i.i.ep
   %i.rb = or disjoint i32 %i.qw, %i.ra
   br label %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i
 
-_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i:   ; preds = %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa, %bb.cx, %.lr.ph.i19.i.i.i.epil.preheader, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i, %bb.cr
-  %.0.i.i.1.i269382.i.i = phi i32 [ %i.pa, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ %i.pa, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ 0, %bb.cr ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ %i.ow, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %i.pa, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.pa, %bb.cx ], [ %i.pa, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
-  %.sroa.18.8.extract.trunc.i367373381.i.i = phi i32 [ %i.oo, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 2, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ 0, %bb.cr ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ 1, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %i.oo, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.oo, %bb.cx ], [ %i.oo, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.0.0.i.i259366374380.i.i = phi ptr [ %i.ot, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ %i.ot, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ null, %bb.cr ], [ %i.ot, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ %i.ot, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %i.ot, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.ot, %bb.cx ], [ %i.ot, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
-  %.0.i55.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ 0, %bb.cr ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %i.pd, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.pd, %bb.cx ], [ %i.pd, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
-  %.05.lcssa.i42.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ 0, %bb.cr ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %.0.i.i15.i.i.i.lcssa, %.lr.ph.i19.i.i.i.epil.preheader ], [ %.0.i.i15.i.i.i.lcssa, %bb.cx ], [ %.0.i.i15.i.i.i.lcssa, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %.05.lcssa.i27.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i.a ], [ 0, %bb.cr ], [ 0, %_ZL20stbtt__cff_get_indexP10stbtt__buf.exit263.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i265.i.i.a ], [ %.0.i.i25.i.i.i.1, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ], [ %i.rb, %bb.cx ], [ %i.qw, %.lr.ph.i19.i.i.i.epil.preheader ]
+_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i:   ; preds = %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa, %bb.cx, %.lr.ph.i19.i.i.i.epil.preheader, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i, %bb.cr
+  %.0.i.i.1.i269382.i.i = phi i32 [ %.0.i.i.1.i269.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ %.0.i.i.1.i269.i.i, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ 0, %bb.cr ], [ %.0.i.i.1.i269.i.i, %.lr.ph.i19.i.i.i.epil.preheader ], [ %.0.i.i.1.i269.i.i, %bb.cx ], [ %.0.i.i.1.i269.i.i, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
+  %.sroa.18.8.extract.trunc.i367373381.i.i = phi i32 [ %i.oo, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ %i.oo, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ 0, %bb.cr ], [ %i.oo, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.oo, %bb.cx ], [ %i.oo, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.0.0.i.i259366374380.i.i = phi ptr [ %i.ot, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ %i.ot, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ null, %bb.cr ], [ %i.ot, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.ot, %bb.cx ], [ %i.ot, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
+  %.0.i55.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ 0, %bb.cr ], [ %i.pd, %.lr.ph.i19.i.i.i.epil.preheader ], [ %i.pd, %bb.cx ], [ %i.pd, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ]
+  %.05.lcssa.i42.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ 0, %bb.cr ], [ %.0.i.i15.i.i.i.lcssa, %.lr.ph.i19.i.i.i.epil.preheader ], [ %.0.i.i15.i.i.i.lcssa, %bb.cx ], [ %.0.i.i15.i.i.i.lcssa, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ] ; 2 uses
+  %.05.lcssa.i27.i.i.i = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i276.i.i ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.1.i268.i.i ], [ 0, %bb.cr ], [ %.0.i.i25.i.i.i.1, %_ZL14stbtt__buf_getP10stbtt__bufi.exit28.i.i.i.loopexit.unr-lcssa ], [ %i.rb, %bb.cx ], [ %i.qw, %.lr.ph.i19.i.i.i.epil.preheader ]
   %i.rc = add nuw nsw i32 %.0.i.i.1.i269382.i.i, 1
   %i.rd = mul nuw nsw i32 %.0.i55.i.i.i, %i.rc
   %i.re = add nuw nsw i32 %i.rd, 2

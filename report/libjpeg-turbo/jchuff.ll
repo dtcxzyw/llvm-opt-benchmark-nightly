@@ -73,8 +73,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e, %bb.f
   %i.v = phi ptr [ %i.u, %bb.f ], [ %i.p, %bb.e ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 1
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !33    ; 3 uses
-  %i.y = zext i8 %i.x to i32
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !33    ; 4 uses
+  %i.y = zext i8 %i.x to i32                      ; 3 uses
   %.not8485 = icmp eq i8 %i.x, 0
   br i1 %.not8485, label %._crit_edge, label %.lr.ph
 
@@ -84,11 +84,10 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.g
-  %.178.lcssa = phi i32 [ 0, %bb.g ], [ %i.y, %.lr.ph ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.i, i64 2
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !33  ; 3 uses
   %i.ac = zext i8 %i.ab to i32                    ; 2 uses
-  %i.ad = add nuw nsw i32 %.178.lcssa, %i.ac
+  %i.ad = add nuw nsw i32 %i.y, %i.ac
   %i.ae = icmp samesign ugt i32 %i.ad, 256
   br i1 %i.ae, label %bb.h, label %bb.i
 
@@ -105,15 +104,15 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
   br i1 %.not8485.1, label %._crit_edge.1, label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %bb.i
-  %i.ai = zext nneg i32 %.178.lcssa to i64
+  %i.ai = zext i8 %i.x to i64
   %scevgep.1 = getelementptr i8, ptr %i.a, i64 %i.ai
   %i.aj = zext i8 %i.ab to i64
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 2, i64 %i.aj, i1 false), !tbaa !33
-  %i.ak = add nuw nsw i32 %.178.lcssa, %i.ac
+  %i.ak = add nuw nsw i32 %i.y, %i.ac
   br label %._crit_edge.1
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.1, %bb.i
-  %.178.lcssa.1 = phi i32 [ %.178.lcssa, %bb.i ], [ %i.ak, %.lr.ph.1 ] ; 4 uses
+  %.178.lcssa.1 = phi i32 [ %i.y, %bb.i ], [ %i.ak, %.lr.ph.1 ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.i, i64 3
   %i.am = load i8, ptr %i.al, align 1, !tbaa !33  ; 3 uses
   %i.an = zext i8 %i.am to i32                    ; 2 uses

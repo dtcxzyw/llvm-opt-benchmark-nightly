@@ -202,7 +202,7 @@ bb.a:
 define dso_local range(i32 0, 2) i32 @test_TLSX_SNI_GetSize_overflow() local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call ptr @wolfSSLv23_client_method() #8
-  %i.b = tail call ptr @wolfSSL_CTX_new(ptr noundef %i.a) #8 ; 11 uses
+  %i.b = tail call ptr @wolfSSL_CTX_new(ptr noundef %i.a) #8 ; 3 uses
   %.not.not = icmp eq ptr %i.b, null
   br i1 %.not.not, label %.thread, label %bb.b
 
@@ -395,11 +395,10 @@ bb.m:                                             ; preds = %bb.l
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %.thread, %bb.c, %bb.f, %bb.e, %bb.g, %.thread335, %.thread331, %bb.l, %bb.m, %.critedge
-  %.0242296300307329343 = phi ptr [ %i.b, %.critedge ], [ %i.b, %bb.m ], [ %i.b, %bb.l ], [ %i.b, %.thread331 ], [ %i.b, %.thread335 ], [ null, %.thread ], [ %i.b, %bb.c ], [ %i.b, %bb.f ], [ %i.b, %bb.e ], [ %i.b, %bb.g ]
   %.0241301306330342 = phi ptr [ %i.k, %.critedge ], [ %i.k, %bb.m ], [ %i.k, %bb.l ], [ %i.k, %.thread331 ], [ %i.k, %.thread335 ], [ null, %.thread ], [ null, %bb.c ], [ %i.k, %bb.f ], [ %i.k, %bb.e ], [ %i.k, %bb.g ]
   %.13 = phi i32 [ 0, %.critedge ], [ 0, %bb.m ], [ 1, %bb.l ], [ 0, %.thread331 ], [ 0, %.thread335 ], [ 0, %.thread ], [ 0, %bb.c ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.g ]
   tail call void @wolfSSL_free(ptr noundef %.0241301306330342) #8
-  tail call void @wolfSSL_CTX_free(ptr noundef %.0242296300307329343) #8
+  tail call void @wolfSSL_CTX_free(ptr noundef %i.b) #8
   ret i32 %.13
 }
 
@@ -618,7 +617,7 @@ bb.m:                                             ; preds = %.critedge341
   br label %.thread381
 
 .critedge343:                                     ; preds = %bb.f, %.critedge, %bb.g, %.critedge338, %bb.k, %bb.l
-  %.1264369376 = phi ptr [ %i.v, %.critedge338 ], [ %i.v, %bb.k ], [ %i.v, %bb.l ], [ null, %bb.f ], [ null, %.critedge ], [ null, %bb.g ]
+  %.1264369376 = phi ptr [ %i.v, %.critedge338 ], [ %i.v, %bb.k ], [ %i.v, %bb.l ], [ null, %bb.g ], [ null, %.critedge ], [ null, %bb.f ]
   call void @wolfSSL_free(ptr noundef %.1264369376) #8
   call void @wolfSSL_CTX_free(ptr noundef %i.e) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8

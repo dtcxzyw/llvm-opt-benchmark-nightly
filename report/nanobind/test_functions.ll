@@ -204,7 +204,7 @@ bb.a:
   %i.c = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #33, !noalias !271 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29, !noalias !271
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29, !noalias !271
-  %i.d = inttoptr i64 %i.b to ptr                 ; 4 uses
+  %i.d = inttoptr i64 %i.b to ptr                 ; 3 uses
   %.not.i.i.i.i = icmp eq i64 %i.b, 0
   br i1 %.not.i.i.i.i, label %_ZN8nanobind6detail11type_casterINS_5typedINS_5tupleEJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEEEiE8from_cppERKSA_NS_9rv_policyEPNS0_12cleanup_listE.exit, label %bb.b
 
@@ -219,10 +219,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN8nanobind6detail11type_casterINS_5typedINS_5tupleEJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEEEiE8from_cppERKSA_NS_9rv_policyEPNS0_12cleanup_listE.exit
 
 _ZN8nanobind6detail11type_casterINS_5typedINS_5tupleEJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEEEiE8from_cppERKSA_NS_9rv_policyEPNS0_12cleanup_listE.exit: ; preds = %bb.a, %bb.b, %bb.c
-  %.sroa.01.0.copyload.i.i = phi ptr [ null, %bb.a ], [ %i.d, %bb.b ], [ %i.d, %bb.c ]
   %i.h = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %5) #33 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
-  ret ptr %.sroa.01.0.copyload.i.i
+  ret ptr %i.d
 }
 
 ; Function Attrs: mustprogress optsize uwtable

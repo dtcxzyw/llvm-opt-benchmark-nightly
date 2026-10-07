@@ -202,7 +202,7 @@ _ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %i.by = load ptr, ptr %i.bx, align 8, !noalias !1793 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
-  %i.ca = load ptr, ptr %i.bz, align 8, !noalias !1793 ; 12 uses
+  %i.ca = load ptr, ptr %i.bz, align 8, !noalias !1793 ; 13 uses
   %.not.i.i.i.i56 = icmp eq ptr %i.ca, null       ; 2 uses
   br i1 %.not.i.i.i.i56, label %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread, label %bb.aa
 
@@ -235,7 +235,7 @@ _ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread:  ; preds = %_ZNSt12__shared_ptr
   store ptr %i.by, ptr %i.cj, align 8
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8            ; 2 uses
-  %.not.i.i.i.i.i59102 = icmp eq ptr %i.cl, null
+  %.not.i.i.i.i.i59102 = icmp eq ptr %i.ca, %i.cl
   br i1 %.not.i.i.i.i.i59102, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit64, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 bb.ad:                                            ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58
@@ -259,7 +259,6 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitth
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i
-  %10 = phi ptr [ %i.ca, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ null, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread ]
   %i.cr = phi ptr [ %i.ch, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.ck, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread ]
   %i.cs = phi ptr [ %.pr.i.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exitthread-pre-split.i.i.i.i.i ], [ %i.cl, %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58.thread ] ; 8 uses
   %.not8.i.i.i.i.i = icmp eq ptr %i.cs, null
@@ -310,7 +309,7 @@ bb.al:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i, %bb.ah, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.al
-  store ptr %10, ptr %i.cr, align 8
+  store ptr %i.ca, ptr %i.cr, align 8
   br i1 %.not.i.i.i.i56, label %_ZNSt12__shared_ptrIKN6Assimp4STEP7EXPRESS8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit64, label %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread104
 
 _ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit.thread104: ; preds = %_ZNK6Assimp4STEP7EXPRESS4LISTixEm.exit58, %_ZN6Assimp4STEP14GenericConvertISt10shared_ptrIKNS0_7EXPRESS8DataTypeEEEEvRT_RKS6_RKNS0_2DBE.exit

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_RNvXs2K_NtNtCs3oUP
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.sroa.2.3.ph.i = phi ptr [ %.sroa.2.1.i, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
-  %spec.select.i.ph.i = phi i32 [ %i.ad, %bb.c ], [ %i.t, %bb.b ] ; 80 uses
+  %spec.select.i.ph.i = phi i32 [ %i.ad, %bb.c ], [ %i.t, %bb.b ] ; 66 uses
   %.not.i.i.i = icmp sgt i16 %.sroa.6.021.i, -1
   br i1 %.not.i.i.i, label %bb.m, label %bb.f
 
@@ -288,8 +288,7 @@ bb.r:                                             ; preds = %bb.m
   ]
 
 .thread121.i.i.i:                                 ; preds = %bb.ci, %bb.cm, %.noexc8, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %.thread137.i.i.i, %bb.cb, %bb.bn, %bb.ax, %bb.ax, %bb.ax, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.q, %bb.p
-  %spec.select.i17.i = phi i32 [ %spec.select.i.ph.i, %bb.cm ], [ %spec.select.i.ph.i, %bb.ci ], [ %spec.select.i.ph.i, %.noexc8 ], [ 127988, %bb.cg ], [ %spec.select.i.ph.i, %bb.cf ], [ %spec.select.i.ph.i, %bb.ce ], [ %spec.select.i.ph.i, %bb.cd ], [ %spec.select.i.ph.i, %.thread137.i.i.i ], [ %spec.select.i.ph.i, %bb.cb ], [ %spec.select.i.ph.i, %bb.bn ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ %spec.select.i.ph.i, %bb.au ], [ %spec.select.i.ph.i, %bb.at ], [ %spec.select.i.ph.i, %bb.as ], [ %spec.select.i.ph.i, %bb.ar ], [ %spec.select.i.ph.i, %bb.q ], [ %spec.select.i.ph.i, %bb.p ]
-  %i.bi = invoke fastcc { i8, i16 } @_RNvNtCsfc8f8SDE2Co_13unicode_width6tables12lookup_width(i32 noundef range(i32 0, 1114112) %spec.select.i17.i) #22
+  %i.bi = invoke fastcc { i8, i16 } @_RNvNtCsfc8f8SDE2Co_13unicode_width6tables12lookup_width(i32 noundef range(i32 0, 1114112) %spec.select.i.ph.i) #22
           to label %.noexc unwind label %bb.cq    ; 2 uses
 
 .noexc:                                           ; preds = %.thread121.i.i.i

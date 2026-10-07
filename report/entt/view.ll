@@ -205,11 +205,11 @@ _ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE4findES1_.exit.i: ; preds = %_ZNK
   br i1 %i.eu, label %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1200, label %.lr.ph.i365.preheader
 
 .lr.ph.i365.preheader:                            ; preds = %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE4findES1_.exit.i
+  %94 = zext nneg i32 %i.em to i64                ; 2 uses
   %i.ev = icmp eq i32 %i.em, 0
   br i1 %i.ev, label %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202, label %.lr.ph1250.a, !llvm.loop !5
 
 .lr.ph1250.a:                                     ; preds = %.lr.ph.i365.preheader
-  %94 = zext nneg i32 %i.em to i64
   br label %bb.ak, !llvm.loop !5
 
 bb.ak:                                            ; preds = %.lr.ph1250.a, %.lr.ph.i365
@@ -221,7 +221,7 @@ bb.ak:                                            ; preds = %.lr.ph1250.a, %.lr.
   br i1 %i.fa, label %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1200, label %.lr.ph.i365, !llvm.loop !5
 
 .lr.ph.i365:                                      ; preds = %bb.ak
-  %i.fb = add nsw i64 %i.ew, -1                   ; 2 uses
+  %i.fb = add nsw i64 %i.ew, -1                   ; 3 uses
   %i.fc = icmp eq i64 %i.fb, 0
   br i1 %i.fc, label %.lr.ph.i365._ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202_crit_edge, label %bb.ak, !llvm.loop !5
 
@@ -237,7 +237,8 @@ _ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15de
   br label %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202, !llvm.loop !5
 
 _ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202: ; preds = %.lr.ph.i365._ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202_crit_edge, %.lr.ph.i365.preheader
-  store i64 0, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !alias.scope !616
+  %.lcssa1245 = phi i64 [ %i.fb, %.lr.ph.i365._ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202_crit_edge ], [ %94, %.lr.ph.i365.preheader ]
+  store i64 %.lcssa1245, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !alias.scope !616
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
   %i.fe = getelementptr inbounds nuw i8, ptr %i.dn, i64 32
   store ptr %i.fe, ptr %12, align 8, !tbaa !96, !alias.scope !617
@@ -247,7 +248,7 @@ _ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15de
   store ptr %i.dn, ptr %i.ff, align 8, !tbaa !77, !alias.scope !617
   br label %.sink.split.a
 
-.sink.split.a:                                    ; preds = %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread, %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1198, %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202
+.sink.split.a:                                    ; preds = %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1202, %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread1198, %_ZNK4entt18basic_storage_viewINS_16basic_sparse_setINS_6entityESaIS2_EEELNS_15deletion_policyE1EE3endEv.exit.thread
   %i.fg = getelementptr inbounds nuw i8, ptr %12, i64 32
   store i64 0, ptr %i.fg, align 8, !tbaa !141, !alias.scope !617
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %10)

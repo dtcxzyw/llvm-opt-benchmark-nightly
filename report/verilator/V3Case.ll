@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.v
   %i.l = load i64, ptr %i.k, align 8, !tbaa !252  ; 2 uses
   %.not = icmp eq i64 %i.l, 0                     ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.077.096, i64 40
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !253  ; 2 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !253  ; 3 uses
   %.not36 = icmp eq i64 %i.n, 0                   ; 2 uses
   br i1 %.not, label %bb.c, label %bb.n
 
@@ -289,7 +289,6 @@ bb.n:                                             ; preds = %bb.b
   br i1 %.not36, label %.thread, label %_ZZN11CaseVisitor21analyzeDecoderPatternEP7AstCaseENKUlmmE_clEmm.exit58
 
 .thread:                                          ; preds = %bb.c, %bb.n
-  %2 = phi i64 [ %i.n, %bb.c ], [ 0, %bb.n ]      ; 2 uses
   %i.ak = load ptr, ptr %.sroa.077.096, align 8, !tbaa !102 ; 3 uses
   %i.al = load i8, ptr %i.c, align 1, !tbaa !141, !range !95, !noundef !96
   %i.am = trunc nuw i8 %i.al to i1
@@ -313,7 +312,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %.thread
   %i.at = load i64, ptr %i.g, align 8, !tbaa !164 ; 2 uses
   %i.au = icmp eq i64 %i.l, %i.at
-  %i.av = icmp eq i64 %2, %i.at
+  %i.av = icmp eq i64 %i.n, %i.at
   %or.cond = select i1 %i.au, i1 true, i1 %i.av
   br i1 %or.cond, label %bb.v, label %bb.s, !llvm.loop !447
 
@@ -333,7 +332,7 @@ _ZN7AstNode2isI9AstAssignS_EEbPKT0_.exit:         ; preds = %bb.t
   br i1 %i.az, label %bb.u, label %_ZZN11CaseVisitor21analyzeDecoderPatternEP7AstCaseENKUlmmE_clEmm.exit58
 
 bb.u:                                             ; preds = %_ZN7AstNode2isI9AstAssignS_EEbPKT0_.exit, %bb.t
-  %.not41 = icmp eq i64 %2, 0
+  %.not41 = icmp eq i64 %i.n, 0
   br i1 %.not41, label %bb.v, label %_ZN7AstNode2isI12AstAssignDlyS_EEbPKT0_.exit
 
 _ZN7AstNode2isI12AstAssignDlyS_EEbPKT0_.exit:     ; preds = %bb.u
