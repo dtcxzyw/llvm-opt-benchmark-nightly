@@ -205,7 +205,7 @@ vec.epilog.middle.block122:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph61.preheader:                               ; preds = %iter.check112, %vec.epilog.middle.block122
   %.14260.ph = phi i64 [ %.047.lcssa74, %iter.check112 ], [ %i.bn, %vec.epilog.middle.block122 ] ; 4 uses
-  %i.bu = sub i64 0, %.14260.ph
+  %i.bu = sub nsw i64 0, %.14260.ph
   %xtraiter127 = and i64 %i.bu, 3                 ; 2 uses
   %lcmp.mod128.not = icmp eq i64 %xtraiter127, 0
   br i1 %lcmp.mod128.not, label %.lr.ph61.prol.loopexit, label %.lr.ph61.prol
@@ -224,7 +224,7 @@ vec.epilog.middle.block122:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph61.prol.loopexit:                           ; preds = %.lr.ph61.prol, %.lr.ph61.preheader
   %.14260.unr = phi i64 [ %.14260.ph, %.lr.ph61.preheader ], [ %i.by, %.lr.ph61.prol ]
-  %i.bz = add i64 %.14260.ph, -13
+  %i.bz = add nsw i64 %.14260.ph, -13
   %i.ca = icmp ult i64 %i.bz, 3
   br i1 %i.ca, label %._crit_edge62, label %.lr.ph61
 
@@ -627,7 +627,7 @@ iter.check:                                       ; preds = %._crit_edge132
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.aq = add nsw i64 %.198.lcssa, -1             ; 2 uses
-  %i.ar = trunc i64 %i.aq to i32
+  %i.ar = trunc nsw i64 %i.aq to i32
   %i.as = xor i32 %.1102.lcssa, -1
   %i.at = icmp ult i32 %i.as, %i.ar
   %i.au = icmp ugt i64 %i.aq, 4294967295
@@ -848,7 +848,7 @@ iter.check300:                                    ; preds = %._crit_edge157
 
 vector.scevcheck254:                              ; preds = %iter.check300
   %i.ec = add nsw i64 %.4.lcssa, -1               ; 2 uses
-  %i.ed = trunc i64 %i.ec to i32
+  %i.ed = trunc nsw i64 %i.ec to i32
   %i.ee = xor i32 %.6.lcssa, -1
   %i.ef = icmp ult i32 %i.ee, %i.ed
   %i.eg = icmp ugt i64 %i.ec, 4294967295
@@ -1251,7 +1251,7 @@ iter.check:                                       ; preds = %bb.f, %bb.e
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.ft = add nsw i64 %.165.lcssa, -1             ; 2 uses
-  %i.fu = trunc i64 %i.ft to i32
+  %i.fu = trunc nsw i64 %i.ft to i32
   %i.fv = xor i32 %.058.lcssa, -1
   %i.fw = icmp ult i32 %i.fv, %i.fu
   %i.fx = icmp ugt i64 %i.ft, 4294967295
@@ -1654,7 +1654,7 @@ iter.check:                                       ; preds = %bb.j
   %i.eu = tail call noundef i32 @llvm.bswap.i32(i32 %i.et)
   store i32 %i.eu, ptr %i.ds, align 4
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
-  %i.ew = add i64 %.395, -4294967297
+  %i.ew = add nsw i64 %.395, -4294967297
   %or.cond199 = icmp ult i64 %i.ew, -4294967293
   br i1 %or.cond199, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -2057,7 +2057,7 @@ iter.check:                                       ; preds = %bb.j
   %i.eu = tail call noundef i32 @llvm.bswap.i32(i32 %i.et)
   store i32 %i.eu, ptr %i.ds, align 4
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
-  %i.ew = add i64 %.3107, -4294967297
+  %i.ew = add nsw i64 %.3107, -4294967297
   %or.cond206 = icmp ult i64 %i.ew, -4294967293
   br i1 %or.cond206, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -2460,7 +2460,7 @@ iter.check:                                       ; preds = %._crit_edge132.i
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.aq = add nsw i64 %.198.lcssa.i, -1           ; 2 uses
-  %i.ar = trunc i64 %i.aq to i32
+  %i.ar = trunc nsw i64 %i.aq to i32
   %i.as = xor i32 %.1102.lcssa.i, -1
   %i.at = icmp ult i32 %i.as, %i.ar
   %i.au = icmp ugt i64 %i.aq, 4294967295
@@ -2681,7 +2681,7 @@ iter.check156:                                    ; preds = %._crit_edge157.i
 
 vector.scevcheck110:                              ; preds = %iter.check156
   %i.ec = add nsw i64 %.4.lcssa.i, -1             ; 2 uses
-  %i.ed = trunc i64 %i.ec to i32
+  %i.ed = trunc nsw i64 %i.ec to i32
   %i.ee = xor i32 %.6.lcssa.i, -1
   %i.ef = icmp ult i32 %i.ee, %i.ed
   %i.eg = icmp ugt i64 %i.ec, 4294967295
@@ -3084,7 +3084,7 @@ bb.c:                                             ; preds = %bb.a, %_ZL5chainPhP
   %.012 = phi i64 [ 0, %bb.a ], [ %i.au, %_ZL5chainPhPKhjjS1_S_.exit ] ; 3 uses
   %i.ad = shl nuw nsw i64 %.012, 4
   %i.ae = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ad ; 3 uses
-  %i.af = trunc nuw i64 %.012 to i8               ; 2 uses
+  %i.af = trunc nuw nsw i64 %.012 to i8           ; 2 uses
   store i8 %i.af, ptr %i.o, align 1, !tbaa !80
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   %i.ag = call i32 @SHA256_Init(ptr noundef nonnull %5) #36 ; 0 uses
@@ -3487,7 +3487,7 @@ vec.epilog.middle.block73:                        ; preds = %vec.epilog.vector.b
 
 .lr.ph61.i.preheader:                             ; preds = %iter.check63, %vec.epilog.middle.block73
   %.14260.i.ph = phi i64 [ %.047.lcssa74.i, %iter.check63 ], [ %i.bz, %vec.epilog.middle.block73 ] ; 4 uses
-  %i.cg = sub i64 0, %.14260.i.ph
+  %i.cg = sub nsw i64 0, %.14260.i.ph
   %xtraiter78 = and i64 %i.cg, 3                  ; 2 uses
   %lcmp.mod79.not = icmp eq i64 %xtraiter78, 0
   br i1 %lcmp.mod79.not, label %.lr.ph61.i.prol.loopexit, label %.lr.ph61.i.prol
@@ -3506,7 +3506,7 @@ vec.epilog.middle.block73:                        ; preds = %vec.epilog.vector.b
 
 .lr.ph61.i.prol.loopexit:                         ; preds = %.lr.ph61.i.prol, %.lr.ph61.i.preheader
   %.14260.i.unr = phi i64 [ %.14260.i.ph, %.lr.ph61.i.preheader ], [ %i.ck, %.lr.ph61.i.prol ]
-  %i.cl = add i64 %.14260.i.ph, -13
+  %i.cl = add nsw i64 %.14260.i.ph, -13
   %i.cm = icmp ult i64 %i.cl, 3
   br i1 %i.cm, label %._crit_edge62.i, label %.lr.ph61.i
 

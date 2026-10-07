@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af, %bb.
   %i.it = xor i32 %i.is, -1
   %i.iu = and i32 %i.ii, %i.it
   %i.iv = add nuw nsw i32 %i.ir, %i.iu
-  %i.iw = trunc nuw i32 %i.iv to i16
+  %i.iw = trunc nuw nsw i32 %i.iv to i16
   %i.ix = getelementptr inbounds nuw i8, ptr %.0770970, i64 2
   store i16 %i.iw, ptr %i.ix, align 2, !tbaa !66
   %i.iy = lshr i32 %i.hz, 13
@@ -578,7 +578,7 @@ bb.au:                                            ; preds = %bb.as, %bb.at, %bb.
   %i.rp = xor i32 %i.ro, -1
   %i.rq = and i32 %i.rf, %i.rp
   %i.rr = add nuw nsw i32 %i.rq, %i.rn
-  %i.rs = trunc nuw i32 %i.rr to i16
+  %i.rs = trunc nuw nsw i32 %i.rr to i16
   %i.rt = getelementptr inbounds nuw i8, ptr %.0776994, i64 2
   store i16 %i.rs, ptr %i.rt, align 2, !tbaa !66
   %i.ru = lshr i32 %i.qw, 13

@@ -204,8 +204,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vec
 
 scalar.ph207.preheader:                           ; preds = %vector.body218, %vector.memcheck, %.lr.ph139
   %.0138.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph139 ], [ %n.vec217, %vector.body218 ] ; 7 uses
-  %i.fh = sub i64 %.069.lcssa185188, %.0138.ph
-  %.neg = add i64 %.0138.ph, 1
+  %i.fh = sub nsw i64 %.069.lcssa185188, %.0138.ph
+  %.neg = add nsw i64 %.0138.ph, 1
   %xtraiter243 = and i64 %i.fh, 1
   %lcmp.mod244.not = icmp eq i64 %xtraiter243, 0
   br i1 %lcmp.mod244.not, label %scalar.ph207.prol.loopexit, label %scalar.ph207.prol
@@ -300,8 +300,8 @@ vector.body218:                                   ; preds = %vector.body218, %ve
 
 .lr.ph141.preheader235:                           ; preds = %vector.body230, %.lr.ph141.preheader
   %.066140.ph = phi i64 [ 0, %.lr.ph141.preheader ], [ %n.vec229, %vector.body230 ] ; 7 uses
-  %i.gx = sub i64 %.069.lcssa185188, %.066140.ph
-  %.neg247 = add i64 %.066140.ph, 1
+  %i.gx = sub nsw i64 %.069.lcssa185188, %.066140.ph
+  %.neg247 = add nsw i64 %.066140.ph, 1
   %xtraiter245 = and i64 %i.gx, 1
   %lcmp.mod246.not = icmp eq i64 %xtraiter245, 0
   br i1 %lcmp.mod246.not, label %.lr.ph141.prol.loopexit, label %.lr.ph141.prol

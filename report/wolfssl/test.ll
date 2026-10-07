@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %narrow.neg51 = mul i32 %.03469, 100000
+  %narrow.neg51 = mul nsw i32 %.03469, 100000
   %i.g = add nsw i32 %narrow.neg51, -1610616809
   br label %.thread
 
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %narrow.neg48 = mul i32 %.03469, 100000
+  %narrow.neg48 = mul nsw i32 %.03469, 100000
   %i.j = add nsw i32 %narrow.neg48, -1610616813
   br label %.thread
 
@@ -224,7 +224,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not40, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %narrow.neg45 = mul i32 %.03469, 100000
+  %narrow.neg45 = mul nsw i32 %.03469, 100000
   %i.l = add nsw i32 %narrow.neg45, -1610616817
   br label %.thread
 
@@ -234,7 +234,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.n, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %bb.h
-  %narrow.neg = mul i32 %.03469, 100000
+  %narrow.neg = mul nsw i32 %.03469, 100000
   %i.o = add nsw i32 %narrow.neg, -1610616821
   br label %.thread
 

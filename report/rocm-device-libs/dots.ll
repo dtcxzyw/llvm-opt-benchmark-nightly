@@ -202,18 +202,28 @@ bb.a:
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = zext <4 x i8> %0 to <4 x i32>
-  %5 = zext <4 x i8> %1 to <4 x i32>
-  %6 = mul nuw nsw <4 x i32> %5, %4
-  %7 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %6) ; 2 uses
+  %4 = zext <4 x i8> %0 to <4 x i16>
+  %5 = zext <4 x i8> %1 to <4 x i16>
+  %6 = mul nuw <4 x i16> %5, %4                   ; 4 uses
+  %7 = extractelement <4 x i16> %6, i64 0
+  %8 = zext i16 %7 to i32
+  %9 = extractelement <4 x i16> %6, i64 1
+  %10 = zext i16 %9 to i32
+  %11 = add nuw nsw i32 %8, %10
+  %12 = extractelement <4 x i16> %6, i64 2
+  %13 = zext i16 %12 to i32
+  %14 = add nuw nsw i32 %11, %13
+  %15 = extractelement <4 x i16> %6, i64 3
+  %16 = zext i16 %15 to i32
+  %17 = add nuw nsw i32 %14, %16                  ; 2 uses
   br i1 %3, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = tail call i32 @__ockl_add_sat_u32(i32 noundef %7, i32 noundef %2) #10
+  %i.i = tail call i32 @__ockl_add_sat_u32(i32 noundef %17, i32 noundef %2) #10
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %i.j = add i32 %7, %2
+  %i.j = add i32 %17, %2
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
@@ -450,9 +460,6 @@ declare i32 @llvm.amdgcn.udot8(i32, i32, i32, i1 immarg) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v2i32(<2 x i32>) #8

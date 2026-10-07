@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.aj
   %i.co = phi i8 [ %i.cn, %bb.ad ], [ %.ph, %.lr.ph.preheader ] ; 5 uses
   %.0238 = phi i32 [ %.2, %bb.ad ], [ 0, %.lr.ph.preheader ]
   %.1169237 = phi ptr [ %i.cm, %bb.ad ], [ %.1169237.ph, %.lr.ph.preheader ]
-  %i.cp = shl i32 %.0238, 4
+  %i.cp = shl nsw i32 %.0238, 4
   %i.cq = add i8 %i.co, -65
   %or.cond = icmp ult i8 %i.cq, 6
   br i1 %or.cond, label %bb.ae, label %bb.af

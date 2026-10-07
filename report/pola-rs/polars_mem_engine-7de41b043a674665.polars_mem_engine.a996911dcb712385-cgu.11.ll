@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %.lr.ph.i
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader, !dbg !26385
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.aa
-  %i.cp = mul nuw i32 %.sroa.0.02.i, %.sroa.0.02.i, !dbg !26386 ; 2 uses
+  %i.cp = mul nuw nsw i32 %.sroa.0.02.i, %.sroa.0.02.i, !dbg !26386 ; 2 uses
   %xtraiter = and i32 %i.cp, 7, !dbg !26385       ; 3 uses
   %i.cq = icmp ult i32 %.sroa.0.02.i, 3, !dbg !26385
   br i1 %i.cq, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new, !dbg !26385
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %.lr.ph.i.i14.i
   br i1 %.not.i.i.i15.i, label %_RNvMs1_NtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i, label %.lr.ph.i.i.i.i.preheader, !dbg !28850
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.z
-  %i.ck = mul nuw i32 %.sroa.0.02.i.i.i, %.sroa.0.02.i.i.i, !dbg !28851 ; 2 uses
+  %i.ck = mul nuw nsw i32 %.sroa.0.02.i.i.i, %.sroa.0.02.i.i.i, !dbg !28851 ; 2 uses
   %xtraiter = and i32 %i.ck, 7, !dbg !28850       ; 3 uses
   %i.cl = icmp ult i32 %.sroa.0.02.i.i.i, 3, !dbg !28850
   br i1 %i.cl, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.new, !dbg !28850

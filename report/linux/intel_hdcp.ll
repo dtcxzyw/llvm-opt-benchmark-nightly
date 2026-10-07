@@ -205,64 +205,65 @@ __drm_to_dev.exit8.i.i.i:                         ; preds = %bb.ft, %bb.fs
   %.0207392.i.i = phi i32 [ 0, %.lr.ph396.preheader.i.i ], [ %.1208.i.i, %bb.ga ] ; 2 uses
   %i.qy = mul nuw nsw i64 %indvars.iv416.i.i.a, 5
   %i.qz = getelementptr i8, ptr %i.oe, i64 %i.qy  ; 6 uses
-  %i.ra = sub nuw nsw i32 4, %.0200394.i.i        ; 6 uses
-  %xtraiter = and i32 %i.ra, 1
+  %i.ra = sub nuw nsw i32 4, %.0200394.i.i        ; 5 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.ra to i64 ; 2 uses
+  %xtraiter = and i64 %wide.trip.count.i.i, 1
   %i.rb = icmp eq i32 %.0200394.i.i, 3
   br i1 %i.rb, label %.lr.ph.i79.i.epil.preheader, label %.lr.ph.preheader.i.i.new
 
 .lr.ph.preheader.i.i.new:                         ; preds = %.lr.ph.preheader.i.i
-  %unroll_iter = and i32 %i.ra, 6
+  %unroll_iter = and i64 %wide.trip.count.i.i, 6
   br label %.lr.ph.i79.i
 
 .lr.ph.i79.i:                                     ; preds = %.lr.ph.i79.i, %.lr.ph.preheader.i.i.new
-  %.1198385.i.i = phi i32 [ %.0197395.i.i, %.lr.ph.preheader.i.i.new ], [ %i.rr, %.lr.ph.i79.i ]
-  %.0205384.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.new ], [ %7, %.lr.ph.i79.i ] ; 4 uses
-  %niter = phi i32 [ 0, %.lr.ph.preheader.i.i.new ], [ %niter.next.1, %.lr.ph.i79.i ]
-  %4 = sext i32 %.0205384.i.i to i64
-  %.tr.i.i = add i32 %.0205384.i.i, %.0200394.i.i
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.new ], [ %indvars.iv.next.i.i.1, %.lr.ph.i79.i ] ; 4 uses
+  %.0205384.i.i = phi i32 [ %.0197395.i.i, %.lr.ph.preheader.i.i.new ], [ %i.rr, %.lr.ph.i79.i ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i.i.new ], [ %niter.next.1, %.lr.ph.i79.i ]
+  %4 = trunc i64 %indvars.iv.i.i to i32
+  %.tr.i.i = add i32 %.0200394.i.i, %4
   %i.rc = shl i32 %.tr.i.i, 3
   %i.rd = sub i32 24, %i.rc
-  %i.re = getelementptr i8, ptr %i.qz, i64 %4
+  %i.re = getelementptr i8, ptr %i.qz, i64 %indvars.iv.i.i
   %i.rf = load i8, ptr %i.re, align 1
   %i.rg = zext i8 %i.rf to i32
   %i.rh = and i32 %i.rd, 248
   %i.ri = shl i32 %i.rg, %i.rh
-  %i.rj = or i32 %i.ri, %.1198385.i.i
-  %5 = or disjoint i32 %.0205384.i.i, 1           ; 2 uses
-  %6 = sext i32 %5 to i64
-  %.tr.i.i.1 = add i32 %5, %.0200394.i.i
+  %i.rj = or i32 %i.ri, %.0205384.i.i
+  %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
+  %5 = trunc i64 %indvars.iv.next.i.i to i32
+  %.tr.i.i.1 = add i32 %.0200394.i.i, %5
   %i.rk = shl i32 %.tr.i.i.1, 3
   %i.rl = sub i32 24, %i.rk
-  %i.rm = getelementptr i8, ptr %i.qz, i64 %6
+  %i.rm = getelementptr i8, ptr %i.qz, i64 %indvars.iv.next.i.i
   %i.rn = load i8, ptr %i.rm, align 1
   %i.ro = zext i8 %i.rn to i32
   %i.rp = and i32 %i.rl, 248
   %i.rq = shl i32 %i.ro, %i.rp
   %i.rr = or i32 %i.rq, %i.rj                     ; 3 uses
-  %7 = add nuw i32 %.0205384.i.i, 2               ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %.lr.ph.i79.i, !llvm.loop !122
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %.lr.ph.i79.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.lr.ph.i79.i.epil.preheader
 
 .lr.ph.i79.i.epil.preheader:                      ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.preheader.i.i
-  %.1198385.i.i.epil.init = phi i32 [ %.0197395.i.i, %.lr.ph.preheader.i.i ], [ %i.rr, %._crit_edge.i.i.unr-lcssa ]
-  %.0205384.i.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %7, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
+  %.0205384.i.i.epil.init = phi i32 [ %.0197395.i.i, %.lr.ph.preheader.i.i ], [ %i.rr, %._crit_edge.i.i.unr-lcssa ]
   %lcmp.mod254 = trunc i32 %i.ra to i1
   call void @llvm.assume(i1 %lcmp.mod254)
-  %8 = sext i32 %.0205384.i.i.epil.init to i64
-  %.tr.i.i.epil = add i32 %.0205384.i.i.epil.init, %.0200394.i.i
+  %6 = trunc i64 %indvars.iv.i.i.epil.init to i32
+  %.tr.i.i.epil = add i32 %.0200394.i.i, %6
   %i.rs = shl i32 %.tr.i.i.epil, 3
   %i.rt = sub i32 24, %i.rs
-  %i.ru = getelementptr i8, ptr %i.qz, i64 %8
+  %i.ru = getelementptr i8, ptr %i.qz, i64 %indvars.iv.i.i.epil.init
   %i.rv = load i8, ptr %i.ru, align 1
   %i.rw = zext i8 %i.rv to i32
   %i.rx = and i32 %i.rt, 248
   %i.ry = shl i32 %i.rw, %i.rx
-  %i.rz = or i32 %i.ry, %.1198385.i.i.epil.init
+  %i.rz = or i32 %i.ry, %.0205384.i.i.epil.init
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i79.i.epil.preheader

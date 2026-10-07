@@ -1,0 +1,1630 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 4ead4881b6557f5..7149fde0c8779aa 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -4504,8 +4504,10 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+     }
+     case Instruction::SExt:
+       Tmp = TyBits - U->getOperand(0)->getType()->getScalarSizeInBits();
+-      return ComputeNumSignBits(U->getOperand(0), DemandedElts, Q, Depth + 1) +
+-             Tmp;
++      FirstAnswer =
++          ComputeNumSignBits(U->getOperand(0), DemandedElts, Q, Depth + 1) +
++          Tmp;
++      break;
+ 
+     case Instruction::SDiv: {
+       const APInt *Denominator;
+@@ -4521,7 +4523,7 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+             ComputeNumSignBits(U->getOperand(0), DemandedElts, Q, Depth + 1);
+ 
+         // Add floor(log(C)) bits to the numerator bits.
+-        return std::min(TyBits, NumBits + Denominator->logBase2());
++        FirstAnswer = std::min(TyBits, NumBits + Denominator->logBase2());
+       }
+       break;
+     }
+@@ -4554,7 +4556,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+           Tmp = std::max(Tmp, ResBits);
+         }
+       }
+-      return Tmp;
++      FirstAnswer = Tmp;
++      break;
+     }
+ 
+     case Instruction::AShr: {
+@@ -4568,7 +4571,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+         Tmp += ShAmtLimited;
+         if (Tmp > TyBits) Tmp = TyBits;
+       }
+-      return Tmp;
++      FirstAnswer = Tmp;
++      break;
+     }
+     case Instruction::Shl: {
+       const APInt *ShAmt;
+@@ -4589,7 +4593,7 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+         if (ShAmt->uge(Tmp))
+           break; // Shifted all sign bits out.
+         Tmp2 = ShAmt->getZExtValue();
+-        return Tmp - Tmp2;
++        FirstAnswer = Tmp - Tmp2;
+       }
+       break;
+     }
+@@ -4612,14 +4616,17 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       // be the minimum of the clamp min/max range.
+       const Value *X;
+       const APInt *CLow, *CHigh;
+-      if (isSignedMinMaxClamp(U, X, CLow, CHigh))
+-        return std::min(CLow->getNumSignBits(), CHigh->getNumSignBits());
++      if (isSignedMinMaxClamp(U, X, CLow, CHigh)) {
++        FirstAnswer = std::min(CLow->getNumSignBits(), CHigh->getNumSignBits());
++        break;
++      }
+ 
+       Tmp = ComputeNumSignBits(U->getOperand(1), DemandedElts, Q, Depth + 1);
+       if (Tmp == 1)
+         break;
+       Tmp2 = ComputeNumSignBits(U->getOperand(2), DemandedElts, Q, Depth + 1);
+-      return std::min(Tmp, Tmp2);
++      FirstAnswer = std::min(Tmp, Tmp2);
++      break;
+     }
+ 
+     case Instruction::Add:
+@@ -4641,14 +4648,17 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+ 
+           // If we are subtracting one from a positive number, there is no carry
+           // out of the result.
+-          if (Known.isNonNegative())
+-            return Tmp;
++          if (Known.isNonNegative()) {
++            FirstAnswer = Tmp;
++            break;
++          }
+         }
+ 
+       Tmp2 = ComputeNumSignBits(U->getOperand(1), DemandedElts, Q, Depth + 1);
+       if (Tmp2 == 1)
+         break;
+-      return std::min(Tmp, Tmp2) - 1;
++      FirstAnswer = std::min(Tmp, Tmp2) - 1;
++      break;
+ 
+     case Instruction::Sub:
+       Tmp2 = ComputeNumSignBits(U->getOperand(1), DemandedElts, Q, Depth + 1);
+@@ -4668,8 +4678,10 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+           // If the input is known to be positive (the sign bit is known clear),
+           // the output of the NEG has the same number of sign bits as the
+           // input.
+-          if (Known.isNonNegative())
+-            return Tmp2;
++          if (Known.isNonNegative()) {
++            FirstAnswer = Tmp2;
++            break;
++          }
+ 
+           // Otherwise, we treat this like a SUB.
+         }
+@@ -4679,7 +4691,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       Tmp = ComputeNumSignBits(U->getOperand(0), DemandedElts, Q, Depth + 1);
+       if (Tmp == 1)
+         break;
+-      return std::min(Tmp, Tmp2) - 1;
++      FirstAnswer = std::min(Tmp, Tmp2) - 1;
++      break;
+ 
+     case Instruction::Mul: {
+       // The output of the Mul can be at most twice the valid bits in the
+@@ -4694,7 +4707,9 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+         break;
+       unsigned OutValidBits =
+           (TyBits - SignBitsOp0 + 1) + (TyBits - SignBitsOp1 + 1);
+-      return OutValidBits > TyBits ? 1 : TyBits - OutValidBits + 1;
++      if (OutValidBits <= TyBits)
++        FirstAnswer = TyBits - OutValidBits + 1;
++      break;
+     }
+ 
+     case Instruction::PHI: {
+@@ -4710,12 +4725,14 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       SimplifyQuery RecQ = Q.getWithoutCondContext();
+       Tmp = TyBits;
+       for (unsigned i = 0, e = NumIncomingValues; i != e; ++i) {
+-        if (Tmp == 1) return Tmp;
++        if (Tmp == 1)
++          break;
+         RecQ.CtxI = PN->getIncomingBlock(i)->getTerminator();
+         Tmp = std::min(Tmp, ComputeNumSignBits(PN->getIncomingValue(i),
+                                                DemandedElts, RecQ, Depth + 1));
+       }
+-      return Tmp;
++      FirstAnswer = Tmp;
++      break;
+     }
+ 
+     case Instruction::Trunc: {
+@@ -4725,9 +4742,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       Tmp = ComputeNumSignBits(U->getOperand(0), Q, Depth + 1);
+       unsigned OperandTyBits = U->getOperand(0)->getType()->getScalarSizeInBits();
+       if (Tmp > (OperandTyBits - TyBits))
+-        return Tmp - (OperandTyBits - TyBits);
+-
+-      return 1;
++        FirstAnswer = Tmp - (OperandTyBits - TyBits);
++      break;
+     }
+ 
+     case Instruction::ExtractElement:
+@@ -4735,7 +4751,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       // skip tracking the specific element. But at least we might find
+       // information valid for all elements of the vector (for example if vector
+       // is sign extended, shifted, etc).
+-      return ComputeNumSignBits(U->getOperand(0), Q, Depth + 1);
++      FirstAnswer = ComputeNumSignBits(U->getOperand(0), Q, Depth + 1);
++      break;
+ 
+     case Instruction::ShuffleVector: {
+       // Collect the minimum number of sign bits that are shared by every vector
+@@ -4769,7 +4786,8 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+       if (Tmp == 1)
+         break;
+       assert(Tmp <= TyBits && "Failed to determine minimum sign bits");
+-      return Tmp;
++      FirstAnswer = Tmp;
++      break;
+     }
+     case Instruction::Call: {
+       if (const auto *II = dyn_cast<IntrinsicInst>(U)) {
+@@ -4783,12 +4801,15 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+             break;
+ 
+           // Absolute value reduces number of sign bits by at most 1.
+-          return Tmp - 1;
++          FirstAnswer = Tmp - 1;
++          break;
+         case Intrinsic::smin:
+         case Intrinsic::smax: {
+           const APInt *CLow, *CHigh;
+           if (isSignedMinMaxIntrinsicClamp(II, CLow, CHigh))
+-            return std::min(CLow->getNumSignBits(), CHigh->getNumSignBits());
++            FirstAnswer =
++                std::min(CLow->getNumSignBits(), CHigh->getNumSignBits());
++          break;
+         }
+         }
+       }
+@@ -4799,6 +4820,9 @@ static unsigned ComputeNumSignBitsImpl(const Value *V,
+   // Finally, if we can prove that the top bits of the result are 0's or 1's,
+   // use this information.
+ 
++  if (FirstAnswer == TyBits)
++    return FirstAnswer;
++
+   // If we can examine all elements of a vector constant successfully, we're
+   // done (we can't do any better than that). If not, keep trying.
+   if (unsigned VecSignBits =
+diff --git a/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp b/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
+index d7863c2527dd2c9..fcb77a8d64489a2 100644
+--- a/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
++++ b/llvm/lib/CodeGen/GlobalISel/GISelValueTracking.cpp
+@@ -2586,14 +2586,15 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+   case TargetOpcode::G_FREEZE: {
+     Register Src = MI.getOperand(1).getReg();
+     if (isGuaranteedNotToBeUndefOrPoison(Src, MRI, Depth + 1))
+-      return computeNumSignBits(Src, DemandedElts, Depth + 1);
++      FirstAnswer = computeNumSignBits(Src, DemandedElts, Depth + 1);
+     break;
+   }
+   case TargetOpcode::G_SEXT: {
+     Register Src = MI.getOperand(1).getReg();
+     LLT SrcTy = MRI.getType(Src);
+     unsigned Tmp = TyBits - SrcTy.getScalarSizeInBits();
+-    return computeNumSignBits(Src, DemandedElts, Depth + 1) + Tmp;
++    FirstAnswer = computeNumSignBits(Src, DemandedElts, Depth + 1) + Tmp;
++    break;
+   }
+   case TargetOpcode::G_ASSERT_SEXT:
+   case TargetOpcode::G_SEXT_INREG: {
+@@ -2601,45 +2602,53 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     Register Src = MI.getOperand(1).getReg();
+     unsigned SrcBits = MI.getOperand(2).getImm();
+     unsigned InRegBits = TyBits - SrcBits + 1;
+-    return std::max(computeNumSignBits(Src, DemandedElts, Depth + 1),
+-                    InRegBits);
++    FirstAnswer =
++        std::max(computeNumSignBits(Src, DemandedElts, Depth + 1), InRegBits);
++    break;
+   }
+   case TargetOpcode::G_LOAD: {
+     GLoad *Ld = cast<GLoad>(&MI);
+     if (DemandedElts != 1 || !getDataLayout().isLittleEndian())
+       break;
+ 
+-    return computeNumSignBitsFromRangeMetadata(Ld, TyBits);
++    FirstAnswer = computeNumSignBitsFromRangeMetadata(Ld, TyBits);
++    break;
+   }
+   case TargetOpcode::G_SEXTLOAD: {
+     GSExtLoad *Ld = cast<GSExtLoad>(&MI);
+ 
+     // FIXME: We need an in-memory type representation.
+     if (DstTy.isVector())
+-      return 1;
++      break;
+ 
+     unsigned NumBits = computeNumSignBitsFromRangeMetadata(Ld, TyBits);
+-    if (NumBits != 1)
+-      return NumBits;
++    if (NumBits != 1) {
++      FirstAnswer = NumBits;
++      break;
++    }
+ 
+     // e.g. i16->i32 = '17' bits known.
+     const MachineMemOperand *MMO = *MI.memoperands_begin();
+-    return TyBits - MMO->getSizeInBits().getValue() + 1;
++    FirstAnswer = TyBits - MMO->getSizeInBits().getValue() + 1;
++    break;
+   }
+   case TargetOpcode::G_ZEXTLOAD: {
+     GZExtLoad *Ld = cast<GZExtLoad>(&MI);
+ 
+     // FIXME: We need an in-memory type representation.
+     if (DstTy.isVector())
+-      return 1;
++      break;
+ 
+     unsigned NumBits = computeNumSignBitsFromRangeMetadata(Ld, TyBits);
+-    if (NumBits != 1)
+-      return NumBits;
++    if (NumBits != 1) {
++      FirstAnswer = NumBits;
++      break;
++    }
+ 
+     // e.g. i16->i32 = '16' bits known.
+     const MachineMemOperand *MMO = *MI.memoperands_begin();
+-    return TyBits - MMO->getSizeInBits().getValue();
++    FirstAnswer = TyBits - MMO->getSizeInBits().getValue();
++    break;
+   }
+   case TargetOpcode::G_AND:
+   case TargetOpcode::G_OR:
+@@ -2690,14 +2699,16 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+         if (SizeDiff <= MinShAmt) {
+           unsigned Tmp =
+               SizeDiff + computeNumSignBits(Extendee, DemandedElts, Depth + 1);
+-          if (MaxShAmt < Tmp)
+-            return Tmp - MaxShAmt;
++          if (MaxShAmt < Tmp) {
++            FirstAnswer = Tmp - MaxShAmt;
++            break;
++          }
+         }
+       }
+       // shl destroys sign bits, ensure it doesn't shift out all sign bits.
+       unsigned Tmp = computeNumSignBits(Src1, DemandedElts, Depth + 1);
+       if (MaxShAmt < Tmp)
+-        return Tmp - MaxShAmt;
++        FirstAnswer = Tmp - MaxShAmt;
+     }
+     break;
+   }
+@@ -2724,7 +2735,8 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     // equal to the magnitude of the LHS. Therefore, the result should have
+     // at least as many sign bits as the left hand side.
+     Register Src = MI.getOperand(1).getReg();
+-    return computeNumSignBits(Src, DemandedElts, Depth + 1);
++    FirstAnswer = computeNumSignBits(Src, DemandedElts, Depth + 1);
++    break;
+   }
+   case TargetOpcode::G_TRUNC: {
+     Register Src = MI.getOperand(1).getReg();
+@@ -2734,22 +2746,24 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     unsigned NumSrcBits = SrcTy.getScalarSizeInBits();
+     unsigned NumSrcSignBits = computeNumSignBits(Src, DemandedElts, Depth + 1);
+     if (NumSrcSignBits > (NumSrcBits - TyBits))
+-      return NumSrcSignBits - (NumSrcBits - TyBits);
++      FirstAnswer = NumSrcSignBits - (NumSrcBits - TyBits);
+     break;
+   }
+   case TargetOpcode::G_SELECT: {
+-    return computeNumSignBitsMin(MI.getOperand(2).getReg(),
+-                                 MI.getOperand(3).getReg(), DemandedElts,
+-                                 Depth + 1);
++    FirstAnswer = computeNumSignBitsMin(MI.getOperand(2).getReg(),
++                                        MI.getOperand(3).getReg(), DemandedElts,
++                                        Depth + 1);
++    break;
+   }
+   case TargetOpcode::G_SMIN:
+   case TargetOpcode::G_SMAX:
+   case TargetOpcode::G_UMIN:
+   case TargetOpcode::G_UMAX:
+     // TODO: Handle clamp pattern with number of sign bits for SMIN/SMAX.
+-    return computeNumSignBitsMin(MI.getOperand(1).getReg(),
+-                                 MI.getOperand(2).getReg(), DemandedElts,
+-                                 Depth + 1);
++    FirstAnswer = computeNumSignBitsMin(MI.getOperand(1).getReg(),
++                                        MI.getOperand(2).getReg(), DemandedElts,
++                                        Depth + 1);
++    break;
+   case TargetOpcode::G_SADDO:
+   case TargetOpcode::G_SADDE:
+   case TargetOpcode::G_UADDO:
+@@ -2776,7 +2790,7 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     unsigned Src2NumSignBits =
+         computeNumSignBits(Src2, DemandedElts, Depth + 1);
+     if (Src2NumSignBits == 1)
+-      return 1; // Early out.
++      break;
+ 
+     // Handle NEG.
+     Register Src1 = MI.getOperand(1).getReg();
+@@ -2802,7 +2816,7 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     unsigned Src1NumSignBits =
+         computeNumSignBits(Src1, DemandedElts, Depth + 1);
+     if (Src1NumSignBits == 1)
+-      return 1; // Early Out.
++      break;
+ 
+     // Sub can have at most one carry bit.  Thus we know that the output
+     // is, at worst, one more bit than the inputs.
+@@ -2814,13 +2828,13 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     unsigned Src2NumSignBits =
+         computeNumSignBits(Src2, DemandedElts, Depth + 1);
+     if (Src2NumSignBits <= 2)
+-      return 1; // Early out.
++      break;
+ 
+     Register Src1 = MI.getOperand(1).getReg();
+     unsigned Src1NumSignBits =
+         computeNumSignBits(Src1, DemandedElts, Depth + 1);
+     if (Src1NumSignBits == 1)
+-      return 1; // Early Out.
++      break;
+ 
+     // Special case decrementing a value (ADD X, -1):
+     KnownBits Known2 = getKnownBits(Src2, DemandedElts, Depth);
+@@ -2872,7 +2886,7 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     if (BC == TargetLoweringBase::ZeroOrNegativeOneBooleanContent)
+       return TyBits; // All bits are sign bits.
+     if (BC == TargetLowering::ZeroOrOneBooleanContent)
+-      return TyBits - 1; // Every always-zero bit is a sign bit.
++      FirstAnswer = TyBits - 1; // Every always-zero bit is a sign bit.
+     break;
+   }
+   case TargetOpcode::G_UNMERGE_VALUES: {
+@@ -2997,22 +3011,26 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+           computeNumSignBits(InVec, DemandedVecElts, Depth + 1);
+       Tmp = std::min(Tmp, VecSignBits);
+     }
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+   case TargetOpcode::G_EXTRACT_VECTOR_ELT: {
+     GExtractVectorElement &Extract = cast<GExtractVectorElement>(MI);
+     Register InVec = Extract.getVectorReg();
+     Register EltNo = Extract.getIndexReg();
+     LLT VecVT = MRI.getType(InVec);
+-    if (VecVT.isScalableVector())
+-      return computeNumSignBits(InVec, APInt(1, 1), Depth + 1);
++    if (VecVT.isScalableVector()) {
++      FirstAnswer = computeNumSignBits(InVec, APInt(1, 1), Depth + 1);
++      break;
++    }
+     unsigned NumSrcElts = VecVT.getNumElements();
+     std::optional<APInt> ConstEltNo = getIConstantVRegVal(EltNo, MRI);
+     APInt DemandedSrcElts =
+         ConstEltNo && ConstEltNo->ult(NumSrcElts)
+             ? APInt::getOneBitSet(NumSrcElts, ConstEltNo->getZExtValue())
+             : APInt::getAllOnes(NumSrcElts);
+-    return computeNumSignBits(InVec, DemandedSrcElts, Depth + 1);
++    FirstAnswer = computeNumSignBits(InVec, DemandedSrcElts, Depth + 1);
++    break;
+   }
+   case TargetOpcode::G_EXTRACT_SUBVECTOR: {
+     // Offset the demanded elts by the subvector index.
+@@ -3026,7 +3044,8 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+       unsigned NumSrcElts = SrcTy.getNumElements();
+       DemandedSrcElts = DemandedElts.zext(NumSrcElts).shl(Idx);
+     }
+-    return computeNumSignBits(SrcReg, DemandedSrcElts, Depth + 1);
++    FirstAnswer = computeNumSignBits(SrcReg, DemandedSrcElts, Depth + 1);
++    break;
+   }
+   case TargetOpcode::G_SHUFFLE_VECTOR: {
+     // Collect the minimum number of sign bits that are shared by every vector
+@@ -3056,7 +3075,7 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+     unsigned NumSrcSignBits = computeNumSignBits(Src, APInt(1, 1), Depth + 1);
+     unsigned NumSrcBits = MRI.getType(Src).getSizeInBits();
+     if (NumSrcSignBits > (NumSrcBits - TyBits))
+-      return NumSrcSignBits - (NumSrcBits - TyBits);
++      FirstAnswer = NumSrcSignBits - (NumSrcBits - TyBits);
+     break;
+   }
+   case TargetOpcode::G_INTRINSIC:
+@@ -3074,6 +3093,8 @@ unsigned GISelValueTracking::computeNumSignBits(Register R,
+ 
+   // Finally, if we can prove that the top bits of the result are 0's or 1's,
+   // use this information.
++  if (FirstAnswer == TyBits)
++    return FirstAnswer;
+   KnownBits Known = getKnownBits(R, DemandedElts, Depth);
+   return std::max(FirstAnswer, Known.countMinSignBits());
+ }
+diff --git a/llvm/lib/CodeGen/SelectionDAG/SelectionDAG.cpp b/llvm/lib/CodeGen/SelectionDAG/SelectionDAG.cpp
+index 77922d8fb13442c..48def827cf57fb4 100644
+--- a/llvm/lib/CodeGen/SelectionDAG/SelectionDAG.cpp
++++ b/llvm/lib/CodeGen/SelectionDAG/SelectionDAG.cpp
+@@ -4970,24 +4970,28 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+   default: break;
+   case ISD::AssertSext:
+     Tmp = cast<VTSDNode>(Op.getOperand(1))->getVT().getSizeInBits();
+-    return VTBits-Tmp+1;
++    FirstAnswer = VTBits - Tmp + 1;
++    break;
+   case ISD::AssertZext:
+     Tmp = cast<VTSDNode>(Op.getOperand(1))->getVT().getSizeInBits();
+-    return VTBits-Tmp;
++    FirstAnswer = VTBits - Tmp;
++    break;
+   case ISD::FREEZE:
+     if (isGuaranteedNotToBeUndefOrPoison(Op.getOperand(0), DemandedElts,
+                                          UndefPoisonKind::UndefOrPoison))
+-      return ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
++      FirstAnswer =
++          ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+     break;
+   case ISD::MERGE_VALUES:
+-    return ComputeNumSignBits(Op.getOperand(Op.getResNo()), DemandedElts,
+-                              Depth + 1);
++    FirstAnswer = ComputeNumSignBits(Op.getOperand(Op.getResNo()), DemandedElts,
++                                     Depth + 1);
++    break;
+   case ISD::SPLAT_VECTOR: {
+     // Check if the sign bits of source go down as far as the truncated value.
+     unsigned NumSrcBits = Op.getOperand(0).getValueSizeInBits();
+     unsigned NumSrcSignBits = ComputeNumSignBits(Op.getOperand(0), Depth + 1);
+     if (NumSrcSignBits > (NumSrcBits - VTBits))
+-      return NumSrcSignBits - (NumSrcBits - VTBits);
++      FirstAnswer = NumSrcSignBits - (NumSrcBits - VTBits);
+     break;
+   }
+   case ISD::BUILD_VECTOR:
+@@ -5041,17 +5045,19 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       }
+       Tmp = std::min(Tmp, Tmp2);
+     }
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+ 
+   case ISD::VECTOR_COMPRESS: {
+     SDValue Vec = Op.getOperand(0);
+     SDValue PassThru = Op.getOperand(2);
+     Tmp = ComputeNumSignBits(PassThru, DemandedElts, Depth + 1);
+     if (Tmp == 1)
+-      return 1;
++      break;
+     Tmp2 = ComputeNumSignBits(Vec, Depth + 1);
+     Tmp = std::min(Tmp, Tmp2);
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+ 
+   case ISD::VECTOR_SHUFFLE: {
+@@ -5075,7 +5081,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     if (Tmp == 1)
+       break;
+     assert(Tmp <= VTBits && "Failed to determine minimum sign bits");
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+ 
+   case ISD::BITCAST: {
+@@ -5090,8 +5097,10 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       break;
+ 
+     // Fast handling of 'identity' bitcasts.
+-    if (VTBits == SrcBits)
+-      return ComputeNumSignBits(N0, DemandedElts, Depth + 1);
++    if (VTBits == SrcBits) {
++      FirstAnswer = ComputeNumSignBits(N0, DemandedElts, Depth + 1);
++      break;
++    }
+ 
+     bool IsLE = getDataLayout().isLittleEndian();
+ 
+@@ -5115,11 +5124,13 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+           unsigned SubOffset = i % Scale;
+           SubOffset = (IsLE ? ((Scale - 1) - SubOffset) : SubOffset);
+           SubOffset = SubOffset * VTBits;
+-          if (Tmp <= SubOffset)
+-            return 1;
++          if (Tmp <= SubOffset) {
++            Tmp2 = 1;
++            break;
++          }
+           Tmp2 = std::min(Tmp2, Tmp - SubOffset);
+         }
+-      return Tmp2;
++      FirstAnswer = Tmp2;
+     }
+     break;
+   }
+@@ -5127,16 +5138,20 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+   case ISD::FP_TO_SINT_SAT:
+     // FP_TO_SINT_SAT produces a signed value that fits in the saturating VT.
+     Tmp = cast<VTSDNode>(Op.getOperand(1))->getVT().getScalarSizeInBits();
+-    return VTBits - Tmp + 1;
++    FirstAnswer = VTBits - Tmp + 1;
++    break;
+   case ISD::SIGN_EXTEND:
+     Tmp = VTBits - Op.getOperand(0).getScalarValueSizeInBits();
+-    return ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth+1) + Tmp;
++    FirstAnswer =
++        ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1) + Tmp;
++    break;
+   case ISD::SIGN_EXTEND_INREG:
+     // Max of the input and what this extends.
+     Tmp = cast<VTSDNode>(Op.getOperand(1))->getVT().getScalarSizeInBits();
+     Tmp = VTBits-Tmp+1;
+     Tmp2 = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth+1);
+-    return std::max(Tmp, Tmp2);
++    FirstAnswer = std::max(Tmp, Tmp2);
++    break;
+   case ISD::SIGN_EXTEND_VECTOR_INREG: {
+     if (VT.isScalableVector())
+       break;
+@@ -5144,7 +5159,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     EVT SrcVT = Src.getValueType();
+     APInt DemandedSrcElts = DemandedElts.zext(SrcVT.getVectorNumElements());
+     Tmp = VTBits - SrcVT.getScalarSizeInBits();
+-    return ComputeNumSignBits(Src, DemandedSrcElts, Depth+1) + Tmp;
++    FirstAnswer = ComputeNumSignBits(Src, DemandedSrcElts, Depth + 1) + Tmp;
++    break;
+   }
+   case ISD::SRA:
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+@@ -5152,7 +5168,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     if (std::optional<unsigned> ShAmt =
+             getValidMinimumShiftAmount(Op, DemandedElts, Depth + 1))
+       Tmp = std::min(Tmp + *ShAmt, VTBits);
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   case ISD::SHL:
+     if (std::optional<ConstantRange> ShAmtRange =
+             getValidShiftAmountRange(Op, DemandedElts, Depth + 1)) {
+@@ -5173,14 +5190,16 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+         if (SizeDifference <= MinShAmt) {
+           Tmp = SizeDifference +
+                 ComputeNumSignBits(Extendee, DemandedElts, Depth + 1);
+-          if (MaxShAmt < Tmp)
+-            return Tmp - MaxShAmt;
++          if (MaxShAmt < Tmp) {
++            FirstAnswer = Tmp - MaxShAmt;
++            break;
++          }
+         }
+       }
+       // shl destroys sign bits, ensure it doesn't shift out all sign bits.
+       Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+       if (MaxShAmt < Tmp)
+-        return Tmp - MaxShAmt;
++        FirstAnswer = Tmp - MaxShAmt;
+     }
+     break;
+   case ISD::AND:
+@@ -5200,14 +5219,18 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+   case ISD::SELECT:
+   case ISD::VSELECT:
+     Tmp = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth+1);
+-    if (Tmp == 1) return 1;  // Early out.
++    if (Tmp == 1)
++      break;
+     Tmp2 = ComputeNumSignBits(Op.getOperand(2), DemandedElts, Depth+1);
+-    return std::min(Tmp, Tmp2);
++    FirstAnswer = std::min(Tmp, Tmp2);
++    break;
+   case ISD::SELECT_CC:
+     Tmp = ComputeNumSignBits(Op.getOperand(2), DemandedElts, Depth+1);
+-    if (Tmp == 1) return 1;  // Early out.
++    if (Tmp == 1)
++      break;
+     Tmp2 = ComputeNumSignBits(Op.getOperand(3), DemandedElts, Depth+1);
+-    return std::min(Tmp, Tmp2);
++    FirstAnswer = std::min(Tmp, Tmp2);
++    break;
+ 
+   case ISD::SMIN:
+   case ISD::SMAX: {
+@@ -5225,24 +5248,27 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       if (CstLow->getAPIntValue().sle(CstHigh->getAPIntValue())) {
+         Tmp = CstLow->getAPIntValue().getNumSignBits();
+         Tmp2 = CstHigh->getAPIntValue().getNumSignBits();
+-        return std::min(Tmp, Tmp2);
++        FirstAnswer = std::min(Tmp, Tmp2);
++        break;
+       }
+     }
+ 
+     // Fallback - just get the minimum number of sign bits of the operands.
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+     if (Tmp == 1)
+-      return 1;  // Early out.
++      break; // Early out.
+     Tmp2 = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth + 1);
+-    return std::min(Tmp, Tmp2);
++    FirstAnswer = std::min(Tmp, Tmp2);
++    break;
+   }
+   case ISD::UMIN:
+   case ISD::UMAX:
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+     if (Tmp == 1)
+-      return 1;  // Early out.
++      break; // Early out.
+     Tmp2 = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth + 1);
+-    return std::min(Tmp, Tmp2);
++    FirstAnswer = std::min(Tmp, Tmp2);
++    break;
+   case ISD::SSUBO_CARRY:
+   case ISD::USUBO_CARRY:
+     // sub_carry(x,x,c) -> 0/-1 (sext carry)
+@@ -5297,7 +5323,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+   case ISD::ADDC:
+     // TODO: Move Operand 1 check before Operand 0 check
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+-    if (Tmp == 1) return 1; // Early out.
++    if (Tmp == 1)
++      break;
+ 
+     // Special case decrementing a value (ADD X, -1):
+     if (ConstantSDNode *CRHS =
+@@ -5313,19 +5340,24 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+ 
+         // If we are subtracting one from a positive number, there is no carry
+         // out of the result.
+-        if (Known.isNonNegative())
+-          return Tmp;
++        if (Known.isNonNegative()) {
++          FirstAnswer = Tmp;
++          break;
++        }
+       }
+ 
+     Tmp2 = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth + 1);
+-    if (Tmp2 == 1) return 1; // Early out.
++    if (Tmp2 == 1)
++      break;
+ 
+     // Add can have at most one carry bit.  Thus we know that the output
+     // is, at worst, one more bit than the inputs.
+-    return std::min(Tmp, Tmp2) - 1;
++    FirstAnswer = std::min(Tmp, Tmp2) - 1;
++    break;
+   case ISD::SUB:
+     Tmp2 = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth + 1);
+-    if (Tmp2 == 1) return 1; // Early out.
++    if (Tmp2 == 1)
++      break;
+ 
+     // Handle NEG.
+     if (ConstantSDNode *CLHS =
+@@ -5340,8 +5372,10 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+ 
+         // If the input is known to be positive (the sign bit is known clear),
+         // the output of the NEG has the same number of sign bits as the input.
+-        if (Known.isNonNegative())
+-          return Tmp2;
++        if (Known.isNonNegative()) {
++          FirstAnswer = Tmp2;
++          break;
++        }
+ 
+         // Otherwise, we treat this like a SUB.
+       }
+@@ -5349,8 +5383,10 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     // Sub can have at most one carry bit.  Thus we know that the output
+     // is, at worst, one more bit than the inputs.
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+-    if (Tmp == 1) return 1; // Early out.
+-    return std::min(Tmp, Tmp2) - 1;
++    if (Tmp == 1)
++      break;
++    FirstAnswer = std::min(Tmp, Tmp2) - 1;
++    break;
+   case ISD::MUL: {
+     // The output of the Mul can be at most twice the valid bits in the inputs.
+     unsigned SignBitsOp0 = ComputeNumSignBits(Op.getOperand(0), Depth + 1);
+@@ -5361,27 +5397,31 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       break;
+     unsigned OutValidBits =
+         (VTBits - SignBitsOp0 + 1) + (VTBits - SignBitsOp1 + 1);
+-    return OutValidBits > VTBits ? 1 : VTBits - OutValidBits + 1;
++    if (OutValidBits <= VTBits)
++      FirstAnswer = VTBits - OutValidBits + 1;
++    break;
+   }
+   case ISD::AVGCEILS:
+   case ISD::AVGFLOORS:
+     Tmp = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
+     if (Tmp == 1)
+-      return 1; // Early out.
++      break; // Early out.
+     Tmp2 = ComputeNumSignBits(Op.getOperand(1), DemandedElts, Depth + 1);
+-    return std::min(Tmp, Tmp2);
++    FirstAnswer = std::min(Tmp, Tmp2);
++    break;
+   case ISD::SREM:
+     // The sign bit is the LHS's sign bit, except when the result of the
+     // remainder is zero. The magnitude of the result should be less than or
+     // equal to the magnitude of the LHS. Therefore, the result should have
+     // at least as many sign bits as the left hand side.
+-    return ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
++    FirstAnswer = ComputeNumSignBits(Op.getOperand(0), DemandedElts, Depth + 1);
++    break;
+   case ISD::TRUNCATE: {
+     // Check if the sign bits of source go down as far as the truncated value.
+     unsigned NumSrcBits = Op.getOperand(0).getScalarValueSizeInBits();
+     unsigned NumSrcSignBits = ComputeNumSignBits(Op.getOperand(0), Depth + 1);
+     if (NumSrcSignBits > (NumSrcBits - VTBits))
+-      return NumSrcSignBits - (NumSrcBits - VTBits);
++      FirstAnswer = NumSrcSignBits - (NumSrcBits - VTBits);
+     break;
+   }
+   case ISD::EXTRACT_ELEMENT: {
+@@ -5397,7 +5437,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+ 
+     // If the sign portion ends in our element the subtraction gives correct
+     // result. Otherwise it gives either negative or > bitwidth result
+-    return std::clamp(KnownSign - rIndex * BitWidth, 1, BitWidth);
++    FirstAnswer = std::clamp(KnownSign - rIndex * BitWidth, 1, BitWidth);
++    break;
+   }
+   case ISD::INSERT_VECTOR_ELT: {
+     if (VT.isScalableVector())
+@@ -5429,7 +5470,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       Tmp = std::min(Tmp, Tmp2);
+     }
+     assert(Tmp <= VTBits && "Failed to determine minimum sign bits");
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+   case ISD::EXTRACT_VECTOR_ELT: {
+     SDValue InVec = Op.getOperand(0);
+@@ -5456,7 +5498,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       DemandedSrcElts =
+           APInt::getOneBitSet(NumSrcElts, ConstEltNo->getZExtValue());
+ 
+-    return ComputeNumSignBits(InVec, DemandedSrcElts, Depth + 1);
++    FirstAnswer = ComputeNumSignBits(InVec, DemandedSrcElts, Depth + 1);
++    break;
+   }
+   case ISD::EXTRACT_SUBVECTOR: {
+     // Offset the demanded elts by the subvector index.
+@@ -5470,7 +5513,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       unsigned NumSrcElts = Src.getValueType().getVectorNumElements();
+       DemandedSrcElts = DemandedElts.zext(NumSrcElts).shl(Idx);
+     }
+-    return ComputeNumSignBits(Src, DemandedSrcElts, Depth + 1);
++    FirstAnswer = ComputeNumSignBits(Src, DemandedSrcElts, Depth + 1);
++    break;
+   }
+   case ISD::CONCAT_VECTORS: {
+     if (VT.isScalableVector())
+@@ -5490,7 +5534,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       Tmp = std::min(Tmp, Tmp2);
+     }
+     assert(Tmp <= VTBits && "Failed to determine minimum sign bits");
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+   case ISD::INSERT_SUBVECTOR: {
+     SDValue Src = Op.getOperand(0);
+@@ -5498,7 +5543,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     if (VT.isScalableVector()) {
+       Tmp = ComputeNumSignBits(Sub, Depth + 1);
+       Tmp = std::min(Tmp, ComputeNumSignBits(Src, Depth + 1));
+-      return Tmp;
++      FirstAnswer = Tmp;
++      break;
+     }
+     // Demand any elements from the subvector and the remainder from the src its
+     // inserted into.
+@@ -5512,14 +5558,15 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     if (!!DemandedSubElts) {
+       Tmp = ComputeNumSignBits(Sub, DemandedSubElts, Depth + 1);
+       if (Tmp == 1)
+-        return 1; // early-out
++        break;
+     }
+     if (!!DemandedSrcElts) {
+       Tmp2 = ComputeNumSignBits(Src, DemandedSrcElts, Depth + 1);
+       Tmp = std::min(Tmp, Tmp2);
+     }
+     assert(Tmp <= VTBits && "Failed to determine minimum sign bits");
+-    return Tmp;
++    FirstAnswer = Tmp;
++    break;
+   }
+   case ISD::LOAD: {
+     // If we are looking at the loaded value of the SDNode.
+@@ -5547,8 +5594,9 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+ 
+       if (VTBits != CR.getBitWidth())
+         break;
+-      return std::min(CR.getSignedMin().getNumSignBits(),
+-                      CR.getSignedMax().getNumSignBits());
++      FirstAnswer = std::min(CR.getSignedMin().getNumSignBits(),
++                             CR.getSignedMax().getNumSignBits());
++      break;
+     }
+ 
+     unsigned ExtType = LD->getExtensionType();
+@@ -5557,10 +5605,12 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+       break;
+     case ISD::SEXTLOAD: // e.g. i16->i32 = '17' bits known.
+       Tmp = LD->getMemoryVT().getScalarSizeInBits();
+-      return VTBits - Tmp + 1;
++      FirstAnswer = VTBits - Tmp + 1;
++      break;
+     case ISD::ZEXTLOAD: // e.g. i16->i32 = '16' bits known.
+       Tmp = LD->getMemoryVT().getScalarSizeInBits();
+-      return VTBits - Tmp;
++      FirstAnswer = VTBits - Tmp;
++      break;
+     case ISD::NON_EXTLOAD:
+       if (const Constant *Cst = TLI->getTargetConstantFromLoad(LD)) {
+         // We only need to handle vectors - computeKnownBits should handle
+@@ -5616,24 +5666,24 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+     if (Op.getResNo() == 0) {
+       Tmp = AT->getMemoryVT().getScalarSizeInBits();
+       if (Tmp == VTBits)
+-        return 1; // early-out
++        break;
+ 
+       // For atomic_load, prefer to use the extension type.
+       if (Op->getOpcode() == ISD::ATOMIC_LOAD) {
+-        switch (AT->getExtensionType()) {
+-        default:
++        if (AT->getExtensionType() == ISD::SEXTLOAD) {
++          FirstAnswer = VTBits - Tmp + 1;
++          break;
++        }
++        if (AT->getExtensionType() == ISD::ZEXTLOAD) {
++          FirstAnswer = VTBits - Tmp;
+           break;
+-        case ISD::SEXTLOAD:
+-          return VTBits - Tmp + 1;
+-        case ISD::ZEXTLOAD:
+-          return VTBits - Tmp;
+         }
+       }
+ 
+       if (TLI->getExtendForAtomicOps() == ISD::SIGN_EXTEND)
+-        return VTBits - Tmp + 1;
++        FirstAnswer = VTBits - Tmp + 1;
+       if (TLI->getExtendForAtomicOps() == ISD::ZERO_EXTEND)
+-        return VTBits - Tmp;
++        FirstAnswer = VTBits - Tmp;
+     }
+     break;
+   }
+@@ -5656,6 +5706,8 @@ unsigned SelectionDAG::ComputeNumSignBits(SDValue Op, const APInt &DemandedElts,
+ 
+   // Finally, if we can prove that the top bits of the result are 0's or 1's,
+   // use this information.
++  if (FirstAnswer == VTBits)
++    return FirstAnswer;
+   KnownBits Known = computeKnownBits(Op, DemandedElts, Depth);
+   return std::max(FirstAnswer, Known.countMinSignBits());
+ }
+diff --git a/llvm/test/Analysis/ValueTracking/monotonic-phi.ll b/llvm/test/Analysis/ValueTracking/monotonic-phi.ll
+index d55d2ed3d114ff1..ac3052431659e6a 100644
+--- a/llvm/test/Analysis/ValueTracking/monotonic-phi.ll
++++ b/llvm/test/Analysis/ValueTracking/monotonic-phi.ll
+@@ -628,13 +628,10 @@ define i1 @test_ashr_zero_start(i8 %n) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[A:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[NEXT:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[NEXT]] = ashr exact i8 [[A]], 1
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i8 [[A]], [[N:%.*]]
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i8 0, [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[A]], 0
+-; CHECK-NEXT:    ret i1 [[CMP]]
++; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-add.mir b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-add.mir
+index a751e7c0b96bad0..2d7e3157f2e671a 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-add.mir
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-add.mir
+@@ -276,3 +276,14 @@ body:             |
+     %3:_(<4 x i16>) = G_BUILD_VECTOR %1, %2, %2, %1
+     %4:_(<4 x i16>) = G_ADD %0, %3
+ ...
++---
++name: knownbits_wrap
++body: |
++  bb.0:
++    ; CHECK-LABEL: name: @knownbits_wrap
++    %lhs:_(s8) = G_CONSTANT i8 64
++    ; CHECK: %{{.+}}:_ KnownBits:11000000 SignBits:2 IsKnownNeverZero:1
++    %rhs:_(s8) = G_CONSTANT i8 -64
++    ; CHECK-NEXT: %{{.+}}:_ KnownBits:00000000 SignBits:8 IsKnownNeverZero:0
++    %sum:_(s8) = G_ADD %lhs, %rhs
++...
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-maxdepth.mir b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-maxdepth.mir
+index a7f31ae964c4da7..dd235fadf7263ff 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-maxdepth.mir
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-maxdepth.mir
+@@ -11,7 +11,7 @@ body: |
+   ; CHECK-DEFAULT-NEXT: %1:_ KnownBits:00000001 SignBits:7 IsKnownNeverZero:1
+   ; CHECK-DEFAULT-NEXT: %2:_ KnownBits:00000110 SignBits:5 IsKnownNeverZero:1
+   ; CHECK-DEFAULT-NEXT: %3:_ KnownBits:00000000 SignBits:8 IsKnownNeverZero:0
+-  ; CHECK-DEFAULT-NEXT: %4:_ KnownBits:00000000 SignBits:7 IsKnownNeverZero:0
++  ; CHECK-DEFAULT-NEXT: %4:_ KnownBits:00000000 SignBits:8 IsKnownNeverZero:0
+   ; CHECK-DEFAULT-NEXT: %5:_ KnownBits:00000000 SignBits:8 IsKnownNeverZero:0
+   ;
+   ; CHECK-O0-LABEL: name: @test_depth_within_limit
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-srem.mir b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-srem.mir
+index df41d5dee287b19..0ef865d9002fb02 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-srem.mir
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-srem.mir
+@@ -88,7 +88,7 @@ body: |
+   ; CHECK-LABEL: name: @srem_const_const
+   ; CHECK-NEXT: %0:_ KnownBits:00000000000000000000000000001010 SignBits:28 IsKnownNeverZero:1
+   ; CHECK-NEXT: %1:_ KnownBits:00000000000000000000000000000011 SignBits:30 IsKnownNeverZero:1
+-  ; CHECK-NEXT: %2:_ KnownBits:000000000000000000000000000000?? SignBits:28 IsKnownNeverZero:0
++  ; CHECK-NEXT: %2:_ KnownBits:000000000000000000000000000000?? SignBits:30 IsKnownNeverZero:0
+     %0:_(i32) = G_CONSTANT i32 10
+     %1:_(i32) = G_CONSTANT i32 3
+     %2:_(i32) = G_SREM %0, %1
+@@ -135,10 +135,23 @@ body: |
+   ; CHECK-LABEL: name: @numsignbits_srem_const_const
+   ; CHECK-NEXT: %0:_ KnownBits:00000000000000000000000000001010 SignBits:28 IsKnownNeverZero:1
+   ; CHECK-NEXT: %1:_ KnownBits:00000000000000000000000000000011 SignBits:30 IsKnownNeverZero:1
+-  ; CHECK-NEXT: %2:_ KnownBits:000000000000000000000000000000?? SignBits:28 IsKnownNeverZero:0
++  ; CHECK-NEXT: %2:_ KnownBits:000000000000000000000000000000?? SignBits:30 IsKnownNeverZero:0
+     %0:_(i32) = G_CONSTANT i32 10
+     %1:_(i32) = G_CONSTANT i32 3
+     %2:_(i32) = G_SREM %0, %1
+     $w0 = COPY %2(i32)
+     RET_ReallyLR implicit $w0
+ ...
++---
++name: knownbits_nonnegative
++body: |
++  bb.0:
++    ; CHECK-LABEL: name: @knownbits_nonnegative
++    %x:_(s32) = G_IMPLICIT_DEF
++    %mask:_(s32) = G_CONSTANT i32 2147483647
++    %lhs:_(s32) = G_AND %x, %mask
++    ; CHECK: %{{.+}}:_ KnownBits:11111111111111111111111100000000 SignBits:24 IsKnownNeverZero:1
++    %rhs:_(s32) = G_CONSTANT i32 -256
++    ; CHECK-NEXT: %{{.+}}:_ KnownBits:000000000000000000000000???????? SignBits:24 IsKnownNeverZero:0
++    %remainder:_(s32) = G_SREM %lhs, %rhs
++...
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-sub.mir b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-sub.mir
+index bfbdc8716396b2c..cc137c6954d9ce7 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-sub.mir
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-sub.mir
+@@ -274,3 +274,15 @@ body:             |
+     %3:_(<4 x i16>) = G_BUILD_VECTOR %1, %2, %2, %1
+     %4:_(<4 x i16>) = G_SUB %0, %3
+ ...
++---
++name: knownbits_sign_bit
++body: |
++  bb.0:
++    ; CHECK-LABEL: name: @knownbits_sign_bit
++    ; CHECK: %{{.+}}:_ KnownBits:10000000000000000000000000000000 SignBits:1 IsKnownNeverZero:1
++    %lhs:_(s32) = G_CONSTANT i32 -2147483648
++    ; CHECK-NEXT: %{{.+}}:_ KnownBits:10000000000000000000000000000000 SignBits:1 IsKnownNeverZero:1
++    %rhs:_(s32) = G_CONSTANT i32 -2147483648
++    ; CHECK-NEXT: %{{.+}}:_ KnownBits:00000000000000000000000000000000 SignBits:32 IsKnownNeverZero:0
++    %difference:_(s32) = G_SUB %lhs, %rhs
++...
+diff --git a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-vector.mir b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-vector.mir
+index 10b843a860abd1a..559a521a944c608 100644
+--- a/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-vector.mir
++++ b/llvm/test/CodeGen/AArch64/GlobalISel/knownbits-vector.mir
+@@ -1084,8 +1084,8 @@ body:             |
+   ; CHECK-NEXT: %zext:_ KnownBits:00000000000000000000000000000000???????????????????????????????? SignBits:32 IsKnownNeverZero:0
+   ; CHECK-NEXT: %const:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:56 IsKnownNeverZero:1
+   ; CHECK-NEXT: %const_splat:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:56 IsKnownNeverZero:1
+-  ; CHECK-NEXT: %umax:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:32 IsKnownNeverZero:1
+-  ; CHECK-NEXT: %copy_umax:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:32 IsKnownNeverZero:1
++  ; CHECK-NEXT: %umax:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:56 IsKnownNeverZero:1
++  ; CHECK-NEXT: %copy_umax:_ KnownBits:1111111111111111111111111111111111111111111111111111111100000000 SignBits:56 IsKnownNeverZero:1
+     %val:_(<2 x i32>) = COPY $x0
+     %zext:_(<2 x i64>) = G_ZEXT %val
+     %const:_(i64) = G_CONSTANT i64 -256
+diff --git a/llvm/test/CodeGen/AArch64/sshl_sat.ll b/llvm/test/CodeGen/AArch64/sshl_sat.ll
+index e68b1f090949f39..9d8747e0e8626d0 100644
+--- a/llvm/test/CodeGen/AArch64/sshl_sat.ll
++++ b/llvm/test/CodeGen/AArch64/sshl_sat.ll
+@@ -1,6 +1,8 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_llc_test_checks.py
+ ; RUN: llc < %s -mtriple=aarch64-- | FileCheck %s
+ 
++declare i32 @llvm.sshl.sat.i32(i32, i32)
++
+ declare i16 @llvm.sshl.sat.i16(i16, i16)
+ declare <4 x i16> @llvm.sshl.sat.v4i16(<4 x i16>, <4 x i16>)
+ 
+@@ -171,3 +173,18 @@ define <4 x i16> @combine_shlsat_to_shl_vec(<4 x i8> %a) nounwind {
+                           <4 x i16> <i16 7, i16 7, i16 7, i16 7>)
+   ret <4 x i16> %tmp
+ }
++
++define i32 @mul_knownbits_shlsat(i32 %x, i32 %y) {
++; CHECK-LABEL: mul_knownbits_shlsat:
++; CHECK:       // %bb.0:
++; CHECK-NEXT:    and w8, w0, #0xff
++; CHECK-NEXT:    and w9, w1, #0xff
++; CHECK-NEXT:    mul w8, w8, w9
++; CHECK-NEXT:    lsl w0, w8, #15
++; CHECK-NEXT:    ret
++  %a = and i32 %x, 255
++  %b = and i32 %y, 255
++  %value = mul i32 %a, %b
++  %result = call i32 @llvm.sshl.sat.i32(i32 %value, i32 15)
++  ret i32 %result
++}
+diff --git a/llvm/test/CodeGen/RISCV/orc-b-patterns.ll b/llvm/test/CodeGen/RISCV/orc-b-patterns.ll
+index 9aa2fb809c5d68f..36433b5f23fd6cd 100644
+--- a/llvm/test/CodeGen/RISCV/orc-b-patterns.ll
++++ b/llvm/test/CodeGen/RISCV/orc-b-patterns.ll
+@@ -29,10 +29,12 @@ define i32 @orc_b_i32_mul255(i32 %x) nounwind {
+ ; RV64I-LABEL: orc_b_i32_mul255:
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 4112
+-; RV64I-NEXT:    addi a1, a1, 257
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 8
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    addi a2, a1, 257
++; RV64I-NEXT:    slli a3, a0, 8
++; RV64I-NEXT:    addi a1, a1, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    and a1, a3, a1
++; RV64I-NEXT:    sub a0, a1, a0
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 16843009
+@@ -62,10 +64,12 @@ define i32 @orc_b_i32_sub_shl8x_x_lsb(i32  %x)  {
+ ; RV64I-LABEL: orc_b_i32_sub_shl8x_x_lsb:
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 4112
+-; RV64I-NEXT:    addi a1, a1, 257
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 8
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    addi a2, a1, 257
++; RV64I-NEXT:    slli a3, a0, 8
++; RV64I-NEXT:    addi a1, a1, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    and a1, a3, a1
++; RV64I-NEXT:    sub a0, a1, a0
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 16843009
+@@ -123,10 +127,13 @@ define  i32 @orc_b_i32_sub_shl8x_x_b1(i32  %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 8224
+ ; RV64I-NEXT:    addi a1, a1, 514
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 7
+-; RV64I-NEXT:    srli a0, a0, 1
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 7
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 1
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 33686018
+@@ -160,10 +167,13 @@ define  i32 @orc_b_i32_sub_shl8x_x_b2(i32  %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 16448
+ ; RV64I-NEXT:    addi a1, a1, 1028
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 6
+-; RV64I-NEXT:    srli a0, a0, 2
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 6
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 2
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 67372036
+@@ -197,10 +207,13 @@ define i32 @orc_b_i32_sub_shl8x_x_b3(i32  %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 32897
+ ; RV64I-NEXT:    addi a1, a1, -2040
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 5
+-; RV64I-NEXT:    srli a0, a0, 3
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 5
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 3
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 134744072
+@@ -234,10 +247,13 @@ define  i32 @orc_b_i32_sub_shl8x_x_b4(i32  %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 65793
+ ; RV64I-NEXT:    addi a1, a1, 16
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 4
+-; RV64I-NEXT:    srli a0, a0, 4
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 4
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 4
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 269488144
+@@ -271,10 +287,13 @@ define  i32 @orc_b_i32_sub_shl8x_x_b5(i32  %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 131586
+ ; RV64I-NEXT:    addi a1, a1, 32
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 3
+-; RV64I-NEXT:    srli a0, a0, 5
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 3
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 5
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 538976288
+@@ -308,10 +327,13 @@ define i32 @orc_b_i32_sub_shl8x_x_b6(i32 %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 263172
+ ; RV64I-NEXT:    addi a1, a1, 64
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 2
+-; RV64I-NEXT:    srli a0, a0, 6
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 2
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 6
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 1077952576
+@@ -345,12 +367,12 @@ define i32 @orc_b_i32_sub_shl8x_x_b7(i32 %x)  {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 65793
+ ; RV64I-NEXT:    slli a1, a1, 3
+-; RV64I-NEXT:    lui a2, 2056
+ ; RV64I-NEXT:    addi a1, a1, 128
+-; RV64I-NEXT:    addi a2, a2, 128
++; RV64I-NEXT:    lui a2, 4112
+ ; RV64I-NEXT:    and a1, a0, a1
+-; RV64I-NEXT:    and a0, a0, a2
+ ; RV64I-NEXT:    slli a0, a0, 1
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
+ ; RV64I-NEXT:    srli a1, a1, 7
+ ; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+@@ -386,13 +408,15 @@ define i32 @orc_b_i32_sub_shl8x_x_b1_shl_used(i32 %x, ptr %arr) {
+ ;
+ ; RV64I-LABEL: orc_b_i32_sub_shl8x_x_b1_shl_used:
+ ; RV64I:       # %bb.0: # %entry
+-; RV64I-NEXT:    lui a2, 8224
+-; RV64I-NEXT:    addi a2, a2, 514
+-; RV64I-NEXT:    and a0, a0, a2
+-; RV64I-NEXT:    slli a2, a0, 7
+-; RV64I-NEXT:    srli a3, a0, 1
+-; RV64I-NEXT:    subw a0, a2, a3
+-; RV64I-NEXT:    sw a3, 0(a1)
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    slli a3, a0, 7
++; RV64I-NEXT:    addi a4, a2, 256
++; RV64I-NEXT:    srli a0, a0, 1
++; RV64I-NEXT:    addi a2, a2, 257
++; RV64I-NEXT:    and a3, a3, a4
++; RV64I-NEXT:    and a2, a0, a2
++; RV64I-NEXT:    sub a0, a3, a2
++; RV64I-NEXT:    sw a2, 0(a1)
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 33686018
+@@ -471,10 +495,13 @@ define i32 @orc_b_i32_sub_shl8x_x_b1_not_used(i32  %x, ptr %arr) {
+ ; RV64I:       # %bb.0: # %entry
+ ; RV64I-NEXT:    lui a1, 8224
+ ; RV64I-NEXT:    addi a1, a1, 514
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 7
+-; RV64I-NEXT:    srli a0, a0, 1
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    lui a2, 4112
++; RV64I-NEXT:    and a1, a0, a1
++; RV64I-NEXT:    slli a0, a0, 7
++; RV64I-NEXT:    addi a2, a2, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    srli a1, a1, 1
++; RV64I-NEXT:    sub a0, a0, a1
+ ; RV64I-NEXT:    ret
+ entry:
+   %and = and i32 %x, 33686018
+diff --git a/llvm/test/CodeGen/RISCV/rv64zbb.ll b/llvm/test/CodeGen/RISCV/rv64zbb.ll
+index b9a1fee5f094613..298ef17e576ea71 100644
+--- a/llvm/test/CodeGen/RISCV/rv64zbb.ll
++++ b/llvm/test/CodeGen/RISCV/rv64zbb.ll
+@@ -1511,10 +1511,12 @@ define i32 @orc_b_i32(i32 %a) {
+ ; RV64I-LABEL: orc_b_i32:
+ ; RV64I:       # %bb.0:
+ ; RV64I-NEXT:    lui a1, 4112
+-; RV64I-NEXT:    addi a1, a1, 257
+-; RV64I-NEXT:    and a0, a0, a1
+-; RV64I-NEXT:    slli a1, a0, 8
+-; RV64I-NEXT:    subw a0, a1, a0
++; RV64I-NEXT:    addi a2, a1, 257
++; RV64I-NEXT:    slli a3, a0, 8
++; RV64I-NEXT:    addi a1, a1, 256
++; RV64I-NEXT:    and a0, a0, a2
++; RV64I-NEXT:    and a1, a3, a1
++; RV64I-NEXT:    sub a0, a1, a0
+ ; RV64I-NEXT:    ret
+ ;
+ ; RV64ZBB-LABEL: orc_b_i32:
+diff --git a/llvm/test/CodeGen/RISCV/rvv/fixed-vectors-int-buildvec.ll b/llvm/test/CodeGen/RISCV/rvv/fixed-vectors-int-buildvec.ll
+index 4bda8441ee88c83..2fa1a51481e065a 100644
+--- a/llvm/test/CodeGen/RISCV/rvv/fixed-vectors-int-buildvec.ll
++++ b/llvm/test/CodeGen/RISCV/rvv/fixed-vectors-int-buildvec.ll
+@@ -720,27 +720,47 @@ define void @buildvec_seq_v4i16_v2i32(ptr %x) {
+ }
+ 
+ define void @buildvec_vid_step1o2_v4i32(ptr %z0, ptr %z1, ptr %z2, ptr %z3, ptr %z4, ptr %z5, ptr %z6) {
+-; CHECK-LABEL: buildvec_vid_step1o2_v4i32:
+-; CHECK:       # %bb.0:
+-; CHECK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+-; CHECK-NEXT:    vid.v v8
+-; CHECK-NEXT:    vsrl.vi v8, v8, 1
+-; CHECK-NEXT:    vse32.v v8, (a0)
+-; CHECK-NEXT:    vmv.s.x v9, zero
+-; CHECK-NEXT:    vse32.v v8, (a1)
+-; CHECK-NEXT:    vse32.v v8, (a2)
+-; CHECK-NEXT:    vmv.v.i v10, 1
+-; CHECK-NEXT:    vse32.v v8, (a3)
+-; CHECK-NEXT:    vmv.v.i v11, 0
+-; CHECK-NEXT:    vsetivli zero, 2, e32, m1, tu, ma
+-; CHECK-NEXT:    vslideup.vi v10, v9, 1
+-; CHECK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+-; CHECK-NEXT:    vse32.v v8, (a4)
+-; CHECK-NEXT:    li a0, 1
+-; CHECK-NEXT:    vslide1down.vx v8, v11, a0
+-; CHECK-NEXT:    vse32.v v10, (a5)
+-; CHECK-NEXT:    vse32.v v8, (a6)
+-; CHECK-NEXT:    ret
++; RV32-LABEL: buildvec_vid_step1o2_v4i32:
++; RV32:       # %bb.0:
++; RV32-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
++; RV32-NEXT:    vid.v v8
++; RV32-NEXT:    vsrl.vi v8, v8, 1
++; RV32-NEXT:    vse32.v v8, (a0)
++; RV32-NEXT:    lui a0, 4112
++; RV32-NEXT:    vmv.s.x v9, a0
++; RV32-NEXT:    vse32.v v8, (a1)
++; RV32-NEXT:    lui a0, 4096
++; RV32-NEXT:    vse32.v v8, (a2)
++; RV32-NEXT:    vmv.s.x v10, a0
++; RV32-NEXT:    vse32.v v8, (a3)
++; RV32-NEXT:    vsext.vf4 v11, v9
++; RV32-NEXT:    vse32.v v8, (a4)
++; RV32-NEXT:    vsext.vf4 v8, v10
++; RV32-NEXT:    vse32.v v11, (a5)
++; RV32-NEXT:    vse32.v v8, (a6)
++; RV32-NEXT:    ret
++;
++; RV64-LABEL: buildvec_vid_step1o2_v4i32:
++; RV64:       # %bb.0:
++; RV64-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
++; RV64-NEXT:    vid.v v8
++; RV64-NEXT:    vsrl.vi v8, v8, 1
++; RV64-NEXT:    vse32.v v8, (a0)
++; RV64-NEXT:    vmv.s.x v9, zero
++; RV64-NEXT:    vse32.v v8, (a1)
++; RV64-NEXT:    vse32.v v8, (a2)
++; RV64-NEXT:    vmv.v.i v10, 1
++; RV64-NEXT:    vse32.v v8, (a3)
++; RV64-NEXT:    vmv.v.i v11, 0
++; RV64-NEXT:    vsetivli zero, 2, e32, m1, tu, ma
++; RV64-NEXT:    vslideup.vi v10, v9, 1
++; RV64-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
++; RV64-NEXT:    vse32.v v8, (a4)
++; RV64-NEXT:    li a0, 1
++; RV64-NEXT:    vslide1down.vx v8, v11, a0
++; RV64-NEXT:    vse32.v v10, (a5)
++; RV64-NEXT:    vse32.v v8, (a6)
++; RV64-NEXT:    ret
+   store <4 x i32> <i32 0, i32 0, i32 1, i32 1>, ptr %z0
+   store <4 x i32> <i32 0, i32 0, i32 1, i32 poison>, ptr %z1
+   store <4 x i32> <i32 0, i32 poison, i32 1, i32 1>, ptr %z2
+@@ -3894,5 +3914,3 @@ entry:
+   %vecinit61 = insertelement <16 x i32> %vecinit9, i32 %conv60, i32 0
+   ret <16 x i32> %vecinit61
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; RV64: {{.*}}
+diff --git a/llvm/test/Transforms/InstCombine/zext-nneg.ll b/llvm/test/Transforms/InstCombine/zext-nneg.ll
+index 20188f605652ebc..09de0f1993a87d9 100644
+--- a/llvm/test/Transforms/InstCombine/zext-nneg.ll
++++ b/llvm/test/Transforms/InstCombine/zext-nneg.ll
+@@ -136,7 +136,7 @@ define i64 @zext_nneg_of_zext_large_negative(i16 %arg) {
+ ; CHECK-SAME: i16 [[ARG:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[SEXT:%.*]] = zext i16 [[ARG]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SEXT]], 2147516415
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SEXT]], -2147450881
+ ; CHECK-NEXT:    ret i64 [[ADD]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SLPVectorizer/AArch64/external-use-icmp.ll b/llvm/test/Transforms/SLPVectorizer/AArch64/external-use-icmp.ll
+index 96dd691c4816e2a..624aa0cb37db39f 100644
+--- a/llvm/test/Transforms/SLPVectorizer/AArch64/external-use-icmp.ll
++++ b/llvm/test/Transforms/SLPVectorizer/AArch64/external-use-icmp.ll
+@@ -5,24 +5,27 @@ define i16 @foo(i16 %in1, i16 %in2) {
+ ; CHECK-LABEL: define i16 @foo(
+ ; CHECK-SAME: i16 [[IN1:%.*]], i16 [[IN2:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[ZEXT1_1:%.*]] = zext i16 [[IN1]] to i64
+-; CHECK-NEXT:    [[ZEXT2_1:%.*]] = zext i16 [[IN2]] to i64
+-; CHECK-NEXT:    [[TMP10:%.*]] = mul nuw nsw i64 [[ZEXT2_1]], [[ZEXT1_1]]
+-; CHECK-NEXT:    [[AND1:%.*]] = and i64 [[TMP10]], 65535
+-; CHECK-NEXT:    [[TMP8:%.*]] = icmp ne i64 [[AND1]], 65533
++; CHECK-NEXT:    [[TMP0:%.*]] = insertelement <2 x i16> poison, i16 [[IN1]], i64 0
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x i16> [[TMP0]], <2 x i16> poison, <2 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP2:%.*]] = zext <2 x i16> [[TMP1]] to <2 x i32>
++; CHECK-NEXT:    [[TMP3:%.*]] = insertelement <2 x i16> poison, i16 [[IN2]], i64 0
++; CHECK-NEXT:    [[TMP4:%.*]] = shufflevector <2 x i16> [[TMP3]], <2 x i16> poison, <2 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP5:%.*]] = zext <2 x i16> [[TMP4]] to <2 x i32>
++; CHECK-NEXT:    [[TMP6:%.*]] = mul <2 x i32> [[TMP5]], [[TMP2]]
++; CHECK-NEXT:    [[TMP7:%.*]] = icmp ne <2 x i32> [[TMP6]], splat (i32 196605)
++; CHECK-NEXT:    [[TMP11:%.*]] = and <2 x i32> [[TMP6]], splat (i32 65535)
++; CHECK-NEXT:    [[TMP9:%.*]] = icmp ne <2 x i32> [[TMP11]], splat (i32 65533)
++; CHECK-NEXT:    [[TMP10:%.*]] = shufflevector <2 x i1> [[TMP7]], <2 x i1> [[TMP9]], <4 x i32> <i32 1, i32 3, i32 2, i32 0>
++; CHECK-NEXT:    [[TMP8:%.*]] = extractelement <4 x i1> [[TMP10]], i64 0
+ ; CHECK-NEXT:    [[ZEXT3_1:%.*]] = zext i1 [[TMP8]] to i16
+-; CHECK-NEXT:    [[CMP2_1:%.*]] = icmp ne i64 [[TMP10]], 196605
++; CHECK-NEXT:    [[CMP2_1:%.*]] = extractelement <4 x i1> [[TMP10]], i64 1
+ ; CHECK-NEXT:    [[ZEXT4_1:%.*]] = zext i1 [[CMP2_1]] to i16
+-; CHECK-NEXT:    [[ADD1:%.*]] = add nuw nsw i16 [[ZEXT3_1]], [[ZEXT4_1]]
+-; CHECK-NEXT:    [[ZEXT1_2:%.*]] = zext i16 [[IN1]] to i64
+-; CHECK-NEXT:    [[ZEXT2_2:%.*]] = zext i16 [[IN2]] to i64
+-; CHECK-NEXT:    [[TMP13:%.*]] = mul nuw nsw i64 [[ZEXT2_2]], [[ZEXT1_2]]
+-; CHECK-NEXT:    [[AND2:%.*]] = and i64 [[TMP13]], 65535
+-; CHECK-NEXT:    [[TMP11:%.*]] = icmp ne i64 [[AND2]], 65533
+-; CHECK-NEXT:    [[ZEXT3_2:%.*]] = zext i1 [[TMP11]] to i16
+-; CHECK-NEXT:    [[CMP2_2:%.*]] = icmp ne i64 [[TMP13]], 196605
++; CHECK-NEXT:    [[ADD1:%.*]] = add nuw nsw i16 [[ZEXT4_1]], [[ZEXT3_1]]
++; CHECK-NEXT:    [[CMP2_2:%.*]] = extractelement <4 x i1> [[TMP10]], i64 3
+ ; CHECK-NEXT:    [[ZEXT4_2:%.*]] = zext i1 [[CMP2_2]] to i16
+ ; CHECK-NEXT:    [[ADD2:%.*]] = add nuw nsw i16 [[ADD1]], [[ZEXT4_2]]
++; CHECK-NEXT:    [[TMP17:%.*]] = extractelement <4 x i1> [[TMP10]], i64 2
++; CHECK-NEXT:    [[ZEXT3_2:%.*]] = zext i1 [[TMP17]] to i16
+ ; CHECK-NEXT:    [[ADD3:%.*]] = add nuw nsw i16 [[ADD2]], [[ZEXT3_2]]
+ ; CHECK-NEXT:    ret i16 [[ADD3]]
+ ;
+diff --git a/llvm/test/Transforms/SLPVectorizer/AArch64/loadorder.ll b/llvm/test/Transforms/SLPVectorizer/AArch64/loadorder.ll
+index bb05440910130df..d4415ef9b28bc0c 100644
+--- a/llvm/test/Transforms/SLPVectorizer/AArch64/loadorder.ll
++++ b/llvm/test/Transforms/SLPVectorizer/AArch64/loadorder.ll
+@@ -1124,28 +1124,32 @@ define void @store_blockstrided4x4(ptr nocapture noundef readonly %p1, i32 nound
+ ; CHECK-NEXT:    [[DST8:%.*]] = getelementptr inbounds i32, ptr [[DST0]], i64 8
+ ; CHECK-NEXT:    [[DST12:%.*]] = getelementptr inbounds i32, ptr [[DST0]], i64 12
+ ; CHECK-NEXT:    [[TMP32:%.*]] = load <4 x i8>, ptr [[P1]], align 1
+-; CHECK-NEXT:    [[TMP33:%.*]] = zext <4 x i8> [[TMP32]] to <4 x i32>
++; CHECK-NEXT:    [[TMP33:%.*]] = zext <4 x i8> [[TMP32]] to <4 x i16>
+ ; CHECK-NEXT:    [[TMP34:%.*]] = load <4 x i8>, ptr [[ARRAYIDX3]], align 1
+-; CHECK-NEXT:    [[TMP35:%.*]] = zext <4 x i8> [[TMP34]] to <4 x i32>
+-; CHECK-NEXT:    [[TMP36:%.*]] = mul <4 x i32> [[TMP33]], [[TMP35]]
++; CHECK-NEXT:    [[TMP35:%.*]] = zext <4 x i8> [[TMP34]] to <4 x i16>
++; CHECK-NEXT:    [[TMP38:%.*]] = mul <4 x i16> [[TMP33]], [[TMP35]]
++; CHECK-NEXT:    [[TMP36:%.*]] = zext <4 x i16> [[TMP38]] to <4 x i32>
+ ; CHECK-NEXT:    [[TMP37:%.*]] = load <4 x i8>, ptr [[P2]], align 1
+-; CHECK-NEXT:    [[TMP38:%.*]] = zext <4 x i8> [[TMP37]] to <4 x i32>
++; CHECK-NEXT:    [[TMP40:%.*]] = zext <4 x i8> [[TMP37]] to <4 x i16>
+ ; CHECK-NEXT:    [[TMP39:%.*]] = load <4 x i8>, ptr [[ARRAYIDX5]], align 1
+-; CHECK-NEXT:    [[TMP40:%.*]] = zext <4 x i8> [[TMP39]] to <4 x i32>
+-; CHECK-NEXT:    [[TMP41:%.*]] = mul <4 x i32> [[TMP38]], [[TMP40]]
++; CHECK-NEXT:    [[TMP43:%.*]] = zext <4 x i8> [[TMP39]] to <4 x i16>
++; CHECK-NEXT:    [[TMP50:%.*]] = mul <4 x i16> [[TMP40]], [[TMP43]]
++; CHECK-NEXT:    [[TMP41:%.*]] = zext <4 x i16> [[TMP50]] to <4 x i32>
+ ; CHECK-NEXT:    [[TMP42:%.*]] = load <4 x i8>, ptr [[ADD_PTR]], align 1
+-; CHECK-NEXT:    [[TMP43:%.*]] = zext <4 x i8> [[TMP42]] to <4 x i32>
++; CHECK-NEXT:    [[TMP45:%.*]] = zext <4 x i8> [[TMP42]] to <4 x i16>
+ ; CHECK-NEXT:    [[TMP44:%.*]] = load <4 x i8>, ptr [[ARRAYIDX3_1]], align 1
+-; CHECK-NEXT:    [[TMP45:%.*]] = zext <4 x i8> [[TMP44]] to <4 x i32>
+-; CHECK-NEXT:    [[TMP46:%.*]] = mul <4 x i32> [[TMP43]], [[TMP45]]
++; CHECK-NEXT:    [[TMP52:%.*]] = zext <4 x i8> [[TMP44]] to <4 x i16>
++; CHECK-NEXT:    [[TMP48:%.*]] = mul <4 x i16> [[TMP45]], [[TMP52]]
++; CHECK-NEXT:    [[TMP46:%.*]] = zext <4 x i16> [[TMP48]] to <4 x i32>
+ ; CHECK-NEXT:    [[TMP47:%.*]] = load <4 x i8>, ptr [[ADD_PTR64]], align 1
+-; CHECK-NEXT:    [[TMP48:%.*]] = zext <4 x i8> [[TMP47]] to <4 x i32>
++; CHECK-NEXT:    [[TMP55:%.*]] = zext <4 x i8> [[TMP47]] to <4 x i16>
+ ; CHECK-NEXT:    [[TMP49:%.*]] = load <4 x i8>, ptr [[ARRAYIDX5_1]], align 1
+-; CHECK-NEXT:    [[TMP50:%.*]] = zext <4 x i8> [[TMP49]] to <4 x i32>
+-; CHECK-NEXT:    [[TMP51:%.*]] = mul <4 x i32> [[TMP48]], [[TMP50]]
++; CHECK-NEXT:    [[TMP53:%.*]] = zext <4 x i8> [[TMP49]] to <4 x i16>
++; CHECK-NEXT:    [[TMP54:%.*]] = mul <4 x i16> [[TMP55]], [[TMP53]]
+ ; CHECK-NEXT:    store <4 x i32> [[TMP36]], ptr [[DST0]], align 4
+ ; CHECK-NEXT:    store <4 x i32> [[TMP41]], ptr [[DST4]], align 4
+ ; CHECK-NEXT:    store <4 x i32> [[TMP46]], ptr [[DST8]], align 4
++; CHECK-NEXT:    [[TMP51:%.*]] = zext <4 x i16> [[TMP54]] to <4 x i32>
+ ; CHECK-NEXT:    store <4 x i32> [[TMP51]], ptr [[DST12]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/unittests/Analysis/ValueTrackingTest.cpp b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+index 955fa15f6bc62da..06383d0d3c2e17c 100644
+--- a/llvm/unittests/Analysis/ValueTrackingTest.cpp
++++ b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+@@ -708,6 +708,57 @@ TEST_F(ValueTrackingTest, ComputeNumSignBits_PR32045) {
+   EXPECT_EQ(ComputeNumSignBits(A, M->getDataLayout()), 32u);
+ }
+ 
++TEST_F(ValueTrackingTest, ComputeNumSignBits_Mul) {
++  parseAssembly(R"(
++    define i32 @test(i32 %x, i32 %y) {
++      %x8 = and i32 %x, 255
++      %y8 = and i32 %y, 255
++      %A = mul i32 %x8, %y8
++      %x15 = and i32 %x, 32767
++      %y15 = and i32 %y, 32767
++      %A2 = mul i32 %x15, %y15
++      %x30 = and i32 %x, 1073741824
++      %y30 = and i32 %y, 1073741824
++      %A3 = mul i32 %x30, %y30
++      %sx = ashr i32 %x, 24
++      %sy = ashr i32 %y, 24
++      %A4 = mul i32 %sx, %sy
++      ret i32 %A
++    }
++  )");
++  EXPECT_EQ(ComputeNumSignBits(A, M->getDataLayout()), 16u);
++  EXPECT_EQ(ComputeNumSignBits(A2, M->getDataLayout()), 2u);
++  EXPECT_EQ(ComputeNumSignBits(A3, M->getDataLayout()), 32u);
++  EXPECT_EQ(ComputeNumSignBits(A4, M->getDataLayout()), 17u);
++}
++
++TEST_F(ValueTrackingTest, ComputeNumSignBits_KnownBits) {
++  parseAssembly(R"(
++    declare i32 @llvm.abs.i32(i32, i1 immarg)
++    define i32 @test(i32 %x, i32 noundef %y) {
++      %small = and i32 %x, 255
++      %A = sub i32 255, %small
++      %cond = icmp ult i32 %y, 256
++      %A2 = select i1 %cond, i32 %y, i32 %small
++      %A3 = call i32 @llvm.abs.i32(i32 %small, i1 false)
++      %nonnegative = and i32 %x, 2147483647
++      %A4 = srem i32 %nonnegative, -256
++      %high = and i32 %x, -65536
++      %A5 = trunc i32 %high to i16
++      %A6 = extractelement <2 x i32> <i32 0, i32 2147483647>, i32 0
++      %A7 = add i32 %small, 0
++      ret i32 %A
++    }
++  )");
++  EXPECT_EQ(ComputeNumSignBits(A, M->getDataLayout()), 24u);
++  EXPECT_EQ(ComputeNumSignBits(A2, M->getDataLayout()), 24u);
++  EXPECT_EQ(ComputeNumSignBits(A3, M->getDataLayout()), 24u);
++  EXPECT_EQ(ComputeNumSignBits(A4, M->getDataLayout()), 24u);
++  EXPECT_EQ(ComputeNumSignBits(A5, M->getDataLayout()), 16u);
++  EXPECT_EQ(ComputeNumSignBits(A6, M->getDataLayout()), 32u);
++  EXPECT_EQ(ComputeNumSignBits(A7, M->getDataLayout()), 24u);
++}
++
+ // No guarantees for canonical IR in this analysis, so this just bails out.
+ TEST_F(ValueTrackingTest, ComputeNumSignBits_Shuffle) {
+   parseAssembly(
+diff --git a/llvm/unittests/Target/AArch64/AArch64SelectionDAGTest.cpp b/llvm/unittests/Target/AArch64/AArch64SelectionDAGTest.cpp
+index 9d0f6e8a2b003b1..87c1fa8b2443bdb 100644
+--- a/llvm/unittests/Target/AArch64/AArch64SelectionDAGTest.cpp
++++ b/llvm/unittests/Target/AArch64/AArch64SelectionDAGTest.cpp
+@@ -204,7 +204,7 @@ TEST_F(AArch64SelectionDAGTest, ComputeNumSignBitsSVE_EXTRACT_SUBVECTOR) {
+   auto Vec = DAG->getConstant(1, Loc, ScalableVecVT);
+   auto ZeroIdx = DAG->getConstant(0, Loc, IdxVT);
+   auto Op = DAG->getNode(ISD::EXTRACT_SUBVECTOR, Loc, FixedVecVT, Vec, ZeroIdx);
+-  auto DemandedElts = APInt(3, 7);
++  auto DemandedElts = APInt(16, 7);
+   EXPECT_EQ(DAG->ComputeNumSignBits(Op, DemandedElts), 7u);
+ }
+ 
+@@ -223,6 +223,45 @@ TEST_F(AArch64SelectionDAGTest, ComputeNumSignBits_VASHR) {
+   EXPECT_EQ(DAG->ComputeNumSignBits(Fr2), 5u);
+ }
+ 
++TEST_F(AArch64SelectionDAGTest, ComputeNumSignBits_MUL) {
++  SDLoc Loc;
++  auto X = DAG->getRegister(0, MVT::i32);
++  auto Y = DAG->getRegister(1, MVT::i32);
++  for (auto [Mask, SignBits] :
++       {std::pair{255u, 16u}, {32767u, 2u}, {1073741824u, 32u}}) {
++    auto C = DAG->getConstant(Mask, Loc, MVT::i32);
++    auto LHS = DAG->getNode(ISD::AND, Loc, MVT::i32, X, C);
++    auto RHS = DAG->getNode(ISD::AND, Loc, MVT::i32, Y, C);
++    auto Product = DAG->getNode(ISD::MUL, Loc, MVT::i32, LHS, RHS);
++    EXPECT_EQ(DAG->ComputeNumSignBits(Product), SignBits) << Mask;
++  }
++  auto Shift = DAG->getConstant(24, Loc, MVT::i32);
++  auto LHS = DAG->getNode(ISD::SRA, Loc, MVT::i32, X, Shift);
++  auto RHS = DAG->getNode(ISD::SRA, Loc, MVT::i32, Y, Shift);
++  auto Product = DAG->getNode(ISD::MUL, Loc, MVT::i32, LHS, RHS);
++  EXPECT_EQ(DAG->ComputeNumSignBits(Product), 17u);
++}
++
++TEST_F(AArch64SelectionDAGTest, ComputeNumSignBits_KnownBits) {
++  SDLoc Loc;
++  auto X = DAG->getRegister(0, MVT::i32);
++  auto Y = DAG->getRegister(1, MVT::i32);
++  auto Small = DAG->getNode(ISD::AND, Loc, MVT::i32, X,
++                            DAG->getConstant(255, Loc, MVT::i32));
++  auto Low = DAG->getNode(ISD::AND, Loc, MVT::i32, X,
++                          DAG->getConstant(127, Loc, MVT::i32));
++  auto Bit = DAG->getNode(ISD::AND, Loc, MVT::i32, Y,
++                          DAG->getConstant(128, Loc, MVT::i32));
++  auto Sum = DAG->getNode(ISD::ADD, Loc, MVT::i32, Low, Bit);
++  EXPECT_EQ(DAG->ComputeNumSignBits(Sum), 24u);
++  auto High = DAG->getNode(ISD::AND, Loc, MVT::i32, X,
++                           DAG->getConstant(0xffff0000, Loc, MVT::i32));
++  auto Trunc = DAG->getNode(ISD::TRUNCATE, Loc, MVT::i16, High);
++  EXPECT_EQ(DAG->ComputeNumSignBits(Trunc), 16u);
++  auto Min = DAG->getNode(ISD::UMIN, Loc, MVT::i32, Small, Y);
++  EXPECT_EQ(DAG->ComputeNumSignBits(Min), 24u);
++}
++
+ TEST_F(AArch64SelectionDAGTest, ComputeNumSignBits_SUB) {
+   SDLoc Loc;
+   auto IntVT = EVT::getIntegerVT(Context, 8);
+@@ -362,7 +401,7 @@ TEST_F(AArch64SelectionDAGTest, ComputeNumSignBits_ADDC) {
+   // N8    = 00001000
+   // Nneg1 = 11111111
+   auto OpSeven = DAG->getNode(ISD::ADDC, Loc, IntVT, N8, Nneg1);
+-  EXPECT_EQ(DAG->ComputeNumSignBits(OpSeven), 4u);
++  EXPECT_EQ(DAG->ComputeNumSignBits(OpSeven), 5u);
+ 
+   // Non negative
+   // Nsign3 = 000????0

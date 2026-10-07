@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -370,7 +370,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -773,7 +773,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -939,7 +939,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -1115,7 +1115,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -1281,7 +1281,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   br i1 %i.al, label %bb.i, label %_RNvMsz_NtCs4NRVxsYgnAr_4core3numt16from_ascii_radix.exit
 
 bb.i:                                             ; preds = %.lr.ph.i.2
-  %i.am = mul nuw i16 %i.ag, 10
+  %i.am = mul nuw nsw i16 %i.ag, 10
   %i.an = trunc nuw nsw i32 %i.ak to i16
   %i.ao = add nuw nsw i16 %i.am, %i.an            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3

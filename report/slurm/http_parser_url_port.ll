@@ -202,10 +202,10 @@ bb.be:                                            ; preds = %.lr.ph118
 .lr.ph118:                                        ; preds = %.thread, %bb.be
   %.0116 = phi i64 [ %i.gc, %bb.be ], [ 0, %.thread ]
   %.051115 = phi ptr [ %i.fx, %bb.be ], [ %i.fu, %.thread ] ; 2 uses
-  %i.fy = mul i64 %.0116, 10
+  %i.fy = mul nsw i64 %.0116, 10
   %i.fz = load i8, ptr %.051115, align 1
   %i.ga = sext i8 %i.fz to i64
-  %i.gb = add i64 %i.fy, -48
+  %i.gb = add nsw i64 %i.fy, -48
   %i.gc = add nsw i64 %i.gb, %i.ga                ; 3 uses
   %i.gd = icmp ugt i64 %i.gc, 65535
   br i1 %i.gd, label %_parse_url_char.exit.thread77, label %bb.be

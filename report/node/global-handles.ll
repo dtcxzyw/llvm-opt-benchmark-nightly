@@ -204,7 +204,7 @@ default.unreachable:                              ; preds = %bb.d
   unreachable
 
 _ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit: ; preds = %bb.d, %bb.f, %bb.e, %bb.c, %bb.b
-  %i.t = add i64 %.sroa.7.011, 1                  ; 2 uses
+  %i.t = add nsw i64 %.sroa.7.011, 1              ; 2 uses
   %i.u = icmp ult i64 %i.t, 256
   br i1 %i.u, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.g
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.p = add i64 %.sroa.7.012, 1                  ; 2 uses
+  %i.p = add nsw i64 %.sroa.7.012, 1              ; 2 uses
   %i.q = icmp ult i64 %i.p, 256
   br i1 %i.q, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.d
 
@@ -655,7 +655,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.n = add i64 %.sroa.7.012, 1                  ; 2 uses
+  %i.n = add nsw i64 %.sroa.7.012, 1              ; 2 uses
   %i.o = icmp ult i64 %i.n, 256
   br i1 %i.o, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.d
 
@@ -708,7 +708,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.r = add i64 %.sroa.7.012, 1                  ; 2 uses
+  %i.r = add nsw i64 %.sroa.7.012, 1              ; 2 uses
   %i.s = icmp ult i64 %i.r, 256
   br i1 %i.s, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.d
 
@@ -819,7 +819,7 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.p = add i64 %.sroa.7.011, 1                  ; 2 uses
+  %i.p = add nsw i64 %.sroa.7.011, 1              ; 2 uses
   %i.q = icmp ult i64 %i.p, 256
   br i1 %i.q, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.d
 
@@ -895,7 +895,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.c, %bb.
   %i.u = phi i64 [ %i.i, %.lr.ph ], [ %i.i, %bb.c ], [ %i.i, %bb.d ], [ %i.r, %bb.b ]
   %i.v = phi i64 [ %i.j, %.lr.ph ], [ %i.s, %bb.c ], [ %i.j, %bb.d ], [ %i.j, %bb.b ]
   %i.w = phi i64 [ %i.k, %.lr.ph ], [ %i.k, %bb.c ], [ %i.t, %bb.d ], [ %i.k, %bb.b ]
-  %i.x = add i64 %.sroa.7.020, 1                  ; 2 uses
+  %i.x = add nsw i64 %.sroa.7.020, 1              ; 2 uses
   %i.y = icmp ult i64 %i.x, 256
   br i1 %i.y, label %_ZN2v88internal13GlobalHandles12NodeIteratorINS1_9NodeBlockINS1_4NodeEEEEppEv.exit, label %bb.f
 

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %rb_array_len.exit.t
 
 .lr.ph.preheader:                                 ; preds = %.thread, %bb.d
   %i.u = phi ptr [ %i.q, %.thread ], [ %i.t, %bb.d ] ; 19 uses
-  %.0.i8184110 = phi i64 [ %i.l, %.thread ], [ %.0.i82, %bb.d ] ; 9 uses
+  %.0.i8184110 = phi i64 [ %i.l, %.thread ], [ %.0.i82, %bb.d ] ; 8 uses
   %i.v = phi ptr [ %i.p, %.thread ], [ %i.s, %bb.d ] ; 14 uses
   %min.iters.check = icmp ult i64 %.0.i8184110, 4
   br i1 %min.iters.check, label %.lr.ph.preheader114, label %vector.ph
@@ -252,7 +252,7 @@ middle.block:                                     ; preds = %vector.body
   %exitcond.not = icmp eq i64 %i.ae, %.0.i8184110
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !72
 
-.loopexit:                                        ; preds = %set_divide_union_find_merge.exit, %RARRAY_AREF.exit
+.loopexit:                                        ; preds = %set_divide_union_find_merge.exit
   %exitcond97.not = icmp eq i64 %.05691, %i.ac
   br i1 %exitcond97.not, label %._crit_edge, label %bb.g, !llvm.loop !73
 
@@ -334,20 +334,16 @@ bb.h:                                             ; preds = %bb.g
   %i.bl = load ptr, ptr %i.ab, align 8, !tbaa !42
   br label %RARRAY_AREF.exit
 
-RARRAY_AREF.exit:                                 ; preds = %bb.g, %bb.h
+RARRAY_AREF.exit:                                 ; preds = %bb.h, %bb.g
   %.0.i.i = phi ptr [ %i.bl, %bb.h ], [ %i.aa, %bb.g ]
   %i.bm = getelementptr [8 x i8], ptr %.0.i.i, i64 %.05691
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !33 ; 2 uses
-  %i.bo = add nuw nsw i64 %.05691, 1              ; 3 uses
-  %1 = icmp slt i64 %i.bo, %.0.i8184110
-  br i1 %1, label %.lr.ph90, label %.loopexit
-
-.lr.ph90:                                         ; preds = %RARRAY_AREF.exit
+  %i.bo = add nuw nsw i64 %.05691, 1              ; 2 uses
   %.020.in21.i.i = getelementptr [8 x i8], ptr %i.u, i64 %.05691
   br label %bb.i
 
-bb.i:                                             ; preds = %.lr.ph90, %set_divide_union_find_merge.exit
-  %.05588 = phi i64 [ %i.bo, %.lr.ph90 ], [ %i.dx, %set_divide_union_find_merge.exit ] ; 6 uses
+bb.i:                                             ; preds = %RARRAY_AREF.exit, %set_divide_union_find_merge.exit
+  %.05588 = phi i64 [ %i.bo, %RARRAY_AREF.exit ], [ %i.dx, %set_divide_union_find_merge.exit ] ; 6 uses
   %i.bp = load i64, ptr %i.f, align 8, !tbaa !16
   %i.bq = and i64 %i.bp, 8192
   %.not.i.i61 = icmp eq i64 %i.bq, 0

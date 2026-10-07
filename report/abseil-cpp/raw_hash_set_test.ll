@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %_ZN7testing7Message
 bb.y:                                             ; preds = %bb.w, %_ZN7testing15AssertionResultD2Ev.exit64
   %storemerge112 = phi i64 [ 0, %bb.w ], [ %i.cs, %_ZN7testing15AssertionResultD2Ev.exit64 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
-  %i.aw = trunc nuw i64 %storemerge112 to i8      ; 2 uses
+  %i.aw = trunc nuw nsw i64 %storemerge112 to i8  ; 2 uses
   %.lhs.trunc = and i8 %i.aw, 63
   %i.ax = urem i8 %.lhs.trunc, 7
   %.zext = zext nneg i8 %i.ax to i64
@@ -608,7 +608,7 @@ bb.bj:                                            ; preds = %_ZN7testing7Message
 bb.bk:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit162, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit167
   %.049312 = phi i32 [ 0, %_ZN7testing15AssertionResultD2Ev.exit162 ], [ %i.gw, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit167 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #43
-  %.lhs.trunc = trunc nuw i32 %.049312 to i8
+  %.lhs.trunc = trunc nuw nsw i32 %.049312 to i8
   %i.gs = urem i8 %.lhs.trunc, 10
   %.zext = zext nneg i8 %i.gs to i32
   store i32 %.zext, ptr %i.f, align 4, !tbaa !188
@@ -1011,7 +1011,7 @@ bb.cz:                                            ; preds = %_ZN7testing15Assert
   %.sroa.13.0316 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 5 uses
   %.sroa.9.0315 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.9.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.0.0314 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.0.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
-  %.lhs.trunc278 = trunc nuw i32 %.048317 to i8
+  %.lhs.trunc278 = trunc nuw nsw i32 %.048317 to i8
   %i.kx = urem i8 %.lhs.trunc278, 10
   %.zext279 = zext nneg i8 %i.kx to i32           ; 2 uses
   %.not.i.i216 = icmp eq ptr %.sroa.9.0315, %.sroa.13.0316
@@ -1414,7 +1414,7 @@ bb.bl:                                            ; preds = %_ZN7testing7Message
 bb.bm:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit162, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit167
   %.049310 = phi i32 [ 0, %_ZN7testing15AssertionResultD2Ev.exit162 ], [ %i.gr, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit167 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #43
-  %.lhs.trunc = trunc nuw i32 %.049310 to i8
+  %.lhs.trunc = trunc nuw nsw i32 %.049310 to i8
   %i.gn = urem i8 %.lhs.trunc, 10
   %.zext = zext nneg i8 %i.gn to i32
   store i32 %.zext, ptr %i.f, align 4, !tbaa !188
@@ -1817,7 +1817,7 @@ bb.dc:                                            ; preds = %_ZN7testing15Assert
   %.sroa.13.0313 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 5 uses
   %.sroa.9.0312 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.9.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.0.0311 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.0.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
-  %.lhs.trunc278 = trunc nuw i32 %.048314 to i8
+  %.lhs.trunc278 = trunc nuw nsw i32 %.048314 to i8
   %i.kq = urem i8 %.lhs.trunc278, 10
   %.zext279 = zext nneg i8 %i.kq to i32           ; 2 uses
   %.not.i.i216 = icmp eq ptr %.sroa.9.0312, %.sroa.13.0313
@@ -2220,7 +2220,7 @@ bb.bj:                                            ; preds = %_ZN7testing7Message
 bb.bk:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit162, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit167
   %.049312 = phi i32 [ 0, %_ZN7testing15AssertionResultD2Ev.exit162 ], [ %i.gw, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit167 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #43
-  %.lhs.trunc = trunc nuw i32 %.049312 to i8
+  %.lhs.trunc = trunc nuw nsw i32 %.049312 to i8
   %i.gs = urem i8 %.lhs.trunc, 10
   %.zext = zext nneg i8 %i.gs to i32
   store i32 %.zext, ptr %i.f, align 4, !tbaa !188
@@ -2623,7 +2623,7 @@ bb.cz:                                            ; preds = %_ZN7testing15Assert
   %.sroa.13.0316 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 5 uses
   %.sroa.9.0315 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.9.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.0.0314 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit213 ], [ %.sroa.0.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
-  %.lhs.trunc278 = trunc nuw i32 %.048317 to i8
+  %.lhs.trunc278 = trunc nuw nsw i32 %.048317 to i8
   %i.kx = urem i8 %.lhs.trunc278, 10
   %.zext279 = zext nneg i8 %i.kx to i32           ; 2 uses
   %.not.i.i216 = icmp eq ptr %.sroa.9.0315, %.sroa.13.0316
@@ -3026,7 +3026,7 @@ bb.bj:                                            ; preds = %_ZN7testing7Message
 bb.bk:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit164, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit170
   %.049316 = phi i32 [ 0, %_ZN7testing15AssertionResultD2Ev.exit164 ], [ %i.hi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit170 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #43
-  %.lhs.trunc = trunc nuw i32 %.049316 to i8
+  %.lhs.trunc = trunc nuw nsw i32 %.049316 to i8
   %i.he = urem i8 %.lhs.trunc, 10
   %.zext = zext nneg i8 %i.he to i32
   store i32 %.zext, ptr %i.f, align 4, !tbaa !188
@@ -3429,7 +3429,7 @@ bb.cz:                                            ; preds = %_ZN7testing15Assert
   %.sroa.13.0320 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 5 uses
   %.sroa.9.0319 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.9.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.0.0318 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.0.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
-  %.lhs.trunc282 = trunc nuw i32 %.048321 to i8
+  %.lhs.trunc282 = trunc nuw nsw i32 %.048321 to i8
   %i.lj = urem i8 %.lhs.trunc282, 10
   %.zext283 = zext nneg i8 %i.lj to i32           ; 2 uses
   %.not.i.i220 = icmp eq ptr %.sroa.9.0319, %.sroa.13.0320
@@ -3832,7 +3832,7 @@ bb.bj:                                            ; preds = %_ZN7testing7Message
 bb.bk:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit164, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit170
   %.049316 = phi i32 [ 0, %_ZN7testing15AssertionResultD2Ev.exit164 ], [ %i.hi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit170 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #43
-  %.lhs.trunc = trunc nuw i32 %.049316 to i8
+  %.lhs.trunc = trunc nuw nsw i32 %.049316 to i8
   %i.he = urem i8 %.lhs.trunc, 10
   %.zext = zext nneg i8 %i.he to i32
   store i32 %.zext, ptr %i.f, align 4, !tbaa !188
@@ -4235,7 +4235,7 @@ bb.cz:                                            ; preds = %_ZN7testing15Assert
   %.sroa.13.0320 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 5 uses
   %.sroa.9.0319 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.9.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
   %.sroa.0.0318 = phi ptr [ null, %_ZN7testing15AssertionResultD2Ev.exit216 ], [ %.sroa.0.1, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 7 uses
-  %.lhs.trunc282 = trunc nuw i32 %.048321 to i8
+  %.lhs.trunc282 = trunc nuw nsw i32 %.048321 to i8
   %i.lj = urem i8 %.lhs.trunc282, 10
   %.zext283 = zext nneg i8 %i.lj to i32           ; 2 uses
   %.not.i.i220 = icmp eq ptr %.sroa.9.0319, %.sroa.13.0320

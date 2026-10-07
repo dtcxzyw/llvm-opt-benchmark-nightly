@@ -204,7 +204,7 @@ _RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader, !dbg !9805
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i
-  %i.bs = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i, !dbg !9806 ; 2 uses
+  %i.bs = mul nuw nsw i32 %.sroa.0.03.i, %.sroa.0.03.i, !dbg !9806 ; 2 uses
   %xtraiter = and i32 %i.bs, 7, !dbg !9805        ; 3 uses
   %i.bt = icmp ult i32 %.sroa.0.03.i, 3, !dbg !9805
   br i1 %i.bt, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new, !dbg !9805
@@ -607,7 +607,7 @@ _RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader, !dbg !10316
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i
-  %i.bu = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i, !dbg !10317 ; 2 uses
+  %i.bu = mul nuw nsw i32 %.sroa.0.03.i, %.sroa.0.03.i, !dbg !10317 ; 2 uses
   %xtraiter = and i32 %i.bu, 7, !dbg !10316       ; 3 uses
   %i.bv = icmp ult i32 %.sroa.0.03.i, 3, !dbg !10316
   br i1 %i.bv, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new, !dbg !10316
@@ -1010,7 +1010,7 @@ _RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i.i: ; preds = %.lr.p
   br i1 %.not.i.i.i17, label %_RNvMs1_NtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i, label %.lr.ph.i.i.i.preheader, !dbg !14396
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm15overflowing_pow.exit.i.i.i
-  %i.cf = mul nuw i32 %.sroa.0.03.i.i, %.sroa.0.03.i.i, !dbg !14397 ; 2 uses
+  %i.cf = mul nuw nsw i32 %.sroa.0.03.i.i, %.sroa.0.03.i.i, !dbg !14397 ; 2 uses
   %xtraiter = and i32 %i.cf, 7, !dbg !14396       ; 3 uses
   %i.cg = icmp ult i32 %.sroa.0.03.i.i, 3, !dbg !14396
   br i1 %i.cg, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i.preheader.new, !dbg !14396

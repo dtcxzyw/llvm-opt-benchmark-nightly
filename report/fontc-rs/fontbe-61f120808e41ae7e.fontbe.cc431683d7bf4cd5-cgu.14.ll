@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.lr.ph.i.1
   br i1 %i.bg, label %bb.n, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread
 
 bb.n:                                             ; preds = %.lr.ph.i.2
-  %i.bh = mul nuw i16 %i.bb, 10
+  %i.bh = mul nuw nsw i16 %i.bb, 10
   %i.bi = trunc nuw nsw i32 %i.bf to i16
   %i.bj = add nuw nsw i16 %i.bh, %i.bi            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -382,7 +382,7 @@ bb.z:                                             ; preds = %.lr.ph.i41.1
   br i1 %i.dt, label %bb.aa, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit48.thread
 
 bb.aa:                                            ; preds = %.lr.ph.i41.2
-  %i.du = mul nuw i16 %i.do, 10
+  %i.du = mul nuw nsw i16 %i.do, 10
   %i.dv = trunc nuw nsw i32 %i.ds to i16
   %i.dw = add nuw nsw i16 %i.du, %i.dv            ; 2 uses
   %.not54.i45.2 = icmp eq i64 %.sroa.15.0.i28, 3
@@ -675,7 +675,7 @@ bb.m:                                             ; preds = %.lr.ph.i.1
   br i1 %i.bg, label %bb.n, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread
 
 bb.n:                                             ; preds = %.lr.ph.i.2
-  %i.bh = mul nuw i16 %i.bb, 10
+  %i.bh = mul nuw nsw i16 %i.bb, 10
   %i.bi = trunc nuw nsw i32 %i.bf to i16
   %i.bj = add nuw nsw i16 %i.bh, %i.bi            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -852,7 +852,7 @@ bb.z:                                             ; preds = %.lr.ph.i41.1
   br i1 %i.dt, label %bb.aa, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit48.thread
 
 bb.aa:                                            ; preds = %.lr.ph.i41.2
-  %i.du = mul nuw i16 %i.do, 10
+  %i.du = mul nuw nsw i16 %i.do, 10
   %i.dv = trunc nuw nsw i32 %i.ds to i16
   %i.dw = add nuw nsw i16 %i.du, %i.dv            ; 2 uses
   %.not54.i45.2 = icmp eq i64 %.sroa.15.0.i28, 3
@@ -1255,7 +1255,7 @@ bb.bh:                                            ; preds = %.lr.ph.i.1
   br i1 %i.fx, label %bb.bi, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit
 
 bb.bi:                                            ; preds = %.lr.ph.i.2
-  %i.fy = mul nuw i16 %i.fs, 10
+  %i.fy = mul nuw nsw i16 %i.fs, 10
   %i.fz = trunc nuw nsw i32 %i.fw to i16
   %i.ga = add nuw nsw i16 %i.fy, %i.fz            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -1390,7 +1390,7 @@ bb.bo:                                            ; preds = %.lr.ph.i112.1
   br i1 %i.hv, label %bb.bp, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit119.thread
 
 bb.bp:                                            ; preds = %.lr.ph.i112.2
-  %i.hw = mul nuw i16 %i.hq, 10
+  %i.hw = mul nuw nsw i16 %i.hq, 10
   %i.hx = trunc nuw nsw i32 %i.hu to i16
   %i.hy = add nuw nsw i16 %i.hw, %i.hx            ; 2 uses
   %.not54.i116.2 = icmp eq i64 %.sroa.15.0.i99, 3
@@ -1793,7 +1793,7 @@ bb.bh:                                            ; preds = %.lr.ph.i.1
   br i1 %i.fx, label %bb.bi, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit
 
 bb.bi:                                            ; preds = %.lr.ph.i.2
-  %i.fy = mul nuw i16 %i.fs, 10
+  %i.fy = mul nuw nsw i16 %i.fs, 10
   %i.fz = trunc nuw nsw i32 %i.fw to i16
   %i.ga = add nuw nsw i16 %i.fy, %i.fz            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -1928,7 +1928,7 @@ bb.bo:                                            ; preds = %.lr.ph.i112.1
   br i1 %i.hv, label %bb.bp, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit119.thread
 
 bb.bp:                                            ; preds = %.lr.ph.i112.2
-  %i.hw = mul nuw i16 %i.hq, 10
+  %i.hw = mul nuw nsw i16 %i.hq, 10
   %i.hx = trunc nuw nsw i32 %i.hu to i16
   %i.hy = add nuw nsw i16 %i.hw, %i.hx            ; 2 uses
   %.not54.i116.2 = icmp eq i64 %.sroa.15.0.i99, 3
@@ -2331,7 +2331,7 @@ bb.m:                                             ; preds = %.lr.ph.i.1
   br i1 %i.cb, label %bb.n, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread
 
 bb.n:                                             ; preds = %.lr.ph.i.2
-  %i.cc = mul nuw i16 %i.bx, 10
+  %i.cc = mul nuw nsw i16 %i.bx, 10
   %i.cd = trunc nuw nsw i32 %i.ca to i16
   %i.ce = add nuw nsw i16 %i.cc, %i.cd            ; 2 uses
   %.not54.i.2 = icmp eq i64 %.sroa.15.0.i, 3
@@ -2734,7 +2734,7 @@ bb.bc:                                            ; preds = %.lr.ph.i.i.i.1
   br i1 %i.ig, label %bb.bd, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.thread.i.i
 
 bb.bd:                                            ; preds = %.lr.ph.i.i.i.2
-  %i.ih = mul nuw i16 %i.ib, 10
+  %i.ih = mul nuw nsw i16 %i.ib, 10
   %i.ii = trunc nuw nsw i32 %i.if to i16
   %i.ij = add nuw nsw i16 %i.ih, %i.ii            ; 2 uses
   %.not54.i.i.i.2 = icmp eq i64 %.sroa.15.0.i.i.i, 3
@@ -2910,7 +2910,7 @@ bb.bp:                                            ; preds = %.lr.ph.i42.i.i.1
   br i1 %i.kt, label %bb.bq, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit49.thread.i.i
 
 bb.bq:                                            ; preds = %.lr.ph.i42.i.i.2
-  %i.ku = mul nuw i16 %i.ko, 10
+  %i.ku = mul nuw nsw i16 %i.ko, 10
   %i.kv = trunc nuw nsw i32 %i.ks to i16
   %i.kw = add nuw nsw i16 %i.ku, %i.kv            ; 2 uses
   %.not54.i46.i.i.2 = icmp eq i64 %.sroa.15.0.i29.i.i, 3
@@ -3313,7 +3313,7 @@ bb.dx:                                            ; preds = %.lr.ph.i.i20.i.1
   br i1 %i.sm, label %bb.dy, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit.i13.i
 
 bb.dy:                                            ; preds = %.lr.ph.i.i20.i.2
-  %i.sn = mul nuw i16 %i.sh, 10
+  %i.sn = mul nuw nsw i16 %i.sh, 10
   %i.so = trunc nuw nsw i32 %i.sl to i16
   %i.sp = add nuw nsw i16 %i.sn, %i.so            ; 2 uses
   %.not54.i.i24.i.2 = icmp eq i64 %.sroa.15.0.i.i6.i, 3
@@ -3448,7 +3448,7 @@ bb.ee:                                            ; preds = %.lr.ph.i112.i.i.1
   br i1 %i.uk, label %bb.ef, label %_RNvMsz_NtCsf3Ta7LF998c_4core3numt27from_ascii_bytes_radix_impl.exit119.thread.i.i
 
 bb.ef:                                            ; preds = %.lr.ph.i112.i.i.2
-  %i.ul = mul nuw i16 %i.uf, 10
+  %i.ul = mul nuw nsw i16 %i.uf, 10
   %i.um = trunc nuw nsw i32 %i.uj to i16
   %i.un = add nuw nsw i16 %i.ul, %i.um            ; 2 uses
   %.not54.i116.i.i.2 = icmp eq i64 %.sroa.15.0.i99.i.i, 3

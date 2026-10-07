@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.lr.ph112, %.loopexit
   %i.w = phi i16 [ 0, %.lr.ph112 ], [ %i.ij, %.loopexit ] ; 4 uses
-  %i.x = phi i16 [ 0, %.lr.ph112 ], [ %i.ik, %.loopexit ] ; 8 uses
+  %i.x = phi i16 [ 0, %.lr.ph112 ], [ %i.ik, %.loopexit ] ; 9 uses
   %.054111 = phi i32 [ 0, %.lr.ph112 ], [ %.3, %.loopexit ] ; 5 uses
   %.056110 = phi i32 [ 0, %.lr.ph112 ], [ %.157, %.loopexit ] ; 2 uses
   %i.y = icmp slt i16 %i.x, 1
@@ -213,7 +213,7 @@ bb.e:                                             ; preds = %.lr.ph112, %.loopex
 
 bb.f:                                             ; preds = %bb.e
   %i.z = shl i16 %i.w, 1                          ; 4 uses
-  %i.aa = add nsw i16 %i.x, -1                    ; 4 uses
+  %i.aa = add nsw i16 %i.x, -1                    ; 3 uses
   store i16 %i.aa, ptr %i.r, align 4, !tbaa !91
   %i.ab = icmp sgt i16 %i.w, -1
   br i1 %i.ab, label %decode_len.exit.thread, label %bb.g
@@ -475,9 +475,9 @@ bb.x:                                             ; preds = %bb.w
   %i.dy = trunc nuw i32 %i.dx to i16
   %i.dz = or i16 %i.z, %i.dy
   store i16 %i.dz, ptr %i.q, align 2, !tbaa !92
-  %2 = zext nneg i16 %i.aa to i32
-  %3 = sub nuw nsw i32 16, %2
-  %i.ea = call fastcc i32 @fill_buf(ptr noundef %1, i32 noundef %3) ; 0 uses
+  %narrow158 = sub nuw nsw i16 17, %i.x
+  %2 = zext nneg i16 %narrow158 to i32
+  %i.ea = call fastcc i32 @fill_buf(ptr noundef %1, i32 noundef %2) ; 0 uses
   %.pre130 = load i16, ptr %i.q, align 2, !tbaa !92 ; 2 uses
   %.pre131 = load i32, ptr %i.s, align 8, !tbaa !38 ; 2 uses
   %i.eb = shl i16 %.pre130, 8                     ; 2 uses

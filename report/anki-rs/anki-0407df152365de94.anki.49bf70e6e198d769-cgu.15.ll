@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %"_ZN86_$LT$digest..
 
 "_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17he9f17a2f1caac8ddE.exit.i": ; preds = %bb.f, %bb.e
   %storemerge.in.i.i.i = phi i64 [ %i.ew, %bb.e ], [ %i.fi, %bb.f ] ; 7 uses
-  %storemerge.i.i.i = trunc nuw i64 %storemerge.in.i.i.i to i8 ; 2 uses
+  %storemerge.i.i.i = trunc nuw nsw i64 %storemerge.in.i.i.i to i8
   store i8 %storemerge.i.i.i, ptr %.sroa.4.0..sroa_idx.i7.i, align 16, !alias.scope !16739, !noalias !16740
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !16693
   %i.fj = call i32 @llvm.bswap.i32(i32 %i.di)     ; 2 uses
@@ -213,8 +213,6 @@ bb.f:                                             ; preds = %"_ZN86_$LT$digest..
   call void @llvm.experimental.noalias.scope.decl(metadata !16741)
   call void @llvm.experimental.noalias.scope.decl(metadata !16742), !noalias !16690
   call void @llvm.experimental.noalias.scope.decl(metadata !16743), !noalias !16690
-  %7 = icmp sgt i8 %storemerge.i.i.i, -1
-  call void @llvm.assume(i1 %7), !noalias !16690
   %i.fk = icmp samesign ult i64 %storemerge.in.i.i.i, 124
   br i1 %i.fk, label %bb.g, label %.thread.i
 

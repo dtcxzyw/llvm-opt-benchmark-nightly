@@ -206,7 +206,7 @@ vector.ph:                                        ; preds = %.preheader.i.prehea
   %i.nn = and i64 %i.nl, 3                        ; 2 uses
   %i.no = icmp eq i64 %i.nn, 0
   %i.np = select i1 %i.no, i64 4, i64 %i.nn
-  %n.vec = sub i64 %i.nl, %i.np                   ; 2 uses
+  %n.vec = sub nsw i64 %i.nl, %i.np               ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.065.098.i = phi i64 [ %i.bd, %bb.m ], [ 10, %.preheader.preheader.i ] ; 5 uses
   %i.bd = add nuw nsw i64 %.sroa.065.098.i, 1     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %i.be = trunc nuw i64 %.sroa.065.098.i to i8
+  %i.be = trunc nuw nsw i64 %.sroa.065.098.i to i8
   %.lhs.trunc.i = add nuw i8 %i.be, 100
   %i.bf = urem i8 %.lhs.trunc.i, 80
   %i.bg = add nuw nsw i8 %i.bf, 20
@@ -607,7 +607,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.065.0100.i = phi i64 [ %i.bh, %bb.o ], [ 10, %.preheader.preheader.i ] ; 5 uses
   %i.bh = add nuw nsw i64 %.sroa.065.0100.i, 1    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %i.bi = trunc nuw i64 %.sroa.065.0100.i to i8
+  %i.bi = trunc nuw nsw i64 %.sroa.065.0100.i to i8
   %.lhs.trunc.i = add nuw i8 %i.bi, 100
   %i.bj = urem i8 %.lhs.trunc.i, 80
   %i.bk = add nuw nsw i8 %i.bj, 20
@@ -1010,7 +1010,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.065.0100.i = phi i64 [ %i.bh, %bb.o ], [ 10, %.preheader.preheader.i ] ; 5 uses
   %i.bh = add nuw nsw i64 %.sroa.065.0100.i, 1    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %i.bi = trunc nuw i64 %.sroa.065.0100.i to i8
+  %i.bi = trunc nuw nsw i64 %.sroa.065.0100.i to i8
   %.lhs.trunc.i = add nuw i8 %i.bi, 100
   %i.bj = urem i8 %.lhs.trunc.i, 80
   %i.bk = add nuw nsw i8 %i.bj, 20

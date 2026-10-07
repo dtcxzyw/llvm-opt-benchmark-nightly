@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZN4absl12lts_20260
   %.051.i = phi i32 [ 0, %.noexc51 ], [ %i.fh, %_ZN4absl12lts_2026052618container_internal14btree_iteratorINS1_10btree_nodeINS1_15set_params_implIhJEEEEERKhPS7_EppEv.exit.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
-  %i.cq = trunc nuw i32 %.051.i to i8             ; 2 uses
+  %i.cq = trunc nuw nsw i32 %.051.i to i8         ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.n, %bb.k

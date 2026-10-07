@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check78, label %.lr.ph28.i.i.preheader93, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph28.i.i.preheader
-  %i.c = shl i64 %.012.lcssa.i.i, 2
+  %i.c = shl nsw i64 %.012.lcssa.i.i, 2
   %i.d = getelementptr i8, ptr %.010.lcssa.i.i, i64 %i.c
   %i.e = getelementptr i8, ptr %.0.lcssa.i.i, i64 %.012.lcssa.i.i
   %bound0 = icmp ult ptr %.010.lcssa.i.i, %i.e
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %bb.h
 
 vector.memcheck:                                  ; preds = %.lr.ph74.i.i.preheader
   %i.am = getelementptr i8, ptr %.013.lcssa.i.i, i64 %.015.lcssa.i.i
-  %i.an = shl i64 %.015.lcssa.i.i, 2
+  %i.an = shl nsw i64 %.015.lcssa.i.i, 2
   %i.ao = getelementptr i8, ptr %.0.lcssa.i.i, i64 %i.an
   %bound0 = icmp ult ptr %.013.lcssa.i.i, %i.ao
   %bound1 = icmp ult ptr %.0.lcssa.i.i, %i.am
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph78.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = xor i1 %.04175.i, true                  ; 2 uses
-  %i.ad = add i64 %.1.i, 1                        ; 2 uses
+  %i.ad = add nsw i64 %.1.i, 1                    ; 2 uses
   %i.ae = icmp ult i64 %i.ad, 309
   br i1 %i.ae, label %.lr.ph78.i, label %_ZN3fmt3v126detail12is_printableEtPKNS1_9singletonEmPKhS6_m.exit, !llvm.loop !639
 
@@ -1096,7 +1096,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph78.i55
 
 bb.p:                                             ; preds = %bb.o
   %i.bi = xor i1 %.04175.i57, true                ; 2 uses
-  %i.bj = add i64 %.1.i60, 1                      ; 2 uses
+  %i.bj = add nsw i64 %.1.i60, 1                  ; 2 uses
   %i.bk = icmp ult i64 %i.bj, 419
   br i1 %i.bk, label %.lr.ph78.i55, label %_ZN3fmt3v126detail12is_printableEtPKNS1_9singletonEmPKhS6_m.exit, !llvm.loop !639
 

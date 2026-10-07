@@ -205,13 +205,13 @@ bb.nk:                                            ; preds = %_ZN4llvm11raw_ostre
 
 bb.nl:                                            ; preds = %bb.nk
   %i.ccm = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEh(ptr noundef nonnull align 8 dereferenceable(48) %i.cch, i8 noundef zeroext 0) #22 ; 0 uses
-  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i, !llvm.loop !11
+  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i
 
 bb.nm:                                            ; preds = %bb.nk
   %i.ccn = getelementptr inbounds nuw i8, ptr %i.cck, i64 1
   store ptr %i.ccn, ptr %i.cci, align 8, !tbaa !243
   store i8 0, ptr %i.cck, align 1, !tbaa !63
-  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i, !llvm.loop !11
+  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i
 
 bb.nn:                                            ; preds = %_ZN4llvm11raw_ostreamlsEc.exit27.i
   %i.cco = getelementptr inbounds nuw i8, ptr %i.cch, i64 32 ; 2 uses
@@ -223,13 +223,13 @@ bb.nn:                                            ; preds = %_ZN4llvm11raw_ostre
 
 bb.no:                                            ; preds = %bb.nn
   %i.ccs = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEh(ptr noundef nonnull align 8 dereferenceable(48) %i.cch, i8 noundef zeroext 0) #22 ; 0 uses
-  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i, !llvm.loop !11
+  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i
 
 bb.np:                                            ; preds = %bb.nn
   %i.cct = getelementptr inbounds nuw i8, ptr %i.ccq, i64 1
   store ptr %i.cct, ptr %i.cco, align 8, !tbaa !243
   store i8 0, ptr %i.ccq, align 1, !tbaa !63
-  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i, !llvm.loop !11
+  br label %_ZN4llvm13encodeSLEB128ElRNS_11raw_ostreamEj.exit.i
 
 bb.nq:                                            ; preds = %_ZN4llvm11raw_ostreamlsEc.exit27.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #22
