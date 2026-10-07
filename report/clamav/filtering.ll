@@ -204,11 +204,11 @@ bb.cn:                                            ; preds = %.lr.ph992, %._crit_
   %.0406989 = phi i32 [ -2147483647, %.lr.ph992 ], [ %.1407.lcssa, %._crit_edge984 ] ; 2 uses
   %i.mq = getelementptr inbounds nuw [12 x i8], ptr %3, i64 %indvars.iv1262 ; 2 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 4
-  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !44 ; 6 uses
+  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !44 ; 5 uses
   %i.mt = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
-  %i.mu = load i32, ptr %i.mt, align 4, !tbaa !45 ; 2 uses
+  %i.mu = load i32, ptr %i.mt, align 4, !tbaa !45
   %i.mv = add i32 %i.ms, -1
-  %i.mw = add i32 %i.mv, %i.mu
+  %i.mw = add i32 %i.mv, %i.mu                    ; 2 uses
   %i.mx = icmp ult i32 %i.ms, %i.mw
   br i1 %i.mx, label %.lr.ph983.preheader, label %._crit_edge984
 
@@ -216,9 +216,7 @@ bb.cn:                                            ; preds = %.lr.ph992, %._crit_
   %i.my = zext i32 %i.ms to i64                   ; 5 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.ms, i32 %spec.select493)
   %wide.trip.count1258 = zext i32 %umax to i64
-  %4 = add i32 %i.mu, -1
-  %5 = add i32 %4, %i.ms
-  %wide.trip.count1260 = zext i32 %5 to i64
+  %wide.trip.count1260 = zext i32 %i.mw to i64
   br label %.lr.ph983
 
 .lr.ph983:                                        ; preds = %.lr.ph983.preheader, %bb.dl

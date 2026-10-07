@@ -205,14 +205,14 @@ bb.b:                                             ; preds = %.lr.ph98, %._crit_e
   %.val66 = load ptr, ptr %i.ac, align 8, !tbaa !61
   %i.ad = sext i32 %i.ab to i64                   ; 2 uses
   %i.ae = getelementptr inbounds [4 x i8], ptr %.val66, i64 %i.ad
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !49 ; 6 uses
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !49 ; 4 uses
   %i.ag = load ptr, ptr %i.t, align 8, !tbaa !90
   %i.ah = getelementptr i8, ptr %i.ag, i64 8
   %.val65 = load ptr, ptr %i.ah, align 8, !tbaa !61
   %i.ai = getelementptr inbounds [4 x i8], ptr %.val65, i64 %i.ad
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !49 ; 3 uses
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !49
   %i.ak = add i32 %i.af, -1
-  %i.al = add i32 %i.ak, %i.aj
+  %i.al = add i32 %i.ak, %i.aj                    ; 3 uses
   %i.am = load ptr, ptr %i.u, align 8, !tbaa !100 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4 ; 3 uses
   store i32 0, ptr %i.an, align 4, !tbaa !59
@@ -253,15 +253,10 @@ Vec_IntPush.exit:                                 ; preds = %bb.b, %Vec_IntGrow.
   %i.bb = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.ba
   store i32 %i.ap, ptr %i.bb, align 4, !tbaa !49
   %i.bc = icmp slt i32 %i.af, %i.al
-  br i1 %i.bc, label %.lr.ph.preheader, label %._crit_edge94.critedge
+  br i1 %i.bc, label %.lr.ph, label %._crit_edge94.critedge
 
-.lr.ph.preheader:                                 ; preds = %Vec_IntPush.exit
-  %1 = add i32 %i.aj, -1
-  %2 = add i32 %1, %i.af
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %Vec_IntPush.exit81
-  %.05882 = phi i32 [ %i.cg, %Vec_IntPush.exit81 ], [ %i.af, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %Vec_IntPush.exit, %Vec_IntPush.exit81
+  %.05882 = phi i32 [ %i.cg, %Vec_IntPush.exit81 ], [ %i.af, %Vec_IntPush.exit ] ; 2 uses
   %i.bd = load ptr, ptr %i.u, align 8, !tbaa !100 ; 6 uses
   %i.be = load i32, ptr %i.v, align 4, !tbaa !30
   %i.bf = add nsw i32 %i.be, %.05882
@@ -339,7 +334,7 @@ Vec_IntPush.exit81:                               ; preds = %.lr.ph, %bb.j, %Vec
   %i.cf = getelementptr inbounds [4 x i8], ptr %i.cc, i64 %i.ce
   store i32 %i.bg, ptr %i.cf, align 4, !tbaa !49
   %i.cg = add nsw i32 %.05882, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %i.cg, %2
+  %exitcond.not = icmp eq i32 %i.cg, %i.al
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !213
 
 ._crit_edge:                                      ; preds = %Vec_IntPush.exit81
@@ -353,8 +348,6 @@ Vec_IntPush.exit81:                               ; preds = %.lr.ph, %bb.j, %Vec
   %i.cm = getelementptr inbounds [4 x i8], ptr %.val71, i64 %i.cl
   %i.cn = call i32 @sat_solver_addclause(ptr noundef %i.ch, ptr noundef %.val71, ptr noundef %i.cm) #30 ; 0 uses
   %i.co = sext i32 %i.af to i64
-  %3 = add i32 %i.aj, -1
-  %4 = add i32 %3, %i.af
   br label %.lr.ph93
 
 .lr.ph93:                                         ; preds = %._crit_edge, %._crit_edge90
@@ -427,7 +420,7 @@ bb.r:                                             ; preds = %.lr.ph89, %bb.q
 ._crit_edge90:                                    ; preds = %bb.r, %.preheader
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond102.not = icmp eq i32 %4, %lftr.wideiv
+  %exitcond102.not = icmp eq i32 %i.al, %lftr.wideiv
   br i1 %exitcond102.not, label %._crit_edge94, label %.lr.ph93, !llvm.loop !216
 
 ._crit_edge94.critedge:                           ; preds = %Vec_IntPush.exit

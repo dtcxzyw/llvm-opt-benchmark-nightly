@@ -204,7 +204,7 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !90   ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 128
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !86 ; 9 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !86 ; 8 uses
   %i.ac = load i32, ptr %i.a, align 8, !tbaa !71  ; 9 uses
   %i.ad = icmp slt i32 %i.ac, 1
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -222,7 +222,7 @@ bb.a:
   %i.ao = sext i32 %i.ai to i64                   ; 7 uses
   %i.ap = add i32 %i.ac, 1                        ; 2 uses
   %i.aq = sext i32 %i.ak to i64                   ; 6 uses
-  %i.ar = sext i32 %i.m to i64                    ; 5 uses
+  %i.ar = sext i32 %i.m to i64                    ; 4 uses
   %wide.trip.count615 = sext i32 %i.o to i64      ; 2 uses
   %i.as = icmp slt i32 %i.ai, 1
   %i.at = zext i32 %i.ai to i64                   ; 12 uses
@@ -237,15 +237,14 @@ bb.a:
   %wide.trip.count610 = sext i32 %i.ag to i64
   %wide.trip.count605 = zext nneg i32 %i.ai to i64
   %i.av = shl nsw i64 %i.ao, 2
-  %3 = mul i64 %i.ab, %i.ar
-  %4 = shl nsw i64 %wide.trip.count600, 2
-  %5 = add nsw i64 %4, -4
-  %i.aw = mul i64 %5, %i.ao
+  %3 = shl nsw i64 %wide.trip.count600, 2
+  %4 = add nsw i64 %3, -4
+  %5 = mul i64 %4, %i.ao
+  %i.aw = mul i64 %i.ab, %i.ar                    ; 2 uses
   %i.ax = shl nuw nsw i64 %i.at, 2
   %scevgep909 = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %6 = mul i64 %i.ab, %i.ar
   %i.ay = shl nsw i64 %i.aq, 2                    ; 2 uses
-  %i.az = getelementptr i8, ptr %i.z, i64 %6
+  %i.az = getelementptr i8, ptr %i.z, i64 %i.aw
   %scevgep926 = getelementptr i8, ptr %i.az, i64 %i.ay ; 2 uses
   %i.ba = add nsw i64 %wide.trip.count615, -1     ; 2 uses
   %i.bb = mul i64 %i.ab, %i.ba
@@ -266,7 +265,7 @@ bb.a:
   %i.bm = add nsw i64 %wide.trip.count575, -1     ; 3 uses
   %i.bn = getelementptr i8, ptr %i.z, i64 %i.bj
   %i.bo = getelementptr i8, ptr %i.bn, i64 %i.bk
-  %i.bp = getelementptr i8, ptr %i.z, i64 %3
+  %i.bp = getelementptr i8, ptr %i.z, i64 %5
   %i.bq = getelementptr i8, ptr %i.bp, i64 %i.aw
   %i.br = getelementptr i8, ptr %i.bq, i64 %i.ax
   %brmerge678 = select i1 %i.ad, i1 true, i1 %i.as

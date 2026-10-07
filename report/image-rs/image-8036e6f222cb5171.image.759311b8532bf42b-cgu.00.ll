@@ -205,10 +205,10 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %min.iters.check80, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutfEINtB13_4IterfEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck70
 
 vector.memcheck70:                                ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutfEINtB13_4IterfEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.ea = add i64 %.sroa.7158.0.copyload.us, %.sroa.5154.0.copyload.us
+  %i.ea = add i64 %.sroa.5154.0.copyload.us, %.sroa.7158.0.copyload.us
   %i.eb = shl i64 %i.ea, 2                        ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0150.0.copyload.us, i64 %i.eb ; 2 uses
-  %i.ec = add i64 %.sroa.9.0.copyload.us, %.sroa.5154.0.copyload.us
+  %i.ec = add i64 %.sroa.5154.0.copyload.us, %.sroa.9.0.copyload.us
   %i.ed = shl i64 %i.ec, 2                        ; 2 uses
   %scevgep71 = getelementptr i8, ptr %.sroa.0150.0.copyload.us, i64 %i.ed ; 2 uses
   %scevgep72 = getelementptr i8, ptr %.sroa.4152.0.copyload.us, i64 %i.eb
@@ -611,7 +611,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.jr, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.preheader: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split
-  %i.js = add i64 %.sroa.5187.0.copyload, %.sroa.4185.0.copyload
+  %i.js = add i64 %.sroa.4185.0.copyload, %.sroa.5187.0.copyload
   %umax = call i64 @llvm.umax.i64(i64 %i.jh, i64 %i.js)
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
 
@@ -985,9 +985,9 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !260
   %.sroa.0282.0.copyload.us = load ptr, ptr %i.l, align 8 ; 7 uses
   %.sroa.4284.0.copyload.us = load ptr, ptr %.sroa.4284.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.5286.0.copyload.us = load i64, ptr %.sroa.5286.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.5286.0.copyload.us = load i64, ptr %.sroa.5286.0..sroa_idx, align 8 ; 6 uses
   %.sroa.6288.0.copyload.us = load ptr, ptr %.sroa.6288.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.7290.0.copyload.us = load i64, ptr %.sroa.7290.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.7290.0.copyload.us = load i64, ptr %.sroa.7290.0..sroa_idx, align 8 ; 8 uses
   %.sroa.9.0.copyload.us = load i64, ptr %.sroa.9.0..sroa_idx, align 8 ; 7 uses
   %i.di = icmp ult i64 %.sroa.7290.0.copyload.us, %.sroa.9.0.copyload.us
   br i1 %i.di, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us
@@ -1034,9 +1034,9 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !262
   %.sroa.0294.0.copyload.us = load ptr, ptr %i.k, align 8 ; 7 uses
   %.sroa.4296.0.copyload.us = load ptr, ptr %.sroa.4296.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.5298.0.copyload.us = load i64, ptr %.sroa.5298.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.5298.0.copyload.us = load i64, ptr %.sroa.5298.0..sroa_idx, align 8 ; 6 uses
   %.sroa.6300.0.copyload.us = load ptr, ptr %.sroa.6300.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.7302.0.copyload.us = load i64, ptr %.sroa.7302.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.7302.0.copyload.us = load i64, ptr %.sroa.7302.0..sroa_idx, align 8 ; 8 uses
   %.sroa.9303.0.copyload.us = load i64, ptr %.sroa.9303.0..sroa_idx, align 8 ; 7 uses
   %i.el = icmp ult i64 %.sroa.7302.0.copyload.us, %.sroa.9303.0.copyload.us
   br i1 %i.el, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.lr.ph.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.thread.loopexit.us
@@ -1306,22 +1306,21 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %min.iters.check160, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck145
 
 vector.memcheck145:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.io = add i64 %.sroa.7290.0.copyload.us, %.sroa.5286.0.copyload.us
+  %i.io = add i64 %.sroa.5286.0.copyload.us, %.sroa.7290.0.copyload.us ; 2 uses
   %i.ip = shl i64 %i.io, 2
   %scevgep146 = getelementptr i8, ptr %.sroa.0282.0.copyload.us, i64 %i.ip ; 2 uses
-  %i.iq = add i64 %.sroa.9.0.copyload.us, %.sroa.5286.0.copyload.us ; 2 uses
+  %i.iq = add i64 %.sroa.5286.0.copyload.us, %.sroa.9.0.copyload.us ; 2 uses
   %i.ir = shl i64 %i.iq, 2
-  %scevgep147 = getelementptr i8, ptr %.sroa.0282.0.copyload.us, i64 %i.ir ; 2 uses
-  %i.is = getelementptr i8, ptr %.sroa.4284.0.copyload.us, i64 %.sroa.5286.0.copyload.us
-  %scevgep148 = getelementptr i8, ptr %i.is, i64 %.sroa.7290.0.copyload.us
+  %i.is = getelementptr i8, ptr %.sroa.0282.0.copyload.us, i64 %i.ir ; 2 uses
+  %scevgep148 = getelementptr i8, ptr %.sroa.4284.0.copyload.us, i64 %i.io
   %scevgep149 = getelementptr i8, ptr %.sroa.4284.0.copyload.us, i64 %i.iq
   %scevgep150 = getelementptr i8, ptr %.sroa.6288.0.copyload.us, i64 %.sroa.7290.0.copyload.us
   %scevgep151 = getelementptr i8, ptr %.sroa.6288.0.copyload.us, i64 %.sroa.9.0.copyload.us
   %bound0152 = icmp ult ptr %scevgep146, %scevgep149
-  %bound1153 = icmp ult ptr %scevgep148, %scevgep147
+  %bound1153 = icmp ult ptr %scevgep148, %i.is
   %found.conflict154 = and i1 %bound0152, %bound1153
   %bound0155 = icmp ult ptr %scevgep146, %scevgep151
-  %bound1156 = icmp ult ptr %scevgep150, %scevgep147
+  %bound1156 = icmp ult ptr %scevgep150, %i.is
   %found.conflict157 = and i1 %bound0155, %bound1156
   %conflict.rdx158 = or i1 %found.conflict154, %found.conflict157
   br i1 %conflict.rdx158, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph161
@@ -1396,22 +1395,21 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %min.iters.check133, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.us.preheader, label %vector.memcheck119
 
 vector.memcheck119:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.lr.ph.us
-  %i.jv = add i64 %.sroa.7302.0.copyload.us, %.sroa.5298.0.copyload.us
+  %i.jv = add i64 %.sroa.5298.0.copyload.us, %.sroa.7302.0.copyload.us ; 2 uses
   %i.jw = shl i64 %i.jv, 2
   %scevgep120 = getelementptr i8, ptr %.sroa.0294.0.copyload.us, i64 %i.jw ; 2 uses
-  %i.jx = add i64 %.sroa.9303.0.copyload.us, %.sroa.5298.0.copyload.us ; 2 uses
+  %i.jx = add i64 %.sroa.5298.0.copyload.us, %.sroa.9303.0.copyload.us ; 2 uses
   %i.jy = shl i64 %i.jx, 2
-  %scevgep121 = getelementptr i8, ptr %.sroa.0294.0.copyload.us, i64 %i.jy ; 2 uses
-  %i.jz = getelementptr i8, ptr %.sroa.4296.0.copyload.us, i64 %.sroa.5298.0.copyload.us
-  %scevgep122 = getelementptr i8, ptr %i.jz, i64 %.sroa.7302.0.copyload.us
+  %i.jz = getelementptr i8, ptr %.sroa.0294.0.copyload.us, i64 %i.jy ; 2 uses
+  %scevgep122 = getelementptr i8, ptr %.sroa.4296.0.copyload.us, i64 %i.jv
   %scevgep123 = getelementptr i8, ptr %.sroa.4296.0.copyload.us, i64 %i.jx
   %scevgep124 = getelementptr i8, ptr %.sroa.6300.0.copyload.us, i64 %.sroa.7302.0.copyload.us
   %scevgep125 = getelementptr i8, ptr %.sroa.6300.0.copyload.us, i64 %.sroa.9303.0.copyload.us
   %bound0126 = icmp ult ptr %scevgep120, %scevgep123
-  %bound1127 = icmp ult ptr %scevgep122, %scevgep121
+  %bound1127 = icmp ult ptr %scevgep122, %i.jz
   %found.conflict128 = and i1 %bound0126, %bound1127
   %bound0129 = icmp ult ptr %scevgep120, %scevgep125
-  %bound1130 = icmp ult ptr %scevgep124, %scevgep121
+  %bound1130 = icmp ult ptr %scevgep124, %i.jz
   %found.conflict131 = and i1 %bound0129, %bound1130
   %conflict.rdx = or i1 %found.conflict128, %found.conflict131
   br i1 %conflict.rdx, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.us.preheader, label %vector.ph134
@@ -1814,9 +1812,9 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !280
   %.sroa.0339.0.copyload.us = load ptr, ptr %i.f, align 8 ; 7 uses
   %.sroa.4341.0.copyload.us = load ptr, ptr %.sroa.4341.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.5343.0.copyload.us = load i64, ptr %.sroa.5343.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.5343.0.copyload.us = load i64, ptr %.sroa.5343.0..sroa_idx, align 8 ; 6 uses
   %.sroa.6345.0.copyload.us = load ptr, ptr %.sroa.6345.0..sroa_idx, align 8 ; 7 uses
-  %.sroa.7347.0.copyload.us = load i64, ptr %.sroa.7347.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.7347.0.copyload.us = load i64, ptr %.sroa.7347.0..sroa_idx, align 8 ; 8 uses
   %.sroa.9348.0.copyload.us = load i64, ptr %.sroa.9348.0..sroa_idx, align 8 ; 7 uses
   %i.pm = icmp ult i64 %.sroa.7347.0.copyload.us, %.sroa.9348.0.copyload.us
   br i1 %i.pm, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.lr.ph.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.thread.loopexit.us
@@ -1978,22 +1976,21 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %min.iters.check253, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.us.preheader, label %vector.memcheck238
 
 vector.memcheck238:                               ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.lr.ph.us
-  %i.sc = add i64 %.sroa.7347.0.copyload.us, %.sroa.5343.0.copyload.us
+  %i.sc = add i64 %.sroa.5343.0.copyload.us, %.sroa.7347.0.copyload.us ; 2 uses
   %i.sd = shl i64 %i.sc, 2
   %scevgep239 = getelementptr i8, ptr %.sroa.0339.0.copyload.us, i64 %i.sd ; 2 uses
-  %i.se = add i64 %.sroa.9348.0.copyload.us, %.sroa.5343.0.copyload.us ; 2 uses
+  %i.se = add i64 %.sroa.5343.0.copyload.us, %.sroa.9348.0.copyload.us ; 2 uses
   %i.sf = shl i64 %i.se, 2
-  %scevgep240 = getelementptr i8, ptr %.sroa.0339.0.copyload.us, i64 %i.sf ; 2 uses
-  %i.sg = getelementptr i8, ptr %.sroa.4341.0.copyload.us, i64 %.sroa.5343.0.copyload.us
-  %scevgep241 = getelementptr i8, ptr %i.sg, i64 %.sroa.7347.0.copyload.us
+  %i.sg = getelementptr i8, ptr %.sroa.0339.0.copyload.us, i64 %i.sf ; 2 uses
+  %scevgep241 = getelementptr i8, ptr %.sroa.4341.0.copyload.us, i64 %i.sc
   %scevgep242 = getelementptr i8, ptr %.sroa.4341.0.copyload.us, i64 %i.se
   %scevgep243 = getelementptr i8, ptr %.sroa.6345.0.copyload.us, i64 %.sroa.7347.0.copyload.us
   %scevgep244 = getelementptr i8, ptr %.sroa.6345.0.copyload.us, i64 %.sroa.9348.0.copyload.us
   %bound0245 = icmp ult ptr %scevgep239, %scevgep242
-  %bound1246 = icmp ult ptr %scevgep241, %scevgep240
+  %bound1246 = icmp ult ptr %scevgep241, %i.sg
   %found.conflict247 = and i1 %bound0245, %bound1246
   %bound0248 = icmp ult ptr %scevgep239, %scevgep244
-  %bound1249 = icmp ult ptr %scevgep243, %scevgep240
+  %bound1249 = icmp ult ptr %scevgep243, %i.sg
   %found.conflict250 = and i1 %bound0248, %bound1249
   %conflict.rdx251 = or i1 %found.conflict247, %found.conflict250
   br i1 %conflict.rdx251, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.us.preheader, label %vector.ph254
@@ -2330,7 +2327,7 @@ bb.ah:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
   unreachable
 
 bb.ai:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
-  %i.wy = add i64 %.sroa.5378.0.copyload, %.sroa.4376.0.copyload
+  %i.wy = add i64 %.sroa.4376.0.copyload, %.sroa.5378.0.copyload
   %umax = call i64 @llvm.umax.i64(i64 %i.wt, i64 %i.wy)
   %i.wz = add i64 %umax, 1
   call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.ww, i64 noundef %i.wz, i64 noundef %i.wt, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @57) #13
@@ -2733,10 +2730,10 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %min.iters.check80, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck66
 
 vector.memcheck66:                                ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us
-  %i.em = add i64 %.sroa.7163.0.copyload.us, %.sroa.5159.0.copyload.us ; 2 uses
+  %i.em = add i64 %.sroa.5159.0.copyload.us, %.sroa.7163.0.copyload.us ; 2 uses
   %i.en = shl i64 %i.em, 2
   %scevgep67 = getelementptr i8, ptr %.sroa.0155.0.copyload.us, i64 %i.en ; 2 uses
-  %i.eo = add i64 %.sroa.9.0.copyload.us, %.sroa.5159.0.copyload.us ; 2 uses
+  %i.eo = add i64 %.sroa.5159.0.copyload.us, %.sroa.9.0.copyload.us ; 2 uses
   %i.ep = shl i64 %i.eo, 2
   %scevgep68 = getelementptr i8, ptr %.sroa.0155.0.copyload.us, i64 %i.ep ; 2 uses
   %i.eq = shl i64 %i.em, 1
@@ -3125,7 +3122,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.kg, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuttEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuttEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuttEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.preheader: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuttEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split
-  %i.kh = add i64 %.sroa.5192.0.copyload, %.sroa.4190.0.copyload
+  %i.kh = add i64 %.sroa.4190.0.copyload, %.sroa.5192.0.copyload
   %umax = call i64 @llvm.umax.i64(i64 %i.js, i64 %i.kh)
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuttEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
 

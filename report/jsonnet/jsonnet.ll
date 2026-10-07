@@ -202,14 +202,13 @@ bb.am:                                            ; preds = %bb.al
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %.preheader.lr.ph.i
-  %.061254.i = phi ptr [ %.040, %.preheader.lr.ph.i ], [ %i.ex, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ] ; 6 uses
+  %.061254.i = phi ptr [ %.040, %.preheader.lr.ph.i ], [ %i.ex, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ] ; 5 uses
   %scevgep.i = getelementptr nuw i8, ptr %.061254.i, i64 1
-  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i) ; 2 uses
-  %scevgep259.i = getelementptr i8, ptr %.061254.i, i64 %strlen.i
+  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i)
+  %scevgep259.i = getelementptr i8, ptr %.061254.i, i64 %strlen.i ; 2 uses
   %i.ew = getelementptr i8, ptr %scevgep259.i, i64 2 ; 3 uses
   %strlen260.i = call i64 @strlen(ptr nonnull dereferenceable(1) %i.ew)
-  %20 = getelementptr i8, ptr %.061254.i, i64 %strlen260.i
-  %scevgep262.i = getelementptr i8, ptr %20, i64 %strlen.i
+  %scevgep262.i = getelementptr i8, ptr %scevgep259.i, i64 %strlen260.i
   %i.ex = getelementptr i8, ptr %scevgep262.i, i64 3 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   store ptr %i.eu, ptr %4, align 8, !tbaa !48
