@@ -205,31 +205,38 @@ bb.a:
   %i.j = sdiv exact i64 %i.i, 12                  ; 2 uses
   %i.k = shl nsw i64 %i.b, 1                      ; 2 uses
   %i.l = icmp ugt i64 %i.j, %i.k
-  br i1 %i.l, label %select.unfold, label %bb.b
+  br i1 %i.l, label %bb.b, label %18
 
-bb.b:                                             ; preds = %bb.a
-  %i.m = icmp ugt i64 %i.j, %i.b
-  br i1 %i.m, label %select.unfold, label %.thread92
+18:                                               ; preds = %bb.a
+  %19 = icmp ugt i64 %i.j, %i.b
+  br i1 %19, label %bb.b, label %.thread
 
-.thread92:                                        ; preds = %bb.b
+.thread:                                          ; preds = %18
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
-  %i.n = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #30 ; 2 uses
-  store i64 1, ptr %i.n, align 16
+  br label %.thread92
+
+bb.b:                                             ; preds = %18, %bb.a
+  %.0 = phi i64 [ %i.k, %bb.a ], [ %i.b, %18 ]    ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
+  %i.m = icmp ugt i64 %.0, 1152921504606846975
+  br i1 %i.m, label %.thread92, label %select.unfold
+
+.thread92:                                        ; preds = %.thread, %bb.b
+  %.090.ph = phi i64 [ 1, %.thread ], [ %.0, %bb.b ] ; 3 uses
+  %.ph = phi i64 [ 24, %.thread ], [ -1, %bb.b ]
+  %i.n = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %.ph) #30 ; 2 uses
+  store i64 %.090.ph, ptr %i.n, align 16
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
+  %.pre106 = shl nsw i64 %.090.ph, 4
   br label %.split41
 
-select.unfold:                                    ; preds = %bb.b, %bb.a
-  %.0 = phi i64 [ %i.k, %bb.a ], [ %i.b, %bb.b ]
-  %.0.fr = freeze i64 %.0                         ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
-  %18 = icmp ugt i64 %.0.fr, 1152921504606846975
-  %i.p = shl nuw nsw i64 %.0.fr, 4
+select.unfold:                                    ; preds = %bb.b
+  %i.p = shl nuw nsw i64 %.0, 4                   ; 2 uses
   %i.q = or disjoint i64 %i.p, 8
-  %spec.select = select i1 %18, i64 -1, i64 %i.q
-  %i.r = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %spec.select) #30 ; 2 uses
-  store i64 %.0.fr, ptr %i.r, align 16
+  %i.r = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.q) #30 ; 2 uses
+  store i64 %.0, ptr %i.r, align 16
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
-  %i.t = icmp eq i64 %.0.fr, 0
+  %i.t = icmp eq i64 %.0, 0
   br i1 %i.t, label %.split, label %.split41
 
 .split:                                           ; preds = %select.unfold
@@ -241,10 +248,10 @@ select.unfold:                                    ; preds = %bb.b, %bb.a
   br label %bb.c
 
 .split41:                                         ; preds = %.thread92, %select.unfold
+  %.pre-phi = phi i64 [ %.pre106, %.thread92 ], [ %i.p, %select.unfold ]
   %i.v = phi ptr [ %i.o, %.thread92 ], [ %i.s, %select.unfold ] ; 3 uses
-  %.09195 = phi i64 [ 1, %.thread92 ], [ %.0.fr, %select.unfold ] ; 3 uses
-  %19 = shl nsw i64 %.09195, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.v, i8 0, i64 %19, i1 false)
+  %.09195 = phi i64 [ %.090.ph, %.thread92 ], [ %.0, %select.unfold ] ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.v, i8 0, i64 %.pre-phi, i1 false)
   store ptr %i.v, ptr %12, align 8, !tbaa !2074
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   store i64 %.09195, ptr %13, align 8, !tbaa !1779
