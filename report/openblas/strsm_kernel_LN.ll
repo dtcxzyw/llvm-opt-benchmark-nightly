@@ -103,20 +103,19 @@ bb.d:                                             ; preds = %bb.c
   %i.ax = sub nuw nsw i64 -4, %i.aw
   %i.ay = shl i64 %.0304, 2
   %i.az = mul i64 %i.ay, %.0169303
-  %9 = add i64 %i.az, -4
   %i.ba = mul i64 %i.q, %i.u
-  %10 = add i64 %9, %i.ba                         ; 2 uses
   %i.bb = shl nuw nsw i64 %.0169303, 2
-  %i.bc = sub nuw nsw i64 -4, %i.bb               ; 2 uses
+  %i.bc = sub nuw nsw i64 -4, %i.bb
   %i.bd = add nsw i64 %.0169303, -2
-  %i.be = getelementptr i8, ptr %4, i64 %10
-  %i.bf = getelementptr i8, ptr %4, i64 %i.au
-  %i.bg = getelementptr i8, ptr %i.bf, i64 -4
-  %i.bh = getelementptr i8, ptr %i.bg, i64 %i.av
-  %i.bi = getelementptr i8, ptr %4, i64 %i.ap
-  %i.bj = getelementptr i8, ptr %i.bi, i64 -4
-  %i.bk = getelementptr i8, ptr %i.bj, i64 %i.aq
-  %i.bl = getelementptr i8, ptr %4, i64 %10
+  %9 = getelementptr i8, ptr %4, i64 %i.az
+  %i.be = getelementptr i8, ptr %9, i64 -4
+  %i.bf = getelementptr i8, ptr %i.be, i64 %i.ba
+  %i.bg = getelementptr i8, ptr %4, i64 %i.au
+  %i.bh = getelementptr i8, ptr %i.bg, i64 -4
+  %i.bi = getelementptr i8, ptr %i.bh, i64 %i.av
+  %i.bj = getelementptr i8, ptr %4, i64 %i.ap
+  %i.bk = getelementptr i8, ptr %i.bj, i64 -4
+  %i.bl = getelementptr i8, ptr %i.bk, i64 %i.aq
   br label %iter.check535
 
 .split.i.preheader:                               ; preds = %._crit_edge.us.i.3, %.lr.ph.i
@@ -149,18 +148,18 @@ bb.d:                                             ; preds = %bb.c
   br label %solve.exit
 
 iter.check535:                                    ; preds = %.lr.ph.us.i.preheader.preheader, %._crit_edge.us.i.3
-  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.3 ] ; 6 uses
+  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.3 ] ; 5 uses
   %i.ca = phi float [ %i.an, %.lr.ph.us.i.preheader.preheader ], [ %i.lv, %._crit_edge.us.i.3 ] ; 4 uses
   %.04452.i300 = phi ptr [ %i.aj, %.lr.ph.us.i.preheader.preheader ], [ %i.lt, %._crit_edge.us.i.3 ] ; 5 uses
   %.04353.i299 = phi ptr [ %i.al, %.lr.ph.us.i.preheader.preheader ], [ %i.ls, %._crit_edge.us.i.3 ] ; 49 uses
   %indvars.iv65.i298 = phi i64 [ %i.af, %.lr.ph.us.i.preheader.preheader ], [ %indvars.iv.next66.i, %._crit_edge.us.i.3 ] ; 38 uses
   %i.cb = sub i64 %i.bd, %indvar                  ; 4 uses
   %i.cc = mul i64 %i.bc, %indvar
-  %scevgep468 = getelementptr i8, ptr %i.be, i64 %i.cc
+  %scevgep468 = getelementptr i8, ptr %i.bf, i64 %i.cc ; 2 uses
   %i.cd = mul i64 %i.ax, %indvar
-  %scevgep426 = getelementptr i8, ptr %i.bh, i64 %i.cd
+  %scevgep426 = getelementptr i8, ptr %i.bi, i64 %i.cd
   %i.ce = mul i64 %i.as, %indvar
-  %scevgep = getelementptr i8, ptr %i.bk, i64 %i.ce
+  %scevgep = getelementptr i8, ptr %i.bl, i64 %i.ce
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv65.i298 ; 6 uses
   %i.cg = load float, ptr %i.cf, align 4, !tbaa !48
   %i.ch = fmul float %i.ca, %i.cg                 ; 3 uses
@@ -171,9 +170,7 @@ iter.check535:                                    ; preds = %.lr.ph.us.i.prehead
   br i1 %min.iters.check514, label %vec.epilog.scalar.ph536.preheader, label %vector.memcheck509
 
 vector.memcheck509:                               ; preds = %iter.check535
-  %11 = mul i64 %i.bc, %indvar
-  %scevgep510 = getelementptr i8, ptr %i.bl, i64 %11
-  %bound0511 = icmp ult ptr %i.x, %scevgep510
+  %bound0511 = icmp ult ptr %i.x, %scevgep468
   %bound1512 = icmp ult ptr %.04353.i299, %i.cf
   %found.conflict513 = and i1 %bound0511, %bound1512
   br i1 %found.conflict513, label %vec.epilog.scalar.ph536.preheader, label %vector.main.loop.iter.check515

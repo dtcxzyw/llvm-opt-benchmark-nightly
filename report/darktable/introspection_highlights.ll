@@ -205,47 +205,47 @@ bb.p:                                             ; preds = %.thread290.i, %.lr.
   br i1 %i.hv, label %.preheader294.i, label %bb.q
 
 .preheader294.i:                                  ; preds = %bb.p
-  %i.hw = trunc i64 %indvars.iv.i to i32          ; 2 uses
-  %13 = add i32 %i.ak, %i.hw
-  %i.hx = call i32 @llvm.smin.i32(i32 %13, i32 %i.q)
-  %smin327.i = sext i32 %i.hx to i64              ; 3 uses
-  %14 = add i64 %i.hf, %smin327.i
-  %15 = shl i64 %14, 4
-  %scevgep.i = getelementptr i8, ptr %6, i64 %15
-  %16 = sub i32 %i.hw, %i.ak
-  %smax.i = call i32 @llvm.smax.i32(i32 %16, i32 0)
-  %17 = zext nneg i32 %smax.i to i64              ; 3 uses
-  %i.hy = add i64 %i.hi, %17
-  %i.hz = shl i64 %i.hy, 4
-  %scevgep326.i = getelementptr i8, ptr %6, i64 %i.hz
-  %i.ia = add i64 %i.hi, %smin327.i
-  %i.ib = shl i64 %i.ia, 4
-  %scevgep328.i = getelementptr i8, ptr %6, i64 %i.ib
+  %i.hw = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
+  %13 = sub i32 %i.hw, %i.ak
+  %i.hx = call i32 @llvm.smax.i32(i32 %13, i32 0)
+  %14 = zext nneg i32 %i.hx to i64                ; 3 uses
+  %15 = add i32 %i.ak, %i.hw
+  %.269.i = call i32 @llvm.smin.i32(i32 %15, i32 %i.q)
+  %16 = sext i32 %.269.i to i64                   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33, !noalias !631
-  %i.ic = add i64 %i.hd, %17
+  %17 = add i64 %i.hd, %14
+  %.idx.i = shl i64 %17, 4
+  %18 = getelementptr inbounds nuw i8, ptr %6, i64 %.idx.i
+  %i.hy = add i64 %indvars.iv.i, %i.hd
+  %i.hz = shl i64 %i.hy, 4
+  %scevgep326.i = getelementptr inbounds nuw i8, ptr %6, i64 %i.hz
+  %i.ia = add i64 %i.hd, %16
+  %i.ib = shl i64 %i.ia, 4
+  %scevgep328.i = getelementptr inbounds nuw i8, ptr %6, i64 %i.ib
+  %i.ic = add i64 %i.hf, %14
   %.idx.i.a = shl i64 %i.ic, 4
   %i.id = getelementptr inbounds nuw i8, ptr %6, i64 %.idx.i.a
-  %i.ie = add i64 %indvars.iv.i, %i.hd
+  %i.ie = add i64 %i.hf, %16
   %.idx262.i = shl i64 %i.ie, 4
-  %i.if = getelementptr inbounds nuw i8, ptr %6, i64 %.idx262.i
-  %i.ig = add i64 %i.hd, %smin327.i
+  %i.if = getelementptr i8, ptr %6, i64 %.idx262.i
+  %i.ig = add i64 %i.hi, %14
   %.idx263.i = shl i64 %i.ig, 4
-  %i.ih = getelementptr inbounds nuw i8, ptr %6, i64 %.idx263.i
-  %i.ii = add i64 %i.hf, %17
+  %i.ih = getelementptr i8, ptr %6, i64 %.idx263.i
+  %i.ii = add i64 %indvars.iv.i, %i.hi
   %.idx264.i = shl i64 %i.ii, 4
-  %i.ij = getelementptr inbounds nuw i8, ptr %6, i64 %.idx264.i
-  %i.ik = add i64 %indvars.iv.i, %i.hi
+  %i.ij = getelementptr i8, ptr %6, i64 %.idx264.i
+  %i.ik = add i64 %i.hi, %16
   %.idx267.i = shl i64 %i.ik, 4
   %i.il = getelementptr i8, ptr %6, i64 %.idx267.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.id, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.u, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.if, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.v, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.ih, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.w, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.ij, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(16) %18, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.u, ptr noundef nonnull readonly align 16 dereferenceable(16) %scevgep326.i, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.v, ptr noundef nonnull readonly align 16 dereferenceable(16) %scevgep328.i, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.w, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.id, i64 16, i1 false), !tbaa !12, !noalias !632
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.x, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.hr, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.y, ptr noundef nonnull readonly align 16 dereferenceable(16) %scevgep.i, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.z, ptr noundef nonnull readonly align 16 dereferenceable(16) %scevgep326.i, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aa, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.il, i64 16, i1 false), !tbaa !12, !noalias !632
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ab, ptr noundef nonnull readonly align 16 dereferenceable(16) %scevgep328.i, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.y, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.if, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.z, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.ih, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aa, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.ij, i64 16, i1 false), !tbaa !12, !noalias !632
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ab, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.il, i64 16, i1 false), !tbaa !12, !noalias !632
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33, !noalias !631
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #33, !noalias !631
   %i.im = load <4 x float>, ptr %i.b, align 16, !tbaa !12, !noalias !631 ; 3 uses
@@ -648,56 +648,56 @@ dwt_interleave_rows.exit.i72:                     ; preds = %bb.y, %bb.x, %bb.u
   %i.ym = sub i32 %i.yl, %i.ak
   %smax.i79 = call i32 @llvm.smax.i32(i32 %i.ym, i32 0)
   %i.yn = zext nneg i32 %smax.i79 to i64          ; 3 uses
-  %18 = add i64 %i.xt, %i.yn
-  %19 = shl i64 %18, 4
-  %scevgep.i80 = getelementptr i8, ptr %6, i64 %19 ; 2 uses
-  %20 = add i32 %i.ak, %i.yl
-  %.194.i = call i32 @llvm.smin.i32(i32 %20, i32 %i.q)
-  %21 = sext i32 %.194.i to i64                   ; 3 uses
-  %i.yo = add i64 %i.xp, %i.yn
+  %19 = add i32 %i.ak, %i.yl
+  %.194.i = call i32 @llvm.smin.i32(i32 %19, i32 %i.q)
+  %20 = sext i32 %.194.i to i64                   ; 3 uses
+  %21 = add i64 %i.xp, %i.yn
+  %.idx.i79 = shl i64 %21, 4
+  %22 = getelementptr inbounds nuw i8, ptr %6, i64 %.idx.i79 ; 2 uses
+  %i.yo = add i64 %.0178211.i, %i.xp
   %.idx.i81 = shl i64 %i.yo, 4
   %i.yp = getelementptr inbounds nuw i8, ptr %6, i64 %.idx.i81 ; 2 uses
-  %i.yq = add i64 %.0178211.i, %i.xp
+  %i.yq = add i64 %i.xp, %20
   %.idx187.i = shl i64 %i.yq, 4
   %i.yr = getelementptr inbounds nuw i8, ptr %6, i64 %.idx187.i ; 2 uses
-  %i.ys = add i64 %i.xp, %21
+  %i.ys = add i64 %i.xq, %i.yn
   %.idx188.i = shl i64 %i.ys, 4
   %i.yt = getelementptr inbounds nuw i8, ptr %6, i64 %.idx188.i ; 2 uses
-  %i.yu = add i64 %i.xq, %i.yn
+  %i.yu = add i64 %i.xq, %20
   %.idx189.i = shl i64 %i.yu, 4
-  %i.yv = getelementptr inbounds nuw i8, ptr %6, i64 %.idx189.i ; 2 uses
-  %i.yw = add i64 %i.xq, %21
+  %i.yv = getelementptr i8, ptr %6, i64 %.idx189.i ; 2 uses
+  %i.yw = add i64 %i.xt, %i.yn
   %.idx190.i = shl i64 %i.yw, 4
   %i.yx = getelementptr i8, ptr %6, i64 %.idx190.i ; 2 uses
   %i.yy = add i64 %.0178211.i, %i.xt
   %.idx192.i = shl i64 %i.yy, 4
   %i.yz = getelementptr i8, ptr %6, i64 %.idx192.i ; 2 uses
-  %i.za = add i64 %i.xt, %21
+  %i.za = add i64 %i.xt, %20
   %.idx193.i = shl i64 %i.za, 4
   %i.zb = getelementptr i8, ptr %6, i64 %.idx193.i ; 2 uses
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yp, i64 8
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %22, i64 8
   %.sroa.5.0.copyload.i = load float, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
-  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yr, i64 8
+  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yp, i64 8
   %.sroa.10.16.copyload.i = load float, ptr %.sroa.10.16..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
-  %.sroa.15.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yt, i64 8
+  %.sroa.15.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yr, i64 8
   %.sroa.15.32.copyload.i = load float, ptr %.sroa.15.32..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
-  %.sroa.20.48..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yv, i64 8
+  %.sroa.20.48..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yt, i64 8
   %.sroa.20.48.copyload.i = load float, ptr %.sroa.20.48..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
-  %.sroa.30.80..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yx, i64 8
+  %.sroa.30.80..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yv, i64 8
   %.sroa.30.80.copyload.i = load float, ptr %.sroa.30.80..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
-  %.sroa.35.96.scevgep.sroa_idx.i = getelementptr inbounds nuw i8, ptr %scevgep.i80, i64 8
+  %.sroa.35.96.scevgep.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yx, i64 8
   %.sroa.35.96.copyload.i = load float, ptr %.sroa.35.96.scevgep.sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
   %.sroa.40.112..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yz, i64 8
   %.sroa.40.112.copyload.i = load float, ptr %.sroa.40.112..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
   %.sroa.45.128..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.zb, i64 8
   %.sroa.45.128.copyload.i = load float, ptr %.sroa.45.128..sroa_idx.i, align 8, !tbaa !12, !alias.scope !635, !noalias !640
   %i.zc = fmul reassoc nsz arcp contract afn <2 x float> %i.ah, %i.yc
-  %i.zd = load <2 x float>, ptr %i.yp, align 16, !tbaa !12, !alias.scope !635, !noalias !640
-  %i.ze = load <2 x float>, ptr %i.yr, align 16, !tbaa !12, !alias.scope !635, !noalias !640
-  %i.zf = load <2 x float>, ptr %i.yt, align 16, !tbaa !12, !alias.scope !635, !noalias !640
-  %i.zg = load <2 x float>, ptr %i.yv, align 16, !tbaa !12, !alias.scope !635, !noalias !640
-  %i.zh = load <2 x float>, ptr %i.yx, align 16, !tbaa !12, !alias.scope !635, !noalias !640
-  %i.zi = load <2 x float>, ptr %scevgep.i80, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.zd = load <2 x float>, ptr %22, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.ze = load <2 x float>, ptr %i.yp, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.zf = load <2 x float>, ptr %i.yr, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.zg = load <2 x float>, ptr %i.yt, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.zh = load <2 x float>, ptr %i.yv, align 16, !tbaa !12, !alias.scope !635, !noalias !640
+  %i.zi = load <2 x float>, ptr %i.yx, align 16, !tbaa !12, !alias.scope !635, !noalias !640
   %i.zj = load <2 x float>, ptr %i.yz, align 16, !tbaa !12, !alias.scope !635, !noalias !640
   %i.zk = load <2 x float>, ptr %i.zb, align 16, !tbaa !12, !alias.scope !635, !noalias !640
   %i.zl = fadd reassoc nsz arcp contract afn <2 x float> %i.zg, %i.ze

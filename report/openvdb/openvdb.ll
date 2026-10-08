@@ -205,7 +205,7 @@ bb.a:
   %i.f = add nsw i32 %i.e, 127
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 33800 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !1131, !noalias !22971 ; 2 uses
-  %i.i = add i32 %i.h, 127                        ; 5 uses
+  %i.i = add i32 %i.h, 127
   %i.j = load i32, ptr %1, align 4, !tbaa !1131
   %i.k = tail call i32 @llvm.smax.i32(i32 %i.b, i32 %i.j) ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -221,7 +221,7 @@ bb.a:
   %i.v = load i32, ptr %i.u, align 4, !tbaa !1131
   %i.w = tail call i32 @llvm.smin.i32(i32 %i.v, i32 %i.f) ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !1131 ; 5 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !1131
   %i.z = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.i) ; 4 uses
   %i.aa = icmp sle i32 %i.k, %i.t
   %i.ab = icmp sle i32 %i.n, %i.w
@@ -280,7 +280,7 @@ bb.b:                                             ; preds = %.preheader, %_ZN7op
   %i.az = add i32 %i.ay, %i.at                    ; 3 uses
   %i.ba = add nsw i32 %i.av, 7                    ; 2 uses
   %i.bb = add nsw i32 %i.ax, 7                    ; 2 uses
-  %i.bc = add i32 %i.az, 7                        ; 6 uses
+  %i.bc = add i32 %i.az, 7                        ; 2 uses
   %i.bd = icmp ne i32 %.0154, %i.av
   %i.be = icmp ne i32 %.035151, %i.ax
   %or.cond122.not132 = or i1 %i.bd, %i.be
@@ -392,13 +392,13 @@ bb.d:                                             ; preds = %._crit_edge172, %.t
   %i.dg = getelementptr inbounds nuw i8, ptr %.037120, i64 132
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !1131, !noalias !22972 ; 2 uses
   %i.di = add i32 %i.dh, 7
-  %i.dj = add i32 %i.db, 7                        ; 5 uses
+  %i.dj = add i32 %i.db, 7
   %i.dk = tail call i32 @llvm.smax.i32(i32 %i.dc, i32 %.0154) ; 5 uses
   %i.dl = tail call i32 @llvm.smax.i32(i32 %i.dh, i32 %.035151) ; 5 uses
   %i.dm = tail call i32 @llvm.smax.i32(i32 %i.db, i32 %.036146) ; 17 uses
   %i.dn = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated16.i, i32 %i.df) ; 5 uses
   %i.do = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated11.i, i32 %i.di) ; 5 uses
-  %i.dp = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated.i, i32 %i.dj) ; 5 uses
+  %i.dp = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated.i, i32 %i.dj) ; 9 uses
   %i.dq = icmp sle i32 %i.dk, %i.dn
   %i.dr = icmp sle i32 %i.dl, %i.do
   %or.cond.not42.i = select i1 %i.dq, i1 %i.dr, i1 false
@@ -414,10 +414,7 @@ bb.d:                                             ; preds = %._crit_edge172, %.t
   br i1 %i.de, label %.lr.ph63.us.us.i.preheader, label %.lr.ph63.us.i.preheader
 
 .lr.ph63.us.i.preheader:                          ; preds = %.preheader.split.split.split.us.i
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %5 = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.i)
-  %6 = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.dj)
-  %i.du = add i32 %6, 1
+  %i.du = add i32 %i.dp, 1
   %i.dv = sub i32 %i.du, %i.dm                    ; 3 uses
   %min.iters.check223 = icmp ult i32 %i.dv, 4
   %n.vec225 = and i32 %i.dv, -4                   ; 3 uses
@@ -429,10 +426,7 @@ bb.d:                                             ; preds = %._crit_edge172, %.t
   br label %.lr.ph63.us.i
 
 .lr.ph63.us.us.i.preheader:                       ; preds = %.preheader.split.split.split.us.i
-  %7 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %8 = tail call i32 @llvm.smin.i32(i32 %7, i32 %i.i)
-  %9 = tail call i32 @llvm.smin.i32(i32 %8, i32 %i.dj)
-  %i.dx = add i32 %9, 1
+  %i.dx = add i32 %i.dp, 1
   %i.dy = sub i32 %i.dx, %i.dm                    ; 3 uses
   %min.iters.check = icmp ult i32 %i.dy, 4
   %n.vec = and i32 %i.dy, -4                      ; 3 uses
@@ -632,10 +626,7 @@ _ZN7openvdb5v13_04util8NodeMaskILj3EE3setEjb.exit.us.us66.us.i: ; preds = %_ZN7o
   br i1 %i.de, label %.lr.ph63.us99.i.preheader, label %.lr.ph63.i.preheader
 
 .lr.ph63.i.preheader:                             ; preds = %.preheader.split.split.split.i
-  %10 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %11 = tail call i32 @llvm.smin.i32(i32 %10, i32 %i.i)
-  %12 = tail call i32 @llvm.smin.i32(i32 %11, i32 %i.dj)
-  %i.gt = add i32 %12, 1
+  %i.gt = add i32 %i.dp, 1
   %i.gu = sub i32 %i.gt, %i.dm                    ; 3 uses
   %min.iters.check275 = icmp ult i32 %i.gu, 4
   %n.vec277 = and i32 %i.gu, -4                   ; 3 uses
@@ -647,10 +638,7 @@ _ZN7openvdb5v13_04util8NodeMaskILj3EE3setEjb.exit.us.us66.us.i: ; preds = %_ZN7o
   br label %.lr.ph63.i
 
 .lr.ph63.us99.i.preheader:                        ; preds = %.preheader.split.split.split.i
-  %13 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %14 = tail call i32 @llvm.smin.i32(i32 %13, i32 %i.i)
-  %15 = tail call i32 @llvm.smin.i32(i32 %14, i32 %i.dj)
-  %i.gw = add i32 %15, 1
+  %i.gw = add i32 %i.dp, 1
   %i.gx = sub i32 %i.gw, %i.dm                    ; 3 uses
   %min.iters.check249 = icmp ult i32 %i.gx, 4
   %n.vec251 = and i32 %i.gx, -4                   ; 3 uses
@@ -1053,7 +1041,7 @@ bb.a:
   %i.f = add nsw i32 %i.e, 127
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 33800 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !1131, !noalias !24135 ; 2 uses
-  %i.i = add i32 %i.h, 127                        ; 3 uses
+  %i.i = add i32 %i.h, 127
   %i.j = load i32, ptr %1, align 4, !tbaa !1131
   %i.k = tail call i32 @llvm.smax.i32(i32 %i.b, i32 %i.j) ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -1069,7 +1057,7 @@ bb.a:
   %i.v = load i32, ptr %i.u, align 4, !tbaa !1131
   %i.w = tail call i32 @llvm.smin.i32(i32 %i.v, i32 %i.f) ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !1131 ; 3 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !1131
   %i.z = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.i) ; 4 uses
   %i.aa = icmp sle i32 %i.k, %i.t
   %i.ab = icmp sle i32 %i.n, %i.w
@@ -1128,7 +1116,7 @@ bb.b:                                             ; preds = %.preheader, %_ZN7op
   %i.az = add i32 %i.ay, %i.at                    ; 3 uses
   %i.ba = add nsw i32 %i.av, 7                    ; 2 uses
   %i.bb = add nsw i32 %i.ax, 7                    ; 2 uses
-  %i.bc = add i32 %i.az, 7                        ; 4 uses
+  %i.bc = add i32 %i.az, 7                        ; 2 uses
   %i.bd = icmp ne i32 %.0146, %i.av
   %i.be = icmp ne i32 %.035143, %i.ax
   %or.cond122.not132 = or i1 %i.bd, %i.be
@@ -1222,13 +1210,13 @@ bb.d:                                             ; preds = %._crit_edge156, %.t
   %i.cw = getelementptr inbounds nuw i8, ptr %.037120, i64 68
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !1131, !noalias !24136 ; 2 uses
   %i.cy = add i32 %i.cx, 7
-  %i.cz = add i32 %i.ct, 7                        ; 3 uses
+  %i.cz = add i32 %i.ct, 7
   %i.da = tail call i32 @llvm.smax.i32(i32 %i.cu, i32 %.0146) ; 3 uses
   %i.db = tail call i32 @llvm.smax.i32(i32 %i.cx, i32 %.035143) ; 3 uses
   %i.dc = tail call i32 @llvm.smax.i32(i32 %i.ct, i32 %.036138) ; 9 uses
   %i.dd = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated16.i, i32 %i.cv) ; 3 uses
   %i.de = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated11.i, i32 %i.cy) ; 3 uses
-  %i.df = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated.i, i32 %i.cz) ; 3 uses
+  %i.df = tail call i32 @llvm.smin.i32(i32 %.sroa.speculated.i, i32 %i.cz) ; 5 uses
   %i.dg = icmp sle i32 %i.da, %i.dd
   %i.dh = icmp sle i32 %i.db, %i.de
   %or.cond.not39.i = select i1 %i.dg, i1 %i.dh, i1 false
@@ -1242,10 +1230,7 @@ bb.d:                                             ; preds = %._crit_edge156, %.t
   br i1 %i.dk, label %.lr.ph47.us.i.preheader, label %.lr.ph47.i.preheader
 
 .lr.ph47.i.preheader:                             ; preds = %.preheader.split.split.i
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %5 = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.i)
-  %6 = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.cz)
-  %i.dl = add i32 %6, 1
+  %i.dl = add i32 %i.df, 1
   %i.dm = sub i32 %i.dl, %i.dc                    ; 3 uses
   %min.iters.check187 = icmp ult i32 %i.dm, 4
   %n.vec189 = and i32 %i.dm, -4                   ; 3 uses
@@ -1257,10 +1242,7 @@ bb.d:                                             ; preds = %._crit_edge156, %.t
   br label %.lr.ph47.i
 
 .lr.ph47.us.i.preheader:                          ; preds = %.preheader.split.split.i
-  %7 = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %i.bc)
-  %8 = tail call i32 @llvm.smin.i32(i32 %7, i32 %i.i)
-  %9 = tail call i32 @llvm.smin.i32(i32 %8, i32 %i.cz)
-  %i.do = add i32 %9, 1
+  %i.do = add i32 %i.df, 1
   %i.dp = sub i32 %i.do, %i.dc                    ; 3 uses
   %min.iters.check = icmp ult i32 %i.dp, 4
   %n.vec = and i32 %i.dp, -4                      ; 3 uses

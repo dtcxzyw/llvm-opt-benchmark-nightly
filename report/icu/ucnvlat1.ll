@@ -204,7 +204,7 @@ bb.a:
   %i.z = sub i64 %i.x, %i.y
   %i.aa = lshr i64 %i.z, 1
   %i.ab = trunc i64 %i.aa to i32
-  %.0188 = tail call i32 @llvm.smin.i32(i32 %i.ab, i32 %i.n) ; 6 uses
+  %.0188 = tail call i32 @llvm.smin.i32(i32 %i.ab, i32 %i.n) ; 5 uses
   %i.ac = icmp sgt i32 %.0188, 0
   %or.cond = select i1 %i.v, i1 %i.ac, i1 false
   br i1 %or.cond, label %bb.j, label %bb.b
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ad, label %bb.c, label %.loopexit227
 
 bb.c:                                             ; preds = %bb.b
-  %i.ae = lshr i32 %.0188, 4                      ; 2 uses
+  %i.ae = lshr i32 %.0188, 4                      ; 3 uses
   %i.af = trunc nuw nsw i32 %. to i16
   br label %bb.d
 
@@ -242,8 +242,8 @@ bb.e:                                             ; preds = %.rtcont
 bb.f:                                             ; preds = %.rtcont, %bb.e
   %.1204 = phi ptr [ %i.aj, %bb.e ], [ %.0203, %.rtcont ] ; 4 uses
   %.1197 = phi ptr [ %i.ai, %bb.e ], [ %.0196, %.rtcont ] ; 4 uses
-  %.1 = phi i32 [ 0, %bb.e ], [ %.0171, %.rtcont ] ; 3 uses
-  %i.am = sub nsw i32 %i.ae, %.1                  ; 4 uses
+  %.1 = phi i32 [ 0, %bb.e ], [ %.0171, %.rtcont ] ; 2 uses
+  %i.am = sub i32 %i.ae, %.1                      ; 5 uses
   %i.an = shl nsw i32 %i.am, 4                    ; 2 uses
   %i.ao = sub nsw i32 %.0188, %i.an               ; 4 uses
   %.not = icmp eq ptr %i.p, null
@@ -256,10 +256,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ar, label %.lr.ph.preheader, label %.loopexit227
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %2 = lshr i32 %.0188, 4                         ; 2 uses
-  %3 = sub i32 %2, %.1
   %.neg = add i32 %.1, 1
-  %xtraiter = and i32 %3, 1
+  %xtraiter = and i32 %i.am, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
@@ -288,7 +286,7 @@ bb.g:                                             ; preds = %bb.f
   %.0181228.unr = phi ptr [ %i.p, %.lr.ph.preheader ], [ %i.bc, %.lr.ph.prol ]
   %.lcssa277.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %i.bb, %.lr.ph.prol ]
   %.lcssa276.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.bc, %.lr.ph.prol ]
-  %i.be = icmp eq i32 %2, %.neg
+  %i.be = icmp eq i32 %i.ae, %.neg
   br i1 %i.be, label %.loopexit227, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

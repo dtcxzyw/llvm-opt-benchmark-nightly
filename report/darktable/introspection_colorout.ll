@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !142
   %i.k = sext i32 %i.j to i64
-  %i.l = mul nsw i64 %i.k, %i.h                   ; 10 uses
+  %i.l = mul nsw i64 %i.k, %i.h                   ; 11 uses
   %i.m = load i32, ptr %i.e, align 64, !tbaa !40
   %i.n = icmp eq i32 %i.m, 6
   br i1 %i.n, label %bb.c, label %bb.d
@@ -608,11 +608,11 @@ bb.am:                                            ; preds = %bb.d
   br i1 %i.kn, label %.preheader.us.i, label %.lr.ph36.split.i
 
 .preheader.us.i:                                  ; preds = %.lr.ph36.i, %.loopexit.us.i
-  %indvars.iv43.i = phi i64 [ %indvars.iv.next44.i, %.loopexit.us.i ], [ 0, %.lr.ph36.i ] ; 2 uses
-  %indvars.iv41.i = phi i64 [ %indvars.iv.next42.i, %.loopexit.us.i ], [ %i.kk, %.lr.ph36.i ] ; 2 uses
+  %indvars.iv43.i = phi i64 [ %indvars.iv.next44.i, %.loopexit.us.i ], [ 0, %.lr.ph36.i ] ; 3 uses
+  %indvars.iv41.i = phi i64 [ %indvars.iv.next42.i, %.loopexit.us.i ], [ %i.kk, %.lr.ph36.i ] ; 3 uses
   %.03235.us.i = phi i64 [ %i.kq, %.loopexit.us.i ], [ 0, %.lr.ph36.i ] ; 4 uses
-  %umin.a = tail call i64 @llvm.umin.i64(i64 %indvars.iv41.i, i64 %i.l)
-  %i.kp = add i64 %umin.a, %indvars.iv43.i        ; 2 uses
+  %umin.a = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %indvars.iv41.i)
+  %i.kp = add i64 %umin.a, %indvars.iv43.i
   %umax = tail call i64 @llvm.umax.i64(i64 %i.kp, i64 1) ; 3 uses
   %i.kq = add i64 %.03235.us.i, %i.kk             ; 3 uses
   %i.kr = tail call i64 @llvm.umin.i64(i64 %i.kq, i64 range(i64 -4611686016279904256, 4611686018427387905) %i.l) ; 2 uses
@@ -627,8 +627,10 @@ bb.am:                                            ; preds = %bb.d
   br i1 %.not38.i, label %.loopexit.us.i, label %.lr.ph.us.i.preheader
 
 .lr.ph.us.i.preheader:                            ; preds = %.preheader.us.i
+  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv41.i, i64 %i.l)
+  %6 = add i64 %umin, %indvars.iv43.i
   %xtraiter = and i64 %umax, 1
-  %i.ky = icmp ult i64 %i.kp, 2
+  %i.ky = icmp ult i64 %6, 2
   br i1 %i.ky, label %.lr.ph.us.i.epil.preheader, label %.lr.ph.us.i.preheader.new
 
 .lr.ph.us.i.preheader.new:                        ; preds = %.lr.ph.us.i.preheader

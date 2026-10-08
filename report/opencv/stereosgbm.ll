@@ -205,9 +205,9 @@ bb.bf:                                            ; preds = %_ZNK2cv11_InputArra
   %.sroa.speculated927.i = call i32 @llvm.smax.i32(i32 %i.kn, i32 0) ; 3 uses
   %.sroa.speculated921.i = call i32 @llvm.smin.i32(i32 %i.kk, i32 0)
   %i.li = add i32 %i.lf, %.sroa.speculated921.i   ; 3 uses
-  %i.lj = sub i32 %i.li, %.sroa.speculated927.i   ; 8 uses
+  %i.lj = sub i32 %i.li, %.sroa.speculated927.i   ; 5 uses
   %i.lk = sext i32 %i.km to i64                   ; 6 uses
-  %i.ll = add nsw i64 %i.lk, 7                    ; 5 uses
+  %i.ll = add nsw i64 %i.lk, 7                    ; 4 uses
   %i.lm = and i64 %i.ll, -8                       ; 4 uses
   %i.ln = trunc i64 %i.lm to i32                  ; 7 uses
   %i.lo = add nsw i32 %i.ln, 8                    ; 3 uses
@@ -348,7 +348,7 @@ _ZNK2cv10BufferSGBM8initCBufEs.exit.i:            ; preds = %vec.epilog.scalar.p
   %i.nh = getelementptr inbounds nuw i8, ptr %7, i64 50 ; 6 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %7, i64 136 ; 6 uses
   %i.nj = add i32 %i.lh, -1                       ; 2 uses
-  %i.nk = add i32 %i.lj, -1                       ; 4 uses
+  %i.nk = add i32 %i.lj, -1                       ; 2 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %26, i64 24
   %i.nm = getelementptr inbounds nuw i8, ptr %26, i64 128
   %i.nn = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 3 uses
@@ -357,7 +357,7 @@ _ZNK2cv10BufferSGBM8initCBufEs.exit.i:            ; preds = %vec.epilog.scalar.p
   %i.nq = getelementptr inbounds nuw i8, ptr %7, i64 72 ; 2 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 2 uses
   %i.ns = xor i32 %i.lv, -1                       ; 2 uses
-  %i.nt = mul nsw i32 %i.lj, %i.ln                ; 3 uses
+  %i.nt = mul i32 %i.lj, %i.ln                    ; 6 uses
   %i.nu = icmp sgt i32 %i.nt, 0                   ; 2 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %7, i64 80 ; 3 uses
   %i.nw = getelementptr inbounds nuw i8, ptr %7, i64 104
@@ -369,7 +369,7 @@ _ZNK2cv10BufferSGBM8initCBufEs.exit.i:            ; preds = %vec.epilog.scalar.p
   %i.oc = mul i32 %i.lv, %i.ln                    ; 4 uses
   %.not6041006.i = icmp slt i32 %i.oc, %i.ln
   %i.od = icmp sgt i32 %i.nt, %i.ln               ; 2 uses
-  %i.oe = mul nsw i32 %i.nk, %i.ln                ; 2 uses
+  %i.oe = mul i32 %i.nk, %i.ln                    ; 4 uses
   %.neg603.i = mul i32 %i.ns, %i.ln               ; 2 uses
   %i.of = add nsw i32 %i.lv, 1                    ; 2 uses
   %i.og = shl nsw i32 %i.lo, 1
@@ -380,52 +380,42 @@ _ZNK2cv10BufferSGBM8initCBufEs.exit.i:            ; preds = %vec.epilog.scalar.p
   %i.ol = getelementptr inbounds nuw i8, ptr %7, i64 88 ; 2 uses
   %i.om = trunc i32 %i.kk to i16
   %i.on = add nsw i32 %i.km, -1
-  %31 = trunc i64 %i.ll to i32                    ; 2 uses
-  %32 = and i32 %31, -8
-  %33 = mul i32 %32, %i.lj
   %i.oo = sext i32 %i.oc to i64                   ; 7 uses
-  %i.op = sext i32 %i.nt to i64                   ; 2 uses
+  %i.op = sext i32 %i.nt to i64                   ; 4 uses
   %i.oq = sext i32 %i.og to i64
   %i.or = sext i32 %i.oh to i64
   %i.os = sext i32 %i.lj to i64
   %i.ot = zext nneg i32 %.sroa.speculated927.i to i64 ; 3 uses
   %i.ou = sext i32 %i.lv to i64
-  %wide.trip.count.i = zext i32 %33 to i64        ; 2 uses
+  %wide.trip.count.i = zext i32 %i.nt to i64      ; 11 uses
   %wide.trip.count1100.i = zext i32 %i.km to i64  ; 31 uses
   %wide.trip.count1142.i = zext i32 %i.lf to i64  ; 8 uses
   %wide.trip.count1164.i = zext nneg i32 %i.li to i64
   %i.ov = trunc i32 %i.of to i16
   %i.ow = ashr exact i64 %sext.i75, 31            ; 6 uses
-  %34 = lshr i64 %i.ll, 3
-  %35 = trunc i64 %34 to i32                      ; 5 uses
-  %36 = mul i32 %i.lj, %35
-  %37 = shl i32 %36, 3
-  %38 = sext i32 %37 to i64                       ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %i.ow, i64 %38)
-  %i.ox = icmp slt i64 %i.ow, %38
+  %smax = call i64 @llvm.smax.i64(i64 %i.ow, i64 %i.op)
+  %i.ox = icmp slt i64 %i.ow, %i.op
   %umin = zext i1 %i.ox to i64                    ; 2 uses
   %i.oy = or disjoint i64 %i.ow, %umin
   %i.oz = sub i64 %smax, %i.oy
   %i.pa = shl nuw nsw i64 %wide.trip.count1100.i, 1 ; 4 uses
-  %i.pb = mul i32 %i.lv, %35
-  %i.pc = shl i32 %35, 3
+  %31 = lshr i64 %i.ll, 3
+  %32 = trunc i64 %31 to i32                      ; 3 uses
+  %i.pb = mul i32 %i.lv, %32
+  %i.pc = shl i32 %32, 3
   %i.pd = shl i32 %i.lv, 3
   %i.pe = add i32 %i.pd, 8
-  %39 = mul i32 %i.pe, %35
-  %i.pf = mul i32 %i.nk, %35
-  %40 = shl i32 %i.pf, 3
+  %i.pf = mul i32 %i.pe, %32
   %i.pg = shl nuw nsw i64 %wide.trip.count1100.i, 1 ; 2 uses
   %i.ph = ashr exact i64 %sext.i75, 31            ; 4 uses
   %i.pi = ashr exact i64 %sext.i75, 31
   %i.pj = lshr i64 %i.ll, 3
-  %i.pk = trunc i64 %i.pj to i32                  ; 3 uses
+  %i.pk = trunc i64 %i.pj to i32                  ; 2 uses
   %i.pl = mul i32 %i.lv, %i.pk
   %i.pm = and i64 %i.ll, 4294967288
   %i.pn = shl i32 %i.lv, 3
   %i.po = add i32 %i.pn, 8
-  %41 = mul i32 %i.po, %i.pk
-  %i.pp = mul i32 %i.nk, %i.pk
-  %42 = shl i32 %i.pp, 3
+  %i.pp = mul i32 %i.po, %i.pk
   %i.pq = ashr exact i64 %sext.i75, 31            ; 6 uses
   %i.pr = or disjoint i64 %i.oo, 1
   %smax422 = call i64 @llvm.smax.i64(i64 %i.pq, i64 %i.pr)
@@ -462,25 +452,17 @@ _ZNK2cv10BufferSGBM8initCBufEs.exit.i:            ; preds = %vec.epilog.scalar.p
   %i.qo = udiv i64 %i.qn, %umax441
   %i.qp = add i64 %i.qo, %umin440
   %i.qq = add i64 %i.qp, 1                        ; 7 uses
-  %43 = lshr i32 %31, 3
-  %44 = mul i32 %43, %i.lj
-  %45 = shl i32 %44, 3                            ; 7 uses
-  %46 = zext i32 %45 to i64
-  %i.qr = shl nuw nsw i64 %46, 1                  ; 2 uses
-  %47 = zext i32 %45 to i64                       ; 4 uses
-  %48 = zext i32 %45 to i64                       ; 4 uses
+  %i.qr = shl nuw nsw i64 %wide.trip.count.i, 1   ; 2 uses
   %i.qs = add nsw i64 %wide.trip.count1100.i, -1
-  %min.iters.check515 = icmp eq i32 %45, 0
-  %min.iters.check517 = icmp ult i32 %45, 16
-  %i.qt = and i64 %48, 8
-  %n.vec519 = and i64 %48, 4294967280             ; 4 uses
-  %cmp.n530 = icmp eq i64 %n.vec519, %48
-  %min.epilog.iters.check535.not.not.a = icmp eq i64 %i.qt, 0
-  %min.iters.check479 = icmp eq i32 %45, 0
-  %min.iters.check481 = icmp ult i32 %45, 16
-  %i.qu = and i64 %47, 8
-  %n.vec483 = and i64 %47, 4294967280             ; 4 uses
-  %cmp.n492 = icmp eq i64 %n.vec483, %47
+  %min.iters.check517 = icmp ult i32 %i.nt, 16
+  %i.qt = and i64 %wide.trip.count.i, 8
+  %n.vec519 = and i64 %wide.trip.count.i, 2147483632 ; 4 uses
+  %min.epilog.iters.check535.not.not.a = icmp eq i64 %n.vec519, %wide.trip.count.i
+  %min.iters.check479 = icmp eq i64 %i.qt, 0
+  %min.iters.check481 = icmp ult i32 %i.nt, 16
+  %i.qu = and i64 %wide.trip.count.i, 8
+  %n.vec483 = and i64 %wide.trip.count.i, 2147483632 ; 4 uses
+  %cmp.n492 = icmp eq i64 %n.vec483, %wide.trip.count.i
   %min.epilog.iters.check497.not.not = icmp eq i64 %i.qu, 0
   %min.iters.check443 = icmp ult i64 %i.qq, 8
   %i.qv = icmp slt i64 %i.pq, 0                   ; 2 uses
@@ -788,7 +770,7 @@ bb.bw:                                            ; preds = %.loopexit988.i, %.l
   %i.wk = mul i64 %i.wj, %i.wi
   %i.wl = getelementptr [2 x i8], ptr %i.wf, i64 %i.wk ; 31 uses
   %i.wm = icmp slt i32 %storemerge1031.i, %i.lh
-  br i1 %i.wm, label %bb.bx, label %49
+  br i1 %i.wm, label %bb.bx, label %.preheader991.i.a
 
 bb.bx:                                            ; preds = %bb.bw
   %i.wn = load ptr, ptr %i.nv, align 8, !tbaa !458
@@ -1191,8 +1173,8 @@ vector.memcheck341:                               ; preds = %.lr.ph1017.i
   %i.afw = add i64 %i.ael, %i.afv                 ; 2 uses
   %i.afx = mul i64 %i.pm, %indvar343              ; 2 uses
   %i.afy = trunc i64 %i.afx to i32
-  %i.afz = add i32 %41, %i.afy
-  %i.aga = call i32 @llvm.smin.i32(i32 %i.afz, i32 %42)
+  %i.afz = add i32 %i.pp, %i.afy
+  %i.aga = call i32 @llvm.smin.i32(i32 %i.afz, i32 %i.oe)
   %smin350 = sext i32 %i.aga to i64
   %i.agb = shl nsw i64 %smin350, 1                ; 2 uses
   %i.agc = trunc i64 %i.afx to i32
@@ -1440,8 +1422,8 @@ vec.epilog.scalar.ph326:                          ; preds = %vec.epilog.scalar.p
 
 vector.memcheck238:                               ; preds = %.lr.ph1026.i
   %i.aju = mul i32 %i.pc, %indvar                 ; 2 uses
-  %i.ajv = add i32 %39, %i.aju
-  %i.ajw = call i32 @llvm.smin.i32(i32 %i.ajv, i32 %40)
+  %i.ajv = add i32 %i.pf, %i.aju
+  %i.ajw = call i32 @llvm.smin.i32(i32 %i.ajv, i32 %i.oe)
   %smin = sext i32 %i.ajw to i64
   %i.ajx = shl nsw i64 %smin, 1
   %scevgep253 = getelementptr i8, ptr %scevgep252, i64 %i.ajx ; 2 uses
@@ -1550,14 +1532,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvar.next = add i32 %indvar, 1
   br i1 %i.amh, label %.lr.ph1026.i, label %.loopexit988.i, !llvm.loop !424
 
-49:                                               ; preds = %bb.bw
-  br i1 %i.vf, label %.preheader991.i.a, label %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i
-
-.preheader991.i.a:                                ; preds = %49
-  br i1 %i.nu, label %iter.check494, label %.loopexit988.i
+.preheader991.i.a:                                ; preds = %bb.bw
+  br i1 %i.vf, label %iter.check494, label %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i
 
 iter.check494:                                    ; preds = %.preheader991.i.a
-  br i1 %min.iters.check479, label %.lr.ph1005.i.preheader, label %vector.memcheck470
+  br i1 %i.nu, label %vector.memcheck470, label %.loopexit988.i
 
 vector.memcheck470:                               ; preds = %iter.check494
   %scevgep473 = getelementptr i8, ptr %i.wf, i64 %i.qr
@@ -1600,8 +1579,8 @@ vec.epilog.vector.body500.preheader:              ; preds = %vector.main.loop.it
   %index501.ph = phi i64 [ 0, %vector.main.loop.iter.check480 ], [ %n.vec483, %vec.epilog.iter.check496 ]
   br label %vec.epilog.vector.body500
 
-.lr.ph1005.i.preheader:                           ; preds = %iter.check494, %vector.memcheck470, %vec.epilog.iter.check496
-  %indvars.iv1090.i.ph = phi i64 [ 0, %vector.memcheck470 ], [ %n.vec483, %vec.epilog.iter.check496 ], [ 0, %iter.check494 ]
+.lr.ph1005.i.preheader:                           ; preds = %vector.memcheck470, %vec.epilog.iter.check496
+  %indvars.iv1090.i.ph = phi i64 [ %n.vec483, %vec.epilog.iter.check496 ], [ 0, %vector.memcheck470 ]
   br label %.lr.ph1005.i
 
 vec.epilog.vector.body500:                        ; preds = %vec.epilog.vector.body500.preheader, %vec.epilog.vector.body500
@@ -1613,28 +1592,25 @@ vec.epilog.vector.body500:                        ; preds = %vec.epilog.vector.b
   %i.amt = add <8 x i16> %wide.load503, %wide.load502
   store <8 x i16> %i.amt, ptr %i.amr, align 2, !tbaa !77, !alias.scope !472, !noalias !473
   %index.next504 = add nuw i64 %index501, 8       ; 2 uses
-  %i.amu = icmp eq i64 %index.next504, %47
+  %i.amu = icmp eq i64 %index.next504, %wide.trip.count.i
   br i1 %i.amu, label %.loopexit988.i, label %vec.epilog.vector.body500, !llvm.loop !429
 
-_ZNK2cv10BufferSGBM7getCBufEi.exit651.i:          ; preds = %49
+_ZNK2cv10BufferSGBM7getCBufEi.exit651.i:          ; preds = %.preheader991.i.a
   %i.amv = urem i64 %i.vm, %i.we                  ; 2 uses
   %i.amw = mul i64 %i.amv, %i.wj
   %i.amx = getelementptr inbounds nuw [2 x i8], ptr %i.wf, i64 %i.amw ; 4 uses
   %i.amy = load ptr, ptr %i.nn, align 8, !tbaa !135 ; 2 uses
-  %50 = ptrtoaddr ptr %i.amy to i64
   %i.amz = load i8, ptr %i.no, align 8, !tbaa !169, !range !69, !noundef !70
   %i.ana = trunc nuw i8 %i.amz to i1
   %i.anb = mul i64 %i.wj, %i.vn
   %i.anc = select i1 %i.ana, i64 %i.anb, i64 0    ; 2 uses
   %i.and = getelementptr inbounds nuw [2 x i8], ptr %i.amy, i64 %i.anc ; 4 uses
-  br i1 %i.nu, label %iter.check532, label %.loopexit988.i
+  br i1 %i.nu, label %vector.memcheck508, label %.loopexit988.i
 
-iter.check532:                                    ; preds = %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i
-  br i1 %min.iters.check515, label %.lr.ph.i86.preheader, label %vector.memcheck508
-
-vector.memcheck508:                               ; preds = %iter.check532
+vector.memcheck508:                               ; preds = %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i
+  %33 = ptrtoaddr ptr %i.amy to i64
   %i.ane = shl i64 %i.anc, 1
-  %i.anf = add i64 %i.ane, %50
+  %i.anf = add i64 %i.ane, %33
   %i.ang = sub i64 %i.anf, %i.wa
   %diff.check509 = icmp ugt i64 %i.ang, -32
   %i.anh = shl i64 %i.wj, 1
@@ -1681,17 +1657,17 @@ vector.body520:                                   ; preds = %vector.main.loop.it
   br i1 %i.aob, label %middle.block529, label %vector.body520, !llvm.loop !430
 
 middle.block529:                                  ; preds = %vector.body520
-  br i1 %cmp.n530, label %.loopexit988.i, label %vec.epilog.iter.check534
+  br i1 %min.epilog.iters.check535.not.not.a, label %.loopexit988.i, label %vec.epilog.iter.check534
 
 vec.epilog.iter.check534:                         ; preds = %middle.block529
-  br i1 %min.epilog.iters.check535.not.not.a, label %.lr.ph.i86.preheader, label %vec.epilog.vector.body538.preheader, !prof !462
+  br i1 %min.iters.check479, label %.lr.ph.i86.preheader, label %vec.epilog.vector.body538.preheader, !prof !462
 
 vec.epilog.vector.body538.preheader:              ; preds = %vector.main.loop.iter.check516, %vec.epilog.iter.check534
   %index539.ph = phi i64 [ 0, %vector.main.loop.iter.check516 ], [ %n.vec519, %vec.epilog.iter.check534 ]
   br label %vec.epilog.vector.body538
 
-.lr.ph.i86.preheader:                             ; preds = %iter.check532, %vector.memcheck508, %vec.epilog.iter.check534
-  %indvars.iv.i87.ph = phi i64 [ 0, %vector.memcheck508 ], [ %n.vec519, %vec.epilog.iter.check534 ], [ 0, %iter.check532 ]
+.lr.ph.i86.preheader:                             ; preds = %vector.memcheck508, %vec.epilog.iter.check534
+  %indvars.iv.i87.ph = phi i64 [ %n.vec519, %vec.epilog.iter.check534 ], [ 0, %vector.memcheck508 ]
   br label %.lr.ph.i86
 
 vec.epilog.vector.body538:                        ; preds = %vec.epilog.vector.body538.preheader, %vec.epilog.vector.body538
@@ -1707,7 +1683,7 @@ vec.epilog.vector.body538:                        ; preds = %vec.epilog.vector.b
   %i.aoh = getelementptr inbounds nuw [2 x i8], ptr %i.vc, i64 %index539
   store <8 x i16> %i.aog, ptr %i.aoh, align 2, !tbaa !77
   %index.next543 = add nuw i64 %index539, 8       ; 2 uses
-  %i.aoi = icmp eq i64 %index.next543, %48
+  %i.aoi = icmp eq i64 %index.next543, %wide.trip.count.i
   br i1 %i.aoi, label %.loopexit988.i, label %vec.epilog.vector.body538, !llvm.loop !431
 
 .lr.ph.i86:                                       ; preds = %.lr.ph.i86, %.lr.ph.i86.preheader
@@ -1770,9 +1746,9 @@ vec.epilog.vector.body538:                        ; preds = %vec.epilog.vector.b
   %exitcond1094.not.i.3 = icmp eq i64 %indvars.iv.next1091.i.3, %wide.trip.count.i
   br i1 %exitcond1094.not.i.3, label %.loopexit988.i, label %.lr.ph1005.i, !llvm.loop !433
 
-.loopexit988.i:                                   ; preds = %vec.epilog.vector.body538, %.lr.ph.i86, %vec.epilog.vector.body500, %.lr.ph1005.i, %._crit_edge1018.i, %._crit_edge1027.i, %middle.block529, %middle.block491, %._crit_edge1012.thread.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i, %.preheader991.i.a, %.preheader987.thread.i, %.preheader989.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i
-  %i.apv = phi i64 [ %.pre1179.i, %._crit_edge1012.thread.i ], [ %.pre1179.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i ], [ %i.we, %middle.block529 ], [ %.pre1179.i, %.preheader987.thread.i ], [ %i.we, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i ], [ %i.we, %.preheader991.i.a ], [ %.pre1179.i, %.preheader989.i ], [ %i.we, %.lr.ph.i86 ], [ %i.we, %middle.block491 ], [ %.pre1179.i, %._crit_edge1027.i ], [ %.pre1179.i, %._crit_edge1018.i ], [ %i.we, %.lr.ph1005.i ], [ %i.we, %vec.epilog.vector.body500 ], [ %i.we, %vec.epilog.vector.body538 ]
-  %i.apw = phi ptr [ %.pre.i, %._crit_edge1012.thread.i ], [ %.pre.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i ], [ %i.wf, %middle.block529 ], [ %.pre.i, %.preheader987.thread.i ], [ %i.wf, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i ], [ %i.wf, %.preheader991.i.a ], [ %.pre.i, %.preheader989.i ], [ %i.wf, %.lr.ph.i86 ], [ %i.wf, %middle.block491 ], [ %.pre.i, %._crit_edge1027.i ], [ %.pre.i, %._crit_edge1018.i ], [ %i.wf, %.lr.ph1005.i ], [ %i.wf, %vec.epilog.vector.body500 ], [ %i.wf, %vec.epilog.vector.body538 ]
+.loopexit988.i:                                   ; preds = %vec.epilog.vector.body538, %.lr.ph.i86, %vec.epilog.vector.body500, %.lr.ph1005.i, %._crit_edge1018.i, %._crit_edge1027.i, %middle.block529, %middle.block491, %._crit_edge1012.thread.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i, %iter.check494, %.preheader987.thread.i, %.preheader989.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i
+  %i.apv = phi i64 [ %.pre1179.i, %._crit_edge1012.thread.i ], [ %.pre1179.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i ], [ %i.we, %middle.block529 ], [ %.pre1179.i, %.preheader987.thread.i ], [ %i.we, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i ], [ %i.we, %iter.check494 ], [ %.pre1179.i, %.preheader989.i ], [ %i.we, %.lr.ph.i86 ], [ %i.we, %middle.block491 ], [ %.pre1179.i, %._crit_edge1027.i ], [ %.pre1179.i, %._crit_edge1018.i ], [ %i.we, %.lr.ph1005.i ], [ %i.we, %vec.epilog.vector.body500 ], [ %i.we, %vec.epilog.vector.body538 ]
+  %i.apw = phi ptr [ %.pre.i, %._crit_edge1012.thread.i ], [ %.pre.i, %_ZNK2cv10BufferSGBM7getCBufEi.exit639.i ], [ %i.wf, %middle.block529 ], [ %.pre.i, %.preheader987.thread.i ], [ %i.wf, %_ZNK2cv10BufferSGBM7getCBufEi.exit651.i ], [ %i.wf, %iter.check494 ], [ %.pre.i, %.preheader989.i ], [ %i.wf, %.lr.ph.i86 ], [ %i.wf, %middle.block491 ], [ %.pre.i, %._crit_edge1027.i ], [ %.pre.i, %._crit_edge1018.i ], [ %i.wf, %.lr.ph1005.i ], [ %i.wf, %vec.epilog.vector.body500 ], [ %i.wf, %vec.epilog.vector.body538 ]
   %i.apx = add i32 %storemerge1031.i, 1           ; 2 uses
   %exitcond1130.not.i = icmp eq i32 %i.apx, %indvars.iv1128.i
   br i1 %exitcond1130.not.i, label %._crit_edge1034.loopexit.i, label %bb.bw, !llvm.loop !434
