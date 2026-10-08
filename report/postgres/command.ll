@@ -204,8 +204,8 @@ do_connect.exit.i:                                ; preds = %bb.fk, %bb.fj, %bb.
   br label %bb.fl
 
 bb.fl:                                            ; preds = %do_connect.exit.i, %bb.ai
-  %.12358.i = phi ptr [ %.12359.i, %do_connect.exit.i ], [ %i.ce, %bb.ai ]
-  %.125.i = phi i32 [ %.0207.i.i, %do_connect.exit.i ], [ 5, %bb.ai ]
+  %.12358.i = phi ptr [ %i.ce, %bb.ai ], [ %.12359.i, %do_connect.exit.i ]
+  %.125.i = phi i32 [ 5, %bb.ai ], [ %.0207.i.i, %do_connect.exit.i ]
   call void @free(ptr noundef %.12358.i) #16
   br label %copy_previous_query.exit
 
@@ -608,11 +608,11 @@ bb.s:                                             ; preds = %bb.r, %.thread43
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 2, 6) i32 @exec_command_watch(ptr noundef %0, i1 noundef zeroext %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.printQueryOpt, align 8      ; 13 uses
-  %5 = alloca %struct.__sigset_t, align 8         ; 10 uses
-  %6 = alloca %struct.__sigset_t, align 8         ; 8 uses
-  %7 = alloca %struct.__sigset_t, align 8         ; 10 uses
-  %8 = alloca %struct.itimerval, align 8          ; 10 uses
+  %4 = alloca %struct.printQueryOpt, align 8      ; 14 uses
+  %5 = alloca %struct.__sigset_t, align 8         ; 11 uses
+  %6 = alloca %struct.__sigset_t, align 8         ; 9 uses
+  %7 = alloca %struct.__sigset_t, align 8         ; 11 uses
+  %8 = alloca %struct.itimerval, align 8          ; 11 uses
   %i.a = alloca i64, align 8                      ; 19 uses
   %i.b = alloca [128 x i8], align 16              ; 20 uses
   %i.c = alloca i32, align 4                      ; 6 uses
@@ -904,9 +904,14 @@ bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   br i1 %i.bz, label %bb.ah, label %bb.ai
 
-bb.ah:                                            ; preds = %copy_previous_query.exit, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %copy_previous_query.exit
   call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.348) #16
-  br label %do_watch.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
+  br label %.loopexit
 
 bb.ai:                                            ; preds = %.thread, %bb.ag
   %.fr105.i88189 = phi i64 [ %.fr105.i88188, %.thread ], [ %.fr105.i88, %bb.ag ] ; 4 uses
@@ -1206,7 +1211,8 @@ bb.bo:                                            ; preds = %.lr.ph.i
   %.us-phi.i = phi i32 [ %i.er, %bb.be ], [ %i.ei, %bb.ba ], [ %i.dy, %bb.ax ], [ %i.dy, %.lr.ph98.split.us.split.split.us.i ], [ %i.dy, %bb.av ], [ %i.ei, %.lr.ph98.split.us.split.split.split.us.i ], [ %i.er, %.lr.ph98.split.us.split.split.split.i ], [ %i.er, %bb.bd ], [ %i.fc, %bb.bi ], [ %i.fc, %bb.bk ], [ %i.fc, %bb.bm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  %i.fo = icmp sgt i32 %.us-phi.i, -1
+  %.us-phi.i.fr = freeze i32 %.us-phi.i
+  %i.fo = icmp sgt i32 %.us-phi.i.fr, -1
   %i.fp = select i1 %i.fo, i32 2, i32 5
   br label %.loopexit96.i
 
@@ -1223,24 +1229,20 @@ bb.bo:                                            ; preds = %.lr.ph.i
 bb.bp:                                            ; preds = %.loopexit96.i
   %i.fr = call i32 @pclose(ptr noundef nonnull %.05283.i) ; 0 uses
   call void @restore_sigpipe_trap() #16
-  br label %9
+  br label %do_watch.exit
 
 bb.bq:                                            ; preds = %.loopexit96.i
   %i.fs = load ptr, ptr @stdout, align 8
   %i.ft = call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.fs, ptr noundef nonnull @.str.291) #16 ; 0 uses
   %i.fu = load ptr, ptr @stdout, align 8
   %i.fv = call i32 @fflush(ptr noundef %i.fu)     ; 0 uses
-  br label %9
-
-9:                                                ; preds = %bb.bq, %bb.bp
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, i8 0, i64 32, i1 false)
-  %10 = call i32 @setitimer(i32 noundef 0, ptr noundef nonnull %8, ptr noundef null) #16 ; 0 uses
-  %11 = call i32 @sigprocmask(i32 noundef 1, ptr noundef nonnull %5, ptr noundef null) #16 ; 0 uses
-  call void @pg_free(ptr noundef %i.dp) #16
   br label %do_watch.exit
 
-do_watch.exit:                                    ; preds = %bb.ah, %9
-  %.054.i = phi i32 [ 5, %bb.ah ], [ %.151.i, %9 ]
+do_watch.exit:                                    ; preds = %bb.bp, %bb.bq
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, i8 0, i64 32, i1 false)
+  %9 = call i32 @setitimer(i32 noundef 0, ptr noundef nonnull %8, ptr noundef null) #16 ; 0 uses
+  %10 = call i32 @sigprocmask(i32 noundef 1, ptr noundef nonnull %5, ptr noundef null) #16 ; 0 uses
+  call void @pg_free(ptr noundef %i.dp) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
@@ -1253,8 +1255,8 @@ do_watch.exit:                                    ; preds = %bb.ah, %9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.c, %..loopexit_crit_edge.critedge, %do_watch.exit
-  %.5 = phi i32 [ %.054.i, %do_watch.exit ], [ 5, %..loopexit_crit_edge.critedge ], [ 5, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %..loopexit_crit_edge.critedge, %do_watch.exit, %bb.ah
+  %.5 = phi i32 [ %.151.i, %do_watch.exit ], [ 5, %bb.ah ], [ 5, %..loopexit_crit_edge.critedge ], [ 5, %bb.c ]
   call void @resetPQExpBuffer(ptr noundef %2) #16
   call void @psql_scan_reset(ptr noundef %0) #16
   br label %ignore_slash_options.exit

@@ -204,7 +204,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i84: ; p
   br i1 %.not54.i, label %.loopexit.i86, label %.lr.ph119.i
 
 .loopexit.i86:                                    ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i84, %._crit_edge114.i, %bb.bm
-  %.0142 = phi i1 [ false, %._crit_edge114.i ], [ true, %bb.bm ], [ false, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i84 ] ; 3 uses
+  %.0142 = phi i1 [ false, %._crit_edge114.i ], [ true, %bb.bm ], [ false, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i84 ] ; 4 uses
   %.3.i = phi i1 [ %.1.lcssa.i, %._crit_edge114.i ], [ true, %bb.bm ], [ true, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i84 ]
   %i.acm = load ptr, ptr %i.wm, align 8, !tbaa !16 ; 2 uses
   %i.acn = icmp eq ptr %i.acm, %i.wn
@@ -269,7 +269,7 @@ _ZN4llvm9BitVector5resetEv.exit.i98:              ; preds = %.lr.ph.i.i.i.i.i.pr
   br label %bb.br
 
 bb.br:                                            ; preds = %_ZN12_GLOBAL__N_127AArch64SpeculationHardening26expandSpeculationSafeValueERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEb.exit.i, %.lr.ph123.i
-  %.0122.i = phi i1 [ false, %.lr.ph123.i ], [ %.0.i.i113, %_ZN12_GLOBAL__N_127AArch64SpeculationHardening26expandSpeculationSafeValueERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEb.exit.i ] ; 3 uses
+  %.0122.i = phi i1 [ false, %.lr.ph123.i ], [ %.0.i.i113, %_ZN12_GLOBAL__N_127AArch64SpeculationHardening26expandSpeculationSafeValueERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEb.exit.i ] ; 4 uses
   %.sroa.088.0120.i = phi ptr [ %i.acx, %.lr.ph123.i ], [ %i.adn, %_ZN12_GLOBAL__N_127AArch64SpeculationHardening26expandSpeculationSafeValueERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEb.exit.i ] ; 27 uses
   %i.ada = getelementptr inbounds nuw i8, ptr %.sroa.088.0120.i, i64 72 ; 2 uses
   %i.adb = load i64, ptr %i.ada, align 8, !tbaa !338
@@ -486,17 +486,20 @@ bb.cd:                                            ; preds = %.lr.ph.i108
   %i.agb = shl nuw i64 1, %i.aga
   %i.agc = and i64 %i.agb, %i.afz
   %.not107.i = icmp eq i64 %i.agc, 0
-  br i1 %.not107.i, label %bb.ce, label %.loopexit.i119
+  br i1 %.not107.i, label %bb.ce, label %.split99.i
 
 bb.ce:                                            ; preds = %bb.cd, %.lr.ph.i108
   %i.agd = getelementptr inbounds nuw i8, ptr %.039118.i, i64 32 ; 2 uses
   %.not41.i = icmp eq ptr %i.agd, %i.afq
   br i1 %.not41.i, label %_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i, label %.lr.ph.i108
 
-.loopexit.i119:                                   ; preds = %bb.cd, %_ZNK4llvm12MachineInstr12isTerminatorENS0_9QueryTypeE.exit.i, %.split92.i, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i105, %.split.i123
+.split99.i:                                       ; preds = %bb.cd
   br i1 %.0142, label %_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i, label %bb.cf
 
-bb.cf:                                            ; preds = %.loopexit.i119
+.loopexit.i119:                                   ; preds = %_ZNK4llvm12MachineInstr12isTerminatorENS0_9QueryTypeE.exit.i, %.split92.i, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit.i105, %.split.i123
+  br i1 %.0142, label %_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i, label %bb.cf
+
+bb.cf:                                            ; preds = %.loopexit.i119, %.split99.i
   %i.age = load ptr, ptr %i.m, align 8, !tbaa !54
   %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 8
   %i.agg = load ptr, ptr %i.agf, align 8, !tbaa !76
@@ -537,8 +540,8 @@ bb.cf:                                            ; preds = %.loopexit.i119
   call void @llvm.memset.p0.i64(ptr align 8 %i.agv, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !22
   br label %_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i
 
-_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i: ; preds = %bb.ce, %.lr.ph.i.i.i.i.i.preheader.i.i.i, %bb.cf, %.loopexit.i119, %_ZNK4llvm9BitVector3anyEv.exit.thread.i
-  %.1.i = phi i1 [ %.0122.i, %.loopexit.i119 ], [ true, %bb.cf ], [ true, %.lr.ph.i.i.i.i.i.preheader.i.i.i ], [ %.0122.i, %_ZNK4llvm9BitVector3anyEv.exit.thread.i ], [ %.0122.i, %bb.ce ]
+_ZN12_GLOBAL__N_127AArch64SpeculationHardening10insertCSDBERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_8DebugLocE.exit.i: ; preds = %bb.ce, %.lr.ph.i.i.i.i.i.preheader.i.i.i, %bb.cf, %.loopexit.i119, %.split99.i, %_ZNK4llvm9BitVector3anyEv.exit.thread.i
+  %.1.i = phi i1 [ %.0122.i, %.loopexit.i119 ], [ %.0122.i, %.split99.i ], [ true, %bb.cf ], [ true, %.lr.ph.i.i.i.i.i.preheader.i.i.i ], [ %.0122.i, %_ZNK4llvm9BitVector3anyEv.exit.thread.i ], [ %.0122.i, %bb.ce ]
   %i.agw = getelementptr inbounds nuw i8, ptr %.sroa.088.0120.i, i64 52
   %i.agx = load i32, ptr %i.agw, align 4, !tbaa !308
   switch i32 %i.agx, label %_ZN12_GLOBAL__N_127AArch64SpeculationHardening26expandSpeculationSafeValueERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEb.exit.i [

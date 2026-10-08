@@ -205,30 +205,39 @@ bb.fc:                                            ; preds = %bb.eo
   %i.agy = add nsw i64 %i.agx, -1
   %i.agz = add i64 %i.agy, %i.agv
   %i.aha = inttoptr i64 %i.agz to ptr
-  %i.ahb = load atomic volatile i64, ptr %i.aha monotonic, align 8
+  %i.ahb = load atomic volatile i64, ptr %i.aha monotonic, align 8 ; 2 uses
   %i.ahc = or disjoint i64 %i.agx, 7
   %i.ahd = add i64 %i.ahc, %i.agv
   %i.ahe = inttoptr i64 %i.ahd to ptr
   %i.ahf = load atomic volatile i64, ptr %i.ahe monotonic, align 8
   %i.ahg = and i64 %i.ahf, 171798691840
   %or.cond2972 = icmp eq i64 %i.ahg, 0
+  br i1 %or.cond2972, label %bb.fd, label %.thread1268, !prof !44
+
+.thread1268:                                      ; preds = %bb.fc
   %15 = add i64 %i.ahb, -1
-  %16 = inttoptr i64 %15 to ptr                   ; 6 uses
+  %16 = inttoptr i64 %15 to ptr
   %17 = load atomic volatile i64, ptr %16 monotonic, align 8
   %18 = add i64 %17, 11
   %19 = inttoptr i64 %18 to ptr
-  %20 = load atomic volatile i16, ptr %19 monotonic, align 2
-  br i1 %or.cond2972, label %bb.fd, label %.thread1268.a, !prof !44
+  %20 = load atomic volatile i16, ptr %19 monotonic, align 2 ; 0 uses
+  br label %.thread1268.a
 
 bb.fd:                                            ; preds = %bb.fc
-  %21 = icmp eq i16 %20, 128
   %i.ahh = and i8 %.sroa.223.0.extract.trunc.i, 4
   %i.ahi = icmp ne i8 %i.ahh, 0
-  %or.cond = or i1 %21, %i.ahi
+  %21 = add i64 %i.ahb, -1
+  %22 = inttoptr i64 %21 to ptr                   ; 6 uses
+  %23 = load atomic volatile i64, ptr %22 monotonic, align 8
+  %24 = add i64 %23, 11
+  %25 = inttoptr i64 %24 to ptr
+  %26 = load atomic volatile i16, ptr %25 monotonic, align 2
+  %27 = icmp eq i16 %26, 128
+  %or.cond = or i1 %i.ahi, %27
   br i1 %or.cond, label %.thread1268.a, label %bb.fe, !prof !45
 
 bb.fe:                                            ; preds = %bb.fd
-  %i.ahj = load atomic volatile i64, ptr %16 monotonic, align 8
+  %i.ahj = load atomic volatile i64, ptr %22 monotonic, align 8
   %i.ahk = add i64 %i.ahj, 11
   %i.ahl = inttoptr i64 %i.ahk to ptr             ; 2 uses
   %i.ahm = load atomic volatile i16, ptr %i.ahl monotonic, align 2
@@ -245,14 +254,14 @@ bb.ff:                                            ; preds = %bb.fe
   ]
 
 bb.fg:                                            ; preds = %bb.ff
-  %i.ahq = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.ahq = getelementptr inbounds nuw i8, ptr %22, i64 16
   br label %_ZN2v88internal12_GLOBAL__N_115GetFastKeyCharsEPNS0_7IsolateENS0_6TaggedINS0_6StringEEENS4_INS0_3MapEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEE.exit498
 
 bb.fh:                                            ; preds = %bb.ff, %bb.ff
-  %i.ahr = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.ahr = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.ahs = load i64, ptr %i.ahr, align 8
   %i.aht = inttoptr i64 %i.ahs to ptr             ; 6 uses
-  %i.ahu = load atomic volatile i64, ptr %16 monotonic, align 8
+  %i.ahu = load atomic volatile i64, ptr %22 monotonic, align 8
   %i.ahv = add i64 %i.ahu, 11
   %i.ahw = inttoptr i64 %i.ahv to ptr
   %i.ahx = load atomic volatile i16, ptr %i.ahw monotonic, align 2
@@ -286,7 +295,7 @@ bb.fl:                                            ; preds = %bb.ff
 
 _ZN2v88internal12_GLOBAL__N_115GetFastKeyCharsEPNS0_7IsolateENS0_6TaggedINS0_6StringEEENS4_INS0_3MapEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEE.exit498: ; preds = %bb.fg, %bb.fj, %bb.fk
   %.0.i497 = phi ptr [ %i.ahq, %bb.fg ], [ %i.aie, %bb.fj ], [ %i.aii, %bb.fk ]
-  %i.aij = getelementptr inbounds nuw i8, ptr %16, i64 12
+  %i.aij = getelementptr inbounds nuw i8, ptr %22, i64 12
   %i.aik = load i32, ptr %i.aij, align 4          ; 2 uses
   %.sroa.01063.4.extract.shift = lshr i64 %.fca.0.extract.i31, 32
   %.sroa.01063.4.extract.trunc = trunc nuw i64 %.sroa.01063.4.extract.shift to i32
@@ -302,7 +311,7 @@ bb.fm:                                            ; preds = %_ZN2v88internal12_G
   %i.aiq = icmp ne i32 %bcmp.i.i499, 0
   br label %bb.fn
 
-.thread1268.a:                                    ; preds = %bb.fc, %bb.fd, %bb.fe
+.thread1268.a:                                    ; preds = %.thread1268, %bb.fd, %bb.fe
   %i.air = add i64 %i.agv, 15
   %i.ais = inttoptr i64 %i.air to ptr             ; 2 uses
   %i.ait = load atomic volatile i32, ptr %i.ais monotonic, align 4
@@ -705,30 +714,39 @@ bb.fg:                                            ; preds = %_ZN2v88internal10Js
   %i.vi = add nsw i64 %i.vh, -1
   %i.vj = add i64 %i.vi, %i.vf
   %i.vk = inttoptr i64 %i.vj to ptr
-  %i.vl = load atomic volatile i64, ptr %i.vk monotonic, align 8
+  %i.vl = load atomic volatile i64, ptr %i.vk monotonic, align 8 ; 2 uses
   %i.vm = or disjoint i64 %i.vh, 7
   %i.vn = add i64 %i.vm, %i.vf
   %i.vo = inttoptr i64 %i.vn to ptr
   %i.vp = load atomic volatile i64, ptr %i.vo monotonic, align 8
   %i.vq = and i64 %i.vp, 171798691840
   %or.cond1392 = icmp eq i64 %i.vq, 0
+  br i1 %or.cond1392, label %bb.fh, label %.thread871, !prof !44
+
+.thread871:                                       ; preds = %bb.fg
   %15 = add i64 %i.vl, -1
-  %16 = inttoptr i64 %15 to ptr                   ; 6 uses
+  %16 = inttoptr i64 %15 to ptr
   %17 = load atomic volatile i64, ptr %16 monotonic, align 8
   %18 = add i64 %17, 11
   %19 = inttoptr i64 %18 to ptr
-  %20 = load atomic volatile i16, ptr %19 monotonic, align 2
-  br i1 %or.cond1392, label %bb.fh, label %.thread874, !prof !44
+  %20 = load atomic volatile i16, ptr %19 monotonic, align 2 ; 0 uses
+  br label %.thread874
 
 bb.fh:                                            ; preds = %bb.fg
-  %21 = icmp eq i16 %20, 128
   %i.vr = and i8 %.sroa.223.0.extract.trunc.i, 4
   %i.vs = icmp ne i8 %i.vr, 0
-  %or.cond = or i1 %21, %i.vs
+  %21 = add i64 %i.vl, -1
+  %22 = inttoptr i64 %21 to ptr                   ; 6 uses
+  %23 = load atomic volatile i64, ptr %22 monotonic, align 8
+  %24 = add i64 %23, 11
+  %25 = inttoptr i64 %24 to ptr
+  %26 = load atomic volatile i16, ptr %25 monotonic, align 2
+  %27 = icmp eq i16 %26, 128
+  %or.cond = or i1 %i.vs, %27
   br i1 %or.cond, label %.thread874, label %bb.fi, !prof !45
 
 bb.fi:                                            ; preds = %bb.fh
-  %i.vt = load atomic volatile i64, ptr %16 monotonic, align 8
+  %i.vt = load atomic volatile i64, ptr %22 monotonic, align 8
   %i.vu = add i64 %i.vt, 11
   %i.vv = inttoptr i64 %i.vu to ptr               ; 2 uses
   %i.vw = load atomic volatile i16, ptr %i.vv monotonic, align 2
@@ -745,14 +763,14 @@ bb.fj:                                            ; preds = %bb.fi
   ]
 
 bb.fk:                                            ; preds = %bb.fj
-  %i.wa = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.wa = getelementptr inbounds nuw i8, ptr %22, i64 16
   br label %_ZN2v88internal12_GLOBAL__N_115GetFastKeyCharsEPNS0_7IsolateENS0_6TaggedINS0_6StringEEENS4_INS0_3MapEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEE.exit295
 
 bb.fl:                                            ; preds = %bb.fj, %bb.fj
-  %i.wb = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.wb = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.wc = load i64, ptr %i.wb, align 8
   %i.wd = inttoptr i64 %i.wc to ptr               ; 6 uses
-  %i.we = load atomic volatile i64, ptr %16 monotonic, align 8
+  %i.we = load atomic volatile i64, ptr %22 monotonic, align 8
   %i.wf = add i64 %i.we, 11
   %i.wg = inttoptr i64 %i.wf to ptr
   %i.wh = load atomic volatile i16, ptr %i.wg monotonic, align 2
@@ -786,7 +804,7 @@ bb.fp:                                            ; preds = %bb.fj
 
 _ZN2v88internal12_GLOBAL__N_115GetFastKeyCharsEPNS0_7IsolateENS0_6TaggedINS0_6StringEEENS4_INS0_3MapEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEE.exit295: ; preds = %bb.fk, %bb.fn, %bb.fo
   %.0.i294 = phi ptr [ %i.wa, %bb.fk ], [ %i.wo, %bb.fn ], [ %i.ws, %bb.fo ] ; 2 uses
-  %i.wt = getelementptr inbounds nuw i8, ptr %16, i64 12
+  %i.wt = getelementptr inbounds nuw i8, ptr %22, i64 12
   %i.wu = load i32, ptr %i.wt, align 4            ; 3 uses
   %.sroa.0721.4.extract.shift = lshr i64 %.fca.0.extract.i31, 32
   %.sroa.0721.4.extract.trunc = trunc nuw i64 %.sroa.0721.4.extract.shift to i32
@@ -818,7 +836,7 @@ bb.fq:                                            ; preds = %_ZN2v88internal12_G
   %or.cond970.not = select i1 %.not.i.i299, i1 true, i1 %.not16.i.i301
   br i1 %or.cond970.not, label %_ZNRSt8optionalIN2v88internal15MessageTemplateEE5valueEv.exit.i304, label %.lr.ph.i.i296, !llvm.loop !17
 
-.thread874:                                       ; preds = %bb.fg, %bb.fh, %bb.fi
+.thread874:                                       ; preds = %bb.fi, %bb.fh, %.thread871
   %i.xg = add i64 %i.vf, 15
   %i.xh = inttoptr i64 %i.xg to ptr               ; 2 uses
   %i.xi = load atomic volatile i32, ptr %i.xh monotonic, align 4
