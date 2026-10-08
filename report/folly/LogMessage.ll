@@ -166,14 +166,17 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !51   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.d
   %i.f = icmp samesign eq i64 %i.d, 0
-  br i1 %i.f, label %._crit_edge, label %.lr.ph
+  br i1 %i.f, label %._crit_edge.thread, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.k, %bb.a
-  %.030.lcssa = phi i64 [ 0, %bb.a ], [ %.131, %bb.k ] ; 2 uses
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %.1, %bb.k ]
+._crit_edge.thread:                               ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  store i64 0, ptr %3, align 8, !tbaa !29
+  br label %.loopexit
+
+._crit_edge:                                      ; preds = %bb.k
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 %.0.lcssa, ptr %i.g, align 8, !tbaa !29
-  %i.h = icmp eq i64 %.030.lcssa, %i.d
+  store i64 %.1, ptr %i.g, align 8, !tbaa !29
+  %i.h = icmp eq i64 %.131, %i.d
   br i1 %i.h, label %.loopexit, label %bb.l
 
 .lr.ph:                                           ; preds = %bb.a, %bb.k
@@ -224,7 +227,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.f, %bb.g, %bb.e, %bb.j, %bb.i, %bb.b
-  %.131 = phi i64 [ %i.k, %bb.b ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.p, %bb.g ], [ %i.r, %bb.i ], [ %i.s, %bb.j ] ; 2 uses
+  %.131 = phi i64 [ %i.k, %bb.b ], [ %i.m, %bb.e ], [ %i.o, %bb.f ], [ %i.p, %bb.g ], [ %i.r, %bb.i ], [ %i.s, %bb.j ] ; 3 uses
   %.1 = phi i64 [ %.064, %bb.b ], [ %i.n, %bb.e ], [ %.064, %bb.f ], [ %.064, %bb.g ], [ %.064, %bb.i ], [ %.064, %bb.j ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.059.062, i64 1 ; 2 uses
   %i.u = icmp eq ptr %i.t, %i.e
@@ -232,7 +235,7 @@ bb.k:                                             ; preds = %bb.f, %bb.g, %bb.e,
 
 bb.l:                                             ; preds = %._crit_edge
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 23 uses
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 noundef %.030.lcssa)
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 noundef %.131)
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %i.x = load i64, ptr %i.c, align 8, !tbaa !51   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x
@@ -523,7 +526,7 @@ bb.af:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.dp = icmp eq ptr %i.do, %i.y
   br i1 %i.dp, label %.loopexit, label %bb.m
 
-.loopexit:                                        ; preds = %bb.af, %bb.l, %._crit_edge
+.loopexit:                                        ; preds = %bb.af, %._crit_edge.thread, %bb.l, %._crit_edge
   ret void
 }
 

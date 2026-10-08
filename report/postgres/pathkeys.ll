@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph74.preheader
 .lr.ph74:                                         ; preds = %bb.b, %.thread
   %indvars.iv = phi i64 [ %indvars.iv.next, %.thread ], [ 1, %bb.b ] ; 2 uses
   %.0375573 = phi ptr [ %i.am, %.thread ], [ %i.t, %bb.b ] ; 3 uses
-  %.0345672 = phi ptr [ %i.ac, %.thread ], [ %i.j, %bb.b ]
+  %.0345672 = phi ptr [ %.13552, %.thread ], [ %i.j, %bb.b ] ; 2 uses
   %.0305870 = phi ptr [ %.181, %.thread ], [ %..i, %bb.b ] ; 4 uses
   %i.w = load ptr, ptr %i.k, align 8
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv
@@ -238,6 +238,7 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %.lr.ph74, %bb.d
   %.181 = phi ptr [ %..i48, %bb.d ], [ %.0305870, %.lr.ph74 ]
+  %.13552 = phi ptr [ %i.ac, %bb.d ], [ %.0345672, %.lr.ph74 ]
   %i.am = tail call ptr @lappend(ptr noundef %.0375573, ptr noundef nonnull %i.y) #10 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.an = load i32, ptr %i.d, align 4

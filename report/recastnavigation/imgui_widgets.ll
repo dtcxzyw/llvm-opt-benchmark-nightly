@@ -205,10 +205,14 @@ _ZL7ImQsortPvmmPFiPKvS1_E.exit:                   ; preds = %bb.a
 _ZL7ImQsortPvmmPFiPKvS1_E.exit.thread:            ; preds = %_ZL7ImQsortPvmmPFiPKvS1_E.exit, %bb.c, %bb.b
   %.0 = phi ptr [ %spec.select, %_ZL7ImQsortPvmmPFiPKvS1_E.exit ], [ %i.d, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
   %.not27 = icmp eq ptr %.0, %i.g
-  br i1 %.not27, label %.loopexit, label %.preheader
+  br i1 %.not27, label %.thread, label %.preheader
+
+.thread:                                          ; preds = %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread
+  store ptr %.0, ptr %1, align 8, !tbaa !790
+  br label %bb.d
 
 .preheader:                                       ; preds = %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread, %.preheader
-  %.1 = phi ptr [ %i.s, %.preheader ], [ %.0, %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread ] ; 4 uses
+  %.1 = phi ptr [ %i.s, %.preheader ], [ %.0, %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread ] ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.1, i64 8
   %i.o = load i32, ptr %i.n, align 8, !tbaa !330
   %i.p = icmp eq i32 %i.o, 0
@@ -217,20 +221,19 @@ _ZL7ImQsortPvmmPFiPKvS1_E.exit.thread:            ; preds = %_ZL7ImQsortPvmmPFiP
   %i.s = getelementptr inbounds nuw i8, ptr %.1, i64 16
   br i1 %i.r, label %.preheader, label %.loopexit, !llvm.loop !789
 
-.loopexit:                                        ; preds = %.preheader, %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread
-  %.2 = phi ptr [ %.0, %_ZL7ImQsortPvmmPFiPKvS1_E.exit.thread ], [ %.1, %.preheader ] ; 3 uses
-  %3 = icmp ne ptr %.2, %i.g                      ; 3 uses
-  %.idx = select i1 %3, i64 16, i64 0
-  %i.t = getelementptr inbounds nuw i8, ptr %.2, i64 %.idx
+.loopexit:                                        ; preds = %.preheader
+  %.not33 = icmp eq ptr %.1, %i.g                 ; 2 uses
+  %.idx = select i1 %.not33, i64 0, i64 16
+  %i.t = getelementptr inbounds nuw i8, ptr %.1, i64 %.idx
   store ptr %i.t, ptr %1, align 8, !tbaa !790
-  br i1 %3, label %.thread.a, label %bb.d
+  br i1 %.not33, label %bb.d, label %.thread.a
 
 .thread.a:                                        ; preds = %.loopexit
-  %i.u = load i32, ptr %.2, align 8, !tbaa !526
+  %i.u = load i32, ptr %.1, align 8, !tbaa !526
   store i32 %i.u, ptr %2, align 4, !tbaa !211
   br label %bb.f
 
-bb.d:                                             ; preds = %.loopexit
+bb.d:                                             ; preds = %.thread, %.loopexit
   store i32 0, ptr %2, align 4, !tbaa !211
   %i.v = load i8, ptr %i.h, align 4, !tbaa !518, !range !187, !noundef !188
   %i.w = trunc nuw i8 %i.v to i1
@@ -241,6 +244,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.thread.a, %bb.e, %bb.d
+  %3 = phi i1 [ true, %.thread.a ], [ false, %bb.e ], [ false, %bb.d ]
   ret i1 %3
 }
 

@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not24.i, label %normal_updatePosition.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %.promoted.i = load i64, ptr %i.a, align 8, !tbaa !37
   br label %bb.b
 
@@ -247,9 +247,13 @@ bb.g:                                             ; preds = %bb.b
   %i.m = load i64, ptr %3, align 8, !tbaa !38
   %i.n = add i64 %i.m, 1
   store i64 %i.n, ptr %3, align 8, !tbaa !38
-  %i.o = getelementptr inbounds nuw i8, ptr %.025.i, i64 1 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.025.i, i64 1 ; 3 uses
   %.not23.i = icmp eq ptr %i.o, %2
-  br i1 %.not23.i, label %bb.j, label %bb.h
+  br i1 %.not23.i, label %.thread, label %bb.h
+
+.thread:                                          ; preds = %bb.g
+  store i64 0, ptr %i.a, align 8, !tbaa !37
+  br label %normal_updatePosition.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.p = load i8, ptr %i.o, align 1, !tbaa !10
@@ -265,15 +269,15 @@ bb.i:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %.025.i, i64 1
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %4 = phi i64 [ %i.b, %bb.i ], [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.b, %bb.e ], [ -1, %bb.f ], [ -1, %bb.h ], [ -1, %bb.g ]
-  %.2.i = phi ptr [ %i.v, %bb.i ], [ %i.g, %bb.c ], [ %i.h, %bb.d ], [ %i.i, %bb.e ], [ %i.l, %bb.f ], [ %spec.select.i, %bb.h ], [ %i.o, %bb.g ] ; 2 uses
+bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f, %bb.e, %bb.d, %bb.c
+  %4 = phi i64 [ %i.b, %bb.i ], [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.b, %bb.e ], [ -1, %bb.f ], [ -1, %bb.h ]
+  %.2.i = phi ptr [ %i.v, %bb.i ], [ %i.g, %bb.c ], [ %i.h, %bb.d ], [ %i.i, %bb.e ], [ %i.l, %bb.f ], [ %spec.select.i, %bb.h ] ; 2 uses
   %i.w = add i64 %4, 1                            ; 2 uses
   store i64 %i.w, ptr %i.a, align 8, !tbaa !37
   %.not.i = icmp eq ptr %.2.i, %2
   br i1 %.not.i, label %normal_updatePosition.exit, label %bb.b, !llvm.loop !0
 
-normal_updatePosition.exit:                       ; preds = %bb.j, %bb.a
+normal_updatePosition.exit:                       ; preds = %bb.j, %.thread, %bb.a
   ret void
 }
 
