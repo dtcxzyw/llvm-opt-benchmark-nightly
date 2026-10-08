@@ -204,8 +204,8 @@ extract32.exit66:                                 ; preds = %bb.a, %update_outpu
   %i.o = lshr i32 %i.m, %i.n
   %i.p = trunc i32 %i.o to i1                     ; 2 uses
   %i.q = load i32, ptr %i.c, align 8
-  %i.r = lshr i32 %i.q, %i.n                      ; 8 uses
-  %i.s = trunc i32 %i.r to i1                     ; 3 uses
+  %i.r = lshr i32 %i.q, %i.n                      ; 6 uses
+  %i.s = trunc i32 %i.r to i1                     ; 10 uses
   %i.t = trunc i32 %i.r to i8
   %i.u = and i8 %i.t, 1
   %i.v = load i32, ptr %i.d, align 4              ; 3 uses
@@ -255,7 +255,6 @@ bb.d:                                             ; preds = %is_connected.exit
   %i.ag = shl nuw i32 %switch.select6.i, %i.n
   %i.ah = or i32 %i.ag, %i.af
   store i32 %i.ah, ptr %i.d, align 4
-  %1 = trunc i32 %i.r to i1                       ; 2 uses
   %i.ai = and i32 %i.r, 1                         ; 2 uses
   br i1 %cond.fr89, label %bb.k, label %bb.l
 
@@ -290,50 +289,50 @@ bb.h:                                             ; preds = %bb.e
   %i.as = xor i1 %i.aq, true
   %i.at = select i1 %.not70, i1 %i.as, i1 false
   %spec.select62 = select i1 %i.at, i8 %.073, i8 1 ; 2 uses
-  %2 = trunc i32 %i.r to i1                       ; 2 uses
   %i.au = and i32 %i.r, 1                         ; 2 uses
   br i1 %cond.fr89, label %bb.k, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  %i.av = icmp slt i32 %switch.select6.i, 0       ; 2 uses
-  %or.cond3 = or i1 %i.av, %cond.fr89
-  %3 = zext i1 %switch.selectcmp5.i to i8
-  %.052 = select i1 %or.cond3, i8 %i.u, i8 %3     ; 5 uses
-  %4 = xor i1 %i.av, true
-  %i.aw = or i1 %cond.fr89, %4
-  br i1 %i.aw, label %.thread74, label %.thread83
+  %i.av = icmp slt i32 %switch.select6.i, 0
+  %i.aw = or i1 %i.av, %cond.fr89
+  br i1 %i.aw, label %2, label %.thread68
 
-.thread83:                                        ; preds = %bb.i
-  %5 = trunc nuw i8 %.052 to i1
-  %6 = zext nneg i8 %.052 to i32
+.thread68:                                        ; preds = %bb.i
+  %1 = zext i1 %switch.selectcmp5.i to i8
+  br label %.thread74
+
+2:                                                ; preds = %bb.i
+  br i1 %cond.fr89, label %.thread74, label %.thread83
+
+.thread83:                                        ; preds = %2
+  %3 = and i32 %i.r, 1
   br label %bb.l
 
-.thread74:                                        ; preds = %bb.i
-  %i.ax = zext nneg i8 %.052 to i32
+.thread74:                                        ; preds = %2, %.thread68
+  %.05271 = phi i8 [ %1, %.thread68 ], [ %i.u, %2 ] ; 2 uses
+  %i.ax = zext nneg i8 %.05271 to i32             ; 2 uses
   %i.ay = shl nuw i32 1, %i.n
   %i.az = xor i32 %i.ay, -1
   %i.ba = and i32 %i.v, %i.az
   %i.bb = shl nuw i32 %i.ax, %i.n
-  %i.bc = or i32 %i.ba, %i.bb
+  %i.bc = or i32 %i.bb, %i.ba
   store i32 %i.bc, ptr %i.d, align 4
-  %i.bd = trunc nuw i8 %.052 to i1
-  %7 = zext nneg i8 %.052 to i32
+  %i.bd = trunc nuw i8 %.05271 to i1
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.d
-  %8 = trunc i32 %i.r to i1                       ; 2 uses
   %i.be = and i32 %i.r, 1                         ; 2 uses
   br i1 %cond.fr89, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.split.a, %.thread, %.thread74, %bb.j
-  %i.bf = phi i32 [ %7, %.thread74 ], [ %i.be, %bb.j ], [ %i.au, %.thread ], [ %i.ai, %.split.a ] ; 2 uses
-  %i.bg = phi i1 [ %i.bd, %.thread74 ], [ %8, %bb.j ], [ %2, %.thread ], [ %1, %.split.a ]
+  %i.bf = phi i32 [ %i.ax, %.thread74 ], [ %i.be, %bb.j ], [ %i.au, %.thread ], [ %i.ai, %.split.a ] ; 2 uses
+  %i.bg = phi i1 [ %i.bd, %.thread74 ], [ %i.s, %bb.j ], [ %i.s, %.thread ], [ %i.s, %.split.a ]
   %.382 = phi i8 [ %.073, %.thread74 ], [ %.073, %bb.j ], [ %spec.select62, %.thread ], [ %.073, %.split.a ]
   br label %bb.l
 
 bb.l:                                             ; preds = %.split.a, %.thread, %.thread83, %bb.j, %bb.k
-  %i.bh = phi i32 [ %i.bf, %bb.k ], [ %i.be, %bb.j ], [ %6, %.thread83 ], [ %i.au, %.thread ], [ %i.ai, %.split.a ]
-  %i.bi = phi i1 [ %i.bg, %bb.k ], [ %8, %bb.j ], [ %5, %.thread83 ], [ %2, %.thread ], [ %1, %.split.a ]
+  %i.bh = phi i32 [ %i.bf, %bb.k ], [ %i.be, %bb.j ], [ %3, %.thread83 ], [ %i.au, %.thread ], [ %i.ai, %.split.a ]
+  %i.bi = phi i1 [ %i.bg, %bb.k ], [ %i.s, %bb.j ], [ %i.s, %.thread83 ], [ %i.s, %.thread ], [ %i.s, %.split.a ]
   %.381 = phi i8 [ %.382, %bb.k ], [ %.073, %bb.j ], [ %.073, %.thread83 ], [ %spec.select62, %.thread ], [ %.073, %.split.a ] ; 2 uses
   %.155.shrunk79 = phi i1 [ true, %bb.k ], [ false, %bb.j ], [ false, %.thread83 ], [ false, %.thread ], [ false, %.split.a ] ; 2 uses
   %i.bj = phi i32 [ %i.bf, %bb.k ], [ -1, %bb.j ], [ -1, %.thread83 ], [ -1, %.thread ], [ -1, %.split.a ] ; 2 uses
@@ -346,7 +345,7 @@ bb.l:                                             ; preds = %.split.a, %.thread,
   %.not.i67 = xor i1 %.155.shrunk79, %i.bp
   %i.bq = and i32 %i.bm, %i.bn
   %i.br = icmp eq i32 %i.bq, 0
-  %.not22.i = xor i1 %i.br, %i.bi
+  %.not22.i = xor i1 %i.bi, %i.br
   %or.cond.i = select i1 %.not.i67, i1 %.not22.i, i1 false
   br i1 %or.cond.i, label %update_output_irq.exit, label %bb.m
 

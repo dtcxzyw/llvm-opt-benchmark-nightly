@@ -204,14 +204,11 @@ bb.a:
   switch i32 %i.b, label %bb.l [
     i32 5, label %bb.m
     i32 3, label %bb.m
-    i32 38, label %.thread.thread
+    i32 38, label %.thread25
     i32 1, label %bb.b
     i32 21, label %bb.k
     i32 23, label %bb.k
   ]
-
-.thread.thread:                                   ; preds = %bb.a
-  br label %bb.m
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -227,7 +224,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.1 = phi i1 [ %i.f, %bb.c ], [ false, %bb.b ]  ; 2 uses
+  %.1 = phi i1 [ %i.f, %bb.c ], [ false, %bb.b ]
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.h, null
@@ -279,8 +276,9 @@ bb.j:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 .thread:                                          ; preds = %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.f, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
-  %spec.select25 = select i1 %.1, ptr @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE26g_thumb_breakpooint_opcode, ptr @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE23g_arm_breakpoint_opcode
-  %spec.select26 = select i1 %.1, i32 2, i32 4
+  br i1 %.1, label %.thread25, label %bb.m
+
+.thread25:                                        ; preds = %.thread, %bb.a
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.a, %bb.a
@@ -290,9 +288,9 @@ bb.l:                                             ; preds = %bb.a
   %i.x = tail call noundef i64 @_ZN12lldb_private8Platform31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteE(ptr noundef nonnull align 8 dereferenceable(528) %0, ptr noundef nonnull align 8 dereferenceable(2200) %1, ptr noundef %2) #25
   br label %bb.n
 
-bb.m:                                             ; preds = %.thread, %.thread.thread, %bb.k, %bb.a, %bb.a
-  %.016 = phi ptr [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE23g_ppc_breakpoint_opcode, %bb.k ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE25g_arm64_breakpoint_opcode, %bb.a ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE25g_arm64_breakpoint_opcode, %bb.a ], [ %spec.select25, %.thread ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE26g_thumb_breakpooint_opcode, %.thread.thread ]
-  %.015 = phi i32 [ 4, %bb.k ], [ 4, %bb.a ], [ 4, %bb.a ], [ %spec.select26, %.thread ], [ 2, %.thread.thread ] ; 2 uses
+bb.m:                                             ; preds = %.thread, %.thread25, %bb.k, %bb.a, %bb.a
+  %.016 = phi ptr [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE23g_ppc_breakpoint_opcode, %bb.k ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE25g_arm64_breakpoint_opcode, %bb.a ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE25g_arm64_breakpoint_opcode, %bb.a ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE26g_thumb_breakpooint_opcode, %.thread25 ], [ @_ZZN12lldb_private14PlatformDarwin31GetSoftwareBreakpointTrapOpcodeERNS_6TargetEPNS_14BreakpointSiteEE23g_arm_breakpoint_opcode, %.thread ]
+  %.015 = phi i32 [ 4, %bb.k ], [ 4, %bb.a ], [ 4, %bb.a ], [ 2, %.thread25 ], [ 4, %.thread ] ; 2 uses
   %i.y = call noundef zeroext i1 @_ZN12lldb_private14BreakpointSite13SetTrapOpcodeEPKhj(ptr noundef nonnull align 8 dereferenceable(240) %2, ptr noundef nonnull %.016, i32 noundef %.015) #25
   %i.z = zext nneg i32 %.015 to i64
   %spec.select = select i1 %i.y, i64 %i.z, i64 0

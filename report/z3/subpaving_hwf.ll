@@ -205,13 +205,14 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !183, !range !113, !noundef !37
   %i.s = trunc nuw i8 %i.r to i1
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %8 = load ptr, ptr %7, align 8, !tbaa !184, !nonnull !37, !align !38 ; 2 uses
+  %9 = load ptr, ptr %8, align 8, !tbaa !36, !nonnull !37, !align !38 ; 2 uses
   br i1 %i.s, label %bb.b, label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %8 = load ptr, ptr %7, align 8, !tbaa !184, !nonnull !37, !align !38
-  %9 = load ptr, ptr %8, align 8, !tbaa !36, !nonnull !37, !align !38
   %10 = tail call noundef zeroext i1 @_ZN11hwf_manager6is_intERK3hwf(ptr noundef nonnull align 8 dereferenceable(736) %9, ptr noundef nonnull align 8 dereferenceable(8) %2)
+  %spec.select = and i1 %4, %10
   %i.t = load ptr, ptr %7, align 8, !tbaa !184, !nonnull !37, !align !38 ; 8 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !36, !nonnull !37, !align !38 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 24 ; 8 uses
@@ -250,8 +251,7 @@ bb.h:                                             ; preds = %bb.f
   br label %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit
 
 _ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit:      ; preds = %bb.h, %bb.g, %bb.e, %bb.d
-  %11 = and i1 %4, %10
-  br i1 %11, label %bb.i, label %_ZN3f2nI11hwf_managerE3incER3hwf.exit
+  br i1 %spec.select, label %bb.i, label %_ZN3f2nI11hwf_managerE3incER3hwf.exit
 
 bb.i:                                             ; preds = %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit
   %i.ae = load ptr, ptr %7, align 8, !tbaa !184, !nonnull !37, !align !38 ; 6 uses
@@ -286,28 +286,27 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 bb.n:                                             ; preds = %bb.a
-  %12 = zext i1 %4 to i32
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %14 = load ptr, ptr %13, align 8, !tbaa !184, !nonnull !37, !align !38 ; 2 uses
-  %15 = load ptr, ptr %14, align 8, !tbaa !36, !nonnull !37, !align !38
-  tail call void @_ZN11hwf_manager3setER3hwfRKS0_(ptr noundef nonnull align 8 dereferenceable(736) %15, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %2)
-  %i.ap = load ptr, ptr %14, align 8, !tbaa !36, !nonnull !37, !align !38
+  tail call void @_ZN11hwf_manager3setER3hwfRKS0_(ptr noundef nonnull align 8 dereferenceable(736) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %2)
+  %i.ap = load ptr, ptr %8, align 8, !tbaa !36, !nonnull !37, !align !38
   %i.aq = tail call noundef zeroext i1 @_ZN11hwf_manager10is_regularERK3hwf(ptr noundef nonnull align 8 dereferenceable(736) %i.ap, ptr noundef nonnull align 8 dereferenceable(8) %i.g)
-  br i1 %i.aq, label %_ZN3f2nI11hwf_managerE3incER3hwf.exit, label %bb.o
+  br i1 %i.aq, label %_ZN3f2nI11hwf_managerE3setER3hwfRKS2_.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ar = tail call ptr @__cxa_allocate_exception(i64 1) #21
   tail call void @__cxa_throw(ptr %i.ar, ptr nonnull @_ZTIN3f2nI11hwf_managerE9exceptionE, ptr null) #23
   unreachable
 
-_ZN3f2nI11hwf_managerE3incER3hwf.exit:            ; preds = %bb.n, %bb.l, %bb.j, %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit
-  %.1 = phi i32 [ 0, %bb.l ], [ 0, %bb.j ], [ 0, %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit ], [ %12, %bb.n ]
+_ZN3f2nI11hwf_managerE3setER3hwfRKS2_.exit:       ; preds = %bb.n
+  %11 = select i1 %4, i32 1073741824, i32 0
+  br label %_ZN3f2nI11hwf_managerE3incER3hwf.exit
+
+_ZN3f2nI11hwf_managerE3incER3hwf.exit:            ; preds = %bb.l, %bb.j, %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit, %_ZN3f2nI11hwf_managerE3setER3hwfRKS2_.exit
+  %.1 = phi i32 [ %11, %_ZN3f2nI11hwf_managerE3setER3hwfRKS2_.exit ], [ 0, %bb.j ], [ 0, %_ZN3f2nI11hwf_managerE4ceilERK3hwfRS2_.exit ], [ 0, %bb.l ]
   %i.as = load i32, ptr %i.i, align 8
   %i.at = select i1 %3, i32 536870912, i32 0
   %i.au = and i32 %i.as, 536870911
-  %i.av = or disjoint i32 %i.at, %i.au
-  %16 = shl nuw nsw i32 %.1, 30
-  %i.aw = or disjoint i32 %i.av, %16
+  %i.av = or disjoint i32 %.1, %i.at
+  %i.aw = or disjoint i32 %i.av, %i.au
   store i32 %i.aw, ptr %i.i, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 3 uses
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !185

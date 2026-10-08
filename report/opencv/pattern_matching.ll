@@ -202,14 +202,14 @@ _ZNSt7__cxx1110_List_baseISt4pairIN3ade6HandleINS2_4NodeEEES5_ESaIS6_EED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %75) #20
   br label %.preheader1685
 
-.preheader1685:                                   ; preds = %_ZNSt7__cxx1110_List_baseISt4pairIN3ade6HandleINS2_4NodeEEES5_ESaIS6_EED2Ev.exit, %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit
+.preheader1685:                                   ; preds = %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit, %_ZNSt7__cxx1110_List_baseISt4pairIN3ade6HandleINS2_4NodeEEES5_ESaIS6_EED2Ev.exit
   %.01792560 = phi i64 [ %i.aew, %_ZNSt7__cxx1110_List_baseISt4pairIN3ade6HandleINS2_4NodeEEES5_ESaIS6_EED2Ev.exit ], [ %i.bny, %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit ] ; 2 uses
   %.sroa.01480.02558 = phi ptr [ %i.aex, %_ZNSt7__cxx1110_List_baseISt4pairIN3ade6HandleINS2_4NodeEEES5_ESaIS6_EED2Ev.exit ], [ %.sroa.01480.1.lcssa3059, %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit ] ; 2 uses
   %i.aey = icmp eq i64 %.01792560, 0
   br i1 %i.aey, label %.preheader.i.i, label %.lr.ph2553
 
 ._crit_edge2554:                                  ; preds = %_ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ENS0_12HandleHasherIS2_EENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev.exit1253
-  br i1 %112, label %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread, label %.preheader.i.i
+  br i1 %.4185, label %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread, label %.preheader.i.i
 
 .lr.ph2553:                                       ; preds = %.preheader1685, %_ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ENS0_12HandleHasherIS2_EENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev.exit1253
   %.01782552 = phi i64 [ %i.blr, %_ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ENS0_12HandleHasherIS2_EENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev.exit1253 ], [ 0, %.preheader1685 ]
@@ -612,7 +612,7 @@ bb.qf:                                            ; preds = %_ZNSt4pairIN3ade6Ha
   br label %bb.qs
 
 .loopexit1672:                                    ; preds = %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit", %._crit_edge2544, %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit.thread1601"
-  %.4185 = phi i8 [ 1, %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit.thread1601" ], [ 0, %._crit_edge2544 ], [ 0, %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit" ] ; 2 uses
+  %.4185 = phi i1 [ true, %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit.thread1601" ], [ false, %._crit_edge2544 ], [ false, %"_ZSt7find_ifINSt8__detail14_Node_iteratorISt4pairIKN3ade6HandleINS3_4NodeEEESt6vectorImSaImEEELb0ELb1EEEZN2cv5gimpl11findMatchesERKNS3_10TypedGraphIJNSE_8NodeTypeENSE_5InputENSE_6OutputENSE_2OpENSE_4DataENSE_10ConstValueENSE_6IslandENSE_8ProtocolENSE_17OriginalInputMetaENSE_10OutputMetaENSE_7JournalENS3_6passes19TopologicalSortDataENSE_17DataObjectCounterENSE_11IslandModelENSE_14ActiveBackendsENSE_18CustomMetaFunctionENSE_9StreamingENSE_12DeserializedENSE_13HasIntrinsicsENSE_10DesyncPathENSE_10DesyncEdgeENSE_14DesynchronizedENSE_11CompileArgsEEEES16_E3$_2ET_S18_S18_T0_.exit" ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %79) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %78) #20
   %i.bjp = load ptr, ptr %i.us, align 8, !tbaa !125 ; 2 uses
@@ -774,8 +774,7 @@ _ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_E
   %i.blr = add nuw i64 %.01782552, 1              ; 2 uses
   %i.bls = load ptr, ptr %.sroa.01480.12550, align 8, !tbaa !90 ; 2 uses
   %i.blt = icmp uge i64 %i.blr, %.01792560
-  %112 = trunc nuw i8 %.4185 to i1                ; 2 uses
-  %.not254 = or i1 %i.blt, %112
+  %.not254 = or i1 %i.blt, %.4185
   br i1 %.not254, label %._crit_edge2554, label %.lr.ph2553, !llvm.loop !274
 
 bb.qs:                                            ; preds = %.body524, %bb.mk, %bb.kz, %bb.jh
@@ -945,7 +944,6 @@ _ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_E
   br label %bb.amc
 
 .preheader.i.i:                                   ; preds = %._crit_edge2554, %.preheader1685
-  %.1182.lcssa3061 = phi i8 [ %.4185, %._crit_edge2554 ], [ 0, %.preheader1685 ]
   %.sroa.01480.1.lcssa3059 = phi ptr [ %i.bls, %._crit_edge2554 ], [ %.sroa.01480.02558, %.preheader1685 ] ; 3 uses
   %i.bnw = icmp eq ptr %.sroa.01480.1.lcssa3059, %74
   br i1 %i.bnw, label %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread.thread, label %.lr.ph.i.i565
@@ -959,10 +957,9 @@ _ZNSt10_HashtableIN3ade6HandleINS0_4NodeEEESt4pairIKS3_St6vectorImSaImEEESaIS9_E
   br i1 %.not.i.i566, label %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit, label %.lr.ph.i.i565, !llvm.loop !275
 
 _ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit: ; preds = %.lr.ph.i.i565
-  %113 = trunc nuw i8 %.1182.lcssa3061 to i1
-  br i1 %113, label %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread, label %.preheader1685, !llvm.loop !276
+  br label %.preheader1685, !llvm.loop !276
 
-_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread: ; preds = %_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit, %._crit_edge2554
+_ZSt8distanceISt14_List_iteratorISt4pairIN3ade6HandleINS2_4NodeEEES5_EEENSt15iterator_traitsIT_E15difference_typeES9_S9_.exit.thread: ; preds = %._crit_edge2554
   %i.bnz = add i64 %.0188, 1
   br label %bb.alt, !llvm.loop !277
 

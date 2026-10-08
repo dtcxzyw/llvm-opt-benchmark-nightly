@@ -202,6 +202,12 @@ bb.al:                                            ; preds = %_ZN12lldb_private19
   %i.dr = icmp ult i64 %i.dl, %i.dq
   br i1 %i.dr, label %bb.am, label %._crit_edge, !llvm.loop !87
 
+._crit_edge:                                      ; preds = %bb.al
+  %12 = trunc nuw i8 %.122 to i1
+  %13 = trunc nuw i8 %.125 to i1
+  %14 = select i1 %12, i1 %13, i1 false
+  br i1 %14, label %bb.bj, label %bb.br
+
 bb.am:                                            ; preds = %.lr.ph, %bb.al
   %.020104 = phi i64 [ 0, %.lr.ph ], [ %i.dl, %bb.al ] ; 2 uses
   %.021103 = phi i8 [ 0, %.lr.ph ], [ %.122, %bb.al ] ; 2 uses
@@ -384,17 +390,9 @@ bb.bi:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN12lldb_private19ObjCLanguageRuntime15ClassDescriptor14iVarDescriptorD2Ev.exit: ; preds = %bb.be, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i49, %bb.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
-  br i1 %or.cond, label %._crit_edge, label %bb.al
+  br i1 %or.cond, label %bb.bj, label %bb.al
 
-._crit_edge:                                      ; preds = %_ZN12lldb_private19ObjCLanguageRuntime15ClassDescriptor14iVarDescriptorD2Ev.exit, %bb.al
-  %.226.ph = phi i8 [ 1, %_ZN12lldb_private19ObjCLanguageRuntime15ClassDescriptor14iVarDescriptorD2Ev.exit ], [ %.125, %bb.al ]
-  %.223.ph = phi i8 [ 1, %_ZN12lldb_private19ObjCLanguageRuntime15ClassDescriptor14iVarDescriptorD2Ev.exit ], [ %.122, %bb.al ]
-  %12 = trunc nuw i8 %.223.ph to i1
-  %13 = trunc nuw i8 %.226.ph to i1
-  %14 = select i1 %12, i1 %13, i1 false
-  br i1 %14, label %bb.bj, label %bb.br
-
-bb.bj:                                            ; preds = %._crit_edge
+bb.bj:                                            ; preds = %_ZN12lldb_private19ObjCLanguageRuntime15ClassDescriptor14iVarDescriptorD2Ev.exit, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
   %i.fp = load ptr, ptr %i.h, align 8, !tbaa !44, !nonnull !45, !align !46 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14

@@ -204,15 +204,15 @@ bb.i:                                             ; preds = %bb.g, %bb.e
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.m, %bb.l
-  %.372.ph = phi i1 [ %.069287, %bb.l ], [ %.271264, %bb.m ] ; 2 uses
+  %.372.ph = phi i8 [ %.069291, %bb.l ], [ %.271264, %bb.m ] ; 2 uses
   %.4.ph = phi i1 [ %.063288, %bb.l ], [ %.not.lcssa.i.i108, %bb.m ]
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0248.0286, i64 8 ; 2 uses
   %.not276.not = icmp eq ptr %i.ck, %i.cc
-  br i1 %.not276.not, label %._crit_edge292, label %bb.j
+  br i1 %.not276.not, label %bb.bk, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph291, %.loopexit
   %.063288 = phi i1 [ true, %.lr.ph291 ], [ %.4.ph, %.loopexit ] ; 2 uses
-  %.069287 = phi i1 [ true, %.lr.ph291 ], [ %.372.ph, %.loopexit ] ; 2 uses
+  %.069291 = phi i8 [ 1, %.lr.ph291 ], [ %.372.ph, %.loopexit ] ; 2 uses
   %.sroa.0248.0286 = phi ptr [ %i.cb, %.lr.ph291 ], [ %i.ck, %.loopexit ] ; 2 uses
   %i.cl = load ptr, ptr %.sroa.0248.0286, align 8, !tbaa !224 ; 3 uses
   %i.cm = icmp eq ptr %i.cl, %1
@@ -237,7 +237,7 @@ bb.m:                                             ; preds = %_ZNK4llvm4bolt15Tai
 
 .lr.ph:                                           ; preds = %bb.l, %bb.m
   %.1279 = phi i1 [ %.not.lcssa.i.i108, %bb.m ], [ %.063288, %bb.l ] ; 4 uses
-  %.170278 = phi i1 [ %.271264, %bb.m ], [ %.069287, %bb.l ] ; 3 uses
+  %.170282 = phi i8 [ %.271264, %bb.m ], [ %.069291, %bb.l ] ; 3 uses
   %.sroa.0244.0277 = phi ptr [ %i.cr, %bb.m ], [ %storemerge, %bb.l ] ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
   %i.cu = load ptr, ptr %i.n, align 8, !tbaa !34
@@ -300,14 +300,14 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %indvars.iv.i.i
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !55
   %i.du = and i64 %i.dt, %i.dr
-  %.not11.not.i.not.i = icmp eq i64 %i.du, 0      ; 2 uses
+  %.not11.not.i.not.i.not = icmp ne i64 %i.du, 0  ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %.not.not.i.i = icmp ne i64 %indvars.iv.next.i.i, %i.dp
-  %or.cond.not = select i1 %.not11.not.i.not.i, i1 %.not.not.i.i, i1 false
-  br i1 %or.cond.not, label %bb.n, label %_ZNK4llvm9BitVector9anyCommonERKS0_.exit.i, !llvm.loop !1
+  %.not.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.dp
+  %or.cond.not = select i1 %.not11.not.i.not.i.not, i1 true, i1 %.not.not.i.i
+  br i1 %or.cond.not, label %_ZNK4llvm9BitVector9anyCommonERKS0_.exit.i, label %bb.n, !llvm.loop !1
 
 _ZNK4llvm9BitVector9anyCommonERKS0_.exit.i:       ; preds = %bb.n, %_ZN4llvm9BitVectorC2Ejb.exit.i
-  %.not.lcssa.i.i.not = phi i1 [ true, %_ZN4llvm9BitVectorC2Ejb.exit.i ], [ %.not11.not.i.not.i, %bb.n ] ; 2 uses
+  %.not.lcssa.i.i.not = phi i1 [ false, %_ZN4llvm9BitVectorC2Ejb.exit.i ], [ %.not11.not.i.not.i.not, %bb.n ] ; 2 uses
   %i.dv = icmp eq ptr %.pre.i, %i.o
   br i1 %i.dv, label %_ZNK4llvm4bolt15TailDuplication9regIsUsedERKNS_6MCInstEjRNS0_13BinaryContextE.exit, label %bb.o
 
@@ -317,9 +317,8 @@ bb.o:                                             ; preds = %_ZNK4llvm9BitVector
 
 _ZNK4llvm4bolt15TailDuplication9regIsUsedERKNS_6MCInstEjRNS0_13BinaryContextE.exit: ; preds = %_ZNK4llvm9BitVector9anyCommonERKS0_.exit.i, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
-  %.1.not = xor i1 %.1279, true
-  %brmerge = select i1 %.not.lcssa.i.i.not, i1 true, i1 %.1.not
-  br i1 %brmerge, label %.thread, label %bb.p
+  %brmerge = select i1 %.not.lcssa.i.i.not, i1 %.1279, i1 false
+  br i1 %brmerge, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %_ZNK4llvm4bolt15TailDuplication9regIsUsedERKNS_6MCInstEjRNS0_13BinaryContextE.exit
   %i.dw = load ptr, ptr %i.k, align 8, !tbaa !32  ; 3 uses
@@ -333,7 +332,7 @@ bb.p:                                             ; preds = %_ZNK4llvm4bolt15Tai
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dz, i64 792
   %i.ec = load ptr, ptr %i.eb, align 8
   %i.ed = call noundef zeroext i1 %i.ec(ptr noundef nonnull align 8 dereferenceable(536) %i.dw, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0244.0277, i32 noundef %i.ca, i64 noundef %i.ea) #22
-  %spec.select272 = select i1 %i.ed, i1 %.170278, i1 false
+  %spec.select275 = select i1 %i.ed, i8 %.170282, i8 0
   br label %.critedge
 
 bb.q:                                             ; preds = %bb.p
@@ -341,15 +340,15 @@ bb.q:                                             ; preds = %bb.p
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dz, i64 800
   %i.eg = load ptr, ptr %i.ef, align 8
   %i.eh = call noundef zeroext i1 %i.eg(ptr noundef nonnull align 8 dereferenceable(536) %i.dw, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0244.0277, i32 noundef %i.ca, i32 noundef %i.ee) #22
-  %spec.select273 = select i1 %i.eh, i1 %.170278, i1 false
+  %spec.select276 = select i1 %i.eh, i8 %.170282, i8 0
   br label %.thread266
 
 .thread:                                          ; preds = %_ZNK4llvm4bolt15TailDuplication9regIsUsedERKNS_6MCInstEjRNS0_13BinaryContextE.exit
-  %.170.mux = select i1 %.not.lcssa.i.i.not, i1 %.170278, i1 false ; 2 uses
+  %.170.mux = select i1 %.not.lcssa.i.i.not, i8 0, i8 %.170282 ; 2 uses
   br i1 %.not274, label %.thread266, label %.critedge
 
 .thread266:                                       ; preds = %bb.q, %.thread
-  %.271268 = phi i1 [ %.170.mux, %.thread ], [ %spec.select273, %bb.q ]
+  %.271268 = phi i8 [ %.170.mux, %.thread ], [ %spec.select276, %bb.q ]
   %i.ei = load ptr, ptr %i.by, align 8, !tbaa !22
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
   %i.ek = load i32, ptr %i.ej, align 8, !tbaa !236
@@ -752,7 +751,7 @@ _ZNK4llvm4bolt15TailDuplication24regIsPossiblyOverwrittenERKNS_6MCInstEjRNS0_13B
   br label %.critedge
 
 .critedge:                                        ; preds = %.split, %.thread, %_ZNK4llvm4bolt15TailDuplication24regIsPossiblyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit
-  %.271264 = phi i1 [ %.271268, %_ZNK4llvm4bolt15TailDuplication24regIsPossiblyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit ], [ %.170.mux, %.thread ], [ %spec.select272, %.split ] ; 3 uses
+  %.271264 = phi i8 [ %.271268, %_ZNK4llvm4bolt15TailDuplication24regIsPossiblyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit ], [ %.170.mux, %.thread ], [ %spec.select275, %.split ] ; 3 uses
   %.2 = phi i1 [ %.not.lcssa.i.i91, %_ZNK4llvm4bolt15TailDuplication24regIsPossiblyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit ], [ %.1279, %.thread ], [ true, %.split ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   %i.kk = load ptr, ptr %i.n, align 8, !tbaa !34
@@ -1155,13 +1154,13 @@ _ZNK4llvm4bolt15TailDuplication26regIsDefinitelyOverwrittenERKNS_6MCInstEjRNS0_1
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br i1 %i.xc, label %._crit_edge292, label %bb.m
 
-._crit_edge292:                                   ; preds = %.loopexit, %_ZNK4llvm4bolt15TailDuplication26regIsDefinitelyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit
-  %.372356 = phi i1 [ %.271264, %_ZNK4llvm4bolt15TailDuplication26regIsDefinitelyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit ], [ %.372.ph, %.loopexit ]
-  %.not276.not.lcssa.ph = phi i1 [ false, %_ZNK4llvm4bolt15TailDuplication26regIsDefinitelyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit ], [ true, %.loopexit ]
-  br i1 %.372356, label %bb.bk, label %bb.bo
+._crit_edge292:                                   ; preds = %_ZNK4llvm4bolt15TailDuplication26regIsDefinitelyOverwrittenERKNS_6MCInstEjRNS0_13BinaryContextE.exit
+  %11 = trunc nuw i8 %.271264 to i1
+  br i1 %11, label %bb.bl, label %bb.bo
 
-bb.bk:                                            ; preds = %._crit_edge292
-  br i1 %.not276.not.lcssa.ph, label %.thread361, label %bb.bl
+bb.bk:                                            ; preds = %.loopexit
+  %12 = trunc nuw i8 %.372.ph to i1
+  br i1 %12, label %.thread361, label %bb.bo
 
 .thread361:                                       ; preds = %bb.i, %bb.bk
   %i.xe = load ptr, ptr %i.m, align 8, !tbaa !238
@@ -1175,7 +1174,7 @@ bb.bk:                                            ; preds = %._crit_edge292
   %i.xm = call noundef zeroext i1 @_ZNK4llvm4bolt15TailDuplication23isOverwrittenBeforeUsedERNS0_16BinaryBasicBlockEj(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(192) %i.xl, i32 noundef %i.ca)
   br i1 %i.xm, label %bb.bl, label %bb.bo
 
-bb.bl:                                            ; preds = %.thread361, %bb.bk
+bb.bl:                                            ; preds = %._crit_edge292, %.thread361
   %i.xn = load i64, ptr %i.av, align 8, !tbaa !240
   %i.xo = load <2 x i64>, ptr %i.au, align 8, !tbaa !55
   %i.xp = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.xn, i64 1
@@ -1232,7 +1231,7 @@ bb.bn:                                            ; preds = %_ZSt4moveIN9__gnu_c
   call void @free(ptr noundef %i.yn) #22
   br label %_ZN4llvm4bolt16BinaryBasicBlock16eraseInstructionEN9__gnu_cxx17__normal_iteratorIPNS_6MCInstESt6vectorIS4_SaIS4_EEEE.exit
 
-bb.bo:                                            ; preds = %.thread361, %._crit_edge292
+bb.bo:                                            ; preds = %bb.bk, %.thread361, %._crit_edge292
   %i.yq = getelementptr inbounds nuw i8, ptr %.sroa.0253.0299, i64 128
   br label %_ZN4llvm4bolt16BinaryBasicBlock16eraseInstructionEN9__gnu_cxx17__normal_iteratorIPNS_6MCInstESt6vectorIS4_SaIS4_EEEE.exit
 

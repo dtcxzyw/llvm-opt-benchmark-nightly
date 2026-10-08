@@ -148,7 +148,6 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = load i32, ptr %i.ab, align 8
   %i.ad = and i32 %i.ac, 61440
   %i.ae = icmp eq i32 %i.ad, 32768
-  %26 = zext i1 %i.ae to i8
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.d
@@ -177,16 +176,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ap = and i32 %i.ao, 61440
   %i.aq = icmp eq i32 %i.ap, 16384
   %i.ar = select i1 %i.am, i1 %i.aq, i1 false
-  %27 = zext i1 %i.ar to i8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h, %bb.f, %bb.e
   %.1170 = phi ptr [ null, %bb.e ], [ null, %bb.f ], [ %i.ak, %bb.i ], [ null, %bb.h ], [ null, %bb.g ] ; 3 uses
-  %.0166 = phi i8 [ %26, %bb.e ], [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ] ; 3 uses
-  %.1164 = phi i8 [ 0, %bb.e ], [ 0, %bb.f ], [ %27, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ] ; 3 uses
-  %28 = trunc nuw i8 %.0166 to i1
-  %29 = trunc nuw i8 %.1164 to i1
-  %or.cond = select i1 %28, i1 true, i1 %29
+  %.0166 = phi i1 [ %i.ae, %bb.e ], [ false, %bb.f ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.g ] ; 3 uses
+  %.1164 = phi i1 [ false, %bb.e ], [ false, %bb.f ], [ %i.ar, %bb.i ], [ false, %bb.h ], [ false, %bb.g ] ; 3 uses
+  %or.cond = select i1 %.0166, i1 true, i1 %.1164
   br i1 %or.cond, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %bb.j
@@ -213,8 +209,8 @@ bb.n:                                             ; preds = %bb.a
 bb.o:                                             ; preds = %bb.k, %bb.l, %bb.c, %bb.j, %bb.m, %bb.b
   %.2171 = phi ptr [ null, %bb.b ], [ null, %bb.m ], [ %.1170, %bb.j ], [ null, %bb.c ], [ %.1170, %bb.l ], [ %.1170, %bb.k ] ; 10 uses
   %.0168 = phi i1 [ false, %bb.b ], [ true, %bb.m ], [ false, %bb.j ], [ false, %bb.c ], [ false, %bb.l ], [ false, %bb.k ]
-  %.1167 = phi i8 [ 0, %bb.b ], [ 0, %bb.m ], [ 0, %bb.j ], [ 0, %bb.c ], [ %.0166, %bb.l ], [ %.0166, %bb.k ]
-  %.2165 = phi i8 [ 0, %bb.b ], [ 0, %bb.m ], [ 0, %bb.j ], [ 0, %bb.c ], [ %.1164, %bb.l ], [ %.1164, %bb.k ]
+  %.1167 = phi i1 [ false, %bb.b ], [ false, %bb.m ], [ false, %bb.j ], [ false, %bb.c ], [ %.0166, %bb.l ], [ %.0166, %bb.k ]
+  %.2165 = phi i1 [ false, %bb.b ], [ false, %bb.m ], [ false, %bb.j ], [ false, %bb.c ], [ %.1164, %bb.l ], [ %.1164, %bb.k ]
   %.1161 = phi ptr [ null, %bb.b ], [ null, %bb.m ], [ null, %bb.j ], [ null, %bb.c ], [ %i.au, %bb.l ], [ null, %bb.k ] ; 11 uses
   %.0 = phi ptr [ @.str.6, %bb.b ], [ @.str.6, %bb.m ], [ @.str.9, %bb.j ], [ @.str.9, %bb.c ], [ @.str.9, %bb.l ], [ @.str.9, %bb.k ]
   %i.ax = tail call ptr @SDL_DBus_GetContext() #8 ; 27 uses
@@ -612,9 +608,8 @@ bb.ar:                                            ; preds = %DBus_AppendFilters.
   br i1 %.not206, label %bb.ax, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %30 = trunc nuw i8 %.1167 to i1
   %i.he = icmp ne ptr %.1161, null                ; 2 uses
-  %or.cond5 = select i1 %30, i1 %i.he, i1 false
+  %or.cond5 = select i1 %.1167, i1 %i.he, i1 false
   br i1 %or.cond5, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
@@ -623,9 +618,8 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.ax
 
 bb.au:                                            ; preds = %bb.as
-  %31 = trunc nuw i8 %.2165 to i1
   %i.hf = icmp ne ptr %.2171, null
-  %or.cond7 = select i1 %31, i1 %i.hf, i1 false
+  %or.cond7 = select i1 %.2165, i1 %i.hf, i1 false
   %or.cond9 = select i1 %or.cond7, i1 %i.he, i1 false
   br i1 %or.cond9, label %bb.av, label %bb.aw
 

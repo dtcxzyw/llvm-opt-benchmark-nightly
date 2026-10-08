@@ -205,6 +205,7 @@ _ZNSt10unique_ptrIN2v89JobHandleESt14default_deleteIS1_EE5resetEPS1_.exit: ; pre
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.q = load atomic i8, ptr %i.p seq_cst, align 8, !range !57, !noundef !58
   %i.r = trunc nuw i8 %i.q to i1
+  %spec.select22 = select i1 %i.r, i1 true, i1 %narrow
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.t = load atomic i64, ptr %i.s monotonic, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -213,11 +214,10 @@ _ZNSt10unique_ptrIN2v89JobHandleESt14default_deleteIS1_EE5resetEPS1_.exit: ; pre
   %i.x = load i64, ptr %i.w, align 8
   %i.y = or i64 %i.x, %i.t
   store i64 %i.y, ptr %i.w, align 8
-  %14 = select i1 %i.r, i1 true, i1 %narrow
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt10unique_ptrIN2v89JobHandleESt14default_deleteIS1_EE5resetEPS1_.exit, %bb.a
-  %.2 = phi i1 [ %14, %_ZNSt10unique_ptrIN2v89JobHandleESt14default_deleteIS1_EE5resetEPS1_.exit ], [ %narrow, %bb.a ]
+  %.2 = phi i1 [ %spec.select22, %_ZNSt10unique_ptrIN2v89JobHandleESt14default_deleteIS1_EE5resetEPS1_.exit ], [ %narrow, %bb.a ]
   %i.z = load ptr, ptr %1, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.ab = load i64, ptr %i.aa, align 8
@@ -258,8 +258,8 @@ bb.d:                                             ; preds = %_ZN2v84base11OwnedV
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 32
   call void @_ZN2v88internal4wasm28ValidateAndSetBuiltinImportsEPKNS1_10WasmModuleENS_4base6VectorIKhEERKNS1_18CompileTimeImportsEPNS1_20WasmDetectedFeaturesE(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::wasm::WasmError") align 8 %6, ptr noundef %i.al, ptr %.sroa.0.0.copyload.i, i64 poison, ptr noundef nonnull align 8 dereferenceable(40) %i.ao, ptr noundef nonnull %5)
   %i.ap = load i32, ptr %6, align 8
-  %.not63 = icmp eq i32 %i.ap, -1
-  br i1 %.not63, label %bb.e, label %bb.f
+  %14 = icmp ne i32 %i.ap, -1                     ; 2 uses
+  br i1 %14, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %.sroa.010.0.copyload = load i64, ptr %5, align 8
@@ -271,7 +271,6 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %.3 = phi i8 [ 0, %bb.e ], [ 1, %bb.d ]
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.av = load ptr, ptr %i.au, align 8            ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
@@ -290,7 +289,7 @@ _ZN2v88internal4wasm9WasmErrorD2Ev.exit:          ; preds = %bb.f, %_ZNKSt7__cxx
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN2v88internal4wasm9WasmErrorD2Ev.exit, %_ZN2v84base11OwnedVectorIKhEaSIS2_Qsr3stdE16is_convertible_vISt10unique_ptrITL0__St14default_deleteIS6_EES5_IT_S7_ISA_EEEEERS3_ONS1_ISA_EE.exit
-  %.4 = phi i8 [ 1, %_ZN2v84base11OwnedVectorIKhEaSIS2_Qsr3stdE16is_convertible_vISt10unique_ptrITL0__St14default_deleteIS6_EES5_IT_S7_ISA_EEEEERS3_ONS1_ISA_EE.exit ], [ %.3, %_ZN2v88internal4wasm9WasmErrorD2Ev.exit ] ; 2 uses
+  %.4 = phi i1 [ true, %_ZN2v84base11OwnedVectorIKhEaSIS2_Qsr3stdE16is_convertible_vISt10unique_ptrITL0__St14default_deleteIS6_EES5_IT_S7_ISA_EEEEERS3_ONS1_ISA_EE.exit ], [ %14, %_ZN2v88internal4wasm9WasmErrorD2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
   %i.ba = call i64 @_ZN2v84base9TimeTicks3NowEv() #29
   %i.bb = load ptr, ptr %i.ac, align 8            ; 2 uses
@@ -298,9 +297,9 @@ bb.g:                                             ; preds = %_ZN2v88internal4was
   %.sroa.09.0.copyload = load i64, ptr %i.bc, align 8
   %i.bd = sub nsw i64 %i.ba, %.sroa.09.0.copyload
   store i64 %i.bd, ptr %7, align 8
-  %15 = trunc nuw i8 %.4 to i1
+  %15 = xor i1 %.4, true
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 138
-  %16 = xor i8 %.4, 1
+  %16 = zext i1 %15 to i8
   store i8 %16, ptr %i.be, align 2
   %i.bf = load ptr, ptr %i.ac, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 137
@@ -358,7 +357,7 @@ _ZNSt10unique_ptrIN2v88internal7metrics8Recorder12DelayedEventINS0_7metrics17Was
   br label %_ZN2v88internal7metrics8Recorder20DelayMainThreadEventINS_7metrics17WasmModuleDecodedEEEvRKT_NS4_8Recorder9ContextIdE.exit
 
 _ZN2v88internal7metrics8Recorder20DelayMainThreadEventINS_7metrics17WasmModuleDecodedEEEvRKT_NS4_8Recorder9ContextIdE.exit: ; preds = %bb.g, %_ZNSt10unique_ptrIN2v88internal7metrics8Recorder12DelayedEventINS0_7metrics17WasmModuleDecodedEEESt14default_deleteIS7_EED2Ev.exit.i
-  br i1 %15, label %bb.i, label %bb.l
+  br i1 %.4, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %_ZN2v88internal7metrics8Recorder20DelayMainThreadEventINS_7metrics17WasmModuleDecodedEEEvRKT_NS4_8Recorder9ContextIdE.exit
   %i.ci = load ptr, ptr %i.ac, align 8
