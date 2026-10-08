@@ -205,8 +205,8 @@ bb.aa:                                            ; preds = %.lr.ph206.us, %.cri
   %.not131.us = icmp ult i32 %i.da, %.083204.us
   br i1 %.not131.us, label %.thread154.us, label %.critedge164.us
 
-.thread154.us:                                    ; preds = %.critedge164.us, %bb.aa, %.critedge164.preheader.us, %bb.z, %.critedge.us
-  %.11.us = phi i32 [ -1, %bb.z ], [ -1, %.critedge.us ], [ 0, %.critedge164.preheader.us ], [ -1, %bb.aa ], [ %i.da, %.critedge164.us ]
+.thread154.us:                                    ; preds = %bb.aa, %.critedge164.us, %.critedge164.preheader.us, %bb.z, %.critedge.us
+  %.11.us = phi i32 [ -1, %.critedge.us ], [ -1, %bb.z ], [ 0, %.critedge164.preheader.us ], [ %i.da, %.critedge164.us ], [ -1, %bb.aa ]
   %i.db = getelementptr inbounds nuw i8, ptr %.0116209.us, i64 12
   store i32 %.11.us, ptr %i.db, align 4
   %i.dc = getelementptr inbounds nuw i8, ptr %.0116209.us, i64 16
@@ -361,8 +361,8 @@ bb.ai:                                            ; preds = %.lr.ph206, %.crited
   %.not131 = icmp ult i32 %i.et, %.083204
   br i1 %.not131, label %.thread154, label %.critedge164
 
-.thread154:                                       ; preds = %bb.ai, %.critedge164, %.critedge164.preheader, %.critedge, %bb.ah
-  %.11 = phi i32 [ -1, %bb.ah ], [ -1, %.critedge ], [ 0, %.critedge164.preheader ], [ -1, %bb.ai ], [ %i.et, %.critedge164 ]
+.thread154:                                       ; preds = %.critedge164, %bb.ai, %.critedge164.preheader, %.critedge, %bb.ah
+  %.11 = phi i32 [ -1, %.critedge ], [ -1, %bb.ah ], [ 0, %.critedge164.preheader ], [ %i.et, %.critedge164 ], [ -1, %bb.ai ]
   %i.eu = getelementptr inbounds nuw i8, ptr %.0116209, i64 12
   store i32 %.11, ptr %i.eu, align 4
   %i.ev = getelementptr inbounds nuw i8, ptr %.0116209, i64 16

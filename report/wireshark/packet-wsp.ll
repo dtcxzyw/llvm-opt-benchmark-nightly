@@ -202,8 +202,8 @@ bb.k:                                             ; preds = %bb.g
   %i.an = call i32 @tvb_get_ntohl(ptr noundef %1, i32 noundef %i.ae)
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.h, %bb.i, %bb.j, %bb.k
-  %.0.ph = phi i32 [ %i.an, %bb.k ], [ %i.am, %bb.j ], [ %i.al, %bb.i ], [ %i.aj, %bb.h ] ; 2 uses
+bb.l:                                             ; preds = %bb.h, %bb.j, %bb.k, %bb.i
+  %.0.ph = phi i32 [ %i.aj, %bb.h ], [ %i.al, %bb.i ], [ %i.am, %bb.j ], [ %i.an, %bb.k ] ; 2 uses
   %i.ao = getelementptr i8, ptr %3, i64 416
   %i.ap = load ptr, ptr %i.ao, align 8
   %i.aq = icmp eq i32 %.0.ph, 1
@@ -214,8 +214,8 @@ bb.l:                                             ; preds = %bb.h, %bb.i, %bb.j,
   %i.av = call ptr @proto_tree_add_string(ptr noundef %0, i32 noundef %i.at, ptr noundef %1, i32 noundef %2, i32 noundef %i.au, ptr noundef %i.as) ; 0 uses
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.d, %.thread, %bb.f, %bb.g
-  %.070.ph = phi i32 [ %i.af, %bb.g ], [ %i.af, %bb.f ], [ %i.ab, %.thread ], [ %i.u, %bb.d ]
+bb.m:                                             ; preds = %bb.d, %bb.f, %bb.g, %.thread
+  %.070.ph = phi i32 [ %i.ab, %.thread ], [ %i.af, %bb.g ], [ %i.af, %bb.f ], [ %i.u, %bb.d ]
   %i.aw = load ptr, ptr %i.a, align 8
   %i.ax = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.aw, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %bb.n
@@ -618,7 +618,7 @@ bb.k:                                             ; preds = %bb.g
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h
-  %.0.ph.i = phi i32 [ %i.an, %bb.k ], [ %i.am, %bb.j ], [ %i.al, %bb.i ], [ %i.aj, %bb.h ]
+  %.0.ph.i = phi i32 [ %i.aj, %bb.h ], [ %i.al, %bb.i ], [ %i.am, %bb.j ], [ %i.an, %bb.k ]
   %i.ao = load ptr, ptr %i.g, align 8
   %i.ap = zext i32 %.0.ph.i to i64
   %i.aq = call ptr @abs_time_secs_to_str_ex(ptr noundef %i.ao, i64 noundef %i.ap, i32 noundef 18, i32 noundef 1)
@@ -627,7 +627,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br label %wkh_text_or_date_value_header_func.exit
 
 bb.m:                                             ; preds = %bb.g, %bb.f, %.thread.i, %bb.b
-  %.068.ph.i = phi i32 [ %i.af, %bb.g ], [ %i.af, %bb.f ], [ %i.ab, %.thread.i ], [ %i.n, %bb.b ]
+  %.068.ph.i = phi i32 [ %i.ab, %.thread.i ], [ %i.af, %bb.g ], [ %i.af, %bb.f ], [ %i.n, %bb.b ]
   %i.at = load ptr, ptr %i.a, align 8
   %i.au = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.at, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %wkh_text_or_date_value_header_func.exit
@@ -1030,18 +1030,14 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.aw = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.at)
   %i.ax = icmp ugt i8 %i.aw, 31
-  br i1 %i.ax, label %bb.m, label %4
+  br i1 %i.ax, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %bb.l
   %i.ay = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.at)
   %i.az = icmp sgt i8 %i.ay, -1
-  br i1 %i.az, label %bb.n, label %4
+  br i1 %i.az, label %bb.n, label %.critedge
 
-4:                                                ; preds = %bb.l, %bb.m
-  store i32 0, ptr %i.c, align 4
-  br label %bb.r
-
-bb.n:                                             ; preds = %bb.k, %bb.m
+bb.n:                                             ; preds = %bb.m, %bb.k
   %i.ba = load ptr, ptr %i.aj, align 8
   %i.bb = call ptr @tvb_get_stringz_enc(ptr noundef %i.ba, ptr noundef %1, i32 noundef %i.at, ptr noundef nonnull %i.c, i32 noundef 0) ; 2 uses
   %i.bc = load i32, ptr @hf_hdr_warning_agent, align 4
@@ -1054,21 +1050,21 @@ bb.n:                                             ; preds = %bb.k, %bb.m
   %i.bi = icmp eq i8 %i.bh, 0
   br i1 %i.bi, label %bb.q, label %bb.o
 
+.critedge:                                        ; preds = %bb.m, %bb.l
+  store i32 0, ptr %i.c, align 4
+  br label %bb.r
+
 bb.o:                                             ; preds = %bb.n
   %i.bj = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.bg)
   %i.bk = icmp ugt i8 %i.bj, 31
-  br i1 %i.bk, label %bb.p, label %5
+  br i1 %i.bk, label %bb.p, label %.critedge111
 
 bb.p:                                             ; preds = %bb.o
   %i.bl = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.bg)
   %i.bm = icmp sgt i8 %i.bl, -1
-  br i1 %i.bm, label %bb.q, label %5
+  br i1 %i.bm, label %bb.q, label %.critedge111
 
-5:                                                ; preds = %bb.o, %bb.p
-  store i32 0, ptr %i.c, align 4
-  br label %bb.r
-
-bb.q:                                             ; preds = %bb.n, %bb.p
+bb.q:                                             ; preds = %bb.p, %bb.n
   %i.bn = load ptr, ptr %i.aj, align 8
   %i.bo = call ptr @tvb_get_stringz_enc(ptr noundef %i.bn, ptr noundef %1, i32 noundef %i.bg, ptr noundef nonnull %i.c, i32 noundef 0) ; 2 uses
   %i.bp = load i32, ptr @hf_hdr_warning_text, align 4
@@ -1077,8 +1073,12 @@ bb.q:                                             ; preds = %bb.n, %bb.p
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.ao, ptr noundef nonnull @.str.1008, ptr noundef %i.bo)
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.b, %bb.e, %5, %4, %bb.j, %bb.i
-  %.0101.ph = phi i32 [ %i.ae, %bb.i ], [ %i.ae, %bb.j ], [ %i.ae, %4 ], [ %i.ae, %5 ], [ %i.v, %bb.e ], [ %i.j, %bb.b ]
+.critedge111:                                     ; preds = %bb.p, %bb.o
+  store i32 0, ptr %i.c, align 4
+  br label %bb.r
+
+bb.r:                                             ; preds = %bb.b, %bb.e, %.critedge111, %.critedge, %bb.j, %bb.i
+  %.0101.ph = phi i32 [ %i.ae, %bb.i ], [ %i.ae, %bb.j ], [ %i.ae, %.critedge ], [ %i.ae, %.critedge111 ], [ %i.v, %bb.e ], [ %i.j, %bb.b ]
   %i.bs = load ptr, ptr %i.a, align 8
   %i.bt = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.bs, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %bb.s
@@ -1481,7 +1481,7 @@ bb.n:                                             ; preds = %bb.m
   %i.al = icmp sgt i8 %i.ak, -1
   br i1 %i.al, label %bb.o, label %bb.p
 
-bb.o:                                             ; preds = %bb.l, %bb.n
+bb.o:                                             ; preds = %bb.n, %bb.l
   %i.am = getelementptr i8, ptr %3, i64 416
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = call ptr @tvb_get_stringz_enc(ptr noundef %i.an, ptr noundef %1, i32 noundef %i.x, ptr noundef nonnull %i.c, i32 noundef 0)
@@ -1490,8 +1490,8 @@ bb.o:                                             ; preds = %bb.l, %bb.n
   %i.ar = call ptr @proto_tree_add_string(ptr noundef %0, i32 noundef %i.ap, ptr noundef %1, i32 noundef %2, i32 noundef %i.aq, ptr noundef %i.ao) ; 0 uses
   br label %bb.q
 
-bb.p:                                             ; preds = %bb.n, %bb.m, %bb.b, %bb.e, %bb.j
-  %.069.ph = phi i32 [ %i.j, %bb.b ], [ %i.y, %bb.j ], [ %i.p, %bb.e ], [ %i.y, %bb.m ], [ %i.y, %bb.n ]
+bb.p:                                             ; preds = %bb.m, %bb.n, %bb.b, %bb.e, %bb.j
+  %.069.ph = phi i32 [ %i.j, %bb.b ], [ %i.y, %bb.j ], [ %i.p, %bb.e ], [ %i.y, %bb.n ], [ %i.y, %bb.m ]
   %i.as = load ptr, ptr %i.a, align 8
   %i.at = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.as, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %bb.q
@@ -1749,11 +1749,11 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.k, %bb.o
-  %.0.ph = phi ptr [ %i.bl, %bb.o ], [ %i.bd, %bb.k ]
+  %.0.ph = phi ptr [ %i.bd, %bb.k ], [ %i.bl, %bb.o ]
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.au, ptr noundef nonnull @.str.1084, ptr noundef %.0.ph)
   br label %.thread94
 
-bb.q:                                             ; preds = %bb.n, %bb.m, %bb.h
+bb.q:                                             ; preds = %bb.m, %bb.n, %bb.h
   %i.bm = load ptr, ptr %i.a, align 8
   %i.bn = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.bm, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %.thread94
@@ -2156,16 +2156,16 @@ bb.k:                                             ; preds = %bb.g
   %i.am = call i32 @tvb_get_ntohl(ptr noundef %1, i32 noundef %i.ad)
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.h, %bb.i, %bb.j, %bb.k
-  %.0.ph = phi i32 [ %i.am, %bb.k ], [ %i.al, %bb.j ], [ %i.ak, %bb.i ], [ %i.ai, %bb.h ]
+bb.l:                                             ; preds = %bb.h, %bb.j, %bb.k, %bb.i
+  %.0.ph = phi i32 [ %i.ai, %bb.h ], [ %i.ak, %bb.i ], [ %i.al, %bb.j ], [ %i.am, %bb.k ]
   %i.an = load ptr, ptr %i.e, align 8
   %i.ao = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.an, ptr noundef nonnull @.str.986, i32 noundef %.0.ph)
   %i.ap = sub i32 %i.ae, %2
   %i.aq = call ptr @proto_tree_add_string(ptr noundef %0, i32 noundef %4, ptr noundef %1, i32 noundef %2, i32 noundef %i.ap, ptr noundef %i.ao) ; 0 uses
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.d, %.thread, %bb.f, %bb.g
-  %.072.ph = phi i32 [ %i.ae, %bb.g ], [ %i.ae, %bb.f ], [ %i.aa, %.thread ], [ %i.t, %bb.d ]
+bb.m:                                             ; preds = %bb.d, %bb.f, %bb.g, %.thread
+  %.072.ph = phi i32 [ %i.aa, %.thread ], [ %i.ae, %bb.g ], [ %i.ae, %bb.f ], [ %i.t, %bb.d ]
   %i.ar = load ptr, ptr %i.a, align 8
   %i.as = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.ar, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %bb.n
@@ -2260,8 +2260,8 @@ bb.k:                                             ; preds = %bb.g
   %i.ah = call i32 @tvb_get_ntohl(ptr noundef %1, i32 noundef %i.y)
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h
-  %.0.ph = phi i32 [ %i.ah, %bb.k ], [ %i.ag, %bb.j ], [ %i.af, %bb.i ], [ %i.ad, %bb.h ]
+bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j, %bb.h
+  %.0.ph = phi i32 [ %i.ad, %bb.h ], [ %i.af, %bb.i ], [ %i.ag, %bb.j ], [ %i.ah, %bb.k ]
   %i.ai = load ptr, ptr %i.e, align 8
   %i.aj = zext i32 %.0.ph to i64
   %i.ak = call ptr @abs_time_secs_to_str_ex(ptr noundef %i.ai, i64 noundef %i.aj, i32 noundef 18, i32 noundef 1)
@@ -2269,8 +2269,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   %i.am = call ptr @proto_tree_add_string(ptr noundef %0, i32 noundef %4, ptr noundef %1, i32 noundef %2, i32 noundef %i.al, ptr noundef %i.ak) ; 0 uses
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.b, %bb.d, %.thread, %bb.f, %bb.g
-  %.063.ph = phi i32 [ %i.z, %bb.g ], [ %i.z, %bb.f ], [ %i.v, %.thread ], [ %i.o, %bb.d ], [ %i.l, %bb.b ]
+bb.m:                                             ; preds = %bb.b, %bb.d, %bb.f, %bb.g, %.thread
+  %.063.ph = phi i32 [ %i.v, %.thread ], [ %i.z, %bb.g ], [ %i.z, %bb.f ], [ %i.o, %bb.d ], [ %i.l, %bb.b ]
   %i.an = load ptr, ptr %i.a, align 8
   %i.ao = call ptr @expert_add_info(ptr noundef %3, ptr noundef %i.an, ptr noundef nonnull @ei_wsp_header_invalid_value) ; 0 uses
   br label %bb.n

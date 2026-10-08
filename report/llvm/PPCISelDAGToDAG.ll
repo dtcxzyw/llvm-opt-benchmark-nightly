@@ -205,7 +205,7 @@ _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread.us.us.i: ; pred
   %i.avh = getelementptr inbounds nuw i8, ptr %.sroa.0149.0211.us.us.i, i64 16
   %i.avi = load ptr, ptr %i.avh, align 8, !tbaa !440
   %.not76.old.us.us.i = icmp eq ptr %i.avi, %.sroa.0165.0.copyload.i
-  br i1 %.not76.old.us.us.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.us.i, label %.thread191.i
+  br i1 %.not76.old.us.us.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.us.i, label %.thread191.i, !llvm.loop !838
 
 _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.us.i: ; preds = %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread.us.us.i
   %i.avj = getelementptr inbounds nuw i8, ptr %.sroa.0149.0211.us.us.i, i64 32
@@ -238,7 +238,7 @@ _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.i: ; pred
 
 _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread.loopexit.us.i: ; preds = %bb.he
   %.not76.old.us.i = icmp eq ptr %i.avl, %.sroa.0165.0.copyload.i
-  br i1 %.not76.old.us.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.i, label %.thread191.i
+  br i1 %.not76.old.us.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.us.i, label %.thread191.i, !llvm.loop !838
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i28, %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i
   %.sroa.0149.0211.i = phi ptr [ %.sroa.0149.0.i, %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i ], [ %.sroa.0149.0209.i, %.lr.ph.i28 ] ; 2 uses
@@ -273,11 +273,11 @@ _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.i: ; preds = %.lr.ph.s
   %i.awa = icmp ne ptr %i.avz, null
   %.not76.i = icmp eq ptr %i.avq, %.sroa.0165.0.copyload.i
   %or.cond200.i = select i1 %i.awa, i1 true, i1 %.not76.i
-  br i1 %or.cond200.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i, label %.thread191.i
+  br i1 %or.cond200.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i, label %.thread191.i, !llvm.loop !838
 
 _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread.i: ; preds = %bb.hg, %bb.hf
   %.not76.old.i = icmp eq ptr %i.avq, %.sroa.0165.0.copyload.i
-  br i1 %.not76.old.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i, label %.thread191.i
+  br i1 %.not76.old.i, label %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i, label %.thread191.i, !llvm.loop !838
 
 _ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread183.i: ; preds = %.lr.ph.i.i87.i, %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.thread.i, %_ZNK4llvm15SmallPtrSetImplIPNS_6SDNodeEE5countEPKS1_.exit.i
   %i.awb = getelementptr inbounds nuw i8, ptr %.sroa.0149.0211.i, i64 32

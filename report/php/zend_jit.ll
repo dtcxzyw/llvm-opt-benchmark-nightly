@@ -205,7 +205,7 @@ bb.bjq:                                           ; preds = %zend_jit_free_cv.ex
   %i.gwd = trunc nuw i8 %.3 to i1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %.thread4013
+.loopexit:                                        ; preds = %.preheader, %.loopexit.loopexit, %.thread4013
   %.6 = phi i1 [ true, %.thread4013 ], [ false, %.preheader ], [ %i.gwd, %.loopexit.loopexit ]
   %i.gwe = load i32, ptr %i.w, align 8, !tbaa !161
   %i.gwf = and i32 %i.gwe, 1

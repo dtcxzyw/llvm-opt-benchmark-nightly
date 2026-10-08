@@ -205,7 +205,7 @@ bb.ov:                                            ; preds = %bb.ou, %bb.ot
   br label %bb.ow
 
 bb.ow:                                            ; preds = %bb.ov, %bb.os
-  %.31245 = phi i8 [ 0, %bb.ov ], [ %.212441793, %bb.os ] ; 4 uses
+  %.31245 = phi i8 [ 0, %bb.ov ], [ %.212441793, %bb.os ]
   %.31206 = phi float [ %.21205, %bb.ov ], [ %.11204, %bb.os ] ; 4 uses
   %i.bfr = fcmp une float %.31206, %.112501790
   br i1 %i.bfr, label %bb.ox, label %bb.oy
@@ -238,10 +238,10 @@ bb.ox:                                            ; preds = %bb.ow
 bb.oy:                                            ; preds = %bb.ox, %bb.ow
   %i.bgk = getelementptr inbounds nuw i8, ptr %.012601537, i64 92
   %i.bgl = load float, ptr %i.bgk, align 4, !tbaa !701 ; 4 uses
+  %23 = trunc nuw i8 %.31245 to i1                ; 4 uses
   br i1 %i.bfh, label %bb.oz, label %.loopexit
 
 bb.oz:                                            ; preds = %bb.oy
-  %23 = trunc nuw i8 %.31245 to i1
   %i.bgm = select i1 %23, float 1.000000e+00, float 6.000000e-01
   %i.bgn = call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 52, float noundef %i.bgm)
   %i.bgo = select i1 %i.r, float 0.000000e+00, float -1.000000e+00
@@ -392,12 +392,12 @@ bb.pi:                                            ; preds = %bb.pg, %bb.ph
   %i.bjx = icmp slt i64 %indvars.iv.next1672, %i.bjw
   br i1 %i.bjx, label %bb.pa, label %.loopexit, !llvm.loop !690
 
-.loopexit:                                        ; preds = %bb.pi, %bb.oz, %bb.oy, %bb.od
-  %i.bjy = phi i1 [ false, %bb.od ], [ false, %bb.oy ], [ true, %bb.oz ], [ true, %bb.pi ]
-  %i.bjz = phi i32 [ %i.bdu, %bb.od ], [ %i.bfg, %bb.oy ], [ %i.bfg, %bb.oz ], [ %i.bfg, %bb.pi ] ; 3 uses
-  %.sroa.01483.01607 = phi <2 x float> [ zeroinitializer, %bb.od ], [ %.sroa.01483.01606, %bb.oy ], [ %.sroa.01483.01606, %bb.oz ], [ %.sroa.01483.01606, %bb.pi ] ; 2 uses
-  %.sroa.01478.0 = phi float [ 0.000000e+00, %bb.od ], [ %i.bgl, %bb.oy ], [ %i.bgl, %bb.oz ], [ %i.bgl, %bb.pi ] ; 2 uses
-  %.41246 = phi i8 [ 0, %bb.od ], [ %.31245, %bb.oy ], [ %.31245, %bb.oz ], [ %.31245, %bb.pi ] ; 2 uses
+.loopexit:                                        ; preds = %bb.pi, %bb.oy, %bb.oz, %bb.od
+  %i.bjy = phi i1 [ false, %bb.od ], [ true, %bb.oz ], [ false, %bb.oy ], [ true, %bb.pi ]
+  %i.bjz = phi i32 [ %i.bdu, %bb.od ], [ %i.bfg, %bb.oz ], [ %i.bfg, %bb.oy ], [ %i.bfg, %bb.pi ] ; 3 uses
+  %.sroa.01483.01607 = phi <2 x float> [ zeroinitializer, %bb.od ], [ %.sroa.01483.01606, %bb.oz ], [ %.sroa.01483.01606, %bb.oy ], [ %.sroa.01483.01606, %bb.pi ] ; 2 uses
+  %.sroa.01478.0 = phi float [ 0.000000e+00, %bb.od ], [ %i.bgl, %bb.oz ], [ %i.bgl, %bb.oy ], [ %i.bgl, %bb.pi ] ; 2 uses
+  %.41246 = phi i1 [ false, %bb.od ], [ %23, %bb.oz ], [ %23, %bb.oy ], [ %23, %bb.pi ] ; 2 uses
   %i.bka = load i32, ptr %i.ei, align 4, !tbaa !218
   %.not1340 = icmp eq i32 %i.bka, %i.s
   br i1 %.not1340, label %bb.pl, label %bb.pj
@@ -405,9 +405,8 @@ bb.pi:                                            ; preds = %bb.pg, %bb.ph
 bb.pj:                                            ; preds = %.loopexit
   %i.bkb = and i32 %5, 131072
   %i.bkc = icmp eq i32 %i.bkb, 0
-  %24 = trunc nuw i8 %.41246 to i1
-  %or.cond181 = select i1 %i.bkc, i1 true, i1 %24
-  %or.cond184 = or i1 %i.bjy, %or.cond181
+  %or.cond181 = select i1 %i.bkc, i1 true, i1 %.41246
+  %or.cond184 = or i1 %or.cond181, %i.bjy
   br i1 %or.cond184, label %bb.pl, label %bb.pk
 
 bb.pk:                                            ; preds = %bb.pj
@@ -500,8 +499,7 @@ _ZN14ImGuiTextIndex12get_line_endEPKci.exit1457:  ; preds = %bb.pr, %bb.ps
   br label %bb.pt
 
 bb.pt:                                            ; preds = %_ZN14ImGuiTextIndex12get_line_endEPKci.exit1457, %bb.po, %bb.pn, %bb.pm
-  %25 = trunc nuw i8 %.41246 to i1
-  br i1 %25, label %bb.pu, label %bb.qa
+  br i1 %.41246, label %bb.pu, label %bb.qa
 
 bb.pu:                                            ; preds = %bb.pt
   %i.blx = getelementptr inbounds nuw i8, ptr %i.i, i64 64
@@ -904,7 +902,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bf, %bb.
   %i.id = phi i32 [ %i.hy, %bb.bg ], [ %spec.select362, %bb.bh ], [ %.pre, %bb.bf ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #41
-  %i.ie = call noundef zeroext i1 @_ZN5ImGui14ButtonBehaviorERK6ImRectjPbS3_i(ptr noundef nonnull align 4 dereferenceable(16) %8, i32 noundef %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i32 noundef %i.id) ; 2 uses
+  %i.ie = call noundef zeroext i1 @_ZN5ImGui14ButtonBehaviorERK6ImRectjPbS3_i(ptr noundef nonnull align 4 dereferenceable(16) %8, i32 noundef %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i32 noundef %i.id) ; 3 uses
   br i1 %.not298, label %bb.bj, label %bb.bx
 
 bb.bj:                                            ; preds = %bb.bi
@@ -974,7 +972,7 @@ bb.bu:                                            ; preds = %bb.bk
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.bt, %bb.bj, %bb.bu, %bb.bs
-  %.0279 = phi i1 [ %not., %bb.bu ], [ false, %bb.bj ], [ true, %bb.bs ], [ true, %bb.bt ] ; 2 uses
+  %.0279 = phi i1 [ %not., %bb.bu ], [ false, %bb.bj ], [ true, %bb.bs ], [ true, %bb.bt ] ; 3 uses
   %.2 = phi i8 [ %.317, %bb.bu ], [ 0, %bb.bj ], [ %.1278, %bb.bs ], [ %spec.select316, %bb.bt ] ; 2 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %i.f, i64 8220 ; 2 uses
   %i.jb = load i32, ptr %i.ja, align 4, !tbaa !222
@@ -1026,14 +1024,14 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %.thread356, %.thread358, %bb.bi
   %.0283.in = phi i1 [ %i.dq, %bb.bi ], [ %i.jl, %.thread358 ], [ %i.dq, %.thread356 ] ; 5 uses
-  %.1280 = phi i1 [ %i.ie, %bb.bi ], [ %.0279, %.thread358 ], [ %.0279, %.thread356 ] ; 2 uses
-  %.5 = phi i8 [ 1, %bb.bi ], [ 0, %.thread358 ], [ 1, %.thread356 ]
+  %.1280 = phi i1 [ %i.ie, %bb.bi ], [ %.0279, %.thread358 ], [ %.0279, %.thread356 ]
+  %11 = phi i1 [ %i.ie, %bb.bi ], [ false, %.thread358 ], [ %.0279, %.thread356 ]
   br i1 %i.hm, label %bb.by, label %bb.cb
 
 bb.by:                                            ; preds = %bb.bx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #41
-  %11 = select i1 %.1280, i8 %.5, i8 0
-  store i8 %11, ptr %i.e, align 1, !tbaa !231
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.e, align 1, !tbaa !231
   call void @_ZN5ImGui21MultiSelectItemFooterEjPbS0_i(i32 noundef %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, i32 noundef 0)
   br i1 %.1280, label %bb.bz, label %bb.ca
 

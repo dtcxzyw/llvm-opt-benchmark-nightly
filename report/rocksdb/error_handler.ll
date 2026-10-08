@@ -205,8 +205,8 @@ bb.q:                                             ; preds = %_ZNSt8_Rb_treeISt5t
   %.sroa.06.0.i.i.i.i.i53 = select i1 %i.ce, i1 %i.ch, i1 %i.cf
   br i1 %.sroa.06.0.i.i.i.i.i53, label %.thread186, label %.thread186.sink.split
 
-.thread186.sink.split:                            ; preds = %bb.q, %.split.i.i43, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeEbEEEclERKS5_S8_.exit.i.i, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeENS3_7SubCodeEbEEEclERKS6_S9_.exit.i.i, %.split.i.i
-  %.19.i.i.i38.lcssa.sink = phi ptr [ %.19.i.i.i, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeENS3_7SubCodeEbEEEclERKS6_S9_.exit.i.i ], [ %.19.i.i.i38, %.split.i.i43 ], [ %.19.i.i.i, %.split.i.i ], [ %.19.i.i.i38, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeEbEEEclERKS5_S8_.exit.i.i ], [ %.19.i.i.i50, %bb.q ]
+.thread186.sink.split:                            ; preds = %bb.q, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeEbEEEclERKS5_S8_.exit.i.i, %.split.i.i43, %.split.i.i, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeENS3_7SubCodeEbEEEclERKS6_S9_.exit.i.i
+  %.19.i.i.i38.lcssa.sink = phi ptr [ %.19.i.i.i38, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeEbEEEclERKS5_S8_.exit.i.i ], [ %.19.i.i.i, %.split.i.i ], [ %.19.i.i.i, %_ZNKSt4lessISt5tupleIJN7rocksdb21BackgroundErrorReasonENS1_6Status4CodeENS3_7SubCodeEbEEEclERKS6_S9_.exit.i.i ], [ %.19.i.i.i38, %.split.i.i43 ], [ %.19.i.i.i50, %bb.q ]
   %i.ci = getelementptr inbounds nuw i8, ptr %.19.i.i.i38.lcssa.sink, i64 40
   %i.cj = load i8, ptr %i.ci, align 4, !tbaa !170
   br label %.thread186

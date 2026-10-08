@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t
   %i.bw = load ptr, ptr %7, align 8, !tbaa !98    ; 3 uses
   %i.bx = load ptr, ptr %i.o, align 8, !tbaa !98  ; 2 uses
   %i.by = icmp eq ptr %i.bw, %i.bx
-  br i1 %i.by, label %bb.at, label %bb.w
+  br i1 %i.by, label %bb.au, label %bb.w
 
 bb.v:                                             ; preds = %bb.t, %bb.s
   %i.bz = landingpad { ptr, i32 }
@@ -415,14 +415,14 @@ bb.am:                                            ; preds = %_ZNSt10unique_ptrIN
 bb.an:                                            ; preds = %.noexc
   %i.eb = load ptr, ptr %3, align 8, !tbaa !111, !noalias !344 ; 3 uses
   %.not.i.i84 = icmp eq ptr %i.eb, null
-  br i1 %.not.i.i84, label %bb.au, label %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i
+  br i1 %.not.i.i84, label %bb.at, label %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i
 
 _ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i: ; preds = %bb.an
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !109, !noalias !344
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 8
   %i.ee = load ptr, ptr %i.ed, align 8, !noalias !344
   call void %i.ee(ptr noundef nonnull align 8 dead_on_return(97) dereferenceable(97) %i.eb) #19, !noalias !344, !inline_history !4
-  br label %bb.au
+  br label %bb.at
 
 bb.ao:                                            ; preds = %.noexc
   %i.ef = landingpad { ptr, i32 }
@@ -477,41 +477,41 @@ bb.as:                                            ; preds = %bb.ar
   br label %thread-pre-split.jt0
 
 thread-pre-split.jt0:                             ; preds = %.lr.ph, %_ZNSt3setImSt4lessImESaImEE4findERKm.exit, %_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE14_M_lower_boundEPSt13_Rb_tree_nodeImEPSt18_Rb_tree_node_baseRKm.exit.i.i, %bb.as
-  %.254.ph.jt0 = phi i64 [ %.052177, %_ZNSt3setImSt4lessImESaImEE4findERKm.exit ], [ %i.et, %bb.as ], [ %.052177, %_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE14_M_lower_boundEPSt13_Rb_tree_nodeImEPSt18_Rb_tree_node_baseRKm.exit.i.i ], [ %.052177, %.lr.ph ]
+  %.254.ph.jt0 = phi i64 [ %i.et, %bb.as ], [ %.052177, %_ZNSt3setImSt4lessImESaImEE4findERKm.exit ], [ %.052177, %_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE14_M_lower_boundEPSt13_Rb_tree_nodeImEPSt18_Rb_tree_node_baseRKm.exit.i.i ], [ %.052177, %.lr.ph ]
   %.pr140.jt0 = load ptr, ptr %7, align 8, !tbaa !113
-  br label %bb.at
+  br label %bb.au
 
-bb.at:                                            ; preds = %bb.u, %thread-pre-split.jt0
-  %13 = phi ptr [ %.pr140.jt0, %thread-pre-split.jt0 ], [ %i.bw, %bb.u ] ; 2 uses
-  %.254.jt0 = phi i64 [ %.254.ph.jt0, %thread-pre-split.jt0 ], [ %.052177, %bb.u ]
-  %.not.i.i.i94.jt0 = icmp eq ptr %13, null
-  br i1 %.not.i.i.i94.jt0, label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0, label %bb.av
-
-bb.au:                                            ; preds = %bb.an, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i
+bb.at:                                            ; preds = %bb.an, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   store ptr %i.dz, ptr %0, align 8, !tbaa !115
   %.pr140.jt1 = load ptr, ptr %7, align 8, !tbaa !113 ; 2 uses
-  %.not.i.i.i94.jt1 = icmp eq ptr %.pr140.jt1, null
+  %.not.i.i.i94.jt0 = icmp eq ptr %.pr140.jt1, null
+  br i1 %.not.i.i.i94.jt0, label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0, label %bb.av
+
+bb.au:                                            ; preds = %bb.u, %thread-pre-split.jt0
+  %13 = phi ptr [ %.pr140.jt0, %thread-pre-split.jt0 ], [ %i.bw, %bb.u ] ; 2 uses
+  %.254.jt4 = phi i64 [ %.254.ph.jt0, %thread-pre-split.jt0 ], [ %.052177, %bb.u ]
+  %.not.i.i.i94.jt1 = icmp eq ptr %13, null
   br i1 %.not.i.i.i94.jt1, label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1, label %bb.aw
 
 bb.av:                                            ; preds = %bb.at
-  call void @_ZdlPv(ptr noundef nonnull %13) #22
+  call void @_ZdlPv(ptr noundef nonnull %.pr140.jt1) #22
   br label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0
 
 bb.aw:                                            ; preds = %bb.au
-  call void @_ZdlPv(ptr noundef nonnull %.pr140.jt1) #22
+  call void @_ZdlPv(ptr noundef nonnull %13) #22
   br label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1
 
 _ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0: ; preds = %bb.av, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
-  br label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.thread142
+  br label %_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit104
 
 _ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1: ; preds = %bb.aw, %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
-  br label %_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit104
+  br label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.thread142
 
-_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.thread142: ; preds = %bb.j, %bb.g, %bb.q, %bb.o, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0, %bb.p, %bb.i, %.loopexit
-  %.355145 = phi i64 [ %.052177, %bb.q ], [ %.052177, %bb.g ], [ %.052177, %.loopexit ], [ %.052177, %bb.p ], [ %.254.jt0, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0 ], [ %.052177, %bb.i ], [ %.052177, %bb.o ], [ %.052177, %bb.j ]
+_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.thread142: ; preds = %bb.j, %bb.g, %bb.q, %bb.o, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1, %bb.p, %bb.i, %.loopexit
+  %.355145 = phi i64 [ %.052177, %bb.q ], [ %.052177, %bb.g ], [ %.052177, %.loopexit ], [ %.052177, %bb.p ], [ %.254.jt4, %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1 ], [ %.052177, %bb.i ], [ %.052177, %bb.o ], [ %.052177, %bb.j ]
   %i.eu = add i64 %.355145, 1                     ; 2 uses
   %i.ev = load ptr, ptr %i.h, align 8, !tbaa !86
   %i.ew = load ptr, ptr %i.g, align 8, !tbaa !87
@@ -691,7 +691,7 @@ _ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i112: ; preds = %
   call void %i.gs(ptr noundef nonnull align 8 dead_on_return(97) dereferenceable(97) %i.gp) #19, !inline_history !6
   br label %_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit113
 
-_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit104: ; preds = %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt1, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i103, %bb.bf
+_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit104: ; preds = %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit.jt0, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i103, %bb.bf
   %i.gt = getelementptr inbounds nuw i8, ptr %6, i64 264
   call void @_ZNSt6vectorIN6duckdb10unique_ptrINS0_14FilterPushdown6FilterESt14default_deleteIS3_ELb1EEESaIS6_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.gt) #19
   %i.gu = getelementptr inbounds nuw i8, ptr %6, i64 8

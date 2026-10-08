@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MachineCSE?download=true
-inline.NumInlined: 2410
+inline.NumInlined: 2411
 inline.NumDeleted: 1305
 loop-unroll.NumRuntimeUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -204,7 +204,7 @@ declare i32 @_ZN4llvm19MachineRegisterInfo20cloneVirtualRegisterENS_8RegisterENS
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_114MachineCSEImpl17isProfitableToCSEEN4llvm8RegisterES2_PNS1_17MachineBasicBlockEPNS1_12MachineInstrE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(748) %0, i32 %1, i32 %2, ptr noundef %3, ptr noundef nonnull %4) unnamed_addr #3 align 2 {
 bb.a:
-  %5 = alloca %"class.llvm::SmallPtrSet.397", align 8 ; 13 uses
+  %5 = alloca %"class.llvm::SmallPtrSet.397", align 8 ; 14 uses
   %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL20AggressiveMachineCSE, i64 120), align 8, !tbaa !288, !range !27, !noundef !28
   %i.b = trunc nuw i8 %i.a to i1
   br i1 %i.b, label %.critedge285, label %bb.b
@@ -316,16 +316,16 @@ _ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i: ; preds = %._crit_edge.i.i
   br label %_ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit
 
 _ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit: ; preds = %.lr.ph.i.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i, %bb.g
-  %i.am = phi i8 [ %.pre.fr.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %i.v, %bb.g ], [ %i.v, %.lr.ph.i.i ] ; 2 uses
+  %i.am = phi i8 [ %.pre.fr.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %i.v, %bb.g ], [ %i.v, %.lr.ph.i.i ] ; 3 uses
   %i.an = phi i32 [ %i.ak, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %.pre, %bb.g ], [ %i.w, %.lr.ph.i.i ]
   %i.ao = phi i32 [ %i.al, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %i.x, %bb.g ], [ %i.x, %.lr.ph.i.i ]
-  %i.ap = phi ptr [ %.pre5.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %i.ai, %bb.g ], [ %i.y, %.lr.ph.i.i ]
+  %i.ap = phi ptr [ %.pre5.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ %i.ai, %bb.g ], [ %i.y, %.lr.ph.i.i ] ; 2 uses
   %i.aq = phi i8 [ %.pre.fr.i, %_ZN4llvm19SmallPtrSetImplBase10insert_impEPKv.exit.i ], [ 1, %bb.g ], [ 1, %.lr.ph.i.i ]
   %i.ar = add nuw nsw i32 %.066248, 1
   %i.as = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CSUsesThreshold, i64 120), align 8, !tbaa !293
   %.not = icmp sge i32 %.066248, %i.as            ; 2 uses
   %.052. = select i1 %.not, i1 true, i1 %.052249  ; 2 uses
-  br i1 %.not, label %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit.thread, label %bb.h
+  br i1 %.not, label %.critedge.critedge, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit
   %i.at = load ptr, ptr %i.aa, align 8, !tbaa !654
@@ -354,7 +354,7 @@ _ZN4llvm19MachineRegisterInfo26defusechain_instr_iteratorILb1ELb0ELb1ELb1EE7adva
   br i1 %i.ay, label %.critedge2.i.i.backedge, label %.lr.ph, !llvm.loop !647
 
 ._crit_edge:                                      ; preds = %.critedge2.i.i
-  br i1 %.052., label %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit.thread, label %._crit_edge.._crit_edge.thread_crit_edge
+  br i1 %.052., label %.critedge.critedge, label %._crit_edge.._crit_edge.thread_crit_edge
 
 ._crit_edge.._crit_edge.thread_crit_edge:         ; preds = %._crit_edge
   %.pre415 = load ptr, ptr %i.i, align 8, !tbaa !73
@@ -465,8 +465,8 @@ _ZN4llvm19MachineRegisterInfo26defusechain_instr_iteratorILb1ELb0ELb1ELb1EE7adva
   %i.bz = icmp eq ptr %i.by, %i.bu
   br i1 %i.bz, label %.critedge2.i.i105.backedge, label %.lr.ph253.loopexit
 
-_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit.thread: ; preds = %_ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit, %.critedge2.i.i.i.i88, %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit, %bb.l, %bb.m, %.critedge2.i.i105, %._crit_edge.thread, %._crit_edge
-  %.658 = phi i1 [ true, %._crit_edge ], [ false, %.critedge2.i.i105 ], [ false, %._crit_edge.thread ], [ true, %bb.m ], [ false, %.critedge2.i.i.i.i88 ], [ true, %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit ], [ true, %bb.l ], [ true, %_ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit ]
+_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit.thread: ; preds = %.critedge2.i.i.i.i88, %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit, %bb.l, %bb.m, %.critedge2.i.i105, %._crit_edge.thread
+  %.557 = phi i1 [ true, %bb.m ], [ false, %._crit_edge.thread ], [ true, %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit ], [ false, %.critedge2.i.i105 ], [ true, %bb.l ], [ false, %.critedge2.i.i.i.i88 ]
   %i.ca = load i8, ptr %i.h, align 8, !tbaa !26, !range !27, !noundef !28
   %i.cb = trunc nuw i8 %i.ca to i1
   br i1 %i.cb, label %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit, label %bb.o
@@ -478,9 +478,21 @@ bb.o:                                             ; preds = %_ZNK4llvm15SmallPtr
 
 _ZN4llvm19SmallPtrSetImplBaseD2Ev.exit:           ; preds = %_ZNK4llvm15SmallPtrSetImplIPNS_12MachineInstrEE5countEPKS1_.exit.thread, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  br i1 %.658, label %.critedge, label %.critedge285
+  br i1 %.557, label %.critedge, label %.critedge285
 
-.critedge:                                        ; preds = %bb.b, %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit
+.critedge.critedge:                               ; preds = %_ZN4llvm15SmallPtrSetImplIPNS_12MachineInstrEE6insertES2_.exit, %._crit_edge
+  %6 = trunc nuw i8 %i.am to i1
+  br i1 %6, label %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit114, label %7
+
+7:                                                ; preds = %.critedge.critedge
+  call void @free(ptr noundef %i.ap) #18
+  br label %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit114
+
+_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit114:        ; preds = %.critedge.critedge, %7
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit114, %bb.b, %_ZN4llvm19SmallPtrSetImplBaseD2Ev.exit
   %i.cd = load ptr, ptr %0, align 8, !tbaa !185   ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !19
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 184

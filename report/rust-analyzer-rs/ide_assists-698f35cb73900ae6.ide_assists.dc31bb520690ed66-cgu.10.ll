@@ -205,7 +205,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %.sroa.022.10253 = phi i64 [ %.sroa.022.10, %bb.es ], [ %.sroa.022.3, %.body494 ], [ %.sroa.022.3, %bb.ep ], [ %.sroa.022.3, %bb.et ], [ %.sroa.022.3, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9RecordPatECsiU5vK8fN4ZC_11ide_assists.exit513 ], [ %.sroa.022.3.lcssa1168.lcssa1195, %.body505.thread238 ]
   %.sroa.10.10252 = phi ptr [ %.sroa.10.10, %bb.es ], [ %.sroa.10.3, %.body494 ], [ %.sroa.10.3, %bb.ep ], [ %.sroa.10.3, %bb.et ], [ %.sroa.10.3, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9RecordPatECsiU5vK8fN4ZC_11ide_assists.exit513 ], [ %.sroa.10.3, %.body505.thread238 ] ; 3 uses
   %i.rv = icmp ne i64 %.sroa.022.10253, -1
-  %or.cond = and i1 %i.rv, %.sroa.0130.10254
+  %or.cond = and i1 %.sroa.0130.10254, %i.rv
   br i1 %or.cond, label %bb.gk, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECsiU5vK8fN4ZC_11ide_assists.exit580
 
 bb.gk:                                            ; preds = %.thread246
@@ -608,7 +608,7 @@ bb.jg:                                            ; preds = %.split299.thread, %
   %.sroa.038.6318 = phi i64 [ %.sroa.038.6, %bb.gy ], [ %.sroa.038.2, %.split299 ], [ %.sroa.038.2, %bb.gz ], [ %.sroa.038.2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleStructPatECsiU5vK8fN4ZC_11ide_assists.exit620 ], [ %.sroa.038.2.lcssa1263.lcssa1280, %.body612.thread335 ]
   %.sroa.1043.6317 = phi ptr [ %.sroa.1043.6, %bb.gy ], [ %.sroa.1043.2, %.split299 ], [ %.sroa.1043.2, %bb.gz ], [ %.sroa.1043.2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes14TupleStructPatECsiU5vK8fN4ZC_11ide_assists.exit620 ], [ %.sroa.1043.2, %.body612.thread335 ] ; 3 uses
   %i.yg = icmp ne i64 %.sroa.038.6318, -1
-  %or.cond3 = and i1 %i.yg, %.sroa.0124.6319
+  %or.cond3 = and i1 %.sroa.0124.6319, %i.yg
   br i1 %or.cond3, label %bb.jh, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECsiU5vK8fN4ZC_11ide_assists.exit668
 
 bb.jh:                                            ; preds = %.thread311

@@ -204,7 +204,8 @@ bb.ai:                                            ; preds = %_ZN5clang6Parser15T
 .critedge.thread:                                 ; preds = %bb.ab, %.critedge
   %i.ej = call i32 @_ZN5clang6Parser14ConsumeBracketEv(ptr noundef nonnull align 8 dereferenceable(2960) %0) ; 0 uses
   %i.ek = load i16, ptr %i.e, align 8, !tbaa !13
-  %i.el = icmp eq i16 %i.ek, 21
+  %.fr = freeze i16 %i.ek
+  %i.el = icmp eq i16 %.fr, 21
   %i.em = zext i1 %i.el to i32
   br label %.loopexit
 
@@ -213,7 +214,7 @@ bb.ai:                                            ; preds = %_ZN5clang6Parser15T
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ab, %.critedge65, %.critedge.thread, %.critedge, %_ZN5clang16LambdaIntroducerD2Ev.exit, %bb.t
-  %.2 = phi i32 [ %i.cs, %bb.t ], [ %.0, %_ZN5clang16LambdaIntroducerD2Ev.exit ], [ 0, %.critedge ], [ %i.em, %.critedge.thread ], [ 0, %.critedge65 ], [ 1, %bb.ab ]
+  %.2 = phi i32 [ %i.cs, %bb.t ], [ %.0, %_ZN5clang16LambdaIntroducerD2Ev.exit ], [ 0, %.critedge65 ], [ 0, %.critedge ], [ %i.em, %.critedge.thread ], [ 1, %bb.ab ]
   %i.en = load ptr, ptr %i.o, align 8, !tbaa !104, !nonnull !105, !align !106
   call void @_ZN5clang12Preprocessor9BacktrackEv(ptr noundef nonnull align 8 dereferenceable(3344) %i.en) #10
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ay, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8, i64 40, i1 false), !tbaa.struct !23

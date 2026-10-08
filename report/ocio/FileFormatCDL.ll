@@ -202,7 +202,7 @@ bb.bm:                                            ; preds = %bb.bd, %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #23
   br label %bb.ed
 
-.thread196.a:                                     ; preds = %bb.bf, %bb.bh, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i104, %bb.bl
+.thread196.a:                                     ; preds = %bb.bl, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i104, %bb.bh, %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #23
   br label %bb.dw
 

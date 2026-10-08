@@ -202,15 +202,15 @@ bb.ao:                                            ; preds = %._crit_edge185
   br i1 %i.ez, label %.loopexit, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %6 = icmp slt i32 %i.ey, 0
+  %6 = icmp sgt i32 %i.ey, -1
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %._crit_edge185
-  %.3 = phi i1 [ true, %._crit_edge185 ], [ %6, %bb.ap ]
+  %.3 = phi i1 [ false, %._crit_edge185 ], [ %6, %bb.ap ]
   %i.fa = and i32 %2, 6146
-  %brmerge.not179 = icmp eq i32 %i.fa, 2
-  %or.cond169 = and i1 %brmerge.not179, %.3
-  br i1 %or.cond169, label %bb.ar, label %glib_autoptr_cleanup_GraphLockableMainloop.exit
+  %brmerge = icmp ne i32 %i.fa, 2
+  %brmerge169 = or i1 %brmerge, %.3
+  br i1 %brmerge169, label %glib_autoptr_cleanup_GraphLockableMainloop.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13

@@ -201,7 +201,7 @@ bb.ay:                                            ; preds = %bb.ax
   call void @_efree(ptr noundef nonnull %i.df) #13
   br label %.thread163
 
-bb.az:                                            ; preds = %bb.am, %.critedge127
+bb.az:                                            ; preds = %.critedge127, %bb.am
   %i.dp = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 116 ; 2 uses
   %i.dr = load i32, ptr %i.dq, align 4, !tbaa !103
@@ -218,7 +218,7 @@ bb.ba:                                            ; preds = %php_stream_xport_co
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
   br label %.critedge129
 
-.thread163:                                       ; preds = %bb.au, %bb.av, %bb.ai, %bb.ah, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.aj, %bb.ak, %bb.al, %bb.aw, %bb.ax, %bb.ay
+.thread163:                                       ; preds = %bb.au, %bb.av, %bb.ai, %bb.z, %bb.aa, %bb.ah, %bb.ab, %bb.ac, %bb.ad, %bb.aj, %bb.ak, %bb.al, %bb.aw, %bb.ax, %bb.ay
   %i.dv = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !97
   %i.dw = icmp eq ptr %i.dv, %12
   call void @llvm.assume(i1 %i.dw)

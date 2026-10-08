@@ -202,10 +202,19 @@ bb.g:                                             ; preds = %_ZN4llvm12DenseMapB
   %.not3244 = icmp eq i32 %i.bj, 0
   br i1 %.not3244, label %._crit_edge.thread, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.g, %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit
-  %.047 = phi ptr [ %4, %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit ], [ %i.bh, %bb.g ] ; 3 uses
-  %.02646 = phi i8 [ %i.bs, %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit ], [ 0, %bb.g ]
-  %.02745 = phi i1 [ %.128, %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit ], [ false, %bb.g ]
+4:                                                ; preds = %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit
+  %5 = getelementptr inbounds nuw i8, ptr %.047, i64 32 ; 2 uses
+  %.not32 = icmp eq ptr %5, %i.bl
+  br i1 %.not32, label %._crit_edge, label %.lr.ph
+
+._crit_edge:                                      ; preds = %4
+  %6 = trunc nuw i8 %i.bs to i1
+  br i1 %6, label %bb.i, label %._crit_edge.thread
+
+.lr.ph:                                           ; preds = %bb.g, %4
+  %.047 = phi ptr [ %5, %4 ], [ %i.bh, %bb.g ]    ; 3 uses
+  %.02646 = phi i8 [ %i.bs, %4 ], [ 0, %bb.g ]
+  %.02745 = phi i1 [ %.128, %4 ], [ false, %bb.g ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.047, i64 16 ; 2 uses
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !44 ; 2 uses
   %i.bo = icmp ne ptr %i.bn, %1                   ; 3 uses
@@ -227,15 +236,8 @@ _ZN4llvm6WeakVHaSEPNS_5ValueE.exit:               ; preds = %.lr.ph, %bb.h
   %i.br = zext i1 %i.bq to i8
   %i.bs = or i8 %.02646, %i.br                    ; 3 uses
   %i.bt = icmp ne i8 %i.bs, 0
-  %or.cond = select i1 %i.bt, i1 %.128, i1 false
-  %4 = getelementptr inbounds nuw i8, ptr %.047, i64 32 ; 2 uses
-  %.not32 = icmp eq ptr %4, %i.bl
-  %or.cond55 = select i1 %or.cond, i1 true, i1 %.not32
-  br i1 %or.cond55, label %._crit_edge, label %.lr.ph
-
-._crit_edge:                                      ; preds = %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit
-  %5 = trunc nuw i8 %i.bs to i1
-  br i1 %5, label %bb.i, label %._crit_edge.thread
+  %or.cond55 = select i1 %i.bt, i1 %.128, i1 false
+  br i1 %or.cond55, label %bb.i, label %4
 
 ._crit_edge.thread:                               ; preds = %bb.g, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
@@ -243,7 +245,7 @@ _ZN4llvm6WeakVHaSEPNS_5ValueE.exit:               ; preds = %.lr.ph, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge, %._crit_edge.thread, %_ZN4llvm12DenseMapBaseINS_8DenseMapINS_15AssumptionCache23AffectedValueCallbackVHENS_11SmallVectorINS2_10ResultElemELj1EEENS_12DenseMapInfoIPNS_5ValueEvEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_SA_SD_E7find_asINS_6WeakVHEEENS_16DenseMapIteratorIS3_S6_SA_SD_Lb0EEERKT_.exit
+bb.i:                                             ; preds = %_ZN4llvm6WeakVHaSEPNS_5ValueE.exit, %._crit_edge, %._crit_edge.thread, %_ZN4llvm12DenseMapBaseINS_8DenseMapINS_15AssumptionCache23AffectedValueCallbackVHENS_11SmallVectorINS2_10ResultElemELj1EEENS_12DenseMapInfoIPNS_5ValueEvEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_SA_SD_E7find_asINS_6WeakVHEEENS_16DenseMapIteratorIS3_S6_SA_SD_Lb0EEERKT_.exit
   %i.bu = getelementptr inbounds nuw i8, ptr %.03150, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.bu, %i.i
   br i1 %.not, label %._crit_edge54, label %bb.d

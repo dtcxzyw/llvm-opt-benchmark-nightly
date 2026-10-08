@@ -204,14 +204,14 @@ bb.v:                                             ; preds = %.lr.ph, %bb.t
   br label %bb.x
 
 .thread96:                                        ; preds = %bb.u, %zend_hash_index_update_mem.exit
-  %.sroa.15.2103 = phi i64 [ %.sroa.15.0.copyload, %bb.u ], [ %2, %zend_hash_index_update_mem.exit ]
+  %.sroa.0.3 = phi i32 [ %.sroa.0.0.copyload, %bb.u ], [ %i.aj, %zend_hash_index_update_mem.exit ]
   %.sroa.1276.2102 = phi ptr [ %.sroa.1276.0.copyload, %bb.u ], [ %i.al, %zend_hash_index_update_mem.exit ]
-  %.sroa.0.2101 = phi i32 [ %.sroa.0.0.copyload, %bb.u ], [ %i.aj, %zend_hash_index_update_mem.exit ]
+  %.sroa.15.3 = phi i64 [ %.sroa.15.0.copyload, %bb.u ], [ %2, %zend_hash_index_update_mem.exit ]
   %i.bt = load i64, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 2184), align 8, !tbaa !95
   %i.bu = or i64 %i.bt, 2
   store i64 %i.bu, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 2184), align 8, !tbaa !95
   %i.bv = load i32, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 1508), align 4, !tbaa !28
-  %i.bw = call i32 (i32, i32, ptr, ...) @phpdbg_print(i32 noundef 2, i32 noundef %i.bv, ptr noundef nonnull @.str.19, i32 noundef %.sroa.0.2101, ptr noundef %.sroa.1276.2102, i64 noundef %.sroa.15.2103) #14 ; 0 uses
+  %i.bw = call i32 (i32, i32, ptr, ...) @phpdbg_print(i32 noundef 2, i32 noundef %i.bv, ptr noundef nonnull @.str.19, i32 noundef %.sroa.0.3, ptr noundef %.sroa.1276.2102, i64 noundef %.sroa.15.3) #14 ; 0 uses
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.o

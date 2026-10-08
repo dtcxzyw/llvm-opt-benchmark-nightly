@@ -205,7 +205,17 @@ bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !115  ; 2 uses
   %i.p = load ptr, ptr %i.m, align 8, !tbaa !105  ; 2 uses
   %.not144 = icmp eq ptr %i.o, %i.p
-  br i1 %.not144, label %_ZNSt6vectorIjSaIjEED2Ev.exit.a, label %.lr.ph
+  br i1 %.not144, label %_ZNSt6vectorIjSaIjEED2Ev.exit.thread182, label %.lr.ph
+
+_ZNSt6vectorIjSaIjEED2Ev.exit.thread182:          ; preds = %bb.f
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 144
+  %9 = load i32, ptr %8, align 8, !tbaa !116
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %11 = load ptr, ptr %10, align 8, !tbaa !114
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 344
+  %13 = load i32, ptr %12, align 8, !tbaa !196
+  %14 = icmp eq i32 %9, %13
+  br label %bb.az
 
 .lr.ph:                                           ; preds = %bb.f
   %i.q = ptrtoint ptr %i.o to i64
@@ -255,9 +265,8 @@ bb.f:                                             ; preds = %bb.e
 
 ._crit_edge:                                      ; preds = %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.aq = ptrtoint ptr %.sroa.14.1 to i64
-  %8 = trunc nuw i8 %.5 to i1
   %i.ar = icmp ne ptr %.sroa.0115.1, %.sroa.9.1
-  %or.cond125.not = select i1 %8, i1 %i.ar, i1 false
+  %or.cond125.not = select i1 %.5, i1 %i.ar, i1 false
   br i1 %or.cond125.not, label %.lr.ph143, label %.loopexit
 
 .lr.ph143:                                        ; preds = %._crit_edge
@@ -270,7 +279,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.ak
 
 bb.g:                                             ; preds = %.lr.ph, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %.0138 = phi i8 [ 0, %.lr.ph ], [ %.5, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 5 uses
+  %.0141 = phi i1 [ false, %.lr.ph ], [ %.5, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 5 uses
   %.063136 = phi i64 [ 0, %.lr.ph ], [ %i.ff, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 7 uses
   %.sroa.0115.0135 = phi ptr [ null, %.lr.ph ], [ %.sroa.0115.1, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 9 uses
   %.sroa.9.0134 = phi ptr [ null, %.lr.ph ], [ %.sroa.9.1, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 8 uses
@@ -543,14 +552,13 @@ bb.ad:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN12lldb_private7Process9GetTargetEv.exit:       ; preds = %bb.z, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.ad
   %i.eo = call noundef zeroext i1 @_ZN12lldb_private6Target21SetSectionLoadAddressERKSt10shared_ptrINS_7SectionEEmb(ptr noundef nonnull align 8 dereferenceable(2200) %i.dz, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 noundef %i.cb, i1 noundef zeroext %i.ch) #23
-  %9 = zext i1 %i.eo to i8
   br label %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
 
 _ZNSt6vectorIjSaIjEE9push_backEOj.exit:           ; preds = %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i, %bb.i, %_ZN12lldb_private7Process9GetTargetEv.exit, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit, %bb.s, %bb.q
   %.sroa.14.1 = phi ptr [ %.sroa.14.0133, %bb.q ], [ %.sroa.14.0133, %bb.s ], [ %.sroa.14.0133, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit ], [ %.sroa.14.0133, %_ZN12lldb_private7Process9GetTargetEv.exit ], [ %i.bx, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %.sroa.14.0133, %bb.i ] ; 2 uses
   %.sroa.9.1 = phi ptr [ %.sroa.9.0134, %bb.q ], [ %.sroa.9.0134, %bb.s ], [ %.sroa.9.0134, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit ], [ %.sroa.9.0134, %_ZN12lldb_private7Process9GetTargetEv.exit ], [ %i.bw, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %i.bi, %bb.i ] ; 3 uses
   %.sroa.0115.1 = phi ptr [ %.sroa.0115.0135, %bb.q ], [ %.sroa.0115.0135, %bb.s ], [ %.sroa.0115.0135, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit ], [ %.sroa.0115.0135, %_ZN12lldb_private7Process9GetTargetEv.exit ], [ %i.bt, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %.sroa.0115.0135, %bb.i ] ; 7 uses
-  %.5 = phi i8 [ %.0138, %bb.q ], [ %.0138, %bb.s ], [ %.0138, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit ], [ %9, %_ZN12lldb_private7Process9GetTargetEv.exit ], [ %.0138, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %.0138, %bb.i ] ; 4 uses
+  %.5 = phi i1 [ %.0141, %bb.q ], [ %.0141, %bb.s ], [ %.0141, %_ZNK12lldb_private11ConstString9AsCStringEPKc.exit ], [ %i.eo, %_ZN12lldb_private7Process9GetTargetEv.exit ], [ %.0141, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %.0141, %bb.i ] ; 3 uses
   %i.ep = load ptr, ptr %i.ap, align 8, !tbaa !130 ; 8 uses
   %.not.i.i92 = icmp eq ptr %i.ep, null
   br i1 %.not.i.i92, label %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.ae
@@ -714,35 +722,42 @@ _ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.e
 
 .loopexit:                                        ; preds = %._crit_edge
   %.not.i.i.i101 = icmp eq ptr %.sroa.0115.1, null
-  br i1 %.not.i.i.i101, label %_ZNSt6vectorIjSaIjEED2Ev.exit.a, label %.loopexit.thread170
+  br i1 %.not.i.i.i101, label %bb.ax, label %.loopexit.thread170
 
 .loopexit.thread170:                              ; preds = %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit100, %.loopexit
   %i.gu = ptrtoint ptr %.sroa.0115.1 to i64
   %i.gv = sub i64 %i.aq, %i.gu
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0115.1, i64 noundef %i.gv) #24
-  br label %_ZNSt6vectorIjSaIjEED2Ev.exit.a
+  br label %bb.ax
 
-_ZNSt6vectorIjSaIjEED2Ev.exit.a:                  ; preds = %bb.f, %.loopexit.thread170, %.loopexit, %bb.d, %bb.e, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit
-  %.8 = phi i8 [ 0, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit ], [ 0, %bb.d ], [ 0, %bb.e ], [ %.5, %.loopexit ], [ %.5, %.loopexit.thread170 ], [ 0, %bb.f ]
-  %i.gw = getelementptr inbounds nuw i8, ptr %2, i64 144 ; 2 uses
+_ZNSt6vectorIjSaIjEED2Ev.exit.a:                  ; preds = %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit, %bb.d, %bb.e
+  %i.gw = getelementptr inbounds nuw i8, ptr %2, i64 144
   %i.gx = load i32, ptr %i.gw, align 8, !tbaa !116
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !114
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 344
-  %i.hb = load i32, ptr %i.ha, align 8, !tbaa !196 ; 2 uses
+  %i.hb = load i32, ptr %i.ha, align 8, !tbaa !196
   %i.hc = icmp eq i32 %i.gx, %i.hb
-  br i1 %i.hc, label %bb.az, label %bb.ax
-
-bb.ax:                                            ; preds = %_ZNSt6vectorIjSaIjEED2Ev.exit.a
-  %10 = trunc nuw i8 %.8 to i1
-  br i1 %10, label %bb.ay, label %bb.az
-
-bb.ay:                                            ; preds = %bb.ax
-  store i32 %i.hb, ptr %i.gw, align 8, !tbaa !116
   br label %bb.az
 
-bb.az:                                            ; preds = %_ZNSt6vectorIjSaIjEED2Ev.exit.a, %bb.ax, %bb.ay
-  %.9 = phi i1 [ false, %bb.ax ], [ true, %bb.ay ], [ true, %_ZNSt6vectorIjSaIjEED2Ev.exit.a ]
+bb.ax:                                            ; preds = %.loopexit.thread170, %.loopexit
+  %15 = getelementptr inbounds nuw i8, ptr %2, i64 144 ; 2 uses
+  %16 = load i32, ptr %15, align 8, !tbaa !116
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %18 = load ptr, ptr %17, align 8, !tbaa !114
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 344
+  %20 = load i32, ptr %19, align 8, !tbaa !196    ; 2 uses
+  %21 = icmp eq i32 %16, %20                      ; 2 uses
+  %.8.not = xor i1 %.5, true
+  %brmerge = or i1 %21, %.8.not
+  br i1 %brmerge, label %bb.az, label %bb.ay
+
+bb.ay:                                            ; preds = %bb.ax
+  store i32 %20, ptr %15, align 8, !tbaa !116
+  br label %bb.az
+
+bb.az:                                            ; preds = %_ZNSt6vectorIjSaIjEED2Ev.exit.thread182, %_ZNSt6vectorIjSaIjEED2Ev.exit.a, %bb.ax, %bb.ay
+  %.9 = phi i1 [ %21, %bb.ax ], [ true, %bb.ay ], [ %i.hc, %_ZNSt6vectorIjSaIjEED2Ev.exit.a ], [ %14, %_ZNSt6vectorIjSaIjEED2Ev.exit.thread182 ]
   ret i1 %.9
 }
 

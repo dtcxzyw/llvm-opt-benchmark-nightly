@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = tail call fastcc { i64, ptr } @_ZN5prost8encoding6varint13decode_varint17h87a786414a068c70E(ptr noalias noundef align 8 dereferenceable(8) %2) ; 2 uses
   %i.m = extractvalue { i64, ptr } %i.l, 0
   %i.n = trunc nuw i64 %i.m to i1
-  br i1 %i.n, label %bb.o, label %bb.p
+  br i1 %i.n, label %bb.o, label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split"
 
 bb.e:                                             ; preds = %bb.c
   %i.o = tail call fastcc { i64, ptr } @_ZN5prost8encoding6varint13decode_varint17h87a786414a068c70E(ptr noalias noundef align 8 dereferenceable(8) %2) ; 2 uses
@@ -310,8 +310,8 @@ bb.o:                                             ; preds = %bb.d
   %i.ag = extractvalue { i64, ptr } %i.l, 1
   br label %.loopexit
 
-bb.p:                                             ; preds = %bb.d, %bb.c, %bb.q, %bb.n
-  %.sroa.014.0 = phi i64 [ 8, %bb.c ], [ 4, %bb.n ], [ %i.aj, %bb.q ], [ 0, %bb.d ] ; 2 uses
+bb.p:                                             ; preds = %bb.c, %bb.q, %bb.n
+  %.sroa.014.0 = phi i64 [ 8, %bb.c ], [ 4, %bb.n ], [ %i.aj, %bb.q ] ; 2 uses
   %.val25 = load ptr, ptr %2, align 8, !nonnull !3, !align !5, !noundef !3 ; 2 uses
   %i.ah = getelementptr i8, ptr %.val25, i64 8    ; 2 uses
   %.val.i = load i64, ptr %i.ah, align 8, !noundef !3 ; 2 uses
@@ -330,13 +330,7 @@ bb.r:                                             ; preds = %bb.k
 
 bb.s:                                             ; preds = %bb.r
   %.not23 = icmp eq i32 %i.ac, %1
-  br i1 %.not23, label %.thread, label %bb.u, !prof !8
-
-.thread:                                          ; preds = %bb.s
-  %.val2546 = load ptr, ptr %2, align 8, !nonnull !3, !align !5, !noundef !3 ; 2 uses
-  %4 = getelementptr i8, ptr %.val2546, i64 8     ; 2 uses
-  %.val.i47 = load i64, ptr %4, align 8, !noundef !3
-  br label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit"
+  br i1 %.not23, label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split", label %bb.u, !prof !8
 
 bb.t:                                             ; preds = %bb.r
   %.sroa.8.8.extract.trunc = trunc nuw nsw i64 %i.y to i8
@@ -348,11 +342,17 @@ bb.u:                                             ; preds = %bb.s
   %i.am = tail call noundef nonnull align 8 ptr @_ZN5prost5error11DecodeError3new17he07b9dc206459158E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @219, i64 noundef 24)
   br label %.loopexit
 
-"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit": ; preds = %bb.p, %.thread
-  %.val.i50 = phi i64 [ %.val.i47, %.thread ], [ %.val.i, %bb.p ]
-  %i.an = phi ptr [ %4, %.thread ], [ %i.ah, %bb.p ]
-  %.val2549 = phi ptr [ %.val2546, %.thread ], [ %.val25, %bb.p ] ; 2 uses
-  %.sroa.014.048 = phi i64 [ 0, %.thread ], [ %.sroa.014.0, %bb.p ] ; 2 uses
+"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split": ; preds = %bb.s, %bb.d
+  %.val2474 = load ptr, ptr %2, align 8, !nonnull !3, !align !5, !noundef !3 ; 2 uses
+  %4 = getelementptr i8, ptr %.val2474, i64 8     ; 2 uses
+  %.val.i75 = load i64, ptr %4, align 8, !noundef !3
+  br label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit"
+
+"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit": ; preds = %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split", %bb.p
+  %.val.i50 = phi i64 [ %.val.i, %bb.p ], [ %.val.i75, %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split" ]
+  %i.an = phi ptr [ %i.ah, %bb.p ], [ %4, %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split" ]
+  %.val2549 = phi ptr [ %.val25, %bb.p ], [ %.val2474, %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split" ] ; 2 uses
+  %.sroa.014.048 = phi i64 [ %.sroa.014.0, %bb.p ], [ 0, %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h04ff361bb74a7780E.exit.sink.split" ] ; 2 uses
   %i.ao = load ptr, ptr %.val2549, align 8, !alias.scope !9244, !nonnull !3, !align !10, !noundef !3
   %i.ap = sub nuw i64 %.val.i50, %.sroa.014.048
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.sroa.014.048
@@ -755,7 +755,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v16i64
 !9240 = !{!9230, !9229, !9227, !9226, !9225, !9216, !9214}
 !9241 = !{!9230, !9227, !9226, !9216, !9214}
 !9242 = !{!9229, !9226, !9225, !9216, !9214}
-!9243 = !{!"branch_weights", !"expected", i32 1190945, i32 2146292703}
+!9243 = !{!"branch_weights", !"expected", i32 1429133, i32 2146054515}
 !9244 = !{!9232}
 !9245 = distinct !{!9245, i1 false, !"_ZN62_$LT$$RF$$u5b$u8$u5d$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h9707777a945dfd9aE"}
 !9246 = distinct !{!9246, !9245, !"_ZN62_$LT$$RF$$u5b$u8$u5d$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17h9707777a945dfd9aE: argument 0"}

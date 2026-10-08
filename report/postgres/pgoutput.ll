@@ -204,9 +204,9 @@ bb.y:                                             ; preds = %bb.x
   %or.cond = or i1 %.1, %i.dm
   br i1 %or.cond, label %.thread, label %bb.ac
 
-.thread:                                          ; preds = %bb.x, %bb.y, %bb.s
-  %.5131.ph = phi i32 [ %.1127, %bb.s ], [ %.4130, %bb.y ], [ %.4130, %bb.x ]
-  %.5.ph = phi i32 [ %.1125, %bb.s ], [ %.4, %bb.y ], [ %.4, %bb.x ] ; 3 uses
+.thread:                                          ; preds = %bb.y, %bb.x, %bb.s
+  %.5131.ph = phi i32 [ %.1125, %bb.s ], [ %.4, %bb.x ], [ %.4, %bb.y ] ; 3 uses
+  %.5.ph = phi i32 [ %.1127, %bb.s ], [ %.4130, %bb.x ], [ %.4130, %bb.y ]
   br i1 %.not162, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %.thread
@@ -236,19 +236,19 @@ bb.aa:                                            ; preds = %bb.z, %.thread
   %i.ee = load i8, ptr %i.bk, align 1, !range !4, !noundef !5
   %i.ef = or i8 %i.ee, %i.ed
   store i8 %i.ef, ptr %i.bk, align 1
-  %i.eg = icmp sgt i32 %.0141219333, %.5.ph
+  %i.eg = icmp sgt i32 %.0141219333, %.5131.ph
   br i1 %i.eg, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.eh = icmp slt i32 %.0141219333, %.5.ph       ; 2 uses
-  %.1146 = select i1 %i.eh, i32 %.5131.ph, i32 %.0145218334
+  %i.eh = icmp slt i32 %.0141219333, %.5131.ph    ; 2 uses
+  %.1146 = select i1 %i.eh, i32 %.5.ph, i32 %.0145218334
   %.1138 = select i1 %i.eh, ptr null, ptr %.0137220332
   %i.ei = call ptr @lappend(ptr noundef %.1138, ptr noundef nonnull %i.ch) #12
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.y, %bb.z, %bb.ab, %bb.aa, %bb.s
   %.3148 = phi i32 [ %.0145218334, %bb.s ], [ %.0145218334, %bb.aa ], [ %.1146, %bb.ab ], [ %.0145218334, %bb.z ], [ %.0145218334, %bb.y ] ; 2 uses
-  %.3144 = phi i32 [ %.0141219333, %bb.s ], [ %.0141219333, %bb.aa ], [ %.5.ph, %bb.ab ], [ %.0141219333, %bb.z ], [ %.0141219333, %bb.y ]
+  %.3144 = phi i32 [ %.0141219333, %bb.s ], [ %.0141219333, %bb.aa ], [ %.5131.ph, %bb.ab ], [ %.0141219333, %bb.z ], [ %.0141219333, %bb.y ]
   %.3140 = phi ptr [ %.0137220332, %bb.s ], [ %.0137220332, %bb.aa ], [ %i.ei, %bb.ab ], [ %.0137220332, %bb.z ], [ %.0137220332, %bb.y ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv331, 1 ; 2 uses
   %i.ej = load i32, ptr %i.cb, align 4

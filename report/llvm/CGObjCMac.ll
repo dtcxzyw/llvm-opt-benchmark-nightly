@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   br i1 %.not693, label %.loopexit, label %bb.am
 
 .loopexit:                                        ; preds = %bb.bd, %_ZNK5clang13ObjCAtTryStmt14getFinallyStmtEv.exit.thread, %.thread690
-  %.2 = phi i1 [ true, %.thread690 ], [ false, %_ZNK5clang13ObjCAtTryStmt14getFinallyStmtEv.exit.thread ], [ false, %bb.bd ]
+  %.2 = phi i1 [ false, %.thread690 ], [ true, %_ZNK5clang13ObjCAtTryStmt14getFinallyStmtEv.exit.thread ], [ true, %bb.bd ]
   %i.acu = load i32, ptr %i.qv, align 8, !tbaa !297
   %i.acv = add i32 %i.acu, -1
   store i32 %i.acv, ptr %i.qv, align 8, !tbaa !297
@@ -219,7 +219,7 @@ bb.be:                                            ; preds = %.loopexit
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %.loopexit
-  br i1 %.2, label %bb.bh, label %bb.bg
+  br i1 %.2, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
   store ptr %i.aw, ptr %54, align 8, !tbaa !1494

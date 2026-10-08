@@ -205,8 +205,8 @@ bb.bx:                                            ; preds = %_ZNK4llvm7SDValue9h
   %.pre1046.a = load ptr, ptr %2, align 8, !tbaa !193
   br label %.thread1009
 
-.thread1009:                                      ; preds = %..thread1009_crit_edge, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread, %_ZNK4llvm7SDValue9hasOneUseEv.exit
-  %i.np = phi ptr [ %.pre1046.a, %..thread1009_crit_edge ], [ %i.mu, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread ], [ %i.mu, %_ZNK4llvm7SDValue9hasOneUseEv.exit ] ; 2 uses
+.thread1009:                                      ; preds = %..thread1009_crit_edge, %_ZNK4llvm7SDValue9hasOneUseEv.exit, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread
+  %i.np = phi ptr [ %.pre1046.a, %..thread1009_crit_edge ], [ %i.mu, %_ZNK4llvm7SDValue9hasOneUseEv.exit ], [ %i.mu, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread ] ; 2 uses
   %.sroa.0291.0.copyload = load i16, ptr %3, align 8, !tbaa !214
   %.sroa.2293.0.copyload = load ptr, ptr %i.e, align 8, !tbaa !216
   %i.nq = getelementptr inbounds nuw i8, ptr %i.np, i64 40
@@ -609,7 +609,7 @@ bb.ea:                                            ; preds = %bb.dz
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #36
   br label %bb.eb
 
-bb.eb:                                            ; preds = %bb.ea, %bb.de, %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit, %bb.w, %bb.x, %_ZN4llvm5APIntD2Ev.exit, %bb.dx, %bb.dw, %bb.dv, %bb.du, %.critedge663, %.critedge657, %bb.co, %bb.cn, %.critedge655, %bb.bk, %bb.bj, %bb.bi, %.thread1003, %_ZN4llvm5APIntD2Ev.exit729, %.critedge649, %.critedge665.a
+bb.eb:                                            ; preds = %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit, %bb.ea, %bb.de, %bb.w, %bb.x, %_ZN4llvm5APIntD2Ev.exit, %bb.dx, %bb.dw, %bb.dv, %bb.du, %.critedge663, %.critedge657, %bb.co, %bb.cn, %.critedge655, %bb.bk, %bb.bj, %bb.bi, %.thread1003, %_ZN4llvm5APIntD2Ev.exit729, %.critedge649, %.critedge665.a
   %.sroa.50.4 = phi i32 [ %.fca.1.extract554, %_ZN4llvm5APIntD2Ev.exit ], [ %.fca.1.extract368, %_ZN4llvm5APIntD2Ev.exit729 ], [ %.sroa.50.2, %.critedge649 ], [ %.fca.1.extract361, %.thread1003 ], [ %.fca.1.extract354, %bb.bi ], [ %.fca.1.extract350, %bb.bj ], [ %.fca.1.extract340, %bb.bk ], [ %.fca.1.extract205, %.critedge655 ], [ %.fca.1.extract198, %bb.cn ], [ %.fca.1.extract194, %bb.co ], [ %.fca.1.extract36, %bb.du ], [ %.fca.1.extract32, %bb.dv ], [ %.fca.1.extract28, %bb.dw ], [ %.fca.1.extract, %bb.dx ], [ 0, %.critedge665.a ], [ 0, %bb.w ], [ %.sroa.50.3, %.critedge663 ], [ %.fca.1.extract90, %bb.de ], [ %.sroa.50.0, %.critedge657 ], [ 0, %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit ], [ 0, %bb.x ], [ 0, %bb.ea ]
   %.sroa.0988.4 = phi ptr [ %.fca.0.extract553, %_ZN4llvm5APIntD2Ev.exit ], [ %.fca.0.extract367, %_ZN4llvm5APIntD2Ev.exit729 ], [ %.sroa.0988.2, %.critedge649 ], [ %.fca.0.extract360, %.thread1003 ], [ %.fca.0.extract353, %bb.bi ], [ %.fca.0.extract349, %bb.bj ], [ %.fca.0.extract339, %bb.bk ], [ %.fca.0.extract204, %.critedge655 ], [ %.fca.0.extract197, %bb.cn ], [ %.fca.0.extract193, %bb.co ], [ %.fca.0.extract35, %bb.du ], [ %.fca.0.extract31, %bb.dv ], [ %.fca.0.extract27, %bb.dw ], [ %.fca.0.extract, %bb.dx ], [ null, %.critedge665.a ], [ %1, %bb.w ], [ %.sroa.0988.3, %.critedge663 ], [ %.fca.0.extract89, %bb.de ], [ %.sroa.0988.0, %.critedge657 ], [ %1, %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit ], [ %1, %bb.x ], [ %i.aaf, %bb.ea ]
   call void @_ZN4llvm9KnownBitsD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %6) #36

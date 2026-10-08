@@ -202,9 +202,9 @@ bb.bd:                                            ; preds = %bb.bc
   store i32 %i.il, ptr %i.g, align 4
   br label %bb.be
 
-bb.be:                                            ; preds = %bb.bb, %bb.bc, %bb.bd
-  %.1465.ph = phi i32 [ 0, %bb.bd ], [ 0, %bb.bc ], [ %.0464.ph, %bb.bb ]
-  %.1463.ph = phi i32 [ %i.ih, %bb.bd ], [ %i.ih, %bb.bc ], [ %.0462.ph, %bb.bb ]
+bb.be:                                            ; preds = %bb.bb, %bb.bd, %bb.bc
+  %.1465.ph = phi i32 [ 0, %bb.bd ], [ %.0464.ph, %bb.bb ], [ 0, %bb.bc ]
+  %.1463.ph = phi i32 [ %i.ih, %bb.bd ], [ %.0462.ph, %bb.bb ], [ %i.ih, %bb.bc ]
   %i.im = getelementptr i8, ptr %1, i64 272       ; 3 uses
   %i.in = load i8, ptr %i.im, align 8, !range !8, !noundef !9
   store i8 1, ptr %i.im, align 8
@@ -279,7 +279,7 @@ proto_item_set_generated.exit:                    ; preds = %bb.bn, %bb.bm, %bb.
   store i8 %i.in, ptr %i.im, align 8
   br label %bb.bp
 
-bb.bo:                                            ; preds = %bb.aw, %bb.az
+bb.bo:                                            ; preds = %bb.az, %bb.aw
   %i.jq = call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef %.2473, i32 noundef %.2469)
   br label %bb.bp
 

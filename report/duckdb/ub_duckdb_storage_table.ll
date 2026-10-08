@@ -205,11 +205,6 @@ _ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %bb.ad, %_ZN9__gnu_c
   %i.dc = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb10StructType13GetChildTypesB5cxx11ERKNS_11LogicalTypeE(ptr noundef nonnull align 8 dereferenceable(24) %7)
           to label %bb.ai unwind label %16        ; 2 uses
 
-16:                                               ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit
-  %17 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.de
-
 bb.ai:                                            ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !1094
@@ -219,6 +214,11 @@ bb.ai:                                            ; preds = %_ZN6duckdb11Logical
   %i.di = sub i64 %i.dg, %i.dh
   %.not51 = icmp eq i64 %i.di, 112
   br i1 %.not51, label %bb.bf, label %.thread
+
+16:                                               ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+  %17 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.de
 
 .thread:                                          ; preds = %bb.r, %bb.ai
   %i.dj = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_28VariantColumnCheckpointStateESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %5)

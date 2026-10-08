@@ -202,7 +202,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.do = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.3, ptr noundef nonnull @__func__.H5FS_vfd_alloc_hdr_and_section_info_if_needed, i32 noundef 2503, i64 noundef %i.dm, i64 noundef %i.dn, ptr noundef nonnull @.str.33) #5 ; 0 uses
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.af, %bb.ag
+bb.ah:                                            ; preds = %bb.ag, %bb.af
   store i64 -1, ptr %i.k, align 8, !tbaa !131
   br i1 %.193.ph138145160, label %bb.ai, label %.thread161
 

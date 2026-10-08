@@ -205,7 +205,7 @@ bb.eq:                                            ; preds = %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #35
   br label %.thread674
 
-.thread674:                                       ; preds = %.thread674.critedge, %.thread668, %bb.db, %bb.dy
+.thread674:                                       ; preds = %.thread674.critedge, %.thread668, %bb.dy, %bb.db
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #35
   invoke void @_ZN4Luau8toStringB5cxx11EPKNS_4TypeE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %26, ptr noundef %.1.i)

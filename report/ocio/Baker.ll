@@ -202,7 +202,7 @@ bb.dq:                                            ; preds = %bb.dn, %_ZNSt7__cxx
   %i.kg = add nuw nsw i32 %.089, 1
   br i1 %or.cond5, label %.thread382, label %bb.cm, !llvm.loop !88
 
-bb.dr:                                            ; preds = %.split374, %.split373, %_ZNK16OpenColorIO_v2_55Baker9getConfigEv.exit257, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit262
+bb.dr:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit262, %_ZNK16OpenColorIO_v2_55Baker9getConfigEv.exit257, %.split373, %.split374
   %i.kh = trunc nuw i8 %.092 to i1
   br i1 %i.kh, label %bb.ec, label %bb.ds
 

@@ -205,17 +205,18 @@ bb.e:                                             ; preds = %bb.by, %bb.a
   %i.dk = load ptr, ptr %i.dj, align 8, !alias.scope !9433, !align !31, !noundef !17 ; 3 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !9433 ; 2 uses
-  %i.dn = load i32, ptr %0, align 8, !range !65, !alias.scope !9433, !noundef !17 ; 2 uses
+  %i.dn = load i32, ptr %0, align 8, !range !65, !alias.scope !9433, !noundef !17
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.dp = load i32, ptr %i.do, align 4, !alias.scope !9433
   call void @llvm.experimental.noalias.scope.decl(metadata !9434)
-  %.not.i.i.i = icmp eq i32 %i.dn, 0              ; 2 uses
+  %.not.i.i.i = icmp ne i32 %i.dn, 0              ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.di, i64 64
   %i.dr = load i32, ptr %i.dq, align 16, !range !65, !alias.scope !9434, !noalias !9435
   %i.ds = getelementptr inbounds nuw i8, ptr %i.di, i64 68
   %i.dt = load i32, ptr %i.ds, align 4, !alias.scope !9434, !noalias !9435
-  %.sroa.4.0.i.i.i = select i1 %.not.i.i.i, i32 %i.dt, i32 %i.dp
-  %.sroa.03.0.i.i.i = select i1 %.not.i.i.i, i32 %i.dr, i32 %i.dn
+  %1 = trunc nuw i32 %i.dr to i1
+  %.sroa.4.0.i.i.i = select i1 %.not.i.i.i, i32 %i.dp, i32 %i.dt
+  %.sroa.03.0.i.i.i = select i1 %.not.i.i.i, i1 true, i1 %1
   %.not142.i.i.i = icmp eq ptr %i.dk, null
   br i1 %.not142.i.i.i, label %bb.g, label %bb.f
 
@@ -618,8 +619,7 @@ bb.ag:                                            ; preds = %.loopexit.split-lp.
   %.sroa.1098.sroa.7.0..sroa.1098.0..sroa_idx99.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 44
   store <4 x i8> <i8 2, i8 0, i8 0, i8 0>, ptr %.sroa.1098.sroa.7.0..sroa.1098.0..sroa_idx99.sroa_idx.i.i.i, align 4, !noalias !9436
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bi), !noalias !9436
-  %1 = trunc nuw i32 %.sroa.03.0.i.i.i to i1
-  br i1 %1, label %bb.ah, label %bb.an
+  br i1 %.sroa.03.0.i.i.i, label %bb.ah, label %bb.an
 
 bb.ah:                                            ; preds = %.loopexit583.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh), !noalias !9436

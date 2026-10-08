@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bp = call zeroext i1 @SDL_SendDropComplete(ptr noundef %i.bo) #12 ; 0 uses
   br label %bb.s
 
-bb.s:                                             ; preds = %.thread70, %._crit_edge83, %bb.n, %bb.r, %._crit_edge
+bb.s:                                             ; preds = %._crit_edge, %bb.r, %bb.n, %._crit_edge83, %.thread70
   %i.bq = load ptr, ptr %i.e, align 8
   %i.br = load ptr, ptr %i.bq, align 8
   %i.bs = load ptr, ptr @WAYLAND_wl_proxy_get_version, align 8

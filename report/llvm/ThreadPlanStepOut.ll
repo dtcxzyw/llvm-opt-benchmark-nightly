@@ -202,11 +202,11 @@ bb.an:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.df) #17
   br label %bb.ao
 
-bb.ao:                                            ; preds = %bb.an, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i17, %bb.aj, %bb.ah
+bb.ao:                                            ; preds = %bb.ah, %bb.aj, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i17, %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   br i1 %.1, label %.thread, label %bb.bd
 
-.thread:                                          ; preds = %bb.d, %bb.n, %bb.r, %bb.t, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i11, %bb.x, %bb.ao
+.thread:                                          ; preds = %bb.x, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i11, %bb.t, %bb.r, %bb.n, %bb.d, %bb.ao
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 3 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.dx = call noundef zeroext i1 @_ZN12lldb_private24ThreadPlanShouldStopHere28InvokeShouldStopHereCallbackEN4lldb15FrameComparisonERNS_6StatusE(ptr noundef nonnull align 8 dereferenceable(44) %i.dv, i32 noundef 5, ptr noundef nonnull align 8 dereferenceable(40) %i.dw) #17
@@ -331,7 +331,7 @@ _ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EED2
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   br label %bb.bd
 
-bb.bd:                                            ; preds = %bb.ao, %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.ap, %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit, %bb.l, %bb.o, %bb.y, %bb.a
+bb.bd:                                            ; preds = %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit, %bb.l, %bb.o, %bb.y, %bb.ap, %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.ao, %bb.a
   %.18 = phi i1 [ true, %bb.a ], [ true, %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit ], [ %i.bq, %bb.y ], [ %i.ad, %bb.l ], [ %i.ao, %bb.o ], [ true, %bb.ap ], [ false, %_ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ false, %bb.ao ]
   ret i1 %.18
 }

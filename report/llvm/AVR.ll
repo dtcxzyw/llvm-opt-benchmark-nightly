@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #15
   br label %bb.r
 
-bb.q:                                             ; preds = %bb.i, %bb.m, %bb.k
+bb.q:                                             ; preds = %bb.k, %bb.m, %bb.i
   %i.ci = load ptr, ptr %i.d, align 8, !tbaa !70, !noalias !329, !nonnull !71, !align !72
   call void @_ZN5clang17DiagnosticBuilderC1EPNS_17DiagnosticsEngineENS_14SourceLocationEj(ptr noundef nonnull align 8 dereferenceable(66) %29, ptr noundef nonnull align 8 dereferenceable(15256) %i.ci, i32 0, i32 noundef 566) #15
   call void @_ZN5clang17DiagnosticBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(66) dereferenceable(66) %29) #15

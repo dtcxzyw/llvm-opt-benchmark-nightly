@@ -202,7 +202,7 @@ bb.bb:                                            ; preds = %_ZNSirsERj.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
   br label %.thread150
 
-.thread150:                                       ; preds = %.critedge91.outer.peel.begin, %.critedge91.outer, %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118, %bb.ag, %.critedge91, %.loopexit302, %bb.h, %bb.g, %bb.at, %bb.bb
+.thread150:                                       ; preds = %.critedge91.outer.peel.begin, %.critedge91.outer, %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118, %bb.ag, %.critedge91, %.loopexit302, %bb.h, %bb.g, %bb.bb, %bb.at
   %.3143153 = phi i32 [ %.3148, %bb.bb ], [ %i.gt, %bb.at ], [ %i.av, %bb.g ], [ %i.av, %bb.h ], [ %i.bd, %.loopexit302 ], [ %.1, %bb.ag ], [ %.1, %.critedge91 ], [ %i.bd, %.critedge91.outer.peel.begin ], [ %.1.ph, %bb.v ], [ %i.dn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118 ], [ %.1.ph, %.critedge91.outer ]
   %i.ib = load ptr, ptr %i.p, align 8, !tbaa !34
   %i.ic = load ptr, ptr %3, align 8, !tbaa !34

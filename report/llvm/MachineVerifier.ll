@@ -204,6 +204,9 @@ _ZN4llvm16MCSubRegIteratorppEv.exit.i.i:          ; preds = %bb.yw, %bb.yv, %bb.
   %i.etr = getelementptr inbounds nuw [32 x i8], ptr %i.etk, i64 %i.etp
   br label %bb.yx
 
+._crit_edge503.i.i:                               ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_17MCRegUnitIteratorEEEZN12_GLOBAL__N_115MachineVerifier13checkLivenessEPKNS_14MachineOperandEjE3$_0EEbOT_T0_.exit.i.i"
+  br i1 %.6.i.i, label %.critedge.i.i215, label %_ZNK4llvm6detail12DenseSetImplINS_8RegisterENS_8DenseMapIS2_NS0_13DenseSetEmptyENS_12DenseMapInfoIS2_vEENS0_12DenseSetPairIS2_EEEEE5countERKS2_.exit.i.i
+
 bb.yx:                                            ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_17MCRegUnitIteratorEEEZN12_GLOBAL__N_115MachineVerifier13checkLivenessEPKNS_14MachineOperandEjE3$_0EEbOT_T0_.exit.i.i", %.lr.ph502.i.i
   %.4500.i.i = phi i1 [ true, %.lr.ph502.i.i ], [ %.6.i.i, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_17MCRegUnitIteratorEEEZN12_GLOBAL__N_115MachineVerifier13checkLivenessEPKNS_14MachineOperandEjE3$_0EEbOT_T0_.exit.i.i" ] ; 3 uses
   %.0143499.i.i = phi ptr [ %i.etr, %.lr.ph502.i.i ], [ %i.eve, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_17MCRegUnitIteratorEEEZN12_GLOBAL__N_115MachineVerifier13checkLivenessEPKNS_14MachineOperandEjE3$_0EEbOT_T0_.exit.i.i" ] ; 3 uses
@@ -280,9 +283,6 @@ _ZN4llvm17MCRegUnitIteratorppEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.p
   %i.eve = getelementptr inbounds nuw i8, ptr %.0143499.i.i, i64 32 ; 2 uses
   %.not159.i.i = icmp eq ptr %i.eve, %i.etq
   br i1 %.not159.i.i, label %._crit_edge503.i.i, label %bb.yx
-
-._crit_edge503.i.i:                               ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_17MCRegUnitIteratorEEEZN12_GLOBAL__N_115MachineVerifier13checkLivenessEPKNS_14MachineOperandEjE3$_0EEbOT_T0_.exit.i.i"
-  br i1 %.6.i.i, label %.critedge.i.i215, label %_ZNK4llvm6detail12DenseSetImplINS_8RegisterENS_8DenseMapIS2_NS0_13DenseSetEmptyENS_12DenseMapInfoIS2_vEENS0_12DenseSetPairIS2_EEEEE5countERKS2_.exit.i.i
 
 .critedge.i.i215:                                 ; preds = %._crit_edge503.i.i, %.loopexit591.i.i
   %i.evf = trunc nuw nsw i64 %indvars.iv to i32

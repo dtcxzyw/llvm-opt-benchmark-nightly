@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
           to label %bb.p unwind label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %i.be, label %bb.q, label %.critedge60
+  br i1 %i.be, label %bb.q, label %5
 
 bb.q:                                             ; preds = %bb.p
   %i.bf = load i32, ptr %i.b, align 4, !tbaa !156
@@ -218,7 +218,12 @@ bb.r:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
   br label %bb.t
 
-.preheader:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i43, %.thread, %bb.q
+5:                                                ; preds = %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
+  %6 = add nsw i32 %.03170, 1
+  br label %bb.s
+
+.preheader:                                       ; preds = %bb.q, %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i43
   %i.bh = load i32, ptr %0, align 4, !tbaa !156   ; 4 uses
   %.not3767 = icmp eq i32 %.03170, %i.bh
   br i1 %.not3767, label %._crit_edge, label %.lr.ph.preheader
@@ -276,13 +281,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond = icmp eq i32 %i.bh, %lftr.wideiv
   br i1 %exitcond, label %._crit_edge, label %.lr.ph, !llvm.loop !416
 
-.critedge60:                                      ; preds = %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
-  %5 = add nsw i32 %.03170, 1
-  br label %bb.s
-
-bb.s:                                             ; preds = %.critedge60, %._crit_edge
-  %.132 = phi i32 [ %.03170, %._crit_edge ], [ %5, %.critedge60 ] ; 2 uses
+bb.s:                                             ; preds = %5, %._crit_edge
+  %.132 = phi i32 [ %.03170, %._crit_edge ], [ %6, %5 ] ; 2 uses
   %i.by = load ptr, ptr %3, align 8, !tbaa !28    ; 2 uses
   %i.bz = icmp eq ptr %i.by, %i.f
   br i1 %i.bz, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
@@ -532,7 +532,7 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
           to label %bb.q unwind label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  br i1 %i.ay, label %bb.r, label %.critedge60
+  br i1 %i.ay, label %bb.r, label %5
 
 bb.r:                                             ; preds = %bb.q
   %i.az = load i32, ptr %i.b, align 4, !tbaa !156
@@ -546,7 +546,12 @@ bb.s:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
   br label %bb.u
 
-.preheader:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i43, %.thread, %bb.r
+5:                                                ; preds = %bb.q
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
+  %6 = add nsw i32 %.03170, 1
+  br label %bb.t
+
+.preheader:                                       ; preds = %bb.r, %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i43
   %i.bb = load i32, ptr %0, align 4, !tbaa !156   ; 4 uses
   %.not3767 = icmp eq i32 %.03170, %i.bb
   br i1 %.not3767, label %._crit_edge, label %.lr.ph.preheader
@@ -604,13 +609,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond = icmp eq i32 %i.bb, %lftr.wideiv
   br i1 %exitcond, label %._crit_edge, label %.lr.ph, !llvm.loop !423
 
-.critedge60:                                      ; preds = %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
-  %5 = add nsw i32 %.03170, 1
-  br label %bb.t
-
-bb.t:                                             ; preds = %.critedge60, %._crit_edge
-  %.132 = phi i32 [ %.03170, %._crit_edge ], [ %5, %.critedge60 ] ; 2 uses
+bb.t:                                             ; preds = %5, %._crit_edge
+  %.132 = phi i32 [ %.03170, %._crit_edge ], [ %6, %5 ] ; 2 uses
   %i.bs = load ptr, ptr %3, align 8, !tbaa !28    ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.f
   br i1 %i.bt, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45

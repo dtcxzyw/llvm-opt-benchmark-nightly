@@ -205,7 +205,7 @@ bb.a:
   %i.ad = alloca [32 x i8], align 8               ; 12 uses
   %i.ae = alloca [64 x i8], align 8               ; 5 uses
   %.sroa.5154 = alloca [56 x i8], align 8         ; 4 uses
-  %i.af = alloca [24 x i8], align 8               ; 12 uses
+  %i.af = alloca [24 x i8], align 8               ; 13 uses
   %i.ag = alloca [64 x i8], align 8               ; 5 uses
   %.sroa.5 = alloca [56 x i8], align 8            ; 4 uses
   %i.ah = alloca [24 x i8], align 8               ; 9 uses
@@ -440,7 +440,14 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
   %.val108 = load i64, ptr %i.af, align 8, !range !6, !noundef !5 ; 2 uses
   %i.bz = icmp eq i64 %.val108, 0
-  br i1 %i.bz, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split
+  br i1 %i.bz, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit, label %3
+
+3:                                                ; preds = %bb.p
+  %4 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  %.val109 = load ptr, ptr %4, align 8, !nonnull !5, !noundef !5
+  %5 = shl nuw i64 %.val108, 4
+  tail call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val109, i64 noundef %5, i64 noundef range(i64 1, -9223372036854775807) 8) #26
+  br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit
 
 bb.q:                                             ; preds = %bb.o
   %.sroa.578.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
@@ -843,11 +850,7 @@ bb.ax:                                            ; preds = %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.aj
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit146: ; preds = %bb.ay, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit, %bb.ba, %.loopexit199
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
-  ret void
-
-bb.ay:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecTINtNtBG_6borrow3CowNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEB19_EEECs41JD7yXDh97_6uu_env.exit.i, %bb.ap
+bb.ay:                                            ; preds = %bb.ap, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecTINtNtBG_6borrow3CowNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEB19_EEECs41JD7yXDh97_6uu_env.exit.i
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs41JD7yXDh97_6uu_env13SignalRequestEBD_(ptr noalias nofree noundef readonly align 8 dereferenceable(32) %i.cs) #26
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs41JD7yXDh97_6uu_env13SignalRequestEBD_(ptr noalias nofree noundef readonly align 8 dereferenceable(32) %i.ct) #26
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs41JD7yXDh97_6uu_env13SignalRequestEBD_(ptr noalias nofree noundef readonly align 8 dereferenceable(32) %i.dd) #26
@@ -857,6 +860,10 @@ bb.ay:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit146
 
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit146: ; preds = %bb.ay, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit, %bb.ba, %.loopexit199
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
+  ret void
+
 bb.az:                                            ; preds = %.thread, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab)
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtCs41JD7yXDh97_6uu_env13SignalRequestEBD_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.ad) #26
@@ -865,15 +872,14 @@ bb.az:                                            ; preds = %.thread, %bb.r
   %i.gx = icmp eq i64 %.val106, 0
   br i1 %i.gx, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split: ; preds = %bb.az, %bb.p
-  %.val106.sink = phi i64 [ %.val108, %bb.p ], [ %.val106, %bb.az ]
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split: ; preds = %bb.az
   %i.gy = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %.val107 = load ptr, ptr %i.gy, align 8, !nonnull !5, !noundef !5
-  %i.gz = shl nuw i64 %.val106.sink, 4
+  %i.gz = shl nuw i64 %.val106, 4
   tail call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val107, i64 noundef %i.gz, i64 noundef range(i64 1, -9223372036854775807) 8) #26
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split, %bb.az, %bb.p
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrEECs41JD7yXDh97_6uu_env.exit.sink.split, %bb.az, %3, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   %.val104 = load i64, ptr %i.ah, align 8, !range !6, !noundef !5 ; 2 uses
   %i.ha = icmp eq i64 %.val104, 0

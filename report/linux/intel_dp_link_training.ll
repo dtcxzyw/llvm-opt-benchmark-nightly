@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/intel_dp_link_training?download=true
-inline.NumInlined: 712
+inline.NumInlined: 713
 inline.NumDeleted: 78
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -204,6 +204,7 @@ define dso_local void @intel_dp_start_link_train(ptr noundef %0, ptr noundef %1,
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
+  %3 = alloca i8, align 1                         ; 4 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca [6 x i8], align 1                 ; 40 uses
   %i.e = alloca i8, align 1                       ; 4 uses
@@ -404,7 +405,7 @@ intel_dp_update_downspread_ctrl.exit.i:           ; preds = %intel_dp_pr_with_as
   %i.cv = select i1 %i.cu, i8 2, i8 1
   %i.cw = getelementptr inbounds nuw i8, ptr %i.p, i64 1
   store i8 %i.cv, ptr %i.cw, align 1
-  %i.cx = getelementptr i8, ptr %1, i64 296       ; 24 uses
+  %i.cx = getelementptr i8, ptr %1, i64 296       ; 25 uses
   %i.cy = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef 263, ptr noundef nonnull %i.p, i64 noundef 2) #8 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #9
   %i.cz = load i8, ptr %i.q, align 1              ; 2 uses
@@ -415,7 +416,7 @@ intel_dp_update_downspread_ctrl.exit.i:           ; preds = %intel_dp_pr_with_as
   %i.de = getelementptr i8, ptr %2, i64 4580      ; 2 uses
   %i.df = load i8, ptr %i.de, align 4, !range !11, !noundef !12
   %i.dg = trunc nuw i8 %i.df to i1                ; 2 uses
-  %i.dh = getelementptr i8, ptr %1, i64 3104      ; 4 uses
+  %i.dh = getelementptr i8, ptr %1, i64 3104      ; 5 uses
   %i.di = load ptr, ptr %i.dh, align 8
   %.not.i.i.i = icmp eq ptr %i.di, null
   br i1 %.not.i.i.i, label %intel_dp_use_post_lt_adj_req.exit.thread.i.i, label %bb.s
@@ -483,7 +484,7 @@ intel_dp_prepare_link_train.exit:                 ; preds = %bb.u, %bb.v
 
 .preheader.preheader:                             ; preds = %intel_dp_prepare_link_train.exit
   %.not307 = icmp slt i32 %i.y, 1
-  br i1 %.not307, label %.preheader._crit_edge, label %.lr.ph
+  br i1 %.not307, label %.loopexit.i, label %.lr.ph
 
 bb.w:                                             ; preds = %intel_dp_prepare_link_train.exit
   %i.eb = call i64 @ktime_get() #8
@@ -886,7 +887,7 @@ intel_dp_128b132b_link_train.exit:                ; preds = %bb.hu, %intel_dp_pr
 .preheader:                                       ; preds = %.lr.ph
   %.023.i = add nsw i32 %.023.in.i306, -1
   %i.aiw = icmp sgt i32 %.023.in.i306, 1
-  br i1 %i.aiw, label %.lr.ph, label %.preheader._crit_edge
+  br i1 %i.aiw, label %.lr.ph, label %.loopexit.i
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.preheader
   %.023.in.i306 = phi i32 [ %.023.i, %.preheader ], [ %spec.store.select, %.preheader.preheader ] ; 4 uses
@@ -897,45 +898,41 @@ intel_dp_128b132b_link_train.exit:                ; preds = %bb.hu, %intel_dp_pr
   store i8 0, ptr %i.f, align 1
   %i.aja = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef %i.aiz, ptr noundef nonnull %i.f, i64 noundef 1) #8 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
-  br i1 %i.aix, label %.preheader, label %.loopexit.i
+  br i1 %i.aix, label %.preheader, label %intel_dp_post_lt_adj_req.exit.i.a
 
-.preheader._crit_edge:                            ; preds = %.preheader, %.preheader.preheader
-  %3 = call fastcc zeroext i1 @intel_dp_link_train_phy(ptr noundef %1, ptr noundef %2, i32 noundef 0) #10, !srcloc !48
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.lr.ph, %.preheader._crit_edge
-  %.2.i = phi i1 [ %3, %.preheader._crit_edge ], [ false, %.lr.ph ]
+.loopexit.i:                                      ; preds = %.preheader, %.preheader.preheader
+  %4 = call fastcc zeroext i1 @intel_dp_link_train_phy(ptr noundef %1, ptr noundef %2, i32 noundef 0) #10, !srcloc !48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
   store i8 0, ptr %i.e, align 1
   %i.ajb = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef 258, ptr noundef nonnull %i.e, i64 noundef 1) #8 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
   %i.ajc = load ptr, ptr %i.dh, align 8
   call void %i.ajc(ptr noundef %1, ptr noundef %2) #8, !inline_history !42
-  %.pre43.i = load ptr, ptr %i.dh, align 8        ; 2 uses
-  br i1 %.2.i, label %bb.hy, label %bb.ku
+  br i1 %4, label %bb.hy, label %bb.ku
 
 bb.hy:                                            ; preds = %.loopexit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
-  %.not.i.i.i71 = icmp eq ptr %.pre43.i, null
-  br i1 %.not.i.i.i71, label %intel_dp_post_lt_adj_req.exit.i.a, label %bb.hz
+  %5 = load ptr, ptr %i.dh, align 8
+  %.not.i.i.i71 = icmp eq ptr %5, null
+  br i1 %.not.i.i.i71, label %intel_dp_post_lt_adj_req.exit.i, label %bb.hz
 
 bb.hz:                                            ; preds = %bb.hy
   %i.ajd = getelementptr i8, ptr %1, i64 17
   %i.aje = load i8, ptr %i.ajd, align 1
   %i.ajf = icmp ugt i8 %i.aje, 18
-  br i1 %i.ajf, label %drm_dp_post_lt_adj_req_supported.exit.i.i.i72, label %intel_dp_post_lt_adj_req.exit.i.a
+  br i1 %i.ajf, label %drm_dp_post_lt_adj_req_supported.exit.i.i.i72, label %intel_dp_post_lt_adj_req.exit.i
 
 drm_dp_post_lt_adj_req_supported.exit.i.i.i72:    ; preds = %bb.hz
   %i.ajg = getelementptr i8, ptr %1, i64 19
   %i.ajh = load i8, ptr %i.ajg, align 1
   %i.aji = and i8 %i.ajh, 32
   %.not4.i.i.i73 = icmp eq i8 %i.aji, 0
-  br i1 %.not4.i.i.i73, label %intel_dp_post_lt_adj_req.exit.i.a, label %intel_dp_use_post_lt_adj_req.exit.i.i74
+  br i1 %.not4.i.i.i73, label %intel_dp_post_lt_adj_req.exit.i, label %intel_dp_use_post_lt_adj_req.exit.i.i74
 
 intel_dp_use_post_lt_adj_req.exit.i.i74:          ; preds = %drm_dp_post_lt_adj_req_supported.exit.i.i.i72
   %i.ajj = call fastcc i32 @intel_dp_training_pattern(ptr noundef readonly %1, ptr noundef %2, i32 noundef 0) #10, !srcloc !44
   %.not142.i.i = icmp eq i32 %i.ajj, 7
-  br i1 %.not142.i.i, label %intel_dp_post_lt_adj_req.exit.i.a, label %bb.ia
+  br i1 %.not142.i.i, label %intel_dp_post_lt_adj_req.exit.i, label %bb.ia
 
 bb.ia:                                            ; preds = %intel_dp_use_post_lt_adj_req.exit.i.i74
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.d, i8 0, i64 6, i1 false), !annotation !10
@@ -981,7 +978,7 @@ __drm_to_dev.exit.i.i80:                          ; preds = %bb.if, %bb.ie
   %i.akd = load ptr, ptr %i.akc, align 8
   %i.ake = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.ajt, ptr noundef nonnull @.str.76, i32 noundef %i.ajx, ptr noundef %i.ajz, i32 noundef %i.akb, ptr noundef %i.akd, ptr noundef %i.ake) #11
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.ig:                                            ; preds = %bb.ib
   br i1 %.not107.i.i, label %bb.ii, label %bb.ih
@@ -1015,7 +1012,7 @@ __drm_to_dev.exit110.i.i:                         ; preds = %bb.ij, %bb.ii
   %i.aku = load ptr, ptr %i.akt, align 8
   %i.akv = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.akk, i32 noundef 2, ptr noundef nonnull @.str.77, i32 noundef %i.ako, ptr noundef %i.akq, i32 noundef %i.aks, ptr noundef %i.aku, ptr noundef %i.akv) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.ik:                                            ; preds = %bb.ia
   %i.akw = load volatile i64, ptr @jiffies, align 64
@@ -1110,7 +1107,7 @@ __drm_to_dev.exit113.i.i:                         ; preds = %bb.iq, %bb.ip
   %i.amy = load ptr, ptr %i.alr, align 8
   %i.amz = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.amr, i32 noundef 2, ptr noundef nonnull @.str.90, i32 noundef %i.amu, ptr noundef %i.amw, i32 noundef %i.amx, ptr noundef %i.amy, ptr noundef %i.amz) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.ir:                                            ; preds = %bb.kt, %.lr.ph.i.i79
   %.0151.i.i = phi i32 [ 0, %.lr.ph.i.i79 ], [ %.1.i.i, %bb.kt ] ; 5 uses
@@ -1202,7 +1199,7 @@ __drm_to_dev.exit118.i.i:                         ; preds = %bb.iy, %bb.ix
   %i.aoz = load ptr, ptr %i.ans, align 8
   %i.apa = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.aos, i32 noundef 2, ptr noundef nonnull @.str.91, i32 noundef %i.aov, ptr noundef %i.aox, i32 noundef %i.aoy, ptr noundef %i.aoz, ptr noundef %i.apa) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.iz:                                            ; preds = %bb.ir
   %i.apb = call zeroext i1 @drm_dp_post_lt_adj_req_in_progress(ptr noundef nonnull %i.d) #8
@@ -1289,7 +1286,7 @@ __drm_to_dev.exit123.i.i:                         ; preds = %bb.jg, %bb.jf
   %i.aqy = load ptr, ptr %i.apr, align 8
   %i.aqz = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.aqr, i32 noundef 2, ptr noundef nonnull @.str.92, i32 noundef %i.aqu, ptr noundef %i.aqw, i32 noundef %i.aqx, ptr noundef %i.aqy, ptr noundef %i.aqz, i32 noundef %.0151.i.i) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.jh:                                            ; preds = %bb.iz
   %i.ara = icmp eq i32 %.0151.i.i, 6
@@ -1376,7 +1373,7 @@ __drm_to_dev.exit128.i.i:                         ; preds = %bb.jo, %bb.jn
   %i.asx = load ptr, ptr %i.arq, align 8
   %i.asy = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.asq, i32 noundef 2, ptr noundef nonnull @.str.93, i32 noundef %i.ast, ptr noundef %i.asv, i32 noundef %i.asw, ptr noundef %i.asx, ptr noundef %i.asy, i32 noundef 6) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.jp:                                            ; preds = %bb.jh
   br i1 %.093150.i.i, label %bb.jq, label %bb.jx
@@ -1462,7 +1459,7 @@ __drm_to_dev.exit133.i.i:                         ; preds = %bb.jw, %bb.jv
   %i.auv = load ptr, ptr %i.ato, align 8
   %i.auw = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.auo, i32 noundef 2, ptr noundef nonnull @.str.94, i32 noundef %i.aur, ptr noundef %i.aut, i32 noundef %i.auu, ptr noundef %i.auv, ptr noundef %i.auw, i32 noundef %.0151.i.i) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.jx:                                            ; preds = %bb.jp
   call void @msleep(i32 noundef 5) #8
@@ -1508,7 +1505,7 @@ __drm_to_dev.exit135.i.i:                         ; preds = %bb.kc, %bb.kb
   %i.avq = load ptr, ptr %i.avp, align 8
   %i.avr = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.avg, ptr noundef nonnull @.str.76, i32 noundef %i.avk, ptr noundef %i.avm, i32 noundef %i.avo, ptr noundef %i.avq, ptr noundef %i.avr) #11
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.kd:                                            ; preds = %bb.jy
   br i1 %.not103.i.i, label %bb.kf, label %bb.ke
@@ -1542,7 +1539,7 @@ __drm_to_dev.exit137.i.i:                         ; preds = %bb.kg, %bb.kf
   %i.awh = load ptr, ptr %i.awg, align 8
   %i.awi = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.avx, i32 noundef 2, ptr noundef nonnull @.str.77, i32 noundef %i.awb, ptr noundef %i.awd, i32 noundef %i.awf, ptr noundef %i.awh, ptr noundef %i.awi) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.kh:                                            ; preds = %bb.jx
   %i.awj = call zeroext i1 @intel_dp_get_adjust_train(ptr noundef %1, ptr noundef %2, i32 noundef 0, ptr noundef nonnull %i.d) #10
@@ -1600,7 +1597,7 @@ __drm_to_dev.exit139.i.i:                         ; preds = %bb.kn, %bb.km
   %i.axl = load ptr, ptr %i.axk, align 8
   %i.axm = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.axb, ptr noundef nonnull @.str.81, i32 noundef %i.axf, ptr noundef %i.axh, i32 noundef %i.axj, ptr noundef %i.axl, ptr noundef %i.axm) #11
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.ko:                                            ; preds = %bb.kj
   br i1 %.not101.i.i, label %bb.kq, label %bb.kp
@@ -1634,7 +1631,7 @@ __drm_to_dev.exit141.i.i:                         ; preds = %bb.kr, %bb.kq
   %i.ayc = load ptr, ptr %i.ayb, align 8
   %i.ayd = call ptr @drm_dp_phy_name(i32 noundef 0) #8
   call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.axs, i32 noundef 2, ptr noundef nonnull @.str.82, i32 noundef %i.axw, ptr noundef %i.axy, i32 noundef %i.aya, ptr noundef %i.ayc, ptr noundef %i.ayd) #8
-  br label %intel_dp_post_lt_adj_req.exit.i.a
+  br label %intel_dp_post_lt_adj_req.exit.i
 
 bb.ks:                                            ; preds = %bb.kh
   %i.aye = sub i64 %.095149.i.i, %i.awk
@@ -1651,16 +1648,24 @@ bb.kt:                                            ; preds = %bb.ks, %bb.ki
   %i.ayg = call zeroext i1 @drm_dp_clock_recovery_ok(ptr noundef nonnull %i.d, i32 noundef %.pre-phi.i.i) #8
   br i1 %i.ayg, label %bb.ir, label %._crit_edge.i.i75
 
-intel_dp_post_lt_adj_req.exit.i.a:                ; preds = %__drm_to_dev.exit141.i.i, %__drm_to_dev.exit139.i.i, %__drm_to_dev.exit137.i.i, %__drm_to_dev.exit135.i.i, %__drm_to_dev.exit133.i.i, %__drm_to_dev.exit128.i.i, %__drm_to_dev.exit123.i.i, %__drm_to_dev.exit118.i.i, %__drm_to_dev.exit113.i.i, %__drm_to_dev.exit110.i.i, %__drm_to_dev.exit.i.i80, %intel_dp_use_post_lt_adj_req.exit.i.i74, %drm_dp_post_lt_adj_req_supported.exit.i.i.i72, %bb.hz, %bb.hy
+intel_dp_post_lt_adj_req.exit.i:                  ; preds = %__drm_to_dev.exit141.i.i, %__drm_to_dev.exit139.i.i, %__drm_to_dev.exit137.i.i, %__drm_to_dev.exit135.i.i, %__drm_to_dev.exit133.i.i, %__drm_to_dev.exit128.i.i, %__drm_to_dev.exit123.i.i, %__drm_to_dev.exit118.i.i, %__drm_to_dev.exit113.i.i, %__drm_to_dev.exit110.i.i, %__drm_to_dev.exit.i.i80, %intel_dp_use_post_lt_adj_req.exit.i.i74, %drm_dp_post_lt_adj_req_supported.exit.i.i.i72, %bb.hz, %bb.hy
   %.097.i.i = phi i1 [ true, %intel_dp_use_post_lt_adj_req.exit.i.i74 ], [ false, %__drm_to_dev.exit.i.i80 ], [ false, %__drm_to_dev.exit110.i.i ], [ true, %__drm_to_dev.exit128.i.i ], [ true, %__drm_to_dev.exit133.i.i ], [ false, %__drm_to_dev.exit135.i.i ], [ false, %__drm_to_dev.exit137.i.i ], [ false, %__drm_to_dev.exit139.i.i ], [ false, %__drm_to_dev.exit141.i.i ], [ true, %__drm_to_dev.exit123.i.i ], [ false, %__drm_to_dev.exit118.i.i ], [ false, %__drm_to_dev.exit113.i.i ], [ true, %drm_dp_post_lt_adj_req_supported.exit.i.i.i72 ], [ true, %bb.hy ], [ true, %bb.hz ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
-  %.pre.i = load ptr, ptr %i.dh, align 8
   br label %bb.ku
 
-bb.ku:                                            ; preds = %intel_dp_post_lt_adj_req.exit.i.a, %.loopexit.i
-  %4 = phi ptr [ %.pre.i, %intel_dp_post_lt_adj_req.exit.i.a ], [ %.pre43.i, %.loopexit.i ]
-  %.3.i = phi i1 [ %.097.i.i, %intel_dp_post_lt_adj_req.exit.i.a ], [ false, %.loopexit.i ] ; 5 uses
-  %.not.i.i25.i = icmp eq ptr %4, null
+intel_dp_post_lt_adj_req.exit.i.a:                ; preds = %.lr.ph
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  store i8 0, ptr %i.c, align 1
+  %6 = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef 258, ptr noundef nonnull %i.c, i64 noundef 1) #8 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  %.pre.i = load ptr, ptr %i.dh, align 8
+  call void %.pre.i(ptr noundef %1, ptr noundef %2) #8, !inline_history !42
+  br label %bb.ku
+
+bb.ku:                                            ; preds = %intel_dp_post_lt_adj_req.exit.i.a, %intel_dp_post_lt_adj_req.exit.i, %.loopexit.i
+  %.3.i = phi i1 [ %.097.i.i, %intel_dp_post_lt_adj_req.exit.i ], [ false, %.loopexit.i ], [ false, %intel_dp_post_lt_adj_req.exit.i.a ] ; 5 uses
+  %7 = load ptr, ptr %i.dh, align 8
+  %.not.i.i25.i = icmp eq ptr %7, null
   br i1 %.not.i.i25.i, label %intel_dp_link_train_all_phys.exit, label %bb.kv
 
 bb.kv:                                            ; preds = %bb.ku
@@ -1686,10 +1691,10 @@ bb.kw:                                            ; preds = %intel_dp_use_post_l
   %i.ayp = load i8, ptr %i.de, align 4, !range !11, !noundef !12
   %i.ayq = shl nuw i8 %i.ayp, 7
   %spec.select.i.i70 = or i8 %i.ayq, %i.ayo
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store i8 %spec.select.i.i70, ptr %i.c, align 1
-  %i.ayr = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef 257, ptr noundef nonnull %i.c, i64 noundef 1) #8 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  store i8 %spec.select.i.i70, ptr %3, align 1
+  %i.ayr = call i64 @drm_dp_dpcd_write(ptr noundef %i.cx, i32 noundef 257, ptr noundef nonnull %3, i64 noundef 1) #8 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %intel_dp_link_train_all_phys.exit
 
 intel_dp_link_train_all_phys.exit:                ; preds = %bb.kw, %intel_dp_use_post_lt_adj_req.exit.i28.i, %drm_dp_post_lt_adj_req_supported.exit.i.i26.i, %bb.kv, %bb.ku, %intel_dp_128b132b_link_train.exit

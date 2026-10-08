@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph15.i
   br i1 %.not.i, label %_ZNK5Ipopt19CompoundMatrixSpace13DimensionsSetEv.exit, label %bb.e
 
 _ZNK5Ipopt19CompoundMatrixSpace13DimensionsSetEv.exit: ; preds = %bb.d, %bb.e, %bb.f, %.preheader.i
-  %.2.i = phi i8 [ 1, %.preheader.i ], [ 0, %bb.f ], [ 1, %bb.e ], [ 0, %bb.d ]
+  %.2.i = phi i8 [ 0, %bb.f ], [ 1, %.preheader.i ], [ 1, %bb.e ], [ 0, %bb.d ]
   store i8 %.2.i, ptr %i.a, align 4, !tbaa !150
   br label %bb.g
 
@@ -412,7 +412,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph15
   br i1 %or.cond.not, label %bb.d, label %.thread, !llvm.loop !19
 
 .thread:                                          ; preds = %bb.c, %bb.d, %.preheader
-  %.2 = phi i1 [ true, %.preheader ], [ %.not, %bb.d ], [ false, %bb.c ]
+  %.2 = phi i1 [ %.not, %bb.d ], [ true, %.preheader ], [ false, %bb.c ]
   ret i1 %.2
 }
 
@@ -473,7 +473,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph15.i
   br i1 %.not.i, label %_ZNK5Ipopt19CompoundMatrixSpace13DimensionsSetEv.exit, label %bb.e
 
 _ZNK5Ipopt19CompoundMatrixSpace13DimensionsSetEv.exit: ; preds = %bb.d, %bb.e, %bb.f, %.preheader.i
-  %.2.i = phi i8 [ 1, %.preheader.i ], [ 0, %bb.f ], [ 1, %bb.e ], [ 0, %bb.d ]
+  %.2.i = phi i8 [ 0, %bb.f ], [ 1, %.preheader.i ], [ 1, %bb.e ], [ 0, %bb.d ]
   store i8 %.2.i, ptr %i.a, align 4, !tbaa !150
   br label %bb.g
 

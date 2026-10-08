@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.w = icmp eq i64 %i.v, %i.s
   br i1 %i.w, label %.thread32, label %.thread.a
 
-.thread.a:                                        ; preds = %bb.e, %bb.f
+.thread.a:                                        ; preds = %bb.f, %bb.e
   %i.x = tail call ptr @mallocx(i64 noundef %i.s, i32 noundef 64) #31 ; 2 uses
   %.not36 = icmp eq ptr %i.x, null
   br i1 %.not36, label %bb.g, label %.thread32

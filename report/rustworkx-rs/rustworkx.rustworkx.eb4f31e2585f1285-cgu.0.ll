@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %.noexc34
   br label %_RNCNCNCNvNtNtNvXs0_NtCskcxRuJ53GpR_9rustworkx10dot_parserNtBh_9DotParserINtNtCscnlsAxKLLci_4pest6parser6ParserNtBh_4RuleE5parse5rules7visible7html_id000Bj_.exit.i.i.i.i
 
 .loopexit.i.i.i.i.i:                              ; preds = %bb.w, %bb.aa, %.noexc11.i.i.i.i.i.i, %_RNvMNtNtNtCsbPr7k8qemyf_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i.i.i.i.i.i.i
-  %storemerge.i.i.i.i.i.i.i = phi i64 [ %i.co, %bb.aa ], [ %i.bg, %.noexc11.i.i.i.i.i.i ], [ %i.bg, %_RNvMNtNtNtCsbPr7k8qemyf_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i.i.i.i.i.i.i ], [ %i.bg, %bb.w ]
+  %storemerge.i.i.i.i.i.i.i = phi i64 [ %i.bg, %_RNvMNtNtNtCsbPr7k8qemyf_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i.i.i.i.i.i.i ], [ %i.co, %bb.aa ], [ %i.bg, %.noexc11.i.i.i.i.i.i ], [ %i.bg, %bb.w ]
   store i64 %storemerge.i.i.i.i.i.i.i, ptr %i.bh, align 8, !alias.scope !9271, !noalias !9272
   %i.cr = call fastcc { i64, ptr } @_RNvMs8_NtCscnlsAxKLLci_4pest12parser_stateINtB5_11ParserStateNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleE12match_stringB11_(ptr noalias noundef nonnull align 8 %i.bd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @96, i64 noundef 1) #64
   br label %_RNCNCNCNvNtNtNvXs0_NtCskcxRuJ53GpR_9rustworkx10dot_parserNtBh_9DotParserINtNtCscnlsAxKLLci_4pest6parser6ParserNtBh_4RuleE5parse5rules7visible7html_id000Bj_.exit.i.i.i.i

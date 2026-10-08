@@ -204,22 +204,26 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %indvars.iv.next460 = add nuw nsw i64 %indvars.iv459, 1 ; 2 uses
   %exitcond463.not = icmp eq i64 %indvars.iv.next460, %i.ct
   %or.cond506 = select i1 %.1279, i1 true, i1 %exitcond463.not
-  br i1 %or.cond506, label %.loopexit425, label %bb.w, !llvm.loop !434
+  br i1 %or.cond506, label %.loopexit422.loopexit, label %bb.w, !llvm.loop !434
 
-.loopexit425:                                     ; preds = %bb.bh, %_ZNK4llvm18TargetLoweringBase24hasBigEndianPartOrderingENS_3EVTERKNS_10DataLayoutE.exit, %.thread406
-  %i.oe = phi i1 [ true, %.thread406 ], [ false, %_ZNK4llvm18TargetLoweringBase24hasBigEndianPartOrderingENS_3EVTERKNS_10DataLayoutE.exit ], [ %.1279, %bb.bh ]
+.loopexit422.loopexit:                            ; preds = %bb.bh
+  %.ph = xor i1 %.1279, true
+  br label %.loopexit425
+
+.loopexit425:                                     ; preds = %.loopexit422.loopexit, %_ZNK4llvm18TargetLoweringBase24hasBigEndianPartOrderingENS_3EVTERKNS_10DataLayoutE.exit, %.thread406
+  %i.oe = phi i1 [ false, %.thread406 ], [ true, %_ZNK4llvm18TargetLoweringBase24hasBigEndianPartOrderingENS_3EVTERKNS_10DataLayoutE.exit ], [ %.ph, %.loopexit422.loopexit ]
   %i.of = load i8, ptr %i.m, align 8, !tbaa !438, !range !223, !noundef !216
   %i.og = trunc nuw i8 %i.of to i1
   br i1 %i.og, label %bb.bi, label %.thread408
 
 bb.bi:                                            ; preds = %.loopexit425
   %i.oh = load i16, ptr %11, align 8, !tbaa !451
-  %.not.i333 = icmp eq i16 %i.oh, %.sroa.0.0.copyload.i293
+  %.not.i333 = icmp ne i16 %i.oh, %.sroa.0.0.copyload.i293
   %i.oi = load ptr, ptr %i.o, align 8
-  %30 = icmp eq ptr %i.oi, null
-  %.not424 = select i1 %.not.i333, i1 %30, i1 false
-  %or.cond = or i1 %i.oe, %.not424
-  br i1 %or.cond, label %.thread408, label %bb.bj
+  %30 = icmp ne ptr %i.oi, null
+  %.not424 = select i1 %.not.i333, i1 true, i1 %30
+  %or.cond.not = and i1 %i.oe, %.not424
+  br i1 %or.cond.not, label %bb.bj, label %.thread408
 
 bb.bj:                                            ; preds = %bb.bi
   %i.oj = load ptr, ptr %2, align 8, !tbaa !84

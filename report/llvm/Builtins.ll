@@ -202,22 +202,26 @@ bb.w:                                             ; preds = %_ZNK5clang7Builtin7
 .thread79:                                        ; preds = %bb.v, %bb.w
   %i.dz = xor i1 %i.cs, true
   %i.ea = and i1 %i.dw, %i.dz
-  br i1 %i.ea, label %.thread82, label %bb.x
+  br i1 %i.ea, label %8, label %bb.x
 
 bb.x:                                             ; preds = %.thread79
-  %.not4 = xor i1 %i.dx, true
-  %or.cond6 = or i1 %4, %.not4
   %i.eb = and i16 %3, 257
-  %or.cond85 = icmp eq i16 %i.eb, 257
-  %or.cond86 = select i1 %or.cond6, i1 true, i1 %or.cond85
-  %brmerge88 = or i1 %5, %or.cond86
-  %8 = and i1 %i.e, %i.dx
-  %not.brmerge88 = xor i1 %brmerge88, true
-  %spec.select89 = select i1 %not.brmerge88, i1 true, i1 %8
+  %or.cond83 = icmp ne i16 %i.eb, 257
+  %.not86 = xor i1 %4, true
+  %not.or.cond6 = and i1 %i.dx, %.not86
+  %or.cond84 = select i1 %not.or.cond6, i1 %or.cond83, i1 false
+  %not.brmerge88 = xor i1 %5, true
+  %spec.select85 = and i1 %or.cond84, %not.brmerge88
+  br label %8
+
+8:                                                ; preds = %bb.x, %.thread79
+  %.0 = phi i1 [ true, %.thread79 ], [ %spec.select85, %bb.x ]
+  %9 = and i1 %i.e, %i.dx
+  %spec.select31 = select i1 %.0, i1 true, i1 %9
   br label %.thread82
 
-.thread82:                                        ; preds = %bb.x, %bb.v, %.thread79, %bb.w
-  %.1 = phi i1 [ true, %bb.w ], [ %spec.select89, %bb.x ], [ true, %.thread79 ], [ true, %bb.v ]
+.thread82:                                        ; preds = %bb.v, %8, %bb.w
+  %.1 = phi i1 [ true, %bb.w ], [ %spec.select31, %8 ], [ true, %bb.v ]
   ret i1 %.1
 }
 

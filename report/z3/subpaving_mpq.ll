@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = load i32, ptr %i.y, align 8
   %i.ae = icmp eq i32 %i.ad, 1
   %i.af = select i1 %i.ac, i1 %i.ae, i1 false
+  %spec.select = and i1 %4, %i.af                 ; 2 uses
   %9 = load ptr, ptr %i.x, align 8, !tbaa !184, !nonnull !69, !align !70 ; 4 uses
-  %10 = and i1 %i.af, %4                          ; 2 uses
   br i1 %3, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ag = load i8, ptr %i.j, align 4
   %i.ah = and i8 %i.ag, -2
   store i8 %i.ah, ptr %i.j, align 4
-  br i1 %10, label %bb.d, label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
+  br i1 %spec.select, label %bb.d, label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
 
 .thread:                                          ; preds = %bb.b
   tail call void @_ZN11mpq_managerILb0EE5floorERK3mpqR3mpz(ptr noundef nonnull align 8 dereferenceable(728) %9, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.g)
@@ -225,7 +225,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = load i8, ptr %i.j, align 4
   %i.aj = and i8 %i.ai, -2
   store i8 %i.aj, ptr %i.j, align 4
-  br i1 %10, label %.thread32, label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
+  br i1 %spec.select, label %.thread32, label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
 
 bb.d:                                             ; preds = %bb.c
   %i.ak = load ptr, ptr %i.x, align 8, !tbaa !184, !nonnull !69, !align !70
@@ -289,20 +289,23 @@ bb.h:                                             ; preds = %_ZN11mpq_managerILb
   %i.bi = load i8, ptr %i.j, align 4
   %i.bj = and i8 %i.bi, -2
   store i8 %i.bj, ptr %i.j, align 4
-  br label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
+  br label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit
 
 bb.i:                                             ; preds = %_ZN11mpq_managerILb0EE3setER3mpzRKS1_.exit.i
   tail call void @_ZN11mpz_managerILb0EE7big_setER3mpzRKS1_(ptr noundef nonnull align 8 dereferenceable(728) %i.au, ptr noundef nonnull align 8 dereferenceable(16) %i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.bc)
+  br label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit
+
+_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit:       ; preds = %bb.h, %bb.i
+  %10 = select i1 %4, i32 1073741824, i32 0
   br label %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a
 
-_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a:     ; preds = %bb.i, %bb.h, %.thread, %bb.c, %.thread32, %bb.d
-  %.1.shrunk = phi i1 [ false, %bb.d ], [ false, %.thread32 ], [ false, %bb.c ], [ false, %.thread ], [ %4, %bb.h ], [ %4, %bb.i ]
+_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit.a:     ; preds = %.thread, %bb.c, %.thread32, %bb.d, %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit
+  %.1 = phi i32 [ 0, %bb.d ], [ 0, %.thread32 ], [ 0, %bb.c ], [ %10, %_ZN11mpq_managerILb0EE3setER3mpqRKS1_.exit ], [ 0, %.thread ]
   %i.bk = load i32, ptr %i.m, align 8
   %i.bl = select i1 %3, i32 536870912, i32 0
   %i.bm = and i32 %i.bk, 536870911
-  %i.bn = or disjoint i32 %i.bl, %i.bm
-  %11 = select i1 %.1.shrunk, i32 1073741824, i32 0
-  %i.bo = or disjoint i32 %i.bn, %11
+  %i.bn = or disjoint i32 %.1, %i.bl
+  %i.bo = or disjoint i32 %i.bn, %i.bm
   store i32 %i.bo, ptr %i.m, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 3 uses
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !185

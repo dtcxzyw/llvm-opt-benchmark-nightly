@@ -205,7 +205,7 @@ _ZNK4llvm12MachineInstr12isPredicableENS0_9QueryTypeE.exit.i317: ; preds = %bb.n
 bb.nq:                                            ; preds = %bb.nr
   %i.dpg = getelementptr inbounds nuw i8, ptr %.sroa.0296.0380.i, i64 8 ; 2 uses
   %.not337.i = icmp eq ptr %i.dpg, %i.dpe
-  br i1 %.not337.i, label %._crit_edge.i323split, label %bb.nr
+  br i1 %.not337.i, label %._crit_edge.i323, label %bb.nr
 
 bb.nr:                                            ; preds = %bb.nq, %.lr.ph.i320
   %.0163382.i = phi i8 [ 1, %.lr.ph.i320 ], [ %.1164.i, %bb.nq ] ; 2 uses
@@ -225,18 +225,14 @@ bb.nr:                                            ; preds = %bb.nq, %.lr.ph.i320
   %i.dpp = trunc nuw i8 %.0166381.i to i1
   %i.dpq = icmp ugt i32 %.reass.i.reass.reass.reass, 131070
   %or.cond182.i = select i1 %i.dpp, i1 %i.dpq, i1 false
-  %.1167.i = select i1 %or.cond182.i, i8 0, i8 %.0166381.i ; 3 uses
+  %.1167.i = select i1 %or.cond182.i, i8 0, i8 %.0166381.i ; 2 uses
   %i.dpr = trunc nuw i8 %.1164.i to i1            ; 3 uses
-  %i.dps = trunc nuw i8 %.1167.i to i1
+  %i.dps = trunc nuw i8 %.1167.i to i1            ; 2 uses
   %or.cond.i322 = select i1 %i.dpr, i1 true, i1 %i.dps
   br i1 %or.cond.i322, label %bb.nq, label %._crit_edge.i323
 
-._crit_edge.i323split:                            ; preds = %bb.nq
-  %45 = trunc nuw i8 %.1167.i to i1
-  br label %._crit_edge.i323
-
-._crit_edge.i323:                                 ; preds = %bb.nr, %._crit_edge.i323split
-  %.2168.ph.i = phi i1 [ %45, %._crit_edge.i323split ], [ false, %bb.nr ]
+._crit_edge.i323:                                 ; preds = %bb.nq, %bb.nr
+  %.2168.ph.i = phi i1 [ false, %bb.nr ], [ %i.dps, %bb.nq ]
   %or.cond8.i = select i1 %i.dpr, i1 true, i1 %.2168.ph.i
   br i1 %or.cond8.i, label %._crit_edge.thread.i, label %.critedge.thread.i
 

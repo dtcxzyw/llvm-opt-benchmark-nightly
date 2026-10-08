@@ -202,9 +202,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.dg, label %.lr.ph, label %.critedge
 
 .critedge:                                        ; preds = %.loopexit282, %bb.u, %.loopexit, %bb.o, %.lr.ph199.split.split.preheader, %.lr.ph199.split.split.us.preheader, %bb.h, %bb.i
-  %.079253 = phi ptr [ %i.u, %.lr.ph199.split.split.preheader ], [ %i.u, %bb.o ], [ null, %bb.i ], [ null, %bb.h ], [ %i.u, %.lr.ph199.split.split.us.preheader ], [ %i.u, %bb.u ], [ %i.u, %.loopexit ], [ %i.u, %.loopexit282 ]
-  %.592 = phi i8 [ 0, %.lr.ph199.split.split.preheader ], [ %i.ax, %bb.o ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %.lr.ph199.split.split.us.preheader ], [ %i.cn, %bb.u ], [ %.491.us217.ph, %.loopexit ], [ %.491.ph, %.loopexit282 ]
-  %.4 = phi i32 [ 0, %.lr.ph199.split.split.preheader ], [ %.284.us.us, %bb.o ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %.lr.ph199.split.split.us.preheader ], [ %.284, %bb.u ], [ 0, %.loopexit ], [ 0, %.loopexit282 ] ; 2 uses
+  %.079253 = phi ptr [ %i.u, %bb.o ], [ %i.u, %.lr.ph199.split.split.preheader ], [ null, %bb.i ], [ null, %bb.h ], [ %i.u, %.lr.ph199.split.split.us.preheader ], [ %i.u, %bb.u ], [ %i.u, %.loopexit ], [ %i.u, %.loopexit282 ]
+  %.not100109 = phi i32 [ %.284.us.us, %bb.o ], [ 0, %.lr.ph199.split.split.preheader ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %.lr.ph199.split.split.us.preheader ], [ %.284, %bb.u ], [ 0, %.loopexit ], [ 0, %.loopexit282 ] ; 2 uses
+  %.592 = phi i8 [ %i.ax, %bb.o ], [ 0, %.lr.ph199.split.split.preheader ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %.lr.ph199.split.split.us.preheader ], [ %i.cn, %bb.u ], [ %.491.us217.ph, %.loopexit ], [ %.491.ph, %.loopexit282 ]
   call void @list_free_deep(ptr noundef %.079253) #7
   call void @list_free_deep(ptr noundef %i.t) #7
   %i.dh = trunc nuw i8 %.592 to i1
@@ -222,7 +222,7 @@ bb.w:                                             ; preds = %bb.v, %.critedge
 
 bb.x:                                             ; preds = %bb.w
   %i.dj = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store i32 %.4, ptr %i.dj, align 4
+  store i32 %.not100109, ptr %i.dj, align 4
   %i.dk = getelementptr inbounds nuw i8, ptr %i.i, i64 11
   store i8 %.693, ptr %i.dk, align 1
   %i.dl = getelementptr inbounds nuw i8, ptr %i.i, i64 9
@@ -231,7 +231,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %i.dm = getelementptr inbounds nuw i8, ptr %i.i, i64 12
-  store i32 %.4, ptr %i.dm, align 4
+  store i32 %.not100109, ptr %i.dm, align 4
   %i.dn = getelementptr inbounds nuw i8, ptr %i.i, i64 10
   store i8 %.693, ptr %i.dn, align 2
   %i.do = getelementptr inbounds nuw i8, ptr %i.i, i64 8

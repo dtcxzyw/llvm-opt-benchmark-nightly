@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaTemplateInstantiateDecl?download=true
-inline.NumInlined: 35695
+inline.NumInlined: 35696
 inline.NumDeleted: 15666
 loop-unroll.NumCompletelyUnrolled: 10
 loop-unroll.NumRuntimeUnrolled: 11
@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %.critedge
   call void @free(ptr noundef %i.es) #25
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %.critedge
+bb.t:                                             ; preds = %.critedge, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.eu = load ptr, ptr %0, align 8, !tbaa !66, !nonnull !67, !align !68
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 832

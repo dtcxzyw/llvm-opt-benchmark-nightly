@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ar = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.aq
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !124
   %.not59.i = icmp eq ptr %i.ap, %i.as
-  br i1 %.not59.i, label %bb.j, label %.thread65.loopexit67.i
+  br i1 %.not59.i, label %bb.j, label %.thread.loopexit71.i
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -228,7 +228,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bb = getelementptr inbounds [8 x i8], ptr %i.ai, i64 %i.ba
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !124
   %.not61.i = icmp eq ptr %i.az, %i.bc
-  br i1 %.not61.i, label %bb.m, label %.thread65.i
+  br i1 %.not61.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %indvars.iv.next80.i = add nuw nsw i64 %indvars.iv79.i, 1 ; 2 uses
@@ -239,26 +239,26 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !176
   %i.bf = tail call zeroext i1 @ggml_gallocr_alloc_graph(ptr noundef %i.be, ptr noundef nonnull %i.aa)
-  br i1 %i.bf, label %bb.v, label %bb.n
+  br i1 %i.bf, label %bb.v, label %.thread65.i
 
-bb.n:                                             ; preds = %._crit_edge.i.a
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 1048
-  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !172 ; 3 uses
-  %i.bi = icmp sgt i32 %i.bh, 0
-  br i1 %i.bi, label %bb.o, label %bb.q
-
-.thread65.loopexit67.i:                           ; preds = %bb.i
+.thread.loopexit71.i:                             ; preds = %bb.i
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 344
-  br label %.thread65.i
+  br label %bb.n
 
-.thread65.i:                                      ; preds = %bb.l, %.thread65.loopexit67.i
-  %3 = phi ptr [ %2, %.thread65.loopexit67.i ], [ %i.aa, %bb.l ] ; 2 uses
+bb.n:                                             ; preds = %bb.l, %.thread.loopexit71.i
+  %3 = phi ptr [ %2, %.thread.loopexit71.i ], [ %i.aa, %bb.l ] ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 1048
+  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !172 ; 2 uses
+  %i.bi = icmp sgt i32 %i.bh, 0
+  br i1 %i.bi, label %.critedge.i, label %bb.q
+
+.thread65.i:                                      ; preds = %._crit_edge.i.a
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 1048
-  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !172 ; 2 uses
+  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !172 ; 3 uses
   %i.bl = icmp sgt i32 %i.bk, 0
-  br i1 %i.bl, label %.critedge.i, label %bb.q
+  br i1 %i.bl, label %bb.o, label %bb.q
 
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %.thread65.i
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1056
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !154 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 1052
@@ -266,9 +266,9 @@ bb.o:                                             ; preds = %bb.n
   %i.bq = icmp eq i32 %i.bn, %i.bp
   br i1 %i.bq, label %bb.p, label %.critedge.i
 
-.critedge.i:                                      ; preds = %bb.o, %.thread65.i
-  %i.br = phi ptr [ %i.aa, %bb.o ], [ %3, %.thread65.i ]
-  %i.bs = phi i32 [ %i.bh, %bb.o ], [ %i.bk, %.thread65.i ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.o, %bb.n
+  %i.br = phi ptr [ %i.aa, %bb.o ], [ %3, %bb.n ]
+  %i.bs = phi i32 [ %i.bk, %bb.o ], [ %i.bh, %bb.n ] ; 2 uses
   %i.bt = icmp samesign ugt i32 %i.bs, 1
   br i1 %i.bt, label %.critedge._crit_edge.i, label %bb.q
 
@@ -279,7 +279,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.critedge._crit_edge.i, %bb.o
   %i.bu = phi i32 [ %.pre87.i, %.critedge._crit_edge.i ], [ %i.bn, %bb.o ]
-  %i.bv = phi i32 [ %i.bs, %.critedge._crit_edge.i ], [ %i.bh, %bb.o ]
+  %i.bv = phi i32 [ %i.bs, %.critedge._crit_edge.i ], [ %i.bk, %bb.o ]
   %i.bw = load i32, ptr %i.s, align 4, !tbaa !157
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !158
@@ -287,7 +287,7 @@ bb.p:                                             ; preds = %.critedge._crit_edg
   unreachable
 
 bb.q:                                             ; preds = %.critedge.i, %.thread65.i, %bb.n
-  %i.bz = phi ptr [ %3, %.thread65.i ], [ %i.br, %.critedge.i ], [ %i.aa, %bb.n ] ; 2 uses
+  %i.bz = phi ptr [ %i.aa, %.thread65.i ], [ %i.br, %.critedge.i ], [ %3, %bb.n ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !120 ; 2 uses
   %i.cc = icmp sgt i32 %i.cb, 0

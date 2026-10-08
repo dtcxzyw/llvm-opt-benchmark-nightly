@@ -204,7 +204,7 @@ _ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exit.i: ; preds = %bb.b, %
   %.1.lcssa185 = phi i1 [ %.3, %_ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i ], [ %.3, %._crit_edge ], [ false, %bb.b ]
   %i.ak = phi ptr [ %.pr.i, %_ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i ], [ %.pre129, %._crit_edge ], [ %i.n, %bb.b ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %i.ak, null
-  br i1 %.not.i.i1.i, label %20, label %bb.i
+  br i1 %.not.i.i1.i, label %_ZNSt6vectorI2BTIP12cmSourceFileESaIS3_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exit.i
   %i.al = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -213,7 +213,11 @@ bb.i:                                             ; preds = %_ZSt8_DestroyIP2BTI
   %i.ao = ptrtoint ptr %i.ak to i64
   %i.ap = sub i64 %i.an, %i.ao
   call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ap) #29
-  br label %20
+  br label %_ZNSt6vectorI2BTIP12cmSourceFileESaIS3_EED2Ev.exit
+
+_ZNSt6vectorI2BTIP12cmSourceFileESaIS3_EED2Ev.exit: ; preds = %_ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exit.i, %bb.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
+  br i1 %.1.lcssa185, label %.thread121, label %bb.ap
 
 bb.j:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.1127 = phi i1 [ false, %.lr.ph ], [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
@@ -297,11 +301,7 @@ bb.o:                                             ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
   br label %bb.aq
 
-20:                                               ; preds = %bb.i, %_ZSt8_DestroyIP2BTIP12cmSourceFileES3_EvT_S5_RSaIT0_E.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
-  br i1 %.1.lcssa185, label %.thread121, label %bb.ap
-
-.thread121:                                       ; preds = %_ZNK17cmGeneratorTarget22HaveCxx20ModuleSourcesEv.exit, %bb.a, %20
+.thread121:                                       ; preds = %bb.a, %_ZNK17cmGeneratorTarget22HaveCxx20ModuleSourcesEv.exit, %_ZNSt6vectorI2BTIP12cmSourceFileESaIS3_EED2Ev.exit
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !229
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 136
@@ -704,7 +704,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114: ; preds = %bb
 default.unreachable:                              ; preds = %bb.t
   unreachable
 
-bb.ap:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit97, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111, %bb.t, %20, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56
+bb.ap:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit97, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111, %bb.t, %_ZNSt6vectorI2BTIP12cmSourceFileESaIS3_EED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56
   ret void
 
 bb.aq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62, %bb.o

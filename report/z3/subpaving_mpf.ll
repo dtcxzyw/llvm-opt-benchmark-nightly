@@ -205,6 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.w = tail call noundef zeroext i1 @_ZN11mpf_manager6is_intERK3mpf(ptr noundef nonnull align 8 dereferenceable(840) %i.v, ptr noundef nonnull align 8 dereferenceable(32) %2)
+  %spec.select = and i1 %4, %i.w
   %i.x = load ptr, ptr %i.t, align 8, !tbaa !187, !nonnull !41, !align !42 ; 8 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !40, !nonnull !41, !align !42 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 24 ; 8 uses
@@ -243,8 +244,7 @@ bb.h:                                             ; preds = %bb.f
   br label %_ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit
 
 _ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit:      ; preds = %bb.h, %bb.g, %bb.e, %bb.d
-  %7 = and i1 %4, %i.w
-  br i1 %7, label %bb.i, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread
+  br i1 %spec.select, label %bb.i, label %bb.s
 
 bb.i:                                             ; preds = %_ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit
   %i.ai = load ptr, ptr %i.t, align 8, !tbaa !187, !nonnull !41, !align !42 ; 6 uses
@@ -260,15 +260,15 @@ bb.j:                                             ; preds = %bb.i
   %i.an = load i32, ptr %i.g, align 8
   %i.ao = and i32 %i.an, 2147450880
   %i.ap = icmp eq i32 %i.ao, 0
-  br i1 %i.ap, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %bb.k
+  br i1 %i.ap, label %bb.s, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.aq = tail call noundef zeroext i1 @_ZN11mpf_manager9is_normalERK3mpf(ptr noundef nonnull align 8 dereferenceable(840) %i.am, ptr noundef nonnull align 8 dereferenceable(32) %i.g)
-  br i1 %i.aq, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i
+  br i1 %i.aq, label %bb.s, label %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i
 
 _ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i:   ; preds = %bb.k
   %i.ar = tail call noundef zeroext i1 @_ZN11mpf_manager11is_denormalERK3mpf(ptr noundef nonnull align 8 dereferenceable(840) %i.am, ptr noundef nonnull align 8 dereferenceable(32) %i.g)
-  br i1 %i.ar, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %bb.l
+  br i1 %i.ar, label %bb.s, label %bb.l
 
 bb.l:                                             ; preds = %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i
   %i.as = tail call ptr @__cxa_allocate_exception(i64 1) #21
@@ -283,15 +283,15 @@ bb.m:                                             ; preds = %bb.i
   %i.av = load i32, ptr %i.g, align 8
   %i.aw = and i32 %i.av, 2147450880
   %i.ax = icmp eq i32 %i.aw, 0
-  br i1 %i.ax, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %bb.n
+  br i1 %i.ax, label %bb.s, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ay = tail call noundef zeroext i1 @_ZN11mpf_manager9is_normalERK3mpf(ptr noundef nonnull align 8 dereferenceable(840) %i.au, ptr noundef nonnull align 8 dereferenceable(32) %i.g)
-  br i1 %i.ay, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32
+  br i1 %i.ay, label %bb.s, label %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32
 
 _ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32: ; preds = %bb.n
   %i.az = tail call noundef zeroext i1 @_ZN11mpf_manager11is_denormalERK3mpf(ptr noundef nonnull align 8 dereferenceable(840) %i.au, ptr noundef nonnull align 8 dereferenceable(32) %i.g)
-  br i1 %i.az, label %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread, label %bb.o
+  br i1 %i.az, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32
   %i.ba = tail call ptr @__cxa_allocate_exception(i64 1) #21
@@ -319,21 +319,17 @@ bb.r:                                             ; preds = %_ZN11mpf_manager10i
   tail call void @__cxa_throw(ptr %i.bh, ptr nonnull @_ZTIN3f2nI11mpf_managerE9exceptionE, ptr null) #23
   unreachable
 
-_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread:     ; preds = %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32, %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i, %_ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit, %bb.j, %bb.k, %bb.m, %bb.n
-  %8 = select i1 %3, i32 536870912, i32 0
-  br label %bb.s
-
-_ZN3f2nI11mpf_managerE3incER3mpf.exit.a:          ; preds = %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i, %bb.q, %bb.p
-  %9 = select i1 %3, i32 536870912, i32 0
+_ZN3f2nI11mpf_managerE3incER3mpf.exit.a:          ; preds = %bb.p, %bb.q, %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i
   %spec.select.a = select i1 %4, i32 1073741824, i32 0
-  %10 = or disjoint i32 %spec.select.a, %9
   br label %bb.s
 
-bb.s:                                             ; preds = %_ZN3f2nI11mpf_managerE3incER3mpf.exit.a, %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread
-  %11 = phi i32 [ %8, %_ZN3f2nI11mpf_managerE3incER3mpf.exit.thread ], [ %10, %_ZN3f2nI11mpf_managerE3incER3mpf.exit.a ]
+bb.s:                                             ; preds = %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32, %bb.n, %bb.m, %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i, %bb.k, %bb.j, %_ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit, %_ZN3f2nI11mpf_managerE3incER3mpf.exit.a
+  %.1 = phi i32 [ %spec.select.a, %_ZN3f2nI11mpf_managerE3incER3mpf.exit.a ], [ 0, %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i ], [ 0, %_ZN3f2nI11mpf_managerE4ceilERK3mpfRS2_.exit ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.n ], [ 0, %_ZN11mpf_manager10is_regularERK3mpf.exit.i.i.i32 ]
   %.in = load i32, ptr %i.i, align 8
+  %7 = select i1 %3, i32 536870912, i32 0
   %i.bi = and i32 %.in, 536870911
-  %i.bj = or disjoint i32 %11, %i.bi
+  %8 = or disjoint i32 %.1, %7
+  %i.bj = or disjoint i32 %8, %i.bi
   store i32 %i.bj, ptr %i.i, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 3 uses
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !188

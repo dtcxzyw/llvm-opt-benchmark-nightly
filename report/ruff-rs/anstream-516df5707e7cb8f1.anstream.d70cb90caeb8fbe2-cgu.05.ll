@@ -14,15 +14,15 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define noundef range(i8 1, 4) i8 @_RNvNtCsisHG5ZUm6CA_8anstream4auto6choice(ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(88) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 10 uses
-  %i.b = alloca [24 x i8], align 8                ; 5 uses
+  %i.a = alloca [24 x i8], align 8                ; 12 uses
+  %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 9 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
   %i.e = alloca [24 x i8], align 8                ; 9 uses
   %i.f = alloca [24 x i8], align 8                ; 9 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 9 uses
-  %i.i = alloca [24 x i8], align 8                ; 7 uses
+  %i.i = alloca [24 x i8], align 8                ; 8 uses
   %i.j = tail call noundef i8 @_RNvMCsbOXrUdIOZ6o_11colorchoiceNtB2_11ColorChoice6global() ; 2 uses
   %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %bb.b, label %bb.ai
@@ -32,7 +32,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RINvNtCs2AWtUsOyxgP_3std3env6var_osReECsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 8)
   %i.l = load i64, ptr %i.g, align 8, !range !3, !noundef !4
-  %.not.i = icmp eq i64 %i.l, -1
+  %.not.i = icmp eq i64 %i.l, -1                  ; 3 uses
   br i1 %.not.i, label %bb.k, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -47,12 +47,11 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.val.i = load ptr, ptr %i.o, align 8, !nonnull !4, !noundef !4
   %lhsc.i = load i8, ptr %.val.i, align 1
-  %2 = icmp ne i8 %lhsc.i, 48
-  %3 = zext i1 %2 to i8
+  %2 = icmp eq i8 %lhsc.i, 48
   br label %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.i
 
 _RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.i: ; preds = %bb.d, %bb.c
-  %.sroa.0.0.i.i = phi i8 [ %3, %bb.d ], [ 1, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i = phi i1 [ %2, %bb.d ], [ false, %bb.c ] ; 2 uses
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
           to label %bb.g unwind label %bb.e
 
@@ -75,7 +74,6 @@ common.resume:                                    ; preds = %bb.ag, %bb.z, %bb.a
 bb.g:                                             ; preds = %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.i
   call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %4 = trunc nuw i8 %.sroa.0.0.i.i to i1          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RINvNtCs2AWtUsOyxgP_3std3env6var_osReECsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.f, ptr noalias noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 8)
   %i.r = load i64, ptr %i.f, align 8, !range !3, !noundef !4
@@ -183,7 +181,6 @@ _RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit: ; preds = %bb.p
   br i1 %.not48, label %bb.s, label %bb.ai
 
 bb.s:                                             ; preds = %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit.thread, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit
-  %.sroa.06.0 = phi i8 [ 1, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread ], [ 0, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit ], [ 0, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit.thread ], [ %..sroa.0.0.i.i, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29 ]
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ah = load ptr, ptr %i.ag, align 8, !invariant.load !4, !nonnull !4
   %i.ai = call noundef zeroext i1 %i.ah(ptr noundef nonnull %0)
@@ -197,12 +194,12 @@ bb.t:                                             ; preds = %_RNvCsiqzR8FqrXFS_1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.al = load i64, ptr %i.ak, align 8
   %.fr = freeze i64 %i.al
-  %5 = icmp eq i64 %.fr, 0                        ; 3 uses
+  %3 = icmp ne i64 %.fr, 0                        ; 2 uses
   br i1 %.not.not.i25, label %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread, label %bb.u
 
 _RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread: ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br i1 %4, label %bb.s, label %bb.ai
+  br i1 %.sroa.0.0.i.i, label %bb.ai, label %bb.s
 
 bb.u:                                             ; preds = %bb.t
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -223,10 +220,9 @@ bb.w:                                             ; preds = %bb.v
 _RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29: ; preds = %bb.u
   call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %brmerge.not = select i1 %5, i1 %4, i1 false
-  %. = select i1 %5, i8 3, i8 2
-  %..sroa.0.0.i.i = select i1 %5, i8 %.sroa.0.0.i.i, i8 1
-  br i1 %brmerge.not, label %bb.s, label %bb.ai
+  %brmerge.not = select i1 %3, i1 true, i1 %.sroa.0.0.i.i
+  %..sroa.0.0.i.i = select i1 %3, i8 2, i8 3
+  br i1 %brmerge.not, label %bb.ai, label %bb.s
 
 bb.x:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -254,7 +250,13 @@ _RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3
 
 _RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.thread.i: ; preds = %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.i32, %bb.y
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %.sink.split.i unwind label %bb.z
+          to label %.sink.split.i.thread unwind label %bb.z
+
+.sink.split.i.thread:                             ; preds = %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.thread.i
+  call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br label %bb.ai
 
 bb.z:                                             ; preds = %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.thread.i
   %i.aw = landingpad { ptr, i32 }
@@ -284,29 +286,30 @@ bb.ad:                                            ; preds = %bb.ac
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #4
   unreachable
 
-.sink.split.i:                                    ; preds = %bb.ab, %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.thread.i
-  %.sroa.0.1.ph.i = phi i1 [ true, %_RNvXsd_NtNtCs2AWtUsOyxgP_3std3ffi6os_strNtB5_8OsStringINtNtCs4NRVxsYgnAr_4core3cmp9PartialEqReE2eq.exit.thread.i ], [ false, %bb.ab ]
+.sink.split.i:                                    ; preds = %bb.ab
   call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit
-
-_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit: ; preds = %bb.x, %.sink.split.i
-  %.sroa.0.1.i = phi i1 [ false, %bb.x ], [ %.sroa.0.1.ph.i, %.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %6 = trunc nuw i8 %.sroa.06.0 to i1
-  %or.cond = select i1 %.sroa.0.1.i, i1 true, i1 %6
-  br i1 %or.cond, label %bb.ai, label %bb.ae
+  br i1 %.not.i, label %bb.ae, label %bb.ai
 
-bb.ae:                                            ; preds = %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit
+_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit: ; preds = %bb.x
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br i1 %.not.i, label %bb.ae, label %bb.ai
+
+bb.ae:                                            ; preds = %.sink.split.i, %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @_RINvNtCs2AWtUsOyxgP_3std3env6var_osReECsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 2)
   %i.ba = load i64, ptr %i.i, align 8, !range !3, !noundef !4
   %.not14 = icmp eq i64 %i.ba, -1
-  br i1 %.not14, label %.sink.split, label %bb.af
+  br i1 %.not14, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit.thread, label %bb.af
+
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit.thread: ; preds = %bb.ae
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  br label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit unwind label %bb.ag
+          to label %.sink.split unwind label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.bb = landingpad { ptr, i32 }
@@ -320,17 +323,13 @@ bb.ah:                                            ; preds = %bb.ag
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #4
   unreachable
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit: ; preds = %bb.af
+.sink.split:                                      ; preds = %bb.af
   call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsisHG5ZUm6CA_8anstream(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.i)
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.ae, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit
-  %.sroa.0.2.ph = phi i8 [ 2, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit ], [ 3, %bb.ae ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.ai
 
-bb.ai:                                            ; preds = %.sink.split, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29, %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit20, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit, %bb.s, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit, %bb.a
-  %.sroa.0.2 = phi i8 [ %i.j, %bb.a ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit20 ], [ 3, %bb.s ], [ 2, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread ], [ 2, %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit ], [ %., %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29 ], [ %.sroa.0.2.ph, %.sink.split ]
+bb.ai:                                            ; preds = %.sink.split.i.thread, %.sink.split.i, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29, %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit, %.sink.split, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit.thread, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit20, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit, %bb.s, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit, %bb.a
+  %.sroa.0.2 = phi i8 [ %i.j, %bb.a ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query8no_color.exit20 ], [ 3, %bb.s ], [ 2, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit ], [ 3, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29.thread ], [ 2, %_RNvCsiqzR8FqrXFS_13anstyle_query19term_supports_color.exit ], [ 3, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsisHG5ZUm6CA_8anstream.exit.thread ], [ %..sroa.0.0.i.i, %_RNvCsiqzR8FqrXFS_13anstyle_query14clicolor_force.exit29 ], [ 2, %.sink.split ], [ 2, %.sink.split.i ], [ 2, %.sink.split.i.thread ]
   ret i8 %.sroa.0.2
 }
 

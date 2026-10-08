@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ft = xor i1 %i.fs, true
   br label %.thread134
 
-.thread134:                                       ; preds = %bb.ad, %bb.ac, %_ZNK4llvm8MCSymbol7getNameEv.exit73, %bb.y, %_ZNK4llvm11GlobalValue15isWeakForLinkerEv.exit, %switch.lookup
+.thread134:                                       ; preds = %bb.y, %_ZNK4llvm11GlobalValue15isWeakForLinkerEv.exit, %_ZNK4llvm8MCSymbol7getNameEv.exit73, %bb.ac, %bb.ad, %switch.lookup
   %.256 = phi i1 [ true, %switch.lookup ], [ %spec.select133.in, %bb.y ], [ true, %_ZNK4llvm11GlobalValue15isWeakForLinkerEv.exit ], [ %spec.select133.in, %_ZNK4llvm8MCSymbol7getNameEv.exit73 ], [ %i.ft, %bb.ad ], [ false, %bb.ac ] ; 2 uses
   %.3 = phi i32 [ %switch.ext, %switch.lookup ], [ %.053132, %bb.y ], [ %.1, %_ZNK4llvm11GlobalValue15isWeakForLinkerEv.exit ], [ %.053132, %_ZNK4llvm8MCSymbol7getNameEv.exit73 ], [ %.1, %bb.ad ], [ %.1, %bb.ac ] ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %.0157, i64 8
