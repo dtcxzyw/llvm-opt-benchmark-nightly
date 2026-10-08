@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.q
   %i.eo = icmp ult i64 %.val3.i13.i, %3
   br i1 %i.eo, label %.lr.ph.i14, label %._crit_edge.i13
 
-._crit_edge.i13:                                  ; preds = %bb.r, %.preheader.i.preheader.i
-  %.val3.i.lcssa.i = phi i64 [ %.val3.i.i17.a, %.preheader.i.preheader.i ], [ %.val3.i13.i, %bb.r ]
+._crit_edge.i13:                                  ; preds = %bb.r, %bb.w
+  %.val3.i.lcssa.i = phi i64 [ %i.gr, %bb.w ], [ %.val3.i13.i, %bb.r ]
   invoke void @_RNvNtCslwFuT2d6ECx_4core9panicking18panic_bounds_check(i64 noundef %.val3.i.lcssa.i, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #27
           to label %.noexc.i unwind label %bb.s
 
@@ -219,9 +219,9 @@ bb.s:                                             ; preds = %._crit_edge.i13
   invoke fastcc void @_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCslcZTgAvcSNH_9hashbrown10scopeguard10ScopeGuardQNtNtBG_3raw13RawTableInnerNCNvMsa_B1v_B1t_15rehash_in_place0EECsbNMRYq9Xj9a_14rustworkx_core(ptr noalias nofree noundef align 8 dereferenceable(24) %i.a) #28
           to label %common.resume unwind label %bb.y
 
-.lr.ph.i14:                                       ; preds = %bb.r, %.preheader.i.preheader.i
-  %.val3.i14.i = phi i64 [ %.val3.i.i17.a, %.preheader.i.preheader.i ], [ %.val3.i13.i, %bb.r ]
-  %i.eq = phi ptr [ %i.gm, %.preheader.i.preheader.i ], [ %i.eh, %bb.r ] ; 7 uses
+.lr.ph.i14:                                       ; preds = %bb.r, %bb.w
+  %.val3.i14.i = phi i64 [ %i.gr, %bb.w ], [ %.val3.i13.i, %bb.r ]
+  %i.eq = phi ptr [ %i.gp, %bb.w ], [ %i.eh, %bb.r ] ; 7 uses
   %i.er = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %.val3.i14.i
   %i.es = load i64, ptr %i.er, align 8, !noalias !356, !noundef !5 ; 3 uses
   %.val11.i = load i64, ptr %i.h, align 8, !alias.scope !354, !noundef !5 ; 6 uses
@@ -306,39 +306,39 @@ bb.v:                                             ; preds = %_RNvMsa_NtCslcZTgAv
   %i.gk = getelementptr i8, ptr %i.gj, i64 16
   store i8 %i.gf, ptr %i.gk, align 1
   %i.gl = icmp eq i8 %i.gd, -1
-  br i1 %i.gl, label %bb.w, label %.preheader.i.preheader.i
+  br i1 %i.gl, label %.preheader.i.preheader.i, label %bb.w
 
 .preheader.i.preheader.i:                         ; preds = %bb.v
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !358)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !359)
-  %.sroa.0.0.copyload.i.i.i.i.a = load i64, ptr %i.ek, align 1, !alias.scope !358, !noalias !359
-  %.sroa.02.0.copyload.i.i.i.i = load i64, ptr %i.gb, align 1, !alias.scope !359, !noalias !358
-  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ek, align 1, !alias.scope !358, !noalias !359
-  store i64 %.sroa.0.0.copyload.i.i.i.i.a, ptr %i.gb, align 1, !alias.scope !359, !noalias !358
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !360)
-  %i.gm = load ptr, ptr %0, align 8, !alias.scope !361, !noalias !362, !nonnull !5, !noundef !5 ; 2 uses
-  %5 = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.el
-  %i.gn = getelementptr inbounds i8, ptr %5, i64 -8
-  %.val3.i.i17.a = load i64, ptr %i.gn, align 8, !noalias !363, !noundef !5 ; 3 uses
-  %6 = icmp ult i64 %.val3.i.i17.a, %3
-  br i1 %6, label %.lr.ph.i14, label %._crit_edge.i13
-
-bb.w:                                             ; preds = %bb.v
-  %7 = add i64 %.sroa.04.018.i, -16
-  %i.go = load i64, ptr %i.h, align 8, !alias.scope !354, !noundef !5
-  %8 = and i64 %i.go, %7
-  %9 = load ptr, ptr %0, align 8, !alias.scope !354, !nonnull !5, !noundef !5
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %.sroa.04.018.i
-  store i8 -1, ptr %10, align 1
-  %i.gp = load ptr, ptr %0, align 8, !alias.scope !354, !nonnull !5, !noundef !5
-  %11 = getelementptr i8, ptr %i.gp, i64 %8
-  %i.gq = getelementptr i8, ptr %11, i64 16
-  store i8 -1, ptr %i.gq, align 1
-  %i.gr = load i64, ptr %i.ek, align 1
-  store i64 %i.gr, ptr %i.gb, align 1
+  %5 = add i64 %.sroa.04.018.i, -16
+  %.sroa.0.0.copyload.i.i.i.i.a = load i64, ptr %i.h, align 8, !alias.scope !354, !noundef !5
+  %6 = and i64 %.sroa.0.0.copyload.i.i.i.i.a, %5
+  %7 = load ptr, ptr %0, align 8, !alias.scope !354, !nonnull !5, !noundef !5
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %.sroa.04.018.i
+  store i8 -1, ptr %8, align 1
+  %i.gm = load ptr, ptr %0, align 8, !alias.scope !354, !nonnull !5, !noundef !5
+  %9 = getelementptr i8, ptr %i.gm, i64 %6
+  %i.gn = getelementptr i8, ptr %9, i64 16
+  store i8 -1, ptr %i.gn, align 1
+  %.val3.i.i17.a = load i64, ptr %i.ek, align 1
+  store i64 %.val3.i.i17.a, ptr %i.gb, align 1
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %bb.u, %bb.q
+bb.w:                                             ; preds = %bb.v
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !358)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !359)
+  %i.go = load i64, ptr %i.ek, align 1, !alias.scope !358, !noalias !359
+  %.sroa.02.0.copyload.i.i.i.i = load i64, ptr %i.gb, align 1, !alias.scope !359, !noalias !358
+  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ek, align 1, !alias.scope !358, !noalias !359
+  store i64 %i.go, ptr %i.gb, align 1, !alias.scope !359, !noalias !358
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !360)
+  %i.gp = load ptr, ptr %0, align 8, !alias.scope !361, !noalias !362, !nonnull !5, !noundef !5 ; 2 uses
+  %10 = getelementptr inbounds [8 x i8], ptr %i.gp, i64 %i.el
+  %i.gq = getelementptr inbounds i8, ptr %10, i64 -8
+  %i.gr = load i64, ptr %i.gq, align 8, !noalias !363, !noundef !5 ; 3 uses
+  %11 = icmp ult i64 %i.gr, %3
+  br i1 %11, label %.lr.ph.i14, label %._crit_edge.i13
+
+bb.x:                                             ; preds = %.preheader.i.preheader.i, %bb.u, %bb.q
   %exitcond.not.i = icmp eq i64 %.sroa.04.018.i, %i.i
   br i1 %exitcond.not.i, label %_RNvMsa_NtCslcZTgAvcSNH_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %bb.q
 

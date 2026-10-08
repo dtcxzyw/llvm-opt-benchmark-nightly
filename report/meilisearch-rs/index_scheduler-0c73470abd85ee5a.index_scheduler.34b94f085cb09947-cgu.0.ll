@@ -206,7 +206,7 @@ bb.yh:                                            ; preds = %bb.yg
   invoke void @"_ZN4core3ptr74drop_in_place$LT$alloc..vec..Vec$LT$meilisearch_types..tasks..Task$GT$$GT$17hba0047fdac754a22E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bu) #81
           to label %bb.xv unwind label %bb.s
 
-"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2dc91d9c0e6827aaE.exit.i2011": ; preds = %bb.yf, %.noexc2003
+"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h2dc91d9c0e6827aaE.exit.i2011": ; preds = %.noexc2003, %bb.yf
   %i.bma = phi i64 [ %i.blv, %bb.yf ], [ %.pre.i.i, %.noexc2003 ] ; 3 uses
   %i.bmb = icmp ult i64 %i.bma, 11764505149049459
   call void @llvm.assume(i1 %i.bmb)

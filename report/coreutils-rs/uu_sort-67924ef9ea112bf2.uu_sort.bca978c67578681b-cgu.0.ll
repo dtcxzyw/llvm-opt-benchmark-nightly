@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 .split3.i:                                        ; preds = %bb.c, %bb.d
   %.sroa.0.028 = phi i64 [ %.sroa.0.030, %bb.d ], [ %2, %bb.c ] ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.028
-  %i.k = sub i64 %2, %.sroa.0.028
+  %i.k = sub nuw i64 %2, %.sroa.0.028
   %cond = icmp eq i64 %.sroa.0.028, 1
   %i.l = load i8, ptr %1, align 1, !alias.scope !9817, !noalias !9818 ; 2 uses
   br i1 %cond, label %bb.e, label %thread-pre-split.i
@@ -608,8 +608,8 @@ bb.p:                                             ; preds = %bb.i
   br label %bb.o
 
 .thread.thread:                                   ; preds = %bb.o, %bb.a, %bb.c, %bb.b
-  %.sroa.01.016 = phi i64 [ 0, %bb.a ], [ %.sroa.01.018, %bb.c ], [ 0, %bb.b ], [ %2, %bb.o ] ; 2 uses
-  %.sroa.0.014 = phi i8 [ 0, %bb.a ], [ %.sroa.0.019, %bb.c ], [ %.sroa.0.019, %bb.b ], [ %.sroa.0.1, %bb.o ]
+  %.sroa.01.016 = phi i64 [ 0, %bb.b ], [ %.sroa.01.018, %bb.c ], [ 0, %bb.a ], [ %2, %bb.o ] ; 2 uses
+  %.sroa.0.014 = phi i8 [ %.sroa.0.019, %bb.b ], [ %.sroa.0.019, %bb.c ], [ 0, %bb.a ], [ %.sroa.0.1, %bb.o ]
   %i.r = sub nuw i64 %2, %.sroa.01.016
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.016
   store ptr %i.s, ptr %0, align 8

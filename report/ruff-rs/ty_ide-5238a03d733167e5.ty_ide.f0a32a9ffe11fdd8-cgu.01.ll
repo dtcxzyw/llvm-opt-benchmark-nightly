@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %_RNvMs_NtCscdodAO9F
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecIBC_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEEEB1d_(ptr noalias noundef align 8 dereferenceable(24) %i.b) #23
           to label %.body unwind label %bb.m
 
-_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecIBv_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEE7reserveBJ_.exit.i, %bb.j
+_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecIBv_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_.exit.i: ; preds = %bb.j, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEE7reserveBJ_.exit.i
   %i.be = phi i64 [ %.pre.i, %bb.j ], [ %i.as, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtCskEUeM34gmJU_6ty_ide16NavigationTargetEE7reserveBJ_.exit.i ]
   %i.bf = add i64 %i.be, %i.ar
   store i64 %i.bf, ptr %i.ak, align 8, !alias.scope !2331

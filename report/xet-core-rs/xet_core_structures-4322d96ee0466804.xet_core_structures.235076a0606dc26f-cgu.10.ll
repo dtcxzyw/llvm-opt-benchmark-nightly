@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_RNvNtNtCs6f1wo00zw
 .lr.ph.i:                                         ; preds = %bb.m, %bb.p
   %i.ba = phi i64 [ %i.bb, %bb.p ], [ %.promoted, %bb.m ] ; 2 uses
   %.sroa.0.063 = phi i64 [ %i.bd, %bb.p ], [ %i.ap, %bb.m ] ; 2 uses
-  %i.bb = add i64 %i.ba, -1                       ; 6 uses
+  %i.bb = add nsw i64 %i.ba, -1                   ; 6 uses
   %i.bc = icmp ult i64 %i.bb, %1
   br i1 %i.bc, label %bb.n, label %bb.o
 
@@ -608,7 +608,7 @@ bb.r:                                             ; preds = %_RNvNtNtCs6f1wo00zw
 .lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i, %bb.t
   %i.be = phi i64 [ %i.bf, %bb.t ], [ %.promoted, %.lr.ph.preheader.i ] ; 2 uses
   %.sroa.0.071.us = phi i64 [ %i.bh, %bb.t ], [ %storemerge, %.lr.ph.preheader.i ] ; 2 uses
-  %i.bf = add i64 %i.be, -1                       ; 6 uses
+  %i.bf = add nsw i64 %i.be, -1                   ; 6 uses
   %i.bg = icmp ult i64 %i.bf, %1
   br i1 %i.bg, label %bb.s, label %.split188.us
 
@@ -634,7 +634,7 @@ _RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.sp
   br label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i
-  %i.bq = add i64 %.promoted, -1                  ; 2 uses
+  %i.bq = add nsw i64 %.promoted, -1              ; 2 uses
   %i.br = icmp ult i64 %i.bq, %1
   br i1 %i.br, label %bb.u, label %.split188.us
 

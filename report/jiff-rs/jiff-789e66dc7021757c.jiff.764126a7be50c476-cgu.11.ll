@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.k
   %i.s = icmp eq i8 %.sroa.027.0.2, 116
   br i1 %i.s, label %.loopexit, label %.thread36
 
-.thread:                                          ; preds = %bb.ae, %bb.ae, %bb.ae, %bb.ae, %bb.ae, %bb.ad
+.thread:                                          ; preds = %bb.ad, %bb.ae, %bb.ae, %bb.ae, %bb.ae, %bb.ae
   %i.t = icmp eq i8 %.sroa.027.0, 122
   br i1 %i.t, label %.loopexit, label %bb.t
 

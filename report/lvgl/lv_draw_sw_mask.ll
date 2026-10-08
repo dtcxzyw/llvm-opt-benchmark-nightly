@@ -205,9 +205,9 @@ circ_next.exit.3.i:                               ; preds = %bb.aa, %bb.z
   br i1 %.not222.not.3.i, label %bb.ab, label %.thread.i
 
 bb.ab:                                            ; preds = %circ_next.exit.3.i
-  %4 = and i32 %.sroa.0.3.3.i, 3                  ; 4 uses
-  %5 = ashr i32 %.sroa.0.3.3.i, 2
-  %i.ek = icmp eq i32 %i.dc, %5
+  %4 = ashr i32 %.sroa.0.3.3.i, 2
+  %5 = and i32 %.sroa.0.3.3.i, 3                  ; 4 uses
+  %i.ek = icmp eq i32 %i.dc, %4
   br i1 %i.ek, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
@@ -218,7 +218,7 @@ bb.ac:                                            ; preds = %bb.ab
   store i32 %.0183240.i, ptr %i.en, align 4, !tbaa !35
   %i.eo = add nuw nsw i32 %i.dp, %i.dd
   %i.ep = add nuw nsw i32 %i.eo, %i.ea
-  %i.eq = add nuw nsw i32 %i.ep, %4
+  %i.eq = add nuw nsw i32 %i.ep, %5
   %i.er = trunc nuw nsw i32 %i.eq to i8
   br label %bb.ai
 
@@ -250,7 +250,7 @@ bb.ae:                                            ; preds = %bb.ad
   store i32 %.0183240.i, ptr %i.fg, align 4, !tbaa !35
   %i.fh = or disjoint i32 %i.dp, 4
   %i.fi = add nuw nsw i32 %i.fh, %i.ea
-  %i.fj = add nuw nsw i32 %i.fi, %4
+  %i.fj = add nuw nsw i32 %i.fi, %5
   %i.fk = trunc nuw nsw i32 %i.fj to i8
   br label %bb.ai
 
@@ -282,7 +282,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %i.fy
   store i32 %.0183240.i, ptr %i.ga, align 4, !tbaa !35
   %i.gb = or disjoint i32 %i.ea, 8
-  %i.gc = add nuw nsw i32 %i.gb, %4
+  %i.gc = add nuw nsw i32 %i.gb, %5
   %i.gd = trunc nuw nsw i32 %i.gc to i8
   br label %bb.ai
 
@@ -304,7 +304,7 @@ bb.ah:                                            ; preds = %bb.af
   store i32 %i.gn, ptr %i.gp, align 4, !tbaa !35
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %i.go
   store i32 %.0183240.i, ptr %i.gq, align 4, !tbaa !35
-  %i.gr = trunc nuw nsw i32 %4 to i8
+  %i.gr = trunc nuw nsw i32 %5 to i8
   %i.gs = or disjoint i8 %i.gr, 12
   br label %bb.ai
 

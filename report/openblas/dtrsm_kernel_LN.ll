@@ -205,18 +205,18 @@ bb.p:                                             ; preds = %bb.o
 
 .split.i246.preheader.1:                          ; preds = %bb.p, %bb.o
   %i.lz = add nsw i64 %.5, -2                     ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.lt, i64 8 ; 2 uses
   %.idx347 = shl nsw i64 %i.lz, 4
   %i.ma = getelementptr inbounds i8, ptr %i.ls, i64 %.idx347 ; 3 uses
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ma, i64 24
   %i.mc = load double, ptr %i.mb, align 8, !tbaa !30
   %i.md = getelementptr inbounds nuw i8, ptr %i.ma, i64 16
   %i.me = getelementptr inbounds [8 x i8], ptr %.0173.lcssa, i64 %i.lz ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.me, i64 8
-  %i.mf = getelementptr inbounds nuw i8, ptr %i.lt, i64 8 ; 2 uses
-  %i.mg = load double, ptr %i.mf, align 8, !tbaa !30
+  %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 8
+  %i.mg = load double, ptr %9, align 8, !tbaa !30
   %i.mh = fmul double %i.mc, %i.mg                ; 3 uses
-  store double %i.mh, ptr %9, align 8, !tbaa !30
   store double %i.mh, ptr %i.mf, align 8, !tbaa !30
+  store double %i.mh, ptr %9, align 8, !tbaa !30
   %i.mi = fneg double %i.mh
   %i.mj = load double, ptr %i.md, align 8, !tbaa !30
   %i.mk = load double, ptr %i.lt, align 8, !tbaa !30
@@ -253,18 +253,18 @@ bb.r:                                             ; preds = %bb.q
 
 .split.i246.preheader.2:                          ; preds = %bb.r, %bb.q
   %i.mz = add nsw i64 %.5.1, -4                   ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.mt, i64 24 ; 2 uses
   %.idx349 = shl nsw i64 %i.mz, 5
   %i.na = getelementptr inbounds i8, ptr %i.ms, i64 %.idx349 ; 10 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 120
   %i.nc = load double, ptr %i.nb, align 8, !tbaa !30
   %i.nd = getelementptr inbounds nuw i8, ptr %i.na, i64 96
   %i.ne = getelementptr inbounds [8 x i8], ptr %.0173.lcssa, i64 %i.mz ; 4 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.ne, i64 24
-  %i.nf = getelementptr inbounds nuw i8, ptr %i.mt, i64 24 ; 2 uses
-  %i.ng = load double, ptr %i.nf, align 8, !tbaa !30
+  %i.nf = getelementptr inbounds nuw i8, ptr %i.ne, i64 24
+  %i.ng = load double, ptr %10, align 8, !tbaa !30
   %i.nh = fmul double %i.nc, %i.ng                ; 3 uses
-  store double %i.nh, ptr %10, align 8, !tbaa !30
   store double %i.nh, ptr %i.nf, align 8, !tbaa !30
+  store double %i.nh, ptr %10, align 8, !tbaa !30
   %i.ni = fneg double %i.nh                       ; 3 uses
   %i.nj = load double, ptr %i.nd, align 8, !tbaa !30
   %i.nk = load double, ptr %i.mt, align 8, !tbaa !30
@@ -342,18 +342,18 @@ bb.t:                                             ; preds = %bb.s
 
 .split.i246.preheader.3:                          ; preds = %bb.t, %bb.s
   %i.pd = add nsw i64 %.5.2, -8                   ; 3 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.ox, i64 56 ; 2 uses
   %.idx351 = shl nsw i64 %i.pd, 6
   %i.pe = getelementptr inbounds i8, ptr %i.ow, i64 %.idx351 ; 36 uses
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 504
   %i.pg = load double, ptr %i.pf, align 8, !tbaa !30
   %i.ph = getelementptr inbounds nuw i8, ptr %i.pe, i64 448
   %i.pi = getelementptr inbounds [8 x i8], ptr %.0173.lcssa, i64 %i.pd ; 8 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.pi, i64 56
-  %i.pj = getelementptr inbounds nuw i8, ptr %i.ox, i64 56 ; 2 uses
-  %i.pk = load double, ptr %i.pj, align 8, !tbaa !30
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 56
+  %i.pk = load double, ptr %11, align 8, !tbaa !30
   %i.pl = fmul double %i.pg, %i.pk                ; 3 uses
-  store double %i.pl, ptr %11, align 8, !tbaa !30
   store double %i.pl, ptr %i.pj, align 8, !tbaa !30
+  store double %i.pl, ptr %11, align 8, !tbaa !30
   %i.pm = fneg double %i.pl                       ; 7 uses
   %i.pn = load double, ptr %i.ph, align 8, !tbaa !30
   %i.po = load double, ptr %i.ox, align 8, !tbaa !30

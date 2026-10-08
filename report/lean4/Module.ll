@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %lean_obj_tag.exit21
   %i.u = icmp eq i64 %.val13.i, %.val.i
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %lean_obj_tag.exit21.i, %bb.f
+.preheader.i:                                     ; preds = %bb.f, %lean_obj_tag.exit21.i
   %.0.shrunk.i = phi i1 [ false, %lean_obj_tag.exit21.i ], [ %i.u, %bb.f ]
   %i.v = load i32, ptr %i.c, align 8, !tbaa !12   ; 3 uses
   %i.w = icmp sgt i32 %i.v, 1

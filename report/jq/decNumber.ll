@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.lr.ph, %bb.m
   %.2123.lcssa = phi ptr [ %2, %.preheader151 ], [ %i.bj, %middle.block ], [ %i.cf, %bb.n ] ; 11 uses
   %.2.lcssa = phi i32 [ 0, %.preheader151 ], [ %i.bg, %middle.block ], [ %i.cc, %bb.n ]
   %.2123.lcssa212 = ptrtoaddr ptr %.2123.lcssa to i64
-  %i.ci = sub nsw i32 %i.d, %.2.lcssa             ; 5 uses
+  %i.ci = sub nuw nsw i32 %i.d, %.2.lcssa         ; 5 uses
   %i.cj = add nsw i32 %i.ci, -1                   ; 3 uses
   switch i32 %i.cj, label %bb.t [
     i32 2, label %bb.o
@@ -382,20 +382,20 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 bb.v:                                             ; preds = %bb.u
   store i32 %i.eu, ptr %0, align 4, !tbaa !19
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.ex = sub i32 3, %i.ci                        ; 3 uses
+  %i.ex = sub nuw nsw i32 3, %i.ci                ; 3 uses
   %i.ey = trunc nuw nsw i32 %i.en to i16
   store i16 %i.ey, ptr %i.ew, align 2, !tbaa !21
-  %i.ez = sub i32 %i.eu, %i.ex                    ; 2 uses
+  %i.ez = sub nsw i32 %i.eu, %i.ex                ; 2 uses
   %i.fa = icmp slt i32 %i.ez, 1
   br i1 %i.fa, label %.loopexit, label %.lr.ph162
 
 .lr.ph162:                                        ; preds = %bb.v
-  %i.fb = zext i32 %i.ci to i64                   ; 2 uses
+  %i.fb = zext nneg i32 %i.ci to i64              ; 2 uses
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr @multies, i64 %i.fb
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !23
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr @DECPOWERS, i64 %i.fb
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !23
-  %i.fg = zext i32 %i.ex to i64
+  %i.fg = zext nneg i32 %i.ex to i64
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr @DECPOWERS, i64 %i.fg
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !23
   br label %bb.x
@@ -404,7 +404,7 @@ bb.w:                                             ; preds = %bb.x
   %i.fj = getelementptr inbounds nuw i8, ptr %.2120159, i64 2 ; 2 uses
   %i.fk = trunc nuw nsw i32 %i.ft to i16
   store i16 %i.fk, ptr %i.fj, align 2, !tbaa !21
-  %i.fl = sub i32 %i.fz, %i.ex                    ; 2 uses
+  %i.fl = sub nsw i32 %i.fz, %i.ex                ; 2 uses
   %i.fm = icmp slt i32 %i.fl, 1
   br i1 %i.fm, label %.loopexit, label %bb.x
 
@@ -425,7 +425,7 @@ bb.x:                                             ; preds = %.lr.ph162, %bb.w
   %i.fx = add i32 %i.fw, %.1160
   %i.fy = trunc i32 %i.fx to i16
   store i16 %i.fy, ptr %.2120159, align 2, !tbaa !21
-  %i.fz = sub i32 %i.fn, %i.ci                    ; 2 uses
+  %i.fz = sub nsw i32 %i.fn, %i.ci                ; 2 uses
   %i.ga = icmp slt i32 %i.fz, 1
   br i1 %i.ga, label %.loopexit, label %bb.w
 

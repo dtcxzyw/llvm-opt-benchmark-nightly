@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = tail call double @llvm.log.f64(double %i.g)
   br label %_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB5_8BinomialINtB7_8DiscreteydE3pmf.exit.i.i
 
-_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB5_8BinomialINtB7_8DiscreteydE3pmf.exit.i.i: ; preds = %_RNCNvXs5_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB7_8BinomialINtNtNtBb_10statistics6traits12DistributiondE7entropy0Bb_.exit.i, %.lr.ph.i
+_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB5_8BinomialINtB7_8DiscreteydE3pmf.exit.i.i: ; preds = %.lr.ph.i, %_RNCNvXs5_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB7_8BinomialINtNtNtBb_10statistics6traits12DistributiondE7entropy0Bb_.exit.i
   %.sroa.0.011.i = phi double [ %.sroa.0.0.i.i, %_RNCNvXs5_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB7_8BinomialINtNtNtBb_10statistics6traits12DistributiondE7entropy0Bb_.exit.i ], [ 0.000000e+00, %.lr.ph.i ] ; 2 uses
   %.sroa.0.0610.i = phi i64 [ %i.i, %_RNCNvXs5_NtNtCs8lmMd0ZksV9_6statrs12distribution8binomialNtB7_8BinomialINtNtNtBb_10statistics6traits12DistributiondE7entropy0Bb_.exit.i ], [ 0, %.lr.ph.i ] ; 5 uses
   %i.i = add nuw i64 %.sroa.0.0610.i, 1

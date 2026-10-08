@@ -205,9 +205,6 @@ bb.f:                                             ; preds = %.lr.ph20
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #29, !noalias !3168
   unreachable
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit: ; preds = %bb.c, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit12
-  ret void
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit12: ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.s = load i64, ptr %i.r, align 8, !noundef !9
@@ -221,6 +218,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7colle
   store i64 %i.w, ptr %i.b, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit: ; preds = %bb.c, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultNtNtCsbNLsQi0JuJ4_5tgrep5serve16FileSearchResultEEB1J_.exit12
+  ret void
 
 .body:                                            ; preds = %bb.d, %bb.e
   resume { ptr, i32 } %i.n
@@ -278,9 +278,6 @@ bb.f:                                             ; preds = %.lr.ph20
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #29, !noalias !3171
   unreachable
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.c, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit12
-  ret void
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit12: ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.s = load i64, ptr %i.r, align 8, !noundef !9
@@ -294,6 +291,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7colle
   store i64 %i.w, ptr %i.b, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.c, %bb.b, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsjFxWRWgRcyr_5rayon4iter7collect8consumer13CollectResultTNtNtCsgCecv3eZDcN_5alloc6string6StringINtNtB4_6option6OptionTINtNtB1K_3vec3VecmENtNtCsbzNSmZPCnTx_10tgrep_core4meta9ContentIdEENtB30_11FileVersionEEECsbNLsQi0JuJ4_5tgrep.exit12
+  ret void
 
 .body:                                            ; preds = %bb.d, %bb.e
   resume { ptr, i32 } %i.n

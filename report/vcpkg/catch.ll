@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.
 .critedge2.thread:                                ; preds = %.critedge
   %i.e = sub i64 %1, %.01219
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %.01219
-  %i.g = sub i64 %1, %.01219
+  %i.g = sub nuw i64 %1, %.01219
   %.sroa.speculated.i38 = tail call i64 @llvm.umin.i64(i64 %i.e, i64 %i.g)
   br label %.critedge2.thread42
 
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %.lr.ph25, %.lr.ph25
   %.0.lcssa = phi i64 [ %.024, %.lr.ph25 ], [ %.01219, %bb.c ]
   %i.l = sub i64 %.0.lcssa, %.01219
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.01219
-  %i.n = sub i64 %1, %.01219
+  %i.n = sub nuw i64 %1, %.01219
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.l, i64 %i.n)
   br label %.critedge2.thread42
 

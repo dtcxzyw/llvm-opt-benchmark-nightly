@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ar = add nsw i32 %.03236.i120, -64
-  %i.as = add nuw i64 %.03137.i119, 6
+  %i.as = add nuw nsw i64 %.03137.i119, 6
   %.not35.i123 = icmp ult i64 %i.as, %i.m
   %i.at = and i32 %.03236.i120, 31
   %spec.select.i124 = select i1 %.not35.i123, i32 %i.ar, i32 %i.at

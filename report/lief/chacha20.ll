@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dq = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.0.i61
   store i64 %i.dp, ptr %i.dq, align 1
   %i.dr = add nuw nsw i64 %i.dm, 8                ; 2 uses
-  %.not.i = icmp ugt i64 %i.dr, %.134.lcssa81
+  %.not.i = icmp samesign ugt i64 %i.dr, %.134.lcssa81
   br i1 %.not.i, label %.preheader, label %.lr.ph63, !llvm.loop !19
 
 .lr.ph66:                                         ; preds = %.lr.ph66.prol.loopexit, %.lr.ph66

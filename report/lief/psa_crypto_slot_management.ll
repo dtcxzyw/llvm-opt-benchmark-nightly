@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.thread.i
   %i.ah = phi ptr [ %i.af, %bb.y ], [ %i.aa, %.thread.i ]
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @global_data, i64 184), i64 %.02941.lcssa.i
   %i.aj = shl nuw nsw i64 %.02941.lcssa.i, 25
-  %i.ak = or i64 %i.y, %i.aj
+  %i.ak = or i64 %i.aj, %i.y
   %i.al = trunc i64 %i.ak to i32
   %i.am = or i32 %i.al, 1073741824
   store i32 %i.am, ptr %0, align 4, !tbaa !24

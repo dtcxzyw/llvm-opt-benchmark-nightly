@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fi, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.ge = and i32 %i.fk, 255
-  %i.gf = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.gf = sub nuw i32 %.0155.i.lcssa, %.1104.i.lcssa
   %i.gg = tail call i32 @llvm.umin.i32(i32 %i.gf, i32 %i.ge) ; 4 uses
   %.not86 = icmp eq i32 %i.gg, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
@@ -608,7 +608,7 @@ bb.u:                                             ; preds = %bb.t
   %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fd, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.fz = and i32 %i.ff, 255
-  %i.ga = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.ga = sub nuw i32 %.0155.i.lcssa, %.1104.i.lcssa
   %i.gb = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.fz) ; 4 uses
   %.not86 = icmp eq i32 %i.gb, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
@@ -1011,7 +1011,7 @@ bb.u:                                             ; preds = %bb.t
   %.1104.i.lcssa = phi i32 [ 0, %ZSTD_HcFindBestMatch.exit ], [ %i.fd, %.thread25 ]
   %.0100.i.lcssa = phi i64 [ %.3154.i, %ZSTD_HcFindBestMatch.exit ], [ %.2102.i29, %.thread25 ] ; 2 uses
   %i.fz = and i32 %i.ff, 255
-  %i.ga = sub i32 %.0155.i.lcssa, %.1104.i.lcssa
+  %i.ga = sub nuw i32 %.0155.i.lcssa, %.1104.i.lcssa
   %i.gb = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.fz) ; 4 uses
   %.not86 = icmp eq i32 %i.gb, 0
   br i1 %.not86, label %ZSTD_dedicatedDictSearch_lazy_search.exit, label %.lr.ph75.preheader
