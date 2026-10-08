@@ -205,7 +205,6 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %i.bh, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %8 = getelementptr i8, ptr %i.au, i64 %i.at
   %i.bi = add nsw i64 %i.at, -1
   %i.bj = mul i64 %i.bi, %i.bc
   %i.bk = getelementptr i8, ptr %i.ar, i64 %i.bj
@@ -215,9 +214,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.bo = select i1 %i.bn, ptr %i.bl, ptr %i.bm
   %i.bp = icmp ugt ptr %i.bl, %i.bm
   %i.bq = select i1 %i.bp, ptr %i.bl, ptr %i.bm
-  %i.br = getelementptr i8, ptr %i.bq, i64 1
-  %bound0 = icmp ult ptr %i.au, %i.br
-  %bound1 = icmp ult ptr %i.bo, %8
+  %8 = getelementptr i8, ptr %i.bq, i64 1
+  %i.br = getelementptr i8, ptr %i.au, i64 %i.at
+  %bound0 = icmp ult ptr %i.bo, %i.br
+  %bound1 = icmp ult ptr %i.au, %8
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -282,22 +282,22 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %gep133 = getelementptr i8, ptr %invariant.gep132, i64 %i.cl
   %gep135 = getelementptr i8, ptr %invariant.gep134, i64 %i.cl
   %gep137 = getelementptr i8, ptr %invariant.gep136, i64 %i.cl
-  %i.cn = load i8, ptr %i.cm, align 1, !alias.scope !396
-  %i.co = load i8, ptr %gep109, align 1, !alias.scope !396
-  %i.cp = load i8, ptr %gep111, align 1, !alias.scope !396
-  %i.cq = load i8, ptr %gep113, align 1, !alias.scope !396
-  %i.cr = load i8, ptr %gep115, align 1, !alias.scope !396
-  %i.cs = load i8, ptr %gep117, align 1, !alias.scope !396
-  %i.ct = load i8, ptr %gep119, align 1, !alias.scope !396
-  %i.cu = load i8, ptr %gep121, align 1, !alias.scope !396
-  %i.cv = load i8, ptr %gep123, align 1, !alias.scope !396
-  %i.cw = load i8, ptr %gep125, align 1, !alias.scope !396
-  %i.cx = load i8, ptr %gep127, align 1, !alias.scope !396
-  %i.cy = load i8, ptr %gep129, align 1, !alias.scope !396
-  %i.cz = load i8, ptr %gep131, align 1, !alias.scope !396
-  %i.da = load i8, ptr %gep133, align 1, !alias.scope !396
-  %i.db = load i8, ptr %gep135, align 1, !alias.scope !396
-  %i.dc = load i8, ptr %gep137, align 1, !alias.scope !396
+  %i.cn = load i8, ptr %i.cm, align 1, !alias.scope !396, !noalias !397
+  %i.co = load i8, ptr %gep109, align 1, !alias.scope !396, !noalias !397
+  %i.cp = load i8, ptr %gep111, align 1, !alias.scope !396, !noalias !397
+  %i.cq = load i8, ptr %gep113, align 1, !alias.scope !396, !noalias !397
+  %i.cr = load i8, ptr %gep115, align 1, !alias.scope !396, !noalias !397
+  %i.cs = load i8, ptr %gep117, align 1, !alias.scope !396, !noalias !397
+  %i.ct = load i8, ptr %gep119, align 1, !alias.scope !396, !noalias !397
+  %i.cu = load i8, ptr %gep121, align 1, !alias.scope !396, !noalias !397
+  %i.cv = load i8, ptr %gep123, align 1, !alias.scope !396, !noalias !397
+  %i.cw = load i8, ptr %gep125, align 1, !alias.scope !396, !noalias !397
+  %i.cx = load i8, ptr %gep127, align 1, !alias.scope !396, !noalias !397
+  %i.cy = load i8, ptr %gep129, align 1, !alias.scope !396, !noalias !397
+  %i.cz = load i8, ptr %gep131, align 1, !alias.scope !396, !noalias !397
+  %i.da = load i8, ptr %gep133, align 1, !alias.scope !396, !noalias !397
+  %i.db = load i8, ptr %gep135, align 1, !alias.scope !396, !noalias !397
+  %i.dc = load i8, ptr %gep137, align 1, !alias.scope !396, !noalias !397
   %i.dd = insertelement <16 x i8> poison, i8 %i.cn, i64 0
   %i.de = insertelement <16 x i8> %i.dd, i8 %i.co, i64 1
   %i.df = insertelement <16 x i8> %i.de, i8 %i.cp, i64 2
@@ -315,7 +315,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.dr = insertelement <16 x i8> %i.dq, i8 %i.db, i64 14
   %i.ds = insertelement <16 x i8> %i.dr, i8 %i.dc, i64 15
   %i.dt = getelementptr inbounds nuw i8, ptr %i.au, i64 %index
-  store <16 x i8> %i.ds, ptr %i.dt, align 1, !alias.scope !397, !noalias !396
+  store <16 x i8> %i.ds, ptr %i.dt, align 1, !alias.scope !397
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.du = icmp eq i64 %index.next, %n.vec
   br i1 %i.du, label %middle.block, label %vector.body, !llvm.loop !393
@@ -361,14 +361,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %gep147 = getelementptr i8, ptr %invariant.gep146, i64 %i.ef
   %gep149 = getelementptr i8, ptr %invariant.gep148, i64 %i.ef
   %gep151 = getelementptr i8, ptr %invariant.gep150, i64 %i.ef
-  %i.eh = load i8, ptr %i.eg, align 1, !alias.scope !396
-  %i.ei = load i8, ptr %gep139, align 1, !alias.scope !396
-  %i.ej = load i8, ptr %gep141, align 1, !alias.scope !396
-  %i.ek = load i8, ptr %gep143, align 1, !alias.scope !396
-  %i.el = load i8, ptr %gep145, align 1, !alias.scope !396
-  %i.em = load i8, ptr %gep147, align 1, !alias.scope !396
-  %i.en = load i8, ptr %gep149, align 1, !alias.scope !396
-  %i.eo = load i8, ptr %gep151, align 1, !alias.scope !396
+  %i.eh = load i8, ptr %i.eg, align 1, !alias.scope !396, !noalias !397
+  %i.ei = load i8, ptr %gep139, align 1, !alias.scope !396, !noalias !397
+  %i.ej = load i8, ptr %gep141, align 1, !alias.scope !396, !noalias !397
+  %i.ek = load i8, ptr %gep143, align 1, !alias.scope !396, !noalias !397
+  %i.el = load i8, ptr %gep145, align 1, !alias.scope !396, !noalias !397
+  %i.em = load i8, ptr %gep147, align 1, !alias.scope !396, !noalias !397
+  %i.en = load i8, ptr %gep149, align 1, !alias.scope !396, !noalias !397
+  %i.eo = load i8, ptr %gep151, align 1, !alias.scope !396, !noalias !397
   %i.ep = insertelement <8 x i8> poison, i8 %i.eh, i64 0
   %i.eq = insertelement <8 x i8> %i.ep, i8 %i.ei, i64 1
   %i.er = insertelement <8 x i8> %i.eq, i8 %i.ej, i64 2
@@ -378,7 +378,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ev = insertelement <8 x i8> %i.eu, i8 %i.en, i64 6
   %i.ew = insertelement <8 x i8> %i.ev, i8 %i.eo, i64 7
   %i.ex = getelementptr inbounds nuw i8, ptr %i.au, i64 %index100
-  store <8 x i8> %i.ew, ptr %i.ex, align 1, !alias.scope !397, !noalias !396
+  store <8 x i8> %i.ew, ptr %i.ex, align 1, !alias.scope !397
   %index.next101 = add nuw i64 %index100, 8       ; 2 uses
   %i.ey = icmp eq i64 %index.next101, %n.vec99
   br i1 %i.ey, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !394
