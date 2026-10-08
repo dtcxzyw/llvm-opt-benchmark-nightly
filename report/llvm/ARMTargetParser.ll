@@ -204,7 +204,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread:         ; preds = %_ZN4llvmeqENS_9Stri
   %i.c = phi i64 [ %.012.add.us.4, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us.4 ], [ %.012.idx27.us, %.split.us ], [ %.012.add.us, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us ], [ %.012.add.us.1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us.1 ], [ %.012.add.us.2, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us.2 ], [ %.012.add.us.3, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us.3 ], [ %.012.idx27, %_ZN4llvmeqENS_9StringRefES0_.exit ]
   %i.d = getelementptr inbounds nuw i8, ptr @_ZN4llvm3ARML8CPUNamesE, i64 %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !41
+  %i.f = load i32, ptr %i.e, align 16, !tbaa !41
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread18, %_ZN4llvmeqENS_9StringRefES0_.exit.thread18.us.5, %_ZN4llvmeqENS_9StringRefES0_.exit.thread

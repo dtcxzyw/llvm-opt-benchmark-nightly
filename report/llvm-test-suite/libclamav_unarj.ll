@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %decode_p.exit.i
 .lr.ph91.i:                                       ; preds = %.lr.ph91.i, %.lr.ph91.preheader.i
   %indvars.iv100.i = phi i64 [ %i.fw, %.lr.ph91.preheader.i ], [ %indvars.iv.next101.i, %.lr.ph91.i ] ; 3 uses
   %indvars.iv.i = phi i64 [ %i.fv, %.lr.ph91.preheader.i ], [ %indvars.iv.next.i, %.lr.ph91.i ] ; 3 uses
-  %i.fx = phi i16 [ %i.fu, %.lr.ph91.preheader.i ], [ %i.gc, %.lr.ph91.i ]
+  %i.fx = phi i16 [ %i.fu, %.lr.ph91.preheader.i ], [ %i.gc, %.lr.ph91.i ] ; 2 uses
   %i.fy = load ptr, ptr %i.v, align 8, !tbaa !20  ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 %indvars.iv.i
@@ -213,11 +213,11 @@ bb.af:                                            ; preds = %decode_p.exit.i
   %indvars.iv.next101.i = add nuw nsw i64 %indvars.iv100.i, 1 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 %indvars.iv100.i
   store i8 %i.ga, ptr %i.gb, align 1, !tbaa !11
-  %i.gc = add i16 %i.fx, -1                       ; 2 uses
-  %i.gd = icmp sgt i16 %i.gc, -1
+  %i.gc = add nsw i16 %i.fx, -1
+  %i.gd = icmp sgt i16 %i.fx, 0
   %i.ge = trunc nuw i64 %indvars.iv.i to i16
   %i.gf = icmp slt i16 %i.ge, 26623
-  %or.cond7.i = and i1 %i.gf, %i.gd
+  %or.cond7.i = and i1 %i.gd, %i.gf
   %i.gg = icmp samesign ult i64 %indvars.iv100.i, 26623
   %i.gh = and i1 %i.gg, %or.cond7.i
   br i1 %i.gh, label %.lr.ph91.i, label %.loopexit.loopexit.i, !llvm.loop !60

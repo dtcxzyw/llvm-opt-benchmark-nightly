@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/redis/original/crcspeed?download=true
 inline.NumInlined: 10
 inline.NumDeleted: 1
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 7
 begin_hunk_0_@crcspeed16little:bb.a
   %i.ae = and i64 %i.ad, 255
@@ -205,37 +205,11 @@ bb.a:
   br i1 %i.ac, label %.lr.ph, label %.preheader42, !llvm.loop !42
 
 .preheader:                                       ; preds = %bb.b, %.preheader42
-  %.140.lcssa = phi i64 [ %.039.lcssa, %.preheader42 ], [ %i.bp, %bb.b ] ; 4 uses
-  %.137.lcssa = phi i64 [ %.036.lcssa, %.preheader42 ], [ %i.br, %bb.b ] ; 5 uses
-  %.1.lcssa = phi ptr [ %.0.lcssa, %.preheader42 ], [ %i.bq, %bb.b ] ; 3 uses
+  %.140.lcssa = phi i64 [ %.039.lcssa, %.preheader42 ], [ %i.bp, %bb.b ] ; 3 uses
+  %.137.lcssa = phi i64 [ %.036.lcssa, %.preheader42 ], [ %i.br, %bb.b ] ; 7 uses
+  %.1.lcssa = phi ptr [ %.0.lcssa, %.preheader42 ], [ %i.bq, %bb.b ] ; 7 uses
   %.not55 = icmp eq i64 %.137.lcssa, 0
-  br i1 %.not55, label %._crit_edge, label %.lr.ph59.preheader
-
-.lr.ph59.preheader:                               ; preds = %.preheader
-  %xtraiter = and i64 %.137.lcssa, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph59.prol.loopexit, label %.lr.ph59.prol
-
-.lr.ph59.prol:                                    ; preds = %.lr.ph59.preheader
-  %4 = lshr i64 %.140.lcssa, 56
-  %5 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 1
-  %6 = load i8, ptr %.1.lcssa, align 1, !tbaa !17
-  %7 = zext i8 %6 to i64
-  %8 = xor i64 %4, %7
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %8
-  %10 = load i64, ptr %9, align 8, !tbaa !19
-  %11 = shl i64 %.140.lcssa, 8
-  %12 = xor i64 %10, %11                          ; 2 uses
-  %13 = add nsw i64 %.137.lcssa, -1
-  br label %.lr.ph59.prol.loopexit
-
-.lr.ph59.prol.loopexit:                           ; preds = %.lr.ph59.prol, %.lr.ph59.preheader
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph59.preheader ], [ %12, %.lr.ph59.prol ]
-  %.258.unr = phi ptr [ %.1.lcssa, %.lr.ph59.preheader ], [ %5, %.lr.ph59.prol ]
-  %.23857.unr = phi i64 [ %.137.lcssa, %.lr.ph59.preheader ], [ %13, %.lr.ph59.prol ]
-  %.24156.unr = phi i64 [ %.140.lcssa, %.lr.ph59.preheader ], [ %12, %.lr.ph59.prol ]
-  %14 = icmp eq i64 %.137.lcssa, 1
-  br i1 %14, label %._crit_edge, label %.lr.ph59.a
+  br i1 %.not55, label %._crit_edge, label %.lr.ph59
 
 bb.b:                                             ; preds = %.lr.ph51, %bb.b
   %.150 = phi ptr [ %.0.lcssa, %.lr.ph51 ], [ %i.bq, %bb.b ] ; 2 uses
@@ -285,34 +259,97 @@ bb.b:                                             ; preds = %.lr.ph51, %bb.b
   %i.bs = icmp ugt i64 %i.br, 7
   br i1 %i.bs, label %bb.b, label %.preheader, !llvm.loop !43
 
-.lr.ph59.a:                                       ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59.a
-  %.258 = phi ptr [ %23, %.lr.ph59.a ], [ %.258.unr, %.lr.ph59.prol.loopexit ] ; 3 uses
-  %.23857 = phi i64 [ %24, %.lr.ph59.a ], [ %.23857.unr, %.lr.ph59.prol.loopexit ]
-  %.24156 = phi i64 [ %i.cb, %.lr.ph59.a ], [ %.24156.unr, %.lr.ph59.prol.loopexit ] ; 2 uses
-  %15 = lshr i64 %.24156, 56
-  %i.bt = getelementptr inbounds nuw i8, ptr %.258, i64 1
-  %16 = load i8, ptr %.258, align 1, !tbaa !17
-  %17 = zext i8 %16 to i64
-  %18 = xor i64 %15, %17
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %18
-  %20 = load i64, ptr %19, align 8, !tbaa !19
-  %21 = shl i64 %.24156, 8
-  %22 = xor i64 %20, %21                          ; 2 uses
-  %i.bu = lshr i64 %22, 56
-  %23 = getelementptr inbounds nuw i8, ptr %.258, i64 2
+.lr.ph59:                                         ; preds = %.preheader
+  %4 = lshr i64 %.140.lcssa, 56
+  %5 = load i8, ptr %.1.lcssa, align 1, !tbaa !17
+  %6 = zext i8 %5 to i64
+  %7 = xor i64 %4, %6
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %7
+  %9 = load i64, ptr %8, align 8, !tbaa !19
+  %10 = shl i64 %.140.lcssa, 8
+  %11 = xor i64 %9, %10                           ; 3 uses
+  %.not = icmp eq i64 %.137.lcssa, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph59.1
+
+.lr.ph59.1:                                       ; preds = %.lr.ph59
+  %12 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 1
+  %13 = lshr i64 %11, 56
+  %14 = load i8, ptr %12, align 1, !tbaa !17
+  %15 = zext i8 %14 to i64
+  %16 = xor i64 %13, %15
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %16
+  %18 = load i64, ptr %17, align 8, !tbaa !19
+  %19 = shl i64 %11, 8
+  %20 = xor i64 %18, %19                          ; 3 uses
+  %.not.1 = icmp eq i64 %.137.lcssa, 2
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph59.2
+
+.lr.ph59.2:                                       ; preds = %.lr.ph59.1
+  %21 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 2
+  %22 = lshr i64 %20, 56
+  %23 = load i8, ptr %21, align 1, !tbaa !17
+  %24 = zext i8 %23 to i64
+  %25 = xor i64 %22, %24
+  %26 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %25
+  %27 = load i64, ptr %26, align 8, !tbaa !19
+  %28 = shl i64 %20, 8
+  %29 = xor i64 %27, %28                          ; 3 uses
+  %.not.2 = icmp eq i64 %.137.lcssa, 3
+  br i1 %.not.2, label %._crit_edge, label %.lr.ph59.3
+
+.lr.ph59.3:                                       ; preds = %.lr.ph59.2
+  %30 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 3
+  %31 = lshr i64 %29, 56
+  %32 = load i8, ptr %30, align 1, !tbaa !17
+  %33 = zext i8 %32 to i64
+  %34 = xor i64 %31, %33
+  %35 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %34
+  %36 = load i64, ptr %35, align 8, !tbaa !19
+  %37 = shl i64 %29, 8
+  %38 = xor i64 %36, %37                          ; 3 uses
+  %.not.3 = icmp eq i64 %.137.lcssa, 4
+  br i1 %.not.3, label %._crit_edge, label %.lr.ph59.4
+
+.lr.ph59.4:                                       ; preds = %.lr.ph59.3
+  %39 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 4
+  %40 = lshr i64 %38, 56
+  %41 = load i8, ptr %39, align 1, !tbaa !17
+  %42 = zext i8 %41 to i64
+  %43 = xor i64 %40, %42
+  %44 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %43
+  %45 = load i64, ptr %44, align 8, !tbaa !19
+  %46 = shl i64 %38, 8
+  %47 = xor i64 %45, %46                          ; 3 uses
+  %.not.4 = icmp eq i64 %.137.lcssa, 5
+  br i1 %.not.4, label %._crit_edge, label %.lr.ph59.a
+
+.lr.ph59.a:                                       ; preds = %.lr.ph59.4
+  %i.bt = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 5
+  %i.bu = lshr i64 %47, 56
   %i.bv = load i8, ptr %i.bt, align 1, !tbaa !17
   %i.bw = zext i8 %i.bv to i64
   %i.bx = xor i64 %i.bu, %i.bw
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bx
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !19
-  %i.ca = shl i64 %22, 8
-  %i.cb = xor i64 %i.bz, %i.ca                    ; 2 uses
-  %24 = add nsw i64 %.23857, -2                   ; 2 uses
-  %.not.1.a = icmp eq i64 %24, 0
-  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph59.a, !llvm.loop !44
+  %i.ca = shl i64 %47, 8
+  %i.cb = xor i64 %i.bz, %i.ca                    ; 3 uses
+  %.not.1.a = icmp eq i64 %.137.lcssa, 6
+  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph59.6
 
-._crit_edge:                                      ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59.a, %.preheader
-  %.241.lcssa = phi i64 [ %.140.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph59.prol.loopexit ], [ %i.cb, %.lr.ph59.a ]
+.lr.ph59.6:                                       ; preds = %.lr.ph59.a
+  %48 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 6
+  %49 = lshr i64 %i.cb, 56
+  %50 = load i8, ptr %48, align 1, !tbaa !17
+  %51 = zext i8 %50 to i64
+  %52 = xor i64 %49, %51
+  %53 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %52
+  %54 = load i64, ptr %53, align 8, !tbaa !19
+  %55 = shl i64 %i.cb, 8
+  %56 = xor i64 %54, %55
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph59, %.lr.ph59.1, %.lr.ph59.2, %.lr.ph59.3, %.lr.ph59.4, %.lr.ph59.a, %.lr.ph59.6, %.preheader
+  %.241.lcssa = phi i64 [ %.140.lcssa, %.preheader ], [ %11, %.lr.ph59 ], [ %20, %.lr.ph59.1 ], [ %29, %.lr.ph59.2 ], [ %38, %.lr.ph59.3 ], [ %47, %.lr.ph59.4 ], [ %i.cb, %.lr.ph59.a ], [ %56, %.lr.ph59.6 ]
   %i.cc = tail call noundef i64 @llvm.bswap.i64(i64 %.241.lcssa)
   ret i64 %i.cc
 }
@@ -334,7 +371,7 @@ bb.a:
   %.038.lcssa = phi i64 [ %i.b, %bb.a ], [ %i.x, %.lr.ph ] ; 2 uses
   %.0.lcssa = phi i64 [ %3, %bb.a ], [ %i.y, %.lr.ph ] ; 3 uses
   %i.h = icmp ugt i64 %.0.lcssa, 7
-  br i1 %i.h, label %.lr.ph55, label %.preheader
+  br i1 %i.h, label %.lr.ph55, label %.lr.ph63.prol
 
 .lr.ph55:                                         ; preds = %.preheader46
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 512
@@ -367,27 +404,13 @@ bb.a:
   %i.ab = and i64 %i.aa, 7
   %i.ac = icmp ne i64 %i.ab, 0
   %i.ad = select i1 %i.z, i1 %i.ac, i1 false
-  br i1 %i.ad, label %.lr.ph, label %.preheader46, !llvm.loop !45
+  br i1 %i.ad, label %.lr.ph, label %.preheader46, !llvm.loop !44
 
-.preheader:                                       ; preds = %bb.b, %.preheader46
-  %.139.lcssa = phi i64 [ %.038.lcssa, %.preheader46 ], [ %i.bt, %bb.b ] ; 2 uses
-  %.1.lcssa = phi i64 [ %.0.lcssa, %.preheader46 ], [ %i.bv, %bb.b ] ; 4 uses
-  %.not59 = icmp eq i64 %.1.lcssa, 0
-  br i1 %.not59, label %._crit_edge, label %.lr.ph63.prol
-
-.lr.ph63.prol:                                    ; preds = %.preheader, %.lr.ph63.prol
-  %.262.prol = phi i64 [ %5, %.lr.ph63.prol ], [ %.1.lcssa, %.preheader ]
-  %.24061.prol = phi i64 [ %4, %.lr.ph63.prol ], [ %.139.lcssa, %.preheader ]
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph63.prol ], [ 0, %.preheader ]
-  %4 = lshr i64 %.24061.prol, 8                   ; 2 uses
-  %5 = add nsw i64 %.262.prol, -1                 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %.1.lcssa
-  br i1 %prol.iter.cmp.not, label %.lr.ph63.prol.loopexit, label %.lr.ph63.prol, !llvm.loop !46
-
-.lr.ph63.prol.loopexit:                           ; preds = %.lr.ph63.prol
-  %6 = icmp ult i64 %.1.lcssa, 8
-  br i1 %6, label %._crit_edge, label %.lr.ph63.a
+.lr.ph63.prol:                                    ; preds = %bb.b, %.preheader46
+  %.24061.prol = phi i64 [ %.038.lcssa, %.preheader46 ], [ %i.bt, %bb.b ] ; 8 uses
+  %prol.iter = phi i64 [ %.0.lcssa, %.preheader46 ], [ %i.bv, %bb.b ] ; 7 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter, 0
+  br i1 %prol.iter.cmp.not, label %._crit_edge, label %.lr.ph63
 
 bb.b:                                             ; preds = %.lr.ph55, %bb.b
   %.154 = phi i64 [ %.0.lcssa, %.lr.ph55 ], [ %i.bv, %bb.b ]
@@ -438,16 +461,42 @@ bb.b:                                             ; preds = %.lr.ph55, %bb.b
   %i.bu = getelementptr inbounds nuw i8, ptr %.14252, i64 8
   %i.bv = add i64 %.154, -8                       ; 3 uses
   %i.bw = icmp ugt i64 %i.bv, 7
-  br i1 %i.bw, label %bb.b, label %.preheader, !llvm.loop !47
+  br i1 %i.bw, label %bb.b, label %.lr.ph63.prol, !llvm.loop !45
 
-.lr.ph63.a:                                       ; preds = %.lr.ph63.prol.loopexit, %.lr.ph63.a
-  %.262 = phi i64 [ %7, %.lr.ph63.a ], [ %5, %.lr.ph63.prol.loopexit ]
-  %7 = add nsw i64 %.262, -8                      ; 2 uses
-  %.not.7 = icmp eq i64 %7, 0
-  br i1 %.not.7, label %._crit_edge, label %.lr.ph63.a, !llvm.loop !48
+.lr.ph63:                                         ; preds = %.lr.ph63.prol
+  %4 = lshr i64 %.24061.prol, 8
+  %.not = icmp eq i64 %prol.iter, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph63.1
 
-._crit_edge:                                      ; preds = %.lr.ph63.prol.loopexit, %.lr.ph63.a, %.preheader
-  %.240.lcssa = phi i64 [ %.139.lcssa, %.preheader ], [ %4, %.lr.ph63.prol.loopexit ], [ 0, %.lr.ph63.a ]
+.lr.ph63.1:                                       ; preds = %.lr.ph63
+  %5 = lshr i64 %.24061.prol, 16
+  %.not.1 = icmp eq i64 %prol.iter, 2
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph63.2
+
+.lr.ph63.2:                                       ; preds = %.lr.ph63.1
+  %6 = lshr i64 %.24061.prol, 24
+  %.not.2 = icmp eq i64 %prol.iter, 3
+  br i1 %.not.2, label %._crit_edge, label %.lr.ph63.3
+
+.lr.ph63.3:                                       ; preds = %.lr.ph63.2
+  %7 = lshr i64 %.24061.prol, 32
+  %.not.3 = icmp eq i64 %prol.iter, 4
+  br i1 %.not.3, label %._crit_edge, label %.lr.ph63.4
+
+.lr.ph63.4:                                       ; preds = %.lr.ph63.3
+  %8 = lshr i64 %.24061.prol, 40
+  %.not.4 = icmp eq i64 %prol.iter, 5
+  br i1 %.not.4, label %._crit_edge, label %.lr.ph63.a
+
+.lr.ph63.a:                                       ; preds = %.lr.ph63.4
+  %9 = lshr i64 %.24061.prol, 48
+  %.not.5 = icmp eq i64 %prol.iter, 6
+  %10 = lshr i64 %.24061.prol, 56
+  %spec.select = select i1 %.not.5, i64 %9, i64 %10
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph63.a, %.lr.ph63, %.lr.ph63.1, %.lr.ph63.2, %.lr.ph63.3, %.lr.ph63.4, %.lr.ph63.prol
+  %.240.lcssa = phi i64 [ %.24061.prol, %.lr.ph63.prol ], [ %4, %.lr.ph63 ], [ %5, %.lr.ph63.1 ], [ %6, %.lr.ph63.2 ], [ %7, %.lr.ph63.3 ], [ %8, %.lr.ph63.4 ], [ %spec.select, %.lr.ph63.a ]
   %i.bx = tail call noundef i64 @llvm.bswap.i64(i64 %.240.lcssa)
   %i.by = trunc i64 %i.bx to i16
   ret i16 %i.by
@@ -706,8 +755,4 @@ attributes #7 = { nounwind }
 !43 = distinct !{!43, !20}
 !44 = distinct !{!44, !20}
 !45 = distinct !{!45, !20}
-!46 = distinct !{!46, !49}
-!47 = distinct !{!47, !20}
-!48 = distinct !{!48, !20}
-!49 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

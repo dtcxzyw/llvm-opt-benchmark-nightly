@@ -1,7 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/GlobPattern?download=true
 inline.NumInlined: 1464
 inline.NumDeleted: 616
-loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm11GlobPattern14SubGlobPattern6createENS_9StringRefEb:bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
@@ -204,18 +205,24 @@ bb.i:                                             ; preds = %.unr-lcssa, %bb.f
   br i1 %i.de, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.i, %bb.e
-  %.sroa.053.0.lcssa.i = phi ptr [ %.sroa.071.0, %bb.e ], [ %.sroa.053.1.i, %bb.i ] ; 4 uses
-  %.sroa.10.0.lcssa.i = phi i64 [ %.sroa.672.0, %bb.e ], [ %i.dd, %bb.i ] ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.053.0.lcssa.i, i64 %.sroa.10.0.lcssa.i
+  %.sroa.053.0.lcssa.i = phi ptr [ %.sroa.071.0, %bb.e ], [ %.sroa.053.1.i, %bb.i ] ; 3 uses
+  %.sroa.10.0.lcssa.i = phi i64 [ %.sroa.672.0, %bb.e ], [ %i.dd, %bb.i ] ; 3 uses
   %.not3573.i = icmp samesign eq i64 %.sroa.10.0.lcssa.i, 0
-  br i1 %.not3573.i, label %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i, label %.lr.ph76.i.preheader
+  br i1 %.not3573.i, label %.lr.ph76.i.preheader, label %.lr.ph76.i.prol
 
-.lr.ph76.i.preheader:                             ; preds = %._crit_edge.i
-  %xtraiter140 = and i64 %.sroa.10.0.lcssa.i, 1
-  %lcmp.mod141.not = icmp eq i64 %xtraiter140, 0
-  br i1 %lcmp.mod141.not, label %.lr.ph76.i.prol.loopexit, label %.lr.ph76.i.prol
+.lr.ph76.i.preheader:                             ; preds = %.lr.ph76.i.prol, %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i, %.lr.ph76.i, %._crit_edge.i
+  %11 = load i8, ptr %i.q, align 8, !alias.scope !185
+  %12 = and i8 %11, -2
+  store i8 %12, ptr %i.q, align 8, !alias.scope !185
+  store ptr %i.r, ptr %9, align 8, !tbaa !17, !alias.scope !185
+  store i32 0, ptr %i.s, align 8, !tbaa !18, !alias.scope !185
+  store i32 6, ptr %i.t, align 4, !tbaa !19, !alias.scope !185
+  %13 = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvm15SmallVectorImplImEaSEOS1_(ptr noundef nonnull align 8 dereferenceable(73) %9, ptr noundef nonnull align 8 dereferenceable(68) %5) ; 0 uses
+  %.pre.i = load i32, ptr %i.l, align 8, !tbaa !68, !noalias !185
+  store i32 %.pre.i, ptr %i.u, align 8, !tbaa !68, !alias.scope !185
+  br label %bb.j
 
-.lr.ph76.i.prol:                                  ; preds = %.lr.ph76.i.preheader
+.lr.ph76.i.prol:                                  ; preds = %._crit_edge.i
   %i.df = load i8, ptr %.sroa.053.0.lcssa.i, align 1, !tbaa !37, !noalias !185
   %i.dg = zext i8 %i.df to i32                    ; 2 uses
   %i.dh = lshr i32 %i.dg, 6
@@ -227,40 +234,27 @@ bb.i:                                             ; preds = %.unr-lcssa, %bb.f
   %i.dn = load i64, ptr %i.dj, align 8, !tbaa !32, !noalias !185
   %i.do = or i64 %i.dm, %i.dn
   store i64 %i.do, ptr %i.dj, align 8, !tbaa !32, !noalias !185
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.053.0.lcssa.i, i64 1
-  br label %.lr.ph76.i.prol.loopexit
+  %.not35.i = icmp samesign eq i64 %.sroa.10.0.lcssa.i, 1
+  br i1 %.not35.i, label %.lr.ph76.i.preheader, label %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i
 
-.lr.ph76.i.prol.loopexit:                         ; preds = %.lr.ph76.i.prol, %.lr.ph76.i.preheader
-  %.03074.i.unr = phi ptr [ %.sroa.053.0.lcssa.i, %.lr.ph76.i.preheader ], [ %12, %.lr.ph76.i.prol ]
-  %13 = icmp eq i64 %.sroa.10.0.lcssa.i, 1
-  br i1 %13, label %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i, label %.lr.ph76.i
+_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i: ; preds = %.lr.ph76.i.prol
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.053.0.lcssa.i, i64 1
+  %i.dp = load i8, ptr %14, align 1, !tbaa !37, !noalias !185
+  %15 = zext i8 %i.dp to i32                      ; 2 uses
+  %16 = lshr i32 %15, 6
+  %17 = zext nneg i32 %16 to i64
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %.ptr66.i, i64 %17 ; 2 uses
+  %19 = and i32 %15, 63
+  %20 = zext nneg i32 %19 to i64
+  %21 = shl nuw i64 1, %20
+  %22 = load i64, ptr %18, align 8, !tbaa !32, !noalias !185
+  %23 = or i64 %21, %22
+  store i64 %23, ptr %18, align 8, !tbaa !32, !noalias !185
+  %.not35.i.1 = icmp samesign eq i64 %.sroa.10.0.lcssa.i, 2
+  br i1 %.not35.i.1, label %.lr.ph76.i.preheader, label %.lr.ph76.i
 
-_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i: ; preds = %.lr.ph76.i.prol.loopexit, %.lr.ph76.i, %._crit_edge.i
-  %i.dp = load i8, ptr %i.q, align 8, !alias.scope !185
-  %14 = and i8 %i.dp, -2
-  store i8 %14, ptr %i.q, align 8, !alias.scope !185
-  store ptr %i.r, ptr %9, align 8, !tbaa !17, !alias.scope !185
-  store i32 0, ptr %i.s, align 8, !tbaa !18, !alias.scope !185
-  store i32 6, ptr %i.t, align 4, !tbaa !19, !alias.scope !185
-  %15 = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvm15SmallVectorImplImEaSEOS1_(ptr noundef nonnull align 8 dereferenceable(73) %9, ptr noundef nonnull align 8 dereferenceable(68) %5) ; 0 uses
-  %.pre.i = load i32, ptr %i.l, align 8, !tbaa !68, !noalias !185
-  store i32 %.pre.i, ptr %i.u, align 8, !tbaa !68, !alias.scope !185
-  br label %bb.j
-
-.lr.ph76.i:                                       ; preds = %.lr.ph76.i.prol.loopexit, %.lr.ph76.i
-  %.03074.i = phi ptr [ %26, %.lr.ph76.i ], [ %.03074.i.unr, %.lr.ph76.i.prol.loopexit ] ; 3 uses
-  %16 = load i8, ptr %.03074.i, align 1, !tbaa !37, !noalias !185
-  %17 = zext i8 %16 to i32                        ; 2 uses
-  %18 = lshr i32 %17, 6
-  %19 = zext nneg i32 %18 to i64
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %.ptr66.i, i64 %19 ; 2 uses
-  %21 = and i32 %17, 63
-  %22 = zext nneg i32 %21 to i64
-  %23 = shl nuw i64 1, %22
-  %24 = load i64, ptr %20, align 8, !tbaa !32, !noalias !185
-  %25 = or i64 %23, %24
-  store i64 %25, ptr %20, align 8, !tbaa !32, !noalias !185
-  %i.dq = getelementptr inbounds nuw i8, ptr %.03074.i, i64 1
+.lr.ph76.i:                                       ; preds = %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i
+  %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.053.0.lcssa.i, i64 2
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !37, !noalias !185
   %i.ds = zext i8 %i.dr to i32                    ; 2 uses
   %i.dt = lshr i32 %i.ds, 6
@@ -272,11 +266,9 @@ _ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_converti
   %i.dz = load i64, ptr %i.dv, align 8, !tbaa !32, !noalias !185
   %i.ea = or i64 %i.dy, %i.dz
   store i64 %i.ea, ptr %i.dv, align 8, !tbaa !32, !noalias !185
-  %26 = getelementptr inbounds nuw i8, ptr %.03074.i, i64 2 ; 2 uses
-  %.not35.i.1 = icmp eq ptr %26, %11
-  br i1 %.not35.i.1, label %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i, label %.lr.ph76.i
+  br label %.lr.ph76.i.preheader
 
-bb.j:                                             ; preds = %_ZN4llvm8ExpectedINS_9BitVectorEEC2IS1_EEOT_PNSt9enable_ifIXsr3stdE16is_convertible_vIS4_S1_EEvE4typeE.exit.i, %.thread.i
+bb.j:                                             ; preds = %.lr.ph76.i.preheader, %.thread.i
   %i.eb = load ptr, ptr %5, align 8, !tbaa !17, !noalias !185 ; 2 uses
   %i.ec = icmp eq ptr %i.eb, %.ptr66.i
   br i1 %i.ec, label %_ZL6expandN4llvm9StringRefES0_.exit, label %bb.k

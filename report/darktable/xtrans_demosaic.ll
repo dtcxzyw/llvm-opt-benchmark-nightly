@@ -203,11 +203,11 @@ bb.ay:                                            ; preds = %bb.aw, %bb.av, %bb.
   br i1 %or.cond10661217, label %.preheader1142.lr.ph, label %.critedge
 
 .preheader1142.lr.ph:                             ; preds = %.preheader1143
+  %2 = tail call i32 @llvm.smin.i32(i32 %.lcssa1164.fr, i32 12)
   %i.aab = zext i16 %i.aaa to i32                 ; 3 uses
   %i.aac = mul nuw nsw i32 %.lcssa1164.fr, %i.aab ; 24 uses
   %i.aad = tail call i32 @llvm.umax.i32(i32 %i.aab, i32 6)
   %smax = add nsw i32 %i.aad, -3                  ; 6 uses
-  %2 = tail call i32 @llvm.smin.i32(i32 %.lcssa1164.fr, i32 12)
   %exitcond1417.not = icmp eq i32 %smax, 3
   %exitcond1417.1.not = icmp eq i32 %smax, 4
   %exitcond1417.2.not = icmp eq i32 %smax, 5
@@ -468,7 +468,7 @@ bb.bg:                                            ; preds = %.preheader1142
   br i1 %i.afn, label %.loopexit1141, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.afo = add nuw i32 %i.aec, 3                  ; 4 uses
+  %i.afo = add nuw nsw i32 %i.aec, 3              ; 4 uses
   %i.afp = getelementptr inbounds nuw i8, ptr %i.aeb, i64 8
   %i.afq = load i16, ptr %i.afp, align 8, !tbaa !117
   %i.afr = sext i16 %i.afq to i32                 ; 2 uses
@@ -528,7 +528,7 @@ bb.bn:                                            ; preds = %.loopexit1141
   br i1 %i.agl, label %.loopexit1141.1, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.agm = add nuw i32 %i.aec, 4                  ; 4 uses
+  %i.agm = add nuw nsw i32 %i.aec, 4              ; 4 uses
   %i.agn = getelementptr inbounds nuw i8, ptr %i.aeb, i64 40
   %i.ago = load i16, ptr %i.agn, align 8, !tbaa !117
   %i.agp = sext i16 %i.ago to i32                 ; 2 uses
@@ -576,7 +576,7 @@ bb.bs:                                            ; preds = %.loopexit1141.1
   br i1 %i.ahh, label %.loopexit1141.2, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.ahi = add nuw i32 %i.aec, 5                  ; 4 uses
+  %i.ahi = add nuw nsw i32 %i.aec, 5              ; 4 uses
   %i.ahj = getelementptr inbounds nuw i8, ptr %i.aeb, i64 72
   %i.ahk = load i16, ptr %i.ahj, align 8, !tbaa !117
   %i.ahl = sext i16 %i.ahk to i32                 ; 2 uses
@@ -623,7 +623,7 @@ bb.bx:                                            ; preds = %.loopexit1141.2
   br i1 %i.aic, label %.loopexit1141.3, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.aid = add nuw i32 %i.aec, 6                  ; 4 uses
+  %i.aid = add nuw nsw i32 %i.aec, 6              ; 4 uses
   %i.aie = getelementptr inbounds nuw i8, ptr %i.aeb, i64 8
   %i.aif = load i16, ptr %i.aie, align 8, !tbaa !117
   %i.aig = sext i16 %i.aif to i32                 ; 2 uses
@@ -671,7 +671,7 @@ bb.cc:                                            ; preds = %.loopexit1141.3
   br i1 %i.aiy, label %.loopexit1141.4, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.aiz = add nuw i32 %i.aec, 7                  ; 4 uses
+  %i.aiz = add nuw nsw i32 %i.aec, 7              ; 4 uses
   %i.aja = getelementptr inbounds nuw i8, ptr %i.aeb, i64 40
   %i.ajb = load i16, ptr %i.aja, align 8, !tbaa !117
   %i.ajc = sext i16 %i.ajb to i32                 ; 2 uses
@@ -719,7 +719,7 @@ bb.ch:                                            ; preds = %.loopexit1141.4
   br i1 %i.aju, label %.critedge21, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.ajv = add nuw i32 %i.aec, 8                  ; 4 uses
+  %i.ajv = add nuw nsw i32 %i.aec, 8              ; 4 uses
   %i.ajw = getelementptr inbounds nuw i8, ptr %i.aeb, i64 72
   %i.ajx = load i16, ptr %i.ajw, align 8, !tbaa !117
   %i.ajy = sext i16 %i.ajx to i32                 ; 2 uses

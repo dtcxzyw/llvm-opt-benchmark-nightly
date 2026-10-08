@@ -202,11 +202,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
   br i1 %.not.i.i, label %u2f_transaction_get_index.exit.preheader.i, label %bb.b
 
 u2f_transaction_get_index.exit.preheader.i:       ; preds = %bb.c
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 7997 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 7997 ; 3 uses
+  %3 = load i8, ptr %i.r, align 1
+  %4 = zext i8 %3 to i32                          ; 2 uses
   %.0.in20.i = add nuw i32 %i.m, 1
   %.021.i = and i32 %.0.in20.i, 3                 ; 2 uses
-  %3 = load i8, ptr %i.r, align 1
-  %4 = zext i8 %3 to i32
   %.not22.i = icmp eq i32 %.021.i, %4
   br i1 %.not22.i, label %u2f_transaction_get_index.exit._crit_edge.i, label %u2f_transaction_get_index.exit.i
 
@@ -220,9 +220,7 @@ u2f_transaction_get_index.exit.i:                 ; preds = %u2f_transaction_get
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.t, ptr noundef nonnull align 1 dereferenceable(16) %i.v, i64 noundef 16, i1 noundef false) #6
   %.0.in.i = add nuw nsw i32 %.024.i, 1
   %.0.i = and i32 %.0.in.i, 3                     ; 2 uses
-  %5 = load i8, ptr %i.r, align 1
-  %6 = zext i8 %5 to i32
-  %.not.i = icmp eq i32 %.0.i, %6
+  %.not.i = icmp eq i32 %.0.i, %4
   br i1 %.not.i, label %u2f_transaction_get_index.exit._crit_edge.loopexit.i, label %u2f_transaction_get_index.exit.i, !llvm.loop !1
 
 u2f_transaction_get_index.exit._crit_edge.loopexit.i: ; preds = %u2f_transaction_get_index.exit.i
@@ -482,11 +480,11 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph.i.i37
   br i1 %.not.i.i39.i, label %u2f_transaction_get_index.exit.preheader.i.i, label %bb.r
 
 u2f_transaction_get_index.exit.preheader.i.i:     ; preds = %bb.s
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 7997 ; 4 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 7997 ; 3 uses
+  %1 = load i8, ptr %i.cl, align 1
+  %2 = zext i8 %1 to i32                          ; 2 uses
   %.0.in20.i.i = add nuw i32 %i.cg, 1
   %.021.i.i = and i32 %.0.in20.i.i, 3             ; 2 uses
-  %1 = load i8, ptr %i.cl, align 1
-  %2 = zext i8 %1 to i32
   %.not22.i.i = icmp eq i32 %.021.i.i, %2
   br i1 %.not22.i.i, label %u2f_transaction_get_index.exit._crit_edge.i.i, label %u2f_transaction_get_index.exit.i.i
 
@@ -500,9 +498,7 @@ u2f_transaction_get_index.exit.i.i:               ; preds = %u2f_transaction_get
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.cn, ptr noundef nonnull align 1 dereferenceable(16) %i.cp, i64 noundef 16, i1 noundef false) #6
   %.0.in.i.i = add nuw nsw i32 %.024.i.i, 1
   %.0.i.i = and i32 %.0.in.i.i, 3                 ; 2 uses
-  %3 = load i8, ptr %i.cl, align 1
-  %4 = zext i8 %3 to i32
-  %.not.i41.i = icmp eq i32 %.0.i.i, %4
+  %.not.i41.i = icmp eq i32 %.0.i.i, %2
   br i1 %.not.i41.i, label %u2f_transaction_get_index.exit._crit_edge.loopexit.i.i, label %u2f_transaction_get_index.exit.i.i, !llvm.loop !1
 
 u2f_transaction_get_index.exit._crit_edge.loopexit.i.i: ; preds = %u2f_transaction_get_index.exit.i.i

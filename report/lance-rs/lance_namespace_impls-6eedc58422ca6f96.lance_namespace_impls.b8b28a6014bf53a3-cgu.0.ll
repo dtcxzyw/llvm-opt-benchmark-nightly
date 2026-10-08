@@ -205,7 +205,7 @@ bb.eg:                                            ; preds = %bb.ef
   br i1 %i.ix, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i120.i.i.i.i, label %bb.eh
 
 bb.eh:                                            ; preds = %.noexc121.i.i.i.i
-  store atomic i8 1, ptr %i.is monotonic, align 1, !noalias !236960
+  store atomic i8 1, ptr %i.is monotonic, align 4, !noalias !236960
   br label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i120.i.i.i.i
 
 _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i120.i.i.i.i: ; preds = %bb.eh, %.noexc121.i.i.i.i, %bb.ef, %bb.ee

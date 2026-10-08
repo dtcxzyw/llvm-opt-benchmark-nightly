@@ -204,10 +204,10 @@ bb.r:                                             ; preds = %bb.s
   br i1 %.not.i66, label %parse_port.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph.i65
-  %i.al = mul nsw i32 %.013.i, 10
+  %i.al = mul nuw nsw i32 %.013.i, 10
   %i.am = load i8, ptr %.01012.i, align 1
   %i.an = sext i8 %i.am to i32
-  %i.ao = add i32 %i.al, -48
+  %i.ao = add nsw i32 %i.al, -48
   %i.ap = add nsw i32 %i.ao, %i.an                ; 3 uses
   %or.cond.i67 = icmp ugt i32 %i.ap, 65535
   br i1 %or.cond.i67, label %parse_port.exit.thread, label %bb.r

@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %decode_p.exit.i
   %i.gd = icmp ugt i32 %.051.i, %i.gc
   %i.ge = icmp ult i32 %.051.i, 26367
   %or.cond4.i = and i1 %i.ge, %i.gd
-  %i.gf = add nsw i16 %.2.i.i, -254               ; 4 uses
+  %i.gf = add nsw i16 %.2.i.i, -254               ; 5 uses
   %i.gg = load ptr, ptr %2, align 8, !tbaa !33    ; 12 uses
   br i1 %or.cond4.i, label %iter.check, label %.lr.ph.i
 
@@ -213,8 +213,8 @@ iter.check:                                       ; preds = %bb.am
   %i.gh = zext nneg i16 %spec.select.i to i64     ; 6 uses
   %i.gi = zext nneg i32 %.051.i to i64            ; 7 uses
   %i.gj = sub nsw i64 26623, %i.gi
-  %i.gk = add nsw i16 %.2.i.i, -255               ; 2 uses
-  %smin = call i16 @llvm.smin.i16(i16 %i.gk, i16 -1)
+  %i.gk = add nsw i16 %.2.i.i, -254
+  %smin = call i16 @llvm.smin.i16(i16 %i.gf, i16 0)
   %i.gl = sub i16 %i.gk, %smin
   %i.gm = zext i16 %i.gl to i64
   %umin = call i64 @llvm.umin.i64(i64 %i.gj, i64 %i.gm)
@@ -299,18 +299,18 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv119.i = phi i64 [ %indvars.iv.next120.i, %vec.epilog.scalar.ph ], [ %indvars.iv119.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %vec.epilog.scalar.ph ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
-  %i.he = phi i16 [ %i.hi, %vec.epilog.scalar.ph ], [ %.ph102, %vec.epilog.scalar.ph.preheader ]
+  %i.he = phi i16 [ %i.hi, %vec.epilog.scalar.ph ], [ %.ph102, %vec.epilog.scalar.ph.preheader ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.hf = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv.i
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !25
   %indvars.iv.next120.i = add nuw nsw i64 %indvars.iv119.i, 1 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv119.i
   store i8 %i.hg, ptr %i.hh, align 1, !tbaa !25
-  %i.hi = add i16 %i.he, -1                       ; 2 uses
-  %i.hj = icmp sgt i16 %i.hi, -1
+  %i.hi = add nsw i16 %i.he, -1
+  %i.hj = icmp sgt i16 %i.he, 0
   %i.hk = trunc nuw i64 %indvars.iv.i to i16
   %i.hl = icmp slt i16 %i.hk, 26623
-  %or.cond7.i = and i1 %i.hl, %i.hj
+  %or.cond7.i = and i1 %i.hj, %i.hl
   %i.hm = icmp samesign ult i64 %indvars.iv119.i, 26623
   %i.hn = and i1 %i.hm, %or.cond7.i
   br i1 %i.hn, label %vec.epilog.scalar.ph, label %.loopexit.loopexit.i, !llvm.loop !86

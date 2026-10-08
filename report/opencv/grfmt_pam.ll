@@ -205,10 +205,10 @@ bb.i:                                             ; preds = %.preheader, %bb.h
   br i1 %isdigit38, label %bb.j, label %.critedge
 
 bb.j:                                             ; preds = %bb.i
-  %i.p = mul i64 %.057, 10
+  %i.p = mul nuw i64 %.057, 10
   %i.q = zext nneg i32 %isdigittmp37 to i64
   %i.r = add nuw nsw i64 %i.p, %i.q               ; 3 uses
-  %i.s = icmp ult i64 %i.r, 2147483647
+  %i.s = icmp samesign ult i64 %i.r, 2147483647
   br i1 %i.s, label %bb.h, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

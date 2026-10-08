@@ -1,8 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/crc32?download=true
 inline.NumInlined: 12
 inline.NumDeleted: 3
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -43,7 +42,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = add i64 %.0181217, -1                    ; 3 uses
   %i.h = lshr i64 %.0188215, 8
   %i.i = getelementptr inbounds nuw i8, ptr %.0184216, i64 1 ; 3 uses
-  %i.j = load i8, ptr %.0184216, align 1, !tbaa !15
+  %i.j = load i8, ptr %.0184216, align 1, !tbaa !14
   %.0188.tr = trunc i64 %.0188215 to i8
   %.narrow213 = xor i8 %i.j, %.0188.tr
   %i.k = zext i8 %.narrow213 to i64
@@ -82,23 +81,23 @@ bb.b:                                             ; preds = %bb.a
   %.0173228 = phi i32 [ %i.he, %.lr.ph234 ], [ %i.x, %.lr.ph234.preheader ]
   %.0177227 = phi ptr [ %i.hv, %.lr.ph234 ], [ %.0184.lcssa, %.lr.ph234.preheader ] ; 6 uses
   %i.z = zext i32 %.0173228 to i64
-  %i.aa = load i64, ptr %.0177227, align 8, !tbaa !17 ; 5 uses
+  %i.aa = load i64, ptr %.0177227, align 8, !tbaa !16 ; 5 uses
   %i.ab = xor i64 %i.aa, %i.z                     ; 4 uses
   %i.ac = zext i32 %.0171229 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %.0177227, i64 8
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !17 ; 5 uses
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !16 ; 5 uses
   %i.af = xor i64 %i.ae, %i.ac                    ; 4 uses
   %i.ag = zext i32 %.0169230 to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %.0177227, i64 16
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !17 ; 5 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !16 ; 5 uses
   %i.aj = xor i64 %i.ai, %i.ag                    ; 4 uses
   %i.ak = zext i32 %.0167231 to i64
   %i.al = getelementptr inbounds nuw i8, ptr %.0177227, i64 24
-  %i.am = load i64, ptr %i.al, align 8, !tbaa !17 ; 5 uses
+  %i.am = load i64, ptr %i.al, align 8, !tbaa !16 ; 5 uses
   %i.an = xor i64 %i.am, %i.ak                    ; 4 uses
   %i.ao = zext i32 %.0165232 to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %.0177227, i64 32
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !17 ; 5 uses
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !16 ; 5 uses
   %i.ar = xor i64 %i.aq, %i.ao                    ; 4 uses
   %i.as = and i64 %i.ab, 255
   %i.at = getelementptr inbounds nuw [4 x i8], ptr @crc_braid_table, i64 %i.as
@@ -308,7 +307,7 @@ bb.b:                                             ; preds = %bb.a
   %.0169.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.ib, %._crit_edge235.loopexit ]
   %.0167.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.ic, %._crit_edge235.loopexit ]
   %.0165.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.id, %._crit_edge235.loopexit ]
-  %i.ie = load i64, ptr %.0177.lcssa, align 8, !tbaa !17
+  %i.ie = load i64, ptr %.0177.lcssa, align 8, !tbaa !16
   %i.if = xor i64 %i.ie, %.0173.lcssa             ; 2 uses
   %i.ig = lshr i64 %i.if, 8
   %i.ih = and i64 %i.if, 255
@@ -358,7 +357,7 @@ bb.b:                                             ; preds = %bb.a
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !9
   %i.ka = zext i32 %i.jz to i64
   %i.kb = getelementptr inbounds nuw i8, ptr %.0177.lcssa, i64 8
-  %i.kc = load i64, ptr %i.kb, align 8, !tbaa !17
+  %i.kc = load i64, ptr %i.kb, align 8, !tbaa !16
   %i.kd = xor i64 %i.kc, %.0171.lcssa
   %i.ke = xor i64 %i.kd, %i.ka
   %i.kf = xor i64 %i.ke, %i.jw                    ; 2 uses
@@ -410,7 +409,7 @@ bb.b:                                             ; preds = %bb.a
   %i.lz = load i32, ptr %i.ly, align 4, !tbaa !9
   %i.ma = zext i32 %i.lz to i64
   %i.mb = getelementptr inbounds nuw i8, ptr %.0177.lcssa, i64 16
-  %i.mc = load i64, ptr %i.mb, align 8, !tbaa !17
+  %i.mc = load i64, ptr %i.mb, align 8, !tbaa !16
   %i.md = xor i64 %i.mc, %.0169.lcssa
   %i.me = xor i64 %i.md, %i.ma
   %i.mf = xor i64 %i.me, %i.lw                    ; 2 uses
@@ -462,7 +461,7 @@ bb.b:                                             ; preds = %bb.a
   %i.nz = load i32, ptr %i.ny, align 4, !tbaa !9
   %i.oa = zext i32 %i.nz to i64
   %i.ob = getelementptr inbounds nuw i8, ptr %.0177.lcssa, i64 24
-  %i.oc = load i64, ptr %i.ob, align 8, !tbaa !17
+  %i.oc = load i64, ptr %i.ob, align 8, !tbaa !16
   %i.od = xor i64 %i.oc, %.0167.lcssa
   %i.oe = xor i64 %i.od, %i.oa
   %i.of = xor i64 %i.oe, %i.nw                    ; 2 uses
@@ -514,7 +513,7 @@ bb.b:                                             ; preds = %bb.a
   %i.pz = load i32, ptr %i.py, align 4, !tbaa !9
   %i.qa = zext i32 %i.pz to i64
   %i.qb = getelementptr inbounds nuw i8, ptr %.0177.lcssa, i64 32
-  %i.qc = load i64, ptr %i.qb, align 8, !tbaa !17
+  %i.qc = load i64, ptr %i.qb, align 8, !tbaa !16
   %i.qd = xor i64 %i.qc, %.0165.lcssa
   %i.qe = xor i64 %i.qd, %i.qa
   %i.qf = xor i64 %i.qe, %i.pw                    ; 2 uses
@@ -574,41 +573,14 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %.1185 = phi ptr [ %i.sa, %._crit_edge235 ], [ %1, %bb.b ] ; 2 uses
   %.1182 = phi i64 [ %i.v, %._crit_edge235 ], [ %2, %bb.b ] ; 3 uses
   %i.sd = icmp ugt i64 %.1182, 7
-  br i1 %i.sd, label %.lr.ph246, label %.preheader
+  br i1 %i.sd, label %.lr.ph246, label %.lr.ph254.prol.loopexit
 
-.preheader:                                       ; preds = %.lr.ph246, %bb.c
-  %.3191.lcssa = phi i64 [ %.2190, %bb.c ], [ %i.ur, %.lr.ph246 ] ; 4 uses
-  %.2186.lcssa = phi ptr [ %.1185, %bb.c ], [ %i.ul, %.lr.ph246 ] ; 3 uses
-  %.2183.lcssa = phi i64 [ %.1182, %bb.c ], [ %i.sf, %.lr.ph246 ] ; 5 uses
-  %.not198250 = icmp eq i64 %.2183.lcssa, 0
-  br i1 %.not198250, label %._crit_edge255, label %.lr.ph254.preheader
-
-.lr.ph254.preheader:                              ; preds = %.preheader
-  %xtraiter = and i64 %.2183.lcssa, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph254.prol.loopexit, label %.lr.ph254.prol
-
-.lr.ph254.prol:                                   ; preds = %.lr.ph254.preheader
-  %3 = add nsw i64 %.2183.lcssa, -1
-  %4 = lshr i64 %.3191.lcssa, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.2186.lcssa, i64 1
-  %6 = load i8, ptr %.2186.lcssa, align 1, !tbaa !15
-  %.4.tr.prol = trunc i64 %.3191.lcssa to i8
-  %.narrow.prol = xor i8 %6, %.4.tr.prol
-  %7 = zext i8 %.narrow.prol to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %7
-  %9 = load i32, ptr %8, align 4, !tbaa !9
-  %10 = zext i32 %9 to i64
-  %11 = xor i64 %4, %10                           ; 2 uses
-  br label %.lr.ph254.prol.loopexit
-
-.lr.ph254.prol.loopexit:                          ; preds = %.lr.ph254.prol, %.lr.ph254.preheader
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph254.preheader ], [ %11, %.lr.ph254.prol ]
-  %.3253.unr = phi i64 [ %.2183.lcssa, %.lr.ph254.preheader ], [ %3, %.lr.ph254.prol ]
-  %.3187252.unr = phi ptr [ %.2186.lcssa, %.lr.ph254.preheader ], [ %5, %.lr.ph254.prol ]
-  %.4251.unr = phi i64 [ %.3191.lcssa, %.lr.ph254.preheader ], [ %11, %.lr.ph254.prol ]
-  %i.se = icmp eq i64 %.2183.lcssa, 1
-  br i1 %i.se, label %._crit_edge255, label %.lr.ph254.a
+.lr.ph254.prol.loopexit:                          ; preds = %.lr.ph246, %bb.c
+  %.3253.unr = phi i64 [ %.2190, %bb.c ], [ %i.ur, %.lr.ph246 ] ; 3 uses
+  %.3187252.unr = phi ptr [ %.1185, %bb.c ], [ %i.ul, %.lr.ph246 ] ; 7 uses
+  %.4251.unr = phi i64 [ %.1182, %bb.c ], [ %i.sf, %.lr.ph246 ] ; 7 uses
+  %i.se = icmp eq i64 %.4251.unr, 0
+  br i1 %i.se, label %._crit_edge255, label %.lr.ph254
 
 .lr.ph246:                                        ; preds = %bb.c, %.lr.ph246
   %.2183244 = phi i64 [ %i.sf, %.lr.ph246 ], [ %.1182, %bb.c ]
@@ -617,7 +589,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.sf = add i64 %.2183244, -8                   ; 3 uses
   %i.sg = lshr i64 %.3191242, 8
   %i.sh = getelementptr inbounds nuw i8, ptr %.2186243, i64 1
-  %i.si = load i8, ptr %.2186243, align 1, !tbaa !15
+  %i.si = load i8, ptr %.2186243, align 1, !tbaa !14
   %.3191.tr = trunc i64 %.3191242 to i8
   %.narrow199 = xor i8 %i.si, %.3191.tr
   %i.sj = zext i8 %.narrow199 to i64
@@ -627,7 +599,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.sn = xor i64 %i.sg, %i.sm                    ; 2 uses
   %i.so = lshr i64 %i.sn, 8
   %i.sp = getelementptr inbounds nuw i8, ptr %.2186243, i64 2
-  %i.sq = load i8, ptr %i.sh, align 1, !tbaa !15
+  %i.sq = load i8, ptr %i.sh, align 1, !tbaa !14
   %.tr = trunc i64 %i.sn to i8
   %.narrow200 = xor i8 %i.sq, %.tr
   %i.sr = zext i8 %.narrow200 to i64
@@ -637,7 +609,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.sv = xor i64 %i.so, %i.su                    ; 2 uses
   %i.sw = lshr i64 %i.sv, 8
   %i.sx = getelementptr inbounds nuw i8, ptr %.2186243, i64 3
-  %i.sy = load i8, ptr %i.sp, align 1, !tbaa !15
+  %i.sy = load i8, ptr %i.sp, align 1, !tbaa !14
   %.tr201 = trunc i64 %i.sv to i8
   %.narrow202 = xor i8 %i.sy, %.tr201
   %i.sz = zext i8 %.narrow202 to i64
@@ -647,7 +619,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.td = xor i64 %i.sw, %i.tc                    ; 2 uses
   %i.te = lshr i64 %i.td, 8
   %i.tf = getelementptr inbounds nuw i8, ptr %.2186243, i64 4
-  %i.tg = load i8, ptr %i.sx, align 1, !tbaa !15
+  %i.tg = load i8, ptr %i.sx, align 1, !tbaa !14
   %.tr203 = trunc i64 %i.td to i8
   %.narrow204 = xor i8 %i.tg, %.tr203
   %i.th = zext i8 %.narrow204 to i64
@@ -657,7 +629,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.tl = xor i64 %i.te, %i.tk                    ; 2 uses
   %i.tm = lshr i64 %i.tl, 8
   %i.tn = getelementptr inbounds nuw i8, ptr %.2186243, i64 5
-  %i.to = load i8, ptr %i.tf, align 1, !tbaa !15
+  %i.to = load i8, ptr %i.tf, align 1, !tbaa !14
   %.tr205 = trunc i64 %i.tl to i8
   %.narrow206 = xor i8 %i.to, %.tr205
   %i.tp = zext i8 %.narrow206 to i64
@@ -667,7 +639,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.tt = xor i64 %i.tm, %i.ts                    ; 2 uses
   %i.tu = lshr i64 %i.tt, 8
   %i.tv = getelementptr inbounds nuw i8, ptr %.2186243, i64 6
-  %i.tw = load i8, ptr %i.tn, align 1, !tbaa !15
+  %i.tw = load i8, ptr %i.tn, align 1, !tbaa !14
   %.tr207 = trunc i64 %i.tt to i8
   %.narrow208 = xor i8 %i.tw, %.tr207
   %i.tx = zext i8 %.narrow208 to i64
@@ -677,7 +649,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.ub = xor i64 %i.tu, %i.ua                    ; 2 uses
   %i.uc = lshr i64 %i.ub, 8
   %i.ud = getelementptr inbounds nuw i8, ptr %.2186243, i64 7
-  %i.ue = load i8, ptr %i.tv, align 1, !tbaa !15
+  %i.ue = load i8, ptr %i.tv, align 1, !tbaa !14
   %.tr209 = trunc i64 %i.ub to i8
   %.narrow210 = xor i8 %i.ue, %.tr209
   %i.uf = zext i8 %.narrow210 to i64
@@ -687,7 +659,7 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.uj = xor i64 %i.uc, %i.ui                    ; 2 uses
   %i.uk = lshr i64 %i.uj, 8
   %i.ul = getelementptr inbounds nuw i8, ptr %.2186243, i64 8 ; 2 uses
-  %i.um = load i8, ptr %i.ud, align 1, !tbaa !15
+  %i.um = load i8, ptr %i.ud, align 1, !tbaa !14
   %.tr211 = trunc i64 %i.uj to i8
   %.narrow212 = xor i8 %i.um, %.tr211
   %i.un = zext i8 %.narrow212 to i64
@@ -696,38 +668,106 @@ bb.c:                                             ; preds = %._crit_edge235, %bb
   %i.uq = zext i32 %i.up to i64
   %i.ur = xor i64 %i.uk, %i.uq                    ; 2 uses
   %i.us = icmp ugt i64 %i.sf, 7
-  br i1 %i.us, label %.lr.ph246, label %.preheader, !llvm.loop !13
+  br i1 %i.us, label %.lr.ph246, label %.lr.ph254.prol.loopexit, !llvm.loop !13
 
-.lr.ph254.a:                                      ; preds = %.lr.ph254.prol.loopexit, %.lr.ph254.a
-  %.3253 = phi i64 [ %19, %.lr.ph254.a ], [ %.3253.unr, %.lr.ph254.prol.loopexit ]
-  %.3187252 = phi ptr [ %20, %.lr.ph254.a ], [ %.3187252.unr, %.lr.ph254.prol.loopexit ] ; 3 uses
-  %.4251 = phi i64 [ %i.va, %.lr.ph254.a ], [ %.4251.unr, %.lr.ph254.prol.loopexit ] ; 2 uses
-  %12 = lshr i64 %.4251, 8
-  %i.ut = getelementptr inbounds nuw i8, ptr %.3187252, i64 1
-  %13 = load i8, ptr %.3187252, align 1, !tbaa !15
-  %.4.tr = trunc i64 %.4251 to i8
-  %.narrow = xor i8 %13, %.4.tr
-  %14 = zext i8 %.narrow to i64
-  %15 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %14
-  %16 = load i32, ptr %15, align 4, !tbaa !9
-  %17 = zext i32 %16 to i64
-  %18 = xor i64 %12, %17                          ; 2 uses
-  %19 = add nsw i64 %.3253, -2                    ; 2 uses
-  %i.uu = lshr i64 %18, 8
-  %20 = getelementptr inbounds nuw i8, ptr %.3187252, i64 2
-  %i.uv = load i8, ptr %i.ut, align 1, !tbaa !15
-  %.4.tr.1.a = trunc i64 %18 to i8
+.lr.ph254:                                        ; preds = %.lr.ph254.prol.loopexit
+  %3 = lshr i64 %.3253.unr, 8
+  %4 = load i8, ptr %.3187252.unr, align 1, !tbaa !14
+  %.4.tr = trunc i64 %.3253.unr to i8
+  %.narrow = xor i8 %4, %.4.tr
+  %5 = zext i8 %.narrow to i64
+  %6 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %5
+  %7 = load i32, ptr %6, align 4, !tbaa !9
+  %8 = zext i32 %7 to i64
+  %9 = xor i64 %3, %8                             ; 3 uses
+  %.not198 = icmp eq i64 %.4251.unr, 1
+  br i1 %.not198, label %._crit_edge255, label %.lr.ph254.1
+
+.lr.ph254.1:                                      ; preds = %.lr.ph254
+  %10 = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 1
+  %11 = lshr i64 %9, 8
+  %12 = load i8, ptr %10, align 1, !tbaa !14
+  %.4.tr.1 = trunc i64 %9 to i8
+  %.narrow.1 = xor i8 %12, %.4.tr.1
+  %13 = zext i8 %.narrow.1 to i64
+  %14 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !9
+  %16 = zext i32 %15 to i64
+  %17 = xor i64 %11, %16                          ; 3 uses
+  %.not198.1 = icmp eq i64 %.4251.unr, 2
+  br i1 %.not198.1, label %._crit_edge255, label %.lr.ph254.2
+
+.lr.ph254.2:                                      ; preds = %.lr.ph254.1
+  %18 = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 2
+  %19 = lshr i64 %17, 8
+  %20 = load i8, ptr %18, align 1, !tbaa !14
+  %.4.tr.2 = trunc i64 %17 to i8
+  %.narrow.2 = xor i8 %20, %.4.tr.2
+  %21 = zext i8 %.narrow.2 to i64
+  %22 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %21
+  %23 = load i32, ptr %22, align 4, !tbaa !9
+  %24 = zext i32 %23 to i64
+  %25 = xor i64 %19, %24                          ; 3 uses
+  %.not198.2 = icmp eq i64 %.4251.unr, 3
+  br i1 %.not198.2, label %._crit_edge255, label %.lr.ph254.3
+
+.lr.ph254.3:                                      ; preds = %.lr.ph254.2
+  %26 = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 3
+  %27 = lshr i64 %25, 8
+  %28 = load i8, ptr %26, align 1, !tbaa !14
+  %.4.tr.3 = trunc i64 %25 to i8
+  %.narrow.3 = xor i8 %28, %.4.tr.3
+  %29 = zext i8 %.narrow.3 to i64
+  %30 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %29
+  %31 = load i32, ptr %30, align 4, !tbaa !9
+  %32 = zext i32 %31 to i64
+  %33 = xor i64 %27, %32                          ; 3 uses
+  %.not198.3 = icmp eq i64 %.4251.unr, 4
+  br i1 %.not198.3, label %._crit_edge255, label %.lr.ph254.4
+
+.lr.ph254.4:                                      ; preds = %.lr.ph254.3
+  %34 = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 4
+  %35 = lshr i64 %33, 8
+  %36 = load i8, ptr %34, align 1, !tbaa !14
+  %.4.tr.4 = trunc i64 %33 to i8
+  %.narrow.4 = xor i8 %36, %.4.tr.4
+  %37 = zext i8 %.narrow.4 to i64
+  %38 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %37
+  %39 = load i32, ptr %38, align 4, !tbaa !9
+  %40 = zext i32 %39 to i64
+  %41 = xor i64 %35, %40                          ; 3 uses
+  %.not198.4 = icmp eq i64 %.4251.unr, 5
+  br i1 %.not198.4, label %._crit_edge255, label %.lr.ph254.a
+
+.lr.ph254.a:                                      ; preds = %.lr.ph254.4
+  %i.ut = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 5
+  %i.uu = lshr i64 %41, 8
+  %i.uv = load i8, ptr %i.ut, align 1, !tbaa !14
+  %.4.tr.1.a = trunc i64 %41 to i8
   %.narrow.1.a = xor i8 %i.uv, %.4.tr.1.a
   %i.uw = zext i8 %.narrow.1.a to i64
   %i.ux = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %i.uw
   %i.uy = load i32, ptr %i.ux, align 4, !tbaa !9
   %i.uz = zext i32 %i.uy to i64
-  %i.va = xor i64 %i.uu, %i.uz                    ; 2 uses
-  %.not198.1.a = icmp eq i64 %19, 0
-  br i1 %.not198.1.a, label %._crit_edge255, label %.lr.ph254.a, !llvm.loop !14
+  %i.va = xor i64 %i.uu, %i.uz                    ; 3 uses
+  %.not198.1.a = icmp eq i64 %.4251.unr, 6
+  br i1 %.not198.1.a, label %._crit_edge255, label %.lr.ph254.6
 
-._crit_edge255:                                   ; preds = %.lr.ph254.prol.loopexit, %.lr.ph254.a, %.preheader
-  %.4.lcssa = phi i64 [ %.3191.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph254.prol.loopexit ], [ %i.va, %.lr.ph254.a ]
+.lr.ph254.6:                                      ; preds = %.lr.ph254.a
+  %42 = getelementptr inbounds nuw i8, ptr %.3187252.unr, i64 6
+  %43 = lshr i64 %i.va, 8
+  %44 = load i8, ptr %42, align 1, !tbaa !14
+  %.4.tr.6 = trunc i64 %i.va to i8
+  %.narrow.6 = xor i8 %44, %.4.tr.6
+  %45 = zext i8 %.narrow.6 to i64
+  %46 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %45
+  %47 = load i32, ptr %46, align 4, !tbaa !9
+  %48 = zext i32 %47 to i64
+  %49 = xor i64 %43, %48
+  br label %._crit_edge255
+
+._crit_edge255:                                   ; preds = %.lr.ph254, %.lr.ph254.1, %.lr.ph254.2, %.lr.ph254.3, %.lr.ph254.4, %.lr.ph254.a, %.lr.ph254.6, %.lr.ph254.prol.loopexit
+  %.4.lcssa = phi i64 [ %.3253.unr, %.lr.ph254.prol.loopexit ], [ %9, %.lr.ph254 ], [ %17, %.lr.ph254.1 ], [ %25, %.lr.ph254.2 ], [ %33, %.lr.ph254.3 ], [ %41, %.lr.ph254.4 ], [ %i.va, %.lr.ph254.a ], [ %49, %.lr.ph254.6 ]
   %i.vb = xor i64 %.4.lcssa, 4294967295
   br label %bb.d
 
@@ -1109,8 +1149,7 @@ attributes #2 = { nofree norecurse nosync nounwind memory(none) uwtable "min-leg
 !11 = distinct !{!11, !10}
 !12 = distinct !{!12, !10}
 !13 = distinct !{!13, !10}
-!14 = distinct !{!14, !10}
-!15 = !{!5, !5, i64 0}
-!16 = !{!"long", !5, i64 0}
-!17 = !{!16, !16, i64 0}
+!14 = !{!5, !5, i64 0}
+!15 = !{!"long", !5, i64 0}
+!16 = !{!15, !15, i64 0}
 end_hunk_0

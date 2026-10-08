@@ -1,5 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flac/original/crc?download=true
-loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -92,38 +93,11 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph, %bb.a
-  %.020.lcssa = phi ptr [ %0, %bb.a ], [ %i.bd, %.lr.ph ] ; 3 uses
-  %.018.lcssa = phi i32 [ %1, %bb.a ], [ %i.be, %.lr.ph ] ; 5 uses
-  %.0.lcssa = phi i16 [ 0, %bb.a ], [ %i.bc, %.lr.ph ] ; 4 uses
+  %.020.lcssa = phi ptr [ %0, %bb.a ], [ %i.bd, %.lr.ph ] ; 7 uses
+  %.018.lcssa = phi i32 [ %1, %bb.a ], [ %i.be, %.lr.ph ] ; 7 uses
+  %.0.lcssa = phi i16 [ 0, %bb.a ], [ %i.bc, %.lr.ph ] ; 3 uses
   %.not27 = icmp eq i32 %.018.lcssa, 0
-  br i1 %.not27, label %._crit_edge, label %.lr.ph31.preheader
-
-.lr.ph31.preheader:                               ; preds = %.preheader
-  %xtraiter = and i32 %.018.lcssa, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph31.prol.loopexit, label %.lr.ph31.prol
-
-.lr.ph31.prol:                                    ; preds = %.lr.ph31.preheader
-  %2 = add nsw i32 %.018.lcssa, -1
-  %3 = shl i16 %.0.lcssa, 8
-  %4 = lshr i16 %.0.lcssa, 8
-  %5 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 1
-  %6 = load i8, ptr %.020.lcssa, align 1, !tbaa !8
-  %7 = zext i8 %6 to i16
-  %8 = xor i16 %4, %7
-  %9 = zext nneg i16 %8 to i64
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %9
-  %11 = load i16, ptr %10, align 2, !tbaa !11
-  %12 = xor i16 %11, %3                           ; 2 uses
-  br label %.lr.ph31.prol.loopexit
-
-.lr.ph31.prol.loopexit:                           ; preds = %.lr.ph31.prol, %.lr.ph31.preheader
-  %.lcssa.unr = phi i16 [ poison, %.lr.ph31.preheader ], [ %12, %.lr.ph31.prol ]
-  %.130.unr = phi i16 [ %.0.lcssa, %.lr.ph31.preheader ], [ %12, %.lr.ph31.prol ]
-  %.11929.unr = phi i32 [ %.018.lcssa, %.lr.ph31.preheader ], [ %2, %.lr.ph31.prol ]
-  %.12128.unr = phi ptr [ %.020.lcssa, %.lr.ph31.preheader ], [ %5, %.lr.ph31.prol ]
-  %13 = icmp eq i32 %.018.lcssa, 1
-  br i1 %13, label %._crit_edge, label %.lr.ph31.a
+  br i1 %.not27, label %._crit_edge, label %.lr.ph31
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.024 = phi i16 [ %i.bc, %.lr.ph ], [ 0, %bb.a ]
@@ -188,36 +162,104 @@ bb.a:
   %i.bf = icmp ugt i32 %i.be, 7
   br i1 %i.bf, label %.lr.ph, label %.preheader, !llvm.loop !15
 
-.lr.ph31.a:                                       ; preds = %.lr.ph31.prol.loopexit, %.lr.ph31.a
-  %.130 = phi i16 [ %i.bp, %.lr.ph31.a ], [ %.130.unr, %.lr.ph31.prol.loopexit ] ; 2 uses
-  %.11929 = phi i32 [ %23, %.lr.ph31.a ], [ %.11929.unr, %.lr.ph31.prol.loopexit ]
-  %.12128 = phi ptr [ %24, %.lr.ph31.a ], [ %.12128.unr, %.lr.ph31.prol.loopexit ] ; 3 uses
-  %14 = shl i16 %.130, 8
-  %15 = lshr i16 %.130, 8
-  %i.bg = getelementptr inbounds nuw i8, ptr %.12128, i64 1
-  %16 = load i8, ptr %.12128, align 1, !tbaa !8
-  %17 = zext i8 %16 to i16
-  %18 = xor i16 %15, %17
-  %19 = zext nneg i16 %18 to i64
-  %20 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %19
-  %21 = load i16, ptr %20, align 2, !tbaa !11     ; 2 uses
-  %22 = xor i16 %21, %14
-  %23 = add nsw i32 %.11929, -2                   ; 2 uses
-  %i.bh = shl i16 %21, 8
-  %i.bi = lshr i16 %22, 8
-  %24 = getelementptr inbounds nuw i8, ptr %.12128, i64 2
+.lr.ph31:                                         ; preds = %.preheader
+  %2 = shl i16 %.0.lcssa, 8
+  %3 = lshr i16 %.0.lcssa, 8
+  %4 = load i8, ptr %.020.lcssa, align 1, !tbaa !8
+  %5 = zext i8 %4 to i16
+  %6 = xor i16 %3, %5
+  %7 = zext nneg i16 %6 to i64
+  %8 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %7
+  %9 = load i16, ptr %8, align 2, !tbaa !11       ; 2 uses
+  %10 = xor i16 %9, %2                            ; 2 uses
+  %.not = icmp eq i32 %.018.lcssa, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph31.1
+
+.lr.ph31.1:                                       ; preds = %.lr.ph31
+  %11 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 1
+  %12 = shl i16 %9, 8
+  %13 = lshr i16 %10, 8
+  %14 = load i8, ptr %11, align 1, !tbaa !8
+  %15 = zext i8 %14 to i16
+  %16 = xor i16 %13, %15
+  %17 = zext nneg i16 %16 to i64
+  %18 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %17
+  %19 = load i16, ptr %18, align 2, !tbaa !11     ; 2 uses
+  %20 = xor i16 %19, %12                          ; 2 uses
+  %.not.1 = icmp eq i32 %.018.lcssa, 2
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph31.2
+
+.lr.ph31.2:                                       ; preds = %.lr.ph31.1
+  %21 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 2
+  %22 = shl i16 %19, 8
+  %23 = lshr i16 %20, 8
+  %24 = load i8, ptr %21, align 1, !tbaa !8
+  %25 = zext i8 %24 to i16
+  %26 = xor i16 %23, %25
+  %27 = zext nneg i16 %26 to i64
+  %28 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %27
+  %29 = load i16, ptr %28, align 2, !tbaa !11     ; 2 uses
+  %30 = xor i16 %29, %22                          ; 2 uses
+  %.not.2 = icmp eq i32 %.018.lcssa, 3
+  br i1 %.not.2, label %._crit_edge, label %.lr.ph31.3
+
+.lr.ph31.3:                                       ; preds = %.lr.ph31.2
+  %31 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 3
+  %32 = shl i16 %29, 8
+  %33 = lshr i16 %30, 8
+  %34 = load i8, ptr %31, align 1, !tbaa !8
+  %35 = zext i8 %34 to i16
+  %36 = xor i16 %33, %35
+  %37 = zext nneg i16 %36 to i64
+  %38 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %37
+  %39 = load i16, ptr %38, align 2, !tbaa !11     ; 2 uses
+  %40 = xor i16 %39, %32                          ; 2 uses
+  %.not.3 = icmp eq i32 %.018.lcssa, 4
+  br i1 %.not.3, label %._crit_edge, label %.lr.ph31.4
+
+.lr.ph31.4:                                       ; preds = %.lr.ph31.3
+  %41 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 4
+  %42 = shl i16 %39, 8
+  %43 = lshr i16 %40, 8
+  %44 = load i8, ptr %41, align 1, !tbaa !8
+  %45 = zext i8 %44 to i16
+  %46 = xor i16 %43, %45
+  %47 = zext nneg i16 %46 to i64
+  %48 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %47
+  %49 = load i16, ptr %48, align 2, !tbaa !11     ; 2 uses
+  %50 = xor i16 %49, %42                          ; 2 uses
+  %.not.4 = icmp eq i32 %.018.lcssa, 5
+  br i1 %.not.4, label %._crit_edge, label %.lr.ph31.a
+
+.lr.ph31.a:                                       ; preds = %.lr.ph31.4
+  %i.bg = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 5
+  %i.bh = shl i16 %49, 8
+  %i.bi = lshr i16 %50, 8
   %i.bj = load i8, ptr %i.bg, align 1, !tbaa !8
   %i.bk = zext i8 %i.bj to i16
   %i.bl = xor i16 %i.bi, %i.bk
   %i.bm = zext nneg i16 %i.bl to i64
   %i.bn = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %i.bm
-  %i.bo = load i16, ptr %i.bn, align 2, !tbaa !11
+  %i.bo = load i16, ptr %i.bn, align 2, !tbaa !11 ; 2 uses
   %i.bp = xor i16 %i.bo, %i.bh                    ; 2 uses
-  %.not.1.a = icmp eq i32 %23, 0
-  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph31.a, !llvm.loop !16
+  %.not.1.a = icmp eq i32 %.018.lcssa, 6
+  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph31.6
 
-._crit_edge:                                      ; preds = %.lr.ph31.prol.loopexit, %.lr.ph31.a, %.preheader
-  %.1.lcssa = phi i16 [ %.0.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph31.prol.loopexit ], [ %i.bp, %.lr.ph31.a ]
+.lr.ph31.6:                                       ; preds = %.lr.ph31.a
+  %51 = getelementptr inbounds nuw i8, ptr %.020.lcssa, i64 6
+  %52 = shl i16 %i.bo, 8
+  %53 = lshr i16 %i.bp, 8
+  %54 = load i8, ptr %51, align 1, !tbaa !8
+  %55 = zext i8 %54 to i16
+  %56 = xor i16 %53, %55
+  %57 = zext nneg i16 %56 to i64
+  %58 = getelementptr inbounds nuw [2 x i8], ptr @FLAC__crc16_table, i64 %57
+  %59 = load i16, ptr %58, align 2, !tbaa !11
+  %60 = xor i16 %59, %52
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph31, %.lr.ph31.1, %.lr.ph31.2, %.lr.ph31.3, %.lr.ph31.4, %.lr.ph31.a, %.lr.ph31.6, %.preheader
+  %.1.lcssa = phi i16 [ %.0.lcssa, %.preheader ], [ %10, %.lr.ph31 ], [ %20, %.lr.ph31.1 ], [ %30, %.lr.ph31.2 ], [ %40, %.lr.ph31.3 ], [ %50, %.lr.ph31.4 ], [ %i.bp, %.lr.ph31.a ], [ %60, %.lr.ph31.6 ]
   ret i16 %.1.lcssa
 }
 
@@ -231,7 +273,7 @@ bb.a:
   %.024 = phi i16 [ %i.aw, %.lr.ph ], [ %2, %bb.a ]
   %.02023 = phi i32 [ %i.ay, %.lr.ph ], [ %1, %bb.a ]
   %.02122 = phi ptr [ %i.ax, %.lr.ph ], [ %0, %bb.a ] ; 3 uses
-  %i.b = load i32, ptr %.02122, align 4, !tbaa !18 ; 3 uses
+  %i.b = load i32, ptr %.02122, align 4, !tbaa !17 ; 3 uses
   %i.c = lshr i32 %i.b, 16
   %i.d = zext i16 %.024 to i32
   %i.e = xor i32 %i.c, %i.d                       ; 2 uses
@@ -256,7 +298,7 @@ bb.a:
   %i.x = load i16, ptr %i.w, align 2, !tbaa !11
   %i.y = xor i16 %i.t, %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %.02122, i64 4
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !18  ; 4 uses
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !17  ; 4 uses
   %i.ab = lshr i32 %i.aa, 24
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @FLAC__crc16_table, i64 1536), i64 %i.ac
@@ -282,7 +324,7 @@ bb.a:
   %i.ax = getelementptr inbounds nuw i8, ptr %.02122, i64 8 ; 2 uses
   %i.ay = add i32 %.02023, -2                     ; 3 uses
   %i.az = icmp ugt i32 %i.ay, 1
-  br i1 %i.az, label %.lr.ph, label %._crit_edge, !llvm.loop !17
+  br i1 %i.az, label %.lr.ph, label %._crit_edge, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.021.lcssa = phi ptr [ %0, %bb.a ], [ %i.ax, %.lr.ph ]
@@ -292,7 +334,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.ba = load i32, ptr %.021.lcssa, align 4, !tbaa !18 ; 3 uses
+  %i.ba = load i32, ptr %.021.lcssa, align 4, !tbaa !17 ; 3 uses
   %i.bb = lshr i32 %i.ba, 16
   %i.bc = zext i16 %.0.lcssa to i32
   %i.bd = xor i32 %i.bb, %i.bc                    ; 2 uses
@@ -334,7 +376,7 @@ bb.a:
   %.01216 = phi i32 [ %i.a, %.lr.ph ], [ %1, %bb.a ]
   %.01315 = phi ptr [ %i.as, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.a = add i32 %.01216, -1                      ; 2 uses
-  %i.b = load i64, ptr %.01315, align 8, !tbaa !21 ; 7 uses
+  %i.b = load i64, ptr %.01315, align 8, !tbaa !20 ; 7 uses
   %i.c = lshr i64 %i.b, 48
   %i.d = trunc nuw i64 %i.c to i16
   %i.e = xor i16 %.017, %i.d
@@ -379,7 +421,7 @@ bb.a:
   %i.ar = xor i16 %i.an, %i.aq                    ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.01315, i64 8
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i16 [ %2, %bb.a ], [ %i.ar, %.lr.ph ]
@@ -413,9 +455,8 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !14 = !{!"llvm.loop.unroll.disable"}
 !15 = distinct !{!15, !9}
 !16 = distinct !{!16, !9}
-!17 = distinct !{!17, !9}
-!18 = !{!5, !5, i64 0}
-!19 = distinct !{!19, !9}
-!20 = !{!"long", !4, i64 0}
-!21 = !{!20, !20, i64 0}
+!17 = !{!5, !5, i64 0}
+!18 = distinct !{!18, !9}
+!19 = !{!"long", !4, i64 0}
+!20 = !{!19, !19, i64 0}
 end_hunk_0

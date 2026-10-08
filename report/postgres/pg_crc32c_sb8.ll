@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/pg_crc32c_sb8?download=true
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -46,37 +46,11 @@ bb.a:
   br i1 %i.s, label %.lr.ph, label %.preheader42, !llvm.loop !4
 
 .preheader:                                       ; preds = %.lr.ph51, %.preheader42
-  %.040.lcssa = phi ptr [ %.038.lcssa, %.preheader42 ], [ %i.w, %.lr.ph51 ] ; 3 uses
-  %.136.lcssa = phi i64 [ %.035.lcssa, %.preheader42 ], [ %i.bp, %.lr.ph51 ] ; 5 uses
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader42 ], [ %i.bo, %.lr.ph51 ] ; 4 uses
+  %.040.lcssa = phi ptr [ %.038.lcssa, %.preheader42 ], [ %i.w, %.lr.ph51 ] ; 7 uses
+  %.136.lcssa = phi i64 [ %.035.lcssa, %.preheader42 ], [ %i.bp, %.lr.ph51 ] ; 7 uses
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader42 ], [ %i.bo, %.lr.ph51 ] ; 3 uses
   %.not55 = icmp eq i64 %.136.lcssa, 0
-  br i1 %.not55, label %._crit_edge, label %.lr.ph59.preheader
-
-.lr.ph59.preheader:                               ; preds = %.preheader
-  %xtraiter = and i64 %.136.lcssa, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph59.prol.loopexit, label %.lr.ph59.prol
-
-.lr.ph59.prol:                                    ; preds = %.lr.ph59.preheader
-  %3 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 1
-  %4 = load i8, ptr %.040.lcssa, align 1
-  %.2.tr.prol = trunc i32 %.1.lcssa to i8
-  %.narrow.prol = xor i8 %4, %.2.tr.prol
-  %5 = zext i8 %.narrow.prol to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %5
-  %7 = load i32, ptr %6, align 4
-  %8 = lshr i32 %.1.lcssa, 8
-  %9 = xor i32 %7, %8                             ; 2 uses
-  %10 = add nsw i64 %.136.lcssa, -1
-  br label %.lr.ph59.prol.loopexit
-
-.lr.ph59.prol.loopexit:                           ; preds = %.lr.ph59.prol, %.lr.ph59.preheader
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph59.preheader ], [ %9, %.lr.ph59.prol ]
-  %.258.unr = phi i32 [ %.1.lcssa, %.lr.ph59.preheader ], [ %9, %.lr.ph59.prol ]
-  %.23757.unr = phi i64 [ %.136.lcssa, %.lr.ph59.preheader ], [ %10, %.lr.ph59.prol ]
-  %.13956.unr = phi ptr [ %.040.lcssa, %.lr.ph59.preheader ], [ %3, %.lr.ph59.prol ]
-  %11 = icmp eq i64 %.136.lcssa, 1
-  br i1 %11, label %._crit_edge, label %.lr.ph59.a
+  br i1 %.not55, label %._crit_edge, label %.lr.ph59
 
 .lr.ph51:                                         ; preds = %.preheader42, %.lr.ph51
   %.150 = phi i32 [ %i.bo, %.lr.ph51 ], [ %.0.lcssa, %.preheader42 ]
@@ -134,34 +108,97 @@ bb.a:
   %i.bq = icmp ugt i64 %i.bp, 7
   br i1 %i.bq, label %.lr.ph51, label %.preheader, !llvm.loop !5
 
-.lr.ph59.a:                                       ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59.a
-  %.258 = phi i32 [ %i.bx, %.lr.ph59.a ], [ %.258.unr, %.lr.ph59.prol.loopexit ] ; 2 uses
-  %.23757 = phi i64 [ %19, %.lr.ph59.a ], [ %.23757.unr, %.lr.ph59.prol.loopexit ]
-  %.13956 = phi ptr [ %i.br, %.lr.ph59.a ], [ %.13956.unr, %.lr.ph59.prol.loopexit ] ; 3 uses
-  %12 = getelementptr inbounds nuw i8, ptr %.13956, i64 1
-  %13 = load i8, ptr %.13956, align 1
-  %.2.tr = trunc i32 %.258 to i8
-  %.narrow = xor i8 %13, %.2.tr
-  %14 = zext i8 %.narrow to i64
-  %15 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %14
-  %16 = load i32, ptr %15, align 4
-  %17 = lshr i32 %.258, 8
-  %18 = xor i32 %16, %17                          ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.13956, i64 2
-  %i.bs = load i8, ptr %12, align 1
-  %.2.tr.1.a = trunc i32 %18 to i8
+.lr.ph59:                                         ; preds = %.preheader
+  %3 = load i8, ptr %.040.lcssa, align 1
+  %.2.tr = trunc i32 %.1.lcssa to i8
+  %.narrow = xor i8 %3, %.2.tr
+  %4 = zext i8 %.narrow to i64
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %4
+  %6 = load i32, ptr %5, align 4
+  %7 = lshr i32 %.1.lcssa, 8
+  %8 = xor i32 %6, %7                             ; 3 uses
+  %.not = icmp eq i64 %.136.lcssa, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph59.1
+
+.lr.ph59.1:                                       ; preds = %.lr.ph59
+  %9 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 1
+  %10 = load i8, ptr %9, align 1
+  %.2.tr.1 = trunc i32 %8 to i8
+  %.narrow.1 = xor i8 %10, %.2.tr.1
+  %11 = zext i8 %.narrow.1 to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %11
+  %13 = load i32, ptr %12, align 4
+  %14 = lshr i32 %8, 8
+  %15 = xor i32 %13, %14                          ; 3 uses
+  %.not.1 = icmp eq i64 %.136.lcssa, 2
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph59.2
+
+.lr.ph59.2:                                       ; preds = %.lr.ph59.1
+  %16 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 2
+  %17 = load i8, ptr %16, align 1
+  %.2.tr.2 = trunc i32 %15 to i8
+  %.narrow.2 = xor i8 %17, %.2.tr.2
+  %18 = zext i8 %.narrow.2 to i64
+  %19 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %18
+  %20 = load i32, ptr %19, align 4
+  %21 = lshr i32 %15, 8
+  %22 = xor i32 %20, %21                          ; 3 uses
+  %.not.2 = icmp eq i64 %.136.lcssa, 3
+  br i1 %.not.2, label %._crit_edge, label %.lr.ph59.3
+
+.lr.ph59.3:                                       ; preds = %.lr.ph59.2
+  %23 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 3
+  %24 = load i8, ptr %23, align 1
+  %.2.tr.3 = trunc i32 %22 to i8
+  %.narrow.3 = xor i8 %24, %.2.tr.3
+  %25 = zext i8 %.narrow.3 to i64
+  %26 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %25
+  %27 = load i32, ptr %26, align 4
+  %28 = lshr i32 %22, 8
+  %29 = xor i32 %27, %28                          ; 3 uses
+  %.not.3 = icmp eq i64 %.136.lcssa, 4
+  br i1 %.not.3, label %._crit_edge, label %.lr.ph59.4
+
+.lr.ph59.4:                                       ; preds = %.lr.ph59.3
+  %30 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 4
+  %31 = load i8, ptr %30, align 1
+  %.2.tr.4 = trunc i32 %29 to i8
+  %.narrow.4 = xor i8 %31, %.2.tr.4
+  %32 = zext i8 %.narrow.4 to i64
+  %33 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %32
+  %34 = load i32, ptr %33, align 4
+  %35 = lshr i32 %29, 8
+  %36 = xor i32 %34, %35                          ; 3 uses
+  %.not.4 = icmp eq i64 %.136.lcssa, 5
+  br i1 %.not.4, label %._crit_edge, label %.lr.ph59.a
+
+.lr.ph59.a:                                       ; preds = %.lr.ph59.4
+  %i.br = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 5
+  %i.bs = load i8, ptr %i.br, align 1
+  %.2.tr.1.a = trunc i32 %36 to i8
   %.narrow.1.a = xor i8 %i.bs, %.2.tr.1.a
   %i.bt = zext i8 %.narrow.1.a to i64
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4
-  %i.bw = lshr i32 %18, 8
-  %i.bx = xor i32 %i.bv, %i.bw                    ; 2 uses
-  %19 = add nsw i64 %.23757, -2                   ; 2 uses
-  %.not.1.a = icmp eq i64 %19, 0
-  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph59.a, !llvm.loop !6
+  %i.bw = lshr i32 %36, 8
+  %i.bx = xor i32 %i.bv, %i.bw                    ; 3 uses
+  %.not.1.a = icmp eq i64 %.136.lcssa, 6
+  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph59.6
 
-._crit_edge:                                      ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59.a, %.preheader
-  %.2.lcssa = phi i32 [ %.1.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph59.prol.loopexit ], [ %i.bx, %.lr.ph59.a ]
+.lr.ph59.6:                                       ; preds = %.lr.ph59.a
+  %37 = getelementptr inbounds nuw i8, ptr %.040.lcssa, i64 6
+  %38 = load i8, ptr %37, align 1
+  %.2.tr.6 = trunc i32 %i.bx to i8
+  %.narrow.6 = xor i8 %38, %.2.tr.6
+  %39 = zext i8 %.narrow.6 to i64
+  %40 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %39
+  %41 = load i32, ptr %40, align 4
+  %42 = lshr i32 %i.bx, 8
+  %43 = xor i32 %41, %42
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph59, %.lr.ph59.1, %.lr.ph59.2, %.lr.ph59.3, %.lr.ph59.4, %.lr.ph59.a, %.lr.ph59.6, %.preheader
+  %.2.lcssa = phi i32 [ %.1.lcssa, %.preheader ], [ %8, %.lr.ph59 ], [ %15, %.lr.ph59.1 ], [ %22, %.lr.ph59.2 ], [ %29, %.lr.ph59.3 ], [ %36, %.lr.ph59.4 ], [ %i.bx, %.lr.ph59.a ], [ %43, %.lr.ph59.6 ]
   ret i32 %.2.lcssa
 }
 
@@ -174,8 +211,7 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable 
 !1 = !{i32 7, !"PIE Level", i32 2}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!4 = distinct !{!4, !7}
-!5 = distinct !{!5, !7}
-!6 = distinct !{!6, !7}
-!7 = !{!"llvm.loop.mustprogress"}
+!4 = distinct !{!4, !6}
+!5 = distinct !{!5, !6}
+!6 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

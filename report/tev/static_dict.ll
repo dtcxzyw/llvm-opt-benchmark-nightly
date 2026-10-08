@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/static_dict?download=true
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -163,15 +163,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ai, label %.lr.ph1200, label %.preheader1138
 
 .preheader1138:                                   ; preds = %bb.e, %bb.c
-  %.026.i995.lcssa = phi ptr [ %i.ag, %bb.c ], [ %i.ar, %bb.e ] ; 3 uses
-  %.024.i996.lcssa = phi ptr [ %1, %bb.c ], [ %i.aq, %bb.e ]
-  %.022.i997.lcssa = phi i64 [ %i.ah, %bb.c ], [ %i.as, %bb.e ] ; 3 uses
+  %.026.i995.lcssa = phi ptr [ %i.ag, %bb.c ], [ %i.ar, %bb.e ] ; 10 uses
+  %.024.i996.lcssa = phi ptr [ %1, %bb.c ], [ %i.aq, %bb.e ] ; 7 uses
+  %.022.i997.lcssa = phi i64 [ %i.ah, %bb.c ], [ %i.as, %bb.e ] ; 8 uses
   %.not.i10021204 = icmp eq i64 %.022.i997.lcssa, 0
   br i1 %.not.i10021204, label %.critedge.i1003, label %.lr.ph1208.preheader
 
 .lr.ph1208.preheader:                             ; preds = %.preheader1138
-  %scevgep1368 = getelementptr i8, ptr %.026.i995.lcssa, i64 %.022.i997.lcssa
-  br label %.lr.ph1208
+  %scevgep1368 = getelementptr i8, ptr %.026.i995.lcssa, i64 %.022.i997.lcssa ; 7 uses
+  %5 = load i8, ptr %.026.i995.lcssa, align 1, !tbaa !22
+  %6 = load i8, ptr %.024.i996.lcssa, align 1, !tbaa !22
+  %7 = icmp eq i8 %5, %6
+  br i1 %7, label %8, label %.critedge.i1003
 
 .lr.ph1200:                                       ; preds = %bb.c, %bb.e
   %.022.i9971199 = phi i64 [ %i.as, %bb.e ], [ %i.ah, %bb.c ]
@@ -199,24 +202,81 @@ bb.e:                                             ; preds = %.lr.ph1200
   %i.at = icmp ugt i64 %i.as, 7
   br i1 %i.at, label %.lr.ph1200, label %.preheader1138, !llvm.loop !31
 
-.lr.ph1208:                                       ; preds = %.lr.ph1208.preheader, %bb.f
-  %.123.i10011207 = phi i64 [ %5, %bb.f ], [ %.022.i997.lcssa, %.lr.ph1208.preheader ]
-  %.125.i10001206 = phi ptr [ %i.ax, %bb.f ], [ %.024.i996.lcssa, %.lr.ph1208.preheader ] ; 2 uses
-  %.228.i9991205 = phi ptr [ %6, %bb.f ], [ %.026.i995.lcssa, %.lr.ph1208.preheader ] ; 3 uses
-  %i.au = load i8, ptr %.228.i9991205, align 1, !tbaa !22
-  %i.av = load i8, ptr %.125.i10001206, align 1, !tbaa !22
+8:                                                ; preds = %.lr.ph1208.preheader
+  %.not.i1002 = icmp eq i64 %.022.i997.lcssa, 1
+  br i1 %.not.i1002, label %.critedge.i1003, label %.lr.ph1208.1
+
+.lr.ph1208.1:                                     ; preds = %8
+  %9 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 1 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 1
+  %11 = load i8, ptr %9, align 1, !tbaa !22
+  %12 = load i8, ptr %10, align 1, !tbaa !22
+  %13 = icmp eq i8 %11, %12
+  br i1 %13, label %14, label %.critedge.i1003
+
+14:                                               ; preds = %.lr.ph1208.1
+  %.not.i1002.1 = icmp eq i64 %.022.i997.lcssa, 2
+  br i1 %.not.i1002.1, label %.critedge.i1003, label %.lr.ph1208.2
+
+.lr.ph1208.2:                                     ; preds = %14
+  %15 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 2 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 2
+  %17 = load i8, ptr %15, align 1, !tbaa !22
+  %18 = load i8, ptr %16, align 1, !tbaa !22
+  %19 = icmp eq i8 %17, %18
+  br i1 %19, label %20, label %.critedge.i1003
+
+20:                                               ; preds = %.lr.ph1208.2
+  %.not.i1002.2 = icmp eq i64 %.022.i997.lcssa, 3
+  br i1 %.not.i1002.2, label %.critedge.i1003, label %.lr.ph1208.3
+
+.lr.ph1208.3:                                     ; preds = %20
+  %21 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 3 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 3
+  %23 = load i8, ptr %21, align 1, !tbaa !22
+  %24 = load i8, ptr %22, align 1, !tbaa !22
+  %25 = icmp eq i8 %23, %24
+  br i1 %25, label %26, label %.critedge.i1003
+
+26:                                               ; preds = %.lr.ph1208.3
+  %.not.i1002.3 = icmp eq i64 %.022.i997.lcssa, 4
+  br i1 %.not.i1002.3, label %.critedge.i1003, label %.lr.ph1208
+
+.lr.ph1208:                                       ; preds = %26
+  %27 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 4 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 4
+  %i.au = load i8, ptr %27, align 1, !tbaa !22
+  %i.av = load i8, ptr %28, align 1, !tbaa !22
   %i.aw = icmp eq i8 %i.au, %i.av
-  br i1 %i.aw, label %bb.f, label %.critedge.i1003
+  br i1 %i.aw, label %29, label %.critedge.i1003
 
-bb.f:                                             ; preds = %.lr.ph1208
-  %5 = add nsw i64 %.123.i10011207, -1            ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %.125.i10001206, i64 1
-  %6 = getelementptr inbounds nuw i8, ptr %.228.i9991205, i64 1
-  %.not.i1002.a = icmp eq i64 %5, 0
-  br i1 %.not.i1002.a, label %.critedge.i1003, label %.lr.ph1208, !llvm.loop !32
+29:                                               ; preds = %.lr.ph1208
+  %.not.i1002.4 = icmp eq i64 %.022.i997.lcssa, 5
+  br i1 %.not.i1002.4, label %.critedge.i1003, label %bb.f
 
-.critedge.i1003:                                  ; preds = %bb.f, %.lr.ph1208, %.preheader1138
-  %.228.i999.lcssa = phi ptr [ %.026.i995.lcssa, %.preheader1138 ], [ %.228.i9991205, %.lr.ph1208 ], [ %scevgep1368, %bb.f ]
+bb.f:                                             ; preds = %29
+  %30 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 5 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 5
+  %31 = load i8, ptr %30, align 1, !tbaa !22
+  %32 = load i8, ptr %i.ax, align 1, !tbaa !22
+  %.not.i1002.a = icmp eq i8 %31, %32
+  br i1 %.not.i1002.a, label %33, label %.critedge.i1003
+
+33:                                               ; preds = %bb.f
+  %.not.i1002.5 = icmp eq i64 %.022.i997.lcssa, 6
+  br i1 %.not.i1002.5, label %.critedge.i1003, label %.lr.ph1208.6
+
+.lr.ph1208.6:                                     ; preds = %33
+  %34 = getelementptr inbounds nuw i8, ptr %.026.i995.lcssa, i64 6 ; 2 uses
+  %35 = getelementptr inbounds nuw i8, ptr %.024.i996.lcssa, i64 6
+  %36 = load i8, ptr %34, align 1, !tbaa !22
+  %37 = load i8, ptr %35, align 1, !tbaa !22
+  %38 = icmp eq i8 %36, %37
+  %spec.select = select i1 %38, ptr %scevgep1368, ptr %34
+  br label %.critedge.i1003
+
+.critedge.i1003:                                  ; preds = %.lr.ph1208.6, %8, %.lr.ph1208.preheader, %.lr.ph1208.1, %14, %.lr.ph1208.2, %20, %.lr.ph1208.3, %26, %.lr.ph1208, %29, %bb.f, %33, %.preheader1138
+  %.228.i999.lcssa = phi ptr [ %.026.i995.lcssa, %.preheader1138 ], [ %.026.i995.lcssa, %.lr.ph1208.preheader ], [ %scevgep1368, %8 ], [ %9, %.lr.ph1208.1 ], [ %scevgep1368, %14 ], [ %15, %.lr.ph1208.2 ], [ %scevgep1368, %20 ], [ %21, %.lr.ph1208.3 ], [ %scevgep1368, %26 ], [ %27, %.lr.ph1208 ], [ %scevgep1368, %29 ], [ %30, %bb.f ], [ %scevgep1368, %33 ], [ %spec.select, %.lr.ph1208.6 ]
   %i.ay = ptrtoint ptr %.228.i999.lcssa to i64
   %i.az = ptrtoint ptr %i.ag to i64
   %i.ba = sub i64 %i.ay, %i.az
@@ -352,7 +412,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add <4 x i64> %vec.ind, splat (i64 4)
   %i.dn = icmp eq i64 %index.next, %n.vec
-  br i1 %i.dn, label %middle.block, label %vector.body, !llvm.loop !33
+  br i1 %i.dn, label %middle.block, label %vector.body, !llvm.loop !32
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.cx, %n.vec
@@ -381,17 +441,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.eb, ptr %i.dz, align 4, !tbaa !20
   %i.ec = add i64 %.07631213, 1                   ; 2 uses
   %.not821 = icmp ugt i64 %i.ec, %i.cs
-  br i1 %.not821, label %._crit_edge, label %scalar.ph, !llvm.loop !34
+  br i1 %.not821, label %._crit_edge, label %scalar.ph, !llvm.loop !33
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.o
   %.3761.lcssa = phi i32 [ %.2760, %bb.o ], [ 1, %middle.block ], [ 1, %scalar.ph ] ; 107 uses
   %i.ed = icmp ult i64 %.2.i1004, %i.s
-  br i1 %i.ed, label %.critedge, label %bb.p, !llvm.loop !35
+  br i1 %i.ed, label %.critedge, label %bb.p, !llvm.loop !34
 
 bb.p:                                             ; preds = %._crit_edge
   %i.ee = add nuw nsw i64 %i.s, 6                 ; 5 uses
   %.not822 = icmp ult i64 %i.ee, %3
-  br i1 %.not822, label %bb.q, label %.critedge, !llvm.loop !35
+  br i1 %.not822, label %bb.q, label %.critedge, !llvm.loop !34
 
 bb.q:                                             ; preds = %bb.p
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 68 uses
@@ -794,7 +854,7 @@ bb.dy:                                            ; preds = %.lr.ph1176
   %i.aau = getelementptr inbounds nuw i8, ptr %.125.i8741174, i64 1
   %i.aav = getelementptr inbounds nuw i8, ptr %.228.i8731173, i64 1
   %.not.i876 = icmp eq i64 %i.aat, 0
-  br i1 %.not.i876, label %.critedge.i877, label %.lr.ph1176, !llvm.loop !32
+  br i1 %.not.i876, label %.critedge.i877, label %.lr.ph1176, !llvm.loop !35
 
 .critedge.i877:                                   ; preds = %bb.dy, %.lr.ph1176, %.preheader1142
   %.228.i873.lcssa = phi ptr [ %.026.i869.lcssa, %.preheader1142 ], [ %.228.i8731173, %.lr.ph1176 ], [ %scevgep, %bb.dy ]
@@ -830,7 +890,7 @@ bb.eb:                                            ; preds = %bb.ea, %bb.dz
 IsMatch.exit863:                                  ; preds = %.critedge.i877, %bb.dw
   %.2.i878 = phi i64 [ %i.aal, %bb.dw ], [ %i.aay, %.critedge.i877 ]
   %i.abg = icmp eq i64 %.2.i878, %i.aad
-  br i1 %i.abg, label %IsMatch.exit863.thread1047, label %.critedge, !llvm.loop !35
+  br i1 %i.abg, label %IsMatch.exit863.thread1047, label %.critedge, !llvm.loop !34
 
 IsMatch.exit863.thread1047:                       ; preds = %bb.eb, %.preheader1139, %IsMatch.exit863
   %i.abh = select i1 %.not817, i64 9, i64 44
@@ -845,7 +905,7 @@ IsMatch.exit863.thread1047:                       ; preds = %bb.eb, %.preheader1
   store i32 %i.abp, ptr %i.abn, align 4, !tbaa !20
   %i.abq = add nuw nsw i64 %i.s, 1                ; 7 uses
   %.not819 = icmp ult i64 %i.abq, %3
-  br i1 %.not819, label %bb.ec, label %.critedge, !llvm.loop !35
+  br i1 %.not819, label %bb.ec, label %.critedge, !llvm.loop !34
 
 bb.ec:                                            ; preds = %IsMatch.exit863.thread1047
   %i.abr = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 5 uses
@@ -1148,7 +1208,7 @@ bb.ew:                                            ; preds = %.lr.ph1267
   %i.aia = getelementptr inbounds nuw i8, ptr %.125.i8881265, i64 1
   %i.aib = getelementptr inbounds nuw i8, ptr %.228.i8871264, i64 1
   %.not.i890 = icmp eq i64 %i.ahz, 0
-  br i1 %.not.i890, label %.critedge.i891, label %.lr.ph1267, !llvm.loop !32
+  br i1 %.not.i890, label %.critedge.i891, label %.lr.ph1267, !llvm.loop !35
 
 .critedge.i891:                                   ; preds = %bb.ew, %.lr.ph1267, %.preheader1133
   %.228.i887.lcssa = phi ptr [ %.026.i883.lcssa, %.preheader1133 ], [ %.228.i8871264, %.lr.ph1267 ], [ %scevgep1372, %bb.ew ]
@@ -1405,7 +1465,7 @@ bb.fr:                                            ; preds = %.lr.ph1234
   %i.amv = getelementptr inbounds nuw i8, ptr %.125.i9301232, i64 1
   %i.amw = getelementptr inbounds nuw i8, ptr %.228.i9291231, i64 1
   %.not.i932 = icmp eq i64 %i.amu, 0
-  br i1 %.not.i932, label %.critedge.i933, label %.lr.ph1234, !llvm.loop !32
+  br i1 %.not.i932, label %.critedge.i933, label %.lr.ph1234, !llvm.loop !35
 
 .critedge.i933:                                   ; preds = %bb.fr, %.lr.ph1234, %.preheader1137
   %.228.i929.lcssa = phi ptr [ %.026.i925.lcssa, %.preheader1137 ], [ %.228.i9291231, %.lr.ph1234 ], [ %scevgep1369, %bb.fr ]
@@ -1718,7 +1778,7 @@ bb.go:                                            ; preds = %.lr.ph1288
   %i.ass = getelementptr inbounds nuw i8, ptr %.125.i9441286, i64 1
   %i.ast = getelementptr inbounds nuw i8, ptr %.228.i9431285, i64 1
   %.not.i946 = icmp eq i64 %i.asr, 0
-  br i1 %.not.i946, label %.critedge.i947, label %.lr.ph1288, !llvm.loop !32
+  br i1 %.not.i946, label %.critedge.i947, label %.lr.ph1288, !llvm.loop !35
 
 .critedge.i947:                                   ; preds = %bb.go, %.lr.ph1288, %.preheader1132
   %.228.i943.lcssa = phi ptr [ %.026.i939.lcssa, %.preheader1132 ], [ %.228.i9431285, %.lr.ph1288 ], [ %scevgep1373, %bb.go ]
@@ -1938,7 +1998,7 @@ bb.hg:                                            ; preds = %.lr.ph1309
   %i.awk = getelementptr inbounds nuw i8, ptr %.125.i9721307, i64 1
   %i.awl = getelementptr inbounds nuw i8, ptr %.228.i9711306, i64 1
   %.not.i974 = icmp eq i64 %i.awj, 0
-  br i1 %.not.i974, label %.critedge.i975, label %.lr.ph1309, !llvm.loop !32
+  br i1 %.not.i974, label %.critedge.i975, label %.lr.ph1309, !llvm.loop !35
 
 .critedge.i975:                                   ; preds = %bb.hg, %.lr.ph1309, %.preheader
   %.228.i971.lcssa = phi ptr [ %.026.i967.lcssa, %.preheader ], [ %.228.i9711306, %.lr.ph1309 ], [ %scevgep1374, %bb.hg ]
@@ -2122,9 +2182,9 @@ attributes #5 = { nounwind }
 !29 = !{!26, !26, i64 0}
 !30 = !{!19, !6, i64 8}
 !31 = distinct !{!31, !23}
-!32 = distinct !{!32, !23}
-!33 = distinct !{!33, !23, !47, !48}
-!34 = distinct !{!34, !23, !48, !47}
+!32 = distinct !{!32, !23, !47, !48}
+!33 = distinct !{!33, !23, !48, !47}
+!34 = distinct !{!34, !23}
 !35 = distinct !{!35, !23}
 !36 = distinct !{!36, !23}
 !37 = distinct !{!37, !23}
