@@ -205,14 +205,14 @@ bb.fn:                                            ; preds = %.loopexit.i, %.lr.p
   %indvars.iv372.i = phi i64 [ 0, %.lr.ph360.i ], [ %indvars.iv.next373.i, %.loopexit.i ] ; 2 uses
   %indvars.iv.i = phi i64 [ %i.bda, %.lr.ph360.i ], [ %indvars.iv.next.i, %.loopexit.i ] ; 2 uses
   %.0299359.i = phi i64 [ 0, %.lr.ph360.i ], [ %i.bls, %.loopexit.i ] ; 6 uses
-  %i.bfu = mul i64 %.0299359.i, %i.bej            ; 2 uses
+  %i.bfu = mul i64 %.0299359.i, %i.bej
   %i.bfv = mul i64 %.0299359.i, %i.bej            ; 5 uses
   %i.bfw = add i64 %i.bfv, %i.bda                 ; 2 uses
   %i.bfx = load i32, ptr %i.ayx, align 4, !tbaa !44
   %i.bfy = sext i32 %i.bfx to i64                 ; 4 uses
   %i.bfz = icmp ugt i64 %i.bfw, %i.bfy
   %i.bga = sub i64 %i.bfy, %i.bfv
-  %i.bgb = select i1 %i.bfz, i64 %i.bga, i64 %i.bda ; 4 uses
+  %i.bgb = select i1 %i.bfz, i64 %i.bga, i64 %i.bda ; 6 uses
   %i.bgc = icmp ule i64 %i.bgb, %i.bek
   %i.bgd = icmp ne i64 %.0299359.i, 0             ; 3 uses
   %i.bge = and i1 %i.bgd, %i.bgc
@@ -259,15 +259,14 @@ bb.fp:                                            ; preds = %bb.fo, %bb.fn
 
 .lr.ph.i23:                                       ; preds = %.preheader350.i
   %gep.i = getelementptr i8, ptr %invariant.gep.i, i64 %i.bgp ; 5 uses
-  %umin = call i64 @llvm.umin.i64(i64 %i.bfw, i64 %i.bfy) ; 2 uses
-  %33 = sub i64 %umin, %i.bfu                     ; 2 uses
-  %xtraiter131 = and i64 %33, 3                   ; 3 uses
+  %umin = call i64 @llvm.umin.i64(i64 %i.bfw, i64 %i.bfy)
+  %xtraiter131 = and i64 %i.bgb, 3                ; 3 uses
   %i.bgw = sub i64 %i.bfu, %umin
   %i.bgx = icmp ugt i64 %i.bgw, -4
   br i1 %i.bgx, label %.epil.preheader130, label %.lr.ph.i23.new
 
 .lr.ph.i23.new:                                   ; preds = %.lr.ph.i23
-  %unroll_iter135 = and i64 %33, -4
+  %unroll_iter135 = and i64 %i.bgb, -4
   br label %bb.fr
 
 .preheader349.i.loopexit.unr-lcssa:               ; preds = %bb.fr

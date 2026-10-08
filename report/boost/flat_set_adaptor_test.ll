@@ -205,7 +205,7 @@ define linkonce_odr hidden noundef zeroext i1 @_ZN5boost7movelib15detail_adaptiv
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64                  ; 5 uses
   %i.b = alloca [256 x i8], align 16              ; 3 uses
-  %i.c = load i64, ptr %5, align 8, !tbaa !319    ; 13 uses
+  %i.c = load i64, ptr %5, align 8, !tbaa !319    ; 12 uses
   %i.d = getelementptr [4 x i8], ptr %2, i64 %i.c ; 8 uses
   %i.e = sub i64 %3, %i.c                         ; 8 uses
   %i.f = load i64, ptr %1, align 8, !tbaa !319
@@ -431,7 +431,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.s
   %.0130204 = phi i64 [ 0, %.lr.ph ], [ %i.ha, %bb.s ] ; 3 uses
   %.0131203 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.s ]
   %.0132202 = phi i64 [ 0, %.lr.ph ], [ %.1.i, %bb.s ] ; 2 uses
-  %.0133201 = phi i64 [ %4, %.lr.ph ], [ %spec.select15.i, %bb.s ] ; 13 uses
+  %.0133201 = phi i64 [ %4, %.lr.ph ], [ %spec.select15.i, %bb.s ] ; 12 uses
   %.0134200 = phi i1 [ true, %.lr.ph ], [ %i.ca, %bb.s ]
   %i.br = load i64, ptr %5, align 8, !tbaa !319   ; 2 uses
   %i.bs = load i64, ptr %1, align 8, !tbaa !319   ; 4 uses
@@ -456,7 +456,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN5boost7movelib15detail_adaptive18lblock_for_combineImEET_S3_S3_S3_Rb.exit: ; preds = %bb.d, %bb.f, %.critedge.i
   %.1 = phi i1 [ true, %bb.f ], [ false, %.critedge.i ], [ true, %bb.d ] ; 10 uses
-  %.1.i = phi i64 [ %i.bu, %bb.f ], [ %i.by, %.critedge.i ], [ %i.br, %bb.d ] ; 14 uses
+  %.1.i = phi i64 [ %i.bu, %bb.f ], [ %i.by, %.critedge.i ], [ %i.br, %bb.d ] ; 13 uses
   %i.bz = and i64 %.0130204, 1
   %i.ca = icmp eq i64 %i.bz, 0                    ; 9 uses
   %i.cb = urem i64 %i.e, %i.bt                    ; 2 uses
@@ -617,8 +617,8 @@ bb.l:                                             ; preds = %bb.k
   %i.du = sub nuw i64 %.0133201, %spec.select15.i ; 2 uses
   %i.dv = sub i64 0, %i.du
   %i.dw = getelementptr [4 x i8], ptr %i.ds, i64 %i.dv ; 4 uses
-  %.idx13.i161 = shl nuw nsw i64 %i.du, 2
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 %.idx13.i161 ; 7 uses
+  %.idx13.i161 = shl i64 %i.du, 2
+  %i.dx = getelementptr i8, ptr %i.dw, i64 %.idx13.i161 ; 8 uses
   %i.dy = add i64 %i.cc, %.0133201
   %i.dz = add i64 %i.dy, %i.c
   %i.ea = shl i64 %i.dz, 2
@@ -632,14 +632,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %min.iters.check288, label %.lr.ph.i10.i156.preheader444, label %vector.memcheck302
 
 vector.memcheck302:                               ; preds = %.lr.ph.i10.i156.preheader
-  %7 = add i64 %i.c, %.0133201
-  %8 = sub i64 %7, %.1.i
-  %9 = shl i64 %8, 2
-  %scevgep = getelementptr i8, ptr %2, i64 %9
   %i.ed = mul i64 %i.cc, -4
   %scevgep304 = getelementptr i8, ptr %scevgep303.a, i64 %i.ed
   %bound0 = icmp ult ptr %i.dw, %i.dq
-  %bound1 = icmp ult ptr %scevgep304, %scevgep
+  %bound1 = icmp ult ptr %scevgep304, %i.dx
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i10.i156.preheader444, label %vector.ph307
 
