@@ -205,14 +205,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph487:                                        ; preds = %bb.k, %.lr.ph487.preheader.new
   %i.ap = phi i8 [ %.pre, %.lr.ph487.preheader.new ], [ %i.bl, %bb.k ] ; 3 uses
-  %indvars.iv556 = phi i64 [ 0, %.lr.ph487.preheader.new ], [ %indvars.iv.next557.1, %bb.k ] ; 3 uses
+  %indvars.iv556 = phi i64 [ 0, %.lr.ph487.preheader.new ], [ %indvars.iv.next557.1, %bb.k ] ; 4 uses
   %.0391486 = phi i32 [ 1, %.lr.ph487.preheader.new ], [ %.1392.1, %bb.k ]
   %niter = phi i64 [ 0, %.lr.ph487.preheader.new ], [ %niter.next.1, %bb.k ]
   %i.aq = zext i8 %i.ap to i64
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.aq
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !27
   %indvars.iv.next557 = or disjoint i64 %indvars.iv556, 1 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv.next557 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv556
+  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 2 uses
   %i.au = load i8, ptr %i.at, align 1, !tbaa !26  ; 3 uses
   %i.av = zext i8 %i.au to i64
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.av
@@ -232,8 +233,9 @@ bb.i:                                             ; preds = %.lr.ph487
   %i.bb = zext i8 %i.ba to i64
   %i.bc = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.bb
   %i.bd = load i16, ptr %i.bc, align 2, !tbaa !27
-  %indvars.iv.next557.1 = add nuw nsw i64 %indvars.iv556, 2 ; 3 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv.next557.1 ; 2 uses
+  %indvars.iv.next557.1 = add nuw nsw i64 %indvars.iv556, 2 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %indvars.iv.next557
+  %i.be = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !26  ; 3 uses
   %i.bg = zext i8 %i.bf to i64
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.bg
@@ -325,9 +327,10 @@ bb.l:                                             ; preds = %.lr.ph487.epil.preh
   br label %.preheader471
 
 .preheader471:                                    ; preds = %.preheader471.preheader, %.preheader471
-  %indvars.iv563 = phi i64 [ %i.cf, %.preheader471.preheader ], [ %indvars.iv.next564, %.preheader471 ]
-  %indvars.iv.next564 = add nsw i64 %indvars.iv563, -1 ; 4 uses
-  %i.cg = getelementptr inbounds i8, ptr %i.aa, i64 %indvars.iv.next564
+  %indvars.iv563 = phi i64 [ %i.cf, %.preheader471.preheader ], [ %indvars.iv.next564, %.preheader471 ] ; 3 uses
+  %indvars.iv.next564 = add nsw i64 %indvars.iv563, -1 ; 2 uses
+  %8 = getelementptr i8, ptr %i.aa, i64 %indvars.iv563
+  %i.cg = getelementptr i8, ptr %8, i64 -1
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !26
   %.not443 = icmp ult i8 %i.ch, %i.bz
   br i1 %.not443, label %bb.m, label %.preheader471, !llvm.loop !107
@@ -335,8 +338,9 @@ bb.l:                                             ; preds = %.lr.ph487.epil.preh
 bb.m:                                             ; preds = %.preheader471
   %i.ci = trunc nsw i64 %indvars.iv.next564 to i32
   %i.cj = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %indvars.iv566
-  %i.ck = getelementptr inbounds [3 x i8], ptr %1, i64 %indvars.iv.next564
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.cj, ptr noundef nonnull align 1 dereferenceable(3) %i.ck, i64 3, i1 false), !tbaa.struct !126
+  %i.ck = getelementptr [3 x i8], ptr %1, i64 %indvars.iv563
+  %9 = getelementptr i8, ptr %i.ck, i64 -3
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.cj, ptr noundef nonnull align 1 dereferenceable(3) %9, i64 3, i1 false), !tbaa.struct !126
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph490, %bb.m
@@ -371,23 +375,26 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %bb.p
-  %indvars.iv571 = phi i64 [ %indvars.iv.next572, %bb.q ], [ %i.cs, %bb.p ]
-  %indvars.iv.next572 = add nsw i64 %indvars.iv571, -1 ; 6 uses
-  %i.ct = getelementptr inbounds i8, ptr %i.aa, i64 %indvars.iv.next572
+  %indvars.iv571 = phi i64 [ %indvars.iv.next572, %bb.q ], [ %i.cs, %bb.p ] ; 4 uses
+  %indvars.iv.next572 = add nsw i64 %indvars.iv571, -1 ; 3 uses
+  %10 = getelementptr i8, ptr %i.aa, i64 %indvars.iv571
+  %i.ct = getelementptr i8, ptr %10, i64 -1
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !26
   %.not440 = icmp ult i8 %i.cu, %i.cb
   br i1 %.not440, label %bb.r, label %bb.q, !llvm.loop !109
 
 bb.r:                                             ; preds = %bb.q
   %i.cv = trunc nsw i64 %indvars.iv.next572 to i32
-  %i.cw = getelementptr inbounds [3 x i8], ptr %1, i64 %indvars.iv.next572 ; 2 uses
-  %.sroa.0.0.copyload = load <3 x i8>, ptr %i.cw, align 1, !tbaa !26
+  %i.cw = getelementptr [3 x i8], ptr %1, i64 %indvars.iv571
+  %11 = getelementptr i8, ptr %i.cw, i64 -3       ; 2 uses
+  %.sroa.0.0.copyload = load <3 x i8>, ptr %11, align 1, !tbaa !26
   %i.cx = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %indvars.iv574 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.cw, ptr noundef nonnull align 1 dereferenceable(3) %i.cx, i64 3, i1 false), !tbaa.struct !126
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %11, ptr noundef nonnull align 1 dereferenceable(3) %i.cx, i64 3, i1 false), !tbaa.struct !126
   store <3 x i8> %.sroa.0.0.copyload, ptr %i.cx, align 1, !tbaa !26
   %i.cy = trunc i64 %indvars.iv574 to i8
   %i.cz = load ptr, ptr %i.ca, align 8, !tbaa !34
-  %i.da = getelementptr inbounds i8, ptr %i.cz, i64 %indvars.iv.next572
+  %12 = getelementptr i8, ptr %i.cz, i64 %indvars.iv571
+  %i.da = getelementptr i8, ptr %12, i64 -1
   store i8 %i.cy, ptr %i.da, align 1, !tbaa !26
   %i.db = trunc i64 %indvars.iv.next572 to i8
   %i.dc = load ptr, ptr %i.ca, align 8, !tbaa !34

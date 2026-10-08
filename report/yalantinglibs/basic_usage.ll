@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %_ZNSt6vectorIcSaIcE
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i213: ; preds = %bb.e, %bb.d
   %.sroa.1230.1.i210 = phi i8 [ 0, %bb.d ], [ %.sroa.1230.0.i208, %bb.e ] ; 3 uses
-  %storemerge.i.i211 = phi i64 [ %i.z, %bb.d ], [ %i.ad, %bb.e ]
-  %i.ae = add i64 %storemerge.i.i211, 4           ; 6 uses
+  %storemerge.i.i211 = phi i64 [ %i.z, %bb.d ], [ %i.ad, %bb.e ] ; 3 uses
+  %i.ae = add i64 %storemerge.i.i211, 4           ; 4 uses
   %i.af = icmp ugt i64 %i.ae, 15
   br i1 %i.af, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i232, label %_ZN11struct_pack6detail6resizeIcEEvRNSt7__cxx1112basic_stringIT_St11char_traitsIS4_ESaIS4_EEEm.exit.i214
 
@@ -244,10 +244,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i236: ;
 _ZN11struct_pack6detail6resizeIcEEvRNSt7__cxx1112basic_stringIT_St11char_traitsIS4_ESaIS4_EEEm.exit.i214: ; preds = %.noexc223, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i213
   %i.ak = phi ptr [ %i.aj, %.noexc223 ], [ %i.v, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i213 ]
   store i64 %i.ae, ptr %i.w, align 8, !tbaa !17
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ae
+  %25 = getelementptr i8, ptr %i.ak, i64 %storemerge.i.i211
+  %i.al = getelementptr i8, ptr %25, i64 4
   store i8 0, ptr %i.al, align 1, !tbaa !18
   %i.am = load ptr, ptr %9, align 8, !tbaa !24
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ae
+  %26 = getelementptr i8, ptr %i.am, i64 %storemerge.i.i211
+  %i.an = getelementptr i8, ptr %26, i64 4
   store i8 0, ptr %i.an, align 1, !tbaa !18
   %i.ao = load ptr, ptr %9, align 8, !tbaa !24    ; 7 uses
   %i.ap = and i8 %.sroa.1230.1.i210, 24
@@ -363,8 +365,8 @@ bb.p:                                             ; preds = %.noexc62
 
 _ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJ6personEEENS_21serialize_buffer_sizeEDpRKT0_.exit.i: ; preds = %bb.p, %bb.o
   %.sroa.1230.1.i = phi i8 [ 0, %bb.o ], [ %.sroa.1230.0.i, %bb.p ] ; 3 uses
-  %storemerge.i.i = phi i64 [ %i.bs, %bb.o ], [ %i.bw, %bb.p ]
-  %i.bx = add i64 %storemerge.i.i, 39             ; 4 uses
+  %storemerge.i.i = phi i64 [ %i.bs, %bb.o ], [ %i.bw, %bb.p ] ; 3 uses
+  %i.bx = add i64 %storemerge.i.i, 39             ; 3 uses
   %i.by = icmp ugt i64 %i.bx, 35
   br i1 %i.by, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i, label %_ZN11struct_pack6detail6resizeIcEEvRNSt7__cxx1112basic_stringIT_St11char_traitsIS4_ESaIS4_EEEm.exit.i
 
@@ -404,8 +406,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i: ; pr
 
 _ZN11struct_pack6detail6resizeIcEEvRNSt7__cxx1112basic_stringIT_St11char_traitsIS4_ESaIS4_EEEm.exit.i: ; preds = %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJ6personEEENS_21serialize_buffer_sizeEDpRKT0_.exit.i, %.noexc66
   %.sroa.10.0 = phi i64 [ %i.cd, %.noexc66 ], [ 36, %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJ6personEEENS_21serialize_buffer_sizeEDpRKT0_.exit.i ]
-  %i.ce = phi ptr [ %i.cc, %.noexc66 ], [ %i.bo, %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJ6personEEENS_21serialize_buffer_sizeEDpRKT0_.exit.i ] ; 8 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.bx
+  %i.ce = phi ptr [ %i.cc, %.noexc66 ], [ %i.bo, %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJ6personEEENS_21serialize_buffer_sizeEDpRKT0_.exit.i ] ; 9 uses
+  %27 = getelementptr i8, ptr %i.ce, i64 %storemerge.i.i
+  %28 = getelementptr i8, ptr %27, i64 39
+  store i8 0, ptr %28, align 1, !tbaa !18
+  %29 = getelementptr i8, ptr %i.ce, i64 %storemerge.i.i
+  %i.cf = getelementptr i8, ptr %29, i64 39
   store i8 0, ptr %i.cf, align 1, !tbaa !18
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 35 ; 2 uses
   %i.ch = and i8 %.sroa.1230.1.i, 24

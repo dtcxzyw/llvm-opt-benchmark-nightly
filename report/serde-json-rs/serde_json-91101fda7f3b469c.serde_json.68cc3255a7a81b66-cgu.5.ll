@@ -204,20 +204,20 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.0.0.i.sroa.gep4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.d = zext i8 %1 to i32                        ; 2 uses
   %i.e = mul nuw nsw i32 %i.d, 5243
   %i.f = lshr i32 %i.e, 19                        ; 2 uses
   %i.g = trunc nuw nsw i32 %i.f to i8
   %.neg.i = mul nsw i32 %i.f, -100
   %i.h = add nsw i32 %.neg.i, %i.d                ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.i = shl nuw nsw i32 %i.h, 1
   %i.j = zext nneg i32 %i.i to i64
   %i.k = icmp ult i32 %i.h, 100
   tail call void @llvm.assume(i1 %i.k)
   %i.l = getelementptr inbounds nuw i8, ptr @_RNvCsgnlcHz8PRH9_4itoa13DECIMAL_PAIRS, i64 %i.j ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !noalias !95, !noundef !5
-  store i8 %i.m, ptr %2, align 1, !alias.scope !95
+  store i8 %i.m, ptr %.sroa.0.0.i.sroa.gep4, align 1, !alias.scope !95
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   %i.p = load i8, ptr %i.o, align 1, !noalias !95, !noundef !5
@@ -226,15 +226,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.06.0.i = phi i8 [ %i.g, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %.sroa.0.0.i = phi i64 [ 1, %bb.b ], [ 3, %bb.a ] ; 2 uses
+  %.sroa.0.0.i = phi i64 [ 1, %bb.b ], [ 3, %bb.a ] ; 3 uses
   %i.q = icmp ne i8 %.sroa.06.0.i, 0
   %i.r = icmp eq i8 %1, 0
   %or.cond.i = or i1 %i.r, %i.q
   br i1 %or.cond.i, label %bb.d, label %_RNvXsr_CsgnlcHz8PRH9_4itoahNtB5_8Unsigned3fmt.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = add nsw i64 %.sroa.0.0.i, -1             ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.s
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.0.i
+  %i.s = add nsw i64 %.sroa.0.0.i, -1
+  %i.t = getelementptr i8, ptr %2, i64 -1
   %i.u = add nuw nsw i8 %.sroa.06.0.i, 48
   store i8 %i.u, ptr %i.t, align 1, !alias.scope !95
   br label %_RNvXsr_CsgnlcHz8PRH9_4itoahNtB5_8Unsigned3fmt.exit
@@ -549,16 +550,17 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = icmp slt i64 %1, 0
   %.sroa.07.0.i = tail call i64 @llvm.abs.i64(i64 %1, i1 false)
-  %i.d = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 2 uses
+  %i.d = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 3 uses
   br i1 %i.c, label %bb.b, label %_RNvXsi_CsgnlcHz8PRH9_4itoaxNtNtB5_7private6Sealed5write.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add i64 %i.d, -1                         ; 4 uses
+  %i.e = add i64 %i.d, -1                         ; 3 uses
   %i.f = icmp ult i64 %i.e, 20
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.e
+  %2 = getelementptr i8, ptr %i.b, i64 %i.d
+  %i.g = getelementptr i8, ptr %2, i64 -1
   store i8 45, ptr %i.g, align 1, !alias.scope !104
   br label %_RNvXsi_CsgnlcHz8PRH9_4itoaxNtNtB5_7private6Sealed5write.exit
 
@@ -961,7 +963,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.i = load i8, ptr %i.h, align 8, !alias.scope !143 ; 2 uses
   %i.j = zext nneg i8 %i.i to i64                 ; 4 uses
-  %i.k = icmp ult i8 %i.i, 5
+  %2 = add i8 %i.i, -1
+  %i.k = icmp ult i8 %2, 4
   %i.l = getelementptr i8, ptr %i.g, i64 %i.j
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 64

@@ -204,10 +204,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtCsdQ1XOHuL
   br label %bb.g
 
 .lr.ph54:                                         ; preds = %bb.g, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtCs1ycKUSY4YU7_17fish_localization8LanguageENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit
-  %.sroa.02.153 = phi i64 [ %6, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtCs1ycKUSY4YU7_17fish_localization8LanguageENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.02.0, %bb.g ] ; 2 uses
+  %.sroa.02.153 = phi i64 [ %7, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtCs1ycKUSY4YU7_17fish_localization8LanguageENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.02.0, %bb.g ] ; 4 uses
   %.sroa.023.152 = phi i64 [ %.sroa.0.0.i, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtCs1ycKUSY4YU7_17fish_localization8LanguageENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.023.0, %bb.g ] ; 3 uses
-  %6 = add i64 %.sroa.02.153, -1                  ; 4 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %6 = getelementptr i8, ptr %i.a, i64 %.sroa.02.153
+  %i.aq = getelementptr i8, ptr %6, i64 -1
   %i.ar = load i8, ptr %i.aq, align 1
   %.not28 = icmp ult i8 %i.ar, %.sroa.021.0
   br i1 %.not28, label %._crit_edge, label %bb.s
@@ -222,8 +222,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtCsdQ1XOHuL
   br i1 %i.l, label %bb.z, label %bb.aa
 
 bb.s:                                             ; preds = %.lr.ph54
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
-  %i.av = load i64, ptr %i.au, align 8            ; 2 uses
+  %7 = add i64 %.sroa.02.153, -1                  ; 2 uses
+  %i.au = getelementptr [8 x i8], ptr %i.b, i64 %.sroa.02.153
+  %8 = getelementptr i8, ptr %i.au, i64 -8
+  %i.av = load i64, ptr %8, align 8               ; 2 uses
   %i.aw = lshr i64 %i.av, 1                       ; 5 uses
   %i.ax = lshr i64 %.sroa.023.152, 1              ; 3 uses
   %i.ay = add nuw i64 %i.aw, %i.ax                ; 5 uses
@@ -273,7 +275,7 @@ bb.y:                                             ; preds = %bb.x, %bb.v
 
 _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtCs1ycKUSY4YU7_17fish_localization8LanguageENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit: ; preds = %bb.u, %bb.y
   %.sroa.0.0.i = phi i64 [ %i.br, %bb.y ], [ %i.be, %bb.u ] ; 2 uses
-  %i.bs = icmp ugt i64 %6, 1
+  %i.bs = icmp ugt i64 %7, 1
   br i1 %i.bs, label %.lr.ph54, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
@@ -455,10 +457,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtCsdQ1XOHuL
   br label %bb.g
 
 .lr.ph54:                                         ; preds = %bb.g, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtNtB1Q_6string6StringENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit
-  %.sroa.02.153 = phi i64 [ %6, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtNtB1Q_6string6StringENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.02.0, %bb.g ] ; 2 uses
+  %.sroa.02.153 = phi i64 [ %7, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtNtB1Q_6string6StringENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.02.0, %bb.g ] ; 4 uses
   %.sroa.023.152 = phi i64 [ %.sroa.0.0.i, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtNtB1Q_6string6StringENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit ], [ %.sroa.023.0, %bb.g ] ; 3 uses
-  %6 = add i64 %.sroa.02.153, -1                  ; 4 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %6 = getelementptr i8, ptr %i.a, i64 %.sroa.02.153
+  %i.aq = getelementptr i8, ptr %6, i64 -1
   %i.ar = load i8, ptr %i.aq, align 1
   %.not28 = icmp ult i8 %i.ar, %.sroa.021.0
   br i1 %.not28, label %._crit_edge, label %bb.s
@@ -473,8 +475,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtCsdQ1XOHuL
   br i1 %i.l, label %bb.z, label %bb.aa
 
 bb.s:                                             ; preds = %.lr.ph54
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
-  %i.av = load i64, ptr %i.au, align 8            ; 2 uses
+  %7 = add i64 %.sroa.02.153, -1                  ; 2 uses
+  %i.au = getelementptr [8 x i8], ptr %i.b, i64 %.sroa.02.153
+  %8 = getelementptr i8, ptr %i.au, i64 -8
+  %i.av = load i64, ptr %8, align 8               ; 2 uses
   %i.aw = lshr i64 %i.av, 1                       ; 5 uses
   %i.ax = lshr i64 %.sroa.023.152, 1              ; 3 uses
   %i.ay = add nuw i64 %i.aw, %i.ax                ; 5 uses
@@ -524,7 +528,7 @@ bb.y:                                             ; preds = %bb.x, %bb.v
 
 _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtCsdQ1XOHuLjZb_13phf_generator6BucketNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keyjNCINvMB18_NtB18_9Generator5resetINtNtNtNtBa_4iter8adapters3map3MapINtNtB8_4iter4IterNtNtB1Q_6string6StringENCNCINvB18_26generate_hash_with_hash_fnB3V_INvCs2i9eeB681C2_10phf_shared4hashB3V_EEs_00EEs_0E0ECs4j8jMzqdx39_18build_script_build.exit: ; preds = %bb.u, %bb.y
   %.sroa.0.0.i = phi i64 [ %i.br, %bb.y ], [ %i.be, %bb.u ] ; 2 uses
-  %i.bs = icmp ugt i64 %6, 1
+  %i.bs = icmp ugt i64 %7, 1
   br i1 %i.bs, label %.lr.ph54, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge

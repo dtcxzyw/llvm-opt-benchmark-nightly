@@ -202,18 +202,19 @@ bb.a:
 define { ptr, ptr } @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$3pop17h34630ad1a990633eE"(ptr nofree align 8 captures(none) %0) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, -1                         ; 2 uses
+  %i.d = add i64 %i.b, -1
   store i64 %i.d, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %i.d ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %i.g = getelementptr [16 x i8], ptr %i.f, i64 %i.b ; 2 uses
+  %1 = getelementptr i8, ptr %i.g, i64 -16
+  %i.h = load ptr, ptr %1, align 8
+  %i.i = getelementptr i8, ptr %i.g, i64 -8
   %i.j = load ptr, ptr %i.i, align 8
   br label %bb.c
 

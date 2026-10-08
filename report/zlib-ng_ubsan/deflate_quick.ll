@@ -202,10 +202,10 @@ bb.gj:                                            ; preds = %bb.gi
 bb.gk:                                            ; preds = %bb.gi, %bb.gj
   %i.ho = load i8, ptr %i.hm, align 1, !tbaa !30  ; 3 uses
   %i.hp = zext i8 %i.ho to i64                    ; 5 uses
-  %2 = add nuw nsw i64 %i.hp, 257                 ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr @static_ltree, i64 %2 ; 2 uses
-  %i.hq = shl nuw nsw i64 %2, 2
-  %i.hr = add i64 %i.hq, ptrtoint (ptr @static_ltree to i64), !nosanitize !12 ; 3 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr @static_ltree, i64 %i.hp ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 1028
+  %i.hq = shl nuw nsw i64 %i.hp, 2                ; 3 uses
+  %i.hr = add i64 %i.hq, add (i64 ptrtoint (ptr @static_ltree to i64), i64 1028), !nosanitize !12 ; 3 uses
   %.not83.i.i = icmp ult i64 %i.hr, ptrtoint (ptr @static_ltree to i64), !nosanitize !12 ; 2 uses
   br i1 %.not83.i.i, label %bb.gl, label %.critedge.i.i, !prof !28, !nosanitize !12
 
@@ -223,7 +223,7 @@ bb.gm:                                            ; preds = %.critedge.i.i
   br label %.critedge97.i.i, !nosanitize !12
 
 .critedge97.i.i:                                  ; preds = %bb.gm, %.critedge.i.i
-  %i.hu = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %i.hu = getelementptr inbounds nuw i8, ptr %2, i64 1030
   %i.hv = load i16, ptr %i.hu, align 2, !tbaa !30 ; 3 uses
   %i.hw = zext i16 %i.hv to i32                   ; 2 uses
   %i.hx = icmp ult i8 %i.ho, 29
@@ -235,8 +235,7 @@ bb.gn:                                            ; preds = %.critedge97.i.i
 
 bb.go:                                            ; preds = %bb.gn, %.critedge97.i.i
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr @extra_lbits, i64 %i.hp
-  %4 = shl nuw nsw i64 %i.hp, 2                   ; 2 uses
-  %i.hz = add i64 %4, ptrtoint (ptr @extra_lbits to i64), !nosanitize !12 ; 2 uses
+  %i.hz = add i64 %i.hq, ptrtoint (ptr @extra_lbits to i64), !nosanitize !12 ; 2 uses
   %.not84.i.i = icmp ult i64 %i.hz, ptrtoint (ptr @extra_lbits to i64), !nosanitize !12
   br i1 %.not84.i.i, label %bb.gp, label %bb.gq, !prof !28, !nosanitize !12
 
@@ -252,7 +251,7 @@ bb.gq:                                            ; preds = %bb.go, %bb.gp
 
 bb.gr:                                            ; preds = %bb.gq
   %i.ic = getelementptr inbounds nuw [4 x i8], ptr @base_length, i64 %i.hp
-  %i.id = add i64 %4, ptrtoint (ptr @base_length to i64), !nosanitize !12 ; 2 uses
+  %i.id = add i64 %i.hq, ptrtoint (ptr @base_length to i64), !nosanitize !12 ; 2 uses
   %.not86.i.i = icmp ult i64 %i.id, ptrtoint (ptr @base_length to i64), !nosanitize !12
   br i1 %.not86.i.i, label %bb.gs, label %bb.gt, !prof !28, !nosanitize !12
 

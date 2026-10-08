@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %get_prompt.exit.i16
   br label %lua_readline.exit.i19
 
 lua_readline.exit.i19:                            ; preds = %bb.h, %bb.g
-  %.0.i19.i20 = phi ptr [ %i.r, %bb.g ], [ %i.x, %bb.h ] ; 6 uses
+  %.0.i19.i20 = phi ptr [ %i.r, %bb.g ], [ %i.x, %bb.h ] ; 5 uses
   call void @lua_settop(ptr noundef %0, i32 noundef -2) #11
   %i.y = icmp eq ptr %.0.i19.i20, null
   br i1 %i.y, label %loadline.exit.thread, label %bb.i
@@ -214,15 +214,14 @@ bb.i:                                             ; preds = %lua_readline.exit.i
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = getelementptr i8, ptr %.0.i19.i20, i64 %i.z
-  %i.ab = getelementptr i8, ptr %i.aa, i64 -1
+  %i.ab = getelementptr i8, ptr %i.aa, i64 -1     ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !14
   %i.ad = icmp eq i8 %i.ac, 10
   br i1 %i.ad, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ae = add i64 %i.z, -1                        ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.0.i19.i20, i64 %i.ae
-  store i8 0, ptr %1, align 1, !tbaa !14
+  %i.ae = add i64 %i.z, -1
+  store i8 0, ptr %i.ab, align 1, !tbaa !14
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
@@ -339,7 +338,7 @@ bb.u:                                             ; preds = %get_prompt.exit.i
   br label %lua_readline.exit.i
 
 lua_readline.exit.i:                              ; preds = %bb.u, %bb.t
-  %.0.i19.i = phi ptr [ %i.bn, %bb.t ], [ %i.bt, %bb.u ] ; 6 uses
+  %.0.i19.i = phi ptr [ %i.bn, %bb.t ], [ %i.bt, %bb.u ] ; 5 uses
   call void @lua_settop(ptr noundef %0, i32 noundef -2) #11
   %i.bu = icmp eq ptr %.0.i19.i, null
   br i1 %i.bu, label %pushline.exit, label %bb.v
@@ -351,15 +350,14 @@ bb.v:                                             ; preds = %lua_readline.exit.i
 
 bb.w:                                             ; preds = %bb.v
   %i.bw = getelementptr i8, ptr %.0.i19.i, i64 %i.bv
-  %i.bx = getelementptr i8, ptr %i.bw, i64 -1
+  %i.bx = getelementptr i8, ptr %i.bw, i64 -1     ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !14
   %i.bz = icmp eq i8 %i.by, 10
   br i1 %i.bz, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.ca = add i64 %i.bv, -1                       ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.0.i19.i, i64 %i.ca
-  store i8 0, ptr %2, align 1, !tbaa !14
+  %i.ca = add i64 %i.bv, -1
+  store i8 0, ptr %i.bx, align 1, !tbaa !14
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v

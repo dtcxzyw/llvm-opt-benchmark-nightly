@@ -204,16 +204,17 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.j
-  %i.x = phi i64 [ %i.u, %.lr.ph ], [ %i.ag, %bb.j ]
+  %i.x = phi i64 [ %i.u, %.lr.ph ], [ %i.ag, %bb.j ] ; 2 uses
   %.075 = phi i64 [ 0, %.lr.ph ], [ %i.ac, %bb.j ]
   %.04274 = phi i64 [ %i.t, %.lr.ph ], [ %i.ab, %bb.j ] ; 2 uses
   %.04473 = phi ptr [ %i.s, %.lr.ph ], [ %i.aa, %bb.j ]
-  %i.y = add nuw i64 %i.x, 3                      ; 3 uses
+  %i.y = add nuw i64 %i.x, 3                      ; 2 uses
   %i.z = icmp ugt i64 %i.y, %.04274
   br i1 %i.z, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.aa = getelementptr inbounds nuw i8, ptr %.04473, i64 %i.y ; 4 uses
+  %6 = getelementptr i8, ptr %.04473, i64 %i.x    ; 2 uses
+  %i.aa = getelementptr i8, ptr %6, i64 3         ; 3 uses
   %i.ab = sub nuw i64 %.04274, %i.y               ; 3 uses
   %i.ac = add i64 %.075, 1                        ; 3 uses
   %i.ad = load i32, ptr %i.w, align 4, !tbaa !64
@@ -232,7 +233,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
-  %i.ag = call i64 @ZSTD_getcBlockSize(ptr noundef nonnull %i.aa, i64 noundef %i.ab, ptr noundef nonnull %5) #15 ; 3 uses
+  %i.ag = call i64 @ZSTD_getcBlockSize(ptr noundef %i.aa, i64 noundef %i.ab, ptr noundef nonnull %5) #15 ; 3 uses
   %i.ah = icmp ult i64 %i.ag, -119
   br i1 %i.ah, label %bb.h, label %.thread
 
@@ -254,7 +255,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.critedge
 
 bb.n:                                             ; preds = %bb.l
-  %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
+  %i.an = getelementptr i8, ptr %6, i64 7
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.k
@@ -657,11 +658,12 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i
   br label %ZSTD_DDictHashSet_emplaceDDict.exit.thread.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i
-  %i.bb = and i64 %.027.i.i.i, %i.ap
-  %i.bc = add i64 %i.bb, 1                        ; 3 uses
+  %i.bb = and i64 %.027.i.i.i, %i.ap              ; 2 uses
+  %i.bc = add i64 %i.bb, 1                        ; 2 uses
   %i.bd = load ptr, ptr %i.n, align 8, !tbaa !49  ; 2 uses
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bc
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !93 ; 2 uses
+  %i.be = getelementptr [8 x i8], ptr %i.bd, i64 %i.bb
+  %2 = getelementptr i8, ptr %i.be, i64 8
+  %i.bf = load ptr, ptr %2, align 8, !tbaa !93    ; 2 uses
   %.not.i31.i.i = icmp eq ptr %i.bf, null
   br i1 %.not.i31.i.i, label %._crit_edge.loopexit.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !136
 
@@ -737,11 +739,12 @@ bb.s:                                             ; preds = %.lr.ph.i17.i
   br label %ZSTD_DDictHashSet_addDDict.exit.thread
 
 bb.t:                                             ; preds = %.lr.ph.i17.i
-  %i.ca = and i64 %.027.i.i, %i.bp
-  %i.cb = add i64 %i.ca, 1                        ; 3 uses
+  %i.ca = and i64 %.027.i.i, %i.bp                ; 2 uses
+  %i.cb = add i64 %i.ca, 1                        ; 2 uses
   %i.cc = load ptr, ptr %i.bm, align 8, !tbaa !49 ; 2 uses
-  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %i.cb
-  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !93 ; 2 uses
+  %i.cd = getelementptr [8 x i8], ptr %i.cc, i64 %i.ca
+  %3 = getelementptr i8, ptr %i.cd, i64 8
+  %i.ce = load ptr, ptr %3, align 8, !tbaa !93    ; 2 uses
   %.not.i18.i = icmp eq ptr %i.ce, null
   br i1 %.not.i18.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i17.i, !llvm.loop !136
 

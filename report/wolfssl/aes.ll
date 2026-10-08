@@ -206,14 +206,15 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %i.u, label %.lr.ph, label %IncCtr.exit
 
 .preheader:                                       ; preds = %.lr.ph
+  %10 = add nsw i64 %indvars.iv.i46, -1           ; 2 uses
   %i.v = trunc nuw i64 %10 to i32
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph, label %IncCtr.exit, !llvm.loop !1
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv.i46 = phi i64 [ %10, %.preheader ], [ %i.r, %.preheader.preheader ]
-  %10 = add nsw i64 %indvars.iv.i46, -1           ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 %10 ; 2 uses
+  %indvars.iv.i46 = phi i64 [ %10, %.preheader ], [ %i.r, %.preheader.preheader ] ; 2 uses
+  %11 = getelementptr i8, ptr %i.q, i64 %indvars.iv.i46
+  %i.x = getelementptr i8, ptr %11, i64 -1        ; 2 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !21
   %i.z = add i8 %i.y, 1                           ; 2 uses
   store i8 %i.z, ptr %i.x, align 1, !tbaa !21
@@ -312,14 +313,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.y, label %.lr.ph, label %wc_AesGcmEncrypt_ex.exit
 
 .preheader.i:                                     ; preds = %.lr.ph
+  %10 = add nsw i64 %indvars.iv.i.i50, -1         ; 2 uses
   %i.z = trunc nuw i64 %10 to i32
   %i.aa = icmp sgt i32 %i.z, 0
   br i1 %i.aa, label %.lr.ph, label %wc_AesGcmEncrypt_ex.exit, !llvm.loop !1
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
-  %indvars.iv.i.i50 = phi i64 [ %10, %.preheader.i ], [ %i.v, %.preheader.i.preheader ]
-  %10 = add nsw i64 %indvars.iv.i.i50, -1         ; 3 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.n, i64 %10 ; 2 uses
+  %indvars.iv.i.i50 = phi i64 [ %10, %.preheader.i ], [ %i.v, %.preheader.i.preheader ] ; 2 uses
+  %11 = getelementptr i8, ptr %i.n, i64 %indvars.iv.i.i50
+  %i.ab = getelementptr i8, ptr %11, i64 -1       ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !21
   %i.ad = add i8 %i.ac, 1                         ; 2 uses
   store i8 %i.ad, ptr %i.ab, align 1, !tbaa !21

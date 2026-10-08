@@ -202,16 +202,17 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.m = icmp slt i64 %i.l, 0
   %.sroa.07.0.i.i.i = tail call i64 @llvm.abs.i64(i64 %i.l, i1 false)
-  %i.n = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 2 uses
+  %i.n = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 3 uses
   br i1 %i.m, label %bb.e, label %_RINvYNtNtCs8ZPNfZ0ciAA_10serde_json3ser16CompactFormatterNtB5_9Formatter9write_i64QNtNvXs_NtB7_5valueNtB1q_5ValueNtNtCs8Chj7Szqq0n_4core3fmt7Display3fmt15WriterFormatterEB7_.exit.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = add i64 %i.n, -1                         ; 4 uses
+  %i.o = add i64 %i.n, -1                         ; 3 uses
   %i.p = icmp ult i64 %i.o, 20
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.o
+  %2 = getelementptr i8, ptr %i.b, i64 %i.n
+  %i.q = getelementptr i8, ptr %2, i64 -1
   store i8 45, ptr %i.q, align 1, !alias.scope !88
   br label %_RINvYNtNtCs8ZPNfZ0ciAA_10serde_json3ser16CompactFormatterNtB5_9Formatter9write_i64QNtNvXs_NtB7_5valueNtB1q_5ValueNtNtCs8Chj7Szqq0n_4core3fmt7Display3fmt15WriterFormatterEB7_.exit.i
 
@@ -308,16 +309,17 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.m = icmp slt i64 %i.l, 0
   %.sroa.07.0.i.i.i = tail call i64 @llvm.abs.i64(i64 %i.l, i1 false)
-  %i.n = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 2 uses
+  %i.n = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 3 uses
   br i1 %i.m, label %bb.e, label %_RINvYNtNtCs8ZPNfZ0ciAA_10serde_json3ser15PrettyFormatterNtB5_9Formatter9write_i64QNtNvXs_NtB7_5valueNtB1p_5ValueNtNtCs8Chj7Szqq0n_4core3fmt7Display3fmt15WriterFormatterEB7_.exit.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = add i64 %i.n, -1                         ; 4 uses
+  %i.o = add i64 %i.n, -1                         ; 3 uses
   %i.p = icmp ult i64 %i.o, 20
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.o
+  %2 = getelementptr i8, ptr %i.b, i64 %i.n
+  %i.q = getelementptr i8, ptr %2, i64 -1
   store i8 45, ptr %i.q, align 1, !alias.scope !91
   br label %_RINvYNtNtCs8ZPNfZ0ciAA_10serde_json3ser15PrettyFormatterNtB5_9Formatter9write_i64QNtNvXs_NtB7_5valueNtB1p_5ValueNtNtCs8Chj7Szqq0n_4core3fmt7Display3fmt15WriterFormatterEB7_.exit.i
 
@@ -720,16 +722,17 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.l = icmp slt i64 %i.k, 0
   %.sroa.07.0.i = tail call i64 @llvm.abs.i64(i64 %i.k, i1 false)
-  %i.m = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 2 uses
+  %i.m = call noundef i64 @_RNvXsu_CsgnlcHz8PRH9_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i, ptr noalias nofree noundef nonnull dereferenceable(20) %i.b) ; 3 uses
   br i1 %i.l, label %bb.d, label %_RNvXsi_CsgnlcHz8PRH9_4itoaxNtNtB5_7private6Sealed5write.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %i.m, -1                         ; 4 uses
+  %i.n = add i64 %i.m, -1                         ; 3 uses
   %i.o = icmp ult i64 %i.n, 20
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.n
+  %2 = getelementptr i8, ptr %i.b, i64 %i.m
+  %i.p = getelementptr i8, ptr %2, i64 -1
   store i8 45, ptr %i.p, align 1, !alias.scope !187
   br label %_RNvXsi_CsgnlcHz8PRH9_4itoaxNtNtB5_7private6Sealed5write.exit
 

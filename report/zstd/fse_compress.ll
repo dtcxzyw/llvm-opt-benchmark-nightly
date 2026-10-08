@@ -62,25 +62,27 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 3 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 5 uses
   %.0162178 = phi i32 [ %i.b, %.lr.ph.preheader ], [ %.1163, %bb.e ] ; 3 uses
-  %6 = add nsw i64 %indvars.iv, -1                ; 3 uses
-  %7 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %6
+  %6 = getelementptr [2 x i8], ptr %1, i64 %indvars.iv
+  %7 = getelementptr i8, ptr %6, i64 -2
   %i.ad = load i16, ptr %7, align 2, !tbaa !9     ; 2 uses
   %i.ae = icmp eq i16 %i.ad, -1
-  %i.af = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %6
-  %i.ag = load i16, ptr %i.af, align 2, !tbaa !9  ; 2 uses
+  %i.af = getelementptr [2 x i8], ptr %4, i64 %indvars.iv
+  %8 = getelementptr i8, ptr %i.af, i64 -2
+  %i.ag = load i16, ptr %8, align 2, !tbaa !9     ; 2 uses
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   br i1 %i.ae, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ai = add i16 %i.ag, 1
   store i16 %i.ai, ptr %i.ah, align 2, !tbaa !9
-  %i.aj = trunc i64 %6 to i8
+  %i.aj = trunc i64 %indvars.iv to i8
+  %9 = add i8 %i.aj, -1
   %i.ak = add i32 %.0162178, -1
   %i.al = zext i32 %.0162178 to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.al
-  store i8 %i.aj, ptr %i.am, align 1, !tbaa !10
+  store i8 %9, ptr %i.am, align 1, !tbaa !10
   br label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph

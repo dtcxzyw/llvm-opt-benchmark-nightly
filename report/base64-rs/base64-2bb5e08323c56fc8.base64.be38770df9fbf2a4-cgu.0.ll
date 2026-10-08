@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not, label %.preheader._crit_edge, label %.lr.ph150, !prof !52
 
 ._crit_edge:                                      ; preds = %bb.o, %.loopexit
-  %.sroa.010.2.lcssa = phi i64 [ %.sroa.010.0, %.loopexit ], [ %i.au, %bb.o ] ; 11 uses
+  %.sroa.010.2.lcssa = phi i64 [ %.sroa.010.0, %.loopexit ], [ %i.au, %bb.o ] ; 12 uses
   switch i64 %i.e, label %bb.g [
     i64 2, label %bb.b
     i64 1, label %bb.h
@@ -228,13 +228,13 @@ bb.c:                                             ; preds = %bb.b
   %i.n = zext nneg i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1, !noundef !5
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.010.2.lcssa
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.010.2.lcssa ; 3 uses
   store i8 %i.p, ptr %i.q, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 1
   %i.s = load i8, ptr %i.r, align 1, !noundef !5  ; 2 uses
-  %i.t = add nuw nsw i64 %.sroa.010.2.lcssa, 1    ; 3 uses
+  %i.t = add nuw nsw i64 %.sroa.010.2.lcssa, 1    ; 2 uses
   %i.u = icmp ult i64 %i.t, %4
-  br i1 %i.u, label %bb.e, label %7
+  br i1 %i.u, label %bb.e, label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.010.2.lcssa, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #18
@@ -246,39 +246,33 @@ bb.e:                                             ; preds = %bb.c
   %i.x = zext nneg i8 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1, !noundef !5
-  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 %i.t
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.q, i64 1
   store i8 %i.z, ptr %i.aa, align 1
-  %i.ab = add nuw i64 %.sroa.010.2.lcssa, 2       ; 3 uses
+  %i.ab = add nuw i64 %.sroa.010.2.lcssa, 2       ; 2 uses
   %i.ac = icmp ult i64 %i.ab, %4
-  br i1 %i.ac, label %8, label %bb.f
+  br i1 %i.ac, label %.sink.split, label %9
 
-7:                                                ; preds = %bb.c
+bb.f:                                             ; preds = %bb.c
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.t, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #18
   unreachable
 
-8:                                                ; preds = %bb.e
-  %9 = shl i8 %i.s, 2
-  %10 = and i8 %9, 60
-  br label %.sink.split
+.sink.split:                                      ; preds = %bb.e
+  %7 = shl i8 %i.s, 2
+  %8 = and i8 %7, 60
+  %i.ad = zext nneg i8 %8 to i64
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %i.ad
+  %i.af = load i8, ptr %i.ae, align 1, !noundef !5
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.q, i64 2
+  store i8 %i.af, ptr %i.ag, align 1
+  %i.ah = add nuw i64 %.sroa.010.2.lcssa, 3
+  br label %bb.g
 
-bb.f:                                             ; preds = %bb.e
+9:                                                ; preds = %bb.e
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.ab, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #18
   unreachable
 
-.sink.split:                                      ; preds = %8, %bb.k
-  %.sink128 = phi i8 [ %i.at, %bb.k ], [ %10, %8 ]
-  %.sink125 = phi i64 [ %i.aq, %bb.k ], [ %i.ab, %8 ]
-  %.sink = phi i64 [ 2, %bb.k ], [ 3, %8 ]
-  %i.ad = zext nneg i8 %.sink128 to i64
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %i.ad
-  %i.af = load i8, ptr %i.ae, align 1, !noundef !5
-  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 %.sink125
-  store i8 %i.af, ptr %i.ag, align 1
-  %i.ah = add nuw i64 %.sroa.010.2.lcssa, %.sink
-  br label %bb.g
-
-bb.g:                                             ; preds = %.sink.split, %._crit_edge
-  %.sroa.010.3 = phi i64 [ %.sroa.010.2.lcssa, %._crit_edge ], [ %i.ah, %.sink.split ]
+bb.g:                                             ; preds = %bb.k, %._crit_edge, %.sink.split
+  %.sroa.010.3 = phi i64 [ %.sroa.010.2.lcssa, %._crit_edge ], [ %i.ah, %.sink.split ], [ %14, %bb.k ]
   ret i64 %.sroa.010.3
 
 bb.h:                                             ; preds = %._crit_edge
@@ -292,9 +286,9 @@ bb.i:                                             ; preds = %bb.h
   %i.am = zext nneg i8 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1, !noundef !5
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.010.2.lcssa
+  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.010.2.lcssa ; 2 uses
   store i8 %i.ao, ptr %i.ap, align 1
-  %i.aq = add nuw nsw i64 %.sroa.010.2.lcssa, 1   ; 3 uses
+  %i.aq = add nuw nsw i64 %.sroa.010.2.lcssa, 1   ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %4
   br i1 %i.ar, label %bb.k, label %bb.l
 
@@ -305,7 +299,13 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.i
   %i.as = shl i8 %i.aj, 4
   %i.at = and i8 %i.as, 48
-  br label %.sink.split
+  %10 = zext nneg i8 %i.at to i64
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %10
+  %12 = load i8, ptr %11, align 1, !noundef !5
+  %13 = getelementptr inbounds nuw i8, ptr %i.ap, i64 1
+  store i8 %12, ptr %13, align 1
+  %14 = add nuw i64 %.sroa.010.2.lcssa, 2
+  br label %bb.g
 
 bb.l:                                             ; preds = %bb.i
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.aq, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #18
@@ -708,7 +708,7 @@ bb.a:
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = add nsw i64 %3, -1                       ; 3 uses
+  %i.j = add nsw i64 %3, -1                       ; 2 uses
   %.not.i.i = icmp eq i64 %3, 0
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
@@ -723,7 +723,8 @@ bb.c:                                             ; preds = %bb.f, %bb.d, %bb.a
   br i1 %i.q, label %bb.g, label %_RNvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode18complete_quads_len.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 %i.j
+  %8 = getelementptr i8, ptr %2, i64 %3
+  %i.r = getelementptr i8, ptr %8, i64 -1
   %i.s = load i8, ptr %i.r, align 1, !alias.scope !150, !noalias !151, !noundef !5 ; 3 uses
   %.not9.i.i = icmp eq i8 %i.s, %i.f
   br i1 %.not9.i.i, label %bb.c, label %bb.f

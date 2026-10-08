@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %.lr.ph220
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %indvars.iv254 = phi i64 [ %i.ck, %.lr.ph.preheader ], [ %indvars.iv.next255, %bb.o ] ; 5 uses
+  %indvars.iv254 = phi i64 [ %i.ck, %.lr.ph.preheader ], [ %indvars.iv.next255, %bb.o ] ; 6 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.0224, i64 %indvars.iv254
   %i.co = load i16, ptr %i.cn, align 2            ; 2 uses
   switch i16 %i.co, label %bb.n [
@@ -222,12 +222,13 @@ bb.n:                                             ; preds = %.lr.ph
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr %.4194222, i64 %indvars.iv254 ; 2 uses
   %i.cs = load i16, ptr %i.cr, align 2, !tbaa !12
   %i.ct = tail call noundef i16 @llvm.bswap.i16(i16 %i.cs)
-  %1 = add nuw nsw i64 %indvars.iv254, 1          ; 2 uses
-  %2 = getelementptr inbounds nuw [2 x i8], ptr %.4194222, i64 %1 ; 2 uses
+  %1 = getelementptr inbounds nuw [2 x i8], ptr %.4194222, i64 %indvars.iv254
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
   %i.cu = load i16, ptr %2, align 2, !tbaa !12
   %i.cv = tail call noundef i16 @llvm.bswap.i16(i16 %i.cu)
   %i.cw = tail call zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext %i.f, i16 noundef zeroext %i.ct, i8 noundef zeroext %i.cq) #5
-  %i.cx = getelementptr inbounds nuw i8, ptr %.0224, i64 %1
+  %3 = getelementptr inbounds nuw i8, ptr %.0224, i64 %indvars.iv254
+  %i.cx = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !17
   %i.cz = tail call zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext %i.f, i16 noundef zeroext %i.cv, i8 noundef zeroext %i.cy) #5
   %i.da = tail call noundef i16 @llvm.bswap.i16(i16 %i.cw)

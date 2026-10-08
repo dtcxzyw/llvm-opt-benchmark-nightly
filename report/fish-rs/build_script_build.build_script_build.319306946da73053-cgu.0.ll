@@ -204,9 +204,9 @@ bb.dl:                                            ; preds = %bb.df, %.thread.i
   br i1 %.not7.i.i, label %.loopexit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.dl, %bb.dm
-  %.sroa.6.08.i.i = phi i64 [ %0, %bb.dm ], [ %.sroa.4.sroa.4.0.i, %bb.dl ] ; 2 uses
-  %0 = add i64 %.sroa.6.08.i.i, -1                ; 3 uses
-  %i.ho = getelementptr inbounds nuw i8, ptr %.val.i, i64 %0
+  %.sroa.6.08.i.i = phi i64 [ %1, %bb.dm ], [ %.sroa.4.sroa.4.0.i, %bb.dl ] ; 3 uses
+  %0 = getelementptr i8, ptr %.val.i, i64 %.sroa.6.08.i.i
+  %i.ho = getelementptr i8, ptr %0, i64 -1
   %i.hp = load i8, ptr %i.ho, align 1, !noalias !78
   switch i8 %i.hp, label %.loopexit.i [
     i8 9, label %bb.dm
@@ -217,7 +217,8 @@ bb.dl:                                            ; preds = %bb.df, %.thread.i
   ]
 
 bb.dm:                                            ; preds = %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i
-  %.not.i9.i = icmp eq i64 %0, 0
+  %1 = add i64 %.sroa.6.08.i.i, -1                ; 2 uses
+  %.not.i9.i = icmp eq i64 %1, 0
   br i1 %.not.i9.i, label %.loopexit.i, label %.lr.ph.i.i
 
 .loopexit.i:                                      ; preds = %bb.dm, %.lr.ph.i.i, %bb.dl

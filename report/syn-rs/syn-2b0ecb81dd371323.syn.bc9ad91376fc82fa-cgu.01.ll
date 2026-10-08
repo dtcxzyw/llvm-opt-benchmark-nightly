@@ -28,7 +28,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.h
-  %.sroa.0.0 = phi i64 [ %i.aa, %bb.h ], [ 0, %.preheader ] ; 5 uses
+  %.sroa.0.0 = phi i64 [ %i.aa, %bb.h ], [ 0, %.preheader ] ; 6 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.sroa.0.0 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64)
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
@@ -95,17 +95,19 @@ _RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit._crit_edge
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit.preheader, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14
-  %.sroa.7.040 = phi i64 [ %.sroa.7.0, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14 ], [ %.sroa.7.038, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit.preheader ] ; 3 uses
+  %.sroa.7.041 = phi i64 [ %.sroa.7.0, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14 ], [ %.sroa.7.038, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit.preheader ] ; 3 uses
+  %.sroa.7.040 = phi i64 [ %.sroa.7.041, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14 ], [ %.sroa.0.0, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit.preheader ]
   %.sroa.13.039 = phi i64 [ %.sroa.13.1, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14 ], [ %.sroa.0.0, %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit.preheader ] ; 5 uses
-  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.sroa.7.040 ; 5 uses
+  %i.ac = getelementptr [16 x i8], ptr %i.f, i64 %.sroa.7.040 ; 2 uses
+  %2 = getelementptr i8, ptr %i.ac, i64 16        ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
+  %i.ad = getelementptr i8, ptr %i.ac, i64 24
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !66, !noundef !26
   %i.af = icmp eq i64 %i.ae, 3
   br i1 %i.af, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.ag = load ptr, ptr %i.ac, align 8, !alias.scope !66, !nonnull !26, !noundef !26 ; 2 uses
+  %i.ag = load ptr, ptr %2, align 8, !alias.scope !66, !nonnull !26, !noundef !26 ; 2 uses
   %i.ah = load i16, ptr %i.ag, align 1
   %i.ai = xor i16 %i.ah, 10592
   %i.aj = getelementptr i8, ptr %i.ag, i64 2
@@ -138,28 +140,28 @@ bb.l:                                             ; preds = %.noexc
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %.noexc
   %.sroa.01.0.i12 = phi ptr [ @2, %bb.l ], [ @1, %bb.k ], [ @0, %.noexc ]
-  store ptr %.sroa.01.0.i12, ptr %i.ac, align 8, !alias.scope !66, !captures !65
+  store ptr %.sroa.01.0.i12, ptr %2, align 8, !alias.scope !66, !captures !65
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.i, %.lr.ph, %bb.m
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.sroa.13.039
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
   %i.at = add i64 %.sroa.13.039, 1
   br label %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14
 
 _RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit14: ; preds = %.noexc, %bb.n
   %.sroa.13.1 = phi i64 [ %i.at, %bb.n ], [ %.sroa.13.039, %.noexc ] ; 2 uses
-  %.sroa.7.0 = add nuw nsw i64 %.sroa.7.040, 1    ; 2 uses
+  %.sroa.7.0 = add nuw nsw i64 %.sroa.7.041, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.7.0, %i.b
   br i1 %exitcond.not, label %_RNCNvMNtCsgbWeKYPjk8w_3syn9lookaheadNtB4_10Lookahead15error0B6_.exit._crit_edge, label %.lr.ph
 
 bb.o:                                             ; preds = %bb.j
   %i.au = landingpad { ptr, i32 }
           cleanup
-  %i.av = sub nuw nsw i64 %i.b, %.sroa.7.040      ; 2 uses
+  %i.av = sub nuw nsw i64 %i.b, %.sroa.7.041      ; 2 uses
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.sroa.13.039
   %i.ax = shl nuw nsw i64 %i.av, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aw, ptr nonnull align 8 %i.ac, i64 %i.ax, i1 false), !noalias !67
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aw, ptr nonnull align 8 %2, i64 %i.ax, i1 false), !noalias !67
   %i.ay = add i64 %i.av, %.sroa.13.039
   store i64 %i.ay, ptr %i.a, align 8, !noalias !67
   resume { ptr, i32 } %i.au
@@ -562,7 +564,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCsgbWeKYPjk8w_3syn.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nuw i64 %1, %i.b                     ; 4 uses
+  %i.e = sub nuw i64 %1, %i.b                     ; 5 uses
   %i.f = load i64, ptr %0, align 8, !range !49, !alias.scope !1918, !noundef !26
   %i.g = sub nsw i64 %i.f, %i.b
   %i.h = icmp ugt i64 %i.e, %i.g
@@ -584,10 +586,12 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsgbWeKYPjk8w_3syn.exit.i: 
   br i1 %i.n, label %._crit_edge.thread.i, label %._crit_edge.i
 
 ._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsgbWeKYPjk8w_3syn.exit.i
-  %i.o = add i64 %i.e, -1                         ; 2 uses
+  %i.o = add i64 %i.e, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 %i.o, i1 false)
-  %i.p = add i64 %i.o, %i.i                       ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p
+  %3 = add i64 %i.i, %i.e                         ; 2 uses
+  %i.p = add i64 %3, -1
+  %4 = getelementptr i8, ptr %i.k, i64 %3
+  %scevgep.i = getelementptr i8, ptr %4, i64 -1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsgbWeKYPjk8w_3syn.exit.i, %._crit_edge.thread.i

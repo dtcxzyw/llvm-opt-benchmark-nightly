@@ -101,7 +101,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.e
   %indvar = phi i64 [ 0, %bb.b ], [ %indvar.next, %bb.e ] ; 3 uses
-  %.sroa.0.022 = phi i64 [ 1, %bb.b ], [ %.sroa.5.023, %bb.e ] ; 8 uses
+  %.sroa.0.022 = phi i64 [ 1, %bb.b ], [ %.sroa.5.023, %bb.e ] ; 10 uses
   %i.g = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.0.022 ; 2 uses
   %i.h = getelementptr i8, ptr %i.g, i64 -8
   %.val11 = load double, ptr %i.g, align 8, !noundef !4
@@ -122,10 +122,11 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.sroa.5.023
+  %i.m = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.0.022
+  %1 = getelementptr i8, ptr %i.m, i64 8
   %i.n = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.0.022 ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 -8
-  %.val.prol = load double, ptr %i.m, align 8, !noundef !4 ; 2 uses
+  %.val.prol = load double, ptr %1, align 8, !noundef !4 ; 2 uses
   %.val10.prol = load double, ptr %i.o, align 8, !noundef !4
   %i.p = fcmp oeq double %.val.prol, %.val10.prol
   br i1 %i.p, label %.lr.ph.prol.loopexit.unr-lcssa, label %bb.d
@@ -143,6 +144,7 @@ bb.d:                                             ; preds = %.lr.ph.prol
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol.loopexit.unr-lcssa, %.lr.ph.preheader
   %.sroa.11.1.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %.sroa.11.1.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.sroa.5.025.unr = phi i64 [ %.sroa.5.023, %.lr.ph.preheader ], [ %.sroa.5.0.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
+  %.sroa.5.0.in25.unr = phi i64 [ %.sroa.0.022, %.lr.ph.preheader ], [ %.sroa.5.023, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.sroa.11.024.unr = phi i64 [ %.sroa.0.022, %.lr.ph.preheader ], [ %.sroa.11.1.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
   %i.r = icmp eq i64 %i.l, %indvar
   br i1 %i.r, label %._crit_edge, label %.lr.ph
@@ -161,12 +163,14 @@ bb.e:                                             ; preds = %bb.c
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.h
-  %.sroa.5.025 = phi i64 [ %.sroa.5.0.1, %bb.h ], [ %.sroa.5.025.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %.sroa.5.026 = phi i64 [ %.sroa.5.0.1, %bb.h ], [ %.sroa.5.025.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %.sroa.5.025 = phi i64 [ %.sroa.5.0, %bb.h ], [ %.sroa.5.0.in25.unr, %.lr.ph.prol.loopexit ]
   %.sroa.11.024 = phi i64 [ %.sroa.11.1.1, %bb.h ], [ %.sroa.11.024.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.sroa.5.025
+  %i.s = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.5.025
+  %2 = getelementptr i8, ptr %i.s, i64 8
   %i.t = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.11.024 ; 2 uses
   %i.u = getelementptr i8, ptr %i.t, i64 -8
-  %.val = load double, ptr %i.s, align 8, !noundef !4 ; 2 uses
+  %.val = load double, ptr %2, align 8, !noundef !4 ; 2 uses
   %.val10 = load double, ptr %i.u, align 8, !noundef !4
   %i.v = fcmp oeq double %.val, %.val10
   br i1 %i.v, label %.lr.ph.1, label %bb.f
@@ -178,8 +182,9 @@ bb.f:                                             ; preds = %.lr.ph
 
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.f
   %.sroa.11.1 = phi i64 [ %i.w, %bb.f ], [ %.sroa.11.024, %.lr.ph ] ; 3 uses
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.sroa.5.025
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
+  %.sroa.5.0 = add nuw nsw i64 %.sroa.5.026, 1
+  %i.x = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.5.026
+  %i.y = getelementptr i8, ptr %i.x, i64 8
   %i.z = getelementptr [8 x i8], ptr %i.f, i64 %.sroa.11.1 ; 2 uses
   %i.aa = getelementptr i8, ptr %i.z, i64 -8
   %.val.1 = load double, ptr %i.y, align 8, !noundef !4 ; 2 uses
@@ -194,7 +199,7 @@ bb.g:                                             ; preds = %.lr.ph.1
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph.1
   %.sroa.11.1.1 = phi i64 [ %i.ac, %bb.g ], [ %.sroa.11.1, %.lr.ph.1 ] ; 2 uses
-  %.sroa.5.0.1 = add nuw nsw i64 %.sroa.5.025, 2  ; 2 uses
+  %.sroa.5.0.1 = add nuw nsw i64 %.sroa.5.026, 2  ; 2 uses
   %exitcond.not.1 = icmp eq i64 %.sroa.5.0.1, %i.b
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph
 }

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k, %_RNvMs5_NtCs
   br i1 %.not.i.i.i34.i, label %bb.u, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.av = getelementptr inbounds nuw i8, ptr %.val.i, i64 16 ; 4 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %.val.i, i64 16 ; 3 uses
   switch i64 %.val26.i, label %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact12read_present.exit.i.i.i.i [
     i64 0, label %bb.u
     i64 1, label %.invoke.i
@@ -237,7 +237,7 @@ _RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit.i.i.i.i: ; 
   %i.bd = call range(i16 1, 7) i16 @llvm.ctpop.i16(i16 %i.ay)
   %i.be = shl nuw nsw i16 %i.bd, 1
   %i.bf = zext nneg i16 %i.be to i64              ; 4 uses
-  %i.bg = add nuw nsw i64 %i.bf, 2                ; 4 uses
+  %i.bg = add nuw nsw i64 %i.bf, 2                ; 3 uses
   %.not.i14.i.i.i.i = icmp samesign ugt i64 %i.bg, %.val26.i
   br i1 %.not.i14.i.i.i.i, label %.invoke.i, label %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit16.i.i.i.i, !prof !6
 
@@ -247,9 +247,9 @@ _RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit16.i.i.i.i: 
   br i1 %.not.i17.i.i.i.i, label %.invoke.i, label %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit19.i.i.i.i, !prof !6
 
 _RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit19.i.i.i.i: ; preds = %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit16.i.i.i.i
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.bf
+  %i.bi = getelementptr i8, ptr %i.av, i64 %i.bf  ; 2 uses
   %.sroa.02.0.copyload.i15.i.i.i.i = load i16, ptr %i.bi, align 1, !alias.scope !935, !noalias !926
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.bg
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 2
   br label %bb.p
 
 bb.p:                                             ; preds = %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit19.i.i.i.i, %_RNvNtNtCs5XgW7KoffLW_12opendal_core5types7compact11read_offset.exit.i.i.i.i
@@ -652,13 +652,13 @@ bb.u:                                             ; preds = %bb.s
   %i.bg = load ptr, ptr %1, align 8, !nonnull !5, !align !12, !noundef !5 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1226)
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 64 ; 2 uses
-  %i.bi = load i64, ptr %i.bh, align 8, !alias.scope !1226, !noalias !1227, !noundef !5 ; 3 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !alias.scope !1226, !noalias !1227, !noundef !5 ; 4 uses
   %i.bj = icmp eq i64 %i.bi, 0
   br i1 %i.bj, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionTIBC_NtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtB16_4list3api7ListDynEL_EEEEB1a_.exit, label %_RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtB6_5boxed3BoxDNtNtNtB1k_4list3api7ListDynEL_EEE3popB1o_.exit
 
 _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtB6_5boxed3BoxDNtNtNtB1k_4list3api7ListDynEL_EEE3popB1o_.exit: ; preds = %bb.u
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 48
-  %i.bl = add nsw i64 %i.bi, -1                   ; 3 uses
+  %i.bl = add nsw i64 %i.bi, -1                   ; 2 uses
   store i64 %i.bl, ptr %i.bh, align 8, !alias.scope !1226, !noalias !1227
   %i.bm = load i64, ptr %i.bk, align 8, !range !7, !alias.scope !1226, !noalias !1227, !noundef !5
   %i.bn = icmp samesign ult i64 %i.bl, %i.bm
@@ -667,8 +667,9 @@ _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6Optio
   %i.bp = load ptr, ptr %i.bo, align 8, !alias.scope !1226, !noalias !1227, !nonnull !5, !noundef !5
   %i.bq = icmp ult i64 %i.bi, 144115188075855873
   call void @llvm.assume(i1 %i.bq)
-  %i.br = getelementptr inbounds nuw [64 x i8], ptr %i.bp, i64 %i.bl
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull align 8 dereferenceable(64) %i.br, i64 64, i1 false), !noalias !1226
+  %i.br = getelementptr [64 x i8], ptr %i.bp, i64 %i.bi
+  %3 = getelementptr i8, ptr %i.br, i64 -64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull align 8 dereferenceable(64) %3, i64 64, i1 false), !noalias !1226
   %.pr = load i64, ptr %i.a, align 8, !alias.scope !1228
   %i.bs = icmp eq i64 %.pr, 2
   br i1 %i.bs, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionTIBC_NtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtB16_4list3api7ListDynEL_EEEEB1a_.exit, label %bb.v
@@ -1071,7 +1072,7 @@ bb.fl:                                            ; preds = %bb.fk
 bb.fm:                                            ; preds = %bb.fl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !1307)
-  %i.mm = load i64, ptr %i.mh, align 8, !alias.scope !1307, !noalias !1308, !noundef !5 ; 3 uses
+  %i.mm = load i64, ptr %i.mh, align 8, !alias.scope !1307, !noalias !1308, !noundef !5 ; 4 uses
   %i.mn = icmp eq i64 %i.mm, 0
   br i1 %i.mn, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionTIBC_NtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtB16_4list3api7ListDynEL_EEEEB1a_.exit234, label %_RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtB6_5boxed3BoxDNtNtNtB1k_4list3api7ListDynEL_EEE3popB1o_.exit230
 
@@ -1087,7 +1088,7 @@ bb.fn:                                            ; preds = %bb.fl
   br label %bb.g
 
 _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtB6_5boxed3BoxDNtNtNtB1k_4list3api7ListDynEL_EEE3popB1o_.exit230: ; preds = %bb.fm
-  %i.mr = add nsw i64 %i.mm, -1                   ; 3 uses
+  %i.mr = add nsw i64 %i.mm, -1                   ; 2 uses
   store i64 %i.mr, ptr %i.mh, align 8, !alias.scope !1307, !noalias !1308
   %i.ms = load i64, ptr %i.mf, align 8, !range !7, !alias.scope !1307, !noalias !1308, !noundef !5
   %i.mt = icmp samesign ult i64 %i.mr, %i.ms
@@ -1095,8 +1096,9 @@ _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecTINtNtCsgxBkk5gSRhY_4core6option6Optio
   %i.mu = load ptr, ptr %i.mg, align 8, !alias.scope !1307, !noalias !1308, !nonnull !5, !noundef !5
   %i.mv = icmp ult i64 %i.mm, 144115188075855873
   call void @llvm.assume(i1 %i.mv)
-  %i.mw = getelementptr inbounds nuw [64 x i8], ptr %i.mu, i64 %i.mr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, ptr noundef nonnull align 8 dereferenceable(64) %i.mw, i64 64, i1 false), !noalias !1307
+  %i.mw = getelementptr [64 x i8], ptr %i.mu, i64 %i.mm
+  %4 = getelementptr i8, ptr %i.mw, i64 -64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, ptr noundef nonnull align 8 dereferenceable(64) %4, i64 64, i1 false), !noalias !1307
   %.pr300 = load i64, ptr %i.i, align 8, !alias.scope !1309
   %i.mx = icmp eq i64 %.pr300, 2
   br i1 %i.mx, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionTIBC_NtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtNtB16_4list3api7ListDynEL_EEEEB1a_.exit234, label %bb.fo

@@ -202,7 +202,7 @@ declare hidden noundef ptr @_ZN8nanobind6detail12strdup_checkEPKc(ptr noundef) l
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @_ZN8nanobind6detail10error_whatEPNS0_13error_payloadE(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [10 x i8], align 1                ; 4 uses
+  %i.a = alloca [10 x i8], align 1                ; 3 uses
   %1 = alloca %"struct.nanobind::detail::Buffer", align 8 ; 19 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   %2 = alloca %"class.std::vector", align 8       ; 13 uses
@@ -577,20 +577,21 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ap, %bb.ao
   %.07.i = phi i32 [ %i.da, %bb.ao ], [ %i.dh, %bb.ap ] ; 3 uses
-  %.0.i = phi i64 [ 10, %bb.ao ], [ %i.df, %bb.ap ] ; 3 uses
+  %.0.i = phi i64 [ 10, %bb.ao ], [ %i.df, %bb.ap ] ; 4 uses
   %i.db = urem i32 %.07.i, 10
   %i.dc = zext nneg i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw i8, ptr @.str.15, i64 %i.dc
   %i.de = load i8, ptr %i.dd, align 1
-  %i.df = add i64 %.0.i, -1                       ; 3 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.df
+  %i.df = add i64 %.0.i, -1
+  %6 = getelementptr i8, ptr %i.a, i64 %.0.i      ; 2 uses
+  %i.dg = getelementptr i8, ptr %6, i64 -1
   store i8 %i.de, ptr %i.dg, align 1
   %i.dh = udiv i32 %.07.i, 10
   %.not.i77 = icmp ult i32 %.07.i, 10
   br i1 %.not.i77, label %bb.aq, label %bb.ap, !llvm.loop !11
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.di = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.df
+  %i.di = getelementptr i8, ptr %6, i64 -1
   %i.dj = sub i64 11, %.0.i                       ; 3 uses
   %i.dk = load ptr, ptr %i.l, align 8             ; 3 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dj

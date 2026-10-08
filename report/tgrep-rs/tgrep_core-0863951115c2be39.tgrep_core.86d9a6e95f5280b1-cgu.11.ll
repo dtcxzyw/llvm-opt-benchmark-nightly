@@ -202,10 +202,10 @@ bb.ap:                                            ; preds = %.lr.ph
           to label %bb.aq unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !771
 
 .lr.ph:                                           ; preds = %bb.an, %bb.ap
-  %.sroa.018.0.in.i18 = phi i64 [ %.sroa.018.0.i, %bb.ap ], [ %.sroa.010.097.i, %bb.an ]
-  %.sroa.018.0.i = add nuw nsw i64 %.sroa.018.0.in.i18, 1 ; 4 uses
-  %i.ci = getelementptr inbounds nuw [12 x i8], ptr %7, i64 %.sroa.018.0.i
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
+  %.sroa.018.0.in.i18 = phi i64 [ %.sroa.018.0.i, %bb.ap ], [ %.sroa.010.097.i, %bb.an ] ; 2 uses
+  %.sroa.018.0.i = add nuw nsw i64 %.sroa.018.0.in.i18, 1 ; 3 uses
+  %i.ci = getelementptr inbounds nuw [12 x i8], ptr %7, i64 %.sroa.018.0.in.i18
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 20
   %i.ck = load i32, ptr %i.cj, align 4, !alias.scope !770, !noalias !775, !noundef !5
   %i.cl = icmp eq i32 %i.ck, %i.cd
   br i1 %i.cl, label %bb.ap, label %._crit_edge
@@ -260,8 +260,8 @@ bb.at:                                            ; preds = %_RNvXs4_NtNtNtCsgCe
   %i.cz = load ptr, ptr %i.bq, align 8, !alias.scope !782, !noalias !779, !nonnull !5, !noundef !5
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.cx
   store i32 %i.cs, ptr %i.da, align 1, !noalias !783
-  %.pre.i.i.i = load i64, ptr %i.br, align 8, !alias.scope !782, !noalias !779 ; 3 uses
-  %i.db = add i64 %.pre.i.i.i, 4                  ; 3 uses
+  %.pre.i.i.i = load i64, ptr %i.br, align 8, !alias.scope !782, !noalias !779 ; 5 uses
+  %i.db = add i64 %.pre.i.i.i, 4                  ; 2 uses
   store i64 %i.db, ptr %i.br, align 8, !alias.scope !782, !noalias !779
   %i.dc = load i64, ptr %i.g, align 8, !range !17, !alias.scope !784, !noalias !779, !noundef !5
   %i.dd = icmp eq i64 %i.db, %i.dc
@@ -273,9 +273,10 @@ bb.au:                                            ; preds = %.noexc.i
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit.i.i: ; preds = %bb.au, %.noexc.i
   %i.de = load ptr, ptr %i.bq, align 8, !alias.scope !784, !noalias !779, !nonnull !5, !noundef !5
-  %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.db
+  %9 = getelementptr i8, ptr %i.de, i64 %.pre.i.i.i
+  %i.df = getelementptr i8, ptr %9, i64 4
   store i8 %i.cu, ptr %i.df, align 1, !noalias !783
-  %i.dg = add i64 %.pre.i.i.i, 5                  ; 3 uses
+  %i.dg = add i64 %.pre.i.i.i, 5                  ; 2 uses
   store i64 %i.dg, ptr %i.br, align 8, !alias.scope !784, !noalias !779
   %i.dh = load i64, ptr %i.g, align 8, !range !17, !alias.scope !785, !noalias !779, !noundef !5
   %i.di = icmp eq i64 %i.dg, %i.dh
@@ -287,7 +288,8 @@ bb.av:                                            ; preds = %_RNvMsG_NtCsgCecv3e
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit13.i.i: ; preds = %bb.av, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit.i.i
   %i.dj = load ptr, ptr %i.bq, align 8, !alias.scope !785, !noalias !779, !nonnull !5, !noundef !5
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.dg
+  %10 = getelementptr i8, ptr %i.dj, i64 %.pre.i.i.i
+  %i.dk = getelementptr i8, ptr %10, i64 5
   store i8 %i.cw, ptr %i.dk, align 1, !noalias !783
   %i.dl = add i64 %.pre.i.i.i, 6                  ; 5 uses
   store i64 %i.dl, ptr %i.br, align 8, !alias.scope !778, !noalias !779

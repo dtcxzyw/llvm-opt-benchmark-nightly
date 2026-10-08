@@ -205,9 +205,10 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.w, label %.loopexit16, label %.preheader
 
 .preheader:                                       ; preds = %bb.g, %.preheader
-  %.idx10 = phi i64 [ %.add11, %.preheader ], [ %.idx, %bb.g ]
-  %.add11 = add nsw i64 %.idx10, -56              ; 3 uses
-  %.ptr13 = getelementptr inbounds i8, ptr %i.g, i64 %.add11
+  %.idx10 = phi i64 [ %.add11, %.preheader ], [ %.idx, %bb.g ] ; 2 uses
+  %.add11 = add nsw i64 %.idx10, -56              ; 2 uses
+  %1 = getelementptr i8, ptr %i.g, i64 %.idx10
+  %.ptr13 = getelementptr i8, ptr %1, i64 -56
   tail call void @_ZN5draco14RAnsBitEncoderD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %.ptr13) #17
   %i.x = icmp eq i64 %.add11, 8
   br i1 %i.x, label %.loopexit16, label %.preheader

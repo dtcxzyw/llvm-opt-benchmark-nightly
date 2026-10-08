@@ -195,8 +195,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = add i64 %1, 15
-  %i.d = and i64 %i.c, -16                        ; 2 uses
-  %i.e = add i64 %i.d, 16                         ; 5 uses
+  %i.d = and i64 %i.c, -16                        ; 3 uses
+  %i.e = add i64 %i.d, 16                         ; 4 uses
   %.034 = load ptr, ptr %i.a, align 8, !tbaa !63  ; 4 uses
   %.not2735 = icmp eq ptr %.034, null
   br i1 %.not2735, label %.loopexit, label %.lr.ph.preheader
@@ -227,12 +227,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not28, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph._crit_edge
-  %i.l = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 %i.e ; 3 uses
+  %2 = getelementptr i8, ptr %.037.lcssa, i64 %i.d ; 2 uses
+  %i.l = getelementptr i8, ptr %2, i64 16         ; 2 uses
   %i.m = sub nuw i64 %.lcssa, %i.e
   store i64 %i.m, ptr %i.l, align 8, !tbaa !52
   %i.n = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !53
-  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.p = getelementptr i8, ptr %2, i64 24
   store ptr %i.o, ptr %i.p, align 8, !tbaa !53
   store i64 %i.e, ptr %.037.lcssa, align 8, !tbaa !52
   br label %bb.e
@@ -277,8 +278,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = add i64 %2, 15
   %i.d = and i64 %i.c, -16
   %i.e = add i64 %3, 15
-  %i.f = and i64 %i.e, -16                        ; 5 uses
-  %i.g = add i64 %i.f, 16                         ; 8 uses
+  %i.f = and i64 %i.e, -16                        ; 6 uses
+  %i.g = add i64 %i.f, 16                         ; 7 uses
   %i.h = icmp eq i64 %i.d, %i.f
   br i1 %i.h, label %pool_free.exit, label %bb.c, !prof !45
 
@@ -388,12 +389,13 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not28.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph.i._crit_edge
-  %i.ag = getelementptr inbounds nuw i8, ptr %.037.i.lcssa, i64 %i.g ; 3 uses
+  %4 = getelementptr i8, ptr %.037.i.lcssa, i64 %i.f ; 2 uses
+  %i.ag = getelementptr i8, ptr %4, i64 16        ; 2 uses
   %i.ah = sub nuw i64 %.lcssa66, %i.g
   store i64 %i.ah, ptr %i.ag, align 8, !tbaa !52
   %i.ai = getelementptr inbounds nuw i8, ptr %.037.i.lcssa, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !53
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %i.ak = getelementptr i8, ptr %4, i64 24
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !53
   store i64 %i.g, ptr %.037.i.lcssa, align 8, !tbaa !52
   br label %bb.t
@@ -796,14 +798,15 @@ size_align_up.exit632.i:                          ; preds = %bb.fu, %bb.fv
   %i.arj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ark = load i64, ptr %i.arj, align 8, !tbaa !100
   %i.arl = shl i64 %i.ark, 1
-  %i.arm = and i64 %i.arl, -32
-  %i.arn = add i64 %i.arm, 64                     ; 3 uses
+  %i.arm = and i64 %i.arl, -32                    ; 2 uses
+  %i.arn = add i64 %i.arm, 64                     ; 2 uses
   %i.aro = tail call ptr %.sroa.0849.0(ptr noundef %.sroa.9.0, i64 noundef %i.arn) #33, !inline_history !371 ; 6 uses
   %.not.i30 = icmp eq ptr %i.aro, null
   br i1 %.not.i30, label %.loopexit1398, label %bb.fw
 
 bb.fw:                                            ; preds = %size_align_up.exit632.i
-  %i.arp = getelementptr inbounds nuw i8, ptr %i.aro, i64 %i.arn ; 2 uses
+  %6 = getelementptr i8, ptr %i.aro, i64 %i.arm
+  %i.arp = getelementptr i8, ptr %6, i64 64       ; 2 uses
   %i.arq = load i64, ptr %0, align 8, !tbaa !99   ; 2 uses
   %i.arr = and i64 %i.arq, 7
   %i.ars = icmp eq i64 %i.arr, 7                  ; 3 uses
@@ -1206,15 +1209,16 @@ bb.mx:                                            ; preds = %bb.mw
   %i.cxt = getelementptr inbounds nuw i8, ptr %.0418.i, i64 8
   %i.cxu = load ptr, ptr %i.cxt, align 8, !tbaa !100 ; 7 uses
   %i.cxv = ptrtoaddr ptr %i.cxu to i64            ; 4 uses
-  %i.cxw = mul nuw nsw i64 %i.cxs, 6
-  %6 = add nuw nsw i64 %i.cxw, 16                 ; 2 uses
-  %i.cxx = getelementptr inbounds nuw i8, ptr %.0385.i, i64 %6
+  %i.cxw = mul nuw nsw i64 %i.cxs, 6              ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.0385.i, i64 %i.cxw
+  %i.cxx = getelementptr inbounds nuw i8, ptr %7, i64 16
   %.not440.i = icmp ult ptr %i.cxx, %.0363.i
   br i1 %.not440.i, label %bb.my, label %size_align_up.exit467.i, !prof !62
 
 size_align_up.exit467.i:                          ; preds = %bb.mx
+  %8 = add nuw nsw i64 %i.cxw, 16
   %i.cxy = lshr i64 %.0356.i, 1
-  %i.cxz = tail call i64 @llvm.umax.i64(i64 %i.cxy, i64 %6)
+  %i.cxz = tail call i64 @llvm.umax.i64(i64 %i.cxy, i64 %8)
   %i.cya = add nuw i64 %i.cxz, 7
   %i.cyb = and i64 %i.cya, -8
   %i.cyc = add i64 %i.cyb, %.0356.i               ; 4 uses
@@ -1617,17 +1621,18 @@ bb.sz:                                            ; preds = %.thread1260, %bb.sy
   br label %bb.tc
 
 bb.ta:                                            ; preds = %bb.sw
-  %i.esz = lshr i64 %i.cxm, 8                     ; 3 uses
+  %i.esz = lshr i64 %i.cxm, 8                     ; 4 uses
   %i.eta = getelementptr inbounds nuw i8, ptr %.0418.i, i64 8
   %i.etb = load ptr, ptr %i.eta, align 8, !tbaa !100
-  %7 = add nuw nsw i64 %i.esz, 2                  ; 2 uses
-  %i.etc = getelementptr inbounds nuw i8, ptr %.0385.i, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %.0385.i, i64 %i.esz
+  %i.etc = getelementptr inbounds nuw i8, ptr %9, i64 2
   %.not427.i = icmp ult ptr %i.etc, %.0363.i
   br i1 %.not427.i, label %bb.tb, label %size_align_up.exit457.i, !prof !62
 
 size_align_up.exit457.i:                          ; preds = %bb.ta
+  %10 = add nuw nsw i64 %i.esz, 2
   %i.etd = lshr i64 %.0356.i, 1
-  %i.ete = tail call i64 @llvm.umax.i64(i64 %i.etd, i64 %7)
+  %i.ete = tail call i64 @llvm.umax.i64(i64 %i.etd, i64 %10)
   %i.etf = add nuw i64 %i.ete, 7
   %i.etg = and i64 %i.etf, -8
   %i.eth = add i64 %i.etg, %.0356.i               ; 4 uses
@@ -2030,14 +2035,15 @@ get_enc_table_with_flag.exit.i33:                 ; preds = %bb.fv, %bb.fu
   %i.arh = select i1 %.not938, i64 4, i64 2, !prof !62 ; 72 uses
   %i.ari = and i32 %2, 128
   %.not939 = icmp eq i32 %i.ari, 0
-  %i.arj = shl i64 %1, 5
-  %i.ark = add i64 %i.arj, 64                     ; 3 uses
+  %i.arj = shl i64 %1, 5                          ; 2 uses
+  %i.ark = add i64 %i.arj, 64                     ; 2 uses
   %i.arl = tail call ptr %.sroa.0486.0(ptr noundef %.sroa.9.0, i64 noundef %i.ark) #33, !inline_history !409 ; 6 uses
   %.not.i = icmp eq ptr %i.arl, null
   br i1 %.not.i, label %.loopexit1049, label %bb.fw
 
 bb.fw:                                            ; preds = %get_enc_table_with_flag.exit.i33
-  %i.arm = getelementptr inbounds nuw i8, ptr %i.arl, i64 %i.ark ; 2 uses
+  %7 = getelementptr i8, ptr %i.arl, i64 %i.arj
+  %i.arm = getelementptr i8, ptr %7, i64 64       ; 2 uses
   %i.arn = load i64, ptr %0, align 8, !tbaa !99   ; 2 uses
   %i.aro = and i64 %i.arn, 7
   %i.arp = icmp eq i64 %i.aro, 7                  ; 4 uses
@@ -2440,15 +2446,16 @@ bb.nn:                                            ; preds = %bb.nm
   %i.cye = getelementptr inbounds nuw i8, ptr %.0423.i, i64 8
   %i.cyf = load ptr, ptr %i.cye, align 8, !tbaa !100 ; 7 uses
   %i.cyg = ptrtoaddr ptr %i.cyf to i64            ; 4 uses
-  %i.cyh = mul nuw nsw i64 %i.cyd, 6
-  %7 = add nuw nsw i64 %i.cyh, 16                 ; 2 uses
-  %i.cyi = getelementptr inbounds nuw i8, ptr %.0390.i, i64 %7
+  %i.cyh = mul nuw nsw i64 %i.cyd, 6              ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.0390.i, i64 %i.cyh
+  %i.cyi = getelementptr inbounds nuw i8, ptr %8, i64 16
   %.not447.i = icmp ult ptr %i.cyi, %.0368.i
   br i1 %.not447.i, label %bb.np, label %bb.no, !prof !62
 
 bb.no:                                            ; preds = %bb.nn
+  %9 = add nuw nsw i64 %i.cyh, 16
   %i.cyj = lshr i64 %.0361.i, 1
-  %i.cyk = tail call i64 @llvm.umax.i64(i64 %i.cyj, i64 %7)
+  %i.cyk = tail call i64 @llvm.umax.i64(i64 %i.cyj, i64 %9)
   %i.cyl = add nuw i64 %i.cyk, 15
   %i.cym = and i64 %i.cyl, -16
   %i.cyn = add i64 %i.cym, %.0361.i               ; 4 uses
@@ -2851,17 +2858,18 @@ bb.tv:                                            ; preds = %.thread911, %bb.tt
   br label %bb.tz
 
 bb.tw:                                            ; preds = %bb.tq
-  %i.etn = lshr i64 %i.cxx, 8                     ; 3 uses
+  %i.etn = lshr i64 %i.cxx, 8                     ; 4 uses
   %i.eto = getelementptr inbounds nuw i8, ptr %.0423.i, i64 8
   %i.etp = load ptr, ptr %i.eto, align 8, !tbaa !100
-  %8 = add nuw nsw i64 %i.etn, 2                  ; 2 uses
-  %i.etq = getelementptr inbounds nuw i8, ptr %.0390.i, i64 %8
+  %10 = getelementptr inbounds nuw i8, ptr %.0390.i, i64 %i.etn
+  %i.etq = getelementptr inbounds nuw i8, ptr %10, i64 2
   %.not432.i = icmp ult ptr %i.etq, %.0368.i
   br i1 %.not432.i, label %bb.ty, label %bb.tx, !prof !62
 
 bb.tx:                                            ; preds = %bb.tw
+  %11 = add nuw nsw i64 %i.etn, 2
   %i.etr = lshr i64 %.0361.i, 1
-  %i.ets = tail call i64 @llvm.umax.i64(i64 %i.etr, i64 %8)
+  %i.ets = tail call i64 @llvm.umax.i64(i64 %i.etr, i64 %11)
   %i.ett = add nuw i64 %i.ets, 15
   %i.etu = and i64 %i.ett, -16
   %i.etv = add i64 %i.etu, %.0361.i               ; 4 uses

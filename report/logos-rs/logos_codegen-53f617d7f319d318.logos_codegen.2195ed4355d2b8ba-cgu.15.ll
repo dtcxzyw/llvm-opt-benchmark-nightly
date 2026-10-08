@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = extractvalue { ptr, i64 } %i.p, 1
   %i.s = call { ptr, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice3raw14from_raw_partsNtNtNtCsaKDqXqZWSq0_14regex_automata4util10primitives9PatternIDEBV_(ptr align 4 %i.q, i64 %i.r, ptr nonnull align 8 @43) #17 ; 2 uses
   %i.t = extractvalue { ptr, i64 } %i.s, 1        ; 2 uses
-  %i.u = shl i64 %i.o, 1                          ; 4 uses
+  %i.u = shl i64 %i.o, 1                          ; 5 uses
   %i.v = icmp ult i64 %i.u, %i.t
   br i1 %i.v, label %bb.c, label %bb.e
 
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = extractvalue { ptr, i64 } %i.z, 1
   %i.ac = call { ptr, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice3raw14from_raw_partsNtNtNtCsaKDqXqZWSq0_14regex_automata4util10primitives9PatternIDEBV_(ptr align 4 %i.aa, i64 %i.ab, ptr nonnull align 8 @43) #17 ; 2 uses
   %i.ad = extractvalue { ptr, i64 } %i.ac, 1      ; 2 uses
-  %i.ae = or disjoint i64 %i.u, 1                 ; 3 uses
+  %i.ae = or disjoint i64 %i.u, 1                 ; 2 uses
   %i.af = icmp ult i64 %i.ae, %i.ad
   br i1 %i.af, label %_RNvMsm_NtNtCsaKDqXqZWSq0_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCsexYYUdYSQU6_5alloc3vec3VecmEE16pattern_id_sliceCs2SM5xCHwwDm_13logos_codegen.exit.i, label %bb.d
 
@@ -229,8 +229,9 @@ bb.e:                                             ; preds = %bb.b
 
 _RNvMsm_NtNtCsaKDqXqZWSq0_14regex_automata3dfa5denseINtB5_11MatchStatesINtNtCsexYYUdYSQU6_5alloc3vec3VecmEE16pattern_id_sliceCs2SM5xCHwwDm_13logos_codegen.exit.i: ; preds = %bb.c
   %i.ag = extractvalue { ptr, i64 } %i.ac, 0
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ae
-  %i.ai = call i64 @_RNvMs10_NtNtCsaKDqXqZWSq0_14regex_automata4util10primitivesNtB6_9PatternID8as_usizeCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 4 %i.ah) #17 ; 3 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.u
+  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
+  %i.ai = call i64 @_RNvMs10_NtNtCsaKDqXqZWSq0_14regex_automata4util10primitivesNtB6_9PatternID8as_usizeCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 4 %2) #17 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 408
   %i.ak = call { ptr, i64 } @_RNvXsu_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmEINtNtCskKLDkoKarTP_4core7convert5AsRefSmE6as_refCsaKDqXqZWSq0_14regex_automata(ptr nonnull align 8 %i.aj) ; 2 uses
   %i.al = extractvalue { ptr, i64 } %i.ak, 0

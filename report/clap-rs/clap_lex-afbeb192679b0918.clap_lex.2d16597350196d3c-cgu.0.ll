@@ -202,7 +202,7 @@ define void @_RNvMs1_Cs3RZUOUhPFQ6_8clap_lexNtB5_9ParsedArg7to_long(ptr dead_on_
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 4 uses
   %.not.i.i = icmp samesign ult i64 %i.c, 2
   br i1 %.not.i.i, label %bb.d, label %bb.b
 
@@ -225,7 +225,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b
   br label %bb.k
 
 .critedge.preheader.i.i.i:                        ; preds = %bb.c
-  %i.l = add nsw i64 %i.c, -3                     ; 4 uses
+  %i.l = add nsw i64 %i.c, -3                     ; 3 uses
   %.not.i.i22 = icmp eq i64 %i.l, 0
   br i1 %.not.i.i22, label %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i, label %.lr.ph.i.i.i
 
@@ -243,15 +243,16 @@ bb.d:                                             ; preds = %bb.a, %bb.b
   br i1 %exitcond.not.i.i.i, label %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i, label %.lr.ph.i.i.i
 
 _RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i: ; preds = %.critedge.backedge.i.i.i, %.critedge.preheader.i.i.i
-  %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
+  %2 = getelementptr i8, ptr %i.e, i64 %i.c
+  %i.q = getelementptr i8, ptr %2, i64 -3
   %rhsc39 = load i8, ptr %i.q, align 1
   %rhsc39.fr = freeze i8 %rhsc39
   %i.r = icmp eq i8 %rhsc39.fr, 61
   br i1 %i.r, label %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.thread.i, label %bb.j
 
 _RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.thread.i: ; preds = %.lr.ph.i.i.i, %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i
-  %.sroa.4.1.i11.i = phi i64 [ %i.l, %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i ], [ %i.m, %.lr.ph.i.i.i ] ; 4 uses
-  %i.s = add i64 %.sroa.4.1.i11.i, 1              ; 4 uses
+  %.sroa.4.1.i11.i = phi i64 [ %i.l, %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i ], [ %i.m, %.lr.ph.i.i.i ] ; 5 uses
+  %i.s = add i64 %.sroa.4.1.i11.i, 1              ; 3 uses
   %.not.i23 = icmp ugt i64 %.sroa.4.1.i11.i, %i.f
   br i1 %.not.i23, label %bb.e, label %bb.f, !prof !11
 
@@ -273,7 +274,9 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %bb.f
   %i.u = sub nuw nsw i64 %i.f, %i.s
-  %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.s
+  %3 = getelementptr i8, ptr %i.e, i64 %.sroa.4.1.i11.i
+  %i.v = getelementptr i8, ptr %3, i64 1          ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %_RNvXNtCs3RZUOUhPFQ6_8clap_lex3extNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrNtB2_8OsStrExt4find.exit.i, %bb.i

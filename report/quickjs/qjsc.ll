@@ -202,11 +202,11 @@ namelist_find.exit.i:                             ; preds = %bb.p
 
 .lr.ph.i11.i:                                     ; preds = %.loopexit.i, %.lr.ph.i11.i
   %i.bv = phi i8 [ %i.bx, %.lr.ph.i11.i ], [ %i.bu, %.loopexit.i ]
-  %.015.i.i.idx = phi i64 [ %.015.i.i.add, %.lr.ph.i11.i ], [ 0, %.loopexit.i ] ; 3 uses
+  %.015.i.i.idx = phi i64 [ %.015.i.i.add, %.lr.ph.i11.i ], [ 0, %.loopexit.i ] ; 4 uses
   %.0914.i.i = phi ptr [ %i.bw, %.lr.ph.i11.i ], [ %i.a, %.loopexit.i ]
   %.015.i.i.ptr = getelementptr inbounds nuw i8, ptr %i.c, i64 %.015.i.i.idx
   %i.bw = getelementptr inbounds nuw i8, ptr %.0914.i.i, i64 1 ; 2 uses
-  %.015.i.i.add = add nuw nsw i64 %.015.i.i.idx, 1 ; 2 uses
+  %.015.i.i.add = add nuw nsw i64 %.015.i.i.idx, 1
   store i8 %i.bv, ptr %.015.i.i.ptr, align 1, !tbaa !24
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !24  ; 2 uses
   %i.by = icmp ne i8 %i.bx, 0
@@ -215,7 +215,8 @@ namelist_find.exit.i:                             ; preds = %bb.p
   br i1 %or.cond.i.i, label %.lr.ph.i11.i, label %find_unique_cname.exit.loopexit
 
 find_unique_cname.exit.loopexit:                  ; preds = %.lr.ph.i11.i
-  %.ptr.le = getelementptr inbounds nuw i8, ptr %i.c, i64 %.015.i.i.add
+  %.015.i.i.ptr.le = getelementptr inbounds nuw i8, ptr %i.c, i64 %.015.i.i.idx
+  %.ptr.le = getelementptr inbounds nuw i8, ptr %.015.i.i.ptr.le, i64 1
   br label %find_unique_cname.exit
 
 find_unique_cname.exit:                           ; preds = %find_unique_cname.exit.loopexit, %.loopexit.i
@@ -618,11 +619,11 @@ bb.ab:                                            ; preds = %check_hasarg.exit25
 
 .lr.ph.i:                                         ; preds = %bb.ab, %.lr.ph.i
   %i.bd = phi i8 [ %i.bf, %.lr.ph.i ], [ %i.bc, %bb.ab ]
-  %.015.i.idx = phi i64 [ %.015.i.add, %.lr.ph.i ], [ 0, %bb.ab ] ; 3 uses
+  %.015.i.idx = phi i64 [ %.015.i.add, %.lr.ph.i ], [ 0, %bb.ab ] ; 4 uses
   %.0914.i = phi ptr [ %i.be, %.lr.ph.i ], [ %.7167, %bb.ab ]
   %.015.i.ptr = getelementptr inbounds nuw i8, ptr %i.e, i64 %.015.i.idx
   %i.be = getelementptr inbounds nuw i8, ptr %.0914.i, i64 1 ; 2 uses
-  %.015.i.add = add nuw nsw i64 %.015.i.idx, 1    ; 2 uses
+  %.015.i.add = add nuw nsw i64 %.015.i.idx, 1
   store i8 %i.bd, ptr %.015.i.ptr, align 1, !tbaa !24
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !24  ; 2 uses
   %i.bg = icmp ne i8 %i.bf, 0
@@ -631,7 +632,8 @@ bb.ab:                                            ; preds = %check_hasarg.exit25
   br i1 %or.cond.i, label %.lr.ph.i, label %js__pstrcpy.exit.loopexit
 
 js__pstrcpy.exit.loopexit:                        ; preds = %.lr.ph.i
-  %.ptr.le = getelementptr inbounds nuw i8, ptr %i.e, i64 %.015.i.add
+  %.015.i.ptr.le = getelementptr inbounds nuw i8, ptr %i.e, i64 %.015.i.idx
+  %.ptr.le = getelementptr inbounds nuw i8, ptr %.015.i.ptr.le, i64 1
   br label %js__pstrcpy.exit
 
 js__pstrcpy.exit:                                 ; preds = %js__pstrcpy.exit.loopexit, %bb.ab
@@ -650,11 +652,11 @@ bb.ac:                                            ; preds = %js__pstrcpy.exit
 
 .lr.ph.i261:                                      ; preds = %bb.ac, %.lr.ph.i261
   %i.bk = phi i8 [ %i.bm, %.lr.ph.i261 ], [ %i.bj, %bb.ac ]
-  %.015.i262.idx = phi i64 [ %.015.i262.add, %.lr.ph.i261 ], [ 0, %bb.ac ] ; 3 uses
+  %.015.i262.idx = phi i64 [ %.015.i262.add, %.lr.ph.i261 ], [ 0, %bb.ac ] ; 4 uses
   %.0914.i263 = phi ptr [ %i.bl, %.lr.ph.i261 ], [ %i.bi, %bb.ac ]
   %.015.i262.ptr = getelementptr inbounds nuw i8, ptr %i.f, i64 %.015.i262.idx
   %i.bl = getelementptr inbounds nuw i8, ptr %.0914.i263, i64 1 ; 2 uses
-  %.015.i262.add = add nuw nsw i64 %.015.i262.idx, 1 ; 2 uses
+  %.015.i262.add = add nuw nsw i64 %.015.i262.idx, 1
   store i8 %i.bk, ptr %.015.i262.ptr, align 1, !tbaa !24
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !24  ; 2 uses
   %i.bn = icmp ne i8 %i.bm, 0
@@ -663,7 +665,8 @@ bb.ac:                                            ; preds = %js__pstrcpy.exit
   br i1 %or.cond.i265, label %.lr.ph.i261, label %js__pstrcpy.exit267.loopexit
 
 js__pstrcpy.exit267.loopexit:                     ; preds = %.lr.ph.i261
-  %.ptr334.le = getelementptr inbounds nuw i8, ptr %i.f, i64 %.015.i262.add
+  %.015.i262.ptr.le = getelementptr inbounds nuw i8, ptr %i.f, i64 %.015.i262.idx
+  %.ptr334.le = getelementptr inbounds nuw i8, ptr %.015.i262.ptr.le, i64 1
   br label %js__pstrcpy.exit267
 
 js__pstrcpy.exit267:                              ; preds = %js__pstrcpy.exit267.loopexit, %bb.ac
@@ -1066,11 +1069,11 @@ bb.bk:                                            ; preds = %bb.bi
 
 .lr.ph.i298:                                      ; preds = %bb.bk, %.lr.ph.i298
   %i.hz = phi i8 [ %i.ib, %.lr.ph.i298 ], [ %i.hy, %bb.bk ]
-  %.015.i299.idx = phi i64 [ %.015.i299.add, %.lr.ph.i298 ], [ 0, %bb.bk ] ; 3 uses
+  %.015.i299.idx = phi i64 [ %.015.i299.add, %.lr.ph.i298 ], [ 0, %bb.bk ] ; 4 uses
   %.0914.i300 = phi ptr [ %i.ia, %.lr.ph.i298 ], [ %spec.store.select, %bb.bk ]
   %.015.i299.ptr = getelementptr inbounds nuw i8, ptr %i.d, i64 %.015.i299.idx
   %i.ia = getelementptr inbounds nuw i8, ptr %.0914.i300, i64 1 ; 2 uses
-  %.015.i299.add = add nuw nsw i64 %.015.i299.idx, 1 ; 2 uses
+  %.015.i299.add = add nuw nsw i64 %.015.i299.idx, 1
   store i8 %i.hz, ptr %.015.i299.ptr, align 1, !tbaa !24
   %i.ib = load i8, ptr %i.ia, align 1, !tbaa !24  ; 2 uses
   %i.ic = icmp ne i8 %i.ib, 0
@@ -1079,7 +1082,8 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %or.cond.i302, label %.lr.ph.i298, label %js__pstrcpy.exit304.loopexit
 
 js__pstrcpy.exit304.loopexit:                     ; preds = %.lr.ph.i298
-  %.ptr335.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.015.i299.add
+  %.015.i299.ptr.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.015.i299.idx
+  %.ptr335.le = getelementptr inbounds nuw i8, ptr %.015.i299.ptr.le, i64 1
   br label %js__pstrcpy.exit304
 
 js__pstrcpy.exit304:                              ; preds = %js__pstrcpy.exit304.loopexit, %bb.bk
@@ -1210,11 +1214,11 @@ bb.bx:                                            ; preds = %bb.bw
 
 .lr.ph.i.i:                                       ; preds = %bb.bx, %.lr.ph.i.i
   %i.ji = phi i8 [ %i.jk, %.lr.ph.i.i ], [ %i.jh, %bb.bx ]
-  %.015.i.idx.i = phi i64 [ %.015.i.add.i, %.lr.ph.i.i ], [ 0, %bb.bx ] ; 3 uses
+  %.015.i.idx.i = phi i64 [ %.015.i.add.i, %.lr.ph.i.i ], [ 0, %bb.bx ] ; 4 uses
   %.0914.i.i = phi ptr [ %i.jj, %.lr.ph.i.i ], [ %.5203550, %bb.bx ]
   %.015.i.ptr.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.015.i.idx.i
   %i.jj = getelementptr inbounds nuw i8, ptr %.0914.i.i, i64 1 ; 2 uses
-  %.015.i.add.i = add nuw nsw i64 %.015.i.idx.i, 1 ; 2 uses
+  %.015.i.add.i = add nuw nsw i64 %.015.i.idx.i, 1
   store i8 %i.ji, ptr %.015.i.ptr.i, align 1, !tbaa !24
   %i.jk = load i8, ptr %i.jj, align 1, !tbaa !24  ; 2 uses
   %i.jl = icmp ne i8 %i.jk, 0
@@ -1223,7 +1227,8 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %or.cond.i.i, label %.lr.ph.i.i, label %js__pstrcpy.exit.loopexit.i
 
 js__pstrcpy.exit.loopexit.i:                      ; preds = %.lr.ph.i.i
-  %.ptr.le.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.015.i.add.i
+  %.015.i.ptr.i.le = getelementptr inbounds nuw i8, ptr %i.a, i64 %.015.i.idx.i
+  %.ptr.le.i = getelementptr inbounds nuw i8, ptr %.015.i.ptr.i.le, i64 1
   br label %js__pstrcpy.exit.i
 
 js__pstrcpy.exit.i:                               ; preds = %js__pstrcpy.exit.loopexit.i, %bb.bx

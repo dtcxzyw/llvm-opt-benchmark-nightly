@@ -203,7 +203,7 @@ begin_hunk_0_@crc32_chorba_sse41:bb.a
   %.3448.i98 = phi ptr [ %i.us, %bb.k ], [ %i.rs, %.lr.ph.peel.next ] ; 5 uses
   %.0449.i97 = phi ptr [ %.1450.i, %bb.k ], [ %i.o, %.lr.ph.peel.next ] ; 6 uses
   %.3454.i96 = phi ptr [ %.4.i, %bb.k ], [ %i.qd, %.lr.ph.peel.next ] ; 7 uses
-  %.3464.i95 = phi i64 [ %i.ut, %bb.k ], [ 704, %.lr.ph.peel.next ] ; 5 uses
+  %.3464.i95 = phi i64 [ %i.ut, %bb.k ], [ 704, %.lr.ph.peel.next ] ; 7 uses
   %.3485.i94 = phi <2 x i64> [ %i.tj, %bb.k ], [ %i.qw, %.lr.ph.peel.next ]
   %.3489.i93 = phi <2 x i64> [ %i.tw, %bb.k ], [ %i.rj, %.lr.ph.peel.next ]
   %.3493.i92 = phi <2 x i64> [ %.4494.i, %bb.k ], [ %i.qj, %.lr.ph.peel.next ]
@@ -326,7 +326,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   store <2 x i64> %.0479.i, ptr %i.uq, align 16, !tbaa !11
   %i.us = getelementptr inbounds nuw i8, ptr %.3448.i98, i64 64
   store <2 x i64> %.0478.i, ptr %i.ur, align 16, !tbaa !11
-  %i.ut = add nuw i64 %.3464.i95, 64              ; 7 uses
+  %i.ut = add nuw i64 %.3464.i95, 64              ; 5 uses
   %i.uu = add nuw i64 %.3464.i95, 2528
   %i.uv = icmp ult i64 %i.uu, %.028
   br i1 %i.uv, label %.lr.ph102, label %._crit_edge, !llvm.loop !8
@@ -337,7 +337,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   store <2 x i64> %.4494.i, ptr %i.uo, align 16, !tbaa !11
   %.neg = add nsw i64 %.028, -2400
   %i.uw = sub i64 %.neg, %i.ut                    ; 2 uses
-  %i.ux = getelementptr i8, ptr %i.t, i64 %i.ut   ; 2 uses
+  %3 = getelementptr i8, ptr %i.t, i64 %.3464.i95
+  %i.ux = getelementptr i8, ptr %3, i64 64        ; 2 uses
   %i.uy = icmp ugt i64 %i.uw, 63
   br i1 %i.uy, label %.lr.ph113.preheader, label %.preheader32
 
@@ -347,9 +348,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.vb = and i64 %i.va, -64                      ; 2 uses
   %i.vc = add i64 %i.vb, 64
   call void @llvm.memset.p0.i64(ptr align 16 %i.ux, i8 0, i64 %i.vc, i1 false), !tbaa !11
-  %i.vd = getelementptr i8, ptr %i.a, i64 %i.ut
+  %i.vd = getelementptr i8, ptr %i.a, i64 %.3464.i95
   %i.ve = getelementptr i8, ptr %i.vd, i64 %i.vb
-  %scevgep = getelementptr i8, ptr %i.ve, i64 2464
+  %scevgep = getelementptr i8, ptr %i.ve, i64 2528
   %i.vf = and i64 %i.uz, 63
   br label %.preheader32
 

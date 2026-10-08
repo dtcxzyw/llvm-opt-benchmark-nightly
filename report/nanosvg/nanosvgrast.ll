@@ -205,7 +205,7 @@ sub_0.i:                                          ; preds = %bb.p, %sub_0.lr.ph.
   %indvars.iv.i = phi i64 [ 0, %sub_0.lr.ph.i ], [ %indvars.iv.next.i, %bb.p ] ; 2 uses
   %i.ap = phi ptr [ %i.am, %sub_0.lr.ph.i ], [ %i.az, %bb.p ] ; 3 uses
   %.096229.i = phi ptr [ null, %sub_0.lr.ph.i ], [ %.197.i, %bb.p ]
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i ; 2 uses
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i ; 3 uses
   %i.ar = load i8, ptr %i.ap, align 1
   %.not242.i = icmp eq i8 %i.ar, 100
   br i1 %.not242.i, label %.tail.i, label %.tail.thread.i
@@ -232,8 +232,8 @@ bb.o:                                             ; preds = %.tail.i
 
 bb.p:                                             ; preds = %.tail.thread.i, %bb.o
   %.197.i = phi ptr [ %i.aw, %bb.o ], [ %.096229.i, %.tail.thread.i ] ; 4 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2
+  %3 = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   %i.az = load ptr, ptr %3, align 8, !tbaa !21    ; 2 uses
   %.not.i = icmp eq ptr %i.az, null
   br i1 %.not.i, label %._crit_edge.i, label %sub_0.i, !llvm.loop !176
@@ -636,7 +636,7 @@ bb.bt:                                            ; preds = %.tail235.thread.i, 
   %.0174243.i = phi float [ 0.000000e+00, %.lr.ph.i72 ], [ %.2176.i, %.tail235.thread.i ] ; 2 uses
   %.0177242.i = phi float [ 0.000000e+00, %.lr.ph.i72 ], [ %.2179.i, %.tail235.thread.i ] ; 3 uses
   %.0180241.i = phi float [ 0.000000e+00, %.lr.ph.i72 ], [ %.2182.i, %.tail235.thread.i ] ; 3 uses
-  %i.se = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i73 ; 7 uses
+  %i.se = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i73 ; 8 uses
   %i.sf = getelementptr inbounds nuw i8, ptr %i.se, i64 8 ; 7 uses
   %i.sg = load ptr, ptr %i.sf, align 8, !tbaa !21
   %i.sh = tail call fastcc i32 @nsvg__parseAttr(ptr noundef %0, ptr noundef %i.sd, ptr noundef %i.sg)
@@ -1039,8 +1039,8 @@ nsvg__parseCoordinate.exit218.i:                  ; preds = %bb.dv, %bb.du, %bb.
   %.2173.i = phi float [ %.0171244.i, %bb.bt ], [ %.1172.i, %nsvg__parseCoordinate.exit218.i ], [ %.1172.i, %.tail235.i ], [ %.1172.i, %sub_0236.i ], [ %.1172.i, %sub_1237.i ], [ %.1172.i, %nsvg__parseCoordinate.exit208.i ], [ %.1172.i, %nsvg__parseCoordinate.exit208.tail.i ] ; 2 uses
   %.2169.i = phi float [ %.0167245.i, %bb.bt ], [ %.1168269.i, %nsvg__parseCoordinate.exit218.i ], [ %.1168269.i, %.tail235.i ], [ %i.yu, %sub_0236.i ], [ %.1168269.i, %sub_1237.i ], [ %.0167245.i, %nsvg__parseCoordinate.exit208.i ], [ %.0167245.i, %nsvg__parseCoordinate.exit208.tail.i ] ; 2 uses
   %.1.i74 = phi float [ %.0166246.i, %bb.bt ], [ %i.aad, %nsvg__parseCoordinate.exit218.i ], [ %.0166246.i, %.tail235.i ], [ %.0166246.i, %sub_0236.i ], [ %.0166246.i, %sub_1237.i ], [ %.0166246.i, %nsvg__parseCoordinate.exit208.i ], [ %.0166246.i, %nsvg__parseCoordinate.exit208.tail.i ] ; 2 uses
-  %indvars.iv.next.i75 = add nuw nsw i64 %indvars.iv.i73, 2 ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i75
+  %indvars.iv.next.i75 = add nuw nsw i64 %indvars.iv.i73, 2
+  %4 = getelementptr inbounds nuw i8, ptr %i.se, i64 16
   %i.aae = load ptr, ptr %4, align 8, !tbaa !21   ; 2 uses
   %.not.i76 = icmp eq ptr %i.aae, null
   br i1 %.not.i76, label %._crit_edge.i77, label %bb.bt, !llvm.loop !180
@@ -1264,7 +1264,7 @@ bb.ei:                                            ; preds = %nsvg__parseCoordina
   %.083116.i = phi float [ 0.000000e+00, %.lr.ph.i97 ], [ %.1.i100, %nsvg__parseCoordinate.exit100.tail.thread.i ] ; 3 uses
   %.084115.i = phi float [ 0.000000e+00, %.lr.ph.i97 ], [ %.2.i99, %nsvg__parseCoordinate.exit100.tail.thread.i ] ; 4 uses
   %.086114.i = phi float [ 0.000000e+00, %.lr.ph.i97 ], [ %.288.i, %nsvg__parseCoordinate.exit100.tail.thread.i ] ; 4 uses
-  %i.adr = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i98 ; 4 uses
+  %i.adr = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i98 ; 5 uses
   %i.ads = getelementptr inbounds nuw i8, ptr %i.adr, i64 8 ; 4 uses
   %i.adt = load ptr, ptr %i.ads, align 8, !tbaa !21
   %i.adu = tail call fastcc i32 @nsvg__parseAttr(ptr noundef %0, ptr noundef %i.adq, ptr noundef %i.adt)
@@ -1547,8 +1547,8 @@ nsvg__parseCoordinate.exit100.tail.thread.i:      ; preds = %nsvg__parseCoordina
   %.288.i = phi float [ %.086114.i, %bb.ei ], [ %.187.i, %nsvg__parseCoordinate.exit105.i ], [ %.187.i, %nsvg__parseCoordinate.exit100.tail.i ], [ %.187.i, %nsvg__parseCoordinate.exit100.i ] ; 7 uses
   %.2.i99 = phi float [ %.084115.i, %bb.ei ], [ %.185.i, %nsvg__parseCoordinate.exit105.i ], [ %.185.i, %nsvg__parseCoordinate.exit100.tail.i ], [ %.185.i, %nsvg__parseCoordinate.exit100.i ] ; 8 uses
   %.1.i100 = phi float [ %.083116.i, %bb.ei ], [ %i.aid, %nsvg__parseCoordinate.exit105.i ], [ %.083116.i, %nsvg__parseCoordinate.exit100.tail.i ], [ %.083116.i, %nsvg__parseCoordinate.exit100.i ] ; 9 uses
-  %indvars.iv.next.i101 = add nuw nsw i64 %indvars.iv.i98, 2 ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i101
+  %indvars.iv.next.i101 = add nuw nsw i64 %indvars.iv.i98, 2
+  %5 = getelementptr inbounds nuw i8, ptr %i.adr, i64 16
   %i.aie = load ptr, ptr %5, align 8, !tbaa !21   ; 2 uses
   %.not.i102 = icmp eq ptr %i.aie, null
   br i1 %.not.i102, label %._crit_edge.i103, label %bb.ei, !llvm.loop !181
@@ -1671,7 +1671,7 @@ bb.fr:                                            ; preds = %.tail130.thread.i, 
   %.092138.i = phi float [ 0.000000e+00, %.lr.ph.i125 ], [ %.2.i127, %.tail130.thread.i ] ; 4 uses
   %.094137.i = phi float [ 0.000000e+00, %.lr.ph.i125 ], [ %.296.i, %.tail130.thread.i ] ; 4 uses
   %.097136.i = phi float [ 0.000000e+00, %.lr.ph.i125 ], [ %.299.i, %.tail130.thread.i ] ; 4 uses
-  %i.aka = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i126 ; 5 uses
+  %i.aka = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.i126 ; 6 uses
   %i.akb = getelementptr inbounds nuw i8, ptr %i.aka, i64 8 ; 5 uses
   %i.akc = load ptr, ptr %i.akb, align 8, !tbaa !21
   %i.akd = tail call fastcc i32 @nsvg__parseAttr(ptr noundef %0, ptr noundef %i.ajz, ptr noundef %i.akc)
@@ -2048,8 +2048,8 @@ nsvg__parseCoordinate.exit121.i:                  ; preds = %bb.hb, %bb.ha, %bb.
   %.296.i = phi float [ %.094137.i, %bb.fr ], [ %.195.i, %nsvg__parseCoordinate.exit121.i ], [ %.195.i, %.tail130.i ], [ %.195.i, %sub_0131.i ], [ %.195.i, %sub_1132.i ], [ %.195.i, %nsvg__parseCoordinate.exit111.i ], [ %.195.i, %nsvg__parseCoordinate.exit111.tail.i ] ; 8 uses
   %.2.i127 = phi float [ %.092138.i, %bb.fr ], [ %.193160.i, %nsvg__parseCoordinate.exit121.i ], [ %.193160.i, %.tail130.i ], [ %i.aoi, %sub_0131.i ], [ %.193160.i, %sub_1132.i ], [ %.092138.i, %nsvg__parseCoordinate.exit111.i ], [ %.092138.i, %nsvg__parseCoordinate.exit111.tail.i ] ; 6 uses
   %.1.i128 = phi float [ %.091139.i, %bb.fr ], [ %i.apr, %nsvg__parseCoordinate.exit121.i ], [ %.091139.i, %.tail130.i ], [ %.091139.i, %sub_0131.i ], [ %.091139.i, %sub_1132.i ], [ %.091139.i, %nsvg__parseCoordinate.exit111.i ], [ %.091139.i, %nsvg__parseCoordinate.exit111.tail.i ] ; 6 uses
-  %indvars.iv.next.i129 = add nuw nsw i64 %indvars.iv.i126, 2 ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i129
+  %indvars.iv.next.i129 = add nuw nsw i64 %indvars.iv.i126, 2
+  %6 = getelementptr inbounds nuw i8, ptr %i.aka, i64 16
   %i.aps = load ptr, ptr %6, align 8, !tbaa !21   ; 2 uses
   %.not.i130 = icmp eq ptr %i.aps, null
   br i1 %.not.i130, label %._crit_edge.i131, label %bb.fr, !llvm.loop !182
@@ -2452,15 +2452,16 @@ scalar.ph154.preheader:                           ; preds = %vector.scevcheck, %
 nsvg__applyOpacity.exit86:                        ; preds = %.lr.ph105, %.loopexit94
   %i.ft = phi i32 [ %i.ep, %.lr.ph105 ], [ %i.ip, %.loopexit94 ]
   %i.fu = phi float [ %i.dr, %.lr.ph105 ], [ %i.gn, %.loopexit94 ] ; 4 uses
-  %indvars.iv127 = phi i64 [ 0, %.lr.ph105 ], [ %indvars.iv.next128, %.loopexit94 ] ; 2 uses
+  %indvars.iv127 = phi i64 [ 0, %.lr.ph105 ], [ %indvars.iv.next128, %.loopexit94 ] ; 3 uses
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv127
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !138 ; 3 uses
   %i.fx = lshr i32 %i.fw, 8                       ; 2 uses
   %i.fy = and i32 %i.fx, 16711680
   %i.fz = mul i32 %spec.select, %i.fy
-  %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 1 ; 3 uses
-  %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv.next128 ; 2 uses
-  %i.gb = load i32, ptr %i.ga, align 4, !tbaa !138 ; 4 uses
+  %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 1 ; 2 uses
+  %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv127 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
+  %i.gb = load i32, ptr %3, align 4, !tbaa !138   ; 4 uses
   %i.gc = lshr i32 %i.gb, 8                       ; 2 uses
   %i.gd = and i32 %i.gc, 16711680
   %i.ge = mul i32 %spec.select, %i.gd             ; 2 uses
@@ -2478,7 +2479,7 @@ bb.k:                                             ; preds = %nsvg__applyOpacity.
 
 nsvg__clampf.exit90:                              ; preds = %nsvg__applyOpacity.exit86, %bb.k
   %.0.i89 = phi i32 [ %i.gl, %bb.k ], [ 0, %nsvg__applyOpacity.exit86 ] ; 2 uses
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.ga, i64 4
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.ga, i64 12
   %i.gn = load float, ptr %i.gm, align 4, !tbaa !139 ; 5 uses
   %i.go = fcmp uno float %i.gn, 0.000000e+00
   br i1 %i.go, label %nsvg__clampf.exit92, label %bb.l
@@ -2881,7 +2882,7 @@ sub_0.lr.ph:                                      ; preds = %bb.d
   br label %sub_0
 
 sub_0:                                            ; preds = %sub_0.lr.ph, %bb.ac
-  %indvars.iv = phi i64 [ 0, %sub_0.lr.ph ], [ %indvars.iv.next, %bb.ac ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %sub_0.lr.ph ], [ %indvars.iv.next, %bb.ac ] ; 3 uses
   %i.s = phi ptr [ %i.l, %sub_0.lr.ph ], [ %i.do, %bb.ac ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.u = load i8, ptr %i.s, align 1
@@ -3156,9 +3157,10 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.e, %bb.i, %bb.h, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.aa, %bb.ab, %bb.v, %bb.y, %bb.z, %bb.x, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %.tail.thread
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !21 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
+  %i.do = load ptr, ptr %3, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %i.do, null
   br i1 %.not, label %._crit_edge, label %sub_0, !llvm.loop !260
 
@@ -3191,15 +3193,16 @@ bb.a:
   br i1 %.not54, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %i.i = phi ptr [ %i.o, %.lr.ph ], [ %i.h, %bb.a ]
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !21
   %i.m = tail call fastcc i32 @nsvg__parseAttr(ptr noundef nonnull %0, ptr noundef %i.i, ptr noundef %i.l) ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !21   ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
+  %i.o = load ptr, ptr %2, align 8, !tbaa !21     ; 2 uses
   %.not = icmp eq ptr %i.o, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !261
 
@@ -3304,7 +3307,7 @@ bb.a:
   br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %nsvg__parseStyle.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %nsvg__parseStyle.exit ], [ 0, %bb.a ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %nsvg__parseStyle.exit ], [ 0, %bb.a ] ; 3 uses
   %i.d = phi ptr [ %i.bq, %nsvg__parseStyle.exit ], [ %i.c, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.f = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.d, ptr noundef nonnull dereferenceable(6) @.str.15) #31
@@ -3532,9 +3535,10 @@ bb.m:                                             ; preds = %.lr.ph
   br label %nsvg__parseStyle.exit
 
 nsvg__parseStyle.exit:                            ; preds = %nsvg__parseNameValue.exit.i, %bb.b, %bb.m
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !21 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
+  %i.bq = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %i.bq, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !265
 
@@ -3559,7 +3563,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %nsvg__parseCoordinate.exit76
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %nsvg__parseCoordinate.exit76 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %nsvg__parseCoordinate.exit76 ] ; 3 uses
   %i.h = phi ptr [ %i.a, %.lr.ph ], [ %i.fb, %nsvg__parseCoordinate.exit76 ]
   %.04493 = phi float [ 0.000000e+00, %.lr.ph ], [ %.1, %nsvg__parseCoordinate.exit76 ] ; 4 uses
   %.04592 = phi float [ 0.000000e+00, %.lr.ph ], [ %.2, %nsvg__parseCoordinate.exit76 ] ; 4 uses
@@ -3932,9 +3936,10 @@ nsvg__parseCoordinate.exit76:                     ; preds = %sub_186, %nsvg__par
   %.249 = phi float [ %.04791, %bb.b ], [ %.148, %nsvg__parseCoordinate.exit71.tail ], [ %.148, %bb.ad ], [ %.148, %bb.ae ], [ %.148, %bb.af ], [ %.148, %bb.ag ], [ %.148, %bb.ah ], [ %.148, %bb.ai ], [ %.148, %bb.aj ], [ %.148, %bb.ak ], [ %.148, %bb.al ], [ %.148, %nsvg__parseCoordinate.exit71 ], [ %.148, %sub_186 ] ; 2 uses
   %.2 = phi float [ %.04592, %bb.b ], [ %.146, %nsvg__parseCoordinate.exit71.tail ], [ %.146, %bb.ad ], [ %.146, %bb.ae ], [ %.146, %bb.af ], [ %.146, %bb.ag ], [ %.146, %bb.ah ], [ %.146, %bb.ai ], [ %.146, %bb.aj ], [ %.146, %bb.ak ], [ %.146, %bb.al ], [ %.146, %nsvg__parseCoordinate.exit71 ], [ %.146, %sub_186 ] ; 2 uses
   %.1 = phi float [ %.04493, %bb.b ], [ %.04493, %nsvg__parseCoordinate.exit71.tail ], [ %i.dz, %bb.ad ], [ %i.ef, %bb.ae ], [ %i.ei, %bb.af ], [ %i.el, %bb.ag ], [ %i.eo, %bb.ah ], [ %i.eq, %bb.ai ], [ %i.et, %bb.aj ], [ %i.ex, %bb.ak ], [ %i.ez, %bb.al ], [ %.04493, %nsvg__parseCoordinate.exit71 ], [ %.04493, %sub_186 ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.fa = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !21 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.fa = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.fa, i64 16
+  %i.fb = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %i.fb, null
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !266
 
@@ -4015,7 +4020,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph43, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.lr.ph43 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph43 ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %i.i = phi ptr [ %i.e, %.lr.ph43 ], [ %i.cu, %.loopexit ]
   %.042 = phi i32 [ 0, %.lr.ph43 ], [ %.3, %.loopexit ] ; 4 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
@@ -4288,9 +4293,10 @@ bb.z:                                             ; preds = %nsvg__moveTo.exit, 
 
 .loopexit:                                        ; preds = %bb.z, %bb.d, %bb.b, %bb.c
   %.3 = phi i32 [ %.042, %bb.b ], [ %.042, %bb.c ], [ %.042, %bb.d ], [ %.2, %bb.z ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.ct = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !21 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.ct = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
+  %i.cu = load ptr, ptr %3, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %i.cu, null
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !268
 
@@ -4325,7 +4331,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph140, %bb.al
-  %indvars.iv = phi i64 [ 0, %.lr.ph140 ], [ %indvars.iv.next, %bb.al ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph140 ], [ %indvars.iv.next, %bb.al ] ; 3 uses
   %i.m = phi ptr [ %i.b, %.lr.ph140 ], [ %i.eb, %bb.al ]
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 5 uses
@@ -4673,9 +4679,10 @@ bb.ak:                                            ; preds = %.sink.split161, %bb
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %.critedge112, %bb.b, %nsvg__parseCoordinate.exit117, %bb.ab, %bb.ad, %nsvg__parseCoordinate.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.ea = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
-  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !21 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  %i.ea = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.ea, i64 16
+  %i.eb = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %i.eb, null
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !272
 

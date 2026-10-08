@@ -202,11 +202,12 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorISt10shared_ptrIN4entt13basic_processIjSaIvEEEESaIS5_EE8pop_backEv.exit
-  %.027 = phi i64 [ %i.h, %_ZNSt6vectorISt10shared_ptrIN4entt13basic_processIjSaIvEEEESaIS5_EE8pop_backEv.exit ], [ %i.g, %.lr.ph.preheader ]
-  %i.h = add i64 %.027, -1                        ; 4 uses
+  %.027 = phi i64 [ %i.h, %_ZNSt6vectorISt10shared_ptrIN4entt13basic_processIjSaIvEEEESaIS5_EE8pop_backEv.exit ], [ %i.g, %.lr.ph.preheader ] ; 3 uses
+  %i.h = add i64 %.027, -1                        ; 2 uses
   %i.i = load ptr, ptr %0, align 8, !tbaa !82
-  %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.h
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !85   ; 5 uses
+  %i.j = getelementptr [16 x i8], ptr %i.i, i64 %.027
+  %3 = getelementptr i8, ptr %i.j, i64 -16
+  %i.k = load ptr, ptr %3, align 8, !tbaa !85     ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 4 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !93    ; 2 uses
   %switch.i = icmp ult i8 %i.m, 2
@@ -243,8 +244,9 @@ switch.lookup:                                    ; preds = %bb.c
 
 _ZN4entt13basic_processIjSaIvEE4tickEjPv.exit:    ; preds = %bb.c, %switch.lookup
   %i.y = load ptr, ptr %0, align 8, !tbaa !82
-  %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %i.h ; 6 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !85  ; 3 uses
+  %i.z = getelementptr [16 x i8], ptr %i.y, i64 %.027 ; 3 uses
+  %4 = getelementptr i8, ptr %i.z, i64 -16        ; 4 uses
+  %i.aa = load ptr, ptr %4, align 8, !tbaa !85    ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
   %i.ac = load i8, ptr %i.ab, align 8, !tbaa !93  ; 2 uses
   %i.ad = icmp eq i8 %i.ac, 6
@@ -275,8 +277,8 @@ bb.g:                                             ; preds = %bb.e
   br label %_ZN4entt13basic_processIjSaIvEE4peekEv.exit
 
 _ZN4entt13basic_processIjSaIvEE4peekEv.exit:      ; preds = %bb.d, %bb.f, %bb.g
-  store ptr %i.af, ptr %i.z, align 8, !tbaa !95
-  %i.an = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
+  store ptr %i.af, ptr %4, align 8, !tbaa !95
+  %i.an = getelementptr i8, ptr %i.z, i64 -8      ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !69 ; 8 uses
   store ptr %i.ah, ptr %i.an, align 8, !tbaa !69
   %.not.i.i.i.i13 = icmp eq ptr %i.ao, null
@@ -327,7 +329,7 @@ bb.m:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exitthread-pre-split
 
 _ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exitthread-pre-split: ; preds = %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.i
-  %.pr = load ptr, ptr %i.z, align 8, !tbaa !85
+  %.pr = load ptr, ptr %4, align 8, !tbaa !85
   br label %_ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 _ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exitthread-pre-split, %_ZN4entt13basic_processIjSaIvEE4peekEv.exit
@@ -348,11 +350,11 @@ _ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EE
 bb.n:                                             ; preds = %_ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.thread, %_ZNSt12__shared_ptrIN4entt13basic_processIjSaIvEEELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.bh = load ptr, ptr %i.a, align 8, !tbaa !58
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -16 ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.z, i64 8
+  %i.bj = getelementptr i8, ptr %i.z, i64 -8
   %i.bk = load <2 x ptr>, ptr %i.bi, align 8, !tbaa !80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i8 0, i64 16, i1 false)
   %i.bl = load ptr, ptr %i.bj, align 8, !tbaa !69 ; 8 uses
-  store <2 x ptr> %i.bk, ptr %i.z, align 8, !tbaa !80
+  store <2 x ptr> %i.bk, ptr %4, align 8, !tbaa !80
   %.not.i.i.i.i15 = icmp eq ptr %i.bl, null
   br i1 %.not.i.i.i.i15, label %_ZNSt10shared_ptrIN4entt13basic_processIjSaIvEEEEaSEOS4_.exit19, label %bb.o
 

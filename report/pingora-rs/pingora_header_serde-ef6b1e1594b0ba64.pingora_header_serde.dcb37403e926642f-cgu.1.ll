@@ -205,7 +205,7 @@ select.unfold.preheader.i.i:                      ; preds = %.noexc8
   br label %select.unfold.i.i
 
 select.unfold.i.i:                                ; preds = %select.unfold.preheader.i.i, %.noexc14
-  %.sroa.13.0.i.i = phi i64 [ %.sroa.13.13338.i.i, %.noexc14 ], [ 0, %select.unfold.preheader.i.i ] ; 6 uses
+  %.sroa.13.0.i.i = phi i64 [ %.sroa.13.13338.i.i, %.noexc14 ], [ 0, %select.unfold.preheader.i.i ] ; 7 uses
   %.sroa.7.0.i.i = phi i64 [ %.sroa.7.2.i.i, %.noexc14 ], [ undef, %select.unfold.preheader.i.i ] ; 4 uses
   %.sroa.0.0.i.i = phi i64 [ %.sroa.0.1.i.i, %.noexc14 ], [ %spec.select, %select.unfold.preheader.i.i ] ; 2 uses
   %.not.i27.i.i = icmp eq i64 %.sroa.0.0.i.i, 2
@@ -216,11 +216,12 @@ bb.f:                                             ; preds = %select.unfold.i.i
   br i1 %i.bk, label %bb.h, label %.invoke
 
 .thread35.i.i:                                    ; preds = %bb.g
-  %i.bl = getelementptr inbounds nuw [104 x i8], ptr %i.be, i64 %i.bm
+  %i.bl = getelementptr [104 x i8], ptr %i.be, i64 %.sroa.13.0.i.i
+  %3 = getelementptr i8, ptr %i.bl, i64 104
   br label %bb.j
 
 bb.g:                                             ; preds = %select.unfold.i.i
-  %i.bm = add i64 %.sroa.13.0.i.i, 1              ; 3 uses
+  %i.bm = add i64 %.sroa.13.0.i.i, 1              ; 2 uses
   call void @llvm.assume(i1 %i.bj)
   %.not17.i.i.i = icmp ult i64 %i.bm, %i.bc
   br i1 %.not17.i.i.i, label %.thread35.i.i, label %_RINvCskspKcFIsYcD_12pingora_http17header_to_h1_wireINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsiWMK64dCVjf_20pingora_header_serde.exit.i
@@ -235,7 +236,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bp, label %bb.m, label %.invoke
 
 bb.j:                                             ; preds = %bb.h, %.thread35.i.i
-  %i.bq = phi ptr [ %i.bl, %.thread35.i.i ], [ %i.bo, %bb.h ] ; 4 uses
+  %i.bq = phi ptr [ %3, %.thread35.i.i ], [ %i.bo, %bb.h ] ; 4 uses
   %.sroa.13.13339.i.i = phi i64 [ %i.bm, %.thread35.i.i ], [ %.sroa.13.0.i.i, %bb.h ]
   %.sroa.09.0.copyload.i.i.i = load i64, ptr %i.bq, align 8, !noalias !212
   %i.br = trunc nuw i64 %.sroa.09.0.copyload.i.i.i to i1

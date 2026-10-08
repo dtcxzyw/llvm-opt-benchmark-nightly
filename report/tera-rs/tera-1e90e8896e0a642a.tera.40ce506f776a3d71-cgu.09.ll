@@ -202,8 +202,8 @@ bb.t:                                             ; preds = %bb.r
   unreachable, !dbg !25462
 
 .lr.ph223:                                        ; preds = %.lr.ph223.preheader, %.backedge
-  %i.ax = phi i64 [ %i.bt, %.backedge ], [ %.ph, %.lr.ph223.preheader ] ; 2 uses
-  %i.ay = add nsw i64 %i.ax, -1, !dbg !25465      ; 3 uses
+  %i.ax = phi i64 [ %i.bt, %.backedge ], [ %.ph, %.lr.ph223.preheader ] ; 3 uses
+  %i.ay = add nsw i64 %i.ax, -1, !dbg !25465      ; 2 uses
   store i64 %i.ay, ptr %i.x, align 8, !dbg !25465
   %i.az = load i64, ptr %i.h, align 8, !dbg !25466, !range !4502, !noundef !1634
   %i.ba = icmp samesign ult i64 %i.ay, %i.az, !dbg !25467
@@ -214,9 +214,10 @@ bb.t:                                             ; preds = %bb.r
     #dbg_value(i64 %i.ay, !25307, !DIExpression(), !25310)
   %i.bc = icmp samesign ult i64 %i.ax, 1152921504606846977, !dbg !25470
   call void @llvm.assume(i1 %i.bc), !dbg !25471
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.ay, !dbg !25472
-    #dbg_value(ptr %i.bd, !25311, !DIExpression(), !25316)
-  %i.be = load ptr, ptr %i.bd, align 8, !dbg !25473, !nonnull !1634, !align !5364, !noundef !1634 ; 4 uses
+  %i.bd = getelementptr [8 x i8], ptr %i.bb, i64 %i.ax, !dbg !25472
+  %4 = getelementptr i8, ptr %i.bd, i64 -8, !dbg !25472
+    #dbg_value(ptr %4, !25311, !DIExpression(), !25316)
+  %i.be = load ptr, ptr %4, align 8, !dbg !25473, !nonnull !1634, !align !5364, !noundef !1634 ; 4 uses
     #dbg_value(ptr %i.be, !24851, !DIExpression(), !25317)
     #dbg_value(ptr %i.i, !25208, !DIExpression(), !25318)
     #dbg_value(ptr %i.be, !25216, !DIExpression(), !25320)
@@ -619,12 +620,12 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !29465
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !29467
-  %i.cz = load i64, ptr %i.ab, align 8, !dbg !29468, !noundef !1634 ; 3 uses
+  %i.cz = load i64, ptr %i.ab, align 8, !dbg !29468, !noundef !1634 ; 4 uses
   %i.da = icmp eq i64 %i.cz, 0, !dbg !29468
   br i1 %i.da, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgCecv3eZDcN_5alloc6string6StringEECs5yXxDE1DkoT_4tera.exit, label %bb.aa, !dbg !29468
 
 bb.aa:                                            ; preds = %bb.z
-  %i.db = add nsw i64 %i.cz, -1, !dbg !29469      ; 3 uses
+  %i.db = add nsw i64 %i.cz, -1, !dbg !29469      ; 2 uses
   store i64 %i.db, ptr %i.ab, align 8, !dbg !29469
   %i.dc = load i64, ptr %3, align 8, !dbg !29470, !range !4502, !noundef !1634
     #dbg_value(i64 %i.dc, !29123, !DIExpression(), !29298)
@@ -636,9 +637,10 @@ bb.aa:                                            ; preds = %bb.z
     #dbg_value(i64 %i.db, !29308, !DIExpression(), !29311)
   %i.df = icmp ult i64 %i.cz, 384307168202282327, !dbg !29474
   call void @llvm.assume(i1 %i.df), !dbg !29475
-  %i.dg = getelementptr inbounds nuw [24 x i8], ptr %i.de, i64 %i.db, !dbg !29476
-    #dbg_value(ptr %i.dg, !29312, !DIExpression(), !29317)
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.dg, i64 24, i1 false), !dbg !29477
+  %i.dg = getelementptr [24 x i8], ptr %i.de, i64 %i.cz, !dbg !29476
+  %5 = getelementptr i8, ptr %i.dg, i64 -24, !dbg !29476
+    #dbg_value(ptr %5, !29312, !DIExpression(), !29317)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !dbg !29477
   %.pr = load i64, ptr %i.f, align 8, !dbg !29478, !alias.scope !29318
     #dbg_value(ptr %i.f, !4531, !DIExpression(), !28701)
   %i.dh = icmp eq i64 %.pr, -1, !dbg !29478

@@ -204,8 +204,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br i1 %i.ah, label %.loopexit395.i.i, label %.split.i.i
 
 bb.m:                                             ; preds = %bb.h
-  %i.ai = add nsw i64 %2, -1                      ; 2 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 %i.ai
+  %i.ai = add nsw i64 %2, -1
+  %4 = getelementptr i8, ptr %1, i64 %2
+  %i.aj = getelementptr i8, ptr %4, i64 -1
   %i.ak = load i8, ptr %i.aj, align 1, !alias.scope !909, !noalias !910, !noundef !6 ; 3 uses
   %i.al = icmp eq i8 %i.ak, 61
   br i1 %i.al, label %.loopexit56, label %bb.n

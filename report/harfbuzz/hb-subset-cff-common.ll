@@ -205,15 +205,16 @@ _ZNK13hb_bit_page_t4nextEPj.exit.thread:          ; preds = %bb.k
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %i.ax, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.l ] ; 2 uses
-  %.027.i = phi ptr [ %i.a, %.lr.ph.preheader.i ], [ %i.bb, %bb.l ]
+  %indvars.iv.i = phi i64 [ %i.ax, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.l ] ; 3 uses
+  %.027.i = phi ptr [ %i.a, %.lr.ph.preheader.i ], [ %2, %bb.l ]
   %i.ba = load i64, ptr %.027.i, align 8, !tbaa !81 ; 2 uses
   %.not20.not.i.not = icmp eq i64 %i.ba, 0
   br i1 %.not20.not.i.not, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %.lr.ph.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv.next.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv.i
+  %2 = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZNK13hb_bit_page_t4nextEPj.exit, label %.lr.ph.i, !llvm.loop !204
 

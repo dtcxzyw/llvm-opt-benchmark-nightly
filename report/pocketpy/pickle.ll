@@ -202,16 +202,17 @@ bb.cm:                                            ; preds = %bb.cl
   br label %bb.cn
 
 bb.cn:                                            ; preds = %.lr.ph347, %select.unfold
-  %indvars.iv366 = phi i64 [ %i.tv, %.lr.ph347 ], [ %indvars.iv.next367, %select.unfold ] ; 2 uses
-  %indvars.iv.next367 = add nsw i64 %indvars.iv366, -1 ; 2 uses
+  %indvars.iv366 = phi i64 [ %i.tv, %.lr.ph347 ], [ %indvars.iv.next367, %select.unfold ] ; 3 uses
+  %indvars.iv.next367 = add nsw i64 %indvars.iv366, -1
   %i.tw = load ptr, ptr %i.tu, align 8, !tbaa !99
-  %i.tx = getelementptr inbounds nuw [32 x i8], ptr %i.tw, i64 %indvars.iv.next367 ; 2 uses
-  %i.ty = load ptr, ptr %i.tx, align 8, !tbaa !101
+  %i.tx = getelementptr [32 x i8], ptr %i.tw, i64 %indvars.iv366 ; 2 uses
+  %4 = getelementptr i8, ptr %i.tx, i64 -32
+  %i.ty = load ptr, ptr %4, align 8, !tbaa !101
   %i.tz = icmp eq ptr %i.ty, null
   br i1 %i.tz, label %select.unfold, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
-  %i.ua = getelementptr inbounds nuw i8, ptr %i.tx, i64 8
+  %i.ua = getelementptr i8, ptr %i.tx, i64 -24
   %i.ub = tail call fastcc zeroext i1 @pkl__write_object(ptr noundef %0, ptr noundef nonnull %i.ua)
   br i1 %i.ub, label %select.unfold, label %pkl__write_array.exit
 
@@ -614,11 +615,12 @@ pkl__read_int.exit165:                            ; preds = %bb.do, %bb.dp, %bb.
   br label %.critedge.backedge
 
 .lr.ph353:                                        ; preds = %.lr.ph353.preheader, %.lr.ph353
-  %indvars.iv408 = phi i64 [ %i.ea, %.lr.ph353.preheader ], [ %indvars.iv.next409, %.lr.ph353 ] ; 2 uses
-  %indvars.iv.next409 = add nsw i64 %indvars.iv408, -1 ; 2 uses
-  %i.eb = getelementptr inbounds nuw [24 x i8], ptr %i.dy, i64 %indvars.iv.next409
+  %indvars.iv408 = phi i64 [ %i.ea, %.lr.ph353.preheader ], [ %indvars.iv.next409, %.lr.ph353 ] ; 3 uses
+  %indvars.iv.next409 = add nsw i64 %indvars.iv408, -1
+  %i.eb = getelementptr [24 x i8], ptr %i.dy, i64 %indvars.iv408
+  %3 = getelementptr i8, ptr %i.eb, i64 -24
   %i.ec = tail call ptr @py_peek(i32 noundef -1) #11
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eb, ptr noundef nonnull align 8 dereferenceable(24) %i.ec, i64 24, i1 false), !tbaa.struct !111
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.ec, i64 24, i1 false), !tbaa.struct !111
   tail call void (...) @py_pop() #11
   %i.ed = icmp samesign ugt i64 %indvars.iv408, 1
   br i1 %i.ed, label %.lr.ph353, label %._crit_edge354, !llvm.loop !104

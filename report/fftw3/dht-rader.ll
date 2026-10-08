@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 ._crit_edge189:                                   ; preds = %bb.i, %.preheader
   %.1159.lcssa = phi i64 [ %i.ed, %.preheader ], [ %i.eu, %bb.i ] ; 4 uses
-  %.3.lcssa = phi i64 [ 1, %.preheader ], [ %smax203, %bb.i ] ; 2 uses
+  %.3.lcssa = phi i64 [ 1, %.preheader ], [ %smax203, %bb.i ] ; 3 uses
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.3.lcssa
   %i.ew = load double, ptr %i.ev, align 8, !tbaa !30
   %i.ex = mul nsw i64 %.1159.lcssa, %i.ac
@@ -229,13 +229,15 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.fd, label %.lr.ph196, label %.loopexit
 
 .lr.ph196:                                        ; preds = %bb.l, %bb.o
-  %.4194 = phi i64 [ %.4, %bb.o ], [ %.4192, %bb.l ] ; 3 uses
+  %.4195 = phi i64 [ %.4, %bb.o ], [ %.4192, %bb.l ] ; 3 uses
+  %.4194 = phi i64 [ %.4195, %bb.o ], [ %.3.lcssa, %bb.l ]
   %.2160193 = phi i64 [ %i.fp, %bb.o ], [ %i.fc, %bb.l ] ; 4 uses
-  %i.fe = sub nuw nsw i64 %i.d, %.4194
+  %i.fe = sub nuw nsw i64 %i.d, %.4195
   %i.ff = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.fe
   %i.fg = load double, ptr %i.ff, align 8, !tbaa !30
   %i.fh = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.4194
-  %i.fi = load double, ptr %i.fh, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %i.fh, i64 8
+  %i.fi = load double, ptr %3, align 8, !tbaa !30
   %i.fj = fsub double %i.fg, %i.fi
   %i.fk = mul nsw i64 %.2160193, %i.ac
   %i.fl = getelementptr inbounds [8 x i8], ptr %2, i64 %i.fk
@@ -254,7 +256,7 @@ bb.n:                                             ; preds = %.lr.ph196
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.fp = phi i64 [ %i.fn, %bb.m ], [ %i.fo, %bb.n ]
-  %.4 = add nuw i64 %.4194, 1                     ; 2 uses
+  %.4 = add nuw i64 %.4195, 1                     ; 2 uses
   %exitcond205.not = icmp eq i64 %.4, %i.d
   br i1 %exitcond205.not, label %.loopexit, label %.lr.ph196, !llvm.loop !66
 

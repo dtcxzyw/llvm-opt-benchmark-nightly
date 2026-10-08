@@ -202,11 +202,18 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 3 uses
   %i.o = load i64, ptr %i.n, align 8              ; 2 uses
   %.not4.i = icmp eq i64 %i.o, 0
-  br i1 %.not4.i, label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit, label %.lr.ph.i
+  br i1 %.not4.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   br label %bb.b
+
+._crit_edge.i:                                    ; preds = %bb.b, %bb.a
+  %4 = load i64, ptr %i.k, align 8                ; 2 uses
+  %5 = add i64 %4, 1                              ; 2 uses
+  %6 = icmp ult i64 %5, 16
+  %7 = load ptr, ptr %0, align 8                  ; 4 uses
+  br i1 %6, label %11, label %8
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.q = phi i64 [ %i.o, %.lr.ph.i ], [ %i.ac, %bb.b ]
@@ -230,16 +237,20 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   call void @_RNvNtNtNtCskKLDkoKarTP_4core9core_arch3x864sse215__mm_store_si128Cs2SM5xCHwwDm_13logos_codegen(ptr %i.ab, ptr nonnull align 16 %i.e) #12
   %i.ac = load i64, ptr %i.n, align 8             ; 2 uses
   %.not.i = icmp eq i64 %i.ac, 0
-  br i1 %.not.i, label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit, label %bb.b
+  br i1 %.not.i, label %._crit_edge.i, label %bb.b
 
-_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit: ; preds = %bb.b, %bb.a
-  %4 = load i64, ptr %i.k, align 8
-  %5 = add i64 %4, 1                              ; 2 uses
-  %6 = load ptr, ptr %0, align 8                  ; 2 uses
-  %..i = call i64 @llvm.umax.i64(i64 %5, i64 16)
-  %.8.i = call i64 @llvm.umin.i64(i64 %5, i64 16)
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %..i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %7, ptr align 1 %6, i64 %.8.i, i1 false)
+8:                                                ; preds = %._crit_edge.i
+  %9 = getelementptr i8, ptr %7, i64 %4
+  %10 = getelementptr i8, ptr %9, i64 1
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %10, ptr noundef nonnull align 1 dereferenceable(16) %7, i64 16, i1 false)
+  br label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit
+
+11:                                               ; preds = %._crit_edge.i
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %12, ptr align 1 %7, i64 %5, i1 false)
+  br label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit
+
+_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs2SM5xCHwwDm_13logos_codegen.exit: ; preds = %8, %11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -641,12 +652,6 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #11
 
 attributes #0 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

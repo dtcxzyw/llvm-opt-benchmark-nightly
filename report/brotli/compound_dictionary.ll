@@ -205,27 +205,27 @@ bb.l:                                             ; preds = %bb.l, %.new41
   %.0164.in230.i = phi ptr [ %i.db, %.new41 ], [ %i.ds, %bb.l ]
   %niter49 = phi i64 [ 0, %.new41 ], [ %niter49.next.3, %bb.l ]
   %.0164.i = load i32, ptr %.0164.in230.i, align 4, !tbaa !23 ; 2 uses
-  %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %.0232.i
+  %i.de = getelementptr [4 x i8], ptr %i.bs, i64 %.0232.i
   store i32 %.0164.i, ptr %i.de, align 4, !tbaa !23
   %i.df = zext i32 %.0164.i to i64
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.df
   %.0164.i.1 = load i32, ptr %i.dg, align 4, !tbaa !23 ; 2 uses
-  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %.0232.i
-  %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
+  %i.dh = getelementptr [4 x i8], ptr %i.bs, i64 %.0232.i
+  %i.di = getelementptr i8, ptr %i.dh, i64 4
   store i32 %.0164.i.1, ptr %i.di, align 4, !tbaa !23
   %i.dj = zext i32 %.0164.i.1 to i64
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.dj
   %.0164.i.2 = load i32, ptr %i.dk, align 4, !tbaa !23 ; 2 uses
-  %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %.0232.i
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
+  %3 = add nuw nsw i64 %.0232.i, 3                ; 2 uses
+  %i.dl = getelementptr [4 x i8], ptr %i.bs, i64 %.0232.i
+  %i.dm = getelementptr i8, ptr %i.dl, i64 8
   store i32 %.0164.i.2, ptr %i.dm, align 4, !tbaa !23
   %i.dn = zext i32 %.0164.i.2 to i64
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.dn
   %.0164.i.3 = load i32, ptr %i.do, align 4, !tbaa !23 ; 3 uses
-  %i.dp = add nuw nsw i64 %.0232.i, 4             ; 3 uses
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %.0232.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.dq, i64 12
-  store i32 %.0164.i.3, ptr %3, align 4, !tbaa !23
+  %i.dp = add nuw nsw i64 %.0232.i, 4             ; 2 uses
+  %i.dq = getelementptr [4 x i8], ptr %i.bs, i64 %3
+  store i32 %.0164.i.3, ptr %i.dq, align 4, !tbaa !23
   %i.dr = zext i32 %.0164.i.3 to i64
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.dr ; 2 uses
   %niter49.next.3 = add i64 %niter49, 4           ; 2 uses
@@ -244,12 +244,12 @@ bb.l:                                             ; preds = %bb.l, %.new41
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.m, %.epil.preheader42
-  %.0232.i.epil = phi i64 [ %.0232.i.epil.init, %.epil.preheader42 ], [ %i.dt, %bb.m ] ; 2 uses
+  %.0232.i.epil = phi i64 [ %.0232.i.epil.init, %.epil.preheader42 ], [ %i.dt, %bb.m ] ; 3 uses
   %.0164.in230.i.epil = phi ptr [ %.0164.in230.i.epil.init, %.epil.preheader42 ], [ %i.dw, %bb.m ]
   %epil.iter = phi i64 [ 0, %.epil.preheader42 ], [ %epil.iter.next, %bb.m ]
   %.0164.i.epil = load i32, ptr %.0164.in230.i.epil, align 4, !tbaa !23 ; 3 uses
-  %i.dt = add nuw nsw i64 %.0232.i.epil, 1        ; 2 uses
-  %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %.0232.i.epil
+  %i.dt = add nuw nsw i64 %.0232.i.epil, 1
+  %i.du = getelementptr [4 x i8], ptr %i.bs, i64 %.0232.i.epil
   store i32 %.0164.i.epil, ptr %i.du, align 4, !tbaa !23
   %i.dv = zext i32 %.0164.i.epil to i64
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.dv
@@ -258,12 +258,11 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.m, !llvm.loop !19
 
 .epilog-lcssa:                                    ; preds = %bb.m, %.unr-lcssa
+  %.lcssa = phi i64 [ %3, %.unr-lcssa ], [ %.0232.i.epil, %bb.m ]
   %.0164.i.lcssa = phi i32 [ %.0164.i.3, %.unr-lcssa ], [ %.0164.i.epil, %bb.m ]
-  %.lcssa = phi i64 [ %i.dp, %.unr-lcssa ], [ %i.dt, %bb.m ]
   %4 = getelementptr [4 x i8], ptr %i.bs, i64 %.lcssa
-  %5 = getelementptr i8, ptr %4, i64 -4
   %i.dx = or i32 %.0164.i.lcssa, -2147483648
-  store i32 %i.dx, ptr %5, align 4, !tbaa !23
+  store i32 %i.dx, ptr %4, align 4, !tbaa !23
   br label %bb.n
 
 bb.n:                                             ; preds = %.epilog-lcssa, %bb.j

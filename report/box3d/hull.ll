@@ -205,9 +205,10 @@ b3HullMap_get.exit:                               ; preds = %bb.d, %b3CompareHul
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !100, !alias.scope !251
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.idx9 = shl nuw nsw i64 %i.d, 1
-  %i.ak = add nuw nsw i64 %.idx9, 2               ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ak
+  %.idx9 = shl nuw nsw i64 %i.d, 1                ; 2 uses
+  %i.ak = add nuw nsw i64 %.idx9, 2
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx9
+  %i.al = getelementptr inbounds nuw i8, ptr %3, i64 2
   store ptr %i.al, ptr %i.aj, align 8, !tbaa !101, !alias.scope !251
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 %i.e, ptr %i.am, align 8, !tbaa !111, !alias.scope !251

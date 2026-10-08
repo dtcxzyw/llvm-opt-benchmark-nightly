@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   store atomic i8 1, ptr %i.b monotonic, align 8
-  %i.c = add i64 %1, 1                            ; 6 uses
+  %i.c = add i64 %1, 1                            ; 5 uses
   %i.d = icmp ugt i64 %i.c, 24019198012642645
   br i1 %i.d, label %.noexc.i, label %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
 
@@ -294,12 +294,13 @@ _ZNSt12_Vector_baseIN6spdlog7details14log_msg_bufferESaIS2_EEC2EmRKS3_.exit.i.i:
 
 _ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit
   %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.ag, %.lr.ph.i.i.i.i.i.i ]
-  %i.ah = getelementptr inbounds nuw [384 x i8], ptr %i.f, i64 %i.c
+  %i.ah = getelementptr [384 x i8], ptr %i.f, i64 %1
+  %2 = getelementptr i8, ptr %i.ah, i64 384
   br label %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit
 
 _ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit: ; preds = %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit, %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
   %.sroa.10.0 = phi ptr [ null, %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ], [ %i.f, %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit ]
-  %.sroa.19.0 = phi ptr [ null, %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ], [ %i.ah, %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit ]
+  %.sroa.19.0 = phi ptr [ null, %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ], [ %2, %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit ]
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ], [ %.lcssa, %_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEEC2Em.exit.loopexit ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %i.c, ptr %i.ai, align 8, !tbaa !91
@@ -702,8 +703,8 @@ _ZNSt10unique_ptrIN6spdlog7details19aggregate_formatterESt14default_deleteIS2_EE
   %i.cx = phi ptr [ %i.cp, %._ZNSt10unique_ptrIN6spdlog7details19aggregate_formatterESt14default_deleteIS2_EED2Ev.exit_crit_edge ], [ %i.s, %._ZNSt10unique_ptrIN6spdlog7details19aggregate_formatterESt14default_deleteIS2_EED2Ev.exit_crit_edge113 ] ; 4 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 24 ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 32 ; 2 uses
-  %i.da = load i64, ptr %i.cz, align 8, !tbaa !59 ; 4 uses
-  %i.db = add i64 %i.da, 1                        ; 3 uses
+  %i.da = load i64, ptr %i.cz, align 8, !tbaa !59 ; 5 uses
+  %i.db = add i64 %i.da, 1                        ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cx, i64 40 ; 2 uses
   %i.dd = icmp eq ptr %i.cv, %i.dc
   br i1 %i.dd, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -736,7 +737,8 @@ _ZN6spdlog7details19aggregate_formatter6add_chEc.exit: ; preds = %_ZNKSt7__cxx11
   store i8 %i.cw, ptr %i.dj, align 1, !tbaa !64
   store i64 %i.db, ptr %i.cz, align 8, !tbaa !59
   %i.dk = load ptr, ptr %i.cy, align 8, !tbaa !60
-  %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.db
+  %3 = getelementptr i8, ptr %i.dk, i64 %i.da
+  %i.dl = getelementptr i8, ptr %3, i64 1
   store i8 0, ptr %i.dl, align 1, !tbaa !64
   br label %bb.y
 
@@ -1139,8 +1141,8 @@ define linkonce_odr dso_local void @_ZN6spdlog7details19aggregate_formatter6add_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !59   ; 4 uses
-  %i.d = add i64 %i.c, 1                          ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !59   ; 5 uses
+  %i.d = add i64 %i.c, 1                          ; 2 uses
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1171,7 +1173,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   store i8 %1, ptr %i.m, align 1, !tbaa !64
   store i64 %i.d, ptr %i.b, align 8, !tbaa !59
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !60
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.d
+  %2 = getelementptr i8, ptr %i.n, i64 %i.c
+  %i.o = getelementptr i8, ptr %2, i64 1
   store i8 0, ptr %i.o, align 1, !tbaa !64
   ret void
 }

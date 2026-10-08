@@ -145,7 +145,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs1xwejQucwHj
 
 bb.d:                                             ; preds = %bb.f, %.lr.ph.i.i
   store i64 -1, ptr %i.f, align 8, !noalias !21
-  %i.k = load i64, ptr %i.h, align 8, !noalias !21, !noundef !4 ; 3 uses
+  %i.k = load i64, ptr %i.h, align 8, !noalias !21, !noundef !4 ; 4 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %bb.j, label %bb.e
 
@@ -157,7 +157,7 @@ bb.d:                                             ; preds = %bb.f, %.lr.ph.i.i
   unreachable
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = add nsw i64 %i.k, -1                     ; 3 uses
+  %i.m = add nsw i64 %i.k, -1                     ; 2 uses
   store i64 %i.m, ptr %i.h, align 8, !noalias !21
   %i.n = load i64, ptr %i.i, align 8, !range !9, !noalias !21, !noundef !4
   %i.o = icmp samesign ult i64 %i.m, %i.n
@@ -165,9 +165,10 @@ bb.e:                                             ; preds = %bb.d
   %i.p = load ptr, ptr %i.j, align 8, !noalias !21, !nonnull !4, !noundef !4
   %i.q = icmp ult i64 %i.k, 576460752303423489
   tail call void @llvm.assume(i1 %i.q)
-  %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.m ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8, !nonnull !4, !align !5, !noundef !4
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  %i.r = getelementptr [16 x i8], ptr %i.p, i64 %i.k ; 2 uses
+  %4 = getelementptr i8, ptr %i.r, i64 -16
+  %i.s = load ptr, ptr %4, align 8, !nonnull !4, !align !5, !noundef !4
+  %i.t = getelementptr i8, ptr %i.r, i64 -8
   %i.u = load ptr, ptr %i.t, align 8, !noundef !4
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !nonnull !4, !noundef !4
@@ -570,7 +571,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
   store i64 -1, ptr %0, align 8
-  %i.e = load i64, ptr %i.b, align 8, !noundef !4 ; 3 uses
+  %i.e = load i64, ptr %i.b, align 8, !noundef !4 ; 4 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -583,7 +584,7 @@ bb.c:                                             ; preds = %bb.b
   ret void
 
 bb.d:                                             ; preds = %bb.b
-  %i.g = add nsw i64 %i.e, -1                     ; 3 uses
+  %i.g = add nsw i64 %i.e, -1                     ; 2 uses
   store i64 %i.g, ptr %i.b, align 8
   %i.h = load i64, ptr %i.c, align 8, !range !9, !noundef !4
   %i.i = icmp samesign ult i64 %i.g, %i.h
@@ -591,9 +592,10 @@ bb.d:                                             ; preds = %bb.b
   %i.j = load ptr, ptr %i.d, align 8, !nonnull !4, !noundef !4
   %i.k = icmp ult i64 %i.e, 576460752303423489
   tail call void @llvm.assume(i1 %i.k)
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %i.g ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !nonnull !4, !align !5, !noundef !4
-  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %i.l = getelementptr [16 x i8], ptr %i.j, i64 %i.e ; 2 uses
+  %1 = getelementptr i8, ptr %i.l, i64 -16
+  %i.m = load ptr, ptr %1, align 8, !nonnull !4, !align !5, !noundef !4
+  %i.n = getelementptr i8, ptr %i.l, i64 -8
   %i.o = load ptr, ptr %i.n, align 8, !noundef !4
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !nonnull !4, !noundef !4

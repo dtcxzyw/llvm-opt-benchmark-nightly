@@ -188,17 +188,17 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv = phi i64 [ %i.f, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %indvars.iv.next ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %indvars.iv = phi i64 [ %i.f, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 3 uses
+  %i.g = getelementptr [32 x i8], ptr %i.b, i64 %indvars.iv ; 3 uses
+  %i.h = getelementptr i8, ptr %i.g, i64 -24
   %i.i = tail call zeroext i1 @py_istype(ptr noundef nonnull %i.h, i16 noundef signext 0) #6
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
+  %3 = getelementptr i8, ptr %i.g, i64 -32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !33
-  %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %i.l = getelementptr i8, ptr %i.g, i64 -28
   %i.m = load i32, ptr %i.l, align 4, !tbaa !42
   %i.n = sext i32 %i.m to i64
   %i.o = getelementptr inbounds [24 x i8], ptr %i.k, i64 %i.n
@@ -207,7 +207,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !32
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 192
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !58
-  %i.t = load i32, ptr %i.g, align 8, !tbaa !43
+  %i.t = load i32, ptr %3, align 8, !tbaa !43
   %i.u = sext i32 %i.t to i64
   %i.v = getelementptr inbounds [20 x i8], ptr %i.s, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 12
@@ -215,11 +215,12 @@ bb.b:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 bb.c:                                             ; preds = %.lr.ph
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.y = load i32, ptr %i.c, align 8, !tbaa !39
   %i.z = add nsw i32 %i.y, -1
   store i32 %i.z, ptr %i.c, align 8, !tbaa !39
-  %3 = icmp samesign ult i64 %indvars.iv, 2
-  br i1 %3, label %.loopexit, label %.lr.ph, !llvm.loop !55
+  %4 = icmp slt i64 %indvars.iv, 2
+  br i1 %4, label %.loopexit, label %.lr.ph, !llvm.loop !55
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %bb.b
   %spec.select = phi i32 [ %i.x, %bb.b ], [ -1, %bb.a ], [ -1, %bb.c ]

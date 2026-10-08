@@ -202,10 +202,12 @@ bb.d:                                             ; preds = %bb.l, %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.t = load i8, ptr %i.s, align 8, !alias.scope !112, !noalias !113 ; 2 uses
-  %i.u = zext nneg i8 %i.t to i64                 ; 3 uses
-  %1 = add nsw i64 %i.u, -1                       ; 3 uses
-  %i.v = icmp ult i8 %i.t, 5
-  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 %1
+  %i.u = zext nneg i8 %i.t to i64                 ; 4 uses
+  %1 = add i8 %i.t, -1
+  %i.v = icmp ult i8 %1, 4
+  %2 = getelementptr i8, ptr %i.r, i64 %i.u
+  %i.w = getelementptr i8, ptr %2, i64 -1
+  %3 = add nsw i64 %i.u, -1                       ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.lr.ph.i
@@ -227,7 +229,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ae = icmp ult i64 %i.ad, %i.y
   tail call void @llvm.assume(i1 %i.ae)
   %i.af = add i64 %i.ad, %i.n                     ; 5 uses
-  %.not15.i = icmp ult i64 %i.af, %1
+  %.not15.i = icmp ult i64 %i.af, %3
   br i1 %.not15.i, label %bb.i, label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -240,7 +242,7 @@ bb.i:                                             ; preds = %bb.k, %bb.j, %bb.g
   br i1 %i.ag, label %.loopexit, label %bb.e
 
 bb.j:                                             ; preds = %bb.g
-  %i.ah = sub nuw i64 %i.af, %1                   ; 5 uses
+  %i.ah = sub nuw i64 %i.af, %3                   ; 5 uses
   %i.ai = add i64 %i.ah, %i.u                     ; 4 uses
   %i.aj = icmp ult i64 %i.ai, %i.ah
   %.not16.i = icmp ugt i64 %i.ai, %.val6

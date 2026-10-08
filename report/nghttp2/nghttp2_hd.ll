@@ -205,7 +205,7 @@ decode_length.exit.thread18.i278:                 ; preds = %bb.aq, %decode_leng
   %.4340 = phi i32 [ 0, %bb.ar ], [ %.3339, %decode_length.exit.i275 ], [ 1, %bb.aq ]
   %.252.i22.i279 = phi i64 [ 1, %bb.ar ], [ %i.iv, %decode_length.exit.i275 ], [ 1, %bb.aq ] ; 3 uses
   %.01421.i280 = phi i32 [ %i.fs, %bb.ar ], [ %.014.i277, %decode_length.exit.i275 ], [ %i.fw, %bb.aq ] ; 3 uses
-  %i.ix = zext i32 %.01421.i280 to i64            ; 4 uses
+  %i.ix = zext i32 %.01421.i280 to i64            ; 5 uses
   %i.iy = icmp ult i64 %i.fn, %i.ix
   br i1 %i.iy, label %hd_inflate_read_len.exit.thread, label %hd_inflate_read_len.exit283
 
@@ -224,7 +224,7 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.jb, label %hd_inflate_read_len.exit.thread, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.jc = add nsw i64 %i.ix, -1                   ; 3 uses
+  %i.jc = add nsw i64 %i.ix, -1                   ; 2 uses
   store i64 %i.jc, ptr %i.z, align 8, !tbaa !90
   br i1 %i.fk, label %bb.br, label %.thread357
 
@@ -264,10 +264,11 @@ hd_ringbuf_get.exit.i.i:                          ; preds = %bb.bu
   br label %.thread352
 
 bb.bw:                                            ; preds = %bb.bt
-  %i.jp = getelementptr inbounds nuw [128 x i8], ptr @static_table, i64 %i.jc ; 3 uses
-  %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 40
-  %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 120
-  %i.js = insertelement <2 x ptr> poison, ptr %i.jp, i64 0
+  %i.jp = getelementptr [128 x i8], ptr @static_table, i64 %i.ix ; 3 uses
+  %6 = getelementptr i8, ptr %i.jp, i64 -128
+  %i.jq = getelementptr i8, ptr %i.jp, i64 -88
+  %i.jr = getelementptr i8, ptr %i.jp, i64 -8
+  %i.js = insertelement <2 x ptr> poison, ptr %6, i64 0
   %i.jt = insertelement <2 x ptr> %i.js, ptr %i.jq, i64 1
   br label %.thread352
 
@@ -670,7 +671,7 @@ bb.a:
   br i1 %i.a, label %hd_get_table_entry.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = add i64 %1, -1                           ; 3 uses
+  %i.b = add i64 %1, -1                           ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i64, ptr %i.c, align 8, !tbaa !69   ; 2 uses
   %i.e = add i64 %i.d, 61
@@ -704,8 +705,8 @@ hd_ringbuf_get.exit.i.i:                          ; preds = %bb.d
   br label %hd_get_table_entry.exit
 
 bb.f:                                             ; preds = %bb.c
-  %i.t = getelementptr inbounds nuw [128 x i8], ptr @static_table, i64 %i.b
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 80
+  %i.t = getelementptr [128 x i8], ptr @static_table, i64 %1
+  %i.u = getelementptr i8, ptr %i.t, i64 -48
   br label %hd_get_table_entry.exit
 
 hd_get_table_entry.exit:                          ; preds = %bb.a, %bb.b, %hd_ringbuf_get.exit.i.i, %bb.f
@@ -745,7 +746,7 @@ bb.a:
   br i1 %i.a, label %hd_get_table_entry.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = add i64 %1, -1                           ; 3 uses
+  %i.b = add i64 %1, -1                           ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i64, ptr %i.c, align 8, !tbaa !69   ; 2 uses
   %i.e = add i64 %i.d, 61
@@ -779,8 +780,8 @@ hd_ringbuf_get.exit.i.i:                          ; preds = %bb.d
   br label %hd_get_table_entry.exit
 
 bb.f:                                             ; preds = %bb.c
-  %i.t = getelementptr inbounds nuw [128 x i8], ptr @static_table, i64 %i.b
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 80
+  %i.t = getelementptr [128 x i8], ptr @static_table, i64 %1
+  %i.u = getelementptr i8, ptr %i.t, i64 -48
   br label %hd_get_table_entry.exit
 
 hd_get_table_entry.exit:                          ; preds = %bb.a, %bb.b, %hd_ringbuf_get.exit.i.i, %bb.f

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137720), align 8
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133888), align 8
   %i.ah = call i32 %i.af(ptr noundef %i.ag, i64 noundef %i.ad, i64 noundef %i.ae, i64 noundef 0, i64 noundef 9223372036854775807, i32 noundef 0, i64 noundef 4, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #17, !inline_history !17 ; 0 uses
-  %i.ai = load i64, ptr %i.c, align 8             ; 6 uses
+  %i.ai = load i64, ptr %i.c, align 8             ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
@@ -268,8 +268,8 @@ bb.h:                                             ; preds = %.lr.ph34, %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %.033
-  %4 = add i64 %i.ai, -1                          ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %4
+  %4 = getelementptr [8 x i8], ptr %i.av, i64 %i.ai
+  %5 = getelementptr i8, ptr %4, i64 -8
   %i.bb = load i64, ptr %5, align 8
   store i64 %i.bb, ptr %i.ba, align 8
   %i.bc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137416), align 8
@@ -277,8 +277,9 @@ bb.i:                                             ; preds = %bb.h
   %i.be = load i64, ptr %i.l, align 8
   %i.bf = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137072), align 8
   %i.bg = load ptr, ptr %i.e, align 8
-  %i.bh = trunc i64 %4 to i32
-  %i.bi = call i32 %i.bc(ptr noundef %i.bd, i64 noundef %i.be, i64 noundef %i.bf, i64 noundef 4, i32 noundef 32, i32 noundef 0, ptr noundef %i.bg, i32 noundef %i.bh) #17 ; 0 uses
+  %i.bh = trunc i64 %i.ai to i32
+  %6 = add i32 %i.bh, -1
+  %i.bi = call i32 %i.bc(ptr noundef %i.bd, i64 noundef %i.be, i64 noundef %i.bf, i64 noundef 4, i32 noundef 32, i32 noundef 0, ptr noundef %i.bg, i32 noundef %6) #17 ; 0 uses
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.h

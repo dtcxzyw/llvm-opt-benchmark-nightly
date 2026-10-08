@@ -202,7 +202,7 @@ common.resume:                                    ; preds = %.lr.ph.i.i.i.i, %.l
 
 _ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit: ; preds = %.noexc.i.i, %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !34
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !34   ; 2 uses
   %i.o = add i64 %i.n, 1                          ; 2 uses
   %i.p = load ptr, ptr %1, align 8, !tbaa !27     ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 696
@@ -235,7 +235,7 @@ tailrecurse.i.i:                                  ; preds = %.lr.ph.i.i
   %i.ae = load ptr, ptr %i.y, align 8, !tbaa !30
   store ptr %i.ae, ptr %i.b, align 8, !tbaa !30
   tail call void @_ZdlPvm(ptr noundef nonnull %i.y, i64 noundef 24) #12, !inline_history !100
-  %i.af = load i64, ptr %i.m, align 8, !tbaa !34
+  %i.af = load i64, ptr %i.m, align 8, !tbaa !34  ; 2 uses
   %i.ag = add i64 %i.af, 1                        ; 2 uses
   %i.ah = load ptr, ptr %1, align 8, !tbaa !27    ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 696
@@ -250,11 +250,13 @@ tailrecurse.i.i:                                  ; preds = %.lr.ph.i.i
   br i1 %.not.i.i, label %_ZNK8facebook4yoga4Node8getChildEm.exit.i.i, label %.lr.ph.i.i
 
 _ZNK8facebook4yoga4Node8getChildEm.exit.i.i:      ; preds = %tailrecurse.i.i, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit
-  %.lcssa6.i.i = phi i64 [ %i.o, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit ], [ %i.ag, %tailrecurse.i.i ] ; 2 uses
+  %.lcssa8.i.i = phi i64 [ %i.n, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit ], [ %i.af, %tailrecurse.i.i ]
+  %.lcssa6.i.i = phi i64 [ %i.o, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit ], [ %i.ag, %tailrecurse.i.i ]
   %.lcssa.i.i = phi ptr [ %i.t, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorC2ERKS4_.exit ], [ %i.al, %tailrecurse.i.i ]
   store i64 %.lcssa6.i.i, ptr %i.m, align 8, !tbaa !34
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %.lcssa.i.i, i64 %.lcssa6.i.i
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !28
+  %i.aq = getelementptr [8 x i8], ptr %.lcssa.i.i, i64 %.lcssa8.i.i
+  %3 = getelementptr i8, ptr %i.aq, i64 8
+  %i.ar = load ptr, ptr %3, align 8, !tbaa !28
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 60
   %i.at = load i8, ptr %i.as, align 4
   %i.au = and i8 %i.at, 12
@@ -311,7 +313,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = zext nneg i16 %i.c to i64                ; 2 uses
+  %i.d = zext nneg i16 %i.c to i64                ; 3 uses
   %i.e = icmp ult i16 %1, 64
   br i1 %i.e, label %bb.d, label %bb.e
 
@@ -323,7 +325,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !101  ; 2 uses
-  %i.j = add nsw i64 %i.d, -4                     ; 3 uses
+  %i.j = add nsw i64 %i.d, -4                     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !104
   %i.m = load ptr, ptr %i.i, align 8, !tbaa !105  ; 2 uses
@@ -339,11 +341,12 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNSt6vectorIjSaIjEE2atEm.exit.i.i:               ; preds = %bb.e
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.j
+  %i.r = getelementptr [4 x i8], ptr %i.m, i64 %i.d
+  %3 = getelementptr i8, ptr %i.r, i64 -16
   br label %_ZNK8facebook4yoga16SmallValueBufferILm4EE5get32Et.exit.i
 
 _ZNK8facebook4yoga16SmallValueBufferILm4EE5get32Et.exit.i: ; preds = %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i, %bb.d
-  %.0.in.i.i = phi ptr [ %i.g, %bb.d ], [ %i.r, %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i ]
+  %.0.in.i.i = phi ptr [ %i.g, %bb.d ], [ %3, %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i ]
   %.0.i4.i = load float, ptr %.0.in.i.i, align 4, !tbaa !106
   br label %_ZNK8facebook4yoga14StyleValuePool14getStoredValueENS0_16StyleValueHandleE.exit
 
@@ -363,7 +366,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not.i3, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = zext nneg i16 %i.y to i64                ; 2 uses
+  %i.z = zext nneg i16 %i.y to i64                ; 3 uses
   %i.aa = icmp ult i16 %1, 64
   br i1 %i.aa, label %bb.j, label %bb.k
 
@@ -375,7 +378,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !101 ; 2 uses
-  %i.af = add nsw i64 %i.z, -4                    ; 3 uses
+  %i.af = add nsw i64 %i.z, -4                    ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !104
   %i.ai = load ptr, ptr %i.ae, align 8, !tbaa !105 ; 2 uses
@@ -391,11 +394,12 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt6vectorIjSaIjEE2atEm.exit.i.i5:              ; preds = %bb.k
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.af
+  %i.an = getelementptr [4 x i8], ptr %i.ai, i64 %i.z
+  %4 = getelementptr i8, ptr %i.an, i64 -16
   br label %_ZNK8facebook4yoga16SmallValueBufferILm4EE5get32Et.exit.i6
 
 _ZNK8facebook4yoga16SmallValueBufferILm4EE5get32Et.exit.i6: ; preds = %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i5, %bb.j
-  %.0.in.i.i7 = phi ptr [ %i.ac, %bb.j ], [ %i.an, %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i5 ]
+  %.0.in.i.i7 = phi ptr [ %i.ac, %bb.j ], [ %4, %_ZNSt6vectorIjSaIjEE2atEm.exit.i.i5 ]
   %.0.i4.i8 = load float, ptr %.0.in.i.i7, align 4, !tbaa !106
   br label %_ZNK8facebook4yoga14StyleValuePool14getStoredValueENS0_16StyleValueHandleE.exit10
 
@@ -555,7 +559,7 @@ declare void @_ZN8facebook4yoga16fatalWithMessageEPKc(ptr noundef) local_unnamed
 define linkonce_odr hidden void @_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8Iterator4nextEv(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !34
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !34   ; 2 uses
   %i.c = add i64 %i.b, 1                          ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !27     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 696
@@ -592,7 +596,7 @@ tailrecurse:                                      ; preds = %bb.b
   %i.t = load ptr, ptr %i.n, align 8, !tbaa !30
   store ptr %i.t, ptr %i.m, align 8, !tbaa !30
   tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef 24) #12
-  %i.u = load i64, ptr %i.a, align 8, !tbaa !34
+  %i.u = load i64, ptr %i.a, align 8, !tbaa !34   ; 2 uses
   %i.v = add i64 %i.u, 1                          ; 2 uses
   %i.w = load ptr, ptr %0, align 8, !tbaa !27     ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 696
@@ -607,11 +611,13 @@ tailrecurse:                                      ; preds = %bb.b
   br i1 %.not, label %_ZNK8facebook4yoga4Node8getChildEm.exit, label %bb.b
 
 _ZNK8facebook4yoga4Node8getChildEm.exit:          ; preds = %tailrecurse, %bb.a
-  %.lcssa6 = phi i64 [ %i.c, %bb.a ], [ %i.v, %tailrecurse ] ; 2 uses
+  %.lcssa8 = phi i64 [ %i.b, %bb.a ], [ %i.u, %tailrecurse ]
+  %.lcssa6 = phi i64 [ %i.c, %bb.a ], [ %i.v, %tailrecurse ]
   %.lcssa = phi ptr [ %i.h, %bb.a ], [ %i.aa, %tailrecurse ]
   store i64 %.lcssa6, ptr %i.a, align 8, !tbaa !34
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %.lcssa, i64 %.lcssa6
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !28
+  %i.af = getelementptr [8 x i8], ptr %.lcssa, i64 %.lcssa8
+  %1 = getelementptr i8, ptr %i.af, i64 8
+  %i.ag = load ptr, ptr %1, align 8, !tbaa !28
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 60
   %i.ai = load i8, ptr %i.ah, align 4
   %i.aj = and i8 %i.ai, 12

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.invoke
   %i.ai = icmp ugt i64 %i.ah, 4                   ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.pre64 = load i64, ptr %i.aj, align 8
-  %i.ak = select i1 %i.ai, i64 %.pre64, i64 %i.ah ; 2 uses
+  %i.ak = select i1 %i.ai, i64 %.pre64, i64 %i.ah ; 3 uses
   %i.al = icmp eq i64 %i.ak, 0
   br i1 %i.al, label %.invoke, label %bb.f, !prof !6
 
@@ -214,7 +214,7 @@ _RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3Ar
   %i.am = load i64, ptr %i.r, align 8, !alias.scope !105, !noalias !106, !noundef !5 ; 2 uses
   %i.an = icmp ugt i64 %i.am, 4                   ; 3 uses
   %.pre = load i64, ptr %i.ae, align 8
-  %i.ao = select i1 %i.an, i64 %.pre, i64 %i.am   ; 2 uses
+  %i.ao = select i1 %i.an, i64 %.pre, i64 %i.am   ; 3 uses
   %i.ap = icmp eq i64 %i.ao, 0
   br i1 %i.ap, label %.invoke, label %bb.ag, !prof !6
 
@@ -223,10 +223,11 @@ bb.f:                                             ; preds = %._crit_edge
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !5
   %.sink12.i12 = select i1 %i.ai, ptr %i.ar, ptr %i.aj
-  %i.as = add i64 %i.ak, -1                       ; 2 uses
+  %i.as = add i64 %i.ak, -1
   store i64 %i.as, ptr %.sink11.i, align 8
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %.sink12.i12, i64 %i.as
-  %i.au = load ptr, ptr %i.at, align 8, !nonnull !5, !noundef !5 ; 2 uses
+  %i.at = getelementptr [8 x i8], ptr %.sink12.i12, i64 %i.ak
+  %2 = getelementptr i8, ptr %i.at, i64 -8
+  %i.au = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5 ; 2 uses
   store ptr %i.au, ptr %i.n, align 8
   br i1 %1, label %bb.m, label %bb.h
 
@@ -629,10 +630,11 @@ bb.ag:                                            ; preds = %_RNvMsc_Cs2efQY0w7v
   %.sink11.i15 = select i1 %i.an, ptr %i.ae, ptr %i.r
   %i.ih = load ptr, ptr %i.af, align 8, !nonnull !5
   %.sink12.i14 = select i1 %i.an, ptr %i.ih, ptr %i.ae
-  %i.ii = add i64 %i.ao, -1                       ; 2 uses
+  %i.ii = add i64 %i.ao, -1
   store i64 %i.ii, ptr %.sink11.i15, align 8
-  %i.ij = getelementptr inbounds nuw [8 x i8], ptr %.sink12.i14, i64 %i.ii
-  %i.ik = load ptr, ptr %i.ij, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.ij = getelementptr [8 x i8], ptr %.sink12.i14, i64 %i.ao
+  %3 = getelementptr i8, ptr %i.ij, i64 -8
+  %i.ik = load ptr, ptr %3, align 8, !nonnull !5, !noundef !5 ; 4 uses
   store ptr %i.ik, ptr %i.q, align 8
   %i.il = add i64 %.sroa.0.057, -1                ; 3 uses
   %i.im = invoke noundef nonnull align 8 ptr @_RNvXsp_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEj4_EINtNtNtCskKLDkoKarTP_4core3ops5index8IndexMutjE9index_mutB1m_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0, i64 noundef %i.il, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5)
@@ -734,7 +736,7 @@ _RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3Ar
   %i.y = icmp ugt i64 %i.x, 4                     ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 19 uses
   %.pre = load i64, ptr %i.z, align 8
-  %i.aa = select i1 %i.y, i64 %.pre, i64 %i.x     ; 2 uses
+  %i.aa = select i1 %i.y, i64 %.pre, i64 %i.x     ; 3 uses
   %i.ab = icmp eq i64 %i.aa, 0
   br i1 %i.ab, label %bb.a, label %bb.b, !prof !6
 
@@ -755,10 +757,11 @@ bb.b:                                             ; preds = %_RNvMsc_Cs2efQY0w7v
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !5
   %.sink12.i = select i1 %i.y, ptr %i.ae, ptr %i.z
-  %i.af = add i64 %i.aa, -1                       ; 2 uses
+  %i.af = add i64 %i.aa, -1
   store i64 %i.af, ptr %.sink11.i, align 8
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.sink12.i, i64 %i.af
-  %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !5, !noundef !5 ; 5 uses
+  %i.ag = getelementptr [8 x i8], ptr %.sink12.i, i64 %i.aa
+  %2 = getelementptr i8, ptr %i.ag, i64 -8
+  %i.ah = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5 ; 5 uses
   store ptr %i.ah, ptr %i.u, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 2 uses
   %i.aj = load i8, ptr %i.ai, align 8, !range !4, !noundef !5
@@ -1161,7 +1164,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = getelementptr i8, ptr %1, i64 %0         ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %0 ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !alias.scope !226, !noundef !5 ; 2 uses
   %i.f = icmp slt i8 %i.e, -64
   br i1 %i.f, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit
@@ -1186,29 +1189,31 @@ _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19: ; preds = %bb.c, %_RNvNt
   br i1 %or.cond.i1227, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader, label %.lr.ph
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader: ; preds = %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge, %.split, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19
-  %.sroa.0.1.lcssa = phi i64 [ %.sroa.0.126, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ], [ %.sroa.0.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %.sroa.0.128, %.split ] ; 2 uses
+  %.sroa.0.1.lcssa = phi i64 [ %.sroa.0.126, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ], [ %.sroa.0.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %.sroa.0.129, %.split ] ; 2 uses
   %.sroa.04.130 = add nuw nsw i64 %0, 1           ; 4 uses
   %i.n = icmp eq i64 %.sroa.04.130, %2
   br i1 %i.n, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread, label %.lr.ph34
 
 .lr.ph:                                           ; preds = %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge
-  %.sroa.0.128 = phi i64 [ %.sroa.0.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %.sroa.0.126, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ] ; 5 uses
+  %.sroa.0.129 = phi i64 [ %.sroa.0.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %.sroa.0.126, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ] ; 5 uses
+  %.sroa.0.128 = phi i64 [ %.sroa.0.129, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %0, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !227)
-  %i.o = icmp ult i64 %.sroa.0.128, %2
+  %i.o = icmp ult i64 %.sroa.0.129, %2
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph
   %i.p = getelementptr i8, ptr %1, i64 %.sroa.0.128 ; 2 uses
-  %i.q = load i8, ptr %i.p, align 1, !alias.scope !227, !noundef !5 ; 2 uses
+  %3 = getelementptr i8, ptr %i.p, i64 -1
+  %i.q = load i8, ptr %3, align 1, !alias.scope !227, !noundef !5 ; 2 uses
   %i.r = icmp slt i8 %i.q, -64
   br i1 %i.r, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge, label %.split
 
 bb.f:                                             ; preds = %.lr.ph
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.128, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #20, !noalias !227
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.129, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #20, !noalias !227
   unreachable
 
 .split:                                           ; preds = %bb.e
-  %i.s = getelementptr i8, ptr %i.p, i64 -1
+  %i.s = getelementptr i8, ptr %i.p, i64 -2
   %i.t = load i8, ptr %i.s, align 1, !alias.scope !227, !noundef !5
   %i.u = icmp ne i8 %i.t, 13
   %i.v = icmp ne i8 %i.q, 10
@@ -1216,21 +1221,22 @@ bb.f:                                             ; preds = %.lr.ph
   br i1 %i.w, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge: ; preds = %.split, %bb.e
-  %.sroa.0.1 = add nsw i64 %.sroa.0.128, -1       ; 4 uses
+  %.sroa.0.1 = add nsw i64 %.sroa.0.129, -1       ; 4 uses
   %i.x = icmp eq i64 %.sroa.0.1, 0
   %i.y = icmp eq i64 %.sroa.0.1, %2
   %or.cond.i12 = or i1 %i.x, %i.y
   br i1 %or.cond.i12, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader, label %.lr.ph
 
 .lr.ph34:                                         ; preds = %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge
-  %.sroa.04.133 = phi i64 [ %.sroa.04.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ], [ %.sroa.04.130, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ] ; 5 uses
+  %.sroa.04.133 = phi i64 [ %.sroa.04.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ], [ %.sroa.04.130, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ] ; 4 uses
   %.sroa.04.1.in32 = phi i64 [ %.sroa.04.133, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ], [ %0, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !228)
   %i.z = icmp ult i64 %.sroa.04.133, %2
   br i1 %i.z, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph34
-  %i.aa = getelementptr i8, ptr %1, i64 %.sroa.04.133
+  %4 = getelementptr i8, ptr %1, i64 %.sroa.04.1.in32 ; 2 uses
+  %i.aa = getelementptr i8, ptr %4, i64 1
   %i.ab = load i8, ptr %i.aa, align 1, !alias.scope !228, !noundef !5 ; 2 uses
   %i.ac = icmp slt i8 %i.ab, -64
   br i1 %i.ac, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge, label %.split23
@@ -1241,8 +1247,7 @@ bb.h:                                             ; preds = %.lr.ph34
   unreachable
 
 .split23:                                         ; preds = %bb.g
-  %3 = getelementptr i8, ptr %1, i64 %.sroa.04.1.in32
-  %i.ad = load i8, ptr %3, align 1, !alias.scope !228, !noundef !5
+  %i.ad = load i8, ptr %4, align 1, !alias.scope !228, !noundef !5
   %i.ae = icmp ne i8 %i.ad, 13
   %i.af = icmp ne i8 %i.ab, 10
   %i.ag = or i1 %i.af, %i.ae

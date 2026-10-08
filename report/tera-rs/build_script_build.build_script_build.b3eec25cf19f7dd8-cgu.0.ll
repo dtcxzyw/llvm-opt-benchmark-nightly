@@ -205,15 +205,17 @@ bb.ak:                                            ; preds = %.lr.ph
   br label %.loopexit49.i.i
 
 .lr.ph375:                                        ; preds = %.preheader44.i.i.preheader, %.preheader44.i.i
-  %.sroa.2.0.i.i.i374 = phi i64 [ %i.ea, %.preheader44.i.i ], [ %.sroa.212.0.i, %.preheader44.i.i.preheader ]
-  %i.ea = add i64 %.sroa.2.0.i.i.i374, -1         ; 6 uses
+  %.sroa.2.0.i.i.i374 = phi i64 [ %i.ea, %.preheader44.i.i ], [ %.sroa.212.0.i, %.preheader44.i.i.preheader ] ; 3 uses
+  %i.ea = add i64 %.sroa.2.0.i.i.i374, -1         ; 4 uses
   %i.eb = icmp ult i64 %i.ea, %.sroa.1367.0.copyload.i
   br i1 %i.eb, label %bb.al, label %.invoke.i
 
 bb.al:                                            ; preds = %.lr.ph375
-  %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.1266.0.copyload.i, i64 %i.ea
+  %0 = getelementptr i8, ptr %.sroa.1266.0.copyload.i, i64 %.sroa.2.0.i.i.i374
+  %i.ec = getelementptr i8, ptr %0, i64 -1
   %i.ed = load i8, ptr %i.ec, align 1, !noalias !33
-  %i.ee = getelementptr i8, ptr %i.dt, i64 %i.ea
+  %1 = getelementptr i8, ptr %i.dt, i64 %.sroa.2.0.i.i.i374
+  %i.ee = getelementptr i8, ptr %1, i64 -1
   %i.ef = load i8, ptr %i.ee, align 1, !noalias !33
   %.not17.i.i.i = icmp eq i8 %i.ed, %i.ef
   br i1 %.not17.i.i.i, label %.preheader44.i.i, label %bb.am
@@ -297,15 +299,17 @@ bb.as:                                            ; preds = %.lr.ph379
   br i1 %.not41.i.us.i380, label %.split.us.i, label %.lr.ph382
 
 .preheader.i26.us.i:                              ; preds = %.lr.ph382
-  %.not41.i.us.i = icmp eq i64 %0, 0
+  %2 = add i64 %.sroa.2.0.i22.i.us.i381, -1       ; 2 uses
+  %.not41.i.us.i = icmp eq i64 %2, 0
   br i1 %.not41.i.us.i, label %.split.us.i, label %.lr.ph382
 
 .lr.ph382:                                        ; preds = %.preheader.i26.us.i.preheader, %.preheader.i26.us.i
-  %.sroa.2.0.i22.i.us.i381 = phi i64 [ %0, %.preheader.i26.us.i ], [ %.sroa.212.0.i, %.preheader.i26.us.i.preheader ]
-  %0 = add i64 %.sroa.2.0.i22.i.us.i381, -1       ; 4 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.1266.0.copyload.i, i64 %0
+  %.sroa.2.0.i22.i.us.i381 = phi i64 [ %2, %.preheader.i26.us.i ], [ %.sroa.212.0.i, %.preheader.i26.us.i.preheader ] ; 3 uses
+  %3 = getelementptr i8, ptr %.sroa.1266.0.copyload.i, i64 %.sroa.2.0.i22.i.us.i381
+  %i.fb = getelementptr i8, ptr %3, i64 -1
   %i.fc = load i8, ptr %i.fb, align 1, !noalias !34
-  %i.fd = getelementptr i8, ptr %i.ex, i64 %0
+  %4 = getelementptr i8, ptr %i.ex, i64 %.sroa.2.0.i22.i.us.i381
+  %i.fd = getelementptr i8, ptr %4, i64 -1
   %i.fe = load i8, ptr %i.fd, align 1, !noalias !34
   %.not17.i23.i.us.i = icmp eq i8 %i.fc, %i.fe
   br i1 %.not17.i23.i.us.i, label %.preheader.i26.us.i, label %.split136.us.i

@@ -202,18 +202,19 @@ bb.a:
 define hidden void @_RNvMs3_NtNtCslghKHtsL3a4_5tokio6signal8registryNtB5_7Globals12record_event(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0, i64 noundef %1) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.a, align 8             ; 2 uses
+  %.val = load ptr, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1 = load i64, ptr %i.b, align 8, !noundef !4
-  %i.c = add i64 %1, -1                           ; 2 uses
+  %i.c = add i64 %1, -1
   %i.d = icmp uge i64 %i.c, %.val1
-  %.not1.i = icmp eq ptr %.val, null
+  %2 = getelementptr [32 x i8], ptr %.val, i64 %1 ; 2 uses
+  %3 = getelementptr i8, ptr %2, i64 -32
+  %.not1.i = icmp eq ptr %3, null
   %.not.i = select i1 %i.d, i1 true, i1 %.not1.i
   br i1 %.not.i, label %_RNvMs1_NtNtCslghKHtsL3a4_5tokio6signal8registryINtB5_8RegistryNtNtB7_4unix9OsStorageE12record_eventB9_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %i.c
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.e = getelementptr i8, ptr %2, i64 -24
   store atomic i8 1, ptr %i.e seq_cst, align 1
   br label %_RNvMs1_NtNtCslghKHtsL3a4_5tokio6signal8registryINtB5_8RegistryNtNtB7_4unix9OsStorageE12record_eventB9_.exit
 
@@ -227,14 +228,16 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.c, align 8             ; 2 uses
+  %.val = load ptr, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1 = load i64, ptr %i.d, align 8, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %1, ptr %i.b, align 8
-  %i.e = add i64 %1, -1                           ; 2 uses
+  %i.e = add i64 %1, -1
   %i.f = icmp uge i64 %i.e, %.val1
-  %.not1.i = icmp eq ptr %.val, null
+  %2 = getelementptr [32 x i8], ptr %.val, i64 %1
+  %3 = getelementptr i8, ptr %2, i64 -32          ; 2 uses
+  %.not1.i = icmp eq ptr %3, null
   %.not.i = select i1 %i.f, i1 true, i1 %.not1.i
   br i1 %.not.i, label %bb.b, label %_RNvMs1_NtNtCslghKHtsL3a4_5tokio6signal8registryINtB5_8RegistryNtNtB7_4unix9OsStorageE17register_listenerB9_.exit, !prof !10
 
@@ -247,8 +250,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMs1_NtNtCslghKHtsL3a4_5tokio6signal8registryINtB5_8RegistryNtNtB7_4unix9OsStorageE17register_listenerB9_.exit: ; preds = %bb.a
-  %2 = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %i.e
-  %i.g = tail call { ptr, i64 } @_RNvMs5_NtNtCslghKHtsL3a4_5tokio4sync5watchINtB5_6SenderuE9subscribeB9_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %2)
+  %i.g = tail call { ptr, i64 } @_RNvMs5_NtNtCslghKHtsL3a4_5tokio4sync5watchINtB5_6SenderuE9subscribeB9_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret { ptr, i64 } %i.g
 }

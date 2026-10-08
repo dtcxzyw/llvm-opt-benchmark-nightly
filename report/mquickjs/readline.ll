@@ -175,7 +175,7 @@ bb.t:                                             ; preds = %bb.h, %bb.h
 
 .preheader.i.i.i:                                 ; preds = %bb.t
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.ao = zext nneg i32 %i.al to i64
+  %i.ao = zext nneg i32 %i.al to i64              ; 2 uses
   %indvars.iv.next.i.i.i49 = add nsw i64 %i.ao, -1 ; 2 uses
   %i.ap = trunc nuw nsw i64 %indvars.iv.next.i.i.i49 to i32
   store i32 %i.ap, ptr %0, align 8, !tbaa !17
@@ -195,7 +195,9 @@ bb.u:                                             ; preds = %.lr.ph51
 
 .lr.ph51:                                         ; preds = %.lr.ph51.preheader, %bb.u
   %indvars.iv.next.i.i.i50 = phi i64 [ %indvars.iv.next.i.i.i, %bb.u ], [ %indvars.iv.next.i.i.i49, %.lr.ph51.preheader ] ; 3 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 %indvars.iv.next.i.i.i50
+  %indvars.iv.i.i.i51 = phi i64 [ %indvars.iv.next.i.i.i50, %bb.u ], [ %i.ao, %.lr.ph51.preheader ]
+  %2 = getelementptr i8, ptr %i.aq, i64 %indvars.iv.i.i.i51
+  %i.at = getelementptr i8, ptr %2, i64 -1
   %i.au = load i8, ptr %i.at, align 1, !tbaa !23
   %i.av = icmp sgt i8 %i.au, -65
   br i1 %i.av, label %.term_backward_char.exit.i.i_crit_edge, label %bb.u, !llvm.loop !40
@@ -344,7 +346,7 @@ bb.al:                                            ; preds = %bb.af
 
 .preheader.i.i:                                   ; preds = %bb.al
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.cf = zext nneg i32 %i.cc to i64
+  %i.cf = zext nneg i32 %i.cc to i64              ; 2 uses
   %indvars.iv.next.i.i46 = add nsw i64 %i.cf, -1  ; 2 uses
   %i.cg = trunc nuw nsw i64 %indvars.iv.next.i.i46 to i32
   store i32 %i.cg, ptr %0, align 8, !tbaa !17
@@ -364,7 +366,9 @@ bb.am:                                            ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.am
   %indvars.iv.next.i.i47 = phi i64 [ %indvars.iv.next.i.i, %bb.am ], [ %indvars.iv.next.i.i46, %.lr.ph.preheader ] ; 3 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 %indvars.iv.next.i.i47
+  %indvars.iv.i.i47 = phi i64 [ %indvars.iv.next.i.i47, %bb.am ], [ %i.cf, %.lr.ph.preheader ]
+  %3 = getelementptr i8, ptr %i.ch, i64 %indvars.iv.i.i47
+  %i.ck = getelementptr i8, ptr %3, i64 -1
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !23
   %i.cm = icmp sgt i8 %i.cl, -65
   br i1 %i.cm, label %.term_backspace.exit.i.loopexit_crit_edge48, label %bb.am, !llvm.loop !40

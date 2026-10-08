@@ -203,7 +203,7 @@ ReplicateValue.exit127:                           ; preds = %bb.f
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph178, %._crit_edge154
-  %indvars.iv195 = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv.next196, %._crit_edge154 ] ; 3 uses
+  %indvars.iv195 = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv.next196, %._crit_edge154 ] ; 4 uses
   %indvars.iv190.in = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv190, %._crit_edge154 ]
   %.0175 = phi ptr [ %0, %.lr.ph178 ], [ %.1.lcssa, %._crit_edge154 ] ; 3 uses
   %.088173 = phi i32 [ %i.f, %.lr.ph178 ], [ %.189.lcssa, %._crit_edge154 ] ; 3 uses
@@ -213,10 +213,11 @@ bb.g:                                             ; preds = %.lr.ph178, %._crit_
   %.098167 = phi i64 [ 256, %.lr.ph178 ], [ %.199.lcssa, %._crit_edge154 ] ; 3 uses
   %.2104166 = phi i64 [ %.1103.lcssa, %.lr.ph178 ], [ %.3105.lcssa, %._crit_edge154 ] ; 3 uses
   %indvars.iv190 = add nsw i64 %indvars.iv190.in, 1 ; 2 uses
-  %indvars.iv.next196 = add nsw i64 %indvars.iv195, 1 ; 5 uses
+  %indvars.iv.next196 = add nsw i64 %indvars.iv195, 1 ; 4 uses
   %i.ao = add nsw i64 %indvars.iv195, -15         ; 2 uses
-  %i.ap = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv.next196 ; 5 uses
-  %i.aq = load i16, ptr %i.ap, align 2, !tbaa !9
+  %i.ap = getelementptr [2 x i8], ptr %3, i64 %indvars.iv195
+  %4 = getelementptr i8, ptr %i.ap, i64 2         ; 5 uses
+  %i.aq = load i16, ptr %4, align 2, !tbaa !9
   %.not116145 = icmp eq i16 %i.aq, 0
   br i1 %.not116145, label %._crit_edge154, label %.lr.ph153
 
@@ -318,9 +319,9 @@ bb.k:                                             ; preds = %bb.k, %bb.j
 
 ReplicateValue.exit.us:                           ; preds = %bb.k
   %i.cg = add i64 %.2100.us, %.097168             ; 2 uses
-  %i.ch = load i16, ptr %i.ap, align 2, !tbaa !9
+  %i.ch = load i16, ptr %4, align 2, !tbaa !9
   %i.ci = add i16 %i.ch, -1                       ; 2 uses
-  store i16 %i.ci, ptr %i.ap, align 2, !tbaa !9
+  store i16 %i.ci, ptr %4, align 2, !tbaa !9
   %.not116.us = icmp eq i16 %i.ci, 0
   br i1 %.not116.us, label %._crit_edge154, label %.lr.ph153.split.us, !llvm.loop !20
 
@@ -388,9 +389,9 @@ bb.n:                                             ; preds = %bb.n, %bb.m
 
 ReplicateValue.exit:                              ; preds = %bb.n
   %i.dl = add i64 %.2100, %.097168                ; 2 uses
-  %i.dm = load i16, ptr %i.ap, align 2, !tbaa !9
+  %i.dm = load i16, ptr %4, align 2, !tbaa !9
   %i.dn = add i16 %i.dm, -1                       ; 2 uses
-  store i16 %i.dn, ptr %i.ap, align 2, !tbaa !9
+  store i16 %i.dn, ptr %4, align 2, !tbaa !9
   %.not116 = icmp eq i16 %i.dn, 0
   br i1 %.not116, label %._crit_edge154, label %bb.l, !llvm.loop !20
 

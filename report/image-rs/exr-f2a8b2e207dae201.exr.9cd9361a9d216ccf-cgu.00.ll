@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCsdsTQD3x2eOp_3exr.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nuw i64 %1, %i.b                     ; 4 uses
+  %i.e = sub nuw i64 %1, %i.b                     ; 5 uses
   %i.f = load i64, ptr %0, align 8, !range !5, !alias.scope !113, !noundef !4
   %i.g = sub nsw i64 %i.f, %i.b
   %i.h = icmp ugt i64 %i.e, %i.g
@@ -226,10 +226,12 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsdsTQD3x2eOp_3exr.exit.i: 
   br i1 %i.n, label %._crit_edge.thread.i, label %._crit_edge.i
 
 ._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsdsTQD3x2eOp_3exr.exit.i
-  %i.o = add i64 %i.e, -1                         ; 2 uses
+  %i.o = add i64 %i.e, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 %i.o, i1 false)
-  %i.p = add i64 %i.o, %i.i                       ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p
+  %3 = add i64 %i.i, %i.e                         ; 2 uses
+  %i.p = add i64 %3, -1
+  %4 = getelementptr i8, ptr %i.k, i64 %3
+  %scevgep.i = getelementptr i8, ptr %4, i64 -1
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsdsTQD3x2eOp_3exr.exit.i, %._crit_edge.thread.i
@@ -632,9 +634,10 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecbE7reserveCsdsTQD3x2eOp_3exr.exit: ; 
 ._crit_edge.thread:                               ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecbE7reserveCsdsTQD3x2eOp_3exr.exit
   %i.m = add i64 %1, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.k, i8 %i.a, i64 %i.m, i1 false)
-  %i.n = add i64 %i.g, %1
-  %i.o = add i64 %i.n, -1                         ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.i, i64 %i.o
+  %i.n = add i64 %i.g, %1                         ; 2 uses
+  %i.o = add i64 %i.n, -1
+  %3 = getelementptr i8, ptr %i.i, i64 %i.n
+  %scevgep = getelementptr i8, ptr %3, i64 -1
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecbE7reserveCsdsTQD3x2eOp_3exr.exit

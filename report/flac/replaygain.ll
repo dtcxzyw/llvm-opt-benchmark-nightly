@@ -204,10 +204,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ac, label %safe_strncpy.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 32)
-  %i.ad = add nsw i64 %spec.select.i, -1          ; 2 uses
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 32) ; 2 uses
+  %i.ad = add nsw i64 %spec.select.i, -1
   %i.ae = call ptr @__strncpy_chk(ptr noundef nonnull %i.e, ptr noundef nonnull %i.w, i64 noundef range(i64 0, 32) %i.ad, i64 noundef 32) #14 ; 0 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.ad
+  %6 = getelementptr i8, ptr %i.e, i64 %spec.select.i
+  %i.af = getelementptr i8, ptr %6, i64 -1
   store i8 0, ptr %i.af, align 1, !tbaa !22
   br label %safe_strncpy.exit.i
 
@@ -262,10 +263,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bd, label %safe_strncpy.exit.i46, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %spec.select.i45 = call i64 @llvm.umin.i64(i64 %i.bc, i64 32)
-  %i.be = add nsw i64 %spec.select.i45, -1        ; 2 uses
+  %spec.select.i45 = call i64 @llvm.umin.i64(i64 %i.bc, i64 32) ; 2 uses
+  %i.be = add nsw i64 %spec.select.i45, -1
   %i.bf = call ptr @__strncpy_chk(ptr noundef nonnull %i.c, ptr noundef nonnull %i.ax, i64 noundef range(i64 0, 32) %i.be, i64 noundef 32) #14 ; 0 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.be
+  %7 = getelementptr i8, ptr %i.c, i64 %spec.select.i45
+  %i.bg = getelementptr i8, ptr %7, i64 -1
   store i8 0, ptr %i.bg, align 1, !tbaa !22
   br label %safe_strncpy.exit.i46
 
@@ -307,10 +309,11 @@ bb.k:                                             ; preds = %.critedge
   br i1 %i.bx, label %safe_strncpy.exit.i51, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %spec.select.i50 = call i64 @llvm.umin.i64(i64 %i.bw, i64 32)
-  %i.by = add nsw i64 %spec.select.i50, -1        ; 2 uses
+  %spec.select.i50 = call i64 @llvm.umin.i64(i64 %i.bw, i64 32) ; 2 uses
+  %i.by = add nsw i64 %spec.select.i50, -1
   %i.bz = call ptr @__strncpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %i.br, i64 noundef range(i64 0, 32) %i.by, i64 noundef 32) #14 ; 0 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.by
+  %8 = getelementptr i8, ptr %i.a, i64 %spec.select.i50
+  %i.ca = getelementptr i8, ptr %8, i64 -1
   store i8 0, ptr %i.ca, align 1, !tbaa !22
   br label %safe_strncpy.exit.i51
 

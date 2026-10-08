@@ -205,13 +205,14 @@ bb.e:                                             ; preds = %bb.a
 
 .split.i:                                         ; preds = %.split.i, %bb.e
   %.012.i = phi i32 [ %i.am, %.split.i ], [ %.sroa.039.0.extract.trunc.i, %bb.e ] ; 2 uses
-  %.0.i5.idx = phi i64 [ %.0.i5.add, %.split.i ], [ 32, %bb.e ]
+  %.0.i5.idx = phi i64 [ %.0.i5.add, %.split.i ], [ 32, %bb.e ] ; 2 uses
   %i.ai = and i32 %.012.i, 15
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %.str.236..str.237.i, i64 %i.aj
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !31
-  %.0.i5.add = add nsw i64 %.0.i5.idx, -1         ; 4 uses
-  %.ptr41 = getelementptr inbounds i8, ptr %i.a, i64 %.0.i5.add
+  %.0.i5.add = add nsw i64 %.0.i5.idx, -1         ; 3 uses
+  %4 = getelementptr i8, ptr %i.a, i64 %.0.i5.idx
+  %.ptr41 = getelementptr i8, ptr %4, i64 -1
   store i8 %i.al, ptr %.ptr41, align 1, !tbaa !31
   %i.am = lshr i32 %.012.i, 4                     ; 2 uses
   %.not.i6 = icmp eq i32 %i.am, 0
@@ -233,12 +234,13 @@ bb.f:                                             ; preds = %_ZN3fmt3v126detail1
 
 .split.us.i:                                      ; preds = %bb.a, %.split.us.i
   %.012.us.i = phi i32 [ %i.aw, %.split.us.i ], [ %.sroa.039.0.extract.trunc.i, %bb.a ] ; 2 uses
-  %.0.us.i.idx = phi i64 [ %.0.us.i.add, %.split.us.i ], [ 32, %bb.a ] ; 2 uses
+  %.0.us.i.idx = phi i64 [ %.0.us.i.add, %.split.us.i ], [ 32, %bb.a ] ; 3 uses
   %i.at = trunc i32 %.012.us.i to i8
   %i.au = and i8 %i.at, 7
   %i.av = or disjoint i8 %i.au, 48
-  %.0.us.i.add = add nsw i64 %.0.us.i.idx, -1     ; 5 uses
-  %.ptr40 = getelementptr inbounds i8, ptr %i.a, i64 %.0.us.i.add
+  %.0.us.i.add = add nsw i64 %.0.us.i.idx, -1     ; 4 uses
+  %5 = getelementptr i8, ptr %i.a, i64 %.0.us.i.idx
+  %.ptr40 = getelementptr i8, ptr %5, i64 -1
   store i8 %i.av, ptr %.ptr40, align 1, !tbaa !31
   %i.aw = lshr i32 %.012.us.i, 3                  ; 2 uses
   %.not.us.i = icmp eq i32 %i.aw, 0
@@ -250,7 +252,7 @@ _ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit8: ; preds = %.split.u
   br i1 %.not, label %_ZN3fmt3v126detail17do_format_decimalIcjEEPT_S4_T0_i.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN3fmt3v126detail16do_format_base2eIcjEEPT_iS4_T0_ib.exit8
-  %gepdiff = sub nsw i64 33, %.0.us.i.idx
+  %gepdiff = sub i64 33, %.0.us.i.idx
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !185
   %i.ba = sext i32 %i.az to i64
@@ -268,12 +270,13 @@ bb.h:                                             ; preds = %bb.g
 
 .split.us.i10:                                    ; preds = %bb.a, %.split.us.i10
   %.012.us.i11 = phi i32 [ %i.bj, %.split.us.i10 ], [ %.sroa.039.0.extract.trunc.i, %bb.a ] ; 2 uses
-  %.0.us.i12.idx = phi i64 [ %.0.us.i12.add, %.split.us.i10 ], [ 32, %bb.a ]
+  %.0.us.i12.idx = phi i64 [ %.0.us.i12.add, %.split.us.i10 ], [ 32, %bb.a ] ; 2 uses
   %i.bg = trunc i32 %.012.us.i11 to i8
   %i.bh = and i8 %i.bg, 1
   %i.bi = or disjoint i8 %i.bh, 48
-  %.0.us.i12.add = add nsw i64 %.0.us.i12.idx, -1 ; 4 uses
-  %.ptr = getelementptr inbounds i8, ptr %i.a, i64 %.0.us.i12.add
+  %.0.us.i12.add = add nsw i64 %.0.us.i12.idx, -1 ; 3 uses
+  %6 = getelementptr i8, ptr %i.a, i64 %.0.us.i12.idx
+  %.ptr = getelementptr i8, ptr %6, i64 -1
   store i8 %i.bi, ptr %.ptr, align 1, !tbaa !31
   %i.bj = lshr i32 %.012.us.i11, 1                ; 2 uses
   %.not.us.i13 = icmp eq i32 %i.bj, 0

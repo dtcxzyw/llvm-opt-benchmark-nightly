@@ -204,17 +204,16 @@ bb.h:                                             ; preds = %_RNvMsb_NtCsjayvGk2
   br label %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7destroyBY_.exit
 
 .lr.ph.i52:                                       ; preds = %bb.h, %bb.j
-  %.sroa.0.05.i = phi i64 [ %i.bw, %bb.j ], [ %.lcssa57, %bb.h ]
-  %i.bw = add nsw i64 %.sroa.0.05.i, -1           ; 3 uses
-  %i.bx = getelementptr inbounds nuw [24 x i8], ptr %.lcssa59, i64 %i.bw
-  %2 = getelementptr inbounds nuw i8, ptr %i.bx, i64 24 ; 2 uses
-  %i.by = load atomic i64, ptr %2 acquire, align 8
+  %.sroa.0.05.i = phi i64 [ %i.bw, %bb.j ], [ %.lcssa57, %bb.h ] ; 2 uses
+  %i.bw = add nsw i64 %.sroa.0.05.i, -1           ; 2 uses
+  %i.bx = getelementptr [24 x i8], ptr %.lcssa59, i64 %.sroa.0.05.i ; 2 uses
+  %i.by = load atomic i64, ptr %i.bx acquire, align 8
   %i.bz = and i64 %i.by, 2
   %i.ca = icmp eq i64 %i.bz, 0
   br i1 %i.ca, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.lr.ph.i52
-  %i.cb = atomicrmw or ptr %2, i64 4 acq_rel, align 8
+  %i.cb = atomicrmw or ptr %i.bx, i64 4 acq_rel, align 8
   %i.cc = and i64 %i.cb, 2
   %i.cd = icmp eq i64 %i.cc, 0
   br i1 %i.cd, label %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7destroyBY_.exit, label %bb.j

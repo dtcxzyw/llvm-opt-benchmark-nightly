@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.k
   store i8 0, ptr %i.n, align 1, !tbaa !47
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #35
-  %i.o = load i64, ptr %i.l, align 8, !tbaa !56   ; 5 uses
+  %i.o = load i64, ptr %i.l, align 8, !tbaa !56   ; 6 uses
   %i.p = load ptr, ptr %2, align 8, !tbaa !44     ; 3 uses
   %i.q = getelementptr i8, ptr %i.p, i64 %i.o
   %i.r = getelementptr i8, ptr %i.q, i64 -1
@@ -211,7 +211,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   br i1 %.not, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = add i64 %i.o, 1                          ; 3 uses
+  %i.t = add i64 %i.o, 1                          ; 2 uses
   %i.u = icmp eq ptr %i.p, %i.d
   br i1 %i.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
@@ -243,7 +243,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   store i8 47, ptr %i.aa, align 1, !tbaa !47
   store i64 %i.t, ptr %i.l, align 8, !tbaa !56
   %i.ab = load ptr, ptr %2, align 8, !tbaa !44
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.t
+  %3 = getelementptr i8, ptr %i.ab, i64 %i.o
+  %i.ac = getelementptr i8, ptr %3, i64 1
   store i8 0, ptr %i.ac, align 1, !tbaa !47
   br label %bb.i
 
@@ -646,7 +647,8 @@ bb.al:                                            ; preds = %bb.aj
   br label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph268
-  %i.gd = getelementptr inbounds i8, ptr %i.fv, i64 %i.gy
+  %16 = getelementptr i8, ptr %i.fv, i64 %i.gv
+  %i.gd = getelementptr i8, ptr %16, i64 2
   store i8 0, ptr %i.gd, align 1, !tbaa !47
   store i32 0, ptr %3, align 4, !tbaa !106
   br label %.lr.ph.i.i.i
@@ -700,12 +702,12 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.0237.0265, i64 8
   %i.gu = load i64, ptr %i.gt, align 8, !tbaa !56 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gr, ptr align 1 %i.gs, i64 %i.gu, i1 false)
-  %i.gv = add i64 %i.gu, %.0125266                ; 2 uses
+  %i.gv = add i64 %i.gu, %.0125266                ; 3 uses
   %i.gw = getelementptr inbounds i8, ptr %i.fv, i64 %i.gv ; 2 uses
   store i8 10, ptr %i.gw, align 1, !tbaa !47
   %i.gx = getelementptr i8, ptr %i.gw, i64 1
   store i8 0, ptr %i.gx, align 1, !tbaa !47
-  %i.gy = add nsw i64 %i.gv, 2                    ; 2 uses
+  %i.gy = add nsw i64 %i.gv, 2
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0237.0265, i64 32 ; 2 uses
   %.not256 = icmp eq ptr %i.gz, %i.fs
   br i1 %.not256, label %.lr.ph.i.i.i.preheader, label %.lr.ph268
@@ -1108,8 +1110,8 @@ bb.x:                                             ; preds = %_ZNKSt19istreambuf_
 _ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel: ; preds = %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.backedge, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.preheader
   %.sroa.045.1 = phi ptr [ %.sroa.045.4.peel, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.preheader ], [ %.sroa.045.4, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.backedge ] ; 6 uses
   %.sroa.042.1 = phi ptr [ %.sroa.042.354.peel, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.preheader ], [ %.sroa.042.354, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.backedge ] ; 7 uses
-  %.1.in = phi i64 [ %.013.lcssa, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.preheader ], [ %.1, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.backedge ] ; 2 uses
-  %.1 = add i64 %.1.in, 1                         ; 9 uses
+  %.1.in = phi i64 [ %.013.lcssa, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.preheader ], [ %.1, %_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv.exit36.peel.backedge ] ; 3 uses
+  %.1 = add i64 %.1.in, 1                         ; 8 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.045.1, i64 16
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !356
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.045.1, i64 24
@@ -1267,7 +1269,8 @@ _ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.i.i31: ; preds = %bb.ag
 
 bb.ah:                                            ; preds = %.noexc33, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i32, %bb.af
   %.0.i.i30 = phi i8 [ -1, %bb.af ], [ %i.hd, %.noexc33 ], [ %i.gx, %_ZNSt15basic_streambufIcSt11char_traitsIcEE5sgetcEv.exit.thread.i.i32 ]
-  %i.he = getelementptr inbounds nuw i8, ptr %i.gr, i64 %.1
+  %5 = getelementptr i8, ptr %i.gr, i64 %.1.in
+  %i.he = getelementptr i8, ptr %5, i64 1
   store i8 %.0.i.i30, ptr %i.he, align 1, !tbaa !47
   %i.hf = getelementptr inbounds nuw i8, ptr %.sroa.045.4, i64 16 ; 2 uses
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !356 ; 2 uses

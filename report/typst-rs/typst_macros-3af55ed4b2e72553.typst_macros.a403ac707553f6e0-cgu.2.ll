@@ -202,10 +202,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtNtCse52Lce
   br label %bb.g
 
 .lr.ph:                                           ; preds = %bb.g, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCse52LceO7DeS_12typst_macros4elem5FieldNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keybNCNvB18_5parses_0E0EB1a_.exit
-  %.sroa.02.137 = phi i64 [ %6, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCse52LceO7DeS_12typst_macros4elem5FieldNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keybNCNvB18_5parses_0E0EB1a_.exit ], [ %.sroa.02.0, %bb.g ] ; 2 uses
+  %.sroa.02.137 = phi i64 [ %7, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCse52LceO7DeS_12typst_macros4elem5FieldNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keybNCNvB18_5parses_0E0EB1a_.exit ], [ %.sroa.02.0, %bb.g ] ; 4 uses
   %.sroa.023.136 = phi i64 [ %.sroa.0.0.i, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCse52LceO7DeS_12typst_macros4elem5FieldNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keybNCNvB18_5parses_0E0EB1a_.exit ], [ %.sroa.023.0, %bb.g ] ; 3 uses
-  %6 = add i64 %.sroa.02.137, -1                  ; 4 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %6 = getelementptr i8, ptr %i.a, i64 %.sroa.02.137
+  %i.bf = getelementptr i8, ptr %6, i64 -1
   %i.bg = load i8, ptr %i.bf, align 1
   %.not28 = icmp ult i8 %i.bg, %.sroa.021.0
   br i1 %.not28, label %._crit_edge, label %bb.s
@@ -220,8 +220,10 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift10create_runNtNtCse52Lce
   br i1 %i.l, label %bb.z, label %bb.aa
 
 bb.s:                                             ; preds = %.lr.ph
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
-  %i.bk = load i64, ptr %i.bj, align 8            ; 2 uses
+  %7 = add i64 %.sroa.02.137, -1                  ; 2 uses
+  %i.bj = getelementptr [8 x i8], ptr %i.b, i64 %.sroa.02.137
+  %8 = getelementptr i8, ptr %i.bj, i64 -8
+  %i.bk = load i64, ptr %8, align 8               ; 2 uses
   %i.bl = lshr i64 %i.bk, 1                       ; 5 uses
   %i.bm = lshr i64 %.sroa.023.136, 1              ; 3 uses
   %i.bn = add nuw i64 %i.bl, %i.bm                ; 5 uses
@@ -271,7 +273,7 @@ bb.y:                                             ; preds = %bb.x, %bb.v
 
 _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCse52LceO7DeS_12typst_macros4elem5FieldNCINvMNtCs1xwejQucwHj_5alloc5sliceSB16_11sort_by_keybNCNvB18_5parses_0E0EB1a_.exit: ; preds = %bb.u, %bb.y
   %.sroa.0.0.i = phi i64 [ %i.cg, %bb.y ], [ %i.bt, %bb.u ] ; 2 uses
-  %i.ch = icmp ugt i64 %6, 1
+  %i.ch = icmp ugt i64 %7, 1
   br i1 %i.ch, label %.lr.ph, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge

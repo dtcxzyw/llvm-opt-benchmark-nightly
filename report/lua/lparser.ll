@@ -204,15 +204,16 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %regle
   %i.an = sext i16 %i.ae to i64
   %i.ao = sext i32 %.val6.i.i to i64
   %i.ap = sext i32 %.pre-phi to i64
-  %invariant.gep = getelementptr [24 x i8], ptr %.val.val.val.i.i, i64 %i.ao
   br label %bb.f
 
 bb.f:                                             ; preds = %localdebuginfo.exit.thread.i, %.lr.ph.i
-  %indvars.iv46 = phi i64 [ %indvars.iv.next47, %localdebuginfo.exit.thread.i ], [ %i.an, %.lr.ph.i ]
-  %indvars.iv.next47 = add nsw i64 %indvars.iv46, -1 ; 4 uses
+  %indvars.iv46 = phi i64 [ %indvars.iv.next47, %localdebuginfo.exit.thread.i ], [ %i.an, %.lr.ph.i ] ; 2 uses
+  %indvars.iv.next47 = add nsw i64 %indvars.iv46, -1 ; 3 uses
   %i.aq = trunc nsw i64 %indvars.iv.next47 to i16
   store i16 %i.aq, ptr %i.ad, align 2, !tbaa !46
-  %gep = getelementptr [24 x i8], ptr %invariant.gep, i64 %indvars.iv.next47 ; 2 uses
+  %1 = getelementptr [24 x i8], ptr %.val.val.val.i.i, i64 %indvars.iv46
+  %2 = getelementptr i8, ptr %1, i64 -24
+  %gep = getelementptr [24 x i8], ptr %2, i64 %i.ao ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %gep, i64 9
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !55
   %i.at = icmp ult i8 %i.as, 4
@@ -587,11 +588,11 @@ bb.v:                                             ; preds = %reglevel.exit.i.i, 
 
 .lr.ph.i30.i:                                     ; preds = %bb.v, %.lr.ph.i30.i
   %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i32.i, %.lr.ph.i30.i ], [ %i.fb, %bb.v ] ; 2 uses
-  %i.hp = load ptr, ptr %i.fp, align 8, !tbaa !127 ; 2 uses
-  %i.hq = getelementptr inbounds [24 x i8], ptr %i.hp, i64 %indvars.iv.i31.i
-  %indvars.iv.next.i32.i = add nsw i64 %indvars.iv.i31.i, 1 ; 3 uses
-  %1 = getelementptr inbounds [24 x i8], ptr %i.hp, i64 %indvars.iv.next.i32.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hq, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !217
+  %i.hp = load ptr, ptr %i.fp, align 8, !tbaa !127
+  %i.hq = getelementptr inbounds [24 x i8], ptr %i.hp, i64 %indvars.iv.i31.i ; 2 uses
+  %indvars.iv.next.i32.i = add nsw i64 %indvars.iv.i31.i, 1 ; 2 uses
+  %3 = getelementptr i8, ptr %i.hq, i64 24
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hq, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !217
   %i.hr = load i32, ptr %i.hl, align 8, !tbaa !126
   %i.hs = add nsw i32 %i.hr, -1                   ; 2 uses
   %i.ht = sext i32 %i.hs to i64

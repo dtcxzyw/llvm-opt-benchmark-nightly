@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 bb.n:                                             ; preds = %.lr.ph, %bb.v
-  %.095152 = phi i64 [ 0, %.lr.ph ], [ %i.cd, %bb.v ] ; 4 uses
+  %.095152 = phi i64 [ 0, %.lr.ph ], [ %i.cd, %bb.v ] ; 5 uses
   %.097151 = phi i64 [ 0, %.lr.ph ], [ %i.ce, %bb.v ] ; 3 uses
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %.097151 ; 2 uses
   %.sroa.041.0.copyload = load i64, ptr %i.ao, align 8, !tbaa !17 ; 3 uses
@@ -242,7 +242,6 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   store double %i.bb, ptr %i.be, align 8
   %.sroa.540.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   store double %i.bc, ptr %.sroa.540.0..sroa_idx, align 8, !tbaa !49
-  %17 = or disjoint i64 %.095152, 1               ; 2 uses
   %i.bf = invoke { i64, i64 } @_Z25paulis_getShiftedPauliStr8PauliStri(i64 %.sroa.041.0.copyload, i64 %.sroa.743.0.copyload, i32 noundef %i.aa)
           to label %bb.r unwind label %bb.w       ; 2 uses
 
@@ -250,9 +249,10 @@ bb.r:                                             ; preds = %bb.q
   %i.bg = extractvalue { i64, i64 } %i.bf, 0
   %i.bh = extractvalue { i64, i64 } %i.bf, 1
   %i.bi = load ptr, ptr %8, align 8, !tbaa !51
-  %i.bj = getelementptr inbounds nuw [16 x i8], ptr %i.bi, i64 %17 ; 2 uses
-  store i64 %i.bg, ptr %i.bj, align 8, !tbaa !17
-  %.sroa.538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
+  %i.bj = getelementptr inbounds nuw [16 x i8], ptr %i.bi, i64 %.095152 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
+  store i64 %i.bg, ptr %17, align 8, !tbaa !17
+  %.sroa.538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
   store i64 %i.bh, ptr %.sroa.538.0..sroa_idx, align 8, !tbaa !17
   %i.bk = invoke noundef i32 @_Z28paulis_getSignOfPauliStrConj8PauliStr(i64 %.sroa.041.0.copyload, i64 %.sroa.743.0.copyload)
           to label %bb.s unwind label %bb.x
@@ -284,9 +284,10 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %i.bz = phi double [ %i.br, %bb.s ], [ %i.br, %bb.t ], [ %i.bx, %bb.u ]
   %i.ca = phi double [ %i.bt, %bb.s ], [ %i.bt, %bb.t ], [ %i.by, %bb.u ]
   %i.cb = load ptr, ptr %9, align 8, !tbaa !53
-  %i.cc = getelementptr inbounds nuw [16 x i8], ptr %i.cb, i64 %17 ; 2 uses
-  store double %i.bz, ptr %i.cc, align 8
-  %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
+  %i.cc = getelementptr inbounds nuw [16 x i8], ptr %i.cb, i64 %.095152 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
+  store double %i.bz, ptr %18, align 8
+  %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
   store double %i.ca, ptr %.sroa.534.0..sroa_idx, align 8, !tbaa !49
   %i.cd = add nuw nsw i64 %.095152, 2             ; 2 uses
   %i.ce = add nuw nsw i64 %.097151, 1             ; 2 uses

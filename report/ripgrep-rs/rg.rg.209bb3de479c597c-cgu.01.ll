@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE8truncateCs2NzvFoTxuAy_2rg.exit, !dbg !9643
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nuw i64 %1, %i.b, !dbg !9644         ; 4 uses
+  %i.e = sub nuw i64 %1, %i.b, !dbg !9644         ; 5 uses
   %i.f = load i64, ptr %0, align 8, !dbg !9645, !range !738, !alias.scope !9637, !noundef !640
   %i.g = sub nsw i64 %i.f, %i.b, !dbg !9646
   %i.h = icmp ugt i64 %i.e, %i.g, !dbg !9647
@@ -226,10 +226,12 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2NzvFoTxuAy_2rg.exit.i: ;
   br i1 %i.n, label %._crit_edge.thread.i, label %._crit_edge.i, !dbg !9656
 
 ._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2NzvFoTxuAy_2rg.exit.i
-  %i.o = add i64 %i.e, -1, !dbg !9656             ; 2 uses
+  %i.o = add i64 %i.e, -1, !dbg !9656
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 %i.o, i1 false), !dbg !9657
-  %i.p = add i64 %i.o, %i.i, !dbg !9656           ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p, !dbg !9656
+  %3 = add i64 %i.i, %i.e, !dbg !9656             ; 2 uses
+  %i.p = add i64 %3, -1, !dbg !9656
+  %4 = getelementptr i8, ptr %i.k, i64 %3, !dbg !9656
+  %scevgep.i = getelementptr i8, ptr %4, i64 -1, !dbg !9656
   br label %._crit_edge.i, !dbg !9658
 
 ._crit_edge.i:                                    ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2NzvFoTxuAy_2rg.exit.i, %._crit_edge.thread.i

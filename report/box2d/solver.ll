@@ -204,8 +204,8 @@ bb.cq:                                            ; preds = %bb.cl, %bb.cm, %bb.
   br label %bb.ct
 
 bb.cr:                                            ; preds = %.lr.ph929, %bb.cs
-  %indvars.iv1016 = phi i64 [ %i.alt, %.lr.ph929 ], [ %indvars.iv.next1017, %bb.cs ] ; 2 uses
-  %indvars.iv.next1017 = add nsw i64 %indvars.iv1016, -1 ; 4 uses
+  %indvars.iv1016 = phi i64 [ %i.alt, %.lr.ph929 ], [ %indvars.iv.next1017, %bb.cs ] ; 3 uses
+  %indvars.iv.next1017 = add nsw i64 %indvars.iv1016, -1 ; 3 uses
   %i.amc = trunc nuw nsw i64 %indvars.iv.next1017 to i32
   %i.amd = lshr i32 %i.amc, 6                     ; 2 uses
   %i.ame = load i32, ptr %i.als, align 4, !tbaa !241
@@ -224,8 +224,9 @@ b2GetBit.exit:                                    ; preds = %bb.cr
   br i1 %.not816, label %b2GetBit.exit.thread, label %bb.cs
 
 b2GetBit.exit.thread:                             ; preds = %bb.cr, %b2GetBit.exit
-  %i.amm = getelementptr inbounds nuw [4 x i8], ptr %i.alp, i64 %indvars.iv.next1017
-  %i.amn = load i32, ptr %i.amm, align 4, !tbaa !289
+  %i.amm = getelementptr [4 x i8], ptr %i.alp, i64 %indvars.iv1016
+  %8 = getelementptr i8, ptr %i.amm, i64 -4
+  %i.amn = load i32, ptr %8, align 4, !tbaa !289
   call void @b2TrySleepIsland(ptr noundef %0, i32 noundef %i.amn) #8
   br label %bb.cs
 
@@ -618,11 +619,12 @@ b2ExecuteMainStage.exit:                          ; preds = %bb.l, %bb.m, %._cri
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph221.us, %b2ExecuteMainStage.exit192.us
-  %indvars.iv246 = phi i64 [ %i.dz, %.lr.ph221.us ], [ %indvars.iv.next247, %b2ExecuteMainStage.exit192.us ]
+  %indvars.iv246 = phi i64 [ %i.dz, %.lr.ph221.us ], [ %indvars.iv.next247, %b2ExecuteMainStage.exit192.us ] ; 2 uses
   %.0131219.us = phi i32 [ 0, %.lr.ph221.us ], [ %i.fn, %b2ExecuteMainStage.exit192.us ]
-  %indvars.iv.next247 = add nsw i64 %indvars.iv246, 1 ; 3 uses
-  %i.eg = getelementptr inbounds [24 x i8], ptr %i.h, i64 %indvars.iv.next247 ; 7 uses
-  %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 12 ; 2 uses
+  %indvars.iv.next247 = add nsw i64 %indvars.iv246, 1 ; 2 uses
+  %i.eg = getelementptr [24 x i8], ptr %i.h, i64 %indvars.iv246 ; 6 uses
+  %1 = getelementptr i8, ptr %i.eg, i64 24        ; 2 uses
+  %i.eh = getelementptr i8, ptr %i.eg, i64 36     ; 2 uses
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !104 ; 3 uses
   switch i32 %i.ei, label %bb.u [
     i32 0, label %b2ExecuteMainStage.exit192.us
@@ -630,9 +632,9 @@ bb.s:                                             ; preds = %.lr.ph221.us, %b2Ex
   ]
 
 bb.t:                                             ; preds = %bb.s
-  %i.ej = load ptr, ptr %i.eg, align 8, !tbaa !103
+  %i.ej = load ptr, ptr %1, align 8, !tbaa !103
   %i.ek = load i64, ptr %i.ej, align 4
-  %i.el = getelementptr i8, ptr %i.eg, i64 8
+  %i.el = getelementptr i8, ptr %i.eg, i64 32
   %.val.i170.us = load i32, ptr %i.el, align 8, !tbaa !102
   call fastcc void @b2ExecuteBlock(i32 %.val.i170.us, ptr noundef %i.d, i64 %i.ek, i32 noundef 0)
   br label %b2ExecuteMainStage.exit192.us
@@ -643,7 +645,7 @@ bb.u:                                             ; preds = %bb.s
   store atomic i32 %i.en, ptr %i.ac seq_cst, align 8
   %i.eo = lshr i32 %i.en, 16                      ; 2 uses
   %i.ep = add nsw i32 %i.eo, -1
-  %i.eq = load ptr, ptr %i.eg, align 8, !tbaa !103
+  %i.eq = load ptr, ptr %1, align 8, !tbaa !103
   %i.er = load i32, ptr %i.eh, align 4, !tbaa !104
   %.fr.i171.us = freeze i32 %i.er                 ; 6 uses
   %i.es = load i32, ptr %i.ad, align 8, !tbaa !106 ; 2 uses
@@ -666,7 +668,7 @@ GetWorkerStartIndex.exit.i.i190.us:               ; preds = %bb.u
 
 .lr.ph.i.i178.us:                                 ; preds = %.preheader.i.i191.us, %bb.v
   %.0.i.i1921.i179.us = phi i32 [ %i.ew, %.preheader.i.i191.us ], [ 0, %bb.v ]
-  %i.ey = getelementptr i8, ptr %i.eg, i64 8
+  %i.ey = getelementptr i8, ptr %i.eg, i64 32
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.y, %.lr.ph.i.i178.us
@@ -698,12 +700,12 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 ._crit_edge.i.i187.us:                            ; preds = %bb.y, %.preheader.i.i191.us
   %.025.lcssa.i.i188.us = phi i32 [ 0, %.preheader.i.i191.us ], [ %.1.i.i183.us, %bb.y ]
-  %i.fi = getelementptr inbounds nuw i8, ptr %i.eg, i64 20
+  %i.fi = getelementptr i8, ptr %i.eg, i64 44
   %i.fj = atomicrmw add ptr %i.fi, i32 %.025.lcssa.i.i188.us seq_cst, align 4 ; 0 uses
   br label %b2ExecuteStage.exit.i173.us
 
 b2ExecuteStage.exit.i173.us:                      ; preds = %._crit_edge.i.i187.us, %GetWorkerStartIndex.exit.i.i190.us, %bb.v
-  %i.fk = getelementptr inbounds nuw i8, ptr %i.eg, i64 20 ; 3 uses
+  %i.fk = getelementptr i8, ptr %i.eg, i64 44     ; 3 uses
   %i.fl = load atomic i32, ptr %i.fk seq_cst, align 4
   %.not22.i174.us = icmp eq i32 %i.fl, %i.ei
   br i1 %.not22.i174.us, label %._crit_edge.i177.us, label %.lr.ph.i175.us

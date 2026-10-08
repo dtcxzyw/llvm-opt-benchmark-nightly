@@ -202,7 +202,7 @@ bb.bp:                                            ; preds = %_RNvMNtCskKLDkoKarT
 
 bb.bq:                                            ; preds = %bb.bp
   %i.gm = extractvalue { ptr, i64 } %i.gl, 0      ; 11 uses
-  %i.gn = extractvalue { ptr, i64 } %i.gl, 1      ; 4 uses
+  %i.gn = extractvalue { ptr, i64 } %i.gl, 1      ; 5 uses
   switch i64 %i.gn, label %bb.bt [
     i64 0, label %bb.br
     i64 1, label %bb.bs
@@ -230,7 +230,7 @@ bb.bt:                                            ; preds = %bb.bw, %bb.bv, %bb.
   call void @llvm.assume(i1 %i.gp)
   store ptr %i.gm, ptr %i.bv, align 8, !noalias !25
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gm, i64 32 ; 3 uses
-  %i.gr = add i64 %i.gn, -2                       ; 3 uses
+  %i.gr = add i64 %i.gn, -2                       ; 2 uses
   %i.gs = getelementptr [32 x i8], ptr %i.gm, i64 %i.gn ; 2 uses
   %i.gt = getelementptr i8, ptr %i.gs, i64 -32
   store ptr %i.gt, ptr %i.bu, align 8, !noalias !25
@@ -411,10 +411,11 @@ bb.cn:                                            ; preds = %bb.dc
 
 .peel.begin.i:                                    ; preds = %bb.cm
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bs, ptr noundef nonnull align 8 dereferenceable(24) %i.br, i64 24, i1 false), !noalias !25
-  %i.id = getelementptr inbounds nuw [32 x i8], ptr %i.gq, i64 %i.gr
+  %i.id = getelementptr [32 x i8], ptr %i.gq, i64 %i.gn
+  %4 = getelementptr i8, ptr %i.id, i64 -64
   store ptr %i.gq, ptr %i.bp, align 8, !noalias !25
   %i.ie = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  store ptr %i.id, ptr %i.ie, align 8, !noalias !25
+  store ptr %4, ptr %i.ie, align 8, !noalias !25
   %.sroa.268.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 2 uses
   %i.if = invoke align 8 ptr @_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterNtNtCsbi23obv45GP_19pyo3_macros_backend6method19MethodTypeAttributeENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBT_(ptr nonnull align 8 %i.bp)
           to label %bb.co unwind label %.thread75.loopexit.loopexit.split-lp.i, !noalias !25 ; 2 uses

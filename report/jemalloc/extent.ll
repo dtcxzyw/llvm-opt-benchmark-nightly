@@ -202,12 +202,13 @@ bb.a:
   %i.b = and i64 %i.a, 2097151                    ; 2 uses
   %i.c = sub nsw i64 0, %i.b
   %i.d = getelementptr inbounds i8, ptr %2, i64 %i.c ; 3 uses
-  %i.e = add i64 %3, 2097151                      ; 2 uses
-  %i.f = getelementptr i8, ptr %2, i64 %i.e
+  %i.e = add i64 %3, 2097151
+  %4 = getelementptr i8, ptr %2, i64 %3
+  %i.f = getelementptr i8, ptr %4, i64 2097151
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = and i64 %i.g, 2097151
-  %4 = sub i64 %i.e, %i.h
-  %gepdiff = add i64 %4, %i.b                     ; 3 uses
+  %5 = add i64 %i.e, %i.b
+  %gepdiff = sub i64 %5, %i.h                     ; 3 uses
   %i.i = load i32, ptr @je_opt_metadata_thp, align 4, !tbaa !88
   %i.j = icmp eq i32 %i.i, 2
   %i.k = load i8, ptr getelementptr inbounds nuw (i8, ptr @je_huge_arena_pac_thp, i64 120), align 8, !range !46

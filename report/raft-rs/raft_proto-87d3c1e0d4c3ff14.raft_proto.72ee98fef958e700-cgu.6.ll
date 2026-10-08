@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %.loopexit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.f, %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i
-  %.sroa.02.08.i.i.i = phi i64 [ %i.ae, %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i ], [ 0, %bb.f ] ; 3 uses
+  %.sroa.02.08.i.i.i = phi i64 [ %i.ae, %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i ], [ 0, %bb.f ] ; 4 uses
   %i.ac = phi ptr [ %i.ad, %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i ], [ %i.x, %bb.f ] ; 2 uses
   %.val.i.i.i = load i8, ptr %i.ac, align 1, !noalias !70, !noundef !4
   switch i8 %.val.i.i.i, label %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i [
@@ -220,11 +220,12 @@ _RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhi
   br i1 %i.af, label %.loopexit.i.i, label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i
-  %i.ag = add nuw i64 %.sroa.02.08.i.i.i, 1       ; 2 uses
-  %3 = sub nuw i64 %i.w, %i.ag                    ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ag ; 2 uses
+  %.neg.i.i = xor i64 %.sroa.02.08.i.i.i, -1
+  %i.ag = add i64 %i.w, %.neg.i.i                 ; 2 uses
+  %3 = getelementptr i8, ptr %i.x, i64 %.sroa.02.08.i.i.i
+  %i.ah = getelementptr i8, ptr %3, i64 1         ; 2 uses
   store ptr %i.ah, ptr %i.k, align 8, !alias.scope !71, !noalias !72, !captures !73
-  store i64 %3, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !71, !noalias !72
+  store i64 %i.ag, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !71, !noalias !72
   br label %bb.h
 
 .loopexit.i.i:                                    ; preds = %_RNCNvXsf_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_5SplithNtNtBb_3str17IsAsciiWhitespaceENtNtNtNtBb_4iter6traits8iterator8Iterator4next0Cs9RMo4C3Dvu6_10raft_proto.exit.i.i.i, %bb.f
@@ -232,7 +233,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i, %.lr.
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.i.i, %bb.g
-  %i.ai = phi i64 [ %i.w, %.loopexit.i.i ], [ %3, %bb.g ]
+  %i.ai = phi i64 [ %i.w, %.loopexit.i.i ], [ %i.ag, %bb.g ]
   %i.aj = phi ptr [ %i.x, %.loopexit.i.i ], [ %i.ah, %bb.g ]
   %i.ak = phi i8 [ 1, %.loopexit.i.i ], [ 0, %bb.g ]
   %.sroa.5.1.i.ph.i = phi i64 [ %i.w, %.loopexit.i.i ], [ %.sroa.02.08.i.i.i, %bb.g ] ; 6 uses
@@ -635,7 +636,7 @@ bb.g:                                             ; preds = %.peel.next
   %i.j = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !85, !nonnull !4, !noundef !4
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.q
   store i8 32, ptr %i.k, align 1
-  %i.l = add nuw i64 %i.q, 1                      ; 3 uses
+  %i.l = add nuw i64 %i.q, 1                      ; 2 uses
   store i64 %i.l, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !85
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.038, i64 24
   %i.n = load i8, ptr %i.m, align 8, !range !84, !noundef !4
@@ -650,7 +651,7 @@ bb.g:                                             ; preds = %.peel.next
 .peel.next:                                       ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit.peel, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit
   %.sroa.0.038 = phi ptr [ %i.p, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit ], [ %i.f, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit.peel ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.038, i64 32 ; 2 uses
-  %i.q = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !85, !noundef !4 ; 4 uses
+  %i.q = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !85, !noundef !4 ; 5 uses
   %i.r = icmp sgt i64 %i.q, -1
   call void @llvm.assume(i1 %i.r)
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef 1)
@@ -677,7 +678,8 @@ bb.j:                                             ; preds = %bb.g
 _RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String4push.exit27: ; preds = %bb.j, %bb.i, %bb.h
   %.sink51 = phi i8 [ 114, %bb.i ], [ 118, %bb.h ], [ 108, %bb.j ]
   %i.s = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !nonnull !4, !noundef !4
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.l
+  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.q
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 %.sink51, ptr %i.t, align 1
   %i.u = add nuw i64 %i.q, 2
   store i64 %i.u, ptr %.sroa.5.0..sroa_idx, align 8

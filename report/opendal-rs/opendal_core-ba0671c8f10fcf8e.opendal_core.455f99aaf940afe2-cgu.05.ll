@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !11 ; 2 uses
   %i.d = getelementptr i8, ptr %i.a, i64 16       ; 3 uses
-  %i.e = getelementptr [32 x i8], ptr %i.d, i64 %i.c ; 2 uses
+  %i.e = getelementptr [32 x i8], ptr %i.d, i64 %i.c ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.g = load i64, ptr %i.f, align 8, !noundef !11 ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !11 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noundef !11
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -216,14 +216,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %._crit_edge.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = add i64 %i.g, -1                         ; 2 uses
-  %.not.i.not.i = icmp ult i64 %i.m, %i.c
-  %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.d, i64 %i.m
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  br i1 %.not.i.not.i, label %._crit_edge.i, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit
+  %i.m = add i64 %i.g, -1
+  %.not.i.i = icmp uge i64 %i.m, %i.c             ; 2 uses
+  %i.n = getelementptr [32 x i8], ptr %i.d, i64 %i.g ; 2 uses
+  %i.o = getelementptr i8, ptr %i.n, i64 -32
+  %storemerge.i.i = select i1 %.not.i.i, ptr %i.e, ptr %i.n
+  %.not56.i = icmp eq ptr %i.o, null
+  %.not5.i = or i1 %.not.i.i, %.not56.i
+  br i1 %.not5.i, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.b, %bb.c
-  %i.p = phi ptr [ %i.o, %bb.c ], [ %i.d, %bb.b ] ; 4 uses
+  %i.p = phi ptr [ %storemerge.i.i, %bb.c ], [ %i.d, %bb.b ] ; 4 uses
   %i.q = icmp eq ptr %i.p, %i.e
   br i1 %i.q, label %_RINvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_5slice4iter4IterNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesEENtNtNtB9_6traits8iterator8Iterator4foldTjjENCNvMs0_NtNtCs5XgW7KoffLW_12opendal_core5types6bufferNtB2P_6Buffer5count0EB2T_.exit, label %bb.d
 

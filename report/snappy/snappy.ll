@@ -205,14 +205,15 @@ bb.z:                                             ; preds = %_ZN6snappyL11EmitLi
 _ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread: ; preds = %bb.z
   %i.jw = xor i64 %.0.copyload.i62.i, %.0.copyload.i.i ; 2 uses
   %i.jx = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.jw, i1 true) ; 2 uses
-  %i.jy = lshr i64 %i.jx, 3
+  %i.jy = lshr i64 %i.jx, 3                       ; 2 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %.11129, i64 8
   %.0.copyload.i63.i = load i64, ptr %i.jz, align 1
   %i.ka = tail call i64 asm "testl ${2:k}, ${2:k}\0A\09cmovzq $1, $0\0A\09", "=r,r,r,0,~{cc},~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i63.i, i64 %i.jw, i64 %.0.copyload.i62.i) #23, !srcloc !132
   %i.kb = and i64 %i.jx, 24
   %i.kc = lshr i64 %i.ka, %i.kb
-  %i.kd = add nuw nsw i64 %i.jy, 4                ; 2 uses
-  %i.ke = getelementptr inbounds nuw i8, ptr %.11129, i64 %i.kd
+  %i.kd = add nuw nsw i64 %i.jy, 4
+  %5 = getelementptr i8, ptr %.11129, i64 %i.jy   ; 2 uses
+  %i.ke = getelementptr i8, ptr %5, i64 4
   %i.kf = ptrtoint ptr %.11129 to i64
   %i.kg = ptrtoint ptr %.8148 to i64
   %i.kh = sub i64 %i.kf, %i.kg
@@ -258,9 +259,10 @@ _ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237: ; preds = %.lr
   %i.kt = tail call i64 asm "testl ${2:k}, ${2:k}\0A\09cmovzq $1, $0\0A\09", "=r,r,r,0,~{cc},~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i66.i, i64 %i.kp, i64 %.0.copyload.i65.i) #23, !srcloc !133
   %i.ku = and i64 %i.kq, 24
   %i.kv = lshr i64 %i.kt, %i.ku
-  %i.kw = or disjoint i64 %i.kr, %.28399.i
-  %i.kx = add i64 %i.kw, 4                        ; 2 uses
-  %i.ky = getelementptr inbounds nuw i8, ptr %.11129, i64 %i.kx
+  %i.kw = or disjoint i64 %i.kr, %.28399.i        ; 2 uses
+  %i.kx = add i64 %i.kw, 4
+  %6 = getelementptr i8, ptr %.11129, i64 %i.kw   ; 2 uses
+  %i.ky = getelementptr i8, ptr %6, i64 4
   %i.kz = ptrtoint ptr %.11129 to i64
   %i.la = ptrtoint ptr %.8148 to i64
   %i.lb = sub i64 %i.kz, %i.la
@@ -274,7 +276,7 @@ bb.ab:                                            ; preds = %.lr.ph.i
 
 .lr.ph104.i:                                      ; preds = %bb.ac, %.lr.ph104.preheader.i
   %.4103.i = phi ptr [ %i.li, %bb.ac ], [ %.2.lcssa.i, %.lr.ph104.preheader.i ] ; 4 uses
-  %.485102.i = phi i64 [ %i.lj, %bb.ac ], [ %.283.lcssa.i, %.lr.ph104.preheader.i ] ; 4 uses
+  %.485102.i = phi i64 [ %i.lj, %bb.ac ], [ %.283.lcssa.i, %.lr.ph104.preheader.i ] ; 5 uses
   %i.le = getelementptr inbounds nuw i8, ptr %i.jt, i64 %.485102.i
   %i.lf = load i8, ptr %i.le, align 1, !tbaa !16
   %i.lg = load i8, ptr %.4103.i, align 1, !tbaa !16
@@ -298,18 +300,20 @@ bb.ae:                                            ; preds = %bb.ad
 .split:                                           ; preds = %bb.ae, %bb.ad
   %.10190 = phi i64 [ %.9189, %bb.ad ], [ %.0.copyload.i67.i, %bb.ae ] ; 2 uses
   %i.lk = icmp ult i64 %.485102.i, 8
-  %i.ll = add i64 %.485102.i, 4                   ; 3 uses
-  %i.lm = getelementptr inbounds nuw i8, ptr %.11129, i64 %i.ll ; 2 uses
+  %i.ll = add i64 %.485102.i, 4                   ; 2 uses
+  %7 = getelementptr i8, ptr %.11129, i64 %.485102.i ; 3 uses
+  %i.lm = getelementptr i8, ptr %7, i64 4         ; 2 uses
   %i.ln = ptrtoint ptr %.11129 to i64
   %i.lo = ptrtoint ptr %.8148 to i64
   %i.lp = sub i64 %i.ln, %i.lo                    ; 2 uses
   br i1 %i.lk, label %bb.af, label %bb.ag
 
 _ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit: ; preds = %bb.ac, %.preheader.i
-  %.485.lcssa.i = phi i64 [ %.283.lcssa.i, %.preheader.i ], [ %i.km, %bb.ac ] ; 2 uses
+  %.485.lcssa.i = phi i64 [ %.283.lcssa.i, %.preheader.i ], [ %i.km, %bb.ac ] ; 3 uses
   %i.lq = icmp ult i64 %.485.lcssa.i, 8
-  %i.lr = add i64 %.485.lcssa.i, 4                ; 3 uses
-  %i.ls = getelementptr inbounds nuw i8, ptr %.11129, i64 %i.lr ; 2 uses
+  %i.lr = add i64 %.485.lcssa.i, 4                ; 2 uses
+  %8 = getelementptr i8, ptr %.11129, i64 %.485.lcssa.i ; 3 uses
+  %i.ls = getelementptr i8, ptr %8, i64 4         ; 2 uses
   %i.lt = ptrtoint ptr %.11129 to i64
   %i.lu = ptrtoint ptr %.8148 to i64
   %i.lv = sub i64 %i.lt, %i.lu                    ; 2 uses
@@ -318,6 +322,7 @@ _ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit: ; preds = %bb.ac, %.preh
 bb.af:                                            ; preds = %.split, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit
   %i.lw = phi i64 [ %i.kh, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread ], [ %i.lv, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.lp, %.split ] ; 3 uses
   %i.lx = phi ptr [ %i.ke, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread ], [ %i.ls, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.lm, %.split ]
+  %9 = phi ptr [ %5, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread ], [ %8, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %7, %.split ]
   %i.ly = phi i64 [ %i.kd, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread ], [ %i.lr, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.ll, %.split ]
   %.11191236 = phi i64 [ %i.kc, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread ], [ %.9189, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %.10190, %.split ]
   %i.lz = shl nuw nsw i64 %i.ly, 2
@@ -339,6 +344,7 @@ bb.af:                                            ; preds = %.split, %_ZN6snappy
 bb.ag:                                            ; preds = %.split, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit
   %i.mm = phi i64 [ %i.lb, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237 ], [ %i.lv, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.lp, %.split ] ; 6 uses
   %i.mn = phi ptr [ %i.ky, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237 ], [ %i.ls, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.lm, %.split ] ; 2 uses
+  %10 = phi ptr [ %6, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237 ], [ %8, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %7, %.split ] ; 2 uses
   %i.mo = phi i64 [ %i.kx, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237 ], [ %i.lr, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %i.ll, %.split ] ; 5 uses
   %.11191244 = phi i64 [ %i.kv, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit.thread237 ], [ %.9189, %_ZN6snappy8internalL15FindMatchLengthEPKcS2_S2_Pm.exit ], [ %.10190, %.split ] ; 2 uses
   %i.mp = icmp ugt i64 %i.mo, 67
@@ -450,7 +456,8 @@ bb.aj:                                            ; preds = %bb.ah
   br label %_ZN6snappyL8EmitCopyILb0EEEPcS1_mm.exit
 
 _ZN6snappyL8EmitCopyILb0EEEPcS1_mm.exit:          ; preds = %bb.aj, %bb.ai, %bb.af
-  %i.og = phi ptr [ %i.lx, %bb.af ], [ %i.mn, %bb.ai ], [ %i.mn, %bb.aj ] ; 6 uses
+  %i.og = phi ptr [ %i.lx, %bb.af ], [ %i.mn, %bb.ai ], [ %i.mn, %bb.aj ] ; 5 uses
+  %11 = phi ptr [ %9, %bb.af ], [ %10, %bb.ai ], [ %10, %bb.aj ]
   %.11191235 = phi i64 [ %.11191236, %bb.af ], [ %.11191244, %bb.ai ], [ %.11191244, %bb.aj ] ; 3 uses
   %.9 = phi ptr [ %i.ml, %bb.af ], [ %i.nz, %bb.ai ], [ %i.of, %bb.aj ] ; 3 uses
   %.not158 = icmp ult ptr %i.og, %i.e
@@ -461,7 +468,7 @@ bb.ak:                                            ; preds = %_ZN6snappyL8EmitCop
   %i.oi = sub i64 %i.oh, %i.h
   %i.oj = trunc i64 %i.oi to i16                  ; 2 uses
   %i.ok = add i16 %i.oj, -1
-  %i.ol = getelementptr inbounds i8, ptr %i.og, i64 -1
+  %i.ol = getelementptr i8, ptr %11, i64 3
   %.0.copyload.i168 = load i32, ptr %i.ol, align 1
   %i.om = mul i32 %.0.copyload.i168, 506832829
   %i.on = lshr i32 %i.om, 16
@@ -864,7 +871,7 @@ _ZN6snappy17SnappyIOVecWriter6AppendEPKcmPPc.exit: ; preds = %_ZN6snappy17Snappy
   %.0135 = phi i32 [ %i.v, %bb.d ], [ %.0135.be, %_ZN6snappy17SnappyIOVecWriter6AppendEPKcmPPc.exit.backedge ] ; 2 uses
   %.1 = phi ptr [ %.091, %bb.d ], [ %.1.be, %_ZN6snappy17SnappyIOVecWriter6AppendEPKcmPPc.exit.backedge ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.1, i64 1 ; 9 uses
-  %i.ad = and i32 %.0135, 255                     ; 4 uses
+  %i.ad = and i32 %.0135, 255                     ; 5 uses
   %i.ae = and i32 %.0135, 3                       ; 3 uses
   switch i32 %i.ae, label %bb.u [
     i32 0, label %bb.e
@@ -898,17 +905,18 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.aq, label %bb.h, label %bb.i, !prof !29
 
 bb.h:                                             ; preds = %bb.g
-  %2 = add nsw i64 %i.ah, -60                     ; 2 uses
   %.0.copyload.i = load i32, ptr %i.ac, align 1
-  %3 = shl nsw i64 %2, 3
-  %4 = and i64 %3, 4294967288
+  %2 = shl nuw nsw i32 %i.ad, 1
+  %3 = add nsw i32 %2, -472
+  %4 = zext nneg i32 %3 to i64
   %i.ar = shl nuw i64 4294967295, %4
   %i.as = trunc i64 %i.ar to i32
   %i.at = xor i32 %i.as, -1
   %i.au = and i32 %.0.copyload.i, %i.at
   %i.av = add i32 %i.au, 1
   %i.aw = zext i32 %i.av to i64
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.ac, i64 %2 ; 2 uses
+  %5 = getelementptr i8, ptr %i.ac, i64 %i.ah
+  %i.ax = getelementptr i8, ptr %5, i64 -60       ; 2 uses
   %.pre170 = ptrtoint ptr %i.ax to i64
   br label %bb.i
 
@@ -1311,7 +1319,7 @@ bb.g:                                             ; preds = %bb.f, %.loopexit
   %i.al = phi ptr [ %i.ak, %bb.f ], [ %i.ac, %.loopexit ] ; 3 uses
   %.2 = phi ptr [ %i.ae, %bb.f ], [ %i.z, %.loopexit ] ; 3 uses
   %i.am = load i8, ptr %.2, align 1, !tbaa !16    ; 3 uses
-  %i.an = zext i8 %i.am to i32                    ; 3 uses
+  %i.an = zext i8 %i.am to i32                    ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 6 uses
   %i.ap = and i32 %i.an, 3                        ; 3 uses
   switch i32 %i.ap, label %bb.p [
@@ -1329,17 +1337,18 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.av, label %bb.i, label %bb.j, !prof !29
 
 bb.i:                                             ; preds = %bb.h
-  %2 = add nsw i64 %i.as, -60                     ; 2 uses
   %.0.copyload.i = load i32, ptr %i.ao, align 1
-  %3 = shl nsw i64 %2, 3
-  %4 = and i64 %3, 4294967288
+  %2 = shl nuw nsw i32 %i.an, 1
+  %3 = add nsw i32 %2, -472
+  %4 = zext nneg i32 %3 to i64
   %i.aw = shl nuw i64 4294967295, %4
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = xor i32 %i.ax, -1
   %i.az = and i32 %.0.copyload.i, %i.ay
   %i.ba = add i32 %i.az, 1
   %i.bb = zext i32 %i.ba to i64
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ao, i64 %2
+  %5 = getelementptr i8, ptr %i.ao, i64 %i.as
+  %i.bc = getelementptr i8, ptr %5, i64 -60
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -1742,7 +1751,7 @@ bb.i:                                             ; preds = %_ZN6snappy17SnappyA
   %.1147.ph = phi ptr [ %i.al, %bb.h ], [ %.0146, %_ZN6snappy17SnappyArrayWriter14AppendFromSelfEmmPPc.exit125 ] ; 23 uses
   %.5.ph = phi ptr [ %.2, %bb.h ], [ %.1, %_ZN6snappy17SnappyArrayWriter14AppendFromSelfEmmPPc.exit125 ] ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.5.ph, i64 1 ; 9 uses
-  %i.ay = and i32 %.2158.ph, 255                  ; 5 uses
+  %i.ay = and i32 %.2158.ph, 255                  ; 6 uses
   %i.az = and i32 %.2158.ph, 3                    ; 3 uses
   switch i32 %i.az, label %bb.y [
     i32 0, label %bb.j
@@ -1787,17 +1796,18 @@ _ZN6snappy17SnappyArrayWriter13TryFastAppendEPKcmmPPc.exit: ; preds = %bb.j
   br i1 %i.bs, label %bb.l, label %bb.m, !prof !29
 
 bb.l:                                             ; preds = %_ZN6snappy17SnappyArrayWriter13TryFastAppendEPKcmmPPc.exit
-  %2 = add nsw i64 %i.bc, -60                     ; 2 uses
   %.0.copyload.i = load i32, ptr %i.ax, align 1
-  %3 = shl nsw i64 %2, 3
-  %4 = and i64 %3, 4294967288
+  %2 = shl nuw nsw i32 %i.ay, 1
+  %3 = add nsw i32 %2, -472
+  %4 = zext nneg i32 %3 to i64
   %i.bt = shl nuw i64 4294967295, %4
   %i.bu = trunc i64 %i.bt to i32
   %i.bv = xor i32 %i.bu, -1
   %i.bw = and i32 %.0.copyload.i, %i.bv
   %i.bx = add i32 %i.bw, 1
   %i.by = zext i32 %i.bx to i64
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.ax, i64 %2 ; 2 uses
+  %5 = getelementptr i8, ptr %i.ax, i64 %i.bc
+  %i.bz = getelementptr i8, ptr %5, i64 -60       ; 2 uses
   %.pre238 = ptrtoint ptr %i.bz to i64
   %.pre239 = sub i64 %i.be, %.pre238
   br label %bb.m
@@ -2140,7 +2150,7 @@ bb.j:                                             ; preds = %bb.e, %bb.i
   %.2143.ph = phi i32 [ %i.az, %bb.i ], [ %.0141, %bb.e ] ; 2 uses
   %.5.ph = phi ptr [ %.2, %bb.i ], [ %.1, %bb.e ] ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.5.ph, i64 1 ; 9 uses
-  %i.bb = and i32 %.2143.ph, 255                  ; 5 uses
+  %i.bb = and i32 %.2143.ph, 255                  ; 6 uses
   %i.bc = and i32 %.2143.ph, 3                    ; 3 uses
   switch i32 %i.bc, label %bb.v [
     i32 0, label %bb.k
@@ -2187,17 +2197,18 @@ _ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE13TryFastAppendEPKcm
   br i1 %i.bx, label %bb.m, label %bb.n, !prof !29
 
 bb.m:                                             ; preds = %_ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE13TryFastAppendEPKcmmPPc.exit
-  %2 = add nsw i64 %i.bf, -60                     ; 2 uses
   %.0.copyload.i = load i32, ptr %i.ba, align 1
-  %3 = shl nsw i64 %2, 3
-  %4 = and i64 %3, 4294967288
+  %2 = shl nuw nsw i32 %i.bb, 1
+  %3 = add nsw i32 %2, -472
+  %4 = zext nneg i32 %3 to i64
   %i.by = shl nuw i64 4294967295, %4
   %i.bz = trunc i64 %i.by to i32
   %i.ca = xor i32 %i.bz, -1
   %i.cb = and i32 %.0.copyload.i, %i.ca
   %i.cc = add i32 %i.cb, 1
   %i.cd = zext i32 %i.cc to i64
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.ba, i64 %2 ; 2 uses
+  %5 = getelementptr i8, ptr %i.ba, i64 %i.bf
+  %i.ce = getelementptr i8, ptr %5, i64 -60       ; 2 uses
   %.pre198 = ptrtoint ptr %i.ce to i64
   %.pre199 = sub i64 %i.bh, %.pre198
   br label %bb.n

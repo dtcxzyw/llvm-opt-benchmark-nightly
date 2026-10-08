@@ -202,12 +202,13 @@ bb.q:                                             ; preds = %bb.i
   br label %bb.aj
 
 bb.r:                                             ; preds = %.lr.ph, %bb.k
-  %.in = phi i64 [ %i.av, %.lr.ph ], [ %i.bo, %bb.k ]
-  %.022144 = phi i32 [ %i.aw, %.lr.ph ], [ %.219.i89, %bb.k ] ; 2 uses
-  %.036143 = phi ptr [ undef, %.lr.ph ], [ %.238, %bb.k ]
-  %i.bo = add nsw i64 %.in, -1                    ; 3 uses
-  %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.bo
-  %i.bq = load i32, ptr %i.bp, align 4, !tbaa !37 ; 2 uses
+  %.022145 = phi i32 [ %i.aw, %.lr.ph ], [ %.219.i89, %bb.k ] ; 2 uses
+  %.036144 = phi ptr [ undef, %.lr.ph ], [ %.238, %bb.k ]
+  %indvars.iv143 = phi i64 [ %i.av, %.lr.ph ], [ %i.bo, %bb.k ] ; 2 uses
+  %i.bo = add nsw i64 %indvars.iv143, -1          ; 2 uses
+  %i.bp = getelementptr [4 x i8], ptr %i.an, i64 %indvars.iv143
+  %7 = getelementptr i8, ptr %i.bp, i64 -4
+  %i.bq = load i32, ptr %7, align 4, !tbaa !37    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
   %i.br = load i64, ptr %i.b, align 8, !tbaa !38
   invoke void @_ZN4i18n12phonenumbers10SimpleItoaB5cxx11El(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, i64 noundef %i.br)
@@ -312,11 +313,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73: ; preds = %bb.
 
 bb.ab:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70, %bb.s
   %i.cq = load i64, ptr %i.b, align 8, !tbaa !38  ; 2 uses
-  %.not33.i = icmp slt i32 %.022144, 0
+  %.not33.i = icmp slt i32 %.022145, 0
   br i1 %.not33.i, label %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ab, %bb.ac
-  %.02035.i = phi i32 [ %.121.i, %bb.ac ], [ %.022144, %bb.ab ] ; 2 uses
+  %.02035.i = phi i32 [ %.121.i, %bb.ac ], [ %.022145, %bb.ab ] ; 2 uses
   %.02334.i = phi i32 [ %.124.i, %bb.ac ], [ 0, %bb.ab ] ; 2 uses
   %i.cr = add nuw nsw i32 %.02334.i, %.02035.i
   %i.cs = lshr i32 %i.cr, 1                       ; 6 uses
@@ -374,7 +375,7 @@ bb.ag:                                            ; preds = %bb.af, %_ZNK4i18n12
 
 bb.ah:                                            ; preds = %bb.af, %bb.ae, %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit
   %.219.i89 = phi i32 [ -1, %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit ], [ %.219.i88, %bb.af ], [ %.219.i88, %bb.ae ]
-  %.238 = phi ptr [ null, %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit ], [ %i.dg, %bb.af ], [ %.036143, %bb.ae ] ; 2 uses
+  %.238 = phi ptr [ null, %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit ], [ %i.dg, %bb.af ], [ %.036144, %bb.ae ] ; 2 uses
   %.134 = phi i1 [ false, %_ZNK4i18n12phonenumbers11AreaCodeMap12BinarySearchEiil.exit ], [ false, %bb.af ], [ true, %bb.ae ]
   %i.di = load ptr, ptr %5, align 8, !tbaa !35    ; 2 uses
   %i.dj = icmp eq ptr %i.di, %i.at

@@ -204,10 +204,11 @@ psset_enumerate_search.exit.thread:               ; preds = %bb.d, %psset_enumer
   br label %.lr.ph, !llvm.loop !0
 
 .lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.039.i4.i44 = phi i64 [ %i.aw, %.lr.ph.i ], [ %i.aq, %.lr.ph.i.preheader ]
-  %i.aw = add nuw nsw i64 %.039.i4.i44, 1         ; 3 uses
-  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.aw
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !14 ; 2 uses
+  %.039.i4.i44 = phi i64 [ %i.aw, %.lr.ph.i ], [ %i.aq, %.lr.ph.i.preheader ] ; 2 uses
+  %i.aw = add nuw nsw i64 %.039.i4.i44, 1         ; 2 uses
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %.039.i4.i44
+  %3 = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  %i.ay = load i64, ptr %3, align 8, !tbaa !14    ; 2 uses
   %i.az = icmp eq i64 %i.ay, 0
   br i1 %i.az, label %.lr.ph.i, label %fb_ffs.exit, !llvm.loop !0
 
@@ -245,7 +246,7 @@ declare ptr @je_hpdata_age_heap_first(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define hidden ptr @je_psset_pick_purge(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5304 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5304 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4280 ; 2 uses
   %i.c = icmp eq ptr %1, null
   br i1 %i.c, label %.split.us, label %.split
@@ -257,7 +258,8 @@ bb.a:
   br i1 %i.f, label %.lr.ph.i.us.preheader, label %fb_fls.exit.us
 
 .lr.ph.i.us.preheader:                            ; preds = %.split.us
-  %i.g = load i64, ptr %i.a, align 8, !tbaa !14   ; 2 uses
+  %2 = getelementptr i8, ptr %0, i64 5304
+  %i.g = load i64, ptr %2, align 8, !tbaa !14     ; 2 uses
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %fb_fls.exit.thread, label %fb_fls.exit.us
 
@@ -292,10 +294,11 @@ fb_fls.exit.us:                                   ; preds = %.lr.ph.i.us.prehead
   br i1 %i.u, label %fb_fls.exit.thread, label %.lr.ph, !llvm.loop !0
 
 .lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.039.i4.i47 = phi i64 [ %i.v, %.lr.ph.i ], [ %i.m, %.lr.ph.i.preheader ]
-  %i.v = add nsw i64 %.039.i4.i47, -1             ; 4 uses
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.v
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !14   ; 2 uses
+  %.039.i4.i47 = phi i64 [ %i.v, %.lr.ph.i ], [ %i.m, %.lr.ph.i.preheader ] ; 2 uses
+  %i.v = add nsw i64 %.039.i4.i47, -1             ; 3 uses
+  %i.w = getelementptr [8 x i8], ptr %i.a, i64 %.039.i4.i47
+  %3 = getelementptr i8, ptr %i.w, i64 -8
+  %i.x = load i64, ptr %3, align 8, !tbaa !14     ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   br i1 %i.y, label %.lr.ph.i, label %fb_fls.exit, !llvm.loop !0
 

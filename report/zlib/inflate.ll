@@ -205,8 +205,8 @@ bb.cb:                                            ; preds = %bb.ca
 
 .preheader1291:                                   ; preds = %.preheader1291.preheader, %bb.cf
   %i.kn = phi ptr [ %.pre2870, %.preheader1291.preheader ], [ %i.kz, %bb.cf ] ; 5 uses
-  %indvars.iv2841 = phi i64 [ 0, %.preheader1291.preheader ], [ %indvars.iv.next2842, %bb.cf ] ; 2 uses
-  %indvars.iv.next2842 = add nuw nsw i64 %indvars.iv2841, 1 ; 4 uses
+  %indvars.iv2841 = phi i64 [ 0, %.preheader1291.preheader ], [ %indvars.iv.next2842, %bb.cf ] ; 3 uses
+  %indvars.iv.next2842 = add nuw nsw i64 %indvars.iv2841, 1 ; 3 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %.131069, i64 %indvars.iv2841
   %i.kp = load i8, ptr %i.ko, align 1, !tbaa !45  ; 2 uses
   %.not1236 = icmp eq ptr %i.kn, null
@@ -262,7 +262,8 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ci, %bb.ch, %bb.cg
   %i.lk = sub nuw i32 %.131005, %i.ld             ; 2 uses
-  %i.ll = getelementptr inbounds nuw i8, ptr %.131069, i64 %indvars.iv.next2842 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.131069, i64 %indvars.iv2841
+  %i.ll = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
   br i1 %i.la, label %.loopexit1277, label %bb.cm
 
 bb.ck:                                            ; preds = %bb.ca
@@ -303,8 +304,8 @@ bb.co:                                            ; preds = %bb.cn
 
 .preheader1290:                                   ; preds = %.preheader1290.preheader, %bb.cs
   %i.ls = phi ptr [ %.pre2872, %.preheader1290.preheader ], [ %i.me, %bb.cs ] ; 5 uses
-  %indvars.iv2844 = phi i64 [ 0, %.preheader1290.preheader ], [ %indvars.iv.next2845, %bb.cs ] ; 2 uses
-  %indvars.iv.next2845 = add nuw nsw i64 %indvars.iv2844, 1 ; 4 uses
+  %indvars.iv2844 = phi i64 [ 0, %.preheader1290.preheader ], [ %indvars.iv.next2845, %bb.cs ] ; 3 uses
+  %indvars.iv.next2845 = add nuw nsw i64 %indvars.iv2844, 1 ; 3 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %.151071, i64 %indvars.iv2844
   %i.lu = load i8, ptr %i.lt, align 1, !tbaa !45  ; 2 uses
   %.not1242 = icmp eq ptr %i.ls, null
@@ -360,7 +361,8 @@ bb.cv:                                            ; preds = %bb.cu
 
 bb.cw:                                            ; preds = %bb.cv, %bb.cu, %bb.ct
   %i.mp = sub nuw i32 %.151007, %i.mi             ; 2 uses
-  %i.mq = getelementptr inbounds nuw i8, ptr %.151071, i64 %indvars.iv.next2845 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.151071, i64 %indvars.iv2844
+  %i.mq = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   br i1 %i.mf, label %.loopexit1277, label %bb.cz
 
 bb.cx:                                            ; preds = %bb.cn

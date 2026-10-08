@@ -202,9 +202,9 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.preheader: ; preds = %.thread515,
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.preheader, %bb.s
-  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.s ], [ %i.bh, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.preheader ] ; 3 uses
-  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 3 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.1.i.i.i
+  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.s ], [ %i.bh, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.preheader ] ; 4 uses
+  %19 = getelementptr i8, ptr %i.bg, i64 %.1.i.i.in.i
+  %i.bi = getelementptr i8, ptr %19, i64 -1
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !19  ; 2 uses
   %i.bk = zext nneg i8 %i.bj to i64
   %memchr.bounds.i = icmp ugt i8 %i.bj, 63
@@ -215,6 +215,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %_ZNSt11char_traitsI
   br i1 %memchr.not.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i83, label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
+  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 2 uses
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
   br i1 %.not15.i.i.i, label %.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, !llvm.loop !52
 

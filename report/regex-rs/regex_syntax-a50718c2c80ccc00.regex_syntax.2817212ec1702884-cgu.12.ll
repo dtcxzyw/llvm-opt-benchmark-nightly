@@ -204,8 +204,8 @@ bb.a:
   br label %bb.c, !dbg !5112
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
-  %i.h = phi i64 [ %i.d, %.lr.ph ], [ %i.ae, %.loopexit ] ; 2 uses
-  %i.i = add nsw i64 %i.h, -1, !dbg !5113         ; 4 uses
+  %i.h = phi i64 [ %i.d, %.lr.ph ], [ %i.ae, %.loopexit ] ; 3 uses
+  %i.i = add nsw i64 %i.h, -1, !dbg !5113         ; 3 uses
   store i64 %i.i, ptr %i.c, align 8, !dbg !5113
   %i.j = load i64, ptr %1, align 8, !dbg !5114, !range !915, !noundef !363
   %i.k = icmp samesign ult i64 %i.i, %i.j, !dbg !5115
@@ -216,10 +216,11 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit
     #dbg_value(i64 %i.i, !5027, !DIExpression(), !5030)
   %i.m = icmp samesign ult i64 %i.h, 1152921504606846977, !dbg !5118
   tail call void @llvm.assume(i1 %i.m), !dbg !5119
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.i, !dbg !5120 ; 2 uses
-    #dbg_value(ptr %i.n, !5031, !DIExpression(), !5036)
-  %i.o = load i32, ptr %i.n, align 4, !dbg !5121, !noundef !363 ; 23 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 4, !dbg !5121
+  %i.n = getelementptr [8 x i8], ptr %i.l, i64 %i.h, !dbg !5120 ; 2 uses
+  %2 = getelementptr i8, ptr %i.n, i64 -8, !dbg !5120
+    #dbg_value(ptr %2, !5031, !DIExpression(), !5036)
+  %i.o = load i32, ptr %2, align 4, !dbg !5121, !noundef !363 ; 23 uses
+  %i.p = getelementptr i8, ptr %i.n, i64 -4, !dbg !5121
   %i.q = load i32, ptr %i.p, align 4, !dbg !5121, !noundef !363
     #dbg_value(i32 %i.o, !4862, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !5037)
     #dbg_value(i32 %i.q, !4862, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5037)

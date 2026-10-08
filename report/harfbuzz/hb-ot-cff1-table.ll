@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit
-  %indvars.iv69 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next70, %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit ] ; 4 uses
+  %indvars.iv69 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next70, %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit ] ; 5 uses
   %indvars.iv = phi i64 [ 2, %.lr.ph ], [ %indvars.iv.next, %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit ]
   %i.n = phi <2 x double> [ %i.l, %.lr.ph ], [ %i.x, %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit ]
   %i.o = load i32, ptr %i.b, align 4, !tbaa !109
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %bb.b
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit: ; preds = %bb.c, %bb.d
   %.0.i.i = phi ptr [ @_hb_CrapPool, %bb.c ], [ %i.q, %bb.d ]
-  %i.r = or disjoint i64 %indvars.iv69, 1         ; 2 uses
+  %i.r = or disjoint i64 %indvars.iv69, 1
   %.not.i.i29 = icmp samesign ult i64 %i.r, %i.p
   br i1 %.not.i.i29, label %bb.f, label %bb.e, !prof !58
 
@@ -233,8 +233,9 @@ bb.e:                                             ; preds = %_ZN3CFF12interp_env
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit31
 
 bb.f:                                             ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.r
-  %.pre = load double, ptr %i.s, align 8, !tbaa !25
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv69
+  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %.pre = load double, ptr %2, align 8, !tbaa !25
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit31
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit31: ; preds = %bb.e, %bb.f

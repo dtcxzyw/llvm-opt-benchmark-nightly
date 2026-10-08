@@ -201,17 +201,18 @@ bb.g:                                             ; preds = %bb.e
 define { i64, i64 } @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtCs2SM5xCHwwDm_13logos_codegen5graph5StateE3popBI_(ptr nofree align 8 captures(none) %0) unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, -1                         ; 2 uses
+  %i.d = add i64 %i.b, -1
   store i64 %i.d, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.d
-  %i.h = load i64, ptr %i.g, align 8
+  %i.g = getelementptr [8 x i8], ptr %i.f, i64 %i.b
+  %1 = getelementptr i8, ptr %i.g, i64 -8
+  %i.h = load i64, ptr %1, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
