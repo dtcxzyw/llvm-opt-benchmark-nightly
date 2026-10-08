@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %_ZL25havePPDomainDe
   %i.i = sub i64 %i.g, %i.h                       ; 3 uses
   %i.j = lshr exact i64 %i.i, 2                   ; 4 uses
   %i.k = trunc i64 %i.j to i32
-  %i.l = mul i64 %i.j, 77309411328                ; 4 uses
+  %i.l = mul i64 %i.j, 77309411328                ; 3 uses
   %i.m = icmp slt i64 %i.l, 0
   br i1 %i.m, label %.noexc, label %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %_ZL25havePPDomainDe
   unreachable
 
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.b
-  %i.n = lshr exact i64 %i.l, 29
+  %i.n = lshr exact i64 %i.l, 29                  ; 2 uses
   %i.o = or disjoint i64 %i.n, 8                  ; 3 uses
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #29 ; 34 uses
   store double 0.000000e+00, ptr %i.p, align 8, !tbaa !252
@@ -224,8 +224,7 @@ _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.b
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
   %i.r = getelementptr i8, ptr %i.p, i64 8
-  %.idx.i.i.i.i.i.i.i = lshr exact i64 %i.l, 29
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.r, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !252
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.r, i8 0, i64 %i.n, i1 false), !tbaa !252
   br label %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit
 
 _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i

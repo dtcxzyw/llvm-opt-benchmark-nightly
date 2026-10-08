@@ -205,7 +205,7 @@ bb.a:
   %i.e = mul i64 %i.a, 12
   %i.f = select i1 %i.d, i64 -1, i64 %i.e
   %i.g = invoke noundef ptr %i.c(i64 noundef %i.f)
-          to label %_ZN17meshopt_Allocator8allocateIfEEPT_m.exit unwind label %bb.b, !inline_history !58 ; 5 uses
+          to label %_ZN17meshopt_Allocator8allocateIfEEPT_m.exit unwind label %bb.b, !inline_history !58 ; 3 uses
 
 _ZN17meshopt_Allocator8allocateIfEEPT_m.exit:     ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 192 ; 2 uses
@@ -229,15 +229,13 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %_ZN17meshopt_Allocator8allocateIfEEPT_m.exit, %.lr.ph
   %.07279 = phi i64 [ %i.bb, %.lr.ph ], [ 0, %_ZN17meshopt_Allocator8allocateIfEEPT_m.exit ] ; 2 uses
-  %i.o = mul nuw i64 %.07279, 3                   ; 4 uses
-  %i.p = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.o
+  %i.o = mul nuw i64 %.07279, 3                   ; 2 uses
+  %i.p = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.o ; 3 uses
   %i.q = load i32, ptr %i.p, align 4, !tbaa !20
-  %7 = add nuw i64 %i.o, 1                        ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %7
-  %i.r = load i32, ptr %8, align 4, !tbaa !20
-  %9 = add nuw i64 %i.o, 2                        ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %9
-  %i.s = load i32, ptr %10, align 4, !tbaa !20
+  %7 = getelementptr inbounds nuw i8, ptr %i.p, i64 4
+  %i.r = load i32, ptr %7, align 4, !tbaa !20
+  %8 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
+  %i.s = load i32, ptr %8, align 4, !tbaa !20
   %i.t = zext i32 %i.q to i64
   %i.u = mul i64 %i.b, %i.t
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.u ; 3 uses
@@ -253,7 +251,7 @@ bb.b:                                             ; preds = %bb.a
   %i.af = load float, ptr %i.ab, align 4, !tbaa !31
   %i.ag = fadd float %i.ae, %i.af
   %i.ah = fdiv float %i.ag, 3.000000e+00
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.o
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.o ; 3 uses
   store float %i.ah, ptr %i.ai, align 4, !tbaa !31
   %i.aj = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !31
@@ -264,8 +262,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ap = load float, ptr %i.ao, align 4, !tbaa !31
   %i.aq = fadd float %i.an, %i.ap
   %i.ar = fdiv float %i.aq, 3.000000e+00
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %7
-  store float %i.ar, ptr %11, align 4, !tbaa !31
+  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
+  store float %i.ar, ptr %9, align 4, !tbaa !31
   %i.as = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.at = load float, ptr %i.as, align 4, !tbaa !31
   %i.au = getelementptr inbounds nuw i8, ptr %i.y, i64 8
@@ -275,8 +273,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !31
   %i.az = fadd float %i.aw, %i.ay
   %i.ba = fdiv float %i.az, 3.000000e+00
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %9
-  store float %i.ba, ptr %12, align 4, !tbaa !31
+  %10 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  store float %i.ba, ptr %10, align 4, !tbaa !31
   %i.bb = add nuw nsw i64 %.07279, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bb, %i.a
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !59

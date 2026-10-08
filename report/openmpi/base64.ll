@@ -65,7 +65,7 @@ bb.b:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.046.lcssa = phi i64 [ %1, %bb.a ], [ %i.s, %bb.b ] ; 3 uses
   %.044.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %bb.b ] ; 2 uses
-  %.042.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %bb.b ] ; 4 uses
+  %.042.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %bb.b ] ; 3 uses
   %.not = icmp eq i64 %.046.lcssa, 0
   br i1 %.not, label %bb.i, label %bb.c
 
@@ -96,7 +96,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ax = zext nneg i8 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr @Base64, i64 %i.ax
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !11
-  %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 %.042.lcssa ; 3 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 %.042.lcssa ; 4 uses
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !11
   %i.bb = zext nneg i8 %i.av to i64
   %i.bc = getelementptr inbounds nuw i8, ptr @Base64, i64 %i.bb
@@ -114,8 +114,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.g
   %.sink = phi i8 [ %i.bi, %bb.g ], [ 61, %bb.f ]
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %.042.lcssa
-  %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %i.bj = getelementptr i8, ptr %i.ba, i64 2
   store i8 %.sink, ptr %i.bj, align 1, !tbaa !11
   %i.bk = getelementptr i8, ptr %i.ba, i64 3
   store i8 61, ptr %i.bk, align 1, !tbaa !11

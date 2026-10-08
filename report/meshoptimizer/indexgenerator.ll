@@ -205,8 +205,8 @@ _ZN7meshoptL11hashBucketsEm.exit:                 ; preds = %bb.d
           to label %bb.e unwind label %bb.h, !inline_history !7 ; 17 uses
 
 bb.e:                                             ; preds = %_ZN7meshoptL11hashBucketsEm.exit
-  %i.p = load i64, ptr %i.f, align 8, !tbaa !25   ; 3 uses
-  %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
+  %i.p = load i64, ptr %i.f, align 8, !tbaa !25   ; 4 uses
+  %i.q = add nuw nsw i64 %i.p, 1
   store i64 %i.q, ptr %i.f, align 8, !tbaa !25
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.p
   store ptr %i.o, ptr %i.r, align 8, !tbaa !28
@@ -219,8 +219,9 @@ bb.e:                                             ; preds = %_ZN7meshoptL11hashB
 
 bb.f:                                             ; preds = %bb.e
   %i.x = add nuw nsw i64 %i.p, 2
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.q
-  store ptr %i.w, ptr %i.y, align 8, !tbaa !28
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.p
+  %7 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  store ptr %i.w, ptr %7, align 8, !tbaa !28
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.o, i8 -1, i64 %i.m, i1 false)
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.w, i8 -1, i64 %i.u, i1 false)
   %.not = icmp eq i64 %2, 0
@@ -623,16 +624,14 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not137, label %.lr.ph.i, label %.lr.ph127
 
 .lr.ph123:                                        ; preds = %.lr.ph123.preheader, %bb.p
-  %.0104122 = phi i64 [ %i.cp, %bb.p ], [ 0, %.lr.ph123.preheader ] ; 5 uses
+  %.0104122 = phi i64 [ %i.cp, %bb.p ], [ 0, %.lr.ph123.preheader ] ; 3 uses
   %.0105121 = phi i32 [ %i.ca, %bb.p ], [ 0, %.lr.ph123.preheader ] ; 4 uses
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0104122
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0104122 ; 3 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !31 ; 4 uses
-  %6 = add nuw i64 %.0104122, 1                   ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
-  %i.ax = load i32, ptr %7, align 4, !tbaa !31    ; 4 uses
-  %8 = add i64 %.0104122, 2                       ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %8
-  %i.ay = load i32, ptr %9, align 4, !tbaa !31    ; 4 uses
+  %6 = getelementptr i8, ptr %i.av, i64 4
+  %i.ax = load i32, ptr %6, align 4, !tbaa !31    ; 4 uses
+  %7 = getelementptr i8, ptr %i.av, i64 8
+  %i.ay = load i32, ptr %7, align 4, !tbaa !31    ; 4 uses
   %i.az = zext i32 %i.aw to i64                   ; 3 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.az
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !31
@@ -712,12 +711,12 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cb = zext i32 %.0105121 to i64
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cb
   store i32 %.0103, ptr %i.cc, align 4, !tbaa !31
-  %i.cd = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0104122
+  %i.cd = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0104122 ; 3 uses
   store i32 %.0105121, ptr %i.cd, align 4, !tbaa !31
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %6
-  store i32 %.0102, ptr %10, align 4, !tbaa !31
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %8
-  store i32 %.0101, ptr %11, align 4, !tbaa !31
+  %8 = getelementptr i8, ptr %i.cd, i64 4
+  store i32 %.0102, ptr %8, align 4, !tbaa !31
+  %9 = getelementptr i8, ptr %i.cd, i64 8
+  store i32 %.0101, ptr %9, align 4, !tbaa !31
   %i.ce = getelementptr inbounds nuw i8, ptr %i.h, i64 %.pre-phi ; 2 uses
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !78
   %i.cg = add i8 %i.cf, -1
