@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.x = fcmp reassoc nsz arcp contract afn ole float %1, %.046.i.i
   %i.y = fcmp reassoc nsz arcp contract afn ogt float %1, %.044.i.i
-  %or.cond59.i.i = select i1 %i.x, i1 true, i1 %i.y
+  %or.cond59.i.i = or i1 %i.x, %i.y
   br i1 %or.cond59.i.i, label %iter.check, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -298,8 +298,8 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bn = fcmp reassoc nsz arcp contract afn ugt <8 x float> %broadcast.splat, %predphi96
   %i.bo = fcmp reassoc nsz arcp contract afn ule <8 x float> %broadcast.splat, %predphi99
   %i.bp = fcmp reassoc nsz arcp contract afn ule <8 x float> %broadcast.splat, %predphi100
-  %.not134 = select <8 x i1> %i.bm, <8 x i1> %i.bo, <8 x i1> zeroinitializer
-  %.not139 = select <8 x i1> %i.bn, <8 x i1> %i.bp, <8 x i1> zeroinitializer
+  %.not134 = and <8 x i1> %i.bm, %i.bo
+  %.not139 = and <8 x i1> %i.bn, %i.bp
   %i.bq = fsub reassoc nsz arcp contract afn <8 x float> %predphi, %broadcast.splat82
   %i.br = fsub reassoc nsz arcp contract afn <8 x float> %predphi94, %broadcast.splat82
   %i.bs = fsub reassoc nsz arcp contract afn <8 x float> %predphi99, %broadcast.splat
@@ -405,7 +405,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.dx = select <8 x i1> %i.ds, <8 x i1> splat (i1 true), <8 x i1> %i.dw
   %i.dy = fcmp reassoc nsz arcp contract afn ugt <8 x float> %broadcast.splat109, %predphi121
   %i.dz = fcmp reassoc nsz arcp contract afn ule <8 x float> %broadcast.splat109, %predphi123
-  %.not144 = select <8 x i1> %i.dy, <8 x i1> %i.dz, <8 x i1> zeroinitializer
+  %.not144 = and <8 x i1> %i.dy, %i.dz
   %i.ea = fsub reassoc nsz arcp contract afn <8 x float> %predphi120, %broadcast.splat111
   %i.eb = fsub reassoc nsz arcp contract afn <8 x float> %predphi123, %broadcast.splat109
   %i.ec = fmul reassoc nsz arcp contract afn <8 x float> %i.eb, %i.ea
@@ -498,7 +498,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 bb.q:                                             ; preds = %bb.p
   %i.fl = fcmp reassoc nsz arcp contract afn ole float %1, %.046.i26.i
   %i.fm = fcmp reassoc nsz arcp contract afn ogt float %1, %.044.i28.i
-  %or.cond59.i30.i = select i1 %i.fl, i1 true, i1 %i.fm
+  %or.cond59.i30.i = or i1 %i.fl, %i.fm
   br i1 %or.cond59.i30.i, label %_ellipse_cross_test.exit37.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q

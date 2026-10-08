@@ -75,16 +75,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -227,16 +227,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -379,16 +379,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -531,16 +531,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -683,16 +683,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -835,16 +835,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -987,16 +987,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -1139,16 +1139,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -1291,16 +1291,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -1443,16 +1443,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -1595,16 +1595,16 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split134.thread, label %.thread131
+  br i1 %i.s, label %.thread131, label %.split134.thread
 
 .split134.thread:                                 ; preds = %._crit_edge
   br label %.thread131
 
-.thread131:                                       ; preds = %bb.f, %.lr.ph, %._crit_edge, %bb.b, %.split134.thread
-  %i.t = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.05.064, %.split134.thread ], [ %..i, %bb.b ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.019.061, %.split134.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.07.063, %._crit_edge ], [ %.sroa.011.053, %.split134.thread ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.065, %._crit_edge ], [ %i.k, %.split134.thread ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread131:                                       ; preds = %bb.f, %.lr.ph, %bb.b, %._crit_edge, %.split134.thread
+  %i.t = phi i64 [ %.sroa.05.064, %._crit_edge ], [ %..i, %bb.b ], [ %.sroa.011.053, %.split134.thread ], [ %i.n, %bb.f ], [ %.sroa.05.064, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.019.061, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split134.thread ], [ %i.k, %bb.f ], [ %.sroa.019.061, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.011.053, %._crit_edge ], [ %.sroa.07.063, %bb.b ], [ %.sroa.07.063, %.split134.thread ], [ %.sroa.07.063, %bb.f ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.065, %bb.b ], [ %.sroa.02.065, %.split134.thread ], [ %.sroa.02.065, %bb.f ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.g, label %bb.h
@@ -1753,16 +1753,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -1918,16 +1918,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2083,16 +2083,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2248,16 +2248,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2413,16 +2413,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2578,16 +2578,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2743,16 +2743,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -2908,16 +2908,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3073,16 +3073,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3238,16 +3238,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3403,16 +3403,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3568,16 +3568,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3733,16 +3733,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -3898,16 +3898,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -4063,16 +4063,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -4228,16 +4228,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -4393,16 +4393,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -4558,16 +4558,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j
@@ -4723,16 +4723,16 @@ bb.b:                                             ; preds = %.lr.ph85, %bb.j
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.s = icmp ult i8 %i.ad, %i.af
-  br i1 %i.s, label %.split163.thread, label %.thread160
+  br i1 %i.s, label %.thread160, label %.split163.thread
 
 .split163.thread:                                 ; preds = %._crit_edge
   br label %.thread160
 
-.thread160:                                       ; preds = %bb.h, %.lr.ph, %._crit_edge, %bb.b, %.split163.thread
-  %i.t = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.05.082, %.split163.thread ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
-  %i.u = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.024.079, %.split163.thread ], [ %i.k, %bb.b ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.08.081, %._crit_edge ], [ %.sroa.013.171, %.split163.thread ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
-  %i.w = phi i32 [ %.sroa.02.083, %._crit_edge ], [ %i.k, %.split163.thread ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
+.thread160:                                       ; preds = %bb.h, %.lr.ph, %bb.b, %._crit_edge, %.split163.thread
+  %i.t = phi i64 [ %.sroa.05.082, %._crit_edge ], [ %.sroa.05.0..sroa.08.0, %bb.b ], [ %.sroa.013.171, %.split163.thread ], [ %i.n, %bb.h ], [ %.sroa.05.082, %.lr.ph ] ; 2 uses
+  %i.u = phi i32 [ %.sroa.024.079, %._crit_edge ], [ %i.k, %bb.b ], [ %i.k, %.split163.thread ], [ %i.k, %bb.h ], [ %.sroa.024.079, %.lr.ph ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.013.171, %._crit_edge ], [ %.sroa.08.081, %bb.b ], [ %.sroa.08.081, %.split163.thread ], [ %.sroa.08.081, %bb.h ], [ %i.i, %.lr.ph ]
+  %i.w = phi i32 [ %i.k, %._crit_edge ], [ %.sroa.02.083, %bb.b ], [ %.sroa.02.083, %.split163.thread ], [ %.sroa.02.083, %bb.h ], [ %i.k, %.lr.ph ] ; 3 uses
   %i.x = sub i32 %i.w, %i.u                       ; 2 uses
   %i.y = icmp slt i32 %i.x, 2
   br i1 %i.y, label %bb.i, label %bb.j

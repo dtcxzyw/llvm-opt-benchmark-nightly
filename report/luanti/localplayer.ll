@@ -204,12 +204,12 @@ bb.dk:                                            ; preds = %_ZNSt7__cxx1112basi
   %.1334728.not = xor i1 %.1334728, true
   %or.cond13.not = and i1 %.1334728.not, %i.xg
   %.not369 = icmp eq i32 %.4324, 0
-  %or.cond387 = select i1 %or.cond13.not, i1 %.not369, i1 false
+  %or.cond387 = and i1 %.not369, %or.cond13.not
   br i1 %or.cond387, label %._crit_edge.i.i576, label %bb.dm
 
 bb.dl:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit575
   %.not369.old = icmp ne i32 %.4324, 0
-  %or.cond388.not = select i1 %.1334728, i1 true, i1 %.not369.old
+  %or.cond388.not = or i1 %.1334728, %.not369.old
   br i1 %or.cond388.not, label %bb.dm, label %._crit_edge.i.i576
 
 bb.dm:                                            ; preds = %bb.dl, %bb.dk
@@ -321,7 +321,7 @@ bb.dq:                                            ; preds = %bb.dp
   %i.yw = load i8, ptr %i.kx, align 1, !tbaa !166, !range !78, !noundef !79
   %i.yx = trunc nuw i8 %i.yw to i1
   %i.yy = icmp sgt i32 %.4324, 0
-  %or.cond16 = select i1 %i.yx, i1 %i.yy, i1 false
+  %or.cond16 = and i1 %i.yy, %i.yx
   br i1 %or.cond16, label %bb.ds, label %bb.ec
 
 bb.dr:                                            ; preds = %bb.dp
@@ -433,7 +433,7 @@ bb.ec:                                            ; preds = %bb.dr, %bb.dq, %_ZN
   %i.aad = load float, ptr %i.cx, align 4, !tbaa !187
   %i.aae = fcmp nsz ogt float %i.aad, %i.yq
   %i.aaf = icmp slt i32 %.4324, 0
-  %or.cond19 = select i1 %i.aae, i1 %i.aaf, i1 false
+  %or.cond19 = and i1 %i.aaf, %i.aae
   br i1 %or.cond19, label %.sink.split, label %bb.ed
 
 .sink.split:                                      ; preds = %bb.ec, %bb.ea
@@ -836,7 +836,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit592: ; preds = %_Z
   %i.adj = load i8, ptr %i.li, align 2, !tbaa !138, !range !78, !noundef !79
   %i.adk = trunc nuw i8 %i.adj to i1
   %i.adl = icmp ne i32 %.4317, 0
-  %or.cond9 = select i1 %i.adk, i1 true, i1 %i.adl
+  %or.cond9 = or i1 %i.adl, %i.adk
   br i1 %or.cond9, label %bb.dx, label %._crit_edge.i.i593
 
 bb.dx:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit592
@@ -905,7 +905,7 @@ bb.ea:                                            ; preds = %bb.dz
   %i.aeo = load i8, ptr %i.jw, align 1, !tbaa !166, !range !78, !noundef !79
   %i.aep = trunc nuw i8 %i.aeo to i1
   %i.aeq = icmp sgt i32 %.4317, 0
-  %or.cond11 = select i1 %i.aep, i1 %i.aeq, i1 false
+  %or.cond11 = and i1 %i.aeq, %i.aep
   br i1 %or.cond11, label %bb.ec, label %bb.ei
 
 bb.eb:                                            ; preds = %bb.dz
@@ -975,7 +975,7 @@ bb.ei:                                            ; preds = %bb.eb, %bb.ea, %_ZN
   %i.afl = load float, ptr %i.ci, align 4, !tbaa !187
   %i.afm = fcmp nsz ogt float %i.afl, %i.aei
   %i.afn = icmp slt i32 %.4317, 0
-  %or.cond14 = select i1 %i.afm, i1 %i.afn, i1 false
+  %or.cond14 = and i1 %i.afn, %i.afm
   br i1 %or.cond14, label %.sink.split, label %bb.ej
 
 .sink.split:                                      ; preds = %bb.ei, %bb.eg

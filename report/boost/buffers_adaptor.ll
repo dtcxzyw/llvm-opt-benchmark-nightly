@@ -205,7 +205,7 @@ _ZN5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit75: ; preds =
   %.sroa.19.0 = phi i64 [ %.sroa.speculated41.i.i.i71, %._crit_edge.i.i.i69 ], [ %.sroa.speculated.i.i.i72, %bb.ag ], [ %.16270.i.i.i67, %.lr.ph.i.i.i65 ] ; 2 uses
   %.not16.i.i = icmp ne i64 %i.ag, 0              ; 2 uses
   %i.ij = icmp ne ptr %.sroa.0405.0, %.sroa.7.2
-  %or.cond17.i.i = select i1 %.not16.i.i, i1 %i.ij, i1 false
+  %or.cond17.i.i = and i1 %.not16.i.i, %i.ij
   br i1 %or.cond17.i.i, label %.lr.ph.i.i76.preheader, label %_ZN5boost4asio11buffer_copyINS_5beast15buffers_adaptorINS2_14buffers_tripleEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit
 
 .lr.ph.i.i76.preheader:                           ; preds = %_ZN5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit75
@@ -230,7 +230,7 @@ bb.al:                                            ; preds = %.lr.ph.i.i76.prehea
 _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i.peel: ; preds = %bb.al, %.lr.ph.i.i76.preheader
   %i.in = sub nuw nsw i64 %spec.select, %i.im     ; 2 uses
   %.not.i.i.peel = icmp ne i64 %i.in, 0
-  %or.cond.i.i.peel = and i1 %.not.i.i.peel, %i.il
+  %or.cond.i.i.peel = and i1 %i.il, %.not.i.i.peel
   br i1 %or.cond.i.i.peel, label %.lr.ph.i.i76.peel.next, label %_ZN5boost4asio11buffer_copyINS_5beast15buffers_adaptorINS2_14buffers_tripleEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit
 
 .lr.ph.i.i76.peel.next:                           ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i.peel
@@ -262,7 +262,7 @@ _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_buffer
   %i.it = getelementptr inbounds nuw i8, ptr %.sroa.07.020.i.i, i64 %i.ir
   %i.iu = sub nuw nsw i64 %.sroa.6.019.i.i, %i.ir ; 2 uses
   %.not.i.i = icmp ne i64 %i.iu, 0
-  %or.cond.i.i = and i1 %.not.i.i, %i.iq
+  %or.cond.i.i = and i1 %i.iq, %.not.i.i
   br i1 %or.cond.i.i, label %.lr.ph.i.i76, label %_ZN5boost4asio11buffer_copyINS_5beast15buffers_adaptorINS2_14buffers_tripleEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit, !llvm.loop !334
 
 _ZN5boost4asio11buffer_copyINS_5beast15buffers_adaptorINS2_14buffers_tripleEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit: ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i.peel, %_ZN5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit75.thread755, %_ZN5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit75.thread, %_ZN5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit75

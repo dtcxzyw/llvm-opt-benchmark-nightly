@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
     #dbg_value(i1 %i.cd, !18676, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !18825)
   %i.cg = icmp ugt i64 %.sroa.0.02611389, %i.aa
-  %or.cond46 = select i1 %.sroa.0.1.i.ph, i1 %i.cg, i1 false ; 2 uses
+  %or.cond46 = and i1 %.sroa.0.1.i.ph, %i.cg      ; 2 uses
   br i1 %i.cd, label %bb.ic, label %bb.id, !dbg !19188
 
 bb.l:                                             ; preds = %bb.id, %bb.ic, %bb.j
@@ -608,7 +608,7 @@ bb.ic:                                            ; preds = %bb.k
   br i1 %or.cond46, label %_RNvXsd_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator4nextCs9GYDdpCSJ4S_14regex_automata.exit.thread, label %bb.l, !dbg !20097
 
 bb.id:                                            ; preds = %bb.k
-  %or.cond376 = select i1 %.sroa.0.0.not, i1 true, i1 %or.cond46, !dbg !20098
+  %or.cond376 = or i1 %or.cond46, %.sroa.0.0.not, !dbg !20098
   br i1 %or.cond376, label %_RNvXsd_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator4nextCs9GYDdpCSJ4S_14regex_automata.exit.thread, label %bb.l, !dbg !20098
 
 bb.ie:                                            ; preds = %_RNvMs3_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson6pikevmNtB5_6PikeVM17nexts_overlapping.exit

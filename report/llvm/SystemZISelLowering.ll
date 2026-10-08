@@ -205,7 +205,7 @@ bb.dm:                                            ; preds = %.sink.split.i, %bb.
   %i.sy = and i64 %4, 8192
   %i.sz = icmp ne i64 %i.sy, 0
   %i.ta = icmp eq i16 %.pr270.pre297.i, 8         ; 3 uses
-  %or.cond.i23 = select i1 %i.sz, i1 %i.ta, i1 false
+  %or.cond.i23 = and i1 %i.sz, %i.ta
   br i1 %or.cond.i23, label %bb.dn, label %_ZN4llvm7CCState11AllocateRegEt.exit.thread215.i
 
 bb.dn:                                            ; preds = %bb.dm
@@ -268,8 +268,8 @@ _ZN4llvm7CCState11AllocateRegEt.exit.thread215.i: ; preds = %bb.dn, %bb.dm
   %i.uc = and i64 %4, 32768
   %.not274.i = icmp eq i64 %i.uc, 0               ; 2 uses
   %.not346.i = xor i1 %i.ta, true
-  %brmerge.i24 = select i1 %.not274.i, i1 true, i1 %.not346.i
-  %.mux.i25 = select i1 %.not274.i, i1 %i.ta, i1 false
+  %brmerge.i24 = or i1 %.not274.i, %.not346.i
+  %.mux.i25 = and i1 %.not274.i, %i.ta
   br i1 %brmerge.i24, label %thread-pre-split.i, label %bb.dr
 
 bb.dr:                                            ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit.thread215.i

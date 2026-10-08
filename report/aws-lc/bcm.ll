@@ -205,11 +205,11 @@ mld_rej_uniform.exit66:                           ; preds = %bb.i, %mld_rej_unif
   %.0.i56 = phi i32 [ %i.bp, %mld_rej_uniform_native.exit.i54 ], [ %.1.i22.i63, %bb.i ] ; 2 uses
   %i.cf = icmp ult i32 %.0.i, 256                 ; 2 uses
   %i.cg = icmp ult i32 %.0.i30, 256               ; 2 uses
-  %or.cond153 = or i1 %i.cf, %i.cg
+  %or.cond153 = or i1 %i.cg, %i.cf
   %i.ch = icmp ult i32 %.0.i43, 256               ; 2 uses
-  %or.cond5154 = or i1 %or.cond153, %i.ch
+  %or.cond5154 = or i1 %i.ch, %or.cond153
   %i.ci = icmp ult i32 %.0.i56, 256               ; 2 uses
-  %i.cj = or i1 %or.cond5154, %i.ci
+  %i.cj = or i1 %i.ci, %or.cond5154
   br i1 %i.cj, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %mld_rej_uniform.exit66, %mld_rej_uniform.exit148
@@ -512,11 +512,11 @@ mld_rej_uniform.exit148:                          ; preds = %bb.w, %bb.y, %.spli
   %.0.i127 = phi i32 [ %.1.i22.i145, %bb.y ], [ %.sroa.14.0155, %.split.i126 ], [ %.1.i.i134, %bb.w ] ; 2 uses
   %i.hi = icmp ult i32 %.0.i67, 256               ; 2 uses
   %i.hj = icmp ult i32 %.0.i81, 256               ; 2 uses
-  %or.cond = select i1 %i.hi, i1 true, i1 %i.hj
+  %or.cond = or i1 %i.hj, %i.hi
   %i.hk = icmp ult i32 %.0.i104, 256              ; 2 uses
-  %or.cond5 = select i1 %or.cond, i1 true, i1 %i.hk
+  %or.cond5 = or i1 %i.hk, %or.cond
   %i.hl = icmp ult i32 %.0.i127, 256              ; 2 uses
-  %6 = select i1 %or.cond5, i1 true, i1 %i.hl
+  %6 = or i1 %i.hl, %or.cond5
   br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !2640
 
 ._crit_edge:                                      ; preds = %mld_rej_uniform.exit148, %mld_rej_uniform.exit66
@@ -919,11 +919,11 @@ mld_rej_eta65.exit67:                             ; preds = %bb.q, %mld_rej_unif
   %.0.i58 = phi i32 [ %i.dp, %mld_rej_uniform_eta4_native.exit.i56 ], [ %.2.i23.i66, %bb.q ] ; 2 uses
   %i.ej = icmp ult i32 %.0.i, 256                 ; 2 uses
   %i.ek = icmp ult i32 %.0.i34, 256               ; 2 uses
-  %or.cond147 = or i1 %i.ej, %i.ek
+  %or.cond147 = or i1 %i.ek, %i.ej
   %i.el = icmp ult i32 %.0.i46, 256               ; 2 uses
-  %or.cond5148 = or i1 %or.cond147, %i.el
+  %or.cond5148 = or i1 %i.el, %or.cond147
   %i.em = icmp ult i32 %.0.i58, 256               ; 2 uses
-  %i.en = or i1 %or.cond5148, %i.em
+  %i.en = or i1 %i.em, %or.cond5148
   br i1 %i.en, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %mld_rej_eta65.exit67, %mld_rej_eta65.exit142
@@ -1309,11 +1309,11 @@ mld_rej_eta65.exit142:                            ; preds = %bb.as, %bb.aw, %.sp
   %.0.i123 = phi i32 [ %.2.i23.i141, %bb.aw ], [ %.sroa.14.0149, %.split.i122 ], [ %.2.i.i131, %bb.as ] ; 2 uses
   %i.kw = icmp ult i32 %.0.i68, 256               ; 2 uses
   %i.kx = icmp ult i32 %.0.i81, 256               ; 2 uses
-  %or.cond = select i1 %i.kw, i1 true, i1 %i.kx
+  %or.cond = or i1 %i.kx, %i.kw
   %i.ky = icmp ult i32 %.0.i102, 256              ; 2 uses
-  %or.cond5 = select i1 %or.cond, i1 true, i1 %i.ky
+  %or.cond5 = or i1 %i.ky, %or.cond
   %i.kz = icmp ult i32 %.0.i123, 256              ; 2 uses
-  %10 = select i1 %or.cond5, i1 true, i1 %i.kz
+  %10 = or i1 %i.kz, %or.cond5
   br i1 %10, label %.lr.ph, label %._crit_edge, !llvm.loop !2651
 
 ._crit_edge:                                      ; preds = %mld_rej_eta65.exit142, %mld_rej_eta65.exit67

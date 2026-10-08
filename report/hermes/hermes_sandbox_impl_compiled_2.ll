@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af, %bb.
   br i1 %.not1664, label %bb.ah, label %bb.z
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.em = sub i32 %.01582, %i.db                  ; 3 uses
+  %i.em = sub nuw i32 %.01582, %i.db              ; 3 uses
   %i.en = icmp ugt i32 %i.em, 2
   br i1 %i.en, label %.preheader1904, label %.loopexit1906
 

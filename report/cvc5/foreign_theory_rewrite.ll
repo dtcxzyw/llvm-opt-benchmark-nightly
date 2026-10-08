@@ -202,8 +202,8 @@ bb.aa:                                            ; preds = %bb.k, %bb.u, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   resume { ptr, i32 } %.pn.pn
 
-_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31._crit_edge: ; preds = %bb.z, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31, %bb.a
-  %i.bw = phi i32 [ 1, %bb.a ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31 ], [ 1, %bb.z ]
+_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31._crit_edge: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31, %bb.z, %bb.a
+  %i.bw = phi i32 [ 1, %bb.a ], [ 1, %bb.z ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit31 ]
   ret i32 %i.bw
 }
 

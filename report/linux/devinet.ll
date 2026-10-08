@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph.split.us
   %.not.i74.us = icmp eq i32 %i.t, 0              ; 2 uses
   %i.u = zext i1 %.not.i74.us to i32              ; 3 uses
   %i.v = icmp ne i32 %.178.us, 0
-  %or.cond3.us = and i1 %.not.i74.us, %i.v
+  %or.cond3.us = and i1 %i.v, %.not.i74.us
   br i1 %or.cond3.us, label %bb.f, label %.thread79.us
 
 bb.f:                                             ; preds = %.thread.us
@@ -276,7 +276,7 @@ bb.l:                                             ; preds = %bb.k, %.thread.us12
   %i.an = phi i1 [ %.not.i74.us127, %bb.k ], [ true, %.thread.us123 ] ; 2 uses
   %i.ao = zext i1 %i.an to i32                    ; 2 uses
   %i.ap = icmp ne i32 %.178.us124, 0
-  %or.cond3.us128 = and i1 %i.an, %i.ap
+  %or.cond3.us128 = and i1 %i.ap, %i.an
   br i1 %or.cond3.us128, label %.loopexit, label %.thread79.us129
 
 .thread79.us129:                                  ; preds = %bb.l, %bb.j
@@ -384,7 +384,7 @@ bb.t:                                             ; preds = %.thread
   %.not.i74 = icmp eq i32 %i.br, 0                ; 2 uses
   %i.bs = zext i1 %.not.i74 to i32                ; 2 uses
   %i.bt = icmp ne i32 %.178, 0
-  %or.cond3 = and i1 %.not.i74, %i.bt
+  %or.cond3 = and i1 %i.bt, %.not.i74
   br i1 %or.cond3, label %.loopexit, label %.thread79
 
 .split.us:                                        ; preds = %bb.g

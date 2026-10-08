@@ -205,7 +205,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit.i.i: ; preds = %bb.g, 
   %i.bg = and i16 %.sroa.102.0.i.i, 256
   %.not1093.i.i = icmp eq i16 %i.bg, 0
   %.not.i.i.i.i51.i.i = icmp eq i64 %.sroa.6.0850.i.i, 7 ; 2 uses
-  %or.cond.i.i = select i1 %.not1093.i.i, i1 %.not.i.i.i.i51.i.i, i1 false
+  %or.cond.i.i = and i1 %.not.i.i.i.i51.i.i, %.not1093.i.i
   br i1 %or.cond.i.i, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit57.i.i
 
 _ZN4llvmneENS_9StringRefES0_.exit.i.i.i.i:        ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit.i.i
@@ -235,7 +235,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit57.i.i: ; preds = %_ZN4
   %i.bu = and i16 %.sroa.102.1.i.i, 256
   %.not1094.i.i = icmp eq i16 %i.bu, 0            ; 8 uses
   %.not.i.i.i.i61.i.i = icmp eq i64 %.sroa.6.0850.i.i, 12 ; 3 uses
-  %or.cond998.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i61.i.i, i1 false
+  %or.cond998.i.i = and i1 %.not.i.i.i.i61.i.i, %.not1094.i.i
   br i1 %or.cond998.i.i, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i62.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit68.i.i
 
 _ZN4llvmneENS_9StringRefES0_.exit.i.i62.i.i:      ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit57.i.i
@@ -257,7 +257,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.i.i62.i.i:      ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit68.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit57.i.i
   %.not.i.i.i.i72.i.i = icmp eq i64 %.sroa.6.0850.i.i, 20 ; 4 uses
-  %or.cond1000.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i72.i.i, i1 false
+  %or.cond1000.i.i = and i1 %.not.i.i.i.i72.i.i, %.not1094.i.i
   br i1 %or.cond1000.i.i, label %bb.h, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit77.i.i
 
 bb.h:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit68.i.i
@@ -275,7 +275,7 @@ bb.h:                                             ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit77.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit68.i.i
   %.not.i.i.i.i81.i.i = icmp eq i64 %.sroa.6.0850.i.i, 9
-  %or.cond1002.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i81.i.i, i1 false
+  %or.cond1002.i.i = and i1 %.not.i.i.i.i81.i.i, %.not1094.i.i
   br i1 %or.cond1002.i.i, label %bb.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit95.i.i
 
 bb.i:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit77.i.i
@@ -306,7 +306,7 @@ bb.i:                                             ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit95.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit77.i.i
   %.not.i.i.i.i99.i.i = icmp eq i64 %.sroa.6.0850.i.i, 8
-  %or.cond1006.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i99.i.i, i1 false
+  %or.cond1006.i.i = and i1 %.not.i.i.i.i99.i.i, %.not1094.i.i
   br i1 %or.cond1006.i.i, label %bb.j, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit113.i.i
 
 bb.j:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit95.i.i
@@ -331,7 +331,7 @@ bb.k:                                             ; preds = %bb.h
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit113.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit95.i.i
   %.not.i.i.i.i117.i.i = icmp eq i64 %.sroa.6.0850.i.i, 41
-  %or.cond1010.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i117.i.i, i1 false
+  %or.cond1010.i.i = and i1 %.not.i.i.i.i117.i.i, %.not1094.i.i
   br i1 %or.cond1010.i.i, label %bb.l, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit122.i.i
 
 bb.l:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit113.i.i
@@ -341,7 +341,7 @@ bb.l:                                             ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit122.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit113.i.i
   %.not.i.i.i.i126.i.i = icmp eq i64 %.sroa.6.0850.i.i, 15
-  %or.cond1012.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i126.i.i, i1 false
+  %or.cond1012.i.i = and i1 %.not.i.i.i.i126.i.i, %.not1094.i.i
   br i1 %or.cond1012.i.i, label %bb.m, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit131.i.i
 
 bb.m:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit122.i.i
@@ -358,7 +358,7 @@ bb.m:                                             ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit131.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit122.i.i
   %.not.i.i.i.i135.i.i = icmp eq i64 %.sroa.6.0850.i.i, 14
-  %or.cond1014.i.i = select i1 %.not1094.i.i, i1 %.not.i.i.i.i135.i.i, i1 false
+  %or.cond1014.i.i = and i1 %.not.i.i.i.i135.i.i, %.not1094.i.i
   br i1 %or.cond1014.i.i, label %bb.n, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit142.i.i
 
 bb.n:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit131.i.i
@@ -388,7 +388,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit142.i.i: ; preds = %_ZN
   %.sroa.102.10.i.i = phi i16 [ %.sroa.102.1.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit131.i.i ], [ %.sroa.102.2.ph.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i62.i.i ] ; 3 uses
   %i.el = and i16 %.sroa.102.10.i.i, 256
   %.not1103.i.i = icmp eq i16 %i.el, 0
-  %or.cond1016.i.i = select i1 %.not1103.i.i, i1 %.not.i.i.i.i61.i.i, i1 false
+  %or.cond1016.i.i = and i1 %.not.i.i.i.i61.i.i, %.not1103.i.i
   br i1 %or.cond1016.i.i, label %bb.o, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.i
 
 bb.o:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit142.i.i
@@ -440,7 +440,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.i: ; preds = %_ZN
   %i.fl = and i16 %.sroa.102.12.i.i, 256
   %.not.i4.i = icmp eq i16 %i.fl, 0               ; 2 uses
   %.not.i.i.i.i164.i.i = icmp eq i64 %.sroa.6.0850.i.i, 9
-  %or.cond1020.i.i = select i1 %.not.i4.i, i1 %.not.i.i.i.i164.i.i, i1 false
+  %or.cond1020.i.i = and i1 %.not.i.i.i.i164.i.i, %.not.i4.i
   br i1 %or.cond1020.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.thread.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.thread.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.i
@@ -468,7 +468,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.i.i: ; preds = %_ZN
   %.sroa.102.12.i11.i = phi i16 [ %.sroa.102.12.i.ph.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.thread.i ], [ %.sroa.102.12.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.i ], [ %.sroa.102.1.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.thread81.i ] ; 6 uses
   %.not.i.i.i.i721183.i10.i = phi i1 [ %.not.i.i.i.i721183.i.ph.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.thread.i ], [ %.not.i.i.i.i721183.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.i ], [ %.not.i.i.i.i72.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit160.i.thread81.i ] ; 8 uses
   %.not.i.i.i.i175.i.i = icmp eq i64 %.sroa.6.0850.i.i, 10 ; 2 uses
-  %or.cond1022.i.i = select i1 %.not.i412.i, i1 %.not.i.i.i.i175.i.i, i1 false
+  %or.cond1022.i.i = and i1 %.not.i.i.i.i175.i.i, %.not.i412.i
   br i1 %or.cond1022.i.i, label %bb.p, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit182.i.i
 
 bb.p:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.i.i
@@ -492,7 +492,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i179.i.i: ; preds = %bb.p
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit182.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit171.i.i
   %.not.i.i.i.i186.i.i = icmp eq i64 %.sroa.6.0850.i.i, 34
-  %or.cond1024.i.i = select i1 %.not.i412.i, i1 %.not.i.i.i.i186.i.i, i1 false
+  %or.cond1024.i.i = and i1 %.not.i.i.i.i186.i.i, %.not.i412.i
   br i1 %or.cond1024.i.i, label %bb.q, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit193.i.i
 
 bb.q:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit182.i.i
@@ -508,7 +508,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i190.i.i: ; preds = %bb.q
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit193.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit182.i.i
   %.not.i.i.i.i197.i.i = icmp eq i64 %.sroa.6.0850.i.i, 23 ; 2 uses
-  %or.cond1026.i.i = select i1 %.not.i412.i, i1 %.not.i.i.i.i197.i.i, i1 false
+  %or.cond1026.i.i = and i1 %.not.i.i.i.i197.i.i, %.not.i412.i
   br i1 %or.cond1026.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.thread.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.thread.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit193.i.i
@@ -541,7 +541,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.i: ; preds = %_ZN
   %i.gr = and i16 %.sroa.102.12.i11.i, 256
   %.not1110.i.i = icmp eq i16 %i.gr, 0            ; 2 uses
   %.not.i.i.i.i208.i.i = icmp eq i64 %.sroa.6.0850.i.i, 21 ; 2 uses
-  %or.cond1028.i.i = select i1 %.not1110.i.i, i1 %.not.i.i.i.i208.i.i, i1 false
+  %or.cond1028.i.i = and i1 %.not.i.i.i.i208.i.i, %.not1110.i.i
   br i1 %or.cond1028.i.i, label %bb.r, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit215.i.i
 
 bb.r:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.i
@@ -572,7 +572,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit215.i.i: ; preds = %_ZN
   %i.ha = phi i64 [ %.ph13.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.thread.i ], [ %i.fy, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.i ] ; 3 uses
   %i.hb = phi i64 [ %.ph.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.thread.i ], [ %i.fx, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit204.i.i ] ; 4 uses
   %.not.i.i.i.i219.i.i = icmp eq i64 %.sroa.6.0850.i.i, 24
-  %or.cond1030.i.i = select i1 %.not1110.i25.i, i1 %.not.i.i.i.i219.i.i, i1 false
+  %or.cond1030.i.i = and i1 %.not.i.i.i.i219.i.i, %.not1110.i25.i
   br i1 %or.cond1030.i.i, label %bb.s, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit226.i.i
 
 bb.s:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit215.i.i
@@ -604,7 +604,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit226.i.i: ; preds = %_ZN
   %.sroa.102.18.i.i = phi i16 [ %.sroa.102.16.i24.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit215.i.i ], [ %.sroa.0.0.insert.insert.i.i225.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i223.i.i ], [ %.sroa.102.16.i24.i, %bb.s ], [ %.sroa.0.0.insert.insert.i.i214.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i212.i.i ], [ %.sroa.102.12.i11.i, %bb.r ] ; 3 uses
   %i.hn = and i16 %.sroa.102.18.i.i, 256
   %.not1114.i.i = icmp eq i16 %i.hn, 0
-  %or.cond1032.i.i = select i1 %.not1114.i.i, i1 %.not.i.i.i.i20812831291.i.i, i1 false
+  %or.cond1032.i.i = and i1 %.not.i.i.i.i20812831291.i.i, %.not1114.i.i
   br i1 %or.cond1032.i.i, label %bb.t, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit237.i.i
 
 bb.t:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit226.i.i
@@ -630,7 +630,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit237.i.i: ; preds = %_ZN
   %i.hw = and i16 %.sroa.102.19.i.i, 256
   %.not1116.i.i = icmp eq i16 %i.hw, 0            ; 3 uses
   %.not.i.i.i.i241.i.i = icmp eq i64 %.sroa.6.0850.i.i, 11
-  %or.cond1034.i.i = select i1 %.not1116.i.i, i1 %.not.i.i.i.i241.i.i, i1 false
+  %or.cond1034.i.i = and i1 %.not.i.i.i.i241.i.i, %.not1116.i.i
   br i1 %or.cond1034.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.thread.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.thread.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit237.i.i
@@ -651,7 +651,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.thread.i.i: ; preds
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit237.i.i
   %.not.i.i.i.i252.i.i = icmp eq i64 %.sroa.6.0850.i.i, 28 ; 2 uses
-  %or.cond1036.i.i = select i1 %.not1116.i.i, i1 %.not.i.i.i.i252.i.i, i1 false
+  %or.cond1036.i.i = and i1 %.not.i.i.i.i252.i.i, %.not1116.i.i
   br i1 %or.cond1036.i.i, label %bb.u, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.i
 
 bb.u:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.i.i
@@ -674,7 +674,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i256.i.i: ; preds = %bb.u
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.i.i
   %.not.i.i.i.i263.i.i = icmp eq i64 %.sroa.6.0850.i.i, 25 ; 2 uses
-  %or.cond1038.i.i = select i1 %.not1116.i.i, i1 %.not.i.i.i.i263.i.i, i1 false
+  %or.cond1038.i.i = and i1 %.not.i.i.i.i263.i.i, %.not1116.i.i
   br i1 %or.cond1038.i.i, label %bb.v, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit270.i.i
 
 bb.v:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.i
@@ -707,7 +707,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit270.i.i: ; preds = %_ZN
   %.sroa.102.22.i.i = phi i16 [ %.sroa.102.19.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.i ], [ %.sroa.0.0.insert.insert.i.i269.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i267.i.i ], [ %.sroa.102.19.i.i, %bb.v ], [ %.sroa.102.20.ph.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit248.thread.i.i ], [ %.sroa.102.19.i.i, %bb.u ], [ %.sroa.0.0.insert.insert.i.i258.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i256.i.i ], [ %.sroa.102.16.ph.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit259.i.thread.i ] ; 3 uses
   %i.ix = and i16 %.sroa.102.22.i.i, 256
   %.not1122.i.i = icmp eq i16 %i.ix, 0
-  %or.cond1040.i.i = select i1 %.not1122.i.i, i1 %.not.i.i.i.i721183.i83452.i, i1 false
+  %or.cond1040.i.i = and i1 %.not.i.i.i.i721183.i83452.i, %.not1122.i.i
   br i1 %or.cond1040.i.i, label %bb.w, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit281.i.i
 
 bb.w:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit270.i.i
@@ -734,7 +734,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit281.i.i: ; preds = %_ZN
   %i.jh = and i16 %.sroa.102.23.i.i, 256
   %.not1124.i.i = icmp eq i16 %i.jh, 0            ; 2 uses
   %.not.i.i.i.i285.i.i = icmp eq i64 %.sroa.6.0850.i.i, 13
-  %or.cond1042.i.i = select i1 %.not1124.i.i, i1 %.not.i.i.i.i285.i.i, i1 false
+  %or.cond1042.i.i = and i1 %.not.i.i.i.i285.i.i, %.not1124.i.i
   br i1 %or.cond1042.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.thread.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.thread.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit281.i.i
@@ -755,7 +755,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.thread.i.i: ; preds
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit281.i.i
   %.not.i.i.i.i296.i.i = icmp eq i64 %.sroa.6.0850.i.i, 33 ; 2 uses
-  %or.cond1044.i.i = select i1 %.not1124.i.i, i1 %.not.i.i.i.i296.i.i, i1 false
+  %or.cond1044.i.i = and i1 %.not.i.i.i.i296.i.i, %.not1124.i.i
   br i1 %or.cond1044.i.i, label %bb.x, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit303.i.i
 
 bb.x:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.i.i
@@ -774,7 +774,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit303.i.i: ; preds = %_ZN
   %.sroa.102.25.i.i = phi i16 [ %.sroa.102.23.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.i.i ], [ %.sroa.0.0.insert.insert.i.i302.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i300.i.i ], [ %.sroa.102.23.i.i, %bb.x ], [ %.sroa.102.24.ph.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit292.thread.i.i ] ; 3 uses
   %i.jq = and i16 %.sroa.102.25.i.i, 256
   %.not1128.i.i = icmp eq i16 %i.jq, 0
-  %or.cond1046.i.i = select i1 %.not1128.i.i, i1 %.not.i.i.i.i20812831291.i3746.i, i1 false
+  %or.cond1046.i.i = and i1 %.not.i.i.i.i20812831291.i3746.i, %.not1128.i.i
   br i1 %or.cond1046.i.i, label %bb.y, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit314.i.i
 
 bb.y:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit303.i.i
@@ -800,7 +800,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit314.i.i: ; preds = %_ZN
   %i.jz = and i16 %.sroa.102.26.i.i, 256
   %.not1130.i.i = icmp eq i16 %i.jz, 0            ; 4 uses
   %.not.i.i.i.i318.i.i = icmp eq i64 %.sroa.6.0850.i.i, 22 ; 2 uses
-  %or.cond1048.i.i = select i1 %.not1130.i.i, i1 %.not.i.i.i.i318.i.i, i1 false
+  %or.cond1048.i.i = and i1 %.not.i.i.i.i318.i.i, %.not1130.i.i
   br i1 %or.cond1048.i.i, label %bb.z, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit325.i.i
 
 bb.z:                                             ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit314.i.i
@@ -823,7 +823,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i322.i.i: ; preds = %bb.z
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit325.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit314.i.i
   %.not.i.i.i.i329.i.i = icmp eq i64 %.sroa.6.0850.i.i, 14
-  %or.cond1050.i.i = select i1 %.not1130.i.i, i1 %.not.i.i.i.i329.i.i, i1 false
+  %or.cond1050.i.i = and i1 %.not.i.i.i.i329.i.i, %.not1130.i.i
   br i1 %or.cond1050.i.i, label %bb.aa, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit334.i.i
 
 bb.aa:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit325.i.i
@@ -840,7 +840,7 @@ bb.aa:                                            ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit334.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit325.i.i
   %.not.i.i.i.i338.i.i = icmp eq i64 %.sroa.6.0850.i.i, 19
-  %or.cond1052.i.i = select i1 %.not1130.i.i, i1 %.not.i.i.i.i338.i.i, i1 false
+  %or.cond1052.i.i = and i1 %.not.i.i.i.i338.i.i, %.not1130.i.i
   br i1 %or.cond1052.i.i, label %bb.ab, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit343.i.i
 
 bb.ab:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit334.i.i
@@ -865,7 +865,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit343.i.i: ; preds = %_ZN
   %i.la = and i64 %i.iw, 8192                     ; 2 uses
   %i.lb = icmp ne i64 %i.la, 0                    ; 3 uses
   %.not.i.i.i.i347.i.i = icmp eq i64 %.sroa.6.0850.i.i, 17
-  %or.cond1054.i.i = select i1 %.not1130.i.i, i1 %.not.i.i.i.i347.i.i, i1 false
+  %or.cond1054.i.i = and i1 %.not.i.i.i.i347.i.i, %.not1130.i.i
   br i1 %or.cond1054.i.i, label %bb.ac, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit354.i.i
 
 bb.ac:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit343.i.i
@@ -892,7 +892,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit354.i.i: ; preds = %_ZN
   %.sroa.102.30.i.i = phi i16 [ %.sroa.102.26.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit343.i.i ], [ %.sroa.102.271317.ph.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit343.thread.i.i ] ; 3 uses
   %i.lm = and i16 %.sroa.102.30.i.i, 256
   %.not1136.i.i = icmp eq i16 %i.lm, 0
-  %or.cond1056.i.i = select i1 %.not1136.i.i, i1 %.not.i.i.i.i318.i.i, i1 false
+  %or.cond1056.i.i = and i1 %.not.i.i.i.i318.i.i, %.not1136.i.i
   br i1 %or.cond1056.i.i, label %bb.ad, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit365.i.i
 
 bb.ad:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit354.i.i
@@ -918,7 +918,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit365.i.i: ; preds = %_ZN
   %.sroa.102.31.i.i = phi i16 [ %.sroa.102.30.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit354.i.i ], [ %.sroa.0.0.insert.insert.i.i364.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i362.i.i ], [ %.sroa.102.30.i.i, %bb.ad ], [ %.sroa.102.26.i.i, %bb.ac ], [ %.sroa.0.0.insert.insert.i.i353.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i351.i.i ] ; 3 uses
   %i.lw = and i16 %.sroa.102.31.i.i, 256
   %.not1138.i.i = icmp eq i16 %i.lw, 0
-  %or.cond1058.i.i = select i1 %.not1138.i.i, i1 %.not.i.i.i.i721183.i83452.i, i1 false
+  %or.cond1058.i.i = and i1 %.not.i.i.i.i721183.i83452.i, %.not1138.i.i
   br i1 %or.cond1058.i.i, label %bb.ae, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit376.i.i
 
 bb.ae:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit365.i.i
@@ -945,7 +945,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit376.i.i: ; preds = %_ZN
   %i.mi = and i16 %.sroa.102.32.i.i, 256
   %.not1140.i.i = icmp eq i16 %i.mi, 0
   %.not.i.i.i.i380.i.i = icmp eq i64 %.sroa.6.0850.i.i, 27
-  %or.cond1060.i.i = select i1 %.not1140.i.i, i1 %.not.i.i.i.i380.i.i, i1 false
+  %or.cond1060.i.i = and i1 %.not.i.i.i.i380.i.i, %.not1140.i.i
   br i1 %or.cond1060.i.i, label %bb.af, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit387.i.i
 
 bb.af:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit376.i.i
@@ -970,7 +970,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit387.i.i: ; preds = %_ZN
   %.sroa.102.33.i.i = phi i16 [ %.sroa.102.32.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit376.i.i ], [ %.sroa.0.0.insert.insert.i.i386.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i384.i.i ], [ %.sroa.102.32.i.i, %bb.af ] ; 4 uses
   %i.mt = and i16 %.sroa.102.33.i.i, 256
   %.not1142.i.i = icmp eq i16 %i.mt, 0            ; 5 uses
-  %or.cond1062.i.i = select i1 %.not1142.i.i, i1 %.not.i.i.i.i20812831291.i3746.i, i1 false
+  %or.cond1062.i.i = and i1 %.not.i.i.i.i20812831291.i3746.i, %.not1142.i.i
   br i1 %or.cond1062.i.i, label %bb.ag, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit396.i.i
 
 bb.ag:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit387.i.i
@@ -986,7 +986,7 @@ bb.ag:                                            ; preds = %_ZN4llvm12StringSwi
   br i1 %.not.i.i394.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit498.thread.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit405.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit396.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit387.i.i
-  %or.cond1064.i.i = select i1 %.not1142.i.i, i1 %.not.i.i.i.i2961312.i.i, i1 false
+  %or.cond1064.i.i = and i1 %.not.i.i.i.i2961312.i.i, %.not1142.i.i
   br i1 %or.cond1064.i.i, label %bb.ah, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit405.i.i
 
 bb.ah:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit396.i.i
@@ -996,7 +996,7 @@ bb.ah:                                            ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit405.i.i: ; preds = %bb.ah, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit396.i.i, %bb.ag
   %.not.i.i.i.i409.i.i = icmp eq i64 %.sroa.6.0850.i.i, 43
-  %or.cond1066.i.i = select i1 %.not1142.i.i, i1 %.not.i.i.i.i409.i.i, i1 false
+  %or.cond1066.i.i = and i1 %.not.i.i.i.i409.i.i, %.not1142.i.i
   br i1 %or.cond1066.i.i, label %bb.ai, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit414.i.i
 
 bb.ai:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit405.i.i
@@ -1006,7 +1006,7 @@ bb.ai:                                            ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit414.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit405.i.i
   %.not.i.i.i.i418.i.i = icmp eq i64 %.sroa.6.0850.i.i, 36
-  %or.cond1068.i.i = select i1 %.not1142.i.i, i1 %.not.i.i.i.i418.i.i, i1 false
+  %or.cond1068.i.i = and i1 %.not.i.i.i.i418.i.i, %.not1142.i.i
   br i1 %or.cond1068.i.i, label %bb.aj, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit423.i.i
 
 bb.aj:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit414.i.i
@@ -1029,7 +1029,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit423.i.i: ; preds = %_ZN
   %i.nh = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 8
   %i.ni = load i64, ptr %i.nh, align 8
   %i.nj = and i64 %i.ni, 144115188075855872       ; 4 uses
-  %or.cond1070.i.i = select i1 %.not1142.i.i, i1 %.not.i.i.i.i51.i.i, i1 false
+  %or.cond1070.i.i = and i1 %.not.i.i.i.i51.i.i, %.not1142.i.i
   br i1 %or.cond1070.i.i, label %bb.ak, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit434.i.i
 
 bb.ak:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit423.i.i
@@ -1055,7 +1055,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit434.i.i: ; preds = %_ZN
   %.sroa.102.38.i.i = phi i16 [ %.sroa.102.33.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit423.i.i ], [ %.sroa.0.0.insert.insert.i.i433.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i431.i.i ], [ %.sroa.102.33.i.i, %bb.ak ], [ %.sroa.102.33.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit423.thread.i.i ] ; 3 uses
   %i.nt = and i16 %.sroa.102.38.i.i, 256
   %.not1148.i.i = icmp eq i16 %i.nt, 0
-  %or.cond1072.i.i = select i1 %.not1148.i.i, i1 %.not.i.i.i.i2631305.i.i, i1 false
+  %or.cond1072.i.i = and i1 %.not.i.i.i.i2631305.i.i, %.not1148.i.i
   br i1 %or.cond1072.i.i, label %bb.al, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit445.i.i
 
 bb.al:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit434.i.i
@@ -1081,7 +1081,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit445.i.i: ; preds = %_ZN
   %i.oc = and i16 %.sroa.102.39.i.i, 256
   %.not1150.i.i = icmp eq i16 %i.oc, 0
   %.not.i.i.i.i449.i.i = icmp eq i64 %.sroa.6.0850.i.i, 30
-  %or.cond1074.i.i = select i1 %.not1150.i.i, i1 %.not.i.i.i.i449.i.i, i1 false
+  %or.cond1074.i.i = and i1 %.not.i.i.i.i449.i.i, %.not1150.i.i
   br i1 %or.cond1074.i.i, label %bb.am, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit456.i.i
 
 bb.am:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit445.i.i
@@ -1108,7 +1108,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit456.i.i: ; preds = %_ZN
   %spec.select1075.i.i = select i1 %.not43.i.i, i1 %i.lv, i1 false
   %i.ol = and i16 %.sroa.102.40.i.i, 256
   %.not1152.i.i = icmp eq i16 %i.ol, 0
-  %or.cond1077.i.i = select i1 %.not1152.i.i, i1 %.not.i.i.i.i2631305.i.i, i1 false
+  %or.cond1077.i.i = and i1 %.not.i.i.i.i2631305.i.i, %.not1152.i.i
   br i1 %or.cond1077.i.i, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i461.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit467.i.i
 
 _ZN4llvmneENS_9StringRefES0_.exit.i.i461.i.i:     ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit456.i.i
@@ -1134,7 +1134,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit467.i.i: ; preds = %_ZN
   %i.ov = load i64, ptr %i.ou, align 8            ; 5 uses
   %i.ow = and i16 %.sroa.102.41.i.i, 256
   %.not1153.i.i = icmp eq i16 %i.ow, 0
-  %or.cond1079.i.i = select i1 %.not1153.i.i, i1 %.not.i.i.i.i61.i.i, i1 false
+  %or.cond1079.i.i = and i1 %.not.i.i.i.i61.i.i, %.not1153.i.i
   br i1 %or.cond1079.i.i, label %bb.an, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit478.i.i
 
 bb.an:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit467.i.i
@@ -1160,7 +1160,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit478.i.i: ; preds = %_ZN
   %.sroa.102.42.i.i = phi i16 [ %.sroa.102.41.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit467.i.i ], [ %.sroa.0.0.insert.insert.i.i477.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i475.i.i ], [ %.sroa.102.41.i.i, %bb.an ] ; 4 uses
   %i.pi = and i16 %.sroa.102.42.i.i, 256
   %.not1155.i.i = icmp eq i16 %i.pi, 0            ; 2 uses
-  %or.cond1081.i.i = select i1 %.not1155.i.i, i1 %.not.i.i.i.i25212981304.i.i, i1 false
+  %or.cond1081.i.i = and i1 %.not.i.i.i.i25212981304.i.i, %.not1155.i.i
   br i1 %or.cond1081.i.i, label %bb.ao, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit487.i.i
 
 bb.ao:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit478.i.i
@@ -1177,7 +1177,7 @@ bb.ao:                                            ; preds = %_ZN4llvm12StringSwi
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit487.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit478.i.i
   %.not.i.i.i.i491.i.i = icmp eq i64 %.sroa.6.0850.i.i, 36
-  %or.cond1083.i.i = select i1 %.not1155.i.i, i1 %.not.i.i.i.i491.i.i, i1 false
+  %or.cond1083.i.i = and i1 %.not.i.i.i.i491.i.i, %.not1155.i.i
   br i1 %or.cond1083.i.i, label %bb.ap, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit498.i.i
 
 bb.ap:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit487.i.i
@@ -1194,7 +1194,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit498.i.i: ; preds = %_ZN
   %.sroa.102.44.i.i = phi i16 [ %.sroa.102.42.i.i, %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit487.i.i ], [ %.sroa.0.0.insert.insert.i.i497.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.thread8.i.i495.i.i ], [ %.sroa.102.42.i.i, %bb.ap ], [ %.sroa.102.42.i.i, %bb.ao ] ; 3 uses
   %i.pr = and i16 %.sroa.102.44.i.i, 256
   %.not1157.i.i = icmp eq i16 %i.pr, 0
-  %or.cond1085.i.i = select i1 %.not1157.i.i, i1 %.not.i.i.i.i17512611267127312821292.i3648.i, i1 false
+  %or.cond1085.i.i = and i1 %.not.i.i.i.i17512611267127312821292.i3648.i, %.not1157.i.i
   br i1 %or.cond1085.i.i, label %bb.aq, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit509.i.i
 
 bb.aq:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit498.i.i
@@ -1238,7 +1238,7 @@ bb.as:                                            ; preds = %bb.ar, %_ZN4llvm12S
   %i.qk = and i16 %.sroa.102.45.i.i, 256
   %.not1159.i.i = icmp eq i16 %i.qk, 0
   %.not.i.i.i.i513.i.i = icmp eq i64 %.sroa.6.0850.i.i, 35
-  %or.cond1087.i.i = select i1 %.not1159.i.i, i1 %.not.i.i.i.i513.i.i, i1 false
+  %or.cond1087.i.i = and i1 %.not.i.i.i.i513.i.i, %.not1159.i.i
   br i1 %or.cond1087.i.i, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i514.i.i, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit520.i.i
 
 _ZN4llvmneENS_9StringRefES0_.exit.i.i514.i.i:     ; preds = %bb.as
@@ -1251,7 +1251,7 @@ _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit520.i.i: ; preds = %_ZN
   %.sroa.102.46.i.i = phi i16 [ %.sroa.102.45.i.i, %bb.as ], [ %spec.select1166.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i514.i.i ] ; 4 uses
   %i.ql = and i16 %.sroa.102.46.i.i, 256
   %.not1161.i.i = icmp eq i16 %i.ql, 0            ; 2 uses
-  %or.cond1089.i.i = select i1 %.not1161.i.i, i1 %.not.i.i.i.i2631305.i.i, i1 false
+  %or.cond1089.i.i = and i1 %.not.i.i.i.i2631305.i.i, %.not1161.i.i
   br i1 %or.cond1089.i.i, label %bb.at, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit529.i.i
 
 bb.at:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit520.i.i
@@ -1268,7 +1268,7 @@ bb.at:                                            ; preds = %_ZN4llvm12StringSwi
   br label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit540.i.i
 
 _ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit529.i.i: ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit520.i.i
-  %or.cond1092.i.i = select i1 %.not1161.i.i, i1 %.not.i.i.i.i197127412811293.i3550.i, i1 false
+  %or.cond1092.i.i = and i1 %.not.i.i.i.i197127412811293.i3550.i, %.not1161.i.i
   br i1 %or.cond1092.i.i, label %bb.au, label %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit540.i.i
 
 bb.au:                                            ; preds = %_ZN4llvm12StringSwitchIbbE4CaseENS_13StringLiteralEb.exit529.i.i

@@ -205,7 +205,7 @@ _ZN4llvm30DiagnosticInfoOptimizationBaseD2Ev.exit.i200: ; preds = %bb.w, %_ZN4ll
   store i64 %i.id, ptr %21, align 8, !tbaa !825
   %i.ie = icmp ugt i32 %i.dy, 1
   %i.if = icmp uge i32 %.0384, %.sroa.speculated.i
-  %29 = select i1 %i.ie, i1 %i.if, i1 false
+  %29 = and i1 %i.ie, %i.if
   br i1 %29, label %.lr.ph447, label %.thread560
 
 .lr.ph447:                                        ; preds = %.thread
@@ -312,7 +312,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 _ZL24hasFullVectorsOrPowerOf2RKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit.thread386: ; preds = %bb.ad, %_ZN4llvm14has_single_bitIjvEEbT_.exit.i
   %i.kd = icmp ult i32 %.sroa.speculated, %.0384
-  %or.cond159 = select i1 %4, i1 %i.kd, i1 false
+  %or.cond159 = and i1 %4, %i.kd
   %i.ke = icmp ult i32 %i.jj, %storemerge443
   %or.cond160 = and i1 %i.jh, %i.ke
   %or.cond451 = or i1 %or.cond159, %or.cond160
@@ -715,7 +715,7 @@ _ZN4llvm14SmallBitVectorC2Ejb.exit:               ; preds = %_ZN4llvm14SmallBitV
   %.057 = phi ptr [ %.259258, %_ZN4llvm16dyn_cast_or_nullINS_17InsertElementInstENS_5ValueEEEDaPT0_.exit195.thread ], [ %1, %_ZN4llvm14SmallBitVectorC2Ejb.exit.preheader ] ; 12 uses
   %i.cr = icmp ne ptr %.057, %0                   ; 2 uses
   %i.cs = icmp ne ptr %.060, null                 ; 2 uses
-  %or.cond = select i1 %i.cr, i1 true, i1 %i.cs
+  %or.cond = or i1 %i.cs, %i.cr
   br i1 %or.cond, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %_ZN4llvm14SmallBitVectorC2Ejb.exit

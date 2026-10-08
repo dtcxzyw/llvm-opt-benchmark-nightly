@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !207  ; 4 uses
   %i.n = icmp ne ptr %i.m, null                   ; 2 uses
-  %or.cond3 = select i1 %i.n, i1 %spec.select26, i1 false
+  %or.cond3 = and i1 %i.n, %spec.select26
   br i1 %or.cond3, label %.thread, label %bb.f
 
 .thread:                                          ; preds = %bb.e

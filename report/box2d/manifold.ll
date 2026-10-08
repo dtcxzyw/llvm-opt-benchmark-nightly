@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.bl = fsub <2 x float> %i.m, %.sroa.050.0.copyload ; 5 uses
   %i.bm = fcmp olt float %i.bk, 0.000000e+00
   %i.bn = fcmp ogt float %.0126.lcssa, f0x34000000 ; 2 uses
-  %or.cond = and i1 %i.bm, %i.bn
+  %or.cond = and i1 %i.bn, %i.bm
   br i1 %or.cond, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -254,7 +254,7 @@ bb.f:                                             ; preds = %bb.b
   %i.co = fmul <2 x float> %i.bl, %i.cn
   %i.cp = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.co)
   %i.cq = fcmp olt float %i.cp, 0.000000e+00
-  %or.cond4 = and i1 %i.cq, %i.bn
+  %or.cond4 = and i1 %i.bn, %i.cq
   br i1 %or.cond4, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f

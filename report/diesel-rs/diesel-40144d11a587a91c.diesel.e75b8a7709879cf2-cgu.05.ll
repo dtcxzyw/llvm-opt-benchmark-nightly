@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !635, !nonnull !4, !noundef !4 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %i.c = tail call noundef i64 @_RNvMNtNtNtCsjRvGck33osM_6diesel2pg10connection6resultNtB2_8PgResult12column_count(ptr noundef nonnull align 8 %i.b), !noalias !635 ; 2 uses
+  %i.c = tail call noundef i64 @_RNvMNtNtNtCsjRvGck33osM_6diesel2pg10connection6resultNtB2_8PgResult12column_count(ptr noundef nonnull align 8 %i.b), !noalias !635 ; 3 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %_RINvYINtNtNtCscI6d9CVNmLh_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB24_5PgRowINtNtB2a_3row8RowIndexReE3idx0E0INtNtB8_12control_flow11ControlFlowjEEB2a_.exit, label %.lr.ph.i.preheader
 
@@ -213,7 +213,7 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.backedge.i
-  %i.e = phi i64 [ %i.f, %.backedge.i ], [ 0, %.lr.ph.i.preheader ] ; 5 uses
+  %i.e = phi i64 [ %i.f, %.backedge.i ], [ 0, %.lr.ph.i.preheader ] ; 4 uses
   %i.f = add nuw i64 %i.e, 1                      ; 2 uses
   %i.g = tail call noundef nonnull align 8 ptr @_RINvMNtNtCscI6d9CVNmLh_4core4cell4onceINtB3_8OnceCellINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtB7_6option6OptionPeEEE15get_or_try_initNCINvB2_11get_or_initNCNvMNtNtNtCsjRvGck33osM_6diesel2pg10connection6resultNtB2u_8PgResult11column_name0E0zEB2A_(ptr noundef nonnull align 8 %i.d, ptr noundef nonnull align 8 %i.b), !noalias !636 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
@@ -249,11 +249,11 @@ _RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8
   %exitcond.not.i = icmp eq i64 %i.f, %i.c
   br i1 %exitcond.not.i, label %_RINvYINtNtNtCscI6d9CVNmLh_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB24_5PgRowINtNtB2a_3row8RowIndexReE3idx0E0INtNtB8_12control_flow11ControlFlowjEEB2a_.exit, label %.lr.ph.i
 
-_RINvYINtNtNtCscI6d9CVNmLh_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB24_5PgRowINtNtB2a_3row8RowIndexReE3idx0E0INtNtB8_12control_flow11ControlFlowjEEB2a_.exit: ; preds = %.backedge.i, %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i, %bb.a
-  %.sroa.0.0.i11 = phi i64 [ 0, %bb.a ], [ 0, %.backedge.i ], [ 1, %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i ]
-  %i.q = phi i64 [ undef, %bb.a ], [ %i.e, %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i ], [ %i.e, %.backedge.i ]
-  %i.r = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i11, 0
-  %i.s = insertvalue { i64, i64 } %i.r, i64 %i.q, 1
+_RINvYINtNtNtCscI6d9CVNmLh_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB24_5PgRowINtNtB2a_3row8RowIndexReE3idx0E0INtNtB8_12control_flow11ControlFlowjEEB2a_.exit: ; preds = %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i, %.backedge.i, %bb.a
+  %.sroa.0.0.i11 = phi i64 [ 0, %bb.a ], [ %i.c, %.backedge.i ], [ %i.e, %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i ]
+  %i.q = phi i64 [ 0, %bb.a ], [ 0, %.backedge.i ], [ 1, %_RNCNvXs2_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB7_5PgRowINtNtBd_3row8RowIndexReE3idx0Bd_.exit.i.i ]
+  %i.r = insertvalue { i64, i64 } poison, i64 %i.q, 0
+  %i.s = insertvalue { i64, i64 } %i.r, i64 %.sroa.0.0.i11, 1
   ret { i64, i64 } %i.s
 }
 

@@ -182,7 +182,7 @@ bb.m:                                             ; preds = %bb.l, %bb.f
   %.2166 = phi i32 [ 2, %bb.l ], [ %.0164, %bb.f ] ; 2 uses
   %i.ca = icmp ne i32 %.2205, 0
   %i.cb = icmp eq i32 %.2166, 2
-  %or.cond5 = select i1 %i.ca, i1 %i.cb, i1 false
+  %or.cond5 = and i1 %i.ca, %i.cb
   br i1 %or.cond5, label %bb.n, label %bb.u
 
 bb.n:                                             ; preds = %bb.m
@@ -233,7 +233,7 @@ bb.u:                                             ; preds = %bb.t, %bb.m
   %.5 = phi i32 [ %.2166, %bb.m ], [ %.3167, %bb.t ] ; 3 uses
   %i.cq = icmp ne i32 %.3206, 0                   ; 2 uses
   %i.cr = icmp eq i32 %.5, 3
-  %or.cond7 = select i1 %i.cq, i1 %i.cr, i1 false
+  %or.cond7 = and i1 %i.cq, %i.cr
   br i1 %or.cond7, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %bb.u
@@ -255,7 +255,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.u
   %i.cv = icmp eq i32 %.5, 4
-  %or.cond9 = select i1 %i.cq, i1 %i.cv, i1 false
+  %or.cond9 = and i1 %i.cq, %i.cv
   br i1 %or.cond9, label %bb.aa, label %.thread300
 
 bb.aa:                                            ; preds = %bb.z
@@ -289,7 +289,7 @@ bb.ac:                                            ; preds = %bb.aa
   %.7 = phi i32 [ %.5, %bb.z ], [ 5, %.thread300.sink.split ] ; 2 uses
   %i.da = icmp ne i32 %.5208, 0
   %i.db = icmp eq i32 %.7, 5                      ; 2 uses
-  %or.cond11 = select i1 %i.da, i1 %i.db, i1 false
+  %or.cond11 = and i1 %i.da, %i.db
   br i1 %or.cond11, label %bb.ad, label %bb.ai
 
 bb.ad:                                            ; preds = %.thread300

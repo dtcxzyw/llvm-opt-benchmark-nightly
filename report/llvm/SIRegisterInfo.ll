@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %._crit_edge807, %bb
   %i.qs = select i1 %i.qo, i16 %i.qr, i16 0       ; 2 uses
   %.0717 = or disjoint i16 %i.qs, %i.mo           ; 2 uses
   %i.qt = and i1 %.1383861, %i.qo
-  %i.qu = and i1 %or.cond21, %i.qp                ; 3 uses
+  %i.qu = and i1 %or.cond21, %i.qp                ; 2 uses
   %i.qv = add i32 %.3393, %.0408785               ; 3 uses
   %i.qw = lshr i32 %i.qv, 2                       ; 2 uses
   %i.qx = add nsw i32 %i.qw, -1                   ; 4 uses
@@ -244,8 +244,8 @@ bb.bs:                                            ; preds = %bb.br, %.lr.ph774
   br i1 %.not442.not.peel, label %.thread731.loopexit, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %or.cond901 = select i1 %or.cond23, i1 %i.qp, i1 %i.qu
-  br i1 %or.cond901, label %bb.bu, label %bb.bv
+  %or.cond.peel = and i1 %or.cond23, %i.qp
+  br i1 %or.cond.peel, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #27

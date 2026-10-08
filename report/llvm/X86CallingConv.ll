@@ -204,7 +204,7 @@ bb.bm:                                            ; preds = %bb.bl, %.critedge.i
   %i.mg = load i8, ptr %i.mf, align 4, !tbaa !328, !range !299, !noundef !300
   %i.mh = trunc nuw i8 %i.mg to i1
   %i.mi = icmp ne i16 %.sroa.017.0.i.i, 7
-  %or.cond.not.i.i = select i1 %i.mh, i1 true, i1 %i.mi
+  %or.cond.not.i.i = or i1 %i.mi, %i.mh
   br i1 %or.cond.not.i.i, label %_ZL13CC_X86_32_MCUjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateE.exit.i, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
@@ -607,7 +607,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit.thread172:   ; preds = %bb.d, %.thread164
   %i.af = and i64 %4, 32768
   %i.ag = icmp ne i64 %i.af, 0
   %i.ah = icmp eq i16 %.sroa.0100.1, 8            ; 3 uses
-  %or.cond = select i1 %i.ag, i1 %i.ah, i1 false
+  %or.cond = and i1 %i.ag, %i.ah
   br i1 %or.cond, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit.thread172
@@ -669,7 +669,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit151:          ; preds = %bb.k, %bb.j
 bb.l:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit.thread172
   %i.bj = and i64 %4, 8192
   %i.bk = icmp ne i64 %i.bj, 0
-  %or.cond379 = select i1 %i.bk, i1 %i.ah, i1 false
+  %or.cond379 = and i1 %i.bk, %i.ah
   br i1 %or.cond379, label %..thread182_crit_edge, label %_ZN4llvm7CCState11AllocateRegEt.exit156.thread188
 
 ..thread182_crit_edge:                            ; preds = %bb.l
@@ -740,7 +740,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit156:          ; preds = %bb.o, %bb.n
 _ZN4llvm7CCState11AllocateRegEt.exit156.thread188: ; preds = %.thread182, %.thread181, %bb.l
   %i.ck = and i64 %4, 16384
   %i.cl = icmp ne i64 %i.ck, 0
-  %or.cond380 = select i1 %i.cl, i1 %i.ah, i1 false
+  %or.cond380 = and i1 %i.cl, %i.ah
   br i1 %or.cond380, label %bb.p, label %_ZN4llvm7CCState11AllocateRegEt.exit161.thread195
 
 bb.p:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit156.thread188
@@ -1143,7 +1143,7 @@ bb.ba:                                            ; preds = %.thread352
   %brmerge385 = or i1 %i.ln, %brmerge384
   %i.lr = and i16 %.sroa.0100.8306429, -2
   %i.ls = icmp eq i16 %i.lr, 14
-  %or.cond387 = select i1 %brmerge385, i1 true, i1 %i.ls
+  %or.cond387 = or i1 %i.ls, %brmerge385
   br i1 %or.cond387, label %.critedge10, label %bb.bf
 
 .critedge10:                                      ; preds = %.thread353
@@ -1413,7 +1413,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit159.thread315: ; preds = %_ZN4llvm7CCState11
   %i.bp = and i64 %4, 8192
   %i.bq = icmp ne i64 %i.bp, 0
   %i.br = icmp eq i16 %.sroa.0185.0, 8            ; 6 uses
-  %or.cond = select i1 %i.bq, i1 %i.br, i1 false
+  %or.cond = and i1 %i.bq, %i.br
   br i1 %or.cond, label %bb.n, label %bb.r
 
 bb.n:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit159.thread315
@@ -1475,7 +1475,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit164:          ; preds = %bb.q, %bb.p
 bb.r:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit159.thread315
   %i.ct = and i64 %4, 32768
   %i.cu = icmp ne i64 %i.ct, 0
-  %or.cond458 = select i1 %i.cu, i1 %i.br, i1 false
+  %or.cond458 = and i1 %i.cu, %i.br
   br i1 %or.cond458, label %..thread325_crit_edge, label %_ZN4llvm7CCState11AllocateRegEt.exit169.thread331
 
 ..thread325_crit_edge:                            ; preds = %bb.r
@@ -1546,7 +1546,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit169:          ; preds = %bb.u, %bb.t
 _ZN4llvm7CCState11AllocateRegEt.exit169.thread331: ; preds = %.thread325, %.thread324, %bb.r
   %i.du = and i64 %4, 16384
   %i.dv = icmp ne i64 %i.du, 0
-  %or.cond459 = select i1 %i.dv, i1 %i.br, i1 false
+  %or.cond459 = and i1 %i.dv, %i.br
   br i1 %or.cond459, label %bb.v, label %_ZN4llvm7CCState11AllocateRegEt.exit174.thread338
 
 bb.v:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit169.thread331
@@ -1613,7 +1613,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit174.thread338: ; preds = %bb.v, %_ZN4llvm7CC
   br i1 %i.ey, label %bb.z, label %thread-pre-split
 
 bb.z:                                             ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit174.thread338
-  %brmerge574.not = select i1 %.not483, i1 %i.br, i1 false
+  %brmerge574.not = and i1 %.not483, %i.br
   br i1 %brmerge574.not, label %bb.aa, label %.thread347
 
 bb.aa:                                            ; preds = %bb.z
@@ -1652,7 +1652,7 @@ _ZN4llvm7CCState11AllocateRegEt.exit179:          ; preds = %bb.aa
 thread-pre-split:                                 ; preds = %_ZN4llvm7CCState11AllocateRegEt.exit174.thread338
   %i.fq = icmp eq i32 %i.ex, 20
   %or.cond461 = and i1 %.not483, %i.fq
-  %or.cond462 = select i1 %or.cond461, i1 %i.br, i1 false
+  %or.cond462 = and i1 %i.br, %or.cond461
   br i1 %or.cond462, label %bb.ab, label %.thread347
 
 bb.ab:                                            ; preds = %thread-pre-split
@@ -2055,7 +2055,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 .thread273:                                       ; preds = %switch.early.test312, %bb.bk
   %i.lg = icmp eq i16 %.sroa.0.0.copyload145341, 17
-  %or.cond293 = select i1 %i.jn, i1 true, i1 %i.lg
+  %or.cond293 = or i1 %i.lg, %i.jn
   br i1 %or.cond293, label %.critedge18, label %bb.bm
 
 .critedge18:                                      ; preds = %.thread273
@@ -2458,7 +2458,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 .thread273:                                       ; preds = %switch.early.test312, %bb.bl
   %i.lh = icmp eq i16 %.sroa.0.0.copyload145341, 17
-  %or.cond293 = select i1 %i.jo, i1 true, i1 %i.lh
+  %or.cond293 = or i1 %i.lh, %i.jo
   br i1 %or.cond293, label %.critedge18, label %bb.bn
 
 .critedge18:                                      ; preds = %.thread273

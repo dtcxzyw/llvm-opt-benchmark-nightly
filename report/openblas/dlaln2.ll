@@ -202,7 +202,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   store double %i.se, ptr %16, align 8, !tbaa !10
   %i.sf = fcmp ogt double %i.se, 1.000000e+00
   %i.sg = fcmp ogt double %spec.select.3, 1.000000e+00
-  %or.cond15 = and i1 %i.sf, %i.sg
+  %or.cond15 = and i1 %i.sg, %i.sf
   %i.sh = fdiv double %i.t, %spec.select.3
   %i.si = fcmp ogt double %i.se, %i.sh
   %or.cond553 = select i1 %or.cond15, i1 %i.si, i1 false
