@@ -205,12 +205,12 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCslFlrwjHoTci_14polars_compute.exit: 
 
 bb.g:                                             ; preds = %.lr.ph.i1062
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 1, !dbg !29005 ; 2 uses
-  %i.s = add nuw i64 %.sroa.02.09.i, 1, !dbg !29006
+  %i.s = add nuw nsw i64 %.sroa.02.09.i, 1, !dbg !29006
   %i.t = icmp eq ptr %i.r, %i.m, !dbg !29001
   br i1 %i.t, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCslFlrwjHoTci_14polars_compute.exit1071, label %.lr.ph.i1062, !dbg !29002
 
 bb.h:                                             ; preds = %.lr.ph.i1062
-  %i.u = icmp ult i64 %.sroa.02.09.i, %.sroa.0.0.i1060, !dbg !29007
+  %i.u = icmp samesign ult i64 %.sroa.02.09.i, %.sroa.0.0.i1060, !dbg !29007
   tail call void @llvm.assume(i1 %i.u), !dbg !29008
   br label %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCslFlrwjHoTci_14polars_compute.exit1071, !dbg !29009
 

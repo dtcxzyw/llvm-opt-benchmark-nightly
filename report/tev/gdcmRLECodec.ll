@@ -204,7 +204,7 @@ bb.by:                                            ; preds = %bb.bw
   br label %.body393
 
 iter.check813:                                    ; preds = %.lr.ph
-  %invariant.gep = getelementptr i8, ptr %i.ik, i64 %i.gk ; 3 uses
+  %invariant.gep = getelementptr inbounds nuw i8, ptr %i.ik, i64 %i.gk ; 3 uses
   %brmerge874 = select i1 %min.iters.check803, i1 true, i1 %i.hh
   br i1 %brmerge874, label %.lr.ph566.preheader, label %vector.main.loop.iter.check804
 
@@ -293,7 +293,7 @@ vector.body808:                                   ; preds = %vector.main.loop.it
   %i.qi = insertelement <16 x i8> %i.qh, i8 %i.ps, i64 13
   %i.qj = insertelement <16 x i8> %i.qi, i8 %i.pt, i64 14
   %i.qk = insertelement <16 x i8> %i.qj, i8 %i.pu, i64 15
-  %i.ql = getelementptr i8, ptr %invariant.gep, i64 %index809
+  %i.ql = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %index809
   store <16 x i8> %i.qk, ptr %i.ql, align 1, !tbaa !47, !alias.scope !184, !noalias !183
   %index.next810 = add nuw i64 %index809, 16      ; 2 uses
   %i.qm = icmp eq i64 %index.next810, %n.vec807
@@ -352,7 +352,7 @@ vec.epilog.vector.body819:                        ; preds = %vec.epilog.vector.b
   %i.ry = insertelement <8 x i8> %i.rx, i8 %i.rq, i64 5
   %i.rz = insertelement <8 x i8> %i.ry, i8 %i.rr, i64 6
   %i.sa = insertelement <8 x i8> %i.rz, i8 %i.rs, i64 7
-  %i.sb = getelementptr i8, ptr %invariant.gep, i64 %index820
+  %i.sb = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %index820
   store <8 x i8> %i.sa, ptr %i.sb, align 1, !tbaa !47, !alias.scope !184, !noalias !183
   %index.next821 = add nuw i64 %index820, 8       ; 2 uses
   %i.sc = icmp eq i64 %index.next821, %n.vec818
@@ -531,7 +531,7 @@ vec.epilog.vector.body785:                        ; preds = %vec.epilog.vector.b
   %i.xf = getelementptr inbounds nuw i8, ptr %i.il, i64 %i.xe
   %i.xg = getelementptr inbounds nuw i8, ptr %i.xf, i64 2
   %i.xh = load i8, ptr %i.xg, align 1, !tbaa !47
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %.0215565
+  %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.0215565
   store i8 %i.xh, ptr %gep, align 1, !tbaa !47
   %i.xi = add nuw nsw i64 %.0215565, 1            ; 2 uses
   %i.xj = icmp samesign ult i64 %i.xi, %i.gk
@@ -934,7 +934,7 @@ vec.epilog.scalar.ph713:                          ; preds = %vec.epilog.scalar.p
   %i.ait = shl nuw i64 %.0210582.us, 1
   %i.aiu = getelementptr inbounds nuw i8, ptr %i.adr, i64 %i.ait
   %i.aiv = load i8, ptr %i.aiu, align 1, !tbaa !47
-  %gep581.us = getelementptr i8, ptr %invariant.gep580.us, i64 %.0210582.us
+  %gep581.us = getelementptr inbounds nuw i8, ptr %invariant.gep580.us, i64 %.0210582.us
   store i8 %i.aiv, ptr %gep581.us, align 1, !tbaa !47
   %i.aiw = add nuw nsw i64 %.0210582.us, 1        ; 2 uses
   %i.aix = icmp samesign ult i64 %i.aiw, %i.acu
@@ -946,7 +946,7 @@ vec.epilog.scalar.ph713:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond616.not, label %.thread428.thread440, label %iter.check712, !llvm.loop !149
 
 iter.check:                                       ; preds = %vec.epilog.scalar.ph713
-  %invariant.gep580.us = getelementptr i8, ptr %i.adq, i64 %i.acu ; 3 uses
+  %invariant.gep580.us = getelementptr inbounds nuw i8, ptr %i.adq, i64 %i.acu ; 3 uses
   %brmerge878 = select i1 %min.iters.check, i1 true, i1 %i.adi
   br i1 %brmerge878, label %.lr.ph583.us.preheader, label %vector.main.loop.iter.check
 
@@ -1034,7 +1034,7 @@ vector.body:                                      ; preds = %vector.main.loop.it
   %i.alw = insertelement <16 x i8> %i.alv, i8 %i.alg, i64 13
   %i.alx = insertelement <16 x i8> %i.alw, i8 %i.alh, i64 14
   %i.aly = insertelement <16 x i8> %i.alx, i8 %i.ali, i64 15
-  %i.alz = getelementptr i8, ptr %invariant.gep580.us, i64 %index
+  %i.alz = getelementptr inbounds nuw i8, ptr %invariant.gep580.us, i64 %index
   store <16 x i8> %i.aly, ptr %i.alz, align 1, !tbaa !47, !alias.scope !192, !noalias !191
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ama = icmp eq i64 %index.next, %n.vec
@@ -1092,7 +1092,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.anl = insertelement <8 x i8> %i.ank, i8 %i.and, i64 5
   %i.anm = insertelement <8 x i8> %i.anl, i8 %i.ane, i64 6
   %i.ann = insertelement <8 x i8> %i.anm, i8 %i.anf, i64 7
-  %i.ano = getelementptr i8, ptr %invariant.gep580.us, i64 %index689
+  %i.ano = getelementptr inbounds nuw i8, ptr %invariant.gep580.us, i64 %index689
   store <8 x i8> %i.ann, ptr %i.ano, align 1, !tbaa !47, !alias.scope !192, !noalias !191
   %index.next690 = add nuw i64 %index689, 8       ; 2 uses
   %i.anp = icmp eq i64 %index.next690, %n.vec688

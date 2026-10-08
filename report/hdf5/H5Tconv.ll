@@ -202,7 +202,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   store i8 %i.et, ptr %i.eq, align 1, !tbaa !15
   store i8 %i.er, ptr %i.es, align 1, !tbaa !15
   %i.eu = getelementptr inbounds nuw i8, ptr %i.eq, i64 %. ; 2 uses
-  %niter1405.next.3 = add nuw i64 %niter1405, 4   ; 2 uses
+  %niter1405.next.3 = add nuw nsw i64 %niter1405, 4 ; 2 uses
   %niter1405.ncmp.3 = icmp eq i64 %niter1405.next.3, %unroll_iter1404
   br i1 %niter1405.ncmp.3, label %.loopexit.loopexit1375.unr-lcssa, label %.lr.ph1315.lver.orig, !llvm.loop !86
 
@@ -366,7 +366,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   store i8 %i.ik, ptr %i.ii, align 1, !tbaa !15
   store i8 %load_initial, ptr %i.ij, align 1, !tbaa !15
   %i.il = getelementptr inbounds nuw i8, ptr %i.ii, i64 %. ; 2 uses
-  %niter1411.next.3 = add nuw i64 %niter1411, 4   ; 2 uses
+  %niter1411.next.3 = add nuw nsw i64 %niter1411, 4 ; 2 uses
   %niter1411.ncmp.3 = icmp eq i64 %niter1411.next.3, %unroll_iter1410
   br i1 %niter1411.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph1315, !llvm.loop !86
 
@@ -408,7 +408,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   %i.ix = shufflevector <4 x i8> %i.iw, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x i8> %i.ix, ptr %i.iv, align 1, !tbaa !15
   %i.iy = getelementptr inbounds nuw i8, ptr %i.iv, i64 %. ; 2 uses
-  %niter1393.next.3 = add nuw i64 %niter1393, 4   ; 2 uses
+  %niter1393.next.3 = add nuw nsw i64 %niter1393, 4 ; 2 uses
   %niter1393.ncmp.3 = icmp eq i64 %niter1393.next.3, %unroll_iter1392
   br i1 %niter1393.ncmp.3, label %.loopexit.loopexit1378.unr-lcssa, label %.lr.ph1307.lver.orig, !llvm.loop !88
 
@@ -616,7 +616,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   store i8 %i.ni, ptr %i.ns, align 1, !tbaa !15
   store i8 %i.nt, ptr %i.nu, align 1, !tbaa !15
   %i.nv = getelementptr inbounds nuw i8, ptr %i.no, i64 %. ; 2 uses
-  %niter1399.next.1 = add nuw i64 %niter1399, 2   ; 2 uses
+  %niter1399.next.1 = add nuw nsw i64 %niter1399, 2 ; 2 uses
   %niter1399.ncmp.1 = icmp eq i64 %niter1399.next.1, %unroll_iter1398
   br i1 %niter1399.ncmp.1, label %.loopexit.loopexit1377.unr-lcssa, label %.lr.ph1307, !llvm.loop !88
 
@@ -733,7 +733,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ai
   %i.pz = shufflevector <4 x i8> %i.py, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x i8> %i.pz, ptr %i.px, align 1, !tbaa !15
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pq, i64 %. ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit1381.unr-lcssa, label %.lr.ph1299, !llvm.loop !90
 

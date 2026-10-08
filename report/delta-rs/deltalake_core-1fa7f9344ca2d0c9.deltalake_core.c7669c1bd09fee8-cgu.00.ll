@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.lr.ph142
 .lr.ph142:                                        ; preds = %bb.l, %bb.m
   %.sroa.0.0.i.i.i140 = phi i64 [ %i.bq, %bb.m ], [ 0, %bb.l ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %.sroa.0.0.i.i.i140
-  %i.bq = add i64 %.sroa.0.0.i.i.i140, 1          ; 4 uses
+  %i.bq = add nuw i64 %.sroa.0.0.i.i.i140, 1      ; 4 uses
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs3LxfdNfGUeX_31datafusion_physical_expr_common9sort_expr14LexRequirementECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(24) %i.bp)
           to label %bb.m unwind label %bb.o, !noalias !15355
 

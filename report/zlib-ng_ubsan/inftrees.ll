@@ -202,16 +202,16 @@ bb.br:                                            ; preds = %bb.by
 bb.bs:                                            ; preds = %._crit_edge309, %bb.br
   %indvars.iv343 = phi i64 [ 1, %._crit_edge309 ], [ %indvars.iv.next344, %bb.br ] ; 3 uses
   %.0175313 = phi i32 [ 1, %._crit_edge309 ], [ %i.dg, %bb.br ] ; 3 uses
-  %i.cx = icmp ult i32 %.0175313, 1073741824
+  %i.cx = icmp samesign ult i32 %.0175313, 1073741824
   br i1 %i.cx, label %bb.bu, label %bb.bt, !prof !26, !nosanitize !21
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.cy = zext i32 %.0175313 to i64, !nosanitize !21
+  %i.cy = zext nneg i32 %.0175313 to i64, !nosanitize !21
   call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @19, i64 %i.cy, i64 1) #5, !nosanitize !21
   br label %bb.bu, !nosanitize !21
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  %i.cz = shl i32 %.0175313, 1                    ; 2 uses
+  %i.cz = shl nuw i32 %.0175313, 1                ; 2 uses
   %i.da = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv343
   %i.db = shl nuw nsw i64 %indvars.iv343, 1
   %i.dc = add i64 %i.db, %i.c, !nosanitize !21    ; 2 uses

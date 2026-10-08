@@ -202,7 +202,7 @@ bb.ql:                                            ; preds = %bb.on
 
 bb.qm:                                            ; preds = %bb.mh
   %i.mh = getelementptr inbounds nuw i8, ptr %i.kg, i64 224
-  %i.mi = load i32, ptr %i.mh, align 4
+  %i.mi = load i32, ptr %i.mh, align 8
   invoke void @_RINvMNtCshMFl0SviwmK_3syn5errorNtB3_5Error3newReEB5_(ptr nonnull sret([24 x i8]) align 8 %i.ec, i32 %i.mi, ptr nonnull @65, i64 68)
           to label %.sink.split unwind label %.loopexit.split-lp155
 
@@ -605,7 +605,7 @@ bb.rd:                                            ; preds = %bb.pl
 
 bb.re:                                            ; preds = %bb.nf
   %i.nd = getelementptr inbounds nuw i8, ptr %i.lj, i64 224
-  %i.ne = load i32, ptr %i.nd, align 4
+  %i.ne = load i32, ptr %i.nd, align 8
   invoke void @_RINvMNtCshMFl0SviwmK_3syn5errorNtB3_5Error3newReEB5_(ptr nonnull sret([24 x i8]) align 8 %i.fm, i32 %i.ne, ptr nonnull @65, i64 68)
           to label %.sink.split unwind label %.loopexit.split-lp184
 

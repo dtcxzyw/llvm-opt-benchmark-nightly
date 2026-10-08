@@ -205,8 +205,8 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 bb.ar:                                            ; preds = %.lr.ph503, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit396
   %.sroa.0427.0501 = phi i64 [ %.sroa.477.0491, %.lr.ph503 ], [ %i.dy, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit396 ] ; 2 uses
   %.sroa.8.0500 = phi i64 [ 0, %.lr.ph503 ], [ %i.dz, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit396 ] ; 2 uses
-  %i.dy = add nuw i64 %.sroa.0427.0501, 1         ; 2 uses
-  %i.dz = add i64 %.sroa.8.0500, 1                ; 2 uses
+  %i.dy = add nuw nsw i64 %.sroa.0427.0501, 1     ; 2 uses
+  %i.dz = add nuw i64 %.sroa.8.0500, 1            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)

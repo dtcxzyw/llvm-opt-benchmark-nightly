@@ -205,6 +205,21 @@ intel_dp_in_hdr_mode.exit.i.i:                    ; preds = %__drm_to_dev.exit88
   %spec.select.i.i = select i1 %i.hp, ptr @.str.63, ptr @.str.64
   br label %.thread44.i
 
+intel_dp_compute_link_for_joined_pipes.exit.thread.i: ; preds = %bb.ax, %__drm_to_dev.exit84.i.i, %__drm_to_dev.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
+  br label %6
+
+intel_dp_compute_link_for_joined_pipes.exit.i:    ; preds = %bb.at
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
+  %cond.i = icmp eq i32 %i.gl, -35
+  br i1 %cond.i, label %.thread.i, label %6
+
+6:                                                ; preds = %intel_dp_compute_link_for_joined_pipes.exit.i, %intel_dp_compute_link_for_joined_pipes.exit.thread.i, %bb.q
+  %.1.i = phi i32 [ %i.gl, %intel_dp_compute_link_for_joined_pipes.exit.i ], [ %.061.i, %bb.q ], [ -22, %intel_dp_compute_link_for_joined_pipes.exit.thread.i ] ; 2 uses
+  %7 = add nuw nsw i32 %.03259.i, 1               ; 2 uses
+  %exitcond.not.i = icmp eq i32 %7, 5
+  br i1 %exitcond.not.i, label %.thread.i, label %bb.q, !llvm.loop !178
+
 .thread44.i:                                      ; preds = %intel_dp_in_hdr_mode.exit.i.i, %__drm_to_dev.exit88.i.i
   %i.hq = phi ptr [ @.str.64, %__drm_to_dev.exit88.i.i ], [ %spec.select.i.i, %intel_dp_in_hdr_mode.exit.i.i ]
   %i.hr = load i8, ptr %i.bb, align 1, !range !22, !noundef !23
@@ -233,28 +248,13 @@ intel_dp_in_hdr_mode.exit.i.i:                    ; preds = %__drm_to_dev.exit88
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %intel_dp_compute_link_config.exit
 
-intel_dp_compute_link_for_joined_pipes.exit.thread.i: ; preds = %bb.ax, %__drm_to_dev.exit84.i.i, %__drm_to_dev.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
-  br label %6
-
-intel_dp_compute_link_for_joined_pipes.exit.i:    ; preds = %bb.at
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
-  %cond.i = icmp eq i32 %i.gl, -35
-  br i1 %cond.i, label %.thread.i, label %6
-
-6:                                                ; preds = %intel_dp_compute_link_for_joined_pipes.exit.i, %intel_dp_compute_link_for_joined_pipes.exit.thread.i, %bb.q
-  %.1.i = phi i32 [ %i.gl, %intel_dp_compute_link_for_joined_pipes.exit.i ], [ %.061.i, %bb.q ], [ -22, %intel_dp_compute_link_for_joined_pipes.exit.thread.i ] ; 2 uses
-  %7 = add nuw nsw i32 %.03259.i, 1               ; 2 uses
-  %exitcond.not.i = icmp eq i32 %7, 5
-  br i1 %exitcond.not.i, label %.thread.i, label %bb.q, !llvm.loop !178
-
 .thread.i:                                        ; preds = %6, %intel_dp_compute_link_for_joined_pipes.exit.i
-  %.243.i = phi i32 [ %.1.i, %6 ], [ -35, %intel_dp_compute_link_for_joined_pipes.exit.i ]
+  %.243.i = phi i32 [ -35, %intel_dp_compute_link_for_joined_pipes.exit.i ], [ %.1.i, %6 ]
   store i8 0, ptr %i.az, align 1
   br label %intel_dp_compute_link_config.exit
 
 intel_dp_compute_link_config.exit:                ; preds = %bb.h, %bb.f, %bb.g, %.thread.i, %.thread44.i, %intel_dp_supports_fec.exit.i, %bb.o, %bb.n, %bb.m
-  %.0 = phi i32 [ -22, %bb.n ], [ -22, %intel_dp_supports_fec.exit.i ], [ %.243.i, %.thread.i ], [ -22, %bb.o ], [ 0, %.thread44.i ], [ -22, %bb.m ], [ -22, %bb.g ], [ -22, %bb.f ], [ -22, %bb.h ]
+  %.0 = phi i32 [ -22, %bb.o ], [ -22, %intel_dp_supports_fec.exit.i ], [ %.243.i, %.thread.i ], [ 0, %.thread44.i ], [ -22, %bb.m ], [ -22, %bb.n ], [ -22, %bb.g ], [ -22, %bb.f ], [ -22, %bb.h ]
   ret i32 %.0
 }
 

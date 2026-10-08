@@ -204,14 +204,14 @@ bb.az:                                            ; preds = %.backedge, %current
   %.1162 = phi i32 [ %i.hh, %current_segment.exit.i ], [ %i.ji, %.backedge ] ; 7 uses
   %.087.i = phi i32 [ 0, %current_segment.exit.i ], [ %.087.i.be, %.backedge ] ; 8 uses
   %.086.i = phi i32 [ 0, %current_segment.exit.i ], [ %.2.i, %.backedge ] ; 3 uses
-  %4 = icmp slt i32 %.1162, 10
+  %4 = icmp samesign ult i32 %.1162, 10
   %or.cond.i141 = and i1 %i.hv, %4
   br i1 %or.cond.i141, label %bb.ba, label %bb.be
 
 bb.ba:                                            ; preds = %bb.az
   %i.hz = zext nneg i32 %.1162 to i64
   %i.ia = getelementptr inbounds nuw i8, ptr %1, i64 %i.hz
-  %i.ib = sub nsw i32 10, %.1162                  ; 3 uses
+  %i.ib = sub nuw nsw i32 10, %.1162              ; 3 uses
   %.val109.i = load i64, ptr %i.hw, align 8, !tbaa !185 ; 2 uses
   %i.ic = icmp sgt i64 %.val109.i, -1
   br i1 %i.ic, label %bb.bb, label %bb.bc
@@ -242,7 +242,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.be
 
 read_from_url.exit.i144:                          ; preds = %bb.bc
-  %5 = icmp slt i32 %.1162, 1
+  %5 = icmp eq i32 %.1162, 0
   br i1 %5, label %.thread.i, label %bb.be
 
 bb.be:                                            ; preds = %read_from_url.exit.i144, %bb.bd, %bb.az

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -406,7 +406,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -810,7 +810,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1012,7 +1012,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1214,7 +1214,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1416,7 +1416,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1618,7 +1618,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1820,7 +1820,7 @@ bb.i:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.h
   %i.ay = phi ptr [ %i.ah, %bb.h ], [ %i.bq, %._crit_edge.loopexit.unr-lcssa ], [ %i.av, %.lr.ph.epil.preheader ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  store atomic i8 1, ptr %i.az monotonic, align 1
+  store atomic i8 1, ptr %i.az monotonic, align 8
   br label %bb.j
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new

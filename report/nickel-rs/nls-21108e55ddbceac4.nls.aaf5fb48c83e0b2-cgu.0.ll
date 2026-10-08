@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %"_ZN136_$LT$core..r
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.bm, %.lr.ph.i.i.i.i.i.i.i.i
   %.sroa.0.07.i.i.i.i.i.i.i.i = phi i64 [ %i.fp, %.lr.ph.i.i.i.i.i.i.i.i ], [ 0, %bb.bm ] ; 2 uses
   %i.fo = getelementptr inbounds nuw [80 x i8], ptr %.sroa.6.0.i.i.i.i.i, i64 %.sroa.0.07.i.i.i.i.i.i.i.i
-  %i.fp = add nuw i64 %.sroa.0.07.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.fp = add nuw nsw i64 %.sroa.0.07.i.i.i.i.i.i.i.i, 1 ; 2 uses
   call fastcc void @"_ZN4core3ptr51drop_in_place$LT$nls..contracts..ContractConfig$GT$17hbda8b4c3bc884c64E"(ptr noalias noundef readonly align 8 dereferenceable(80) %i.fo), !noalias !70595
   %i.fq = icmp eq i64 %i.fp, %.sroa.8.0.i.i.i.i.i
   br i1 %i.fq, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h4d770e494fb351ceE.exit.i.i.i.i.i.i", label %.lr.ph.i.i.i.i.i.i.i.i
@@ -608,7 +608,7 @@ bb.x:                                             ; preds = %bb.v
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.x, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h24b598f56fd0df8eE.exit.i.i.i.i.i"
   %.sroa.0.010.i.i.i.i.i = phi i64 [ %i.ao, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h24b598f56fd0df8eE.exit.i.i.i.i.i" ], [ 0, %bb.x ] ; 2 uses
   %i.an = getelementptr inbounds nuw [24 x i8], ptr %.sroa.6.0.i.i, i64 %.sroa.0.010.i.i.i.i.i ; 2 uses
-  %i.ao = add nuw i64 %.sroa.0.010.i.i.i.i.i, 1   ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.0.010.i.i.i.i.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !91817)
   call void @llvm.experimental.noalias.scope.decl(metadata !91818)
   %.val.i.i.i.i.i.i.i = load i64, ptr %i.an, align 8, !range !74, !alias.scope !91819, !noalias !91820, !noundef !44 ; 2 uses
@@ -1011,7 +1011,7 @@ bb.y:                                             ; preds = %bb.w
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.y, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h24b598f56fd0df8eE.exit.i.i.i.i.i"
   %.sroa.0.010.i.i.i.i.i = phi i64 [ %i.ao, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h24b598f56fd0df8eE.exit.i.i.i.i.i" ], [ 0, %bb.y ] ; 2 uses
   %i.an = getelementptr inbounds nuw [24 x i8], ptr %.sroa.6.0.i.i, i64 %.sroa.0.010.i.i.i.i.i ; 2 uses
-  %i.ao = add nuw i64 %.sroa.0.010.i.i.i.i.i, 1   ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.0.010.i.i.i.i.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !92320)
   call void @llvm.experimental.noalias.scope.decl(metadata !92321)
   %.val.i.i.i.i.i.i.i = load i64, ptr %i.an, align 8, !range !74, !alias.scope !92322, !noalias !92323, !noundef !44 ; 2 uses

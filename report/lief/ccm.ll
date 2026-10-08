@@ -205,8 +205,8 @@ vector.body209:                                   ; preds = %vector.ph207, %vect
   %i.fq = xor <16 x i8> %wide.load214, %wide.load212
   %i.fr = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.fk ; 2 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 16
-  store <16 x i8> %i.fp, ptr %i.fr, align 1, !tbaa !16
-  store <16 x i8> %i.fq, ptr %i.fs, align 1, !tbaa !16
+  store <16 x i8> %i.fp, ptr %i.fr, align 8, !tbaa !16
+  store <16 x i8> %i.fq, ptr %i.fs, align 8, !tbaa !16
   %index.next215 = add nuw i64 %index210, 32      ; 2 uses
   %i.ft = icmp eq i64 %index.next215, %n.vec208
   br i1 %i.ft, label %middle.block216, label %vector.body209, !llvm.loop !47

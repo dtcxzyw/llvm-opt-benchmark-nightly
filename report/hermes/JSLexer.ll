@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.e, %bb.g
   %.134 = phi i8 [ %i.n, %bb.e ], [ %i.q, %bb.g ]
-  %i.r = shl i32 %.05794, 4
+  %i.r = shl nuw nsw i32 %.05794, 4
   %i.s = sext i8 %.134 to i32
   %i.t = add nsw i32 %i.r, %i.s                   ; 3 uses
   %i.u = icmp ugt i32 %i.t, 1114111
@@ -239,7 +239,7 @@ bb.i:                                             ; preds = %bb.j
   br i1 %isdigit41, label %bb.j, label %.thread60
 
 bb.j:                                             ; preds = %.lr.ph
-  %i.y = mul i32 %.05689, 10
+  %i.y = mul nuw i32 %.05689, 10
   %i.z = add nuw nsw i32 %isdigittmp40, %i.y      ; 3 uses
   %i.aa = icmp ugt i32 %i.z, 1114111
   br i1 %i.aa, label %.thread60, label %bb.i
