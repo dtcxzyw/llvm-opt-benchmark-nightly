@@ -204,10 +204,11 @@ bb.m:                                             ; preds = %.preheader65.split
   br i1 %.not5468, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.169 = phi i64 [ %i.bc, %.lr.ph ], [ %.us-phi, %.preheader ]
-  %i.bc = add i64 %.169, -1                       ; 3 uses
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.bc
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !57 ; 2 uses
+  %.169 = phi i64 [ %i.bc, %.lr.ph ], [ %.us-phi, %.preheader ] ; 2 uses
+  %i.bc = add i64 %.169, -1                       ; 2 uses
+  %i.bd = getelementptr [8 x i8], ptr %i.ah, i64 %.169
+  %5 = getelementptr i8, ptr %i.bd, i64 -8
+  %i.be = load ptr, ptr %5, align 8, !tbaa !57    ; 2 uses
   %i.bf = tail call ptr @stream_data(ptr noundef %i.be) #20
   tail call void @free(ptr noundef %i.bf) #20
   tail call void @stream_close(ptr noundef %i.be) #20

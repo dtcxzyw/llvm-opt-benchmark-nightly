@@ -203,7 +203,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
   %indvars.iv64 = phi i64 [ %indvars.iv.next65, %bb.c ], [ 0, %bb.a ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 1, %bb.a ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 1, %bb.a ] ; 3 uses
   %.049 = phi i64 [ %.1, %bb.c ], [ 0, %bb.a ]    ; 2 uses
   %.03648 = phi ptr [ %.137, %bb.c ], [ null, %bb.a ] ; 2 uses
   %i.c = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv64 ; 3 uses
@@ -222,9 +222,10 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b, %.lr.ph
   %.137 = phi ptr [ %i.e, %bb.b ], [ %.03648, %.lr.ph ] ; 2 uses
   %.1 = phi i64 [ %i.h, %bb.b ], [ %.049, %.lr.ph ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next
-  %i.j = load i64, ptr %i.i, align 8
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.j = load i64, ptr %3, align 8
   %i.k = icmp ugt i64 %2, %i.j
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1
   br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !3
@@ -241,7 +242,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   br i1 %.not52, label %._crit_edge58, label %.lr.ph57
 
 .lr.ph57:                                         ; preds = %._crit_edge, %bb.e
-  %indvars.iv69 = phi i64 [ %indvars.iv.next70, %bb.e ], [ %.040.lcssa, %._crit_edge ] ; 2 uses
+  %indvars.iv69 = phi i64 [ %indvars.iv.next70, %bb.e ], [ %.040.lcssa, %._crit_edge ] ; 3 uses
   %.255 = phi i64 [ %.3, %bb.e ], [ %i.m, %._crit_edge ] ; 2 uses
   %.23854 = phi ptr [ %.339, %bb.e ], [ %i.l, %._crit_edge ] ; 2 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv69 ; 3 uses
@@ -260,9 +261,10 @@ bb.d:                                             ; preds = %.lr.ph57
 bb.e:                                             ; preds = %bb.d, %.lr.ph57
   %.339 = phi ptr [ %i.r, %bb.d ], [ %.23854, %.lr.ph57 ] ; 2 uses
   %.3 = phi i64 [ %i.u, %bb.d ], [ %.255, %.lr.ph57 ] ; 3 uses
-  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 3 uses
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next70
-  %i.w = load i64, ptr %i.v, align 8
+  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 2 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv69
+  %4 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
+  %i.w = load i64, ptr %4, align 8
   %.not = icmp ult i64 %.3, %i.w
   br i1 %.not, label %._crit_edge58, label %.lr.ph57, !llvm.loop !4
 
@@ -328,7 +330,7 @@ bb.a:
 
 .lr.ph55:                                         ; preds = %.preheader, %bb.c
   %indvars.iv104 = phi i64 [ %indvars.iv.next105, %bb.c ], [ 0, %.preheader ] ; 2 uses
-  %indvars.iv102 = phi i64 [ %indvars.iv.next103, %bb.c ], [ 1, %.preheader ] ; 2 uses
+  %indvars.iv102 = phi i64 [ %indvars.iv.next103, %bb.c ], [ 1, %.preheader ] ; 3 uses
   %.0.i54 = phi i64 [ %.1.i, %bb.c ], [ 0, %.preheader ] ; 2 uses
   %.036.i53 = phi ptr [ %.137.i, %bb.c ], [ null, %.preheader ] ; 2 uses
   %i.d = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv104 ; 3 uses
@@ -347,9 +349,10 @@ bb.b:                                             ; preds = %.lr.ph55
 bb.c:                                             ; preds = %bb.b, %.lr.ph55
   %.137.i = phi ptr [ %i.f, %bb.b ], [ %.036.i53, %.lr.ph55 ] ; 2 uses
   %.1.i = phi i64 [ %i.i, %bb.b ], [ %.0.i54, %.lr.ph55 ] ; 2 uses
-  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 1 ; 2 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next103
-  %i.k = load i64, ptr %i.j, align 8
+  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 1
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv102
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %i.k = load i64, ptr %3, align 8
   %i.l = icmp ugt i64 %.tr43.lcssa, %i.k
   %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1
   br i1 %i.l, label %.lr.ph55, label %._crit_edge, !llvm.loop !3
@@ -366,7 +369,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph55
   br i1 %.not.i59, label %CORD_add_forest.exit, label %.lr.ph64
 
 .lr.ph64:                                         ; preds = %._crit_edge, %bb.e
-  %indvars.iv109 = phi i64 [ %indvars.iv.next110, %bb.e ], [ %.040.i.lcssa, %._crit_edge ] ; 2 uses
+  %indvars.iv109 = phi i64 [ %indvars.iv.next110, %bb.e ], [ %.040.i.lcssa, %._crit_edge ] ; 3 uses
   %.2.i62 = phi i64 [ %.3.i, %bb.e ], [ %i.n, %._crit_edge ] ; 2 uses
   %.238.i61 = phi ptr [ %.339.i, %bb.e ], [ %i.m, %._crit_edge ] ; 2 uses
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv109 ; 3 uses
@@ -385,9 +388,10 @@ bb.d:                                             ; preds = %.lr.ph64
 bb.e:                                             ; preds = %bb.d, %.lr.ph64
   %.339.i = phi ptr [ %i.s, %bb.d ], [ %.238.i61, %.lr.ph64 ] ; 2 uses
   %.3.i = phi i64 [ %i.v, %bb.d ], [ %.2.i62, %.lr.ph64 ] ; 3 uses
-  %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 1 ; 3 uses
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next110
-  %i.x = load i64, ptr %i.w, align 8
+  %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 1 ; 2 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv109
+  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %i.x = load i64, ptr %4, align 8
   %.not.i = icmp ult i64 %.3.i, %i.x
   br i1 %.not.i, label %CORD_add_forest.exit, label %.lr.ph64, !llvm.loop !4
 
@@ -477,7 +481,7 @@ bb.p:                                             ; preds = %bb.g, %.lr.ph
 
 .lr.ph72:                                         ; preds = %bb.p, %bb.r
   %indvars.iv94 = phi i64 [ %indvars.iv.next95, %bb.r ], [ 0, %bb.p ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ 1, %bb.p ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ 1, %bb.p ] ; 3 uses
   %.0.i3170 = phi i64 [ %.1.i41, %bb.r ], [ 0, %bb.p ] ; 2 uses
   %.036.i3069 = phi ptr [ %.137.i40, %bb.r ], [ null, %bb.p ] ; 2 uses
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv94 ; 3 uses
@@ -496,9 +500,10 @@ bb.q:                                             ; preds = %.lr.ph72
 bb.r:                                             ; preds = %bb.q, %.lr.ph72
   %.137.i40 = phi ptr [ %i.bk, %bb.q ], [ %.036.i3069, %.lr.ph72 ] ; 2 uses
   %.1.i41 = phi i64 [ %i.bn, %bb.q ], [ %.0.i3170, %.lr.ph72 ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next
-  %i.bp = load i64, ptr %i.bo, align 8
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv
+  %5 = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
+  %i.bp = load i64, ptr %5, align 8
   %i.bq = icmp ugt i64 %.tr4350, %i.bp
   %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 1
   br i1 %i.bq, label %.lr.ph72, label %._crit_edge73, !llvm.loop !3
@@ -515,7 +520,7 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph72
   br i1 %.not.i3577, label %CORD_add_forest.exit, label %.lr.ph82
 
 .lr.ph82:                                         ; preds = %._crit_edge73, %bb.t
-  %indvars.iv99 = phi i64 [ %indvars.iv.next100, %bb.t ], [ %.040.i29.lcssa, %._crit_edge73 ] ; 2 uses
+  %indvars.iv99 = phi i64 [ %indvars.iv.next100, %bb.t ], [ %.040.i29.lcssa, %._crit_edge73 ] ; 3 uses
   %.2.i3480 = phi i64 [ %.3.i38, %bb.t ], [ %i.bs, %._crit_edge73 ] ; 2 uses
   %.238.i3379 = phi ptr [ %.339.i37, %bb.t ], [ %i.br, %._crit_edge73 ] ; 2 uses
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv99 ; 3 uses
@@ -534,9 +539,10 @@ bb.s:                                             ; preds = %.lr.ph82
 bb.t:                                             ; preds = %bb.s, %.lr.ph82
   %.339.i37 = phi ptr [ %i.bx, %bb.s ], [ %.238.i3379, %.lr.ph82 ] ; 2 uses
   %.3.i38 = phi i64 [ %i.ca, %bb.s ], [ %.2.i3480, %.lr.ph82 ] ; 3 uses
-  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 3 uses
-  %i.cb = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv.next100
-  %i.cc = load i64, ptr %i.cb, align 8
+  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
+  %i.cb = getelementptr inbounds nuw [8 x i8], ptr @min_len, i64 %indvars.iv99
+  %6 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
+  %i.cc = load i64, ptr %6, align 8
   %.not.i35 = icmp ult i64 %.3.i38, %i.cc
   br i1 %.not.i35, label %CORD_add_forest.exit, label %.lr.ph82, !llvm.loop !4
 

@@ -205,7 +205,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.j = load i8, ptr %i.i, align 8               ; 2 uses
   %i.k = zext nneg i8 %i.j to i64                 ; 4 uses
-  %i.l = icmp ult i8 %i.j, 5
+  %1 = add i8 %i.j, -1
+  %i.l = icmp ult i8 %1, 4
   %i.m = getelementptr i8, ptr %i.h, i64 %i.k
   %i.n = getelementptr i8, ptr %i.m, i64 -1
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -608,8 +609,8 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %thread-pre-split.i, %bb.ad
   %.sroa.0.0184.i = phi i8 [ 0, %bb.ad ], [ %.sroa.0.0.ph.i, %thread-pre-split.i ]
-  %i.fp = phi i64 [ 1, %bb.ad ], [ %.pr.i, %thread-pre-split.i ] ; 2 uses
-  %i.fq = add nsw i64 %i.fp, -1                   ; 3 uses
+  %i.fp = phi i64 [ 1, %bb.ad ], [ %.pr.i, %thread-pre-split.i ] ; 3 uses
+  %i.fq = add nsw i64 %i.fp, -1                   ; 2 uses
   store i64 %i.fq, ptr %i.eo, align 8, !noalias !4409
   %i.fr = load i64, ptr %i.bf, align 8, !range !10, !noalias !4409, !noundef !9
   %i.fs = icmp samesign ult i64 %i.fq, %i.fr
@@ -617,8 +618,9 @@ bb.ah:                                            ; preds = %thread-pre-split.i,
   %i.ft = load ptr, ptr %i.en, align 8, !noalias !4409, !nonnull !9, !noundef !9
   %i.fu = icmp samesign ult i64 %i.fp, 384307168202282327
   call void @llvm.assume(i1 %i.fu)
-  %i.fv = getelementptr inbounds nuw [24 x i8], ptr %i.ft, i64 %i.fq
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.fv, i64 24, i1 false), !noalias !4411
+  %i.fv = getelementptr [24 x i8], ptr %i.ft, i64 %i.fp
+  %4 = getelementptr i8, ptr %i.fv, i64 -24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !noalias !4411
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc), !noalias !4409
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bc, ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i64 24, i1 false), !noalias !4409
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !4409

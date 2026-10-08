@@ -205,10 +205,10 @@ bb.aq:                                            ; preds = %.lr.ph.i
   br i1 %or.cond51.i, label %_ZL27InputTextReconcileUndoStateP19ImGuiInputTextStatePKciS2_i.exit, label %.preheader52.preheader.i
 
 .preheader52.preheader.i:                         ; preds = %._crit_edge.i
-  %i.gk = sext i32 %i.ga to i64
+  %i.gk = sext i32 %i.ga to i64                   ; 2 uses
   %i.gl = sext i32 %.046.lcssa.i to i64           ; 3 uses
   %sext1633 = shl i64 %i.ft, 32
-  %i.gm = ashr exact i64 %sext1633, 32            ; 2 uses
+  %i.gm = ashr exact i64 %sext1633, 32            ; 3 uses
   %i.gn = sub i32 %i.ga, %.046.lcssa.i            ; 2 uses
   %indvars.iv.next64.i1855 = add nsw i64 %i.gm, -1 ; 2 uses
   %indvars.iv.next62.i1856 = add nsw i64 %i.gk, -1 ; 2 uses
@@ -223,16 +223,20 @@ bb.aq:                                            ; preds = %.lr.ph.i
   %indvars.iv.next62.i = add nsw i64 %indvars.iv.next62.i1859, -1 ; 2 uses
   %i.gr = icmp sgt i64 %indvars.iv.next62.i1859, %i.gl
   %i.gs = icmp sgt i64 %indvars.iv.next64.i1858, %i.gl
-  %23 = and i1 %i.gr, %i.gs
+  %23 = select i1 %i.gr, i1 %i.gs, i1 false
   br i1 %23, label %.lr.ph1860, label %.preheader52.i._crit_edge, !llvm.loop !8
 
 .lr.ph1860:                                       ; preds = %.preheader52.preheader.i, %.preheader52.i
   %indvars.iv.next62.i1859 = phi i64 [ %indvars.iv.next62.i, %.preheader52.i ], [ %indvars.iv.next62.i1856, %.preheader52.preheader.i ] ; 4 uses
   %indvars.iv.next64.i1858 = phi i64 [ %indvars.iv.next64.i, %.preheader52.i ], [ %indvars.iv.next64.i1855, %.preheader52.preheader.i ] ; 4 uses
+  %indvars.iv61.i1859 = phi i64 [ %indvars.iv.next62.i1859, %.preheader52.i ], [ %i.gk, %.preheader52.preheader.i ]
+  %indvars.iv63.i1858 = phi i64 [ %indvars.iv.next64.i1858, %.preheader52.i ], [ %i.gm, %.preheader52.preheader.i ]
   %indvars.iv71.i1857 = phi i32 [ %indvars.iv.next72.i, %.preheader52.i ], [ %i.gn, %.preheader52.preheader.i ] ; 2 uses
-  %i.gt = getelementptr inbounds i8, ptr %i.fx, i64 %indvars.iv.next62.i1859
+  %24 = getelementptr i8, ptr %i.fx, i64 %indvars.iv61.i1859
+  %i.gt = getelementptr i8, ptr %24, i64 -1
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !351
-  %i.gv = getelementptr inbounds i8, ptr %2, i64 %indvars.iv.next64.i1858
+  %25 = getelementptr i8, ptr %2, i64 %indvars.iv63.i1858
+  %i.gv = getelementptr i8, ptr %25, i64 -1
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !351
   %.not48.i = icmp eq i8 %i.gu, %i.gw
   br i1 %.not48.i, label %.preheader52.i, label %._crit_edge1861, !llvm.loop !8
@@ -635,7 +639,7 @@ bb.oz:                                            ; preds = %bb.oy
   br label %bb.pa
 
 bb.pa:                                            ; preds = %.lr.ph1663, %bb.pi
-  %indvars.iv1671 = phi i64 [ %i.bhp, %.lr.ph1663 ], [ %indvars.iv.next1672, %bb.pi ] ; 3 uses
+  %indvars.iv1671 = phi i64 [ %i.bhp, %.lr.ph1663 ], [ %indvars.iv.next1672, %bb.pi ] ; 4 uses
   %i.bhq = load i32, ptr %i.aue, align 8, !tbaa !733 ; 2 uses
   %.not.i1442 = icmp eq i32 %i.bhq, 0
   br i1 %.not.i1442, label %_ZN14ImGuiTextIndex14get_line_beginEPKci.exit, label %bb.pb
@@ -650,15 +654,16 @@ bb.pb:                                            ; preds = %bb.pa
 _ZN14ImGuiTextIndex14get_line_beginEPKci.exit:    ; preds = %bb.pa, %bb.pb
   %i.bhv = phi i64 [ %i.bhu, %bb.pb ], [ 0, %bb.pa ]
   %i.bhw = getelementptr inbounds i8, ptr %.012081595, i64 %i.bhv ; 3 uses
-  %indvars.iv.next1672 = add nsw i64 %indvars.iv1671, 1 ; 4 uses
+  %indvars.iv.next1672 = add nsw i64 %indvars.iv1671, 1 ; 3 uses
   %i.bhx = sext i32 %i.bhq to i64
   %i.bhy = icmp slt i64 %indvars.iv.next1672, %i.bhx
   br i1 %i.bhy, label %bb.pc, label %bb.pd
 
 bb.pc:                                            ; preds = %_ZN14ImGuiTextIndex14get_line_beginEPKci.exit
   %i.bhz = load ptr, ptr %i.bhl, align 8, !tbaa !730
-  %i.bia = getelementptr inbounds [4 x i8], ptr %i.bhz, i64 %indvars.iv.next1672
-  %i.bib = load i32, ptr %i.bia, align 4, !tbaa !208
+  %i.bia = getelementptr [4 x i8], ptr %i.bhz, i64 %indvars.iv1671
+  %26 = getelementptr i8, ptr %i.bia, i64 4
+  %i.bib = load i32, ptr %26, align 4, !tbaa !208
   %i.bic = add nsw i32 %i.bib, -1
   br label %_ZN14ImGuiTextIndex12get_line_endEPKci.exit
 
@@ -1061,9 +1066,9 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %or.cond51, label %.loopexit, label %.preheader52.preheader
 
 .preheader52.preheader:                           ; preds = %._crit_edge
-  %i.k = sext i32 %2 to i64
+  %i.k = sext i32 %2 to i64                       ; 2 uses
   %i.l = sext i32 %.046.lcssa to i64              ; 2 uses
-  %i.m = sext i32 %4 to i64
+  %i.m = sext i32 %4 to i64                       ; 2 uses
   %i.n = sub i32 %2, %.046.lcssa                  ; 2 uses
   %indvars.iv.next6480 = add nsw i64 %i.m, -1     ; 2 uses
   %indvars.iv.next6281 = add nsw i64 %i.k, -1     ; 2 uses
@@ -1078,16 +1083,20 @@ bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next62 = add nsw i64 %indvars.iv.next6284, -1 ; 2 uses
   %i.r = icmp sgt i64 %indvars.iv.next6284, %i.l
   %i.s = icmp sgt i64 %indvars.iv.next6483, %i.l
-  %5 = and i1 %i.r, %i.s
+  %5 = select i1 %i.r, i1 %i.s, i1 false
   br i1 %5, label %.lr.ph85, label %.preheader52._crit_edge, !llvm.loop !8
 
 .lr.ph85:                                         ; preds = %.preheader52.preheader, %.preheader52
   %indvars.iv.next6284 = phi i64 [ %indvars.iv.next62, %.preheader52 ], [ %indvars.iv.next6281, %.preheader52.preheader ] ; 4 uses
   %indvars.iv.next6483 = phi i64 [ %indvars.iv.next64, %.preheader52 ], [ %indvars.iv.next6480, %.preheader52.preheader ] ; 4 uses
+  %indvars.iv6184 = phi i64 [ %indvars.iv.next6284, %.preheader52 ], [ %i.k, %.preheader52.preheader ]
+  %indvars.iv6383 = phi i64 [ %indvars.iv.next6483, %.preheader52 ], [ %i.m, %.preheader52.preheader ]
   %indvars.iv7182 = phi i32 [ %indvars.iv.next72, %.preheader52 ], [ %i.n, %.preheader52.preheader ] ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next6284
+  %6 = getelementptr i8, ptr %1, i64 %indvars.iv6184
+  %i.t = getelementptr i8, ptr %6, i64 -1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !351
-  %i.v = getelementptr inbounds i8, ptr %3, i64 %indvars.iv.next6483
+  %7 = getelementptr i8, ptr %3, i64 %indvars.iv6383
+  %i.v = getelementptr i8, ptr %7, i64 -1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !351
   %.not48 = icmp eq i8 %i.u, %i.w
   br i1 %.not48, label %.preheader52, label %._crit_edge86, !llvm.loop !8
@@ -1490,7 +1499,7 @@ bb.dj:                                            ; preds = %bb.dk
 
 bb.dk:                                            ; preds = %bb.di, %bb.dk
   %i.wm = phi i32 [ %i.ry, %bb.di ], [ %i.xn, %bb.dk ]
-  %indvars.iv = phi i64 [ 0, %bb.di ], [ %indvars.iv.next, %bb.dk ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.di ], [ %indvars.iv.next, %bb.dk ] ; 3 uses
   %i.wn = trunc nuw nsw i64 %indvars.iv to i32
   %i.wo = uitofp nneg i32 %i.wn to float
   %i.wp = insertelement <2 x float> poison, float %i.wo, i64 0
@@ -1519,9 +1528,10 @@ bb.dk:                                            ; preds = %bb.di, %bb.dk
   %i.xj = insertelement <2 x float> poison, float %i.xd, i64 0
   %i.xk = insertelement <2 x float> %i.xj, float %i.xe, i64 1
   %i.xl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.xk, <2 x float> %i.tg, <2 x float> %i.xf)
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.xm = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv.next
-  %i.xn = load i32, ptr %i.xm, align 4, !tbaa !208 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.xm = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv
+  %41 = getelementptr inbounds nuw i8, ptr %i.xm, i64 4
+  %i.xn = load i32, ptr %41, align 4, !tbaa !208  ; 2 uses
   call void @_ZN5ImGui38ShadeVertsLinearColorGradientKeepAlphaEP10ImDrawListii6ImVec2S2_jj(ptr noundef nonnull %i.ae, i32 noundef %i.wv, i32 noundef %i.xa, <2 x float> %i.xi, <2 x float> %i.xl, i32 noundef %i.wm, i32 noundef %i.xn)
   %exitcond.not = icmp eq i64 %indvars.iv.next, 6
   br i1 %exitcond.not, label %bb.dj, label %bb.dk, !llvm.loop !770

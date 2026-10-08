@@ -205,10 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph151:                                        ; preds = %.preheader144
   %i.ch = mul nsw i32 %1, 3
-  %i.ci = sext i32 %i.a to i64                    ; 2 uses
-  %i.cj = sext i32 %i.ch to i64                   ; 2 uses
-  %invariant.gep175 = getelementptr [8 x i8], ptr %2, i64 %i.ci ; 2 uses
-  %invariant.gep177 = getelementptr [8 x i8], ptr %2, i64 %i.cj ; 2 uses
+  %i.ci = sext i32 %i.a to i64                    ; 3 uses
+  %i.cj = sext i32 %i.ch to i64                   ; 3 uses
   %i.ck = sub nsw i64 2, %i.f                     ; 3 uses
   %min.iters.check190 = icmp ult i64 %i.ck, 6
   br i1 %min.iters.check190, label %scalar.ph189.preheader, label %vector.memcheck191
@@ -239,15 +237,16 @@ vector.ph195:                                     ; preds = %vector.memcheck191
   %broadcast.splat198 = shufflevector <2 x double> %broadcast.splatinsert197, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert199 = insertelement <2 x double> poison, double %i.aa, i64 0
   %broadcast.splat200 = shufflevector <2 x double> %broadcast.splatinsert199, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %invariant.op = add i64 %i.f, 1
+  %invariant.gep205 = getelementptr [8 x i8], ptr %2, i64 %i.f
   br label %vector.body201
 
 vector.body201:                                   ; preds = %vector.body201, %vector.ph195
   %index202 = phi i64 [ 0, %vector.ph195 ], [ %index.next205, %vector.body201 ] ; 2 uses
-  %.reass = add i64 %index202, %invariant.op      ; 2 uses
-  %i.cz = getelementptr [8 x i8], ptr %invariant.gep175, i64 %.reass ; 2 uses
+  %gep206 = getelementptr [8 x i8], ptr %invariant.gep205, i64 %index202
+  %5 = getelementptr i8, ptr %gep206, i64 8       ; 2 uses
+  %i.cz = getelementptr [8 x i8], ptr %5, i64 %i.ci ; 2 uses
   %wide.load = load <2 x double>, ptr %i.cz, align 8, !tbaa !19, !alias.scope !729, !noalias !730 ; 2 uses
-  %i.da = getelementptr [8 x i8], ptr %invariant.gep177, i64 %.reass ; 2 uses
+  %i.da = getelementptr [8 x i8], ptr %5, i64 %i.cj ; 2 uses
   %wide.load203 = load <2 x double>, ptr %i.da, align 8, !tbaa !19, !alias.scope !730 ; 2 uses
   %i.db = fneg <2 x double> %wide.load203
   %i.dc = fmul <2 x double> %broadcast.splat198, %i.db
@@ -332,11 +331,15 @@ scalar.ph189.preheader:                           ; preds = %vector.memcheck191,
   ret void
 
 scalar.ph189:                                     ; preds = %scalar.ph189.preheader, %scalar.ph189
-  %indvars.iv158 = phi i64 [ %indvars.iv.next159, %scalar.ph189 ], [ %indvars.iv158.ph, %scalar.ph189.preheader ]
-  %indvars.iv.next159 = add nsw i64 %indvars.iv158, 1 ; 4 uses
-  %gep176 = getelementptr [8 x i8], ptr %invariant.gep175, i64 %indvars.iv.next159 ; 2 uses
+  %indvars.iv158 = phi i64 [ %indvars.iv.next159, %scalar.ph189 ], [ %indvars.iv158.ph, %scalar.ph189.preheader ] ; 3 uses
+  %indvars.iv.next159 = add nsw i64 %indvars.iv158, 1 ; 2 uses
+  %6 = getelementptr [8 x i8], ptr %2, i64 %indvars.iv158
+  %7 = getelementptr i8, ptr %6, i64 8
+  %gep176 = getelementptr [8 x i8], ptr %7, i64 %i.ci ; 2 uses
   %i.ex = load double, ptr %gep176, align 8, !tbaa !19 ; 2 uses
-  %gep178 = getelementptr [8 x i8], ptr %invariant.gep177, i64 %indvars.iv.next159 ; 3 uses
+  %8 = getelementptr [8 x i8], ptr %2, i64 %indvars.iv158
+  %9 = getelementptr i8, ptr %8, i64 8
+  %gep178 = getelementptr [8 x i8], ptr %9, i64 %i.cj ; 3 uses
   %i.ey = load double, ptr %gep178, align 8, !tbaa !19
   %i.ez = fneg double %i.ey
   %i.fa = fmul double %i.ab, %i.ez

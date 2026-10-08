@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.ai
   br i1 %i.ao, label %.preheader.preheader, label %.critedge.thread5
 
 .preheader.preheader:                             ; preds = %bb.an
-  %i.cf = and i64 %i.am, 4294967295
+  %i.cf = and i64 %i.am, 4294967295               ; 2 uses
   %indvars.iv.next124 = add nsw i64 %i.cf, -1     ; 2 uses
   %i.cg = icmp sgt i64 %indvars.iv.next124, %i.al
   br i1 %i.cg, label %.lr.ph.preheader, label %.critedge.thread5
@@ -220,7 +220,9 @@ bb.an:                                            ; preds = %bb.ai
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.preheader
   %indvars.iv.next125 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next124, %.lr.ph.preheader ] ; 3 uses
-  %i.cj = getelementptr inbounds i8, ptr %i.ch, i64 %indvars.iv.next125
+  %indvars.iv125 = phi i64 [ %indvars.iv.next125, %.preheader ], [ %i.cf, %.lr.ph.preheader ]
+  %6 = getelementptr i8, ptr %i.ch, i64 %indvars.iv125
+  %i.cj = getelementptr i8, ptr %6, i64 -1
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !13
   %.not10 = icmp eq i8 %i.ck, 47
   br i1 %.not10, label %bb.ao, label %.preheader, !llvm.loop !102

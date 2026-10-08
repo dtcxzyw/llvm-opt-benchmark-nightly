@@ -201,14 +201,15 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ %i.f, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars.iv = phi i64 [ %i.f, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.j = load ptr, ptr %i.b, align 8, !tbaa !24
-  %i.k = getelementptr inbounds nuw [72 x i8], ptr %i.j, i64 %indvars.iv.next ; 3 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !21
-  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %i.k = getelementptr [72 x i8], ptr %i.j, i64 %indvars.iv ; 3 uses
+  %2 = getelementptr i8, ptr %i.k, i64 -72
+  %i.l = load ptr, ptr %2, align 8, !tbaa !21
+  %i.m = getelementptr i8, ptr %i.k, i64 -64
   %i.n = load i32, ptr %i.m, align 8, !tbaa !22
-  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %i.o = getelementptr i8, ptr %i.k, i64 -56
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !23   ; 2 uses
   %.not = icmp eq ptr %i.p, null
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4

@@ -204,8 +204,8 @@ _ZN3ozz9animation12_GLOBAL__N_115InitializeCacheERKNS0_9Animation14TKeyframesCtr
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   %i.bq = add nsw i64 %2, 7                       ; 2 uses
-  %i.br = lshr i64 %i.bq, 3                       ; 2 uses
-  %i.bs = add nsw i64 %i.br, -1                   ; 4 uses
+  %i.br = lshr i64 %i.bq, 3                       ; 3 uses
+  %i.bs = add nsw i64 %i.br, -1                   ; 3 uses
   %.not.i76 = icmp eq i64 %i.bs, 0
   br i1 %.not.i76, label %_ZN3ozz9animation12_GLOBAL__N_112OutdateCacheERKNS_4spanIhEEm.exit, label %.lr.ph.i77.preheader
 
@@ -270,7 +270,8 @@ _ZN3ozz9animation12_GLOBAL__N_112OutdateCacheERKNS_4spanIhEEm.exit: ; preds = %_
   %i.cn = lshr i32 255, %i.cm
   %i.co = trunc nuw i32 %i.cn to i8
   %i.cp = load ptr, ptr %i.bp, align 8, !tbaa !47
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.bs
+  %7 = getelementptr i8, ptr %i.cp, i64 %i.br
+  %i.cq = getelementptr i8, ptr %7, i64 -1
   store i8 %i.co, ptr %i.cq, align 1, !tbaa !56
   br label %.thread3
 
@@ -438,10 +439,11 @@ bb.q:                                             ; preds = %_ZN3ozz9animation12
   br i1 %i.fb, label %.preheader.i.preheader, label %.lr.ph35, !llvm.loop !120
 
 .lr.ph35:                                         ; preds = %.lr.ph.i95.preheader, %.lr.ph.i95
-  %indvars.iv.i9634 = phi i64 [ %i.fc, %.lr.ph.i95 ], [ %i.ew, %.lr.ph.i95.preheader ]
-  %i.fc = add nsw i64 %indvars.iv.i9634, -1       ; 5 uses
-  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %i.fc
-  %i.fe = load i32, ptr %i.fd, align 4, !tbaa !58
+  %indvars.iv.i9634 = phi i64 [ %i.fc, %.lr.ph.i95 ], [ %i.ew, %.lr.ph.i95.preheader ] ; 2 uses
+  %i.fc = add nsw i64 %indvars.iv.i9634, -1       ; 4 uses
+  %i.fd = getelementptr [4 x i8], ptr %i.ev, i64 %indvars.iv.i9634
+  %8 = getelementptr i8, ptr %i.fd, i64 -4
+  %i.fe = load i32, ptr %8, align 4, !tbaa !58
   %i.ff = icmp eq i32 %i.fe, %i.eh
   br i1 %i.ff, label %.thread.loopexit21.i, label %.lr.ph.i95, !llvm.loop !120
 

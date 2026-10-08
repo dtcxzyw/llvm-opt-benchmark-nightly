@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.bj, label %.critedge, label %.preheader80
 
 .lr.ph114:                                        ; preds = %.lr.ph114.preheader, %bb.l
-  %indvars.iv132 = phi i64 [ %indvars.iv.next, %.lr.ph114.preheader ], [ %indvars.iv.next133, %bb.l ] ; 3 uses
+  %indvars.iv132 = phi i64 [ %indvars.iv.next, %.lr.ph114.preheader ], [ %indvars.iv.next133, %bb.l ] ; 4 uses
   %i.bk = icmp eq i64 %indvars.iv132, %i.ba
   br i1 %i.bk, label %bb.k, label %bb.l
 
@@ -214,8 +214,9 @@ bb.k:                                             ; preds = %.lr.ph114
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph114
-  %indvars.iv.next133 = add nsw i64 %indvars.iv132, -1 ; 2 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next133
+  %indvars.iv.next133 = add nsw i64 %indvars.iv132, -1
+  %1 = getelementptr i8, ptr %i.a, i64 %indvars.iv132
+  %i.bn = getelementptr i8, ptr %1, i64 -1
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !10
   %i.bp = sext i8 %i.bo to i32
   %i.bq = load ptr, ptr @stdout, align 8, !tbaa !13
@@ -265,9 +266,10 @@ bb.p:                                             ; preds = %.preheader174, %bb.
   br i1 %i.ch, label %bb.p, label %.preheader
 
 .preheader:                                       ; preds = %bb.p, %.preheader
-  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %.preheader ], [ %indvars.iv138, %bb.p ] ; 2 uses
-  %indvars.iv.next141 = add nsw i64 %indvars.iv140, -1 ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next141
+  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %.preheader ], [ %indvars.iv138, %bb.p ] ; 3 uses
+  %indvars.iv.next141 = add nsw i64 %indvars.iv140, -1
+  %2 = getelementptr i8, ptr %i.a, i64 %indvars.iv140
+  %i.ci = getelementptr i8, ptr %2, i64 -1
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !10
   %i.ck = sext i8 %i.cj to i32
   %i.cl = load ptr, ptr @stdout, align 8, !tbaa !13
@@ -670,8 +672,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.l, label %.preheader.lr.ph.split.split.us, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
-  %i.m = zext i32 %i.k to i64
-  %7 = add nuw nsw i64 %i.m, 1                    ; 2 uses
+  %i.m = zext i32 %i.k to i64                     ; 2 uses
   br label %.preheader
 
 .preheader.lr.ph.split.split.us:                  ; preds = %.preheader.lr.ph.split
@@ -731,9 +732,11 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.ac = phi i32 [ %i.at, %._crit_edge ], [ %i.j, %.preheader.preheader ] ; 3 uses
   %.03358 = phi i32 [ %i.ac, %._crit_edge ], [ %3, %.preheader.preheader ] ; 2 uses
   %.03457 = phi ptr [ %scevgep92, %._crit_edge ], [ %1, %.preheader.preheader ] ; 4 uses
-  %.03556 = phi ptr [ %scevgep.a, %._crit_edge ], [ %0, %.preheader.preheader ] ; 4 uses
-  %scevgep.a = getelementptr i8, ptr %.03556, i64 %7
-  %scevgep92 = getelementptr i8, ptr %.03457, i64 %7
+  %.03556 = phi ptr [ %scevgep, %._crit_edge ], [ %0, %.preheader.preheader ] ; 4 uses
+  %7 = getelementptr i8, ptr %.03556, i64 %i.m
+  %scevgep = getelementptr i8, ptr %7, i64 1
+  %scevgep.a = getelementptr i8, ptr %.03457, i64 %i.m
+  %scevgep92 = getelementptr i8, ptr %scevgep.a, i64 1
   %i.ad = load i8, ptr %.03556, align 1, !tbaa !10
   %i.ae = load i8, ptr %.03457, align 1, !tbaa !10
   %.not43130 = icmp eq i8 %i.ad, %i.ae

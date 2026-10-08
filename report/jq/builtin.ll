@@ -204,21 +204,24 @@ bb.ak:                                            ; preds = %bb.aj
   %i.fx = add nsw i64 %i.fw, 1
   %i.fy = tail call ptr @jv_mem_alloc(i64 noundef %i.fx) #17 ; 8 uses
   %.not477660 = icmp sgt i32 %i.fv, 0
-  br i1 %.not477660, label %.lr.ph664, label %.thread557
+  br i1 %.not477660, label %.lr.ph664.preheader, label %.thread557
 
-.lr.ph664:                                        ; preds = %bb.ak, %bb.aw
-  %.0436662 = phi i32 [ %.3439.ph, %bb.aw ], [ 0, %bb.ak ] ; 2 uses
-  %.0441661 = phi i32 [ %i.hk, %bb.aw ], [ 0, %bb.ak ] ; 2 uses
-  %i.fz = sext i32 %.0441661 to i64               ; 3 uses
+.lr.ph664.preheader:                              ; preds = %bb.ak
+  %invariant.op = add nsw i64 %i.fw, -1
+  br label %.lr.ph664
+
+.lr.ph664:                                        ; preds = %.lr.ph664.preheader, %bb.aw
+  %.0436662 = phi i32 [ %.3439.ph, %bb.aw ], [ 0, %.lr.ph664.preheader ] ; 2 uses
+  %.0441661 = phi i32 [ %i.hk, %bb.aw ], [ 0, %.lr.ph664.preheader ] ; 2 uses
+  %i.fz = sext i32 %.0441661 to i64               ; 5 uses
   %i.ga = getelementptr inbounds i8, ptr %i.fr, i64 %i.fz
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !16  ; 2 uses
   %.not475 = icmp eq i8 %i.gb, 37
   br i1 %.not475, label %.preheader596.preheader, label %bb.aw
 
 .preheader596.preheader:                          ; preds = %.lr.ph664
-  %i.gc = add nsw i64 %i.fz, 2                    ; 3 uses
-  %indvars.iv.next721 = add nsw i64 %i.fz, 1      ; 2 uses
-  %.not476 = icmp slt i64 %indvars.iv.next721, %i.fw
+  %i.gc = add nsw i64 %i.fz, 2                    ; 2 uses
+  %.not476 = icmp sgt i64 %invariant.op, %i.fz
   br i1 %.not476, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %.else499, %.preheader596.preheader
@@ -235,7 +238,8 @@ bb.al:                                            ; preds = %.else499, %.prehead
   br label %f_tostring.exit
 
 bb.am:                                            ; preds = %.preheader596.preheader
-  %i.gk = getelementptr inbounds i8, ptr %i.fr, i64 %indvars.iv.next721
+  %5 = getelementptr i8, ptr %i.fr, i64 %i.fz
+  %i.gk = getelementptr i8, ptr %5, i64 1
   %i.gl = load i8, ptr %i.gk, align 1, !tbaa !16  ; 5 uses
   %i.gm = add i8 %i.gl, -48                       ; 2 uses
   %or.cond = icmp ult i8 %i.gm, 10
@@ -278,7 +282,8 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not476.1, label %bb.ar, label %bb.al
 
 bb.ar:                                            ; preds = %.else499
-  %i.gy = getelementptr inbounds i8, ptr %i.fr, i64 %i.gc
+  %6 = getelementptr i8, ptr %i.fr, i64 %i.fz
+  %i.gy = getelementptr i8, ptr %6, i64 2
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !16  ; 5 uses
   %i.ha = add i8 %i.gz, -48                       ; 2 uses
   %or.cond.1 = icmp ult i8 %i.ha, 10

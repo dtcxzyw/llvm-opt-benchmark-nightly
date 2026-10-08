@@ -204,9 +204,10 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecbE7reserveCs9GYDdpCSJ4S_14regex_autom
     #dbg_value(ptr undef, !11715, !DIExpression(), !11718)
     #dbg_value(ptr undef, !11705, !DIExpression(), !11712)
     #dbg_value(ptr undef, !11706, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !11807)
-  %i.n = add i64 %i.g, %1, !dbg !11711
-  %i.o = add i64 %i.n, -1, !dbg !11711            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.i, i64 %i.o, !dbg !11711
+  %i.n = add i64 %i.g, %1, !dbg !11711            ; 2 uses
+  %i.o = add i64 %i.n, -1, !dbg !11711
+  %3 = getelementptr i8, ptr %i.i, i64 %i.n, !dbg !11711
+  %scevgep = getelementptr i8, ptr %3, i64 -1, !dbg !11711
   br label %bb.c, !dbg !11825
 
 ._crit_edge:                                      ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecbE7reserveCs9GYDdpCSJ4S_14regex_automata.exit

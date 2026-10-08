@@ -204,11 +204,11 @@ bb.l:                                             ; preds = %_RINvMs1_NtNtCsfu0r
 _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.1.i: ; preds = %bb.l, %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i
   %i.gt = phi i64 [ %.pre1092, %bb.l ], [ %i.gq, %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i ]
   %i.gu = phi ptr [ %.pre1091, %bb.l ], [ %i.gr, %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i ] ; 4 uses
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 24
+  %i.gv = getelementptr i8, ptr %i.gu, i64 24
   store ptr @22, ptr %i.gv, align 8, !noalias !1013
-  %.sroa.4.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.gu, i64 32
+  %.sroa.4.0..sroa_idx.i.1.i = getelementptr i8, ptr %i.gu, i64 32
   store i64 7, ptr %.sroa.4.0..sroa_idx.i.1.i, align 8, !noalias !1014
-  %.sroa.5.0..sroa_idx.i.1.i = getelementptr inbounds nuw i8, ptr %i.gu, i64 40
+  %.sroa.5.0..sroa_idx.i.1.i = getelementptr i8, ptr %i.gu, i64 40
   store i8 1, ptr %.sroa.5.0..sroa_idx.i.1.i, align 8, !noalias !1014
   store i64 2, ptr %.sroa.11451.0..sroa_idx, align 8, !alias.scope !1005, !noalias !1006
   call void @llvm.experimental.noalias.scope.decl(metadata !1015)
@@ -223,11 +223,11 @@ bb.m:                                             ; preds = %_RINvMs1_NtNtCsfu0r
 
 _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command25visible_long_flag_aliasesReAB1w_j3_ECscjwHxV1jUiA_13stdio_fixture.exit: ; preds = %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.1.i, %bb.m
   %i.gx = phi ptr [ %i.gu, %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.1.i ], [ %.pre1093, %bb.m ] ; 3 uses
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 48
+  %i.gy = getelementptr i8, ptr %i.gx, i64 48
   store ptr @23, ptr %i.gy, align 8, !noalias !1017
-  %.sroa.4.0..sroa_idx.i.2.i = getelementptr inbounds nuw i8, ptr %i.gx, i64 56
+  %.sroa.4.0..sroa_idx.i.2.i = getelementptr i8, ptr %i.gx, i64 56
   store i64 8, ptr %.sroa.4.0..sroa_idx.i.2.i, align 8, !noalias !1018
-  %.sroa.5.0..sroa_idx.i.2.i = getelementptr inbounds nuw i8, ptr %i.gx, i64 64
+  %.sroa.5.0..sroa_idx.i.2.i = getelementptr i8, ptr %i.gx, i64 64
   store i8 1, ptr %.sroa.5.0..sroa_idx.i.2.i, align 8, !noalias !1018
   store i64 3, ptr %.sroa.11451.0..sroa_idx, align 8, !alias.scope !1011, !noalias !1012
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(712) %i.av, ptr noundef nonnull align 8 dereferenceable(712) %i.au, i64 712, i1 false), !alias.scope !1019, !noalias !1020
@@ -351,7 +351,7 @@ _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command25visible_
   %i.hb = getelementptr inbounds nuw i8, ptr %i.as, i64 80 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1028)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.54585.0..sroa_idx, i8 0, i64 9, i1 false)
-  %i.hc = load i64, ptr %.sroa.9525.0..sroa_idx, align 8, !alias.scope !1029, !noalias !1026, !noundef !6 ; 4 uses
+  %i.hc = load i64, ptr %.sroa.9525.0..sroa_idx, align 8, !alias.scope !1029, !noalias !1026, !noundef !6 ; 5 uses
   %i.hd = load i64, ptr %i.hb, align 8, !range !5, !alias.scope !1029, !noalias !1026, !noundef !6 ; 2 uses
   %i.he = icmp eq i64 %i.hc, %i.hd
   br i1 %i.he, label %bb.n, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i
@@ -369,7 +369,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_
   store i32 113, ptr %i.hh, align 4, !noalias !1031
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   store i8 1, ptr %i.hi, align 4, !noalias !1031
-  %i.hj = add i64 %i.hc, 1                        ; 3 uses
+  %i.hj = add i64 %i.hc, 1                        ; 2 uses
   store i64 %i.hj, ptr %.sroa.9525.0..sroa_idx, align 8, !alias.scope !1029, !noalias !1026
   call void @llvm.experimental.noalias.scope.decl(metadata !1032)
   %i.hk = icmp eq i64 %i.hj, %i.hg
@@ -382,9 +382,10 @@ bb.o:                                             ; preds = %_RNvMsG_NtCs4wP2HXf
 
 _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command26visible_short_flag_aliasesAcj2_ECscjwHxV1jUiA_13stdio_fixture.exit: ; preds = %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i, %bb.o
   %i.hl = phi ptr [ %.pre8.i, %bb.o ], [ %i.hf, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i ]
-  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.hl, i64 %i.hj ; 2 uses
-  store i32 119, ptr %i.hm, align 4, !noalias !1033
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 4
+  %i.hm = getelementptr [8 x i8], ptr %i.hl, i64 %i.hc ; 2 uses
+  %0 = getelementptr i8, ptr %i.hm, i64 8
+  store i32 119, ptr %0, align 4, !noalias !1033
+  %i.hn = getelementptr i8, ptr %i.hm, i64 12
   store i8 1, ptr %i.hn, align 4, !noalias !1033
   %i.ho = add i64 %i.hc, 2
   store i64 %i.ho, ptr %.sroa.9525.0..sroa_idx, align 8, !alias.scope !1030, !noalias !1026
@@ -542,7 +543,7 @@ _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command15visible_
   %i.hz = getelementptr inbounds nuw i8, ptr %i.ap, i64 112 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1054)
   call void @llvm.experimental.noalias.scope.decl(metadata !1055)
-  %i.ia = load i64, ptr %i.hy, align 8, !alias.scope !1056, !noalias !1057, !noundef !6 ; 4 uses
+  %i.ia = load i64, ptr %i.hy, align 8, !alias.scope !1056, !noalias !1057, !noundef !6 ; 5 uses
   %i.ib = load i64, ptr %i.hx, align 8, !range !5, !alias.scope !1056, !noalias !1057, !noundef !6 ; 2 uses
   %i.ic = icmp eq i64 %i.ia, %i.ib
   br i1 %i.ic, label %bb.q, label %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i203
@@ -561,7 +562,7 @@ _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_
   store i64 8, ptr %.sroa.4.0..sroa_idx.i.i204, align 8, !noalias !1061
   %.sroa.5.0..sroa_idx.i.i205 = getelementptr inbounds nuw i8, ptr %i.if, i64 16
   store i8 1, ptr %.sroa.5.0..sroa_idx.i.i205, align 8, !noalias !1061
-  %i.ig = add i64 %i.ia, 1                        ; 3 uses
+  %i.ig = add i64 %i.ia, 1                        ; 2 uses
   store i64 %i.ig, ptr %i.hy, align 8, !alias.scope !1056, !noalias !1057
   call void @llvm.experimental.noalias.scope.decl(metadata !1062)
   call void @llvm.experimental.noalias.scope.decl(metadata !1063)
@@ -575,11 +576,12 @@ bb.r:                                             ; preds = %_RINvMs1_NtNtCsfu0r
 
 _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command25visible_long_flag_aliasesReAB1w_j2_ECscjwHxV1jUiA_13stdio_fixture.exit: ; preds = %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i203, %bb.r
   %i.ii = phi ptr [ %i.ie, %_RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command23visible_long_flag_aliasReECscjwHxV1jUiA_13stdio_fixture.exit.i203 ], [ %.pre1096, %bb.r ]
-  %i.ij = getelementptr inbounds nuw [24 x i8], ptr %i.ii, i64 %i.ig ; 3 uses
-  store ptr @31, ptr %i.ij, align 8, !noalias !1064
-  %.sroa.4.0..sroa_idx.i.1.i207 = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
+  %i.ij = getelementptr [24 x i8], ptr %i.ii, i64 %i.ia ; 3 uses
+  %1 = getelementptr i8, ptr %i.ij, i64 24
+  store ptr @31, ptr %1, align 8, !noalias !1064
+  %.sroa.4.0..sroa_idx.i.1.i207 = getelementptr i8, ptr %i.ij, i64 32
   store i64 3, ptr %.sroa.4.0..sroa_idx.i.1.i207, align 8, !noalias !1065
-  %.sroa.5.0..sroa_idx.i.1.i208 = getelementptr inbounds nuw i8, ptr %i.ij, i64 16
+  %.sroa.5.0..sroa_idx.i.1.i208 = getelementptr i8, ptr %i.ij, i64 40
   store i8 1, ptr %.sroa.5.0..sroa_idx.i.1.i208, align 8, !noalias !1065
   %i.ik = add i64 %i.ia, 2
   store i64 %i.ik, ptr %i.hy, align 8, !alias.scope !1058, !noalias !1059
@@ -591,7 +593,7 @@ _RINvMs1_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB6_7Command25visible_
   %i.im = getelementptr inbounds nuw i8, ptr %i.aq, i64 96 ; 3 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.aq, i64 88 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1070)
-  %i.io = load i64, ptr %i.im, align 8, !alias.scope !1071, !noalias !1068, !noundef !6 ; 4 uses
+  %i.io = load i64, ptr %i.im, align 8, !alias.scope !1071, !noalias !1068, !noundef !6 ; 5 uses
   %i.ip = load i64, ptr %i.il, align 8, !range !5, !alias.scope !1071, !noalias !1068, !noundef !6 ; 2 uses
   %i.iq = icmp eq i64 %i.io, %i.ip
   br i1 %i.iq, label %bb.s, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i209
@@ -608,7 +610,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_
   store i32 114, ptr %i.it, align 4, !noalias !1073
   %i.iu = getelementptr inbounds nuw i8, ptr %i.it, i64 4
   store i8 1, ptr %i.iu, align 4, !noalias !1073
-  %i.iv = add i64 %i.io, 1                        ; 3 uses
+  %i.iv = add i64 %i.io, 1                        ; 2 uses
   store i64 %i.iv, ptr %i.im, align 8, !alias.scope !1071, !noalias !1068
   call void @llvm.experimental.noalias.scope.decl(metadata !1074)
   %i.iw = icmp eq i64 %i.iv, %i.ir
@@ -621,9 +623,10 @@ bb.t:                                             ; preds = %_RNvMsG_NtCs4wP2HXf
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrEECscjwHxV1jUiA_13stdio_fixture.exit250: ; preds = %bb.t, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i209
   %i.ix = phi ptr [ %.pre8.i210, %bb.t ], [ %i.is, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecTcbEE8push_mutCscjwHxV1jUiA_13stdio_fixture.exit.i209 ]
-  %i.iy = getelementptr inbounds nuw [8 x i8], ptr %i.ix, i64 %i.iv ; 2 uses
-  store i32 121, ptr %i.iy, align 4, !noalias !1075
-  %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 4
+  %i.iy = getelementptr [8 x i8], ptr %i.ix, i64 %i.io ; 2 uses
+  %2 = getelementptr i8, ptr %i.iy, i64 8
+  store i32 121, ptr %2, align 4, !noalias !1075
+  %i.iz = getelementptr i8, ptr %i.iy, i64 12
   store i8 1, ptr %i.iz, align 4, !noalias !1075
   %i.ja = add i64 %i.io, 2
   store i64 %i.ja, ptr %i.im, align 8, !alias.scope !1072, !noalias !1068

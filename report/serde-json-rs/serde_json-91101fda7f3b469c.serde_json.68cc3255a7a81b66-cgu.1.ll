@@ -202,13 +202,14 @@ bb.ac:                                            ; preds = %.lr.ph
   br label %.loopexit41.split.us.i
 
 .lr.ph28:                                         ; preds = %.preheader36.i.i.preheader, %.preheader36.i.i
-  %.sroa.2.0.i.i27 = phi i64 [ %i.du, %.preheader36.i.i ], [ %.fr214.i, %.preheader36.i.i.preheader ]
-  %i.du = add i64 %.sroa.2.0.i.i27, -1            ; 6 uses
+  %.sroa.2.0.i.i27 = phi i64 [ %i.du, %.preheader36.i.i ], [ %.fr214.i, %.preheader36.i.i.preheader ] ; 2 uses
+  %i.du = add i64 %.sroa.2.0.i.i27, -1            ; 5 uses
   %i.dv = icmp ult i64 %i.du, %.sroa.15.0.copyload
   br i1 %i.dv, label %bb.ad, label %.split32.us.i.i.invoke
 
 bb.ad:                                            ; preds = %.lr.ph28
-  %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %i.du
+  %5 = getelementptr i8, ptr %.sroa.14.0.copyload, i64 %.sroa.2.0.i.i27
+  %i.dw = getelementptr i8, ptr %5, i64 -1
   %i.dx = load i8, ptr %i.dw, align 1, !alias.scope !48, !noalias !50, !noundef !5
   %i.dy = add i64 %i.du, %i.cx                    ; 2 uses
   %i.dz = icmp ult i64 %i.dy, %.sroa.1390.0.copyload
@@ -282,9 +283,10 @@ bb.ag:                                            ; preds = %bb.u
   br i1 %.not34.i.us.i, label %.split.us.i20.i, label %.lr.ph35
 
 .lr.ph35:                                         ; preds = %.preheader.i18.us.i.preheader, %.preheader.i18.us.i
-  %.sroa.2.0.us.i.us.i34 = phi i64 [ %i.ep, %.preheader.i18.us.i ], [ %.fr214.i, %.preheader.i18.us.i.preheader ]
-  %i.ep = add i64 %.sroa.2.0.us.i.us.i34, -1      ; 4 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %i.ep
+  %.sroa.2.0.us.i.us.i34 = phi i64 [ %i.ep, %.preheader.i18.us.i ], [ %.fr214.i, %.preheader.i18.us.i.preheader ] ; 2 uses
+  %i.ep = add i64 %.sroa.2.0.us.i.us.i34, -1      ; 3 uses
+  %6 = getelementptr i8, ptr %.sroa.14.0.copyload, i64 %.sroa.2.0.us.i.us.i34
+  %i.eq = getelementptr i8, ptr %6, i64 -1
   %i.er = load i8, ptr %i.eq, align 1, !alias.scope !52, !noalias !54, !noundef !5
   %i.es = add i64 %i.ep, %i.eh                    ; 2 uses
   %i.et = icmp ult i64 %i.es, %.sroa.1390.0.copyload
@@ -687,7 +689,8 @@ bb.d:                                             ; preds = %bb.y
   %.not.i.i.i.i.i = icmp ugt i64 %i.m, %.val1.i.i.i.i
   %i.n = load i8, ptr %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8, !alias.scope !98, !noalias !99 ; 2 uses
   %i.o = zext nneg i8 %i.n to i64                 ; 4 uses
-  %i.p = icmp ult i8 %i.n, 5
+  %3 = add i8 %i.n, -1
+  %i.p = icmp ult i8 %3, 4
   %i.q = getelementptr i8, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, i64 %i.o
   %i.r = getelementptr i8, ptr %i.q, i64 -1
   %i.s = load i8, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8, !range !11, !alias.scope !98, !noalias !99
@@ -978,7 +981,8 @@ bb.d:                                             ; preds = %bb.y
   %.not.i.i.i.i.i = icmp ugt i64 %i.h, %.val1.i.i.i.i
   %i.i = load i8, ptr %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8, !alias.scope !150, !noalias !149 ; 2 uses
   %i.j = zext nneg i8 %i.i to i64                 ; 4 uses
-  %i.k = icmp ult i8 %i.i, 5
+  %3 = add i8 %i.i, -1
+  %i.k = icmp ult i8 %3, 4
   %i.l = getelementptr i8, ptr %.sroa.4.sroa.5.sroa.7.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, i64 %i.j
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8, !range !11, !alias.scope !150, !noalias !149
@@ -1381,7 +1385,8 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.m = load i8, ptr %i.l, align 8, !alias.scope !304, !noalias !305, !noundef !5 ; 2 uses
   %i.n = zext nneg i8 %i.m to i64                 ; 4 uses
-  %i.o = icmp ult i8 %i.m, 5
+  %2 = add i8 %i.m, -1
+  %i.o = icmp ult i8 %2, 4
   tail call void @llvm.assume(i1 %i.o)
   %i.p = getelementptr i8, ptr %i.k, i64 %i.n
   %i.q = getelementptr i8, ptr %i.p, i64 -1

@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %bb.q
   %i.w = phi i32 [ %i.p, %.lr.ph ], [ %i.bl, %bb.q ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.t, %.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 11 uses
+  %indvars.iv = phi i64 [ %i.t, %.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 13 uses
   %i.x = getelementptr inbounds i8, ptr %i.m, i64 %indvars.iv
   %i.y = load i8, ptr %i.x, align 1, !tbaa !8
   %.not184 = icmp eq i8 %i.y, 0
@@ -266,28 +266,30 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not192, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %4 = add nsw i64 %indvars.iv, -1                ; 2 uses
-  %i.ax = getelementptr inbounds i8, ptr %i.m, i64 %4
+  %4 = getelementptr i8, ptr %i.m, i64 %indvars.iv
+  %i.ax = getelementptr i8, ptr %4, i64 -1
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !8
   %.not193 = icmp eq i8 %i.ay, 0
   br i1 %.not193, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.az = getelementptr inbounds i8, ptr %i.n, i64 %4
+  %5 = getelementptr i8, ptr %i.n, i64 %indvars.iv
+  %i.az = getelementptr i8, ptr %5, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !8
   %i.bb = and i8 %i.ba, 15
   %.not194 = icmp eq i8 %i.bb, 0
   br i1 %.not194, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %5 = add nsw i64 %indvars.iv, 1                 ; 2 uses
-  %i.bc = getelementptr inbounds i8, ptr %i.m, i64 %5
+  %6 = getelementptr i8, ptr %i.m, i64 %indvars.iv
+  %i.bc = getelementptr i8, ptr %6, i64 1
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !8
   %.not195 = icmp eq i8 %i.bd, 0
   br i1 %.not195, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.be = getelementptr inbounds i8, ptr %i.n, i64 %5
+  %7 = getelementptr i8, ptr %i.n, i64 %indvars.iv
+  %i.be = getelementptr i8, ptr %7, i64 1
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !8
   %i.bg = and i8 %i.bf, 15
   %.not196 = icmp eq i8 %i.bg, 0

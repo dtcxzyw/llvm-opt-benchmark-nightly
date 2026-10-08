@@ -205,9 +205,10 @@ bb.cm:                                            ; preds = %bb.cl
   %spec.select.v.i.i98 = select i1 %i.jm, i64 32, i64 24 ; 2 uses
   %i.jn = load i64, ptr %i.cm, align 8
   %i.jo = lshr i64 %i.jn, 29
-  %.idx = and i64 %i.jo, 536870904
-  %i.jp = add nuw nsw i64 %.idx, 24               ; 2 uses
-  %i.jq = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.jp
+  %.idx = and i64 %i.jo, 536870904                ; 2 uses
+  %i.jp = add nuw nsw i64 %.idx, 24
+  %12 = getelementptr inbounds nuw i8, ptr %spec.select, i64 %.idx
+  %i.jq = getelementptr inbounds nuw i8, ptr %12, i64 24
   %.not196 = icmp samesign eq i64 %spec.select.v.i.i98, %i.jp
   br i1 %.not196, label %._crit_edge, label %.lr.ph.preheader
 

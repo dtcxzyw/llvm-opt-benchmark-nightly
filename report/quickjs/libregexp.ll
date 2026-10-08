@@ -205,13 +205,13 @@ bb.ca:                                            ; preds = %.thread1388.i, %.lr
   %.17963.i = phi ptr [ %i.ns, %.thread1388.i ], [ %.159611595.i, %.lr.ph1597.i ] ; 2 uses
   %.13934.i = phi ptr [ %i.nq, %.thread1388.i ], [ %.119321596.i, %.lr.ph1597.i ]
   store i64 %i.nb, ptr %.221006.i, align 8, !tbaa !21
-  %i.nt = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.nb ; 2 uses
+  %i.nt = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.nb ; 3 uses
   %i.nu = load ptr, ptr %i.nt, align 8, !tbaa !20
   %i.nv = getelementptr inbounds nuw i8, ptr %.221006.i, i64 8
   store ptr %i.nu, ptr %i.nv, align 8, !tbaa !21
   %i.nw = getelementptr inbounds nuw i8, ptr %.221006.i, i64 16 ; 2 uses
   store ptr null, ptr %i.nt, align 8, !tbaa !20
-  %i.nx = or disjoint i64 %i.nb, 1                ; 2 uses
+  %i.nx = or disjoint i64 %i.nb, 1
   %i.ny = ptrtoint ptr %i.nw to i64               ; 2 uses
   %i.nz = sub i64 %.pre-phi.i, %i.ny
   %i.oa = icmp slt i64 %i.nz, 9
@@ -242,7 +242,7 @@ bb.cc:                                            ; preds = %.thread1393.i, %bb.
   %.19965.i = phi ptr [ %i.on, %.thread1393.i ], [ %.17963.i, %bb.ca ] ; 2 uses
   %.15936.i = phi ptr [ %i.ol, %.thread1393.i ], [ %.13934.i, %bb.ca ] ; 2 uses
   store i64 %i.nx, ptr %.241008.i, align 8, !tbaa !21
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.nx ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.nt, i64 8 ; 2 uses
   %i.oo = load ptr, ptr %8, align 8, !tbaa !20
   %i.op = getelementptr inbounds nuw i8, ptr %.241008.i, i64 8
   store ptr %i.oo, ptr %i.op, align 8, !tbaa !21
@@ -645,15 +645,16 @@ exchange_func.exit.i.i:                           ; preds = %.lr.ph43.i._crit_ed
   br i1 %i.at, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i, %bb.p
-  %i.au = phi i64 [ %i.bq, %bb.p ], [ %i.as, %.lr.ph7.i.i ] ; 4 uses
-  %i.av = phi i64 [ %i.bp, %bb.p ], [ %i.ar, %.lr.ph7.i.i ]
+  %i.au = phi i64 [ %i.bq, %bb.p ], [ %i.as, %.lr.ph7.i.i ] ; 3 uses
+  %i.av = phi i64 [ %i.bp, %bb.p ], [ %i.ar, %.lr.ph7.i.i ] ; 2 uses
   %.03.i.i = phi i64 [ %.077.i.i, %bb.p ], [ %i.aq, %.lr.ph7.i.i ]
   %i.aw = icmp ult i64 %i.au, %.pre.i.i
   br i1 %i.aw, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph.i.i
-  %i.ax = getelementptr inbounds nuw i8, ptr %.018641.i.lcssa, i64 %i.au ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  %3 = getelementptr i8, ptr %.018641.i.lcssa, i64 %i.av ; 2 uses
+  %i.ax = getelementptr i8, ptr %3, i64 8
+  %i.ay = getelementptr i8, ptr %3, i64 16
   %i.az = load ptr, ptr %i.ax, align 8, !tbaa !71
   %i.ba = load ptr, ptr %i.ay, align 8, !tbaa !71
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 12
@@ -690,9 +691,10 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i.i, label %.preheader.i.i, label %.lr.ph7.i.i, !llvm.loop !115
 
 .lr.ph17.i.i:                                     ; preds = %.preheader.i.i, %._crit_edge11.i.i
-  %.18016.i.i = phi i64 [ %.180.i.i, %._crit_edge11.i.i ], [ %.pre.i.i, %.preheader.i.i ] ; 5 uses
-  %.180.in15.i.i = phi i64 [ %.18016.i.i, %._crit_edge11.i.i ], [ %i.ap, %.preheader.i.i ]
-  %i.bs = getelementptr inbounds nuw i8, ptr %.018641.i.lcssa, i64 %.18016.i.i
+  %.18016.i.i = phi i64 [ %.180.i.i, %._crit_edge11.i.i ], [ %.pre.i.i, %.preheader.i.i ] ; 4 uses
+  %.180.in15.i.i = phi i64 [ %.18016.i.i, %._crit_edge11.i.i ], [ %i.ap, %.preheader.i.i ] ; 2 uses
+  %4 = getelementptr i8, ptr %.018641.i.lcssa, i64 %.180.in15.i.i
+  %i.bs = getelementptr i8, ptr %4, i64 -8
   call void %.0.i.i.i(ptr noundef %.018641.i.lcssa, ptr noundef nonnull %i.bs, i64 noundef 8) #20, !inline_history !113
   %i.bt = icmp ugt i64 %.18016.i.i, 8
   br i1 %i.bt, label %.lr.ph10.i.i, label %._crit_edge11.i.i
@@ -702,15 +704,16 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %.lr.ph10.i.i
-  %i.bv = phi i64 [ 8, %.lr.ph10.i.i ], [ %i.cr, %bb.t ] ; 4 uses
-  %i.bw = phi i64 [ 0, %.lr.ph10.i.i ], [ %i.cq, %bb.t ]
+  %i.bv = phi i64 [ 8, %.lr.ph10.i.i ], [ %i.cr, %bb.t ] ; 3 uses
+  %i.bw = phi i64 [ 0, %.lr.ph10.i.i ], [ %i.cq, %bb.t ] ; 2 uses
   %.18.i.i = phi i64 [ 0, %.lr.ph10.i.i ], [ %.178.i.i, %bb.t ]
   %i.bx = icmp ult i64 %i.bv, %i.bu
   br i1 %i.bx, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.by = getelementptr inbounds nuw i8, ptr %.018641.i.lcssa, i64 %i.bv ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
+  %5 = getelementptr i8, ptr %.018641.i.lcssa, i64 %i.bw ; 2 uses
+  %i.by = getelementptr i8, ptr %5, i64 8
+  %i.bz = getelementptr i8, ptr %5, i64 16
   %i.ca = load ptr, ptr %i.by, align 8, !tbaa !71
   %i.cb = load ptr, ptr %i.bz, align 8, !tbaa !71
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 12

@@ -118,9 +118,9 @@ define dso_local void @_ZN16btDbvtBroadphaseC2EP22btOverlappingPairCache(ptr nou
 bb.a:
   %2 = alloca %class.btAlignedObjectArray.6, align 8 ; 9 uses
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTV16btDbvtBroadphase, i64 16), ptr %0, align 8, !tbaa !11
-  %.ptr.ptr = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.ptr.ptr = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN6btDbvtC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.ptr)
-  %.ptr.ptr.1 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %.ptr.ptr.1 = getelementptr inbounds nuw i8, ptr %0, i64 72
   invoke void @_ZN6btDbvtC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %.ptr.ptr.1)
           to label %bb.b unwind label %.preheader.preheader
 
@@ -234,8 +234,10 @@ bb.k:                                             ; preds = %bb.e
 .loopexit.loopexit:                               ; preds = %bb.g, %bb.k, %bb.f
   %.pn.pn = phi { ptr, i32 } [ %i.ag, %bb.k ], [ %i.aa, %bb.g ], [ %i.z, %bb.f ]
   call void @_ZN20btAlignedObjectArrayIS_IPK10btDbvtNodeEED2Ev(ptr noundef nonnull align 8 dead_on_return(25) dereferenceable(25) %i.a) #19
-  call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr.ptr.1) #19
-  call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr.ptr) #19
+  %.ptr31 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr31) #19
+  %.ptr31.1 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZN6btDbvtD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.ptr31.1) #19
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %.loopexit.loopexit

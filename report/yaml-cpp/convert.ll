@@ -202,13 +202,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %.th
 
 bb.al:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
   %.018.add = add nuw nsw i64 %.018.idx77, 16     ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr @_ZZN4YAML7convertIbvE6decodeERKNS_4NodeERbE5names, i64 %.018.idx77
+  %.018.ptr = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.not = icmp eq i64 %.018.add, 64
   br i1 %.not, label %.critedge, label %bb.am
 
 bb.am:                                            ; preds = %.preheader, %bb.al
+  %.018.ptr78 = phi ptr [ @_ZZN4YAML7convertIbvE6decodeERKNS_4NodeERbE5names, %.preheader ], [ %.018.ptr, %bb.al ] ; 2 uses
   %.018.idx77 = phi i64 [ 0, %.preheader ], [ %.018.add, %bb.al ] ; 2 uses
-  %.018.ptr78 = getelementptr inbounds nuw i8, ptr @_ZZN4YAML7convertIbvE6decodeERKNS_4NodeERbE5names, i64 %.018.idx77 ; 2 uses
-  %i.ez = load ptr, ptr %.018.ptr78, align 16, !tbaa !83 ; 2 uses
+  %i.ez = load ptr, ptr %.018.ptr78, align 8, !tbaa !83 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.fa = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.fb = trunc nuw i8 %i.fa to i1

@@ -202,16 +202,17 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.k = icmp slt i64 %i.j, 0
   %.sroa.07.0.i.i.i = tail call i64 @llvm.abs.i64(i64 %i.j, i1 false)
-  %i.l = call noundef i64 @_RNvXsu_CscOYT7KBnvIh_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias noundef nonnull dereferenceable(20) %i.b) ; 2 uses
+  %i.l = call noundef i64 @_RNvXsu_CscOYT7KBnvIh_4itoayNtB5_8Unsigned3fmt(i64 noundef %.sroa.07.0.i.i.i, ptr noalias noundef nonnull dereferenceable(20) %i.b) ; 3 uses
   br i1 %i.k, label %bb.d, label %_RNvXs1_NtCs5PtHgSLqj5O_10serde_json3serQINtB5_10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtCsboAIIHEtPkY_10serde_core3ser10Serializer13serialize_i64Cs2JiOgHzbbc7_10tokenizers.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = add i64 %i.l, -1                         ; 4 uses
+  %i.m = add i64 %i.l, -1                         ; 3 uses
   %i.n = icmp ult i64 %i.m, 20
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.m
+  %2 = getelementptr i8, ptr %i.b, i64 %i.l
+  %i.o = getelementptr i8, ptr %2, i64 -1
   store i8 45, ptr %i.o, align 1, !alias.scope !2213
   br label %_RNvXs1_NtCs5PtHgSLqj5O_10serde_json3serQINtB5_10SerializerQINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtCsboAIIHEtPkY_10serde_core3ser10Serializer13serialize_i64Cs2JiOgHzbbc7_10tokenizers.exit
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.m = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 noundef signext 58, i64 noundef -1) #24 ; 6 uses
+  %i.m = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 noundef signext 58, i64 noundef -1) #24 ; 7 uses
   %i.n = icmp eq i64 %i.m, -1
   br i1 %i.n, label %bb.d, label %bb.g
 
@@ -346,8 +346,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.as = load ptr, ptr %1, align 8, !tbaa !31
-  %4 = add nuw nsw i64 %i.m, 1                    ; 2 uses
-  %i.at = getelementptr inbounds i8, ptr %i.as, i64 %4 ; 2 uses
+  %.neg = xor i64 %i.m, -1
+  %4 = getelementptr i8, ptr %i.as, i64 %i.m
+  %i.at = getelementptr i8, ptr %4, i64 1         ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.av = load i64, ptr %i.au, align 8, !tbaa !28
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
@@ -355,7 +356,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   store i64 0, ptr %i.ax, align 8, !tbaa !28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
-  %gepdiff = sub nsw i64 %i.av, %4                ; 4 uses
+  %gepdiff = add i64 %i.av, %.neg                 ; 4 uses
   store i64 %gepdiff, ptr %i.a, align 8, !tbaa !32
   %i.ay = icmp ugt i64 %gepdiff, 15
   br i1 %i.ay, label %.noexc.i18, label %._crit_edge.i.i17

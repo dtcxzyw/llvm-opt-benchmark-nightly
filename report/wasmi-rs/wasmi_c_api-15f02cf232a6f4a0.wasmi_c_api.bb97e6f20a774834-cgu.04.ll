@@ -202,13 +202,14 @@ bb.b:                                             ; preds = %bb.g, %bb.h, %bb.e,
 
 bb.c:                                             ; preds = %bb.a
   %i.f = extractvalue { ptr, i64 } %i.d, 0        ; 2 uses
-  %i.g = extractvalue { ptr, i64 } %i.d, 1        ; 2 uses
-  %i.h = add i64 %i.g, -1                         ; 3 uses
+  %i.g = extractvalue { ptr, i64 } %i.d, 1        ; 3 uses
+  %i.h = add i64 %i.g, -1                         ; 2 uses
   %.not = icmp eq i64 %i.g, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.h
+  %2 = getelementptr i8, ptr %i.f, i64 %i.g
+  %i.i = getelementptr i8, ptr %2, i64 -1
   %i.j = load i8, ptr %i.i, align 1, !noundef !5
   %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %bb.g, label %bb.h, !prof !10

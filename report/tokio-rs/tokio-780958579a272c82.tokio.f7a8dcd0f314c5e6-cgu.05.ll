@@ -204,13 +204,13 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.s = atomicrmw add ptr %0, i64 65537 seq_cst, align 8 ; 0 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8, !noundef !4 ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8, !noundef !4 ; 4 uses
   %i.v = icmp eq i64 %i.u, 0
   br i1 %i.v, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 232
-  %i.x = add nsw i64 %i.u, -1                     ; 3 uses
+  %i.x = add nsw i64 %i.u, -1                     ; 2 uses
   store i64 %i.x, ptr %i.t, align 8
   %i.y = load i64, ptr %i.w, align 8, !range !17, !noundef !4
   %i.z = icmp samesign ult i64 %i.x, %i.y
@@ -219,8 +219,9 @@ bb.i:                                             ; preds = %bb.h
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !4, !noundef !4
   %i.ac = icmp ult i64 %i.u, 1152921504606846977
   tail call void @llvm.assume(i1 %i.ac)
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.x
-  %i.ae = load i64, ptr %i.ad, align 8, !noundef !4
+  %i.ad = getelementptr [8 x i8], ptr %i.ab, i64 %i.u
+  %2 = getelementptr i8, ptr %i.ad, i64 -8
+  %i.ae = load i64, ptr %2, align 8, !noundef !4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
@@ -258,7 +259,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 6 uses
+  %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 7 uses
   %i.g = icmp ult i64 %i.f, 1152921504606846976
   tail call void @llvm.assume(i1 %i.g)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 240
@@ -320,9 +321,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.02.027
-  %i.t = add nsw i64 %i.f, -1                     ; 2 uses
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.t
-  %i.v = load i64, ptr %i.u, align 8, !noalias !369
+  %i.t = add nsw i64 %i.f, -1
+  %i.u = getelementptr [8 x i8], ptr %i.i, i64 %i.f
+  %3 = getelementptr i8, ptr %i.u, i64 -8
+  %i.v = load i64, ptr %3, align 8, !noalias !369
   store i64 %i.v, ptr %i.s, align 8, !noalias !369
   store i64 %i.t, ptr %i.e, align 8, !alias.scope !369
   %i.w = atomicrmw add ptr %0, i64 65536 seq_cst, align 8 ; 0 uses

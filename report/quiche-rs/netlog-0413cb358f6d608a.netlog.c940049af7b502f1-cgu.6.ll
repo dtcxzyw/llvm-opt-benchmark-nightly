@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %_RNvMs5_NtNtNtCsG25
     #dbg_value(ptr %i.au, !8984, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !8991)
     #dbg_value(ptr %i.au, !8992, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !8996)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 24, !dbg !9163 ; 2 uses
-  %i.ay = load i64, ptr %i.ax, align 8, !dbg !9163, !noundef !722 ; 3 uses
+  %i.ay = load i64, ptr %i.ax, align 8, !dbg !9163, !noundef !722 ; 4 uses
   %i.az = icmp eq i64 %i.ay, 0, !dbg !9163
   br i1 %i.az, label %bb.o, label %bb.s, !dbg !9163
 
@@ -265,7 +265,7 @@ bb.s:                                             ; preds = %bb.n
     #dbg_value(ptr %i.bi, !8837, !DIExpression(), !8983)
     #dbg_value(ptr %i.bi, !8984, !DIExpression(), !8991)
     #dbg_value(ptr %i.bi, !8992, !DIExpression(), !8996)
-  %i.bj = add nsw i64 %i.ay, -1, !dbg !9176       ; 3 uses
+  %i.bj = add nsw i64 %i.ay, -1, !dbg !9176       ; 2 uses
   store i64 %i.bj, ptr %i.ax, align 8, !dbg !9176
   %i.bk = load i64, ptr %i.bi, align 8, !dbg !9177, !range !1010, !noundef !722
   %i.bl = icmp samesign ult i64 %i.bj, %i.bk, !dbg !9178
@@ -277,9 +277,10 @@ bb.s:                                             ; preds = %bb.n
     #dbg_value(i64 %i.bj, !9079, !DIExpression(), !9082)
   %i.bo = icmp ult i64 %i.ay, 1152921504606846977, !dbg !9181
   tail call void @llvm.assume(i1 %i.bo), !dbg !9182
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %i.bj, !dbg !9183
-    #dbg_value(ptr %i.bp, !9083, !DIExpression(), !9088)
-  %i.bq = load ptr, ptr %i.bp, align 8, !dbg !9184, !nonnull !722, !align !1019, !noundef !722
+  %i.bp = getelementptr [8 x i8], ptr %i.bn, i64 %i.ay, !dbg !9183
+  %4 = getelementptr i8, ptr %i.bp, i64 -8, !dbg !9183
+    #dbg_value(ptr %4, !9083, !DIExpression(), !9088)
+  %i.bq = load ptr, ptr %4, align 8, !dbg !9184, !nonnull !722, !align !1019, !noundef !722
     #dbg_value(ptr %i.bq, !8735, !DIExpression(), !9089)
     #dbg_value(ptr %i.bq, !8789, !DIExpression(), !8792)
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !9185

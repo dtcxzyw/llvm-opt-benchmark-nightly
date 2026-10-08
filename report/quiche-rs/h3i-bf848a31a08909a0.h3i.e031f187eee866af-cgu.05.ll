@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
     #dbg_value(i64 %i.bt, !19955, !DIExpression(), !19205)
     #dbg_value(i64 1, !19958, !DIExpression(), !19208)
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !20243 ; 2 uses
-  %i.bv = load i64, ptr %i.bu, align 8, !dbg !20243, !alias.scope !19964, !noalias !19928, !noundef !1246 ; 4 uses
+  %i.bv = load i64, ptr %i.bu, align 8, !dbg !20243, !alias.scope !19964, !noalias !19928, !noundef !1246 ; 5 uses
     #dbg_value(i64 %i.bv, !19936, !DIExpression(), !19209)
   %i.bw = icmp ult i64 %i.bv, 576460752303423488, !dbg !20244
   call void @llvm.assume(i1 %i.bw), !dbg !20245
@@ -486,13 +486,14 @@ bb.bj:                                            ; preds = %bb.al
     #dbg_value(ptr %i.dc, !19938, !DIExpression(), !19372)
     #dbg_value(ptr %i.dc, !19956, !DIExpression(), !19374)
     #dbg_value(ptr %i.dc, !19956, !DIExpression(), !19205)
-  %i.dh = add nsw i64 %i.bv, -1, !dbg !20313      ; 2 uses
+  %i.dh = add nsw i64 %i.bv, -1, !dbg !20313
     #dbg_value(i64 %i.dh, !19955, !DIExpression(), !19374)
     #dbg_value(i64 %i.dh, !19948, !DIExpression(), !19199)
-  %i.di = getelementptr inbounds nuw [16 x i8], ptr %i.dc, i64 %i.dh, !dbg !20314
-    #dbg_value(ptr %i.di, !19961, !DIExpression(), !19208)
+  %i.di = getelementptr [16 x i8], ptr %i.dc, i64 %i.bv, !dbg !20314
+  %3 = getelementptr i8, ptr %i.di, i64 -16, !dbg !20314
+    #dbg_value(ptr %3, !19961, !DIExpression(), !19208)
     #dbg_value(ptr %i.dd, !19962, !DIExpression(), !19208)
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dd, ptr noundef nonnull align 8 dereferenceable(16) %i.di, i64 16, i1 false), !dbg !20315, !noalias !20085
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dd, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !dbg !20315, !noalias !20085
   store i64 %i.dh, ptr %i.bu, align 8, !dbg !20316, !alias.scope !19964, !noalias !19928
     #dbg_value(ptr %i.de, !19427, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20086)
     #dbg_value(i64 %i.dg, !19427, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20086)

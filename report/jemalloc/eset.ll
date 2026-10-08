@@ -202,7 +202,7 @@ eset_enumerate_search.exit50.i:                   ; preds = %._crit_edge.i47.i, 
   %.sroa.9.0.i = phi i64 [ 0, %sz_psz2ind.exit.i ], [ 0, %bb.p ], [ %.sroa.9.7.i, %._crit_edge.i47.i ]
   %.037.i = phi ptr [ null, %sz_psz2ind.exit.i ], [ null, %bb.p ], [ %.0.lcssa.i48.i, %._crit_edge.i47.i ] ; 4 uses
   %i.dd = zext nneg i32 %.0.i43.i to i64          ; 2 uses
-  %i.de = lshr i64 %i.dd, 6                       ; 3 uses
+  %i.de = lshr i64 %i.dd, 6                       ; 4 uses
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.de
   %i.dg = load i64, ptr %i.df, align 8, !tbaa !25
   %i.dh = and i64 %i.dd, 63
@@ -223,8 +223,10 @@ eset_enumerate_search.exit50.i:                   ; preds = %._crit_edge.i47.i, 
 
 .lr.ph:                                           ; preds = %.lr.ph.i52.i.preheader, %.lr.ph.i52.i
   %i.do = phi i64 [ %i.dm, %.lr.ph.i52.i ], [ %i.dk, %.lr.ph.i52.i.preheader ] ; 3 uses
-  %i.dp = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.do
-  %i.dq = load i64, ptr %i.dp, align 8, !tbaa !25 ; 2 uses
+  %.039.i4.i.i113 = phi i64 [ %i.do, %.lr.ph.i52.i ], [ %i.de, %.lr.ph.i52.i.preheader ]
+  %i.dp = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.039.i4.i.i113
+  %8 = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
+  %i.dq = load i64, ptr %8, align 8, !tbaa !25    ; 2 uses
   %i.dr = icmp eq i64 %i.dq, 0
   br i1 %i.dr, label %.lr.ph.i52.i, label %fb_ffs.exit.i, !llvm.loop !31
 
@@ -295,7 +297,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %bb.z
   %i.ew = add nuw nsw i64 %.035.in76.i, 1         ; 2 uses
-  %i.ex = lshr i64 %i.ew, 6                       ; 3 uses
+  %i.ex = lshr i64 %i.ew, 6                       ; 4 uses
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ex
   %i.ez = load i64, ptr %i.ey, align 8, !tbaa !25
   %i.fa = and i64 %i.ew, 63
@@ -316,8 +318,10 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph113:                                        ; preds = %.lr.ph.i59.i.preheader, %.lr.ph.i59.i
   %i.fh = phi i64 [ %i.ff, %.lr.ph.i59.i ], [ %i.fd, %.lr.ph.i59.i.preheader ] ; 3 uses
-  %i.fi = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.fh
-  %i.fj = load i64, ptr %i.fi, align 8, !tbaa !25 ; 2 uses
+  %.039.i4.i60.i114 = phi i64 [ %i.fh, %.lr.ph.i59.i ], [ %i.ex, %.lr.ph.i59.i.preheader ]
+  %i.fi = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.039.i4.i60.i114
+  %9 = getelementptr inbounds nuw i8, ptr %i.fi, i64 8
+  %i.fj = load i64, ptr %9, align 8, !tbaa !25    ; 2 uses
   %i.fk = icmp eq i64 %i.fj, 0
   br i1 %i.fk, label %.lr.ph.i59.i, label %fb_ffs.exit61.i, !llvm.loop !31
 
@@ -477,7 +481,7 @@ eset_enumerate_alignment_search.exit.i:           ; preds = %bb.ai
 
 eset_enumerate_alignment_search.exit.thread.i:    ; preds = %eset_enumerate_alignment_search.exit.thread69.i, %bb.af, %sz_psz2ind.exit.i20
   %i.im = zext nneg i32 %.0.i55.i to i64          ; 2 uses
-  %i.in = lshr i64 %i.im, 6                       ; 3 uses
+  %i.in = lshr i64 %i.im, 6                       ; 4 uses
   %i.io = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.in
   %i.ip = load i64, ptr %i.io, align 8, !tbaa !25
   %i.iq = and i64 %i.im, 63
@@ -498,8 +502,10 @@ eset_enumerate_alignment_search.exit.thread.i:    ; preds = %eset_enumerate_alig
 
 .lr.ph115:                                        ; preds = %.lr.ph.i58.i.preheader, %.lr.ph.i58.i
   %i.ix = phi i64 [ %i.iv, %.lr.ph.i58.i ], [ %i.it, %.lr.ph.i58.i.preheader ] ; 3 uses
-  %i.iy = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ix
-  %i.iz = load i64, ptr %i.iy, align 8, !tbaa !25 ; 2 uses
+  %.039.i4.i.i31117 = phi i64 [ %i.ix, %.lr.ph.i58.i ], [ %i.in, %.lr.ph.i58.i.preheader ]
+  %i.iy = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.039.i4.i.i31117
+  %10 = getelementptr inbounds nuw i8, ptr %i.iy, i64 8
+  %i.iz = load i64, ptr %10, align 8, !tbaa !25   ; 2 uses
   %i.ja = icmp eq i64 %i.iz, 0
   br i1 %i.ja, label %.lr.ph.i58.i, label %._crit_edge.i.i25, !llvm.loop !31
 
@@ -551,7 +557,7 @@ bb.aj:                                            ; preds = %fb_ffs.exit66.i, %.
 
 select.unfold.i:                                  ; preds = %bb.aj
   %i.jx = add nuw nsw i64 %i.jh, 1                ; 2 uses
-  %i.jy = lshr i64 %i.jx, 6                       ; 3 uses
+  %i.jy = lshr i64 %i.jx, 6                       ; 4 uses
   %i.jz = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.jy
   %i.ka = load i64, ptr %i.jz, align 8, !tbaa !25
   %i.kb = and i64 %i.jx, 63
@@ -572,8 +578,10 @@ select.unfold.i:                                  ; preds = %bb.aj
 
 .lr.ph116:                                        ; preds = %.lr.ph.i64.i.preheader, %.lr.ph.i64.i
   %i.ki = phi i64 [ %i.kg, %.lr.ph.i64.i ], [ %i.ke, %.lr.ph.i64.i.preheader ] ; 3 uses
-  %i.kj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ki
-  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !25 ; 2 uses
+  %.039.i4.i65.i119 = phi i64 [ %i.ki, %.lr.ph.i64.i ], [ %i.jy, %.lr.ph.i64.i.preheader ]
+  %i.kj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.039.i4.i65.i119
+  %11 = getelementptr inbounds nuw i8, ptr %i.kj, i64 8
+  %i.kk = load i64, ptr %11, align 8, !tbaa !25   ; 2 uses
   %i.kl = icmp eq i64 %i.kk, 0
   br i1 %i.kl, label %.lr.ph.i64.i, label %._crit_edge.i60.i, !llvm.loop !31
 

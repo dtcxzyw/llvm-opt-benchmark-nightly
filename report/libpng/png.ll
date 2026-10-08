@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %.preheader
   br i1 %.not25, label %.critedge, label %.preheader.1
 
 .preheader.1:                                     ; preds = %bb.c
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %i.h = getelementptr i8, ptr %1, i64 1
   %i.i = load i8, ptr %i.h, align 1, !tbaa !28    ; 3 uses
   %.not24.1 = icmp eq i8 %i.i, 46
   br i1 %.not24.1, label %bb.e, label %bb.d
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader.1
   br i1 %or.cond, label %.critedge, label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.e
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %i.o = getelementptr i8, ptr %1, i64 2
   %i.p = load i8, ptr %i.o, align 1, !tbaa !28    ; 3 uses
   %.not24.2 = icmp eq i8 %i.p, 54
   br i1 %.not24.2, label %bb.g, label %bb.f
@@ -247,7 +247,7 @@ bb.g:                                             ; preds = %bb.f, %.preheader.2
   br i1 %or.cond31, label %.critedge, label %.preheader.3
 
 .preheader.3:                                     ; preds = %bb.g
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 3
+  %i.v = getelementptr i8, ptr %1, i64 3
   %i.w = load i8, ptr %i.v, align 1, !tbaa !28    ; 3 uses
   %.not24.3 = icmp eq i8 %i.w, 46
   br i1 %.not24.3, label %bb.i, label %bb.h
@@ -268,7 +268,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader.3
   br i1 %or.cond32, label %.critedge, label %.preheader.4
 
 .preheader.4:                                     ; preds = %bb.i
-  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.ac = getelementptr i8, ptr %1, i64 4
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !28  ; 3 uses
   %.not24.4 = icmp eq i8 %i.ad, 53
   br i1 %.not24.4, label %bb.k, label %bb.j
@@ -289,7 +289,7 @@ bb.k:                                             ; preds = %bb.j, %.preheader.4
   br i1 %or.cond33, label %.critedge, label %.preheader.5
 
 .preheader.5:                                     ; preds = %bb.k
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %i.aj = getelementptr i8, ptr %1, i64 5
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !28  ; 3 uses
   %.not24.5 = icmp eq i8 %i.ak, 56
   br i1 %.not24.5, label %bb.m, label %bb.l
@@ -310,7 +310,7 @@ bb.m:                                             ; preds = %bb.l, %.preheader.5
   br i1 %or.cond34, label %.critedge, label %.preheader.6
 
 .preheader.6:                                     ; preds = %bb.m
-  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %i.aq = getelementptr i8, ptr %1, i64 6
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !28
   %.not24.6 = icmp eq i8 %i.ar, 0
   br i1 %.not24.6, label %.critedge, label %bb.n
@@ -713,12 +713,12 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   br i1 %.not167241, label %._crit_edge246.thread, label %.lr.ph245
 
 .lr.ph245:                                        ; preds = %bb.an, %.lr.ph245
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph245 ], [ 0, %bb.an ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph245 ], [ 0, %bb.an ] ; 4 uses
   %.1243 = phi i32 [ %i.er, %.lr.ph245 ], [ %.0, %bb.an ] ; 3 uses
   %i.en = urem i32 %.1243, 10
   %i.eo = trunc nuw nsw i32 %i.en to i8
   %i.ep = or disjoint i8 %i.eo, 48
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 13 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 15 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
   store i8 %i.ep, ptr %i.eq, align 1, !tbaa !28
   %i.er = udiv i32 %.1243, 10
@@ -754,11 +754,11 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %5 = sub i64 %indvars.iv.next, %index
   %next.gep = getelementptr i8, ptr %.14148, i64 %index ; 2 uses
-  %5 = sub i64 %indvars.iv, %index
-  %i.ew = getelementptr inbounds nuw i8, ptr %i.b, i64 %5 ; 2 uses
-  %i.ex = getelementptr inbounds i8, ptr %i.ew, i64 -15
-  %i.ey = getelementptr inbounds i8, ptr %i.ew, i64 -31
+  %i.ew = getelementptr i8, ptr %i.b, i64 %5      ; 2 uses
+  %i.ex = getelementptr i8, ptr %i.ew, i64 -16
+  %i.ey = getelementptr i8, ptr %i.ew, i64 -32
   %wide.load = load <16 x i8>, ptr %i.ex, align 1, !tbaa !28, !alias.scope !166
   %wide.load338 = load <16 x i8>, ptr %i.ey, align 1, !tbaa !28, !alias.scope !166
   %reverse = shufflevector <16 x i8> %wide.load, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -787,10 +787,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index342 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next346, %vec.epilog.vector.body ] ; 3 uses
+  %6 = sub i64 %indvars.iv.next, %index342
   %next.gep343 = getelementptr i8, ptr %.14148, i64 %index342
-  %6 = sub i64 %indvars.iv, %index342
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
-  %i.fe = getelementptr inbounds i8, ptr %i.fd, i64 -7
+  %i.fd = getelementptr i8, ptr %i.b, i64 %6
+  %i.fe = getelementptr i8, ptr %i.fd, i64 -8
   %wide.load344 = load <8 x i8>, ptr %i.fe, align 1, !tbaa !28, !alias.scope !166
   %reverse345 = shufflevector <8 x i8> %wide.load344, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i8> %reverse345, ptr %next.gep343, align 1, !tbaa !28, !alias.scope !167, !noalias !166
@@ -811,11 +811,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %lcmp.mod360.not, label %.lr.ph251.prol.loopexit, label %.lr.ph251.prol
 
 .lr.ph251.prol:                                   ; preds = %.lr.ph251.preheader, %.lr.ph251.prol
-  %indvars.iv268.prol = phi i64 [ %i.fh, %.lr.ph251.prol ], [ %indvars.iv268.ph, %.lr.ph251.preheader ]
+  %indvars.iv268.prol = phi i64 [ %i.fh, %.lr.ph251.prol ], [ %indvars.iv268.ph, %.lr.ph251.preheader ] ; 2 uses
   %.15249.prol = phi ptr [ %i.fk, %.lr.ph251.prol ], [ %.15249.ph, %.lr.ph251.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph251.prol ], [ 0, %.lr.ph251.preheader ]
-  %i.fh = add nsw i64 %indvars.iv268.prol, -1     ; 3 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fh
+  %i.fh = add nsw i64 %indvars.iv268.prol, -1     ; 2 uses
+  %7 = getelementptr i8, ptr %i.b, i64 %indvars.iv268.prol
+  %i.fi = getelementptr i8, ptr %7, i64 -1
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !28
   %i.fk = getelementptr inbounds nuw i8, ptr %.15249.prol, i64 1 ; 3 uses
   store i8 %i.fj, ptr %.15249.prol, align 1, !tbaa !28
@@ -835,7 +836,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not327, label %bb.ao, label %.thread207
 
 .lr.ph251:                                        ; preds = %.lr.ph251.prol.loopexit, %.lr.ph251
-  %indvars.iv268 = phi i64 [ %i.go, %.lr.ph251 ], [ %indvars.iv268.unr, %.lr.ph251.prol.loopexit ] ; 8 uses
+  %indvars.iv268 = phi i64 [ %i.go, %.lr.ph251 ], [ %indvars.iv268.unr, %.lr.ph251.prol.loopexit ] ; 9 uses
   %.15249 = phi ptr [ %i.gr, %.lr.ph251 ], [ %.15249.unr, %.lr.ph251.prol.loopexit ] ; 9 uses
   %i.fm = getelementptr i8, ptr %i.b, i64 %indvars.iv268
   %i.fn = getelementptr i8, ptr %i.fm, i64 -1
@@ -872,8 +873,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !28
   %i.gn = getelementptr inbounds nuw i8, ptr %.15249, i64 7
   store i8 %i.gm, ptr %i.gj, align 1, !tbaa !28
-  %i.go = add nsw i64 %indvars.iv268, -8          ; 3 uses
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.go
+  %i.go = add nsw i64 %indvars.iv268, -8          ; 2 uses
+  %8 = getelementptr i8, ptr %i.b, i64 %indvars.iv268
+  %i.gp = getelementptr i8, ptr %8, i64 -8
   %i.gq = load i8, ptr %i.gp, align 1, !tbaa !28
   %i.gr = getelementptr inbounds nuw i8, ptr %.15249, i64 8 ; 2 uses
   store i8 %i.gq, ptr %i.gn, align 1, !tbaa !28
@@ -953,7 +955,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
   %.03551 = phi i32 [ 16, %.lr.ph.preheader ], [ %spec.select, %.lr.ph ] ; 2 uses
   %.13949 = phi i32 [ %.03884, %.lr.ph.preheader ], [ %i.f, %.lr.ph ] ; 3 uses
   %i.f = udiv i32 %.13949, 10                     ; 2 uses
@@ -961,7 +963,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = add nsw i32 %.neg, %.13949               ; 2 uses
   %i.h = trunc i32 %i.g to i8
   %i.i = add i8 %i.h, 48
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 5 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   store i8 %i.i, ptr %i.j, align 1, !tbaa !28
   %i.k = icmp eq i32 %.03551, 16
@@ -994,11 +996,11 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %4 = sub i64 %indvars.iv.next, %index
   %next.gep = getelementptr i8, ptr %.04082, i64 %index ; 2 uses
-  %4 = sub i64 %indvars.iv, %index
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %4 ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %i.s, i64 -15
-  %i.u = getelementptr inbounds i8, ptr %i.s, i64 -31
+  %i.s = getelementptr i8, ptr %i.a, i64 %4       ; 2 uses
+  %i.t = getelementptr i8, ptr %i.s, i64 -16
+  %i.u = getelementptr i8, ptr %i.s, i64 -32
   %wide.load = load <16 x i8>, ptr %i.t, align 1, !tbaa !28
   %wide.load95 = load <16 x i8>, ptr %i.u, align 1, !tbaa !28
   %reverse = shufflevector <16 x i8> %wide.load, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -1027,10 +1029,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index99 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next103, %vec.epilog.vector.body ] ; 3 uses
+  %5 = sub i64 %indvars.iv.next, %index99
   %next.gep100 = getelementptr i8, ptr %.04082, i64 %index99
-  %5 = sub i64 %indvars.iv, %index99
-  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
-  %i.aa = getelementptr inbounds i8, ptr %i.z, i64 -7
+  %i.z = getelementptr i8, ptr %i.a, i64 %5
+  %i.aa = getelementptr i8, ptr %i.z, i64 -8
   %wide.load101 = load <8 x i8>, ptr %i.aa, align 1, !tbaa !28
   %reverse102 = shufflevector <8 x i8> %wide.load101, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i8> %reverse102, ptr %next.gep100, align 1, !tbaa !28
@@ -1048,10 +1050,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph55
 
 .lr.ph55:                                         ; preds = %.lr.ph55.preheader, %.lr.ph55
-  %indvars.iv75 = phi i64 [ %i.ac, %.lr.ph55 ], [ %indvars.iv75.ph, %.lr.ph55.preheader ]
+  %indvars.iv75 = phi i64 [ %i.ac, %.lr.ph55 ], [ %indvars.iv75.ph, %.lr.ph55.preheader ] ; 2 uses
   %.14153 = phi ptr [ %i.af, %.lr.ph55 ], [ %.14153.ph, %.lr.ph55.preheader ] ; 2 uses
-  %i.ac = add nsw i64 %indvars.iv75, -1           ; 3 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ac
+  %i.ac = add nsw i64 %indvars.iv75, -1           ; 2 uses
+  %6 = getelementptr i8, ptr %i.a, i64 %indvars.iv75
+  %i.ad = getelementptr i8, ptr %6, i64 -1
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !28
   %i.af = getelementptr inbounds nuw i8, ptr %.14153, i64 1 ; 2 uses
   store i8 %i.ae, ptr %.14153, align 1, !tbaa !28

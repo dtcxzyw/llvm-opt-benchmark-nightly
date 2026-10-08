@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.j, %bb.h
-  %.02441.i = phi i64 [ 0, %bb.h ], [ %i.q, %bb.j ] ; 4 uses
+  %.02441.i = phi i64 [ 0, %bb.h ], [ %i.q, %bb.j ] ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.02644.i, i64 %.02441.i
   %i.o = load i8, ptr %i.n, align 1
   %i.p = icmp eq i8 %i.o, 10
@@ -223,10 +223,11 @@ bb.k:                                             ; preds = %bb.i
   br label %do_write_log_timestamps.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.s = add i64 %.02441.i, 1                     ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.02644.i, i64 %.02441.i
+  %i.s = add i64 %.02441.i, 1                     ; 2 uses
   %.val.i = load i32, ptr %i.a, align 8
   %i.t = tail call i64 @qemu_write_full(i32 noundef %.val.i, ptr noundef nonnull %.02644.i, i64 noundef %i.s) #13 ; 0 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %.02644.i, i64 %i.s
+  %i.u = getelementptr i8, ptr %3, i64 1
   %i.v = sub i64 %.02545.i, %i.s                  ; 2 uses
   store i8 1, ptr %i.g, align 1
   %.not.i = icmp eq i64 %i.v, 0

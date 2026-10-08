@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.tail.i
   br label %skip_utf8_bom.exit
 
 skip_utf8_bom.exit:                               ; preds = %bb.c, %sub_0.i, %sub_1.i, %.tail.i, %bb.d
-  %.0.i.sroa.gep.promoted = phi i64 [ 3, %bb.d ], [ 0, %.tail.i ], [ 0, %sub_1.i ], [ 0, %sub_0.i ], [ 0, %bb.c ] ; 4 uses
+  %.0.i.sroa.gep.promoted = phi i64 [ 3, %bb.d ], [ 0, %.tail.i ], [ 0, %sub_1.i ], [ 0, %sub_0.i ], [ 0, %bb.c ] ; 5 uses
   %i.l = icmp ult i64 %.0.i.sroa.gep.promoted, %1
   br i1 %i.l, label %.lr.ph.i.preheader, label %buffer_skip_whitespace.exit
 
@@ -220,14 +220,16 @@ skip_utf8_bom.exit:                               ; preds = %bb.c, %sub_0.i, %su
   br i1 %exitcond.not.i88, label %.critedge.thread.i.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.q = phi i64 [ %i.u, %.lr.ph ], [ %i.p, %.lr.ph.preheader ] ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 %i.q
+  %5 = phi i64 [ %i.u, %.lr.ph ], [ %i.p, %.lr.ph.preheader ] ; 3 uses
+  %i.q = phi i64 [ %5, %.lr.ph ], [ %.0.i.sroa.gep.promoted, %.lr.ph.preheader ]
+  %6 = getelementptr i8, ptr %0, i64 %i.q
+  %i.r = getelementptr i8, ptr %6, i64 1
   %i.s = load i8, ptr %i.r, align 1, !tbaa !64
   %i.t = icmp ult i8 %i.s, 33
   br i1 %i.t, label %.lr.ph, label %buffer_skip_whitespace.exit.sink.split
 
 .lr.ph:                                           ; preds = %.lr.ph.i
-  %i.u = add i64 %i.q, 1                          ; 2 uses
+  %i.u = add i64 %5, 1                            ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.u, %1
   br i1 %exitcond.not.i, label %.critedge.thread.i.loopexit, label %.lr.ph.i
 
@@ -236,7 +238,7 @@ skip_utf8_bom.exit:                               ; preds = %bb.c, %sub_0.i, %su
   br label %buffer_skip_whitespace.exit.sink.split
 
 buffer_skip_whitespace.exit.sink.split:           ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %.critedge.thread.i.loopexit
-  %.lcssa.sink = phi i64 [ %i.v, %.critedge.thread.i.loopexit ], [ %.0.i.sroa.gep.promoted, %.lr.ph.i.preheader ], [ %i.q, %.lr.ph.i ]
+  %.lcssa.sink = phi i64 [ %i.v, %.critedge.thread.i.loopexit ], [ %.0.i.sroa.gep.promoted, %.lr.ph.i.preheader ], [ %5, %.lr.ph.i ]
   store i64 %.lcssa.sink, ptr %.0.i.sroa.gep, align 8
   br label %buffer_skip_whitespace.exit
 
@@ -252,7 +254,7 @@ bb.e:                                             ; preds = %buffer_skip_whitesp
 bb.f:                                             ; preds = %bb.e
   %i.x = load ptr, ptr %4, align 8, !tbaa !59     ; 4 uses
   %i.y = icmp ne ptr %i.x, null
-  %.pre = load i64, ptr %.0.i.sroa.gep, align 8, !tbaa !63 ; 5 uses
+  %.pre = load i64, ptr %.0.i.sroa.gep, align 8, !tbaa !63 ; 6 uses
   %.pre69 = load i64, ptr %.0.i.sroa.gep48, align 8, !tbaa !60 ; 5 uses
   %i.z = icmp ult i64 %.pre, %.pre69
   %or.cond83 = select i1 %i.y, i1 %i.z, i1 false
@@ -270,14 +272,16 @@ bb.f:                                             ; preds = %bb.e
   br i1 %exitcond.not.i4189, label %.critedge.thread.i40.loopexit, label %.lr.ph.i38
 
 .lr.ph.i38:                                       ; preds = %.lr.ph63.preheader, %.lr.ph63
-  %i.ae = phi i64 [ %i.ai, %.lr.ph63 ], [ %i.ad, %.lr.ph63.preheader ] ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ae
+  %7 = phi i64 [ %i.ai, %.lr.ph63 ], [ %i.ad, %.lr.ph63.preheader ] ; 3 uses
+  %i.ae = phi i64 [ %7, %.lr.ph63 ], [ %.pre, %.lr.ph63.preheader ]
+  %8 = getelementptr i8, ptr %i.x, i64 %i.ae
+  %i.af = getelementptr i8, ptr %8, i64 1
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !64
   %i.ah = icmp ult i8 %i.ag, 33
   br i1 %i.ah, label %.lr.ph63, label %buffer_skip_whitespace.exit42.sink.split
 
 .lr.ph63:                                         ; preds = %.lr.ph.i38
-  %i.ai = add i64 %i.ae, 1                        ; 2 uses
+  %i.ai = add i64 %7, 1                           ; 2 uses
   %exitcond.not.i41 = icmp eq i64 %i.ai, %.pre69
   br i1 %exitcond.not.i41, label %.critedge.thread.i40.loopexit, label %.lr.ph.i38
 
@@ -286,7 +290,7 @@ bb.f:                                             ; preds = %bb.e
   br label %buffer_skip_whitespace.exit42.sink.split
 
 buffer_skip_whitespace.exit42.sink.split:         ; preds = %.lr.ph.i38, %.lr.ph.i38.preheader, %.critedge.thread.i40.loopexit
-  %.lcssa61.sink = phi i64 [ %i.aj, %.critedge.thread.i40.loopexit ], [ %.pre, %.lr.ph.i38.preheader ], [ %i.ae, %.lr.ph.i38 ] ; 2 uses
+  %.lcssa61.sink = phi i64 [ %i.aj, %.critedge.thread.i40.loopexit ], [ %.pre, %.lr.ph.i38.preheader ], [ %7, %.lr.ph.i38 ] ; 2 uses
   store i64 %.lcssa61.sink, ptr %.0.i.sroa.gep, align 8
   br label %buffer_skip_whitespace.exit42
 
@@ -689,10 +693,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.c
-  %.164.idx = phi i64 [ %.063116.add, %bb.c ], [ %.063116.idx, %.lr.ph ]
+  %.164.idx = phi i64 [ %.063116.add, %bb.c ], [ %.063116.idx, %.lr.ph ] ; 2 uses
   %.160 = phi i64 [ %i.l, %bb.c ], [ %.059117, %.lr.ph ]
-  %.164.add = add nuw nsw i64 %.164.idx, 1        ; 3 uses
-  %.ptr124 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.164.add
+  %.164.add = add nuw nsw i64 %.164.idx, 1        ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.164.idx
+  %.ptr124 = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.m = add nuw nsw i64 %i.c, %.164.add
   %i.n = icmp ult i64 %i.m, %i.g
   br i1 %i.n, label %.lr.ph, label %.thread103

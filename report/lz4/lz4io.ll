@@ -202,20 +202,21 @@ bb.ae:                                            ; preds = %bb.ac
   br label %.loopexit22.i
 
 .loopexit22.i:                                    ; preds = %.loopexit22.i.preheader, %bb.af
-  %.1.in.i = phi i64 [ %.1.i, %bb.af ], [ %.1.in.i.ph, %.loopexit22.i.preheader ] ; 2 uses
-  %.1.i = add i64 %.1.in.i, 1                     ; 4 uses
+  %.1.in.i = phi i64 [ %.1.i, %bb.af ], [ %.1.in.i.ph, %.loopexit22.i.preheader ] ; 3 uses
+  %.1.i = add i64 %.1.in.i, 1                     ; 2 uses
   %i.dq = load i64, ptr %i.bm, align 8, !tbaa !157 ; 2 uses
   %i.dr = icmp ult i64 %.1.i, %i.dq
-  %i.ds = load ptr, ptr %i.bo, align 8, !tbaa !37 ; 3 uses
+  %i.ds = load ptr, ptr %i.bo, align 8, !tbaa !37 ; 2 uses
   br i1 %i.dr, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %.loopexit22.i
-  %i.dt = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %.1.in.i
-  %1 = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %.1.i
+  %i.dt = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %.1.in.i ; 2 uses
+  %1 = getelementptr i8, ptr %i.dt, i64 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dt, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !162
   %i.du = load ptr, ptr %i.bo, align 8, !tbaa !37
-  %i.dv = getelementptr inbounds nuw [24 x i8], ptr %i.du, i64 %.1.i
-  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !159
+  %i.dv = getelementptr [24 x i8], ptr %i.du, i64 %.1.in.i
+  %2 = getelementptr i8, ptr %i.dv, i64 24
+  %i.dw = load ptr, ptr %2, align 8, !tbaa !159
   %i.dx = icmp eq ptr %i.dw, null
   br i1 %i.dx, label %WR_removeBuffID.exit, label %.loopexit22.i, !llvm.loop !154
 

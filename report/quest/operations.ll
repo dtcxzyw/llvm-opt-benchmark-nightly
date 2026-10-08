@@ -204,10 +204,11 @@ bb.a:
   br label %.lr.ph34
 
 bb.b:                                             ; preds = %._crit_edge, %.lr.ph30
-  %indvars.iv37.in = phi i64 [ %i.h, %.lr.ph30 ], [ %indvars.iv37, %._crit_edge ] ; 2 uses
-  %indvars.iv37 = add nsw i64 %indvars.iv37.in, -1 ; 4 uses
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv37 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !11   ; 2 uses
+  %indvars.iv37.in = phi i64 [ %i.h, %.lr.ph30 ], [ %indvars.iv37, %._crit_edge ] ; 4 uses
+  %indvars.iv37 = add nsw i64 %indvars.iv37.in, -1 ; 2 uses
+  %i.k = getelementptr [4 x i8], ptr %1, i64 %indvars.iv37.in
+  %5 = getelementptr i8, ptr %i.k, i64 -4         ; 2 uses
+  %i.l = load i32, ptr %5, align 4, !tbaa !11     ; 2 uses
   call void @_Z20validate_quregFields5QuregPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull @__func__.applyHadamard)
   call void @_Z15validate_target5QuregiPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, i32 noundef %i.l, ptr noundef nonnull @__func__.applyHadamard)
   call void @applyMultiStateControlledHadamard(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef null, ptr noundef null, i32 noundef 0, i32 noundef %i.l)
@@ -215,7 +216,8 @@ bb.b:                                             ; preds = %._crit_edge, %.lr.p
   br i1 %i.m, label %.lr.ph.preheader, label %._crit_edge31
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.n = getelementptr [4 x i8], ptr %1, i64 %indvars.iv37
+  %i.n = getelementptr [4 x i8], ptr %1, i64 %indvars.iv37.in
+  %6 = getelementptr i8, ptr %i.n, i64 -4
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %applyMultiQubitPhaseShift.exit
@@ -227,9 +229,9 @@ bb.b:                                             ; preds = %._crit_edge, %.lr.p
   %i.o = shl nuw i64 2, %indvars.iv
   %i.p = sitofp i64 %i.o to double
   %i.q = fdiv double f0x400921FB54442D18, %i.p    ; 2 uses
-  %i.r = load i32, ptr %i.k, align 4, !tbaa !11   ; 2 uses
+  %i.r = load i32, ptr %5, align 4, !tbaa !11     ; 2 uses
   %i.s = xor i64 %indvars.iv, -1
-  %i.t = getelementptr [4 x i8], ptr %i.n, i64 %i.s
+  %i.t = getelementptr [4 x i8], ptr %6, i64 %i.s
   %i.u = load i32, ptr %i.t, align 4, !tbaa !11   ; 2 uses
   call void @_Z20validate_quregFields5QuregPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull @__func__.applyTwoQubitPhaseShift)
   call void @_Z19validate_twoTargets5QuregiiPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, i32 noundef %i.r, i32 noundef %i.u, ptr noundef nonnull @__func__.applyTwoQubitPhaseShift)

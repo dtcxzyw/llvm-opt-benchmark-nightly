@@ -204,14 +204,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv = phi i64 [ 32, %bb.a ], [ %indvars.iv.next.1, %bb.b ] ; 2 uses
+  %indvars.iv = phi i64 [ 32, %bb.a ], [ %indvars.iv.next.1, %bb.b ] ; 4 uses
   %.012 = phi i32 [ 0, %bb.a ], [ %i.x, %bb.b ]
   %.011 = phi i32 [ 1, %bb.a ], [ %i.ab, %bb.b ]  ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.a = getelementptr i8, ptr %0, i64 %indvars.iv.next
+  %1 = getelementptr i8, ptr %0, i64 %indvars.iv
+  %i.a = getelementptr i8, ptr %1, i64 -1
   %i.b = load i8, ptr %i.a, align 1
   %i.c = zext i8 %i.b to i32                      ; 2 uses
-  %i.d = getelementptr i8, ptr @sc25519_is_canonical.L, i64 %indvars.iv.next
+  %2 = getelementptr i8, ptr @sc25519_is_canonical.L, i64 %indvars.iv
+  %i.d = getelementptr i8, ptr %2, i64 -1
   %i.e = load i8, ptr %i.d, align 1
   %i.f = zext i8 %i.e to i32                      ; 2 uses
   %i.g = sub nsw i32 %i.c, %i.f
@@ -222,11 +224,13 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.l = add nuw nsw i32 %i.k, 511
   %i.m = lshr i32 %i.l, 8
   %i.n = and i32 %i.m, %.011                      ; 2 uses
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 4 uses
-  %i.o = getelementptr i8, ptr %0, i64 %indvars.iv.next.1
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
+  %3 = getelementptr i8, ptr %0, i64 %indvars.iv.next
+  %i.o = getelementptr i8, ptr %3, i64 -1
   %i.p = load i8, ptr %i.o, align 1
   %i.q = zext i8 %i.p to i32                      ; 2 uses
-  %i.r = getelementptr i8, ptr @sc25519_is_canonical.L, i64 %indvars.iv.next.1
+  %4 = getelementptr i8, ptr @sc25519_is_canonical.L, i64 %indvars.iv.next
+  %i.r = getelementptr i8, ptr %4, i64 -1
   %i.s = load i8, ptr %i.r, align 2
   %i.t = zext i8 %i.s to i32                      ; 2 uses
   %i.u = sub nsw i32 %i.q, %i.t

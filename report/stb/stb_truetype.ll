@@ -204,7 +204,7 @@ bb.bq:                                            ; preds = %stbtt__buf_get8.exi
   br label %.lr.ph354
 
 .lr.ph354:                                        ; preds = %.lr.ph354.preheader, %.lr.ph354
-  %indvars.iv417 = phi i64 [ 0, %.lr.ph354.preheader ], [ %indvars.iv.next418, %.lr.ph354 ] ; 3 uses
+  %indvars.iv417 = phi i64 [ 0, %.lr.ph354.preheader ], [ %indvars.iv.next418, %.lr.ph354 ] ; 4 uses
   %i.jh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv417 ; 3 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jh, i64 16
@@ -229,7 +229,7 @@ bb.bq:                                            ; preds = %stbtt__buf_get8.exi
   %i.kb = extractelement <2 x float> %i.jp, i64 1
   %i.kc = fptosi float %i.kb to i32
   tail call void @stbtt__csctx_v(ptr noundef %2, i8 noundef zeroext 4, i32 noundef %i.js, i32 noundef %i.ju, i32 noundef %i.jw, i32 noundef %i.jy, i32 noundef %i.ka, i32 noundef %i.kc)
-  %indvars.iv.next418 = add nuw nsw i64 %indvars.iv417, 6 ; 3 uses
+  %indvars.iv.next418 = add nuw nsw i64 %indvars.iv417, 6 ; 2 uses
   %i.kd = trunc i64 %indvars.iv417 to i32
   %i.ke = add i32 %i.kd, 11
   %i.kf = icmp slt i32 %i.ke, %i.jg
@@ -242,8 +242,9 @@ bb.bq:                                            ; preds = %stbtt__buf_get8.exi
   br i1 %.not269, label %bb.br, label %.critedge
 
 bb.br:                                            ; preds = %._crit_edge355
-  %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next418
-  %i.kj = load float, ptr %i.ki, align 4, !tbaa !80
+  %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv417
+  %5 = getelementptr inbounds nuw i8, ptr %i.ki, i64 24
+  %i.kj = load float, ptr %5, align 8, !tbaa !80
   %i.kk = zext nneg i32 %i.kh to i64
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.kk
   %i.km = load float, ptr %i.kl, align 4, !tbaa !80
@@ -352,7 +353,7 @@ bb.cf:                                            ; preds = %stbtt__buf_get8.exi
 
 .lr.ph351:                                        ; preds = %.lr.ph351.preheader, %stbtt__csctx_rline_to.exit311
   %i.lu = phi i32 [ %.pre440, %.lr.ph351.preheader ], [ %i.mw, %stbtt__csctx_rline_to.exit311 ] ; 2 uses
-  %indvars.iv414 = phi i64 [ 0, %.lr.ph351.preheader ], [ %indvars.iv.next415, %stbtt__csctx_rline_to.exit311 ] ; 2 uses
+  %indvars.iv414 = phi i64 [ 0, %.lr.ph351.preheader ], [ %indvars.iv.next415, %stbtt__csctx_rline_to.exit311 ] ; 3 uses
   %i.lv = phi <2 x float> [ %i.lt, %.lr.ph351.preheader ], [ %i.my, %stbtt__csctx_rline_to.exit311 ]
   %i.lw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv414
   %i.lx = load <2 x float>, ptr %i.lw, align 8, !tbaa !80
@@ -446,7 +447,7 @@ stbtt__csctx_rline_to.exit311:                    ; preds = %stbtt__track_vertex
   %i.my = phi <2 x float> [ %i.ly, %stbtt__track_vertex.exit.i.i308 ], [ %i.mv, %bb.cs ]
   %i.mz = add nsw i32 %i.mx, 1
   store i32 %i.mz, ptr %.phi.trans.insert.i309, align 8, !tbaa !60
-  %indvars.iv.next415 = add nuw nsw i64 %indvars.iv414, 2 ; 4 uses
+  %indvars.iv.next415 = add nuw nsw i64 %indvars.iv414, 2 ; 3 uses
   %i.na = or disjoint i64 %indvars.iv.next415, 1
   %i.nb = icmp samesign ult i64 %i.na, %i.ls
   br i1 %i.nb, label %.lr.ph351, label %._crit_edge, !llvm.loop !169
@@ -461,17 +462,18 @@ bb.ct:                                            ; preds = %._crit_edge
   %i.ne = add nuw i32 %.0253360, 2147483640
   %i.nf = and i32 %i.ne, 2147483646
   %narrow = add nuw i32 %i.nf, 3
-  %i.ng = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next415 ; 4 uses
-  %i.nh = load float, ptr %i.ng, align 4, !tbaa !80
+  %i.ng = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv414 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.ng, i64 8
+  %i.nh = load float, ptr %6, align 8, !tbaa !80
   %i.ni = zext nneg i32 %narrow to i64
   %i.nj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ni
   %i.nk = load float, ptr %i.nj, align 4, !tbaa !80
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.ng, i64 8
-  %i.nm = load float, ptr %i.nl, align 4, !tbaa !80
-  %i.nn = getelementptr inbounds nuw i8, ptr %i.ng, i64 12
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.ng, i64 16
+  %i.nm = load float, ptr %i.nl, align 8, !tbaa !80
+  %i.nn = getelementptr inbounds nuw i8, ptr %i.ng, i64 20
   %i.no = load float, ptr %i.nn, align 4, !tbaa !80
-  %i.np = getelementptr inbounds nuw i8, ptr %i.ng, i64 16
-  %i.nq = load float, ptr %i.np, align 4, !tbaa !80
+  %i.np = getelementptr inbounds nuw i8, ptr %i.ng, i64 24
+  %i.nq = load float, ptr %i.np, align 8, !tbaa !80
   %i.nr = zext nneg i32 %i.nd to i64
   %i.ns = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.nr
   %i.nt = load float, ptr %i.ns, align 4, !tbaa !80

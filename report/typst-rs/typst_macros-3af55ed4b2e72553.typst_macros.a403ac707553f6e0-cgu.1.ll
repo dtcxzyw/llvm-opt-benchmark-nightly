@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.q, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit.thread, label %bb.g
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = load i64, ptr %i.i, align 8, !noalias !61 ; 3 uses
+  %i.r = load i64, ptr %i.i, align 8, !noalias !61 ; 4 uses
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit.thread, label %bb.q
 
@@ -272,13 +272,14 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
 
 bb.q:                                             ; preds = %bb.e
   %i.ap = load i64, ptr %i.e, align 8, !noalias !61 ; 3 uses
-  %i.aq = add i64 %i.r, -1                        ; 5 uses
+  %i.aq = add i64 %i.r, -1                        ; 4 uses
   %i.ar = icmp ult i64 %i.aq, %i.ap
   br i1 %i.ar, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.as = load ptr, ptr %i.d, align 8, !noalias !61 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.aq
+  %2 = getelementptr i8, ptr %i.as, i64 %i.r
+  %i.at = getelementptr i8, ptr %2, i64 -1
   %i.au = load i8, ptr %i.at, align 1, !noalias !61
   %i.av = load i8, ptr %i.k, align 8, !noalias !61
   %i.aw = icmp eq i8 %i.au, %i.av
@@ -376,11 +377,13 @@ bb.ab:                                            ; preds = %bb.aa, %bb.y
   br i1 %.not17.i.us.i, label %.split26.us.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.split.us.i
-  %.sroa.2.0.i.us.i206 = phi i64 [ %i.bz, %.split.us.i ], [ %.sroa.01.0.i.i, %.lr.ph.preheader ]
-  %i.bz = add i64 %.sroa.2.0.i.us.i206, -1        ; 5 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bz
+  %.sroa.2.0.i.us.i206 = phi i64 [ %i.bz, %.split.us.i ], [ %.sroa.01.0.i.i, %.lr.ph.preheader ] ; 3 uses
+  %i.bz = add i64 %.sroa.2.0.i.us.i206, -1        ; 3 uses
+  %3 = getelementptr i8, ptr %i.bc, i64 %.sroa.2.0.i.us.i206
+  %i.ca = getelementptr i8, ptr %3, i64 -1
   %i.cb = load i8, ptr %i.ca, align 1, !noalias !62
-  %i.cc = getelementptr i8, ptr %i.by, i64 %i.bz
+  %4 = getelementptr i8, ptr %i.by, i64 %.sroa.2.0.i.us.i206
+  %i.cc = getelementptr i8, ptr %4, i64 -1
   %i.cd = load i8, ptr %i.cc, align 1, !noalias !62
   %.not19.i.us.i = icmp eq i8 %i.cb, %i.cd
   br i1 %.not19.i.us.i, label %.split.us.i, label %.split28.us.i

@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.g
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.g ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.g ] ; 7 uses
   %i.a = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %indvars.iv ; 3 uses
   %i.b = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %indvars.iv ; 2 uses
   %i.c = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.b) #19 ; 0 uses
@@ -214,14 +214,16 @@ bb.b:                                             ; preds = %bb.a, %bb.g
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.f, ptr %i.g, align 8, !tbaa !112
   %i.h = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.b) #19 ; 0 uses
-  %1 = or disjoint i64 %indvars.iv, 128           ; 3 uses
-  %2 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %1 ; 2 uses
+  %1 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 5120 ; 2 uses
   %i.i = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %2) #19 ; 0 uses
-  %i.j = getelementptr inbounds nuw [168 x i8], ptr @itemstats, i64 %1
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !43
+  %i.j = getelementptr inbounds nuw [168 x i8], ptr @itemstats, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 21504
+  %i.k = load i64, ptr %3, align 8, !tbaa !43
   store i64 %i.k, ptr %i.a, align 8, !tbaa !113
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr @tails, i64 %1
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !32   ; 8 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr @tails, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 1024
+  %i.m = load ptr, ptr %4, align 8, !tbaa !32     ; 8 uses
   %.not = icmp eq ptr %i.m, null
   br i1 %.not, label %bb.g, label %bb.c
 
@@ -624,7 +626,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.ac
-  %indvars.iv = phi i64 [ 1, %bb.j ], [ %indvars.iv.next, %bb.ac ] ; 9 uses
+  %indvars.iv = phi i64 [ 1, %bb.j ], [ %indvars.iv.next, %bb.ac ] ; 12 uses
   %.14285 = phi i32 [ 999999, %bb.j ], [ %spec.select60, %bb.ac ]
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !26 ; 2 uses
@@ -660,11 +662,12 @@ bb.m:                                             ; preds = %.preheader.i
   br i1 %i.ak, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %.loopexit.i
-  %1 = or disjoint i64 %indvars.iv, 128           ; 3 uses
-  %2 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %1 ; 2 uses
+  %1 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 5120 ; 2 uses
   %i.al = call i32 @pthread_mutex_lock(ptr noundef nonnull %2) #19 ; 0 uses
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr @tails, i64 %1
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !32 ; 2 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr @tails, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.am, i64 1024
+  %i.an = load ptr, ptr %3, align 8, !tbaa !32    ; 2 uses
   %.not.i = icmp eq ptr %i.an, null
   br i1 %.not.i, label %bb.p, label %bb.o
 
@@ -678,8 +681,9 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.040.i = phi double [ %i.as, %bb.o ], [ 0.000000e+00, %bb.n ] ; 2 uses
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr @sizes_bytes, i64 %1
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !18
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr @sizes_bytes, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %i.at, i64 1024
+  %i.au = load i64, ptr %4, align 8, !tbaa !18
   %i.av = call i32 @pthread_mutex_unlock(ptr noundef nonnull %2) #19 ; 0 uses
   %i.aw = load double, ptr getelementptr inbounds nuw (i8, ptr @settings, i64 216), align 8, !tbaa !141
   %i.ax = fmul double %.040.i, %i.aw
@@ -693,13 +697,14 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !18
   %i.bg = add i64 %i.bf, %i.au
   %i.bh = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.bc) #19 ; 0 uses
-  %3 = or disjoint i64 %indvars.iv, 64            ; 2 uses
-  %4 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %3 ; 2 uses
-  %i.bi = call i32 @pthread_mutex_lock(ptr noundef nonnull %4) #19 ; 0 uses
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr @sizes_bytes, i64 %3
-  %i.bk = load i64, ptr %i.bj, align 8, !tbaa !18
+  %5 = getelementptr inbounds nuw [40 x i8], ptr @lru_locks, i64 %indvars.iv
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 2560 ; 2 uses
+  %i.bi = call i32 @pthread_mutex_lock(ptr noundef nonnull %6) #19 ; 0 uses
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr @sizes_bytes, i64 %indvars.iv
+  %7 = getelementptr inbounds nuw i8, ptr %i.bj, i64 512
+  %i.bk = load i64, ptr %7, align 8, !tbaa !18
   %i.bl = add i64 %i.bg, %i.bk
-  %i.bm = call i32 @pthread_mutex_unlock(ptr noundef nonnull %4) #19 ; 0 uses
+  %i.bm = call i32 @pthread_mutex_unlock(ptr noundef nonnull %6) #19 ; 0 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.loopexit.i

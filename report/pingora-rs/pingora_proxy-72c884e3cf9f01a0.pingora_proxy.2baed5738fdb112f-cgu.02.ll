@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i
   %i.as = add i64 %i.af, 1
   %i.at = add i64 %i.as, %.sroa.5.0.i.i.i         ; 2 uses
   %.not12.i.i = icmp ugt i64 %i.at, %i.ad         ; 2 uses
-  %i.au = add i64 %.sroa.5.0.i.i.i, %i.af         ; 3 uses
+  %i.au = add i64 %.sroa.5.0.i.i.i, %i.af         ; 4 uses
   %or.cond.i.not.i = icmp ult i64 %i.au, %i.ad
   br i1 %or.cond.i.not.i, label %bb.i, label %bb.h
 
@@ -220,15 +220,16 @@ bb.i:                                             ; preds = %.loopexit.i.i
   br label %.lr.ph.split.i.i
 
 _RINvMNtCskKLDkoKarTP_4core3stre4findcECs3Kwrwkha1e5_13pingora_proxy.exit: ; preds = %bb.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.au
   br i1 %i.aw, label %bb.j, label %_RINvMNtCskKLDkoKarTP_4core3stre4findcECs3Kwrwkha1e5_13pingora_proxy.exit.thread112
 
 bb.j:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core3stre4findcECs3Kwrwkha1e5_13pingora_proxy.exit
-  %i.ax = add nuw i64 %i.au, 1                    ; 5 uses
+  %i.ax = add nuw i64 %i.au, 1                    ; 4 uses
   %i.ay = icmp eq i64 %i.ad, %i.ax
   br i1 %i.ay, label %_RINvMNtCskKLDkoKarTP_4core3stre4findcECs3Kwrwkha1e5_13pingora_proxy.exit.thread112, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ax ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 3 uses
   %i.ba = load i8, ptr %i.az, align 1, !alias.scope !912, !noundef !6
   %i.bb = icmp sgt i8 %i.ba, -65
   br i1 %i.bb, label %bb.l, label %bb.q

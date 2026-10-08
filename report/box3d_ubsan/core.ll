@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.a, label %bb.ci, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = zext nneg i32 %1 to i64                  ; 11 uses
+  %i.b = zext nneg i32 %1 to i64                  ; 12 uses
   %.not.i = icmp ult i64 add (i64 ptrtoint (ptr @rapid_secret to i64), i64 16), ptrtoint (ptr @rapid_secret to i64), !nosanitize !15
   br i1 %.not.i, label %bb.c, label %bb.d, !prof !18, !nosanitize !15
 
@@ -302,24 +302,24 @@ bb.q:                                             ; preds = %bb.p
   unreachable, !nosanitize !15
 
 bb.r:                                             ; preds = %bb.p
-  %2 = add nsw i64 %i.b, -1                       ; 2 uses
-  %3 = ptrtoint ptr %0 to i64, !nosanitize !15    ; 6 uses
-  %i.ai = add i64 %2, %3, !nosanitize !15         ; 2 uses
-  %.not154.i = icmp ult i64 %i.ai, %3, !nosanitize !15
+  %2 = ptrtoint ptr %0 to i64, !nosanitize !15    ; 6 uses
+  %3 = add i64 %2, -1
+  %i.ai = add i64 %3, %i.b, !nosanitize !15       ; 2 uses
+  %.not154.i = icmp ult i64 %i.ai, %2, !nosanitize !15
   br i1 %.not154.i, label %bb.s, label %bb.t, !prof !18, !nosanitize !15
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @25, i64 %3, i64 %i.ai) #16, !nosanitize !15
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @25, i64 %2, i64 %i.ai) #16, !nosanitize !15
   unreachable, !nosanitize !15
 
 bb.t:                                             ; preds = %bb.r
   %i.aj = lshr i64 %i.b, 1                        ; 2 uses
-  %i.ak = add i64 %i.aj, %3, !nosanitize !15      ; 2 uses
-  %.not156.i = icmp ult i64 %i.ak, %3, !nosanitize !15
+  %i.ak = add i64 %i.aj, %2, !nosanitize !15      ; 2 uses
+  %.not156.i = icmp ult i64 %i.ak, %2, !nosanitize !15
   br i1 %.not156.i, label %bb.u, label %bb.v, !prof !18, !nosanitize !15
 
 bb.u:                                             ; preds = %bb.t
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @26, i64 %3, i64 %i.ak) #16, !nosanitize !15
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @26, i64 %2, i64 %i.ak) #16, !nosanitize !15
   unreachable, !nosanitize !15
 
 bb.v:                                             ; preds = %bb.t
@@ -327,7 +327,8 @@ bb.v:                                             ; preds = %bb.t
   %i.am = load i8, ptr %0, align 1, !tbaa !21
   %i.an = zext i8 %i.am to i64
   %i.ao = shl nuw nsw i64 %i.an, 45
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %2
+  %4 = getelementptr i8, ptr %0, i64 %i.b
+  %i.ap = getelementptr i8, ptr %4, i64 -1
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !21
   %i.ar = zext i8 %i.aq to i64
   %i.as = or disjoint i64 %i.ao, %i.ar

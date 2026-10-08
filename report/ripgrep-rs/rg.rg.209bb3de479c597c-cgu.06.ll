@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %.sroa.038.0.i.i, !dbg !9646
-  %i.an = load i64, ptr %i.am, align 8, !dbg !9647, !noalias !9601, !noundef !387 ; 4 uses
+  %i.an = load i64, ptr %i.am, align 8, !dbg !9647, !noalias !9601, !noundef !387 ; 5 uses
   %.not.i.i = icmp ne i64 %i.an, 0, !dbg !9648
   %i.ao = icmp ult i64 %.sroa.040.0.i.i, %i.ak
   %or.cond.i.i = select i1 %.not.i.i, i1 %i.ao, i1 false, !dbg !9649
@@ -217,7 +217,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not44.i.i, label %bb.p, label %bb.k, !dbg !9653
 
 bb.k:                                             ; preds = %bb.j
-  %i.ar = add i64 %i.an, -1, !dbg !9654           ; 3 uses
+  %i.ar = add i64 %i.an, -1, !dbg !9654           ; 2 uses
   %i.as = add i64 %i.aq, -1, !dbg !9655           ; 3 uses
   %.not.i = icmp ugt i64 %i.ar, %i.as, !dbg !9656
   br i1 %.not.i, label %bb.l, label %_RNvXs2_NtCsdq8xsXUia3c_10grep_regex7matcherNtB5_13RegexCapturesNtCs7LWxN68iDgu_12grep_matcher8Captures3get.exit, !dbg !9656, !prof !501
@@ -245,7 +245,8 @@ bb.m:                                             ; preds = %_RNvXs2_NtCsdq8xsXU
   br i1 %.not.i2, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCs2NzvFoTxuAy_2rg.exit, label %bb.n, !dbg !9665
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ar, !dbg !9666
+  %3 = getelementptr i8, ptr %i.aw, i64 %i.an, !dbg !9666
+  %i.ba = getelementptr i8, ptr %3, i64 -1, !dbg !9666
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !9667
   %i.bc = load ptr, ptr %i.bb, align 8, !dbg !9667, !alias.scope !9615, !nonnull !387, !noundef !387
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.ay, !dbg !9668
@@ -648,7 +649,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.bd, %bb.be
   %i.gg = phi ptr [ %i.go, %bb.be ], [ %i.gf, %bb.bd ] ; 2 uses
-  %.sroa.010.041.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.gn, %bb.be ], [ %spec.select.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bd ] ; 2 uses
+  %.sroa.010.041.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.gn, %bb.be ], [ %spec.select.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bd ] ; 3 uses
   %.val.i.i.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.gg, align 1, !dbg !13502, !alias.scope !13181, !noalias !13180, !noundef !387 ; 3 uses
   %i.gh = add i8 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, -58, !dbg !13503
   %or.cond.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i8 %i.gh, -10, !dbg !13503
@@ -674,8 +675,9 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12gr
   br label %bb.bh, !dbg !13508
 
 bb.be:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.gn = add nuw nsw i64 %.sroa.010.041.i.i.i.i.i.i.i.i.i.i.i.i, 1, !dbg !13509 ; 3 uses
-  %i.go = getelementptr inbounds nuw i8, ptr %i.fr, i64 %i.gn, !dbg !13500
+  %i.gn = add nuw nsw i64 %.sroa.010.041.i.i.i.i.i.i.i.i.i.i.i.i, 1, !dbg !13509 ; 2 uses
+  %9 = getelementptr i8, ptr %i.fr, i64 %.sroa.010.041.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13500
+  %i.go = getelementptr i8, ptr %9, i64 1, !dbg !13500
   %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.gn, %i.fy, !dbg !13500
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRhE6map_orbNvNtCs7LWxN68iDgu_12grep_matcher11interpolate19is_valid_cap_letterECs2NzvFoTxuAy_2rg.exit.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13501
 

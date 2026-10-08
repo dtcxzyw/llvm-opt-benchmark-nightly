@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %bb.b
   br label %uv__thread_getname.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.g = add i64 %2, -1                           ; 2 uses
+  %i.g = add i64 %2, -1
   %i.h = call ptr @strncpy(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 noundef %i.g) #12 ; 0 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %i.g
+  %3 = getelementptr i8, ptr %1, i64 %2
+  %i.i = getelementptr i8, ptr %3, i64 -1
   store i8 0, ptr %i.i, align 1
   br label %uv__thread_getname.exit
 
@@ -235,9 +236,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = add i64 %2, -1                           ; 2 uses
+  %i.e = add i64 %2, -1
   %i.f = call ptr @strncpy(ptr noundef %1, ptr noundef nonnull %i.a, i64 noundef %i.e) #12 ; 0 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.e
+  %3 = getelementptr i8, ptr %1, i64 %2
+  %i.g = getelementptr i8, ptr %3, i64 -1
   store i8 0, ptr %i.g, align 1
   br label %bb.d
 

@@ -203,11 +203,12 @@ bb.c:                                             ; preds = %bb.d
 
 get_page_from_global_pool.exit.i.i:               ; preds = %get_page_from_global_pool.exit.i.i.lr.ph, %bb.c
   %i.j = phi i64 [ %mem_malloced.promoted.i.i, %get_page_from_global_pool.exit.i.i.lr.ph ], [ %i.o, %bb.c ]
-  %indvars.iv.i.i4 = phi i64 [ %i.h, %get_page_from_global_pool.exit.i.i.lr.ph ], [ %indvars.iv.next.i.i, %bb.c ]
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i4, -1 ; 4 uses
+  %indvars.iv.i.i4 = phi i64 [ %i.h, %get_page_from_global_pool.exit.i.i.lr.ph ], [ %indvars.iv.next.i.i, %bb.c ] ; 2 uses
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i4, -1 ; 3 uses
   %indvars.i.i = trunc nuw i64 %indvars.iv.next.i.i to i32 ; 2 uses
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.next.i.i
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !23   ; 2 uses
+  %i.k = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv.i.i4
+  %1 = getelementptr i8, ptr %i.k, i64 -8
+  %i.l = load ptr, ptr %1, align 8, !tbaa !23     ; 2 uses
   %.not1.i.i = icmp eq ptr %i.l, null
   br i1 %.not1.i.i, label %do_slabs_adjust_mem_limit.exit.loopexit, label %bb.d
 
@@ -487,11 +488,12 @@ bb.i:                                             ; preds = %bb.j
 
 get_page_from_global_pool.exit.i:                 ; preds = %get_page_from_global_pool.exit.i.lr.ph, %bb.i
   %i.az = phi i64 [ %mem_malloced.promoted.i, %get_page_from_global_pool.exit.i.lr.ph ], [ %i.be, %bb.i ]
-  %indvars.iv.i40 = phi i64 [ %i.ax, %get_page_from_global_pool.exit.i.lr.ph ], [ %indvars.iv.next.i, %bb.i ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i40, -1 ; 4 uses
+  %indvars.iv.i40 = phi i64 [ %i.ax, %get_page_from_global_pool.exit.i.lr.ph ], [ %indvars.iv.next.i, %bb.i ] ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i40, -1 ; 3 uses
   %indvars.i = trunc nuw i64 %indvars.iv.next.i to i32 ; 2 uses
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.next.i
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !23 ; 2 uses
+  %i.ba = getelementptr [8 x i8], ptr %i.av, i64 %indvars.iv.i40
+  %3 = getelementptr i8, ptr %i.ba, i64 -8
+  %i.bb = load ptr, ptr %3, align 8, !tbaa !23    ; 2 uses
   %.not1.i = icmp eq ptr %i.bb, null
   br i1 %.not1.i, label %split_slab_page_into_freelist.exit.loopexit, label %bb.j
 

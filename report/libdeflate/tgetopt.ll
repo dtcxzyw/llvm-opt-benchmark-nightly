@@ -202,15 +202,16 @@ bb.x:                                             ; preds = %bb.w, %.thread82
   br i1 %i.bd, label %.lr.ph54.preheader, label %._crit_edge
 
 .lr.ph54.preheader:                               ; preds = %.critedge
-  %i.be = zext nneg i32 %0 to i64                 ; 3 uses
+  %i.be = zext nneg i32 %0 to i64                 ; 4 uses
   %i.bf = and i64 %i.be, 1
   %lcmp.mod.not.not = icmp eq i64 %i.bf, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph54.prol, label %.lr.ph54.prol.loopexit
 
 .lr.ph54.prol:                                    ; preds = %.lr.ph54.preheader
-  %indvars.iv.next67.prol = add nsw i64 %i.be, -1 ; 3 uses
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next67.prol
-  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !13 ; 2 uses
+  %indvars.iv.next67.prol = add nsw i64 %i.be, -1 ; 2 uses
+  %i.bg = getelementptr [8 x i8], ptr %1, i64 %i.be
+  %3 = getelementptr i8, ptr %i.bg, i64 -8
+  %i.bh = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
   %.not46.prol = icmp eq ptr %i.bh, null
   br i1 %.not46.prol, label %.lr.ph54.prol.loopexit, label %bb.y
 
@@ -229,7 +230,7 @@ bb.y:                                             ; preds = %.lr.ph54.prol
   br i1 %i.bl, label %._crit_edge, label %.lr.ph54
 
 .lr.ph54:                                         ; preds = %.lr.ph54.prol.loopexit, %bb.ab
-  %indvars.iv66 = phi i64 [ %indvars.iv.next67.1, %bb.ab ], [ %indvars.iv66.unr, %.lr.ph54.prol.loopexit ] ; 3 uses
+  %indvars.iv66 = phi i64 [ %indvars.iv.next67.1, %bb.ab ], [ %indvars.iv66.unr, %.lr.ph54.prol.loopexit ] ; 4 uses
   %i.bm = phi i32 [ %i.bz, %bb.ab ], [ %.unr, %.lr.ph54.prol.loopexit ] ; 2 uses
   %i.bn = getelementptr [8 x i8], ptr %1, i64 %indvars.iv66
   %i.bo = getelementptr i8, ptr %i.bn, i64 -8
@@ -247,9 +248,10 @@ bb.z:                                             ; preds = %.lr.ph54
 
 .lr.ph54.1:                                       ; preds = %bb.z, %.lr.ph54
   %i.bt = phi i32 [ %i.bq, %bb.z ], [ %i.bm, %.lr.ph54 ] ; 2 uses
-  %indvars.iv.next67.1 = add nsw i64 %indvars.iv66, -2 ; 2 uses
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next67.1
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !13 ; 2 uses
+  %indvars.iv.next67.1 = add nsw i64 %indvars.iv66, -2
+  %i.bu = getelementptr [8 x i8], ptr %1, i64 %indvars.iv66
+  %4 = getelementptr i8, ptr %i.bu, i64 -16
+  %i.bv = load ptr, ptr %4, align 8, !tbaa !13    ; 2 uses
   %.not46.1 = icmp eq ptr %i.bv, null
   br i1 %.not46.1, label %bb.ab, label %bb.aa
 

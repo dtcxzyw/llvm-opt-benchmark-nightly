@@ -204,13 +204,15 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
   %i.x = phi double [ %i.aa, %bb.e ], [ %i.p, %.lr.ph.preheader ]
+  %indvars.iv60 = phi i64 [ 1, %bb.e ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.y = phi i1 [ true, %bb.e ], [ false, %.lr.ph.preheader ]
-  %indvars.iv60 = phi i64 [ 2, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
   %2 = getelementptr inbounds nuw [8 x i8], ptr @pio2_tab, i64 %indvars.iv60
-  %i.z = load double, ptr %2, align 8, !tbaa !15
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.z = load double, ptr %3, align 8, !tbaa !15
   %i.aa = tail call double @llvm.fmuladd.f64(double %i.o, double %i.z, double %i.x) ; 4 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr @pio2_t_tab, i64 %indvars.iv60
-  %i.ac = load double, ptr %i.ab, align 8, !tbaa !15
+  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  %i.ac = load double, ptr %4, align 8, !tbaa !15
   %i.ad = fmul double %.046, %i.ac                ; 3 uses
   %i.ae = fsub double %i.aa, %i.ad                ; 3 uses
   br i1 %i.y, label %._crit_edge, label %bb.e

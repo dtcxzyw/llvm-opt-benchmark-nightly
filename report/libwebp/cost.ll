@@ -116,7 +116,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv = phi i64 [ %i.d, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.d, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %.04051 = phi ptr [ %i.m, %.lr.ph ], [ %i.ao, %bb.e ]
   %.04150 = phi i32 [ %i.p, %.lr.ph ], [ %i.ak, %bb.e ]
   %i.x = getelementptr inbounds [2 x i8], ptr %i.v, i64 %indvars.iv
@@ -133,11 +133,12 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %i.ai = zext i16 %i.ah to i32
   %i.aj = add nuw nsw i32 %.04150, %i.ad
   %i.ak = add nuw nsw i32 %i.aj, %i.ai            ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
-  %i.al = getelementptr inbounds [24 x i8], ptr %i.j, i64 %indvars.iv.next
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %i.al = getelementptr [24 x i8], ptr %i.j, i64 %indvars.iv
+  %2 = getelementptr i8, ptr %i.al, i64 24
   %narrow = tail call i16 @llvm.umin.i16(i16 %i.z, i16 2)
   %i.am = zext nneg i16 %narrow to i64
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.am
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.am
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !26 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !21

@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %bb
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.a
-  %i.k = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.65, i64 noundef -1, i64 noundef 6) #19
-  %i.l = add i64 %i.k, 1                          ; 4 uses
+  %i.k = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.65, i64 noundef -1, i64 noundef 6) #19 ; 2 uses
+  %i.l = add i64 %i.k, 1                          ; 3 uses
   %i.m = load i64, ptr %i.a, align 8, !tbaa !49   ; 2 uses
   %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %bb.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit
@@ -218,7 +218,8 @@ bb.e:                                             ; preds = %bb.d
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit: ; preds = %bb.d
   store i64 %i.l, ptr %i.a, align 8, !tbaa !49
   %i.o = load ptr, ptr %1, align 8, !tbaa !47
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.l
+  %2 = getelementptr i8, ptr %i.o, i64 %i.k
+  %i.p = getelementptr i8, ptr %2, i64 1
   store i8 0, ptr %i.p, align 1, !tbaa !48
   %i.q = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.65, i64 noundef 0, i64 noundef 6) #19 ; 2 uses
   switch i64 %i.q, label %bb.g [

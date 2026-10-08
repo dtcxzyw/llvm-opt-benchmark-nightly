@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.i = zext i8 %i.h to i32
   %i.j = tail call noundef i32 @tolower(i32 noundef %i.i) #18
   %i.k = trunc i32 %i.j to i8
-  %i.l = load i64, ptr %i.b, align 8, !tbaa !14   ; 4 uses
-  %i.m = add i64 %i.l, 1                          ; 3 uses
+  %i.l = load i64, ptr %i.b, align 8, !tbaa !14   ; 5 uses
+  %i.m = add i64 %i.l, 1                          ; 2 uses
   %i.n = load ptr, ptr %0, align 8, !tbaa !17     ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.a
   br i1 %i.o, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -236,7 +236,8 @@ _ZNSt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
   store i8 %i.k, ptr %i.u, align 1, !tbaa !16
   store i64 %i.m, ptr %i.b, align 8, !tbaa !14
   %i.v = load ptr, ptr %0, align 8, !tbaa !17
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.m
+  %2 = getelementptr i8, ptr %i.v, i64 %i.l
+  %i.w = getelementptr i8, ptr %2, i64 1
   store i8 0, ptr %i.w, align 1, !tbaa !16
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.x, %i.g
@@ -299,8 +300,8 @@ bb.b:                                             ; preds = %bb.a
   %i.i = zext i8 %i.h to i32
   %i.j = tail call noundef i32 @toupper(i32 noundef %i.i) #18
   %i.k = trunc i32 %i.j to i8
-  %i.l = load i64, ptr %i.b, align 8, !tbaa !14   ; 4 uses
-  %i.m = add i64 %i.l, 1                          ; 3 uses
+  %i.l = load i64, ptr %i.b, align 8, !tbaa !14   ; 5 uses
+  %i.m = add i64 %i.l, 1                          ; 2 uses
   %i.n = load ptr, ptr %0, align 8, !tbaa !17     ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.a
   br i1 %i.o, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -333,7 +334,8 @@ _ZNSt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
   store i8 %i.k, ptr %i.u, align 1, !tbaa !16
   store i64 %i.m, ptr %i.b, align 8, !tbaa !14
   %i.v = load ptr, ptr %0, align 8, !tbaa !17
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.m
+  %2 = getelementptr i8, ptr %i.v, i64 %i.l
+  %i.w = getelementptr i8, ptr %2, i64 1
   store i8 0, ptr %i.w, align 1, !tbaa !16
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.x, %i.g

@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.o, label %bb.c, label %local__find_closest_cue_.exit, !llvm.loop !31
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit.i
-  %.in = phi i64 [ %i.k, %.lr.ph ], [ %i.p, %.loopexit.i ]
-  %i.p = add nsw i64 %.in, -1                     ; 3 uses
-  %i.q = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.p ; 4 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 23
+  %.in = phi i64 [ %i.k, %.lr.ph ], [ %i.p, %.loopexit.i ] ; 2 uses
+  %i.p = add nsw i64 %.in, -1                     ; 2 uses
+  %i.q = getelementptr [32 x i8], ptr %i.m, i64 %.in ; 4 uses
+  %i.r = getelementptr i8, ptr %i.q, i64 -9
   %i.s = load i8, ptr %i.r, align 1, !tbaa !42    ; 2 uses
   %i.t = zext i8 %i.s to i32
   %.163.i = add nsw i32 %i.t, -1                  ; 2 uses
@@ -213,11 +213,11 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit.
   br i1 %.not69.i, label %.loopexit.i, label %.lr.ph66.i
 
 .lr.ph66.i:                                       ; preds = %bb.c
-  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %i.u = getelementptr i8, ptr %i.q, i64 -24
   %i.v = load i8, ptr %i.u, align 8, !tbaa !43
   %i.w = zext i8 %i.v to i32                      ; 2 uses
   %i.x = icmp ugt i32 %i.e, %i.w
-  %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 24 ; 2 uses
+  %i.y = getelementptr i8, ptr %i.q, i64 -8       ; 2 uses
   br i1 %i.x, label %.split67.loopexit70.i, label %.lr.ph66.split.i
 
 .lr.ph66.split.i:                                 ; preds = %.lr.ph66.i
@@ -246,7 +246,8 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph66.spl
 .split67.i:                                       ; preds = %bb.d, %.split67.loopexit70.i
   %.pre-phi.i = phi i64 [ %.pre90.i, %.split67.loopexit70.i ], [ %i.ab, %bb.d ]
   %i.ag = phi ptr [ %.pre89.i, %.split67.loopexit70.i ], [ %i.aa, %bb.d ]
-  %i.ah = load i64, ptr %i.q, align 8, !tbaa !47
+  %5 = getelementptr i8, ptr %i.q, i64 -32
+  %i.ah = load i64, ptr %5, align 8, !tbaa !47
   %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %.pre-phi.i
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !48
   %i.ak = add i64 %i.aj, %i.ah

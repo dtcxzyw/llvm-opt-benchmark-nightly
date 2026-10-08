@@ -204,15 +204,16 @@ bb.dc:                                            ; preds = %.split614, %.split6
   br label %bb.de
 
 bb.dd:                                            ; preds = %bb.de
+  %5 = add nsw i64 %indvars.iv.i690, -1           ; 2 uses
   %i.oy = trunc nuw i64 %5 to i32                 ; 2 uses
   %i.oz = icmp sgt i32 %i.oy, 0
   br i1 %i.oz, label %bb.de, label %_ZN17double_conversion17TrimTrailingZerosENS_6VectorIKcEE.exit, !llvm.loop !2
 
 bb.de:                                            ; preds = %.lr.ph692, %bb.dd
   %i.pa = phi i32 [ %.6191, %.lr.ph692 ], [ %i.oy, %bb.dd ]
-  %indvars.iv.i690 = phi i64 [ %i.ox, %.lr.ph692 ], [ %5, %bb.dd ]
-  %5 = add nsw i64 %indvars.iv.i690, -1           ; 3 uses
-  %i.pb = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
+  %indvars.iv.i690 = phi i64 [ %i.ox, %.lr.ph692 ], [ %5, %bb.dd ] ; 2 uses
+  %6 = getelementptr i8, ptr %i.d, i64 %indvars.iv.i690
+  %i.pb = getelementptr i8, ptr %6, i64 -1
   %i.pc = load i8, ptr %i.pb, align 1, !tbaa !23
   %.not.i = icmp eq i8 %i.pc, 48
   br i1 %.not.i, label %bb.dd, label %._ZN17double_conversion17TrimTrailingZerosENS_6VectorIKcEE.exit_crit_edge693, !llvm.loop !2
@@ -353,7 +354,7 @@ bb.d:                                             ; preds = %.lr.ph.i._crit_edge
 
 ._crit_edge535:                                   ; preds = %bb.c, %.lr.ph.i._crit_edge.thread, %.lr.ph.i._crit_edge
   %i.af = phi i16 [ %i.x, %.lr.ph.i._crit_edge ], [ %.pre, %.lr.ph.i._crit_edge.thread ], [ %.pre, %bb.c ] ; 3 uses
-  %i.ag = phi ptr [ %i.w, %.lr.ph.i._crit_edge ], [ %1, %.lr.ph.i._crit_edge.thread ], [ %1, %bb.c ] ; 5 uses
+  %i.ag = phi ptr [ %i.w, %.lr.ph.i._crit_edge ], [ %1, %.lr.ph.i._crit_edge.thread ], [ %1, %bb.c ] ; 3 uses
   switch i16 %i.af, label %bb.j [
     i16 43, label %bb.e
     i16 45, label %bb.e
@@ -366,16 +367,16 @@ bb.e:                                             ; preds = %._crit_edge535, %._
   br i1 %.not6.not.i238, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit244, label %.lr.ph.i239
 
 .lr.ph.i239:                                      ; preds = %bb.e, %bb.f
-  %.0338.idx = phi i64 [ %.0338.add, %bb.f ], [ 2, %bb.e ] ; 4 uses
-  %.0338.ptr = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0338.idx
+  %.0338.idx = phi i64 [ %.0338.add, %bb.f ], [ 2, %bb.e ] ; 3 uses
+  %.0338.ptr = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0338.idx ; 4 uses
   %i.ai = load i16, ptr %.0338.ptr, align 2, !tbaa !41 ; 2 uses
   %i.aj = zext i16 %i.ai to i32
   %i.ak = tail call fastcc noundef zeroext i1 @_ZN17double_conversionL12isWhitespaceEi(i32 noundef %i.aj)
   br i1 %i.ak, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.i239
-  %.0338.add = add nuw nsw i64 %.0338.idx, 2      ; 2 uses
-  %.ptr = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0338.add
+  %.0338.add = add nuw nsw i64 %.0338.idx, 2
+  %.ptr = getelementptr inbounds nuw i8, ptr %.0338.ptr, i64 2
   %.not.not.i243 = icmp eq ptr %.ptr, %i.g
   br i1 %.not.not.i243, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit244, label %.lr.ph.i239, !llvm.loop !3
 
@@ -395,13 +396,12 @@ bb.h:                                             ; preds = %bb.g
   br label %.thread
 
 bb.i:                                             ; preds = %bb.g
-  %.0338.ptr.le = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0338.idx ; 2 uses
-  store ptr %.0338.ptr.le, ptr %i.a, align 8, !tbaa !40
+  store ptr %.0338.ptr, ptr %i.a, align 8, !tbaa !40
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge535
   %i.ap = phi i16 [ %i.ai, %bb.i ], [ %i.af, %._crit_edge535 ]
-  %i.aq = phi ptr [ %.0338.ptr.le, %bb.i ], [ %i.ag, %._crit_edge535 ]
+  %i.aq = phi ptr [ %.0338.ptr, %bb.i ], [ %i.ag, %._crit_edge535 ]
   %.0180 = phi i1 [ %i.ah, %bb.i ], [ false, %._crit_edge535 ] ; 8 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !26 ; 2 uses
@@ -804,15 +804,16 @@ bb.db:                                            ; preds = %.split608, %.split6
   br label %bb.dd
 
 bb.dc:                                            ; preds = %bb.dd
+  %5 = add nsw i64 %indvars.iv.i688, -1           ; 2 uses
   %i.no = trunc nuw i64 %5 to i32                 ; 2 uses
   %i.np = icmp sgt i32 %i.no, 0
   br i1 %i.np, label %bb.dd, label %_ZN17double_conversion17TrimTrailingZerosENS_6VectorIKcEE.exit, !llvm.loop !2
 
 bb.dd:                                            ; preds = %.lr.ph690, %bb.dc
   %i.nq = phi i32 [ %.6191, %.lr.ph690 ], [ %i.no, %bb.dc ]
-  %indvars.iv.i688 = phi i64 [ %i.nn, %.lr.ph690 ], [ %5, %bb.dc ]
-  %5 = add nsw i64 %indvars.iv.i688, -1           ; 3 uses
-  %i.nr = getelementptr inbounds nuw i8, ptr %i.c, i64 %5
+  %indvars.iv.i688 = phi i64 [ %i.nn, %.lr.ph690 ], [ %5, %bb.dc ] ; 2 uses
+  %6 = getelementptr i8, ptr %i.c, i64 %indvars.iv.i688
+  %i.nr = getelementptr i8, ptr %6, i64 -1
   %i.ns = load i8, ptr %i.nr, align 1, !tbaa !23
   %.not.i = icmp eq i8 %i.ns, 48
   br i1 %.not.i, label %bb.dc, label %._ZN17double_conversion17TrimTrailingZerosENS_6VectorIKcEE.exit_crit_edge691, !llvm.loop !2

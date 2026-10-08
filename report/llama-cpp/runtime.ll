@@ -205,7 +205,7 @@ bb.gq:                                            ; preds = %bb.go
 bb.gr:                                            ; preds = %.lr.ph1449, %_ZNSt12__shared_ptrIN5jinja14value_object_tELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.jt23
   %i.adh = phi i64 [ %i.abd, %.lr.ph1449 ], [ %i.beo, %_ZNSt12__shared_ptrIN5jinja14value_object_tELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.jt23 ]
   %.0651447 = phi i1 [ true, %.lr.ph1449 ], [ %.166.jt23, %_ZNSt12__shared_ptrIN5jinja14value_object_tELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.jt23 ] ; 2 uses
-  %storemerge1446 = phi i64 [ 0, %.lr.ph1449 ], [ %i.aeb, %_ZNSt12__shared_ptrIN5jinja14value_object_tELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.jt23 ] ; 13 uses
+  %storemerge1446 = phi i64 [ 0, %.lr.ph1449 ], [ %i.aeb, %_ZNSt12__shared_ptrIN5jinja14value_object_tELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.jt23 ] ; 14 uses
   %i.adi = load i8, ptr @g_jinja_debug, align 1, !tbaa !40, !range !85, !noundef !86
   %i.adj = trunc nuw i8 %i.adi to i1
   br i1 %i.adj, label %bb.gs, label %bb.gt
@@ -259,7 +259,7 @@ bb.gt:                                            ; preds = %bb.gs, %bb.gr
   store i8 0, ptr %i.acw, align 1, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #31
-  %i.aeb = add nuw i64 %storemerge1446, 1         ; 7 uses
+  %i.aeb = add nuw i64 %storemerge1446, 1         ; 6 uses
   %i.aec = invoke noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #35
           to label %bb.gu unwind label %.thread1737 ; 13 uses
 
@@ -662,10 +662,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit551: ; preds = %.c
   br i1 %.not177, label %bb.li, label %bb.lm
 
 bb.li:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit551
-  %i.aut = getelementptr inbounds nuw [16 x i8], ptr %i.aun, i64 %i.aeb ; 2 uses
-  %i.auu = getelementptr inbounds nuw i8, ptr %i.aut, i64 8
+  %i.aut = getelementptr inbounds nuw [16 x i8], ptr %i.aun, i64 %storemerge1446 ; 2 uses
+  %73 = getelementptr inbounds nuw i8, ptr %i.aut, i64 16
+  %i.auu = getelementptr inbounds nuw i8, ptr %i.aut, i64 24
   %i.auv = load ptr, ptr %i.auu, align 8, !tbaa !88 ; 2 uses
-  %i.auw = load <2 x ptr>, ptr %i.aut, align 8, !tbaa !87
+  %i.auw = load <2 x ptr>, ptr %73, align 8, !tbaa !87
   store <2 x ptr> %i.auw, ptr %65, align 16, !tbaa !87
   %.not.i.i.i556 = icmp eq ptr %i.auv, null
   br i1 %.not.i.i.i556, label %_ZNSt10shared_ptrIN5jinja7value_tEEC2ERKS2_.exit558, label %bb.lj

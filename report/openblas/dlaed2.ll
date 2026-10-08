@@ -202,6 +202,7 @@ vec.epilog.middle.block759:                       ; preds = %vec.epilog.vector.b
   br label %bb.j
 
 .lr.ph492:                                        ; preds = %bb.k
+  %indvars.iv.next592 = add nsw i64 %indvars.iv591697, -1 ; 2 uses
   %i.lp = getelementptr [4 x i8], ptr %12, i64 %indvars.iv593696
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !35 ; 3 uses
   %i.lr = sext i32 %i.lq to i64                   ; 2 uses
@@ -234,13 +235,13 @@ vec.epilog.middle.block759:                       ; preds = %vec.epilog.vector.b
 bb.j:                                             ; preds = %.lr.ph698, %.lr.ph492
   %i.mf = phi i64 [ %i.lg, %.lr.ph698 ], [ %i.lr, %.lr.ph492 ]
   %i.mg = phi i32 [ %i.lf, %.lr.ph698 ], [ %i.lq, %.lr.ph492 ] ; 2 uses
-  %indvars.iv591697 = phi i64 [ %i.lo, %.lr.ph698 ], [ %indvars.iv.next592, %.lr.ph492 ]
+  %indvars.iv591697 = phi i64 [ %i.lo, %.lr.ph698 ], [ %indvars.iv.next592, %.lr.ph492 ] ; 2 uses
   %indvars.iv593696 = phi i64 [ 1, %.lr.ph698 ], [ %indvars.iv.next594, %.lr.ph492 ] ; 3 uses
-  %indvars.iv.next592 = add nsw i64 %indvars.iv591697, -1 ; 3 uses
   %i.mh = getelementptr inbounds [4 x i8], ptr %i.t, i64 %i.mf
   store i32 4, ptr %i.mh, align 4, !tbaa !35
-  %i.mi = getelementptr inbounds [4 x i8], ptr %i.s, i64 %indvars.iv.next592
-  store i32 %i.mg, ptr %i.mi, align 4, !tbaa !35
+  %i.mi = getelementptr [4 x i8], ptr %i.s, i64 %indvars.iv591697
+  %17 = getelementptr i8, ptr %i.mi, i64 -4
+  store i32 %i.mg, ptr %17, align 4, !tbaa !35
   %i.mj = load i32, ptr %1, align 4, !tbaa !35    ; 3 uses
   %i.mk = zext i32 %i.mj to i64
   %i.ml = icmp eq i64 %indvars.iv593696, %i.mk

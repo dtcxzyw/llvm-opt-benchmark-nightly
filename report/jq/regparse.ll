@@ -205,14 +205,15 @@ onig_name_to_group_numbers.exit.thread25..loopexit_crit_edge: ; preds = %onig_na
   br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
+  %indvars.iv.next = add nsw i64 %indvars.iv38, -1
   %i.q = icmp sgt i64 %indvars.iv38, 1
   br i1 %i.q, label %.lr.ph, label %.loopexit, !llvm.loop !180
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv38 = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.o, %.lr.ph.preheader ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv38, -1 ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.next
-  %i.r = load i32, ptr %5, align 4, !tbaa !26     ; 2 uses
+  %indvars.iv38 = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.o, %.lr.ph.preheader ] ; 3 uses
+  %5 = getelementptr [4 x i8], ptr %i.l, i64 %indvars.iv38
+  %6 = getelementptr i8, ptr %5, i64 -4
+  %i.r = load i32, ptr %6, align 4, !tbaa !26     ; 2 uses
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.s
   %i.u = load i32, ptr %i.t, align 4, !tbaa !26
@@ -615,7 +616,7 @@ bb.n:                                             ; preds = %bb.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.l, %bb.m, %bb.n, %bb.h
-  %i.ci = shl i32 %.0172.lcssa, 3                 ; 2 uses
+  %i.ci = shl i32 %.0172.lcssa, 3                 ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.0164276, i64 12 ; 7 uses
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !112 ; 3 uses
   %i.cl = add i32 %i.ci, 12                       ; 5 uses
@@ -647,9 +648,8 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s, %bb.q
   %.promoted236 = phi i32 [ %.0, %bb.s ], [ %i.ck, %bb.q ] ; 2 uses
-  %3 = add nsw i64 %i.cp, 4                       ; 2 uses
-  %4 = trunc i64 %3 to i32                        ; 4 uses
-  %i.cu = icmp ult i32 %.promoted236, %4
+  %3 = add i32 %i.ci, 8                           ; 4 uses
+  %i.cu = icmp ult i32 %.promoted236, %3
   br i1 %i.cu, label %.preheader220, label %._crit_edge245
 
 ._crit_edge245:                                   ; preds = %bb.t
@@ -659,7 +659,7 @@ bb.t:                                             ; preds = %bb.s, %bb.q
 .preheader220:                                    ; preds = %bb.t, %.preheader220
   %i.cv = phi i32 [ %i.cw, %.preheader220 ], [ %.promoted236, %bb.t ]
   %i.cw = shl i32 %i.cv, 1                        ; 4 uses
-  %i.cx = icmp ult i32 %i.cw, %4
+  %i.cx = icmp ult i32 %i.cw, %3
   br i1 %i.cx, label %.preheader220, label %bb.u, !llvm.loop !203
 
 bb.u:                                             ; preds = %.preheader220
@@ -677,11 +677,11 @@ bb.v:                                             ; preds = %._crit_edge245, %bb
   store i32 %.2178, ptr %i.dd, align 1
   %i.de = getelementptr inbounds nuw i8, ptr %.0164276, i64 8 ; 6 uses
   %i.df = load i32, ptr %i.de, align 8, !tbaa !113
-  %i.dg = icmp ult i32 %i.df, %4
+  %i.dg = icmp ult i32 %i.df, %3
   br i1 %i.dg, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  store i32 %4, ptr %i.de, align 8, !tbaa !113
+  store i32 %3, ptr %i.de, align 8, !tbaa !113
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
@@ -710,7 +710,8 @@ bb.y:                                             ; preds = %.preheader219
 
 bb.z:                                             ; preds = %._crit_edge246, %bb.y
   %i.dq = phi ptr [ %.pre247, %._crit_edge246 ], [ %i.do, %bb.y ]
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 %3
+  %4 = getelementptr i8, ptr %i.dq, i64 %i.cp
+  %i.dr = getelementptr i8, ptr %4, i64 4
   store i32 %.1175, ptr %i.dr, align 1
   %i.ds = load i32, ptr %i.de, align 8, !tbaa !113
   %i.dt = icmp ult i32 %i.ds, %i.cl

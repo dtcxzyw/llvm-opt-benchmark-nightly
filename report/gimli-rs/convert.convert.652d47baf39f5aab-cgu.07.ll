@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.h:                                             ; preds = %bb.c
-  %i.m = add i64 %2, -1                           ; 2 uses
+  %i.m = add i64 %2, -1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 152
   %i.o = load i64, ptr %i.n, align 8, !noundef !5
   %i.p = icmp ult i64 %i.m, %i.o
@@ -233,8 +233,9 @@ bb.k:                                             ; preds = %bb.h
 bb.l:                                             ; preds = %bb.h
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.v = load ptr, ptr %i.u, align 16, !nonnull !5, !noundef !5
-  %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.v, i64 %i.m
-  tail call fastcc void @_RNvXsM_NtNtCsi68uqYEhoRA_5gimli4read4unitINtB5_14AttributeValueINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 16 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.w) #23
+  %i.w = getelementptr [32 x i8], ptr %i.v, i64 %2
+  %3 = getelementptr i8, ptr %i.w, i64 -32
+  tail call fastcc void @_RNvXsM_NtNtCsi68uqYEhoRA_5gimli4read4unitINtB5_14AttributeValueINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 16 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(32) %3) #23
   br label %bb.f
 }
 

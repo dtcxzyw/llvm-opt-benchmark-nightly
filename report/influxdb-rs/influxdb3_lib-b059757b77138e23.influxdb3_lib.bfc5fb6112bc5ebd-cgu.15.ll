@@ -204,7 +204,7 @@ bb.fm:                                            ; preds = %_RNCNvMs2_Cs9bTpyRJ
   br i1 %i.sv, label %bb.fo, label %.invoke.i.i.i.i.i.i
 
 bb.fn:                                            ; preds = %bb.fm
-  %i.sw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i.i, i64 10
+  %i.sw = getelementptr i8, ptr %.sroa.0.0.i.i.i.i.i.i.i, i64 10
   %i.sx = load i8, ptr %i.sw, align 1, !alias.scope !7838, !noalias !7839, !noundef !13
   %i.sy = icmp sgt i8 %i.sx, -65
   br i1 %i.sy, label %bb.fo, label %.invoke.i.i.i.i.i.i
@@ -238,7 +238,8 @@ bb.fq:                                            ; preds = %bb.fp, %.split7.i.i
   br i1 %i.tg, label %bb.fr, label %_RINvCsgwXesxSsAwT_6multer14parse_boundaryReECsgsNUVCRJO2f_13influxdb3_lib.exit.thread9.i.i.i.i.i
 
 bb.fr:                                            ; preds = %bb.fq
-  %i.th = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i.i, i64 10 ; 2 uses
+  %i.th = getelementptr i8, ptr %.sroa.0.0.i.i.i.i.i.i.i, i64 10 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.th) ]
   %i.ti = load i64, ptr %i.th, align 1
   %i.tj = xor i64 %i.ti, 8386094127413096294
   %i.tk = getelementptr i8, ptr %i.th, i64 8
@@ -641,7 +642,7 @@ bb.aqh:                                           ; preds = %bb.aqg
   store i64 0, ptr %.sroa.5258.0..sroa_idx.i.i, align 16, !alias.scope !12910, !noalias !12911
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8152.sroa.0.0.copyload249.i.i) ]
   %.sroa.0157.0.copyload158.i.i = load i64, ptr %i.fft, align 8, !noalias !12912 ; 2 uses
-  %.sroa.7.0..sroa_idx159.i.i = getelementptr inbounds nuw i8, ptr %i.fft, i64 8
+  %.sroa.7.0..sroa_idx159.i.i = getelementptr i8, ptr %i.fft, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i.i, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx159.i.i, i64 56, i1 false), !noalias !12912
   %.not.i.i87.i = icmp eq i64 %.sroa.0157.0.copyload158.i.i, -1
   br i1 %.not.i.i87.i, label %bb.aqi, label %bb.aqk, !prof !16

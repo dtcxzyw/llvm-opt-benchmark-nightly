@@ -170,7 +170,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !137)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !136, !noalias !138, !noundef !3 ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !136, !noalias !138, !noundef !3 ; 8 uses
   switch i64 %i.b, label %bb.i [
     i64 1, label %bb.b
     i64 0, label %_RINvMs3_NtCsffXo9NmvYC7_8indexmap3mapINtB6_8IndexMapNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexuINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCs3CTDFEpwZhE_10rustc_hash8FxHasherEE16swap_remove_fullBO_EBS_.exit
@@ -440,9 +440,10 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtCsffXo9NmvYC7_8indexmap6BucketNtNtC
   %i.dy = getelementptr inbounds nuw [24 x i8], ptr %i.bn, i64 %i.dw ; 3 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !192 ; 2 uses
-  %i.dz = add nsw i64 %i.b, -1                    ; 4 uses
-  %i.ea = getelementptr inbounds nuw [24 x i8], ptr %i.bn, i64 %i.dz
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dy, ptr noundef nonnull align 8 dereferenceable(24) %i.ea, i64 24, i1 false), !noalias !191
+  %i.dz = add nsw i64 %i.b, -1                    ; 3 uses
+  %i.ea = getelementptr [24 x i8], ptr %i.bn, i64 %i.b
+  %2 = getelementptr i8, ptr %i.ea, i64 -24
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dy, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !noalias !191
   store i64 %i.dz, ptr %i.a, align 8, !alias.scope !193, !noalias !194
   %i.eb = icmp samesign ult i64 %i.dw, %i.dz
   br i1 %i.eb, label %bb.q, label %_RINvMs3_NtCsffXo9NmvYC7_8indexmap3mapINtB6_8IndexMapNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexuINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCs3CTDFEpwZhE_10rustc_hash8FxHasherEE16swap_remove_fullBO_EBS_.exit
@@ -845,10 +846,10 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCsC8Capf
   br label %bb.g
 
 .lr.ph:                                           ; preds = %bb.g, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB16_7sort_byNCINvMs1_B18_NtB18_5Zalsa3newNtNtB1a_13database_impl12DatabaseImplE0E0EB1a_.exit
-  %.sroa.02.138 = phi i64 [ %6, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB16_7sort_byNCINvMs1_B18_NtB18_5Zalsa3newNtNtB1a_13database_impl12DatabaseImplE0E0EB1a_.exit ], [ %.sroa.02.0, %bb.g ] ; 2 uses
+  %.sroa.02.138 = phi i64 [ %7, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB16_7sort_byNCINvMs1_B18_NtB18_5Zalsa3newNtNtB1a_13database_impl12DatabaseImplE0E0EB1a_.exit ], [ %.sroa.02.0, %bb.g ] ; 4 uses
   %.sroa.023.137 = phi i64 [ %.sroa.0.0.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB16_7sort_byNCINvMs1_B18_NtB18_5Zalsa3newNtNtB1a_13database_impl12DatabaseImplE0E0EB1a_.exit ], [ %.sroa.023.0, %bb.g ] ; 4 uses
-  %6 = add i64 %.sroa.02.138, -1                  ; 4 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %6 = getelementptr i8, ptr %i.a, i64 %.sroa.02.138
+  %i.cy = getelementptr i8, ptr %6, i64 -1
   %i.cz = load i8, ptr %i.cy, align 1, !noundef !3
   %.not29 = icmp ult i8 %i.cz, %.sroa.021.0
   br i1 %.not29, label %._crit_edge, label %bb.r
@@ -863,8 +864,10 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCsC8Capf
   br i1 %i.k, label %bb.y, label %bb.z
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
-  %i.dd = load i64, ptr %i.dc, align 8, !noundef !3 ; 3 uses
+  %7 = add i64 %.sroa.02.138, -1                  ; 2 uses
+  %i.dc = getelementptr [8 x i8], ptr %i.b, i64 %.sroa.02.138
+  %8 = getelementptr i8, ptr %i.dc, i64 -8
+  %i.dd = load i64, ptr %8, align 8, !noundef !3  ; 3 uses
   %i.de = lshr i64 %i.dd, 1                       ; 5 uses
   %i.df = lshr i64 %.sroa.023.137, 1              ; 3 uses
   %i.dg = add nuw i64 %i.de, %i.df                ; 5 uses
@@ -915,7 +918,7 @@ bb.x:                                             ; preds = %bb.u
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB16_7sort_byNCINvMs1_B18_NtB18_5Zalsa3newNtNtB1a_13database_impl12DatabaseImplE0E0EB1a_.exit: ; preds = %bb.t, %bb.w
   %.sroa.0.0.i = phi i64 [ %i.dv, %bb.w ], [ %i.do, %bb.t ] ; 2 uses
-  %i.ec = icmp ugt i64 %6, 1
+  %i.ec = icmp ugt i64 %7, 1
   br i1 %i.ec, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge

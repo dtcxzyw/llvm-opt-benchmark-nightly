@@ -205,8 +205,10 @@ bb.bw:                                            ; preds = %bb.bv
 
 .lr.ph1061:                                       ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
   %i.ok = phi i64 [ %i.oi, %.lr.ph.i.i.i ], [ 1, %.lr.ph.i.i.i.preheader ] ; 3 uses
-  %i.ol = getelementptr inbounds nuw [4 x i8], ptr %i.ny, i64 %i.ok
-  %i.om = load i32, ptr %i.ol, align 4, !tbaa !324, !noalias !1362 ; 2 uses
+  %.01219.i.i.i1061 = phi i64 [ %i.ok, %.lr.ph.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader ]
+  %i.ol = getelementptr [4 x i8], ptr %i.ny, i64 %.01219.i.i.i1061
+  %75 = getelementptr i8, ptr %i.ol, i64 4
+  %i.om = load i32, ptr %75, align 4, !tbaa !324, !noalias !1362 ; 2 uses
   %i.on = icmp eq i32 %i.om, 0
   br i1 %i.on, label %.lr.ph.i.i.i, label %._crit_edge.i.loopexit.i.i, !llvm.loop !1355
 

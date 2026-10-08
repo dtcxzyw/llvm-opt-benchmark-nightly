@@ -204,9 +204,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.f
   %.idx.i = shl nsw i64 %i.aa, 2                  ; 2 uses
   %i.ae = getelementptr inbounds i8, ptr %.val31.i, i64 %.idx.i ; 3 uses
-  %.idx10.i = shl nsw i64 %i.ab, 2
-  %i.af = add nsw i64 %.idx10.i, 4                ; 2 uses
-  %i.ag = getelementptr inbounds i8, ptr %.val31.i, i64 %i.af ; 5 uses
+  %.idx10.i = shl nsw i64 %i.ab, 2                ; 2 uses
+  %i.af = add nsw i64 %.idx10.i, 4
+  %6 = getelementptr i8, ptr %.val31.i, i64 %.idx10.i
+  %i.ag = getelementptr i8, ptr %6, i64 4         ; 5 uses
   %i.ah = ptrtoint ptr %i.ag to i64               ; 3 uses
   %.not.i.i.i = icmp eq i64 %.idx.i, %i.af
   br i1 %.not.i.i.i, label %.loopexit, label %bb.h
@@ -609,9 +610,10 @@ bb.g:                                             ; preds = %bb.f
   %.val31.i = load ptr, ptr %.val, align 8, !tbaa !130 ; 2 uses
   %.idx.i = mul nsw i64 %i.aa, 24                 ; 2 uses
   %i.ae = getelementptr inbounds i8, ptr %.val31.i, i64 %.idx.i ; 2 uses
-  %.idx10.i = mul nsw i64 %i.ab, 24
-  %i.af = add nsw i64 %.idx10.i, 24               ; 2 uses
-  %i.ag = getelementptr inbounds i8, ptr %.val31.i, i64 %i.af ; 3 uses
+  %.idx10.i = mul nsw i64 %i.ab, 24               ; 2 uses
+  %i.af = add nsw i64 %.idx10.i, 24
+  %6 = getelementptr i8, ptr %.val31.i, i64 %.idx10.i
+  %i.ag = getelementptr i8, ptr %6, i64 24        ; 3 uses
   %i.ah = ptrtoint ptr %i.ag to i64               ; 3 uses
   %.not.i.i.i = icmp eq i64 %.idx.i, %i.af
   br i1 %.not.i.i.i, label %.loopexit, label %bb.h
@@ -1014,9 +1016,10 @@ bb.g:                                             ; preds = %bb.f
   %.val31.i = load ptr, ptr %.val, align 8, !tbaa !142 ; 2 uses
   %.idx.i = shl nsw i64 %i.aa, 4                  ; 2 uses
   %i.ae = getelementptr inbounds i8, ptr %.val31.i, i64 %.idx.i ; 2 uses
-  %.idx10.i = shl nsw i64 %i.ab, 4
-  %i.af = add nsw i64 %.idx10.i, 16               ; 2 uses
-  %i.ag = getelementptr inbounds i8, ptr %.val31.i, i64 %i.af ; 4 uses
+  %.idx10.i = shl nsw i64 %i.ab, 4                ; 2 uses
+  %i.af = add nsw i64 %.idx10.i, 16
+  %7 = getelementptr i8, ptr %.val31.i, i64 %.idx10.i
+  %i.ag = getelementptr i8, ptr %7, i64 16        ; 4 uses
   %i.ah = ptrtoint ptr %i.ag to i64               ; 3 uses
   %.not.i.i.i = icmp eq i64 %.idx.i, %i.af
   br i1 %.not.i.i.i, label %.loopexit, label %bb.h
@@ -1419,7 +1422,8 @@ bb.d:                                             ; preds = %.noexc
   %i.y = add nsw i64 %i.x, %i.u                   ; 2 uses
   %i.z = icmp slt i64 %i.x, 0                     ; 3 uses
   %i.aa = sub nsw i64 0, %i.w
-  %i.ab = select i1 %i.z, i64 %i.y, i64 %i.u      ; 2 uses
+  %6 = select i1 %i.z, i64 %i.y, i64 %i.u         ; 2 uses
+  %i.ab = select i1 %i.z, i64 %i.u, i64 %i.y      ; 2 uses
   %i.ac = select i1 %i.z, i64 %i.aa, i64 %i.w
   %i.ad = icmp eq i64 %i.ac, 1
   br i1 %i.ad, label %bb.e, label %.preheader.i
@@ -1436,20 +1440,20 @@ bb.d:                                             ; preds = %.noexc
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %6 = select i1 %i.z, i64 %i.u, i64 %i.y
-  %i.ah = add nsw i64 %6, 1                       ; 2 uses
-  %.not.i.i.i = icmp eq i64 %i.ab, %i.ah
+  %i.ah = add nsw i64 %i.ab, 1
+  %.not.i.i.i = icmp eq i64 %6, %i.ah
   br i1 %.not.i.i.i, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = load ptr, ptr %i.j, align 8, !tbaa !166 ; 2 uses
-  %i.aj = getelementptr inbounds i8, ptr %i.ai, i64 %i.ab
-  %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.ah
+  %7 = getelementptr inbounds i8, ptr %i.ai, i64 %6
+  %i.aj = getelementptr i8, ptr %i.ai, i64 %i.ab
+  %i.ak = getelementptr i8, ptr %i.aj, i64 1
   %i.al = load ptr, ptr %i.k, align 8, !tbaa !166 ; 2 uses
   %i.am = ptrtoint ptr %i.al to i64               ; 2 uses
   %i.an = ptrtoint ptr %i.ak to i64
   %i.ao = sub i64 %i.am, %i.an
-  %i.ap = getelementptr inbounds i8, ptr %i.aj, i64 %i.ao ; 3 uses
+  %i.ap = getelementptr inbounds i8, ptr %7, i64 %i.ao ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.al, %i.ap
   br i1 %.not.i.i.i.i, label %bb.h, label %bb.g
 

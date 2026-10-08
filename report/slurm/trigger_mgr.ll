@@ -202,14 +202,15 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.i = load i8, ptr %i.h, align 1               ; 2 uses
   %.not = icmp eq i8 %i.i, 0
   br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !17
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
   %i.j = phi i8 [ %i.e, %.lr.ph ], [ %i.i, %bb.b ]
   %i.k = sext i8 %i.j to i64
   %i.l = getelementptr inbounds [2 x i8], ptr %i.g, i64 %i.k

@@ -202,13 +202,14 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.g, label %.lr.ph7, label %.critedge2
 
 bb.c:                                             ; preds = %.lr.ph7
+  %1 = add i64 %.06, -1                           ; 2 uses
   %i.h = icmp ugt i64 %1, %.016.lcssa
   br i1 %i.h, label %.lr.ph7, label %.critedge2, !llvm.loop !78
 
 .lr.ph7:                                          ; preds = %.critedge, %bb.c
-  %.06 = phi i64 [ %1, %bb.c ], [ %.8.val, %.critedge ] ; 2 uses
-  %1 = add i64 %.06, -1                           ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 %1
+  %.06 = phi i64 [ %1, %bb.c ], [ %.8.val, %.critedge ] ; 3 uses
+  %2 = getelementptr i8, ptr %.0.val, i64 %.06
+  %i.i = getelementptr i8, ptr %2, i64 -1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !26
   %i.k = zext i8 %i.j to i32
   %i.l = tail call i32 @isspace(i32 noundef %i.k) #26

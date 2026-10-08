@@ -205,7 +205,7 @@ bb.cx:                                            ; preds = %bb.cw
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %bb.cx
-  %.0823.ph = phi i64 [ 0, %bb.cx ], [ %.0823.ph.be, %.outer.backedge ] ; 13 uses
+  %.0823.ph = phi i64 [ 0, %bb.cx ], [ %.0823.ph.be, %.outer.backedge ] ; 14 uses
   %.0818.ph = phi i64 [ %i.adt, %bb.cx ], [ %.0818.ph.be, %.outer.backedge ]
   %.0815.ph = phi i64 [ 0, %bb.cx ], [ %.0815.ph.be, %.outer.backedge ]
   br label %.outer22085
@@ -608,7 +608,7 @@ bb.fj:                                            ; preds = %bb.fh
   br i1 %i.all, label %bb.fr, label %bb.fk
 
 bb.fk:                                            ; preds = %._crit_edge
-  %i.alm = add i64 %.0823.ph, -1                  ; 4 uses
+  %i.alm = add i64 %.0823.ph, -1                  ; 3 uses
   %i.aln = icmp ult i64 %.0823.ph, 33
   br i1 %i.aln, label %bb.fm, label %bb.fl, !prof !10, !nosanitize !9
 
@@ -617,7 +617,7 @@ bb.fl:                                            ; preds = %bb.fk
   unreachable, !nosanitize !9
 
 bb.fm:                                            ; preds = %bb.fk
-  %i.alo = getelementptr inbounds nuw [16 x i8], ptr %24, i64 %i.alm ; 2 uses
+  %i.alo = getelementptr [16 x i8], ptr %24, i64 %.0823.ph ; 2 uses
   %i.alp = shl nuw nsw i64 %i.alm, 4
   %i.alq = add i64 %i.alp, %i.adv, !nosanitize !9 ; 3 uses
   %.not986 = icmp ult i64 %i.alq, %i.adv, !nosanitize !9
@@ -636,8 +636,9 @@ bb.fp:                                            ; preds = %bb.fo
   unreachable, !nosanitize !9
 
 bb.fq:                                            ; preds = %bb.fo
-  %i.alr = load i64, ptr %i.alo, align 16, !tbaa !166
-  %i.als = getelementptr inbounds nuw i8, ptr %i.alo, i64 8
+  %25 = getelementptr i8, ptr %i.alo, i64 -16
+  %i.alr = load i64, ptr %25, align 16, !tbaa !166
+  %i.als = getelementptr i8, ptr %i.alo, i64 -8
   %i.alt = load i64, ptr %i.als, align 8, !tbaa !167
   br label %.outer.backedge
 

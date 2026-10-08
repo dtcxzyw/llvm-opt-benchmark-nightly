@@ -103,7 +103,7 @@ bb.a:
   br i1 %epil.iter.cmp.not, label %.loopexit144, label %.lr.ph.epil, !llvm.loop !33
 
 .loopexit144:                                     ; preds = %.loopexit144.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
-  %i.ag = add i64 %1, -1                          ; 8 uses
+  %i.ag = add i64 %1, -1                          ; 7 uses
   %i.ah = icmp sgt i64 %1, 1
   br i1 %i.ah, label %.lr.ph179.preheader, label %._crit_edge180
 
@@ -360,8 +360,9 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge180:                                   ; preds = %._crit_edge175, %.loopexit144
   %.0127.lcssa = phi ptr [ %5, %.loopexit144 ], [ %i.dj, %._crit_edge175 ]
   store i64 %i.ag, ptr %.0127.lcssa, align 8, !tbaa !29
-  %i.dk = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ag
-  %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !24
+  %i.dk = getelementptr [8 x i8], ptr %0, i64 %1
+  %6 = getelementptr i8, ptr %i.dk, i64 -8
+  %i.dl = load ptr, ptr %6, align 8, !tbaa !24
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %4
   %i.dn = load double, ptr %i.dm, align 8, !tbaa !26
   %i.do = fcmp oeq double %i.dn, 0.000000e+00

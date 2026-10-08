@@ -202,13 +202,15 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 define void @_RNvMs2_NtCs36qfJazsBC0_6boxcar7bucketsINtB5_7BucketsINtNtNtB7_3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEKj3a_E18alloc_bucket_afterB1g_(ptr nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 1, 0) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %1, i1 true) ; 2 uses
-  %i.c = sub nsw i64 59, %i.b                     ; 4 uses
+  %i.b = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %1, i1 true) ; 3 uses
+  %i.c = sub nsw i64 59, %i.b                     ; 3 uses
   %i.d = icmp ugt i64 %i.c, 57
   br i1 %i.d, label %_RINvNtCs36qfJazsBC0_6boxcar7buckets13allocate_raceINtNtNtB4_3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEEB1e_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.c
+  %2 = sub nsw i64 58, %i.b
+  %i.e = getelementptr [8 x i8], ptr %0, i64 %2
+  %3 = getelementptr i8, ptr %i.e, i64 8
   %i.f = shl nuw nsw i64 32, %i.c                 ; 3 uses
   %i.g = icmp samesign ugt i64 %i.c, 52
   br i1 %i.g, label %.split5.i.i, label %.split.i.i
@@ -230,7 +232,7 @@ bb.c:                                             ; preds = %.split.i.i
   unreachable
 
 _RINvNtCs36qfJazsBC0_6boxcar7buckets14allocate_sliceINtNtNtB4_3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEEB1f_.exit.i: ; preds = %.split.i.i
-  %i.l = cmpxchg ptr %i.e, ptr null, ptr %i.j release monotonic, align 8
+  %i.l = cmpxchg ptr %3, ptr null, ptr %i.j release monotonic, align 8
   %.sroa.18.0.in.i.i = extractvalue { ptr, i1 } %i.l, 1
   br i1 %.sroa.18.0.in.i.i, label %_RINvNtCs36qfJazsBC0_6boxcar7buckets13allocate_raceINtNtNtB4_3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEEB1e_.exit, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEEB1l_.exit.i.i.i.preheader
 
@@ -633,7 +635,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.y
   %i.ez = load ptr, ptr %i.bj, align 8, !nonnull !4, !noundef !4
-  %i.fa = getelementptr inbounds nuw [16 x i8], ptr %i.ez, i64 %i.ek
+  %i.fa = getelementptr [16 x i8], ptr %i.ez, i64 %i.ek
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i32 %i.br, ptr %i.e, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)

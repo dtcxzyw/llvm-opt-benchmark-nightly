@@ -204,15 +204,16 @@ b3NameMap_metadata_offset.exit.us.us:             ; preds = %b3NameMap_metadata_
   %.024274.us.us = phi i64 [ %i.u, %b3NameMap_total_alloc_size.exit.us.us ], [ %1, %b3NameMap_metadata_offset.exit.lr.ph ] ; 3 uses
   store ptr %i.p, ptr %i.f, align 8, !tbaa !21
   %i.q = load i64, ptr %i.a, align 8, !tbaa !20
-  %i.r = shl i64 %i.q, 3
-  %4 = add i64 %i.r, 8                            ; 2 uses
-  %5 = ptrtoint ptr %i.p to i64, !nosanitize !10  ; 3 uses
-  %i.s = add i64 %4, %5, !nosanitize !10          ; 2 uses
-  %.not36.us.us = icmp ult i64 %i.s, %5, !nosanitize !10
+  %i.r = shl i64 %i.q, 3                          ; 2 uses
+  %4 = ptrtoint ptr %i.p to i64, !nosanitize !10  ; 3 uses
+  %5 = add i64 %4, 8
+  %i.s = add i64 %5, %i.r, !nosanitize !10        ; 2 uses
+  %.not36.us.us = icmp ult i64 %i.s, %4, !nosanitize !10
   br i1 %.not36.us.us, label %.split286.us, label %bb.b, !prof !11, !nosanitize !10
 
 bb.b:                                             ; preds = %b3NameMap_metadata_offset.exit.us.us
-  %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 %4 ; 2 uses
+  %6 = getelementptr i8, ptr %i.p, i64 %i.r
+  %i.t = getelementptr i8, ptr %6, i64 8          ; 2 uses
   store ptr %i.t, ptr %i.g, align 8, !tbaa !22
   %i.u = shl i64 %.024274.us.us, 1                ; 4 uses
   %i.v = add i64 %i.u, 8
@@ -346,21 +347,22 @@ b3NameMap_total_alloc_size.exit.us.us:            ; preds = %.split.us278.us
 
 b3NameMap_metadata_offset.exit:                   ; preds = %b3NameMap_metadata_offset.exit.lr.ph
   store ptr %i.e, ptr %i.f, align 8, !tbaa !21
-  %i.cr = shl i64 %i.b, 3
-  %6 = add i64 %i.cr, 8                           ; 2 uses
+  %i.cr = shl i64 %i.b, 3                         ; 2 uses
   %7 = ptrtoint ptr %i.e to i64, !nosanitize !10  ; 3 uses
-  %i.cs = add i64 %6, %7, !nosanitize !10         ; 2 uses
+  %8 = add i64 %7, 8
+  %i.cs = add i64 %8, %i.cr, !nosanitize !10      ; 2 uses
   %.not36 = icmp ult i64 %i.cs, %7, !nosanitize !10
   br i1 %.not36, label %.split286.us, label %bb.i, !prof !11, !nosanitize !10
 
 .split286.us:                                     ; preds = %b3NameMap_metadata_offset.exit.us.us, %b3NameMap_metadata_offset.exit
-  %.us-phi = phi i64 [ %7, %b3NameMap_metadata_offset.exit ], [ %5, %b3NameMap_metadata_offset.exit.us.us ]
+  %.us-phi = phi i64 [ %7, %b3NameMap_metadata_offset.exit ], [ %4, %b3NameMap_metadata_offset.exit.us.us ]
   %.us-phi287 = phi i64 [ %i.cs, %b3NameMap_metadata_offset.exit ], [ %i.s, %b3NameMap_metadata_offset.exit.us.us ]
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @113, i64 %.us-phi, i64 %.us-phi287) #10, !nosanitize !10
   unreachable, !nosanitize !10
 
 bb.i:                                             ; preds = %b3NameMap_metadata_offset.exit
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.e, i64 %6 ; 4 uses
+  %9 = getelementptr i8, ptr %i.e, i64 %i.cr
+  %i.ct = getelementptr i8, ptr %9, i64 8         ; 5 uses
   store ptr %i.ct, ptr %i.g, align 8, !tbaa !22
   %i.cu = shl i64 %1, 1                           ; 2 uses
   %i.cv = add i64 %i.cu, 8
@@ -369,9 +371,13 @@ bb.i:                                             ; preds = %b3NameMap_metadata_
   %i.cx = add i64 %1, 4611686018427387904
   %i.cy = icmp sgt i64 %i.cx, -1
   %i.cz = ptrtoint ptr %i.ct to i64, !nosanitize !10 ; 3 uses
-  %i.da = add i64 %i.cu, %i.cz, !nosanitize !10   ; 2 uses
+  %i.da = add i64 %i.cu, %i.cz, !nosanitize !10   ; 3 uses
+  %10 = icmp ne ptr %i.ct, null, !nosanitize !10  ; 2 uses
+  %11 = icmp eq i64 %i.da, 0
+  %12 = xor i1 %10, %11
   %i.db = icmp uge i64 %i.da, %i.cz, !nosanitize !10
-  %i.dc = and i1 %i.cy, %i.db, !nosanitize !10
+  %13 = and i1 %i.cy, %i.db, !nosanitize !10
+  %i.dc = and i1 %12, %13, !nosanitize !10
   br i1 %i.dc, label %bb.j, label %.split289.us, !prof !14, !nosanitize !10
 
 .split289.us:                                     ; preds = %bb.b, %bb.i
@@ -384,7 +390,8 @@ bb.j:                                             ; preds = %bb.i
   %i.dd = ptrtoint ptr %i.cw to i64, !nosanitize !10 ; 2 uses
   %i.de = and i64 %i.dd, 1, !nosanitize !10
   %i.df = icmp eq i64 %i.de, 0, !nosanitize !10
-  br i1 %i.df, label %._crit_edge, label %.split293.us, !prof !14, !nosanitize !10
+  %14 = and i1 %10, %i.df
+  br i1 %14, label %._crit_edge, label %.split293.us, !prof !14, !nosanitize !10
 
 .split293.us:                                     ; preds = %bb.c, %bb.j
   %.us-phi294 = phi i64 [ %i.dd, %bb.j ], [ %i.ai, %bb.c ]

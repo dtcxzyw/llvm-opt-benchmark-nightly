@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = extractvalue { i64, i64 } %i.b, 1        ; 5 uses
+  %i.e = extractvalue { i64, i64 } %i.b, 1        ; 6 uses
   %i.f = icmp ult i64 %i.e, %i.a
   tail call void @llvm.assume(i1 %i.f)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %i.e
@@ -213,7 +213,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.h, label %bb.e, label %bb.b
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = add nuw i64 %i.e, 1                      ; 6 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %i.e ; 2 uses
+  %i.i = add nuw i64 %i.e, 1                      ; 4 uses
   %.not.i = icmp ult i64 %i.i, %1
   br i1 %.not.i, label %bb.f, label %.split.i
 
@@ -222,14 +223,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %_RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.i
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.l = load i8, ptr %i.k, align 1, !alias.scope !86, !noundef !4
   %i.m = icmp sgt i8 %i.l, -65
   br i1 %i.m, label %_RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit, label %bb.g
 
 _RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit: ; preds = %.split.i, %bb.f
   %i.n = sub nuw i64 %1, %i.i
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.i
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 1
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %bb.c, %_RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit
@@ -426,7 +427,7 @@ bb.i:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !115
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !112
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !112
-  %i.bi = load ptr, ptr %i.an, align 8, !nonnull !4, !noundef !4 ; 7 uses
+  %i.bi = load ptr, ptr %i.an, align 8, !nonnull !4, !noundef !4 ; 6 uses
   %i.bj = load i64, ptr %i.ao, align 8, !noundef !4 ; 9 uses
   br label %bb.k
 
@@ -445,7 +446,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.bn, label %bb.l, label %.loopexit43
 
 bb.l:                                             ; preds = %.noexc
-  %i.bo = extractvalue { i64, i64 } %i.bl, 1      ; 5 uses
+  %i.bo = extractvalue { i64, i64 } %i.bl, 1      ; 6 uses
   %i.bp = icmp ult i64 %i.bo, %i.bk
   call void @llvm.assume(i1 %i.bp)
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bo
@@ -454,7 +455,8 @@ bb.l:                                             ; preds = %.noexc
   br i1 %i.br, label %bb.m, label %bb.j
 
 bb.m:                                             ; preds = %bb.l
-  %i.bs = add nuw i64 %i.bo, 1                    ; 6 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bo ; 2 uses
+  %i.bs = add nuw i64 %i.bo, 1                    ; 4 uses
   %.not.i.i = icmp ult i64 %i.bs, %i.bj
   br i1 %.not.i.i, label %bb.n, label %.split.i.i
 
@@ -463,14 +465,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bt, label %_RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bs
+  %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 1
   %i.bv = load i8, ptr %i.bu, align 1, !alias.scope !117, !noundef !4
   %i.bw = icmp sgt i8 %i.bv, -65
   br i1 %i.bw, label %_RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i, label %bb.o
 
 _RNvXs9_NtNtCsj6eKBz9Db1c_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i: ; preds = %bb.n, %.split.i.i
   %i.bx = sub nuw i64 %i.bj, %i.bs
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bs
+  %i.by = getelementptr inbounds nuw i8, ptr %4, i64 1
   br label %.loopexit43
 
 bb.o:                                             ; preds = %bb.n, %.split.i.i

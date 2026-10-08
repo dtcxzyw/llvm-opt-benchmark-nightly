@@ -197,16 +197,16 @@ bb.k:                                             ; preds = %.lr.ph546, %bb.k
   br label %bb.x
 
 bb.l:                                             ; preds = %.lr.ph552, %bb.w
-  %indvars.iv654 = phi i64 [ 0, %.lr.ph552 ], [ %indvars.iv.next655, %bb.w ] ; 3 uses
+  %indvars.iv654 = phi i64 [ 0, %.lr.ph552 ], [ %indvars.iv.next655, %bb.w ] ; 4 uses
   %.0439551 = phi i32 [ 0, %.lr.ph552 ], [ %.1440, %bb.w ]
   %.0442550 = phi i32 [ 0, %.lr.ph552 ], [ %.2444, %bb.w ]
   %i.bz = load ptr, ptr %i.bx, align 8, !tbaa !55 ; 2 uses
   %i.ca = shl nuw nsw i64 %indvars.iv654, 1       ; 2 uses
   %.idx759 = mul nuw nsw i64 %indvars.iv654, 24
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.idx759 ; 3 uses
-  %3 = or disjoint i64 %i.ca, 1                   ; 2 uses
-  %.idx760 = mul nuw nsw i64 %3, 12
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.idx760 ; 2 uses
+  %3 = mul nuw i64 %indvars.iv654, 24
+  %4 = getelementptr inbounds nuw i8, ptr %i.bz, i64 %3 ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 12
   %.val508 = load float, ptr %i.cb, align 4, !tbaa !24 ; 2 uses
   %i.cd = getelementptr i8, ptr %i.cb, i64 8
   %.val509 = load float, ptr %i.cd, align 4, !tbaa !24 ; 2 uses
@@ -262,7 +262,7 @@ _ZL20classifyOffMeshPointPKfS0_S0_.exit:          ; preds = %bb.l, %bb.m, %bb.n,
   %i.cq = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.ca ; 2 uses
   store i8 %.0.i, ptr %i.cq, align 1, !tbaa !27
   %.val = load float, ptr %i.cc, align 4, !tbaa !24 ; 2 uses
-  %i.cr = getelementptr i8, ptr %i.cc, i64 8
+  %i.cr = getelementptr i8, ptr %4, i64 20
   %.val503 = load float, ptr %i.cr, align 4, !tbaa !24 ; 2 uses
   %i.cs = fcmp oge float %.val, %i.bs
   %i.ct = fcmp oge float %.val503, %i.bu
@@ -292,7 +292,8 @@ switch.lookup:                                    ; preds = %_ZL20classifyOffMes
 _ZL20classifyOffMeshPointPKfS0_S0_.exit515:       ; preds = %_ZL20classifyOffMeshPointPKfS0_S0_.exit, %switch.lookup
   %i.dg = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %_ZL20classifyOffMeshPointPKfS0_S0_.exit ]
   %i.dh = phi i8 [ %switch.load812, %switch.lookup ], [ -1, %_ZL20classifyOffMeshPointPKfS0_S0_.exit ]
-  %i.di = getelementptr inbounds nuw i8, ptr %i.q, i64 %3
+  %5 = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.ca
+  %i.di = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !27
   br i1 %i.cp, label %bb.u, label %bb.w
 

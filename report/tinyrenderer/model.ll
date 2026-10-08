@@ -204,9 +204,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.c, %bb.b
-  %.1.i.i.in = phi i64 [ %i.b, %bb.b ], [ %.1.i.i, %bb.c ] ; 3 uses
-  %.1.i.i = add i64 %.1.i.i.in, -1                ; 10 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %.1.i.i
+  %.1.i.i.in = phi i64 [ %i.b, %bb.b ], [ %.1.i.i, %bb.c ] ; 5 uses
+  %.1.i.i = add i64 %.1.i.i.in, -1                ; 8 uses
+  %5 = getelementptr i8, ptr %i.c, i64 %.1.i.i.in
+  %i.d = getelementptr i8, ptr %5, i64 -1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !29
   %memchr.char0cmp.not = icmp eq i8 %i.e, 46
   br i1 %memchr.char0cmp.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit, label %bb.c
@@ -264,7 +265,8 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds = %._crit_edge.i.i.i, %bb.f, %bb.g
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   store i64 %.1.i.i, ptr %i.m, align 8, !tbaa !28, !alias.scope !101
-  %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %.1.i.i
+  %6 = getelementptr i8, ptr %i.k, i64 %.1.i.i.in
+  %i.n = getelementptr i8, ptr %6, i64 -1
   store i8 0, ptr %i.n, align 1, !tbaa !29
   call void @llvm.experimental.noalias.scope.decl(metadata !102)
   %i.o = load ptr, ptr %0, align 8, !tbaa !16, !noalias !102 ; 3 uses

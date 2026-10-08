@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 3 uses
   %2 = alloca %struct.cpu, align 8                ; 9 uses
   %i.c = alloca [1024 x i8], align 16             ; 6 uses
-  %i.d = alloca [8 x [64 x i8]], align 16         ; 7 uses
+  %i.d = alloca [8 x [64 x i8]], align 16         ; 6 uses
   %i.e = alloca [1024 x i8], align 16             ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
@@ -335,17 +335,17 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.n
   %.068.idx91 = phi i64 [ 0, %bb.m ], [ %.068.add, %bb.n ] ; 3 uses
-  %.068.ptr92 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.068.idx91 ; 2 uses
+  %.068.ptr92 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.068.idx91 ; 3 uses
   %i.az = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.068.ptr92) #16
   %i.ba = call i32 @strncmp(ptr noundef nonnull %i.an, ptr noundef nonnull %.068.ptr92, i64 noundef %i.az) #16
   %i.bb = icmp ne i32 %i.ba, 0                    ; 2 uses
-  %.068.add = add nuw nsw i64 %.068.idx91, 64     ; 3 uses
+  %.068.add = add nuw nsw i64 %.068.idx91, 64     ; 2 uses
   %i.bc = icmp samesign ult i64 %.068.idx91, 448
   %i.bd = select i1 %i.bb, i1 %i.bc, i1 false
   br i1 %i.bd, label %bb.n, label %bb.o, !llvm.loop !27
 
 bb.o:                                             ; preds = %bb.n
-  %.068.ptr.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.068.add ; 2 uses
+  %.068.ptr.le = getelementptr inbounds nuw i8, ptr %.068.ptr92, i64 64 ; 2 uses
   %i.be = trunc i64 %i.ay to i32
   br i1 %i.bb, label %.loopexit86.preheader, label %bb.p
 
@@ -697,11 +697,12 @@ uv__ifaddr_exclude.exit79:                        ; preds = %bb.i
 bb.j:                                             ; preds = %uv__ifaddr_exclude.exit79
   %i.al = getelementptr inbounds nuw i8, ptr %.162102, i64 8
   %i.am = load ptr, ptr %i.al, align 8            ; 2 uses
-  %i.an = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.am) #16
-  %i.ao = add i64 %i.an, 1                        ; 2 uses
+  %i.an = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.am) #16 ; 2 uses
+  %i.ao = add i64 %i.an, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.058101, ptr nonnull align 1 %i.am, i64 %i.ao, i1 false)
   store ptr %.058101, ptr %.063100, align 8
-  %i.ap = getelementptr inbounds nuw i8, ptr %.058101, i64 %i.ao
+  %2 = getelementptr i8, ptr %.058101, i64 %i.an
+  %i.ap = getelementptr i8, ptr %2, i64 1
   %i.aq = load ptr, ptr %i.ah, align 8            ; 3 uses
   %i.ar = load i16, ptr %i.aq, align 2
   %i.as = icmp eq i16 %i.ar, 10

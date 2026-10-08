@@ -204,8 +204,8 @@ _ZNSt11_Deque_baseIPK8FileLineSaIS2_EED2Ev.exit:  ; preds = %bb.a, %_ZNSt11_Dequ
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE17_M_initialize_mapEm(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit:
-  %i.a = lshr i64 %1, 6                           ; 2 uses
-  %2 = add nuw nsw i64 %i.a, 1                    ; 2 uses
+  %i.a = lshr i64 %1, 6                           ; 3 uses
+  %.neg = xor i64 %i.a, -1
   %i.b = tail call i64 @llvm.umax.i64(i64 %i.a, i64 5)
   %.sroa.speculated = add nuw nsw i64 %i.b, 3     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -214,12 +214,13 @@ _ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit:
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #31 ; 2 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !298
   %i.f = load i64, ptr %i.c, align 8, !tbaa !302
-  %3 = sub i64 %i.f, %2
-  %i.g = lshr i64 %3, 1
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.g ; 6 uses
-  %.idx = shl nuw nsw i64 %2, 3
-  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx ; 2 uses
-  br label %.lr.ph.i
+  %2 = add i64 %i.f, %.neg
+  %i.g = lshr i64 %2, 1
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.g ; 7 uses
+  %3 = getelementptr [8 x i8], ptr %i.h, i64 %i.a ; 3 uses
+  %i.i = getelementptr i8, ptr %3, i64 8          ; 2 uses
+  %4 = icmp ult ptr %i.h, %i.i
+  br i1 %4, label %.lr.ph.i, label %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit
 
 .lr.ph.i:                                         ; preds = %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE16_M_allocate_nodeEv.exit.i
   %.011.i = phi ptr [ %i.k, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE16_M_allocate_nodeEv.exit.i ], [ %i.h, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit ] ; 4 uses
@@ -230,7 +231,7 @@ _ZNSt11_Deque_baseIPK8FileLineSaIS2_EE16_M_allocate_nodeEv.exit.i: ; preds = %.l
   store ptr %i.j, ptr %.011.i, align 8, !tbaa !301
   %i.k = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
   %i.l = icmp ult ptr %i.k, %i.i
-  br i1 %i.l, label %.lr.ph.i, label %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit, !llvm.loop !582
+  br i1 %i.l, label %.lr.ph.i, label %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit.loopexit, !llvm.loop !582
 
 bb.a:                                             ; preds = %.lr.ph.i
   %i.m = landingpad { ptr, i32 }
@@ -288,29 +289,33 @@ bb.e:                                             ; preds = %.body
 bb.f:                                             ; preds = %bb.e
   resume { ptr, i32 } %i.ab
 
-_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit: ; preds = %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE16_M_allocate_nodeEv.exit.i
+_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit.loopexit: ; preds = %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE16_M_allocate_nodeEv.exit.i
+  %.pre = load ptr, ptr %i.h, align 8, !tbaa !301
+  %.pre18 = load ptr, ptr %3, align 8, !tbaa !301
+  br label %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit
+
+_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit: ; preds = %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit.loopexit, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit
+  %5 = phi ptr [ %.pre18, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit.loopexit ], [ undef, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit ] ; 3 uses
+  %6 = phi ptr [ %.pre, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_create_nodesEPPS2_S6_.exit.loopexit ], [ undef, %_ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit ] ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.h, ptr %i.ad, align 8, !tbaa !303
-  %4 = load ptr, ptr %i.h, align 8, !tbaa !301    ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %4, ptr %i.ae, align 8, !tbaa !583
-  %i.af = getelementptr inbounds nuw i8, ptr %4, i64 512
+  store ptr %6, ptr %i.ae, align 8, !tbaa !583
+  %i.af = getelementptr inbounds nuw i8, ptr %6, i64 512
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !584
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %5 = getelementptr inbounds i8, ptr %i.i, i64 -8 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store ptr %5, ptr %i.ai, align 8, !tbaa !303
-  %6 = load ptr, ptr %5, align 8, !tbaa !301      ; 3 uses
+  store ptr %3, ptr %i.ai, align 8, !tbaa !303
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr %6, ptr %i.aj, align 8, !tbaa !583
-  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 512
+  store ptr %5, ptr %i.aj, align 8, !tbaa !583
+  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 512
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !584
-  store ptr %4, ptr %i.ac, align 8, !tbaa !585
+  store ptr %6, ptr %i.ac, align 8, !tbaa !585
   %i.am = and i64 %1, 63
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.am
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.am
   store ptr %i.an, ptr %i.ah, align 8, !tbaa !586
   ret void
 

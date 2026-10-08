@@ -205,7 +205,7 @@ bb.a:
 define hidden void @mi_debug_show_arenas() local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca [2624 x i8], align 16             ; 24 uses
+  %i.b = alloca [2624 x i8], align 16             ; 23 uses
   %i.c = tail call ptr @mi_heap_main() #17
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !40   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 32
@@ -384,7 +384,7 @@ bb.p:                                             ; preds = %.sink.split.i.i, %b
   %switch.masked = trunc i40 %switch.downshift to i8
   %.057.i.i = select i1 %i.ca, i8 %switch.masked, i8 32
   store i8 %.057.i.i, ptr %.0.sroa.phi.i.i, align 1, !tbaa !15
-  %i.cb = getelementptr inbounds nuw i8, ptr %.0.sroa.phi.i.i, i64 1
+  %i.cb = getelementptr i8, ptr %.0.sroa.phi.i.i, i64 1
   store i8 32, ptr %i.cb, align 1, !tbaa !15
   br label %bb.r
 
@@ -449,6 +449,7 @@ bb.x:                                             ; preds = %_mi_memset.exit.i.i
   br label %bb.as
 
 .peel.begin.i.i.i:                                ; preds = %bb.bm
+  %0 = getelementptr i8, ptr %i.b, i64 %.4.i.i
   %i.cp = add i64 %.26434.i.i, 63                 ; 5 uses
   %.val.i.peel.i.i.i = load ptr, ptr %i.av, align 8, !tbaa !29
   %i.cq = shl i64 %i.cp, 16
@@ -597,7 +598,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.aj
   br i1 %.not73.peel.i.i.i, label %mi_debug_show_page_bfield.exit.i.i, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ho
+  %i.ex = getelementptr i8, ptr %0, i64 1
   %i.ey = call i32 (ptr, i64, ptr, ...) @_mi_snprintf(ptr noundef nonnull %i.ex, i64 noundef 32, ptr noundef nonnull @.str.30, i32 noundef %.364.peel.i.i.i) #17
   %i.ez = sext i32 %i.ey to i64
   %i.fa = add i64 %i.ho, %i.ez
@@ -761,11 +762,11 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
-  %.4.i.i = phi i64 [ %.3.i.i, %bb.bk ], [ %i.hm, %bb.bl ] ; 2 uses
+  %.4.i.i = phi i64 [ %.3.i.i, %bb.bk ], [ %i.hm, %bb.bl ] ; 3 uses
   %.160.i.i.i = phi i32 [ %.05983.i.i.i, %bb.bk ], [ %.364.i.i.i, %bb.bl ] ; 2 uses
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.b, i64 %.4.i.i
+  %i.hn = getelementptr i8, ptr %i.b, i64 %.4.i.i
   store i8 %.3.i.i.i, ptr %i.hn, align 1, !tbaa !15
-  %i.ho = add nuw nsw i64 %.4.i.i, 1              ; 4 uses
+  %i.ho = add nuw nsw i64 %.4.i.i, 1              ; 3 uses
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %i.hp = add nsw i64 %.166.i.i.i, -1             ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, 63
@@ -773,11 +774,11 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
 
 mi_debug_show_page_bfield.exit.i.i:               ; preds = %bb.ar, %bb.aq
   %.5.i.i = phi i64 [ %i.ho, %bb.aq ], [ %i.fa, %bb.ar ] ; 2 uses
-  %i.hq = getelementptr inbounds nuw i8, ptr %i.b, i64 %.5.i.i
+  %i.hq = getelementptr i8, ptr %i.b, i64 %.5.i.i ; 2 uses
   store i8 %.3.peel.i.i.i, ptr %i.hq, align 1, !tbaa !15
-  %i.hr = add nuw nsw i64 %.5.i.i, 1              ; 2 uses
+  %i.hr = add nuw nsw i64 %.5.i.i, 1
   %i.hs = add nsw i64 %.166.peel.i.i.i, -1
-  %i.ht = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.hr
+  %i.ht = getelementptr i8, ptr %i.hq, i64 1
   %i.hu = call i32 (ptr, i64, ptr, ...) @_mi_snprintf(ptr noundef nonnull %i.ht, i64 noundef 32, ptr noundef nonnull @.str.30, i32 noundef 37) #17
   %i.hv = sext i32 %i.hu to i64
   %i.hw = add i64 %i.hr, %i.hv                    ; 2 uses

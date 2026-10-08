@@ -204,10 +204,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ad, label %.lr.ph53, label %._crit_edge54
 
 .lr.ph53:                                         ; preds = %._crit_edge, %.lr.ph53
-  %indvars.iv59 = phi i64 [ %indvars.iv.next60, %.lr.ph53 ], [ %i.g, %._crit_edge ] ; 2 uses
-  %indvars.iv.next60 = add nsw i64 %indvars.iv59, 1 ; 3 uses
-  %i.ae = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next60
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !11
+  %indvars.iv59 = phi i64 [ %indvars.iv.next60, %.lr.ph53 ], [ %i.g, %._crit_edge ] ; 3 uses
+  %indvars.iv.next60 = add nsw i64 %indvars.iv59, 1 ; 2 uses
+  %i.ae = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv59
+  %3 = getelementptr i8, ptr %i.ae, i64 4
+  %i.af = load i32, ptr %3, align 4, !tbaa !11
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv59
   store i32 %i.af, ptr %i.ag, align 4, !tbaa !11
   %i.ah = load i32, ptr %i.c, align 4, !tbaa !11
@@ -317,7 +318,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.0.i = phi ptr [ %i.t, %bb.g ], [ %0, %bb.f ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %.sink67.i ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 %.sink66.i ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.i ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.i ; 4 uses
   %i.x = load i32, ptr %i.v, align 4, !tbaa !11
   %.not47.i = icmp slt i32 %.053.lcssa, %i.x
   br i1 %.not47.i, label %bb.i, label %test_memio_drop_message.exit
@@ -389,11 +390,11 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph53.i:                                       ; preds = %._crit_edge.i, %.lr.ph53.i
   %indvars.iv59.i = phi i64 [ %indvars.iv.next60.i, %.lr.ph53.i ], [ %i.m, %._crit_edge.i ] ; 2 uses
-  %indvars.iv.next60.i = add nuw nsw i64 %indvars.iv59.i, 1 ; 3 uses
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv.next60.i
-  %4 = load i32, ptr %i.au, align 4, !tbaa !11
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv59.i
-  store i32 %4, ptr %5, align 4, !tbaa !11
+  %indvars.iv.next60.i = add nuw nsw i64 %indvars.iv59.i, 1 ; 2 uses
+  %i.au = getelementptr [4 x i8], ptr %i.w, i64 %indvars.iv59.i ; 2 uses
+  %4 = getelementptr i8, ptr %i.au, i64 4
+  %5 = load i32, ptr %4, align 4, !tbaa !11
+  store i32 %5, ptr %i.au, align 4, !tbaa !11
   %i.av = load i32, ptr %i.v, align 4, !tbaa !11
   %i.aw = add nsw i32 %i.av, -1                   ; 2 uses
   %i.ax = sext i32 %i.aw to i64

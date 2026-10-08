@@ -205,17 +205,17 @@ bb.bh:                                            ; preds = %.lr.ph609.i
   unreachable
 
 .lr.ph609.i.preheader:                            ; preds = %.preheader.i, %.lr.ph609.i
-  %.0375602.i43 = phi i64 [ %i.fn, %.lr.ph609.i ], [ 0, %.preheader.i ]
+  %.0375602.i43 = phi i64 [ %i.fn, %.lr.ph609.i ], [ 0, %.preheader.i ] ; 2 uses
   %.0372603.i42 = phi i1 [ %.1373.i, %.lr.ph609.i ], [ false, %.preheader.i ]
   %.0370604.i41 = phi i1 [ %i.fw, %.lr.ph609.i ], [ false, %.preheader.i ]
   %.0368605.i40 = phi i1 [ %i.fs, %.lr.ph609.i ], [ false, %.preheader.i ]
   %.0362606.i39 = phi i8 [ %i.fq, %.lr.ph609.i ], [ 0, %.preheader.i ]
   %.0358607.i38 = phi ptr [ %.1359.i, %.lr.ph609.i ], [ @_ZN8nanobind6detailL18nb_type_vectorcallEP7_objectPKS2_mS2_, %.preheader.i ]
   %.2349608.i37 = phi ptr [ %.3350.i, %.lr.ph609.i ], [ %.1348.i, %.preheader.i ] ; 3 uses
-  %i.fk = phi ptr [ %i.gc, %.lr.ph609.i ], [ %i.fi, %.preheader.i ] ; 2 uses
+  %i.fk = phi ptr [ %18, %.lr.ph609.i ], [ %i.fi, %.preheader.i ] ; 2 uses
   %i.fl = phi i32 [ %i.gd, %.lr.ph609.i ], [ %i.fj, %.preheader.i ] ; 5 uses
   %i.fm = phi ptr [ %i.gb, %.lr.ph609.i ], [ %i.fi, %.preheader.i ]
-  %i.fn = add nuw nsw i64 %.0375602.i43, 1        ; 3 uses
+  %i.fn = add nuw nsw i64 %.0375602.i43, 1        ; 2 uses
   %i.fo = icmp eq i32 %i.fl, 71
   %i.fp = zext i1 %i.fo to i8
   %i.fq = or i8 %.0362606.i39, %i.fp              ; 2 uses
@@ -244,8 +244,9 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %.1373.i = phi i1 [ true, %bb.bi ], [ %.0372603.i42, %bb.bj ] ; 2 uses
   %.1359.i = phi ptr [ %i.fz, %bb.bi ], [ %.0358607.i38, %bb.bj ] ; 2 uses
   %.3350.i = phi ptr [ %.2349608.i37, %bb.bi ], [ %i.ga, %bb.bj ] ; 2 uses
-  %i.gc = getelementptr inbounds nuw [16 x i8], ptr %i.gb, i64 %i.fn ; 2 uses
-  %i.gd = load i32, ptr %i.gc, align 8            ; 2 uses
+  %i.gc = getelementptr [16 x i8], ptr %i.gb, i64 %.0375602.i43
+  %18 = getelementptr i8, ptr %i.gc, i64 16       ; 2 uses
+  %i.gd = load i32, ptr %18, align 8              ; 2 uses
   %.not408.i = icmp eq i32 %i.gd, 0
   br i1 %.not408.i, label %._crit_edge610.loopexit.i, label %.lr.ph609.i
 

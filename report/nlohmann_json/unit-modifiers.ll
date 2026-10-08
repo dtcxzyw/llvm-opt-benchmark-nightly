@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit: ; preds
   %i.g = load ptr, ptr %1, align 8, !tbaa !72
   %i.h = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %i.g, i64 noundef %i.b) ; 0 uses
   %i.i = load i8, ptr %2, align 1, !tbaa !32
-  %i.j = load i64, ptr %i.c, align 8, !tbaa !49   ; 4 uses
-  %i.k = add i64 %i.j, 1                          ; 3 uses
+  %i.j = load i64, ptr %i.c, align 8, !tbaa !49   ; 5 uses
+  %i.k = add i64 %i.j, 1                          ; 2 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !72     ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.n = icmp eq ptr %i.l, %i.m
@@ -237,7 +237,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.i: ; preds = %bb.
   store i8 %i.i, ptr %i.t, align 1, !tbaa !32
   store i64 %i.k, ptr %i.c, align 8, !tbaa !49
   %i.u = load ptr, ptr %0, align 8, !tbaa !72
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.k
+  %5 = getelementptr i8, ptr %i.u, i64 %i.j
+  %i.v = getelementptr i8, ptr %5, i64 1
   store i8 0, ptr %i.v, align 1, !tbaa !32
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !49   ; 2 uses

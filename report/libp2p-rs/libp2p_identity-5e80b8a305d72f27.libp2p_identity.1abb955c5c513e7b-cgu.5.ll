@@ -204,10 +204,12 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2iisHxfqoT7_15libp2p_iden
   br i1 %i.n, label %._crit_edge.thread.i.i, label %._crit_edge.i.i
 
 ._crit_edge.thread.i.i:                           ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2iisHxfqoT7_15libp2p_identity.exit.i.i
-  %i.o = add i64 %1, -1                           ; 2 uses
+  %i.o = add i64 %1, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 0, i64 %i.o, i1 false)
-  %i.p = add i64 %i.i, %i.o                       ; 2 uses
-  %scevgep.i.i = getelementptr i8, ptr %i.k, i64 %i.p
+  %4 = add i64 %i.i, %1                           ; 2 uses
+  %i.p = add i64 %4, -1
+  %5 = getelementptr i8, ptr %i.k, i64 %4
+  %scevgep.i.i = getelementptr i8, ptr %5, i64 -1
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.thread.i.i, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs2iisHxfqoT7_15libp2p_identity.exit.i.i

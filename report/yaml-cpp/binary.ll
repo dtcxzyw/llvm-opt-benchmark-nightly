@@ -199,10 +199,11 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc:                                           ; preds = %bb.a
   %i.d = mul i64 %i.b, 3
-  %i.e = lshr i64 %i.d, 2                         ; 3 uses
-  %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
+  %i.e = lshr i64 %i.d, 2                         ; 4 uses
+  %i.f = add nuw nsw i64 %i.e, 1
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #11 ; 16 uses
-  %i.h = getelementptr i8, ptr %i.g, i64 %i.f     ; 6 uses
+  %2 = getelementptr i8, ptr %i.g, i64 %i.e
+  %i.h = getelementptr i8, ptr %2, i64 1          ; 6 uses
   store i8 0, ptr %i.g, align 1, !tbaa !14
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 1 ; 2 uses
   %i.j = icmp eq i64 %i.e, 0

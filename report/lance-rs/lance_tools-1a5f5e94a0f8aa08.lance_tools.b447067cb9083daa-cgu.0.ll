@@ -204,7 +204,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !alias.scope !202, !noalias !203, !nonnull !4, !noundef !4 ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.p = load i64, ptr %i.o, align 8, !alias.scope !202, !noalias !203, !noundef !4 ; 8 uses
+  %i.p = load i64, ptr %i.o, align 8, !alias.scope !202, !noalias !203, !noundef !4 ; 9 uses
   %.idx.i.i = shl nuw nsw i64 %i.p, 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx.i.i
   %i.r = icmp eq i64 %i.p, 0
@@ -261,7 +261,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCsdRkAOB6wJ8u_12clap_builder4ut
   %i.aq = add nsw i64 %i.p, %i.ap
   %i.ar = shl nuw nsw i64 %i.aq, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr nonnull align 8 %i.ao, i64 %i.ar, i1 false), !noalias !208
-  %i.as = add nsw i64 %i.p, -1                    ; 5 uses
+  %i.as = add nsw i64 %i.p, -1                    ; 4 uses
   store i64 %i.as, ptr %i.o, align 8, !alias.scope !209, !noalias !203
   tail call void @llvm.experimental.noalias.scope.decl(metadata !210)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i)
@@ -359,9 +359,10 @@ bb.g:                                             ; preds = %_RNvXsm_NtNtCsdRkAO
 
 bb.h:                                             ; preds = %._crit_edge.i.i, %_RNvXsm_NtNtCsdRkAOB6wJ8u_12clap_builder4util2idNtB5_2IdNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit._crit_edge.i.i
   %i.bp = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.n, %_RNvXsm_NtNtCsdRkAOB6wJ8u_12clap_builder4util2idNtB5_2IdNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit._crit_edge.i.i ]
-  %i.bq = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %i.as ; 2 uses
-  store ptr %i.al, ptr %i.bq, align 8, !noalias !225
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
+  %i.bq = getelementptr [16 x i8], ptr %i.bp, i64 %i.p ; 2 uses
+  %2 = getelementptr i8, ptr %i.bq, i64 -16
+  store ptr %i.al, ptr %2, align 8, !noalias !225
+  %i.br = getelementptr i8, ptr %i.bq, i64 -8
   store i64 %i.an, ptr %i.br, align 8, !noalias !227
   store i64 %i.p, ptr %i.o, align 8, !alias.scope !224, !noalias !225
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
@@ -764,7 +765,7 @@ _RNvXNtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtNtCs3PfUT2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !645
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !646
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %.pre = load i64, ptr %.phi.trans.insert, align 8 ; 3 uses
+  %.pre = load i64, ptr %.phi.trans.insert, align 8 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !645
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   %i.af = icmp ult i64 %.pre, 384307168202282326
@@ -847,18 +848,19 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtC
 
 bb.p:                                             ; preds = %_RNvXNtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtNtCs3PfUT229lOd_12object_store4path5parts8PathPartEINtB2_18SpecFromIterNestedB11_NtB13_9PathPartsE9from_iterCsftBYP88YJaE_11lance_tools.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.aq = add nsw i64 %.pre, -1                   ; 5 uses
+  %i.aq = add nsw i64 %.pre, -1                   ; 4 uses
   store i64 %i.aq, ptr %i.ap, align 8
   %i.ar = load i64, ptr %i.j, align 8, !range !6, !noundef !4 ; 3 uses
   %i.as = icmp samesign ult i64 %i.aq, %i.ar
   call void @llvm.assume(i1 %i.as)
   %i.at = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !nonnull !4, !noundef !4 ; 6 uses
-  %i.av = getelementptr inbounds nuw [24 x i8], ptr %i.au, i64 %i.aq ; 3 uses
-  %.sroa.053.0.copyload = load i64, ptr %i.av, align 8 ; 4 uses
-  %.sroa.454.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
+  %i.av = getelementptr [24 x i8], ptr %i.au, i64 %.pre ; 3 uses
+  %2 = getelementptr i8, ptr %i.av, i64 -24
+  %.sroa.053.0.copyload = load i64, ptr %2, align 8 ; 4 uses
+  %.sroa.454.0..sroa_idx = getelementptr i8, ptr %i.av, i64 -16
   %.sroa.454.0.copyload = load ptr, ptr %.sroa.454.0..sroa_idx, align 8 ; 5 uses
-  %.sroa.555.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 16
+  %.sroa.555.0..sroa_idx = getelementptr i8, ptr %i.av, i64 -8
   %.sroa.555.0.copyload = load i64, ptr %.sroa.555.0..sroa_idx, align 8 ; 8 uses
   %.not.i21 = icmp slt i64 %.sroa.555.0.copyload, 0
   br i1 %.not.i21, label %bb.u, label %bb.q, !prof !12

@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.aq, label %bb.h, label %.loopexit226
 
 bb.h:                                             ; preds = %.noexc
-  %i.ar = extractvalue { i64, i64 } %i.ao, 1      ; 5 uses
+  %i.ar = extractvalue { i64, i64 } %i.ao, 1      ; 6 uses
   %i.as = icmp ult i64 %i.ar, %i.an
   call void @llvm.assume(i1 %i.as)
   %i.at = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ar
@@ -245,9 +245,10 @@ bb.h:                                             ; preds = %.noexc
           to label %bb.j unwind label %.body.thread170.loopexit.split-lp
 
 bb.i:                                             ; preds = %bb.h
-  %3 = add nuw i64 %i.ar, 1                       ; 2 uses
-  %4 = sub nuw i64 %i.am, %3
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.ak, i64 %3
+  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ar
+  %.neg.le.i = xor i64 %i.ar, -1
+  %4 = add i64 %i.am, %.neg.le.i
+  %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 1
   br label %.loopexit226
 
 bb.j:                                             ; preds = %.loopexit226

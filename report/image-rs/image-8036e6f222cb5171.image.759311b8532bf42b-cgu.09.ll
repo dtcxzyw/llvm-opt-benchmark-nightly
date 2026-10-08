@@ -205,16 +205,16 @@ bb.df:                                            ; preds = %bb.de
   br i1 %i.kz, label %bb.dg, label %.noexc70.i.i.i.i
 
 bb.dg:                                            ; preds = %.noexc67.i.i.i.i
-  %i.la = load i64, ptr %.sink.i.i.sroa.gep3.i.i.i, align 8, !alias.scope !1384, !noalias !1385, !noundef !4 ; 5 uses
+  %i.la = load i64, ptr %.sink.i.i.sroa.gep3.i.i.i, align 8, !alias.scope !1384, !noalias !1385, !noundef !4 ; 6 uses
   %i.lb = icmp sgt i64 %i.la, -1
   call void @llvm.assume(i1 %i.lb)
-  %2 = add nsw i64 %i.la, -257                    ; 2 uses
   %i.lc = icmp samesign ult i64 %i.la, 257
   br i1 %i.lc, label %bb.di, label %bb.dh, !prof !7
 
 bb.dh:                                            ; preds = %bb.dg
   %i.ld = load ptr, ptr %.sink85.i.i.sroa.gep2.i.i.i, align 8, !alias.scope !1384, !noalias !1385, !nonnull !4, !noundef !4
-  %i.le = getelementptr inbounds nuw i8, ptr %i.ld, i64 %2
+  %2 = getelementptr i8, ptr %i.ld, i64 %i.la
+  %i.le = getelementptr i8, ptr %2, i64 -257
   %i.lf = invoke noundef zeroext i1 @_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.le, i64 noundef 257, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @57, i64 noundef 2)
           to label %.noexc68.i.i.i.i unwind label %.loopexit.i.i.i.i, !noalias !1379
 
@@ -222,7 +222,8 @@ bb.dh:                                            ; preds = %bb.dg
   br i1 %i.lf, label %bb.dj, label %.noexc70.i.i.i.i
 
 bb.di:                                            ; preds = %bb.dg
-  invoke void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.la, i64 noundef %i.la, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @58) #34
+  %3 = add nuw nsw i64 %i.la, -257
+  invoke void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.la, i64 noundef %i.la, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @58) #34
           to label %.noexc69.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i, !noalias !1379
 
 .noexc69.i.i.i.i:                                 ; preds = %bb.di
@@ -625,8 +626,8 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit
   %i.o = load ptr, ptr %i.d, align 8, !alias.scope !1623, !nonnull !4, !noundef !4
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m
   store i16 %i.l, ptr %i.p, align 1
-  %.pre.i2 = load i64, ptr %i.a, align 8, !alias.scope !1623 ; 2 uses
-  %i.q = add i64 %.pre.i2, 2                      ; 3 uses
+  %.pre.i2 = load i64, ptr %i.a, align 8, !alias.scope !1623 ; 3 uses
+  %i.q = add i64 %.pre.i2, 2                      ; 2 uses
   store i64 %i.q, ptr %i.a, align 8, !alias.scope !1623
   %i.r = trunc i64 %5 to i8
   %i.s = load i64, ptr %0, align 8, !range !13, !alias.scope !1624, !noundef !4
@@ -639,7 +640,8 @@ bb.c:                                             ; preds = %_RNvMsG_NtCs4wP2HXf
 
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit3: ; preds = %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE8push_mutCsa5QsYiPB8Gl_5image.exit, %bb.c
   %i.u = load ptr, ptr %i.d, align 8, !alias.scope !1624, !nonnull !4, !noundef !4
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.q
+  %6 = getelementptr i8, ptr %i.u, i64 %.pre.i2
+  %i.v = getelementptr i8, ptr %6, i64 2
   store i8 %i.r, ptr %i.v, align 1
   %i.w = add i64 %.pre.i2, 3
   store i64 %i.w, ptr %i.a, align 8, !alias.scope !1624

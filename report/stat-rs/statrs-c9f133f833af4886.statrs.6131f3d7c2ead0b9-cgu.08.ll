@@ -205,7 +205,7 @@ _RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9d
   %.val15.i.i34 = load i64, ptr %i.an, align 8, !alias.scope !105, !noalias !106, !noundef !4 ; 3 uses
   %i.ec = add i64 %.val14.i.i33, -1               ; 2 uses
   %.val18.i.i35 = load ptr, ptr %i.ao, align 8, !alias.scope !105, !noalias !106, !noundef !4 ; 5 uses
-  %i.ed = getelementptr [8 x i8], ptr %.val18.i.i35, i64 %.val15.i.i34 ; 5 uses
+  %i.ed = getelementptr [8 x i8], ptr %.val18.i.i35, i64 %.val15.i.i34 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !104
   store ptr %.val18.i.i35, ptr %i.d, align 8, !noalias !104
   store i64 %.val13.i.i32, ptr %.sroa.430.0..sroa_idx.i, align 8, !noalias !104
@@ -277,7 +277,7 @@ middle.block160:                                  ; preds = %vector.body155
   br i1 %exitcond.not.i.i40, label %_RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i41, label %.preheader.i.i38, !llvm.loop !72
 
 _RNvXsy_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB14_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdB12_B1n_B1n_B12_EEINtNtNtCs3oUPovFnLWP_4core3ops5arith9MulAssigndE10mul_assignCs8lmMd0ZksV9_6statrs.exit.i41: ; preds = %.preheader.i.i38, %middle.block160, %.noexc47
-  %i.eq = getelementptr i8, ptr %i.ed, i64 8
+  %i.eq = getelementptr i8, ptr %i.ed, i64 8      ; 2 uses
   %.not.i42 = icmp eq i64 %i.ec, 0
   br i1 %.not.i42, label %_RINvNtNtCsbADZB03g5jP_8nalgebra6linalg2lu15gauss_step_swapdNtNtNtB6_4base9dimension3DynBV_INtNtBZ_11vec_storage10VecStoragedBV_BV_EECs8lmMd0ZksV9_6statrs.exit, label %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.lr.ph.i
 
@@ -313,11 +313,12 @@ _RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dime
   br i1 %exitcond.not.i43, label %_RINvNtNtCsbADZB03g5jP_8nalgebra6linalg2lu15gauss_step_swapdNtNtNtB6_4base9dimension3DynBV_INtNtBZ_11vec_storage10VecStoragedBV_BV_EECs8lmMd0ZksV9_6statrs.exit, label %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.us.i
 
 _RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.i: ; preds = %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.lr.ph.i
-  %i.fd = getelementptr [8 x i8], ptr %i.ed, i64 %.sroa.0.0.lcssa.i ; 2 uses
+  %i.fd = getelementptr [8 x i8], ptr %i.eq, i64 %.sroa.0.0.lcssa.i
+  %2 = getelementptr i8, ptr %i.fd, i64 -8        ; 2 uses
   %i.fe = load double, ptr %i.ed, align 8, !noundef !4
-  %i.ff = load i64, ptr %i.fd, align 8
+  %i.ff = load i64, ptr %2, align 8
   store i64 %i.ff, ptr %i.ed, align 8
-  store double %i.fe, ptr %i.fd, align 8
+  store double %i.fe, ptr %2, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !112
   store i64 %i.er, ptr %i.b, align 8, !noalias !112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !112

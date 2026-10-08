@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %._crit_edge.i
   %i.ec = shl nuw i64 %i.dz, 2
   %i.ed = select i1 %i.eb, i64 -1, i64 %i.ec
   %i.ee = invoke noundef ptr %i.ea(i64 noundef %i.ed)
-          to label %.noexc164 unwind label %bb.v, !inline_history !22 ; 5 uses
+          to label %.noexc164 unwind label %bb.v, !inline_history !22 ; 4 uses
 
 .noexc164:                                        ; preds = %bb.k
   store i64 2, ptr %i.g, align 8, !tbaa !14
@@ -607,8 +607,8 @@ _ZN7meshoptL19computeFaceTangentsEPNS_7TangentEmPKjPKfmS5_m.exit: ; preds = %bb.
           to label %_ZN17meshopt_Allocator8allocateIjEEPT_m.exit173 unwind label %bb.x, !inline_history !18 ; 22 uses
 
 _ZN17meshopt_Allocator8allocateIjEEPT_m.exit173:  ; preds = %_ZN7meshoptL19computeFaceTangentsEPNS_7TangentEmPKjPKfmS5_m.exit
-  %i.nk = load i64, ptr %i.g, align 8, !tbaa !14  ; 4 uses
-  %i.nl = add nuw nsw i64 %i.nk, 1                ; 2 uses
+  %i.nk = load i64, ptr %i.g, align 8, !tbaa !14  ; 6 uses
+  %i.nl = add nuw nsw i64 %i.nk, 1
   store i64 %i.nl, ptr %i.g, align 8, !tbaa !14
   %i.nm = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.nk
   store ptr %i.nj, ptr %i.nm, align 8, !tbaa !15
@@ -681,10 +681,11 @@ bb.x:                                             ; preds = %_ZN7meshoptL19compu
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.oc = add nuw nsw i64 %i.nk, 2                ; 2 uses
+  %i.oc = add nuw nsw i64 %i.nk, 2
   store i64 %i.oc, ptr %i.g, align 8, !tbaa !14
-  %i.od = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.nl
-  store ptr %i.nu, ptr %i.od, align 8, !tbaa !15
+  %i.od = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.nk
+  %12 = getelementptr inbounds nuw i8, ptr %i.od, i64 8
+  store ptr %i.nu, ptr %12, align 8, !tbaa !15
   %i.oe = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !49
   %i.of = invoke noundef ptr %i.oe(i64 noundef %i.a)
           to label %_ZN17meshopt_Allocator8allocateIhEEPT_m.exit unwind label %bb.aa, !inline_history !32 ; 13 uses
@@ -692,8 +693,9 @@ bb.y:                                             ; preds = %._crit_edge
 _ZN17meshopt_Allocator8allocateIhEEPT_m.exit:     ; preds = %bb.y
   %i.og = add nuw nsw i64 %i.nk, 3
   store i64 %i.og, ptr %i.g, align 8, !tbaa !14
-  %i.oh = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.oc
-  store ptr %i.of, ptr %i.oh, align 8, !tbaa !15
+  %i.oh = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %i.nk
+  %13 = getelementptr inbounds nuw i8, ptr %i.oh, i64 16
+  store ptr %i.of, ptr %13, align 8, !tbaa !15
   br i1 %.not90.i, label %.preheader208, label %.lr.ph219.preheader
 
 .lr.ph219.preheader:                              ; preds = %_ZN17meshopt_Allocator8allocateIhEEPT_m.exit
@@ -855,18 +857,18 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %.lr.ph221, %_ZN7meshoptL18mergeTangentGroupsEPjS0_PhPKjmS3_S3_.exit
   %.0131220 = phi i64 [ 0, %.lr.ph221 ], [ %i.rf, %_ZN7meshoptL18mergeTangentGroupsEPjS0_PhPKjmS3_S3_.exit ] ; 2 uses
-  %i.rf = add nuw i64 %.0131220, 1                ; 3 uses
-  %i.rg = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %i.rf
-  %12 = load i32, ptr %i.rg, align 4, !tbaa !50   ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %.0131220
-  %i.rh = load i32, ptr %13, align 4, !tbaa !50   ; 3 uses
-  %.not152 = icmp eq i32 %12, %i.rh
+  %i.rf = add nuw i64 %.0131220, 1                ; 2 uses
+  %i.rg = getelementptr [4 x i8], ptr %i.ee, i64 %.0131220 ; 2 uses
+  %14 = getelementptr i8, ptr %i.rg, i64 4
+  %15 = load i32, ptr %14, align 4, !tbaa !50     ; 2 uses
+  %i.rh = load i32, ptr %i.rg, align 4, !tbaa !50 ; 3 uses
+  %.not152 = icmp eq i32 %15, %i.rh
   br i1 %.not152, label %_ZN7meshoptL18mergeTangentGroupsEPjS0_PhPKjmS3_S3_.exit, label %.lr.ph134.i
 
 .lr.ph134.i:                                      ; preds = %bb.ab
   %i.ri = zext i32 %i.rh to i64
   %i.rj = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %i.ri ; 2 uses
-  %i.rk = sub i32 %12, %i.rh
+  %i.rk = sub i32 %15, %i.rh
   %i.rl = zext i32 %i.rk to i64                   ; 3 uses
   br label %bb.ac
 

@@ -204,8 +204,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.q
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 3 uses
-  %i.br = add nuw nsw i64 %indvars.iv, 2          ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 4 uses
+  %i.br = add nuw nsw i64 %indvars.iv, 2          ; 2 uses
   %i.bs = load i32, ptr %i.at, align 8, !tbaa !91
   %i.bt = zext i32 %i.bs to i64
   %i.bu = icmp samesign ult i64 %i.br, %i.bt
@@ -214,7 +214,8 @@ bb.n:                                             ; preds = %.lr.ph, %bb.q
 bb.o:                                             ; preds = %bb.n
   %i.bv = load i64, ptr %i.bq, align 8, !tbaa !92
   %i.bw = inttoptr i64 %i.bv to ptr
-  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %i.br
+  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %indvars.iv
+  %1 = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n
@@ -223,7 +224,7 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.ca = phi ptr [ %i.bx, %bb.o ], [ %i.bz, %bb.p ]
+  %i.ca = phi ptr [ %1, %bb.o ], [ %i.bz, %bb.p ]
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !16
   %i.cd = sitofp i32 %i.cc to double

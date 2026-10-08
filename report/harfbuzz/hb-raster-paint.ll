@@ -205,14 +205,15 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 .preheader:                                       ; preds = %.lr.ph
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv84, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.am
   br i1 %exitcond.not, label %split, label %.lr.ph, !llvm.loop !319
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv84 = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %.preheader.preheader ] ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv84, 1 ; 3 uses
-  %4 = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %indvars.iv.next
-  %i.bk = load float, ptr %4, align 4, !tbaa !323
+  %indvars.iv84 = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %.preheader.preheader ] ; 4 uses
+  %4 = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %indvars.iv84
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.bk = load float, ptr %5, align 4, !tbaa !323
   %i.bl = fcmp olt float %.1, %i.bk
   br i1 %i.bl, label %._crit_edge, label %.preheader, !llvm.loop !319
 

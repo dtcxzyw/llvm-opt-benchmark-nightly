@@ -202,7 +202,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9Attribute
 define hidden void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4stmt4StmtE3popCse52LceO7DeS_12typst_macros(ptr nofree writeonly sret([352 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr nofree align 8 captures(none) %1) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -211,12 +211,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, -1                         ; 2 uses
+  %i.d = add i64 %i.b, -1
   store i64 %i.d, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = getelementptr inbounds nuw [352 x i8], ptr %i.f, i64 %i.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef nonnull align 8 dereferenceable(352) %i.g, i64 352, i1 false)
+  %i.g = getelementptr [352 x i8], ptr %i.f, i64 %i.b
+  %2 = getelementptr i8, ptr %i.g, i64 -352
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef nonnull align 8 dereferenceable(352) %2, i64 352, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

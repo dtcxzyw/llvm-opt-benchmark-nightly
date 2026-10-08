@@ -202,10 +202,11 @@ bb.n:                                             ; preds = %bb.m
 
 mi_theap_page_queue_of.exit:                      ; preds = %_mi_page_free_collect.exit, %bb.j, %mi_page_is_huge.exit.i.i, %bb.l, %bb.m, %bb.n
   %i.bg = phi i64 [ 74, %_mi_page_free_collect.exit ], [ 73, %bb.m ], [ 73, %mi_page_is_huge.exit.i.i ], [ %i.av, %bb.l ], [ %i.bf, %bb.n ], [ 73, %bb.j ]
-  %.idx = shl nuw nsw i64 %i.bg, 5
-  %.add = add nuw nsw i64 %.idx, 1312             ; 2 uses
-  %.ptr9 = getelementptr inbounds nuw i8, ptr %0, i64 %.add ; 6 uses
-  %i.bh = getelementptr i8, ptr %.ptr9, i64 24    ; 2 uses
+  %.idx = shl nuw nsw i64 %i.bg, 5                ; 2 uses
+  %.add = add nuw nsw i64 %.idx, 1312
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 5 uses
+  %.ptr9 = getelementptr inbounds nuw i8, ptr %2, i64 1312 ; 2 uses
+  %i.bh = getelementptr i8, ptr %2, i64 1336      ; 2 uses
   %.val.i = load i64, ptr %i.bh, align 8, !tbaa !18
   %i.bi = icmp eq i64 %.val.i, 524304
   br i1 %i.bi, label %mi_page_flags_set.exit.i.i, label %.split.i.i
@@ -258,7 +259,7 @@ bb.p:                                             ; preds = %bb.o
   br label %mi_page_set_in_full.exit.i
 
 mi_page_set_in_full.exit.i:                       ; preds = %bb.p, %.thread13.i.i, %.thread.i.i, %bb.o, %mi_page_flags_set.exit.i.i, %.split.i.i
-  %i.cf = getelementptr inbounds nuw i8, ptr %.ptr9, i64 8 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 1320 ; 3 uses
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !52 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 96
   store ptr %i.cg, ptr %i.ch, align 8, !tbaa !53
@@ -270,7 +271,7 @@ mi_page_set_in_full.exit.i:                       ; preds = %bb.p, %.thread13.i.
 .thread.i:                                        ; preds = %mi_page_set_in_full.exit.i
   store ptr %1, ptr %i.cf, align 8, !tbaa !52
   store ptr %1, ptr %.ptr9, align 8, !tbaa !55
-  %i.cj = getelementptr inbounds nuw i8, ptr %.ptr9, i64 16 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 1328 ; 2 uses
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !56
   %i.cl = add i64 %i.ck, 1
   store i64 %i.cl, ptr %i.cj, align 8, !tbaa !56
@@ -281,7 +282,7 @@ bb.q:                                             ; preds = %mi_page_set_in_full
   store ptr %1, ptr %i.cm, align 8, !tbaa !54
   store ptr %1, ptr %i.cf, align 8, !tbaa !52
   %.pr.i = load ptr, ptr %.ptr9, align 8, !tbaa !55 ; 2 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %.ptr9, i64 16 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 1328 ; 2 uses
   %i.co = load i64, ptr %i.cn, align 8, !tbaa !56
   %i.cp = add i64 %i.co, 1
   store i64 %i.cp, ptr %i.cn, align 8, !tbaa !56

@@ -204,17 +204,18 @@ bb.j:                                             ; preds = %._crit_edge
   br label %bb.k
 
 .lr.ph179.split:                                  ; preds = %.lr.ph179, %.lr.ph179.split
-  %indvars.iv189 = phi i64 [ %indvars.iv.next190, %.lr.ph179.split ], [ 0, %.lr.ph179 ] ; 3 uses
+  %indvars.iv189 = phi i64 [ %indvars.iv.next190, %.lr.ph179.split ], [ 0, %.lr.ph179 ] ; 4 uses
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv189 ; 2 uses
-  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 3 uses
+  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
   %i.fj = load <2 x i64>, ptr %i.fi, align 4, !tbaa !68
   store <2 x i64> %i.fj, ptr %4, align 16, !tbaa !68
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fi, i64 16
   %i.fl = load <2 x i64>, ptr %i.fk, align 4, !tbaa !68
   store <2 x i64> %i.fl, ptr %i.eu, align 16, !tbaa !68
   %i.fm = load ptr, ptr %i.ey, align 8, !tbaa !192
-  %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.fm, i64 %indvars.iv.next190
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ex, ptr noundef nonnull align 8 dereferenceable(32) %i.fn, i64 32, i1 false), !tbaa.struct !134
+  %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.fm, i64 %indvars.iv189
+  %6 = getelementptr inbounds nuw i8, ptr %i.fn, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ex, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !134
   %i.fo = call fastcc ptr @b2CreateShapeInternal(ptr noundef %i.c, ptr noundef nonnull %i.e, <2 x float> %i.g, <2 x float> %i.h, ptr noundef nonnull %2, ptr noundef nonnull %4, i32 noundef 4)
   %i.fp = load i32, ptr %i.fo, align 8, !tbaa !82
   %i.fq = load ptr, ptr %i.es, align 8, !tbaa !141

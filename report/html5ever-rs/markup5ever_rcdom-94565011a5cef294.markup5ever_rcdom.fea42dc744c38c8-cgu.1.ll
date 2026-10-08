@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = extractvalue { ptr, i64 } %i.h, 0        ; 5 uses
-  %i.j = extractvalue { ptr, i64 } %i.h, 1        ; 7 uses
+  %i.j = extractvalue { ptr, i64 } %i.h, 1        ; 8 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %bb.d, label %bb.c, !prof !5
 
@@ -340,7 +340,7 @@ bb.r:                                             ; preds = %bb.ab
 bb.s:                                             ; preds = %bb.m
   %i.af = add nuw nsw i64 %i.u, 1
   store i64 %i.af, ptr %i.t, align 8, !noalias !353
-  %i.ag = add i64 %i.j, -1                        ; 3 uses
+  %i.ag = add i64 %i.j, -1                        ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.i, i64 128
   %i.ai = load i64, ptr %i.ah, align 8, !noundef !4 ; 2 uses
   %i.aj = icmp ult i64 %i.ag, %i.ai
@@ -383,8 +383,9 @@ bb.w:                                             ; preds = %bb.s
 bb.x:                                             ; preds = %bb.v, %bb.t, %bb.u
   %.sroa.4.0.i = phi i64 [ %i.au, %bb.v ], [ 0, %bb.t ], [ %i.am, %bb.u ]
   %.sroa.0.0.i = phi ptr [ %i.av, %bb.v ], [ inttoptr (i64 1 to ptr), %bb.t ], [ %.sroa.55.8..sroa_idx6, %bb.u ]
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.ag
-  %.val33 = load ptr, ptr %i.az, align 8, !nonnull !4, !noundef !4
+  %i.az = getelementptr [8 x i8], ptr %i.al, i64 %i.j
+  %3 = getelementptr i8, ptr %i.az, i64 -8
+  %.val33 = load ptr, ptr %3, align 8, !nonnull !4, !noundef !4
   %i.ba = invoke fastcc noundef zeroext i1 @_RNvCs1mImOlsSUsK_17markup5ever_rcdom23append_to_existing_text(ptr nonnull %.val33, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0.i, i64 noundef %.sroa.4.0.i)
           to label %bb.y unwind label %.thread71
 
@@ -787,8 +788,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtBG
   ret void
 
 bb.j:                                             ; preds = %.lr.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit
-  %i.u = phi i64 [ %i.m, %.lr.ph ], [ %i.bl, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit ] ; 2 uses
-  %i.v = add nsw i64 %i.u, -1                     ; 3 uses
+  %i.u = phi i64 [ %i.m, %.lr.ph ], [ %i.bl, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit ] ; 3 uses
+  %i.v = add nsw i64 %i.u, -1                     ; 2 uses
   store i64 %i.v, ptr %i.l, align 8
   %i.w = load i64, ptr %i.d, align 8, !range !10, !noundef !4
   %i.x = icmp samesign ult i64 %i.v, %i.w
@@ -796,8 +797,9 @@ bb.j:                                             ; preds = %.lr.ph, %_RINvNtCsk
   %i.y = load ptr, ptr %i.o, align 8, !nonnull !4, !noundef !4
   %i.z = icmp samesign ult i64 %i.u, 1152921504606846977
   call void @llvm.assume(i1 %i.z)
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.v
-  %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !4, !noundef !4 ; 7 uses
+  %i.aa = getelementptr [8 x i8], ptr %i.y, i64 %i.u
+  %1 = getelementptr i8, ptr %i.aa, i64 -8
+  %i.ab = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.ab, ptr %i.c, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 104

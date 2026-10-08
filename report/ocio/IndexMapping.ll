@@ -41,7 +41,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_512IndexMappingE, i64 16), ptr %0, align 8, !tbaa !9
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %1, ptr %i.a, align 8, !tbaa !12
-  %scevgep = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %scevgep, i8 0, i64 72, i1 false)
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %_ZN16OpenColorIO_v2_512IndexMapping6resizeEm.exit, label %bb.b
@@ -86,7 +86,8 @@ bb.e:                                             ; preds = %_ZNSt6vectorISt4pai
   br label %_ZNSt6vectorISt4pairIffESaIS1_EED2Ev.exit.1
 
 _ZNSt6vectorISt4pairIffESaIS1_EED2Ev.exit.1:      ; preds = %bb.e, %_ZNSt6vectorISt4pairIffESaIS1_EED2Ev.exit
-  %i.o = load ptr, ptr %scevgep, align 8, !tbaa !16 ; 3 uses
+  %.ptr8.2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.o = load ptr, ptr %.ptr8.2, align 8, !tbaa !16 ; 3 uses
   %.not.i.i.i10.2 = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i10.2, label %_ZNSt6vectorISt4pairIffESaIS1_EED2Ev.exit.2, label %bb.f
 

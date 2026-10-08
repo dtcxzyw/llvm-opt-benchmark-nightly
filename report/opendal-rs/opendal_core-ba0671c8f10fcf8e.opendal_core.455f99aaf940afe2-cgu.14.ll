@@ -204,8 +204,8 @@ _RNvXs9_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtN
   unreachable
 
 bb.ax:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core3stre4findcECs5XgW7KoffLW_12opendal_core.exit.i
-  %i.dn = add nuw i64 %i.cd, 1
-  %i.do = add i64 %i.dn, %i.df                    ; 19 uses
+  %i.dn = add i64 %i.df, %i.cd                    ; 3 uses
+  %i.do = add i64 %i.dn, 1                        ; 17 uses
   %i.dp = invoke { ptr, i64 } @_RNvMs0_NtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entryNtB5_5Entry4path(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.r)
           to label %.noexc25 unwind label %.loopexit.split-lp
 
@@ -235,7 +235,8 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %or.cond.i, label %_RNvXs9_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke, label %_RNvXs8_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread50.i, !prof !1296
 
 bb.ba:                                            ; preds = %bb.az
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.do
+  %3 = getelementptr i8, ptr %i.dt, i64 %i.dn
+  %i.dx = getelementptr i8, ptr %3, i64 1
   %i.dy = load i8, ptr %i.dx, align 1, !alias.scope !1302, !noundef !5
   %i.dz = icmp sgt i8 %i.dy, -65
   br i1 %i.dz, label %_RNvXs8_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread50.i, label %_RNvXs9_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
@@ -279,7 +280,8 @@ bb.bd:                                            ; preds = %.noexc30
   br i1 %or.cond73.i, label %_RNvXs9_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke, label %_RNvXs8_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit40.thread54.i, !prof !1296
 
 bb.be:                                            ; preds = %bb.bd
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.do
+  %4 = getelementptr i8, ptr %i.ed, i64 %i.dn
+  %i.eg = getelementptr i8, ptr %4, i64 1
   %i.eh = load i8, ptr %i.eg, align 1, !alias.scope !1304, !noundef !5
   %i.ei = icmp sgt i8 %i.eh, -65
   br i1 %i.ei, label %_RNvXs8_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit40.thread54.i, label %_RNvXs9_NtNtCsgxBkk5gSRhY_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
