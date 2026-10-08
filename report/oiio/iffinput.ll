@@ -205,7 +205,7 @@ bb.es:                                            ; preds = %bb.ep
   %i.afp = phi i16 [ %i.ago, %.thread853 ], [ %.pre, %.lr.ph944.preheader ] ; 2 uses
   %i.afq = phi i16 [ %i.agp, %.thread853 ], [ %i.afl, %.lr.ph944.preheader ] ; 2 uses
   %.0255942 = phi i32 [ %i.agq, %.thread853 ], [ 0, %.lr.ph944.preheader ] ; 2 uses
-  %i.afr = load ptr, ptr %i.ac, align 8, !tbaa !58 ; 3 uses
+  %i.afr = load ptr, ptr %i.ac, align 8, !tbaa !58 ; 2 uses
   %i.afs = load i32, ptr %i.as, align 4, !tbaa !110
   %i.aft = load i8, ptr %i.ad, align 8, !tbaa !65
   %i.afu = lshr i8 %i.aft, 3
@@ -223,8 +223,8 @@ bb.es:                                            ; preds = %bb.ep
   %i.age = zext i16 %i.afq to i32
   %i.agf = mul i32 %i.afs, %i.age
   %i.agg = zext i32 %i.agf to i64
-  %i.agh = mul nuw nsw i64 %i.agd, %i.agg         ; 3 uses
-  %i.agi = getelementptr inbounds nuw i8, ptr %i.afr, i64 %i.agh
+  %i.agh = mul nuw nsw i64 %i.agd, %i.agg         ; 2 uses
+  %i.agi = getelementptr i8, ptr %i.afr, i64 %i.agh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x) #30
   %i.agj = load i16, ptr %i.s, align 2, !tbaa !63 ; 3 uses
   store i16 %i.agj, ptr %i.x, align 2, !tbaa !63
@@ -233,7 +233,6 @@ bb.es:                                            ; preds = %bb.ep
 
 .lr.ph940:                                        ; preds = %.lr.ph944
   %i.agk = mul i32 %.0255942, %i.zy
-  %scevgep1452 = getelementptr i8, ptr %i.afr, i64 %i.agh
   %scevgep1454.a = getelementptr i8, ptr %i.afr, i64 1
   %scevgep1455 = getelementptr i8, ptr %scevgep1454.a, i64 %i.agh
   br label %bb.et
@@ -306,21 +305,20 @@ bb.ew:                                            ; preds = %bb.et
   %i.ahl = add nuw nsw i64 %i.ahk, %i.agz
   %i.ahm = zext i16 %i.ags to i64
   %i.ahn = mul nuw nsw i64 %i.ahl, %i.ahm         ; 2 uses
-  %i.aho = getelementptr inbounds nuw i8, ptr %i.agi, i64 %i.ahn
-  %i.ahp = getelementptr inbounds nuw i8, ptr %i.aho, i64 %i.ahk ; 6 uses
+  %i.aho = getelementptr i8, ptr %i.agi, i64 %i.ahn
+  %i.ahp = getelementptr i8, ptr %i.aho, i64 %i.ahk ; 7 uses
   %i.ahq = and i64 %.0252934, 4294967295          ; 10 uses
   %i.ahr = add nuw nsw i64 %i.ahq, 1              ; 2 uses
   %min.iters.check1463 = icmp samesign ult i64 %i.ahq, 7
   br i1 %min.iters.check1463, label %.lr.ph.preheader1477, label %vector.memcheck1451
 
 vector.memcheck1451:                              ; preds = %.lr.ph.preheader
-  %7 = add nuw nsw i64 %i.ahk, %i.ahn             ; 2 uses
-  %scevgep1453 = getelementptr i8, ptr %scevgep1452, i64 %7
-  %i.ahs = getelementptr i8, ptr %scevgep1455, i64 %7
+  %scevgep1453 = getelementptr i8, ptr %scevgep1455, i64 %i.ahk
+  %i.ahs = getelementptr i8, ptr %scevgep1453, i64 %i.ahn
   %scevgep1456.a = getelementptr i8, ptr %i.ahs, i64 %i.ahq
   %i.aht = getelementptr i8, ptr %scevgep1457, i64 %i.aha
   %scevgep1458 = getelementptr i8, ptr %i.aht, i64 %i.ahq
-  %bound01459 = icmp ult ptr %scevgep1453, %scevgep1458
+  %bound01459 = icmp ult ptr %i.ahp, %scevgep1458
   %bound11460 = icmp ult ptr %i.ahd, %scevgep1456.a
   %found.conflict1461 = and i1 %bound01459, %bound11460
   br i1 %found.conflict1461, label %.lr.ph.preheader1477, label %vector.ph1464
