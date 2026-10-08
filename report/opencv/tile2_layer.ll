@@ -205,7 +205,7 @@ bb.a:
   %i.cc = mul i64 %.recomposed, %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bt, i64 40
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !65
-  %i.cf = mul i64 %i.cc, %i.ce                    ; 5 uses
+  %i.cf = mul i64 %i.cc, %i.ce                    ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !32
   %i.ci = sext i32 %i.ch to i64                   ; 3 uses
@@ -218,8 +218,8 @@ bb.a:
   %i.co = mul i64 %.recomposed144, %i.cn
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !65
-  %i.cr = mul i64 %i.co, %i.cq                    ; 5 uses
-  %i.cs = add nsw i64 %i.cr, %i.cf
+  %i.cr = mul i64 %i.co, %i.cq                    ; 2 uses
+  %i.cs = add i64 %i.cr, %i.cf
   %i.ct = getelementptr inbounds nuw i8, ptr %i.br, i64 12
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !32
   %i.cv = sext i32 %i.cu to i64                   ; 3 uses
@@ -232,8 +232,8 @@ bb.a:
   %i.db = mul i64 %.recomposed145, %i.da
   %i.dc = getelementptr inbounds nuw i8, ptr %i.bt, i64 24 ; 2 uses
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !65 ; 5 uses
-  %i.de = mul i64 %i.db, %i.dd                    ; 5 uses
-  %i.df = add nsw i64 %i.cs, %i.de
+  %i.de = mul i64 %i.db, %i.dd                    ; 2 uses
+  %i.df = add i64 %i.cs, %i.de
   %i.dg = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !32
   %i.di = sext i32 %i.dh to i64                   ; 3 uses
@@ -246,8 +246,8 @@ bb.a:
   %i.do = mul i64 %.recomposed146, %i.dn
   %i.dp = getelementptr inbounds nuw i8, ptr %i.bt, i64 16 ; 2 uses
   %i.dq = load i64, ptr %i.dp, align 8, !tbaa !65 ; 5 uses
-  %i.dr = mul i64 %i.do, %i.dq                    ; 5 uses
-  %i.ds = add nsw i64 %i.df, %i.dr
+  %i.dr = mul i64 %i.do, %i.dq                    ; 2 uses
+  %i.ds = add i64 %i.df, %i.dr
   %i.dt = getelementptr inbounds nuw i8, ptr %i.br, i64 4
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !32
   %i.dv = sext i32 %i.du to i64                   ; 2 uses
@@ -261,8 +261,8 @@ bb.a:
   %i.ec = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 2 uses
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !65 ; 5 uses
   %i.ee = mul i64 %i.ed, %i.eb
-  %i.ef = mul i64 %i.ee, %i.dy                    ; 5 uses
-  %i.eg = add nsw i64 %i.ds, %i.ef
+  %i.ef = mul i64 %i.ee, %i.dy                    ; 2 uses
+  %i.eg = add i64 %i.ds, %i.ef
   %i.eh = load i32, ptr %i.br, align 4, !tbaa !32
   %i.ei = sext i32 %i.eh to i64
   %i.ej = srem i64 %.fr.i.i.i, %i.ei
@@ -270,12 +270,12 @@ bb.a:
   %i.el = sext i32 %i.ek to i64
   %i.em = mul i64 %i.ej, %i.el
   %i.en = load i64, ptr %i.bt, align 8, !tbaa !65 ; 5 uses
-  %i.eo = mul i64 %i.em, %i.en                    ; 5 uses
-  %i.ep = add nsw i64 %i.eg, %i.eo                ; 4 uses
+  %i.eo = mul i64 %i.em, %i.en                    ; 2 uses
+  %i.ep = add i64 %i.eg, %i.eo                    ; 7 uses
   %i.eq = load ptr, ptr %i.ag, align 8, !tbaa !177, !nonnull !67, !align !173
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !65
   %i.es = load ptr, ptr %i.ai, align 8, !tbaa !178, !nonnull !67, !align !173
-  %i.et = load ptr, ptr %i.es, align 8, !tbaa !68 ; 12 uses
+  %i.et = load ptr, ptr %i.es, align 8, !tbaa !68 ; 8 uses
   switch i64 %i.er, label %bb.e [
     i64 1, label %bb.b
     i64 2, label %bb.c
@@ -283,21 +283,20 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %.preheader19.i.i.i
-  %i.eu = getelementptr inbounds i8, ptr %i.et, i64 %i.ep
+  %i.eu = getelementptr i8, ptr %i.et, i64 %i.ep
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader13.us.us.i.preheader.i.i
 
 .preheader13.us.us.i.preheader.i.i:               ; preds = %bb.b
   %i.ev = load ptr, ptr %i.ah, align 8, !tbaa !179, !nonnull !67, !align !173
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !68
-  %2 = add i64 %i.eo, %i.ef
-  %3 = add i64 %2, %i.dr
-  %4 = add i64 %3, %i.de
-  %5 = add i64 %4, %i.cr
-  %6 = add i64 %5, %i.cf                          ; 2 uses
-  %scevgep41.a = getelementptr i8, ptr %i.et, i64 %6
-  %i.ex = getelementptr i8, ptr %i.et, i64 %i.ba
-  %scevgep43 = getelementptr i8, ptr %i.ex, i64 %wide.trip.count.i.i.i
-  %scevgep44 = getelementptr i8, ptr %scevgep43, i64 %6
+  %2 = getelementptr i8, ptr %i.et, i64 %i.ba
+  %scevgep39 = getelementptr i8, ptr %2, i64 %wide.trip.count.i.i.i
+  %3 = getelementptr i8, ptr %scevgep39, i64 %i.eo
+  %4 = getelementptr i8, ptr %3, i64 %i.ef
+  %scevgep41.a = getelementptr i8, ptr %4, i64 %i.dr
+  %i.ex = getelementptr i8, ptr %scevgep41.a, i64 %i.de
+  %scevgep43 = getelementptr i8, ptr %i.ex, i64 %i.cr
+  %scevgep44 = getelementptr i8, ptr %scevgep43, i64 %i.cf
   br label %.preheader13.us.us.i.i.i
 
 .preheader13.us.us.i.i.i:                         ; preds = %._crit_edge.split213.us.split.us.us.us.i.loopexit.i.i, %.preheader13.us.us.i.preheader.i.i
@@ -321,27 +320,26 @@ bb.b:                                             ; preds = %.preheader19.i.i.i
   %i.ey = load ptr, ptr %i.e, align 8, !tbaa !172, !nonnull !67, !align !173 ; 4 uses
   %i.ez = load i64, ptr %i.ey, align 8, !tbaa !65
   %i.fa = mul i64 %i.ez, %indvars.iv410.i.i.i     ; 2 uses
-  %i.fb = getelementptr inbounds i8, ptr %i.eu, i64 %i.fa
+  %i.fb = getelementptr i8, ptr %i.eu, i64 %i.fa
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %i.fd = load i64, ptr %i.fc, align 8, !tbaa !65
   %i.fe = mul i64 %i.fd, %indvars.iv405.i.i.i     ; 2 uses
-  %i.ff = getelementptr inbounds i8, ptr %i.fb, i64 %i.fe
+  %i.ff = getelementptr i8, ptr %i.fb, i64 %i.fe
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
   %i.fh = load i64, ptr %i.fg, align 8, !tbaa !65
   %i.fi = mul i64 %i.fh, %indvars.iv400.i.i.i     ; 2 uses
-  %i.fj = getelementptr inbounds i8, ptr %i.ff, i64 %i.fi
+  %i.fj = getelementptr i8, ptr %i.ff, i64 %i.fi
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ey, i64 24
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !65
   %i.fm = mul i64 %i.fl, %indvars.iv395.i.i.i     ; 2 uses
-  %i.fn = getelementptr inbounds i8, ptr %i.fj, i64 %i.fm
-  %7 = add i64 %i.fa, %i.fe
-  %8 = add i64 %7, %i.fi
-  %9 = add i64 %8, %i.fm                          ; 2 uses
-  %scevgep42.a = getelementptr i8, ptr %scevgep41.a, i64 %9
-  %scevgep45 = getelementptr i8, ptr %scevgep44, i64 %9
+  %i.fn = getelementptr i8, ptr %i.fj, i64 %i.fm  ; 2 uses
+  %5 = getelementptr i8, ptr %scevgep44, i64 %i.fa
+  %6 = getelementptr i8, ptr %5, i64 %i.fe
+  %scevgep42.a = getelementptr i8, ptr %6, i64 %i.fi
+  %scevgep45 = getelementptr i8, ptr %scevgep42.a, i64 %i.fm
   %i.fo = getelementptr i8, ptr %.3188168.us.us.us.us.us.us.us.us.us.us.us.i.i.i, i64 %i.bb
   %scevgep46 = getelementptr i8, ptr %i.fo, i64 %wide.trip.count.i.i.i
-  %bound047 = icmp ult ptr %scevgep42.a, %scevgep46
+  %bound047 = icmp ult ptr %i.fn, %scevgep46
   %bound148 = icmp ult ptr %.3188168.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %scevgep45
   %found.conflict49 = and i1 %bound047, %bound148
   %i.fp = or i1 %found.conflict49, %stride.check50
@@ -469,68 +467,57 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond414.not.i.i.i, label %.loopexit.i.i.i, label %.preheader13.us.us.i.i.i, !llvm.loop !133
 
 bb.c:                                             ; preds = %.preheader19.i.i.i
-  %i.gs = getelementptr inbounds [2 x i8], ptr %i.et, i64 %i.ep
+  %i.gs = getelementptr [2 x i8], ptr %i.et, i64 %i.ep
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader14.us.us.i.preheader.i.i
 
 .preheader14.us.us.i.preheader.i.i:               ; preds = %bb.c
   %i.gt = load ptr, ptr %i.ah, align 8, !tbaa !179, !nonnull !67, !align !173
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !68
-  %10 = add i64 %i.eo, %i.cr
-  %11 = add i64 %10, %i.de
-  %12 = add i64 %11, %i.dr
-  %13 = add i64 %12, %i.ef
-  %i.gv = add i64 %13, %i.cf                      ; 2 uses
+  %i.gv = add i64 %i.be, %i.ep
   %i.gw = shl i64 %i.gv, 1
   %i.gx = shl i64 %i.en, 1
   %i.gy = shl i64 %i.ed, 1
   %i.gz = shl i64 %i.dq, 1
   %i.ha = shl i64 %i.dd, 1
-  %14 = add i64 %i.be, %i.gv
-  %15 = shl i64 %14, 1
-  %16 = getelementptr i8, ptr %i.et, i64 %i.gw
-  %i.hb = getelementptr i8, ptr %i.et, i64 %15
+  %i.hb = getelementptr i8, ptr %i.et, i64 %i.gw
   br label %.preheader14.us.us.i.i.i
 
 .preheader14.us.us.i.i.i:                         ; preds = %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i, %.preheader14.us.us.i.preheader.i.i
   %indvars.iv382.i.i.i = phi i64 [ %indvars.iv.next383.i.i.i, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i ], [ 0, %.preheader14.us.us.i.preheader.i.i ] ; 3 uses
   %.0173144.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge.split139.us.split.us.us.us.i.loopexit.i.i ], [ %i.gu, %.preheader14.us.us.i.preheader.i.i ]
-  %i.hc = mul i64 %i.gx, %indvars.iv382.i.i.i     ; 2 uses
-  %i.hd = mul nsw i64 %indvars.iv382.i.i.i, %i.en
-  %i.he = getelementptr inbounds [2 x i8], ptr %i.gs, i64 %i.hd
-  %17 = getelementptr i8, ptr %16, i64 %i.hc
+  %i.hc = mul i64 %i.gx, %indvars.iv382.i.i.i
+  %i.hd = mul i64 %indvars.iv382.i.i.i, %i.en
+  %i.he = getelementptr [2 x i8], ptr %i.gs, i64 %i.hd
   %i.hf = getelementptr i8, ptr %i.hb, i64 %i.hc
   br label %.preheader10.us.us.us.us.us.us.i.i.i
 
 .preheader10.us.us.us.us.us.us.i.i.i:             ; preds = %._crit_edge110.split.us.split.us.split.us.us.us.us.us.us.us.i.i.i, %.preheader14.us.us.i.i.i
   %indvars.iv377.i.i.i = phi i64 [ %indvars.iv.next378.i.i.i, %._crit_edge110.split.us.split.us.split.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader14.us.us.i.i.i ] ; 3 uses
   %.1174122.us.us.us.us.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge110.split.us.split.us.split.us.us.us.us.us.us.us.i.i.i ], [ %.0173144.us.us.i.i.i, %.preheader14.us.us.i.i.i ]
-  %i.hg = mul i64 %i.gy, %indvars.iv377.i.i.i     ; 2 uses
-  %i.hh = mul nsw i64 %indvars.iv377.i.i.i, %i.ed
-  %i.hi = getelementptr inbounds [2 x i8], ptr %i.he, i64 %i.hh
-  %18 = getelementptr i8, ptr %17, i64 %i.hg
+  %i.hg = mul i64 %i.gy, %indvars.iv377.i.i.i
+  %i.hh = mul i64 %indvars.iv377.i.i.i, %i.ed
+  %i.hi = getelementptr [2 x i8], ptr %i.he, i64 %i.hh
   %i.hj = getelementptr i8, ptr %i.hf, i64 %i.hg
   br label %.preheader6.us.us.us.us.us.us.us.us.us.i.i.i
 
 .preheader6.us.us.us.us.us.us.us.us.us.i.i.i:     ; preds = %._crit_edge.split106.us.split.us.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader10.us.us.us.us.us.us.i.i.i
   %indvars.iv372.i.i.i = phi i64 [ %indvars.iv.next373.i.i.i, %._crit_edge.split106.us.split.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader10.us.us.us.us.us.us.i.i.i ] ; 3 uses
   %.2175108.us.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge.split106.us.split.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.1174122.us.us.us.us.us.us.i.i.i, %.preheader10.us.us.us.us.us.us.i.i.i ]
-  %i.hk = mul i64 %i.gz, %indvars.iv372.i.i.i     ; 2 uses
-  %i.hl = mul nsw i64 %indvars.iv372.i.i.i, %i.dq
-  %i.hm = getelementptr inbounds [2 x i8], ptr %i.hi, i64 %i.hl
-  %19 = getelementptr i8, ptr %18, i64 %i.hk
+  %i.hk = mul i64 %i.gz, %indvars.iv372.i.i.i
+  %i.hl = mul i64 %indvars.iv372.i.i.i, %i.dq
+  %i.hm = getelementptr [2 x i8], ptr %i.hi, i64 %i.hl
   %i.hn = getelementptr i8, ptr %i.hj, i64 %i.hk
   br label %.preheader2.lr.ph.us.us.us.us.us.us.us.us.us.us.us.i.i.i
 
 .preheader2.lr.ph.us.us.us.us.us.us.us.us.us.us.us.i.i.i: ; preds = %._crit_edge94.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader6.us.us.us.us.us.us.us.us.us.i.i.i
   %indvars.iv367.i.i.i = phi i64 [ %indvars.iv.next368.i.i.i, %._crit_edge94.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader6.us.us.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
   %.317695.us.us.us.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.it, %._crit_edge94.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.2175108.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader6.us.us.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
-  %i.ho = mul i64 %i.ha, %indvars.iv367.i.i.i     ; 2 uses
-  %scevgep70 = getelementptr i8, ptr %19, i64 %i.ho
+  %i.ho = mul i64 %i.ha, %indvars.iv367.i.i.i
   %scevgep71 = getelementptr i8, ptr %i.hn, i64 %i.ho
-  %i.hp = mul nsw i64 %indvars.iv367.i.i.i, %i.dd
-  %i.hq = getelementptr inbounds [2 x i8], ptr %i.hm, i64 %i.hp
+  %i.hp = mul i64 %indvars.iv367.i.i.i, %i.dd
+  %i.hq = getelementptr [2 x i8], ptr %i.hm, i64 %i.hp ; 2 uses
   %scevgep72 = getelementptr i8, ptr %.317695.us.us.us.us.us.us.us.us.us.us.us.i.i.i, i64 %i.bh
-  %bound073 = icmp ult ptr %scevgep70, %scevgep72
+  %bound073 = icmp ult ptr %i.hq, %scevgep72
   %bound174 = icmp ult ptr %.317695.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %scevgep71
   %found.conflict75 = and i1 %bound073, %bound174
   %i.hr = or i1 %found.conflict75, %stride.check76
@@ -658,68 +645,57 @@ vec.epilog.scalar.ph92:                           ; preds = %vec.epilog.scalar.p
   br i1 %exitcond386.not.i.i.i, label %.loopexit.i.i.i, label %.preheader14.us.us.i.i.i, !llvm.loop !145
 
 bb.d:                                             ; preds = %.preheader19.i.i.i
-  %i.iu = getelementptr inbounds [4 x i8], ptr %i.et, i64 %i.ep
+  %i.iu = getelementptr [4 x i8], ptr %i.et, i64 %i.ep
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader15.us.us.us.us.i.preheader.i.i
 
 .preheader15.us.us.us.us.i.preheader.i.i:         ; preds = %bb.d
   %i.iv = load ptr, ptr %i.ah, align 8, !tbaa !179, !nonnull !67, !align !173
   %i.iw = load ptr, ptr %i.iv, align 8, !tbaa !68
-  %20 = add i64 %i.eo, %i.cr
-  %21 = add i64 %20, %i.de
-  %22 = add i64 %21, %i.dr
-  %23 = add i64 %22, %i.ef
-  %i.ix = add i64 %23, %i.cf                      ; 2 uses
+  %i.ix = add i64 %i.bl, %i.ep
   %i.iy = shl i64 %i.ix, 2
   %i.iz = shl i64 %i.en, 2
   %i.ja = shl i64 %i.ed, 2
   %i.jb = shl i64 %i.dq, 2
   %i.jc = shl i64 %i.dd, 2
-  %24 = add i64 %i.bl, %i.ix
-  %25 = shl i64 %24, 2
-  %26 = getelementptr i8, ptr %i.et, i64 %i.iy
-  %i.jd = getelementptr i8, ptr %i.et, i64 %25
+  %i.jd = getelementptr i8, ptr %i.et, i64 %i.iy
   br label %.preheader15.us.us.us.us.i.i.i
 
 .preheader15.us.us.us.us.i.i.i:                   ; preds = %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i, %.preheader15.us.us.us.us.i.preheader.i.i
   %indvars.iv354.i.i.i = phi i64 [ %indvars.iv.next355.i.i.i, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i ], [ 0, %.preheader15.us.us.us.us.i.preheader.i.i ] ; 3 uses
   %.016172.us.us.us.us.i.i.i = phi ptr [ %i.ks, %._crit_edge.split.us.split.us.split.us.split.us.us.us.us.us.i.i.i ], [ %i.iw, %.preheader15.us.us.us.us.i.preheader.i.i ]
-  %i.je = mul i64 %i.iz, %indvars.iv354.i.i.i     ; 2 uses
-  %i.jf = mul nsw i64 %indvars.iv354.i.i.i, %i.en
-  %i.jg = getelementptr inbounds [4 x i8], ptr %i.iu, i64 %i.jf
-  %27 = getelementptr i8, ptr %26, i64 %i.je
+  %i.je = mul i64 %i.iz, %indvars.iv354.i.i.i
+  %i.jf = mul i64 %indvars.iv354.i.i.i, %i.en
+  %i.jg = getelementptr [4 x i8], ptr %i.iu, i64 %i.jf
   %i.jh = getelementptr i8, ptr %i.jd, i64 %i.je
   br label %.preheader11.us.us.us.us.us.us.us.us.i.i.i
 
 .preheader11.us.us.us.us.us.us.us.us.i.i.i:       ; preds = %._crit_edge41.split.us.split.us.split.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader15.us.us.us.us.i.i.i
   %indvars.iv349.i.i.i = phi i64 [ %indvars.iv.next350.i.i.i, %._crit_edge41.split.us.split.us.split.us.us.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader15.us.us.us.us.i.i.i ] ; 3 uses
   %.116253.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.ks, %._crit_edge41.split.us.split.us.split.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.016172.us.us.us.us.i.i.i, %.preheader15.us.us.us.us.i.i.i ]
-  %i.ji = mul i64 %i.ja, %indvars.iv349.i.i.i     ; 2 uses
-  %i.jj = mul nsw i64 %indvars.iv349.i.i.i, %i.ed
-  %i.jk = getelementptr inbounds [4 x i8], ptr %i.jg, i64 %i.jj
-  %28 = getelementptr i8, ptr %27, i64 %i.ji
+  %i.ji = mul i64 %i.ja, %indvars.iv349.i.i.i
+  %i.jj = mul i64 %indvars.iv349.i.i.i, %i.ed
+  %i.jk = getelementptr [4 x i8], ptr %i.jg, i64 %i.jj
   %i.jl = getelementptr i8, ptr %i.jh, i64 %i.ji
   br label %.preheader7.us.us.us.us.us.us.us.us.us.us.us.i.i.i
 
 .preheader7.us.us.us.us.us.us.us.us.us.us.us.i.i.i: ; preds = %._crit_edge.split.us.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader11.us.us.us.us.us.us.us.us.i.i.i
   %indvars.iv344.i.i.i = phi i64 [ %indvars.iv.next345.i.i.i, %._crit_edge.split.us.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader11.us.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
   %.216339.us.us.us.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.ks, %._crit_edge.split.us.split.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.116253.us.us.us.us.us.us.us.us.i.i.i, %.preheader11.us.us.us.us.us.us.us.us.i.i.i ]
-  %i.jm = mul i64 %i.jb, %indvars.iv344.i.i.i     ; 2 uses
-  %i.jn = mul nsw i64 %indvars.iv344.i.i.i, %i.dq
-  %i.jo = getelementptr inbounds [4 x i8], ptr %i.jk, i64 %i.jn
-  %29 = getelementptr i8, ptr %28, i64 %i.jm
+  %i.jm = mul i64 %i.jb, %indvars.iv344.i.i.i
+  %i.jn = mul i64 %indvars.iv344.i.i.i, %i.dq
+  %i.jo = getelementptr [4 x i8], ptr %i.jk, i64 %i.jn
   %i.jp = getelementptr i8, ptr %i.jl, i64 %i.jm
   br label %.preheader3.lr.ph.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i
 
 .preheader3.lr.ph.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i: ; preds = %._crit_edge27.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader7.us.us.us.us.us.us.us.us.us.us.us.i.i.i
   %indvars.iv339.i.i.i = phi i64 [ %indvars.iv.next340.i.i.i, %._crit_edge27.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ 0, %.preheader7.us.us.us.us.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
   %.316428.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.ks, %._crit_edge27.split.us.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.216339.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %.preheader7.us.us.us.us.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
-  %i.jq = mul i64 %i.jc, %indvars.iv339.i.i.i     ; 2 uses
-  %scevgep105 = getelementptr i8, ptr %29, i64 %i.jq
+  %i.jq = mul i64 %i.jc, %indvars.iv339.i.i.i
   %scevgep106 = getelementptr i8, ptr %i.jp, i64 %i.jq
-  %i.jr = mul nsw i64 %indvars.iv339.i.i.i, %i.dd
-  %i.js = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %i.jr
+  %i.jr = mul i64 %indvars.iv339.i.i.i, %i.dd
+  %i.js = getelementptr [4 x i8], ptr %i.jo, i64 %i.jr ; 2 uses
   %scevgep107 = getelementptr i8, ptr %.316428.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i, i64 %i.bo
-  %bound0108 = icmp ult ptr %scevgep105, %scevgep107
+  %bound0108 = icmp ult ptr %i.js, %scevgep107
   %bound1109 = icmp ult ptr %.316428.us.us.us.us.us.us.us.us.us.us.us.us.us.i.i.i, %scevgep106
   %found.conflict110 = and i1 %bound0108, %bound1109
   %i.jt = or i1 %found.conflict110, %stride.check111
@@ -824,21 +800,15 @@ scalar.ph112:                                     ; preds = %scalar.ph112.prol.l
   br i1 %exitcond358.not.i.i.i, label %.loopexit.i.i.i, label %.preheader15.us.us.us.us.i.i.i, !llvm.loop !156
 
 bb.e:                                             ; preds = %.preheader19.i.i.i
-  %i.kt = getelementptr inbounds [8 x i8], ptr %i.et, i64 %i.ep
+  %i.kt = getelementptr [8 x i8], ptr %i.et, i64 %i.ep
   br i1 %brmerge491.i.i.i, label %.loopexit.i.i.i, label %.preheader12.i.preheader.i.i
 
 .preheader12.i.preheader.i.i:                     ; preds = %bb.e
   %i.ku = load ptr, ptr %i.ah, align 8, !tbaa !179, !nonnull !67, !align !173
   %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !68
-  %30 = add i64 %i.eo, %i.cr
-  %31 = add i64 %30, %i.de
-  %32 = add i64 %31, %i.dr
-  %33 = add i64 %32, %i.ef
-  %34 = add i64 %33, %i.cf
-  %35 = shl i64 %34, 3                            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.et, i64 %35
-  %scevgep35 = getelementptr i8, ptr %i.et, i64 %i.au
-  %scevgep36.a = getelementptr i8, ptr %scevgep35, i64 %35
+  %scevgep = getelementptr i8, ptr %i.et, i64 %i.au
+  %7 = shl i64 %i.ep, 3
+  %scevgep36.a = getelementptr i8, ptr %scevgep, i64 %7
   br label %.preheader12.i.i.i
 
 .preheader12.i.i.i:                               ; preds = %._crit_edge.i.loopexit.i.i, %.preheader12.i.preheader.i.i
@@ -864,28 +834,27 @@ bb.e:                                             ; preds = %.preheader19.i.i.i
   %.3243.us.us.us.us.us.us.us.us.us.i.i.i = phi ptr [ %i.mo, %._crit_edge242.split.us.us.us.us.us.us.us.us.us.us.i.i.i ], [ %.2256.us.us.us.us.us.us.us.i.i.i, %.preheader4.us.us.us.us.us.us.us.i.i.i ] ; 3 uses
   %i.kz = shl nuw nsw i64 %indvars.iv423.i.i.i, 3
   %i.la = load i64, ptr %i.bt, align 8, !tbaa !65 ; 2 uses
-  %i.lb = mul nsw i64 %i.la, %indvars.iv438.i.i.i
-  %i.lc = getelementptr inbounds [8 x i8], ptr %i.kt, i64 %i.lb
+  %i.lb = mul i64 %i.la, %indvars.iv438.i.i.i
+  %i.lc = getelementptr [8 x i8], ptr %i.kt, i64 %i.lb
   %i.ld = load i64, ptr %i.ec, align 8, !tbaa !65 ; 2 uses
-  %i.le = mul nsw i64 %i.ld, %indvars.iv433.i.i.i
-  %i.lf = getelementptr inbounds [8 x i8], ptr %i.lc, i64 %i.le
+  %i.le = mul i64 %i.ld, %indvars.iv433.i.i.i
+  %i.lf = getelementptr [8 x i8], ptr %i.lc, i64 %i.le
   %i.lg = load i64, ptr %i.dp, align 8, !tbaa !65 ; 2 uses
-  %i.lh = mul nsw i64 %i.lg, %indvars.iv428.i.i.i
-  %i.li = getelementptr inbounds [8 x i8], ptr %i.lf, i64 %i.lh
+  %i.lh = mul i64 %i.lg, %indvars.iv428.i.i.i
+  %i.li = getelementptr [8 x i8], ptr %i.lf, i64 %i.lh
   %i.lj = load i64, ptr %i.dc, align 8, !tbaa !65 ; 2 uses
-  %i.lk = mul nsw i64 %i.lj, %indvars.iv423.i.i.i
-  %i.ll = getelementptr inbounds [8 x i8], ptr %i.li, i64 %i.lk
+  %i.lk = mul i64 %i.lj, %indvars.iv423.i.i.i
+  %i.ll = getelementptr [8 x i8], ptr %i.li, i64 %i.lk ; 2 uses
   %i.lm = mul i64 %i.kw, %i.la
   %i.ln = mul i64 %i.kx, %i.ld
-  %36 = add i64 %i.lm, %i.ln
   %i.lo = mul i64 %i.ky, %i.lg
-  %37 = add i64 %36, %i.lo
-  %38 = mul i64 %i.lj, %i.kz
-  %39 = add i64 %37, %38                          ; 2 uses
-  %scevgep34 = getelementptr i8, ptr %scevgep, i64 %39
-  %scevgep37 = getelementptr i8, ptr %scevgep36.a, i64 %39
+  %8 = mul i64 %i.lj, %i.kz
+  %9 = getelementptr i8, ptr %scevgep36.a, i64 %i.lm
+  %10 = getelementptr i8, ptr %9, i64 %i.ln
+  %scevgep34 = getelementptr i8, ptr %10, i64 %i.lo
+  %scevgep37 = getelementptr i8, ptr %scevgep34, i64 %8
   %scevgep38 = getelementptr i8, ptr %.3243.us.us.us.us.us.us.us.us.us.i.i.i, i64 %i.ax
-  %bound0 = icmp ult ptr %scevgep34, %scevgep38
+  %bound0 = icmp ult ptr %i.ll, %scevgep38
   %bound1 = icmp ult ptr %.3243.us.us.us.us.us.us.us.us.us.i.i.i, %scevgep37
   %found.conflict = and i1 %bound0, %bound1
   %i.lp = or i1 %found.conflict, %stride.check

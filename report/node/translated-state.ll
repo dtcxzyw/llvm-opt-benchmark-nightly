@@ -202,14 +202,14 @@ bb.a:
   %i.t = icmp ne ptr %i.m, null
   %.neg.i.i = sext i1 %i.t to i64
   %i.u = add nsw i64 %i.s, %.neg.i.i
-  %i.v = shl i64 %i.u, 6                          ; 3 uses
+  %i.v = shl i64 %i.u, 6
   %i.w = load ptr, ptr %i.j, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.y = load ptr, ptr %i.x, align 8
   %i.z = ptrtoint ptr %i.w to i64
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = sub i64 %i.z, %i.aa
-  %i.ac = lshr i64 %i.ab, 3                       ; 3 uses
+  %i.ac = lshr i64 %i.ab, 3
   %i.ad = add i64 %i.v, %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.af = load ptr, ptr %i.ae, align 8
@@ -217,8 +217,8 @@ bb.a:
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = sub i64 %i.ah, %i.ai
-  %i.ak = lshr i64 %i.aj, 3                       ; 3 uses
-  %i.al = add i64 %i.ad, %i.ak
+  %i.ak = lshr i64 %i.aj, 3
+  %i.al = add i64 %i.ad, %i.ak                    ; 3 uses
   %i.am = trunc i64 %i.al to i32                  ; 4 uses
   %i.an = icmp eq ptr %i.g, null                  ; 2 uses
   br i1 %i.an, label %bb.b, label %.loopexit
@@ -229,9 +229,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ap, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %2 = add nuw nsw i64 %i.ac, %i.ak
-  %3 = add i64 %2, %i.v
-  %wide.trip.count = and i64 %3, 4294967295
+  %wide.trip.count = and i64 %i.al, 2147483647
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
@@ -301,9 +299,7 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
 .lr.ph141:                                        ; preds = %.preheader
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = add nuw nsw i64 %i.ac, %i.ak
-  %5 = add i64 %4, %i.v
-  %wide.trip.count145 = and i64 %5, 4294967295
+  %wide.trip.count145 = and i64 %i.al, 2147483647
   br label %bb.i
 
 bb.h:                                             ; preds = %.loopexit

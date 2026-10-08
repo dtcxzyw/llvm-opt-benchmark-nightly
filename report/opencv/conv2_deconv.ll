@@ -205,7 +205,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 4, !tbaa !18   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !108, !nonnull !106, !align !107
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !18   ; 21 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !18   ; 24 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !109, !nonnull !106, !align !107
   %i.k = load i32, ptr %i.j, align 4, !tbaa !18
@@ -214,7 +214,7 @@ bb.a:
   %i.n = sext i32 %i.e to i64
   %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.p = load ptr, ptr %i.o, align 8, !nonnull !106, !align !107
-  %i.q = sext i32 %i.h to i64                     ; 14 uses
+  %i.q = sext i32 %i.h to i64                     ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !106, !align !110
   %i.t = getelementptr inbounds nuw i8, ptr %.val, i64 48
@@ -239,9 +239,6 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %.val, i64 160
   %i.an = shl nuw nsw i64 %i.q, 2
   %wide.trip.count90.i.i.i = zext i32 %i.h to i64 ; 2 uses
-  %2 = shl nsw i64 %i.q, 2
-  %3 = shl nsw i64 %i.q, 2
-  %4 = shl nsw i64 %i.q, 2
   %i.ao = shl nsw i64 %i.q, 2
   %i.ap = shl nsw i64 %i.q, 2
   %i.aq = shl nsw i64 %i.q, 2
@@ -275,7 +272,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bg = sext i32 %i.bf to i64                   ; 5 uses
   %i.bh = mul i64 %i.be, %i.bg
   %i.bi = mul i64 %i.bh, %i.q
-  %i.bj = getelementptr inbounds [4 x i8], ptr %i.az, i64 %i.bi ; 3 uses
+  %i.bj = getelementptr [4 x i8], ptr %i.az, i64 %i.bi ; 13 uses
   %i.bk = load ptr, ptr %i.s, align 8, !tbaa !9
   %i.bl = load i32, ptr %i.u, align 4, !tbaa !18  ; 2 uses
   %i.bm = sext i32 %i.bl to i64
@@ -299,12 +296,12 @@ bb.c:                                             ; preds = %bb.b
   %i.ca = icmp sgt i32 %i.bz, 0
   %i.cb = sext i32 %i.bz to i64
   %i.cc = sext i32 %i.aw to i64                   ; 4 uses
-  %5 = mul i64 %i.an, %i.be
-  %6 = mul i64 %5, %i.bg
-  %scevgep.i.i.i = getelementptr i8, ptr %i.az, i64 %6 ; 13 uses
-  %7 = zext nneg i32 %.sroa.speculated.i.i.i to i64 ; 20 uses
-  %8 = shl nuw nsw i64 %7, 2                      ; 13 uses
-  %scevgep72.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %8 ; 8 uses
+  %2 = zext nneg i32 %.sroa.speculated.i.i.i to i64 ; 20 uses
+  %3 = shl nuw nsw i64 %2, 2                      ; 13 uses
+  %4 = mul i64 %i.an, %i.be
+  %5 = mul i64 %4, %i.bg
+  %6 = getelementptr i8, ptr %i.az, i64 %5
+  %scevgep72.i.i.i = getelementptr i8, ptr %6, i64 %3 ; 8 uses
   %i.cd = xor i32 %.sroa.speculated.i.i.i, -1
   %i.ce = add i32 %i.h, %i.cd
   %i.cf = zext i32 %i.ce to i64
@@ -319,7 +316,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ca, label %.lr.ph55.i.split.us.i.i.preheader, label %.lr.ph55.i.split.i.i
 
 .lr.ph55.i.split.us.i.i.preheader:                ; preds = %.lr.ph55.i.i.i
-  %i.cj = mul i64 %2, %i.be
+  %i.cj = mul i64 %i.ao, %i.be
   %i.ck = mul i64 %i.cj, %i.bg
   %i.cl = add i64 %i.ck, %i.ba
   %i.cm = shl nsw i64 %i.cc, 2
@@ -327,9 +324,9 @@ bb.c:                                             ; preds = %bb.b
   %i.co = sub i64 %i.cl, %i.cn
   %min.iters.check41 = icmp ult i32 %.sroa.speculated.i.i.i, 8
   %invariant.op128 = add i64 %i.co, -1
-  %n.vec43 = and i64 %7, 2147483640               ; 3 uses
-  %cmp.n50 = icmp eq i64 %n.vec43, %7
-  %xtraiter106 = and i64 %7, 3                    ; 2 uses
+  %n.vec43 = and i64 %2, 2147483640               ; 3 uses
+  %cmp.n50 = icmp eq i64 %n.vec43, %2
+  %xtraiter106 = and i64 %2, 3                    ; 2 uses
   %lcmp.mod107.not = icmp eq i64 %xtraiter106, 0
   %i.cp = and i32 %i.bx, 1
   %lcmp.mod112.not = icmp eq i32 %i.cp, 0
@@ -338,23 +335,25 @@ bb.c:                                             ; preds = %bb.b
   %invariant.op126 = sub i64 1, %i.ci
   %invariant.op127 = sub i32 3, %i.bx
   %min.iters.check = icmp ult i32 %.sroa.speculated.i.i.i, 8
-  %n.vec = and i64 %7, 2147483640                 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %7
+  %n.vec = and i64 %2, 2147483640                 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %2
   br label %.lr.ph55.i.split.us.i.i
 
 .lr.ph55.i.split.us.i.i:                          ; preds = %.lr.ph55.i.split.us.i.i.preheader, %._crit_edge52.i.loopexit.us.i.i
-  %indvars.iv109.i.us.i.i = phi i64 [ %indvars.iv.next110.i.us.i.i, %._crit_edge52.i.loopexit.us.i.i ], [ 0, %.lr.ph55.i.split.us.i.i.preheader ] ; 4 uses
+  %indvars.iv109.i.us.i.i = phi i64 [ %indvars.iv.next110.i.us.i.i, %._crit_edge52.i.loopexit.us.i.i ], [ 0, %.lr.ph55.i.split.us.i.i.preheader ] ; 3 uses
   %i.cr = trunc nuw nsw i64 %indvars.iv109.i.us.i.i to i32 ; 4 uses
   %i.cs = mul i32 %i.h, %i.cr
-  %i.ct = sext i32 %i.cs to i64
-  %i.cu = shl nsw i64 %i.ct, 2                    ; 2 uses
+  %i.ct = sext i32 %i.cs to i64                   ; 2 uses
+  %i.cu = shl nsw i64 %i.ct, 2
   %scevgep73.i.us.i.i = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.cu
-  %9 = mul nuw nsw i64 %indvars.iv109.i.us.i.i, %i.q
-  %i.cv = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %9 ; 9 uses
+  %i.cv = getelementptr [4 x i8], ptr %i.bj, i64 %i.ct ; 10 uses
   br i1 %.not.i.i.i, label %.lr.ph23.preheader.i.us.i.i, label %.lr.ph.i.us.i.i.preheader
 
 .lr.ph.i.us.i.i.preheader:                        ; preds = %.lr.ph55.i.split.us.i.i
-  %10 = mul i64 %3, %indvars.iv109.i.us.i.i
+  %7 = trunc i64 %indvars.iv109.i.us.i.i to i32
+  %8 = mul i32 %i.h, %7
+  %9 = sext i32 %8 to i64
+  %10 = shl nsw i64 %9, 2
   %.reass129 = add i64 %10, %invariant.op128
   %diff.check = icmp ult i64 %.reass129, 31
   %or.cond = select i1 %min.iters.check41, i1 true, i1 %diff.check
@@ -395,7 +394,7 @@ middle.block49:                                   ; preds = %vector.body44
 
 .lr.ph.i.us.i.i.prol.loopexit:                    ; preds = %.lr.ph.i.us.i.i.prol, %.lr.ph.i.us.i.i.preheader84
   %indvars.iv.i.us.i.i.unr = phi i64 [ %indvars.iv.i.us.i.i.ph, %.lr.ph.i.us.i.i.preheader84 ], [ %indvars.iv.next.i.us.i.i.prol, %.lr.ph.i.us.i.i.prol ]
-  %i.dd = sub nsw i64 %indvars.iv.i.us.i.i.ph, %7
+  %i.dd = sub nsw i64 %indvars.iv.i.us.i.i.ph, %2
   %i.de = icmp ugt i64 %i.dd, -4
   br i1 %i.de, label %.loopexit.i.us.i.i, label %.lr.ph.i.us.i.i
 
@@ -421,12 +420,11 @@ middle.block49:                                   ; preds = %vector.body44
   %i.dm = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %indvars.iv.next.i.us.i.i.2
   store float %i.dl, ptr %i.dm, align 4, !tbaa !112
   %indvars.iv.next.i.us.i.i.3 = add nuw nsw i64 %indvars.iv.i.us.i.i, 4 ; 2 uses
-  %exitcond.not.i.us.i.i.3 = icmp eq i64 %indvars.iv.next.i.us.i.i.3, %7
+  %exitcond.not.i.us.i.i.3 = icmp eq i64 %indvars.iv.next.i.us.i.i.3, %2
   br i1 %exitcond.not.i.us.i.i.3, label %.loopexit.i.us.i.i, label %.lr.ph.i.us.i.i, !llvm.loop !84
 
 .lr.ph23.preheader.i.us.i.i:                      ; preds = %.lr.ph55.i.split.us.i.i
-  %scevgep68.i.us.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.cu
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us.i.i, i8 0, i64 %8, i1 false), !tbaa !112
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.cv, i8 0, i64 %3, i1 false), !tbaa !112
   br label %.loopexit.i.us.i.i
 
 .loopexit.i.us.i.i:                               ; preds = %.lr.ph.i.us.i.i.prol.loopexit, %.lr.ph.i.us.i.i, %middle.block49, %.lr.ph23.preheader.i.us.i.i
@@ -594,7 +592,7 @@ middle.block:                                     ; preds = %vector.body
   %i.gh = fadd float %i.gg, 0.000000e+00
   store float %i.gh, ptr %i.gf, align 4, !tbaa !112
   %indvars.iv.next100.i.us6.i.i = add nuw nsw i64 %indvars.iv99.i.us5.i.i, 1 ; 2 uses
-  %exitcond103.not.i.us7.i.i = icmp eq i64 %indvars.iv.next100.i.us6.i.i, %7
+  %exitcond103.not.i.us7.i.i = icmp eq i64 %indvars.iv.next100.i.us6.i.i, %2
   br i1 %exitcond103.not.i.us7.i.i, label %.thread5.i.us.i.i, label %.thread8.i.us.i.i, !llvm.loop !88
 
 .lr.ph43.split.us.preheader.i.us.us.i.i:          ; preds = %.lr.ph49.i.us.i.i, %.thread8.i.loopexit.us.us.i.i
@@ -712,7 +710,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.ih = fadd float %.0103.lcssa.i.ph.us.us.i.i, %i.ig
   store float %i.ih, ptr %i.if, align 4, !tbaa !112
   %indvars.iv.next100.i.us.us.i.i = add nuw nsw i64 %indvars.iv99.i.us.us.i.i, 1 ; 2 uses
-  %exitcond103.not.i.us.us.i.i = icmp eq i64 %indvars.iv.next100.i.us.us.i.i, %7
+  %exitcond103.not.i.us.us.i.i = icmp eq i64 %indvars.iv.next100.i.us.us.i.i, %2
   br i1 %exitcond103.not.i.us.us.i.i, label %.thread5.i.us.i.i, label %.lr.ph43.split.us.preheader.i.us.us.i.i, !llvm.loop !92
 
 .thread5.i.us.i.i:                                ; preds = %bb.f, %bb.e, %bb.d, %.thread8.i.us.i.i, %.thread8.i.loopexit.us.us.i.i, %middle.block
@@ -731,7 +729,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 
 .lr.ph55.i.split.split.us.i.i:                    ; preds = %.lr.ph55.i.split.i.i
   %i.ii = load ptr, ptr %i.ab, align 8, !tbaa !114, !nonnull !106, !align !107 ; 3 uses
-  %i.ij = mul i64 %4, %i.be
+  %i.ij = mul i64 %i.ap, %i.be
   %i.ik = mul i64 %i.ij, %i.bg
   %i.il = add i64 %i.ik, %i.ba
   %i.im = shl nsw i64 %i.cc, 2
@@ -739,9 +737,9 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.io = sub i64 %i.il, %i.in
   %min.iters.check55 = icmp ult i32 %.sroa.speculated.i.i.i, 8
   %invariant.op124 = add i64 %i.io, -1
-  %n.vec57 = and i64 %7, 2147483640               ; 3 uses
-  %cmp.n64 = icmp eq i64 %n.vec57, %7
-  %xtraiter100 = and i64 %7, 3                    ; 2 uses
+  %n.vec57 = and i64 %2, 2147483640               ; 3 uses
+  %cmp.n64 = icmp eq i64 %n.vec57, %2
+  %xtraiter100 = and i64 %2, 3                    ; 2 uses
   %lcmp.mod101.not = icmp eq i64 %xtraiter100, 0
   %i.ip = and i32 %i.bx, 1
   %lcmp.mod104.not = icmp eq i32 %i.ip, 0
@@ -752,19 +750,21 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   br label %bb.i
 
 bb.i:                                             ; preds = %.preheader13.i.loopexit.us28.i.i, %.lr.ph55.i.split.split.us.i.i
-  %indvars.iv109.i.us9.i.i = phi i64 [ 0, %.lr.ph55.i.split.split.us.i.i ], [ %indvars.iv.next110.i.us30.i.i, %.preheader13.i.loopexit.us28.i.i ] ; 4 uses
+  %indvars.iv109.i.us9.i.i = phi i64 [ 0, %.lr.ph55.i.split.split.us.i.i ], [ %indvars.iv.next110.i.us30.i.i, %.preheader13.i.loopexit.us28.i.i ] ; 3 uses
   %i.is = trunc nuw nsw i64 %indvars.iv109.i.us9.i.i to i32 ; 4 uses
   %i.it = mul i32 %i.h, %i.is
-  %i.iu = sext i32 %i.it to i64
-  %i.iv = shl nsw i64 %i.iu, 2                    ; 2 uses
+  %i.iu = sext i32 %i.it to i64                   ; 2 uses
+  %i.iv = shl nsw i64 %i.iu, 2
   %scevgep73.i.us10.i.i = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.iv
-  %11 = mul nuw nsw i64 %indvars.iv109.i.us9.i.i, %i.q
-  %i.iw = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %11 ; 6 uses
+  %i.iw = getelementptr [4 x i8], ptr %i.bj, i64 %i.iu ; 7 uses
   br i1 %.not.i.i.i, label %.lr.ph23.preheader.i.us18.i.i, label %.lr.ph.i.us12.i.i.preheader
 
 .lr.ph.i.us12.i.i.preheader:                      ; preds = %bb.i
-  %12 = mul i64 %i.ao, %indvars.iv109.i.us9.i.i
-  %.reass125 = add i64 %12, %invariant.op124
+  %11 = trunc i64 %indvars.iv109.i.us9.i.i to i32
+  %12 = mul i32 %i.h, %11
+  %13 = sext i32 %12 to i64
+  %14 = shl nsw i64 %13, 2
+  %.reass125 = add i64 %14, %invariant.op124
   %diff.check53 = icmp ult i64 %.reass125, 31
   %or.cond80 = select i1 %min.iters.check55, i1 true, i1 %diff.check53
   br i1 %or.cond80, label %.lr.ph.i.us12.i.i.preheader85, label %vector.body58
@@ -804,7 +804,7 @@ middle.block63:                                   ; preds = %vector.body58
 
 .lr.ph.i.us12.i.i.prol.loopexit:                  ; preds = %.lr.ph.i.us12.i.i.prol, %.lr.ph.i.us12.i.i.preheader85
   %indvars.iv.i.us13.i.i.unr = phi i64 [ %indvars.iv.i.us13.i.i.ph, %.lr.ph.i.us12.i.i.preheader85 ], [ %indvars.iv.next.i.us15.i.i.prol, %.lr.ph.i.us12.i.i.prol ]
-  %i.je = sub nsw i64 %indvars.iv.i.us13.i.i.ph, %7
+  %i.je = sub nsw i64 %indvars.iv.i.us13.i.i.ph, %2
   %i.jf = icmp ugt i64 %i.je, -4
   br i1 %i.jf, label %.loopexit.i.us20.i.i, label %.lr.ph.i.us12.i.i
 
@@ -830,12 +830,11 @@ middle.block63:                                   ; preds = %vector.body58
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.iw, i64 %indvars.iv.next.i.us15.i.i.2
   store float %i.jm, ptr %i.jn, align 4, !tbaa !112
   %indvars.iv.next.i.us15.i.i.3 = add nuw nsw i64 %indvars.iv.i.us13.i.i, 4 ; 2 uses
-  %exitcond.not.i.us16.i.i.3 = icmp eq i64 %indvars.iv.next.i.us15.i.i.3, %7
+  %exitcond.not.i.us16.i.i.3 = icmp eq i64 %indvars.iv.next.i.us15.i.i.3, %2
   br i1 %exitcond.not.i.us16.i.i.3, label %.loopexit.i.us20.i.i, label %.lr.ph.i.us12.i.i, !llvm.loop !97
 
 .lr.ph23.preheader.i.us18.i.i:                    ; preds = %bb.i
-  %scevgep68.i.us19.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.iv
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us19.i.i, i8 0, i64 %8, i1 false), !tbaa !112
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iw, i8 0, i64 %3, i1 false), !tbaa !112
   br label %.loopexit.i.us20.i.i
 
 .loopexit.i.us20.i.i:                             ; preds = %.lr.ph.i.us12.i.i.prol.loopexit, %.lr.ph.i.us12.i.i, %middle.block63, %.lr.ph23.preheader.i.us18.i.i
@@ -892,7 +891,7 @@ middle.block63:                                   ; preds = %vector.body58
   br i1 %.not.i.i.i, label %.lr.ph55.i.split.split.split.us.i.i, label %.lr.ph.i.preheader.i.i.preheader
 
 .lr.ph.i.preheader.i.i.preheader:                 ; preds = %.lr.ph55.i.split.split.i.i
-  %i.kc = mul i64 %i.ap, %i.be
+  %i.kc = mul i64 %i.aq, %i.be
   %i.kd = mul i64 %i.kc, %i.bg
   %i.ke = add i64 %i.kd, %i.ba
   %i.kf = shl nsw i64 %i.cc, 2
@@ -900,9 +899,9 @@ middle.block63:                                   ; preds = %vector.body58
   %i.kh = sub i64 %i.ke, %i.kg
   %min.iters.check69 = icmp ult i32 %.sroa.speculated.i.i.i, 8
   %invariant.op = add i64 %i.kh, -1
-  %n.vec71 = and i64 %7, 2147483640               ; 3 uses
-  %cmp.n78 = icmp eq i64 %n.vec71, %7
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %n.vec71 = and i64 %2, 2147483640               ; 3 uses
+  %cmp.n78 = icmp eq i64 %n.vec71, %2
+  %xtraiter = and i64 %2, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.lr.ph.i.preheader.i.i
 
@@ -932,38 +931,38 @@ middle.block63:                                   ; preds = %vector.body58
   %niter99 = phi i64 [ 0, %.lr.ph23.preheader.i.us34.us.i.i.preheader.new ], [ %niter99.next.3, %.lr.ph23.preheader.i.us34.us.i.i ]
   %i.kk = trunc nuw nsw i64 %indvars.iv109.i.us32.us.i.i to i32
   %i.kl = mul i32 %i.h, %i.kk
-  %i.km = sext i32 %i.kl to i64
-  %i.kn = shl nsw i64 %i.km, 2                    ; 2 uses
+  %i.km = sext i32 %i.kl to i64                   ; 2 uses
+  %i.kn = shl nsw i64 %i.km, 2
   %scevgep73.i.us33.us.i.i = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.kn
-  %scevgep68.i.us35.us.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.kn
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.us.i.i, i8 0, i64 %8, i1 false), !tbaa !112
+  %15 = getelementptr [4 x i8], ptr %i.bj, i64 %i.km
+  tail call void @llvm.memset.p0.i64(ptr align 4 %15, i8 0, i64 %3, i1 false), !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.us33.us.i.i, i8 0, i64 %i.ch, i1 false), !tbaa !112
   %i.ko = trunc i64 %indvars.iv109.i.us32.us.i.i to i32
   %i.kp = or disjoint i32 %i.ko, 1
   %i.kq = mul i32 %i.h, %i.kp
-  %i.kr = sext i32 %i.kq to i64
-  %i.ks = shl nsw i64 %i.kr, 2                    ; 2 uses
+  %i.kr = sext i32 %i.kq to i64                   ; 2 uses
+  %i.ks = shl nsw i64 %i.kr, 2
   %scevgep73.i.us33.us.i.i.1 = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.ks
-  %scevgep68.i.us35.us.i.i.1 = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.ks
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.us.i.i.1, i8 0, i64 %8, i1 false), !tbaa !112
+  %16 = getelementptr [4 x i8], ptr %i.bj, i64 %i.kr
+  tail call void @llvm.memset.p0.i64(ptr align 4 %16, i8 0, i64 %3, i1 false), !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.us33.us.i.i.1, i8 0, i64 %i.ch, i1 false), !tbaa !112
   %i.kt = trunc i64 %indvars.iv109.i.us32.us.i.i to i32
   %i.ku = or disjoint i32 %i.kt, 2
   %i.kv = mul i32 %i.h, %i.ku
-  %i.kw = sext i32 %i.kv to i64
-  %i.kx = shl nsw i64 %i.kw, 2                    ; 2 uses
+  %i.kw = sext i32 %i.kv to i64                   ; 2 uses
+  %i.kx = shl nsw i64 %i.kw, 2
   %scevgep73.i.us33.us.i.i.2 = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.kx
-  %scevgep68.i.us35.us.i.i.2 = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.kx
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.us.i.i.2, i8 0, i64 %8, i1 false), !tbaa !112
+  %17 = getelementptr [4 x i8], ptr %i.bj, i64 %i.kw
+  tail call void @llvm.memset.p0.i64(ptr align 4 %17, i8 0, i64 %3, i1 false), !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.us33.us.i.i.2, i8 0, i64 %i.ch, i1 false), !tbaa !112
   %i.ky = trunc i64 %indvars.iv109.i.us32.us.i.i to i32
   %i.kz = or disjoint i32 %i.ky, 3
   %i.la = mul i32 %i.h, %i.kz
-  %i.lb = sext i32 %i.la to i64
-  %i.lc = shl nsw i64 %i.lb, 2                    ; 2 uses
+  %i.lb = sext i32 %i.la to i64                   ; 2 uses
+  %i.lc = shl nsw i64 %i.lb, 2
   %scevgep73.i.us33.us.i.i.3 = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.lc
-  %scevgep68.i.us35.us.i.i.3 = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.lc
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.us.i.i.3, i8 0, i64 %8, i1 false), !tbaa !112
+  %18 = getelementptr [4 x i8], ptr %i.bj, i64 %i.lb
+  tail call void @llvm.memset.p0.i64(ptr align 4 %18, i8 0, i64 %3, i1 false), !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.us33.us.i.i.3, i8 0, i64 %i.ch, i1 false), !tbaa !112
   %indvars.iv.next110.i.us39.us.i.i.3 = add nuw nsw i64 %indvars.iv109.i.us32.us.i.i, 4 ; 2 uses
   %niter99.next.3 = add i64 %niter99, 4           ; 2 uses
@@ -976,44 +975,45 @@ middle.block63:                                   ; preds = %vector.body58
   %i.ld = trunc nuw nsw i64 %indvars.iv109.i.us32.i.i to i32
   %i.le = mul i32 %i.h, %i.ld
   %i.lf = sext i32 %i.le to i64
-  %13 = shl nsw i64 %i.lf, 2
-  %scevgep68.i.us35.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %13
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.i.i, i8 0, i64 %8, i1 false), !tbaa !112
+  %19 = getelementptr [4 x i8], ptr %i.bj, i64 %i.lf
+  tail call void @llvm.memset.p0.i64(ptr align 4 %19, i8 0, i64 %3, i1 false), !tbaa !112
   %i.lg = trunc i64 %indvars.iv109.i.us32.i.i to i32
   %i.lh = or disjoint i32 %i.lg, 1
   %i.li = mul i32 %i.h, %i.lh
   %i.lj = sext i32 %i.li to i64
-  %14 = shl nsw i64 %i.lj, 2
-  %scevgep68.i.us35.i.i.1 = getelementptr i8, ptr %scevgep.i.i.i, i64 %14
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.i.i.1, i8 0, i64 %8, i1 false), !tbaa !112
+  %20 = getelementptr [4 x i8], ptr %i.bj, i64 %i.lj
+  tail call void @llvm.memset.p0.i64(ptr align 4 %20, i8 0, i64 %3, i1 false), !tbaa !112
   %i.lk = trunc i64 %indvars.iv109.i.us32.i.i to i32
   %i.ll = or disjoint i32 %i.lk, 2
   %i.lm = mul i32 %i.h, %i.ll
   %i.ln = sext i32 %i.lm to i64
-  %15 = shl nsw i64 %i.ln, 2
-  %scevgep68.i.us35.i.i.2 = getelementptr i8, ptr %scevgep.i.i.i, i64 %15
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.i.i.2, i8 0, i64 %8, i1 false), !tbaa !112
+  %21 = getelementptr [4 x i8], ptr %i.bj, i64 %i.ln
+  tail call void @llvm.memset.p0.i64(ptr align 4 %21, i8 0, i64 %3, i1 false), !tbaa !112
   %i.lo = trunc i64 %indvars.iv109.i.us32.i.i to i32
   %i.lp = or disjoint i32 %i.lo, 3
   %i.lq = mul i32 %i.h, %i.lp
   %i.lr = sext i32 %i.lq to i64
-  %16 = shl nsw i64 %i.lr, 2
-  %scevgep68.i.us35.i.i.3 = getelementptr i8, ptr %scevgep.i.i.i, i64 %16
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.i.i.3, i8 0, i64 %8, i1 false), !tbaa !112
+  %22 = getelementptr [4 x i8], ptr %i.bj, i64 %i.lr
+  tail call void @llvm.memset.p0.i64(ptr align 4 %22, i8 0, i64 %3, i1 false), !tbaa !112
   %indvars.iv.next110.i.us39.i.i.3 = add nuw nsw i64 %indvars.iv109.i.us32.i.i, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit17.i.i.i.loopexit88.unr-lcssa, label %.lr.ph23.preheader.i.us34.i.i, !llvm.loop !94
 
 .lr.ph.i.preheader.i.i:                           ; preds = %.lr.ph.i.preheader.i.i.preheader, %._crit_edge.i.i.i
-  %indvars.iv109.i.i.i = phi i64 [ %indvars.iv.next110.i.i.i, %._crit_edge.i.i.i ], [ 0, %.lr.ph.i.preheader.i.i.preheader ] ; 4 uses
-  %17 = mul nuw nsw i64 %indvars.iv109.i.i.i, %i.q
-  %i.ls = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %17 ; 6 uses
+  %indvars.iv109.i.i.i = phi i64 [ %indvars.iv.next110.i.i.i, %._crit_edge.i.i.i ], [ 0, %.lr.ph.i.preheader.i.i.preheader ] ; 3 uses
+  %23 = trunc nuw nsw i64 %indvars.iv109.i.i.i to i32
+  %24 = mul i32 %i.h, %23
+  %25 = sext i32 %24 to i64                       ; 2 uses
+  %i.ls = getelementptr [4 x i8], ptr %i.bj, i64 %25 ; 6 uses
   br i1 %min.iters.check69, label %.lr.ph.i.i.i.preheader, label %vector.memcheck66
 
 vector.memcheck66:                                ; preds = %.lr.ph.i.preheader.i.i
-  %18 = mul i64 %i.aq, %indvars.iv109.i.i.i
-  %.reass = add i64 %18, %invariant.op
+  %26 = trunc i64 %indvars.iv109.i.i.i to i32
+  %27 = mul i32 %i.h, %26
+  %28 = sext i32 %27 to i64
+  %29 = shl nsw i64 %28, 2
+  %.reass = add i64 %29, %invariant.op
   %diff.check67 = icmp ult i64 %.reass, 31
   br i1 %diff.check67, label %.lr.ph.i.i.i.preheader, label %vector.body72
 
@@ -1052,7 +1052,7 @@ middle.block77:                                   ; preds = %vector.body72
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.i.preheader
   %indvars.iv.i.i.i.unr = phi i64 [ %indvars.iv.i.i.i.ph, %.lr.ph.i.i.i.preheader ], [ %indvars.iv.next.i.i.i.prol, %.lr.ph.i.i.i.prol ]
-  %i.ma = sub nsw i64 %indvars.iv.i.i.i.ph, %7
+  %i.ma = sub nsw i64 %indvars.iv.i.i.i.ph, %2
   %i.mb = icmp ugt i64 %i.ma, -4
   br i1 %i.mb, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i
 
@@ -1078,17 +1078,14 @@ middle.block77:                                   ; preds = %vector.body72
   %i.mj = getelementptr inbounds nuw [4 x i8], ptr %i.ls, i64 %indvars.iv.next.i.i.i.2
   store float %i.mi, ptr %i.mj, align 4, !tbaa !112
   %indvars.iv.next.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.i, 4 ; 2 uses
-  %exitcond.not.i.i.i.3 = icmp eq i64 %indvars.iv.next.i.i.i.3, %7
+  %exitcond.not.i.i.i.3 = icmp eq i64 %indvars.iv.next.i.i.i.3, %2
   br i1 %exitcond.not.i.i.i.3, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i, !llvm.loop !100
 
 .loopexit.i.loopexit.i.i:                         ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %middle.block77
   br i1 %i.bw, label %.lr.ph25.preheader.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph25.preheader.i.i.i:                         ; preds = %.loopexit.i.loopexit.i.i
-  %19 = trunc nuw nsw i64 %indvars.iv109.i.i.i to i32
-  %20 = mul i32 %i.h, %19
-  %21 = sext i32 %20 to i64
-  %i.mk = shl nsw i64 %21, 2
+  %i.mk = shl nsw i64 %25, 2
   %scevgep73.i.i.i = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.mk
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.i.i, i8 0, i64 %i.ch, i1 false), !tbaa !112
   br label %._crit_edge.i.i.i
@@ -1113,11 +1110,11 @@ middle.block77:                                   ; preds = %vector.body72
   %epil.iter95 = phi i64 [ %epil.iter95.next, %.lr.ph23.preheader.i.us34.us.i.i.epil ], [ 0, %.lr.ph23.preheader.i.us34.us.i.i.epil.preheader ]
   %i.ml = trunc nuw nsw i64 %indvars.iv109.i.us32.us.i.i.epil to i32
   %i.mm = mul i32 %i.h, %i.ml
-  %i.mn = sext i32 %i.mm to i64
-  %i.mo = shl nsw i64 %i.mn, 2                    ; 2 uses
+  %i.mn = sext i32 %i.mm to i64                   ; 2 uses
+  %i.mo = shl nsw i64 %i.mn, 2
   %scevgep73.i.us33.us.i.i.epil = getelementptr i8, ptr %scevgep72.i.i.i, i64 %i.mo
-  %scevgep68.i.us35.us.i.i.epil = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.mo
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.us.i.i.epil, i8 0, i64 %8, i1 false), !tbaa !112
+  %30 = getelementptr [4 x i8], ptr %i.bj, i64 %i.mn
+  tail call void @llvm.memset.p0.i64(ptr align 4 %30, i8 0, i64 %3, i1 false), !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep73.i.us33.us.i.i.epil, i8 0, i64 %i.ch, i1 false), !tbaa !112
   %indvars.iv.next110.i.us39.us.i.i.epil = add nuw nsw i64 %indvars.iv109.i.us32.us.i.i.epil, 1
   %epil.iter95.next = add i64 %epil.iter95, 1     ; 2 uses
@@ -1140,9 +1137,8 @@ middle.block77:                                   ; preds = %vector.body72
   %i.mp = trunc nuw nsw i64 %indvars.iv109.i.us32.i.i.epil to i32
   %i.mq = mul i32 %i.h, %i.mp
   %i.mr = sext i32 %i.mq to i64
-  %22 = shl nsw i64 %i.mr, 2
-  %scevgep68.i.us35.i.i.epil = getelementptr i8, ptr %scevgep.i.i.i, i64 %22
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep68.i.us35.i.i.epil, i8 0, i64 %8, i1 false), !tbaa !112
+  %31 = getelementptr [4 x i8], ptr %i.bj, i64 %i.mr
+  tail call void @llvm.memset.p0.i64(ptr align 4 %31, i8 0, i64 %3, i1 false), !tbaa !112
   %indvars.iv.next110.i.us39.i.i.epil = add nuw nsw i64 %indvars.iv109.i.us32.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter91

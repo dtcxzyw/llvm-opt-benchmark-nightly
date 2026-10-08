@@ -205,13 +205,13 @@ bb.o:                                             ; preds = %._crit_edge299.i
   %i.jw = load ptr, ptr %i.r, align 8, !tbaa !218
   %i.jx = getelementptr inbounds nuw [56 x i8], ptr %i.jw, i64 %i.eg ; 2 uses
   %i.jy = sub nuw i64 %storemerge303.i, %.0191.i
-  %i.jz = lshr i64 %i.jy, 2                       ; 2 uses
+  %i.jz = lshr i64 %i.jy, 2
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jx, i64 40
-  %i.kb = load ptr, ptr %i.ka, align 8, !tbaa !22 ; 3 uses
+  %i.kb = load ptr, ptr %i.ka, align 8, !tbaa !22 ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.jx, i64 16
-  %i.kd = load i64, ptr %i.kc, align 8, !tbaa !17 ; 2 uses
-  %i.ke = mul i64 %i.kd, %i.jz
-  %i.kf = getelementptr inbounds nuw i8, ptr %i.kb, i64 %i.ke ; 5 uses
+  %i.kd = load i64, ptr %i.kc, align 8, !tbaa !17
+  %i.ke = mul i64 %i.kd, %i.jz                    ; 2 uses
+  %i.kf = getelementptr i8, ptr %i.kb, i64 %i.ke  ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.kf, i64 64) ]
   br i1 %.not314.i, label %.loopexit.i, label %.lr.ph302.i.preheader
 
@@ -219,13 +219,11 @@ bb.o:                                             ; preds = %._crit_edge299.i
   br i1 %min.iters.check, label %.lr.ph302.i.preheader125, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph302.i.preheader
-  %3 = mul i64 %i.kd, %i.jz                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.kb, i64 %3
   %scevgep75.a = getelementptr i8, ptr %i.kb, i64 %i.fe
-  %scevgep76.a = getelementptr i8, ptr %scevgep75.a, i64 %3
+  %scevgep76.a = getelementptr i8, ptr %scevgep75.a, i64 %i.ke
   %scevgep77.a = getelementptr i8, ptr %i.fs, i64 %i.ff
   %scevgep78 = getelementptr i8, ptr %scevgep77.a, i64 %i.fu
-  %bound0 = icmp ult ptr %scevgep, %scevgep78
+  %bound0 = icmp ult ptr %i.kf, %scevgep78
   %bound1 = icmp ult ptr %i.fv, %scevgep76.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph302.i.preheader125, label %vector.body
@@ -628,13 +626,13 @@ bb.o:                                             ; preds = %._crit_edge300.i
   %i.kd = load ptr, ptr %i.r, align 8, !tbaa !218
   %i.ke = getelementptr inbounds nuw [56 x i8], ptr %i.kd, i64 %i.eg ; 2 uses
   %i.kf = sub nuw i64 %storemerge304.i, %.0191.i
-  %i.kg = lshr i64 %i.kf, 2                       ; 2 uses
+  %i.kg = lshr i64 %i.kf, 2
   %i.kh = getelementptr inbounds nuw i8, ptr %i.ke, i64 40
-  %i.ki = load ptr, ptr %i.kh, align 8, !tbaa !22 ; 3 uses
+  %i.ki = load ptr, ptr %i.kh, align 8, !tbaa !22 ; 2 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ke, i64 16
-  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !17 ; 2 uses
-  %i.kl = mul i64 %i.kk, %i.kg
-  %i.km = getelementptr inbounds nuw i8, ptr %i.ki, i64 %i.kl ; 5 uses
+  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !17
+  %i.kl = mul i64 %i.kk, %i.kg                    ; 2 uses
+  %i.km = getelementptr i8, ptr %i.ki, i64 %i.kl  ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.km, i64 64) ]
   br i1 %.not315.i, label %.loopexit.i, label %.lr.ph303.i.preheader
 
@@ -642,13 +640,11 @@ bb.o:                                             ; preds = %._crit_edge300.i
   br i1 %min.iters.check, label %.lr.ph303.i.preheader109, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph303.i.preheader
-  %3 = mul i64 %i.kk, %i.kg                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ki, i64 %3
   %scevgep80.a = getelementptr i8, ptr %i.ki, i64 %i.fe
-  %scevgep81.a = getelementptr i8, ptr %scevgep80.a, i64 %3
+  %scevgep81.a = getelementptr i8, ptr %scevgep80.a, i64 %i.kl
   %scevgep82.a = getelementptr i8, ptr %i.fs, i64 %i.ff
   %scevgep83 = getelementptr i8, ptr %scevgep82.a, i64 %i.fu
-  %bound0 = icmp ult ptr %scevgep, %scevgep83
+  %bound0 = icmp ult ptr %i.km, %scevgep83
   %bound1 = icmp ult ptr %i.fv, %scevgep81.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph303.i.preheader109, label %vector.body
@@ -1051,13 +1047,13 @@ bb.p:                                             ; preds = %._crit_edge302.i.i
   %i.kk = load ptr, ptr %i.v, align 8, !tbaa !218
   %i.kl = getelementptr inbounds nuw [56 x i8], ptr %i.kk, i64 %i.el ; 2 uses
   %i.km = sub nuw i64 %storemerge306.i.i, %.0191.i.i
-  %i.kn = lshr i64 %i.km, 2                       ; 2 uses
+  %i.kn = lshr i64 %i.km, 2
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kl, i64 40
-  %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !22 ; 3 uses
+  %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !22 ; 2 uses
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kl, i64 16
-  %i.kr = load i64, ptr %i.kq, align 8, !tbaa !17 ; 2 uses
-  %i.ks = mul i64 %i.kr, %i.kn
-  %i.kt = getelementptr inbounds nuw i8, ptr %i.kp, i64 %i.ks ; 5 uses
+  %i.kr = load i64, ptr %i.kq, align 8, !tbaa !17
+  %i.ks = mul i64 %i.kr, %i.kn                    ; 2 uses
+  %i.kt = getelementptr i8, ptr %i.kp, i64 %i.ks  ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.kt, i64 64) ]
   br i1 %.not317.i.i, label %.loopexit.i.i, label %.lr.ph305.i.i.preheader
 
@@ -1065,13 +1061,11 @@ bb.p:                                             ; preds = %._crit_edge302.i.i
   br i1 %min.iters.check, label %.lr.ph305.i.i.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph305.i.i.preheader
-  %3 = mul i64 %i.kr, %i.kn                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.kp, i64 %3
   %scevgep28.a = getelementptr i8, ptr %i.kp, i64 %i.fj
-  %scevgep29.a = getelementptr i8, ptr %scevgep28.a, i64 %3
+  %scevgep29.a = getelementptr i8, ptr %scevgep28.a, i64 %i.ks
   %scevgep30.a = getelementptr i8, ptr %i.fx, i64 %i.fk
   %scevgep31 = getelementptr i8, ptr %scevgep30.a, i64 %i.fz
-  %bound0 = icmp ult ptr %scevgep, %scevgep31
+  %bound0 = icmp ult ptr %i.kt, %scevgep31
   %bound1 = icmp ult ptr %i.ga, %scevgep29.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph305.i.i.preheader56, label %vector.body

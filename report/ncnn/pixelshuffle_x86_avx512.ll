@@ -192,32 +192,24 @@ bb.b:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %.noexc.preheader, %_ZN4ncnn3MatD2Ev.exit
   %i.z = phi i32 [ %i.v, %.noexc.preheader ], [ %i.al, %_ZN4ncnn3MatD2Ev.exit ] ; 3 uses
   %indvars.iv305 = phi i64 [ %i.x, %.noexc.preheader ], [ %indvars.iv.next306, %_ZN4ncnn3MatD2Ev.exit ] ; 7 uses
-  %i.aa = load ptr, ptr %3, align 8, !tbaa !32, !noalias !77 ; 3 uses
+  %i.aa = load ptr, ptr %3, align 8, !tbaa !32, !noalias !77
   %i.ab = load i64, ptr %i.n, align 8, !tbaa !33, !noalias !77
   %i.ac = mul i64 %i.ab, %indvars.iv305
-  %i.ad = load i64, ptr %i.o, align 8, !tbaa !16, !noalias !77 ; 6 uses
-  %i.ae = mul i64 %i.ac, %i.ad                    ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ae ; 2 uses
+  %i.ad = load i64, ptr %i.o, align 8, !tbaa !16, !noalias !77 ; 2 uses
+  %i.ae = mul i64 %i.ac, %i.ad
+  %i.af = getelementptr i8, ptr %i.aa, i64 %i.ae  ; 2 uses
   %i.ag = icmp sgt i32 %i.z, 0
   br i1 %i.ag, label %.lr.ph244, label %_ZN4ncnn3MatD2Ev.exit
 
 .lr.ph244:                                        ; preds = %.noexc
   %i.ah = load i32, ptr %i.m, align 4, !tbaa !14, !noalias !77
-  %i.ai = sext i32 %i.ah to i64                   ; 5 uses
+  %i.ai = sext i32 %i.ah to i64
   %i.aj = mul i64 %i.ad, %i.ai                    ; 2 uses
   %i.ak = trunc nsw i64 %indvars.iv305 to i32
-  %10 = mul i64 %i.ad, %i.ai
-  %11 = shl i64 %i.ad, 2
-  %12 = mul i64 %11, %i.ai
-  %13 = mul i64 %i.ad, %i.ai
-  %14 = shl i64 %i.ad, 1
-  %15 = mul i64 %14, %i.ai
   %broadcast.splatinsert463.a = insertelement <8 x i64> poison, i64 %indvars.iv305, i64 0
   %broadcast.splat464.a = shufflevector <8 x i64> %broadcast.splatinsert463.a, <8 x i64> poison, <8 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert493.a = insertelement <8 x i64> poison, i64 %indvars.iv305, i64 0
   %broadcast.splat494.a = shufflevector <8 x i64> %broadcast.splatinsert493.a, <8 x i64> poison, <8 x i32> zeroinitializer
-  %16 = getelementptr i8, ptr %i.aa, i64 %i.ae
-  %17 = getelementptr i8, ptr %i.aa, i64 %i.ae
   br label %bb.c
 
 _ZN4ncnn3MatD2Ev.exit:                            ; preds = %.loopexit, %.noexc
@@ -228,10 +220,8 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %.loopexit, %.noexc
   br i1 %exitcond308.not, label %._crit_edge247, label %.noexc, !llvm.loop !46
 
 bb.c:                                             ; preds = %.lr.ph244, %.loopexit
-  %indvars.iv302 = phi i64 [ 0, %.lr.ph244 ], [ %indvars.iv.next303, %.loopexit ] ; 7 uses
+  %indvars.iv302 = phi i64 [ 0, %.lr.ph244 ], [ %indvars.iv.next303, %.loopexit ] ; 5 uses
   %.pr = phi i32 [ %i.z, %.lr.ph244 ], [ %i.lw, %.loopexit ] ; 11 uses
-  %18 = mul i64 %13, %indvars.iv302
-  %19 = mul i64 %10, %indvars.iv302
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   %i.am = icmp sgt i32 %.pr, 0
   br i1 %i.am, label %.lr.ph, label %._crit_edge.thread
@@ -530,20 +520,17 @@ bb.d:                                             ; preds = %._crit_edge
 .lr.ph240.preheader:                              ; preds = %bb.d
   %i.ef = load ptr, ptr %i.s, align 8, !tbaa !82
   %.pre309 = load i32, ptr %9, align 4, !tbaa !15
-  %20 = getelementptr i8, ptr %16, i64 %18
   br label %.lr.ph240
 
 .lr.ph240:                                        ; preds = %.lr.ph240.preheader, %._crit_edge235
   %i.eg = phi i32 [ %.pre309, %.lr.ph240.preheader ], [ %i.fb, %._crit_edge235 ] ; 2 uses
-  %indvars.iv299 = phi i64 [ 0, %.lr.ph240.preheader ], [ %indvars.iv.next300, %._crit_edge235 ] ; 3 uses
+  %indvars.iv299 = phi i64 [ 0, %.lr.ph240.preheader ], [ %indvars.iv.next300, %._crit_edge235 ] ; 2 uses
   %.0157238 = phi ptr [ %i.du, %.lr.ph240.preheader ], [ %i.hj, %._crit_edge235 ] ; 10 uses
   %.0158237 = phi ptr [ %i.ef, %.lr.ph240.preheader ], [ %i.hk, %._crit_edge235 ] ; 10 uses
-  %21 = mul i64 %15, %indvars.iv299
-  %scevgep371 = getelementptr i8, ptr %20, i64 %21 ; 2 uses
   %i.eh = shl nuw nsw i64 %indvars.iv299, 1
   %i.ei = add nuw nsw i64 %i.eh, %indvars.iv302
   %i.ej = mul i64 %i.aj, %i.ei
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ej ; 8 uses
+  %i.ek = getelementptr i8, ptr %i.af, i64 %i.ej  ; 10 uses
   %.not170223 = icmp slt i32 %i.eg, 8
   br i1 %.not170223, label %.preheader201, label %.lr.ph226
 
@@ -603,9 +590,9 @@ iter.check402:                                    ; preds = %.preheader
 
 vector.memcheck370:                               ; preds = %iter.check402
   %i.ff = shl nuw nsw i64 %i.fd, 3
-  %scevgep372.a = getelementptr i8, ptr %scevgep371, i64 %i.ff ; 2 uses
+  %scevgep372.a = getelementptr i8, ptr %i.ek, i64 %i.ff ; 2 uses
   %i.fg = shl nuw nsw i64 %wide.trip.count297, 3
-  %scevgep373.a = getelementptr i8, ptr %scevgep371, i64 %i.fg ; 2 uses
+  %scevgep373.a = getelementptr i8, ptr %i.ek, i64 %i.fg ; 2 uses
   %i.fh = shl nuw nsw i64 %i.fd, 2                ; 2 uses
   %scevgep374.a = getelementptr i8, ptr %.0157238, i64 %i.fh
   %i.fi = shl nuw nsw i64 %wide.trip.count297, 2  ; 2 uses
@@ -781,22 +768,19 @@ vec.epilog.middle.block414:                       ; preds = %vec.epilog.vector.b
   %i.hs = load ptr, ptr %i.t, align 16, !tbaa !82
   %i.ht = load ptr, ptr %i.s, align 8, !tbaa !82
   %.pre = load i32, ptr %9, align 4, !tbaa !15
-  %22 = getelementptr i8, ptr %17, i64 %19
   br label %.lr.ph222
 
 .lr.ph222:                                        ; preds = %.lr.ph222.preheader, %._crit_edge215
   %i.hu = phi i32 [ %.pre, %.lr.ph222.preheader ], [ %i.ia, %._crit_edge215 ] ; 2 uses
-  %indvars.iv277 = phi i64 [ 0, %.lr.ph222.preheader ], [ %indvars.iv.next278, %._crit_edge215 ] ; 3 uses
+  %indvars.iv277 = phi i64 [ 0, %.lr.ph222.preheader ], [ %indvars.iv.next278, %._crit_edge215 ] ; 2 uses
   %.0153219 = phi ptr [ %i.hr, %.lr.ph222.preheader ], [ %i.ls, %._crit_edge215 ] ; 9 uses
   %.0154218 = phi ptr [ %i.hs, %.lr.ph222.preheader ], [ %i.lr, %._crit_edge215 ] ; 9 uses
   %.0155217 = phi ptr [ %i.ht, %.lr.ph222.preheader ], [ %i.lq, %._crit_edge215 ] ; 9 uses
   %.0156216 = phi ptr [ %i.ho, %.lr.ph222.preheader ], [ %i.lp, %._crit_edge215 ] ; 9 uses
-  %23 = mul i64 %12, %indvars.iv277
-  %scevgep = getelementptr i8, ptr %22, i64 %23   ; 2 uses
   %i.hv = shl nuw nsw i64 %indvars.iv277, 2
   %i.hw = add nuw nsw i64 %i.hv, %indvars.iv302
   %i.hx = mul i64 %i.aj, %i.hw
-  %i.hy = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.hx ; 6 uses
+  %i.hy = getelementptr i8, ptr %i.af, i64 %i.hx  ; 8 uses
   %.not169207 = icmp slt i32 %i.hu, 4
   br i1 %.not169207, label %.preheader202, label %.lr.ph210
 
@@ -819,9 +803,9 @@ iter.check:                                       ; preds = %.preheader202
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ie = shl nuw nsw i64 %i.ic, 4
-  %scevgep335.a = getelementptr i8, ptr %scevgep, i64 %i.ie ; 4 uses
+  %scevgep335.a = getelementptr i8, ptr %i.hy, i64 %i.ie ; 4 uses
   %i.if = shl nuw nsw i64 %wide.trip.count275, 4
-  %scevgep336.a = getelementptr i8, ptr %scevgep, i64 %i.if ; 4 uses
+  %scevgep336.a = getelementptr i8, ptr %i.hy, i64 %i.if ; 4 uses
   %i.ig = shl nuw nsw i64 %i.ic, 2                ; 4 uses
   %scevgep337.a = getelementptr i8, ptr %.0156216, i64 %i.ig
   %i.ih = shl nuw nsw i64 %wide.trip.count275, 2  ; 4 uses

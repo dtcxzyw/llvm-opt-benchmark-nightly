@@ -204,7 +204,7 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPfmfET_
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !176, !nonnull !84, !align !86 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !177, !nonnull !84, !align !85
-  %i.am = load ptr, ptr %i.al, align 8, !tbaa !58 ; 4 uses
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !58 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ao = load i32, ptr %i.y, align 4, !tbaa !51  ; 2 uses
   %i.ap = icmp sgt i32 %i.ao, 0
@@ -243,7 +243,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %._crit_edge134, %bb
   %i.az = trunc nsw i64 %indvars.iv180 to i32     ; 2 uses
   %i.ba = sdiv i32 %i.az, %i.ay
   %i.bb = srem i32 %i.az, %i.ay
-  %i.bc = sext i32 %i.av to i64                   ; 4 uses
+  %i.bc = sext i32 %i.av to i64                   ; 3 uses
   %i.bd = mul nsw i64 %indvars.iv180, %i.bc
   %i.be = load i32, ptr %i.aa, align 4, !tbaa !51
   %i.bf = sext i32 %i.be to i64                   ; 2 uses
@@ -253,15 +253,15 @@ _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %._crit_edge134, %bb
   %i.bj = mul i64 %indvars.iv180, %i.bi           ; 2 uses
   %i.bk = mul i64 %i.bj, %i.bf
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.bk
-  %i.bm = sext i32 %i.aw to i64                   ; 5 uses
+  %i.bm = sext i32 %i.aw to i64                   ; 4 uses
   %i.bn = mul i64 %i.bj, %i.bm
   %i.bo = getelementptr [4 x i8], ptr %i.ah, i64 %i.bn ; 2 uses
-  %i.bp = sext i32 %i.ba to i64                   ; 3 uses
-  %i.bq = sext i32 %i.ay to i64                   ; 3 uses
+  %i.bp = sext i32 %i.ba to i64                   ; 2 uses
+  %i.bq = sext i32 %i.ay to i64                   ; 2 uses
   %i.br = mul nsw i64 %i.bp, %i.bq
   %i.bs = mul i64 %i.br, %i.bc
   %i.bt = mul i64 %i.bs, %i.bm
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.bt
+  %i.bu = getelementptr [4 x i8], ptr %i.am, i64 %i.bt ; 2 uses
   %i.bv = icmp sgt i32 %i.av, 0
   br i1 %i.bv, label %.preheader102.lr.ph, label %._crit_edge131
 
@@ -269,16 +269,10 @@ _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %._crit_edge134, %bb
   %i.bw = add i64 %indvar, %i.aq
   %i.bx = shl i64 %i.bw, 2
   %i.by = sext i32 %i.bb to i64                   ; 2 uses
-  %2 = shl nsw i64 %i.bq, 2
-  %3 = mul i64 %2, %i.bc
-  %4 = mul i64 %3, %i.bm
-  %5 = mul i64 %4, %i.bp
-  %scevgep = getelementptr i8, ptr %i.am, i64 %5  ; 2 uses
   %i.bz = shl nsw i64 %i.bq, 2
   %i.ca = mul i64 %i.bz, %i.bc
   %i.cb = mul i64 %i.ca, %i.bm
-  %i.cc = mul i64 %i.cb, %i.bp                    ; 2 uses
-  %scevgep219 = getelementptr i8, ptr %i.am, i64 %i.cc
+  %i.cc = mul i64 %i.cb, %i.bp
   %scevgep221 = getelementptr i8, ptr %i.am, i64 %i.cc
   %i.cd = mul i64 %i.bx, %i.bi
   %i.ce = mul i64 %i.cd, %i.bm
@@ -582,11 +576,11 @@ scalar.ph229.preheader:                           ; preds = %.lr.ph118, %middle.
   %i.gj = load i32, ptr %i.u, align 4, !tbaa !51  ; 4 uses
   %i.gk = sext i32 %i.gj to i64
   %i.gl = mul i64 %indvars.iv177, %i.gk
-  %i.gm = add i64 %i.gl, %i.by                    ; 3 uses
+  %i.gm = add i64 %i.gl, %i.by                    ; 2 uses
   %i.gn = load i32, ptr %i.aj, align 4, !tbaa !51 ; 8 uses
-  %i.go = sext i32 %i.gn to i64                   ; 5 uses
+  %i.go = sext i32 %i.gn to i64                   ; 4 uses
   %i.gp = mul i64 %i.gm, %i.go
-  %i.gq = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.gp ; 4 uses
+  %i.gq = getelementptr [4 x i8], ptr %i.bu, i64 %i.gp ; 6 uses
   %i.gr = icmp sgt i32 %i.gn, 0
   br i1 %i.gr, label %.preheader100, label %._crit_edge129.split
 
@@ -597,16 +591,15 @@ scalar.ph229.preheader:                           ; preds = %.lr.ph118, %middle.
   br i1 %i.gu, label %.preheader100.thread203, label %._crit_edge129.split
 
 .preheader100.thread203:                          ; preds = %._crit_edge119.thread
-  %6 = zext nneg i32 %i.gt to i64
   %i.gv = sext i32 %i.gs to i64
   %i.gw = mul i64 %indvars.iv177, %i.gv
   %i.gx = add i64 %i.gw, %i.by
-  %7 = shl i64 %i.gx, 2
-  %i.gy = mul i64 %7, %6
-  %scevgep163204 = getelementptr i8, ptr %scevgep, i64 %i.gy
+  %2 = zext nneg i32 %i.gt to i64
+  %i.gy = mul i64 %i.gx, %2
+  %3 = getelementptr [4 x i8], ptr %i.bu, i64 %i.gy
   %i.gz = zext nneg i32 %i.gt to i64
   %i.ha = shl nuw nsw i64 %i.gz, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep163204, i8 0, i64 %i.ha, i1 false), !tbaa !83
+  tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 0, i64 %i.ha, i1 false), !tbaa !83
   br label %._crit_edge129.split
 
 scalar.ph229:                                     ; preds = %scalar.ph229.preheader, %scalar.ph229
@@ -620,12 +613,9 @@ scalar.ph229:                                     ; preds = %scalar.ph229.prehea
   br i1 %exitcond162.not, label %._crit_edge119, label %scalar.ph229, !llvm.loop !160
 
 .preheader100:                                    ; preds = %._crit_edge119
-  %8 = shl i64 %i.gm, 2
-  %9 = mul i64 %8, %i.go
-  %scevgep163 = getelementptr i8, ptr %scevgep, i64 %9
   %i.he = zext nneg i32 %i.gn to i64
   %i.hf = shl nuw nsw i64 %i.he, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep163, i8 0, i64 %i.hf, i1 false), !tbaa !83
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gq, i8 0, i64 %i.hf, i1 false), !tbaa !83
   br i1 %i.fl, label %.lr.ph125.preheader, label %._crit_edge129.split
 
 .lr.ph125.preheader:                              ; preds = %.preheader100
@@ -634,8 +624,7 @@ scalar.ph229:                                     ; preds = %scalar.ph229.prehea
   %i.hi = getelementptr [4 x i8], ptr %.sroa.091.0, i64 %i.hh
   %wide.trip.count170 = zext nneg i32 %i.gn to i64 ; 6 uses
   %i.hj = shl i64 %i.gm, 2
-  %i.hk = mul i64 %i.hj, %i.go                    ; 2 uses
-  %scevgep220 = getelementptr i8, ptr %scevgep219, i64 %i.hk
+  %i.hk = mul i64 %i.hj, %i.go
   %i.hl = shl nuw nsw i64 %wide.trip.count170, 2  ; 2 uses
   %i.hm = getelementptr i8, ptr %scevgep221, i64 %i.hk
   %scevgep222 = getelementptr i8, ptr %i.hm, i64 %i.hl
@@ -645,7 +634,7 @@ scalar.ph229:                                     ; preds = %scalar.ph229.prehea
   %i.hp = mul i64 %i.hn, %i.ho
   %scevgep225 = getelementptr i8, ptr %scevgep224, i64 %i.hp
   %min.iters.check = icmp ult i32 %i.gn, 8
-  %bound0 = icmp ult ptr %scevgep220, %scevgep225
+  %bound0 = icmp ult ptr %i.gq, %scevgep225
   %bound1 = icmp ult ptr %i.bo, %scevgep222
   %found.conflict = and i1 %bound0, %bound1
   %n.vec = and i64 %wide.trip.count170, 2147483640 ; 3 uses

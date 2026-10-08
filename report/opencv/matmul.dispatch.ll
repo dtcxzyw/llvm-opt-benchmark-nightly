@@ -205,12 +205,12 @@ bb.ca:                                            ; preds = %bb.bz
   %.sext1258 = sext i16 %i.aed to i32
   %i.aee = add i32 %.sroa.speculated, %.sext1258  ; 2 uses
   %i.aef = add i32 %i.aee, 1
-  %i.aeg = sext i32 %i.aef to i64                 ; 2 uses
-  %i.aeh = sext i32 %i.aec to i64                 ; 2 uses
+  %i.aeg = sext i32 %i.aef to i64
+  %i.aeh = sext i32 %i.aec to i64
   %i.aei = mul nsw i64 %i.aeh, %i.aeg             ; 2 uses
   %i.aej = mul nsw i64 %i.aei, %.pre-phi          ; 2 uses
-  %i.aek = zext nneg i32 %i.add to i64            ; 2 uses
-  %i.ael = mul nsw i64 %i.aei, %i.aek             ; 2 uses
+  %i.aek = zext nneg i32 %i.add to i64
+  %i.ael = mul i64 %i.aei, %i.aek                 ; 3 uses
   br i1 %i.ade, label %bb.cb, label %bb.cc
 
 bb.cb:                                            ; preds = %._crit_edge
@@ -272,8 +272,8 @@ bb.ci:                                            ; preds = %_ZN2cv10AutoBufferI
   br label %_ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit
 
 _ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit:     ; preds = %.noexc1089, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i, %bb.cd
-  %i.afe = phi ptr [ %i.afd, %.noexc1089 ], [ %i.afb, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i ], [ %.pre, %bb.cd ] ; 6 uses
-  %i.aff = getelementptr inbounds nuw i8, ptr %i.afe, i64 %i.ael ; 4 uses
+  %i.afe = phi ptr [ %i.afd, %.noexc1089 ], [ %i.afb, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i ], [ %.pre, %bb.cd ] ; 5 uses
+  %i.aff = getelementptr i8, ptr %i.afe, i64 %i.ael ; 5 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %i.aff, i64 %i.aej ; 9 uses
   %spec.select1085 = select i1 %i.ade, ptr %i.afg, ptr null ; 4 uses
   %i.afh = icmp sgt i32 %.sroa.32.0, 0
@@ -292,10 +292,7 @@ _ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit:     ; preds = %.noexc1089, %_ZN2cv
   %i.afr = shl nuw nsw i32 %.01252, 3
   %.not1276 = icmp eq ptr %i.afe, null
   %i.afs = lshr i32 %i.ada, 2
-  %15 = mul nsw i64 %i.aeg, %i.aeh
-  %16 = mul i64 %15, %i.aek                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.afe, i64 %16
-  %scevgep1497.a = getelementptr i8, ptr %i.afe, i64 %16
+  %scevgep1497.a = getelementptr i8, ptr %i.afe, i64 %i.ael
   %stride.check1501 = icmp slt i64 %.0918, 0
   br label %bb.cj
 
@@ -686,7 +683,7 @@ bb.cz:                                            ; preds = %_ZN2cv12cpu_baselin
   %i.ala = getelementptr i8, ptr %i.akz, i64 %i.aky
   %scevgep1500 = getelementptr i8, ptr %i.ala, i64 %i.akw
   %min.iters.check = icmp ult i32 %i.akr, 8
-  %bound0 = icmp ult ptr %scevgep, %scevgep1500
+  %bound0 = icmp ult ptr %i.aff, %scevgep1500
   %bound1 = icmp ult ptr %i.ahi, %scevgep1498.a
   %found.conflict = and i1 %bound0, %bound1
   %stride.check = icmp slt i32 %i.akp, 0
