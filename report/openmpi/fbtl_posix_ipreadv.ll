@@ -37,8 +37,8 @@ bb.c:                                             ; preds = %bb.a
   store i64 0, ptr %i.i, align 8, !tbaa !42
   %i.j = sext i32 %i.d to i64                     ; 3 uses
   %i.k = mul nsw i64 %i.j, 168
-  %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #7 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 16 uses
+  %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #7 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 15 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !43
   %i.n = icmp eq ptr %i.l, null
   br i1 %i.n, label %bb.d, label %bb.e
@@ -58,8 +58,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   tail call void (i32, ptr, ...) @opal_output(i32 noundef 1, ptr noundef nonnull @.str) #8
-  %2 = load ptr, ptr %i.m, align 8, !tbaa !43
-  tail call void @free(ptr noundef %2) #8
+  tail call void @free(ptr noundef nonnull %i.l) #8
   tail call void @free(ptr noundef nonnull %i.a) #8
   br label %bb.w
 
@@ -289,7 +288,7 @@ bb.v:                                             ; preds = %bb.u
   tail call void @free(ptr noundef nonnull %i.a) #8
   br label %bb.w
 
-.critedge:                                        ; preds = %.preheader, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u
+.critedge:                                        ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %.preheader
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
   %i.ek = load i32, ptr %i.bs, align 4, !tbaa !65
   %i.el = sext i32 %i.ek to i64

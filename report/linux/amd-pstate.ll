@@ -204,18 +204,15 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.cu = load i64, ptr %i.a, align 8             ; 3 uses
+  %i.cu = load i64, ptr %i.a, align 8             ; 2 uses
   %i.cv = getelementptr i8, ptr %i.cq, i64 128
   store volatile i64 %i.cu, ptr %i.cv, align 8
-  %i.cw = trunc i64 %i.cu to i8
-  %1 = trunc i64 %i.cu to i32
-  %2 = and i32 %1, 255
+  %i.cw = trunc i64 %i.cu to i8                   ; 2 uses
   %i.cx = getelementptr i8, ptr %i.cq, i64 136
   %i.cy = getelementptr i8, ptr %i.cq, i64 139
   %i.cz = load i8, ptr %i.cy, align 1
-  %3 = zext i8 %i.cz to i32
-  %4 = icmp samesign ult i32 %2, %3
-  br i1 %4, label %bb.af, label %bb.ag
+  %1 = icmp ugt i8 %i.cz, %i.cw
+  br i1 %1, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %i.da = getelementptr i8, ptr %i.cq, i64 137
@@ -618,18 +615,15 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.t
 
 bb.q:                                             ; preds = %bb.o
-  %i.bj = load i64, ptr %i.a, align 8             ; 3 uses
+  %i.bj = load i64, ptr %i.a, align 8             ; 2 uses
   %i.bk = getelementptr i8, ptr %i.bf, i64 128
   store volatile i64 %i.bj, ptr %i.bk, align 8
-  %i.bl = trunc i64 %i.bj to i8
-  %1 = trunc i64 %i.bj to i32
-  %2 = and i32 %1, 255
+  %i.bl = trunc i64 %i.bj to i8                   ; 2 uses
   %i.bm = getelementptr i8, ptr %i.bf, i64 136
   %i.bn = getelementptr i8, ptr %i.bf, i64 139
   %i.bo = load i8, ptr %i.bn, align 1
-  %3 = zext i8 %i.bo to i32
-  %4 = icmp samesign ult i32 %2, %3
-  br i1 %4, label %bb.r, label %bb.s
+  %1 = icmp ugt i8 %i.bo, %i.bl
+  br i1 %1, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.bp = getelementptr i8, ptr %i.bf, i64 137

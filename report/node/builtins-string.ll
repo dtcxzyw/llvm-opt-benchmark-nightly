@@ -164,7 +164,7 @@ _ZNSt6vectorIhSaIhEE9push_backEOh.exit.i:         ; preds = %_ZNSt6vectorIhSaIhE
 
 ._crit_edge.i:                                    ; preds = %bb.e
   %i.aj = icmp eq i32 %.052210.i, %i.i
-  br i1 %i.aj, label %._crit_edge.thread.i, label %3
+  br i1 %i.aj, label %._crit_edge.thread.i, label %_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i
 
 ._crit_edge.thread.i:                             ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i, %._crit_edge.i
   %.sroa.0131.0.lcssa.ph252.i = phi ptr [ %.sroa.0131.0209.i, %._crit_edge.i ], [ %.sroa.0131.2.i, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i ] ; 4 uses
@@ -186,20 +186,12 @@ bb.k:                                             ; preds = %._crit_edge.thread.
   %i.ar = load i64, ptr %i.an, align 8
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit.i
 
-3:                                                ; preds = %._crit_edge.i
-  %4 = sub nsw i32 %i.i, %.052210.i               ; 2 uses
-  %5 = icmp slt i32 %4, 0
-  br i1 %5, label %6, label %_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i
-
-6:                                                ; preds = %3
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
-  unreachable
-
-_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i: ; preds = %3
-  %7 = zext nneg i32 %4 to i64                    ; 2 uses
-  %i.as = shl nuw nsw i64 %7, 1
+_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i: ; preds = %._crit_edge.i
+  %3 = sub nuw nsw i32 %i.i, %.052210.i
+  %4 = sext i32 %3 to i64                         ; 2 uses
+  %i.as = shl nuw nsw i64 %4, 1
   %i.at = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.as) #13 ; 3 uses
-  %i.au = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %7
+  %i.au = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.aa, %_ZNSt12_Vector_baseItSaItEE13_M_deallocateEPtm.exit.i.i
@@ -602,7 +594,7 @@ attributes #16 = { noreturn }
 !9 = !{}
 !10 = distinct !{!10, !5}
 !11 = distinct !{!11, !5}
-!12 = !{!"branch_weights", !"expected", i32 2145766516, i32 1717132}
+!12 = !{!"branch_weights", !"expected", i32 2145766517, i32 1717131}
 !13 = distinct !{!13, !5}
 !14 = !{!"branch_weights", i32 2146410443, i32 1073205}
 !15 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}

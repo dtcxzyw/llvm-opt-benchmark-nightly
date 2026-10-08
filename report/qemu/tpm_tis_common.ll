@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/tpm_tis_common?download=true
 inline.NumInlined: 50
 inline.NumDeleted: 18
-loop-unroll.NumCompletelyUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@tpm_tis_mmio_read:bb.a
   tail call void @__assert_fail(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 58, ptr noundef nonnull @__PRETTY_FUNCTION__.tpm_tis_locality_from_addr) #8
   unreachable
@@ -204,17 +204,15 @@ bb.p:                                             ; preds = %bb.o
   %i.cn = zext i32 %i.cm to i64
   %i.co = load i64, ptr %i.cb, align 8
   %i.cp = tail call i64 @llvm.umin.i64(i64 %i.co, i64 %i.cn)
-  %3 = trunc nuw i64 %i.cp to i32
   %i.cq = load i16, ptr %i.cc, align 16           ; 2 uses
-  %i.cr = add i16 %i.cq, 1                        ; 2 uses
+  %i.cr = add i16 %i.cq, 1                        ; 4 uses
   store i16 %i.cr, ptr %i.cc, align 16
   %i.cs = zext i16 %i.cq to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.cs
   %i.cu = load i8, ptr %i.ct, align 1
-  %4 = zext i8 %i.cu to i32                       ; 5 uses
-  %i.cv = zext i16 %i.cr to i32                   ; 3 uses
-  %5 = and i32 %3, 65535
-  %.not19.i = icmp samesign ugt i32 %5, %i.cv
+  %i.cv = zext i8 %i.cu to i32                    ; 5 uses
+  %3 = trunc i64 %i.cp to i16
+  %.not19.i = icmp ult i16 %i.cr, %3
   br i1 %.not19.i, label %tpm_tis_raise_irq.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -253,12 +251,12 @@ trace_tpm_tis_raise_irq.exit.i.i:                 ; preds = %bb.u, %bb.t, %bb.s,
   %i.dg = or i32 %i.df, 2
   store i32 %i.dg, ptr %i.cf, align 4
   %.pre.i = load i16, ptr %i.cc, align 16
-  %.pre21.i = zext i16 %.pre.i to i32
   br label %tpm_tis_raise_irq.exit.i
 
 tpm_tis_raise_irq.exit.i:                         ; preds = %trace_tpm_tis_raise_irq.exit.i.i, %bb.q, %bb.p
-  %.pre-phi.i = phi i32 [ %.pre21.i, %trace_tpm_tis_raise_irq.exit.i.i ], [ %i.cv, %bb.q ], [ %i.cv, %bb.p ]
-  %i.dh = add nsw i32 %.pre-phi.i, -1
+  %4 = phi i16 [ %.pre.i, %trace_tpm_tis_raise_irq.exit.i.i ], [ %i.cr, %bb.q ], [ %i.cr, %bb.p ]
+  %5 = zext i16 %4 to i32
+  %i.dh = add nsw i32 %5, -1
   %i.di = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i20.i = icmp eq i32 %i.di, 0
   br i1 %.not.i20.i, label %tpm_tis_data_read.exit, label %bb.v, !prof !7
@@ -275,11 +273,11 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not3.i.i, label %tpm_tis_data_read.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.13, i32 noundef range(i32 0, 256) %4, i32 noundef range(i32 -1, 65535) %i.dh) #9
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.13, i32 noundef range(i32 0, 256) %i.cv, i32 noundef range(i32 -1, 65535) %i.dh) #9
   br label %tpm_tis_data_read.exit
 
 tpm_tis_data_read.exit:                           ; preds = %bb.x, %bb.w, %bb.v, %tpm_tis_raise_irq.exit.i, %bb.o, %.lr.ph.split
-  %.068 = phi i32 [ 255, %.lr.ph.split ], [ 255, %bb.o ], [ %4, %tpm_tis_raise_irq.exit.i ], [ %4, %bb.v ], [ %4, %bb.w ], [ %4, %bb.x ]
+  %.068 = phi i32 [ 255, %.lr.ph.split ], [ 255, %bb.o ], [ %i.cv, %tpm_tis_raise_irq.exit.i ], [ %i.cv, %bb.v ], [ %i.cv, %bb.w ], [ %i.cv, %bb.x ]
   %i.dm = and i32 %.07293, 255                    ; 2 uses
   %i.dn = shl i32 %.068, %i.dm
   %i.do = or i32 %i.dn, %.17094                   ; 2 uses
@@ -552,7 +550,7 @@ bb.t:                                             ; preds = %bb.m
 
 bb.u:                                             ; preds = %.thread, %bb.s, %bb.t, %bb.l
   %.1209 = phi i8 [ %i.af, %bb.l ], [ %i.af, %bb.t ], [ %i.g, %bb.s ], [ -1, %.thread ] ; 3 uses
-  %.1 = phi i32 [ 1, %bb.l ], [ 1, %bb.t ], [ 0, %bb.s ], [ 1, %.thread ] ; 7 uses
+  %.1 = phi i32 [ 1, %bb.l ], [ 1, %bb.t ], [ 0, %bb.s ], [ 1, %.thread ] ; 4 uses
   %i.bc = and i64 %spec.select, 16
   %.not238 = icmp eq i64 %i.bc, 0
   br i1 %.not238, label %bb.w, label %bb.v
@@ -579,56 +577,25 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond256, label %.critedge, label %.loopexit
 
 .critedge:                                        ; preds = %bb.x
-  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4376 ; 4 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4376 ; 2 uses
   %i.bn = and i64 %i.e, 7
   %i.bo = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %i.bn
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 4 ; 3 uses
   %i.bq = load i8, ptr %i.bp, align 4             ; 2 uses
   %i.br = and i8 %i.bq, 8
   %.not240 = icmp eq i8 %i.br, 0
-  br i1 %.not240, label %.preheader.preheader, label %.loopexit
+  br i1 %.not240, label %.lr.ph305.2, label %.loopexit
 
-.preheader.preheader:                             ; preds = %.critedge
-  %4 = and i64 %i.e, 7                            ; 7 uses
-  %5 = icmp samesign ult i64 %4, 4
-  br i1 %5, label %.lr.ph305, label %.critedge246.preheader
+.lr.ph305.2:                                      ; preds = %.critedge
+  %4 = and i64 %i.e, 7                            ; 2 uses
+  %.not241.2 = icmp eq i64 %4, 4
+  br i1 %.not241.2, label %.critedge246.preheader, label %.lr.ph305
 
-.preheader:                                       ; preds = %.lr.ph305
-  %.not309 = icmp eq i64 %4, 3
-  br i1 %.not309, label %.critedge246.preheader, label %.lr.ph305.1
+.lr.ph305.3:                                      ; preds = %.lr.ph305
+  %.not241.3 = icmp eq i64 %indvars.iv.next, 4
+  br i1 %.not241.3, label %.critedge246.preheader, label %.lr.ph305, !llvm.loop !13
 
-.lr.ph305.1:                                      ; preds = %.preheader
-  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 52
-  %8 = load i8, ptr %7, align 4
-  %9 = and i8 %8, 8
-  %.not241.1 = icmp eq i8 %9, 0
-  br i1 %.not241.1, label %.preheader.1, label %.loopexit, !llvm.loop !13
-
-.preheader.1:                                     ; preds = %.lr.ph305.1
-  %10 = icmp samesign ult i64 %4, 2
-  br i1 %10, label %.lr.ph305.2, label %.critedge246.preheader
-
-.lr.ph305.2:                                      ; preds = %.preheader.1
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 76
-  %13 = load i8, ptr %12, align 4
-  %14 = and i8 %13, 8
-  %.not241.2 = icmp eq i8 %14, 0
-  br i1 %.not241.2, label %.preheader.2, label %.loopexit, !llvm.loop !13
-
-.preheader.2:                                     ; preds = %.lr.ph305.2
-  %15 = icmp eq i64 %4, 0
-  br i1 %15, label %.lr.ph305.3, label %.critedge246.preheader
-
-.lr.ph305.3:                                      ; preds = %.preheader.2
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 4476
-  %17 = load i8, ptr %16, align 4
-  %18 = and i8 %17, 8
-  %.not241.3 = icmp eq i8 %18, 0
-  br i1 %.not241.3, label %.critedge246.preheader, label %.loopexit, !llvm.loop !13
-
-.critedge246.preheader:                           ; preds = %.preheader, %.preheader.1, %.preheader.2, %.lr.ph305.3, %.preheader.preheader
+.critedge246.preheader:                           ; preds = %.lr.ph305.3, %.lr.ph305.2
   %.not = icmp eq i8 %i.g, 0
   br i1 %.not, label %.critedge246._crit_edge, label %.critedge246.preheader270
 
@@ -641,13 +608,15 @@ bb.x:                                             ; preds = %bb.w
   %exitcond.not = icmp eq i64 %wide.trip.count, 1
   br i1 %exitcond.not, label %.critedge246._crit_edge.loopexit, label %.critedge246.1
 
-.lr.ph305:                                        ; preds = %.preheader.preheader
-  %i.bv = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %4
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 28
+.lr.ph305:                                        ; preds = %.lr.ph305.2, %.lr.ph305.3
+  %indvars.iv307 = phi i64 [ %indvars.iv.next, %.lr.ph305.3 ], [ %4, %.lr.ph305.2 ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv307, 1 ; 3 uses
+  %i.bv = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %indvars.iv.next
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   %i.bx = load i8, ptr %i.bw, align 4
   %i.by = and i8 %i.bx, 8
   %.not241 = icmp eq i8 %i.by, 0
-  br i1 %.not241, label %.preheader, label %.loopexit, !llvm.loop !13
+  br i1 %.not241, label %.lr.ph305.3, label %.loopexit, !llvm.loop !13
 
 .critedge246.1:                                   ; preds = %.critedge246.preheader270
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 4404 ; 2 uses
@@ -710,8 +679,8 @@ bb.x:                                             ; preds = %bb.w
   tail call fastcc void @tpm_tis_prep_abort(ptr noundef nonnull %0, i8 noundef zeroext %i.ct, i8 noundef zeroext %i.g)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph305, %.lr.ph305.1, %.lr.ph305.2, %.lr.ph305.3, %bb.x, %.critedge246._crit_edge, %.critedge, %bb.w
-  %.3 = phi i32 [ %.1, %bb.w ], [ %.1, %bb.x ], [ 0, %.critedge246._crit_edge ], [ %.1, %.critedge ], [ %.1, %.lr.ph305.3 ], [ %.1, %.lr.ph305.2 ], [ %.1, %.lr.ph305.1 ], [ %.1, %.lr.ph305 ]
+.loopexit:                                        ; preds = %.lr.ph305, %bb.x, %.critedge246._crit_edge, %.critedge, %bb.w
+  %.3 = phi i32 [ %.1, %bb.w ], [ %.1, %bb.x ], [ 0, %.critedge246._crit_edge ], [ %.1, %.critedge ], [ %.1, %.lr.ph305 ]
   %i.cu = and i64 %spec.select, 2
   %.not242 = icmp eq i64 %i.cu, 0
   br i1 %.not242, label %bb.ab, label %bb.y

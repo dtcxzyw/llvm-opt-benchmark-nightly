@@ -205,7 +205,7 @@ define void @_Z12string_stripRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIc
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !67   ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !67   ; 7 uses
   %.not21 = icmp eq i64 %i.c, 0
   %.pre = load ptr, ptr %1, align 8               ; 3 uses
   br i1 %.not21, label %.critedge, label %.lr.ph
@@ -225,14 +225,14 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !674
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.016.lcssa = phi i64 [ 0, %bb.a ], [ %i.c, %bb.b ], [ %.01618, %.lr.ph ] ; 8 uses
+  %.016.lcssa = phi i64 [ 0, %bb.a ], [ %i.c, %bb.b ], [ %.01618, %.lr.ph ] ; 6 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %.016.lcssa, i64 %i.c) ; 2 uses
   %i.i = icmp ugt i64 %i.c, %.016.lcssa
-  br i1 %i.i, label %.lr.ph25, label %.critedge2
+  br i1 %i.i, label %.lr.ph25, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.c:                                             ; preds = %.lr.ph25
   %i.j = icmp ugt i64 %i.k, %.016.lcssa
-  br i1 %i.j, label %.lr.ph25, label %.critedge2, !llvm.loop !675
+  br i1 %i.j, label %.lr.ph25, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, !llvm.loop !675
 
 .lr.ph25:                                         ; preds = %.critedge, %bb.c
   %.024 = phi i64 [ %i.k, %bb.c ], [ %i.c, %.critedge ] ; 2 uses
@@ -245,19 +245,11 @@ bb.c:                                             ; preds = %.lr.ph25
   br i1 %.not17, label %..critedge2_crit_edge26, label %bb.c, !llvm.loop !675
 
 ..critedge2_crit_edge26:                          ; preds = %.lr.ph25
-  br label %.critedge2, !llvm.loop !675
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, !llvm.loop !675
 
-.critedge2:                                       ; preds = %bb.c, %..critedge2_crit_edge26, %.critedge
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.c, %..critedge2_crit_edge26, %.critedge
   %.0.lcssa = phi i64 [ %umin, %.critedge ], [ %.024, %..critedge2_crit_edge26 ], [ %umin, %bb.c ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !678)
-  %2 = icmp ugt i64 %.016.lcssa, %i.c
-  br i1 %2, label %3, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-3:                                                ; preds = %.critedge2
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.132, ptr noundef nonnull @.str.133, i64 noundef %.016.lcssa, i64 noundef %i.c) #48, !noalias !678
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %.critedge2
   %i.p = sub i64 %.0.lcssa, %.016.lcssa
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !64, !alias.scope !678

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
           to label %bb.e unwind label %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  %.062 = phi i32 [ %i.e, %bb.b ], [ %i.c, %bb.d ] ; 10 uses
+  %.062 = phi i32 [ %i.e, %bb.b ], [ %i.c, %bb.d ] ; 9 uses
   %.061 = phi i32 [ %i.c, %bb.b ], [ %i.e, %bb.d ] ; 2 uses
   %i.j = icmp sgt i32 %i.a, 0
   br i1 %i.j, label %.lr.ph79, label %._crit_edge
@@ -243,33 +243,32 @@ bb.e:                                             ; preds = %bb.d, %bb.b
   %i.am = load i32, ptr %i.al, align 4            ; 3 uses
   %i.an = load i64, ptr %i.ac, align 8            ; 2 uses
   %wide.trip.count112 = zext nneg i32 %i.a to i64
-  %wide.trip.count = zext i32 %.062 to i64        ; 2 uses
-  %wide.trip.count102.a = zext nneg i32 %.062 to i64
-  %wide.trip.count107 = zext i32 %.062 to i64     ; 11 uses
-  %i.ao = add nsw i64 %wide.trip.count107, -1     ; 2 uses
-  %xtraiter = and i64 %wide.trip.count107, 1
+  %wide.trip.count102.a = zext i32 %.062 to i64   ; 13 uses
+  %wide.trip.count107 = zext nneg i32 %.062 to i64
+  %i.ao = add nsw i64 %wide.trip.count102.a, -1   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count102.a, 1
   %i.ap = icmp eq i64 %i.ao, 0
-  %unroll_iter = and i64 %wide.trip.count107, 2147483646
+  %unroll_iter = and i64 %wide.trip.count102.a, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod135 = trunc i32 %.062 to i1
-  %xtraiter136 = and i64 %wide.trip.count107, 3   ; 3 uses
+  %xtraiter136 = and i64 %wide.trip.count102.a, 3 ; 3 uses
   %i.aq = icmp ult i32 %.062, 4
-  %unroll_iter139 = and i64 %wide.trip.count107, 2147483644
+  %unroll_iter139 = and i64 %wide.trip.count102.a, 2147483644
   %lcmp.mod137.not = icmp eq i64 %xtraiter136, 0
   %lcmp.mod138 = icmp ne i64 %xtraiter136, 0
-  %xtraiter141 = and i64 %wide.trip.count107, 3   ; 3 uses
+  %xtraiter141 = and i64 %wide.trip.count102.a, 3 ; 3 uses
   %i.ar = icmp ult i32 %.062, 4
-  %unroll_iter145 = and i64 %wide.trip.count107, 2147483644
+  %unroll_iter145 = and i64 %wide.trip.count102.a, 2147483644
   %lcmp.mod143.not = icmp eq i64 %xtraiter141, 0
   %lcmp.mod144 = icmp ne i64 %xtraiter141, 0
   %min.iters.check = icmp ult i32 %.062, 4
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  %xtraiter147 = and i64 %wide.trip.count107, 3   ; 2 uses
+  %n.vec = and i64 %wide.trip.count102.a, 2147483644 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count102.a
+  %xtraiter147 = and i64 %wide.trip.count102.a, 3 ; 2 uses
   %lcmp.mod148.not = icmp eq i64 %xtraiter147, 0
-  %xtraiter149 = and i64 %wide.trip.count107, 1
+  %xtraiter149 = and i64 %wide.trip.count102.a, 1
   %i.as = icmp eq i64 %i.ao, 0
-  %unroll_iter153 = and i64 %wide.trip.count107, 2147483646
+  %unroll_iter153 = and i64 %wide.trip.count102.a, 2147483646
   %lcmp.mod151.not = icmp eq i64 %xtraiter149, 0
   %lcmp.mod152 = trunc i32 %.062 to i1
   br label %bb.f
@@ -508,7 +507,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.us.split.us.prol.loopexit:           ; preds = %.lr.ph.split.us.split.us.prol, %.lr.ph.split.us.split.us.preheader129
   %indvars.iv99.unr = phi i64 [ %indvars.iv99.ph, %.lr.ph.split.us.split.us.preheader129 ], [ %indvars.iv.next100.prol, %.lr.ph.split.us.split.us.prol ]
-  %i.ee = sub nsw i64 %indvars.iv99.ph, %wide.trip.count107
+  %i.ee = sub nsw i64 %indvars.iv99.ph, %wide.trip.count102.a
   %i.ef = icmp ugt i64 %i.ee, -4
   br i1 %i.ef, label %.loopexit, label %.lr.ph.split.us.split.us
 
@@ -534,7 +533,7 @@ middle.block:                                     ; preds = %vector.body
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv.next100.2
   store double %i.eq, ptr %i.er, align 8, !tbaa !40
   %indvars.iv.next100.3 = add nuw nsw i64 %indvars.iv99, 4 ; 2 uses
-  %exitcond103.not.3 = icmp eq i64 %indvars.iv.next100.3, %wide.trip.count102.a
+  %exitcond103.not.3 = icmp eq i64 %indvars.iv.next100.3, %wide.trip.count107
   br i1 %exitcond103.not.3, label %.loopexit, label %.lr.ph.split.us.split.us, !llvm.loop !146
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us.split.preheader, %.lr.ph.split.us.split

@@ -205,9 +205,8 @@ bb.ap:                                            ; preds = %bb.ao
   store i8 %i.lp, ptr %i.lm, align 1, !tbaa !18
   %i.lq = getelementptr inbounds nuw [8 x i8], ptr %i.jg, i64 %indvars.iv106.i.i
   %i.lr = load i64, ptr %i.lq, align 8, !tbaa !12
-  %i.ls = sub nsw i64 64, %indvars.iv106.i.i
-  %7 = and i64 %i.ls, 4294967295
-  %i.lt = lshr i64 %i.lk, %7
+  %i.ls = sub nuw nsw i64 64, %indvars.iv106.i.i
+  %i.lt = lshr i64 %i.lk, %i.ls
   %i.lu = add i64 %i.lr, %i.lt                    ; 2 uses
   %i.lv = icmp ult i64 %i.lu, %i.kp
   br i1 %i.lv, label %bb.as, label %bb.aq

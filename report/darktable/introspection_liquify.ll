@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %apply_round_stamp.e
   %i.bg = and i32 %i.bf, 2
   %.not.i.i = icmp eq i32 %i.bg, 0
   %.v.i.i = select i1 %.not.i.i, float 5.000000e-01, float 5.000000e-02
-  %i.bh = load <2 x float>, ptr %i.bb, align 4, !alias.scope !212, !noalias !213 ; 3 uses
+  %i.bh = load <2 x float>, ptr %i.bb, align 4, !alias.scope !212, !noalias !213 ; 4 uses
   %i.bi = load <2 x float>, ptr %i.bc, align 4, !alias.scope !212, !noalias !213
   %i.bj = fsub reassoc nsz arcp contract afn <2 x float> %i.bi, %i.bh
   %i.bk = call reassoc nsz arcp contract afn float @cabsf(<2 x float> noundef %i.bj) #31
@@ -413,11 +413,12 @@ bb.k:                                             ; preds = %build_lookup_table.
   call void @free(ptr noundef %i.ch) #30, !noalias !214
   %i.fd = load i32, ptr %i.ar, align 4, !tbaa !37, !alias.scope !213, !noalias !212
   %i.fe = sext i32 %i.fd to i64                   ; 3 uses
-  %10 = call reassoc nsz arcp contract afn <2 x float> @llvm.round.v2f32(<2 x float> %i.bh) ; 2 uses
-  %11 = extractelement <2 x float> %10, i64 0
+  %10 = extractelement <2 x float> %i.bh, i64 0
+  %11 = call reassoc nsz arcp contract afn float @llvm.round.f32(float %10)
   %i.ff = fptoui float %11 to i64
-  %i.fg = extractelement <2 x float> %10, i64 1
-  %i.fh = fptoui float %i.fg to i64
+  %i.fg = extractelement <2 x float> %i.bh, i64 1
+  %12 = call reassoc nsz arcp contract afn float @llvm.round.f32(float %i.fg)
+  %i.fh = fptoui float %12 to i64
   %i.fi = load i32, ptr %i.ba, align 4, !tbaa !36, !alias.scope !213, !noalias !212
   %i.fj = sext i32 %i.fi to i64
   %i.fk = sub i64 %i.fh, %i.fj
@@ -818,9 +819,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.round.v2f32(<2 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.minnum.v8f32(<8 x float>, <8 x float>) #6

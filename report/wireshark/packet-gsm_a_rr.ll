@@ -204,11 +204,9 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   call void @wmem_strbuf_append_c(ptr noundef %i.i, i8 noundef signext %i.m)
   %i.n = add i32 %.01819, 4                       ; 2 uses
   %i.o = add i8 %.020, 1                          ; 2 uses
-  %4 = zext i8 %i.o to i32
   %i.p = load i64, ptr %i.a, align 8
-  %5 = trunc i64 %i.p to i32
-  %6 = and i32 %5, 255
-  %.not = icmp samesign ult i32 %6, %4
+  %4 = trunc i64 %i.p to i8
+  %.not = icmp ugt i8 %i.o, %4
   br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !90
 
 bb.c:                                             ; preds = %bb.b

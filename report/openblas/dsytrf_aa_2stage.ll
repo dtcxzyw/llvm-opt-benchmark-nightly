@@ -143,19 +143,14 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.at = load i32, ptr %5, align 4, !tbaa !31
-  %11 = insertelement <2 x i32> poison, i32 %i.i, i64 0
-  %12 = insertelement <2 x i32> %11, i32 %i.at, i64 1
-  %13 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %i.ar, i64 1
-  %14 = sdiv <2 x i32> %12, %13                   ; 2 uses
-  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
-  %16 = extractelement <2 x i32> %14, i64 1       ; 62 uses
-  store i32 %16, ptr %i.d, align 4, !tbaa !31
+  %11 = sdiv i32 %i.at, %i.ar                     ; 69 uses
+  store i32 %11, ptr %i.d, align 4, !tbaa !31
   %i.au = mul nsw i32 %i.ag, 3
-  %.not648 = icmp sgt i32 %16, %i.au
+  %.not648 = icmp sgt i32 %11, %i.au
   br i1 %.not648, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.av = add nsw i32 %16, -1
+  %i.av = add nsw i32 %11, -1
   %i.aw = sdiv i32 %i.av, 3                       ; 2 uses
   store i32 %i.aw, ptr %i.h, align 4, !tbaa !31
   br label %bb.p
@@ -277,17 +272,16 @@ bb.s:                                             ; preds = %._crit_edge
 
 .lr.ph752:                                        ; preds = %bb.s
   %i.by = or disjoint i32 %i.bg, 1                ; 15 uses
-  %i.bz = add nsw i32 %16, -1                     ; 4 uses
-  %17 = add <8 x i32> %15, <i32 1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1> ; 8 uses
-  %i.ca = add nsw i32 %16, -1
-  %18 = extractelement <8 x i32> %17, i64 0
-  %19 = extractelement <8 x i32> %17, i64 1
-  %20 = extractelement <8 x i32> %17, i64 3
-  %21 = extractelement <8 x i32> %17, i64 4
-  %22 = extractelement <8 x i32> %17, i64 5
-  %23 = extractelement <8 x i32> %17, i64 6
-  %24 = extractelement <8 x i32> %17, i64 7
-  %25 = extractelement <8 x i32> %17, i64 2
+  %i.bz = add i32 %i.i, 1
+  %i.ca = add nsw i32 %11, -1
+  %12 = add nsw i32 %11, -1
+  %13 = add nsw i32 %11, -1                       ; 4 uses
+  %14 = add nsw i32 %11, -1
+  %15 = add nsw i32 %11, -1
+  %16 = add nsw i32 %11, -1
+  %17 = add nsw i32 %11, -1
+  %18 = add nsw i32 %11, -1
+  %19 = add nsw i32 %11, -1
   br label %bb.t
 
 bb.t:                                             ; preds = %.loopexit697, %.lr.ph752
@@ -310,8 +304,8 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.cj = add nsw i32 %i.cf, %i.cb
   %storemerge678.peel = select i1 %i.ch, i32 %i.cj, i32 %i.ci
   store i32 %storemerge678.peel, ptr %i.f, align 4, !tbaa !31
-  store i32 %19, ptr %i.c, align 4, !tbaa !31
-  %i.ck = mul nsw i32 %i.cb, %16
+  store i32 %i.ca, ptr %i.c, align 4, !tbaa !31
+  %i.ck = mul nsw i32 %i.cb, %11
   %i.cl = add nsw i32 %i.by, %i.ck
   %i.cm = sext i32 %i.cl to i64
   %i.cn = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.cm
@@ -338,9 +332,9 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.db = add nsw i32 %i.cz, %i.da
   %storemerge677 = select i1 %i.cw, i32 %i.db, i32 %i.cy
   store i32 %storemerge677, ptr %i.f, align 4, !tbaa !31
-  store i32 %25, ptr %i.c, align 4, !tbaa !31
+  store i32 %12, ptr %i.c, align 4, !tbaa !31
   %i.dc = add nsw i32 %.0625702, -1
-  %i.dd = mul i32 %16, %i.dc
+  %i.dd = mul i32 %11, %i.dc
   %i.de = mul i32 %i.dd, %i.cx
   %i.df = add i32 %i.by, %i.cx
   %i.dg = add nsw i32 %i.df, %i.de
@@ -372,12 +366,12 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
 
 ._crit_edge705:                                   ; preds = %._crit_edge705.loopexit, %bb.t
   %.pre-phi840 = phi i32 [ %.pre839, %._crit_edge705.loopexit ], [ %i.cd, %bb.t ] ; 2 uses
-  store i32 %i.bz, ptr %i.b, align 4, !tbaa !31
+  store i32 %13, ptr %i.b, align 4, !tbaa !31
   %i.dx = add nsw i32 %.pre-phi840, 1
-  %i.dy = mul i32 %i.dx, %18
+  %i.dy = mul i32 %i.dx, %i.bz
   %i.dz = sext i32 %i.dy to i64
   %i.ea = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.dz
-  %i.eb = mul nsw i32 %.pre-phi840, %16
+  %i.eb = mul nsw i32 %.pre-phi840, %11
   %i.ec = add nsw i32 %i.eb, %i.by
   %i.ed = sext i32 %i.ec to i64
   %i.ee = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.ed
@@ -389,7 +383,7 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.eg = load i32, ptr %i.h, align 4, !tbaa !31  ; 3 uses
   %i.eh = mul nsw i32 %i.eg, %i.cg
   store i32 %i.eh, ptr %i.b, align 4, !tbaa !31
-  store i32 %i.bz, ptr %i.c, align 4, !tbaa !31
+  store i32 %13, ptr %i.c, align 4, !tbaa !31
   %i.ei = mul nsw i32 %i.eg, %.1623749            ; 2 uses
   %i.ej = add nsw i32 %i.ei, 1
   %i.ek = mul nsw i32 %i.ej, %i.i
@@ -399,12 +393,12 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.eo = sext i32 %i.eg to i64
   %i.ep = getelementptr [8 x i8], ptr %i.n, i64 %i.eo
   %i.eq = getelementptr i8, ptr %i.ep, i64 8
-  %i.er = mul nsw i32 %16, %i.ei
+  %i.er = mul nsw i32 %11, %i.ei
   %i.es = add nsw i32 %i.er, %i.by
   %i.et = sext i32 %i.es to i64
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.et
   call void @dgemm_(ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.g, ptr noundef nonnull %i.g, ptr noundef nonnull %i.b, ptr noundef nonnull @c_b21, ptr noundef %i.en, ptr noundef nonnull %3, ptr noundef %i.eq, ptr noundef nonnull %1, ptr noundef nonnull @c_b12, ptr noundef nonnull %i.eu, ptr noundef nonnull %i.c) #5
-  store i32 %i.bz, ptr %i.b, align 4, !tbaa !31
+  store i32 %13, ptr %i.b, align 4, !tbaa !31
   %i.ev = load i32, ptr %i.h, align 4, !tbaa !31  ; 3 uses
   %i.ew = mul nsw i32 %i.ev, %i.cg                ; 2 uses
   %i.ex = add nsw i32 %i.ew, 1
@@ -414,13 +408,13 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.fb = add nsw i32 %i.ex, %i.fa
   %i.fc = sext i32 %i.fb to i64
   %i.fd = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.fc
-  %i.fe = mul nsw i32 %i.ew, %16
+  %i.fe = mul nsw i32 %i.ew, %11
   %i.ff = add i32 %i.by, %i.ev
   %i.fg = add nsw i32 %i.ff, %i.fe
   %i.fh = sext i32 %i.fg to i64
   %i.fi = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.fh
   call void @dgemm_(ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g, ptr noundef nonnull @c_b12, ptr noundef %i.fd, ptr noundef nonnull %3, ptr noundef nonnull %i.fi, ptr noundef nonnull %i.b, ptr noundef nonnull @c_b13, ptr noundef %8, ptr noundef nonnull %1) #5
-  store i32 %i.bz, ptr %i.b, align 4, !tbaa !31
+  store i32 %13, ptr %i.b, align 4, !tbaa !31
   %i.fj = add nsw i32 %.1623749, -2
   %i.fk = load i32, ptr %i.h, align 4, !tbaa !31  ; 2 uses
   %i.fl = mul nsw i32 %i.fk, %i.fj
@@ -431,7 +425,7 @@ bb.t:                                             ; preds = %.loopexit697, %.lr.
   %i.fq = add nsw i32 %i.fm, %i.fp
   %i.fr = sext i32 %i.fq to i64
   %i.fs = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.fr
-  %i.ft = mul nsw i32 %i.fn, %16
+  %i.ft = mul nsw i32 %i.fn, %11
   %i.fu = add nsw i32 %i.ft, %i.by
   %i.fv = sext i32 %i.fu to i64
   %i.fw = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.fv
@@ -443,10 +437,10 @@ bb.u:                                             ; preds = %._crit_edge705
   br i1 %.not666, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %.thread682, %bb.u
-  store i32 %20, ptr %i.b, align 4, !tbaa !31
+  store i32 %14, ptr %i.b, align 4, !tbaa !31
   %i.fx = load i32, ptr %i.h, align 4, !tbaa !31  ; 2 uses
   %i.fy = mul nsw i32 %i.fx, %.1623749            ; 2 uses
-  %i.fz = mul nsw i32 %i.fy, %16
+  %i.fz = mul nsw i32 %i.fy, %11
   %i.ga = add nsw i32 %i.fz, %i.by
   %i.gb = sext i32 %i.ga to i64
   %i.gc = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.gb
@@ -498,7 +492,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %i.gu = zext i32 %indvars.iv801 to i64          ; 2 uses
   %.neg676 = add i32 %i.gr, %i.bg                 ; 5 uses
   %.reass718 = add i32 %.1626713, %invariant.op
-  %i.gv = mul nsw i32 %.reass718, %16
+  %i.gv = mul nsw i32 %.reass718, %11
   %i.gw = sub i32 %i.by, %.1626713
   %invariant.op710 = add i32 %i.gw, %i.gv         ; 5 uses
   %xtraiter = and i32 %i.gt, 3                    ; 2 uses
@@ -510,7 +504,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph709 ]
   %i.gx = trunc i64 %indvars.iv803.prol to i32    ; 3 uses
   %.reass.prol = add i32 %invariant.op, %i.gx
-  %i.gy = mul nsw i32 %.reass.prol, %16
+  %i.gy = mul nsw i32 %.reass.prol, %11
   %i.gz = sub i32 %.neg676, %i.gx
   %i.ha = add nsw i32 %i.gz, %i.gy
   %i.hb = sext i32 %i.ha to i64
@@ -534,7 +528,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %indvars.iv803 = phi i64 [ %indvars.iv.next804.3, %.lr.ph709.new ], [ %indvars.iv803.unr, %.prol.loopexit ] ; 5 uses
   %i.hh = trunc i64 %indvars.iv803 to i32         ; 3 uses
   %.reass = add i32 %invariant.op, %i.hh
-  %i.hi = mul nsw i32 %.reass, %16
+  %i.hi = mul nsw i32 %.reass, %11
   %i.hj = sub i32 %.neg676, %i.hh
   %i.hk = add nsw i32 %i.hj, %i.hi
   %i.hl = sext i32 %i.hk to i64
@@ -547,7 +541,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %i.hq = trunc i64 %indvars.iv803 to i32         ; 2 uses
   %i.hr = add i32 %i.hq, 1                        ; 2 uses
   %.reass.1 = add i32 %i.gm, %i.hq
-  %i.hs = mul nsw i32 %.reass.1, %16
+  %i.hs = mul nsw i32 %.reass.1, %11
   %i.ht = sub i32 %.neg676, %i.hr
   %i.hu = add nsw i32 %i.ht, %i.hs
   %i.hv = sext i32 %i.hu to i64
@@ -560,7 +554,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %i.ia = trunc i64 %indvars.iv803 to i32
   %i.ib = add i32 %i.ia, 2                        ; 3 uses
   %.reass.2 = add i32 %invariant.op, %i.ib
-  %i.ic = mul nsw i32 %.reass.2, %16
+  %i.ic = mul nsw i32 %.reass.2, %11
   %i.id = sub i32 %.neg676, %i.ib
   %i.ie = add nsw i32 %i.id, %i.ic
   %i.if = sext i32 %i.ie to i64
@@ -573,7 +567,7 @@ bb.x:                                             ; preds = %.lr.ph715, %.loopex
   %i.ik = trunc i64 %indvars.iv803 to i32
   %i.il = add i32 %i.ik, 3                        ; 3 uses
   %.reass.3 = add i32 %invariant.op, %i.il
-  %i.im = mul nsw i32 %.reass.3, %16
+  %i.im = mul nsw i32 %.reass.3, %11
   %i.in = sub i32 %.neg676, %i.il
   %i.io = add nsw i32 %i.in, %i.im
   %i.ip = sext i32 %i.io to i64
@@ -600,9 +594,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.iv, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  store i32 %22, ptr %i.b, align 4, !tbaa !31
+  store i32 %16, ptr %i.b, align 4, !tbaa !31
   %i.iw = load i32, ptr %i.h, align 4, !tbaa !31  ; 2 uses
-  %i.ix = mul nsw i32 %i.iw, %16
+  %i.ix = mul nsw i32 %i.iw, %11
   %i.iy = add nsw i32 %i.ix, %i.by
   %i.iz = sext i32 %i.iy to i64
   %i.ja = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.iz
@@ -620,9 +614,9 @@ bb.ab:                                            ; preds = %bb.z
   %i.ji = load i32, ptr %i.h, align 4, !tbaa !31  ; 5 uses
   %i.jj = add nsw i32 %i.ji, %i.gk
   store i32 %i.jj, ptr %i.b, align 4, !tbaa !31
-  store i32 %21, ptr %i.c, align 4, !tbaa !31
+  store i32 %15, ptr %i.c, align 4, !tbaa !31
   %i.jk = mul nsw i32 %i.ji, %i.cg
-  %i.jl = mul nsw i32 %i.jk, %16
+  %i.jl = mul nsw i32 %i.jk, %11
   %i.jm = add i32 %i.by, %i.ji
   %i.jn = add nsw i32 %i.jm, %i.jl
   %i.jo = sext i32 %i.jn to i64
@@ -753,17 +747,17 @@ bb.ad:                                            ; preds = %bb.ac, %bb.y
   store i32 %i.mq, ptr %i.c, align 4, !tbaa !31
   %i.mr = call i32 @llvm.smin.i32(i32 %i.mn, i32 %i.mq)
   store i32 %i.mr, ptr %i.g, align 4, !tbaa !31
-  store i32 %23, ptr %i.b, align 4, !tbaa !31
+  store i32 %17, ptr %i.b, align 4, !tbaa !31
   %i.ms = mul nsw i32 %i.mn, %.1623749
-  %i.mt = mul nsw i32 %i.ms, %16
+  %i.mt = mul nsw i32 %i.ms, %11
   %i.mu = add i32 %i.by, %i.mn
   %i.mv = add nsw i32 %i.mu, %i.mt
   %i.mw = sext i32 %i.mv to i64
   %i.mx = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.mw
   call void @dlaset_(ptr noundef nonnull @.str.6, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull @c_b13, ptr noundef nonnull @c_b13, ptr noundef nonnull %i.mx, ptr noundef nonnull %i.b) #5
-  store i32 %24, ptr %i.b, align 4, !tbaa !31
+  store i32 %18, ptr %i.b, align 4, !tbaa !31
   %i.my = load i32, ptr %i.h, align 4, !tbaa !31  ; 2 uses
-  %i.mz = mul i32 %16, %.1623749
+  %i.mz = mul i32 %11, %.1623749
   %i.na = mul i32 %i.mz, %i.my
   %i.nb = add i32 %i.by, %i.my
   %i.nc = add nsw i32 %i.nb, %i.na
@@ -773,7 +767,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.y
   br i1 %.not666685, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %._crit_edge728
-  store i32 %i.ca, ptr %i.b, align 4, !tbaa !31
+  store i32 %19, ptr %i.b, align 4, !tbaa !31
   %i.nf = load i32, ptr %i.h, align 4, !tbaa !31  ; 3 uses
   %i.ng = mul nsw i32 %i.nf, %i.cg
   %i.nh = add nsw i32 %i.ng, 1
@@ -783,7 +777,7 @@ bb.ae:                                            ; preds = %._crit_edge728
   %i.nl = add nsw i32 %i.nh, %i.nk
   %i.nm = sext i32 %i.nl to i64
   %i.nn = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.nm
-  %i.no = mul nsw i32 %i.ni, %16
+  %i.no = mul nsw i32 %i.ni, %11
   %i.np = add i32 %i.by, %i.nf
   %i.nq = add nsw i32 %i.np, %i.no
   %i.nr = sext i32 %i.nq to i64
@@ -824,7 +818,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
 .lr.ph734:                                        ; preds = %.lr.ph734.preheader, %._crit_edge735
   %.3739 = phi i32 [ %i.qm, %._crit_edge735 ], [ 1, %.lr.ph734.preheader ] ; 5 uses
   %.reass730.reass = add i32 %.3739, %invariant.op743
-  %i.ob = mul nsw i32 %16, %.reass730.reass
+  %i.ob = mul nsw i32 %11, %.reass730.reass
   %i.oc = sub i32 %i.nw, %.3739
   %invariant.op736 = add i32 %i.oc, %i.ob         ; 5 uses
   %i.od = add i32 %i.by, %.3739                   ; 5 uses
@@ -839,7 +833,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
   %i.og = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.of
   %i.oh = load double, ptr %i.og, align 8, !tbaa !33
   %i.oi = add i32 %i.ny, %i.oe
-  %i.oj = mul nsw i32 %16, %i.oi
+  %i.oj = mul nsw i32 %11, %i.oi
   %i.ok = trunc i64 %indvars.iv808 to i32
   %i.ol = add i32 %i.nt, %i.ok
   %i.om = sub i32 %i.od, %i.ol
@@ -854,7 +848,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
   %i.os = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.or
   %i.ot = load double, ptr %i.os, align 8, !tbaa !33
   %i.ou = add i32 %i.ny, %i.oq
-  %i.ov = mul nsw i32 %16, %i.ou
+  %i.ov = mul nsw i32 %11, %i.ou
   %i.ow = trunc i64 %indvars.iv.next809 to i32
   %i.ox = add i32 %i.nt, %i.ow
   %i.oy = sub i32 %i.od, %i.ox
@@ -869,7 +863,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
   %i.pe = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.pd
   %i.pf = load double, ptr %i.pe, align 8, !tbaa !33
   %i.pg = add i32 %i.ny, %i.pc
-  %i.ph = mul nsw i32 %16, %i.pg
+  %i.ph = mul nsw i32 %11, %i.pg
   %i.pi = trunc i64 %indvars.iv.next809.1 to i32
   %i.pj = add i32 %i.nt, %i.pi
   %i.pk = sub i32 %i.od, %i.pj
@@ -884,7 +878,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
   %i.pq = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.pp
   %i.pr = load double, ptr %i.pq, align 8, !tbaa !33
   %i.ps = add i32 %i.ny, %i.po
-  %i.pt = mul nsw i32 %16, %i.ps
+  %i.pt = mul nsw i32 %11, %i.ps
   %i.pu = trunc i64 %indvars.iv.next809.2 to i32
   %i.pv = add i32 %i.nt, %i.pu
   %i.pw = sub i32 %i.od, %i.pv
@@ -914,7 +908,7 @@ bb.ag:                                            ; preds = %bb.ag, %.epil.prehe
   %i.qc = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.qb
   %i.qd = load double, ptr %i.qc, align 8, !tbaa !33
   %i.qe = add i32 %i.ny, %i.qa
-  %i.qf = mul nsw i32 %16, %i.qe
+  %i.qf = mul nsw i32 %11, %i.qe
   %i.qg = trunc i64 %indvars.iv808.epil to i32
   %i.qh = add i32 %i.nt, %i.qg
   %i.qi = sub i32 %i.od, %i.qh
@@ -1051,15 +1045,15 @@ bb.ao:                                            ; preds = %._crit_edge
 .lr.ph797:                                        ; preds = %bb.ao
   %i.ta = or disjoint i32 %i.bg, 1                ; 15 uses
   %i.tb = add i32 %i.i, 1                         ; 5 uses
-  %i.tc = add nsw i32 %16, -1
-  %i.td = add nsw i32 %16, -1
-  %i.te = add nsw i32 %16, -1                     ; 4 uses
-  %i.tf = add nsw i32 %16, -1
-  %i.tg = add nsw i32 %16, -1
-  %i.th = add nsw i32 %16, -1
-  %i.ti = add nsw i32 %16, -1
-  %i.tj = add nsw i32 %16, -1
-  %i.tk = add nsw i32 %16, -1
+  %i.tc = add nsw i32 %11, -1
+  %i.td = add nsw i32 %11, -1
+  %i.te = add nsw i32 %11, -1                     ; 4 uses
+  %i.tf = add nsw i32 %11, -1
+  %i.tg = add nsw i32 %11, -1
+  %i.th = add nsw i32 %11, -1
+  %i.ti = add nsw i32 %11, -1
+  %i.tj = add nsw i32 %11, -1
+  %i.tk = add nsw i32 %11, -1
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit694, %.lr.ph797
@@ -1083,7 +1077,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   %storemerge662.peel = select i1 %i.tr, i32 %i.tt, i32 %i.ts
   store i32 %storemerge662.peel, ptr %i.f, align 4, !tbaa !31
   store i32 %i.tc, ptr %i.c, align 4, !tbaa !31
-  %i.tu = mul nsw i32 %i.tl, %16
+  %i.tu = mul nsw i32 %i.tl, %11
   %i.tv = add nsw i32 %i.ta, %i.tu
   %i.tw = sext i32 %i.tv to i64
   %i.tx = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.tw
@@ -1110,7 +1104,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   store i32 %storemerge, ptr %i.f, align 4, !tbaa !31
   store i32 %i.td, ptr %i.c, align 4, !tbaa !31
   %i.uk = add nsw i32 %.3628754, -1
-  %i.ul = mul i32 %16, %i.uk
+  %i.ul = mul i32 %11, %i.uk
   %i.um = mul i32 %i.ul, %i.uf
   %i.un = add i32 %i.ta, %i.uf
   %i.uo = add nsw i32 %i.un, %i.um
@@ -1147,7 +1141,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   %i.vg = mul i32 %i.vf, %i.tb
   %i.vh = sext i32 %i.vg to i64
   %i.vi = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.vh
-  %i.vj = mul nsw i32 %.pre-phi, %16
+  %i.vj = mul nsw i32 %.pre-phi, %11
   %i.vk = add nsw i32 %i.vj, %i.ta
   %i.vl = sext i32 %i.vk to i64
   %i.vm = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.vl
@@ -1167,7 +1161,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   %i.vu = sext i32 %i.vo to i64
   %i.vv = getelementptr [8 x i8], ptr %i.n, i64 %i.vu
   %i.vw = getelementptr i8, ptr %i.vv, i64 8
-  %i.vx = mul nsw i32 %16, %i.vq
+  %i.vx = mul nsw i32 %11, %i.vq
   %i.vy = add nsw i32 %i.vx, %i.ta
   %i.vz = sext i32 %i.vy to i64
   %i.wa = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.vz
@@ -1182,7 +1176,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   %i.wh = add nsw i32 %i.wd, %i.wg
   %i.wi = sext i32 %i.wh to i64
   %i.wj = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.wi
-  %i.wk = mul nsw i32 %i.we, %16
+  %i.wk = mul nsw i32 %i.we, %11
   %i.wl = add i32 %i.ta, %i.wb
   %i.wm = add nsw i32 %i.wl, %i.wk
   %i.wn = sext i32 %i.wm to i64
@@ -1199,7 +1193,7 @@ bb.ap:                                            ; preds = %.loopexit694, %.lr.
   %i.ww = add nsw i32 %i.wr, %i.wv
   %i.wx = sext i32 %i.ww to i64
   %i.wy = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.wx
-  %i.wz = mul nsw i32 %i.wq, %16
+  %i.wz = mul nsw i32 %i.wq, %11
   %i.xa = add nsw i32 %i.wz, %i.ta
   %i.xb = sext i32 %i.xa to i64
   %i.xc = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.xb
@@ -1214,7 +1208,7 @@ bb.ar:                                            ; preds = %.thread686, %bb.aq
   store i32 %i.tf, ptr %i.b, align 4, !tbaa !31
   %i.xd = load i32, ptr %i.h, align 4, !tbaa !31  ; 2 uses
   %i.xe = mul nsw i32 %i.xd, %.2624793            ; 2 uses
-  %i.xf = mul nsw i32 %i.xe, %16
+  %i.xf = mul nsw i32 %i.xe, %11
   %i.xg = add nsw i32 %i.xf, %i.ta
   %i.xh = sext i32 %i.xg to i64
   %i.xi = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.xh
@@ -1265,7 +1259,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.xz = add i32 %i.xq, %i.xy
   %i.ya = zext i32 %indvars.iv817 to i64          ; 2 uses
   %.reass772 = add i32 %.4629767, %invariant.op771
-  %i.yb = mul nsw i32 %.reass772, %16
+  %i.yb = mul nsw i32 %.reass772, %11
   %i.yc = sub i32 %i.ta, %.4629767
   %invariant.op762 = add i32 %i.yc, %i.yb         ; 5 uses
   %.neg = add i32 %i.xx, %i.bg                    ; 5 uses
@@ -1282,7 +1276,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.yf = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.ye
   %i.yg = load double, ptr %i.yf, align 8, !tbaa !33
   %.reass765.prol = add i32 %invariant.op771, %i.yd
-  %i.yh = mul nsw i32 %.reass765.prol, %16
+  %i.yh = mul nsw i32 %.reass765.prol, %11
   %i.yi = sub i32 %.neg, %i.yd
   %i.yj = add nsw i32 %i.yi, %i.yh
   %i.yk = sext i32 %i.yj to i64
@@ -1306,7 +1300,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.yp = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.yo
   %i.yq = load double, ptr %i.yp, align 8, !tbaa !33
   %.reass765 = add i32 %invariant.op771, %i.yn
-  %i.yr = mul nsw i32 %.reass765, %16
+  %i.yr = mul nsw i32 %.reass765, %11
   %i.ys = sub i32 %.neg, %i.yn
   %i.yt = add nsw i32 %i.ys, %i.yr
   %i.yu = sext i32 %i.yt to i64
@@ -1319,7 +1313,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.yz = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.yy
   %i.za = load double, ptr %i.yz, align 8, !tbaa !33
   %.reass765.1 = add i32 %i.xs, %i.yw
-  %i.zb = mul nsw i32 %.reass765.1, %16
+  %i.zb = mul nsw i32 %.reass765.1, %11
   %i.zc = sub i32 %.neg, %i.yx
   %i.zd = add nsw i32 %i.zc, %i.zb
   %i.ze = sext i32 %i.zd to i64
@@ -1332,7 +1326,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.zj = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.zi
   %i.zk = load double, ptr %i.zj, align 8, !tbaa !33
   %.reass765.2 = add i32 %invariant.op771, %i.zh
-  %i.zl = mul nsw i32 %.reass765.2, %16
+  %i.zl = mul nsw i32 %.reass765.2, %11
   %i.zm = sub i32 %.neg, %i.zh
   %i.zn = add nsw i32 %i.zm, %i.zl
   %i.zo = sext i32 %i.zn to i64
@@ -1345,7 +1339,7 @@ bb.at:                                            ; preds = %.lr.ph769, %.loopex
   %i.zt = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.zs
   %i.zu = load double, ptr %i.zt, align 8, !tbaa !33
   %.reass765.3 = add i32 %invariant.op771, %i.zr
-  %i.zv = mul nsw i32 %.reass765.3, %16
+  %i.zv = mul nsw i32 %.reass765.3, %11
   %i.zw = sub i32 %.neg, %i.zr
   %i.zx = add nsw i32 %i.zw, %i.zv
   %i.zy = sext i32 %i.zx to i64
@@ -1374,7 +1368,7 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %bb.av
   store i32 %i.th, ptr %i.b, align 4, !tbaa !31
   %i.aac = load i32, ptr %i.h, align 4, !tbaa !31 ; 2 uses
-  %i.aad = mul nsw i32 %i.aac, %16
+  %i.aad = mul nsw i32 %i.aac, %11
   %i.aae = add nsw i32 %i.aad, %i.ta
   %i.aaf = sext i32 %i.aae to i64
   %i.aag = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.aaf
@@ -1393,7 +1387,7 @@ bb.ax:                                            ; preds = %bb.av
   store i32 %i.aao, ptr %i.b, align 4, !tbaa !31
   store i32 %i.tg, ptr %i.c, align 4, !tbaa !31
   %i.aap = mul nsw i32 %i.aan, %i.tq
-  %i.aaq = mul nsw i32 %i.aap, %16
+  %i.aaq = mul nsw i32 %i.aap, %11
   %i.aar = add i32 %i.ta, %i.aan
   %i.aas = add nsw i32 %i.aar, %i.aaq
   %i.aat = sext i32 %i.aas to i64
@@ -1462,7 +1456,7 @@ bb.az:                                            ; preds = %._crit_edge841, %bb
   store i32 %i.acq, ptr %i.g, align 4, !tbaa !31
   store i32 %i.ti, ptr %i.b, align 4, !tbaa !31
   %i.acr = mul nsw i32 %i.acm, %.2624793
-  %i.acs = mul nsw i32 %i.acr, %16
+  %i.acs = mul nsw i32 %i.acr, %11
   %i.act = add i32 %i.ta, %i.acm
   %i.acu = add nsw i32 %i.act, %i.acs
   %i.acv = sext i32 %i.acu to i64
@@ -1478,7 +1472,7 @@ bb.az:                                            ; preds = %._crit_edge841, %bb
   %i.add = add nsw i32 %i.acz, %i.adc
   %i.ade = sext i32 %i.add to i64
   %i.adf = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.ade
-  %i.adg = mul nsw i32 %i.ada, %16
+  %i.adg = mul nsw i32 %i.ada, %11
   %i.adh = add i32 %i.ta, %i.acx
   %i.adi = add nsw i32 %i.adh, %i.adg
   %i.adj = sext i32 %i.adi to i64
@@ -1497,7 +1491,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.adr = add nsw i32 %i.adn, %i.adq
   %i.ads = sext i32 %i.adr to i64
   %i.adt = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.ads
-  %i.adu = mul nsw i32 %i.adm, %16
+  %i.adu = mul nsw i32 %i.adm, %11
   %i.adv = add i32 %i.ta, %i.adl
   %i.adw = add nsw i32 %i.adv, %i.adu
   %i.adx = sext i32 %i.adw to i64
@@ -1538,7 +1532,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
 .lr.ph778:                                        ; preds = %.lr.ph778.preheader, %._crit_edge779
   %.6783 = phi i32 [ %i.ags, %._crit_edge779 ], [ 1, %.lr.ph778.preheader ] ; 5 uses
   %.reass774.reass = add i32 %.6783, %invariant.op787
-  %i.aeh = mul nsw i32 %16, %.reass774.reass
+  %i.aeh = mul nsw i32 %11, %.reass774.reass
   %i.aei = sub i32 %i.aec, %.6783
   %invariant.op780 = add i32 %i.aei, %i.aeh       ; 5 uses
   %i.aej = add i32 %i.ta, %.6783                  ; 5 uses
@@ -1553,7 +1547,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.aem = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.ael
   %i.aen = load double, ptr %i.aem, align 8, !tbaa !33
   %i.aeo = add i32 %i.aee, %i.aek
-  %i.aep = mul nsw i32 %16, %i.aeo
+  %i.aep = mul nsw i32 %11, %i.aeo
   %i.aeq = trunc i64 %indvars.iv825 to i32
   %i.aer = add i32 %i.adz, %i.aeq
   %i.aes = sub i32 %i.aej, %i.aer
@@ -1568,7 +1562,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.aey = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.aex
   %i.aez = load double, ptr %i.aey, align 8, !tbaa !33
   %i.afa = add i32 %i.aee, %i.aew
-  %i.afb = mul nsw i32 %16, %i.afa
+  %i.afb = mul nsw i32 %11, %i.afa
   %i.afc = trunc i64 %indvars.iv.next826 to i32
   %i.afd = add i32 %i.adz, %i.afc
   %i.afe = sub i32 %i.aej, %i.afd
@@ -1583,7 +1577,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.afk = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.afj
   %i.afl = load double, ptr %i.afk, align 8, !tbaa !33
   %i.afm = add i32 %i.aee, %i.afi
-  %i.afn = mul nsw i32 %16, %i.afm
+  %i.afn = mul nsw i32 %11, %i.afm
   %i.afo = trunc i64 %indvars.iv.next826.1 to i32
   %i.afp = add i32 %i.adz, %i.afo
   %i.afq = sub i32 %i.aej, %i.afp
@@ -1598,7 +1592,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.afw = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.afv
   %i.afx = load double, ptr %i.afw, align 8, !tbaa !33
   %i.afy = add i32 %i.aee, %i.afu
-  %i.afz = mul nsw i32 %16, %i.afy
+  %i.afz = mul nsw i32 %11, %i.afy
   %i.aga = trunc i64 %indvars.iv.next826.2 to i32
   %i.agb = add i32 %i.adz, %i.aga
   %i.agc = sub i32 %i.aej, %i.agb
@@ -1628,7 +1622,7 @@ bb.bc:                                            ; preds = %bb.bc, %.epil.prehe
   %i.agi = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.agh
   %i.agj = load double, ptr %i.agi, align 8, !tbaa !33
   %i.agk = add i32 %i.aee, %i.agg
-  %i.agl = mul nsw i32 %16, %i.agk
+  %i.agl = mul nsw i32 %11, %i.agk
   %i.agm = trunc i64 %indvars.iv825.epil to i32
   %i.agn = add i32 %i.adz, %i.agm
   %i.ago = sub i32 %i.aej, %i.agn

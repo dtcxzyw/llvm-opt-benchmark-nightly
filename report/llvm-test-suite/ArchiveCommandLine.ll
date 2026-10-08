@@ -204,25 +204,21 @@ bb.cc:                                            ; preds = %bb.cb, %bb.bz
   br i1 %i.nf, label %.preheader.us.preheader.i.i, label %.noexc285
 
 .preheader.us.preheader.i.i:                      ; preds = %.noexc
-  %i.ng = zext nneg i32 %i.ne to i64              ; 2 uses
+  %i.ng = zext nneg i32 %i.ne to i64
   %i.nh = load ptr, ptr %i.nc, align 8
-  br label %.preheader.us.i.i
+  br label %bb.cd
 
-.preheader.us.i.i:                                ; preds = %.critedge.us.i.i, %.preheader.us.preheader.i.i
-  %indvars.iv35.i.i = phi i64 [ 0, %.preheader.us.preheader.i.i ], [ %indvars.iv.next36.i.i, %.critedge.us.i.i ] ; 3 uses
-  %19 = icmp samesign ult i64 %indvars.iv35.i.i, %i.ng
-  br i1 %19, label %bb.cd, label %.critedge.us.i.i
-
-bb.cd:                                            ; preds = %.preheader.us.i.i
+bb.cd:                                            ; preds = %.critedge.us.i.i, %.preheader.us.preheader.i.i
+  %indvars.iv35.i.i = phi i64 [ 0, %.preheader.us.preheader.i.i ], [ %indvars.iv.next36.i.i, %.critedge.us.i.i ] ; 2 uses
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.nh, i64 %indvars.iv35.i.i
   %i.nj = load i32, ptr %i.ni, align 4, !tbaa !45
   %.not.us.i.i = icmp eq i32 %i.nj, 42
   br i1 %.not.us.i.i, label %_ZN11CStringBaseIwED2Ev.exit302, label %.critedge.us.i.i
 
-.critedge.us.i.i:                                 ; preds = %bb.cd, %.preheader.us.i.i
+.critedge.us.i.i:                                 ; preds = %bb.cd
   %indvars.iv.next36.i.i = add nuw nsw i64 %indvars.iv35.i.i, 1 ; 2 uses
   %i.nk = icmp eq i64 %indvars.iv.next36.i.i, %i.ng
-  br i1 %i.nk, label %.noexc285, label %.preheader.us.i.i, !llvm.loop !90
+  br i1 %i.nk, label %.noexc285, label %bb.cd, !llvm.loop !90
 
 .noexc285:                                        ; preds = %.critedge.us.i.i, %.noexc
   %i.nl = load i32, ptr %i.nd, align 8, !tbaa !42 ; 2 uses
@@ -230,25 +226,21 @@ bb.cd:                                            ; preds = %.preheader.us.i.i
   br i1 %i.nm, label %.preheader.us.preheader.i.i290, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit
 
 .preheader.us.preheader.i.i290:                   ; preds = %.noexc285
-  %i.nn = zext nneg i32 %i.nl to i64              ; 2 uses
+  %i.nn = zext nneg i32 %i.nl to i64
   %i.no = load ptr, ptr %i.nc, align 8
-  br label %.preheader.us.i.i292
+  br label %bb.ce
 
-.preheader.us.i.i292:                             ; preds = %.critedge.us.i.i295, %.preheader.us.preheader.i.i290
-  %indvars.iv35.i.i293 = phi i64 [ 0, %.preheader.us.preheader.i.i290 ], [ %indvars.iv.next36.i.i296, %.critedge.us.i.i295 ] ; 3 uses
-  %20 = icmp samesign ult i64 %indvars.iv35.i.i293, %i.nn
-  br i1 %20, label %bb.ce, label %.critedge.us.i.i295
-
-bb.ce:                                            ; preds = %.preheader.us.i.i292
+bb.ce:                                            ; preds = %.critedge.us.i.i295, %.preheader.us.preheader.i.i290
+  %indvars.iv35.i.i293 = phi i64 [ 0, %.preheader.us.preheader.i.i290 ], [ %indvars.iv.next36.i.i296, %.critedge.us.i.i295 ] ; 2 uses
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.no, i64 %indvars.iv35.i.i293
   %i.nq = load i32, ptr %i.np, align 4, !tbaa !45
   %.not.us.i.i297 = icmp eq i32 %i.nq, 63
   br i1 %.not.us.i.i297, label %_ZN11CStringBaseIwED2Ev.exit302, label %.critedge.us.i.i295
 
-.critedge.us.i.i295:                              ; preds = %bb.ce, %.preheader.us.i.i292
+.critedge.us.i.i295:                              ; preds = %bb.ce
   %indvars.iv.next36.i.i296 = add nuw nsw i64 %indvars.iv35.i.i293, 1 ; 2 uses
   %i.nr = icmp eq i64 %indvars.iv.next36.i.i296, %i.nn
-  br i1 %i.nr, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit, label %.preheader.us.i.i292, !llvm.loop !90
+  br i1 %i.nr, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit, label %bb.ce, !llvm.loop !90
 
 _ZN11CStringBaseIwED2Ev.exit302:                  ; preds = %bb.cd, %bb.ce
   invoke void @_ZN9NWildcard7CCensor7AddItemEbRK11CStringBaseIwEb(ptr noundef nonnull align 8 dereferenceable(32) %9, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %i.nc, i1 noundef zeroext false)

@@ -205,7 +205,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define noundef zeroext i1 @_ZN7httplib6detail13is_valid_pathERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !183  ; 8 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !183  ; 7 uses
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %.critedge.split, label %.lr.ph
 
@@ -257,10 +257,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %exitcond94.not, label %.critedge2, label %bb.d, !llvm.loop !1357
 
 .critedge2:                                       ; preds = %bb.d, %bb.e
-  %.2.lcssa = phi i64 [ %.280, %bb.d ], [ %umax, %bb.e ] ; 4 uses
-  %1 = tail call i64 @llvm.umin.i64(i64 %.2.lcssa, i64 %i.b) ; 2 uses
-  %spec.select.i.i = sub nuw i64 %1, %.13987      ; 3 uses
-  %cond = icmp eq i64 %1, %.13987
+  %.2.lcssa = phi i64 [ %.280, %bb.d ], [ %umax, %bb.e ] ; 5 uses
+  %spec.select.i.i = sub nuw i64 %.2.lcssa, %.13987 ; 3 uses
+  %cond = icmp eq i64 %.2.lcssa, %.13987
   br i1 %cond, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit61.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %.critedge2

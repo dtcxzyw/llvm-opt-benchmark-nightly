@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 3 uses
   store i64 0, ptr %i.n, align 8, !tbaa !89
   tail call void @avpriv_set_pts_info(ptr noundef nonnull %i.i, i32 noundef 64, i32 noundef 1, i32 noundef 14112000) #7
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 45 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 44 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !51   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 232
   store i64 -1, ptr %i.q, align 8, !tbaa !92
@@ -608,13 +608,13 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %i.iv = load ptr, ptr %i.o, align 8, !tbaa !51
-  %i.iw = call i64 @avio_seek(ptr noundef %i.iv, i64 noundef 0, i32 noundef 1) #7 ; 4 uses
+  %i.iw = call i64 @avio_seek(ptr noundef %i.iv, i64 noundef 0, i32 noundef 1) #7 ; 3 uses
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.be
-  %indvars.iv = phi i64 [ 0, %bb.at ], [ %indvars.iv.next, %bb.be ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %bb.at ], [ %indvars.iv.next, %bb.be ] ; 4 uses
   %i.ix = load ptr, ptr %i.o, align 8, !tbaa !51  ; 2 uses
-  %i.iy = add nsw i64 %i.iw, %indvars.iv          ; 2 uses
+  %i.iy = add nsw i64 %i.iw, %indvars.iv          ; 3 uses
   %i.iz = call i64 @avio_seek(ptr noundef %i.ix, i64 noundef %i.iy, i32 noundef 0) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
@@ -720,26 +720,20 @@ bb.bd:                                            ; preds = %check.exit.thread, 
 bb.be:                                            ; preds = %bb.bc, %check.exit87, %bb.bd, %check.exit87.thread
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 65536
-  br i1 %exitcond.not, label %4, label %bb.au, !llvm.loop !78
-
-4:                                                ; preds = %bb.be
-  %5 = load ptr, ptr %i.o, align 8, !tbaa !51
-  %6 = call i64 @avio_seek(ptr noundef %5, i64 noundef %i.iw, i32 noundef 0) #7
-  br label %bb.bf
+  br i1 %exitcond.not, label %bb.bf, label %bb.au, !llvm.loop !78
 
 .thread100:                                       ; preds = %bb.bc
   %i.km = trunc nuw nsw i64 %indvars.iv to i32
   %.not76 = icmp eq i64 %indvars.iv, 0
   %i.kn = select i1 %.not76, i32 40, i32 32
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef %i.kn, ptr noundef nonnull @.str.10, i32 noundef %i.km, i64 noundef %i.iw) #7
-  %7 = load ptr, ptr %i.o, align 8, !tbaa !51
-  %8 = add nsw i64 %i.iw, %indvars.iv
-  %9 = call i64 @avio_seek(ptr noundef %7, i64 noundef %8, i32 noundef 0) #7
   br label %bb.bf
 
-bb.bf:                                            ; preds = %.thread100, %4
-  %.067 = phi i64 [ %6, %4 ], [ %9, %.thread100 ] ; 7 uses
-  %i.ko = icmp slt i64 %.067, 0
+bb.bf:                                            ; preds = %bb.be, %.thread100
+  %.067 = phi i64 [ %i.iy, %.thread100 ], [ %i.iw, %bb.be ]
+  %4 = load ptr, ptr %i.o, align 8, !tbaa !51
+  %5 = call i64 @avio_seek(ptr noundef %4, i64 noundef %.067, i32 noundef 0) #7 ; 7 uses
+  %i.ko = icmp slt i64 %5, 0
   br i1 %i.ko, label %bb.bg, label %.preheader
 
 .preheader:                                       ; preds = %bb.bf
@@ -761,7 +755,7 @@ bb.bf:                                            ; preds = %.thread100, %4
   br label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.kv = trunc i64 %.067 to i32
+  %i.kv = trunc i64 %5 to i32
   br label %.loopexit
 
 bb.bh:                                            ; preds = %bb.bh, %.lr.ph.new
@@ -769,22 +763,22 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph.new
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.bh ]
   %i.kw = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv113 ; 2 uses
   %i.kx = load i64, ptr %i.kw, align 8, !tbaa !67
-  %i.ky = add nsw i64 %i.kx, %.067
+  %i.ky = add nsw i64 %i.kx, %5
   store i64 %i.ky, ptr %i.kw, align 8, !tbaa !67
   %i.kz = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv113
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 24 ; 2 uses
   %i.lb = load i64, ptr %i.la, align 8, !tbaa !67
-  %i.lc = add nsw i64 %i.lb, %.067
+  %i.lc = add nsw i64 %i.lb, %5
   store i64 %i.lc, ptr %i.la, align 8, !tbaa !67
   %i.ld = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv113
   %i.le = getelementptr inbounds nuw i8, ptr %i.ld, i64 48 ; 2 uses
   %i.lf = load i64, ptr %i.le, align 8, !tbaa !67
-  %i.lg = add nsw i64 %i.lf, %.067
+  %i.lg = add nsw i64 %i.lf, %5
   store i64 %i.lg, ptr %i.le, align 8, !tbaa !67
   %i.lh = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv113
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 72 ; 2 uses
   %i.lj = load i64, ptr %i.li, align 8, !tbaa !67
-  %i.lk = add nsw i64 %i.lj, %.067
+  %i.lk = add nsw i64 %i.lj, %5
   store i64 %i.lk, ptr %i.li, align 8, !tbaa !67
   %indvars.iv.next114.3 = add nuw nsw i64 %indvars.iv113, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -806,7 +800,7 @@ bb.bi:                                            ; preds = %bb.bi, %.epil.prehe
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.bi ]
   %i.ll = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv113.epil ; 2 uses
   %i.lm = load i64, ptr %i.ll, align 8, !tbaa !67
-  %i.ln = add nsw i64 %i.lm, %.067
+  %i.ln = add nsw i64 %i.lm, %5
   store i64 %i.ln, ptr %i.ll, align 8, !tbaa !67
   %indvars.iv.next114.epil = add nuw nsw i64 %indvars.iv113.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses

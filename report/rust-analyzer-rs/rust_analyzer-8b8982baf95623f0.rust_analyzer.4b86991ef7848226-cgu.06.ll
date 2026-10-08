@@ -205,45 +205,21 @@ define internal fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9P
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !560)
-  %i.b = load i64, ptr %0, align 8, !alias.scope !560, !noundef !7 ; 5 uses
+  %i.b = load i64, ptr %0, align 8, !alias.scope !560, !noundef !7 ; 3 uses
   %i.c = icmp ugt i64 %i.b, 1
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  br i1 %i.c, label %bb.c, label %.preheader.preheader
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  br i1 %i.c, label %bb.c, label %bb.b
 
-.preheader.preheader:                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit, label %.lr.ph
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i64 %i.b, 0
+  br i1 %i.e, label %_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit, label %.lr.ph3
 
-.lr.ph:                                           ; preds = %.preheader.preheader
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 8 dereferenceable(152) %i.d)
-          to label %_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit unwind label %bb.b
+.lr.ph3:                                          ; preds = %bb.b
+  tail call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 8 dereferenceable(152) %i.d)
+  br label %_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit
 
-2:                                                ; preds = %.lr.ph3
-  %3 = add nuw nsw i64 %.sroa.0.1.i.i2, 1         ; 2 uses
-  %4 = icmp eq i64 %3, %i.b
-  br i1 %4, label %common.resume.i, label %.lr.ph3
-
-bb.b:                                             ; preds = %.lr.ph
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %i.e = icmp eq i64 %i.b, 1
-  br i1 %i.e, label %common.resume.i, label %.lr.ph3
-
-.lr.ph3:                                          ; preds = %bb.b, %2
-  %.sroa.0.1.i.i2 = phi i64 [ %3, %2 ], [ 1, %bb.b ] ; 2 uses
-  %6 = getelementptr inbounds nuw [152 x i8], ptr %i.d, i64 %.sroa.0.1.i.i2
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 8 dereferenceable(152) %6) #44
-          to label %2 unwind label %7
-
-common.resume.i:                                  ; preds = %2, %bb.b, %bb.e, %bb.d
-  %common.resume.op.i = phi { ptr, i32 } [ %i.k, %bb.d ], [ %i.k, %bb.e ], [ %5, %bb.b ], [ %5, %2 ]
-  resume { ptr, i32 } %common.resume.op.i
-
-7:                                                ; preds = %.lr.ph3
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #45
-  unreachable
+common.resume.i:                                  ; preds = %bb.e, %bb.d
+  resume { ptr, i32 } %i.k
 
 bb.c:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.d, align 8, !alias.scope !560, !nonnull !7, !noundef !7
@@ -260,7 +236,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
   %.val2.i.i = load i64, ptr %i.a, align 8, !alias.scope !561, !noalias !560 ; 2 uses
   %i.l = icmp eq i64 %.val2.i.i, 0
   br i1 %i.l, label %common.resume.i, label %bb.e
@@ -286,7 +262,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtCsi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !560
   br label %_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit
 
-_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %.preheader.preheader, %.lr.ph, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanEECs6u1mgJOKDyY_13rust_analyzer.exit.i
+_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanj1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %bb.b, %.lr.ph3, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtCsixqsALXRULh_14cargo_metadata10diagnostic14DiagnosticSpanEECs6u1mgJOKDyY_13rust_analyzer.exit.i
   ret void
 }
 

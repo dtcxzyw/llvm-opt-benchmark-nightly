@@ -205,9 +205,8 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.p = fmul nnan float %i.g, f0x40C90FDB
-  %8 = insertelement <2 x i32> poison, i32 %4, i64 0
-  %9 = insertelement <2 x i32> %8, i32 %5, i64 1
-  %10 = add nsw <2 x i32> %9, splat (i32 -1)
+  %8 = add nsw i32 %4, -1
+  %9 = add nsw i32 %5, -1
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
@@ -300,16 +299,16 @@ bb.c:                                             ; preds = %_ZN4pstd8optionalIN
   %i.br = fcmp olt float %i.bq, 0.000000e+00
   %i.bs = fadd float %i.p, %i.bq
   %.sroa.5.0 = select i1 %i.br, float %i.bs, float %i.bq
-  %11 = insertelement <2 x float> poison, float %i.bo, i64 0
-  %12 = insertelement <2 x float> %11, float %.sroa.5.0, i64 1
-  %13 = call <2 x float> @llvm.floor.v2f32(<2 x float> %12)
-  %14 = fptosi <2 x float> %13 to <2 x i32>
-  %15 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %14, <2 x i32> zeroinitializer)
-  %16 = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %10, <2 x i32> %15) ; 2 uses
-  %17 = extractelement <2 x i32> %16, i64 0
-  %18 = mul nsw i32 %17, %5
-  %19 = extractelement <2 x i32> %16, i64 1
-  %i.bt = add nsw i32 %19, %18
+  %10 = call noundef float @llvm.floor.f32(float %i.bo)
+  %11 = fptosi float %10 to i32
+  %.sroa.speculated60 = call i32 @llvm.smax.i32(i32 %11, i32 0)
+  %.sroa.speculated56 = call i32 @llvm.smin.i32(i32 %8, i32 %.sroa.speculated60)
+  %12 = call noundef float @llvm.floor.f32(float %.sroa.5.0)
+  %13 = fptosi float %12 to i32
+  %.sroa.speculated49 = call i32 @llvm.smax.i32(i32 %13, i32 0)
+  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %9, i32 %.sroa.speculated49)
+  %14 = mul nsw i32 %.sroa.speculated56, %5
+  %i.bt = add nsw i32 %.sroa.speculated, %14
   %i.bu = sext i32 %i.bt to i64
   %i.bv = getelementptr inbounds [4 x i8], ptr %6, i64 %i.bu ; 2 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !28
@@ -711,6 +710,9 @@ declare float @acosf(float noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @atan2f(float noundef, float noundef) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.floor.f32(float) #14
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #1
 
@@ -1114,16 +1116,13 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #28
 declare float @llvm.sqrt.f32(float) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.fshr.v2i32(<2 x i32>, <2 x i32>, <2 x i32>) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.floor.v2f32(<2 x float>) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v4f32.v4p0(<4 x float>, <4 x ptr>, <4 x i1>) #29

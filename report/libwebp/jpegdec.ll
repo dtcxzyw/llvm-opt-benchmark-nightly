@@ -61,8 +61,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %0, ptr %i.g, align 8, !tbaa !14
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 64
   store i64 %1, ptr %i.h, align 8, !tbaa !15
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(648) %8, i8 0, i64 648, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(656) %5, i8 0, i64 656, i1 false)
   %i.i = call ptr @jpeg_std_error(ptr noundef nonnull %6) #17
   store volatile ptr %i.i, ptr %5, align 8, !tbaa !38
   store ptr @my_error_exit, ptr %6, align 8, !tbaa !52

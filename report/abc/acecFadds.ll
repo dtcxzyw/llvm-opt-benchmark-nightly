@@ -205,26 +205,26 @@ bb.a:
   %.promoted61 = phi ptr [ %.promoted6182, %bb.z ], [ %i.k, %bb.a ] ; 8 uses
   %.promoted58 = phi i32 [ %.promoted5879, %bb.z ], [ 1000, %bb.a ] ; 5 uses
   %.promoted = phi i32 [ %.promoted77, %bb.z ], [ 0, %bb.a ] ; 15 uses
-  %.03468 = phi ptr [ %.135, %bb.z ], [ %.val, %bb.a ] ; 8 uses
-  %.03667 = phi ptr [ %.137, %bb.z ], [ %.val40, %bb.a ] ; 8 uses
-  %i.q = load i32, ptr %.03667, align 4, !tbaa !43 ; 2 uses
-  %i.r = load i32, ptr %.03468, align 4, !tbaa !43
+  %.03468 = phi ptr [ %.135, %bb.z ], [ %.val, %bb.a ] ; 7 uses
+  %.03667 = phi ptr [ %.137, %bb.z ], [ %.val40, %bb.a ] ; 7 uses
+  %i.q = load i32, ptr %.03667, align 4, !tbaa !43 ; 3 uses
+  %i.r = load i32, ptr %.03468, align 4, !tbaa !43 ; 2 uses
   %.not = icmp eq i32 %i.q, %i.r
   br i1 %.not, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %.preheader54
   %i.s = getelementptr inbounds nuw i8, ptr %.03667, i64 4 ; 2 uses
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !43
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !43   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.03468, i64 4
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !43
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !43   ; 2 uses
   %.not.1 = icmp eq i32 %i.t, %i.v
   br i1 %.not.1, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %.03667, i64 8 ; 2 uses
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !43
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !43   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.03468, i64 8
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !43
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !43   ; 2 uses
   %.not.2 = icmp eq i32 %i.x, %i.z
   br i1 %.not.2, label %.preheader, label %.thread
 
@@ -445,13 +445,10 @@ Vec_IntPush.exit52:                               ; preds = %Vec_IntPush.exit.3,
   %i.cp = getelementptr inbounds nuw i8, ptr %.03468, i64 16
   br label %bb.z
 
-.thread:                                          ; preds = %.preheader54, %bb.b, %bb.c
-  %.057.lcssa.wide = phi i64 [ 0, %.preheader54 ], [ 1, %bb.b ], [ 2, %bb.c ] ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %.03667, i64 %.057.lcssa.wide
-  %4 = load i32, ptr %3, align 4, !tbaa !43       ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %.03468, i64 %.057.lcssa.wide
-  %6 = load i32, ptr %5, align 4, !tbaa !43       ; 2 uses
-  %i.cq = icmp slt i32 %4, %6
+.thread:                                          ; preds = %bb.c, %bb.b, %.preheader54
+  %3 = phi i32 [ %i.r, %.preheader54 ], [ %i.v, %bb.b ], [ %i.z, %bb.c ] ; 2 uses
+  %4 = phi i32 [ %i.q, %.preheader54 ], [ %i.t, %bb.b ], [ %i.x, %bb.c ] ; 2 uses
+  %i.cq = icmp slt i32 %4, %3
   br i1 %i.cq, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.thread
@@ -459,7 +456,7 @@ bb.x:                                             ; preds = %.thread
   br label %bb.z
 
 bb.y:                                             ; preds = %.thread
-  %i.cs = icmp sgt i32 %4, %6
+  %i.cs = icmp sgt i32 %4, %3
   %spec.select.idx = select i1 %i.cs, i64 16, i64 0
   %spec.select = getelementptr inbounds nuw i8, ptr %.03468, i64 %spec.select.idx
   br label %bb.z

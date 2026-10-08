@@ -204,7 +204,7 @@ bb.ca:                                            ; preds = %.lr.ph, %switch.ear
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit: ; preds = %._crit_edge.i.i.i.i.thread, %._crit_edge.i.i.i.i
-  %.0123.lcssa609611 = phi i64 [ 1, %._crit_edge.i.i.i.i.thread ], [ %.0123.lcssa, %._crit_edge.i.i.i.i ] ; 2 uses
+  %.0123.lcssa609611 = phi i64 [ 1, %._crit_edge.i.i.i.i.thread ], [ %.0123.lcssa, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.md = phi ptr [ %i.lr, %._crit_edge.i.i.i.i.thread ], [ %i.ly, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.me = load i64, ptr %i.c, align 8, !tbaa !94  ; 2 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 2 uses
@@ -267,9 +267,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i26
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i263: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_mm.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i262
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #20
-  %.sroa.speculated4.i265 = call i64 @llvm.umin.i64(i64 %2, i64 %.0123.lcssa609611) ; 2 uses
-  %i.my = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.speculated4.i265 ; 2 uses
-  %i.mz = sub nuw i64 %2, %.sroa.speculated4.i265 ; 4 uses
+  %i.my = getelementptr inbounds nuw i8, ptr %1, i64 %.0123.lcssa609611 ; 2 uses
+  %i.mz = sub nuw i64 %2, %.0123.lcssa609611      ; 4 uses
   %i.na = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 9 uses
   store ptr %i.na, ptr %42, align 8, !tbaa !153
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20

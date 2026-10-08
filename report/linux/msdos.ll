@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %bb.be, %put_partiti
 
 is_extended_partition.exit.thread.3.i:            ; preds = %bb.bf, %bb.bb, %bb.ba, %bb.ba, %bb.ba, %is_extended_partition.exit.thread.2.i
   %.2.ph.3.i = phi i32 [ %.2.ph.2.i, %bb.ba ], [ 0, %bb.bf ], [ %.2.ph.2.i, %bb.ba ], [ %.2.ph.2.i, %bb.bb ], [ %.2.ph.2.i, %is_extended_partition.exit.thread.2.i ], [ %.2.ph.2.i, %bb.ba ]
-  %.162.val75.i = load i32, ptr %i.el, align 1
+  %.162.val75.i = load i32, ptr %i.el, align 1    ; 4 uses
   %.not68.i = icmp eq i32 %.162.val75.i, 0
   br i1 %.not68.i, label %bb.bh, label %bb.bg
 
@@ -219,7 +219,7 @@ bb.bg:                                            ; preds = %is_extended_partiti
   ]
 
 bb.bh:                                            ; preds = %bb.bg, %is_extended_partition.exit.thread.3.i
-  %.162.val75.1.i = load i32, ptr %i.fy, align 1
+  %.162.val75.1.i = load i32, ptr %i.fy, align 1  ; 4 uses
   %.not68.1.i = icmp eq i32 %.162.val75.1.i, 0
   br i1 %.not68.1.i, label %bb.bj, label %bb.bi
 
@@ -234,7 +234,7 @@ bb.bi:                                            ; preds = %bb.bh
   ]
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
-  %.162.val75.2.i = load i32, ptr %i.hl, align 1
+  %.162.val75.2.i = load i32, ptr %i.hl, align 1  ; 4 uses
   %.not68.2.i = icmp eq i32 %.162.val75.2.i, 0
   br i1 %.not68.2.i, label %bb.bl, label %bb.bk
 
@@ -249,7 +249,7 @@ bb.bk:                                            ; preds = %bb.bj
   ]
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj
-  %.162.val75.3.i = load i32, ptr %i.jd, align 1
+  %.162.val75.3.i = load i32, ptr %i.jd, align 1  ; 4 uses
   %.not68.3.i = icmp eq i32 %.162.val75.3.i, 0
   br i1 %.not68.3.i, label %msdos_magic_present.exit.thread.i, label %bb.bm
 
@@ -264,14 +264,13 @@ bb.bm:                                            ; preds = %bb.bl
   ]
 
 .thread88.i:                                      ; preds = %bb.bm, %bb.bm, %bb.bm, %bb.bk, %bb.bk, %bb.bk, %bb.bi, %bb.bi, %bb.bi, %bb.bg, %bb.bg, %bb.bg
-  %.162101.lcssa.i = phi ptr [ %i.kv, %bb.bg ], [ %i.kv, %bb.bg ], [ %i.kv, %bb.bg ], [ %i.kx, %bb.bi ], [ %i.kx, %bb.bi ], [ %i.kx, %bb.bi ], [ %i.kz, %bb.bk ], [ %i.kz, %bb.bk ], [ %i.kz, %bb.bk ], [ %i.lb, %bb.bm ], [ %i.lb, %bb.bm ], [ %i.lb, %bb.bm ] ; 2 uses
+  %.162.val74.i = phi i32 [ %.162.val75.i, %bb.bg ], [ %.162.val75.i, %bb.bg ], [ %.162.val75.i, %bb.bg ], [ %.162.val75.1.i, %bb.bi ], [ %.162.val75.1.i, %bb.bi ], [ %.162.val75.1.i, %bb.bi ], [ %.162.val75.2.i, %bb.bk ], [ %.162.val75.2.i, %bb.bk ], [ %.162.val75.2.i, %bb.bk ], [ %.162.val75.3.i, %bb.bm ], [ %.162.val75.3.i, %bb.bm ], [ %.162.val75.3.i, %bb.bm ]
+  %.162101.lcssa.i = phi ptr [ %i.kv, %bb.bg ], [ %i.kv, %bb.bg ], [ %i.kv, %bb.bg ], [ %i.kx, %bb.bi ], [ %i.kx, %bb.bi ], [ %i.kx, %bb.bi ], [ %i.kz, %bb.bk ], [ %i.kz, %bb.bk ], [ %i.kz, %bb.bk ], [ %i.lb, %bb.bm ], [ %i.lb, %bb.bm ], [ %i.lb, %bb.bm ]
   %i.ld = getelementptr i8, ptr %.162101.lcssa.i, i64 8
   %.162.val72.i = load i32, ptr %i.ld, align 1
   %i.le = zext i32 %.162.val72.i to i64
   %i.lf = mul nuw nsw i64 %i.le, %i.dz
   %i.lg = add nuw nsw i64 %i.lf, %i.dd
-  %4 = getelementptr i8, ptr %.162101.lcssa.i, i64 12
-  %.162.val74.i = load i32, ptr %4, align 1
   %i.lh = zext i32 %.162.val74.i to i64
   %i.li = mul nuw nsw i64 %i.lh, %i.dz
   %i.lj = load ptr, ptr %1, align 8               ; 2 uses

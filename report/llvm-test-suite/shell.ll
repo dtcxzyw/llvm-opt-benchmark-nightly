@@ -204,8 +204,8 @@ bb.z:                                             ; preds = %bb.g, %resolve_back
   br i1 %i.de, label %.preheader626, label %._crit_edge, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.z, %bb.c
-  %.0453.lcssa.ph.in = phi i64 [ %indvars.iv.next705, %bb.z ], [ %indvars.iv704, %bb.c ] ; 2 uses
-  %.0453.lcssa.ph = trunc i64 %.0453.lcssa.ph.in to i32 ; 21 uses
+  %.0453.lcssa.ph.in = phi i64 [ %indvars.iv.next705, %bb.z ], [ %indvars.iv704, %bb.c ] ; 3 uses
+  %.0453.lcssa.ph = trunc i64 %.0453.lcssa.ph.in to i32 ; 20 uses
   %i.df = icmp eq i32 %.0453.lcssa.ph, 0
   br i1 %i.df, label %.loopexit, label %bb.aa
 
@@ -608,8 +608,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %.not684, label %.loopexit, label %.lr.ph682.preheader
 
 .lr.ph682.preheader:                              ; preds = %.preheader
-  %umax746 = tail call i32 @llvm.umin.i32(i32 %.0453.lcssa.ph, i32 100)
-  %wide.trip.count747 = zext nneg i32 %umax746 to i64
+  %wide.trip.count747 = and i64 %.0453.lcssa.ph.in, 4294967295
   br label %.lr.ph682
 
 .lr.ph682:                                        ; preds = %.lr.ph682.preheader, %.lr.ph682
@@ -1010,9 +1009,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #19

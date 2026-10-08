@@ -174,27 +174,23 @@ bb.d:                                             ; preds = %.critedge
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit: ; preds = %bb.d
   %spec.select.i.i = tail call noundef i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.b)
   tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef 0, i64 noundef %spec.select.i.i)
-  %i.l = sub nsw i32 %i.c, %i.h
+  %i.l = sub nuw nsw i32 %i.c, %i.h
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit, %bb.d
-  %.027 = phi i32 [ %i.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit ], [ %i.c, %bb.d ] ; 2 uses
+  %.027 = phi i32 [ %i.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit ], [ %i.c, %bb.d ]
   %i.m = add nsw i32 %.027, -1                    ; 2 uses
-  %1 = icmp sgt i32 %.027, 0
-  br i1 %1, label %.lr.ph45, label %.critedge2.thread
-
-.lr.ph45:                                         ; preds = %bb.e
-  %2 = load i64, ptr %i.a, align 8, !tbaa !23     ; 4 uses
+  %1 = load i64, ptr %i.a, align 8, !tbaa !23     ; 4 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph45, %bb.h
-  %.044 = phi i32 [ %i.m, %.lr.ph45 ], [ %i.r, %bb.h ] ; 5 uses
+bb.f:                                             ; preds = %bb.e, %bb.h
+  %.044 = phi i32 [ %i.m, %bb.e ], [ %i.r, %bb.h ] ; 5 uses
   %i.n = zext nneg i32 %.044 to i64               ; 3 uses
-  %.not.i29 = icmp ugt i64 %2, %i.n
+  %.not.i29 = icmp ugt i64 %1, %i.n
   br i1 %.not.i29, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.48, i64 noundef %i.n, i64 noundef %2) #28
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.48, i64 noundef %i.n, i64 noundef %1) #28
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30: ; preds = %bb.f
@@ -222,11 +218,11 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.i:                                             ; preds = %.critedge2
   %i.t = add nuw nsw i32 %.044, 1
   %i.u = zext nneg i32 %i.t to i64                ; 4 uses
-  %i.v = icmp ult i64 %2, %i.u
+  %i.v = icmp ult i64 %1, %i.u
   br i1 %i.v, label %bb.j, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32
 
 bb.j:                                             ; preds = %bb.i
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.45, ptr noundef nonnull @.str.49, i64 noundef %i.u, i64 noundef %2) #28
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.45, ptr noundef nonnull @.str.49, i64 noundef %i.u, i64 noundef %1) #28
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32: ; preds = %bb.i
@@ -235,7 +231,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32: ; preds =
   store i8 0, ptr %i.w, align 1, !tbaa !21
   br label %.critedge2.thread
 
-.critedge2.thread:                                ; preds = %bb.h, %.critedge.thread61, %bb.e, %.critedge2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32, %.critedge.thread
+.critedge2.thread:                                ; preds = %bb.h, %.critedge.thread61, %.critedge2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32, %.critedge.thread
   ret void
 }
 

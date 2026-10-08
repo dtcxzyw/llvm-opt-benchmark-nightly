@@ -135,7 +135,7 @@ bb.c:                                             ; preds = %.lr.ph714.i
   br label %bb.ef
 
 bb.d:                                             ; preds = %.lr.ph714.i
-  %i.r = add nuw i64 %.2195713.i, 1               ; 24 uses
+  %i.r = add nuw i64 %.2195713.i, 1               ; 23 uses
   %.not278.i = icmp ult i64 %i.r, %0
   br i1 %.not278.i, label %bb.g, label %bb.e
 
@@ -538,14 +538,12 @@ bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #11
-  %i.gu = sub nuw i64 %.5198.lcssa.ph.i, %.2195713.i
-  %20 = sub nuw i64 %0, %i.r
-  %.sroa.speculated.i332.i = tail call i64 @llvm.umin.i64(i64 %20, i64 %i.gu) ; 4 uses
+  %i.gu = sub nuw i64 %.5198.lcssa.ph.i, %.2195713.i ; 4 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %i.gv, ptr %9, align 8, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
-  store i64 %.sroa.speculated.i332.i, ptr %i.d, align 8, !tbaa !17
-  %i.gw = icmp ugt i64 %.sroa.speculated.i332.i, 15
+  store i64 %i.gu, ptr %i.d, align 8, !tbaa !17
+  %i.gw = icmp ugt i64 %i.gu, 15
   br i1 %i.gw, label %.noexc.i.i.i341.i, label %._crit_edge.i.i.i.i340.i
 
 .noexc.i.i.i341.i:                                ; preds = %bb.az
@@ -560,7 +558,7 @@ bb.az:                                            ; preds = %bb.ay
 
 ._crit_edge.i.i.i.i340.i:                         ; preds = %.noexc343.i, %bb.az
   %i.gz = phi ptr [ %i.gx, %.noexc343.i ], [ %i.gv, %bb.az ] ; 2 uses
-  switch i64 %.sroa.speculated.i332.i, label %bb.bb [
+  switch i64 %i.gu, label %bb.bb [
     i64 1, label %bb.ba
     i64 0, label %bb.bc
   ]
@@ -571,7 +569,7 @@ bb.ba:                                            ; preds = %._crit_edge.i.i.i.i
   br label %bb.bc
 
 bb.bb:                                            ; preds = %._crit_edge.i.i.i.i340.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gz, ptr nonnull align 1 %i.v, i64 %.sroa.speculated.i332.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gz, ptr nonnull align 1 %i.v, i64 %i.gu, i1 false)
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba, %._crit_edge.i.i.i.i340.i

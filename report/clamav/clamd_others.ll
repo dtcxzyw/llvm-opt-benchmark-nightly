@@ -105,8 +105,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.1 = phi i64 [ %i.r, %bb.g ], [ %.068, %bb.f ]
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1
   store ptr null, ptr %i.t, align 8, !tbaa !11
-  %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !36   ; 6 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !36   ; 3 uses
   %i.w = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) @.str.5) #22 ; 2 uses
   %.not87106 = icmp eq ptr %i.w, null
   br i1 %.not87106, label %.preheader105, label %.lr.ph
@@ -179,19 +179,18 @@ xfree.exit93:                                     ; preds = %xfree.exit, %bb.l
 
 .lr.ph114:                                        ; preds = %.preheader, %bb.p
   %.2113 = phi i64 [ %.3, %bb.p ], [ 0, %.preheader ] ; 2 uses
-  %.069112 = phi i64 [ %i.aw, %bb.p ], [ 0, %.preheader ] ; 4 uses
+  %.069112 = phi i64 [ %i.aw, %bb.p ], [ 0, %.preheader ] ; 3 uses
   %i.ap = add nuw i64 %.069112, 1                 ; 4 uses
   %i.aq = icmp ult i64 %i.ap, %i.ai
-  br i1 %i.aq, label %3, label %.critedge91
+  %.pre = load ptr, ptr %i.u, align 8, !tbaa !36  ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.pre, i64 %.069112
+  %4 = load i8, ptr %3, align 1, !tbaa !12        ; 2 uses
+  %5 = icmp eq i8 %4, 37
+  %or.cond = select i1 %i.aq, i1 %5, i1 false
+  br i1 %or.cond, label %bb.m, label %.critedge91
 
-3:                                                ; preds = %.lr.ph114
-  %4 = getelementptr inbounds nuw i8, ptr %i.v, i64 %.069112
-  %5 = load i8, ptr %4, align 1, !tbaa !12
-  %6 = icmp eq i8 %5, 37
-  br i1 %6, label %bb.m, label %.critedge91
-
-bb.m:                                             ; preds = %3
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ap
+bb.m:                                             ; preds = %.lr.ph114
+  %i.ar = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.ap
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !12
   switch i8 %i.as, label %.critedge91 [
     i8 118, label %bb.n
@@ -209,11 +208,10 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(139) %endptr, ptr noundef nonnull align 1 dereferenceable(139) @.str.7, i64 139, i1 false)
   br label %bb.p
 
-.critedge91:                                      ; preds = %bb.m, %3, %.lr.ph114
-  %7 = getelementptr inbounds nuw i8, ptr %i.v, i64 %.069112
-  %8 = load i8, ptr %7, align 1, !tbaa !12
+.critedge91:                                      ; preds = %bb.m, %.lr.ph114
+  %6 = phi i8 [ 37, %bb.m ], [ %4, %.lr.ph114 ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.an, i64 %.2113
-  store i8 %8, ptr %i.av, align 1, !tbaa !12
+  store i8 %6, ptr %i.av, align 1, !tbaa !12
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %.critedge91, %bb.o

@@ -205,18 +205,20 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.be, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.cq = fmul reassoc nsz arcp contract afn <2 x float> %i.cp, splat (float 6.553600e+04)
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ck
-  %7 = fptosi <2 x float> %i.cq to <2 x i32>
-  %8 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %7, <2 x i32> zeroinitializer) ; 2 uses
-  %9 = extractelement <2 x i32> %8, i64 0
-  %i.cr = tail call i32 @llvm.umin.i32(i32 %9, i32 65535)
+  %i.cq = fmul reassoc nsz arcp contract afn <2 x float> %i.cp, splat (float 6.553600e+04) ; 2 uses
+  %6 = extractelement <2 x float> %i.cq, i64 0
+  %7 = fptosi float %6 to i32
+  %8 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
+  %i.cr = tail call i32 @llvm.umin.i32(i32 %8, i32 65535)
   %i.cs = zext nneg i32 %i.cr to i64
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.cs
   %i.cu = load float, ptr %i.ct, align 4, !tbaa !13
-  store float %i.cu, ptr %6, align 4, !tbaa !13
-  %10 = extractelement <2 x i32> %8, i64 1
-  %i.cv = tail call i32 @llvm.umin.i32(i32 %10, i32 65535)
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ck
+  store float %i.cu, ptr %9, align 4, !tbaa !13
+  %10 = extractelement <2 x float> %i.cq, i64 1
+  %11 = fptosi float %10 to i32
+  %12 = tail call i32 @llvm.smax.i32(i32 %11, i32 0)
+  %i.cv = tail call i32 @llvm.umin.i32(i32 %12, i32 65535)
   %i.cw = zext nneg i32 %i.cv to i64
   %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %i.cw
   %i.cy = load float, ptr %i.cx, align 4, !tbaa !13
@@ -618,9 +620,6 @@ declare <10 x float> @llvm.masked.load.v10f32.p0(ptr captures(none), <10 x i1>, 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <8 x float> @llvm.masked.load.v8f32.p0(ptr captures(none), <8 x i1>, <8 x float>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 x float>) #20

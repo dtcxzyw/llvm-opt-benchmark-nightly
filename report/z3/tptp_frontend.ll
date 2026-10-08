@@ -205,15 +205,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.e
 
 .critedge:                                        ; preds = %.critedge2, %.lr.ph, %.preheader
   %.0.lcssa = phi i64 [ %.0710.i.i, %.preheader ], [ %.04, %.lr.ph ], [ %.8.val, %.critedge2 ]
+  %2 = sub nuw i64 %.0.lcssa, %.0710.i.i          ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.p, ptr %0, align 8, !tbaa !139, !alias.scope !1236
-  %2 = tail call i64 @llvm.umin.i64(i64 %.0.lcssa, i64 %.8.val)
-  %spec.select.i.i.i = sub nuw i64 %2, %.0710.i.i ; 8 uses
-  %i.q = icmp ugt i64 %spec.select.i.i.i, 15
+  %i.q = icmp ugt i64 %2, 15
   br i1 %i.q, label %bb.c, label %._crit_edge.i.i.i
 
 bb.c:                                             ; preds = %.critedge
-  %i.r = icmp slt i64 %spec.select.i.i.i, 0
+  %i.r = icmp slt i64 %2, 0
   br i1 %i.r, label %.noexc10.i.i, label %bb.d
 
 .noexc10.i.i:                                     ; preds = %bb.c
@@ -221,7 +220,7 @@ bb.c:                                             ; preds = %.critedge
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.s = add nuw i64 %spec.select.i.i.i, 1        ; 2 uses
+  %i.s = add nuw i64 %2, 1                        ; 2 uses
   %i.t = icmp slt i64 %i.s, 0
   br i1 %i.t, label %.noexc11.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i, !prof !227
 
@@ -232,12 +231,12 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i: ; preds = %bb.d
   %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #32 ; 2 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !225, !alias.scope !1236
-  store i64 %spec.select.i.i.i, ptr %i.p, align 8, !tbaa !141, !alias.scope !1236
+  store i64 %2, ptr %i.p, align 8, !tbaa !141, !alias.scope !1236
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i, %.critedge
   %i.v = phi ptr [ %i.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i ], [ %i.p, %.critedge ] ; 3 uses
-  switch i64 %spec.select.i.i.i, label %bb.f [
+  switch i64 %2, label %bb.f [
     i64 1, label %bb.e
     i64 0, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
   ]
@@ -248,13 +247,13 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
 
 bb.f:                                             ; preds = %._crit_edge.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull align 1 %i.e, i64 %spec.select.i.i.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull align 1 %i.e, i64 %2, i1 false)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds = %._crit_edge.i.i.i, %bb.e, %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %spec.select.i.i.i, ptr %i.x, align 8, !tbaa !140, !alias.scope !1236
-  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 %spec.select.i.i.i
+  store i64 %2, ptr %i.x, align 8, !tbaa !140, !alias.scope !1236
+  %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 %2
   store i8 0, ptr %i.y, align 1, !tbaa !141
   br label %bb.g
 
