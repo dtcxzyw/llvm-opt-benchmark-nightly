@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.as = load i32, ptr %18, align 8, !tbaa !56
   %i.at = lshr i32 %i.as, 5
   %i.au = and i32 %i.at, 127                      ; 2 uses
-  %i.av = add nuw nsw i32 %i.au, 1                ; 9 uses
+  %i.av = add nuw nsw i32 %i.au, 1                ; 6 uses
   %i.aw = invoke noundef i64 @_ZNK2cv3Mat5totalEv(ptr noundef nonnull align 8 dereferenceable(208) %26)
           to label %bb.aj unwind label %bb.al
 
@@ -359,10 +359,10 @@ bb.aw:                                            ; preds = %bb.av
   %i.cp = sext i32 %umax to i64
   %i.cq = shl nsw i64 %i.cp, 3                    ; 2 uses
   %smin207 = call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.ax)
-  %i.cr = add i32 %smin207, %indvars.iv201        ; 4 uses
-  %i.cs = mul i32 %i.av, %i.cr
-  %i.ct = call i32 @llvm.umax.i32(i32 %i.cs, i32 1)
-  %umax208 = sext i32 %i.ct to i64                ; 3 uses
+  %i.cr = add i32 %smin207, %indvars.iv201
+  %i.cs = mul i32 %i.av, %i.cr                    ; 4 uses
+  %i.ct = call i32 @llvm.umax.i32(i32 %i.cs, i32 1) ; 3 uses
+  %umax208 = sext i32 %i.ct to i64                ; 12 uses
   %i.cu = add nuw nsw i32 %.071168.us, %.sroa.speculated150 ; 3 uses
   %.sroa.speculated.us = call i32 @llvm.smin.i32(i32 %i.cu, i32 %i.ax) ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #30
@@ -462,10 +462,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not, label %._crit_edge.us, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.bf
-  %39 = mul i32 %i.cr, %i.av                      ; 2 uses
-  %40 = call i32 @llvm.umax.i32(i32 %39, i32 1)   ; 2 uses
-  %41 = sext i32 %40 to i64                       ; 3 uses
-  %min.iters.check254 = icmp ult i32 %39, 4
+  %min.iters.check254 = icmp ult i32 %i.cs, 4
   br i1 %min.iters.check254, label %.lr.ph.us.preheader271, label %vector.memcheck241
 
 vector.memcheck241:                               ; preds = %.lr.ph.us.preheader
@@ -482,7 +479,7 @@ vector.memcheck241:                               ; preds = %.lr.ph.us.preheader
   br i1 %conflict.rdx, label %.lr.ph.us.preheader271, label %vector.ph255
 
 vector.ph255:                                     ; preds = %vector.memcheck241
-  %n.vec256 = and i64 %41, -4                     ; 3 uses
+  %n.vec256 = and i64 %umax208, -4                ; 3 uses
   br label %vector.body257
 
 vector.body257:                                   ; preds = %vector.body257, %vector.ph255
@@ -510,12 +507,12 @@ vector.body257:                                   ; preds = %vector.body257, %ve
   br i1 %i.do, label %middle.block266, label %vector.body257, !llvm.loop !142
 
 middle.block266:                                  ; preds = %vector.body257
-  %cmp.n267 = icmp eq i64 %n.vec256, %41
+  %cmp.n267 = icmp eq i64 %n.vec256, %umax208
   br i1 %cmp.n267, label %._crit_edge.us, label %.lr.ph.us.preheader271
 
 .lr.ph.us.preheader271:                           ; preds = %vector.memcheck241, %.lr.ph.us.preheader, %middle.block266
   %.1163.us.ph = phi i64 [ 0, %vector.memcheck241 ], [ 0, %.lr.ph.us.preheader ], [ %n.vec256, %middle.block266 ] ; 6 uses
-  %i.dp = and i32 %40, 1
+  %i.dp = and i32 %i.ct, 1
   %lcmp.mod.not = icmp eq i32 %i.dp, 0
   br i1 %lcmp.mod.not, label %.lr.ph.us.prol.loopexit, label %.lr.ph.us.prol
 
@@ -534,7 +531,7 @@ middle.block266:                                  ; preds = %vector.body257
 
 .lr.ph.us.prol.loopexit:                          ; preds = %.lr.ph.us.prol, %.lr.ph.us.preheader271
   %.1163.us.unr = phi i64 [ %.1163.us.ph, %.lr.ph.us.preheader271 ], [ %i.dy, %.lr.ph.us.prol ]
-  %i.dz = add nsw i64 %41, -1
+  %i.dz = add nsw i64 %umax208, -1
   %i.ea = icmp eq i64 %.1163.us.ph, %i.dz
   br i1 %i.ea, label %._crit_edge.us, label %.lr.ph.us
 
@@ -609,14 +606,11 @@ middle.block266:                                  ; preds = %vector.body257
   br i1 %or.cond198, label %.lr.ph167.us.preheader, label %.loopexit.us
 
 .lr.ph167.us.preheader:                           ; preds = %.loopexit159.us
-  %42 = mul i32 %i.cr, %i.av                      ; 2 uses
-  %43 = call i32 @llvm.umax.i32(i32 %42, i32 1)
-  %44 = sext i32 %43 to i64                       ; 2 uses
-  %min.iters.check = icmp ult i32 %42, 4
+  %min.iters.check = icmp ult i32 %i.cs, 4
   br i1 %min.iters.check, label %.lr.ph167.us.preheader269, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph167.us.preheader
-  %n.vec = and i64 %44, -4                        ; 3 uses
+  %n.vec = and i64 %umax208, -4                   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -634,7 +628,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.fw, label %middle.block, label %vector.body, !llvm.loop !145
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %44
+  %cmp.n = icmp eq i64 %n.vec, %umax208
   br i1 %cmp.n, label %.loopexit.us, label %.lr.ph167.us.preheader269
 
 .lr.ph167.us.preheader269:                        ; preds = %.lr.ph167.us.preheader, %middle.block
@@ -679,10 +673,7 @@ bb.bg:                                            ; preds = %.loopexit.us
   br i1 %.not199, label %.loopexit159.us, label %.lr.ph165.us.preheader
 
 .lr.ph165.us.preheader:                           ; preds = %.preheader158.us
-  %45 = mul i32 %i.cr, %i.av                      ; 2 uses
-  %46 = call i32 @llvm.umax.i32(i32 %45, i32 1)   ; 2 uses
-  %47 = sext i32 %46 to i64                       ; 4 uses
-  %min.iters.check228 = icmp ult i32 %45, 4
+  %min.iters.check228 = icmp ult i32 %i.cs, 4
   br i1 %min.iters.check228, label %.lr.ph165.us.preheader270, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph165.us.preheader
@@ -694,7 +685,7 @@ vector.memcheck:                                  ; preds = %.lr.ph165.us.prehea
   br i1 %found.conflict, label %.lr.ph165.us.preheader270, label %vector.ph229
 
 vector.ph229:                                     ; preds = %vector.memcheck
-  %n.vec230 = and i64 %47, -4                     ; 3 uses
+  %n.vec230 = and i64 %umax208, -4                ; 3 uses
   br label %vector.body231
 
 vector.body231:                                   ; preds = %vector.body231, %vector.ph229
@@ -716,13 +707,13 @@ vector.body231:                                   ; preds = %vector.body231, %ve
   br i1 %i.gk, label %middle.block238, label %vector.body231, !llvm.loop !151
 
 middle.block238:                                  ; preds = %vector.body231
-  %cmp.n239 = icmp eq i64 %n.vec230, %47
+  %cmp.n239 = icmp eq i64 %n.vec230, %umax208
   br i1 %cmp.n239, label %.loopexit159.us, label %.lr.ph165.us.preheader270
 
 .lr.ph165.us.preheader270:                        ; preds = %vector.memcheck, %.lr.ph165.us.preheader, %middle.block238
   %.0164.us.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph165.us.preheader ], [ %n.vec230, %middle.block238 ] ; 3 uses
-  %xtraiter273 = and i64 %47, 3
-  %i.gl = and i32 %46, 3
+  %xtraiter273 = and i64 %umax208, 3
+  %i.gl = and i32 %i.ct, 3
   %lcmp.mod274.not = icmp eq i32 %i.gl, 0
   br i1 %lcmp.mod274.not, label %.lr.ph165.us.prol.loopexit, label %.lr.ph165.us.prol
 
@@ -742,7 +733,7 @@ middle.block238:                                  ; preds = %vector.body231
 
 .lr.ph165.us.prol.loopexit:                       ; preds = %.lr.ph165.us.prol, %.lr.ph165.us.preheader270
   %.0164.us.unr = phi i64 [ %.0164.us.ph, %.lr.ph165.us.preheader270 ], [ %i.gr, %.lr.ph165.us.prol ]
-  %i.gs = sub nsw i64 %.0164.us.ph, %47
+  %i.gs = sub nsw i64 %.0164.us.ph, %umax208
   %i.gt = icmp ugt i64 %i.gs, -4
   br i1 %i.gt, label %.loopexit159.us, label %.lr.ph165.us
 

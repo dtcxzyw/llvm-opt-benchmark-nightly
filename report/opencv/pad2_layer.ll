@@ -205,7 +205,7 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !294, !nonnull !195, !align !211
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !194 ; 5 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !194 ; 3 uses
   %i.aj = ptrtoaddr ptr %i.ai to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %.val, i64 48
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !295, !nonnull !195, !align !210 ; 2 uses
@@ -310,20 +310,20 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ch = phi i32 [ %i.cg, %bb.h ], [ %i.ce, %bb.g ] ; 2 uses
   %i.ci = load ptr, ptr %i.ax, align 8, !tbaa !297, !nonnull !195, !align !211 ; 4 uses
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !59
-  %i.ck = mul i64 %i.cj, %i.by                    ; 5 uses
-  %i.cl = getelementptr inbounds i8, ptr %i.ai, i64 %i.ck
+  %i.ck = mul i64 %i.cj, %i.by                    ; 3 uses
+  %i.cl = getelementptr i8, ptr %i.ai, i64 %i.ck
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !59
-  %i.co = mul i64 %i.cn, %i.bz                    ; 5 uses
-  %i.cp = getelementptr inbounds i8, ptr %i.cl, i64 %i.co
+  %i.co = mul i64 %i.cn, %i.bz                    ; 3 uses
+  %i.cp = getelementptr i8, ptr %i.cl, i64 %i.co
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !59
-  %i.cs = mul i64 %i.cr, %.pre.i.i.i              ; 5 uses
-  %i.ct = getelementptr inbounds i8, ptr %i.cp, i64 %i.cs
+  %i.cs = mul i64 %i.cr, %.pre.i.i.i              ; 3 uses
+  %i.ct = getelementptr i8, ptr %i.cp, i64 %i.cs
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ci, i64 24
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !59
-  %i.cw = mul i64 %i.cv, %indvars.iv173.i.i.i     ; 5 uses
-  %i.cx = getelementptr inbounds i8, ptr %i.ct, i64 %i.cw ; 13 uses
+  %i.cw = mul i64 %i.cv, %indvars.iv173.i.i.i     ; 3 uses
+  %i.cx = getelementptr i8, ptr %i.ct, i64 %i.cw  ; 15 uses
   %i.cy = or i32 %i.cd, %i.ch
   %i.cz = icmp slt i32 %i.cy, 0
   br i1 %i.cz, label %.preheader.us.i.i.i, label %bb.j
@@ -564,11 +564,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bc, label %.lr.ph130.us.preheader.i.i.i, label %.loopexit.us.i.i.i
 
 .lr.ph130.us.preheader.i.i.i:                     ; preds = %.preheader.us.i.i.i
-  %2 = getelementptr i8, ptr %i.ai, i64 %i.cw
-  %3 = getelementptr i8, ptr %2, i64 %i.cs
-  %4 = getelementptr i8, ptr %3, i64 %i.co
-  %scevgep169.i.i.i = getelementptr i8, ptr %4, i64 %i.ck
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep169.i.i.i, i8 %i.ae, i64 %i.bg, i1 false), !tbaa !22
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.cx, i8 %i.ae, i64 %i.bg, i1 false), !tbaa !22
   br label %.loopexit.us.i.i.i
 
 .preheader110.us.i.i.i:                           ; preds = %._crit_edge.us.i.i.i
@@ -623,11 +619,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.ba, label %.lr.ph120.us.preheader.i.i.i, label %.loopexit115.us.i.i.i
 
 .lr.ph120.us.preheader.i.i.i:                     ; preds = %.preheader114.us.i.i.i
-  %5 = getelementptr i8, ptr %i.ai, i64 %i.cw
-  %6 = getelementptr i8, ptr %5, i64 %i.cs
-  %7 = getelementptr i8, ptr %6, i64 %i.co
-  %scevgep.i.i.i = getelementptr i8, ptr %7, i64 %i.ck
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i, i8 %i.ae, i64 %i.bd, i1 false), !tbaa !22
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.cx, i8 %i.ae, i64 %i.bd, i1 false), !tbaa !22
   br label %.loopexit115.us.i.i.i
 
 .preheader116.us.i.i.i:                           ; preds = %bb.j
@@ -1030,7 +1022,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !387, !nonnull !195, !align !211
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !194  ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !194
   %i.h = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !388, !nonnull !195, !align !211
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24
@@ -1084,18 +1076,18 @@ bb.b:                                             ; preds = %.loopexit126.i.i.i,
   %i.ay = sext i32 %i.ax to i64                   ; 2 uses
   %i.az = load ptr, ptr %i.t, align 8, !tbaa !391, !nonnull !195, !align !211
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !59
-  %i.bb = mul i64 %i.ba, %i.ay                    ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.bb
+  %i.bb = mul i64 %i.ba, %i.ay
+  %i.bc = getelementptr i8, ptr %i.g, i64 %i.bb
   %i.bd = sext i32 %i.aw to i64                   ; 9 uses
   %i.be = load ptr, ptr %i.u, align 8, !tbaa !392, !nonnull !195, !align !211
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !59
-  %i.bg = mul i64 %i.bf, %i.bd                    ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bg
+  %i.bg = mul i64 %i.bf, %i.bd
+  %i.bh = getelementptr i8, ptr %i.bc, i64 %i.bg
   %i.bi = sext i32 %i.as to i64                   ; 2 uses
   %i.bj = load ptr, ptr %i.v, align 8, !tbaa !393, !nonnull !195, !align !211
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !59
-  %i.bl = mul i64 %i.bk, %i.bi                    ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bl ; 5 uses
+  %i.bl = mul i64 %i.bk, %i.bi
+  %i.bm = getelementptr i8, ptr %i.bh, i64 %i.bl  ; 5 uses
   %i.bn = load ptr, ptr %i.w, align 8, !tbaa !394, !nonnull !195, !align !211
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !35
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.ay
@@ -1223,9 +1215,6 @@ bb.d:                                             ; preds = %bb.b
   %i.eg = icmp sgt i32 %i.dh, 0
   %i.eh = zext nneg i32 %i.dh to i64
   %i.ei = sext i32 %i.cz to i64                   ; 2 uses
-  %2 = getelementptr i8, ptr %i.g, i64 %i.bl
-  %3 = getelementptr i8, ptr %2, i64 %i.bg
-  %scevgep.i.i.i = getelementptr i8, ptr %3, i64 %i.bb
   %i.ej = sext i32 %.lcssa.i.i.i to i64
   br label %bb.e
 
@@ -1280,16 +1269,15 @@ bb.e:                                             ; preds = %.loopexit120.i.i.i,
   %indvars.iv170.i.i.i = phi i64 [ %i.ej, %.lr.ph139.i.i.i ], [ %indvars.iv.next171.i.i.i, %.loopexit120.i.i.i ] ; 3 uses
   %i.fe = load ptr, ptr %i.ad, align 8, !tbaa !398, !nonnull !195, !align !211
   %i.ff = load i64, ptr %i.fe, align 8, !tbaa !59
-  %i.fg = mul i64 %i.ff, %indvars.iv170.i.i.i     ; 2 uses
-  %i.fh = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.fg ; 5 uses
+  %i.fg = mul i64 %i.ff, %indvars.iv170.i.i.i
+  %i.fh = getelementptr i8, ptr %i.bm, i64 %i.fg  ; 6 uses
   br i1 %i.dz, label %bb.f, label %.loopexit122.i.i.i
 
 bb.f:                                             ; preds = %bb.e
   br i1 %i.m, label %bb.g, label %.lr.ph135.preheader.i.i.i
 
 .lr.ph135.preheader.i.i.i:                        ; preds = %bb.f
-  %scevgep163.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 %i.fg
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep163.i.i.i, i8 %i.l, i64 %i.ea, i1 false), !tbaa !22
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.fh, i8 %i.l, i64 %i.ea, i1 false), !tbaa !22
   br label %.loopexit122.i.i.i
 
 bb.g:                                             ; preds = %bb.f

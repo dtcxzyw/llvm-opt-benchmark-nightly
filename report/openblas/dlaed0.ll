@@ -204,7 +204,7 @@ pow_ii.exit381:                                   ; preds = %.lr.ph.i375, %pow_i
   %i.hh = add i32 %i.hg, %i.hf                    ; 2 uses
   %i.hi = add i32 %i.hh, %i.hg                    ; 3 uses
   %i.hj = add i32 %i.go, 2
-  %i.hk = add i32 %i.hj, %i.hi                    ; 3 uses
+  %i.hk = add i32 %i.hj, %i.hi                    ; 2 uses
   %i.hl = add nsw i32 %i.hk, %i.hg
   %i.hm = shl i32 %i.go, 1
   %i.hn = mul nsw i32 %i.hm, %.1
@@ -214,7 +214,7 @@ pow_ii.exit381:                                   ; preds = %.lr.ph.i375, %pow_i
   %i.hr = add i32 %i.hq, %i.ho
   %.not354402 = icmp slt i32 %.0326.lcssa501504, 0
   %.pre485 = sext i32 %i.hf to i64                ; 3 uses
-  %.pre486 = sext i32 %i.hk to i64                ; 2 uses
+  %.pre486 = sext i32 %i.hk to i64                ; 3 uses
   br i1 %.not354402, label %._crit_edge405, label %iter.check
 
 iter.check:                                       ; preds = %pow_ii.exit381
@@ -226,8 +226,7 @@ iter.check:                                       ; preds = %pow_ii.exit381
   br i1 %min.iters.check, label %.lr.ph404.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %12 = sext i32 %i.hk to i64
-  %i.ht = sub nsw i64 %12, %.pre485
+  %i.ht = sub nsw i64 %.pre486, %.pre485
   %i.hu = shl nsw i64 %i.ht, 2
   %i.hv = add nsw i64 %i.hu, -1
   %diff.check = icmp ult i64 %i.hv, 127

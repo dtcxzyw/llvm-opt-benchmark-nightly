@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.a
   %i.o = load i8, ptr %i.n, align 1, !tbaa !76, !range !80, !noundef !81
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.q = tail call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK2cv8MatShape4backEv(ptr noundef nonnull align 4 dereferenceable(52) %i.p)
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !83   ; 12 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !83   ; 10 uses
   %i.s = icmp eq i32 %i.d, 3                      ; 2 uses
   br i1 %i.s, label %bb.h, label %bb.l
 
@@ -607,7 +607,7 @@ bb.af:                                            ; preds = %._crit_edge38.us.us
 .preheader.us.us.us.us.us.i.us.us.us.us.i.i:      ; preds = %.lr.ph.us.us.us.us.us.preheader.i.us.us.us.us.i.i, %bb.af
   %i.gf = trunc i64 %indvars.iv103.i.us.us.us.us.i.i to i32
   %i.gg = mul i32 %i.dh, %i.gf
-  %i.gh = sub i32 %i.gg, %i.dn                    ; 3 uses
+  %i.gh = sub i32 %i.gg, %i.dn
   br label %.lr.ph34.us.us.us.us.us.i.us.us.us.us.i.i
 
 .lr.ph34.us.us.us.us.us.i.us.us.us.us.i.i:        ; preds = %.loopexit.us.us.us.us.us.i.us.us.us.us.i.i, %.preheader.us.us.us.us.us.i.us.us.us.us.i.i
@@ -621,8 +621,8 @@ bb.af:                                            ; preds = %._crit_edge38.us.us
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !83
   %i.gn = add i32 %i.gm, %i.ge                    ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
-  %i.gp = load i32, ptr %i.go, align 4, !tbaa !83 ; 3 uses
-  %i.gq = add nsw i32 %i.gp, %i.gh                ; 2 uses
+  %i.gp = load i32, ptr %i.go, align 4, !tbaa !83
+  %i.gq = add i32 %i.gp, %i.gh                    ; 2 uses
   %.not.us.us.us.us.us.i.us.us.us.us.i.i = icmp ult i32 %i.gk, %i.cl
   %.not142.us.us.us.us.us.i.us.us.us.us.i.i = icmp ult i32 %i.gn, %i.ck
   %or.cond.us.us.us.us.us.i.us.us.us.us.i.i = select i1 %.not.us.us.us.us.us.i.us.us.us.us.i.i, i1 %.not142.us.us.us.us.us.i.us.us.us.us.i.i, i1 false
@@ -633,10 +633,10 @@ bb.af:                                            ; preds = %._crit_edge38.us.us
 bb.ag:                                            ; preds = %.lr.ph34.us.us.us.us.us.i.us.us.us.us.i.i
   %i.gr = mul i32 %i.gk, %i.ck
   %i.gs = add i32 %i.gr, %i.gn
-  %i.gt = mul i32 %i.gs, %i.cn                    ; 3 uses
-  %i.gu = add nsw i32 %i.gt, %i.gq
-  %i.gv = mul nsw i32 %i.gu, %i.r
-  %i.gw = sext i32 %i.gv to i64
+  %i.gt = mul i32 %i.gs, %i.cn
+  %i.gu = add i32 %i.gt, %i.gq
+  %i.gv = mul i32 %i.gu, %i.r
+  %i.gw = sext i32 %i.gv to i64                   ; 5 uses
   %i.gx = getelementptr inbounds i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw ; 8 uses
   br i1 %.not.i.i.i.i.i.i.i, label %.loopexit.us.us.us.us.us.i.us.us.us.us.i.i, label %.lr.ph31.us.us.us.us.us.i.us.us.us.us.i.i
 
@@ -652,12 +652,8 @@ bb.ag:                                            ; preds = %.lr.ph34.us.us.us.u
   br i1 %min.iters.check, label %.lr.ph31.split.us49.us.us.us.us.i.us.us.us.us.i.i.preheader76, label %vector.memcheck52
 
 vector.memcheck52:                                ; preds = %.lr.ph31.split.us49.us.us.us.us.i.us.us.us.us.i.i.preheader
-  %16 = add i32 %i.gh, %i.gp
-  %17 = add i32 %16, %i.gt
-  %18 = mul i32 %i.r, %17
-  %19 = sext i32 %18 to i64                       ; 2 uses
-  %scevgep53 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %19
-  %scevgep55 = getelementptr i8, ptr %scevgep54, i64 %19
+  %scevgep53 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw
+  %scevgep55 = getelementptr i8, ptr %scevgep54, i64 %i.gw
   %bound056 = icmp ult ptr %.sroa.021.0.i.i.i, %scevgep55
   %bound157 = icmp ult ptr %scevgep53, %scevgep
   %found.conflict58 = and i1 %bound056, %bound157
@@ -718,12 +714,8 @@ middle.block72:                                   ; preds = %vector.body65
   br i1 %min.iters.check, label %.lr.ph31.split.us.us.us.us.us.us.i.us.us.us.us.i.i.preheader75, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph31.split.us.us.us.us.us.us.i.us.us.us.us.i.i.preheader
-  %20 = add i32 %i.gh, %i.gp
-  %21 = add i32 %20, %i.gt
-  %22 = mul i32 %i.r, %21
-  %23 = sext i32 %22 to i64                       ; 2 uses
-  %scevgep46 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %23
-  %scevgep48 = getelementptr i8, ptr %scevgep47, i64 %23
+  %scevgep46 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw
+  %scevgep48 = getelementptr i8, ptr %scevgep47, i64 %i.gw
   %bound0 = icmp ult ptr %.sroa.021.0.i.i.i, %scevgep48
   %bound1 = icmp ult ptr %scevgep46, %scevgep
   %found.conflict = and i1 %bound0, %bound1

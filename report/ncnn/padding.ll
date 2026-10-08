@@ -203,14 +203,14 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not.not, label %bb.c, label %._crit_edge126
 
 .noexc75:                                         ; preds = %.noexc75.lr.ph, %_ZN4ncnn3MatD2Ev.exit
-  %indvars.iv130 = phi i64 [ 0, %.noexc75.lr.ph ], [ %indvars.iv.next131, %_ZN4ncnn3MatD2Ev.exit ] ; 6 uses
+  %indvars.iv130 = phi i64 [ 0, %.noexc75.lr.ph ], [ %indvars.iv.next131, %_ZN4ncnn3MatD2Ev.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #10
-  %i.bi = load ptr, ptr %5, align 8, !tbaa !19, !noalias !382 ; 2 uses
+  %i.bi = load ptr, ptr %5, align 8, !tbaa !19, !noalias !382
   %i.bj = load i64, ptr %i.q, align 8, !tbaa !20, !noalias !382
-  %i.bk = mul i64 %i.bj, %indvars.iv133           ; 2 uses
-  %i.bl = load i64, ptr %i.r, align 8, !tbaa !47, !noalias !382 ; 4 uses
+  %i.bk = mul i64 %i.bj, %indvars.iv133
+  %i.bl = load i64, ptr %i.r, align 8, !tbaa !47, !noalias !382 ; 3 uses
   %i.bm = mul i64 %i.bk, %i.bl
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bm
+  %i.bn = getelementptr i8, ptr %i.bi, i64 %i.bm
   %i.bo = load i32, ptr %i.s, align 8, !tbaa !48, !noalias !382
   %i.bp = load ptr, ptr %i.t, align 8, !tbaa !18, !noalias !382
   store ptr null, ptr %i.u, align 8, !tbaa !17
@@ -221,12 +221,12 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bq = load <2 x i32>, ptr %i.o, align 4, !tbaa !49, !noalias !382
   %i.br = load i32, ptr %i.p, align 8, !tbaa !52, !noalias !382
   %i.bs = load i32, ptr %i.o, align 4, !tbaa !51, !noalias !382
-  %i.bt = sext i32 %i.bs to i64                   ; 2 uses
-  %i.bu = sext i32 %i.br to i64                   ; 2 uses
+  %i.bt = sext i32 %i.bs to i64
+  %i.bu = sext i32 %i.br to i64
   %i.bv = mul nsw i64 %i.bu, %i.bt                ; 12 uses
   %i.bw = mul i64 %i.bv, %indvars.iv130
   %i.bx = mul i64 %i.bw, %i.bl
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bx ; 7 uses
+  %i.by = getelementptr i8, ptr %i.bn, i64 %i.bx  ; 8 uses
   store ptr %i.by, ptr %10, align 8, !tbaa !19
   %i.bz = shufflevector <2 x i32> %i.bq, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ca = shufflevector <4 x i32> %i.bz, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
@@ -265,13 +265,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cm, label %.lr.ph.preheader, label %_ZN4ncnn3MatD2Ev.exit
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %12 = mul i64 %indvars.iv130, %i.bu
-  %13 = mul i64 %12, %i.bt
-  %14 = add i64 %13, %i.bk
-  %15 = mul i64 %i.bl, %14
-  %scevgep = getelementptr i8, ptr %i.bi, i64 %15
   %i.cn = and i64 %i.bv, 2147483647
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 %i.bc, i64 %i.cn, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr align 1 %i.by, i8 %i.bc, i64 %i.cn, i1 false), !tbaa !61
   %.pr.pre = load i64, ptr %7, align 8, !tbaa !55
   br label %_ZN4ncnn3Mat4fillIaEEvT_.exit
 
