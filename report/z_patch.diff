@@ -1,0 +1,329 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 7bbb2eb8e8313..88711550f8479 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -2066,8 +2066,12 @@ static void computeKnownBitsFromOperator(const Operator *I,
+         // want to waste time spinning around in loops.
+         // TODO: See if we can base recursion limiter on number of incoming phi
+         // edges so we don't overly clamp analysis.
+-        computeKnownBits(IncValue, DemandedElts, Known2, RecQ,
+-                         MaxAnalysisRecursionDepth - 1);
++        unsigned IncDepth = MaxAnalysisRecursionDepth - 1;
++        if (auto *IncPhi = dyn_cast<PHINode>(IncValue);
++            IncPhi && IncPhi->getNumIncomingValues() == 1 &&
++            Depth + 1 < IncDepth)
++          --IncDepth;
++        computeKnownBits(IncValue, DemandedElts, Known2, RecQ, IncDepth);
+ 
+         // See if we can further use a conditional branch into the phi
+         // to help us determine the range of the value.
+@@ -6452,9 +6456,14 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+         // Recurse, but cap the recursion to two levels, because we don't want
+         // to waste time spinning around in loops. We need at least depth 2 to
+         // detect known sign bits.
++        unsigned IncDepth = PhiRecursionLimit;
++        if (auto *IncPhi = dyn_cast<PHINode>(IncValue);
++            IncPhi && IncPhi->getNumIncomingValues() == 1 &&
++            Depth + 1 < IncDepth)
++          --IncDepth;
+         computeKnownFPClass(IncValue, DemandedElts, InterestedClasses, KnownSrc,
+                             Q.getWithoutCondContext().getWithInstruction(CtxI),
+-                            PhiRecursionLimit);
++                            IncDepth);
+ 
+         if (First) {
+           Known = KnownSrc;
+diff --git a/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll b/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
+index 99d23570f2d88..3942738de3c47 100644
+--- a/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
++++ b/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
+@@ -71,4 +71,103 @@ exit:
+ }
+ 
+ 
++define void @merge_lcssa_phi_of_nsw_iv(i32 %n, i1 %c0, i1 %c1) {
++; CHECK-LABEL: 'merge_lcssa_phi_of_nsw_iv'
++; CHECK-NEXT:  Classifying expressions for: @merge_lcssa_phi_of_nsw_iv
++; CHECK-NEXT:    %iv = phi i32 [ 0, %check ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + (1 smax %n))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw nsw i32 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,-2147483648) S: [1,-2147483648) Exits: (1 smax %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.lcssa = phi i32 [ %iv, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2147483647) S: [0,2147483647) --> (-1 + (1 smax %n))<nsw> U: [0,2147483647) S: [0,2147483647)
++; CHECK-NEXT:    %m = phi i32 [ 0, %entry ], [ 0, %check ], [ %iv.lcssa, %exit ]
++; CHECK-NEXT:    --> %m U: [0,-2147483648) S: [0,-2147483648)
++; CHECK-NEXT:  Determining loop execution counts for: @merge_lcssa_phi_of_nsw_iv
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br i1 %c0, label %merge, label %check
++
++check:
++  br i1 %c1, label %merge, label %loop
++
++loop:
++  %iv = phi i32 [ 0, %check ], [ %iv.next, %loop ]
++  %iv.next = add nuw nsw i32 %iv, 1
++  %ec = icmp slt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  %iv.lcssa = phi i32 [ %iv, %loop ]
++  br label %merge
++
++merge:
++  %m = phi i32 [ 0, %entry ], [ 0, %check ], [ %iv.lcssa, %exit ]
++  ret void
++}
++
++define void @merge_single_incoming_phi_edge_cond(ptr %q, i1 %c0) {
++; CHECK-LABEL: 'merge_single_incoming_phi_edge_cond'
++; CHECK-NEXT:  Classifying expressions for: @merge_single_incoming_phi_edge_cond
++; CHECK-NEXT:    %v = load i8, ptr %q, align 1
++; CHECK-NEXT:    --> %v U: full-set S: full-set
++; CHECK-NEXT:    %p1 = phi i8 [ %v, %e ]
++; CHECK-NEXT:    --> %v U: full-set S: full-set
++; CHECK-NEXT:    %p = phi i8 [ %p1, %l ], [ 0, %entry ]
++; CHECK-NEXT:    --> %p U: [0,16) S: [0,16)
++; CHECK-NEXT:  Determining loop execution counts for: @merge_single_incoming_phi_edge_cond
++;
++entry:
++  br i1 %c0, label %e, label %merge
++
++e:
++  %v = load i8, ptr %q
++  br label %l
++
++l:
++  %p1 = phi i8 [ %v, %e ]
++  %c = icmp ult i8 %p1, 16
++  br i1 %c, label %merge, label %other
++
++other:
++  ret void
++
++merge:
++  %p = phi i8 [ %p1, %l ], [ 0, %entry ]
++  ret void
++}
++
++define void @merge_single_incoming_phi_cycle_in_dead_code(i32 %a, i1 %c) {
++; CHECK-LABEL: 'merge_single_incoming_phi_cycle_in_dead_code'
++; CHECK-NEXT:  Classifying expressions for: @merge_single_incoming_phi_cycle_in_dead_code
++; CHECK-NEXT:    %p1 = phi i32 [ %p2, %dead2 ]
++; CHECK-NEXT:    --> poison U: full-set S: full-set
++; CHECK-NEXT:    %p2 = phi i32 [ %p1, %dead1 ]
++; CHECK-NEXT:    --> poison U: full-set S: full-set
++; CHECK-NEXT:    %m = phi i32 [ %p1, %dead1 ], [ 0, %entry ], [ %a, %other ]
++; CHECK-NEXT:    --> %m U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @merge_single_incoming_phi_cycle_in_dead_code
++;
++entry:
++  br i1 %c, label %exit, label %other
++
++other:
++  br label %exit
++
++dead1:
++  %p1 = phi i32 [ %p2, %dead2 ]
++  br i1 %c, label %dead2, label %exit
++
++dead2:
++  %p2 = phi i32 [ %p1, %dead1 ]
++  br label %dead1
++
++exit:
++  %m = phi i32 [ %p1, %dead1 ], [ 0, %entry ], [ %a, %other ]
++  ret void
++}
++
+ !0 = !{i32 0, i32 2147483647}
+diff --git a/llvm/test/Analysis/ValueTracking/known-fpclass.ll b/llvm/test/Analysis/ValueTracking/known-fpclass.ll
+index 02289fd2641cf..676eb640ee83f 100644
+--- a/llvm/test/Analysis/ValueTracking/known-fpclass.ll
++++ b/llvm/test/Analysis/ValueTracking/known-fpclass.ll
+@@ -54,3 +54,35 @@ define i1 @vector_reverse_fpclass_demanded_fail(<4 x double> %vec, double nofpcl
+   %cmp = fcmp oge double %ele, 0.0
+   ret i1 %cmp
+ }
++
++define i1 @merge_single_incoming_phi_cycle_in_dead_code(i1 %c) {
++; CHECK-LABEL: @merge_single_incoming_phi_cycle_in_dead_code(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[EXIT:%.*]]
++; CHECK:       dead1:
++; CHECK-NEXT:    [[P1:%.*]] = phi double [ [[P2:%.*]], [[DEAD2:%.*]] ]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[DEAD2]], label [[EXIT]]
++; CHECK:       dead2:
++; CHECK-NEXT:    [[P2]] = phi double [ [[P1]], [[DEAD1:%.*]] ]
++; CHECK-NEXT:    br label [[DEAD1]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[M:%.*]] = phi double [ [[P1]], [[DEAD1]] ], [ 1.000000e+00, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[R:%.*]] = fcmp olt double [[M]], 0.000000e+00
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  br label %exit
++
++dead1:
++  %p1 = phi double [ %p2, %dead2 ]
++  br i1 %c, label %dead2, label %exit
++
++dead2:
++  %p2 = phi double [ %p1, %dead1 ]
++  br label %dead1
++
++exit:
++  %m = phi double [ %p1, %dead1 ], [ 1.0, %entry ]
++  %r = fcmp olt double %m, 0.0
++  ret i1 %r
++}
+diff --git a/llvm/test/Transforms/FunctionAttrs/noundef.ll b/llvm/test/Transforms/FunctionAttrs/noundef.ll
+index 202ac2257950c..10640869e0f2e 100644
+--- a/llvm/test/Transforms/FunctionAttrs/noundef.ll
++++ b/llvm/test/Transforms/FunctionAttrs/noundef.ll
+@@ -233,6 +233,37 @@ define nofpclass(nan) float @compute_not_nofpclass(float noundef nofpclass(nan)
+   ret float %y
+ }
+ 
++define nofpclass(ninf nsub nnorm nzero) double @merge_single_incoming_phi_fabs(double noundef %x, i1 noundef %c0) {
++; CHECK-LABEL: define noundef nofpclass(ninf nzero nsub nnorm) double @merge_single_incoming_phi_fabs(
++; CHECK-SAME: double noundef [[X:%.*]], i1 noundef [[C0:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C0]], label [[E:%.*]], label [[MERGE:%.*]]
++; CHECK:       e:
++; CHECK-NEXT:    [[V:%.*]] = call double @llvm.fabs.f64(double [[X]])
++; CHECK-NEXT:    br label [[L:%.*]]
++; CHECK:       l:
++; CHECK-NEXT:    [[P1:%.*]] = phi double [ [[V]], [[E]] ]
++; CHECK-NEXT:    br label [[MERGE]]
++; CHECK:       merge:
++; CHECK-NEXT:    [[P:%.*]] = phi double [ [[P1]], [[L]] ], [ 1.000000e+00, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    ret double [[P]]
++;
++entry:
++  br i1 %c0, label %e, label %merge
++
++e:
++  %v = call double @llvm.fabs.f64(double %x)
++  br label %l
++
++l:
++  %p1 = phi double [ %v, %e ]
++  br label %merge
++
++merge:
++  %p = phi double [ %p1, %l ], [ 1.0, %entry ]
++  ret double %p
++}
++
+ define nofpclass(nan) float @definitely_nofpclass(float noundef nofpclass(nan) %x) {
+ ; CHECK-LABEL: define noundef nofpclass(nan) float @definitely_nofpclass(
+ ; CHECK-SAME: float noundef returned nofpclass(nan) [[X:%.*]]) #[[ATTR0]] {
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll b/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll
+new file mode 100644
+index 0000000000000..89e17f4769ae2
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll
+@@ -0,0 +1,98 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes="default<O3>" -S %s | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++; The cleanup loop counting down from the exit value of the first loop should
++; be widened to an i64 IV with a simple exit compare.
++define void @f(i32 %n, i1 %c0, i1 %c1, ptr %bh) {
++; CHECK-LABEL: @f(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C3:%.*]] = icmp sgt i32 [[N:%.*]], 0
++; CHECK-NEXT:    br i1 [[C3]], label [[BODY_LR_PH:%.*]], label [[EXIT:%.*]]
++; CHECK:       body.lr.ph:
++; CHECK-NEXT:    [[C0_FR:%.*]] = freeze i1 [[C0:%.*]]
++; CHECK-NEXT:    br i1 [[C0_FR]], label [[BODY_US:%.*]], label [[BODY_LR_PH_SPLIT:%.*]]
++; CHECK:       body.us:
++; CHECK-NEXT:    [[F_US:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       body.lr.ph.split:
++; CHECK-NEXT:    [[C1_FR:%.*]] = freeze i1 [[C1:%.*]]
++; CHECK-NEXT:    br i1 [[C1_FR]], label [[BODY_US5:%.*]], label [[BODY:%.*]]
++; CHECK:       body.us5:
++; CHECK-NEXT:    [[F_US7:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br i1 [[F_US7]], label [[EXIT]], label [[INNER:%.*]]
++; CHECK:       body:
++; CHECK-NEXT:    [[I4:%.*]] = phi i32 [ [[I_NEXT:%.*]], [[INNER_PREHEADER:%.*]] ], [ 0, [[BODY_LR_PH_SPLIT]] ]
++; CHECK-NEXT:    [[F:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br i1 [[F]], label [[CLEANUP_PREHEADER:%.*]], label [[INNER_PREHEADER]]
++; CHECK:       inner.preheader:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I4]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[EXIT]], label [[BODY]]
++; CHECK:       cleanup.preheader:
++; CHECK-NEXT:    [[MORE11_NOT:%.*]] = icmp eq i32 [[I4]], 0
++; CHECK-NEXT:    br i1 [[MORE11_NOT]], label [[EXIT]], label [[CLEANUP_BODY_PREHEADER:%.*]]
++; CHECK:       cleanup.body.preheader:
++; CHECK-NEXT:    [[J10:%.*]] = add nsw i32 [[I4]], -1
++; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[J10]] to i64
++; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[I4]] to i64
++; CHECK-NEXT:    br label [[CLEANUP_BODY:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    br label [[INNER]]
++; CHECK:       cleanup.body:
++; CHECK-NEXT:    [[INDVARS_IV17:%.*]] = phi i64 [ [[TMP1]], [[CLEANUP_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT18:%.*]], [[CLEANUP_BODY]] ]
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], [[CLEANUP_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[CLEANUP_BODY]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr [16 x i8], ptr [[BH:%.*]], i64 [[INDVARS_IV17]]
++; CHECK-NEXT:    store i32 0, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], -1
++; CHECK-NEXT:    [[MORE_NOT:%.*]] = icmp eq i64 [[INDVARS_IV]], 0
++; CHECK-NEXT:    [[INDVARS_IV_NEXT18]] = add nsw i64 [[INDVARS_IV17]], -1
++; CHECK-NEXT:    br i1 [[MORE_NOT]], label [[EXIT]], label [[CLEANUP_BODY]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %latch ]
++  %x = phi i32 [ %n, %entry ], [ %x.inner, %latch ]
++  %c = icmp slt i32 %i, %n
++  br i1 %c, label %body, label %exit
++
++body:
++  %f = call i1 @fail()
++  %bail = select i1 %f, i1 true, i1 %c0
++  br i1 %bail, label %cleanup, label %inner
++
++inner:
++  %x.inner = phi i32 [ %x.or, %inner.body ], [ 0, %body ]
++  br i1 %c1, label %inner.body, label %latch
++
++inner.body:
++  %x.or = or i32 %x, 1
++  br label %inner
++
++latch:
++  %i.next = add i32 %i, 1
++  br label %loop
++
++cleanup:
++  %j.in = phi i32 [ %j, %cleanup.body ], [ %i, %body ]
++  %j = add i32 %j.in, -1
++  %more = icmp sgt i32 %j, -1
++  br i1 %more, label %cleanup.body, label %exit
++
++cleanup.body:
++  %idx = zext i32 %j.in to i64
++  %gep = getelementptr [16 x i8], ptr %bh, i64 %idx
++  store i32 0, ptr %gep, align 4
++  br label %cleanup
++
++exit:
++  ret void
++}
++
++declare i1 @fail()
