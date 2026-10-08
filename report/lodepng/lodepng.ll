@@ -205,7 +205,7 @@ begin_hunk_0_@llvm.abs.v2i16
 !828 = !{!827}
 !829 = distinct !{ptr @_ZN7lodepng8compressERSt6vectorIhSaIhEEPKhmRK23LodePNGCompressSettings, null}
 !830 = distinct !{!830, !34, !48, !49}
-!831 = distinct !{!831, !34, !48}
+!831 = distinct !{!831, !34, !49, !48}
 !832 = distinct !{!832, !52}
 !833 = distinct !{!833, !34}
 !834 = distinct !{!834, !52}
