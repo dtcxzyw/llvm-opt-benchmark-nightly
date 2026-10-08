@@ -1,0 +1,275 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/ExtraPassManager.h b/llvm/include/llvm/Transforms/Utils/ExtraPassManager.h
+index c0884ec6cadd7..84b26675a6ba3 100644
+--- a/llvm/include/llvm/Transforms/Utils/ExtraPassManager.h
++++ b/llvm/include/llvm/Transforms/Utils/ExtraPassManager.h
+@@ -15,6 +15,7 @@
+ #ifndef LLVM_TRANSFORMS_UTILS_EXTRAPASSMANAGER_H
+ #define LLVM_TRANSFORMS_UTILS_EXTRAPASSMANAGER_H
+ 
++#include "llvm/Analysis/MemorySSA.h"
+ #include "llvm/IR/PassManager.h"
+ #include "llvm/Transforms/Scalar/LoopPassManager.h"
+ 
+@@ -92,6 +93,11 @@ class ExtraLoopPassManager
+     if (AM.getCachedResult<MarkerTy>(L))
+       PA.intersect(InnerLPM.run(L, AM, AR, U));
+     PA.abandon<MarkerTy>();
++    // Loop passes must preserve MemorySSA when it is available, so preserve it
++    // here to satisfy a surrounding loop-mssa adaptor. This must follow the
++    // abandon above: preserve<> is a no-op while the set is all-preserved.
++    if (AR.MSSA)
++      PA.preserve<MemorySSAAnalysis>();
+     return PA;
+   }
+ };
+diff --git a/llvm/lib/Passes/PassBuilderPipelines.cpp b/llvm/lib/Passes/PassBuilderPipelines.cpp
+index 901250fdd787e..36d9e63dc1023 100644
+--- a/llvm/lib/Passes/PassBuilderPipelines.cpp
++++ b/llvm/lib/Passes/PassBuilderPipelines.cpp
+@@ -810,10 +810,20 @@ PassBuilder::buildFunctionSimplificationPipeline(OptimizationLevel Level,
+   FPM.addPass(DSEPass());
+   FPM.addPass(MoveAutoInitPass());
+ 
+-  FPM.addPass(createFunctionToLoopPassAdaptor(
+-      LICMPass(PTO.LicmMssaOptCap, PTO.LicmMssaNoAccForPromotionCap,
+-               /*AllowSpeculation=*/true),
+-      /*UseMemorySSA=*/true));
++  {
++    LoopPassManager LPM;
++    LPM.addPass(LICMPass(PTO.LicmMssaOptCap, PTO.LicmMssaNoAccForPromotionCap,
++                         /*AllowSpeculation=*/true));
++    // LICM can hoist a loop-invariant exit condition into the preheader;
++    // trivial unswitching then hoists the invariant exit branch out of the
++    // loop. Only run it when LICM changed the loop.
++    ExtraLoopPassManager<ShouldRunExtraSimpleLoopUnswitch> ExtraPasses;
++    ExtraPasses.addPass(
++        SimpleLoopUnswitchPass(/*NonTrivial=*/false, /*Trivial=*/true));
++    LPM.addPass(std::move(ExtraPasses));
++    FPM.addPass(
++        createFunctionToLoopPassAdaptor(std::move(LPM), /*UseMemorySSA=*/true));
++  }
+ 
+   FPM.addPass(CoroElidePass());
+ 
+diff --git a/llvm/lib/Transforms/Scalar/LICM.cpp b/llvm/lib/Transforms/Scalar/LICM.cpp
+index 172dd080114ae..62103075fc6c4 100644
+--- a/llvm/lib/Transforms/Scalar/LICM.cpp
++++ b/llvm/lib/Transforms/Scalar/LICM.cpp
+@@ -78,6 +78,7 @@
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Transforms/Scalar.h"
++#include "llvm/Transforms/Scalar/SimpleLoopUnswitch.h"
+ #include "llvm/Transforms/Utils/AssumeBundleBuilder.h"
+ #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+ #include "llvm/Transforms/Utils/Local.h"
+@@ -308,6 +309,33 @@ struct LegacyLICMPass : public LoopPass {
+ };
+ } // namespace
+ 
++// Return true if L contains a trivial loop-unswitch candidate: a block that
++// dominates the latch and exits the loop via a loop-invariant condition. Such a
++// branch runs on every iteration and can be hoisted into the preheader.
++static bool hasLoopInvariantExitCandidate(const Loop &L,
++                                          const DominatorTree &DT) {
++  BasicBlock *Latch = L.getLoopLatch();
++  if (!Latch)
++    return false;
++  for (DomTreeNode *N = DT.getNode(Latch); N; N = N->getIDom()) {
++    BasicBlock *BB = N->getBlock();
++    if (!L.contains(BB))
++      break;
++    Value *Cond;
++    Instruction *Term = BB->getTerminator();
++    if (auto *BI = dyn_cast<CondBrInst>(Term))
++      Cond = BI->getCondition();
++    else if (auto *SI = dyn_cast<SwitchInst>(Term))
++      Cond = SI->getCondition();
++    else
++      continue;
++    if (L.isLoopInvariant(Cond) &&
++        any_of(successors(BB), [&L](BasicBlock *S) { return !L.contains(S); }))
++      return true;
++  }
++  return false;
++}
++
+ PreservedAnalyses LICMPass::run(Loop &L, LoopAnalysisManager &AM,
+                                 LoopStandardAnalysisResults &AR, LPMUpdater &) {
+   if (!AR.MSSA)
+@@ -327,6 +355,13 @@ PreservedAnalyses LICMPass::run(Loop &L, LoopAnalysisManager &AM,
+   auto PA = getLoopPassPreservedAnalyses();
+   PA.preserve<MemorySSAAnalysis>();
+ 
++  // If the loop now exits via a loop-invariant condition, request extra trivial
++  // unswitching to hoist that branch out of the loop.
++  if (hasLoopInvariantExitCandidate(L, AR.DT)) {
++    AM.getResult<ShouldRunExtraSimpleLoopUnswitch>(L, AR);
++    PA.preserve<ShouldRunExtraSimpleLoopUnswitch>();
++  }
++
+   return PA;
+ }
+ 
+diff --git a/llvm/test/Transforms/GuardWidening/loop-schedule.ll b/llvm/test/Transforms/GuardWidening/loop-schedule.ll
+index 79fe6193ac49d..bca9ccc366211 100644
+--- a/llvm/test/Transforms/GuardWidening/loop-schedule.ll
++++ b/llvm/test/Transforms/GuardWidening/loop-schedule.ll
+@@ -1,10 +1,12 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
+ ; RUN: opt -S -passes='licm,guard-widening,licm' -verify-memoryssa -debug-pass-manager < %s 2>&1 | FileCheck %s
+ 
+-; Main point of this test is to check the scheduling -- there should be
+-; no analysis passes needed between LICM and LoopGuardWidening
++; Main point of this test is to check the scheduling. After hoisting a
++; loop-invariant exit condition LICM requests the ShouldRunExtraSimpleLoopUnswitch
++; marker; GuardWidening still follows LICM directly.
+ 
+ ; CHECK: LICMPass
++; CHECK-NEXT: ShouldRunExtraSimpleLoopUnswitch
+ ; CHECK-NEXT: GuardWideningPass
+ ; CHECK-NEXT: LICMPass
+ 
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+index 0086bad9bce74..7c856172c8aa3 100644
+--- a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+@@ -134,32 +134,25 @@ exit:
+ define void @iterator_distance_index(ptr %out, ptr %arr, i1 %skip) {
+ ; CHECK-LABEL: define void @iterator_distance_index(
+ ; CHECK-SAME: ptr nofree writeonly captures(none) [[OUT:%.*]], ptr [[ARR:%.*]], i1 [[SKIP:%.*]]) local_unnamed_addr #[[ATTR0]] {
+-; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    br i1 [[SKIP]], label %[[EARLY_EXIT:.*]], label %[[INNER_PREHEADER:.*]]
+ ; CHECK:       [[INNER_PREHEADER]]:
+-; CHECK-NEXT:    [[I2:%.*]] = phi i32 [ [[I_NEXT:%.*]], %[[OUTER_LATCH:.*]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    br label %[[INNER_BODY_PREHEADER:.*]]
+-; CHECK:       [[INNER_BODY_PREHEADER]]:
+-; CHECK-NEXT:    [[J1:%.*]] = phi i32 [ 0, %[[INNER_PREHEADER]] ], [ [[J_NEXT:%.*]], %[[INNER_EXIT:.*]] ]
+-; CHECK-NEXT:    [[K_LT_J_PEEL_NOT:%.*]] = icmp eq i32 [[J1]], 0
+-; CHECK-NEXT:    br i1 [[K_LT_J_PEEL_NOT]], label %[[INNER_EXIT]], label %[[INNER_BODY_PEEL_NEXT:.*]]
+-; CHECK:       [[INNER_BODY_PEEL_NEXT]]:
+-; CHECK-NEXT:    [[K_LT_J_NOT:%.*]] = icmp eq i32 [[J1]], 1
+-; CHECK-NEXT:    br label %[[INNER_BODY:.*]]
+-; CHECK:       [[INNER_BODY]]:
+-; CHECK-NEXT:    br i1 [[K_LT_J_NOT]], label %[[INNER_EXIT]], label %[[INNER_BODY]], !llvm.loop [[LOOP4:![0-9]+]]
+-; CHECK:       [[INNER_EXIT]]:
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 [[I2]], [[J1]]
+-; CHECK-NEXT:    [[IDX:%.*]] = zext nneg i32 [[SUB]] to i64
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr [4 x i8], ptr [[ARR]], i64 [[IDX]]
++; CHECK-NEXT:    store ptr [[ARR]], ptr [[OUT]], align 8
++; CHECK-NEXT:    store i32 0, ptr [[OUT]], align 8
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[ARR]], i64 4
+ ; CHECK-NEXT:    store ptr [[GEP]], ptr [[OUT]], align 8
+ ; CHECK-NEXT:    store i32 0, ptr [[OUT]], align 8
+-; CHECK-NEXT:    [[J_NEXT]] = add nuw nsw i32 [[J1]], 1
+-; CHECK-NEXT:    [[J_GT_I_NOT:%.*]] = icmp samesign ult i32 [[J1]], [[I2]]
+-; CHECK-NEXT:    br i1 [[J_GT_I_NOT]], label %[[INNER_BODY_PREHEADER]], label %[[OUTER_LATCH]]
++; CHECK-NEXT:    store ptr [[ARR]], ptr [[OUT]], align 8
++; CHECK-NEXT:    store i32 0, ptr [[OUT]], align 8
++; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr i8, ptr [[ARR]], i64 8
++; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr i8, ptr [[ARR]], i64 4
++; CHECK-NEXT:    store ptr [[GEP1]], ptr [[OUT]], align 8
++; CHECK-NEXT:    store i32 0, ptr [[OUT]], align 8
++; CHECK-NEXT:    store ptr [[GEP_1]], ptr [[OUT]], align 8
++; CHECK-NEXT:    store i32 0, ptr [[OUT]], align 8
++; CHECK-NEXT:    br label %[[OUTER_LATCH:.*]]
+ ; CHECK:       [[OUTER_LATCH]]:
+-; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I2]], 1
+-; CHECK-NEXT:    br label %[[INNER_PREHEADER]]
++; CHECK-NEXT:    br label %[[OUTER_LATCH]]
+ ; CHECK:       [[EARLY_EXIT]]:
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/test/Transforms/PhaseOrdering/hoist-loop-invariant-guarded-trap.ll b/llvm/test/Transforms/PhaseOrdering/hoist-loop-invariant-guarded-trap.ll
+new file mode 100644
+index 0000000000000..62c3c66f91b30
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/hoist-loop-invariant-guarded-trap.ll
+@@ -0,0 +1,86 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='default<O2>' -S < %s | FileCheck %s
++
++; A loop-invariant exit branch, made invariant by IndVarSimplify exit
++; predication, is hoisted out of the surviving outer loop rather than
++; re-evaluated every iteration.
++
++define void @nested_guarded_trap(ptr %p, i64 %bp0, i64 %n, i64 %umax, i64 %rows) {
++; CHECK-LABEL: define void @nested_guarded_trap(
++; CHECK-SAME: ptr nofree writeonly captures(none) [[P:%.*]], i64 [[BP0:%.*]], i64 [[N:%.*]], i64 [[UMAX:%.*]], i64 [[ROWS:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SUM:%.*]] = add i64 [[N]], [[BP0]]
++; CHECK-NEXT:    [[BAD:%.*]] = icmp ugt i64 [[SUM]], [[UMAX]]
++; CHECK-NEXT:    br i1 [[BAD]], label %[[GUARD_TRAP:.*]], label %[[OUTER_PREHEADER:.*]]
++; CHECK:       [[OUTER_PREHEADER]]:
++; CHECK-NEXT:    [[N0:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[N0]], label %[[EXIT_SPLIT:.*]], label %[[OUTER_PREHEADER1:.*]]
++; CHECK:       [[OUTER_PREHEADER1]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[UMAX]], [[BP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    [[DOTNOT:%.*]] = icmp ugt i64 [[TMP0]], [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[BP0]]
++; CHECK-NEXT:    br i1 [[DOTNOT]], label %[[OUTER:.*]], label %[[OOB_TRAP:.*]]
++; CHECK:       [[OUTER]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i64 [ [[R_NEXT:%.*]], %[[OUTER]] ], [ 0, %[[OUTER_PREHEADER1]] ]
++; CHECK-NEXT:    [[V:%.*]] = trunc i64 [[R]] to i8
++; CHECK-NEXT:    [[TMP3:%.*]] = mul i64 [[N]], [[R]]
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[TMP2]], i64 [[TMP3]]
++; CHECK-NEXT:    tail call void @llvm.memset.p0.i64(ptr align 1 [[SCEVGEP]], i8 [[V]], i64 [[N]], i1 false)
++; CHECK-NEXT:    [[R_NEXT]] = add i64 [[R]], 1
++; CHECK-NEXT:    [[ODONE:%.*]] = icmp eq i64 [[R_NEXT]], [[ROWS]]
++; CHECK-NEXT:    br i1 [[ODONE]], label %[[EXIT_SPLIT]], label %[[OUTER]]
++; CHECK:       [[GUARD_TRAP]]:
++; CHECK-NEXT:    tail call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++; CHECK:       [[OOB_TRAP]]:
++; CHECK-NEXT:    tail call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++; CHECK:       [[EXIT_SPLIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %sum = add i64 %bp0, %n
++  %bad = icmp ugt i64 %sum, %umax
++  br i1 %bad, label %guard.trap, label %outer          ; dominating guard
++
++outer:
++  %r = phi i64 [ 0, %entry ], [ %r.next, %inner.done ]
++  %n0 = icmp eq i64 %n, 0
++  br i1 %n0, label %inner.done, label %inner
++
++inner:
++  %bp = phi i64 [ %bp0, %outer ], [ %bp.next, %cont ]
++  %cnt = phi i64 [ %n, %outer ], [ %cnt.next, %cont ]
++  %oob = icmp eq i64 %bp, %umax
++  br i1 %oob, label %oob.trap, label %cont             ; guard-dead per-element check
++
++cont:
++  %roff = mul i64 %r, %n
++  %aidx = add i64 %roff, %bp
++  %gep = getelementptr i8, ptr %p, i64 %aidx
++  %v = trunc i64 %r to i8
++  store i8 %v, ptr %gep                                 ; distinct window per row
++  %bp.next = add i64 %bp, 1
++  %cnt.next = add i64 %cnt, -1
++  %idone = icmp eq i64 %cnt.next, 0
++  br i1 %idone, label %inner.done, label %inner
++
++inner.done:
++  %r.next = add i64 %r, 1
++  %odone = icmp eq i64 %r.next, %rows
++  br i1 %odone, label %exit, label %outer
++
++guard.trap:
++  tail call void @llvm.trap()
++  unreachable
++
++oob.trap:
++  tail call void @llvm.trap()
++  unreachable
++
++exit:
++  ret void
++}
++
++declare void @llvm.trap()
