@@ -204,7 +204,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i.i.i:         ; preds = %_ZSt6fill_nIPimiET_
   %indvar = phi i64 [ 0, %.preheader28.us.us.i.us.i.i.preheader ], [ %indvar.next, %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i ] ; 3 uses
   %.011966.us.us.i.us.i.i = phi i32 [ %.val2, %.preheader28.us.us.i.us.i.i.preheader ], [ %i.ko, %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i ]
   %.012065.us.us.i.us.i.i = phi ptr [ %i.ez, %.preheader28.us.us.i.us.i.i.preheader ], [ %i.km, %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i ]
-  %.012362.us.us.i.us.i.i = phi ptr [ %i.fc, %.preheader28.us.us.i.us.i.i.preheader ], [ %i.kp, %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i ] ; 4 uses
+  %.012362.us.us.i.us.i.i = phi ptr [ %i.fc, %.preheader28.us.us.i.us.i.i.preheader ], [ %i.kp, %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i ] ; 2 uses
   %i.fz = mul i64 %indvar, %i.fm
   %scevgep54 = getelementptr i8, ptr %i.fv, i64 %i.fz
   %i.ga = mul i64 %indvar, %i.fm
@@ -265,8 +265,8 @@ bb.ag:                                            ; preds = %.lr.ph34.us.us.us.u
   %i.gt = mul i32 %i.gs, %i.cn
   %i.gu = add i32 %i.gt, %i.gq
   %i.gv = mul i32 %i.gu, %i.r
-  %i.gw = sext i32 %i.gv to i64                   ; 5 uses
-  %i.gx = getelementptr inbounds i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw ; 8 uses
+  %i.gw = sext i32 %i.gv to i64                   ; 3 uses
+  %i.gx = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw ; 10 uses
   br i1 %.not.i.i.i.i.i.i.i, label %.loopexit.us.us.us.us.us.i.us.us.us.us.i.i, label %.lr.ph31.us.us.us.us.us.i.us.us.us.us.i.i
 
 .lr.ph31.us.us.us.us.us.i.us.us.us.us.i.i:        ; preds = %bb.ag
@@ -281,10 +281,9 @@ bb.ag:                                            ; preds = %.lr.ph34.us.us.us.u
   br i1 %min.iters.check, label %.lr.ph31.split.us49.us.us.us.us.i.us.us.us.us.i.i.preheader76, label %vector.memcheck52
 
 vector.memcheck52:                                ; preds = %.lr.ph31.split.us49.us.us.us.us.i.us.us.us.us.i.i.preheader
-  %scevgep53 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw
   %scevgep55 = getelementptr i8, ptr %scevgep54, i64 %i.gw
   %bound056 = icmp ult ptr %.sroa.021.0.i.i.i, %scevgep55
-  %bound157 = icmp ult ptr %scevgep53, %scevgep
+  %bound157 = icmp ult ptr %i.gx, %scevgep
   %found.conflict58 = and i1 %bound056, %bound157
   br i1 %found.conflict58, label %.lr.ph31.split.us49.us.us.us.us.i.us.us.us.us.i.i.preheader76, label %vector.ph61
 
@@ -343,10 +342,9 @@ middle.block72:                                   ; preds = %vector.body65
   br i1 %min.iters.check, label %.lr.ph31.split.us.us.us.us.us.us.i.us.us.us.us.i.i.preheader75, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph31.split.us.us.us.us.us.us.i.us.us.us.us.i.i.preheader
-  %scevgep46 = getelementptr i8, ptr %.012362.us.us.i.us.i.i, i64 %i.gw
   %scevgep48 = getelementptr i8, ptr %scevgep47.a, i64 %i.gw
   %bound0 = icmp ult ptr %.sroa.021.0.i.i.i, %scevgep48
-  %bound1 = icmp ult ptr %scevgep46, %scevgep
+  %bound1 = icmp ult ptr %i.gx, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph31.split.us.us.us.us.us.us.i.us.us.us.us.i.i.preheader75, label %vector.ph
 
