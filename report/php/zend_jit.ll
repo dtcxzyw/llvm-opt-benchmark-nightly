@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.d
   %i.y = load ptr, ptr %2, align 8, !tbaa !465    ; 3 uses
   %.not28.i = icmp eq ptr %0, %i.y
-  br i1 %.not28.i, label %bb.j, label %bb.l, !prof !80
+  br i1 %.not28.i, label %bb.j, label %bb.m, !prof !80
 
 bb.j:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 4
@@ -236,15 +236,16 @@ zend_jit_find_method_helper.exit:                 ; preds = %bb.c, %bb.b
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %.sink.split, label %bb.n
 
-bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k
-  %3 = phi ptr [ %i.y, %bb.i ], [ %i.y, %bb.j ], [ %.pre, %bb.k ] ; 3 uses
+bb.l:                                             ; preds = %bb.j, %bb.k
+  %3 = phi ptr [ %.pre, %bb.k ], [ %i.y, %bb.j ]  ; 2 uses
   %.not13 = icmp eq ptr %0, %3
   br i1 %.not13, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %bb.l
-  %i.an = load i32, ptr %3, align 4, !tbaa !294
+bb.m:                                             ; preds = %bb.i, %bb.l
+  %4 = phi ptr [ %3, %bb.l ], [ %i.y, %bb.i ]     ; 2 uses
+  %i.an = load i32, ptr %4, align 4, !tbaa !294
   %i.ao = add i32 %i.an, 1
-  store i32 %i.ao, ptr %3, align 4, !tbaa !294
+  store i32 %i.ao, ptr %4, align 4, !tbaa !294
   %i.ap = load i32, ptr %0, align 8, !tbaa !294   ; 2 uses
   %i.aq = icmp ne i32 %i.ap, 0
   tail call void @llvm.assume(i1 %i.aq)

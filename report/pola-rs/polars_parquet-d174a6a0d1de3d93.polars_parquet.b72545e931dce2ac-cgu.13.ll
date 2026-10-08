@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %i.k = load ptr, ptr %i.d, align 8, !dbg !20863, !noalias !20849, !noundef !636
   %.not10.i = icmp eq ptr %i.k, null, !dbg !20863
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !20864
-  %i.m = load i64, ptr %i.l, align 8, !dbg !20864, !noalias !20849 ; 2 uses
+  %i.m = load i64, ptr %i.l, align 8, !dbg !20864, !noalias !20849 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !20865, !noalias !20849
   %.not7.i16.i = icmp eq i64 %i.m, 0, !dbg !20866
   %i.n = select i1 %.not10.i, i1 true, i1 %.not7.i16.i, !dbg !20866
@@ -234,11 +234,11 @@ bb.e:                                             ; preds = %.noexc
   %.sroa.0.0.i.not.i.i = or i1 %i.s, %i.t, !dbg !20876
   %i.u = select i1 %.not13.i, i1 true, i1 %.sroa.0.0.i.not.i.i, !dbg !20876
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !20877, !noalias !20849
-  br i1 %i.u, label %bb.f, label %bb.h, !dbg !20878
+  br i1 %i.u, label %bb.f, label %.sink.split, !dbg !20878
 
-.sink.split:                                      ; preds = %bb.b, %bb.h
-  %.sroa.6.0.i.ph.sink = phi i64 [ %.sroa.6.0.i.ph, %bb.h ], [ %2, %bb.b ]
-  store i64 %.sroa.6.0.i.ph.sink, ptr %i.e, align 8, !dbg !20879
+.sink.split:                                      ; preds = %bb.b, %bb.h, %.noexc8
+  %.sroa.6.0.i.ph16.sink = phi i64 [ %.sroa.57.0.i, %.noexc8 ], [ %i.m, %bb.h ], [ %2, %bb.b ]
+  store i64 %.sroa.6.0.i.ph16.sink, ptr %i.e, align 8, !dbg !20879
   br label %bb.f, !dbg !20880
 
 bb.f:                                             ; preds = %.sink.split, %.noexc8, %bb.h
@@ -251,9 +251,8 @@ bb.g:                                             ; preds = %bb.e, %bb.d
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef align 8 dereferenceable(24) %1) #31
           to label %bb.k unwind label %bb.j, !dbg !20858
 
-bb.h:                                             ; preds = %.noexc8, %.noexc
-  %.sroa.6.0.i.ph = phi i64 [ %i.m, %.noexc ], [ %.sroa.57.0.i, %.noexc8 ] ; 2 uses
-  %i.w = icmp ugt i64 %.sroa.6.0.i.ph, %i.f, !dbg !20881
+bb.h:                                             ; preds = %.noexc
+  %i.w = icmp ugt i64 %i.m, %i.f, !dbg !20881
   br i1 %i.w, label %bb.f, label %.sink.split, !dbg !20881
 
 bb.i:                                             ; preds = %bb.f, %bb.c

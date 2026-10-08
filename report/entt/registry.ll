@@ -205,7 +205,7 @@ bb.a:
   %i.h = ashr exact i64 %i.g, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.not13 = icmp eq ptr %1, %2
-  br i1 %.not13, label %.critedge, label %.lr.ph
+  br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.014 = phi ptr [ %i.x, %bb.b ], [ %1, %bb.a ]  ; 3 uses
@@ -213,8 +213,8 @@ bb.a:
   %.not9 = icmp eq i64 %i.j, %i.h
   br i1 %.not9, label %.critedge, label %bb.b
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.x, %bb.b ], [ %.014, %.lr.ph ] ; 2 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.b
+  %.0.lcssa = phi ptr [ %i.x, %bb.b ], [ %.014, %.lr.ph ] ; 2 uses
   %.not1017 = icmp eq ptr %.0.lcssa, %2
   br i1 %.not1017, label %._crit_edge, label %.lr.ph19
 
@@ -305,7 +305,7 @@ _ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit: ; preds = %.lr.ph.i,
   %.not10 = icmp eq ptr %i.bk, %2
   br i1 %.not10, label %._crit_edge, label %bb.c, !llvm.loop !2584
 
-._crit_edge:                                      ; preds = %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit, %.critedge
+._crit_edge:                                      ; preds = %_ZN4entt13basic_storageINS_6entityES1_SaIS1_EE4nextEv.exit, %bb.a, %.critedge
   ret void
 }
 
@@ -708,8 +708,8 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.j = icmp eq ptr %1, %2                       ; 2 uses
-  br i1 %i.j, label %.critedge.i, label %.lr.ph.i
+  %i.j = icmp eq ptr %1, %2
+  br i1 %i.j, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
   %.sroa.05.011.i = phi ptr [ %i.x, %bb.b ], [ %1, %bb.a ] ; 3 uses
@@ -717,8 +717,8 @@ bb.a:
   %.not.i = icmp eq i64 %i.k, %i.h
   br i1 %.not.i, label %.critedge.i, label %bb.b
 
-.critedge.i:                                      ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.sroa.05.0.lcssa.i = phi ptr [ %1, %bb.a ], [ %.sroa.05.011.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.b, %.lr.ph.i
+  %.sroa.05.0.lcssa.i = phi ptr [ %i.x, %bb.b ], [ %.sroa.05.011.i, %.lr.ph.i ] ; 2 uses
   %i.l = icmp eq ptr %.sroa.05.0.lcssa.i, %2
   br i1 %i.l, label %_ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_iteratorIT_EN9__gnu_cxx17__normal_iteratorIPS2_St6vectorIS2_S3_EEEEEvS7_S7_.exit, label %.lr.ph15.i
 
@@ -771,8 +771,7 @@ _ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_i
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !769
   %i.au = icmp eq ptr %i.ar, %i.at
-  %or.cond = or i1 %i.au, %i.j
-  br i1 %or.cond, label %.loopexit, label %.lr.ph.split
+  br i1 %i.au, label %.loopexit, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %_ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_iteratorIT_EN9__gnu_cxx17__normal_iteratorIPS2_St6vectorIS2_S3_EEEEEvS7_S7_.exit, %_ZNK4entt4sighIFvRNS_14basic_registryIN8Registry9my_entityESaIS3_EEES3_ES4_E7publishES6_S3_.exit
   %.sroa.05.08 = phi ptr [ %i.bi, %_ZNK4entt4sighIFvRNS_14basic_registryIN8Registry9my_entityESaIS3_EEES3_ES4_E7publishES6_S3_.exit ], [ %1, %_ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_iteratorIT_EN9__gnu_cxx17__normal_iteratorIPS2_St6vectorIS2_S3_EEEEEvS7_S7_.exit ] ; 2 uses
@@ -806,7 +805,7 @@ _ZNK4entt4sighIFvRNS_14basic_registryIN8Registry9my_entityESaIS3_EEES3_ES4_E7pub
   %i.bj = icmp eq ptr %i.bi, %2
   br i1 %i.bj, label %.loopexit, label %.lr.ph.split, !llvm.loop !2619
 
-.loopexit:                                        ; preds = %_ZNK4entt4sighIFvRNS_14basic_registryIN8Registry9my_entityESaIS3_EEES3_ES4_E7publishES6_S3_.exit, %_ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_iteratorIT_EN9__gnu_cxx17__normal_iteratorIPS2_St6vectorIS2_S3_EEEEEvS7_S7_.exit
+.loopexit:                                        ; preds = %_ZNK4entt4sighIFvRNS_14basic_registryIN8Registry9my_entityESaIS3_EEES3_ES4_E7publishES6_S3_.exit, %bb.a, %_ZN4entt13basic_storageIN8Registry9my_entityES2_SaIS2_EE8generateITkSt15output_iteratorIT_EN9__gnu_cxx17__normal_iteratorIPS2_St6vectorIS2_S3_EEEEEvS7_S7_.exit
   ret void
 }
 

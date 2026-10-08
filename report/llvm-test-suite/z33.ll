@@ -202,13 +202,13 @@ bb.x:                                             ; preds = %.loopexit87
   %i.dg = tail call i32 @fseek(ptr noundef %i.bq, i64 noundef 0, i32 noundef 2) ; 0 uses
   %i.dh = load ptr, ptr %i.h, align 8, !tbaa !8   ; 8 uses
   %i.di = load i16, ptr %i.e, align 8, !tbaa !8
-  %i.dj = zext i16 %i.di to i32                   ; 3 uses
+  %i.dj = zext i16 %i.di to i32                   ; 2 uses
   %i.dk = tail call i64 @ftell(ptr noundef %i.dh)
   %i.dl = trunc i64 %i.dk to i32                  ; 2 uses
   %i.dm = add nsw i32 %i.dl, -1                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %.not48.i.not = icmp sgt i32 %i.dl, %i.dj
-  br i1 %.not48.i.not, label %.lr.ph.i73, label %._crit_edge.i76
+  br i1 %.not48.i.not, label %.lr.ph.i73, label %SearchFile.exit.thread
 
 .lr.ph.i73:                                       ; preds = %bb.x, %bb.al
   %.03950.i = phi i32 [ %.140.i, %bb.al ], [ %i.dm, %bb.x ] ; 5 uses
@@ -287,22 +287,21 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.ai
-  %.142.i = phi i32 [ %.04149.i, %bb.ak ], [ %i.dy, %bb.aj ], [ %i.dy, %bb.ai ] ; 3 uses
+  %.142.i = phi i32 [ %.04149.i, %bb.ak ], [ %i.dy, %bb.aj ], [ %i.dy, %bb.ai ] ; 4 uses
   %.140.i = phi i32 [ %i.em, %bb.ak ], [ %.03950.i, %bb.aj ], [ %.03950.i, %bb.ai ] ; 2 uses
   %.not.i75 = icmp sgt i32 %.142.i, %.140.i
   br i1 %.not.i75, label %._crit_edge.i76, label %.lr.ph.i73, !llvm.loop !50
 
-._crit_edge.i76:                                  ; preds = %bb.al, %bb.x
-  %.041.lcssa.i = phi i32 [ %i.dj, %bb.x ], [ %.142.i, %bb.al ] ; 2 uses
-  %i.en = icmp slt i32 %.041.lcssa.i, %i.dm
+._crit_edge.i76:                                  ; preds = %bb.al
+  %i.en = icmp slt i32 %.142.i, %i.dm
   br i1 %i.en, label %SearchFile.exit, label %SearchFile.exit.thread
 
-SearchFile.exit.thread:                           ; preds = %._crit_edge.i76
+SearchFile.exit.thread:                           ; preds = %._crit_edge.i76, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %bb.ar
 
 SearchFile.exit:                                  ; preds = %._crit_edge.i76
-  %i.eo = sext i32 %.041.lcssa.i to i64
+  %i.eo = sext i32 %.142.i to i64
   %i.ep = call i32 @fseek(ptr noundef %i.dh, i64 noundef %i.eo, i32 noundef 0) ; 0 uses
   %i.eq = call ptr @fgets(ptr noundef nonnull %i.c, i32 noundef 512, ptr noundef %i.dh) ; 0 uses
   %i.er = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.58, ptr noundef nonnull %i.a) #11 ; 0 uses

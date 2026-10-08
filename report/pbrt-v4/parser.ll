@@ -205,14 +205,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br label %.body
 
 bb.o:                                             ; preds = %_ZN4pbrt14isQuotedStringESt17basic_string_viewIcSt11char_traitsIcEE.exit.i
-  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload.i, i64 1 ; 6 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload.i, i64 1 ; 5 uses
   %i.cb = add i64 %.sroa.01.0.copyload.i, -2      ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cb ; 9 uses
   %.not1.i = icmp samesign eq i64 %i.cb, 0
-  br i1 %.not1.i, label %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit", label %.lr.ph.i
+  br i1 %.not1.i, label %_ZN4pstd8optionalIN4pbrt5TokenEEptEv.exit80, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.o, %.critedge2.i
-  %.02.i = phi ptr [ %i.ce, %.critedge2.i ], [ %i.ca, %bb.o ] ; 3 uses
+  %.02.i = phi ptr [ %i.ce, %.critedge2.i ], [ %i.ca, %bb.o ] ; 8 uses
   %i.cd = load i8, ptr %.02.i, align 1, !tbaa !44
   switch i8 %i.cd, label %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit" [
     i8 32, label %.critedge2.i
@@ -224,12 +224,11 @@ bb.o:                                             ; preds = %_ZN4pbrt14isQuotedS
   %.not.i = icmp eq ptr %i.ce, %i.cc
   br i1 %.not.i, label %_ZN4pstd8optionalIN4pbrt5TokenEEptEv.exit80, label %.lr.ph.i, !llvm.loop !672
 
-"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit": ; preds = %.lr.ph.i, %bb.o
-  %.0.lcssa.i = phi ptr [ %i.ca, %bb.o ], [ %.02.i, %.lr.ph.i ] ; 6 uses
-  %i.cf = icmp eq ptr %.0.lcssa.i, %i.cc
+"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit": ; preds = %.lr.ph.i
+  %i.cf = icmp eq ptr %.02.i, %i.cc
   br i1 %i.cf, label %_ZN4pstd8optionalIN4pbrt5TokenEEptEv.exit80, label %.lr.ph.preheader.i82
 
-_ZN4pstd8optionalIN4pbrt5TokenEEptEv.exit80:      ; preds = %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit", %.critedge2.i
+_ZN4pstd8optionalIN4pbrt5TokenEEptEv.exit80:      ; preds = %bb.o, %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit", %.critedge2.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IPKcvEET_S8_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.cc, ptr noundef nonnull align 1 dereferenceable(1) %9)
@@ -285,14 +284,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.v,
 
 .lr.ph.preheader.i82:                             ; preds = %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E_clESS_.exit"
   %i.cq = ptrtoaddr ptr %i.ca to i64
-  %i.cr = ptrtoaddr ptr %.0.lcssa.i to i64
+  %i.cr = ptrtoaddr ptr %.02.i to i64
   %i.cs = add i64 %i.cb, %i.cq                    ; 3 uses
   %i.ct = sub i64 %i.cs, %i.cr
-  %scevgep.i83 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.ct
+  %scevgep.i83 = getelementptr i8, ptr %.02.i, i64 %i.ct
   br label %.lr.ph.i84
 
 .lr.ph.i84:                                       ; preds = %bb.w, %.lr.ph.preheader.i82
-  %.02.i85 = phi ptr [ %i.cv, %bb.w ], [ %.0.lcssa.i, %.lr.ph.preheader.i82 ] ; 4 uses
+  %.02.i85 = phi ptr [ %i.cv, %bb.w ], [ %.02.i, %.lr.ph.preheader.i82 ] ; 4 uses
   %i.cu = load i8, ptr %.02.i85, align 1, !tbaa !44
   switch i8 %i.cu, label %bb.w [
     i8 32, label %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E0_clESS_.exit"
@@ -308,9 +307,9 @@ bb.w:                                             ; preds = %.lr.ph.i84
   %.0.lcssa.i86 = phi ptr [ %scevgep.i83, %bb.w ], [ %.02.i85, %.lr.ph.i84 ], [ %.02.i85, %.lr.ph.i84 ] ; 4 uses
   %i.cw = load i64, ptr %i.ap, align 8, !tbaa !43
   %i.cx = ptrtoint ptr %.0.lcssa.i86 to i64       ; 2 uses
-  %i.cy = ptrtoint ptr %.0.lcssa.i to i64
+  %i.cy = ptrtoint ptr %.02.i to i64
   %i.cz = sub i64 %i.cx, %i.cy
-  %i.da = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.ak, i64 noundef 0, i64 noundef %i.cw, ptr noundef nonnull %.0.lcssa.i, i64 noundef %i.cz)
+  %i.da = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.ak, i64 noundef 0, i64 noundef %i.cw, ptr noundef nonnull %.02.i, i64 noundef %i.cz)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignIPKcvEERS4_T_S9_.exit unwind label %bb.y ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignIPKcvEERS4_T_S9_.exit: ; preds = %"_ZZN4pbrtL15parseParametersISt8functionIFN4pstd8optionalINS_5TokenEEEiEEZNS_5parseEPNS_12ParserTargetESt10unique_ptrINS_9TokenizerESt14default_deleteISB_EEE3$_5EENS_13InlinedVectorIPNS_15ParsedParameterELi8ENS2_3pmr21polymorphic_allocatorISI_EEEET_T0_bRKS1_IFvRKS4_PKcEEENKUlSS_E0_clESS_.exit"

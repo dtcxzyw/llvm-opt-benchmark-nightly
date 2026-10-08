@@ -205,10 +205,10 @@ bb.ah:                                            ; preds = %_ZNK8nlohmann16json
 bb.ai:                                            ; preds = %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #41
   %i.ek = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %i.el = load ptr, ptr %i.ek, align 8, !tbaa !392 ; 3 uses
+  %i.el = load ptr, ptr %i.ek, align 8, !tbaa !392 ; 2 uses
   %i.em = load ptr, ptr %8, align 8, !tbaa !393   ; 3 uses
   %.not = icmp eq ptr %i.el, %i.em
-  br i1 %.not, label %18, label %bb.at
+  br i1 %.not, label %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i, label %bb.at
 
 bb.aj:                                            ; preds = %_ZNSt12_Vector_baseIN8tinygltf5ValueESaIS1_EE11_M_allocateEm.exit.i, %bb.w
   %i.en = landingpad { ptr, i32 }
@@ -333,38 +333,33 @@ bb.at:                                            ; preds = %bb.ai
   %i.fs = call noundef nonnull align 8 dereferenceable(145) ptr @_ZN8tinygltf5ValueaSEOS0_(ptr noundef nonnull align 8 dereferenceable(145) %2, ptr noundef nonnull align 8 dereferenceable(145) %12) #41 ; 0 uses
   call void @_ZN8tinygltf5ValueD2Ev(ptr noundef nonnull align 8 dead_on_return(145) dereferenceable(145) %12) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #41
-  %.pre48 = load ptr, ptr %8, align 8, !tbaa !393
-  %.pre49 = load ptr, ptr %i.ek, align 8, !tbaa !392
-  br label %18
-
-18:                                               ; preds = %bb.at, %bb.ai
-  %19 = phi ptr [ %.pre49, %bb.at ], [ %i.el, %bb.ai ] ; 2 uses
-  %20 = phi ptr [ %.pre48, %bb.at ], [ %i.em, %bb.ai ] ; 3 uses
-  %.not.i.i2.i = icmp eq ptr %20, %19
+  %.pre48 = load ptr, ptr %8, align 8, !tbaa !393 ; 3 uses
+  %.pre49 = load ptr, ptr %i.ek, align 8, !tbaa !392 ; 2 uses
+  %.not.i.i2.i = icmp eq ptr %.pre48, %.pre49
   br i1 %.not.i.i2.i, label %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %18, %.lr.ph.i
-  %.0.i.i3.i = phi ptr [ %i.ft, %.lr.ph.i ], [ %20, %18 ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.at, %.lr.ph.i
+  %.0.i.i3.i = phi ptr [ %i.ft, %.lr.ph.i ], [ %.pre48, %bb.at ] ; 2 uses
   call void @_ZSt8_DestroyIN8tinygltf5ValueEEvPT_(ptr noundef %.0.i.i3.i) #39, !inline_history !37
   %i.ft = getelementptr inbounds nuw i8, ptr %.0.i.i3.i, i64 152 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.ft, %19
+  %.not.i.i.i = icmp eq ptr %i.ft, %.pre49
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i, label %.lr.ph.i, !llvm.loop !35
 
 _ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i: ; preds = %.lr.ph.i
   %.pre.i = load ptr, ptr %8, align 8, !tbaa !393
   br label %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i, %18
-  %21 = phi ptr [ %.pre.i, %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i ], [ %20, %18 ] ; 3 uses
-  %.not.i.i1.i = icmp eq ptr %21, null
+_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %bb.ai, %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i, %bb.at
+  %18 = phi ptr [ %.pre.i, %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.loopexit.i ], [ %.pre48, %bb.at ], [ %i.em, %bb.ai ] ; 3 uses
+  %.not.i.i1.i = icmp eq ptr %18, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN8tinygltf5ValueESaIS1_EED2Ev.exit, label %bb.au
 
 bb.au:                                            ; preds = %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i
   %i.fu = load ptr, ptr %i.cp, align 8, !tbaa !596
   %i.fv = ptrtoint ptr %i.fu to i64
-  %i.fw = ptrtoint ptr %21 to i64
+  %i.fw = ptrtoint ptr %18 to i64
   %i.fx = sub i64 %i.fv, %i.fw
-  call void @_ZdlPvm(ptr noundef nonnull %21, i64 noundef %i.fx) #42, !inline_history !606
+  call void @_ZdlPvm(ptr noundef nonnull %18, i64 noundef %i.fx) #42, !inline_history !606
   br label %_ZNSt6vectorIN8tinygltf5ValueESaIS1_EED2Ev.exit
 
 _ZNSt6vectorIN8tinygltf5ValueESaIS1_EED2Ev.exit:  ; preds = %_ZSt8_DestroyIPN8tinygltf5ValueES1_EvT_S3_RSaIT0_E.exit.i, %bb.au

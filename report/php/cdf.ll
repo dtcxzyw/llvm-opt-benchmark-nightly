@@ -205,14 +205,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !38   ; 3 uses
   %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = load ptr, ptr %3, align 8, !tbaa !39
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.023 = phi i64 [ 0, %.lr.ph ], [ %i.h, %bb.c ] ; 3 uses
+  %.023 = phi i64 [ 0, %.lr.ph ], [ %i.h, %bb.c ] ; 4 uses
   %i.d = getelementptr inbounds nuw [136 x i8], ptr %i.c, i64 %.023
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 66
   %i.f = load i8, ptr %i.e, align 2, !tbaa !42
@@ -224,14 +224,13 @@ bb.c:                                             ; preds = %bb.b
   %exitcond.not = icmp eq i64 %i.h, %i.b
   br i1 %exitcond.not, label %._crit_edge.thread, label %bb.b, !llvm.loop !65
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %.023, %bb.b ] ; 2 uses
-  %i.i = icmp eq i64 %.0.lcssa, %i.b
+._crit_edge:                                      ; preds = %bb.b
+  %i.i = icmp eq i64 %.023, %i.b
   br i1 %i.i, label %._crit_edge.thread, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge
   %i.j = load ptr, ptr %3, align 8, !tbaa !39
-  %i.k = getelementptr inbounds nuw [136 x i8], ptr %i.j, i64 %.0.lcssa ; 3 uses
+  %i.k = getelementptr inbounds nuw [136 x i8], ptr %i.j, i64 %.023 ; 3 uses
   store ptr %i.k, ptr %5, align 8, !tbaa !40
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 120
   %i.m = load i32, ptr %i.l, align 8, !tbaa !43   ; 2 uses
@@ -245,7 +244,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = tail call i32 @cdf_read_long_sector_chain(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %i.m, i64 noundef %i.q, ptr noundef %4)
   br label %bb.f
 
-._crit_edge.thread:                               ; preds = %bb.c, %bb.d, %._crit_edge
+._crit_edge.thread:                               ; preds = %bb.c, %bb.a, %bb.d, %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
   tail call void @_efree(ptr noundef null) #19
   store ptr null, ptr %4, align 8, !tbaa !18

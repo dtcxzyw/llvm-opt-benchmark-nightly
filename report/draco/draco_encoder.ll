@@ -202,10 +202,8 @@ sub_0:                                            ; preds = %sub_0.lr.ph, %_ZNSt
   %i.an = getelementptr inbounds [8 x i8], ptr %1, i64 %i.am
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !59 ; 18 uses
   %i.ap = load i8, ptr %i.ao, align 1             ; 2 uses
-  %19 = zext i8 %i.ap to i32
-  %20 = sub nsw i32 45, %19                       ; 2 uses
-  %.not404 = icmp eq i8 %i.ap, 45                 ; 2 uses
-  br i1 %.not404, label %sub_1, label %.tail356
+  %.not404 = icmp eq i8 %i.ap, 45
+  br i1 %.not404, label %sub_1, label %.tail361.thread
 
 sub_1:                                            ; preds = %sub_0
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
@@ -242,10 +240,10 @@ sub_2359:                                         ; preds = %sub_1358
   %i.bg = sub nsw i32 0, %i.bf
   br label %.tail356
 
-.tail356:                                         ; preds = %sub_0, %sub_1358, %sub_2359
-  %21 = phi i32 [ %i.bg, %sub_2359 ], [ %i.bc, %sub_1358 ], [ %20, %sub_0 ]
-  %.not127 = icmp eq i32 %21, 0
-  br i1 %.not127, label %bb.b, label %sub_0362
+.tail356:                                         ; preds = %sub_1358, %sub_2359
+  %19 = phi i32 [ %i.bg, %sub_2359 ], [ %i.bc, %sub_1358 ]
+  %.not127 = icmp eq i32 %19, 0
+  br i1 %.not127, label %bb.b, label %sub_1363
 
 bb.b:                                             ; preds = %.tail356, %.tail
   call fastcc void @_ZN12_GLOBAL__N_15UsageEv()
@@ -256,10 +254,7 @@ bb.c:                                             ; preds = %bb.e, %bb.d
           cleanup
   br label %_ZNSt10unique_ptrIN5draco10PointCloudESt14default_deleteIS1_EED2Ev.exit282
 
-sub_0362:                                         ; preds = %.tail356
-  br i1 %.not404, label %sub_1363, label %.tail361.thread
-
-sub_1363:                                         ; preds = %sub_0362
+sub_1363:                                         ; preds = %.tail356
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
   %i.bj = load i8, ptr %i.bi, align 1             ; 2 uses
   %i.bk = zext i8 %i.bj to i32
@@ -281,7 +276,9 @@ sub_2364:                                         ; preds = %sub_1363
   %or.cond173 = select i1 %.not128, i1 %i.br, i1 false
   br i1 %or.cond173, label %bb.d, label %sub_1368
 
-.tail361.thread:                                  ; preds = %sub_0362
+.tail361.thread:                                  ; preds = %sub_0
+  %20 = zext i8 %i.ap to i32
+  %21 = sub nsw i32 45, %20
   %i.bs = icmp slt i32 %.0115403, %i.ab
   br label %.tail366
 
@@ -312,7 +309,7 @@ sub_2369:                                         ; preds = %sub_1368
 
 .tail366:                                         ; preds = %.tail361.thread, %sub_1368, %sub_2369
   %i.ci = phi i1 [ %i.bs, %.tail361.thread ], [ %i.br, %sub_1368 ], [ %i.br, %sub_2369 ] ; 7 uses
-  %i.cj = phi i32 [ %20, %.tail361.thread ], [ %i.cd, %sub_1368 ], [ %i.ch, %sub_2369 ]
+  %i.cj = phi i32 [ %21, %.tail361.thread ], [ %i.cd, %sub_1368 ], [ %i.ch, %sub_2369 ]
   %.not129 = icmp eq i32 %i.cj, 0
   %or.cond174 = select i1 %.not129, i1 %i.ci, i1 false
   br i1 %or.cond174, label %bb.e, label %bb.f

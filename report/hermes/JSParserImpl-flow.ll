@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
-  %.sroa.020.026 = load ptr, ptr %i.g, align 8, !tbaa !155 ; 3 uses
+  %.sroa.020.026 = load ptr, ptr %i.g, align 8, !tbaa !155 ; 2 uses
   %.not27 = icmp eq ptr %.sroa.020.026, %3
-  br i1 %.not27, label %._crit_edge, label %.lr.ph
+  br i1 %.not27, label %_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -212,18 +212,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.d
 
-._crit_edge.loopexit:                             ; preds = %bb.f
-  %.pre = load ptr, ptr %i.g, align 8, !tbaa !155
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
-  %6 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.020.026, %bb.c ] ; 3 uses
-  %.not4.i.i = icmp eq ptr %6, %3
+._crit_edge:                                      ; preds = %bb.f
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !155 ; 3 uses
+  %.not4.i.i = icmp eq ptr %.pre, %3
   br i1 %.not4.i.i, label %_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit.thread, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
   %.06.i.i = phi i64 [ %i.m, %.lr.ph.i.i ], [ 0, %._crit_edge ] ; 2 uses
-  %.sroa.02.05.i.i = phi ptr [ %i.l, %.lr.ph.i.i ], [ %6, %._crit_edge ]
+  %.sroa.02.05.i.i = phi ptr [ %i.l, %.lr.ph.i.i ], [ %.pre, %._crit_edge ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !155  ; 2 uses
   %i.m = add nuw nsw i64 %.06.i.i, 1
@@ -259,14 +255,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.020.028, i64 8
   %.sroa.020.0 = load ptr, ptr %i.t, align 8, !tbaa !155 ; 2 uses
   %.not = icmp eq ptr %.sroa.020.0, %3
-  br i1 %.not, label %._crit_edge.loopexit, label %bb.d
+  br i1 %.not, label %._crit_edge, label %bb.d
 
 bb.g:                                             ; preds = %_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit
   store ptr %3, ptr %3, align 8, !tbaa !154
   store ptr %3, ptr %i.g, align 8, !tbaa !155
   br label %bb.j
 
-_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit.thread: ; preds = %._crit_edge, %_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit
+_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit.thread: ; preds = %bb.c, %._crit_edge, %_ZNK4llvh12simple_ilistIN6hermes6ESTree4NodeEJEE4sizeEv.exit
   %i.u = load ptr, ptr %0, align 8, !tbaa !61, !nonnull !62, !align !63 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !177  ; 2 uses
@@ -340,7 +336,7 @@ _ZN6hermes6ESTree22SequenceExpressionNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEE
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN6hermes6ESTree22SequenceExpressionNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEE.exit, %bb.g
-  %.0 = phi ptr [ %6, %bb.g ], [ %.0.i.i.i, %_ZN6hermes6ESTree22SequenceExpressionNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEE.exit ]
+  %.0 = phi ptr [ %.pre, %bb.g ], [ %.0.i.i.i, %_ZN6hermes6ESTree22SequenceExpressionNodeC2EON4llvh12simple_ilistINS0_4NodeEJEEE.exit ]
   ret ptr %.0
 }
 

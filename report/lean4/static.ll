@@ -206,7 +206,7 @@ bb.bl:                                            ; preds = %_ZL7mi_outccPPcS_.e
 
 bb.bm:                                            ; preds = %bb.bi
   %i.em = icmp ult ptr %.1303, %i.e
-  br i1 %i.em, label %.split.i, label %.split56.us.i
+  br i1 %i.em, label %.split.i, label %_ZL7mi_outccPPcS_.exit53.i
 
 .split.i:                                         ; preds = %bb.bm, %_ZL7mi_outccPPcS_.exit51.i
   %.10 = phi ptr [ %.11, %_ZL7mi_outccPPcS_.exit51.i ], [ %.1303, %bb.bm ]
@@ -229,27 +229,25 @@ bb.bn:                                            ; preds = %.split.i
 
 _ZL7mi_outccPPcS_.exit51.i:                       ; preds = %bb.bn, %.split.i
   %.11 = phi ptr [ %i.ev, %bb.bn ], [ %.10, %.split.i ] ; 2 uses
-  %i.ew = phi ptr [ %i.ev, %bb.bn ], [ %i.en, %.split.i ] ; 2 uses
+  %i.ew = phi ptr [ %i.ev, %bb.bn ], [ %i.en, %.split.i ] ; 5 uses
   %.not.i260 = icmp ugt i64 %i.ei, %.054.i
   br i1 %.not.i260, label %.split56.us.i, label %.split.i, !llvm.loop !327
 
-.split56.us.i:                                    ; preds = %_ZL7mi_outccPPcS_.exit51.i, %bb.bm
-  %.8 = phi ptr [ %.1303, %bb.bm ], [ %.11, %_ZL7mi_outccPPcS_.exit51.i ]
-  %4 = phi ptr [ %.1303, %bb.bm ], [ %i.ew, %_ZL7mi_outccPPcS_.exit51.i ] ; 4 uses
+.split56.us.i:                                    ; preds = %_ZL7mi_outccPPcS_.exit51.i
   %.not46.i = icmp ne i8 %.0195, 0
-  %.not.i52.i = icmp ult ptr %4, %i.e
+  %.not.i52.i = icmp ult ptr %i.ew, %i.e
   %or.cond70.i = select i1 %.not46.i, i1 %.not.i52.i, i1 false
   br i1 %or.cond70.i, label %bb.bo, label %_ZL7mi_outccPPcS_.exit53.i
 
 bb.bo:                                            ; preds = %.split56.us.i
-  store i8 %.0195, ptr %4, align 1, !tbaa !69
-  %i.ex = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
+  store i8 %.0195, ptr %i.ew, align 1, !tbaa !69
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 1 ; 2 uses
   br label %_ZL7mi_outccPPcS_.exit53.i
 
-_ZL7mi_outccPPcS_.exit53.i:                       ; preds = %bb.bo, %.split56.us.i
-  %.9310 = phi ptr [ %i.ex, %bb.bo ], [ %.8, %.split56.us.i ] ; 3 uses
-  %5 = phi ptr [ %i.ex, %bb.bo ], [ %4, %.split56.us.i ]
-  %i.ey = ptrtoint ptr %5 to i64
+_ZL7mi_outccPPcS_.exit53.i:                       ; preds = %bb.bm, %bb.bo, %.split56.us.i
+  %.9310 = phi ptr [ %i.ex, %bb.bo ], [ %.11, %.split56.us.i ], [ %.1303, %bb.bm ] ; 3 uses
+  %4 = phi ptr [ %i.ex, %bb.bo ], [ %i.ew, %.split56.us.i ], [ %.1303, %bb.bm ]
+  %i.ey = ptrtoint ptr %4 to i64
   %i.ez = ptrtoint ptr %.1303 to i64
   %i.fa = sub i64 %i.ey, %i.ez                    ; 3 uses
   %i.fb = lshr i64 %i.fa, 1                       ; 4 uses

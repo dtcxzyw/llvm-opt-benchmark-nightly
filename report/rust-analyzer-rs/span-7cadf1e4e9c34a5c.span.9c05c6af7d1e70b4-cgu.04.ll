@@ -202,7 +202,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 7 uses
   switch i64 %i.d, label %.lr.ph.i.i [
-    i64 0, label %_RINvMNtCshzWfHUSfYae_4core5sliceSTNtNtCsuAhG64lL82_9text_size4size8TextSizeNtCsdovh4xi6v3I_4span4SpanE15partition_pointNCNvMNtB1d_3mapNtB1Y_7SpanMap7span_at0EB1d_.exit
+    i64 0, label %bb.c
     i64 1, label %._crit_edge.i.i
   ]
 
@@ -227,24 +227,21 @@ bb.a:
   %.val14.i.i = load i32, ptr %i.l, align 4, !alias.scope !87, !noalias !88, !noundef !5
   %.not.i.i.i = icmp ule i32 %.val14.i.i, %2
   %i.m = zext i1 %.not.i.i.i to i64
-  %i.n = add nuw nsw i64 %.sroa.05.0.lcssa.i.i, %i.m ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.05.0.lcssa.i.i, %i.m ; 4 uses
   %i.o = icmp ule i64 %i.n, %i.d
   tail call void @llvm.assume(i1 %i.o)
-  br label %_RINvMNtCshzWfHUSfYae_4core5sliceSTNtNtCsuAhG64lL82_9text_size4size8TextSizeNtCsdovh4xi6v3I_4span4SpanE15partition_pointNCNvMNtB1d_3mapNtB1Y_7SpanMap7span_at0EB1d_.exit
-
-_RINvMNtCshzWfHUSfYae_4core5sliceSTNtNtCsuAhG64lL82_9text_size4size8TextSizeNtCsdovh4xi6v3I_4span4SpanE15partition_pointNCNvMNtB1d_3mapNtB1Y_7SpanMap7span_at0EB1d_.exit: ; preds = %bb.a, %._crit_edge.i.i
-  %.sroa.4.0.i.i = phi i64 [ %i.d, %bb.a ], [ %i.n, %._crit_edge.i.i ] ; 3 uses
-  %3 = icmp ult i64 %.sroa.4.0.i.i, %i.d
+  %3 = icmp ult i64 %i.n, %i.d
   br i1 %3, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core5sliceSTNtNtCsuAhG64lL82_9text_size4size8TextSizeNtCsdovh4xi6v3I_4span4SpanE15partition_pointNCNvMNtB1d_3mapNtB1Y_7SpanMap7span_at0EB1d_.exit
-  %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %.sroa.4.0.i.i
+bb.b:                                             ; preds = %._crit_edge.i.i
+  %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %i.n
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %0, ptr noundef nonnull align 4 dereferenceable(20) %i.q, i64 20, i1 false)
   ret void
 
-bb.c:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core5sliceSTNtNtCsuAhG64lL82_9text_size4size8TextSizeNtCsdovh4xi6v3I_4span4SpanE15partition_pointNCNvMNtB1d_3mapNtB1Y_7SpanMap7span_at0EB1d_.exit
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.4.0.i.i, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #28
+bb.c:                                             ; preds = %bb.a, %._crit_edge.i.i
+  %.sroa.4.0.i.i3 = phi i64 [ %i.n, %._crit_edge.i.i ], [ %i.d, %bb.a ]
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.4.0.i.i3, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #28
   unreachable
 }
 

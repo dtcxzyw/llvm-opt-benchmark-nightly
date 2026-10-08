@@ -204,10 +204,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN4c
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
   %i.t = add i32 %2, 1                            ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 2 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !34   ; 3 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !34   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 4 uses
   %.not447488 = icmp eq ptr %i.v, %i.w
-  br i1 %.not447488, label %._crit_edge, label %.lr.ph
+  br i1 %.not447488, label %._crit_edge497, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.x = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 6 uses
@@ -219,13 +219,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN4c
   %i.ad = getelementptr inbounds nuw i8, ptr %22, i64 18
   br label %bb.i
 
-._crit_edge.loopexit:                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit177
-  %.pre499 = load ptr, ptr %i.u, align 8, !tbaa !34
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %51 = phi ptr [ %.pre499, %._crit_edge.loopexit ], [ %i.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
-  %.not448493 = icmp eq ptr %51, %i.w
+._crit_edge:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit177
+  %.pre499 = load ptr, ptr %i.u, align 8, !tbaa !34 ; 2 uses
+  %.not448493 = icmp eq ptr %.pre499, %i.w
   br i1 %.not448493, label %._crit_edge497, label %.lr.ph496
 
 bb.f:                                             ; preds = %._crit_edge.i.i
@@ -628,7 +624,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit177: ; preds = %_ZN4cvc58internal8
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
   %i.fe = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0426.0489) #26 ; 2 uses
   %.not447 = icmp eq ptr %i.fe, %i.w
-  br i1 %.not447, label %._crit_edge.loopexit, label %bb.i
+  br i1 %.not447, label %._crit_edge, label %bb.i
 
 bb.aw:                                            ; preds = %bb.aj
   %i.ff = add nuw nsw i32 %i.dr, 1
@@ -960,12 +956,12 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
   br label %.body257
 
-._crit_edge497:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit195, %._crit_edge
+._crit_edge497:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit195, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %._crit_edge
   %i.iz = icmp ugt i32 %i.t, 1
   br i1 %i.iz, label %bb.dv, label %bb.kd
 
 .lr.ph496:                                        ; preds = %._crit_edge, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit195
-  %.sroa.0420.0494 = phi ptr [ %i.kb, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit195 ], [ %51, %._crit_edge ] ; 4 uses
+  %.sroa.0420.0494 = phi ptr [ %i.kb, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit195 ], [ %.pre499, %._crit_edge ] ; 4 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %.sroa.0420.0494, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #22
   %i.jb = load ptr, ptr %i.ja, align 8, !tbaa !26 ; 16 uses

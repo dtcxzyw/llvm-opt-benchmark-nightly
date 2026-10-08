@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
 
 _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtNtCs87CvPiUlf0m_5alloc3vec9into_iter8IntoIterNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit44.i: ; preds = %bb.al, %bb.ak
   %.sroa.0179.0.copyload = load i64, ptr %i.n, align 8, !noalias !1137 ; 4 uses
-  %.sroa.4.0.copyload = load ptr, ptr %i.by, align 8, !noalias !1137 ; 6 uses
+  %.sroa.4.0.copyload = load ptr, ptr %i.by, align 8, !noalias !1137 ; 5 uses
   %.sroa.5181.0.copyload = load i64, ptr %i.bz, align 8, !noalias !1137 ; 3 uses
   br i1 %.not.i.i40776, label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecbEECsbNMRYq9Xj9a_14rustworkx_core.exit45.i, label %bb.am
 
@@ -608,7 +608,7 @@ bb.bx:                                            ; preds = %bb.ao, %_RINvNtCslw
   %.idx = mul nuw nsw i64 %.sroa.5181.0.copyload, 24
   %i.jt = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 %.idx ; 5 uses
   %i.ju = icmp eq i64 %.sroa.5181.0.copyload, 0
-  br i1 %i.ju, label %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread, label %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.lr.ph
+  br i1 %i.ju, label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueSINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i53, label %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.lr.ph
 
 _RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.lr.ph: ; preds = %bb.bx
   %i.jv = getelementptr inbounds nuw i8, ptr %i.p, i64 32
@@ -669,7 +669,7 @@ bb.bz:                                            ; preds = %_RINvNtCslwFuT2d6EC
 
 _RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit: ; preds = %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.lr.ph, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit61
   %.sroa.5184.0364 = phi ptr [ %.sroa.4.0.copyload, %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.lr.ph ], [ %i.kr, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit61 ] ; 4 uses
-  %i.kr = getelementptr inbounds nuw i8, ptr %.sroa.5184.0364, i64 24 ; 6 uses
+  %i.kr = getelementptr inbounds nuw i8, ptr %.sroa.5184.0364, i64 24 ; 8 uses
   %.sroa.0187.0.copyload188 = load i64, ptr %.sroa.5184.0364, align 8, !noalias !1177 ; 5 uses
   %.sroa.7189.0..sroa.5184.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5184.0364, i64 8
   %.sroa.7189.sroa.0.0.copyload = load ptr, ptr %.sroa.7189.0..sroa.5184.8..sroa_idx, align 8, !noalias !1177 ; 6 uses
@@ -685,19 +685,18 @@ bb.ca:                                            ; preds = %_RNvXs4_NtNtCs87CvP
   %i.kt = icmp eq i64 %.sroa.7189.sroa.5.0.copyload, 0
   br i1 %i.kt, label %.thread, label %.lr.ph
 
-_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread: ; preds = %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit, %bb.bx
-  %.sroa.5184.1214 = phi ptr [ %.sroa.4.0.copyload, %bb.bx ], [ %i.kr, %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit ] ; 3 uses
+_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread: ; preds = %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit
   %i.ku = ptrtoint ptr %i.jt to i64
-  %i.kv = ptrtoint ptr %.sroa.5184.1214 to i64
+  %i.kv = ptrtoint ptr %i.kr to i64
   %i.kw = sub nuw i64 %i.ku, %i.kv
   %i.kx = udiv exact i64 %i.kw, 24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1178)
-  %i.ky = icmp eq ptr %i.jt, %.sroa.5184.1214
+  %i.ky = icmp eq ptr %i.jt, %i.kr
   br i1 %i.ky, label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueSINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i53, label %.lr.ph.i.i.i48
 
 .lr.ph.i.i.i48:                                   ; preds = %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i.i52
   %.sroa.0.011.i.i.i49 = phi i64 [ %i.la, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i.i52 ], [ 0, %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread ] ; 2 uses
-  %i.kz = getelementptr inbounds nuw [24 x i8], ptr %.sroa.5184.1214, i64 %.sroa.0.011.i.i.i49 ; 2 uses
+  %i.kz = getelementptr inbounds nuw [24 x i8], ptr %i.kr, i64 %.sroa.0.011.i.i.i49 ; 2 uses
   %i.la = add nuw nsw i64 %.sroa.0.011.i.i.i49, 1 ; 2 uses
   %.val8.i.i.i50 = load i64, ptr %i.kz, align 8, !alias.scope !1178, !noalias !1179 ; 2 uses
   %i.lb = icmp eq i64 %.val8.i.i.i50, 0
@@ -714,7 +713,7 @@ _RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs6
   %i.le = icmp eq i64 %i.la, %i.kx
   br i1 %i.le, label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueSINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i53, label %.lr.ph.i.i.i48
 
-_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueSINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i53: ; preds = %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit61, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i.i52, %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread
+_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueSINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i53: ; preds = %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit61, %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtCs87CvPiUlf0m_5alloc3vec3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEECsbNMRYq9Xj9a_14rustworkx_core.exit.i.i.i52, %bb.bx, %_RNvXs4_NtNtCs87CvPiUlf0m_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEENtNtNtNtCslwFuT2d6ECx_4core4iter6traits8iterator8Iterator4nextCsbNMRYq9Xj9a_14rustworkx_core.exit.thread
   %i.lf = icmp eq i64 %.sroa.0179.0.copyload, 0
   br i1 %i.lf, label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtNtCs87CvPiUlf0m_5alloc3vec9into_iter8IntoIterINtBG_3VecNtNtCs68Jln09rRqb_8petgraph10graph_impl9EdgeIndexEEECsbNMRYq9Xj9a_14rustworkx_core.exit54, label %bb.cc
 

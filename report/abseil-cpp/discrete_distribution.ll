@@ -16,9 +16,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4absl12lts_2026052615random_internal24InitDiscreteDistributionEPSt6vectorIdSaIdEE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::vector") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !19     ; 9 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !19     ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 7 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 6 uses
   %.not5.i = icmp eq ptr %i.a, %i.c
   br i1 %.not5.i, label %.loopexit169, label %.lr.ph.i
 
@@ -102,7 +102,7 @@ bb.b:                                             ; preds = %.loopexit169
 bb.c:                                             ; preds = %.loopexit169
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %.not343 = icmp eq ptr %i.c, %i.a
-  br i1 %.not343, label %_ZNSt6vectorISt4pairIdmESaIS1_EE7reserveEm.exit, label %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i
+  br i1 %.not343, label %_ZNSt6vectorImSaImEED2Ev.exit71, label %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseISt4pairIdmESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.ad = shl nuw nsw i64 %i.z, 1
@@ -115,17 +115,12 @@ _ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !28
   %i.ag = getelementptr inbounds nuw [16 x i8], ptr %i.ae, i64 %i.aa
   store ptr %i.ag, ptr %i.ac, align 8, !tbaa !29
-  %.pre = load ptr, ptr %1, align 8, !tbaa !19
-  %.pre324 = load ptr, ptr %i.b, align 8, !tbaa !19
-  br label %_ZNSt6vectorISt4pairIdmESaIS1_EE7reserveEm.exit
-
-_ZNSt6vectorISt4pairIdmESaIS1_EE7reserveEm.exit:  ; preds = %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i, %bb.c
-  %2 = phi ptr [ %.pre324, %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.c, %bb.c ] ; 2 uses
-  %3 = phi ptr [ %.pre, %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ %i.a, %bb.c ] ; 2 uses
-  %.not149247 = icmp eq ptr %3, %2
+  %.pre = load ptr, ptr %1, align 8, !tbaa !19    ; 2 uses
+  %.pre324 = load ptr, ptr %i.b, align 8, !tbaa !19 ; 2 uses
+  %.not149247 = icmp eq ptr %.pre, %.pre324
   br i1 %.not149247, label %_ZNSt6vectorImSaImEED2Ev.exit71, label %.lr.ph256
 
-.lr.ph256:                                        ; preds = %_ZNSt6vectorISt4pairIdmESaIS1_EE7reserveEm.exit
+.lr.ph256:                                        ; preds = %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i
   %i.ah = uitofp nneg i64 %i.aa to double
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br label %bb.e
@@ -149,7 +144,7 @@ bb.e:                                             ; preds = %.lr.ph256, %_ZNSt6v
   %.sroa.0111.0251 = phi ptr [ null, %.lr.ph256 ], [ %.sroa.0111.1, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 13 uses
   %.sroa.12.0250 = phi ptr [ null, %.lr.ph256 ], [ %.sroa.12.1, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 8 uses
   %.sroa.23.0249 = phi ptr [ null, %.lr.ph256 ], [ %.sroa.23.1, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 8 uses
-  %.sroa.0108.0248 = phi ptr [ %3, %.lr.ph256 ], [ %i.cr, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 2 uses
+  %.sroa.0108.0248 = phi ptr [ %.pre, %.lr.ph256 ], [ %i.cr, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 2 uses
   %i.am = load double, ptr %.sroa.0108.0248, align 8, !tbaa !21
   %i.an = fmul double %i.am, %i.ah                ; 3 uses
   %i.ao = load ptr, ptr %i.ai, align 8, !tbaa !28 ; 7 uses
@@ -388,7 +383,7 @@ _ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %bb.q, %_ZNSt6vector
   %.sroa.0127.1 = phi ptr [ %.sroa.0127.0254, %bb.k ], [ %.sroa.0127.0254, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.cm, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i50 ], [ %.sroa.0127.0254, %bb.q ] ; 4 uses
   %.1 = add i64 %.0255, 1
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0108.0248, i64 8 ; 2 uses
-  %.not149 = icmp eq ptr %i.cr, %2
+  %.not149 = icmp eq ptr %i.cr, %.pre324
   br i1 %.not149, label %.preheader152, label %bb.e
 
 .critedge.preheader:                              ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit, %.preheader152
@@ -601,7 +596,7 @@ bb.ag:                                            ; preds = %_ZNSt6vectorImSaImE
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0127.2.lcssa, i64 noundef %i.ew) #10
   br label %_ZNSt6vectorImSaImEED2Ev.exit71
 
-_ZNSt6vectorImSaImEED2Ev.exit71:                  ; preds = %_ZNSt6vectorISt4pairIdmESaIS1_EE7reserveEm.exit, %_ZNSt6vectorImSaImEED2Ev.exit, %bb.ag
+_ZNSt6vectorImSaImEED2Ev.exit71:                  ; preds = %bb.c, %_ZNSt12_Vector_baseISt4pairIdmESaIS1_EE13_M_deallocateEPS1_m.exit.i, %_ZNSt6vectorImSaImEED2Ev.exit, %bb.ag
   ret void
 
 bb.ah:                                            ; preds = %.lr.ph281, %bb.ah

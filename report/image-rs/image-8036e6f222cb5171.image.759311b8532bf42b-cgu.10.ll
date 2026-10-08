@@ -205,7 +205,7 @@ define hidden void @_RNvMs1_NtCsch97uQowpgv_3fax7decoderINtB5_13Group4DecoderINt
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
-  %i.c = alloca [24 x i8], align 8                ; 12 uses
+  %i.c = alloca [24 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !5, !noundef !5
@@ -301,19 +301,19 @@ bb.j:                                             ; preds = %bb.b
 
 .preheader.i92:                                   ; preds = %bb.j
   %i.al = load i64, ptr %i.h, align 8, !alias.scope !630, !noundef !5 ; 3 uses
-  %.promoted.i = load i64, ptr %i.i, align 8, !alias.scope !630 ; 3 uses
+  %.promoted.i = load i64, ptr %i.i, align 8, !alias.scope !630 ; 2 uses
   %i.am = icmp ult i64 %.promoted.i, %i.al
-  br i1 %i.am, label %.lr.ph.i, label %.loopexit.i
+  br i1 %i.am, label %.lr.ph.i, label %_RNvMs3_Csch97uQowpgv_3faxNtB5_11Transitions10next_color.exit.thread
 
 .lr.ph.i:                                         ; preds = %.preheader.i92
-  %i.an = load ptr, ptr %i.c, align 8, !alias.scope !630, !nonnull !5, !align !25, !noundef !5
+  %i.an = load ptr, ptr %i.c, align 8, !alias.scope !630, !nonnull !5, !align !25, !noundef !5 ; 2 uses
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   br i1 %i.ak, label %bb.r, label %bb.q
 
-.loopexit.i:                                      ; preds = %bb.o, %bb.m, %.preheader.i92
-  %2 = phi i64 [ %i.ap, %bb.m ], [ %.promoted.i, %.preheader.i92 ], [ %i.av, %bb.o ] ; 3 uses
+.loopexit.i:                                      ; preds = %bb.o, %bb.m
+  %2 = phi i64 [ %i.ap, %bb.m ], [ %i.av, %bb.o ] ; 3 uses
   %i.ao = icmp ult i64 %2, %i.al
   br i1 %i.ao, label %bb.p, label %_RNvMs3_Csch97uQowpgv_3faxNtB5_11Transitions10next_color.exit.thread
 
@@ -341,8 +341,7 @@ bb.o:                                             ; preds = %bb.m
   br label %.loopexit.i
 
 bb.p:                                             ; preds = %.loopexit.i
-  %3 = load ptr, ptr %i.c, align 8, !alias.scope !630, !nonnull !5, !align !25, !noundef !5
-  %i.aw = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %2
+  %i.aw = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %2
   %i.ax = load i16, ptr %i.aw, align 2, !noalias !630, !noundef !5
   %i.ay = add nuw i64 %2, 1
   store i64 %i.ay, ptr %i.i, align 8, !alias.scope !630
@@ -371,7 +370,7 @@ bb.t:                                             ; preds = %bb.r
   %i.bg = load i16, ptr %i.bf, align 2, !noalias !630, !noundef !5
   br label %bb.u
 
-_RNvMs3_Csch97uQowpgv_3faxNtB5_11Transitions10next_color.exit.thread: ; preds = %bb.n, %bb.q, %.loopexit.i, %bb.r
+_RNvMs3_Csch97uQowpgv_3faxNtB5_11Transitions10next_color.exit.thread: ; preds = %bb.n, %bb.q, %.loopexit.i, %bb.r, %.preheader.i92
   %i.bh = load i16, ptr %i.n, align 8, !noundef !5 ; 2 uses
   br label %bb.v
 
@@ -404,18 +403,13 @@ bb.x:                                             ; preds = %bb.b
 bb.y:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !631)
   %i.bt = load i64, ptr %i.h, align 8, !alias.scope !631, !noundef !5 ; 4 uses
-  %.promoted.i94 = load i64, ptr %i.i, align 8, !alias.scope !631 ; 3 uses
+  %.promoted.i94 = load i64, ptr %i.i, align 8, !alias.scope !631 ; 2 uses
   %i.bu = icmp ult i64 %.promoted.i94, %i.bt
-  br i1 %i.bu, label %.lr.ph.i98, label %.loopexit.i95
+  br i1 %i.bu, label %.lr.ph.i98, label %.loopexit
 
 .lr.ph.i98:                                       ; preds = %bb.y
   %i.bv = load ptr, ptr %i.c, align 8, !alias.scope !631, !nonnull !5, !align !25, !noundef !5
   br label %bb.z
-
-.loopexit.i95:                                    ; preds = %bb.aa, %bb.y
-  %4 = phi i64 [ %spec.select, %bb.aa ], [ %.promoted.i94, %bb.y ] ; 2 uses
-  %5 = icmp ult i64 %4, %i.bt
-  br i1 %5, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit, label %.loopexit
 
 bb.z:                                             ; preds = %bb.ab, %.lr.ph.i98
   %i.bw = phi i64 [ %.promoted.i94, %.lr.ph.i98 ], [ %i.cc, %bb.ab ] ; 4 uses
@@ -429,8 +423,9 @@ bb.aa:                                            ; preds = %bb.z
   %i.ca = xor i1 %i.u, %i.bz
   %not. = xor i1 %i.ca, true
   %i.cb = zext i1 %not. to i64
-  %spec.select = add nuw i64 %i.bw, %i.cb
-  br label %.loopexit.i95
+  %spec.select = add nuw i64 %i.bw, %i.cb         ; 2 uses
+  %3 = icmp ult i64 %spec.select, %i.bt
+  br i1 %3, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit, label %.loopexit
 
 bb.ab:                                            ; preds = %bb.z
   %i.cc = add i64 %i.bw, 1                        ; 3 uses
@@ -443,9 +438,9 @@ bb.ac:                                            ; preds = %bb.d
   %.pre180 = load i64, ptr %i.h, align 8
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit: ; preds = %.loopexit.i95, %bb.ac
-  %i.ce = phi i64 [ %.pre180, %bb.ac ], [ %i.bt, %.loopexit.i95 ]
-  %storemerge.in = phi i64 [ %i.cd, %bb.ac ], [ %4, %.loopexit.i95 ] ; 2 uses
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit: ; preds = %bb.aa, %bb.ac
+  %i.ce = phi i64 [ %.pre180, %bb.ac ], [ %i.bt, %bb.aa ]
+  %storemerge.in = phi i64 [ %i.cd, %bb.ac ], [ %spec.select, %bb.aa ] ; 2 uses
   %storemerge = add i64 %storemerge.in, 1         ; 3 uses
   store i64 %storemerge, ptr %i.i, align 8
   %i.cf = icmp ult i64 %storemerge, %i.ce
@@ -610,8 +605,8 @@ bb.aw:                                            ; preds = %bb.av
   call void @_RNvMs3_Csch97uQowpgv_3faxNtB5_11Transitions9seek_back(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, i16 noundef %i.du)
   br label %bb.ae
 
-.loopexit:                                        ; preds = %.loopexit.i95, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit116, %bb.aj, %bb.b, %bb.h, %.preheader7.i, %bb.f, %.preheader.i, %bb.af, %.preheader.i111, %bb.ah, %.preheader7.i105, %bb.ab, %bb.x, %bb.w, %bb.ax, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa5QsYiPB8Gl_5image.exit.i119, %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingINtNtCs4wP2HXfJTCR_5alloc3vec3VectEECsa5QsYiPB8Gl_5image.exit
-  %.sink211 = phi i64 [ -1, %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingINtNtCs4wP2HXfJTCR_5alloc3vec3VectEECsa5QsYiPB8Gl_5image.exit ], [ 1, %bb.af ], [ 1, %bb.w ], [ 2, %bb.ax ], [ 1, %bb.h ], [ 1, %bb.ab ], [ 1, %bb.ah ], [ 2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa5QsYiPB8Gl_5image.exit.i119 ], [ -1, %bb.x ], [ 1, %bb.f ], [ 1, %.preheader7.i105 ], [ 1, %.preheader.i111 ], [ 1, %.preheader.i ], [ 1, %.preheader7.i ], [ 1, %bb.b ], [ 1, %bb.aj ], [ 1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit116 ], [ 1, %.loopexit.i95 ]
+.loopexit:                                        ; preds = %bb.y, %bb.aa, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit116, %bb.aj, %bb.b, %bb.h, %.preheader7.i, %bb.f, %.preheader.i, %bb.af, %.preheader.i111, %bb.ah, %.preheader7.i105, %bb.ab, %bb.x, %bb.w, %bb.ax, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa5QsYiPB8Gl_5image.exit.i119, %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingINtNtCs4wP2HXfJTCR_5alloc3vec3VectEECsa5QsYiPB8Gl_5image.exit
+  %.sink211 = phi i64 [ -1, %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingINtNtCs4wP2HXfJTCR_5alloc3vec3VectEECsa5QsYiPB8Gl_5image.exit ], [ 1, %bb.h ], [ 1, %bb.w ], [ 2, %bb.ax ], [ 1, %bb.ab ], [ 1, %bb.ah ], [ 1, %bb.af ], [ 2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsa5QsYiPB8Gl_5image.exit.i119 ], [ -1, %bb.x ], [ 1, %bb.f ], [ 1, %.preheader7.i105 ], [ 1, %.preheader.i111 ], [ 1, %.preheader.i ], [ 1, %.preheader7.i ], [ 1, %bb.b ], [ 1, %bb.aj ], [ 1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsch97uQowpgv_3fax7decoder11DecodeErrorNtNtNtB4_2io5error5ErrorEECsa5QsYiPB8Gl_5image.exit116 ], [ 1, %bb.aa ], [ 1, %bb.y ]
   store i64 %.sink211, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   ret void

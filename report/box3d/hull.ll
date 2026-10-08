@@ -205,7 +205,7 @@ bb.a:
   store ptr %i.ar, ptr %i.ar, align 8, !tbaa !27
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 3 uses
   store ptr %i.ar, ptr %i.as, align 8, !tbaa !28
-  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 22 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 21 uses
   store ptr %i.at, ptr %i.at, align 8, !tbaa !27
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 6 uses
   store ptr %i.at, ptr %i.au, align 8, !tbaa !28
@@ -608,9 +608,9 @@ bb.aa:                                            ; preds = %bb.aa, %.new
 b3HullBuilder_BuildInitialHull.exit.i:            ; preds = %._crit_edge.thread.i.i
   %i.ou = add nsw i32 %i.i, -4
   %i.ov = call i32 @llvm.umin.i32(i32 %i.ou, i32 252)
-  %.018.i.i = load ptr, ptr %i.au, align 8, !tbaa !28 ; 4 uses
+  %.018.i.i = load ptr, ptr %i.au, align 8, !tbaa !28 ; 3 uses
   %.not19.i.i = icmp eq ptr %.018.i.i, %i.at
-  br i1 %.not19.i.i, label %._crit_edge.i, label %.lr.ph.preheader.i.i
+  br i1 %.not19.i.i, label %._crit_edge.i83.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %b3HullBuilder_BuildInitialHull.exit.i
   %i.ow = load float, ptr %i.di, align 8, !tbaa !44
@@ -646,7 +646,11 @@ b3HullBuilder_NextConflictVertex.exit.i:          ; preds = %bb.ad
   %i.pd = icmp ne ptr %.114.i.i, null
   %i.pe = icmp sgt i32 %2, 4
   %i.pf = and i1 %i.pe, %i.pd
-  br i1 %i.pf, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.pf, label %.lr.ph.i, label %.lr.ph.i80.i.preheader
+
+.lr.ph.i80.i.preheader:                           ; preds = %b3HullBuilder_NextConflictVertex.exit79.i, %b3HullBuilder_NextConflictVertex.exit.i
+  %.06996.i.i.ph = phi ptr [ %.018.i.i, %b3HullBuilder_NextConflictVertex.exit.i ], [ %.018.i65.i, %b3HullBuilder_NextConflictVertex.exit79.i ]
+  br label %.lr.ph.i80.i
 
 .lr.ph.i:                                         ; preds = %b3HullBuilder_NextConflictVertex.exit.i
   %i.pg = getelementptr inbounds nuw i8, ptr %3, i64 324 ; 5 uses
@@ -1049,9 +1053,9 @@ bb.bt:                                            ; preds = %.epil.preheader638
   br label %b3HullBuilder_AddVertexToHull.exit.i
 
 b3HullBuilder_AddVertexToHull.exit.i:             ; preds = %b3HullBuilder_AddVertexToHull.exit.i.loopexit.unr-lcssa, %bb.bt, %.epil.preheader638, %.preheader.i40.i.i
-  %.018.i65.i = load ptr, ptr %i.au, align 8, !tbaa !28 ; 4 uses
+  %.018.i65.i = load ptr, ptr %i.au, align 8, !tbaa !28 ; 3 uses
   %.not19.i66.i = icmp eq ptr %.018.i65.i, %i.at
-  br i1 %.not19.i66.i, label %._crit_edge.i, label %.lr.ph.preheader.i67.i
+  br i1 %.not19.i66.i, label %._crit_edge.i83.i, label %.lr.ph.preheader.i67.i
 
 .lr.ph.preheader.i67.i:                           ; preds = %b3HullBuilder_AddVertexToHull.exit.i
   %i.afx = load float, ptr %i.di, align 8, !tbaa !44
@@ -1088,24 +1092,19 @@ b3HullBuilder_NextConflictVertex.exit79.i:        ; preds = %bb.bw
   %i.agf = icmp ne ptr %.114.i73.i, null
   %i.agg = icmp ne i32 %i.age, 0
   %i.agh = select i1 %i.agf, i1 %i.agg, i1 false
-  br i1 %i.agh, label %bb.ae, label %._crit_edge.i, !llvm.loop !160
+  br i1 %i.agh, label %bb.ae, label %.lr.ph.i80.i.preheader, !llvm.loop !160
 
-._crit_edge.i:                                    ; preds = %b3HullBuilder_NextConflictVertex.exit79.i, %b3HullBuilder_AddVertexToHull.exit.i, %b3HullBuilder_NextConflictVertex.exit.i, %b3HullBuilder_BuildInitialHull.exit.i
-  %.06992.i.i = phi ptr [ %.018.i.i, %b3HullBuilder_BuildInitialHull.exit.i ], [ %.018.i.i, %b3HullBuilder_NextConflictVertex.exit.i ], [ %.018.i65.i, %b3HullBuilder_AddVertexToHull.exit.i ], [ %.018.i65.i, %b3HullBuilder_NextConflictVertex.exit79.i ] ; 2 uses
-  %.not93.i.i = icmp eq ptr %.06992.i.i, %i.at
-  br i1 %.not93.i.i, label %._crit_edge.i83.i, label %.lr.ph.i80.i
-
-._crit_edge.i83.i:                                ; preds = %bb.by, %._crit_edge.i
-  %4 = phi i32 [ 0, %._crit_edge.i ], [ %i.agq, %bb.by ] ; 4 uses
-  %5 = phi i32 [ 0, %._crit_edge.i ], [ %i.ahb, %bb.by ] ; 5 uses
+._crit_edge.i83.i:                                ; preds = %b3HullBuilder_AddVertexToHull.exit.i, %bb.by, %b3HullBuilder_BuildInitialHull.exit.i
+  %4 = phi i32 [ %i.agq, %bb.by ], [ 0, %b3HullBuilder_BuildInitialHull.exit.i ], [ 0, %b3HullBuilder_AddVertexToHull.exit.i ] ; 4 uses
+  %5 = phi i32 [ %i.ahb, %bb.by ], [ 0, %b3HullBuilder_BuildInitialHull.exit.i ], [ 0, %b3HullBuilder_AddVertexToHull.exit.i ] ; 5 uses
   %i.agi = load ptr, ptr %i.as, align 8, !tbaa !207 ; 2 uses
   %.not7498.i.i = icmp eq ptr %i.agi, %i.ar
   br i1 %.not7498.i.i, label %b3HullBuilder_Construct.exit, label %.lr.ph102.i.i
 
-.lr.ph.i80.i:                                     ; preds = %._crit_edge.i, %bb.by
-  %.06996.i.i = phi ptr [ %.069.i.i, %bb.by ], [ %.06992.i.i, %._crit_edge.i ] ; 7 uses
-  %.095.i.i = phi i32 [ %i.ahb, %bb.by ], [ 0, %._crit_edge.i ]
-  %.06894.i.i = phi i32 [ %i.agq, %bb.by ], [ 0, %._crit_edge.i ]
+.lr.ph.i80.i:                                     ; preds = %.lr.ph.i80.i.preheader, %bb.by
+  %.06996.i.i = phi ptr [ %.069.i.i, %bb.by ], [ %.06996.i.i.ph, %.lr.ph.i80.i.preheader ] ; 7 uses
+  %.095.i.i = phi i32 [ %i.ahb, %bb.by ], [ 0, %.lr.ph.i80.i.preheader ]
+  %.06894.i.i = phi i32 [ %i.agq, %bb.by ], [ 0, %.lr.ph.i80.i.preheader ]
   %i.agj = getelementptr inbounds nuw i8, ptr %.06996.i.i, i64 16
   %i.agk = load ptr, ptr %i.agj, align 8, !tbaa !52 ; 2 uses
   br label %bb.bx

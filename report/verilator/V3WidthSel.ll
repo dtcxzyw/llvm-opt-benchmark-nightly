@@ -202,7 +202,7 @@ bb.eg:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.eh:                                            ; preds = %bb.eg
   %i.qu = getelementptr inbounds nuw i8, ptr %i.oh, i64 64 ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.qu, align 8, !tbaa !93 ; 2 uses
-  switch i16 %.sroa.0.0.copyload.i.i.i, label %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420 [
+  switch i16 %.sroa.0.0.copyload.i.i.i, label %_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit [
     i16 99, label %_ZN7AstNode4castI19AstUnpackArrayDType12AstNodeDTypeEEPT_PT0_.exit
     i16 98, label %_ZN7AstNode4castI17AstPackArrayDType12AstNodeDTypeEEPT_PT0_.exit
     i16 73, label %_ZN7AstNode4castI18AstAssocArrayDType12AstNodeDTypeEEPT_PT0_.exit
@@ -605,11 +605,7 @@ bb.qu:                                            ; preds = %bb.qt, %bb.pz, %bb.
 
 bb.qv:                                            ; preds = %bb.eh
   %i.bht = call noundef zeroext i1 @_ZNK7AstNode8isStringEv(ptr noundef nonnull align 8 dereferenceable(152) %i.oh)
-  br i1 %i.bht, label %.preheader, label %._ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420_crit_edge
-
-._ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420_crit_edge: ; preds = %bb.qv
-  %.sroa.0.0.copyload.i.i.i1419.pre = load i16, ptr %i.qu, align 8, !tbaa !93
-  br label %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420
+  br i1 %i.bht, label %.preheader, label %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420
 
 .preheader:                                       ; preds = %bb.qv
   %.not.i13791700 = icmp eq ptr %i.hw, null
@@ -882,9 +878,9 @@ bb.rq:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %134) #21
   br label %bb.xk
 
-_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420: ; preds = %bb.eh, %._ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420_crit_edge
-  %.sroa.0.0.copyload.i.i.i1530 = phi i16 [ %.sroa.0.0.copyload.i.i.i1419.pre, %._ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420_crit_edge ], [ %.sroa.0.0.copyload.i.i.i, %bb.eh ] ; 2 uses
-  %i.bkr = icmp eq i16 %.sroa.0.0.copyload.i.i.i1530, 74
+_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420: ; preds = %bb.qv
+  %.sroa.0.0.copyload.i.i.i1419.pre = load i16, ptr %i.qu, align 8, !tbaa !93 ; 2 uses
+  %i.bkr = icmp eq i16 %.sroa.0.0.copyload.i.i.i1419.pre, 74
   br i1 %i.bkr, label %bb.rr, label %_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit
 
 bb.rr:                                            ; preds = %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420
@@ -1287,8 +1283,9 @@ bb.ui:                                            ; preds = %bb.uh, %bb.tn, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %144) #21
   br label %bb.xk
 
-_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit: ; preds = %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420
-  %i.btp = and i16 %.sroa.0.0.copyload.i.i.i1530, -2
+_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit: ; preds = %bb.eh, %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420
+  %.sroa.0.0.copyload.i.i.i15302245 = phi i16 [ %.sroa.0.0.copyload.i.i.i1419.pre, %_ZN7AstNode2isI13AstBasicDType12AstNodeDTypeEEbPKT0_.exit1420 ], [ %.sroa.0.0.copyload.i.i.i, %bb.eh ]
+  %i.btp = and i16 %.sroa.0.0.copyload.i.i.i15302245, -2
   %spec.select.i.i1531 = icmp eq i16 %i.btp, 100
   br i1 %spec.select.i.i1531, label %bb.uj, label %_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit.thread
 

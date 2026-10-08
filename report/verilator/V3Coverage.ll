@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 _ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit: ; preds = %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE12emplace_backIJRKS5_EEERS5_DpOT_.exit.i.i
   %.pre = load ptr, ptr %4, align 8, !tbaa !101   ; 4 uses
   %i.k = icmp eq ptr %.pre, %4
-  br i1 %i.k, label %5, label %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit
+  br i1 %i.k, label %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit, label %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit
 
 _ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit: ; preds = %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit
   call void @_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %.pre, ptr noundef nonnull align 8 dereferenceable(24) %4) #23
@@ -214,17 +214,12 @@ _ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6splice
   %i.o = add i64 %i.n, %i.l
   store i64 %i.o, ptr %i.m, align 8, !tbaa !227
   store i64 0, ptr %i.b, align 8, !tbaa !227
-  %.pre12 = load ptr, ptr %4, align 8, !tbaa !101
-  br label %5
-
-5:                                                ; preds = %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit
-  %6 = phi ptr [ %.pre12, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit ], [ %.pre, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit ] ; 2 uses
-  %.sroa.06.0 = phi ptr [ %.pre, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit ], [ %1, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %6, %4
+  %.pre12 = load ptr, ptr %4, align 8, !tbaa !101 ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre12, %4
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit, label %.lr.ph.i.i7
 
-.lr.ph.i.i7:                                      ; preds = %5, %.lr.ph.i.i7
-  %.09.i.i = phi ptr [ %i.p, %.lr.ph.i.i7 ], [ %6, %5 ] ; 3 uses
+.lr.ph.i.i7:                                      ; preds = %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit, %.lr.ph.i.i7
+  %.09.i.i = phi ptr [ %i.p, %.lr.ph.i.i7 ], [ %.pre12, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit ] ; 3 uses
   %i.p = load ptr, ptr %.09.i.i, align 8, !tbaa !101 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 16
   call void @_ZNSt5dequeIN15CoverageVisitor9CoverTermESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %i.q) #23
@@ -232,8 +227,8 @@ _ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6splice
   %.not.i.i8 = icmp eq ptr %i.p, %4
   br i1 %.not.i.i8, label %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit, label %.lr.ph.i.i7, !llvm.loop !2
 
-_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit: ; preds = %.lr.ph.i.i7, %bb.a, %5
-  %.sroa.06.021 = phi ptr [ %1, %bb.a ], [ %.sroa.06.0, %5 ], [ %.sroa.06.0, %.lr.ph.i.i7 ]
+_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit: ; preds = %.lr.ph.i.i7, %bb.a, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit
+  %.sroa.06.021 = phi ptr [ %1, %bb.a ], [ %.pre, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EE6spliceESt20_List_const_iteratorIS5_ERS7_.exit ], [ %1, %_ZNSt7__cxx114listISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EEC2ISt20_List_const_iteratorIS5_EvEET_SB_RKS6_.exit ], [ %.pre, %.lr.ph.i.i7 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   ret ptr %.sroa.06.021
 }

@@ -202,15 +202,15 @@ bb.a:
   %i.l = alloca [32 x i8], align 8                ; 5 uses
   %i.m = alloca [32 x i8], align 8                ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.o = load i64, ptr %i.n, align 8, !noundef !6 ; 7 uses
+  %i.o = load i64, ptr %i.n, align 8, !noundef !6 ; 9 uses
   %i.p = icmp ult i64 %i.o, 288230376151711744
   tail call void @llvm.assume(i1 %i.p)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.r = load ptr, ptr %i.q, align 8, !nonnull !6, !noundef !6 ; 12 uses
+  %i.r = load ptr, ptr %i.q, align 8, !nonnull !6, !noundef !6 ; 16 uses
   %i.s = load i64, ptr %1, align 8, !range !9, !noundef !6
   %.idx = shl nuw nsw i64 %i.o, 5
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx
   store ptr %i.r, ptr %i.m, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 8 uses
   store ptr %i.r, ptr %.sroa.4.0..sroa_idx, align 8
@@ -296,7 +296,7 @@ bb.f:                                             ; preds = %.noexc7
   br i1 %i.af, label %.invoke, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i: ; preds = %bb.f
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 96 ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 96 ; 2 uses
   store ptr %i.ag, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1121, !noalias !1122
   %.sroa.0.0.copyload2.i.i.i62.i = load i8, ptr %i.y, align 8, !noalias !1123 ; 2 uses
   %.not.i.i.i63.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i62.i, -1
@@ -333,10 +333,10 @@ bb.i:                                             ; preds = %.noexc9
   call void @llvm.experimental.noalias.scope.decl(metadata !1126)
   call void @llvm.experimental.noalias.scope.decl(metadata !1127)
   %i.an = icmp eq i64 %i.o, 3
-  br i1 %i.an, label %bb.m, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i
+  br i1 %i.an, label %.invoke, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i: ; preds = %bb.i
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.r, i64 128 ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.r, i64 128 ; 2 uses
   store ptr %i.ao, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1128, !noalias !1129
   %.sroa.0.0.copyload2.i.i.i69.i = load i8, ptr %i.ag, align 8, !noalias !1130 ; 2 uses
   %.not.i.i.i70.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i69.i, -1
@@ -371,24 +371,23 @@ bb.l:                                             ; preds = %.noexc11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1131
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i, %bb.i
-  %2 = phi ptr [ %i.ao, %bb.l ], [ %i.ao, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i ], [ %i.ag, %bb.i ] ; 6 uses
-  %3 = phi i8 [ %i.au, %bb.l ], [ 2, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i ], [ 2, %bb.i ]
+bb.m:                                             ; preds = %bb.l, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i
+  %2 = phi i8 [ %i.au, %bb.l ], [ 2, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i68.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !1132)
   call void @llvm.experimental.noalias.scope.decl(metadata !1133)
   call void @llvm.experimental.noalias.scope.decl(metadata !1134)
-  %i.av = icmp eq ptr %2, %i.t
+  %i.av = icmp eq i64 %i.o, 4
   br i1 %i.av, label %.invoke, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i: ; preds = %bb.m
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.r, i64 160 ; 2 uses
   store ptr %i.aw, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1135, !noalias !1136
-  %.sroa.0.0.copyload2.i.i.i76.i = load i8, ptr %2, align 8, !noalias !1137 ; 2 uses
+  %.sroa.0.0.copyload2.i.i.i76.i = load i8, ptr %i.ao, align 8, !noalias !1137 ; 2 uses
   %.not.i.i.i77.i = icmp eq i8 %.sroa.0.0.copyload2.i.i.i76.i, -1
   br i1 %.not.i.i.i77.i, label %.invoke, label %bb.n
 
 bb.n:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i
-  %.sroa.7.0..sroa_idx3.i.i.i78.i = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %.sroa.7.0..sroa_idx3.i.i.i78.i = getelementptr inbounds nuw i8, ptr %i.r, i64 129
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1138
   store i8 %.sroa.0.0.copyload2.i.i.i76.i, ptr %i.d, align 8, !noalias !1138
   %.sroa.7.0..sroa_idx.i.i.i79.i = getelementptr inbounds nuw i8, ptr %i.d, i64 1
@@ -417,18 +416,18 @@ bb.p:                                             ; preds = %.noexc13
   call void @llvm.experimental.noalias.scope.decl(metadata !1139)
   call void @llvm.experimental.noalias.scope.decl(metadata !1140)
   call void @llvm.experimental.noalias.scope.decl(metadata !1141)
-  %i.bd = icmp eq ptr %i.aw, %i.t
+  %i.bd = icmp eq i64 %i.o, 5
   br i1 %i.bd, label %.invoke, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i: ; preds = %bb.p
-  %i.be = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.be = getelementptr inbounds nuw i8, ptr %i.r, i64 192
   store ptr %i.be, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1142, !noalias !1143
   %.sroa.0.0.copyload4.i.i.i.i = load i8, ptr %i.aw, align 8, !noalias !1144 ; 2 uses
   %.not.i.i.i84.i = icmp eq i8 %.sroa.0.0.copyload4.i.i.i.i, -1
   br i1 %.not.i.i.i84.i, label %.invoke, label %bb.q
 
 bb.q:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i
-  %.sroa.7.0..sroa_idx5.i.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 33
+  %.sroa.7.0..sroa_idx5.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 161
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1145
   store i8 %.sroa.0.0.copyload4.i.i.i.i, ptr %i.b, align 8, !noalias !1145
   %.sroa.7.0..sroa_idx.i.i.i85.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -449,9 +448,9 @@ bb.r:                                             ; preds = %.noexc14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1145
   br label %_RINvXs0_NvXNvNvXs_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers9metaspaceNtBg_9MetaspaceNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializes_1__NtBb_15MetaspaceHelperB1p_11deserializeNtB6_9___VisitorNtB1r_7Visitor9visit_seqQNtNtNtCs5PtHgSLqj5O_10serde_json5value2de15SeqDeserializerEBk_.exit.thread
 
-.invoke:                                          ; preds = %bb.p, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i, %bb.m, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i, %bb.f, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i, %bb.c, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i56.i, %bb.a, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i
-  %4 = phi i64 [ 4, %bb.m ], [ 2, %bb.f ], [ 1, %bb.c ], [ 0, %bb.a ], [ 0, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i ], [ 1, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i56.i ], [ 2, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i ], [ 4, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i ], [ 5, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i ], [ 5, %bb.p ]
-  %i.bj = invoke noundef nonnull align 8 ptr @_RNvYNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error14invalid_lengthCs2JiOgHzbbc7_10tokenizers(i64 noundef %4, ptr noundef nonnull @112, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @4)
+.invoke:                                          ; preds = %bb.p, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i, %bb.m, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i, %bb.i, %bb.f, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i, %bb.c, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i56.i, %bb.a, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i
+  %3 = phi i64 [ 4, %bb.m ], [ 2, %bb.f ], [ 1, %bb.c ], [ 0, %bb.a ], [ 0, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i ], [ 1, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i56.i ], [ 2, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i61.i ], [ 4, %bb.i ], [ 4, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i75.i ], [ 5, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit.i.i.i83.i ], [ 5, %bb.p ]
+  %i.bj = invoke noundef nonnull align 8 ptr @_RNvYNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error14invalid_lengthCs2JiOgHzbbc7_10tokenizers(i64 noundef %3, ptr noundef nonnull @112, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @4)
           to label %_RINvXs0_NvXNvNvXs_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers9metaspaceNtBg_9MetaspaceNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializes_1__NtBb_15MetaspaceHelperB1p_11deserializeNtB6_9___VisitorNtB1r_7Visitor9visit_seqQNtNtNtCs5PtHgSLqj5O_10serde_json5value2de15SeqDeserializerEBk_.exit.thread unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.u, %bb.t
@@ -492,7 +491,7 @@ bb.v:                                             ; preds = %.noexc14
   %.sroa.739.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 %i.am, ptr %.sroa.739.0..sroa_idx.i, align 4, !alias.scope !1102, !noalias !1103
   %.sroa.840.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 29
-  store i8 %3, ptr %.sroa.840.0..sroa_idx.i, align 1, !alias.scope !1102, !noalias !1103
+  store i8 %2, ptr %.sroa.840.0..sroa_idx.i, align 1, !alias.scope !1102, !noalias !1103
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 30
   store i8 %i.bc, ptr %.sroa.9.0..sroa_idx.i, align 2, !alias.scope !1102, !noalias !1103
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
