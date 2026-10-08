@@ -205,14 +205,14 @@ bb.jy:                                            ; preds = %_ZNK4llvm4Type13get
   %i.auy = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %.0.i1269) #22
   %i.auz = tail call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.aux, ptr noundef nonnull align 4 dereferenceable(29) %i.auy) #22 ; 3 uses
   %.sroa.01381.0.extract.trunc = trunc i16 %i.auz to i8 ; 2 uses
-  %.sroa.7.0.extract.shift = lshr i16 %i.auz, 8   ; 2 uses
   %i.ava = lshr i32 %.0908, 1                     ; 2 uses
   %i.avb = and i32 %i.ava, 1
   %spec.select1838 = or i32 %i.avb, %.0908        ; 2 uses
-  %83 = icmp eq i8 %.sroa.01381.0.extract.trunc, 0
-  %84 = icmp eq i16 %.sroa.7.0.extract.shift, 0
-  %or.cond1841.not = and i1 %84, %83              ; 2 uses
-  br i1 %or.cond1841.not, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread, label %bb.jz
+  %83 = icmp ne i8 %.sroa.01381.0.extract.trunc, 0 ; 2 uses
+  %84 = ashr i16 %i.auz, 8                        ; 2 uses
+  %85 = icmp ne i16 %84, 0                        ; 2 uses
+  %.not3.i1272 = or i1 %83, %85
+  br i1 %.not3.i1272, label %bb.jz, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
 bb.jz:                                            ; preds = %bb.jy
   %i.avc = shl i32 %.0908, 1
@@ -221,7 +221,7 @@ bb.jz:                                            ; preds = %bb.jy
   %i.avf = or disjoint i32 %i.avd, %i.ave
   %spec.select1852 = or i32 %i.avf, %spec.select1838 ; 3 uses
   %i.avg = icmp eq i8 %.sroa.01381.0.extract.trunc, 1
-  %i.avh = icmp eq i16 %.sroa.7.0.extract.shift, 1
+  %i.avh = icmp eq i16 %84, 1
   %or.cond1844 = and i1 %i.avg, %i.avh
   br i1 %or.cond1844, label %bb.ka, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
@@ -290,10 +290,11 @@ bb.kf:                                            ; preds = %_ZN4llvm12KnownFPCl
   br i1 %i.awg, label %bb.kg, label %bb.ki
 
 bb.kg:                                            ; preds = %bb.kf
+  %.demorgan = or i1 %83, %85
   %i.awh = and i32 %i.awe, 144
-  %85 = icmp eq i32 %i.awh, 0
-  %or.cond1849 = or i1 %or.cond1841.not, %85
-  br i1 %or.cond1849, label %bb.kh, label %bb.ki
+  %86 = icmp ne i32 %i.awh, 0
+  %or.cond1838.not = and i1 %86, %.demorgan
+  br i1 %or.cond1838.not, label %bb.ki, label %bb.kh
 
 bb.kh:                                            ; preds = %bb.kg
   %i.awi = getelementptr inbounds nuw i8, ptr %1, i64 4

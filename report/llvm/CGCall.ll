@@ -205,23 +205,26 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   %i.am = select i1 %i.al, i8 %.sroa.01.0.i.i, i8 %.sroa.01.0.i8.i ; 2 uses
   %i.an = icmp eq i16 %.sroa.32.0.i7.i, 255
   %.v.i.i = select i1 %i.an, i16 %.sroa.32.0.i.i, i16 %.sroa.32.0.i7.i ; 2 uses
-  %16 = icmp eq i16 %.sroa.32.0.i.i, 0
-  %17 = or i8 %i.am, %.sroa.01.0.i.i
-  %i.ao = icmp eq i8 %17, 0
-  %or.cond35 = and i1 %16, %i.ao
-  %i.ap = icmp eq i16 %.v.i.i, 0
-  %or.cond37 = select i1 %or.cond35, i1 %i.ap, i1 false
-  br i1 %or.cond37, label %bb.i, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
+  %.sroa.7.0.extract.trunc = zext nneg i16 %.v.i.i to i32
+  %i.ao = icmp eq i8 %.sroa.01.0.i.i, 0
+  %i.ap = icmp eq i16 %.sroa.32.0.i.i, 0
+  %or.cond37 = select i1 %i.ao, i1 %i.ap, i1 false
+  br i1 %or.cond37, label %_ZNK4llvm13DenormalFPEnveqES0_.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
 
-bb.i:                                             ; preds = %bb.h
+_ZNK4llvm13DenormalFPEnveqES0_.exit:              ; preds = %bb.h
+  %16 = icmp eq i8 %i.am, 0
+  %17 = icmp eq i16 %.v.i.i, 0
+  %18 = select i1 %16, i1 %17, i1 false
+  br i1 %18, label %bb.i, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
+
+bb.i:                                             ; preds = %_ZNK4llvm13DenormalFPEnveqES0_.exit
   %i.aq = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !72
   %i.as = or i64 %i.ar, 4294967296
   store i64 %i.as, ptr %i.aq, align 8, !tbaa !72
   br label %bb.j
 
-_ZNK4llvm13DenormalFPEnveqES0_.exit.thread:       ; preds = %bb.h
-  %.sroa.7.0.extract.trunc = zext nneg i16 %.v.i.i to i32
+_ZNK4llvm13DenormalFPEnveqES0_.exit.thread:       ; preds = %bb.h, %_ZNK4llvm13DenormalFPEnveqES0_.exit
   %.sroa.7.0.insert.shift = shl nuw i32 %.sroa.7.0.extract.trunc, 24
   %.sroa.6.0.insert.ext = zext i8 %i.am to i32
   %.sroa.6.0.insert.shift = shl nuw nsw i32 %.sroa.6.0.insert.ext, 16
@@ -624,28 +627,28 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN5clang7CodeGen17TargetCodeGenInfo27initPointerAuthFnAttributesERKNS_18PointerAuthOptionsERN4llvm11AttrBuilderE(ptr noundef nonnull align 4 dereferenceable(68) %i.f, ptr noundef nonnull align 8 dereferenceable(88) %5) #27
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !1359, !nonnull !59, !align !60 ; 2 uses
   %i.h = getelementptr i8, ptr %i.g, i64 728
-  %.val = load i16, ptr %i.h, align 8, !tbaa !1344 ; 3 uses
+  %.val = load i16, ptr %i.h, align 8, !tbaa !1344 ; 4 uses
   %i.i = getelementptr i8, ptr %i.g, i64 730
   %.val9 = load i16, ptr %i.i, align 2, !tbaa !1344 ; 2 uses
-  %.sroa.03.0.extract.trunc.i.i.i = trunc i16 %.val to i8 ; 2 uses
-  %.sroa.34.0.extract.shift.i.i.i = lshr i16 %.val, 8 ; 2 uses
+  %.sroa.03.0.extract.trunc.i.i.i = trunc i16 %.val to i8
+  %.sroa.34.0.extract.shift.i.i.i = lshr i16 %.val, 8
   %.sroa.0.0.extract.trunc.i.i.i = trunc i16 %.val9 to i8 ; 2 uses
   %.sroa.3.0.extract.shift.i.i.i = lshr i16 %.val9, 8 ; 2 uses
   %i.j = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i, -1
   %i.k = select i1 %i.j, i8 %.sroa.03.0.extract.trunc.i.i.i, i8 %.sroa.0.0.extract.trunc.i.i.i ; 2 uses
   %i.l = icmp eq i16 %.sroa.3.0.extract.shift.i.i.i, 255
   %.v.i.i.i = select i1 %i.l, i16 %.sroa.34.0.extract.shift.i.i.i, i16 %.sroa.3.0.extract.shift.i.i.i ; 2 uses
-  %6 = icmp ne i8 %.sroa.03.0.extract.trunc.i.i.i, 0
-  %7 = icmp ne i16 %.sroa.34.0.extract.shift.i.i.i, 0
-  %or.cond.not14.i.i = or i1 %6, %7
-  %8 = icmp ne i8 %i.k, 0
-  %or.cond8.not11.i.i = select i1 %or.cond.not14.i.i, i1 true, i1 %8
-  %9 = icmp ne i16 %.v.i.i.i, 0
-  %or.cond10.i.i = select i1 %or.cond8.not11.i.i, i1 true, i1 %9
-  br i1 %or.cond10.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i, label %.critedge
-
-_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i:   ; preds = %bb.b
   %.sroa.8.0.insert.ext.i.i = zext nneg i16 %.v.i.i.i to i32
+  %6 = icmp eq i16 %.val, 0
+  br i1 %6, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i:          ; preds = %bb.b
+  %7 = icmp ne i8 %i.k, 0
+  %8 = icmp ne i16 %.v.i.i.i, 0
+  %.not3.i.i.i = select i1 %7, i1 true, i1 %8
+  br i1 %.not3.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i, label %.critedge
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i:   ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i, %bb.b
   %.sroa.8.0.insert.shift.i.i = shl nuw i32 %.sroa.8.0.insert.ext.i.i, 24
   %.sroa.6.0.insert.ext.i.i = zext i8 %i.k to i32
   %.sroa.6.0.insert.shift.i.i = shl nuw nsw i32 %.sroa.6.0.insert.ext.i.i, 16
@@ -655,7 +658,7 @@ _ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i:   ; preds = %bb.b
   %i.m = tail call noundef nonnull align 8 dereferenceable(88) ptr @_ZN4llvm11AttrBuilder20addDenormalFPEnvAttrENS_13DenormalFPEnvE(ptr noundef nonnull align 8 dereferenceable(88) %5, i32 %.sroa.0.0.insert.insert.i.i) #27 ; 0 uses
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i, %bb.b, %bb.a
+.critedge:                                        ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i, %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i, %bb.a
   ret void
 }
 
@@ -674,28 +677,28 @@ bb.a:
   tail call void @_ZN5clang7CodeGen17TargetCodeGenInfo27initPointerAuthFnAttributesERKNS_18PointerAuthOptionsERN4llvm11AttrBuilderE(ptr noundef nonnull align 4 dereferenceable(68) %i.f, ptr noundef nonnull align 8 dereferenceable(88) %1) #27
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !1359, !nonnull !59, !align !60 ; 2 uses
   %i.h = getelementptr i8, ptr %i.g, i64 728
-  %.val.i = load i16, ptr %i.h, align 8, !tbaa !1344 ; 3 uses
+  %.val.i = load i16, ptr %i.h, align 8, !tbaa !1344 ; 4 uses
   %i.i = getelementptr i8, ptr %i.g, i64 730
   %.val9.i = load i16, ptr %i.i, align 2, !tbaa !1344 ; 2 uses
-  %.sroa.03.0.extract.trunc.i.i.i.i = trunc i16 %.val.i to i8 ; 2 uses
-  %.sroa.34.0.extract.shift.i.i.i.i = lshr i16 %.val.i, 8 ; 2 uses
+  %.sroa.03.0.extract.trunc.i.i.i.i = trunc i16 %.val.i to i8
+  %.sroa.34.0.extract.shift.i.i.i.i = lshr i16 %.val.i, 8
   %.sroa.0.0.extract.trunc.i.i.i.i = trunc i16 %.val9.i to i8 ; 2 uses
   %.sroa.3.0.extract.shift.i.i.i.i = lshr i16 %.val9.i, 8 ; 2 uses
   %i.j = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i.i, -1
   %i.k = select i1 %i.j, i8 %.sroa.03.0.extract.trunc.i.i.i.i, i8 %.sroa.0.0.extract.trunc.i.i.i.i ; 2 uses
   %i.l = icmp eq i16 %.sroa.3.0.extract.shift.i.i.i.i, 255
   %.v.i.i.i.i = select i1 %i.l, i16 %.sroa.34.0.extract.shift.i.i.i.i, i16 %.sroa.3.0.extract.shift.i.i.i.i ; 2 uses
-  %2 = icmp ne i8 %.sroa.03.0.extract.trunc.i.i.i.i, 0
-  %3 = icmp ne i16 %.sroa.34.0.extract.shift.i.i.i.i, 0
-  %or.cond.not14.i.i.i = or i1 %2, %3
-  %4 = icmp ne i8 %i.k, 0
-  %or.cond8.not11.i.i.i = select i1 %or.cond.not14.i.i.i, i1 true, i1 %4
-  %5 = icmp ne i16 %.v.i.i.i.i, 0
-  %or.cond10.i.i.i = select i1 %or.cond8.not11.i.i.i, i1 true, i1 %5
-  br i1 %or.cond10.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i, label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
-
-_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %bb.a
   %.sroa.8.0.insert.ext.i.i.i = zext nneg i16 %.v.i.i.i.i to i32
+  %2 = icmp eq i16 %.val.i, 0
+  br i1 %2, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i:        ; preds = %bb.a
+  %3 = icmp ne i8 %i.k, 0
+  %4 = icmp ne i16 %.v.i.i.i.i, 0
+  %.not3.i.i.i.i = select i1 %3, i1 true, i1 %4
+  br i1 %.not3.i.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i, label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, %bb.a
   %.sroa.8.0.insert.shift.i.i.i = shl nuw i32 %.sroa.8.0.insert.ext.i.i.i, 24
   %.sroa.6.0.insert.ext.i.i.i = zext i8 %i.k to i32
   %.sroa.6.0.insert.shift.i.i.i = shl nuw nsw i32 %.sroa.6.0.insert.ext.i.i.i, 16
@@ -705,7 +708,7 @@ _ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %bb.a
   %i.m = tail call noundef nonnull align 8 dereferenceable(88) ptr @_ZN4llvm11AttrBuilder20addDenormalFPEnvAttrENS_13DenormalFPEnvE(ptr noundef nonnull align 8 dereferenceable(88) %1, i32 %.sroa.0.0.insert.insert.i.i.i) #27 ; 0 uses
   br label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
 
-_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit: ; preds = %bb.a, %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
+_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit: ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
   %i.n = tail call noundef zeroext i1 @_ZN5clang7CodeGen13CodeGenModule27GetCPUAndFeaturesAttributesENS_10GlobalDeclERN4llvm11AttrBuilderEb(ptr noundef nonnull align 8 dereferenceable(4008) %0, i64 0, i32 0, ptr noundef nonnull align 8 dereferenceable(88) %1, i1 noundef zeroext true) #27 ; 0 uses
   ret void
 }
@@ -1108,28 +1111,28 @@ bb.du:                                            ; preds = %_ZL22addNoBuiltinAt
   call void @_ZN5clang7CodeGen17TargetCodeGenInfo27initPointerAuthFnAttributesERKNS_18PointerAuthOptionsERN4llvm11AttrBuilderE(ptr noundef nonnull align 4 dereferenceable(68) %i.abd, ptr noundef nonnull align 8 dereferenceable(88) %20) #27
   %i.abe = load ptr, ptr %i.aaz, align 8, !tbaa !1359, !nonnull !59, !align !60 ; 2 uses
   %i.abf = getelementptr i8, ptr %i.abe, i64 728
-  %.val.i521 = load i16, ptr %i.abf, align 8, !tbaa !1344 ; 3 uses
+  %.val.i521 = load i16, ptr %i.abf, align 8, !tbaa !1344 ; 4 uses
   %i.abg = getelementptr i8, ptr %i.abe, i64 730
   %.val9.i = load i16, ptr %i.abg, align 2, !tbaa !1344 ; 2 uses
-  %.sroa.03.0.extract.trunc.i.i.i.i = trunc i16 %.val.i521 to i8 ; 2 uses
-  %.sroa.34.0.extract.shift.i.i.i.i = lshr i16 %.val.i521, 8 ; 2 uses
+  %.sroa.03.0.extract.trunc.i.i.i.i = trunc i16 %.val.i521 to i8
+  %.sroa.34.0.extract.shift.i.i.i.i = lshr i16 %.val.i521, 8
   %.sroa.0.0.extract.trunc.i.i.i.i = trunc i16 %.val9.i to i8 ; 2 uses
   %.sroa.3.0.extract.shift.i.i.i.i = lshr i16 %.val9.i, 8 ; 2 uses
   %i.abh = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i.i, -1
   %i.abi = select i1 %i.abh, i8 %.sroa.03.0.extract.trunc.i.i.i.i, i8 %.sroa.0.0.extract.trunc.i.i.i.i ; 2 uses
   %i.abj = icmp eq i16 %.sroa.3.0.extract.shift.i.i.i.i, 255
   %.v.i.i.i.i = select i1 %i.abj, i16 %.sroa.34.0.extract.shift.i.i.i.i, i16 %.sroa.3.0.extract.shift.i.i.i.i ; 2 uses
-  %33 = icmp ne i8 %.sroa.03.0.extract.trunc.i.i.i.i, 0
-  %34 = icmp ne i16 %.sroa.34.0.extract.shift.i.i.i.i, 0
-  %or.cond.not14.i.i.i = or i1 %33, %34
-  %35 = icmp ne i8 %i.abi, 0
-  %or.cond8.not11.i.i.i = select i1 %or.cond.not14.i.i.i, i1 true, i1 %35
-  %36 = icmp ne i16 %.v.i.i.i.i, 0
-  %or.cond10.i.i.i = select i1 %or.cond8.not11.i.i.i, i1 true, i1 %36
-  br i1 %or.cond10.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i, label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
-
-_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %bb.du
   %.sroa.8.0.insert.ext.i.i.i = zext nneg i16 %.v.i.i.i.i to i32
+  %33 = icmp eq i16 %.val.i521, 0
+  br i1 %33, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i:        ; preds = %bb.du
+  %34 = icmp ne i8 %i.abi, 0
+  %35 = icmp ne i16 %.v.i.i.i.i, 0
+  %.not3.i.i.i.i = select i1 %34, i1 true, i1 %35
+  br i1 %.not3.i.i.i.i, label %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i, label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
+
+_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, %bb.du
   %.sroa.8.0.insert.shift.i.i.i = shl nuw i32 %.sroa.8.0.insert.ext.i.i.i, 24
   %.sroa.6.0.insert.ext.i.i.i = zext i8 %i.abi to i32
   %.sroa.6.0.insert.shift.i.i.i = shl nuw nsw i32 %.sroa.6.0.insert.ext.i.i.i, 16
@@ -1139,7 +1142,7 @@ _ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i: ; preds = %bb.du
   %i.abk = call noundef nonnull align 8 dereferenceable(88) ptr @_ZN4llvm11AttrBuilder20addDenormalFPEnvAttrENS_13DenormalFPEnvE(ptr noundef nonnull align 8 dereferenceable(88) %20, i32 %.sroa.0.0.insert.insert.i.i.i) #27 ; 0 uses
   br label %_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit
 
-_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit: ; preds = %bb.du, %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
+_ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit: ; preds = %_ZNK4llvm13DenormalFPEnvneES0_.exit.i.i.i, %_ZNK4llvm13DenormalFPEnvneES0_.exit.thread.i.i.i
   br i1 %.not.i, label %.thread1060, label %bb.dv
 
 _ZN5clang7CodeGen13CodeGenModule28getDefaultFunctionAttributesEN4llvm9StringRefEbbRNS2_11AttrBuilderE.exit.thread: ; preds = %_ZL22addNoBuiltinAttributesRN4llvm11AttrBuilderERKN5clang11LangOptionsEPKNS2_13NoBuiltinAttrE.exit

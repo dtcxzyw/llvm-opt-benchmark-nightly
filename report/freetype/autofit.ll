@@ -205,16 +205,18 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   %i.aj = ashr i64 %i.ai, 63
   %i.ak = add i64 %i.ai, 32768
   %i.al = add i64 %i.ak, %i.aj
+  %4 = lshr i64 %i.al, 16
   %i.am = load i64, ptr %i.a, align 8, !tbaa !76
   %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 776
   store i64 %i.am, ptr %i.an, align 8, !tbaa !592
   %i.ao = load i16, ptr %i.k, align 8, !tbaa !590
   store i16 %i.ao, ptr %i.m, align 8, !tbaa !289
-  %4 = shl i64 %i.al, 16
-  %5 = add i64 %4, 140737488355328
-  %6 = ashr i64 %5, 48
+  %5 = trunc i64 %4 to i32
+  %6 = add i32 %5, 32768
+  %7 = ashr i32 %6, 16
+  %8 = sext i32 %7 to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 792
-  store i64 %6, ptr %i.ap, align 8, !tbaa !594
+  store i64 %8, ptr %i.ap, align 8, !tbaa !594
   br i1 %.not46, label %.thread, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f
@@ -248,16 +250,18 @@ bb.h:                                             ; preds = %._crit_edge, %bb.g
   %i.bb = ashr i64 %i.ba, 63
   %i.bc = add i64 %i.ba, 32768
   %i.bd = add i64 %i.bc, %i.bb
+  %9 = lshr i64 %i.bd, 16
   %i.be = load i64, ptr %i.b, align 8, !tbaa !76
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 784
   store i64 %i.be, ptr %i.bf, align 8, !tbaa !595
   %i.bg = load i16, ptr %i.k, align 8, !tbaa !590
   store i16 %i.bg, ptr %i.m, align 8, !tbaa !289
-  %7 = shl i64 %i.bd, 16
-  %8 = add i64 %7, 140737488355328
-  %9 = ashr i64 %8, 48
+  %10 = trunc i64 %9 to i32
+  %11 = add i32 %10, 32768
+  %12 = ashr i32 %11, 16
+  %13 = sext i32 %12 to i64
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 800
-  store i64 %9, ptr %i.bh, align 8, !tbaa !597
+  store i64 %13, ptr %i.bh, align 8, !tbaa !597
   %.neg54 = add nsw i64 %i.r, -524288
   %i.bi = sub i64 %.neg54, %i.ax
   %i.bj = call i64 @FT_DivFix(i64 noundef %i.bi, i64 noundef %i.r) #18

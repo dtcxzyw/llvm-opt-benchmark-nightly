@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.not5 = icmp eq i64 %1, 0
-  br i1 %.not5, label %.split.i.i, label %bb.d
+  br i1 %.not5, label %.split.i.i, label %bb.d, !prof !151
 
 bb.c:                                             ; preds = %bb.a
   %i.b = lshr i64 %1, 32                          ; 2 uses
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %bb.a
   %cttz = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.c, i1 true)
   %.not = icmp eq i64 %i.b, 0
   %i.d = or disjoint i32 %cttz, 32
-  %i.e = select i1 %.not, i32 31, i32 %i.d
+  %i.e = select i1 %.not, i32 31, i32 %i.d, !prof !151
   br label %.split.i.i
 
 bb.d:                                             ; preds = %bb.b
@@ -616,7 +616,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
 imalloc_no_sample.exit78:                         ; preds = %.critedge.i.i49, %.thread247, %bb.ag, %bb.at, %sz_s2u.exit.i59, %ipallocztm_explicit_slab.exit83
   %.0.i46 = phi ptr [ %i.fd, %sz_s2u.exit.i59 ], [ %i.cw, %ipallocztm_explicit_slab.exit83 ], [ %i.fj, %.critedge.i.i49 ], [ %.0.i24.i70.ph, %.thread247 ], [ %.132.i.i73, %bb.ag ], [ %i.ec, %bb.at ] ; 2 uses
   %i.fk = icmp eq ptr %.0.i46, null
-  br i1 %i.fk, label %imalloc.exit, label %bb.au, !prof !151
+  br i1 %i.fk, label %imalloc.exit, label %bb.au, !prof !152
 
 bb.au:                                            ; preds = %imalloc_no_sample.exit78
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
@@ -1019,7 +1019,7 @@ tcache_get_from_ind.exit:                         ; preds = %bb.f, %bb.d, %mallo
   %.0.i = phi ptr [ null, %mallocx_tcache_get.exit ], [ null, %mallocx_arena_get.exit.thread ], [ %i.af, %bb.d ], [ %i.ag, %bb.f ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.ah = icmp eq ptr %.0.i52, null
-  br i1 %i.ah, label %bb.g, label %bb.h, !prof !152
+  br i1 %i.ah, label %bb.g, label %bb.h, !prof !153
 
 bb.g:                                             ; preds = %tcache_get_from_ind.exit
   call void @duckdb_je_rtree_ctx_data_init(ptr noundef nonnull %8) #21
@@ -1157,7 +1157,7 @@ aligned_usize_get.exit:                           ; preds = %.thread107, %sz_s2u
   br i1 %spec.select.i, label %arena_get_from_ind.exit, label %tsdn_witness_tsdp_get.exit.i
 
 tsdn_witness_tsdp_get.exit.i:                     ; preds = %aligned_usize_get.exit
-  store i8 %i.a, ptr %9, align 8, !tbaa !154
+  store i8 %i.a, ptr %9, align 8, !tbaa !155
   %i.cs = getelementptr inbounds nuw i8, ptr %9, i64 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.cs, i8 0, i64 7, i1 false)
   %i.ct = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
@@ -1265,12 +1265,12 @@ ipallocztm_explicit_slab.exit.i:                  ; preds = %sz_sa2u.exit
 isdalloct.exit:                                   ; preds = %ipallocztm_explicit_slab.exit.i
   %i.ep = call i64 @llvm.umin.i64(i64 %1, i64 %i.ao)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.en, ptr align 1 %0, i64 %i.ep, i1 false)
-  %i.eq = load i8, ptr %9, align 8, !tbaa !154, !range !95, !noundef !96
+  %i.eq = load i8, ptr %9, align 8, !tbaa !155, !range !95, !noundef !96
   %i.er = trunc nuw i8 %i.eq to i1
   %i.es = select i1 %i.er, i32 8, i32 9
   %i.et = ptrtoint ptr %i.en to i64
   call void @duckdb_je_hook_invoke_alloc(i32 noundef %i.es, ptr noundef nonnull %i.en, i64 noundef %i.et, ptr noundef nonnull %i.ct) #21
-  %i.eu = load i8, ptr %9, align 8, !tbaa !154, !range !95, !noundef !96
+  %i.eu = load i8, ptr %9, align 8, !tbaa !155, !range !95, !noundef !96
   %i.ev = trunc nuw i8 %i.eu to i1
   %i.ew = select i1 %i.ev, i32 3, i32 4
   call void @duckdb_je_hook_invoke_dalloc(i32 noundef %i.ew, ptr noundef %0, ptr noundef nonnull %i.ct) #21
@@ -1673,7 +1673,7 @@ bb.ag:                                            ; preds = %bb.af
 sz_size2index.exit.i32:                           ; preds = %bb.ag, %bb.ae
   %.0.i50.i33 = phi i32 [ %i.ds, %bb.ae ], [ %i.eg, %bb.ag ] ; 8 uses
   %i.eh = icmp samesign ugt i32 %.0.i50.i33, 231
-  br i1 %i.eh, label %aligned_usize_get.exit.i26.thread, label %bb.ah, !prof !155
+  br i1 %i.eh, label %aligned_usize_get.exit.i26.thread, label %bb.ah, !prof !156
 
 bb.ah:                                            ; preds = %sz_size2index.exit.i32
   %i.ei = zext nneg i32 %.0.i50.i33 to i64        ; 3 uses
@@ -1887,7 +1887,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
 imalloc_no_sample.exit:                           ; preds = %.critedge.i.i, %.thread269, %bb.au, %bb.bf, %sz_s2u.exit.i
   %.0.i44 = phi ptr [ %i.gx, %sz_s2u.exit.i ], [ %i.hc, %.critedge.i.i ], [ %.0.i24.i.ph, %.thread269 ], [ %.132.i.i, %bb.au ], [ %i.fy, %bb.bf ] ; 4 uses
   %i.hd = icmp eq ptr %.0.i44, null
-  br i1 %i.hd, label %aligned_usize_get.exit.i26.thread, label %bb.bg, !prof !156
+  br i1 %i.hd, label %aligned_usize_get.exit.i26.thread, label %bb.bg, !prof !157
 
 bb.bg:                                            ; preds = %imalloc_no_sample.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -2290,7 +2290,7 @@ sz_s2u_compute.exit29.i:                          ; preds = %bb.o, %bb.n
 aligned_usize_get.exit:                           ; preds = %.thread15, %bb.f, %bb.h
   %storemerge.i = phi i64 [ %.0.i13, %.thread15 ], [ %i.v, %bb.f ], [ %i.ac, %bb.h ] ; 2 uses
   %i.bp = icmp ugt i64 %storemerge.i, 8070450532247928832
-  %spec.select = select i1 %i.bp, i64 0, i64 %storemerge.i, !prof !157
+  %spec.select = select i1 %i.bp, i64 0, i64 %storemerge.i, !prof !158
   br label %malloc_init.exit.thread
 
 malloc_init.exit.thread:                          ; preds = %aligned_usize_get.exit, %.thread15, %sz_s2u_compute.exit29.i, %sz_s2u.exit25.i, %bb.l, %bb.g, %bb.b
@@ -2684,7 +2684,7 @@ sz_size2index.exit:                               ; preds = %bb.o, %sz_size2inde
 bb.p:                                             ; preds = %sz_size2index.exit
   %i.co = getelementptr inbounds nuw [40 x i8], ptr @duckdb_je_bin_infos, i64 %i.cm
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16
-  %i.cq = load i32, ptr %i.cp, align 8, !tbaa !159
+  %i.cq = load i32, ptr %i.cp, align 8, !tbaa !160
   %i.cr = zext i32 %i.cq to i64
   br label %bb.q
 
@@ -2725,8 +2725,8 @@ bb.r:                                             ; preds = %select.unfold, %bb.
 bb.s:                                             ; preds = %bb.r
   %i.dp = sub nuw i64 %1, %.0103                  ; 6 uses
   %.not = icmp ult i64 %i.dp, %.098
-  %or.cond = select i1 %i.cn, i1 true, i1 %.not, !prof !160
-  br i1 %or.cond, label %bb.ae, label %bb.t, !prof !160
+  %or.cond = select i1 %i.cn, i1 true, i1 %.not, !prof !161
+  br i1 %or.cond, label %bb.ae, label %bb.t, !prof !161
 
 bb.t:                                             ; preds = %bb.s
   %i.dq = icmp eq ptr %.0146, null
@@ -2979,7 +2979,7 @@ cache_bin_low_water_adjust.exit:                  ; preds = %bb.aj, %bb.ak
   %i.gz = add nuw nsw i64 %.0197.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph.epil, !llvm.loop !158
+  br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph.epil, !llvm.loop !159
 
 .loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.epil, %cache_bin_low_water_adjust.exit
   %i.ha = add i64 %spec.select.i128196, %.095
@@ -2993,8 +2993,8 @@ cache_bin_low_water_adjust.exit:                  ; preds = %bb.aj, %bb.ak
   %i.hc = mul i64 %.196, %storemerge.i            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   store i8 1, ptr %4, align 8, !tbaa !110
-  store <2 x ptr> %i.dl, ptr %i.df, align 8, !tbaa !162
-  store <2 x ptr> %i.dn, ptr %i.di, align 8, !tbaa !162
+  store <2 x ptr> %i.dl, ptr %i.df, align 8, !tbaa !163
+  store <2 x ptr> %i.dn, ptr %i.di, align 8, !tbaa !163
   %i.hd = load i64, ptr %i.de, align 8, !tbaa !24 ; 2 uses
   %i.he = add i64 %i.hd, %i.hc
   store i64 %i.he, ptr %i.de, align 8, !tbaa !24
@@ -3397,10 +3397,10 @@ bb.an:                                            ; preds = %bb.aj
 
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) @duckdb_je_opt_hpa_opts, i64 48, i1 false), !tbaa.struct !163
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) @duckdb_je_opt_hpa_opts, i64 48, i1 false), !tbaa.struct !164
   %i.cl = load atomic i8, ptr @duckdb_je_background_thread_enabled_state monotonic, align 1, !range !95, !noundef !96
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store i8 %i.cl, ptr %i.cm, align 4, !tbaa !164
+  store i8 %i.cl, ptr %i.cm, align 4, !tbaa !165
   %i.cn = load ptr, ptr @a0, align 8, !tbaa !33
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 10664
   %i.cp = call zeroext i1 @duckdb_je_pa_shard_enable_hpa(ptr noundef null, ptr noundef nonnull %i.co, ptr noundef nonnull %1, ptr noundef nonnull @duckdb_je_opt_hpa_sec_opts) #21
@@ -3517,17 +3517,17 @@ bb.e:                                             ; preds = %bb.d
 
 malloc_mutex_lock.exit:                           ; preds = %bb.d, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 10408 ; 2 uses
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !165  ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !166  ; 2 uses
   %.not2029 = icmp eq ptr %i.x, null
   br i1 %.not2029, label %select.unfold._crit_edge, label %select.unfold
 
 select.unfold:                                    ; preds = %malloc_mutex_lock.exit, %select.unfold
   %.030 = phi ptr [ %i.aa, %select.unfold ], [ %i.x, %malloc_mutex_lock.exit ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.030, i64 176
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !166
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !167
   tail call void @duckdb_je_tcache_stats_merge(ptr noundef %.0.i, ptr noundef %i.z, ptr noundef nonnull %i.i) #21
-  %i.aa = load ptr, ptr %.030, align 8, !tbaa !167 ; 3 uses
-  %i.ab = load ptr, ptr %i.w, align 8, !tbaa !165
+  %i.aa = load ptr, ptr %.030, align 8, !tbaa !168 ; 3 uses
+  %i.ab = load ptr, ptr %i.w, align 8, !tbaa !166
   %.not21 = icmp eq ptr %i.aa, %i.ab
   %.not2036 = icmp eq ptr %i.aa, null
   %.not20 = or i1 %.not21, %.not2036
@@ -3930,7 +3930,7 @@ bb.md:                                            ; preds = %bb.mc
 bb.me:                                            ; preds = %bb.md
   %i.afo = call i64 @llvm.umax.i64(i64 %i.afi, i64 4096)
   %.sink1432 = call i64 @llvm.umin.i64(i64 %i.afo, i64 2097152)
-  store i64 %.sink1432, ptr @duckdb_je_opt_hpa_opts, align 8, !tbaa !168
+  store i64 %.sink1432, ptr @duckdb_je_opt_hpa_opts, align 8, !tbaa !169
   %i.afp = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.afq = trunc nuw i8 %i.afp to i1
   br i1 %i.afq, label %bb.mf, label %bb.mg
@@ -4076,7 +4076,7 @@ bb.mx:                                            ; preds = %bb.mw
   br label %bb.na
 
 bb.my:                                            ; preds = %bb.mx
-  store i64 %i.ahd, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 24), align 8, !tbaa !169
+  store i64 %i.ahd, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 24), align 8, !tbaa !170
   %i.ahj = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.ahk = trunc nuw i8 %i.ahj to i1
   br i1 %i.ahk, label %bb.mz, label %bb.na
@@ -4123,7 +4123,7 @@ bb.ne:                                            ; preds = %bb.nd
   br label %bb.nh
 
 bb.nf:                                            ; preds = %bb.ne
-  store i64 %i.ahr, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 32), align 8, !tbaa !170
+  store i64 %i.ahr, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 32), align 8, !tbaa !171
   %i.ahx = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.ahy = trunc nuw i8 %i.ahx to i1
   br i1 %i.ahy, label %bb.ng, label %bb.nh
@@ -4170,7 +4170,7 @@ bb.nm:                                            ; preds = %bb.nk
 
 bb.nn:                                            ; preds = %bb.nm, %bb.nl
   %storemerge1251 = phi i8 [ 1, %bb.nl ], [ 0, %bb.nm ]
-  store i8 %storemerge1251, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 40), align 8, !tbaa !171
+  store i8 %storemerge1251, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 40), align 8, !tbaa !172
   %i.aii = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.aij = trunc nuw i8 %i.aii to i1
   br i1 %i.aij, label %bb.no, label %malloc_conf_error.exit.thread
@@ -4214,7 +4214,7 @@ sub_11263:                                        ; preds = %sub_01262
   br i1 %i.aix, label %bb.nr, label %bb.nt
 
 bb.nr:                                            ; preds = %.tail1261
-  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 16), align 8, !tbaa !172
+  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 16), align 8, !tbaa !173
   %i.aiy = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.aiz = trunc nuw i8 %i.aiy to i1
   br i1 %i.aiz, label %bb.ns, label %malloc_conf_error.exit.thread
@@ -4246,7 +4246,7 @@ bb.nu:                                            ; preds = %bb.nt
 
 bb.nv:                                            ; preds = %bb.nu
   %i.ajg = load i32, ptr %i.ao, align 4, !tbaa !8
-  store i32 %i.ajg, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 16), align 8, !tbaa !172
+  store i32 %i.ajg, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_opts, i64 16), align 8, !tbaa !173
   %i.ajh = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.aji = trunc nuw i8 %i.ajh to i1
   br i1 %i.aji, label %bb.nw, label %bb.nx
@@ -4294,7 +4294,7 @@ bb.ob:                                            ; preds = %bb.oa
   br label %bb.oe
 
 bb.oc:                                            ; preds = %bb.ob
-  store i64 %i.ajp, ptr @duckdb_je_opt_hpa_sec_opts, align 8, !tbaa !173
+  store i64 %i.ajp, ptr @duckdb_je_opt_hpa_sec_opts, align 8, !tbaa !174
   %i.ajv = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.ajw = trunc nuw i8 %i.ajv to i1
   br i1 %i.ajw, label %bb.od, label %bb.oe
@@ -4342,7 +4342,7 @@ bb.oi:                                            ; preds = %bb.oh
 
 bb.oj:                                            ; preds = %bb.oi
   %.1273 = call i64 @llvm.umax.i64(i64 %i.akd, i64 4096)
-  store i64 %.1273, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 8), align 8, !tbaa !174
+  store i64 %.1273, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 8), align 8, !tbaa !175
   %i.akj = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.akk = trunc nuw i8 %i.akj to i1
   br i1 %i.akk, label %bb.ok, label %bb.ol
@@ -4386,7 +4386,7 @@ bb.oo:                                            ; preds = %bb.on
 
 bb.op:                                            ; preds = %bb.oo
   %.1274 = call i64 @llvm.umax.i64(i64 %i.akq, i64 4096)
-  store i64 %.1274, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 16), align 8, !tbaa !175
+  store i64 %.1274, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 16), align 8, !tbaa !176
   %i.akw = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.akx = trunc nuw i8 %i.akw to i1
   br i1 %i.akx, label %bb.oq, label %bb.or
@@ -4433,7 +4433,7 @@ bb.ov:                                            ; preds = %bb.ou
 
 bb.ow:                                            ; preds = %bb.ov
   %.1275 = call i64 @llvm.umax.i64(i64 %i.ald, i64 4096)
-  store i64 %.1275, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 24), align 8, !tbaa !176
+  store i64 %.1275, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 24), align 8, !tbaa !177
   %i.alj = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.alk = trunc nuw i8 %i.alj to i1
   br i1 %i.alk, label %bb.ox, label %bb.oy
@@ -4480,7 +4480,7 @@ bb.pb:                                            ; preds = %bb.pa
 
 bb.pc:                                            ; preds = %bb.pb
   %.1276 = call i64 @llvm.umin.i64(i64 %i.alq, i64 512)
-  store i64 %.1276, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 32), align 8, !tbaa !177
+  store i64 %.1276, ptr getelementptr inbounds nuw (i8, ptr @duckdb_je_opt_hpa_sec_opts, i64 32), align 8, !tbaa !178
   %i.alw = load i8, ptr @duckdb_je_opt_confirm_conf, align 1, !range !95
   %i.alx = trunc nuw i8 %i.alw to i1
   br i1 %i.alx, label %bb.pd, label %bb.pe
@@ -4883,30 +4883,30 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
-  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !182
+  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !183
   %i.bd = ptrtoint ptr %i.bc to i64               ; 4 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc nuw nsw i64 %i.be to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.bf, ptr %i.bg, align 8, !tbaa !183, !alias.scope !184
+  store i32 %i.bf, ptr %i.bg, align 8, !tbaa !184, !alias.scope !185
   %i.bh = trunc i64 %i.bd to i8                   ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.bj = and i8 %i.bh, 1
-  store i8 %i.bj, ptr %i.bi, align 1, !tbaa !185, !alias.scope !184
+  store i8 %i.bj, ptr %i.bi, align 1, !tbaa !186, !alias.scope !185
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bl = lshr i8 %i.bh, 1
   %i.bm = and i8 %i.bl, 1
-  store i8 %i.bm, ptr %i.bk, align 8, !tbaa !186, !alias.scope !184
+  store i8 %i.bm, ptr %i.bk, align 8, !tbaa !187, !alias.scope !185
   %i.bn = trunc i64 %i.bd to i32
   %i.bo = lshr i32 %i.bn, 2
   %i.bp = and i32 %i.bo, 7
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.bp, ptr %i.bq, align 4, !tbaa !187, !alias.scope !184
+  store i32 %i.bp, ptr %i.bq, align 4, !tbaa !188, !alias.scope !185
   %i.br = shl i64 %i.bd, 16
   %i.bs = ashr exact i64 %i.br, 16
   %i.bt = and i64 %i.bs, -128
   %i.bu = inttoptr i64 %i.bt to ptr
-  store ptr %i.bu, ptr %0, align 8, !tbaa !19, !alias.scope !184
+  store ptr %i.bu, ptr %0, align 8, !tbaa !19, !alias.scope !185
   ret void
 }
 
@@ -5022,7 +5022,7 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
-  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !190
+  %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !191
   %i.bd = ptrtoint ptr %i.bc to i64               ; 3 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc i64 %i.bd to i8                   ; 2 uses
@@ -5107,7 +5107,7 @@ bb.f:                                             ; preds = %.preheader.i
   br i1 %i.p, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.i.i
-  tail call void asm sideeffect "pause", "~{dirflag},~{fpsr},~{flags}"() #21, !srcloc !191
+  tail call void asm sideeffect "pause", "~{dirflag},~{fpsr},~{flags}"() #21, !srcloc !192
   %.0..0..0..0..0..0..0..0.1.i.i = load volatile i32, ptr %i.a, align 4, !tbaa !8
   %i.q = add i32 %.0..0..0..0..0..0..0..0.1.i.i, 1
   store volatile i32 %i.q, ptr %i.a, align 4, !tbaa !8
@@ -5510,45 +5510,46 @@ attributes #25 = { nounwind willreturn memory(read) }
 !148 = distinct !{!148, !147, !"rtree_leaf_elm_read: argument 0"}
 !149 = !{!148}
 !150 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!151 = !{!"branch_weights", !"expected", i32 470596, i32 2147013052}
-!152 = !{!"branch_weights", !"expected", i32 1609941, i32 2145873707}
-!153 = !{!"hook_ralloc_args_s", !16, i64 0, !6, i64 8}
-!154 = !{!153, !16, i64 0}
-!155 = !{!"branch_weights", !"expected", i32 1072667, i32 2146410981}
-!156 = !{!"branch_weights", !"expected", i32 470600, i32 2147013048}
-!157 = !{!"branch_weights", !"expected", i32 1948825, i32 2145534823}
-!158 = distinct !{!158, !161}
-!159 = !{!35, !7, i64 16}
-!160 = !{!"branch_weights", i32 2002, i32 2000}
-!161 = !{!"llvm.loop.unroll.disable"}
-!162 = !{!108, !108, i64 0}
-!163 = !{i64 0, i64 8, !24, i64 8, i64 8, !24, i64 16, i64 4, !8, i64 20, i64 1, !94, i64 24, i64 8, !24, i64 32, i64 8, !24, i64 40, i64 1, !94}
-!164 = !{!73, !16, i64 20}
-!165 = !{!81, !41, i64 10408}
-!166 = !{!105, !104, i64 176}
-!167 = !{!105, !41, i64 0}
-!168 = !{!73, !20, i64 0}
-!169 = !{!73, !20, i64 24}
-!170 = !{!73, !20, i64 32}
-!171 = !{!73, !16, i64 40}
-!172 = !{!73, !7, i64 16}
-!173 = !{!63, !20, i64 0}
-!174 = !{!63, !20, i64 8}
-!175 = !{!63, !20, i64 16}
-!176 = !{!63, !20, i64 24}
-!177 = !{!63, !20, i64 32}
-!178 = distinct !{!178, i1 false, !"rtree_leaf_elm_read"}
-!179 = distinct !{!179, !178, !"rtree_leaf_elm_read: argument 0"}
-!180 = distinct !{!180, i1 false, !"rtree_leaf_elm_bits_decode"}
-!181 = distinct !{!181, !180, !"rtree_leaf_elm_bits_decode: argument 0"}
-!182 = !{!179}
-!183 = !{!18, !7, i64 8}
-!184 = !{!181}
-!185 = !{!18, !16, i64 17}
-!186 = !{!18, !16, i64 16}
-!187 = !{!18, !7, i64 12}
-!188 = distinct !{!188, i1 false, !"rtree_leaf_elm_read"}
-!189 = distinct !{!189, !188, !"rtree_leaf_elm_read: argument 0"}
-!190 = !{!189}
-!191 = !{i64 2151180949}
+!151 = !{!"branch_weights", i32 1, i32 1048575}
+!152 = !{!"branch_weights", !"expected", i32 470596, i32 2147013052}
+!153 = !{!"branch_weights", !"expected", i32 1609941, i32 2145873707}
+!154 = !{!"hook_ralloc_args_s", !16, i64 0, !6, i64 8}
+!155 = !{!154, !16, i64 0}
+!156 = !{!"branch_weights", !"expected", i32 1072667, i32 2146410981}
+!157 = !{!"branch_weights", !"expected", i32 470600, i32 2147013048}
+!158 = !{!"branch_weights", !"expected", i32 1948825, i32 2145534823}
+!159 = distinct !{!159, !162}
+!160 = !{!35, !7, i64 16}
+!161 = !{!"branch_weights", i32 2002, i32 2000}
+!162 = !{!"llvm.loop.unroll.disable"}
+!163 = !{!108, !108, i64 0}
+!164 = !{i64 0, i64 8, !24, i64 8, i64 8, !24, i64 16, i64 4, !8, i64 20, i64 1, !94, i64 24, i64 8, !24, i64 32, i64 8, !24, i64 40, i64 1, !94}
+!165 = !{!73, !16, i64 20}
+!166 = !{!81, !41, i64 10408}
+!167 = !{!105, !104, i64 176}
+!168 = !{!105, !41, i64 0}
+!169 = !{!73, !20, i64 0}
+!170 = !{!73, !20, i64 24}
+!171 = !{!73, !20, i64 32}
+!172 = !{!73, !16, i64 40}
+!173 = !{!73, !7, i64 16}
+!174 = !{!63, !20, i64 0}
+!175 = !{!63, !20, i64 8}
+!176 = !{!63, !20, i64 16}
+!177 = !{!63, !20, i64 24}
+!178 = !{!63, !20, i64 32}
+!179 = distinct !{!179, i1 false, !"rtree_leaf_elm_read"}
+!180 = distinct !{!180, !179, !"rtree_leaf_elm_read: argument 0"}
+!181 = distinct !{!181, i1 false, !"rtree_leaf_elm_bits_decode"}
+!182 = distinct !{!182, !181, !"rtree_leaf_elm_bits_decode: argument 0"}
+!183 = !{!180}
+!184 = !{!18, !7, i64 8}
+!185 = !{!182}
+!186 = !{!18, !16, i64 17}
+!187 = !{!18, !16, i64 16}
+!188 = !{!18, !7, i64 12}
+!189 = distinct !{!189, i1 false, !"rtree_leaf_elm_read"}
+!190 = distinct !{!190, !189, !"rtree_leaf_elm_read: argument 0"}
+!191 = !{!190}
+!192 = !{i64 2151180949}
 end_hunk_8

@@ -202,7 +202,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !38
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !39
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -272,7 +272,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !41
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !42
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -342,7 +342,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !44
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !45
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -412,7 +412,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !47
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !48
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -604,7 +604,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !50
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !51
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -674,7 +674,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !53
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !54
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -744,7 +744,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !56
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !57
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -814,7 +814,7 @@ bb.a:
   %i.k = lshr i64 %i.c, 12
   %i.l = and i64 %i.k, 262143
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.l
-  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !59
+  %i.n = load atomic ptr, ptr %i.m monotonic, align 8, !noalias !60
   %i.o = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.p = trunc i64 %i.o to i1
   br i1 %i.p, label %.noexc2, label %.noexc.thread, !prof !34
@@ -876,7 +876,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.not7.i = icmp eq i64 %2, 0
-  br i1 %.not7.i, label %.thread, label %bb.e
+  br i1 %.not7.i, label %.thread, label %bb.e, !prof !36
 
 bb.d:                                             ; preds = %bb.b
   %i.c = lshr i64 %2, 32                          ; 2 uses
@@ -884,7 +884,7 @@ bb.d:                                             ; preds = %bb.b
   %cttz.i = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.d, i1 true)
   %.not.i = icmp eq i64 %i.c, 0
   %i.e = or disjoint i32 %cttz.i, 32
-  %i.f = select i1 %.not.i, i32 31, i32 %i.e
+  %i.f = select i1 %.not.i, i32 31, i32 %i.e, !prof !36
   br label %.thread
 
 bb.e:                                             ; preds = %bb.c
@@ -961,7 +961,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.not7.i = icmp eq i64 %2, 0
-  br i1 %.not7.i, label %.thread, label %bb.e
+  br i1 %.not7.i, label %.thread, label %bb.e, !prof !36
 
 bb.d:                                             ; preds = %bb.b
   %i.c = lshr i64 %2, 32                          ; 2 uses
@@ -969,7 +969,7 @@ bb.d:                                             ; preds = %bb.b
   %cttz.i = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.d, i1 true)
   %.not.i = icmp eq i64 %i.c, 0
   %i.e = or disjoint i32 %cttz.i, 32
-  %i.f = select i1 %.not.i, i32 31, i32 %i.e
+  %i.f = select i1 %.not.i, i32 31, i32 %i.e, !prof !36
   br label %.thread
 
 bb.e:                                             ; preds = %bb.c
@@ -1080,7 +1080,7 @@ declare ptr @je_malloc_default(i64 noundef) local_unnamed_addr #5
 ; Function Attrs: mustprogress noinline uwtable
 define internal fastcc noalias noundef ptr @_ZL9handleOOMmb(i64 noundef %0, i1 noundef zeroext %1) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i8, ptr @je_opt_experimental_infallible_new, align 1, !tbaa !64, !range !65, !noundef !66
+  %i.a = load i8, ptr @je_opt_experimental_infallible_new, align 1, !tbaa !65, !range !66, !noundef !67
   %i.b = trunc nuw i8 %i.a to i1
   br i1 %i.b, label %bb.b, label %.preheader
 
@@ -1091,18 +1091,18 @@ bb.b:                                             ; preds = %bb.a
   br label %.thread22
 
 .preheader:                                       ; preds = %bb.a, %bb.g
-  %i.e = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) @_ZZL9handleOOMmbE3mtx) #17, !inline_history !60 ; 2 uses
+  %i.e = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) @_ZZL9handleOOMmbE3mtx) #17, !inline_history !61 ; 2 uses
   %.not.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
-  tail call void @_ZSt20__throw_system_errori(i32 noundef %i.e) #18, !inline_history !61
+  tail call void @_ZSt20__throw_system_errori(i32 noundef %i.e) #18, !inline_history !62
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %.preheader
   %i.f = tail call noundef ptr @_ZSt15set_new_handlerPFvvE(ptr noundef null) #17 ; 3 uses
   %i.g = tail call noundef ptr @_ZSt15set_new_handlerPFvvE(ptr noundef %i.f) #17 ; 0 uses
-  %i.h = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) @_ZZL9handleOOMmbE3mtx) #17, !inline_history !62 ; 0 uses
+  %i.h = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) @_ZZL9handleOOMmbE3mtx) #17, !inline_history !63 ; 0 uses
   %i.i = icmp eq ptr %i.f, null
   br i1 %i.i, label %.loopexit, label %bb.d
 
@@ -1263,35 +1263,36 @@ attributes #19 = { nounwind allocsize(0) }
 !33 = !{!31, !30, i64 8}
 !34 = !{!"branch_weights", i32 2146410443, i32 1073205}
 !35 = !{!24, !22, i64 18}
-!36 = distinct !{!36, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!37 = distinct !{!37, !36, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!38 = !{!37}
-!39 = distinct !{!39, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!40 = distinct !{!40, !39, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!41 = !{!40}
-!42 = distinct !{!42, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!43 = distinct !{!43, !42, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!44 = !{!43}
-!45 = distinct !{!45, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!46 = distinct !{!46, !45, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!47 = !{!46}
-!48 = distinct !{!48, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!49 = distinct !{!49, !48, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!50 = !{!49}
-!51 = distinct !{!51, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!52 = distinct !{!52, !51, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!53 = !{!52}
-!54 = distinct !{!54, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!55 = distinct !{!55, !54, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!56 = !{!55}
-!57 = distinct !{!57, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
-!58 = distinct !{!58, !57, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
-!59 = !{!58}
-!60 = distinct !{null, null, null}
-!61 = distinct !{null, null}
-!62 = distinct !{null, null, null}
-!63 = !{!"bool", !9, i64 0}
-!64 = !{!63, !63, i64 0}
-!65 = !{i8 0, i8 2}
-!66 = !{}
+!36 = !{!"branch_weights", i32 1, i32 1048575}
+!37 = distinct !{!37, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!38 = distinct !{!38, !37, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!39 = !{!38}
+!40 = distinct !{!40, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!41 = distinct !{!41, !40, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!42 = !{!41}
+!43 = distinct !{!43, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!44 = distinct !{!44, !43, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!45 = !{!44}
+!46 = distinct !{!46, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!47 = distinct !{!47, !46, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!48 = !{!47}
+!49 = distinct !{!49, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!50 = distinct !{!50, !49, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!51 = !{!50}
+!52 = distinct !{!52, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!53 = distinct !{!53, !52, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!54 = !{!53}
+!55 = distinct !{!55, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!56 = distinct !{!56, !55, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!57 = !{!56}
+!58 = distinct !{!58, i1 false, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb"}
+!59 = distinct !{!59, !58, !"_ZL19rtree_leaf_elm_readP6tsdn_sP7rtree_sP16rtree_leaf_elm_sb: argument 0"}
+!60 = !{!59}
+!61 = distinct !{null, null, null}
+!62 = distinct !{null, null}
+!63 = distinct !{null, null, null}
+!64 = !{!"bool", !9, i64 0}
+!65 = !{!64, !64, i64 0}
+!66 = !{i8 0, i8 2}
+!67 = !{}
 end_hunk_0

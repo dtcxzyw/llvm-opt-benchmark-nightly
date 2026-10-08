@@ -205,17 +205,27 @@ _ZN4llvm7mdconst15extract_or_nullINS_11ConstantIntEPNS_8MetadataEEENSt9enable_if
   br i1 %i.em, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a": ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %i.en = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.el) #17
-  %spec.select.i.i.not.i.i.i.i.i.i.i = icmp eq i32 %i.en, 16843009
-  br i1 %spec.select.i.i.not.i.i.i.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i", label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit
+  %i.en = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.el) #17 ; 3 uses
+  %9 = and i32 %i.en, 65535
+  %spec.select.i.i.not.i.i.i.i.i.i.i = icmp eq i32 %9, 257
+  br i1 %spec.select.i.i.not.i.i.i.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i", label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit
 
-"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a", %.lr.ph.i.i.i.i.i.i.i
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a"
+  %10 = shl i32 %i.en, 8
+  %.unshifted4.i.i.i.i.i.i.i.i.i = xor i32 %10, 16777216
+  %11 = icmp ugt i32 %.unshifted4.i.i.i.i.i.i.i.i.i, 16777215
+  %.mask = and i32 %i.en, -16777216
+  %12 = icmp ne i32 %.mask, 16777216
+  %.not3.i.i.i.i.i.i.i.i.i.i = or i1 %12, %11
+  br i1 %.not3.i.i.i.i.i.i.i.i.i.i, label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i"
+
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i", %.lr.ph.i.i.i.i.i.i.i
   %i.eo = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i.i.i.i, i64 8
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !664 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ep, %i.ek
   br i1 %.not.i.i.i.i.i.i.i, label %.sink.split356, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !866
 
-_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a"
+_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i.a", %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i"
   %i.eq = icmp eq ptr %i.ek, %.sroa.03.07.i.i.i.i.i.i.i
   br i1 %i.eq, label %.sink.split356, label %bb.ad
 
@@ -236,17 +246,27 @@ bb.ad:                                            ; preds = %_ZL33checkDenormalA
   br i1 %i.ey, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i141", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136": ; preds = %.lr.ph.i.i.i.i.i.i.i134
-  %i.ez = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.ex) #17
-  %spec.select.i.i.not.i.i.i.i.i.i.i137 = icmp eq i32 %i.ez, 33686018
-  br i1 %spec.select.i.i.not.i.i.i.i.i.i.i137, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i141", label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit143
+  %i.ez = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.ex) #17 ; 3 uses
+  %13 = and i32 %i.ez, 65535
+  %spec.select.i.i.not.i.i.i.i.i.i.i137 = icmp eq i32 %13, 514
+  br i1 %spec.select.i.i.not.i.i.i.i.i.i.i137, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i148", label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit143
 
-"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i141": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136", %.lr.ph.i.i.i.i.i.i.i134
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i148": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136"
+  %14 = shl i32 %i.ez, 8
+  %.unshifted4.i.i.i.i.i.i.i.i.i149 = xor i32 %14, 33554432
+  %15 = icmp ugt i32 %.unshifted4.i.i.i.i.i.i.i.i.i149, 16777215
+  %.mask279 = and i32 %i.ez, -16777216
+  %16 = icmp ne i32 %.mask279, 33554432
+  %.not3.i.i.i.i.i.i.i.i.i.i150 = or i1 %16, %15
+  br i1 %.not3.i.i.i.i.i.i.i.i.i.i150, label %_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit143, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i141"
+
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i.i141": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i148", %.lr.ph.i.i.i.i.i.i.i134
   %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i.i.i.i135, i64 8
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !664 ; 2 uses
   %.not.i.i.i.i.i.i.i142 = icmp eq ptr %i.fb, %i.ew
   br i1 %.not.i.i.i.i.i.i.i142, label %.sink.split356, label %.lr.ph.i.i.i.i.i.i.i134, !llvm.loop !866
 
-_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit143: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136"
+_ZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS_13DenormalFPEnvE.exit143: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i136", %"_ZN9__gnu_cxx5__ops10_Iter_predIZL33checkDenormalAttributeConsistencyRKN4llvm6ModuleENS2_13DenormalFPEnvEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.i148"
   %i.fc = icmp eq ptr %i.ew, %.sroa.03.07.i.i.i.i.i.i.i135
   br i1 %i.fc, label %.sink.split356, label %bb.ae
 
@@ -262,30 +282,56 @@ bb.ae:                                            ; preds = %_ZL33checkDenormalA
 
 bb.af:                                            ; preds = %bb.ae
   %i.fk = getelementptr inbounds i8, ptr %i.fh, i64 -64
-  %i.fl = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.fk) #17
+  %i.fl = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.fk) #17 ; 3 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fh, i64 8
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !664 ; 2 uses
   %.not5.i.i.i.i.i.i = icmp eq ptr %i.fn, %i.fi
-  br i1 %.not5.i.i.i.i.i.i, label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit.thread239, label %.lr.ph.i.i.i.i.i.i
+  br i1 %.not5.i.i.i.i.i.i, label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit.thread239, label %.lr.ph.i.i.i.i.preheader.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.af, %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i"
-  %.sroa.03.06.i.i.i.i.i.i = phi ptr [ %i.fs, %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i" ], [ %i.fn, %bb.af ] ; 3 uses
+.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %bb.af
+  %.sroa.02.0.extract.trunc.i.i.i.i.i.i.i.i.i.i = trunc i32 %i.fl to i16
+  %17 = ashr i16 %.sroa.02.0.extract.trunc.i.i.i.i.i.i.i.i.i.i, 8
+  %.sroa.2.0.extract.shift.i.i.i.i.i.i.i.i.i.i = lshr i32 %i.fl, 16 ; 2 uses
+  %.sroa.2.0.extract.trunc.i.i.i.i.i.i.i.i.i.i = trunc nuw i32 %.sroa.2.0.extract.shift.i.i.i.i.i.i.i.i.i.i to i16
+  %sext.i4.i.i.i.i.i.i.i.i.i.i = shl i32 %.sroa.2.0.extract.shift.i.i.i.i.i.i.i.i.i.i, 24
+  %18 = ashr i16 %.sroa.2.0.extract.trunc.i.i.i.i.i.i.i.i.i.i, 8
+  br label %.lr.ph.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i:                               ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i", %.lr.ph.i.i.i.i.preheader.i.i
+  %.sroa.03.06.i.i.i.i.i.i = phi ptr [ %i.fs, %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i" ], [ %i.fn, %.lr.ph.i.i.i.i.preheader.i.i ] ; 3 uses
   %i.fo = getelementptr inbounds i8, ptr %.sroa.03.06.i.i.i.i.i.i, i64 -64 ; 2 uses
   %i.fp = call noundef zeroext i1 @_ZNK4llvm11GlobalValue13isDeclarationEv(ptr noundef nonnull align 8 dereferenceable(140) %i.fo) #17
   br i1 %i.fp, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a": ; preds = %.lr.ph.i.i.i.i.i.i
-  %i.fq = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.fo) #17
-  %spec.select.i.i.not.i.i.i.i.i.i = icmp eq i32 %i.fl, %i.fq
-  br i1 %spec.select.i.i.not.i.i.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i", label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit
+  %i.fq = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %i.fo) #17 ; 4 uses
+  %.sroa.4.0.extract.shift.i.i.i.i.i.i.i.i = lshr i32 %i.fq, 8
+  %.sroa.4.0.extract.trunc.i.i.i.i.i.i.i.i = trunc i32 %.sroa.4.0.extract.shift.i.i.i.i.i.i.i.i to i8
+  %.unshifted.i.i.i.i.i.i.i.i = xor i32 %i.fq, %i.fl
+  %.mask.i.i.i.i.i.i.i.i = and i32 %.unshifted.i.i.i.i.i.i.i.i, 255
+  %19 = icmp eq i32 %.mask.i.i.i.i.i.i.i.i, 0
+  %20 = sext i8 %.sroa.4.0.extract.trunc.i.i.i.i.i.i.i.i to i16
+  %spec.select.i.i.not.i.i.i.i.i.i = icmp eq i16 %17, %20
+  %21 = and i1 %19, %spec.select.i.i.not.i.i.i.i.i.i
+  br i1 %21, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i", label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit
 
-"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a", %.lr.ph.i.i.i.i.i.i
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a"
+  %22 = shl i32 %i.fq, 8
+  %.unshifted3.i.i.i.i.i.i.i.i = xor i32 %22, %sext.i4.i.i.i.i.i.i.i.i.i.i
+  %23 = icmp ugt i32 %.unshifted3.i.i.i.i.i.i.i.i, 16777215
+  %24 = ashr i32 %i.fq, 24
+  %25 = trunc nsw i32 %24 to i16
+  %26 = icmp ne i16 %18, %25
+  %.not3.i.i.i.i.i.i.i.i.i = select i1 %23, i1 true, i1 %26
+  br i1 %.not3.i.i.i.i.i.i.i.i.i, label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i"
+
+"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.thread.i.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i", %.lr.ph.i.i.i.i.i.i
   %i.fr = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i.i.i.i.i, i64 8
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !664 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.fs, %i.fi
   br i1 %.not.i.i.i.i.i.i, label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit.thread239, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !867
 
-_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a"
+_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i.a", %"_ZN9__gnu_cxx5__ops10_Iter_predIZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleEE3$_0EclINS2_14ilist_iteratorINS2_12ilist_detail12node_optionsINS2_8FunctionELb0ELb0EvLb0EvEELb0ELb1EEEEEbT_.exit.i.i.i.i.i.i"
   %.not258 = icmp eq ptr %i.fi, %.sroa.03.06.i.i.i.i.i.i
   br i1 %.not258, label %_ZL35checkDenormalAttributeInconsistencyRKN4llvm6ModuleE.exit.thread239, label %.sink.split356
 

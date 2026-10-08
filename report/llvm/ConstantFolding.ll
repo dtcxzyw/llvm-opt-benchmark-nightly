@@ -205,25 +205,26 @@ _ZNK4llvm7APFloat10isDenormalEv.exit:             ; preds = %bb.k, %bb.l
 
 bb.m:                                             ; preds = %_ZNK4llvm7APFloat10isDenormalEv.exit
   %i.aj = load ptr, ptr %1, align 8, !tbaa !35
-  %i.ak = tail call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %2, ptr noundef nonnull align 4 dereferenceable(29) %i.aj) #26 ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i16 %i.ak to i8 ; 3 uses
+  %i.ak = tail call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %2, ptr noundef nonnull align 4 dereferenceable(29) %i.aj) #26 ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i16 %i.ak to i8 ; 2 uses
   %.sroa.6.0.extract.shift = lshr i16 %i.ak, 8    ; 3 uses
-  %5 = icmp eq i8 %.sroa.0.0.extract.trunc, 0
-  %i.al = icmp eq i16 %.sroa.6.0.extract.shift, 0 ; 3 uses
-  %or.cond52 = and i1 %5, %i.al
-  br i1 %or.cond52, label %bb.n, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
+  %i.al = icmp eq i16 %i.ak, 0
+  br i1 %i.al, label %bb.n, label %5
 
 bb.n:                                             ; preds = %bb.m
   %i.am = load ptr, ptr %0, align 8, !tbaa !58, !nonnull !16, !align !59
   %i.an = tail call noundef ptr @_ZN4llvm10ConstantFP3getERNS_11LLVMContextERKNS_7APFloatE(ptr noundef nonnull align 8 dereferenceable(8) %i.am, ptr noundef nonnull align 8 dereferenceable(24) %1) #26
   br label %_ZNK4llvm4Type14isIEEELikeFPTyEv.exit
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.m
-  %i.ao = icmp eq i16 %.sroa.6.0.extract.shift, 3
+5:                                                ; preds = %bb.m
+  %6 = icmp eq i16 %.sroa.6.0.extract.shift, 3
+  br i1 %6, label %_ZNK4llvm4Type14isIEEELikeFPTyEv.exit, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
+
+_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %5
+  %i.ao = icmp eq i16 %.sroa.6.0.extract.shift, 0 ; 2 uses
   %i.ap = icmp eq i8 %.sroa.0.0.extract.trunc, 3
-  %or.cond9 = and i1 %i.al, %i.ap
-  %or.cond55 = or i1 %i.ao, %or.cond9
-  br i1 %or.cond55, label %_ZNK4llvm4Type14isIEEELikeFPTyEv.exit, label %bb.o
+  %or.cond9 = and i1 %i.ao, %i.ap
+  br i1 %or.cond9, label %_ZNK4llvm4Type14isIEEELikeFPTyEv.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread
   %i.aq = load ptr, ptr %1, align 8, !tbaa !35    ; 2 uses
@@ -240,7 +241,7 @@ bb.o:                                             ; preds = %_ZNK4llvm12Denormal
 
 bb.p:                                             ; preds = %bb.o
   %i.ax = icmp ne i8 %.sroa.0.0.extract.trunc, 2
-  %.not = xor i1 %i.al, true
+  %.not = xor i1 %i.ao, true
   %.not37 = or i1 %i.ax, %.not
   br label %bb.q
 
@@ -254,8 +255,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br label %_ZNK4llvm4Type14isIEEELikeFPTyEv.exit
 
-_ZNK4llvm4Type14isIEEELikeFPTyEv.exit:            ; preds = %bb.n, %bb.q, %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.g, %_ZNK4llvm7APFloat10isDenormalEv.exit, %bb.i, %_ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit
-  %.1 = phi ptr [ %i.l, %_ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit ], [ %i.af, %bb.i ], [ null, %bb.g ], [ null, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ %i.an, %bb.n ], [ %i.ba, %bb.q ], [ null, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
+_ZNK4llvm4Type14isIEEELikeFPTyEv.exit:            ; preds = %bb.n, %bb.q, %5, %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.g, %_ZNK4llvm7APFloat10isDenormalEv.exit, %bb.i, %_ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit
+  %.1 = phi ptr [ %i.l, %_ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit ], [ %i.af, %bb.i ], [ null, %bb.g ], [ null, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ %i.an, %bb.n ], [ %i.ba, %bb.q ], [ null, %5 ], [ null, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
   ret ptr %.1
 }
 
