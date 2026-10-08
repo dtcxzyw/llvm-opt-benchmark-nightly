@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN8ultrahdr17JpegEncoderHelper6encodeEPPKhPKjii12uhdr_img_fmtiPKvm(ptr dead_on_unwind noalias writable sret(%struct.uhdr_error_info) align 4 initializes((0, 264)) %0, ptr noundef nonnull align 8 dereferenceable(112) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, ptr noundef %8, i64 noundef %9) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %10 = alloca %struct.jpeg_compress_struct, align 8 ; 27 uses
+  %10 = alloca %struct.jpeg_compress_struct, align 8 ; 28 uses
   %11 = alloca %"struct.ultrahdr::jpeg_error_mgr_impl", align 8 ; 6 uses
   %i.a = alloca [255 x i8], align 16              ; 5 uses
   %i.b = alloca [1 x ptr], align 8                ; 5 uses
@@ -274,7 +274,7 @@ bb.c:                                             ; preds = %_ZNSt8_Rb_treeI12uh
 _ZNSt3mapI12uhdr_img_fmtSt6vectorIiSaIiEESt4lessIS0_ESaISt4pairIKS0_S3_EEE4findERS7_.exit64: ; preds = %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS2_.exit.i.i61, %bb.c
   %.sroa.0.0.i.i63 = phi ptr [ %spec.select.i.i62, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @_ZN8ultrahdr14sample_factorsE, i64 8), %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS2_.exit.i.i61 ]
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i63, i64 40
-  %i.v = call ptr @jpeg_std_error(ptr noundef nonnull %11) ; 2 uses
+  %i.v = call ptr @jpeg_std_error(ptr noundef nonnull %11)
   store ptr %i.v, ptr %10, align 8, !tbaa !95
   store ptr @_ZN8ultrahdrL15jpegrerror_exitEP18jpeg_common_struct, ptr %11, align 8, !tbaa !96
   %i.w = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -583,7 +583,8 @@ bb.r:                                             ; preds = %_ZNSt3mapI12uhdr_im
   store i32 1, ptr %0, align 4, !tbaa !25
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 1, ptr %i.et, align 4, !tbaa !26
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  %12 = load ptr, ptr %10, align 8, !tbaa !95
+  %i.eu = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !63
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void %i.ev(ptr noundef nonnull %10, ptr noundef nonnull %i.ew)

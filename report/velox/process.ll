@@ -205,24 +205,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %.sroa.038.054 = phi ptr [ %i.cj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ], [ %i.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store <2 x ptr> <ptr @.str.53, ptr getelementptr inbounds nuw (i8, ptr @.str.53, i64 1)>, ptr %4, align 16
-  %i.r = load ptr, ptr %.sroa.038.054, align 8, !tbaa !37 ; 5 uses
+  %i.r = load ptr, ptr %.sroa.038.054, align 8, !tbaa !37 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.038.054, i64 8 ; 5 uses
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !39   ; 4 uses
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !39   ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.t
   %.not2633.i.i.i = icmp samesign eq i64 %i.t, 0
   br i1 %.not2633.i.i.i, label %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.lr.ph, %.critedge15.i.i.i
-  %.pn = phi ptr [ %indvars.iv, %.critedge15.i.i.i ], [ %i.r, %.lr.ph ]
-  %.sroa.018.034.i.i.i = phi ptr [ %7, %.critedge15.i.i.i ], [ %i.r, %.lr.ph ] ; 4 uses
-  %indvars.iv = getelementptr i8, ptr %.pn, i64 1 ; 3 uses
+  %.sroa.018.034.i.i.i = phi ptr [ %.sroa.0.0.lcssa.ph.i.i.i.le, %.critedge15.i.i.i ], [ %i.r, %.lr.ph ] ; 3 uses
   %5 = load i8, ptr %.sroa.018.034.i.i.i, align 1, !tbaa !38
   %6 = icmp eq i8 %5, 34
+  %.sroa.0.0.lcssa.ph.i.i.i.le = getelementptr inbounds nuw i8, ptr %.sroa.018.034.i.i.i, i64 1 ; 3 uses
   br i1 %6, label %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i, label %.critedge15.i.i.i
 
 .critedge15.i.i.i:                                ; preds = %.lr.ph.preheader.i.i.i
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.018.034.i.i.i, i64 1 ; 2 uses
-  %.not26.i.i.i = icmp eq ptr %7, %i.u
+  %.not26.i.i.i = icmp eq ptr %.sroa.0.0.lcssa.ph.i.i.i.le, %i.u
   br i1 %.not26.i.i.i, label %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i, label %.lr.ph.preheader.i.i.i, !llvm.loop !13
 
 _ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i: ; preds = %.critedge15.i.i.i, %.lr.ph
@@ -231,38 +229,34 @@ _ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__n
 
 _ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i: ; preds = %.lr.ph.preheader.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %.not.i9.i.i = icmp eq ptr %.sroa.018.034.i.i.i, %indvars.iv
-  br i1 %.not.i9.i.i, label %bb.d, label %8
-
-8:                                                ; preds = %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i
   store <2 x ptr> <ptr @.str.54, ptr getelementptr inbounds nuw (i8, ptr @.str.54, i64 2)>, ptr %3, align 16
-  invoke void @_ZN5boost9algorithm6detail21find_format_all_impl2INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13first_finderFIPKcNS0_8is_equalEEENS1_13const_formatFINS_14iterator_rangeISB_EEEENSF_IN9__gnu_cxx17__normal_iteratorIPcS8_EEEESG_EEvRT_T0_T1_T2_T3_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.038.054, ptr noundef nonnull byval(%"struct.boost::algorithm::detail::first_finderF") align 8 %4, ptr nonnull @.str.54, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.54, i64 2), ptr nonnull %.sroa.018.034.i.i.i, ptr nonnull %indvars.iv, ptr noundef nonnull byval(%"class.boost::iterator_range") align 8 %3)
+  invoke void @_ZN5boost9algorithm6detail21find_format_all_impl2INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_13first_finderFIPKcNS0_8is_equalEEENS1_13const_formatFINS_14iterator_rangeISB_EEEENSF_IN9__gnu_cxx17__normal_iteratorIPcS8_EEEESG_EEvRT_T0_T1_T2_T3_(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.038.054, ptr noundef nonnull byval(%"struct.boost::algorithm::detail::first_finderF") align 8 %4, ptr nonnull @.str.54, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.54, i64 2), ptr nonnull %.sroa.018.034.i.i.i, ptr nonnull %.sroa.0.0.lcssa.ph.i.i.i.le, ptr noundef nonnull byval(%"class.boost::iterator_range") align 8 %3)
           to label %._crit_edge62 unwind label %bb.p
 
-._crit_edge62:                                    ; preds = %8
+._crit_edge62:                                    ; preds = %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i
   %.pre = load ptr, ptr %.sroa.038.054, align 8, !tbaa !37
   %.pre63 = load i64, ptr %i.s, align 8, !tbaa !39
   br label %bb.d
 
-bb.d:                                             ; preds = %._crit_edge62, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i
-  %9 = phi i64 [ %.pre63, %._crit_edge62 ], [ %i.t, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i ], [ %i.t, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i ] ; 3 uses
-  %10 = phi ptr [ %.pre, %._crit_edge62 ], [ %i.r, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i ], [ %i.r, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i ] ; 4 uses
+bb.d:                                             ; preds = %._crit_edge62, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i
+  %7 = phi i64 [ %.pre63, %._crit_edge62 ], [ %i.t, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i ] ; 3 uses
+  %8 = phi ptr [ %.pre, %._crit_edge62 ], [ %i.r, %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.thread.i.i ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.v = getelementptr inbounds nuw i8, ptr %10, i64 %9 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %8, i64 %7 ; 3 uses
   %i.w = ptrtoint ptr %i.v to i64
-  %i.x = ashr i64 %9, 2                           ; 2 uses
+  %i.x = ashr i64 %7, 2                           ; 2 uses
   %i.y = icmp sgt i64 %i.x, 0
   br i1 %i.y, label %.lr.ph.i.i.i20, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i20:                                   ; preds = %bb.d
-  %i.z = and i64 %9, -4
-  %scevgep.i.i.i = getelementptr i8, ptr %10, i64 %i.z
+  %i.z = and i64 %7, -4
+  %scevgep.i.i.i = getelementptr i8, ptr %8, i64 %i.z
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.lr.ph.i.i.i20
   %.052.i.i.i = phi i64 [ %i.x, %.lr.ph.i.i.i20 ], [ %i.am, %bb.i ] ; 2 uses
-  %.sroa.032.051.i.i.i = phi ptr [ %10, %.lr.ph.i.i.i20 ], [ %i.al, %bb.i ] ; 9 uses
+  %.sroa.032.051.i.i.i = phi ptr [ %8, %.lr.ph.i.i.i20 ], [ %i.al, %bb.i ] ; 9 uses
   %i.aa = load i8, ptr %.sroa.032.051.i.i.i, align 1, !tbaa !38
   %i.ab = icmp eq i8 %i.aa, 32
   br i1 %i.ab, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEcET_SA_SA_RKT0_.exit, label %bb.f
@@ -292,7 +286,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.an, label %bb.e, label %._crit_edge.i.i.i, !llvm.loop !552
 
 ._crit_edge.i.i.i:                                ; preds = %bb.i, %bb.d
-  %.sroa.032.0.lcssa.i.i.i = phi ptr [ %10, %bb.d ], [ %scevgep.i.i.i, %bb.i ] ; 6 uses
+  %.sroa.032.0.lcssa.i.i.i = phi ptr [ %8, %bb.d ], [ %scevgep.i.i.i, %bb.i ] ; 6 uses
   %.pre-phi.i.i.i = ptrtoint ptr %.sroa.032.0.lcssa.i.i.i to i64
   %i.ao = sub i64 %i.w, %.pre-phi.i.i.i
   switch i64 %i.ao, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEcET_SA_SA_RKT0_.exit.thread [
@@ -388,7 +382,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   store i8 0, ptr %i.bn, align 1, !tbaa !38
   br label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEcET_SA_SA_RKT0_.exit.thread
 
-bb.p:                                             ; preds = %8
+bb.p:                                             ; preds = %_ZNK5boost9algorithm6detail13first_finderFIPKcNS0_8is_equalEEclIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS_14iterator_rangeIT_EESJ_SJ_.exit.i.i
   %i.bo = landingpad { ptr, i32 }
           cleanup
   br label %bb.v

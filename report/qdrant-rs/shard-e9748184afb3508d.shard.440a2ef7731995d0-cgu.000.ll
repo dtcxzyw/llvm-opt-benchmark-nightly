@@ -205,8 +205,8 @@ _RNCNvMs5_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecNtNtCs607s0NAIaWN_7segment5types15
   br i1 %.not, label %.loopexit, label %bb.c
 
 bb.e:                                             ; preds = %.split, %_RNCNvMs5_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecNtNtCs607s0NAIaWN_7segment5types15ExtendedPointIdE5dedup0Cs5QaNqjAn6vc_5shard.exit
-  %.sroa.5.025 = add nuw i64 %.sroa.0.024, 1      ; 2 uses
-  %i.y = icmp ult i64 %.sroa.5.025, %i.b
+  %.sroa.5.025 = add nuw nsw i64 %.sroa.0.024, 1  ; 2 uses
+  %i.y = icmp samesign ult i64 %.sroa.5.025, %i.b
   br i1 %i.y, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.e

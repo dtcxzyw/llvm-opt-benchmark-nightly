@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.aj
   store i64 37, ptr %i.bc, align 8, !noalias !914
   call void @llvm.experimental.noalias.scope.decl(metadata !915)
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.07.091, i64 256
-  %.val12.i.i = load i64, ptr %i.bi, align 8, !alias.scope !916, !noalias !917, !noundef !5 ; 4 uses
+  %.val12.i.i = load i64, ptr %i.bi, align 8, !alias.scope !916, !noalias !917, !noundef !5 ; 3 uses
   %i.bj = icmp ult i64 %.val12.i.i, 2
   br i1 %i.bj, label %_RNvMsb_NtNtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memory7dynamicINtB5_13DynamicMemoryNtNtNtB9_13shm_allocator14pool_allocator13PoolAllocatorINtNtNtNtB9_13shared_memory6common7details6MemoryB1t_INtNtNtB9_15dynamic_storage19posix_shared_memory7StorageINtB2p_16AllocatorDetailsB1t_EEEE27extract_name_and_segment_idCsadSKrpJ73hd_12iox2_service.exit.thread, label %.lr.ph.i.i
 
@@ -266,12 +266,10 @@ split.i:                                          ; preds = %bb.j, %bb.h, %bb.m
 
 bb.o:                                             ; preds = %bb.k, %bb.n
   %.sroa.07.024.i.i.lcssa127 = phi i64 [ %.sroa.07.024.i.i, %bb.n ], [ %i.bq, %bb.k ] ; 4 uses
-  %i.bw = add nuw nsw i64 %.sroa.07.024.i.i.lcssa127, 2 ; 7 uses
-  %2 = icmp ult i64 %.val12.i.i, %i.bw
+  %i.bw = add nuw nsw i64 %.sroa.07.024.i.i.lcssa127, 2 ; 6 uses
   %i.bx = add nuw nsw i64 %.sroa.07.024.i.i.lcssa127, 5
   %i.by = icmp ugt i64 %.val12.i.i, %i.bx
-  %or.cond = select i1 %2, i1 true, i1 %i.by
-  br i1 %or.cond, label %_RNvMsb_NtNtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memory7dynamicINtB5_13DynamicMemoryNtNtNtB9_13shm_allocator14pool_allocator13PoolAllocatorINtNtNtNtB9_13shared_memory6common7details6MemoryB1t_INtNtNtB9_15dynamic_storage19posix_shared_memory7StorageINtB2p_16AllocatorDetailsB1t_EEEE27extract_name_and_segment_idCsadSKrpJ73hd_12iox2_service.exit.thread, label %bb.p
+  br i1 %i.by, label %_RNvMsb_NtNtCs7gufeB8TUC6_12iceoryx2_cal23resizable_shared_memory7dynamicINtB5_13DynamicMemoryNtNtNtB9_13shm_allocator14pool_allocator13PoolAllocatorINtNtNtNtB9_13shared_memory6common7details6MemoryB1t_INtNtNtB9_15dynamic_storage19posix_shared_memory7StorageINtB2p_16AllocatorDetailsB1t_EEEE27extract_name_and_segment_idCsadSKrpJ73hd_12iox2_service.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !914

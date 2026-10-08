@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader.4
   tail call void (ptr, ...) @agerrorf(ptr noundef nonnull @.str.18, ptr noundef nonnull %1) #23
   br label %bb.h
 
-.thread:                                          ; preds = %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader.4
+.thread:                                          ; preds = %.preheader.4, %.preheader.3, %.preheader.2, %.preheader.1, %.preheader.preheader
   %.02130.lcssa = phi i64 [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ], [ 2, %.preheader.2 ], [ 3, %.preheader.3 ], [ 4, %.preheader.4 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.02130.lcssa

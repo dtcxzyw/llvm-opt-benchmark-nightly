@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void (ptr, ...) @exerror(ptr noundef nonnull @.str.22) #19
   br label %bb.i
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
+.thread:                                          ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
   %.lcssa = phi i64 [ 3, %bb.a ], [ 4, %bb.b ], [ 5, %bb.c ], [ 6, %bb.d ], [ 7, %bb.e ], [ 8, %bb.f ], [ 9, %bb.g ] ; 2 uses
   %i.p = trunc nuw nsw i64 %.lcssa to i32
   %i.q = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef %2) ; 2 uses

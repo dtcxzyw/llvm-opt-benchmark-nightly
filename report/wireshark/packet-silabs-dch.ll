@@ -202,10 +202,13 @@ bb.k:                                             ; preds = %lookup_ble_connecti
   br i1 %i.m, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 2 uses
+  %11 = load i8, ptr %i.bk, align 4
   %i.bl = shl i8 %i.bj, 4
-  %i.bm = and i8 %i.bl, 48
-  store i8 %i.bm, ptr %i.bk, align 4
+  %12 = and i8 %i.bl, 48
+  %i.bm = and i8 %11, -49
+  %13 = or disjoint i8 %i.bm, %12
+  store i8 %13, ptr %i.bk, align 4
   %i.bn = icmp ne i8 %i.bj, 1
   %i.bo = zext i1 %i.bn to i32
   %i.bp = getelementptr i8, ptr %1, i64 356
@@ -214,9 +217,12 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bq = icmp eq i8 %i.bj, 1                     ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.br = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 2 uses
   %i.bs = select i1 %i.bq, i8 32, i8 16
-  store i8 %i.bs, ptr %i.br, align 4
+  %14 = load i8, ptr %i.br, align 4
+  %15 = and i8 %14, -49
+  %16 = or disjoint i8 %15, %i.bs
+  store i8 %16, ptr %i.br, align 4
   %i.bt = zext i1 %i.bq to i32
   %i.bu = getelementptr i8, ptr %1, i64 356
   store i32 %i.bt, ptr %i.bu, align 4

@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
+  %i.d = alloca i32, align 4                      ; 7 uses
   %2 = alloca %struct.ScanKeyData, align 8        ; 4 uses
   %3 = alloca %struct.movedb_failure_params, align 4 ; 5 uses
   %4 = alloca [1 x %struct.__jmp_buf_tag], align 16 ; 4 uses
@@ -274,7 +274,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %bb.i
-  %i.ab = load i32, ptr %i.d, align 4             ; 3 uses
+  %i.ab = load i32, ptr %i.d, align 4
   %i.ac = icmp eq i32 %i.ab, %i.u
   br i1 %i.ac, label %bb.l, label %bb.m
 
@@ -298,7 +298,8 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %bb.m
-  %i.aj = call ptr @GetDatabasePath(i32 noundef %i.m, i32 noundef %i.ab) #16 ; 4 uses
+  %7 = load i32, ptr %i.d, align 4
+  %i.aj = call ptr @GetDatabasePath(i32 noundef %i.m, i32 noundef %7) #16 ; 4 uses
   %i.ak = call ptr @GetDatabasePath(i32 noundef %i.m, i32 noundef %i.u) #16 ; 7 uses
   call void @RequestCheckpoint(i32 noundef 60) #16
   %i.al = call i64 @EmitProcSignalBarrier(i32 noundef 0) #16
@@ -391,8 +392,9 @@ bb.s:                                             ; preds = %bb.r
   store i32 %i.u, ptr %i.bo, align 4
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %i.m, ptr %i.bp, align 4
+  %8 = load i32, ptr %i.d, align 4
   %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 %i.ab, ptr %i.bq, align 4
+  store i32 %8, ptr %i.bq, align 4
   call void @XLogBeginInsert() #16
   call void @XLogRegisterData(ptr noundef nonnull %5, i32 noundef 16) #16
   %i.br = call i64 @XLogInsert(i8 noundef zeroext 4, i8 noundef zeroext 1) #16 ; 0 uses

@@ -202,7 +202,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.ahv = getelementptr i8, ptr %i.ahu, i64 8
   %i.ahw = load ptr, ptr %i.ahv, align 8
   %i.ahx = getelementptr i8, ptr %i.ahw, i64 %i.ahe
-  %i.ahy = add nuw i32 %.0.lcssa.i, 1
+  %i.ahy = add nuw nsw i32 %.0.lcssa.i, 1
   %i.ahz = zext nneg i32 %.0.lcssa.i to i64
   %i.aia = getelementptr i8, ptr %i.ahx, i64 %i.ahz
   store i8 10, ptr %i.aia, align 1
@@ -605,15 +605,18 @@ g_strdup_inline.exit:                             ; preds = %bb.c
   %i.r = getelementptr i8, ptr %1, i64 200        ; 4 uses
   store ptr %i.q, ptr %i.r, align 8
   store ptr %1, ptr %2, align 8
-  %i.s = call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #29 ; 4 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.s = call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #29
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   store ptr %i.s, ptr %i.t, align 8
   %i.u = call noalias ptr @g_strdup(ptr noundef %0)
-  store ptr %i.u, ptr %i.s, align 8
-  %i.v = getelementptr i8, ptr %i.s, i64 8
+  %5 = load ptr, ptr %i.t, align 8
+  store ptr %i.u, ptr %5, align 8
+  %6 = load ptr, ptr %i.t, align 8
+  %i.v = getelementptr i8, ptr %6, i64 8
   store i32 1, ptr %i.v, align 8
-  %i.w = load ptr, ptr %i.r, align 8
-  call void @g_ptr_array_add(ptr noundef %i.w, ptr noundef %i.s)
+  %7 = load ptr, ptr %i.r, align 8
+  %i.w = load ptr, ptr %i.t, align 8
+  call void @g_ptr_array_add(ptr noundef %7, ptr noundef %i.w)
   %i.x = call ptr @MateParserAlloc(ptr noundef nonnull @g_malloc)
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   store ptr %i.x, ptr %i.y, align 8

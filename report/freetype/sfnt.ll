@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 17 uses
   %10 = alloca %struct.FT_StreamRec_, align 8     ; 5 uses
   %i.b = alloca ptr, align 8                      ; 23 uses
-  %i.c = alloca ptr, align 8                      ; 4 uses
+  %i.c = alloca ptr, align 8                      ; 10 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i32, align 4                      ; 7 uses
@@ -280,7 +280,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.ar
 
 bb.j:                                             ; preds = %bb.h
-  %i.ac = call noalias ptr @png_create_info_struct(ptr noundef nonnull %i.ab) #27 ; 8 uses
+  %i.ac = call noalias ptr @png_create_info_struct(ptr noundef nonnull %i.ab) #27 ; 2 uses
   store ptr %i.ac, ptr %i.c, align 8, !tbaa !749
   %.not58 = icmp eq ptr %i.ac, null
   br i1 %.not58, label %bb.k, label %bb.l
@@ -305,9 +305,11 @@ bb.n:                                             ; preds = %bb.l
   %i.ag = load ptr, ptr %i.b, align 8, !tbaa !747
   call void @png_set_read_fn(ptr noundef %i.ag, ptr noundef nonnull %10, ptr noundef nonnull @read_data_from_FT_Stream) #27
   %i.ah = load ptr, ptr %i.b, align 8, !tbaa !747
-  call void @png_read_info(ptr noundef %i.ah, ptr noundef nonnull %i.ac) #27
+  %11 = load ptr, ptr %i.c, align 8, !tbaa !749
+  call void @png_read_info(ptr noundef %i.ah, ptr noundef %11) #27
   %i.ai = load ptr, ptr %i.b, align 8, !tbaa !747
-  %i.aj = call i32 @png_get_IHDR(ptr noundef %i.ai, ptr noundef nonnull %i.ac, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef null, ptr noundef null) #27 ; 0 uses
+  %12 = load ptr, ptr %i.c, align 8, !tbaa !749
+  %i.aj = call i32 @png_get_IHDR(ptr noundef %i.ai, ptr noundef %12, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef null, ptr noundef null) #27 ; 0 uses
   %i.ak = load i32, ptr %i.a, align 4, !tbaa !30
   %.not60 = icmp eq i32 %i.ak, 0
   br i1 %.not60, label %bb.o, label %bb.aq
@@ -383,7 +385,8 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %i.bk = load ptr, ptr %i.b, align 8, !tbaa !747
-  %i.bl = call i32 @png_get_valid(ptr noundef %i.bk, ptr noundef nonnull %i.ac, i32 noundef 16) #27
+  %13 = load ptr, ptr %i.c, align 8, !tbaa !749
+  %i.bl = call i32 @png_get_valid(ptr noundef %i.bk, ptr noundef %13, i32 noundef 16) #27
   %.not63 = icmp eq i32 %i.bl, 0
   br i1 %.not63, label %bb.z, label %bb.y
 
@@ -438,9 +441,11 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.bz = load ptr, ptr %i.b, align 8, !tbaa !747
   call void @png_set_filler(ptr noundef %i.bz, i32 noundef 255, i32 noundef 1) #27
   %i.ca = load ptr, ptr %i.b, align 8, !tbaa !747
-  call void @png_read_update_info(ptr noundef %i.ca, ptr noundef nonnull %i.ac) #27
+  %14 = load ptr, ptr %i.c, align 8, !tbaa !749
+  call void @png_read_update_info(ptr noundef %i.ca, ptr noundef %14) #27
   %i.cb = load ptr, ptr %i.b, align 8, !tbaa !747
-  %i.cc = call i32 @png_get_IHDR(ptr noundef %i.cb, ptr noundef nonnull %i.ac, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef null, ptr noundef null) #27 ; 0 uses
+  %15 = load ptr, ptr %i.c, align 8, !tbaa !749
+  %i.cc = call i32 @png_get_IHDR(ptr noundef %i.cb, ptr noundef %15, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef null, ptr noundef null) #27 ; 0 uses
   %i.cd = load i32, ptr %i.f, align 4, !tbaa !30
   %.not65 = icmp eq i32 %i.cd, 8
   br i1 %.not65, label %bb.ai, label %bb.aj
@@ -557,7 +562,8 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph.new
   %.0..0..0..0.10 = load volatile ptr, ptr %i.i, align 8, !tbaa !745
   call void @png_read_image(ptr noundef %i.do, ptr noundef %.0..0..0..0.10) #27
   %i.dp = load ptr, ptr %i.b, align 8, !tbaa !747
-  call void @png_read_end(ptr noundef %i.dp, ptr noundef nonnull %i.ac) #27
+  %16 = load ptr, ptr %i.c, align 8, !tbaa !749
+  call void @png_read_end(ptr noundef %i.dp, ptr noundef %16) #27
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.m, %bb.r, %bb.aj, %bb.ao, %._crit_edge, %bb.q, %bb.p, %bb.n, %bb.ak, %bb.am

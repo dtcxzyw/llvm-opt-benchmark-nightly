@@ -204,15 +204,14 @@ bb.eg:                                            ; preds = %bb.ef, %.loopexit
   %i.aeo = ptrtoint ptr %i.aem to i64
   %i.aep = ptrtoint ptr %i.aen to i64
   %i.aeq = sub i64 %i.aeo, %i.aep
-  %i.aer = sdiv exact i64 %i.aeq, 24              ; 2 uses
-  %26 = and i64 %i.aer, 255
-  %.not243 = icmp eq i64 %26, 0
+  %i.aer = sdiv exact i64 %i.aeq, 24
+  %26 = trunc i64 %i.aer to i8                    ; 2 uses
+  %.not243 = icmp eq i8 %26, 0
   br i1 %.not243, label %._crit_edge242, label %.lr.ph241
 
 .lr.ph241:                                        ; preds = %bb.eg
   %i.aes = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.aet = getelementptr inbounds nuw i8, ptr %3, i64 33
-  %27 = trunc i64 %i.aer to i8
   br label %bb.eh
 
 ._crit_edge242:                                   ; preds = %_ZL14EmitUnwindCodeRN4llvm10MCStreamerEPKNS_8MCSymbolERNS_5WinEH11InstructionE.exit, %bb.eg
@@ -423,8 +422,8 @@ bb.et:                                            ; preds = %bb.eh
 
 _ZL14EmitUnwindCodeRN4llvm10MCStreamerEPKNS_8MCSymbolERNS_5WinEH11InstructionE.exit: ; preds = %bb.ej, %bb.ek, %bb.eo, %bb.ep, %bb.eq, %bb.er, %bb.es, %bb.et
   %i.aiz = add nuw i8 %.0239, 1                   ; 2 uses
-  %28 = icmp ult i8 %i.aiz, %27
-  br i1 %28, label %bb.eh, label %._crit_edge242, !llvm.loop !283
+  %exitcond.not = icmp eq i8 %i.aiz, %26
+  br i1 %exitcond.not, label %._crit_edge242, label %bb.eh, !llvm.loop !283
 
 bb.eu:                                            ; preds = %._crit_edge242
   %i.aja = load ptr, ptr %0, align 8, !tbaa !62
@@ -827,9 +826,8 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   %i.zl = ptrtoint ptr %i.zj to i64
   %i.zm = sub i64 %i.zk, %i.zl
   %i.zn = sdiv exact i64 %i.zm, 24
-  %19 = trunc i64 %i.zn to i32
-  %20 = and i32 %19, 255                          ; 2 uses
-  %.not503 = icmp eq i32 %20, 0
+  %19 = trunc i64 %i.zn to i8                     ; 2 uses
+  %.not503 = icmp eq i8 %19, 0
   br i1 %.not503, label %._crit_edge486, label %.lr.ph485
 
 ._crit_edge486:                                   ; preds = %.lr.ph485, %.loopexit
@@ -842,7 +840,7 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   br i1 %.not214492, label %._crit_edge496, label %.lr.ph495
 
 .lr.ph485:                                        ; preds = %.loopexit, %.lr.ph485
-  %indvars.iv = phi i32 [ %indvars.iv.next, %.lr.ph485 ], [ 0, %.loopexit ]
+  %.0188483 = phi i8 [ %20, %.lr.ph485 ], [ 0, %.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #22
   %i.zs = load ptr, ptr %i.o, align 8, !tbaa !105
   %i.zt = getelementptr inbounds i8, ptr %i.zs, i64 -24 ; 2 uses
@@ -850,8 +848,8 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   store ptr %i.zt, ptr %i.o, align 8, !tbaa !106
   call fastcc void @_ZL17ARMEmitUnwindCodeRN4llvm10MCStreamerERKNS_5WinEH11InstructionE(ptr noundef nonnull align 8 dereferenceable(304) %0, ptr noundef nonnull align 8 dereferenceable(17) %18)
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
-  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i32 %indvars.iv.next, %20
+  %20 = add nuw i8 %.0188483, 1                   ; 2 uses
+  %exitcond.not = icmp eq i8 %20, %19
   br i1 %exitcond.not, label %._crit_edge486, label %.lr.ph485, !llvm.loop !529
 
 ._crit_edge496:                                   ; preds = %._crit_edge491, %._crit_edge486

@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca [1200 x i8], align 16             ; 6 uses
   %i.e = alloca [1200 x i8], align 16             ; 4 uses
   %i.f = alloca i32, align 4                      ; 4 uses
-  %i.g = alloca i32, align 4                      ; 10 uses
+  %i.g = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
@@ -276,7 +276,8 @@ bb.i:                                             ; preds = %bb.g
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %.preheader
-  %i.y = call i32 @file_remove(ptr noundef nonnull @netoutfile) #24 ; 0 uses
+  %i.y = call i32 @file_remove(ptr noundef nonnull @netoutfile) #24
+  store i32 %i.y, ptr %i.g, align 4, !tbaa !12
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge, %bb.i
@@ -679,7 +680,7 @@ bb.a:
   %i.c = alloca [1200 x i8], align 16             ; 4 uses
   %i.d = alloca [1200 x i8], align 16             ; 5 uses
   %i.e = alloca i32, align 4                      ; 5 uses
-  %i.f = alloca i32, align 4                      ; 10 uses
+  %i.f = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
@@ -754,7 +755,8 @@ bb.i:                                             ; preds = %bb.g
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %.preheader
-  %i.z = call i32 @file_remove(ptr noundef nonnull @netoutfile) #24 ; 0 uses
+  %i.z = call i32 @file_remove(ptr noundef nonnull @netoutfile) #24
+  store i32 %i.z, ptr %i.f, align 4, !tbaa !12
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge, %bb.i

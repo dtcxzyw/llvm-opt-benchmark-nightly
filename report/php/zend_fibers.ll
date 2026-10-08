@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = call noalias dereferenceable_or_null(16384) ptr @_emalloc_large(i64 noundef 16384) #25 ; 9 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 5 uses
+  %i.g = call noalias dereferenceable_or_null(16384) ptr @_emalloc_large(i64 noundef 16384) #25 ; 7 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 4 uses
   store ptr %i.h, ptr %i.g, align 8, !tbaa !121
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16384 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -215,17 +215,19 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.l, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 480), align 8, !tbaa !124
   store ptr %i.i, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 488), align 8, !tbaa !125
   store i64 16384, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 504), align 8, !tbaa !70
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 288
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 288 ; 2 uses
   store ptr %i.h, ptr %i.m, align 8, !tbaa !87
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 296
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 296 ; 2 uses
   store ptr %i.h, ptr %i.n, align 8, !tbaa !90
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.h, i8 0, i64 80, i1 false)
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 56
+  %2 = load ptr, ptr %i.m, align 8, !tbaa !87     ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr @zend_fiber_function, ptr %i.o, align 8, !tbaa !92
-  %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 512), align 8, !tbaa !71
-  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 80
-  store ptr %i.p, ptr %i.q, align 8, !tbaa !93
-  store ptr %i.h, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 512), align 8, !tbaa !71
+  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 512), align 8, !tbaa !71
+  %i.p = load ptr, ptr %i.n, align 8, !tbaa !90
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 48
+  store ptr %3, ptr %i.q, align 8, !tbaa !93
+  store ptr %2, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 512), align 8, !tbaa !71
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 528), align 8, !tbaa !73
   %i.r = trunc i64 %.0 to i32
   store i32 %i.r, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 424), align 8, !tbaa !72

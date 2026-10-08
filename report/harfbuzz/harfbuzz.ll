@@ -205,10 +205,10 @@ bb.t:                                             ; preds = %bb.s
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.lr.ph.preheader.i, %.preheader.i, %.critedge.i.a
-  %i.fb = phi i8 [ %.pre134, %.lr.ph.preheader.i ], [ %i.ey, %.preheader.i ], [ %i.dp, %.critedge.i.a ]
-  %i.fc = phi i8 [ %.pre132, %.lr.ph.preheader.i ], [ %i.en, %.preheader.i ], [ %i.ct, %.critedge.i.a ]
-  %i.fd = phi i8 [ %.pre130, %.lr.ph.preheader.i ], [ %i.ec, %.preheader.i ], [ %i.bx, %.critedge.i.a ]
-  %i.fe = phi i8 [ %.pre.i, %.lr.ph.preheader.i ], [ %i.ds, %.preheader.i ], [ %i.bb, %.critedge.i.a ]
+  %i.fb = phi i8 [ %.pre134, %.lr.ph.preheader.i ], [ %i.dp, %.critedge.i.a ], [ %i.ey, %.preheader.i ]
+  %i.fc = phi i8 [ %.pre132, %.lr.ph.preheader.i ], [ %i.ct, %.critedge.i.a ], [ %i.en, %.preheader.i ]
+  %i.fd = phi i8 [ %.pre130, %.lr.ph.preheader.i ], [ %i.bx, %.critedge.i.a ], [ %i.ec, %.preheader.i ]
+  %i.fe = phi i8 [ %.pre.i, %.lr.ph.preheader.i ], [ %i.bb, %.critedge.i.a ], [ %i.ds, %.preheader.i ]
   %i.ff = zext i8 %i.fe to i32
   %i.fg = shl nuw i32 %i.ff, 24
   %i.fh = zext i8 %i.fd to i32
@@ -467,10 +467,10 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.loopexit.i85
 
 .loopexit.i85:                                    ; preds = %.lr.ph.preheader.i80, %.preheader.i93, %.critedge.i105
-  %i.kz = phi i8 [ %.pre140, %.lr.ph.preheader.i80 ], [ %i.kw, %.preheader.i93 ], [ %i.jn, %.critedge.i105 ]
-  %i.la = phi i8 [ %.pre138, %.lr.ph.preheader.i80 ], [ %i.kl, %.preheader.i93 ], [ %i.ir, %.critedge.i105 ]
-  %i.lb = phi i8 [ %.pre136, %.lr.ph.preheader.i80 ], [ %i.ka, %.preheader.i93 ], [ %i.hv, %.critedge.i105 ]
-  %i.lc = phi i8 [ %.pre.i84, %.lr.ph.preheader.i80 ], [ %i.jq, %.preheader.i93 ], [ %i.gz, %.critedge.i105 ]
+  %i.kz = phi i8 [ %.pre140, %.lr.ph.preheader.i80 ], [ %i.jn, %.critedge.i105 ], [ %i.kw, %.preheader.i93 ]
+  %i.la = phi i8 [ %.pre138, %.lr.ph.preheader.i80 ], [ %i.ir, %.critedge.i105 ], [ %i.kl, %.preheader.i93 ]
+  %i.lb = phi i8 [ %.pre136, %.lr.ph.preheader.i80 ], [ %i.hv, %.critedge.i105 ], [ %i.ka, %.preheader.i93 ]
+  %i.lc = phi i8 [ %.pre.i84, %.lr.ph.preheader.i80 ], [ %i.gz, %.critedge.i105 ], [ %i.jq, %.preheader.i93 ]
   %i.ld = zext i8 %i.lc to i32
   %i.le = shl nuw i32 %i.ld, 24
   %i.lf = zext i8 %i.lb to i32
@@ -873,8 +873,8 @@ bb.b:                                             ; preds = %bb.a
   %i.k = tail call noundef i32 @llvm.bswap.i32(i32 %i.j)
   %i.l = sitofp i32 %i.k to float
   %i.m = fmul nnan float %i.l, f0x37800000
-  %5 = fcmp oge float %i.m, %1                    ; 2 uses
-  br i1 %5, label %bb.d, label %bb.c
+  %5 = fcmp ult float %i.m, %1
+  br i1 %5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -909,8 +909,7 @@ bb.f:                                             ; preds = %.thread
 bb.g:                                             ; preds = %.thread
   %i.y = and i64 %.02132.in, 4294967295           ; 3 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.y ; 2 uses
-  %.0.i.i25 = select i1 %5, ptr %i.z, ptr @_hb_NullPool, !prof !268
-  %i.aa = load i32, ptr %.0.i.i25, align 1, !tbaa !278
+  %i.aa = load i32, ptr %i.z, align 1, !tbaa !278
   %i.ab = tail call noundef i32 @llvm.bswap.i32(i32 %i.aa)
   %i.ac = sitofp i32 %i.ab to float
   %i.ad = fmul nnan float %i.ac, f0x37800000

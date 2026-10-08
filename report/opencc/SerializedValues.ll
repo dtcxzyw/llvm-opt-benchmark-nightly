@@ -202,28 +202,31 @@ bb.g:                                             ; preds = %bb.c, %bb.b
   br label %.body
 
 .lr.ph41:                                         ; preds = %bb.d, %._crit_edge
-  %.01739 = phi i64 [ %.1.lcssa, %._crit_edge ], [ 0, %bb.d ] ; 2 uses
+  %.01739 = phi i64 [ %.1.lcssa, %._crit_edge ], [ 0, %bb.d ] ; 3 uses
   %.sroa.031.038 = phi ptr [ %i.an, %._crit_edge ], [ %i.t, %bb.d ] ; 2 uses
   %i.ah = load ptr, ptr %.sroa.031.038, align 8, !tbaa !37 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !39
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 56
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = invoke noundef i64 %i.ak(ptr noundef nonnull align 8 dereferenceable(8) %i.ah)
-          to label %bb.h unwind label %bb.i       ; 2 uses
+          to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph41
-  %i.am = trunc i64 %i.al to i16
+  %i.am = trunc i64 %i.al to i16                  ; 3 uses
   invoke fastcc void @_ZN12_GLOBAL__N_112WriteIntegerItEEvP8_IO_FILET_(ptr noundef %1, i16 noundef zeroext %i.am)
-          to label %.preheader.a unwind label %bb.i
+          to label %.preheader unwind label %bb.i
 
-.preheader.a:                                     ; preds = %bb.h
-  %6 = trunc i64 %i.al to i32
-  %7 = and i32 %6, 65535                          ; 2 uses
-  %.not43 = icmp eq i32 %7, 0
-  br i1 %.not43, label %._crit_edge, label %.lr.ph
+.preheader:                                       ; preds = %bb.h
+  %.not43 = icmp eq i16 %i.am, 0
+  br i1 %.not43, label %._crit_edge, label %.preheader.a
 
-._crit_edge:                                      ; preds = %bb.p, %.preheader.a
-  %.1.lcssa = phi i64 [ %.01739, %.preheader.a ], [ %i.ba, %bb.p ]
+.preheader.a:                                     ; preds = %.preheader
+  %6 = trunc i64 %.01739 to i16
+  %7 = add i16 %6, %i.am
+  br label %.lr.ph
+
+._crit_edge:                                      ; preds = %bb.p, %.preheader
+  %.1.lcssa = phi i64 [ %.01739, %.preheader ], [ %i.ba, %bb.p ]
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.031.038, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.an, %i.v
   br i1 %.not, label %._crit_edge42, label %.lr.ph41
@@ -234,7 +237,6 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph41
   br label %.body
 
 .lr.ph:                                           ; preds = %.preheader.a, %bb.p
-  %indvars.iv = phi i32 [ %indvars.iv.next, %bb.p ], [ 0, %.preheader.a ]
   %.135 = phi i64 [ %i.ba, %bb.p ], [ %.01739, %.preheader.a ] ; 2 uses
   %i.ap = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %.135
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !41
@@ -298,9 +300,9 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.ba = add i64 %.135, 1                        ; 2 uses
-  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i32 %indvars.iv.next, %7
+  %i.ba = add i64 %.135, 1                        ; 3 uses
+  %lftr.wideiv = trunc i64 %i.ba to i16
+  %exitcond.not = icmp eq i16 %7, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !62
 
 .body:                                            ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.n, %bb.g, %bb.f

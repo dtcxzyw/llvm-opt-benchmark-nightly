@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 10 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %i.d = alloca i8, align 1                       ; 4 uses
-  %i.e = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 7 uses
   %i.f = alloca i32, align 4                      ; 39 uses
   %i.g = alloca ptr, align 8                      ; 12 uses
   %i.h = alloca i32, align 4                      ; 19 uses
@@ -449,7 +449,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ac
   %i.de = load i32, ptr @hf_scsi_sbc_lba64_address, align 4
   %.0..0..0..0.30 = load volatile i32, ptr %i.f, align 4
-  %i.df = call ptr @proto_tree_add_item_ret_uint64(ptr noundef %2, i32 noundef %i.de, ptr noundef %i.cs, i32 noundef %.0..0..0..0.30, i32 noundef 8, i32 noundef 0, ptr noundef nonnull %i.c) ; 2 uses
+  %i.df = call ptr @proto_tree_add_item_ret_uint64(ptr noundef %2, i32 noundef %i.de, ptr noundef %i.cs, i32 noundef %.0..0..0..0.30, i32 noundef 8, i32 noundef 0, ptr noundef nonnull %i.c)
   store ptr %i.df, ptr %i.e, align 8
   %.0..0..0..0.31 = load volatile i32, ptr %i.f, align 4
   %i.dg = add i32 %.0..0..0..0.31, 8
@@ -487,7 +487,8 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.0189 = phi ptr [ %i.dz, %bb.ae ], [ %i.ec, %bb.af ]
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.df, ptr noundef nonnull @.str.274, ptr noundef %.0189)
+  %10 = load ptr, ptr %i.e, align 8
+  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %10, ptr noundef nonnull @.str.274, ptr noundef %.0189)
   %.0..0..0..0.33 = load volatile i32, ptr %i.f, align 4
   %i.ed = add i32 %.0..0..0..0.33, 4
   store volatile i32 %i.ed, ptr %i.f, align 4

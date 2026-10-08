@@ -202,7 +202,7 @@ define internal fastcc void @_RNvNtCs9dV2ZPf2jOH_6semver5parse18numeric_identifi
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %.fr = freeze ptr %1                            ; 9 uses
-  %.not64 = icmp eq ptr %.fr, null                ; 4 uses
+  %.not64 = icmp eq ptr %.fr, null                ; 3 uses
   %i.b = icmp eq i64 %2, 0
   %.not76 = or i1 %i.b, %.not64
   br i1 %.not76, label %bb.h, label %.lr.ph.split
@@ -214,12 +214,12 @@ bb.a:
   br i1 %or.cond94, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split
-  %scevgep = getelementptr i8, ptr %.fr, i64 %2
+  %scevgep = getelementptr i8, ptr %.fr, i64 %2   ; 2 uses
   %i.e = add i64 %2, -1                           ; 2 uses
   %i.f = add nsw i8 %i.c, -48
   %i.g = zext nneg i8 %i.f to i64                 ; 3 uses
   %exitcond.peel.not = icmp eq i64 %i.e, 0
-  br i1 %exitcond.peel.not, label %.split.i.i.i, label %bb.c
+  br i1 %exitcond.peel.not, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %.fr, i64 1 ; 2 uses
@@ -238,7 +238,7 @@ bb.d:                                             ; preds = %bb.f
 
 ._crit_edge:                                      ; preds = %bb.f
   %.not56 = icmp eq i64 %2, 0
-  br i1 %.not56, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit, label %.split.i.i.i
+  br i1 %.not56, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61
 
 .lr.ph97:                                         ; preds = %bb.c, %bb.d
   %i.o = phi i8 [ %i.m, %bb.d ], [ %i.i, %bb.c ]
@@ -305,13 +305,6 @@ _RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5ra
   %.not57.not = select i1 %i.ac, i1 %.not5766, i1 false
   br i1 %.not57.not, label %bb.j, label %bb.k
 
-.split.i.i.i:                                     ; preds = %._crit_edge, %bb.b
-  %.sroa.09.0.lcssa114138 = phi i64 [ %i.g, %bb.b ], [ %i.v, %._crit_edge ]
-  %.sroa.0.0.lcssa115135 = phi i64 [ 1, %bb.b ], [ %2, %._crit_edge ] ; 3 uses
-  %4 = icmp ne i64 %.sroa.0.0.lcssa115135, %2
-  %or.cond.i.i = or i1 %4, %.not64
-  br i1 %or.cond.i.i, label %_RNvXs9_NtNtCshzWfHUSfYae_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs9dV2ZPf2jOH_6semver.exit.thread.i.i59, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61
-
 .loopexit:                                        ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %.fr, i64 %i.k
   br label %bb.i
@@ -325,15 +318,14 @@ bb.i:                                             ; preds = %.loopexit, %bb.c
   %or.cond6.i.i = or i1 %i.ag, %.not64
   br i1 %or.cond6.i.i, label %_RNvXs9_NtNtCshzWfHUSfYae_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs9dV2ZPf2jOH_6semver.exit.thread.i.i59, label %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61
 
-_RNvXs9_NtNtCshzWfHUSfYae_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs9dV2ZPf2jOH_6semver.exit.thread.i.i59: ; preds = %bb.i, %.split.i.i.i
-  %.sroa.0.0.lcssa115136 = phi i64 [ %.sroa.0.0.lcssa.ph.ph, %bb.i ], [ %.sroa.0.0.lcssa115135, %.split.i.i.i ]
-  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr nonnull %.fr, i64 %2, i64 %.sroa.0.0.lcssa115136, i64 %2, ptr nonnull align 8 @17) #32
+_RNvXs9_NtNtCshzWfHUSfYae_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs9dV2ZPf2jOH_6semver.exit.thread.i.i59: ; preds = %bb.i
+  tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr nonnull %.fr, i64 %2, i64 %.sroa.0.0.lcssa.ph.ph, i64 %2, ptr nonnull align 8 @17) #32
   unreachable
 
-_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61: ; preds = %.split.i.i.i, %bb.i
-  %.sroa.09.0.lcssa114137 = phi i64 [ %.sroa.09.0.lcssa114138, %.split.i.i.i ], [ %.sroa.09.0.lcssa.ph.ph, %bb.i ]
-  %.sroa.0.0.lcssa115134 = phi i64 [ %.sroa.0.0.lcssa115135, %.split.i.i.i ], [ %.sroa.0.0.lcssa.ph.ph, %bb.i ]
-  %.lcssa117132 = phi ptr [ %scevgep, %.split.i.i.i ], [ %.lcssa.ph.ph, %bb.i ]
+_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit61: ; preds = %._crit_edge, %bb.b, %bb.i
+  %.sroa.09.0.lcssa114137 = phi i64 [ %.sroa.09.0.lcssa.ph.ph, %bb.i ], [ %i.g, %bb.b ], [ %i.v, %._crit_edge ]
+  %.sroa.0.0.lcssa115134 = phi i64 [ %.sroa.0.0.lcssa.ph.ph, %bb.i ], [ 1, %bb.b ], [ %2, %._crit_edge ]
+  %.lcssa117132 = phi ptr [ %.lcssa.ph.ph, %bb.i ], [ %scevgep, %bb.b ], [ %scevgep, %._crit_edge ]
   %i.ah = sub nuw i64 %2, %.sroa.0.0.lcssa115134
   store i64 %.sroa.09.0.lcssa114137, ptr %0, align 8
   %.sroa.226.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

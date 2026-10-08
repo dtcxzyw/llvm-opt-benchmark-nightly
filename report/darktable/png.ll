@@ -157,18 +157,16 @@ bb.h:                                             ; preds = %bb.f
 switch.lookup:                                    ; preds = %bb.h
   %i.al = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.write_image, i64 %i.al
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.am = zext nneg i32 %switch.tableidx to i64
   %switch.gep172 = getelementptr inbounds nuw i8, ptr @switch.table.write_image.3, i64 %i.am
-  %switch.load173 = load i8, ptr %switch.gep172, align 1 ; 2 uses
+  %switch.load173 = load i8, ptr %switch.gep172, align 1
   store i8 %switch.load, ptr %i.c, align 4, !tbaa !46
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   store i8 %switch.load173, ptr %i.an, align 1, !tbaa !46
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %switch.lookup
-  %12 = phi i8 [ 2, %bb.h ], [ %switch.load173, %switch.lookup ] ; 3 uses
-  %13 = phi i8 [ 2, %bb.h ], [ %switch.load, %switch.lookup ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
   store i32 0, ptr %i.d, align 4, !tbaa !21
   %i.ao = call i32 @cmsSaveProfileToMem(ptr noundef %i.ai, ptr noundef null, ptr noundef nonnull %i.d) #18 ; 0 uses
@@ -380,24 +378,20 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.q
   %i.ee = load ptr, ptr %i.bq, align 8, !tbaa !49
   call void @png_free(ptr noundef %i.bf, ptr noundef %i.ee) #18
   call void @png_free(ptr noundef %i.bf, ptr noundef nonnull %i.bh) #18
-  %.pre.pre = load i8, ptr %i.c, align 4, !tbaa !46
-  %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %.pre95.pre = load i8, ptr %.phi.trans.insert.phi.trans.insert, align 1
   br label %PNGwriteRawProfile.exit
 
 PNGwriteRawProfile.exit:                          ; preds = %bb.o, %bb.x
-  %.pre95 = phi i8 [ %12, %bb.o ], [ %.pre95.pre, %bb.x ]
-  %.pre = phi i8 [ %13, %bb.o ], [ %.pre.pre, %bb.x ]
   call void @free(ptr noundef %i.bc) #18
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.m, %PNGwriteRawProfile.exit, %bb.l
-  %14 = phi i8 [ %12, %bb.m ], [ %.pre95, %PNGwriteRawProfile.exit ], [ %12, %bb.l ]
-  %15 = phi i8 [ %13, %bb.m ], [ %.pre, %PNGwriteRawProfile.exit ], [ %13, %bb.l ]
   %i.ef = load ptr, ptr %i.a, align 8, !tbaa !42
   %i.eg = load ptr, ptr %i.b, align 8, !tbaa !18
   call void @png_write_info(ptr noundef %i.ef, ptr noundef %i.eg) #18
-  %i.eh = icmp ne i8 %15, 2
+  %12 = load i8, ptr %i.c, align 4, !tbaa !46
+  %i.eh = icmp ne i8 %12, 2
+  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
+  %14 = load i8, ptr %13, align 1
   %i.ei = icmp ne i8 %14, 2
   %or.cond5 = select i1 %i.eh, i1 %i.ei, i1 false
   br i1 %or.cond5, label %bb.z, label %bb.aa

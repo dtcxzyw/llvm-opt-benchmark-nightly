@@ -147,15 +147,15 @@ mz_stream_read.exit.i:                            ; preds = %mz_stream_is_open.e
   %i.k = icmp eq i32 %i.j, 1
   br i1 %i.k, label %.preheader.i.preheader, label %mz_stream_read.exit..thread_crit_edge.i
 
+mz_stream_read.exit..thread_crit_edge.i:          ; preds = %mz_stream_read.exit.i
+  %.pr.pre.i = load ptr, ptr %0, align 8, !tbaa !19
+  br label %.thread.i
+
 .preheader.i.preheader:                           ; preds = %mz_stream_read.exit.i
   %i.l = load i8, ptr %i.a, align 1, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   store i8 %i.l, ptr %1, align 1, !tbaa !24
   br label %bb.e
-
-mz_stream_read.exit..thread_crit_edge.i:          ; preds = %mz_stream_read.exit.i
-  %.pr.pre.i = load ptr, ptr %0, align 8, !tbaa !19
-  br label %.thread.i
 
 .thread.i:                                        ; preds = %mz_stream_read.exit..thread_crit_edge.i, %mz_stream_is_open.exit.i.i
   %.pr.i = phi ptr [ %.pr.pre.i, %mz_stream_read.exit..thread_crit_edge.i ], [ %.pr.pre30.i, %mz_stream_is_open.exit.i.i ] ; 2 uses

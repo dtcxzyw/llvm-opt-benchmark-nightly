@@ -204,10 +204,10 @@ _ZNK2cv11_InputArray6getMatEi.exit205:            ; preds = %bb.al, %bb.am
   %i.bg = add <2 x i32> %i.a, splat (i32 -1)
   %i.bh = load <2 x i32>, ptr %i.bf, align 8, !tbaa !19 ; 2 uses
   %i.bi = add <2 x i32> %i.bg, %i.bh
-  %i.bj = sdiv <2 x i32> %i.bi, %i.bh             ; 2 uses
+  %i.bj = sdiv <2 x i32> %i.bi, %i.bh             ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %i.bl = extractelement <2 x i32> %i.bj, i64 0   ; 3 uses
-  %i.bm = extractelement <2 x i32> %i.bj, i64 1   ; 2 uses
+  %i.bl = extractelement <2 x i32> %i.bj, i64 0   ; 2 uses
+  %i.bm = extractelement <2 x i32> %i.bj, i64 1
   %i.bn = mul nsw i32 %i.bm, %i.bl
   %i.bo = sext i32 %i.bn to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
@@ -235,9 +235,10 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt6vectorIS_IiSa
   br i1 %i.bv, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
-  %17 = add nsw i32 %i.bl, -1
-  %18 = add nsw i32 %i.bm, -1
+  %17 = add nsw <2 x i32> %i.bj, splat (i32 -1)   ; 2 uses
   %wide.trip.count = zext nneg i32 %i.am to i64
+  %18 = extractelement <2 x i32> %17, i64 0
+  %19 = extractelement <2 x i32> %17, i64 1
   br label %bb.ax
 
 bb.ao:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
@@ -308,10 +309,10 @@ bb.ax:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.cn = fdiv <2 x float> %i.ck, %i.cm           ; 2 uses
   %i.co = shufflevector <2 x float> %i.cn, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.cp = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.co)
-  %.sroa.speculated246 = call i32 @llvm.smin.i32(i32 %17, i32 %i.cp)
+  %.sroa.speculated246 = call i32 @llvm.smin.i32(i32 %18, i32 %i.cp)
   %i.cq = shufflevector <2 x float> %i.cn, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.cr = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.cq)
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %18, i32 %i.cr)
+  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %19, i32 %i.cr)
   %i.cs = mul nsw i32 %.sroa.speculated, %i.bl
   %i.ct = add nsw i32 %i.cs, %.sroa.speculated246
   %i.cu = sext i32 %i.ct to i64

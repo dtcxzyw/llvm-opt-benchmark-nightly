@@ -205,7 +205,7 @@ bb.a:
   %17 = alloca %"class.cxx20::expected.263", align 4 ; 6 uses
   %18 = alloca %"struct.cxx20::span.242", align 8 ; 3 uses
   %19 = alloca %"struct.WasmEdge::Executor::Executor::SavedThreadLocal", align 8 ; 8 uses
-  %20 = alloca %"class.WasmEdge::ErrCode", align 4 ; 8 uses
+  %20 = alloca %"class.WasmEdge::ErrCode", align 4 ; 9 uses
   %21 = alloca %"class.WasmEdge::Fault", align 8  ; 9 uses
   %22 = alloca %"struct.std::array.278", align 8  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 176
@@ -608,7 +608,7 @@ _ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv1
 
 bb.as:                                            ; preds = %_ZNSt6vectorIN8WasmEdge7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS0_10RefVariantEEEESaISD_EEC2EmRKSE_.exit152
   %i.is = getelementptr inbounds nuw i8, ptr %21, i64 8
-  %i.it = call i32 @_setjmp(ptr noundef nonnull %i.is) #35 ; 3 uses
+  %i.it = call i32 @_setjmp(ptr noundef nonnull %i.is) #35 ; 2 uses
   %.not117 = icmp eq i32 %i.it, 0
   br i1 %.not117, label %bb.ay, label %bb.at
 
@@ -719,13 +719,13 @@ bb.bb:                                            ; preds = %bb.ba, %bb.av
 bb.bc:                                            ; preds = %bb.bb
   %.2108 = extractvalue { ptr, i32 } %.pn, 0
   %i.jy = call ptr @__cxa_begin_catch(ptr %.2108) #29
-  %i.jz = load i32, ptr %i.jy, align 4, !tbaa !94 ; 2 uses
+  %i.jz = load i32, ptr %i.jy, align 4, !tbaa !94
   store i32 %i.jz, ptr %20, align 4, !tbaa !94
   invoke void @__cxa_end_catch()
           to label %bb.bd unwind label %bb.bf
 
 bb.bd:                                            ; preds = %bb.bc, %_ZNK8WasmEdge6SymbolIFvPvS1_PKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEPSE_EEclIJPNS_8Executor8Executor22ExecutionContextStructES1_SH_SH_EEEDaDpT_.exit
-  %23 = phi i32 [ %i.jz, %bb.bc ], [ %i.it, %_ZNK8WasmEdge6SymbolIFvPvS1_PKNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEEPSE_EEclIJPNS_8Executor8Executor22ExecutionContextStructES1_SH_SH_EEEDaDpT_.exit ]
+  %23 = load i32, ptr %20, align 4, !tbaa !94
   switch i32 %23, label %bb.be [
     i32 0, label %.preheader306
     i32 1, label %bb.bh

@@ -150,21 +150,21 @@ bb.g:                                             ; preds = %gicv5_current_phys_
   %i.x = load i64, ptr %i.w, align 8
   %i.y = trunc i64 %i.x to i32
   %i.z = tail call i64 @gicv5_get_hppi(ptr noundef %.val.i, i32 noundef range(i32 0, 4) %.0.i, i32 noundef %i.y) #8
-  %.sroa.5.0.extract.shift.i = lshr i64 %i.z, 32  ; 2 uses
+  %.sroa.5.0.extract.shift.i = lshr i64 %i.z, 32
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.r
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 3612
-  %i.ac = load i8, ptr %i.ab, align 4             ; 2 uses
-  %1 = zext i8 %i.ac to i32
-  %2 = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32
-  %3 = and i32 %2, 255
-  %.not28.i = icmp samesign ult i32 %3, %1
-  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8
-  %.sroa.6.0.i = select i1 %.not28.i, i8 %.sroa.5.0.extract.trunc.i, i8 %i.ac ; 3 uses
-  %4 = icmp eq i8 %.sroa.6.0.i, -1
-  br i1 %4, label %gic_hppi.exit, label %bb.h
+  %i.ac = load i8, ptr %i.ab, align 4             ; 3 uses
+  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8 ; 2 uses
+  %.not28.i = icmp ugt i8 %i.ac, %.sroa.5.0.extract.trunc.i
+  br i1 %.not28.i, label %bb.h, label %1
 
-bb.h:                                             ; preds = %bb.g
-  %i.ad = zext i8 %.sroa.6.0.i to i64             ; 2 uses
+1:                                                ; preds = %bb.g
+  %2 = icmp eq i8 %i.ac, -1
+  br i1 %2, label %gic_hppi.exit, label %bb.h
+
+bb.h:                                             ; preds = %bb.g, %1
+  %.sroa.6.034.i = phi i8 [ %i.ac, %1 ], [ %.sroa.5.0.extract.trunc.i, %bb.g ] ; 2 uses
+  %i.ad = zext i8 %.sroa.6.034.i to i64           ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 3384
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.r
   %i.ag = load i64, ptr %i.af, align 8
@@ -179,12 +179,12 @@ bb.i:                                             ; preds = %bb.h
   %i.am = icmp samesign ult i64 %i.al, 32
   %i.an = select i1 %i.am, i64 %i.al, i64 255
   %.not29.i = icmp samesign ugt i64 %i.an, %i.ad
-  %i.ao = zext i8 %.sroa.6.0.i to i32
+  %i.ao = zext i8 %.sroa.6.034.i to i32
   %spec.select = select i1 %.not29.i, i32 %i.ao, i32 255
   br label %gic_hppi.exit
 
-gic_hppi.exit:                                    ; preds = %bb.i, %gicv5_current_phys_domain.exit, %bb.g, %bb.h
-  %.sroa.7.0.i = phi i32 [ 255, %gicv5_current_phys_domain.exit ], [ 255, %bb.g ], [ %spec.select, %bb.i ], [ 255, %bb.h ] ; 2 uses
+gic_hppi.exit:                                    ; preds = %bb.i, %gicv5_current_phys_domain.exit, %1, %bb.h
+  %.sroa.7.0.i = phi i32 [ 255, %gicv5_current_phys_domain.exit ], [ 255, %1 ], [ %spec.select, %bb.i ], [ 255, %bb.h ] ; 2 uses
   %i.ap = icmp eq i32 %.sroa.7.0.i, 0             ; 3 uses
   %i.aq = icmp ne i32 %.sroa.7.0.i, 255
   %i.ar = xor i1 %i.ap, %i.aq                     ; 2 uses
@@ -363,22 +363,21 @@ extract64.exit:                                   ; preds = %.preheader54, %bb.b
   %i.z = shl nuw nsw i64 %i.s, 3
   %i.aa = and i64 %i.z, 56
   %i.ab = lshr i64 %i.y, %i.aa
-  %1 = and i64 %i.ab, 31                          ; 2 uses
-  %2 = zext i8 %i.r to i64
-  %3 = icmp samesign ult i64 %1, %2
+  %1 = trunc i64 %i.ab to i8
+  %2 = and i8 %1, 31                              ; 3 uses
+  %3 = icmp ugt i8 %i.r, %2
   br i1 %3, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %extract64.exit
   %i.ac = trunc nuw nsw i64 %i.s to i32
-  %4 = trunc nuw nsw i64 %1 to i8                 ; 2 uses
   %i.ad = or disjoint i32 %i.ac, 536870912        ; 2 uses
   store i32 %i.ad, ptr %i.j, align 8
-  store i8 %4, ptr %i.i, align 4
+  store i8 %2, ptr %i.i, align 4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %extract64.exit
   %i.ae = phi i32 [ %i.ad, %bb.a ], [ %i.q, %extract64.exit ] ; 2 uses
-  %i.af = phi i8 [ %4, %bb.a ], [ %i.r, %extract64.exit ] ; 2 uses
+  %i.af = phi i8 [ %2, %bb.a ], [ %i.r, %extract64.exit ] ; 2 uses
   %.not = icmp eq i64 %i.v, 0
   br i1 %.not, label %._crit_edge, label %extract64.exit, !llvm.loop !11
 
@@ -412,22 +411,21 @@ extract64.exit.1:                                 ; preds = %._crit_edge, %bb.d
   %i.ba = shl nuw nsw i64 %i.as, 3
   %i.bb = and i64 %i.ba, 56
   %i.bc = lshr i64 %i.az, %i.bb
-  %5 = and i64 %i.bc, 31                          ; 2 uses
-  %6 = zext i8 %i.ar to i64
-  %7 = icmp samesign ult i64 %5, %6
-  br i1 %7, label %bb.c, label %bb.d
+  %4 = trunc i64 %i.bc to i8
+  %5 = and i8 %4, 31                              ; 3 uses
+  %6 = icmp ugt i8 %i.ar, %5
+  br i1 %6, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %extract64.exit.1
   %i.bd = trunc nuw nsw i64 %i.as to i32
-  %8 = trunc nuw nsw i64 %5 to i8                 ; 2 uses
   %i.be = or disjoint i32 %i.bd, 536870976        ; 2 uses
   store i32 %i.be, ptr %i.j, align 8
-  store i8 %8, ptr %i.i, align 4
+  store i8 %5, ptr %i.i, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %extract64.exit.1
   %i.bf = phi i32 [ %i.be, %bb.c ], [ %i.aq, %extract64.exit.1 ] ; 2 uses
-  %i.bg = phi i8 [ %8, %bb.c ], [ %i.ar, %extract64.exit.1 ] ; 2 uses
+  %i.bg = phi i8 [ %5, %bb.c ], [ %i.ar, %extract64.exit.1 ] ; 2 uses
   %.not.1 = icmp eq i64 %i.av, 0
   br i1 %.not.1, label %._crit_edge.1, label %extract64.exit.1, !llvm.loop !11
 
@@ -830,34 +828,28 @@ bb.g:                                             ; preds = %gicv5_current_phys_
   %i.x = load i64, ptr %i.w, align 8
   %i.y = trunc i64 %i.x to i32
   %i.z = tail call i64 @gicv5_get_hppi(ptr noundef %.val.i, i32 noundef range(i32 0, 4) %.0.i, i32 noundef %i.y) #8 ; 2 uses
-  %.sroa.5.0.extract.shift.i = lshr i64 %i.z, 32  ; 2 uses
+  %.sroa.5.0.extract.shift.i = lshr i64 %i.z, 32
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 3608
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.s ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  %i.ad = load i8, ptr %i.ac, align 4             ; 2 uses
-  %2 = zext i8 %i.ad to i32
-  %3 = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32
-  %4 = and i32 %3, 255
-  %.not28.i = icmp samesign ult i32 %4, %2
-  br i1 %.not28.i, label %bb.h, label %5
-
-5:                                                ; preds = %bb.g
-  %.sroa.03.0.copyload.i = load i32, ptr %i.ab, align 8
-  br label %bb.i
+  %i.ad = load i8, ptr %i.ac, align 4             ; 3 uses
+  %2 = trunc i64 %.sroa.5.0.extract.shift.i to i8 ; 2 uses
+  %.not28.i = icmp ugt i8 %i.ad, %2
+  br i1 %.not28.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8
   %.sroa.01.0.extract.trunc.i = trunc i64 %i.z to i32
-  br label %bb.i
+  br label %bb.j
 
-bb.i:                                             ; preds = %bb.h, %5
-  %.sroa.03.0.i = phi i32 [ %.sroa.03.0.copyload.i, %5 ], [ %.sroa.01.0.extract.trunc.i, %bb.h ] ; 3 uses
-  %.sroa.6.0.i = phi i8 [ %i.ad, %5 ], [ %.sroa.5.0.extract.trunc.i, %bb.h ] ; 3 uses
-  %i.ae = icmp eq i8 %.sroa.6.0.i, -1
+bb.i:                                             ; preds = %bb.g
+  %.sroa.03.0.copyload.i = load i32, ptr %i.ab, align 8
+  %i.ae = icmp eq i8 %i.ad, -1
   br i1 %i.ae, label %gic_hppi.exit.thread, label %bb.j
 
-bb.j:                                             ; preds = %bb.i
-  %i.af = zext i8 %.sroa.6.0.i to i64             ; 3 uses
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.sroa.6.034.i = phi i8 [ %2, %bb.h ], [ %i.ad, %bb.i ] ; 2 uses
+  %.sroa.03.033.i = phi i32 [ %.sroa.01.0.extract.trunc.i, %bb.h ], [ %.sroa.03.0.copyload.i, %bb.i ] ; 3 uses
+  %i.af = zext i8 %.sroa.6.034.i to i64           ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 3384
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.s
   %i.ai = load i64, ptr %i.ah, align 8
@@ -875,14 +867,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not29.i, label %gic_hppi.exit, label %gic_hppi.exit.thread
 
 gic_hppi.exit:                                    ; preds = %bb.k
-  %i.aq = zext i32 %.sroa.03.0.i to i64           ; 3 uses
-  %i.ar = lshr i32 %.sroa.03.0.i, 29              ; 2 uses
+  %i.aq = zext i32 %.sroa.03.033.i to i64         ; 3 uses
+  %i.ar = lshr i32 %.sroa.03.033.i, 29            ; 2 uses
   %i.as = and i64 %i.aq, 16777215                 ; 3 uses
   %i.at = trunc nuw nsw i64 %i.as to i32
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.av = load i8, ptr %i.au, align 1
   %i.aw = icmp eq i8 %i.av, 1                     ; 3 uses
-  %cond = icmp eq i8 %.sroa.6.0.i, 0
+  %cond = icmp eq i8 %.sroa.6.034.i, 0
   br i1 %cond, label %bb.o, label %.gic_hppi_is_nmi.exit_crit_edge
 
 gic_hppi.exit.thread:                             ; preds = %bb.i, %bb.j, %bb.k, %gicv5_current_phys_domain.exit
@@ -1022,7 +1014,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not3.i, label %trace_gicv5_gicr_cdia.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.52, i32 noundef range(i32 0, 4) %.0.i, i32 noundef %.sroa.03.0.i) #8
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.52, i32 noundef range(i32 0, 4) %.0.i, i32 noundef %.sroa.03.033.i) #8
   br label %trace_gicv5_gicr_cdia.exit
 
 trace_gicv5_gicr_cdia.exit:                       ; preds = %bb.ad, %bb.ae, %bb.af, %bb.ag
@@ -1145,34 +1137,28 @@ bb.c:                                             ; preds = %gicv5_logical_domai
   %i.i = load i64, ptr %i.h, align 8
   %i.j = trunc i64 %i.i to i32
   %i.k = tail call i64 @gicv5_get_hppi(ptr noundef %.val.i, i32 noundef range(i32 0, 4) %i.a, i32 noundef %i.j) #8 ; 2 uses
-  %.sroa.5.0.extract.shift.i = lshr i64 %i.k, 32  ; 2 uses
+  %.sroa.5.0.extract.shift.i = lshr i64 %i.k, 32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 3608
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.c ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
-  %i.o = load i8, ptr %i.n, align 4               ; 2 uses
-  %2 = zext i8 %i.o to i32
-  %3 = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32
-  %4 = and i32 %3, 255
-  %.not28.i = icmp samesign ult i32 %4, %2
-  br i1 %.not28.i, label %bb.d, label %5
-
-5:                                                ; preds = %bb.c
-  %.sroa.03.0.copyload.i = load i32, ptr %i.m, align 8
-  br label %bb.e
+  %i.o = load i8, ptr %i.n, align 4               ; 3 uses
+  %2 = trunc i64 %.sroa.5.0.extract.shift.i to i8 ; 2 uses
+  %.not28.i = icmp ugt i8 %i.o, %2
+  br i1 %.not28.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i8
   %.sroa.01.0.extract.trunc.i = trunc i64 %i.k to i32
-  br label %bb.e
+  br label %bb.f
 
-bb.e:                                             ; preds = %bb.d, %5
-  %.sroa.03.0.i = phi i32 [ %.sroa.03.0.copyload.i, %5 ], [ %.sroa.01.0.extract.trunc.i, %bb.d ]
-  %.sroa.6.0.i = phi i8 [ %i.o, %5 ], [ %.sroa.5.0.extract.trunc.i, %bb.d ] ; 2 uses
-  %i.p = icmp eq i8 %.sroa.6.0.i, -1
+bb.e:                                             ; preds = %bb.c
+  %.sroa.03.0.copyload.i = load i32, ptr %i.m, align 8
+  %i.p = icmp eq i8 %i.o, -1
   br i1 %i.p, label %gic_hppi.exit, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.q = zext i8 %.sroa.6.0.i to i64              ; 3 uses
+bb.f:                                             ; preds = %bb.e, %bb.d
+  %.sroa.6.034.i = phi i8 [ %2, %bb.d ], [ %i.o, %bb.e ]
+  %.sroa.03.033.i = phi i32 [ %.sroa.01.0.extract.trunc.i, %bb.d ], [ %.sroa.03.0.copyload.i, %bb.e ]
+  %i.q = zext i8 %.sroa.6.034.i to i64            ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 3384
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.c
   %i.t = load i64, ptr %i.s, align 8
@@ -1191,7 +1177,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ab = shl nuw nsw i64 %i.q, 32
-  %i.ac = zext i32 %.sroa.03.0.i to i64
+  %i.ac = zext i32 %.sroa.03.033.i to i64
   %i.ad = or disjoint i64 %i.ab, %i.ac
   br label %gic_hppi.exit
 

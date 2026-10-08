@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph61, %._crit_e
   br i1 %lcmp.mod155.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %indvars.iv.next84.prol = add nsw i64 %i.cx, 1
+  %indvars.iv.next84.prol = add nuw nsw i64 %i.cx, 1
   %i.da = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.cx
   %i.db = load i32, ptr %i.da, align 4, !tbaa !76
   %i.dc = zext i32 %i.db to i64
@@ -239,7 +239,7 @@ bb.v:                                             ; preds = %.lr.ph61, %._crit_e
   %i.dr = zext i64 %i.dq to i128
   %i.ds = add i128 %.355, %i.dr
   %indvars.iv85.1 = add nsw i64 %indvars.iv85.in, -2 ; 2 uses
-  %indvars.iv.next84.1 = add nsw i64 %indvars.iv83, 2 ; 2 uses
+  %indvars.iv.next84.1 = add nuw nsw i64 %indvars.iv83, 2 ; 2 uses
   %i.dt = getelementptr [4 x i8], ptr %i.au, i64 %indvars.iv83
   %i.du = getelementptr i8, ptr %i.dt, i64 4
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !76

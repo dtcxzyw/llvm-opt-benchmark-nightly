@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.iq = icmp eq i32 %i.ip, 1
   br i1 %i.iq, label %.thread, label %bb.bd
 
-bb.bd:                                            ; preds = %bb.bb, %bb.bc
+bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.hq
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !27
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !26 ; 2 uses
@@ -227,18 +227,15 @@ bb.bd:                                            ; preds = %bb.bb, %bb.bc
   %.287 = select i1 %i.jg, ptr %i.hk, ptr %i.jh
   br label %bb.bg
 
-.thread:                                          ; preds = %bb.ay, %bb.ba, %bb.bc
-  %.0217338.lcssa.wide = phi i32 [ 0, %bb.ay ], [ 1, %bb.ba ], [ 2, %bb.bc ] ; 2 uses
+.thread:                                          ; preds = %bb.bc, %bb.ba, %bb.ay
+  %.cmp = phi i64 [ 1, %bb.ay ], [ 1, %bb.ba ], [ -2, %bb.bc ]
+  %.0217338.lcssa.wide = phi i64 [ 0, %bb.ay ], [ 1, %bb.ba ], [ 2, %bb.bc ] ; 2 uses
   %5 = getelementptr inbounds nuw i8, ptr %i.hv, i64 8 ; 2 uses
-  %6 = add nuw nsw i32 %.0217338.lcssa.wide, 1    ; 2 uses
-  %7 = icmp eq i32 %6, 3
-  %8 = select i1 %7, i32 0, i32 %6
-  %9 = zext nneg i32 %8 to i64
-  %i.ji = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %9
+  %6 = getelementptr [24 x i8], ptr %5, i64 %.cmp
+  %i.ji = getelementptr [24 x i8], ptr %6, i64 %.0217338.lcssa.wide
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !30
-  %10 = zext nneg i32 %.0217338.lcssa.wide to i64
-  %i.jl = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %10 ; 4 uses
+  %i.jl = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %.0217338.lcssa.wide ; 4 uses
   %i.jm = load ptr, ptr %i.jl, align 8, !tbaa !29
   %i.jn = load ptr, ptr %i.jm, align 8, !tbaa !26 ; 2 uses
   %i.jo = load ptr, ptr %i.jk, align 8, !tbaa !26 ; 2 uses

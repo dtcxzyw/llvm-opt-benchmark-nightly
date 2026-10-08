@@ -205,7 +205,7 @@ define internal void @OneComponentChromaPrediction4x4_regenerate(ptr nofree noun
 bb.a:
   %i.a = load ptr, ptr @img, align 8, !tbaa !11   ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 15544
-  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !9 ; 2 uses
+  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !9 ; 3 uses
   %i.d = sdiv <2 x i32> splat (i32 64), %i.c      ; 3 uses
   %i.e = shufflevector <2 x i32> %i.d, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
   %i.f = extractelement <2 x i32> %i.d, i64 1     ; 7 uses
@@ -231,7 +231,10 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.y = load i32, ptr %i.x, align 8, !tbaa !236
   %i.z = add nsw i32 %i.y, -1                     ; 8 uses
-  %8 = ashr <2 x i32> %i.c, splat (i32 2)         ; 2 uses
+  %8 = extractelement <2 x i32> %i.c, i64 1
+  %9 = ashr i32 %8, 2
+  %10 = extractelement <2 x i32> %i.c, i64 0
+  %11 = ashr i32 %10, 2
   %i.aa = add nsw i32 %i.s, %4
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr inbounds [8 x i8], ptr @listX, i64 %i.ab
@@ -261,7 +264,8 @@ bb.a:
   %i.ba = shufflevector <4 x i32> %i.az, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.bb = add nsw <4 x i32> %i.ba, <i32 0, i32 1, i32 2, i32 3> ; 3 uses
   %i.bc = add nsw i32 %1, 1
-  %i.bd = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> zeroinitializer
+  %12 = insertelement <4 x i32> poison, i32 %11, i64 0
+  %i.bd = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.be = sdiv <4 x i32> %i.bb, %i.bd             ; 4 uses
   %i.bf = extractelement <4 x i32> %i.be, i64 0
   %i.bg = sext i32 %i.bf to i64
@@ -280,7 +284,6 @@ bb.a:
   %i.bt = add nsw i32 %i.ar, %i.bs
   %i.bu = mul nsw i32 %i.bt, %i.g
   %i.bv = add nsw i32 %2, 3
-  %9 = extractelement <2 x i32> %8, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.j

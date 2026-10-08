@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !26  ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 1 ; 15 uses
   %reass.sub = sub i64 %.sroa.22.0196, %i.q       ; 3 uses
-  %i.bk = add i64 %reass.sub, -2                  ; 19 uses
+  %i.bk = add i64 %reass.sub, -2                  ; 18 uses
   switch i8 %i.bi, label %bb.be [
     i8 97, label %bb.n
     i8 98, label %bb.p
@@ -601,10 +601,9 @@ bb.ao:                                            ; preds = %bb.an
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah
-  %.051.lcssa = phi i64 [ %invariant.umin, %bb.ai ], [ 0, %bb.ah ], [ 1, %bb.aj ], [ %invariant.umin, %bb.ak ], [ 2, %bb.al ], [ %invariant.umin, %bb.am ], [ 3, %bb.an ], [ %invariant.umin, %bb.ao ]
-  %.sroa.speculated4.i.i111 = call i64 @llvm.umin.i64(i64 %i.bk, i64 %.051.lcssa) ; 2 uses
-  %i.gb = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.sroa.speculated4.i.i111
-  %i.gc = sub nuw i64 %i.bk, %.sroa.speculated4.i.i111
+  %.051.lcssa = phi i64 [ %invariant.umin, %bb.ai ], [ 0, %bb.ah ], [ 1, %bb.aj ], [ %invariant.umin, %bb.ak ], [ 2, %bb.al ], [ %invariant.umin, %bb.am ], [ 3, %bb.an ], [ %invariant.umin, %bb.ao ] ; 2 uses
+  %i.gb = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.051.lcssa
+  %i.gc = sub nuw i64 %i.bk, %.051.lcssa
   %i.gd = call i64 @__isoc23_strtoul(ptr noundef nonnull %i.c, ptr noundef null, i32 noundef 8) #16 ; 2 uses
   %i.ge = icmp ult i64 %i.gd, 256
   br i1 %i.ge, label %bb.ap, label %bb.ar

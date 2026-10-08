@@ -61,7 +61,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal i32 @kmsgrab_read_header(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !25   ; 27 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !25   ; 25 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !67
@@ -296,44 +296,44 @@ bb.y:                                             ; preds = %.critedge
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.31) #7
   br label %bb.aw
 
-bb.z:                                             ; preds = %.preheader, %2
-  %indvars.iv245 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next246, %2 ] ; 2 uses
+1:                                                ; preds = %bb.z
+  %indvars.iv.next244 = add nuw nsw i64 %indvars.iv245, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next244, 28
+  br i1 %exitcond.not, label %2, label %bb.z, !llvm.loop !65
+
+bb.z:                                             ; preds = %.preheader, %1
+  %indvars.iv245 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next244, %1 ] ; 2 uses
   %i.da = getelementptr inbounds nuw [8 x i8], ptr @kmsgrab_formats, i64 %indvars.iv245 ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 4
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !84
   %i.dd = icmp eq i32 %i.dc, %i.cz
-  br i1 %i.dd, label %bb.aa, label %2
+  br i1 %i.dd, label %bb.aa, label %1
 
 bb.aa:                                            ; preds = %bb.z
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
   %i.df = load i32, ptr %i.de, align 8, !tbaa !85 ; 2 uses
   %.not215 = icmp eq i32 %i.df, -1
-  %.pre256.a = load i32, ptr %i.da, align 8, !tbaa !86 ; 2 uses
+  %.pre256.a = load i32, ptr %i.da, align 8, !tbaa !86 ; 3 uses
   %.not216 = icmp eq i32 %i.df, %.pre256.a
   %or.cond = select i1 %.not215, i1 true, i1 %.not216
-  br i1 %or.cond, label %bb.ac, label %1
+  br i1 %or.cond, label %bb.ac, label %bb.ab
 
-1:                                                ; preds = %bb.aa
+bb.ab:                                            ; preds = %bb.aa
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.32, i32 noundef %i.cz) #7
   br label %bb.aw
 
-2:                                                ; preds = %bb.z
-  %indvars.iv.next246 = add nuw nsw i64 %indvars.iv245, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next246, 28
-  br i1 %exitcond.not, label %bb.ab, label %bb.z, !llvm.loop !65
-
-bb.ab:                                            ; preds = %2
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.33, i32 noundef %i.cz) #7
-  br label %bb.aw
-
 bb.ac:                                            ; preds = %bb.aa
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 60
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 2 uses
   store i32 %i.cz, ptr %i.dg, align 4, !tbaa !47
   store i32 %.pre256.a, ptr %i.de, align 8, !tbaa !85
   %i.dh = load i32, ptr %i.ct, align 8, !tbaa !46
   %i.di = and i32 %i.dh, 2
   %.not217 = icmp eq i32 %i.di, 0
   br i1 %.not217, label %.thread284, label %bb.ad
+
+2:                                                ; preds = %1
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.33, i32 noundef %i.cz) #7
+  br label %bb.aw
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dj = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 2 uses
@@ -353,11 +353,8 @@ bb.af:                                            ; preds = %bb.ad
   br label %.thread284
 
 .thread284:                                       ; preds = %bb.ac, %bb.af
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  %4 = load i32, ptr %3, align 8, !tbaa !85
-  %i.dl = tail call ptr @av_get_pix_fmt_name(i32 noundef %4) #7
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 60
-  %i.dm = load i32, ptr %5, align 4, !tbaa !47
+  %i.dl = tail call ptr @av_get_pix_fmt_name(i32 noundef %.pre256.a) #7
+  %i.dm = load i32, ptr %i.dg, align 4, !tbaa !47
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.do = load i64, ptr %i.dn, align 8, !tbaa !48
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 40, ptr noundef nonnull @.str.35, ptr noundef %i.dl, i32 noundef %i.dm, i64 noundef %i.do) #7
@@ -508,12 +505,12 @@ bb.av:                                            ; preds = %bb.at
   store i64 %i.fy, ptr %i.fz, align 8, !tbaa !58
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.as, %bb.ar, %bb.s, %bb.t, %bb.av, %bb.au, %bb.aq, %bb.ao, %bb.ae, %bb.ab, %1, %bb.y, %bb.x, %bb.k, %bb.i, %bb.g
-  %.1186 = phi ptr [ null, %bb.i ], [ null, %1 ], [ null, %bb.ab ], [ null, %bb.ae ], [ %.0185, %bb.au ], [ %.0185, %bb.av ], [ %.0185, %bb.ar ], [ null, %bb.s ], [ %i.eg, %bb.aq ], [ null, %bb.ao ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ null, %bb.t ], [ %.0185, %bb.as ]
-  %.0184 = phi ptr [ null, %bb.i ], [ %i.cd, %1 ], [ %i.cd, %bb.ab ], [ %i.cd, %bb.ae ], [ %i.cd, %bb.au ], [ %i.cd, %bb.av ], [ %i.cd, %bb.ar ], [ null, %bb.s ], [ %i.cd, %bb.aq ], [ %i.cd, %bb.ao ], [ %i.cd, %bb.y ], [ null, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ null, %bb.t ], [ %i.cd, %bb.as ]
-  %.0183 = phi i32 [ -22, %bb.i ], [ -22, %1 ], [ -22, %bb.ab ], [ -22, %bb.ae ], [ %i.fs, %bb.au ], [ 0, %bb.av ], [ -12, %bb.ar ], [ -22, %bb.s ], [ -22, %bb.aq ], [ %i.el, %bb.ao ], [ -22, %bb.y ], [ %i.cj, %bb.x ], [ %i.ac, %bb.g ], [ %i.ao, %bb.k ], [ -22, %bb.t ], [ -12, %bb.as ]
-  %.4 = phi ptr [ %i.x, %bb.i ], [ %.3, %1 ], [ %.3, %bb.ab ], [ %.3, %bb.ae ], [ %.3, %bb.au ], [ %.3, %bb.av ], [ %.3, %bb.ar ], [ %.2283, %bb.s ], [ %.3, %bb.aq ], [ %.3, %bb.ao ], [ %.3, %bb.y ], [ %.3, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ %.2283, %bb.t ], [ %.3, %bb.as ]
-  %.1 = phi ptr [ null, %bb.i ], [ %.0177, %1 ], [ %.0177, %bb.ab ], [ %.0177, %bb.ae ], [ %.0177, %bb.au ], [ %.0177, %bb.av ], [ %.0177, %bb.ar ], [ %i.ah, %bb.s ], [ %.0177, %bb.aq ], [ %.0177, %bb.ao ], [ %.0177, %bb.y ], [ %.0177, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ %i.ah, %bb.t ], [ %.0177, %bb.as ]
+bb.aw:                                            ; preds = %bb.as, %bb.ar, %bb.s, %bb.t, %bb.av, %bb.au, %bb.aq, %bb.ao, %bb.ae, %2, %bb.ab, %bb.y, %bb.x, %bb.k, %bb.i, %bb.g
+  %.1186 = phi ptr [ null, %bb.i ], [ null, %bb.ab ], [ null, %2 ], [ null, %bb.ae ], [ %.0185, %bb.au ], [ %.0185, %bb.av ], [ %.0185, %bb.ar ], [ null, %bb.s ], [ %i.eg, %bb.aq ], [ null, %bb.ao ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ null, %bb.t ], [ %.0185, %bb.as ]
+  %.0184 = phi ptr [ null, %bb.i ], [ %i.cd, %bb.ab ], [ %i.cd, %2 ], [ %i.cd, %bb.ae ], [ %i.cd, %bb.au ], [ %i.cd, %bb.av ], [ %i.cd, %bb.ar ], [ null, %bb.s ], [ %i.cd, %bb.aq ], [ %i.cd, %bb.ao ], [ %i.cd, %bb.y ], [ null, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ null, %bb.t ], [ %i.cd, %bb.as ]
+  %.0183 = phi i32 [ -22, %bb.i ], [ -22, %bb.ab ], [ -22, %2 ], [ -22, %bb.ae ], [ %i.fs, %bb.au ], [ 0, %bb.av ], [ -12, %bb.ar ], [ -22, %bb.s ], [ -22, %bb.aq ], [ %i.el, %bb.ao ], [ -22, %bb.y ], [ %i.cj, %bb.x ], [ %i.ac, %bb.g ], [ %i.ao, %bb.k ], [ -22, %bb.t ], [ -12, %bb.as ]
+  %.4 = phi ptr [ %i.x, %bb.i ], [ %.3, %bb.ab ], [ %.3, %2 ], [ %.3, %bb.ae ], [ %.3, %bb.au ], [ %.3, %bb.av ], [ %.3, %bb.ar ], [ %.2283, %bb.s ], [ %.3, %bb.aq ], [ %.3, %bb.ao ], [ %.3, %bb.y ], [ %.3, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ %.2283, %bb.t ], [ %.3, %bb.as ]
+  %.1 = phi ptr [ null, %bb.i ], [ %.0177, %bb.ab ], [ %.0177, %2 ], [ %.0177, %bb.ae ], [ %.0177, %bb.au ], [ %.0177, %bb.av ], [ %.0177, %bb.ar ], [ %i.ah, %bb.s ], [ %.0177, %bb.aq ], [ %.0177, %bb.ao ], [ %.0177, %bb.y ], [ %.0177, %bb.x ], [ null, %bb.g ], [ null, %bb.k ], [ %i.ah, %bb.t ], [ %.0177, %bb.as ]
   tail call void @drmModeFreePlaneResources(ptr noundef %.1) #7
   tail call void @drmModeFreePlane(ptr noundef %.4) #7
   tail call void @drmModeFreeFB(ptr noundef %.1186) #7

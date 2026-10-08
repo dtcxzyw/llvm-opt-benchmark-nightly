@@ -205,14 +205,12 @@ bb.gy:                                            ; preds = %.loopexit64.i.i
   %i.aol = load <2 x i32>, ptr %i.aoh, align 4
   %i.aom = load <2 x i32>, ptr %i.aoi, align 4
   %i.aon = shufflevector <2 x i32> %i.aol, <2 x i32> %i.aom, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.aoo = sdiv <4 x i32> %i.aok, %i.aon          ; 4 uses
+  %i.aoo = sdiv <4 x i32> %i.aok, %i.aon          ; 3 uses
   %i.aop = getelementptr inbounds nuw i8, ptr %i.d, i64 18224
-  %7 = extractelement <4 x i32> %i.aoo, i64 3
-  %8 = sub i32 3, %7
   %i.aoq = getelementptr inbounds nuw i8, ptr %i.d, i64 18204
   %i.aor = getelementptr inbounds nuw i8, ptr %i.d, i64 18320
-  %9 = extractelement <4 x i32> %i.aoo, i64 1
-  %10 = sub i32 3, %9
+  %7 = shufflevector <4 x i32> %i.aoo, <4 x i32> poison, <2 x i32> <i32 3, i32 1>
+  %8 = sub <2 x i32> splat (i32 3), %7            ; 2 uses
   %i.aos = getelementptr inbounds nuw i8, ptr %i.d, i64 18300
   %i.aot = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.aou = extractelement <4 x i32> %i.aoo, i64 2
@@ -222,6 +220,8 @@ bb.gy:                                            ; preds = %.loopexit64.i.i
   %i.aoy = sub i32 3, %i.aox
   %i.aoz = sext i32 %i.aoy to i64
   %.pre80.i.i = load i32, ptr %i.aoa, align 8
+  %9 = extractelement <2 x i32> %8, i64 0
+  %10 = extractelement <2 x i32> %8, i64 1
   br label %bb.gz
 
 bb.gz:                                            ; preds = %._crit_edge.i.i, %.lr.ph75.i.i
@@ -245,7 +245,7 @@ bb.gz:                                            ; preds = %._crit_edge.i.i, %.
   %i.apm = zext i32 %i.apl to i64
   %i.apn = getelementptr inbounds nuw i8, ptr %i.api, i64 %i.apm
   %i.apo = load ptr, ptr %i.aop, align 8
-  %i.app = mul i32 %.173.i.i, %8
+  %i.app = mul i32 %.173.i.i, %9
   %i.apq = load i32, ptr %i.aoq, align 4
   %i.apr = mul i32 %i.app, %i.apq
   %i.aps = zext i32 %i.apr to i64
@@ -648,11 +648,7 @@ bb.h:                                             ; preds = %.epil.preheader195
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %.not.i = icmp eq i32 %.1.lcssa, 0
-  br i1 %.not.i, label %.critedge.preheader.split.split.i.preheader, label %.lr.ph.preheader.i
-
-.critedge.preheader.split.split.i.preheader:      ; preds = %.epilog-lcssa
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  br label %bb.j
+  br i1 %.not.i, label %.critedge.preheader.split.split.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.epilog-lcssa
   %wide.trip.count.i = zext i32 %.1.lcssa to i64  ; 7 uses
@@ -854,14 +850,18 @@ bb.i:                                             ; preds = %bb.i, %.critedge.pr
   %exitcond72.not.i = icmp eq i64 %indvars.iv.next69.i, %spec.select.i
   br i1 %exitcond72.not.i, label %tdefl_radix_sort_syms.exit, label %.critedge.preheader.split.split.us.i, !llvm.loop !328
 
+.critedge.preheader.split.split.i:                ; preds = %.epilog-lcssa
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  br label %bb.j
+
 tdefl_radix_sort_syms.exit.thread:                ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %tdefl_huffman_enforce_max_code_size.exit
 
-bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split.split.i.preheader
-  %indvars.iv73.i = phi i64 [ 0, %.critedge.preheader.split.split.i.preheader ], [ %indvars.iv.next74.i.3, %bb.j ] ; 6 uses
-  %.03748.i = phi i32 [ 0, %.critedge.preheader.split.split.i.preheader ], [ %i.fu, %bb.j ] ; 2 uses
+bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split.split.i
+  %indvars.iv73.i = phi i64 [ 0, %.critedge.preheader.split.split.i ], [ %indvars.iv.next74.i.3, %bb.j ] ; 6 uses
+  %.03748.i = phi i32 [ 0, %.critedge.preheader.split.split.i ], [ %i.fu, %bb.j ] ; 2 uses
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv73.i
   store i32 %.03748.i, ptr %i.ff, align 16
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv73.i

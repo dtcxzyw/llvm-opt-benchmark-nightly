@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.lr.ph502, %bb.x
   %i.ki = load ptr, ptr %i.ja, align 8, !tbaa !32
   %i.kj = call fastcc i32 @LossyDctEncoder_execute(ptr noundef %i.kh, ptr noundef %i.ki, ptr noundef %1)
   %i.kk = load <2 x i64>, ptr %i.ac, align 8, !tbaa !50
-  %i.kl = load <2 x i64>, ptr %i.jb, align 8, !tbaa !50 ; 2 uses
+  %i.kl = load <2 x i64>, ptr %i.jb, align 8, !tbaa !50 ; 3 uses
   %i.km = add <2 x i64> %i.kl, %i.kk
   store <2 x i64> %i.km, ptr %i.ac, align 8, !tbaa !50
   %i.kn = load ptr, ptr %i.iu, align 8, !tbaa !33 ; 4 uses
@@ -229,11 +229,12 @@ bb.w:                                             ; preds = %.lr.ph502, %bb.x
   br i1 %.not374, label %bb.x, label %DwaCompressor_writeRelevantChannelRules.exit.thread
 
 bb.x:                                             ; preds = %bb.w
-  %3 = shl <2 x i64> %i.kl, splat (i64 1)         ; 2 uses
-  %4 = extractelement <2 x i64> %3, i64 1
+  %3 = extractelement <2 x i64> %i.kl, i64 1
+  %4 = shl i64 %3, 1
   %i.la = getelementptr inbounds nuw i8, ptr %.1301500, i64 %4 ; 2 uses
-  %i.lb = extractelement <2 x i64> %3, i64 0
-  %i.lc = getelementptr inbounds nuw i8, ptr %.1307499, i64 %i.lb ; 2 uses
+  %i.lb = extractelement <2 x i64> %i.kl, i64 0
+  %5 = shl i64 %i.lb, 1
+  %i.lc = getelementptr inbounds nuw i8, ptr %.1307499, i64 %5 ; 2 uses
   %indvars.iv.next546 = add nuw nsw i64 %indvars.iv545, 1 ; 2 uses
   %i.ld = load i32, ptr %i.iq, align 4, !tbaa !78
   %i.le = sext i32 %i.ld to i64
@@ -320,14 +321,15 @@ bb.ab:                                            ; preds = %bb.z
   %i.mp = load ptr, ptr %i.ji, align 8, !tbaa !32
   %i.mq = call fastcc i32 @LossyDctEncoder_execute(ptr noundef %i.mo, ptr noundef %i.mp, ptr noundef %2)
   %i.mr = load <2 x i64>, ptr %i.ac, align 8, !tbaa !50
-  %i.ms = load <2 x i64>, ptr %i.jj, align 8, !tbaa !50 ; 2 uses
+  %i.ms = load <2 x i64>, ptr %i.jj, align 8, !tbaa !50 ; 3 uses
   %i.mt = add <2 x i64> %i.ms, %i.mr
   store <2 x i64> %i.mt, ptr %i.ac, align 8, !tbaa !50
-  %5 = shl <2 x i64> %i.ms, splat (i64 1)         ; 2 uses
-  %6 = extractelement <2 x i64> %5, i64 0
-  %i.mu = getelementptr inbounds nuw i8, ptr %.3309523, i64 %6
-  %i.mv = extractelement <2 x i64> %5, i64 1
-  %i.mw = getelementptr inbounds nuw i8, ptr %.3303524, i64 %i.mv
+  %6 = extractelement <2 x i64> %i.ms, i64 0
+  %7 = shl i64 %6, 1
+  %i.mu = getelementptr inbounds nuw i8, ptr %.3309523, i64 %7
+  %i.mv = extractelement <2 x i64> %i.ms, i64 1
+  %8 = shl i64 %i.mv, 1
+  %i.mw = getelementptr inbounds nuw i8, ptr %.3303524, i64 %8
   %.not378 = icmp eq i32 %i.mq, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br i1 %.not378, label %.loopexit, label %DwaCompressor_writeRelevantChannelRules.exit.thread

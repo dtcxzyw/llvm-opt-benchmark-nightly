@@ -205,7 +205,7 @@ bb.rh:                                            ; preds = %bb.rg, %_ZSt18unini
   br i1 %i.cmw, label %.lr.ph13.preheader.i271.i, label %.noexc254.i
 
 .lr.ph13.preheader.i271.i:                        ; preds = %bb.rh, %bb.re
-  %i.cmx = phi ptr [ %i.clp, %bb.re ], [ %i.cma, %bb.rh ]
+  %i.cmx = phi ptr [ %i.cma, %bb.rh ], [ %i.clp, %bb.re ]
   store i32 0, ptr %i.cmx, align 4
   %.pre550.pre.i = load ptr, ptr %i.ckj, align 8, !tbaa !86
   br label %.noexc254.i

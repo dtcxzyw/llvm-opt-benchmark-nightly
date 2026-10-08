@@ -199,8 +199,8 @@ bb.u:                                             ; preds = %bb.s
 .preheader.lr.ph.i:                               ; preds = %.preheader47.i
   %i.at = add nsw i32 %.036.lcssa59.i, -1
   %i.au = getelementptr inbounds nuw i8, ptr %.0, i64 40
-  %i.av = zext nneg i32 %i.at to i64              ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.036.lcssa59.i to i64
+  %i.av = zext i32 %i.at to i64                   ; 2 uses
+  %wide.trip.count.i = zext i32 %.036.lcssa59.i to i64
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.av
   br label %.preheader.i
 

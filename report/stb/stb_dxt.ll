@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bq = or i16 %i.bm, %i.bp
   br label %.thread56
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o
+.thread:                                          ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
   call void @stb__OptimizeColorsBlock(ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
   %i.br = load i16, ptr %i.a, align 2, !tbaa !12  ; 4 uses
   %i.bs = load i16, ptr %i.b, align 2, !tbaa !12  ; 4 uses

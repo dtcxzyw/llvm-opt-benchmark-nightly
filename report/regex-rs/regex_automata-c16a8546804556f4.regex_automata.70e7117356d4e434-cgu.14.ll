@@ -204,7 +204,7 @@ _RINvMs3_NtCs3roNzt6HBWW_12regex_syntax3hirNtB6_3Hir7literalINtNtCs4wP2HXfJTCR_5
   %.sroa.5.0 = phi ptr [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxShEECs9GYDdpCSJ4S_14regex_automata.exit.i ], [ %i.fl, %bb.bu ], !dbg !14788
   %.sroa.0.0135 = phi i64 [ 2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxShEECs9GYDdpCSJ4S_14regex_automata.exit.i ], [ 3, %bb.bu ], !dbg !14787
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !dbg !14789
-  %i.fs = sub i64 %4, %invariant.umin, !dbg !14790
+  %i.fs = sub nuw i64 %4, %invariant.umin, !dbg !14790
   store i64 %.sroa.0.0135, ptr %0, align 8, !dbg !14791
   %.sroa.022.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14791
   store ptr %.sroa.5.0, ptr %.sroa.022.sroa.4.0..sroa_idx, align 8, !dbg !14791

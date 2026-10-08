@@ -204,26 +204,25 @@ default.unreachable:                              ; preds = %.loopexit748.us.i.2
   %i.xg = load ptr, ptr %i.xf, align 8, !tbaa !32
   %i.xh = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.xi = load ptr, ptr %i.xh, align 8, !tbaa !32
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %5 = load <2 x i32>, ptr %4, align 4, !tbaa !28
-  %6 = sdiv <2 x i32> %5, splat (i32 2)           ; 3 uses
   br i1 %.not478765.i, label %.preheader736.lr.ph.i, label %decode_blocks.exit
 
 .preheader736.lr.ph.i:                            ; preds = %.loopexit739.i
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 68
+  %5 = load <2 x i32>, ptr %4, align 4, !tbaa !28
+  %6 = sdiv <2 x i32> %5, splat (i32 2)           ; 2 uses
   %i.xj = icmp sgt i32 %.fr.i, 0
-  %7 = shl nsw <2 x i32> %6, splat (i32 4)        ; 2 uses
-  %8 = extractelement <2 x i32> %7, i64 0
+  %7 = extractelement <2 x i32> %6, i64 0         ; 2 uses
+  %8 = shl nsw i32 %7, 4
   %i.xk = sext i32 %8 to i64
-  %i.xl = extractelement <2 x i32> %7, i64 1
-  %i.xm = sext i32 %i.xl to i64
+  %i.xl = extractelement <2 x i32> %6, i64 1      ; 2 uses
+  %9 = shl nsw i32 %i.xl, 4
+  %i.xm = sext i32 %9 to i64
   br i1 %i.xj, label %.preheader736.lr.ph.split.i, label %decode_blocks.exit
 
 .preheader736.lr.ph.split.i:                      ; preds = %.preheader736.lr.ph.i
   %i.xn = load i32, ptr %i.dr, align 8, !tbaa !79
-  %9 = extractelement <2 x i32> %6, i64 0
-  %i.xo = sext i32 %9 to i64
-  %10 = extractelement <2 x i32> %6, i64 1
-  %i.xp = sext i32 %10 to i64
+  %i.xo = sext i32 %7 to i64
+  %i.xp = sext i32 %i.xl to i64
   %i.xq = zext nneg i32 %.fr.i to i64
   br label %.preheader736.i
 

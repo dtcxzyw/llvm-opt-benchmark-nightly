@@ -205,15 +205,19 @@ bb.a:
   %i.s = sitofp <2 x i32> %i.r to <2 x float>
   %i.t = fsub <2 x float> %i.q, %i.s
   %i.u = fmul <2 x float> %i.t, splat (float 3.000000e+00) ; 2 uses
-  %i.v = fptosi <2 x float> %i.u to <2 x i32>     ; 4 uses
+  %i.v = fptosi <2 x float> %i.u to <2 x i32>     ; 3 uses
   %i.w = sitofp <2 x i32> %i.v to <2 x float>
   %foldExtExtBinop = sub nsw <2 x i32> %i.r, %i.o
-  %i.x = extractelement <2 x i32> %foldExtExtBinop, i64 0 ; 4 uses
+  %5 = extractelement <2 x i32> %foldExtExtBinop, i64 0 ; 4 uses
+  %i.x = extractelement <2 x i32> %i.v, i64 0     ; 2 uses
+  %.sroa.5.0.insert.ext.i = zext i32 %i.x to i64
+  %.sroa.5.0.insert.shift.i = shl nuw i64 %.sroa.5.0.insert.ext.i, 32
   %i.y = fsub <2 x float> %i.u, %i.w              ; 5 uses
   %foldExtExtBinop163 = sub nsw <2 x i32> %i.r, %i.o
-  %i.z = extractelement <2 x i32> %foldExtExtBinop163, i64 1 ; 4 uses
-  %5 = zext <2 x i32> %i.v to <2 x i64>
-  %6 = shl nuw <2 x i64> %5, splat (i64 32)
+  %6 = extractelement <2 x i32> %foldExtExtBinop163, i64 1 ; 4 uses
+  %i.z = extractelement <2 x i32> %i.v, i64 1     ; 2 uses
+  %.sroa.5.0.insert.ext.i138 = zext i32 %i.z to i64
+  %.sroa.5.0.insert.shift.i139 = shl nuw i64 %.sroa.5.0.insert.ext.i138, 32
   %i.aa = fdiv float %i.j, 3.000000e+00           ; 3 uses
   %i.ab = fcmp olt float %i.aa, 0.000000e+00
   %i.ac = fsub float 1.000000e+00, %i.aa
@@ -231,18 +235,18 @@ bb.a:
   %i.ao = sub nsw i32 %i.ah, %i.ae                ; 4 uses
   %.sroa.5.0.insert.ext.i144 = zext i32 %i.al to i64
   %.sroa.5.0.insert.shift.i145 = shl nuw i64 %.sroa.5.0.insert.ext.i144, 32
-  %i.ap = and i32 %i.x, 65535
+  %i.ap = and i32 %5, 65535
   %i.aq = add nuw nsw i32 %i.ap, 24               ; 2 uses
-  %i.ar = lshr i32 %i.x, 5
+  %i.ar = lshr i32 %5, 5
   %i.as = and i32 %i.ar, 134215680
   %i.at = shl i32 %i.aq, 16
   %i.au = xor i32 %i.as, %i.at
   %i.av = xor i32 %i.au, %i.aq                    ; 2 uses
   %i.aw = lshr i32 %i.av, 11
-  %i.ax = and i32 %i.z, 65535
+  %i.ax = and i32 %6, 65535
   %i.ay = add i32 %i.av, %i.ax
   %i.az = add i32 %i.ay, %i.aw                    ; 2 uses
-  %i.ba = lshr i32 %i.z, 5
+  %i.ba = lshr i32 %6, 5
   %i.bb = and i32 %i.ba, 134215680
   %i.bc = shl i32 %i.az, 16
   %i.bd = xor i32 %i.bb, %i.bc
@@ -327,13 +331,13 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.do = getelementptr inbounds nuw i8, ptr %.0152, i64 256
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !275
-  %i.dq = icmp eq i32 %i.dp, %i.x
+  %i.dq = icmp eq i32 %i.dp, %5
   br i1 %i.dq, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.dr = getelementptr inbounds nuw i8, ptr %.0152, i64 260
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !275
-  %i.dt = icmp eq i32 %i.ds, %i.z
+  %i.dt = icmp eq i32 %i.ds, %6
   br i1 %i.dt, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
@@ -421,9 +425,9 @@ bb.i:                                             ; preds = %_ZN11btSparseSdfILi
   %i.ex = getelementptr inbounds nuw i8, ptr %i.et, i64 272
   store i32 %i.cx, ptr %i.ex, align 16, !tbaa !662
   %i.ey = getelementptr inbounds nuw i8, ptr %i.et, i64 256
-  store i32 %i.x, ptr %i.ey, align 16, !tbaa !275
+  store i32 %5, ptr %i.ey, align 16, !tbaa !275
   %i.ez = getelementptr inbounds nuw i8, ptr %i.et, i64 260
-  store i32 %i.z, ptr %i.ez, align 4, !tbaa !275
+  store i32 %6, ptr %i.ez, align 4, !tbaa !275
   %i.fa = getelementptr inbounds nuw i8, ptr %i.et, i64 264
   store i32 %i.ao, ptr %i.fa, align 8, !tbaa !275
   tail call void @_ZN11btSparseSdfILi3EE9BuildCellERNS0_4CellE(ptr noundef nonnull align 8 dereferenceable(60) %0, ptr noundef nonnull align 8 dereferenceable(296) %i.et)
@@ -435,24 +439,21 @@ bb.i:                                             ; preds = %_ZN11btSparseSdfILi
   %i.fc = load i32, ptr %i.fb, align 8, !tbaa !667
   %i.fd = getelementptr inbounds nuw i8, ptr %.1, i64 268
   store i32 %i.fc, ptr %i.fd, align 4, !tbaa !668
-  %7 = extractelement <2 x i32> %i.v, i64 0
-  %i.fe = sext i32 %7 to i64
+  %i.fe = sext i32 %i.x to i64
   %i.ff = getelementptr inbounds [64 x i8], ptr %.1, i64 %i.fe ; 2 uses
-  %8 = extractelement <2 x i32> %i.v, i64 1
-  %i.fg = sext i32 %8 to i64                      ; 2 uses
+  %i.fg = sext i32 %i.z to i64                    ; 2 uses
   %i.fh = getelementptr inbounds [16 x i8], ptr %i.ff, i64 %i.fg ; 2 uses
   %i.fi = sext i32 %i.al to i64                   ; 4 uses
   %i.fj = getelementptr inbounds [4 x i8], ptr %i.fh, i64 %i.fi
   %i.fk = load float, ptr %i.fj, align 4, !tbaa !253 ; 3 uses
-  %9 = add <2 x i64> %6, splat (i64 4294967296)   ; 2 uses
-  %10 = extractelement <2 x i64> %9, i64 0
-  %i.fl = ashr exact i64 %10, 26
+  %7 = add i64 %.sroa.5.0.insert.shift.i, 4294967296
+  %i.fl = ashr exact i64 %7, 26
   %i.fm = getelementptr inbounds i8, ptr %.1, i64 %i.fl ; 2 uses
   %i.fn = getelementptr inbounds [16 x i8], ptr %i.fm, i64 %i.fg ; 2 uses
   %i.fo = getelementptr inbounds [4 x i8], ptr %i.fn, i64 %i.fi
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !253 ; 2 uses
-  %11 = extractelement <2 x i64> %9, i64 1
-  %i.fq = ashr exact i64 %11, 32                  ; 2 uses
+  %8 = add i64 %.sroa.5.0.insert.shift.i139, 4294967296
+  %i.fq = ashr exact i64 %8, 32                   ; 2 uses
   %i.fr = getelementptr inbounds [16 x i8], ptr %i.fm, i64 %i.fq ; 2 uses
   %i.fs = getelementptr inbounds [4 x i8], ptr %i.fr, i64 %i.fi
   %i.ft = load float, ptr %i.fs, align 4, !tbaa !253

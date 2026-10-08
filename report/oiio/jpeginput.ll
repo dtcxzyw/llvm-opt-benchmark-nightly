@@ -205,11 +205,11 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN11OpenImageIO4v3_18JpgInput21read_native_scanlinesEiiiiNS0_4spanISt4byteLm18446744073709551615EEE(ptr noundef nonnull align 8 dereferenceable(1312) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly byval(%"class.OpenImageIO::v3_1::span.31") align 8 captures(none) %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 2 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   %i.b = alloca i32, align 4                      ; 8 uses
   %6 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 10 uses
   %7 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 9 uses
-  %i.c = alloca i32, align 4                      ; 7 uses
+  %i.c = alloca i32, align 4                      ; 8 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   store i32 %3, ptr %i.a, align 4, !tbaa !45
   store i32 %4, ptr %i.b, align 4, !tbaa !45
@@ -247,7 +247,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   br i1 %i.r, label %_ZN11OpenImageIO4v3_110ImageInput13seek_subimageEii.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = icmp slt i32 %3, 0
+  %8 = load i32, ptr %i.a, align 4, !tbaa !45     ; 3 uses
+  %i.s = icmp slt i32 %8, 0
   br i1 %i.s, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -256,7 +257,7 @@ bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 364
   %i.w = load i32, ptr %i.v, align 4, !tbaa !165
   %i.x = icmp sle i32 %i.t, %i.w
-  %.not = icmp slt i32 %3, %i.t
+  %.not = icmp slt i32 %8, %i.t
   %or.cond = and i1 %.not, %i.x
   br i1 %or.cond, label %bb.h, label %bb.g
 
@@ -273,7 +274,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !413
   %i.af = add nsw i32 %i.ae, %i.ac
-  %i.ag = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput19valid_raw_span_sizeENS0_4spanIKSt4byteLm18446744073709551615EEERKNS0_9ImageSpecEiiiiiiii(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr %i.y, i64 %i.aa, ptr noundef nonnull align 8 dereferenceable(160) %i.ab, i32 noundef %i.ac, i32 noundef %i.af, i32 noundef %3, i32 noundef %i.t, i32 noundef 0, i32 noundef 1, i32 noundef 0, i32 noundef -1)
+  %i.ag = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput19valid_raw_span_sizeENS0_4spanIKSt4byteLm18446744073709551615EEERKNS0_9ImageSpecEiiiiiiii(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr %i.y, i64 %i.aa, ptr noundef nonnull align 8 dereferenceable(160) %i.ab, i32 noundef %i.ac, i32 noundef %i.af, i32 noundef %8, i32 noundef %i.t, i32 noundef 0, i32 noundef 1, i32 noundef 0, i32 noundef -1)
           to label %bb.i unwind label %bb.c
 
 bb.i:                                             ; preds = %bb.h
@@ -281,8 +282,9 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 5 uses
-  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !164
-  %i.aj = icmp sgt i32 %i.ai, %3
+  %9 = load i32, ptr %i.ah, align 8, !tbaa !164
+  %i.ai = load i32, ptr %i.a, align 4, !tbaa !45
+  %i.aj = icmp sgt i32 %9, %i.ai
   br i1 %i.aj, label %bb.k, label %bb.u
 
 bb.k:                                             ; preds = %bb.j
@@ -404,11 +406,12 @@ bb.aa:                                            ; preds = %bb.w, %bb.z, %bb.y
   %i.bn = zext i32 %i.bm to i64                   ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 24
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !185
-  %8 = zext nneg i32 %3 to i64
-  %i.bq = mul nuw nsw i64 %8, %i.bn
+  %10 = load i32, ptr %i.a, align 4, !tbaa !45    ; 2 uses
+  %11 = sext i32 %10 to i64
+  %i.bq = mul nsw i64 %11, %i.bn
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bq
   %i.bs = load i32, ptr %i.b, align 4, !tbaa !45
-  %i.bt = sub nsw i32 %i.bs, %3
+  %i.bt = sub nsw i32 %i.bs, %10
   %i.bu = sext i32 %i.bt to i64
   %i.bv = mul nsw i64 %i.bu, %i.bn
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.y, ptr align 1 %i.br, i64 %i.bv, i1 false)
@@ -422,9 +425,10 @@ bb.ab:                                            ; preds = %bb.u
 
 bb.ac:                                            ; preds = %bb.ab
   %i.by = load i32, ptr %i.b, align 4, !tbaa !45  ; 2 uses
-  %i.bz = sub i32 %i.by, %3                       ; 8 uses
+  %12 = load i32, ptr %i.a, align 4, !tbaa !45    ; 2 uses
+  %i.bz = sub i32 %i.by, %12                      ; 8 uses
   %i.ca = call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec14scanline_bytesEb(ptr noundef nonnull align 8 dereferenceable(160) %i.ab, i1 noundef zeroext true) #32 ; 5 uses
-  %.not65 = icmp eq i32 %i.by, %3
+  %.not65 = icmp eq i32 %i.by, %12
   br i1 %.not65, label %._crit_edge, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
@@ -599,7 +603,8 @@ bb.ai:                                            ; preds = %bb.ai, %.epil.prehe
 
 .loopexit101:                                     ; preds = %.loopexit101.loopexit.unr-lcssa, %bb.ai, %.preheader100, %._crit_edge
   %i.ee = load i32, ptr %i.ah, align 8, !tbaa !164
-  %i.ef = icmp slt i32 %i.ee, %3
+  %13 = load i32, ptr %i.a, align 4, !tbaa !45    ; 2 uses
+  %i.ef = icmp slt i32 %i.ee, %13
   br i1 %i.ef, label %.lr.ph108, label %._crit_edge109
 
 .lr.ph108:                                        ; preds = %.loopexit101
@@ -628,14 +633,16 @@ bb.an:                                            ; preds = %bb.al
   %i.el = load i32, ptr %i.ah, align 8, !tbaa !164
   %i.em = add nsw i32 %i.el, 1                    ; 2 uses
   store i32 %i.em, ptr %i.ah, align 8, !tbaa !164
-  %i.en = icmp slt i32 %i.em, %3
+  %14 = load i32, ptr %i.a, align 4, !tbaa !45    ; 2 uses
+  %i.en = icmp slt i32 %i.em, %14
   br i1 %i.en, label %bb.aj, label %._crit_edge109, !llvm.loop !406
 
 ._crit_edge109:                                   ; preds = %bb.an, %.loopexit101
+  %.lcssa = phi i32 [ %13, %.loopexit101 ], [ %14, %bb.an ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #32
-  store i32 %3, ptr %i.c, align 4, !tbaa !45
+  store i32 %.lcssa, ptr %i.c, align 4, !tbaa !45
   %i.eo = load i32, ptr %i.b, align 4, !tbaa !45  ; 3 uses
-  %.not66110 = icmp slt i32 %3, %i.eo
+  %.not66110 = icmp slt i32 %.lcssa, %i.eo
   br i1 %.not66110, label %.lr.ph112, label %._crit_edge113
 
 .lr.ph112:                                        ; preds = %._crit_edge109
@@ -644,8 +651,9 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %.lr.ph112, %.critedge73
   %i.eq = phi i32 [ %i.eo, %.lr.ph112 ], [ %i.fc, %.critedge73 ]
-  %i.er = phi i32 [ %3, %.lr.ph112 ], [ %i.fb, %.critedge73 ] ; 3 uses
-  %i.es = sub nsw i32 %i.er, %3
+  %i.er = phi i32 [ %.lcssa, %.lr.ph112 ], [ %i.fb, %.critedge73 ] ; 2 uses
+  %15 = load i32, ptr %i.a, align 4, !tbaa !45
+  %i.es = sub nsw i32 %i.er, %15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #32
   %i.et = sext i32 %i.es to i64
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.cl, i64 %i.et
@@ -685,7 +693,8 @@ bb.as:                                            ; preds = %.loopexit.split-lp,
   br label %bb.aw
 
 .critedge73:                                      ; preds = %bb.aq
-  %i.fb = add nsw i32 %i.er, %i.ew                ; 3 uses
+  %16 = load i32, ptr %i.c, align 4, !tbaa !45
+  %i.fb = add nsw i32 %16, %i.ew                  ; 3 uses
   store i32 %i.fb, ptr %i.c, align 4, !tbaa !45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #32
   %i.fc = load i32, ptr %i.b, align 4, !tbaa !45  ; 3 uses

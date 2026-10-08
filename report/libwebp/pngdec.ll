@@ -194,16 +194,12 @@ bb.s:                                             ; preds = %bb.r
   %i.bl = load volatile ptr, ptr %i.b, align 8, !tbaa !27
   %i.bm = call i32 @png_get_gAMA(ptr noundef %i.bk, ptr noundef %i.bl, ptr noundef nonnull %i.k) #14
   %.not59 = icmp eq i32 %i.bm, 0
-  br i1 %.not59, label %bb.u, label %._crit_edge72
+  br i1 %.not59, label %bb.u, label %bb.t
 
-._crit_edge72:                                    ; preds = %bb.s
-  %.pre73 = load double, ptr %i.k, align 8, !tbaa !29
-  br label %bb.t
-
-bb.t:                                             ; preds = %._crit_edge72, %bb.r
-  %6 = phi double [ %.pre73, %._crit_edge72 ], [ f0x3FDD1745D1745D17, %bb.r ]
-  %7 = load volatile ptr, ptr %i.a, align 8, !tbaa !25
-  call void @png_set_gamma(ptr noundef %7, double noundef 2.200000e+00, double noundef %6) #14
+bb.t:                                             ; preds = %bb.s, %bb.r
+  %6 = load volatile ptr, ptr %i.a, align 8, !tbaa !25
+  %7 = load double, ptr %i.k, align 8, !tbaa !29
+  call void @png_set_gamma(ptr noundef %6, double noundef 2.200000e+00, double noundef %7) #14
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s

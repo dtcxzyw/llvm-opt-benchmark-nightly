@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = icmp slt i32 %i.q, 0
   %spec.select39.i = select i1 %i.r, i32 %i.p, i32 %i.q
   store i32 %spec.select39.i, ptr %i.n, align 4
-  br label %vt100_scroll.exit
+  br label %vt100_scroll.exit, !llvm.loop !41
 
 vt100_scroll.exit:                                ; preds = %bb.c, %bb.b
   tail call void @vt100_refresh(ptr noundef nonnull %0)
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = icmp eq i32 %i.x, %i.y
   %spec.store.select.i = select i1 %i.z, i32 0, i32 %i.x
   store i32 %spec.store.select.i, ptr %i.s, align 4
-  br label %vt100_scroll.exit41
+  br label %vt100_scroll.exit41, !llvm.loop !42
 
 vt100_scroll.exit41:                              ; preds = %bb.e, %bb.d
   tail call void @vt100_refresh(ptr noundef nonnull %0)
@@ -629,7 +629,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aj = add nuw nsw i32 %.06068, 1              ; 2 uses
   %i.ak = load i32, ptr %i.x, align 4             ; 2 uses
   %i.al = icmp slt i32 %i.aj, %i.ak
-  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !41
+  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !43
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre72 = load i32, ptr %i.g, align 4
@@ -949,4 +949,6 @@ attributes #14 = { nounwind allocsize(0) }
 !39 = distinct !{!39, !11}
 !40 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !41 = distinct !{!41, !11}
+!42 = distinct !{!42, !11}
+!43 = distinct !{!43, !11}
 end_hunk_1

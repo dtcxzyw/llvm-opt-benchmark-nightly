@@ -205,24 +205,22 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %3 = load <2 x i32>, ptr %i.e, align 8          ; 4 uses
-  %4 = extractelement <2 x i32> %3, i64 0         ; 3 uses
-  %5 = icmp sgt i32 %4, 0
-  %6 = extractelement <2 x i32> %3, i64 1         ; 2 uses
+  %3 = load i32, ptr %i.e, align 8, !tbaa !12     ; 5 uses
+  %4 = icmp sgt i32 %3, 0
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %6 = load i32, ptr %5, align 4                  ; 4 uses
   %i.f = icmp sgt i32 %6, 0
-  tail call void @llvm.assume(i1 %5)
+  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.assume(i1 %i.f)
-  %7 = insertelement <2 x i32> poison, i32 %1, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %2, i64 1
-  %9 = srem <2 x i32> %8, %3
-  %10 = add nsw <2 x i32> %9, %3                  ; 2 uses
-  %11 = extractelement <2 x i32> %10, i64 0
-  %i.g = srem i32 %11, %4
-  %12 = extractelement <2 x i32> %10, i64 1
-  %i.h = srem i32 %12, %6
-  %i.i = sext i32 %i.g to i64
+  %7 = srem i32 %1, %3
+  %8 = add nsw i32 %7, %3
+  %9 = srem i32 %8, %3
+  %i.g = srem i32 %2, %6
+  %10 = add nsw i32 %i.g, %6
+  %i.h = srem i32 %10, %6
+  %i.i = sext i32 %9 to i64
   %i.j = sext i32 %i.h to i64
-  %i.k = zext nneg i32 %4 to i64
+  %i.k = zext nneg i32 %3 to i64
   %i.l = mul nsw i64 %i.j, %i.k
   %i.m = getelementptr i8, ptr %i.a, i64 %i.l
   %i.n = getelementptr i8, ptr %i.m, i64 %i.i

@@ -204,55 +204,53 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @php_execute_simple_script(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = alloca [1 x %struct.__jmp_buf_tag], align 16 ; 5 uses
+  %2 = alloca [1 x %struct.__jmp_buf_tag], align 16 ; 4 uses
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 448), align 8, !tbaa !121
   %i.a = alloca [4096 x i8], align 16             ; 4 uses
   store i8 0, ptr %i.a, align 16, !tbaa !19
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !91 ; 2 uses
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !91
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   store ptr %2, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !91
   %i.c = call i32 @__sigsetjmp(ptr noundef nonnull %2, i32 noundef 0) #28
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %bb.b, label %.thread
-
-.thread:                                          ; preds = %bb.a
-  store ptr %i.b, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !91
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
-  br label %bb.g
+  br i1 %i.d, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @core_globals, i64 490), align 2, !tbaa !55
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !85
   %.not = icmp eq ptr %i.f, null
-  br i1 %.not, label %bb.e, label %bb.c
+  br i1 %.not, label %3, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @sapi_globals, i64 432), align 8, !tbaa !123
   %i.h = and i32 %i.g, 1
   %.not10 = icmp eq i32 %i.h, 0
-  br i1 %.not10, label %bb.d, label %bb.e
+  br i1 %.not10, label %bb.d, label %3
 
 bb.d:                                             ; preds = %bb.c
   %i.i = call ptr @getcwd(ptr noundef nonnull %i.a, i64 noundef 4095) #26 ; 0 uses
   %i.j = load ptr, ptr %i.e, align 8, !tbaa !85
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = call i32 @virtual_chdir_file(ptr noundef nonnull %i.k, ptr noundef nonnull @chdir) #26 ; 0 uses
+  br label %3
+
+3:                                                ; preds = %bb.d, %bb.c, %bb.b
+  %4 = call i32 (i32, ptr, i32, ...) @zend_execute_scripts(i32 noundef 8, ptr noundef %1, i32 noundef 1, ptr noundef nonnull %0) #26 ; 0 uses
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
-  %3 = call i32 (i32, ptr, i32, ...) @zend_execute_scripts(i32 noundef 8, ptr noundef %1, i32 noundef 1, ptr noundef nonnull %0) #26 ; 0 uses
-  %.pre = load i8, ptr %i.a, align 16, !tbaa !19
-  %i.m = icmp eq i8 %.pre, 0
+bb.e:                                             ; preds = %3, %bb.a
   store ptr %i.b, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 416), align 8, !tbaa !91
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
+  %.pre = load i8, ptr %i.a, align 16, !tbaa !19
+  %i.m = icmp eq i8 %.pre, 0
   br i1 %i.m, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.n = call i32 @chdir(ptr noundef nonnull %i.a) #26 ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %.thread, %bb.f, %bb.e
+bb.g:                                             ; preds = %bb.f, %bb.e
   %i.o = load i32, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 448), align 8, !tbaa !121
   ret i32 %i.o
 }

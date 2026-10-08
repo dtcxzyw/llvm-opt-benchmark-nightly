@@ -204,7 +204,7 @@ Ndr_ObjReadArray.exit.i.i:                        ; preds = %Ndr_DataSize.exit.i
 
 .lr.ph921.i.i:                                    ; preds = %Ndr_ObjReadArray.exit.i.i
   %i.tp = add nsw i32 %.0.lcssa.i541.i.i, -1
-  %i.tq = zext nneg i32 %i.tp to i64              ; 2 uses
+  %i.tq = zext nneg i32 %i.tp to i64
   %.not347.i = icmp eq i32 %.0.lcssa.i541.i.i, 1
   br i1 %.not347.i, label %._crit_edge922.i.loopexit.peel.begin.i, label %.lr.ph921.i.split.i
 
@@ -214,15 +214,13 @@ Ndr_ObjReadArray.exit.i.i:                        ; preds = %Ndr_DataSize.exit.i
   br label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cq, %.lr.ph921.i.split.i
-  %indvars.iv1017.i.i = phi i64 [ 0, %.lr.ph921.i.split.i ], [ %indvars.iv.next1018.i.i, %bb.cq ] ; 4 uses
+  %indvars.iv1017.i.i = phi i64 [ 0, %.lr.ph921.i.split.i ], [ %indvars.iv.next1018.i.i, %bb.cq ] ; 3 uses
   %i.ts = getelementptr inbounds nuw [4 x i8], ptr %.2749.i.i, i64 %indvars.iv1017.i.i
   %i.tt = load i32, ptr %i.ts, align 4, !tbaa !21
   %i.tu = sext i32 %i.tt to i64
   %i.tv = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.tu
   %i.tw = load ptr, ptr %i.tv, align 8, !tbaa !43
-  %1 = icmp eq i64 %indvars.iv1017.i.i, %i.tq
-  %2 = select i1 %1, ptr @.str.27, ptr @.str.38
-  %i.tx = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.r, ptr noundef nonnull @.str.37, ptr noundef %i.tw, ptr noundef nonnull %2) #20 ; 0 uses
+  %i.tx = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.r, ptr noundef nonnull @.str.37, ptr noundef %i.tw, ptr noundef nonnull @.str.38) #20 ; 0 uses
   %indvars.iv.next1018.i.i = add nuw nsw i64 %indvars.iv1017.i.i, 1 ; 2 uses
   %exitcond1021.not.i.i = icmp eq i64 %indvars.iv1017.i.i, %i.tr
   br i1 %exitcond1021.not.i.i, label %._crit_edge922.i.loopexit.peel.begin.i, label %bb.cq, !llvm.loop !58
@@ -625,7 +623,7 @@ bb.fx:                                            ; preds = %Ndr_ObjReadBody.exi
 
 .lr.ph918.i.i:                                    ; preds = %bb.fx
   %i.alw = add nsw i32 %.0.lcssa.i695.i.i, -1
-  %i.alx = zext nneg i32 %i.alw to i64            ; 2 uses
+  %i.alx = zext nneg i32 %i.alw to i64
   br i1 %.not803.i.i, label %._crit_edge919.i.loopexit.peel.begin.i, label %.lr.ph918.i.split.i
 
 .lr.ph918.i.split.i:                              ; preds = %.lr.ph918.i.i
@@ -634,15 +632,13 @@ bb.fx:                                            ; preds = %Ndr_ObjReadBody.exi
   br label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fy, %.lr.ph918.i.split.i
-  %indvars.iv1012.i.i = phi i64 [ 0, %.lr.ph918.i.split.i ], [ %indvars.iv.next1013.i.i, %bb.fy ] ; 4 uses
+  %indvars.iv1012.i.i = phi i64 [ 0, %.lr.ph918.i.split.i ], [ %indvars.iv.next1013.i.i, %bb.fy ] ; 3 uses
   %i.alz = getelementptr inbounds nuw [4 x i8], ptr %.17.i.i, i64 %indvars.iv1012.i.i
   %i.ama = load i32, ptr %i.alz, align 4, !tbaa !21
   %i.amb = sext i32 %i.ama to i64
   %i.amc = getelementptr inbounds [8 x i8], ptr %i.f, i64 %i.amb
   %i.amd = load ptr, ptr %i.amc, align 8, !tbaa !43
-  %3 = icmp eq i64 %indvars.iv1012.i.i, %i.alx
-  %4 = select i1 %3, ptr @.str.27, ptr @.str.28
-  %i.ame = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.r, ptr noundef nonnull @.str.26, ptr noundef %i.amd, ptr noundef nonnull %4) #20 ; 0 uses
+  %i.ame = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.r, ptr noundef nonnull @.str.26, ptr noundef %i.amd, ptr noundef nonnull @.str.28) #20 ; 0 uses
   %indvars.iv.next1013.i.i = add nuw nsw i64 %indvars.iv1012.i.i, 1 ; 2 uses
   %exitcond1016.not.i.i = icmp eq i64 %indvars.iv1012.i.i, %i.aly
   br i1 %exitcond1016.not.i.i, label %._crit_edge919.i.loopexit.peel.begin.i, label %bb.fy, !llvm.loop !59

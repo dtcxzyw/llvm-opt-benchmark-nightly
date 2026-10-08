@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 7 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i8, align 1                       ; 4 uses
-  %4 = alloca %struct.rb_io_blocking_operation, align 8 ; 8 uses
+  %4 = alloca %struct.rb_io_blocking_operation, align 8 ; 9 uses
   %i.g = alloca ptr, align 8                      ; 4 uses
   %5 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.h = alloca i32, align 4                      ; 4 uses
@@ -256,6 +256,7 @@ thread_io_mn_schedulable.exit:                    ; preds = %bb.a, %bb.b
   %i.y = call ptr @rb_errno_ptr() #17
   store i32 0, ptr %i.y, align 4, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.0..0..0..0.28 = load volatile ptr, ptr %i.b, align 8, !tbaa !144
   store ptr %.0..0..0..0.28, ptr %i.z, align 8, !tbaa !244

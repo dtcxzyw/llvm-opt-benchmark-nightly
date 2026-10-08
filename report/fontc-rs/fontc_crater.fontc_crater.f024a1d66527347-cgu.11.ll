@@ -204,9 +204,6 @@ bb.c:                                             ; preds = %bb.b
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsimRn6g4KI1Q_5rayon3vec13DrainProducerNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetEEB1n_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.a) #30
           to label %common.resume unwind label %bb.d
 
-common.resume:                                    ; preds = %bb.c
-  resume { ptr, i32 } %i.c
-
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsimRn6g4KI1Q_5rayon3vec13DrainProducerNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetEEB1n_.exit: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw [104 x i8], ptr %1, i64 %3
   %i.e = sub nuw nsw i64 %2, %3
@@ -218,6 +215,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsimRn6g4KI1Q_5rayon3vec13DrainProd
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.e, ptr %i.h, align 8
   ret void
+
+common.resume:                                    ; preds = %bb.c
+  resume { ptr, i32 } %i.c
 
 bb.d:                                             ; preds = %bb.c
   %i.i = landingpad { ptr, i32 }

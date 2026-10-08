@@ -204,11 +204,11 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef zeroext i1 @_ZN4clip3x119write_pngERKNS_5imageERNSt3__16vectorIhNS4_9allocatorIhEEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 15 uses
+  %i.a = alloca ptr, align 8                      ; 16 uses
   %i.b = alloca ptr, align 8                      ; 9 uses
   %i.c = alloca ptr, align 8                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
-  %i.d = call noalias ptr @png_create_write_struct(ptr noundef nonnull @.str, ptr noundef null, ptr noundef null, ptr noundef null) ; 4 uses
+  %i.d = call noalias ptr @png_create_write_struct(ptr noundef nonnull @.str, ptr noundef null, ptr noundef null, ptr noundef null) ; 3 uses
   store ptr %i.d, ptr %i.a, align 8, !tbaa !27
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.h, label %bb.b
@@ -225,7 +225,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %i.f = call ptr @png_set_longjmp_fn(ptr noundef nonnull %i.d, ptr noundef nonnull @longjmp, i64 noundef 200)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !27
+  %i.f = call ptr @png_set_longjmp_fn(ptr noundef %2, ptr noundef nonnull @longjmp, i64 noundef 200)
   %i.g = call i32 @_setjmp(ptr noundef %i.f) #32
   %.not40 = icmp eq i32 %i.g, 0
   br i1 %.not40, label %bb.f, label %bb.e

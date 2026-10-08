@@ -205,7 +205,7 @@ bb.kc:                                            ; preds = %bb.kb
   invoke fastcc void @"_ZN4core3ptr103drop_in_place$LT$alloc..vec..Vec$LT$$LP$serde_json..value..Value$C$http..status..StatusCode$RP$$GT$$GT$17h076e4bdcd3dbabf2E"(ptr noalias noundef align 8 dereferenceable(24) %i.bg) #55
           to label %.body26 unwind label %bb.kg
 
-"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h3ca717c3dfa02006E.exit.i": ; preds = %"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17hb2ba1f312c196b47E.exit", %.noexc24
+"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h3ca717c3dfa02006E.exit.i": ; preds = %.noexc24, %"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17hb2ba1f312c196b47E.exit"
   %i.afq = phi i64 [ %i.afl, %"_ZN79_$LT$core..result..Result$LT$T$C$E$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17hb2ba1f312c196b47E.exit" ], [ %.pre.i.i23, %.noexc24 ] ; 3 uses
   %i.afr = icmp ult i64 %i.afq, 115292150460684698
   call void @llvm.assume(i1 %i.afr)

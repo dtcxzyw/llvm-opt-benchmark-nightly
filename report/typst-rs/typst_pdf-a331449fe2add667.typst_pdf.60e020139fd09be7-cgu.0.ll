@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.q
   %i.eo = icmp ult i64 %.val3.i13.i, %3
   br i1 %i.eo, label %.lr.ph.i15, label %._crit_edge.i14
 
-._crit_edge.i14:                                  ; preds = %bb.r, %.preheader.preheader.i
-  %.val3.i.lcssa.i = phi i64 [ %.val3.i.i18.a, %.preheader.preheader.i ], [ %.val3.i13.i, %bb.r ]
+._crit_edge.i14:                                  ; preds = %bb.r, %bb.w
+  %.val3.i.lcssa.i = phi i64 [ %i.gs, %bb.w ], [ %.val3.i13.i, %bb.r ]
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.val3.i.lcssa.i, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @95) #42
           to label %.noexc.i unwind label %bb.s
 
@@ -219,9 +219,9 @@ bb.s:                                             ; preds = %._crit_edge.i14
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs2qDE43xvXom_9hashbrown10scopeguard10ScopeGuardQNtNtBG_3raw13RawTableInnerNCNvMsa_B1v_B1t_15rehash_in_place0EECs8jFhWeO2DFb_9typst_pdf(ptr noalias nofree noundef align 8 dereferenceable(24) %i.a) #44
           to label %common.resume unwind label %bb.y
 
-.lr.ph.i15:                                       ; preds = %bb.r, %.preheader.preheader.i
-  %.val3.i14.i = phi i64 [ %.val3.i.i18.a, %.preheader.preheader.i ], [ %.val3.i13.i, %bb.r ]
-  %i.eq = phi ptr [ %i.gn, %.preheader.preheader.i ], [ %i.eh, %bb.r ] ; 7 uses
+.lr.ph.i15:                                       ; preds = %bb.r, %bb.w
+  %.val3.i14.i = phi i64 [ %i.gs, %bb.w ], [ %.val3.i13.i, %bb.r ]
+  %i.eq = phi ptr [ %i.gq, %bb.w ], [ %i.eh, %bb.r ] ; 7 uses
   %i.er = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %.val3.i14.i
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 96
   %i.et = load i64, ptr %i.es, align 8, !noalias !2895, !noundef !10 ; 3 uses
@@ -307,39 +307,39 @@ bb.v:                                             ; preds = %_RNvMsa_NtCs2qDE43x
   %i.gl = getelementptr i8, ptr %i.gk, i64 16
   store i8 %i.gg, ptr %i.gl, align 1
   %i.gm = icmp eq i8 %i.ge, -1
-  br i1 %i.gm, label %bb.w, label %.preheader.preheader.i
+  br i1 %i.gm, label %.preheader.preheader.i, label %bb.w
 
 .preheader.preheader.i:                           ; preds = %bb.v
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2897)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2898)
-  %.sroa.0.0.copyload.i.i.i.i.a = load i64, ptr %i.ek, align 1, !alias.scope !2897, !noalias !2898
-  %.sroa.02.0.copyload.i.i.i.i = load i64, ptr %i.gc, align 1, !alias.scope !2898, !noalias !2897
-  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ek, align 1, !alias.scope !2897, !noalias !2898
-  store i64 %.sroa.0.0.copyload.i.i.i.i.a, ptr %i.gc, align 1, !alias.scope !2898, !noalias !2897
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2899)
-  %i.gn = load ptr, ptr %0, align 8, !alias.scope !2900, !noalias !2901, !nonnull !10, !noundef !10 ; 2 uses
-  %5 = getelementptr inbounds [8 x i8], ptr %i.gn, i64 %i.el
-  %i.go = getelementptr inbounds i8, ptr %5, i64 -8
-  %.val3.i.i18.a = load i64, ptr %i.go, align 8, !noalias !2902, !noundef !10 ; 3 uses
-  %6 = icmp ult i64 %.val3.i.i18.a, %3
-  br i1 %6, label %.lr.ph.i15, label %._crit_edge.i14
-
-bb.w:                                             ; preds = %bb.v
-  %7 = add i64 %.sroa.04.018.i, -16
-  %i.gp = load i64, ptr %i.h, align 8, !alias.scope !2893, !noundef !10
-  %8 = and i64 %i.gp, %7
-  %9 = load ptr, ptr %0, align 8, !alias.scope !2893, !nonnull !10, !noundef !10
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %.sroa.04.018.i
-  store i8 -1, ptr %10, align 1
-  %i.gq = load ptr, ptr %0, align 8, !alias.scope !2893, !nonnull !10, !noundef !10
-  %11 = getelementptr i8, ptr %i.gq, i64 %8
-  %i.gr = getelementptr i8, ptr %11, i64 16
-  store i8 -1, ptr %i.gr, align 1
-  %i.gs = load i64, ptr %i.ek, align 1
-  store i64 %i.gs, ptr %i.gc, align 1
+  %5 = add i64 %.sroa.04.018.i, -16
+  %.sroa.0.0.copyload.i.i.i.i.a = load i64, ptr %i.h, align 8, !alias.scope !2893, !noundef !10
+  %6 = and i64 %.sroa.0.0.copyload.i.i.i.i.a, %5
+  %7 = load ptr, ptr %0, align 8, !alias.scope !2893, !nonnull !10, !noundef !10
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %.sroa.04.018.i
+  store i8 -1, ptr %8, align 1
+  %i.gn = load ptr, ptr %0, align 8, !alias.scope !2893, !nonnull !10, !noundef !10
+  %9 = getelementptr i8, ptr %i.gn, i64 %6
+  %i.go = getelementptr i8, ptr %9, i64 16
+  store i8 -1, ptr %i.go, align 1
+  %.val3.i.i18.a = load i64, ptr %i.ek, align 1
+  store i64 %.val3.i.i18.a, ptr %i.gc, align 1
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %bb.u, %bb.q
+bb.w:                                             ; preds = %bb.v
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2897)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2898)
+  %i.gp = load i64, ptr %i.ek, align 1, !alias.scope !2897, !noalias !2898
+  %.sroa.02.0.copyload.i.i.i.i = load i64, ptr %i.gc, align 1, !alias.scope !2898, !noalias !2897
+  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ek, align 1, !alias.scope !2897, !noalias !2898
+  store i64 %i.gp, ptr %i.gc, align 1, !alias.scope !2898, !noalias !2897
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !2899)
+  %i.gq = load ptr, ptr %0, align 8, !alias.scope !2900, !noalias !2901, !nonnull !10, !noundef !10 ; 2 uses
+  %10 = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %i.el
+  %i.gr = getelementptr inbounds i8, ptr %10, i64 -8
+  %i.gs = load i64, ptr %i.gr, align 8, !noalias !2902, !noundef !10 ; 3 uses
+  %11 = icmp ult i64 %i.gs, %3
+  br i1 %11, label %.lr.ph.i15, label %._crit_edge.i14
+
+bb.x:                                             ; preds = %.preheader.preheader.i, %bb.u, %bb.q
   %exitcond.not.i = icmp eq i64 %.sroa.04.018.i, %i.i
   br i1 %exitcond.not.i, label %_RNvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %bb.q
 
@@ -742,45 +742,18 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtCsiSzwKAiqS6b_8smallvec8SmallVecANtNt
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtCsiSzwKAiqS6b_8smallvec8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_EEB1f_(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3770)
-  %i.a = load i64, ptr %0, align 8, !alias.scope !3770, !noundef !10 ; 6 uses
+  %i.a = load i64, ptr %0, align 8, !alias.scope !3770, !noundef !10 ; 4 uses
   %i.b = icmp ugt i64 %i.a, 1
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  br i1 %i.b, label %bb.d, label %.preheader.preheader
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  br i1 %i.b, label %bb.d, label %bb.b
 
-.preheader.preheader:                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit, label %.lr.ph
+bb.b:                                             ; preds = %bb.a
+  %i.d = icmp eq i64 %i.a, 0
+  br i1 %i.d, label %_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit, label %bb.c
 
-.lr.ph:                                           ; preds = %.preheader.preheader
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEBF_(ptr noalias nofree noundef align 8 dereferenceable(88) %i.c)
-          to label %_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit unwind label %bb.b
-
-2:                                                ; preds = %.lr.ph8
-  %3 = add nuw nsw i64 %.sroa.0.1.i.i7, 1         ; 2 uses
-  %4 = icmp eq i64 %3, %i.a
-  br i1 %4, label %common.resume.i, label %.lr.ph8
-
-bb.b:                                             ; preds = %.lr.ph
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %i.d = icmp eq i64 %i.a, 1
-  br i1 %i.d, label %common.resume.i, label %.lr.ph8
-
-.lr.ph8:                                          ; preds = %bb.b, %2
-  %.sroa.0.1.i.i7 = phi i64 [ %3, %2 ], [ 1, %bb.b ] ; 2 uses
-  %6 = getelementptr inbounds nuw [88 x i8], ptr %i.c, i64 %.sroa.0.1.i.i7
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEBF_(ptr noalias nofree noundef align 8 dereferenceable(88) %6) #44
-          to label %2 unwind label %bb.c
-
-common.resume.i:                                  ; preds = %2, %bb.b, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i
-  %common.resume.op.i = phi { ptr, i32 } [ %i.n, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i ], [ %5, %bb.b ], [ %5, %2 ]
-  resume { ptr, i32 } %common.resume.op.i
-
-bb.c:                                             ; preds = %.lr.ph8
-  %7 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #43
-  unreachable
+bb.c:                                             ; preds = %bb.b
+  tail call fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEBF_(ptr noalias nofree noundef align 8 dereferenceable(88) %i.c)
+  br label %_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.c, align 8, !alias.scope !3770, !nonnull !10, !noundef !10 ; 4 uses
@@ -826,14 +799,14 @@ bb.h:                                             ; preds = %.lr.ph12
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i: ; preds = %bb.f, %bb.g
   %i.r = mul nuw i64 %i.a, 88
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.r, i64 noundef range(i64 1, -9223372036854775807) 8) #41, !noalias !3771
-  br label %common.resume.i
+  resume { ptr, i32 } %i.n
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1c_.exit.i: ; preds = %bb.e, %bb.d
   %i.s = mul nuw i64 %i.a, 88
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.s, i64 noundef range(i64 1, -9223372036854775807) 8) #41, !noalias !3771
   br label %_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit
 
-_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit: ; preds = %.preheader.preheader, %.lr.ph, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1c_.exit.i
+_RNvXsx_CsiSzwKAiqS6b_8smallvecINtB5_8SmallVecANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBM_.exit: ; preds = %bb.b, %bb.c, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1c_.exit.i
   ret void
 }
 
@@ -1236,29 +1209,29 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtCsiSzwKAiqS6b_8smallvec8IntoIterANtNt
 
 .lr.ph.preheader.i.i:                             ; preds = %.preheader.i.preheader.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !18817)
-  %.val.i43.i.i = load i64, ptr %i.acu, align 8, !range !24, !alias.scope !18817, !noalias !18759, !noundef !10 ; 2 uses
+  %.val.i43.i.i = load i64, ptr %i.acu, align 8, !range !24, !alias.scope !18817, !noalias !18752, !noundef !10 ; 2 uses
   %i.amg = icmp sgt i64 %.val.i43.i.i, 0
   br i1 %i.amg, label %bb.ic, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs8jFhWeO2DFb_9typst_pdf.exit.i44.i.i
 
 bb.ic:                                            ; preds = %.lr.ph.preheader.i.i
-  %.val2.i49.i.i = load ptr, ptr %i.acv, align 8, !alias.scope !18817, !noalias !18759, !nonnull !10, !noundef !10
+  %.val2.i49.i.i = load ptr, ptr %i.acv, align 8, !alias.scope !18817, !noalias !18752, !nonnull !10, !noundef !10
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i49.i.i, i64 noundef %.val.i43.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #41, !noalias !18818
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs8jFhWeO2DFb_9typst_pdf.exit.i44.i.i
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs8jFhWeO2DFb_9typst_pdf.exit.i44.i.i: ; preds = %bb.ic, %.lr.ph.preheader.i.i
-  %.val3.i45.i.i = load i64, ptr %i.aby, align 8, !alias.scope !18817, !noalias !18759 ; 2 uses
+  %.val3.i45.i.i = load i64, ptr %i.aby, align 8, !alias.scope !18817, !noalias !18752 ; 2 uses
   %i.amh = icmp eq i64 %.val3.i45.i.i, 0
   br i1 %i.amh, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsidf7BFzONoc_6krilla4geom4RectEECs8jFhWeO2DFb_9typst_pdf.exit7.i47.i.i, label %bb.id
 
 bb.id:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs8jFhWeO2DFb_9typst_pdf.exit.i44.i.i
-  %.val4.i46.i.i = load ptr, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i.i, align 8, !alias.scope !18817, !noalias !18759, !nonnull !10, !noundef !10
+  %.val4.i46.i.i = load ptr, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx2.sroa_idx.i.i.i.i, align 8, !alias.scope !18817, !noalias !18752, !nonnull !10, !noundef !10
   %i.ami = shl nuw i64 %.val3.i45.i.i, 4
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4.i46.i.i, i64 noundef %i.ami, i64 noundef range(i64 1, -9223372036854775807) 4) #41, !noalias !18819
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsidf7BFzONoc_6krilla4geom4RectEECs8jFhWeO2DFb_9typst_pdf.exit7.i47.i.i
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsidf7BFzONoc_6krilla4geom4RectEECs8jFhWeO2DFb_9typst_pdf.exit7.i47.i.i: ; preds = %bb.id, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECs8jFhWeO2DFb_9typst_pdf.exit.i44.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !18820), !noalias !18816
-  %i.amj = load i64, ptr %i.acw, align 8, !range !38, !alias.scope !18821, !noalias !18759, !noundef !10 ; 3 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !18820)
+  %i.amj = load i64, ptr %i.acw, align 8, !range !38, !alias.scope !18821, !noalias !18752, !noundef !10 ; 3 uses
   %i.amk = icmp eq i64 %i.amj, -2
   br i1 %i.amk, label %bb.ie, label %bb.il
 
@@ -1328,14 +1301,14 @@ bb.ik:                                            ; preds = %bb.ij
   unreachable
 
 bb.il:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsidf7BFzONoc_6krilla4geom4RectEECs8jFhWeO2DFb_9typst_pdf.exit7.i47.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !18838), !noalias !18816
+  call void @llvm.experimental.noalias.scope.decl(metadata !18838)
   switch i64 %i.amj, label %bb.im [
     i64 -1, label %bb.in
     i64 0, label %_RINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters7flatten17and_then_or_clearINtCsiSzwKAiqS6b_8smallvec8IntoIterANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_EB1G_NvYB16_NtNtNtB6_6traits8iterator8Iterator4nextEB1K_.exit.i.i.i.i
   ]
 
 bb.im:                                            ; preds = %bb.il
-  %.val1.i.i.i48.i.i = load ptr, ptr %i.acx, align 8, !alias.scope !18839, !noalias !18759, !nonnull !10, !noundef !10
+  %.val1.i.i.i48.i.i = load ptr, ptr %i.acx, align 8, !alias.scope !18839, !noalias !18752, !nonnull !10, !noundef !10
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i.i48.i.i, i64 noundef %i.amj, i64 noundef range(i64 1, -9223372036854775807) 1) #41, !noalias !18840
   br label %_RINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters7flatten17and_then_or_clearINtCsiSzwKAiqS6b_8smallvec8IntoIterANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_EB1G_NvYB16_NtNtNtB6_6traits8iterator8Iterator4nextEB1K_.exit.i.i.i.i
 
@@ -1393,11 +1366,6 @@ bb.it:                                            ; preds = %bb.is
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #43, !noalias !18783
   unreachable
-
-6:                                                ; preds = %.invoke177.i.i, %.invoke178.i.i
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB11_.exit.i.i.i.i.i
 
 bb.iu:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtCsiSzwKAiqS6b_8smallvec8IntoIterANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_EEB1f_.exit.i.i.i.i.i.i
   %i.anp = load ptr, ptr %i.aby, align 8, !alias.scope !18813, !noalias !18759, !nonnull !10, !noundef !10 ; 4 uses
@@ -1624,7 +1592,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.anp, i64 noundef %i.aqa, i64 noundef range(i64 1, -9223372036854775807) 8) #41, !noalias !18858
   br label %_RINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters7flatten17and_then_or_clearINtCsiSzwKAiqS6b_8smallvec8IntoIterANtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationj1_EB1G_NvYB16_NtNtNtB6_6traits8iterator8Iterator4nextEB1K_.exit.i.i.i.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB11_.exit.i.i.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i.i.i.i, %6, %bb.is, %bb.ir, %bb.ij, %bb.ii, %.body55.i.i
+6:                                                ; preds = %.invoke177.i.i, %.invoke178.i.i
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB11_.exit.i.i.i.i.i
+
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB11_.exit.i.i.i.i.i: ; preds = %6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i.i.i.i, %bb.is, %bb.ir, %bb.ij, %bb.ii, %.body55.i.i
   %eh.lpad-body.i.i.i.i.i = phi { ptr, i32 } [ %eh.lpad-body56.i.i, %.body55.i.i ], [ %eh.lpad-body69.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc7raw_vec6RawVecNtNtCs8jFhWeO2DFb_9typst_pdf4link14LinkAnnotationEEB1j_.exit.i.i.i.i.i ], [ %i.anh, %bb.ir ], [ %i.anh, %bb.is ], [ %7, %6 ], [ %i.ams, %bb.ij ], [ %i.ams, %bb.ii ]
   store i64 0, ptr %i.fd, align 8, !alias.scope !18899, !noalias !18759
   br label %.body.i.i
@@ -2027,8 +2000,8 @@ begin_hunk_3_@llvm.fabs.v2f32
 !18815 = !{!17917}
 !18816 = !{!17845, !17844, !17843}
 !18817 = !{!17919}
-!18818 = !{!17921, !17919, !17845, !17844, !17843, !17831}
-!18819 = !{!17919, !17845, !17844, !17843, !17831}
+!18818 = !{!17921, !17919, !17831}
+!18819 = !{!17919, !17831}
 !18820 = !{!17923}
 !18821 = !{!17923, !17919}
 !18822 = !{!17925}
@@ -2049,7 +2022,7 @@ begin_hunk_3_@llvm.fabs.v2f32
 !18837 = !{!17945, !17943, !17831}
 !18838 = !{!17947}
 !18839 = !{!17947, !17923, !17919}
-!18840 = !{!17949, !17947, !17923, !17919, !17845, !17844, !17843, !17831}
+!18840 = !{!17949, !17947, !17923, !17919, !17831}
 !18841 = !{!17951}
 !18842 = !{!17953}
 !18843 = !{!17955}
