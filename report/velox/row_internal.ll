@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.a
 .lr.ph154:                                        ; preds = %bb.i
   %.not119 = icmp eq ptr %4, null
   %i.gw = add nsw i64 %i.gv, -1
-  %i.gx = sdiv i64 %i.gw, 8                       ; 3 uses
+  %i.gx = sdiv i64 %i.gw, 8                       ; 2 uses
   %i.gy = icmp eq i32 %i.gu, 0
   br i1 %i.gy, label %.critedge.thread, label %.lr.ph154.split.split.preheader
 
@@ -226,14 +226,10 @@ bb.i:                                             ; preds = %bb.a
   %i.hn = mul i64 %i.hm, %i.gv                    ; 2 uses
   %i.ho = getelementptr inbounds i8, ptr %i.hk, i64 %i.hn
   %i.hp = ptrtoaddr ptr %i.hk to i64
-  %7 = tail call i64 @llvm.smax.i64(i64 %i.gx, i64 0)
   %i.hq = add i64 %i.hn, %i.hp
   %i.hr = tail call i64 @llvm.smax.i64(i64 %i.gx, i64 0)
   %i.hs = add nuw nsw i64 %i.hr, 1                ; 2 uses
-  %min.iters.check235 = icmp ult i32 %i.gu, 89
-  %8 = and i64 %7, 4294967295
-  %9 = icmp eq i64 %8, 4294967295
-  %or.cond = select i1 %min.iters.check235, i1 true, i1 %9
+  %min.iters.check235 = icmp ult i32 %i.gu, 25
   %n.vec237 = and i64 %i.hs, 9223372036854775804  ; 3 uses
   %cmp.n244 = icmp eq i64 %i.hs, %n.vec237
   br label %.lr.ph154.split.split
@@ -260,7 +256,7 @@ bb.k:                                             ; preds = %.lr.ph154.split.spl
   %i.ia = mul i32 %i.gu, %i.hz
   %i.ib = zext i32 %i.ia to i64                   ; 2 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %i.gr, i64 %i.ib ; 2 uses
-  br i1 %or.cond, label %scalar.ph234.preheader, label %vector.memcheck232
+  br i1 %min.iters.check235, label %scalar.ph234.preheader, label %vector.memcheck232
 
 vector.memcheck232:                               ; preds = %.lr.ph148
   %i.id = add nuw i64 %i.gs, %i.ib
