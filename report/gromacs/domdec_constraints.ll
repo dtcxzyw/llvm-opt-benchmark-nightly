@@ -205,8 +205,8 @@ bb.u:                                             ; preds = %bb.s, %_ZN3gmx9Hash
   %exitcond122.not = icmp eq i64 %indvars.iv.next119, %i.eo
   br i1 %exitcond122.not, label %._crit_edge104, label %bb.s, !llvm.loop !255
 
-.loopexit:                                        ; preds = %._crit_edge104, %.lr.ph107, %._crit_edge96, %bb.n
-  %.054 = phi i32 [ %1, %bb.n ], [ %i.dh, %._crit_edge96 ], [ %i.dh, %.lr.ph107 ], [ %i.dh, %._crit_edge104 ]
+.loopexit:                                        ; preds = %._crit_edge104, %._crit_edge96, %.lr.ph107, %bb.n
+  %.054 = phi i32 [ %1, %bb.n ], [ %i.dh, %.lr.ph107 ], [ %i.dh, %._crit_edge96 ], [ %i.dh, %._crit_edge104 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #8
