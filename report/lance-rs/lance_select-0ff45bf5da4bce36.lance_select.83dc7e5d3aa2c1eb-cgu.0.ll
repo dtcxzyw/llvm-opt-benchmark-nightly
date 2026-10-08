@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.r)
   %i.s = icmp samesign ult i64 %i.q, %i.n         ; 2 uses
   %i.t = select i1 %i.s, ptr %i.l, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.u = select i1 %i.s, ptr %.val1.i.i.i, ptr %.val.i.i.i ; 3 uses
+  %i.u = select i1 %i.s, ptr %.val1.i.i.i, ptr %.val.i.i.i, !unpredictable !4 ; 3 uses
   %i.v = load i64, ptr %i.t, align 8, !alias.scope !2435
   store i64 %i.v, ptr %.sroa.02.0.i, align 8, !alias.scope !2435
   store ptr %i.u, ptr %i.l, align 8, !alias.scope !2435
@@ -223,7 +223,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ad)
   %i.ae = icmp samesign ult i64 %i.ac, %i.z       ; 2 uses
   %i.af = select i1 %i.ae, ptr %i.x, ptr %i.w, !unpredictable !4
-  %i.ag = select i1 %i.ae, ptr %.val1.i2.i.i, ptr %.val.i1.i.i ; 3 uses
+  %i.ag = select i1 %i.ae, ptr %.val1.i2.i.i, ptr %.val.i1.i.i, !unpredictable !4 ; 3 uses
   %i.ah = load i64, ptr %i.af, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.ah, ptr %i.w, align 8, !alias.scope !2435
   store ptr %i.ag, ptr %i.x, align 8, !alias.scope !2435
@@ -241,7 +241,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ap)
   %i.aq = icmp samesign ult i64 %i.ao, %i.al      ; 2 uses
   %i.ar = select i1 %i.aq, ptr %i.aj, ptr %i.ai, !unpredictable !4
-  %i.as = select i1 %i.aq, ptr %.val1.i4.i.i, ptr %.val.i3.i.i ; 3 uses
+  %i.as = select i1 %i.aq, ptr %.val1.i4.i.i, ptr %.val.i3.i.i, !unpredictable !4 ; 3 uses
   %i.at = load i64, ptr %i.ar, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.at, ptr %i.ai, align 8, !alias.scope !2435
   store ptr %i.as, ptr %i.aj, align 8, !alias.scope !2435
@@ -259,7 +259,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.bb)
   %i.bc = icmp samesign ult i64 %i.ba, %i.ax      ; 2 uses
   %i.bd = select i1 %i.bc, ptr %i.av, ptr %i.au, !unpredictable !4
-  %i.be = select i1 %i.bc, ptr %.val1.i6.i.i, ptr %.val.i5.i.i ; 3 uses
+  %i.be = select i1 %i.bc, ptr %.val1.i6.i.i, ptr %.val.i5.i.i, !unpredictable !4 ; 3 uses
   %i.bf = load i64, ptr %i.bd, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.bf, ptr %i.au, align 8, !alias.scope !2435
   store ptr %i.be, ptr %i.av, align 8, !alias.scope !2435
@@ -277,7 +277,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = icmp samesign ult i64 %i.bm, %i.bj      ; 2 uses
   %i.bp = select i1 %i.bo, ptr %i.bh, ptr %i.bg, !unpredictable !4
-  %i.bq = select i1 %i.bo, ptr %.val1.i8.i.i, ptr %.val.i7.i.i ; 3 uses
+  %i.bq = select i1 %i.bo, ptr %.val1.i8.i.i, ptr %.val.i7.i.i, !unpredictable !4 ; 3 uses
   %i.br = load i64, ptr %i.bp, align 8, !alias.scope !2435
   store i64 %i.br, ptr %i.bg, align 8, !alias.scope !2435
   store ptr %i.bq, ptr %i.bh, align 8, !alias.scope !2435
@@ -295,7 +295,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.bz)
   %i.ca = icmp samesign ult i64 %i.by, %i.bv      ; 2 uses
   %i.cb = select i1 %i.ca, ptr %i.bt, ptr %i.bs, !unpredictable !4
-  %i.cc = select i1 %i.ca, ptr %.val1.i10.i.i, ptr %.val.i9.i.i ; 3 uses
+  %i.cc = select i1 %i.ca, ptr %.val1.i10.i.i, ptr %.val.i9.i.i, !unpredictable !4 ; 3 uses
   %i.cd = load i64, ptr %i.cb, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.cd, ptr %i.bs, align 8, !alias.scope !2435
   store ptr %i.cc, ptr %i.bt, align 8, !alias.scope !2435
@@ -310,8 +310,8 @@ bb.e:                                             ; preds = %bb.c
   %i.ck = icmp ult i64 %i.cj, 230584300921369396
   tail call void @llvm.assume(i1 %i.ck)
   %i.cl = icmp samesign ult i64 %i.cj, %i.cg      ; 2 uses
-  %i.cm = select i1 %i.cl, ptr %i.ce, ptr %.val.i11.cast.i.i ; 3 uses
-  %i.cn = select i1 %i.cl, i64 %i.cd, i64 %i.ah   ; 3 uses
+  %i.cm = select i1 %i.cl, ptr %i.ce, ptr %.val.i11.cast.i.i, !unpredictable !4 ; 3 uses
+  %i.cn = select i1 %i.cl, i64 %i.cd, i64 %i.ah, !unpredictable !4 ; 3 uses
   store i64 %i.cn, ptr %i.w, align 8, !alias.scope !2435
   store ptr %i.cm, ptr %i.bs, align 8, !alias.scope !2435
   %i.co = inttoptr i64 %i.bf to ptr               ; 2 uses
@@ -325,8 +325,8 @@ bb.e:                                             ; preds = %bb.c
   %i.cv = icmp ult i64 %i.cu, 230584300921369396
   tail call void @llvm.assume(i1 %i.cv)
   %i.cw = icmp samesign ult i64 %i.cu, %i.cr      ; 2 uses
-  %i.cx = select i1 %i.cw, ptr %i.cp, ptr %i.co   ; 3 uses
-  %i.cy = select i1 %i.cw, i64 %i.bf, i64 %i.at   ; 3 uses
+  %i.cx = select i1 %i.cw, ptr %i.cp, ptr %i.co, !unpredictable !4 ; 3 uses
+  %i.cy = select i1 %i.cw, i64 %i.bf, i64 %i.at, !unpredictable !4 ; 3 uses
   store i64 %i.cy, ptr %i.ai, align 8, !alias.scope !2435
   store ptr %i.cx, ptr %i.au, align 8, !alias.scope !2435
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 32 ; 18 uses
@@ -341,7 +341,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.df)
   %i.dg = icmp samesign ult i64 %i.de, %i.db      ; 2 uses
   %i.dh = select i1 %i.dg, ptr %i.bh, ptr %i.cz, !unpredictable !4
-  %i.di = select i1 %i.dg, ptr %.val1.i16.i.i, ptr %i.bq ; 3 uses
+  %i.di = select i1 %i.dg, ptr %.val1.i16.i.i, ptr %i.bq, !unpredictable !4 ; 3 uses
   %i.dj = load i64, ptr %i.dh, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.dj, ptr %i.cz, align 8, !alias.scope !2435
   store ptr %i.di, ptr %i.bh, align 8, !alias.scope !2435
@@ -355,7 +355,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.dp)
   %i.dq = icmp samesign ult i64 %i.do, %i.dl      ; 2 uses
   %i.dr = select i1 %i.dq, ptr %i.aj, ptr %i.av, !unpredictable !4
-  %i.ds = select i1 %i.dq, ptr %i.be, ptr %i.as   ; 3 uses
+  %i.ds = select i1 %i.dq, ptr %i.be, ptr %i.as, !unpredictable !4 ; 3 uses
   %i.dt = load i64, ptr %i.dr, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.dt, ptr %i.av, align 8, !alias.scope !2435
   store ptr %i.ds, ptr %i.aj, align 8, !alias.scope !2435
@@ -369,7 +369,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.dz)
   %i.ea = icmp samesign ult i64 %i.dy, %i.dv      ; 2 uses
   %i.eb = select i1 %i.ea, ptr %i.x, ptr %i.bt, !unpredictable !4
-  %i.ec = select i1 %i.ea, ptr %i.cc, ptr %i.ag   ; 3 uses
+  %i.ec = select i1 %i.ea, ptr %i.cc, ptr %i.ag, !unpredictable !4 ; 3 uses
   %i.ed = load i64, ptr %i.eb, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.ed, ptr %i.bt, align 8, !alias.scope !2435
   store ptr %i.ec, ptr %i.x, align 8, !alias.scope !2435
@@ -385,7 +385,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ek)
   %i.el = icmp samesign ult i64 %i.ej, %i.eg      ; 2 uses
   %i.em = select i1 %i.el, ptr %i.cz, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.en = select i1 %i.el, ptr %.val1.i22.i.i, ptr %i.ee ; 3 uses
+  %i.en = select i1 %i.el, ptr %.val1.i22.i.i, ptr %i.ee, !unpredictable !4 ; 3 uses
   %i.eo = load i64, ptr %i.em, align 8, !alias.scope !2435
   store i64 %i.eo, ptr %.sroa.02.0.i, align 8, !alias.scope !2435
   store ptr %i.en, ptr %i.cz, align 8, !alias.scope !2435
@@ -400,8 +400,8 @@ bb.e:                                             ; preds = %bb.c
   %i.ew = icmp ult i64 %i.ev, 230584300921369396
   tail call void @llvm.assume(i1 %i.ew)
   %i.ex = icmp samesign ult i64 %i.ev, %i.es      ; 2 uses
-  %i.ey = select i1 %i.ex, ptr %i.eq, ptr %i.ep   ; 3 uses
-  %i.ez = select i1 %i.ex, i64 %i.cy, i64 %i.cn
+  %i.ey = select i1 %i.ex, ptr %i.eq, ptr %i.ep, !unpredictable !4 ; 3 uses
+  %i.ez = select i1 %i.ex, i64 %i.cy, i64 %i.cn, !unpredictable !4
   store i64 %i.ez, ptr %i.w, align 8, !alias.scope !2435
   store ptr %i.ey, ptr %i.ai, align 8, !alias.scope !2435
   %i.fa = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
@@ -414,7 +414,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ff)
   %i.fg = icmp samesign ult i64 %i.fe, %i.fb      ; 2 uses
   %i.fh = select i1 %i.fg, ptr %i.bs, ptr %i.au, !unpredictable !4
-  %i.fi = select i1 %i.fg, ptr %i.cx, ptr %i.cm   ; 3 uses
+  %i.fi = select i1 %i.fg, ptr %i.cx, ptr %i.cm, !unpredictable !4 ; 3 uses
   %i.fj = load i64, ptr %i.fh, align 8, !alias.scope !2435
   store i64 %i.fj, ptr %i.au, align 8, !alias.scope !2435
   store ptr %i.fi, ptr %i.bs, align 8, !alias.scope !2435
@@ -429,8 +429,8 @@ bb.e:                                             ; preds = %bb.c
   %i.fr = icmp ult i64 %i.fq, 230584300921369396
   tail call void @llvm.assume(i1 %i.fr)
   %i.fs = icmp samesign ult i64 %i.fq, %i.fn      ; 2 uses
-  %i.ft = select i1 %i.fs, ptr %i.fl, ptr %i.fk   ; 3 uses
-  %i.fu = select i1 %i.fs, i64 %i.ed, i64 %i.dt
+  %i.ft = select i1 %i.fs, ptr %i.fl, ptr %i.fk, !unpredictable !4 ; 3 uses
+  %i.fu = select i1 %i.fs, i64 %i.ed, i64 %i.dt, !unpredictable !4
   store i64 %i.fu, ptr %i.av, align 8, !alias.scope !2435
   store ptr %i.ft, ptr %i.bt, align 8, !alias.scope !2435
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
@@ -443,7 +443,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ga)
   %i.gb = icmp samesign ult i64 %i.fz, %i.fw      ; 2 uses
   %i.gc = select i1 %i.gb, ptr %i.x, ptr %i.aj, !unpredictable !4
-  %i.gd = select i1 %i.gb, ptr %i.ds, ptr %i.ec   ; 3 uses
+  %i.gd = select i1 %i.gb, ptr %i.ds, ptr %i.ec, !unpredictable !4 ; 3 uses
   %i.ge = load i64, ptr %i.gc, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.ge, ptr %i.aj, align 8, !alias.scope !2435
   store ptr %i.gd, ptr %i.x, align 8, !alias.scope !2435
@@ -457,7 +457,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.gk)
   %i.gl = icmp samesign ult i64 %i.gj, %i.gg      ; 2 uses
   %i.gm = select i1 %i.gl, ptr %i.l, ptr %i.bh, !unpredictable !4
-  %i.gn = select i1 %i.gl, ptr %i.di, ptr %i.u    ; 3 uses
+  %i.gn = select i1 %i.gl, ptr %i.di, ptr %i.u, !unpredictable !4 ; 3 uses
   %i.go = load i64, ptr %i.gm, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.go, ptr %i.bh, align 8, !alias.scope !2435
   store ptr %i.gn, ptr %i.l, align 8, !alias.scope !2435
@@ -471,7 +471,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.gu)
   %i.gv = icmp samesign ult i64 %i.gt, %i.gq      ; 2 uses
   %i.gw = select i1 %i.gv, ptr %i.bs, ptr %i.cz, !unpredictable !4
-  %i.gx = select i1 %i.gv, ptr %i.en, ptr %i.fi   ; 3 uses
+  %i.gx = select i1 %i.gv, ptr %i.en, ptr %i.fi, !unpredictable !4 ; 3 uses
   %i.gy = load i64, ptr %i.gw, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.gy, ptr %i.cz, align 8, !alias.scope !2435
   store ptr %i.gx, ptr %i.bs, align 8, !alias.scope !2435
@@ -487,7 +487,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.hf)
   %i.hg = icmp samesign ult i64 %i.he, %i.hb      ; 2 uses
   %i.hh = select i1 %i.hg, ptr %i.aj, ptr %i.bg, !unpredictable !4
-  %i.hi = select i1 %i.hg, ptr %.val1.i36.i.i, ptr %i.gz ; 3 uses
+  %i.hi = select i1 %i.hg, ptr %.val1.i36.i.i, ptr %i.gz, !unpredictable !4 ; 3 uses
   %i.hj = load i64, ptr %i.hh, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.hj, ptr %i.bg, align 8, !alias.scope !2435
   store ptr %i.hi, ptr %i.aj, align 8, !alias.scope !2435
@@ -502,7 +502,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.hq)
   %i.hr = icmp samesign ult i64 %i.hp, %i.hm      ; 2 uses
   %i.hs = select i1 %i.hr, ptr %i.bh, ptr %i.bt, !unpredictable !4
-  %i.ht = select i1 %i.hr, ptr %i.ft, ptr %i.hk   ; 3 uses
+  %i.ht = select i1 %i.hr, ptr %i.ft, ptr %i.hk, !unpredictable !4 ; 3 uses
   %i.hu = load i64, ptr %i.hs, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.hu, ptr %i.bt, align 8, !alias.scope !2435
   store ptr %i.ht, ptr %i.bh, align 8, !alias.scope !2435
@@ -516,7 +516,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ia)
   %i.ib = icmp samesign ult i64 %i.hz, %i.hw      ; 2 uses
   %i.ic = select i1 %i.ib, ptr %i.l, ptr %i.x, !unpredictable !4
-  %i.id = select i1 %i.ib, ptr %i.gd, ptr %i.gn
+  %i.id = select i1 %i.ib, ptr %i.gd, ptr %i.gn, !unpredictable !4
   %i.ie = load i64, ptr %i.ic, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.ie, ptr %i.x, align 8, !alias.scope !2435
   store ptr %i.id, ptr %i.l, align 8, !alias.scope !2435
@@ -532,7 +532,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.il)
   %i.im = icmp samesign ult i64 %i.ik, %i.ih      ; 2 uses
   %i.in = select i1 %i.im, ptr %i.bg, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.io = select i1 %i.im, ptr %.val1.i42.i.i, ptr %i.if ; 3 uses
+  %i.io = select i1 %i.im, ptr %.val1.i42.i.i, ptr %i.if, !unpredictable !4 ; 3 uses
   %i.ip = load i64, ptr %i.in, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.ip, ptr %.sroa.02.0.i, align 8, !alias.scope !2435
   store ptr %i.io, ptr %i.bg, align 8, !alias.scope !2435
@@ -548,7 +548,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.iw)
   %i.ix = icmp samesign ult i64 %i.iv, %i.is      ; 2 uses
   %i.iy = select i1 %i.ix, ptr %i.bt, ptr %i.au, !unpredictable !4
-  %i.iz = select i1 %i.ix, ptr %.val1.i44.i.i, ptr %i.iq ; 3 uses
+  %i.iz = select i1 %i.ix, ptr %.val1.i44.i.i, ptr %i.iq, !unpredictable !4 ; 3 uses
   %i.ja = load i64, ptr %i.iy, align 8, !alias.scope !2435
   store i64 %i.ja, ptr %i.au, align 8, !alias.scope !2435
   store ptr %i.iz, ptr %i.bt, align 8, !alias.scope !2435
@@ -564,7 +564,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.jh)
   %i.ji = icmp samesign ult i64 %i.jg, %i.jd      ; 2 uses
   %i.jj = select i1 %i.ji, ptr %i.av, ptr %i.cz, !unpredictable !4
-  %i.jk = select i1 %i.ji, ptr %i.jb, ptr %.val.i45.i.i ; 3 uses
+  %i.jk = select i1 %i.ji, ptr %i.jb, ptr %.val.i45.i.i, !unpredictable !4 ; 3 uses
   %i.jl = load i64, ptr %i.jj, align 8, !alias.scope !2435
   store i64 %i.jl, ptr %i.cz, align 8, !alias.scope !2435
   store ptr %i.jk, ptr %i.av, align 8, !alias.scope !2435
@@ -578,7 +578,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.jr)
   %i.js = icmp samesign ult i64 %i.jq, %i.jn      ; 2 uses
   %i.jt = select i1 %i.js, ptr %i.bh, ptr %i.bs, !unpredictable !4
-  %i.ju = select i1 %i.js, ptr %i.gx, ptr %i.ht   ; 3 uses
+  %i.ju = select i1 %i.js, ptr %i.gx, ptr %i.ht, !unpredictable !4 ; 3 uses
   %i.jv = load i64, ptr %i.jt, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.jv, ptr %i.bs, align 8, !alias.scope !2435
   store ptr %i.ju, ptr %i.bh, align 8, !alias.scope !2435
@@ -593,7 +593,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.kc)
   %i.kd = icmp samesign ult i64 %i.kb, %i.jy      ; 2 uses
   %i.ke = select i1 %i.kd, ptr %i.x, ptr %i.aj, !unpredictable !4
-  %i.kf = select i1 %i.kd, ptr %i.hi, ptr %i.jw   ; 3 uses
+  %i.kf = select i1 %i.kd, ptr %i.hi, ptr %i.jw, !unpredictable !4 ; 3 uses
   %i.kg = load i64, ptr %i.ke, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.kg, ptr %i.aj, align 8, !alias.scope !2435
   store ptr %i.kf, ptr %i.x, align 8, !alias.scope !2435
@@ -609,7 +609,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.kn)
   %i.ko = icmp samesign ult i64 %i.km, %i.kj      ; 2 uses
   %i.kp = select i1 %i.ko, ptr %i.w, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.kq = select i1 %i.ko, ptr %i.kh, ptr %.val.i51.i.i ; 3 uses
+  %i.kq = select i1 %i.ko, ptr %i.kh, ptr %.val.i51.i.i, !unpredictable !4 ; 3 uses
   %i.kr = load i64, ptr %i.kp, align 8, !alias.scope !2435
   store i64 %i.kr, ptr %.sroa.02.0.i, align 8, !alias.scope !2435
   store ptr %i.kq, ptr %i.w, align 8, !alias.scope !2435
@@ -623,7 +623,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.kx)
   %i.ky = icmp samesign ult i64 %i.kw, %i.kt      ; 2 uses
   %i.kz = select i1 %i.ky, ptr %i.bg, ptr %i.ai, !unpredictable !4
-  %i.la = select i1 %i.ky, ptr %i.ey, ptr %i.io   ; 3 uses
+  %i.la = select i1 %i.ky, ptr %i.ey, ptr %i.io, !unpredictable !4 ; 3 uses
   %i.lb = load i64, ptr %i.kz, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.lb, ptr %i.ai, align 8, !alias.scope !2435
   store ptr %i.la, ptr %i.bg, align 8, !alias.scope !2435
@@ -638,8 +638,8 @@ bb.e:                                             ; preds = %bb.c
   %i.lj = icmp ult i64 %i.li, 230584300921369396
   tail call void @llvm.assume(i1 %i.lj)
   %i.lk = icmp samesign ult i64 %i.li, %i.lf      ; 2 uses
-  %i.ll = select i1 %i.lk, ptr %i.ld, ptr %i.lc   ; 3 uses
-  %i.lm = select i1 %i.lk, i64 %i.kg, i64 %i.jv   ; 2 uses
+  %i.ll = select i1 %i.lk, ptr %i.ld, ptr %i.lc, !unpredictable !4 ; 3 uses
+  %i.lm = select i1 %i.lk, i64 %i.kg, i64 %i.jv, !unpredictable !4 ; 2 uses
   store i64 %i.lm, ptr %i.bs, align 8, !alias.scope !2435
   store ptr %i.ll, ptr %i.aj, align 8, !alias.scope !2435
   %i.ln = getelementptr inbounds nuw i8, ptr %i.iz, i64 16
@@ -652,7 +652,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ls)
   %i.lt = icmp samesign ult i64 %i.lr, %i.lo      ; 2 uses
   %i.lu = select i1 %i.lt, ptr %i.bt, ptr %i.av, !unpredictable !4
-  %i.lv = select i1 %i.lt, ptr %i.jk, ptr %i.iz   ; 3 uses
+  %i.lv = select i1 %i.lt, ptr %i.jk, ptr %i.iz, !unpredictable !4 ; 3 uses
   %i.lw = load i64, ptr %i.lu, align 8, !alias.scope !2435
   store i64 %i.lw, ptr %i.av, align 8, !alias.scope !2435
   store ptr %i.lv, ptr %i.bt, align 8, !alias.scope !2435
@@ -666,7 +666,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.mc)
   %i.md = icmp samesign ult i64 %i.mb, %i.ly      ; 2 uses
   %i.me = select i1 %i.md, ptr %i.bh, ptr %i.x, !unpredictable !4
-  %i.mf = select i1 %i.md, ptr %i.kf, ptr %i.ju
+  %i.mf = select i1 %i.md, ptr %i.kf, ptr %i.ju, !unpredictable !4
   %i.mg = load i64, ptr %i.me, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.mg, ptr %i.x, align 8, !alias.scope !2435
   store ptr %i.mf, ptr %i.bh, align 8, !alias.scope !2435
@@ -681,7 +681,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.mm)
   %i.mn = icmp samesign ult i64 %i.ml, %i.mi      ; 2 uses
   %i.mo = select i1 %i.mn, ptr %i.au, ptr %i.w, !unpredictable !4
-  %i.mp = select i1 %i.mn, ptr %i.kq, ptr %.val.i61.i.i ; 3 uses
+  %i.mp = select i1 %i.mn, ptr %i.kq, ptr %.val.i61.i.i, !unpredictable !4 ; 3 uses
   %i.mq = load i64, ptr %i.mo, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.mq, ptr %i.w, align 8, !alias.scope !2435
   store ptr %i.mp, ptr %i.au, align 8, !alias.scope !2435
@@ -697,7 +697,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.mx)
   %i.my = icmp samesign ult i64 %i.mw, %i.mt      ; 2 uses
   %i.mz = select i1 %i.my, ptr %i.cz, ptr %i.ai, !unpredictable !4
-  %i.na = select i1 %i.my, ptr %i.mr, ptr %.val.i63.i.i ; 3 uses
+  %i.na = select i1 %i.my, ptr %i.mr, ptr %.val.i63.i.i, !unpredictable !4 ; 3 uses
   %i.nb = load i64, ptr %i.mz, align 8, !alias.scope !2435 ; 3 uses
   store i64 %i.nb, ptr %i.ai, align 8, !alias.scope !2435
   store ptr %i.na, ptr %i.cz, align 8, !alias.scope !2435
@@ -712,7 +712,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ni)
   %i.nj = icmp samesign ult i64 %i.nh, %i.ne      ; 2 uses
   %i.nk = select i1 %i.nj, ptr %i.bs, ptr %i.bg, !unpredictable !4
-  %i.nl = select i1 %i.nj, ptr %i.la, ptr %i.nc   ; 3 uses
+  %i.nl = select i1 %i.nj, ptr %i.la, ptr %i.nc, !unpredictable !4 ; 3 uses
   %i.nm = load i64, ptr %i.nk, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.nm, ptr %i.bg, align 8, !alias.scope !2435
   store ptr %i.nl, ptr %i.bs, align 8, !alias.scope !2435
@@ -727,7 +727,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.nt)
   %i.nu = icmp samesign ult i64 %i.ns, %i.np      ; 2 uses
   %i.nv = select i1 %i.nu, ptr %i.x, ptr %i.aj, !unpredictable !4
-  %i.nw = select i1 %i.nu, ptr %i.ll, ptr %i.nn
+  %i.nw = select i1 %i.nu, ptr %i.ll, ptr %i.nn, !unpredictable !4
   %i.nx = load i64, ptr %i.nv, align 8, !alias.scope !2435
   store i64 %i.nx, ptr %i.aj, align 8, !alias.scope !2435
   store ptr %i.nw, ptr %i.x, align 8, !alias.scope !2435
@@ -742,8 +742,8 @@ bb.e:                                             ; preds = %bb.c
   %i.of = icmp ult i64 %i.oe, 230584300921369396
   tail call void @llvm.assume(i1 %i.of)
   %i.og = icmp samesign ult i64 %i.oe, %i.ob      ; 2 uses
-  %i.oh = select i1 %i.og, ptr %i.nz, ptr %i.ny   ; 3 uses
-  %i.oi = select i1 %i.og, i64 %i.nb, i64 %i.mq
+  %i.oh = select i1 %i.og, ptr %i.nz, ptr %i.ny, !unpredictable !4 ; 3 uses
+  %i.oi = select i1 %i.og, i64 %i.nb, i64 %i.mq, !unpredictable !4
   store i64 %i.oi, ptr %i.w, align 8, !alias.scope !2435
   store ptr %i.oh, ptr %i.ai, align 8, !alias.scope !2435
   %i.oj = getelementptr inbounds nuw i8, ptr %i.na, i64 16
@@ -756,7 +756,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.oo)
   %i.op = icmp samesign ult i64 %i.on, %i.ok      ; 2 uses
   %i.oq = select i1 %i.op, ptr %i.cz, ptr %i.au, !unpredictable !4
-  %i.or = select i1 %i.op, ptr %i.mp, ptr %i.na   ; 3 uses
+  %i.or = select i1 %i.op, ptr %i.mp, ptr %i.na, !unpredictable !4 ; 3 uses
   %i.os = load i64, ptr %i.oq, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.os, ptr %i.au, align 8, !alias.scope !2435
   store ptr %i.or, ptr %i.cz, align 8, !alias.scope !2435
@@ -772,7 +772,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.oz)
   %i.pa = icmp samesign ult i64 %i.oy, %i.ov      ; 2 uses
   %i.pb = select i1 %i.pa, ptr %i.av, ptr %i.bg, !unpredictable !4
-  %i.pc = select i1 %i.pa, ptr %i.ot, ptr %.val.i73.i.i ; 3 uses
+  %i.pc = select i1 %i.pa, ptr %i.ot, ptr %.val.i73.i.i, !unpredictable !4 ; 3 uses
   %i.pd = load i64, ptr %i.pb, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.pd, ptr %i.bg, align 8, !alias.scope !2435
   store ptr %i.pc, ptr %i.av, align 8, !alias.scope !2435
@@ -786,7 +786,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.pj)
   %i.pk = icmp samesign ult i64 %i.pi, %i.pf      ; 2 uses
   %i.pl = select i1 %i.pk, ptr %i.bt, ptr %i.bs, !unpredictable !4
-  %i.pm = select i1 %i.pk, ptr %i.nl, ptr %i.lv   ; 3 uses
+  %i.pm = select i1 %i.pk, ptr %i.nl, ptr %i.lv, !unpredictable !4 ; 3 uses
   %i.pn = load i64, ptr %i.pl, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.pn, ptr %i.bs, align 8, !alias.scope !2435
   store ptr %i.pm, ptr %i.bt, align 8, !alias.scope !2435
@@ -801,7 +801,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.pu)
   %i.pv = icmp samesign ult i64 %i.pt, %i.pq      ; 2 uses
   %i.pw = select i1 %i.pv, ptr %i.au, ptr %i.ai, !unpredictable !4
-  %i.px = select i1 %i.pv, ptr %i.oh, ptr %i.po   ; 3 uses
+  %i.px = select i1 %i.pv, ptr %i.oh, ptr %i.po, !unpredictable !4 ; 3 uses
   %i.py = load i64, ptr %i.pw, align 8, !alias.scope !2435
   store i64 %i.py, ptr %i.ai, align 8, !alias.scope !2435
   store ptr %i.px, ptr %i.au, align 8, !alias.scope !2435
@@ -816,7 +816,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.qf)
   %i.qg = icmp samesign ult i64 %i.qe, %i.qb      ; 2 uses
   %i.qh = select i1 %i.qg, ptr %i.bg, ptr %i.cz, !unpredictable !4
-  %i.qi = select i1 %i.qg, ptr %i.or, ptr %i.pz   ; 3 uses
+  %i.qi = select i1 %i.qg, ptr %i.or, ptr %i.pz, !unpredictable !4 ; 3 uses
   %i.qj = load i64, ptr %i.qh, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.qj, ptr %i.cz, align 8, !alias.scope !2435
   store ptr %i.qi, ptr %i.bg, align 8, !alias.scope !2435
@@ -831,7 +831,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.qq)
   %i.qr = icmp samesign ult i64 %i.qp, %i.qm      ; 2 uses
   %i.qs = select i1 %i.qr, ptr %i.av, ptr %i.bs, !unpredictable !4
-  %i.qt = select i1 %i.qr, ptr %i.qk, ptr %i.pc
+  %i.qt = select i1 %i.qr, ptr %i.qk, ptr %i.pc, !unpredictable !4
   %i.qu = load i64, ptr %i.qs, align 8, !alias.scope !2435 ; 2 uses
   store i64 %i.qu, ptr %i.bs, align 8, !alias.scope !2435
   store ptr %i.qt, ptr %i.av, align 8, !alias.scope !2435
@@ -846,7 +846,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.ra)
   %i.rb = icmp samesign ult i64 %i.qz, %i.qw      ; 2 uses
   %i.rc = select i1 %i.rb, ptr %i.aj, ptr %i.bt, !unpredictable !4
-  %i.rd = select i1 %i.rb, ptr %i.pm, ptr %.val.i83.i.i
+  %i.rd = select i1 %i.rb, ptr %i.pm, ptr %.val.i83.i.i, !unpredictable !4
   %i.re = load i64, ptr %i.rc, align 8, !alias.scope !2435
   store i64 %i.re, ptr %i.bt, align 8, !alias.scope !2435
   store ptr %i.rd, ptr %i.aj, align 8, !alias.scope !2435
@@ -861,7 +861,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.rl)
   %i.rm = icmp samesign ult i64 %i.rk, %i.rh      ; 2 uses
   %i.rn = select i1 %i.rm, ptr %i.cz, ptr %i.au, !unpredictable !4
-  %i.ro = select i1 %i.rm, ptr %i.px, ptr %i.rf
+  %i.ro = select i1 %i.rm, ptr %i.px, ptr %i.rf, !unpredictable !4
   %i.rp = load i64, ptr %i.rn, align 8, !alias.scope !2435
   store i64 %i.rp, ptr %i.au, align 8, !alias.scope !2435
   store ptr %i.ro, ptr %i.cz, align 8, !alias.scope !2435
@@ -876,7 +876,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.rw)
   %i.rx = icmp samesign ult i64 %i.rv, %i.rs      ; 2 uses
   %i.ry = select i1 %i.rx, ptr %i.bs, ptr %i.bg, !unpredictable !4
-  %i.rz = select i1 %i.rx, ptr %i.qi, ptr %i.rq
+  %i.rz = select i1 %i.rx, ptr %i.qi, ptr %i.rq, !unpredictable !4
   %i.sa = load i64, ptr %i.ry, align 8, !alias.scope !2435
   store i64 %i.sa, ptr %i.bg, align 8, !alias.scope !2435
   store ptr %i.rz, ptr %i.bs, align 8, !alias.scope !2435
@@ -897,7 +897,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.sh)
   %i.si = icmp samesign ult i64 %i.sg, %i.sd      ; 2 uses
   %i.sj = select i1 %i.si, ptr %i.sb, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.sk = select i1 %i.si, ptr %.val1.i.i15.i, ptr %.val.i.i14.i ; 3 uses
+  %i.sk = select i1 %i.si, ptr %.val1.i.i15.i, ptr %.val.i.i14.i, !unpredictable !4 ; 3 uses
   %i.sl = load i64, ptr %i.sj, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.sl, ptr %.sroa.02.0.i, align 8, !alias.scope !2437
   store ptr %i.sk, ptr %i.sb, align 8, !alias.scope !2437
@@ -915,7 +915,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.st)
   %i.su = icmp samesign ult i64 %i.ss, %i.sp      ; 2 uses
   %i.sv = select i1 %i.su, ptr %i.sn, ptr %i.sm, !unpredictable !4
-  %i.sw = select i1 %i.su, ptr %.val1.i2.i17.i, ptr %.val.i1.i16.i ; 3 uses
+  %i.sw = select i1 %i.su, ptr %.val1.i2.i17.i, ptr %.val.i1.i16.i, !unpredictable !4 ; 3 uses
   %i.sx = load i64, ptr %i.sv, align 8, !alias.scope !2437
   store i64 %i.sx, ptr %i.sm, align 8, !alias.scope !2437
   store ptr %i.sw, ptr %i.sn, align 8, !alias.scope !2437
@@ -933,7 +933,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.tf)
   %i.tg = icmp samesign ult i64 %i.te, %i.tb      ; 2 uses
   %i.th = select i1 %i.tg, ptr %i.sz, ptr %i.sy, !unpredictable !4
-  %i.ti = select i1 %i.tg, ptr %.val1.i4.i19.i, ptr %.val.i3.i18.i ; 3 uses
+  %i.ti = select i1 %i.tg, ptr %.val1.i4.i19.i, ptr %.val.i3.i18.i, !unpredictable !4 ; 3 uses
   %i.tj = load i64, ptr %i.th, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.ti, ptr %i.sz, align 8, !alias.scope !2437
   %i.tk = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 32 ; 11 uses
@@ -950,7 +950,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.tr)
   %i.ts = icmp samesign ult i64 %i.tq, %i.tn      ; 2 uses
   %i.tt = select i1 %i.ts, ptr %i.tl, ptr %i.tk, !unpredictable !4
-  %i.tu = select i1 %i.ts, ptr %.val1.i6.i21.i, ptr %.val.i5.i20.i ; 3 uses
+  %i.tu = select i1 %i.ts, ptr %.val1.i6.i21.i, ptr %.val.i5.i20.i, !unpredictable !4 ; 3 uses
   %i.tv = load i64, ptr %i.tt, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.tu, ptr %i.tl, align 8, !alias.scope !2437
   %i.tw = inttoptr i64 %i.sl to ptr               ; 2 uses
@@ -964,7 +964,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.uc)
   %i.ud = icmp samesign ult i64 %i.ub, %i.ty      ; 2 uses
   %i.ue = select i1 %i.ud, ptr %i.sn, ptr %.sroa.02.0.i, !unpredictable !4
-  %i.uf = select i1 %i.ud, ptr %i.tw, ptr %i.sw   ; 3 uses
+  %i.uf = select i1 %i.ud, ptr %i.tw, ptr %i.sw, !unpredictable !4 ; 3 uses
   %i.ug = load i64, ptr %i.ue, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.uf, ptr %i.sn, align 8, !alias.scope !2437
   %i.uh = inttoptr i64 %i.tv to ptr               ; 2 uses
@@ -978,8 +978,8 @@ bb.f:                                             ; preds = %bb.d
   %i.uo = icmp ult i64 %i.un, 230584300921369396
   tail call void @llvm.assume(i1 %i.uo)
   %i.up = icmp samesign ult i64 %i.un, %i.uk      ; 2 uses
-  %i.uq = select i1 %i.up, ptr %i.ui, ptr %i.uh   ; 3 uses
-  %i.ur = select i1 %i.up, i64 %i.tv, i64 %i.tj   ; 2 uses
+  %i.uq = select i1 %i.up, ptr %i.ui, ptr %i.uh, !unpredictable !4 ; 3 uses
+  %i.ur = select i1 %i.up, i64 %i.tv, i64 %i.tj, !unpredictable !4 ; 2 uses
   store ptr %i.uq, ptr %i.tk, align 8, !alias.scope !2437
   %i.us = getelementptr inbounds nuw i8, ptr %i.tu, i64 16
   %i.ut = load i64, ptr %i.us, align 8, !noalias !2436, !noundef !4 ; 2 uses
@@ -991,7 +991,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.ux)
   %i.uy = icmp samesign ult i64 %i.uw, %i.ut      ; 2 uses
   %i.uz = select i1 %i.uy, ptr %i.tl, ptr %i.sb, !unpredictable !4
-  %i.va = select i1 %i.uy, ptr %i.sk, ptr %i.tu   ; 3 uses
+  %i.va = select i1 %i.uy, ptr %i.sk, ptr %i.tu, !unpredictable !4 ; 3 uses
   %i.vb = load i64, ptr %i.uz, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.vb, ptr %i.sb, align 8, !alias.scope !2437
   store ptr %i.va, ptr %i.tl, align 8, !alias.scope !2437
@@ -1007,7 +1007,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.vi)
   %i.vj = icmp samesign ult i64 %i.vh, %i.ve      ; 2 uses
   %i.vk = select i1 %i.vj, ptr %i.vc, ptr %i.sz, !unpredictable !4
-  %i.vl = select i1 %i.vj, ptr %i.ti, ptr %.val.i13.i.i ; 3 uses
+  %i.vl = select i1 %i.vj, ptr %i.ti, ptr %.val.i13.i.i, !unpredictable !4 ; 3 uses
   %i.vm = load i64, ptr %i.vk, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.vm, ptr %i.sz, align 8, !alias.scope !2437
   store ptr %i.vl, ptr %i.vc, align 8, !alias.scope !2437
@@ -1022,8 +1022,8 @@ bb.f:                                             ; preds = %bb.d
   %i.vu = icmp ult i64 %i.vt, 230584300921369396
   tail call void @llvm.assume(i1 %i.vu)
   %i.vv = icmp samesign ult i64 %i.vt, %i.vq      ; 2 uses
-  %i.vw = select i1 %i.vv, ptr %i.vo, ptr %i.vn   ; 3 uses
-  %i.vx = select i1 %i.vv, i64 %i.ur, i64 %i.ug   ; 2 uses
+  %i.vw = select i1 %i.vv, ptr %i.vo, ptr %i.vn, !unpredictable !4 ; 3 uses
+  %i.vx = select i1 %i.vv, i64 %i.ur, i64 %i.ug, !unpredictable !4 ; 2 uses
   store ptr %i.vw, ptr %i.sy, align 8, !alias.scope !2437
   %i.vy = inttoptr i64 %i.vb to ptr               ; 2 uses
   %.val1.i18.i.i = load ptr, ptr %i.sm, align 8, !alias.scope !2437, !nonnull !4, !align !8, !noundef !4 ; 2 uses
@@ -1037,7 +1037,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.we)
   %i.wf = icmp samesign ult i64 %i.wd, %i.wa      ; 2 uses
   %i.wg = select i1 %i.wf, ptr %i.sb, ptr %i.sm, !unpredictable !4
-  %i.wh = select i1 %i.wf, ptr %.val1.i18.i.i, ptr %i.vy ; 3 uses
+  %i.wh = select i1 %i.wf, ptr %.val1.i18.i.i, ptr %i.vy, !unpredictable !4 ; 3 uses
   %i.wi = load i64, ptr %i.wg, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.wh, ptr %i.sb, align 8, !alias.scope !2437
   %i.wj = inttoptr i64 %i.vm to ptr               ; 2 uses
@@ -1051,7 +1051,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.wp)
   %i.wq = icmp samesign ult i64 %i.wo, %i.wl      ; 2 uses
   %i.wr = select i1 %i.wq, ptr %i.sz, ptr %i.tk, !unpredictable !4
-  %i.ws = select i1 %i.wq, ptr %i.uq, ptr %i.wj   ; 3 uses
+  %i.ws = select i1 %i.wq, ptr %i.uq, ptr %i.wj, !unpredictable !4 ; 3 uses
   %i.wt = load i64, ptr %i.wr, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.ws, ptr %i.sz, align 8, !alias.scope !2437
   %i.wu = getelementptr inbounds nuw i8, ptr %i.va, i64 16
@@ -1064,7 +1064,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.wz)
   %i.xa = icmp samesign ult i64 %i.wy, %i.wv      ; 2 uses
   %i.xb = select i1 %i.xa, ptr %i.tl, ptr %i.sn, !unpredictable !4
-  %i.xc = select i1 %i.xa, ptr %i.uf, ptr %i.va   ; 3 uses
+  %i.xc = select i1 %i.xa, ptr %i.uf, ptr %i.va, !unpredictable !4 ; 3 uses
   %i.xd = load i64, ptr %i.xb, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.xd, ptr %i.sn, align 8, !alias.scope !2437
   store ptr %i.xc, ptr %i.tl, align 8, !alias.scope !2437
@@ -1079,8 +1079,8 @@ bb.f:                                             ; preds = %bb.d
   %i.xl = icmp ult i64 %i.xk, 230584300921369396
   tail call void @llvm.assume(i1 %i.xl)
   %i.xm = icmp samesign ult i64 %i.xk, %i.xh      ; 2 uses
-  %i.xn = select i1 %i.xm, ptr %i.xf, ptr %i.xe   ; 3 uses
-  %i.xo = select i1 %i.xm, i64 %i.wt, i64 %i.wi   ; 2 uses
+  %i.xn = select i1 %i.xm, ptr %i.xf, ptr %i.xe, !unpredictable !4 ; 3 uses
+  %i.xo = select i1 %i.xm, i64 %i.wt, i64 %i.wi, !unpredictable !4 ; 2 uses
   store ptr %i.xn, ptr %i.tk, align 8, !alias.scope !2437
   %i.xp = getelementptr inbounds nuw i8, ptr %i.vl, i64 16
   %i.xq = load i64, ptr %i.xp, align 8, !noalias !2436, !noundef !4 ; 2 uses
@@ -1092,7 +1092,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.xu)
   %i.xv = icmp samesign ult i64 %i.xt, %i.xq      ; 2 uses
   %i.xw = select i1 %i.xv, ptr %i.vc, ptr %i.sb, !unpredictable !4
-  %i.xx = select i1 %i.xv, ptr %i.wh, ptr %i.vl   ; 3 uses
+  %i.xx = select i1 %i.xv, ptr %i.wh, ptr %i.vl, !unpredictable !4 ; 3 uses
   %i.xy = load i64, ptr %i.xw, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.xx, ptr %i.vc, align 8, !alias.scope !2437
   %i.xz = inttoptr i64 %i.xd to ptr               ; 2 uses
@@ -1106,7 +1106,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.yf)
   %i.yg = icmp samesign ult i64 %i.ye, %i.yb      ; 2 uses
   %i.yh = select i1 %i.yg, ptr %i.sn, ptr %i.sz, !unpredictable !4
-  %i.yi = select i1 %i.yg, ptr %i.ws, ptr %i.xz   ; 3 uses
+  %i.yi = select i1 %i.yg, ptr %i.ws, ptr %i.xz, !unpredictable !4 ; 3 uses
   %i.yj = load i64, ptr %i.yh, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.yi, ptr %i.sn, align 8, !alias.scope !2437
   %i.yk = inttoptr i64 %i.xo to ptr               ; 2 uses
@@ -1120,8 +1120,8 @@ bb.f:                                             ; preds = %bb.d
   %i.yr = icmp ult i64 %i.yq, 230584300921369396
   tail call void @llvm.assume(i1 %i.yr)
   %i.ys = icmp samesign ult i64 %i.yq, %i.yn      ; 2 uses
-  %i.yt = select i1 %i.ys, ptr %i.yl, ptr %i.yk   ; 3 uses
-  %i.yu = select i1 %i.ys, i64 %i.xo, i64 %i.vx
+  %i.yt = select i1 %i.ys, ptr %i.yl, ptr %i.yk, !unpredictable !4 ; 3 uses
+  %i.yu = select i1 %i.ys, i64 %i.xo, i64 %i.vx, !unpredictable !4
   store i64 %i.yu, ptr %.sroa.02.0.i, align 8, !alias.scope !2437
   store ptr %i.yt, ptr %i.sm, align 8, !alias.scope !2437
   %i.yv = getelementptr inbounds nuw i8, ptr %i.xn, i64 16
@@ -1134,7 +1134,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.za)
   %i.zb = icmp samesign ult i64 %i.yz, %i.yw      ; 2 uses
   %i.zc = select i1 %i.zb, ptr %i.tk, ptr %i.sy, !unpredictable !4
-  %i.zd = select i1 %i.zb, ptr %i.vw, ptr %i.xn   ; 3 uses
+  %i.zd = select i1 %i.zb, ptr %i.vw, ptr %i.xn, !unpredictable !4 ; 3 uses
   %i.ze = load i64, ptr %i.zc, align 8, !alias.scope !2437 ; 2 uses
   store ptr %i.zd, ptr %i.tk, align 8, !alias.scope !2437
   %i.zf = inttoptr i64 %i.yj to ptr               ; 2 uses
@@ -1148,8 +1148,8 @@ bb.f:                                             ; preds = %bb.d
   %i.zm = icmp ult i64 %i.zl, 230584300921369396
   tail call void @llvm.assume(i1 %i.zm)
   %i.zn = icmp samesign ult i64 %i.zl, %i.zi      ; 2 uses
-  %i.zo = select i1 %i.zn, ptr %i.zg, ptr %i.zf   ; 3 uses
-  %i.zp = select i1 %i.zn, i64 %i.yj, i64 %i.xy   ; 2 uses
+  %i.zo = select i1 %i.zn, ptr %i.zg, ptr %i.zf, !unpredictable !4 ; 3 uses
+  %i.zp = select i1 %i.zn, i64 %i.yj, i64 %i.xy, !unpredictable !4 ; 2 uses
   store ptr %i.zo, ptr %i.sz, align 8, !alias.scope !2437
   %i.zq = getelementptr inbounds nuw i8, ptr %i.xc, i64 16
   %i.zr = load i64, ptr %i.zq, align 8, !noalias !2436, !noundef !4 ; 2 uses
@@ -1161,7 +1161,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.zv)
   %i.zw = icmp samesign ult i64 %i.zu, %i.zr      ; 2 uses
   %i.zx = select i1 %i.zw, ptr %i.tl, ptr %i.vc, !unpredictable !4
-  %i.zy = select i1 %i.zw, ptr %i.xx, ptr %i.xc
+  %i.zy = select i1 %i.zw, ptr %i.xx, ptr %i.xc, !unpredictable !4
   %i.zz = load i64, ptr %i.zx, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.zz, ptr %i.vc, align 8, !alias.scope !2437
   store ptr %i.zy, ptr %i.tl, align 8, !alias.scope !2437
@@ -1176,8 +1176,8 @@ bb.f:                                             ; preds = %bb.d
   %i.aah = icmp ult i64 %i.aag, 230584300921369396
   tail call void @llvm.assume(i1 %i.aah)
   %i.aai = icmp samesign ult i64 %i.aag, %i.aad   ; 2 uses
-  %i.aaj = select i1 %i.aai, ptr %i.aab, ptr %i.aaa ; 3 uses
-  %i.aak = select i1 %i.aai, i64 %i.zp, i64 %i.ze ; 2 uses
+  %i.aaj = select i1 %i.aai, ptr %i.aab, ptr %i.aaa, !unpredictable !4 ; 3 uses
+  %i.aak = select i1 %i.aai, i64 %i.zp, i64 %i.ze, !unpredictable !4 ; 2 uses
   store i64 %i.aak, ptr %i.sy, align 8, !alias.scope !2437
   store ptr %i.aaj, ptr %i.sb, align 8, !alias.scope !2437
   %i.aal = getelementptr inbounds nuw i8, ptr %i.zo, i64 16
@@ -1190,7 +1190,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.aaq)
   %i.aar = icmp samesign ult i64 %i.aap, %i.aam   ; 2 uses
   %i.aas = select i1 %i.aar, ptr %i.sz, ptr %i.tk, !unpredictable !4
-  %i.aat = select i1 %i.aar, ptr %i.zd, ptr %i.zo ; 3 uses
+  %i.aat = select i1 %i.aar, ptr %i.zd, ptr %i.zo, !unpredictable !4 ; 3 uses
   %i.aau = load i64, ptr %i.aas, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.aau, ptr %i.tk, align 8, !alias.scope !2437
   store ptr %i.aat, ptr %i.sz, align 8, !alias.scope !2437
@@ -1205,7 +1205,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.abb)
   %i.abc = icmp samesign ult i64 %i.aba, %i.aax   ; 2 uses
   %i.abd = select i1 %i.abc, ptr %i.sn, ptr %i.vc, !unpredictable !4
-  %i.abe = select i1 %i.abc, ptr %i.aav, ptr %i.yi
+  %i.abe = select i1 %i.abc, ptr %i.aav, ptr %i.yi, !unpredictable !4
   %i.abf = load i64, ptr %i.abd, align 8, !alias.scope !2437 ; 2 uses
   store i64 %i.abf, ptr %i.vc, align 8, !alias.scope !2437
   store ptr %i.abe, ptr %i.sn, align 8, !alias.scope !2437
@@ -1220,7 +1220,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.abm)
   %i.abn = icmp samesign ult i64 %i.abl, %i.abi   ; 2 uses
   %i.abo = select i1 %i.abn, ptr %i.sy, ptr %i.sm, !unpredictable !4
-  %i.abp = select i1 %i.abn, ptr %i.yt, ptr %i.abg
+  %i.abp = select i1 %i.abn, ptr %i.yt, ptr %i.abg, !unpredictable !4
   %i.abq = load i64, ptr %i.abo, align 8, !alias.scope !2437
   store i64 %i.abq, ptr %i.sm, align 8, !alias.scope !2437
   store ptr %i.abp, ptr %i.sy, align 8, !alias.scope !2437
@@ -1235,7 +1235,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.abx)
   %i.aby = icmp samesign ult i64 %i.abw, %i.abt   ; 2 uses
   %i.abz = select i1 %i.aby, ptr %i.tk, ptr %i.sb, !unpredictable !4
-  %i.aca = select i1 %i.aby, ptr %i.aaj, ptr %i.abr
+  %i.aca = select i1 %i.aby, ptr %i.aaj, ptr %i.abr, !unpredictable !4
   %i.acb = load i64, ptr %i.abz, align 8, !alias.scope !2437
   store i64 %i.acb, ptr %i.sb, align 8, !alias.scope !2437
   store ptr %i.aca, ptr %i.tk, align 8, !alias.scope !2437
@@ -1250,7 +1250,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.aci)
   %i.acj = icmp samesign ult i64 %i.ach, %i.ace   ; 2 uses
   %i.ack = select i1 %i.acj, ptr %i.vc, ptr %i.sz, !unpredictable !4
-  %i.acl = select i1 %i.acj, ptr %i.aat, ptr %i.acc
+  %i.acl = select i1 %i.acj, ptr %i.aat, ptr %i.acc, !unpredictable !4
   %i.acm = load i64, ptr %i.ack, align 8, !alias.scope !2437
   store i64 %i.acm, ptr %i.sz, align 8, !alias.scope !2437
   store ptr %i.acl, ptr %i.vc, align 8, !alias.scope !2437

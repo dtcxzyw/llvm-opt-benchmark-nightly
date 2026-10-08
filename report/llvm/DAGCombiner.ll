@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %_ZNK4llvm18TargetLo
   %.fca.1.extract30 = extractvalue { ptr, i32 } %i.cu, 1
   br label %.critedge
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.t, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, %bb.p, %_ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit, %bb.o, %bb.m, %bb.l
+_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.t, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, %_ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit, %bb.p, %bb.o, %bb.m, %bb.l
   %i.cv = and i32 %.sroa.0.0.copyload.i115, 2176
   %or.cond202 = icmp eq i32 %i.cv, 2176
   br i1 %or.cond202, label %bb.v, label %bb.aa

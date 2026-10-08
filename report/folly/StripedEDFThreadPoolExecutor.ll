@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.r, ptr %i.o, align 8, !tbaa !1760
   store ptr %.029.i.i, ptr %.030..031.i.i, align 8, !tbaa !1764
   %.not.i.i = icmp eq ptr %i.p, null
-  %i.s = select i1 %.0.i.i.i.i.i, i64 %.031.i.val.i, i64 %.030.i.val.i
+  %i.s = select i1 %.0.i.i.i.i.i, i64 %.031.i.val.i, i64 %.030.i.val.i, !unpredictable !184
   br i1 %.not.i.i, label %bb.d, label %.preheader.i, !llvm.loop !93
 
 bb.d:                                             ; preds = %.preheader.i
@@ -608,7 +608,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.bq, ptr %i.bn, align 8, !tbaa !1760
   store ptr %.029.i.i.i.i, ptr %.030..031.i.i.i.i, align 8, !tbaa !1764
   %.not.i.i.i8.i = icmp eq ptr %i.bo, null
-  %i.br = select i1 %.0.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i, i64 %.030.i.val.i.i.i
+  %i.br = select i1 %.0.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i, i64 %.030.i.val.i.i.i, !unpredictable !184
   br i1 %.not.i.i.i8.i, label %bb.o, label %.preheader.i.i.i, !llvm.loop !93
 
 bb.o:                                             ; preds = %.preheader.i.i.i
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.t, ptr %i.q, align 8, !tbaa !1760
   store ptr %.029.i.i.i.i.i.i.i, ptr %.030..031.i.i.i.i.i.i.i, align 8, !tbaa !1764
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.r, null
-  %i.u = select i1 %.0.i.i.i.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i.i.i.i, i64 %.030.i.val.i.i.i.i.i.i
+  %i.u = select i1 %.0.i.i.i.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i.i.i.i, i64 %.030.i.val.i.i.i.i.i.i, !unpredictable !184
   br i1 %.not.i.i.i.i.i.i.i, label %bb.e, label %.preheader.i.i.i.i.i.i, !llvm.loop !93
 
 bb.e:                                             ; preds = %.preheader.i.i.i.i.i.i
@@ -1414,7 +1414,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.cn, ptr %i.ck, align 8, !tbaa !1760
   store ptr %.029.i.i.i.i, ptr %.030..031.i.i.i.i, align 8, !tbaa !1764
   %.not.i.i.i9.i = icmp eq ptr %i.cl, null
-  %i.co = select i1 %.0.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i, i64 %.030.i.val.i.i.i
+  %i.co = select i1 %.0.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i, i64 %.030.i.val.i.i.i, !unpredictable !184
   br i1 %.not.i.i.i9.i, label %bb.n, label %.preheader.i.i.i, !llvm.loop !93
 
 bb.n:                                             ; preds = %.preheader.i.i.i
@@ -1546,7 +1546,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.q, ptr %i.n, align 8, !tbaa !1760
   store ptr %.029.i.i.i.i.i.i.i, ptr %.030..031.i.i.i.i.i.i.i, align 8, !tbaa !1764
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.o, null
-  %i.r = select i1 %.0.i.i.i.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i.i.i.i, i64 %.030.i.val.i.i.i.i.i.i
+  %i.r = select i1 %.0.i.i.i.i.i.i.i.i.i.i, i64 %.031.i.val.i.i.i.i.i.i, i64 %.030.i.val.i.i.i.i.i.i, !unpredictable !184
   br i1 %.not.i.i.i.i.i.i.i, label %bb.c, label %.preheader.i.i.i.i.i.i, !llvm.loop !93
 
 bb.c:                                             ; preds = %.preheader.i.i.i.i.i.i

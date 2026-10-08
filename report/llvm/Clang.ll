@@ -205,11 +205,11 @@ _ZN4llvm11SmallVectorIcLj64EED2Ev.exit:           ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %47) #21
   br label %bb.dm
 
-bb.dm:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPKcLb1EE9push_backES2_.exit868, %_ZN4llvm11SmallVectorIcLj64EED2Ev.exit
-  %66 = icmp eq i8 %.sroa.01294.0.lcssa210521462215, %.sroa.01284.0.lcssa210321482213
-  %.not1831 = icmp eq i8 %.sroa.81300.0.lcssa210621452216, %.sroa.81288.0.lcssa210421472214
-  %or.cond1852 = select i1 %66, i1 %.not1831, i1 false
-  br i1 %or.cond1852, label %bb.dy, label %_ZNK4llvm12DenormalModeneES0_.exit874.thread
+bb.dm:                                            ; preds = %_ZN4llvm11SmallVectorIcLj64EED2Ev.exit, %_ZN4llvm23SmallVectorTemplateBaseIPKcLb1EE9push_backES2_.exit868
+  %66 = icmp ne i8 %.sroa.01294.0.lcssa210521462215, %.sroa.01284.0.lcssa210321482213
+  %67 = icmp ne i8 %.sroa.81300.0.lcssa210621452216, %.sroa.81288.0.lcssa210421472214
+  %or.cond1852 = select i1 %66, i1 true, i1 %67
+  br i1 %or.cond1852, label %_ZNK4llvm12DenormalModeneES0_.exit874.thread, label %bb.dy
 
 _ZNK4llvm12DenormalModeneES0_.exit874.thread:     ; preds = %bb.dm
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #21
@@ -392,7 +392,7 @@ _ZN4llvm11SmallVectorIcLj64EED2Ev.exit896:        ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #21
   br label %bb.dy
 
-bb.dy:                                            ; preds = %bb.dm, %_ZN4llvm11SmallVectorIcLj64EED2Ev.exit896
+bb.dy:                                            ; preds = %_ZN4llvm11SmallVectorIcLj64EED2Ev.exit896, %bb.dm
   %i.aha = icmp eq i64 %.sroa.18.1.lcssa208821632198, 0
   br i1 %i.aha, label %bb.ec, label %bb.dz
 

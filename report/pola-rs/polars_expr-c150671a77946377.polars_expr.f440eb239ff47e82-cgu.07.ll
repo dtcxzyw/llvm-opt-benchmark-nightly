@@ -205,7 +205,7 @@ define internal fastcc void @_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9
   %i.cj = icmp eq i8 %.sroa.0.0.i.i22.i, -1, !dbg !56984 ; 2 uses
   %i.ck = select i1 %i.cj, ptr %i.bx, ptr %i.bv, !dbg !56985, !unpredictable !3509
   %i.cl = select i1 %i.cj, ptr %i.bv, ptr %i.bx, !dbg !56986, !unpredictable !3509
-  %i.cm = select i1 %i.bg, i32 %.val7.i, i32 %.val8.i, !dbg !56987
+  %i.cm = select i1 %i.bg, i32 %.val7.i, i32 %.val8.i, !dbg !56987, !unpredictable !3509
   store i32 %i.cm, ptr %2, align 4, !dbg !56987
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 4, !dbg !56988
   %i.co = load i32, ptr %i.ck, align 4, !dbg !56989
@@ -336,7 +336,7 @@ define internal fastcc void @_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9
   %i.gb = icmp eq i8 %.sroa.0.0.i.i22.i22, -1, !dbg !57094 ; 2 uses
   %i.gc = select i1 %i.gb, ptr %i.fp, ptr %i.fn, !dbg !57095, !unpredictable !3509
   %i.gd = select i1 %i.gb, ptr %i.fn, ptr %i.fp, !dbg !57096, !unpredictable !3509
-  %i.ge = select i1 %i.ey, i32 %.val7.i11, i32 %.val8.i12, !dbg !57097 ; 3 uses
+  %i.ge = select i1 %i.ey, i32 %.val7.i11, i32 %.val8.i12, !dbg !57097, !unpredictable !3509 ; 3 uses
   store i32 %i.ge, ptr %i.cu, align 4, !dbg !57097
   %i.gf = getelementptr i8, ptr %2, i64 20, !dbg !57098
   %i.gg = load i32, ptr %i.gc, align 4, !dbg !57099
@@ -739,16 +739,16 @@ bb.g:                                             ; preds = %bb.e
   %switch.offset.i.i21.i = sub nsw i8 0, %i.cr, !dbg !61783
   %.sroa.0.0.i.i22.i = select i1 %i.ag, i8 %switch.offset.i.i21.i, i8 %i.cr, !dbg !61783
   %i.cs = icmp eq i8 %.sroa.0.0.i.i22.i, -1, !dbg !61784 ; 2 uses
-  %i.ct = select i1 %i.bq, i32 %.val7.i, i32 %.val8.i, !dbg !61785
+  %i.ct = select i1 %i.bq, i32 %.val7.i, i32 %.val8.i, !dbg !61785, !unpredictable !3509
   store i32 %i.ct, ptr %2, align 4, !dbg !61785
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 4, !dbg !61786
-  %i.cv = select i1 %i.cs, i32 %.val1.i, i32 %.val2.i, !dbg !61787
+  %i.cv = select i1 %i.cs, i32 %.val1.i, i32 %.val2.i, !dbg !61787, !unpredictable !3509
   store i32 %i.cv, ptr %i.cu, align 4, !dbg !61787
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !61788
-  %i.cx = select i1 %i.cs, i32 %.val2.i, i32 %.val1.i, !dbg !61789
+  %i.cx = select i1 %i.cs, i32 %.val2.i, i32 %.val1.i, !dbg !61789, !unpredictable !3509
   store i32 %i.cx, ptr %i.cw, align 4, !dbg !61789
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 12, !dbg !61790
-  %i.cz = select i1 %i.cc, i32 %.val5.i, i32 %.val4.i, !dbg !61791
+  %i.cz = select i1 %i.cc, i32 %.val5.i, i32 %.val4.i, !dbg !61791, !unpredictable !3509
   store i32 %i.cz, ptr %i.cy, align 4, !dbg !61791
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.d, !dbg !61792 ; 8 uses
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d, !dbg !61793 ; 4 uses
@@ -858,16 +858,16 @@ bb.g:                                             ; preds = %bb.e
   %switch.offset.i.i21.i53 = sub nsw i8 0, %i.fy, !dbg !61887
   %.sroa.0.0.i.i22.i54 = select i1 %i.ag, i8 %switch.offset.i.i21.i53, i8 %i.fy, !dbg !61887
   %i.fz = icmp eq i8 %.sroa.0.0.i.i22.i54, -1, !dbg !61888 ; 2 uses
-  %i.ga = select i1 %i.ex, i32 %.val7.i43, i32 %.val8.i44, !dbg !61889
+  %i.ga = select i1 %i.ex, i32 %.val7.i43, i32 %.val8.i44, !dbg !61889, !unpredictable !3509
   store i32 %i.ga, ptr %i.db, align 4, !dbg !61889
   %i.gb = getelementptr inbounds nuw i8, ptr %i.db, i64 4, !dbg !61890
-  %i.gc = select i1 %i.fz, i32 %.val1.i51, i32 %.val2.i52, !dbg !61891
+  %i.gc = select i1 %i.fz, i32 %.val1.i51, i32 %.val2.i52, !dbg !61891, !unpredictable !3509
   store i32 %i.gc, ptr %i.gb, align 4, !dbg !61891
   %i.gd = getelementptr inbounds nuw i8, ptr %i.db, i64 8, !dbg !61892
-  %i.ge = select i1 %i.fz, i32 %.val2.i52, i32 %.val1.i51, !dbg !61893
+  %i.ge = select i1 %i.fz, i32 %.val2.i52, i32 %.val1.i51, !dbg !61893, !unpredictable !3509
   store i32 %i.ge, ptr %i.gd, align 4, !dbg !61893
   %i.gf = getelementptr inbounds nuw i8, ptr %i.db, i64 12, !dbg !61894
-  %i.gg = select i1 %i.fj, i32 %.val5.i48, i32 %.val4.i47, !dbg !61895
+  %i.gg = select i1 %i.fj, i32 %.val5.i48, i32 %.val4.i47, !dbg !61895, !unpredictable !3509
   store i32 %i.gg, ptr %i.gf, align 4, !dbg !61895
   br label %bb.i, !dbg !61896
 

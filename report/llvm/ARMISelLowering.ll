@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
   %.not216 = icmp eq ptr %.fca.0.extract53, null
   br i1 %.not216, label %.critedgethread-pre-split, label %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.thread
 
-.critedgethread-pre-split:                        ; preds = %bb.s, %bb.r, %.critedge17, %bb.q
+.critedgethread-pre-split:                        ; preds = %.critedge17, %bb.q, %bb.r, %bb.s
   %.pr = load i32, ptr %i.a, align 4, !tbaa !827
   br label %.critedge
 

@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #22
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ac, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
+bb.af:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26, %bb.ac
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 1752 ; 4 uses
   %i.dv = load ptr, ptr %7, align 8, !tbaa !35    ; 3 uses
   %i.dw = load i64, ptr %i.cc, align 8, !tbaa !36 ; 7 uses

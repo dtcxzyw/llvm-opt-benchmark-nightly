@@ -205,7 +205,7 @@ _RNCINvMNtCsf3Ta7LF998c_4core5sliceSj16sort_unstable_byNCNvMNtCsbzNSmZPCnTx_10tg
   %i.cz = icmp slt i64 %spec.select.i.i29, 0      ; 2 uses
   %i.da = select i1 %i.cz, ptr %i.ch, ptr %i.cf, !unpredictable !4
   %i.db = select i1 %i.cz, ptr %i.cf, ptr %i.ch, !unpredictable !4
-  %i.dc = select i1 %i.bm, i64 %.val7, i64 %.val8
+  %i.dc = select i1 %i.bm, i64 %.val7, i64 %.val8, !unpredictable !4
   store i64 %i.dc, ptr %1, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.de = load i64, ptr %i.da, align 8
@@ -608,8 +608,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ad = sub i64 %i.v, %i.z
   %spec.select.i.i.i.i = select i1 %i.ac, i64 %i.ad, i64 %i.ab
   %i.ae = icmp slt i64 %spec.select.i.i.i.i, 0    ; 2 uses
-  %i.af = select i1 %i.ae, i64 %.val2.i.i, i64 %.val1.i.i ; 6 uses
-  %i.ag = select i1 %i.ae, i64 %.val1.i.i, i64 %.val2.i.i ; 6 uses
+  %i.af = select i1 %i.ae, i64 %.val2.i.i, i64 %.val1.i.i, !unpredictable !4 ; 6 uses
+  %i.ag = select i1 %i.ae, i64 %.val1.i.i, i64 %.val2.i.i, !unpredictable !4 ; 6 uses
   store i64 %i.ag, ptr %.sroa.02.0, align 8, !alias.scope !488
   store i64 %i.af, ptr %i.j, align 8, !alias.scope !488
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 8 ; 7 uses
@@ -649,8 +649,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ay = sub i64 %i.aq, %i.au
   %spec.select.i.i.i49.i = select i1 %i.ax, i64 %i.ay, i64 %i.aw
   %i.az = icmp slt i64 %spec.select.i.i.i49.i, 0  ; 2 uses
-  %i.ba = select i1 %i.az, i64 %.val2.i46.i, i64 %.val1.i45.i ; 6 uses
-  %i.bb = select i1 %i.az, i64 %.val1.i45.i, i64 %.val2.i46.i ; 6 uses
+  %i.ba = select i1 %i.az, i64 %.val2.i46.i, i64 %.val1.i45.i, !unpredictable !4 ; 6 uses
+  %i.bb = select i1 %i.az, i64 %.val1.i45.i, i64 %.val2.i46.i, !unpredictable !4 ; 6 uses
   store i64 %i.bb, ptr %i.ah, align 8, !alias.scope !488
   store i64 %i.ba, ptr %i.ai, align 8, !alias.scope !488
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 16 ; 8 uses
@@ -690,8 +690,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.bt = sub i64 %i.bl, %i.bp
   %spec.select.i.i.i55.i = select i1 %i.bs, i64 %i.bt, i64 %i.br
   %i.bu = icmp slt i64 %spec.select.i.i.i55.i, 0  ; 2 uses
-  %i.bv = select i1 %i.bu, i64 %.val2.i52.i, i64 %.val1.i51.i ; 6 uses
-  %i.bw = select i1 %i.bu, i64 %.val1.i51.i, i64 %.val2.i52.i ; 6 uses
+  %i.bv = select i1 %i.bu, i64 %.val2.i52.i, i64 %.val1.i51.i, !unpredictable !4 ; 6 uses
+  %i.bw = select i1 %i.bu, i64 %.val1.i51.i, i64 %.val2.i52.i, !unpredictable !4 ; 6 uses
   store i64 %i.bw, ptr %i.bc, align 8, !alias.scope !488
   store i64 %i.bv, ptr %i.bd, align 8, !alias.scope !488
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 24 ; 9 uses
@@ -731,8 +731,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.co = sub i64 %i.cg, %i.ck
   %spec.select.i.i.i61.i = select i1 %i.cn, i64 %i.co, i64 %i.cm
   %i.cp = icmp slt i64 %spec.select.i.i.i61.i, 0  ; 2 uses
-  %i.cq = select i1 %i.cp, i64 %.val2.i58.i, i64 %.val1.i57.i ; 6 uses
-  %i.cr = select i1 %i.cp, i64 %.val1.i57.i, i64 %.val2.i58.i ; 6 uses
+  %i.cq = select i1 %i.cp, i64 %.val2.i58.i, i64 %.val1.i57.i, !unpredictable !4 ; 6 uses
+  %i.cr = select i1 %i.cp, i64 %.val1.i57.i, i64 %.val2.i58.i, !unpredictable !4 ; 6 uses
   store i64 %i.cr, ptr %i.bx, align 8, !alias.scope !488
   store i64 %i.cq, ptr %i.by, align 8, !alias.scope !488
   %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 40 ; 9 uses
@@ -772,8 +772,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.dj = sub i64 %i.db, %i.df
   %spec.select.i.i.i67.i = select i1 %i.di, i64 %i.dj, i64 %i.dh
   %i.dk = icmp slt i64 %spec.select.i.i.i67.i, 0  ; 2 uses
-  %i.dl = select i1 %i.dk, i64 %.val2.i64.i, i64 %.val1.i63.i ; 6 uses
-  %i.dm = select i1 %i.dk, i64 %.val1.i63.i, i64 %.val2.i64.i ; 6 uses
+  %i.dl = select i1 %i.dk, i64 %.val2.i64.i, i64 %.val1.i63.i, !unpredictable !4 ; 6 uses
+  %i.dm = select i1 %i.dk, i64 %.val1.i63.i, i64 %.val2.i64.i, !unpredictable !4 ; 6 uses
   store i64 %i.dm, ptr %i.cs, align 8, !alias.scope !488
   store i64 %i.dl, ptr %i.ct, align 8, !alias.scope !488
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 48 ; 11 uses
@@ -813,8 +813,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ee = sub i64 %i.dw, %i.ea
   %spec.select.i.i.i73.i = select i1 %i.ed, i64 %i.ee, i64 %i.ec
   %i.ef = icmp slt i64 %spec.select.i.i.i73.i, 0  ; 2 uses
-  %i.eg = select i1 %i.ef, i64 %.val2.i70.i, i64 %.val1.i69.i ; 6 uses
-  %i.eh = select i1 %i.ef, i64 %.val1.i69.i, i64 %.val2.i70.i ; 6 uses
+  %i.eg = select i1 %i.ef, i64 %.val2.i70.i, i64 %.val1.i69.i, !unpredictable !4 ; 6 uses
+  %i.eh = select i1 %i.ef, i64 %.val1.i69.i, i64 %.val2.i70.i, !unpredictable !4 ; 6 uses
   store i64 %i.eh, ptr %i.dn, align 8, !alias.scope !488
   store i64 %i.eg, ptr %i.do, align 8, !alias.scope !488
   %i.ei = icmp ult i64 %i.eh, %i.n
@@ -850,8 +850,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ex = sub i64 %i.ep, %i.et
   %spec.select.i.i.i79.i = select i1 %i.ew, i64 %i.ex, i64 %i.ev
   %i.ey = icmp slt i64 %spec.select.i.i.i79.i, 0  ; 2 uses
-  %i.ez = select i1 %i.ey, i64 %i.bb, i64 %i.eh   ; 6 uses
-  %i.fa = select i1 %i.ey, i64 %i.eh, i64 %i.bb   ; 6 uses
+  %i.ez = select i1 %i.ey, i64 %i.bb, i64 %i.eh, !unpredictable !4 ; 6 uses
+  %i.fa = select i1 %i.ey, i64 %i.eh, i64 %i.bb, !unpredictable !4 ; 6 uses
   store i64 %i.fa, ptr %i.ah, align 8, !alias.scope !488
   store i64 %i.ez, ptr %i.dn, align 8, !alias.scope !488
   %i.fb = icmp ult i64 %i.cr, %i.n
@@ -887,8 +887,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.fq = sub i64 %i.fi, %i.fm
   %spec.select.i.i.i85.i = select i1 %i.fp, i64 %i.fq, i64 %i.fo
   %i.fr = icmp slt i64 %spec.select.i.i.i85.i, 0  ; 2 uses
-  %i.fs = select i1 %i.fr, i64 %i.bw, i64 %i.cr   ; 6 uses
-  %i.ft = select i1 %i.fr, i64 %i.cr, i64 %i.bw   ; 6 uses
+  %i.fs = select i1 %i.fr, i64 %i.bw, i64 %i.cr, !unpredictable !4 ; 6 uses
+  %i.ft = select i1 %i.fr, i64 %i.cr, i64 %i.bw, !unpredictable !4 ; 6 uses
   store i64 %i.ft, ptr %i.bc, align 8, !alias.scope !488
   store i64 %i.fs, ptr %i.bx, align 8, !alias.scope !488
   %i.fu = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 32 ; 9 uses
@@ -926,8 +926,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.gk = sub i64 %i.gc, %i.gg
   %spec.select.i.i.i91.i = select i1 %i.gj, i64 %i.gk, i64 %i.gi
   %i.gl = icmp slt i64 %spec.select.i.i.i91.i, 0  ; 2 uses
-  %i.gm = select i1 %i.gl, i64 %.val2.i88.i, i64 %i.dl ; 6 uses
-  %i.gn = select i1 %i.gl, i64 %i.dl, i64 %.val2.i88.i ; 6 uses
+  %i.gm = select i1 %i.gl, i64 %.val2.i88.i, i64 %i.dl, !unpredictable !4 ; 6 uses
+  %i.gn = select i1 %i.gl, i64 %i.dl, i64 %.val2.i88.i, !unpredictable !4 ; 6 uses
   store i64 %i.gn, ptr %i.fu, align 8, !alias.scope !488
   store i64 %i.gm, ptr %i.ct, align 8, !alias.scope !488
   %i.go = icmp ult i64 %i.bv, %i.n
@@ -963,8 +963,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.hd = sub i64 %i.gv, %i.gz
   %spec.select.i.i.i97.i = select i1 %i.hc, i64 %i.hd, i64 %i.hb
   %i.he = icmp slt i64 %spec.select.i.i.i97.i, 0  ; 2 uses
-  %i.hf = select i1 %i.he, i64 %i.cq, i64 %i.bv   ; 6 uses
-  %i.hg = select i1 %i.he, i64 %i.bv, i64 %i.cq   ; 6 uses
+  %i.hf = select i1 %i.he, i64 %i.cq, i64 %i.bv, !unpredictable !4 ; 6 uses
+  %i.hg = select i1 %i.he, i64 %i.bv, i64 %i.cq, !unpredictable !4 ; 6 uses
   store i64 %i.hg, ptr %i.by, align 8, !alias.scope !488
   store i64 %i.hf, ptr %i.bd, align 8, !alias.scope !488
   %i.hh = icmp ult i64 %i.ba, %i.n
@@ -1000,8 +1000,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.hw = sub i64 %i.ho, %i.hs
   %spec.select.i.i.i103.i = select i1 %i.hv, i64 %i.hw, i64 %i.hu
   %i.hx = icmp slt i64 %spec.select.i.i.i103.i, 0 ; 2 uses
-  %i.hy = select i1 %i.hx, i64 %i.eg, i64 %i.ba   ; 6 uses
-  %i.hz = select i1 %i.hx, i64 %i.ba, i64 %i.eg   ; 6 uses
+  %i.hy = select i1 %i.hx, i64 %i.eg, i64 %i.ba, !unpredictable !4 ; 6 uses
+  %i.hz = select i1 %i.hx, i64 %i.ba, i64 %i.eg, !unpredictable !4 ; 6 uses
   store i64 %i.hz, ptr %i.do, align 8, !alias.scope !488
   store i64 %i.hy, ptr %i.ai, align 8, !alias.scope !488
   %i.ia = icmp ult i64 %i.gn, %i.n
@@ -1037,8 +1037,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ip = sub i64 %i.ih, %i.il
   %spec.select.i.i.i109.i = select i1 %i.io, i64 %i.ip, i64 %i.in
   %i.iq = icmp slt i64 %spec.select.i.i.i109.i, 0 ; 2 uses
-  %i.ir = select i1 %i.iq, i64 %i.ag, i64 %i.gn   ; 6 uses
-  %i.is = select i1 %i.iq, i64 %i.gn, i64 %i.ag   ; 6 uses
+  %i.ir = select i1 %i.iq, i64 %i.ag, i64 %i.gn, !unpredictable !4 ; 6 uses
+  %i.is = select i1 %i.iq, i64 %i.gn, i64 %i.ag, !unpredictable !4 ; 6 uses
   store i64 %i.is, ptr %.sroa.02.0, align 8, !alias.scope !488
   store i64 %i.ir, ptr %i.fu, align 8, !alias.scope !488
   %i.it = icmp ult i64 %i.ft, %i.n
@@ -1074,8 +1074,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ji = sub i64 %i.ja, %i.je
   %spec.select.i.i.i115.i = select i1 %i.jh, i64 %i.ji, i64 %i.jg
   %i.jj = icmp slt i64 %spec.select.i.i.i115.i, 0 ; 2 uses
-  %i.jk = select i1 %i.jj, i64 %i.fa, i64 %i.ft   ; 6 uses
-  %i.jl = select i1 %i.jj, i64 %i.ft, i64 %i.fa   ; 6 uses
+  %i.jk = select i1 %i.jj, i64 %i.fa, i64 %i.ft, !unpredictable !4 ; 6 uses
+  %i.jl = select i1 %i.jj, i64 %i.ft, i64 %i.fa, !unpredictable !4 ; 6 uses
   store i64 %i.jl, ptr %i.ah, align 8, !alias.scope !488
   store i64 %i.jk, ptr %i.bc, align 8, !alias.scope !488
   %i.jm = icmp ult i64 %i.ez, %i.n
@@ -1111,8 +1111,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.kb = sub i64 %i.jt, %i.jx
   %spec.select.i.i.i121.i = select i1 %i.ka, i64 %i.kb, i64 %i.jz
   %i.kc = icmp slt i64 %spec.select.i.i.i121.i, 0 ; 2 uses
-  %i.kd = select i1 %i.kc, i64 %i.fs, i64 %i.ez   ; 6 uses
-  %i.ke = select i1 %i.kc, i64 %i.ez, i64 %i.fs   ; 6 uses
+  %i.kd = select i1 %i.kc, i64 %i.fs, i64 %i.ez, !unpredictable !4 ; 6 uses
+  %i.ke = select i1 %i.kc, i64 %i.ez, i64 %i.fs, !unpredictable !4 ; 6 uses
   store i64 %i.ke, ptr %i.bx, align 8, !alias.scope !488
   store i64 %i.kd, ptr %i.dn, align 8, !alias.scope !488
   %i.kf = icmp ult i64 %i.hz, %i.n
@@ -1148,8 +1148,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ku = sub i64 %i.km, %i.kq
   %spec.select.i.i.i127.i = select i1 %i.kt, i64 %i.ku, i64 %i.ks
   %i.kv = icmp slt i64 %spec.select.i.i.i127.i, 0 ; 2 uses
-  %i.kw = select i1 %i.kv, i64 %i.hg, i64 %i.hz   ; 6 uses
-  %i.kx = select i1 %i.kv, i64 %i.hz, i64 %i.hg   ; 6 uses
+  %i.kw = select i1 %i.kv, i64 %i.hg, i64 %i.hz, !unpredictable !4 ; 6 uses
+  %i.kx = select i1 %i.kv, i64 %i.hz, i64 %i.hg, !unpredictable !4 ; 6 uses
   store i64 %i.kx, ptr %i.by, align 8, !alias.scope !488
   store i64 %i.kw, ptr %i.do, align 8, !alias.scope !488
   %i.ky = icmp ult i64 %i.hy, %i.n
@@ -1185,8 +1185,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ln = sub i64 %i.lf, %i.lj
   %spec.select.i.i.i133.i = select i1 %i.lm, i64 %i.ln, i64 %i.ll
   %i.lo = icmp slt i64 %spec.select.i.i.i133.i, 0 ; 2 uses
-  %i.lp = select i1 %i.lo, i64 %i.hf, i64 %i.hy   ; 6 uses
-  %i.lq = select i1 %i.lo, i64 %i.hy, i64 %i.hf   ; 6 uses
+  %i.lp = select i1 %i.lo, i64 %i.hf, i64 %i.hy, !unpredictable !4 ; 6 uses
+  %i.lq = select i1 %i.lo, i64 %i.hy, i64 %i.hf, !unpredictable !4 ; 6 uses
   store i64 %i.lq, ptr %i.bd, align 8, !alias.scope !488
   store i64 %i.lp, ptr %i.ai, align 8, !alias.scope !488
   %i.lr = icmp ult i64 %i.af, %i.n
@@ -1222,8 +1222,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.mg = sub i64 %i.ly, %i.mc
   %spec.select.i.i.i139.i = select i1 %i.mf, i64 %i.mg, i64 %i.me
   %i.mh = icmp slt i64 %spec.select.i.i.i139.i, 0 ; 2 uses
-  %i.mi = select i1 %i.mh, i64 %i.gm, i64 %i.af   ; 6 uses
-  %i.mj = select i1 %i.mh, i64 %i.af, i64 %i.gm   ; 6 uses
+  %i.mi = select i1 %i.mh, i64 %i.gm, i64 %i.af, !unpredictable !4 ; 6 uses
+  %i.mj = select i1 %i.mh, i64 %i.af, i64 %i.gm, !unpredictable !4 ; 6 uses
   store i64 %i.mj, ptr %i.ct, align 8, !alias.scope !488
   store i64 %i.mi, ptr %i.j, align 8, !alias.scope !488
   %i.mk = icmp ult i64 %i.kd, %i.n
@@ -1259,8 +1259,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.mz = sub i64 %i.mr, %i.mv
   %spec.select.i.i.i145.i = select i1 %i.my, i64 %i.mz, i64 %i.mx
   %i.na = icmp slt i64 %spec.select.i.i.i145.i, 0 ; 2 uses
-  %i.nb = select i1 %i.na, i64 %i.ir, i64 %i.kd   ; 6 uses
-  %i.nc = select i1 %i.na, i64 %i.kd, i64 %i.ir   ; 6 uses
+  %i.nb = select i1 %i.na, i64 %i.ir, i64 %i.kd, !unpredictable !4 ; 6 uses
+  %i.nc = select i1 %i.na, i64 %i.kd, i64 %i.ir, !unpredictable !4 ; 6 uses
   store i64 %i.nc, ptr %i.fu, align 8, !alias.scope !488
   store i64 %i.nb, ptr %i.dn, align 8, !alias.scope !488
   %i.nd = icmp ult i64 %i.lq, %i.n
@@ -1296,8 +1296,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ns = sub i64 %i.nk, %i.no
   %spec.select.i.i.i151.i = select i1 %i.nr, i64 %i.ns, i64 %i.nq
   %i.nt = icmp slt i64 %spec.select.i.i.i151.i, 0 ; 2 uses
-  %i.nu = select i1 %i.nt, i64 %i.dm, i64 %i.lq   ; 6 uses
-  %i.nv = select i1 %i.nt, i64 %i.lq, i64 %i.dm   ; 6 uses
+  %i.nu = select i1 %i.nt, i64 %i.dm, i64 %i.lq, !unpredictable !4 ; 6 uses
+  %i.nv = select i1 %i.nt, i64 %i.lq, i64 %i.dm, !unpredictable !4 ; 6 uses
   store i64 %i.nv, ptr %i.cs, align 8, !alias.scope !488
   store i64 %i.nu, ptr %i.bd, align 8, !alias.scope !488
   %i.nw = icmp ult i64 %i.mj, %i.n
@@ -1333,8 +1333,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ol = sub i64 %i.od, %i.oh
   %spec.select.i.i.i157.i = select i1 %i.ok, i64 %i.ol, i64 %i.oj
   %i.om = icmp slt i64 %spec.select.i.i.i157.i, 0 ; 2 uses
-  %i.on = select i1 %i.om, i64 %i.kw, i64 %i.mj   ; 6 uses
-  %i.oo = select i1 %i.om, i64 %i.mj, i64 %i.kw   ; 6 uses
+  %i.on = select i1 %i.om, i64 %i.kw, i64 %i.mj, !unpredictable !4 ; 6 uses
+  %i.oo = select i1 %i.om, i64 %i.mj, i64 %i.kw, !unpredictable !4 ; 6 uses
   store i64 %i.oo, ptr %i.do, align 8, !alias.scope !488
   store i64 %i.on, ptr %i.ct, align 8, !alias.scope !488
   %i.op = icmp ult i64 %i.mi, %i.n
@@ -1370,8 +1370,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.pe = sub i64 %i.ow, %i.pa
   %spec.select.i.i.i163.i = select i1 %i.pd, i64 %i.pe, i64 %i.pc
   %i.pf = icmp slt i64 %spec.select.i.i.i163.i, 0 ; 2 uses
-  %i.pg = select i1 %i.pf, i64 %i.lp, i64 %i.mi
-  %i.ph = select i1 %i.pf, i64 %i.mi, i64 %i.lp   ; 6 uses
+  %i.pg = select i1 %i.pf, i64 %i.lp, i64 %i.mi, !unpredictable !4
+  %i.ph = select i1 %i.pf, i64 %i.mi, i64 %i.lp, !unpredictable !4 ; 6 uses
   store i64 %i.ph, ptr %i.ai, align 8, !alias.scope !488
   store i64 %i.pg, ptr %i.j, align 8, !alias.scope !488
   %i.pi = icmp ult i64 %i.nv, %i.n
@@ -1407,8 +1407,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.px = sub i64 %i.pp, %i.pt
   %spec.select.i.i.i169.i = select i1 %i.pw, i64 %i.px, i64 %i.pv
   %i.py = icmp slt i64 %spec.select.i.i.i169.i, 0 ; 2 uses
-  %i.pz = select i1 %i.py, i64 %i.is, i64 %i.nv   ; 6 uses
-  %i.qa = select i1 %i.py, i64 %i.nv, i64 %i.is   ; 6 uses
+  %i.pz = select i1 %i.py, i64 %i.is, i64 %i.nv, !unpredictable !4 ; 6 uses
+  %i.qa = select i1 %i.py, i64 %i.nv, i64 %i.is, !unpredictable !4 ; 6 uses
   store i64 %i.qa, ptr %.sroa.02.0, align 8, !alias.scope !488
   store i64 %i.pz, ptr %i.cs, align 8, !alias.scope !488
   %i.qb = icmp ult i64 %i.oo, %i.n
@@ -1444,8 +1444,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.qq = sub i64 %i.qi, %i.qm
   %spec.select.i.i.i175.i = select i1 %i.qp, i64 %i.qq, i64 %i.qo
   %i.qr = icmp slt i64 %spec.select.i.i.i175.i, 0 ; 2 uses
-  %i.qs = select i1 %i.qr, i64 %i.ke, i64 %i.oo   ; 6 uses
-  %i.qt = select i1 %i.qr, i64 %i.oo, i64 %i.ke   ; 6 uses
+  %i.qs = select i1 %i.qr, i64 %i.ke, i64 %i.oo, !unpredictable !4 ; 6 uses
+  %i.qt = select i1 %i.qr, i64 %i.oo, i64 %i.ke, !unpredictable !4 ; 6 uses
   store i64 %i.qt, ptr %i.bx, align 8, !alias.scope !488
   store i64 %i.qs, ptr %i.do, align 8, !alias.scope !488
   %i.qu = icmp ult i64 %i.kx, %i.n
@@ -1481,8 +1481,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.rj = sub i64 %i.rb, %i.rf
   %spec.select.i.i.i181.i = select i1 %i.ri, i64 %i.rj, i64 %i.rh
   %i.rk = icmp slt i64 %spec.select.i.i.i181.i, 0 ; 2 uses
-  %i.rl = select i1 %i.rk, i64 %i.nc, i64 %i.kx   ; 6 uses
-  %i.rm = select i1 %i.rk, i64 %i.kx, i64 %i.nc   ; 6 uses
+  %i.rl = select i1 %i.rk, i64 %i.nc, i64 %i.kx, !unpredictable !4 ; 6 uses
+  %i.rm = select i1 %i.rk, i64 %i.kx, i64 %i.nc, !unpredictable !4 ; 6 uses
   store i64 %i.rm, ptr %i.fu, align 8, !alias.scope !488
   store i64 %i.rl, ptr %i.by, align 8, !alias.scope !488
   %i.rn = icmp ult i64 %i.on, %i.n
@@ -1518,8 +1518,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.sc = sub i64 %i.ru, %i.ry
   %spec.select.i.i.i187.i = select i1 %i.sb, i64 %i.sc, i64 %i.sa
   %i.sd = icmp slt i64 %spec.select.i.i.i187.i, 0 ; 2 uses
-  %i.se = select i1 %i.sd, i64 %i.nb, i64 %i.on   ; 6 uses
-  %i.sf = select i1 %i.sd, i64 %i.on, i64 %i.nb   ; 6 uses
+  %i.se = select i1 %i.sd, i64 %i.nb, i64 %i.on, !unpredictable !4 ; 6 uses
+  %i.sf = select i1 %i.sd, i64 %i.on, i64 %i.nb, !unpredictable !4 ; 6 uses
   store i64 %i.sf, ptr %i.dn, align 8, !alias.scope !488
   store i64 %i.se, ptr %i.ct, align 8, !alias.scope !488
   %i.sg = icmp ult i64 %i.ph, %i.n
@@ -1555,8 +1555,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.sv = sub i64 %i.sn, %i.sr
   %spec.select.i.i.i193.i = select i1 %i.su, i64 %i.sv, i64 %i.st
   %i.sw = icmp slt i64 %spec.select.i.i.i193.i, 0 ; 2 uses
-  %i.sx = select i1 %i.sw, i64 %i.nu, i64 %i.ph   ; 6 uses
-  %i.sy = select i1 %i.sw, i64 %i.ph, i64 %i.nu   ; 6 uses
+  %i.sx = select i1 %i.sw, i64 %i.nu, i64 %i.ph, !unpredictable !4 ; 6 uses
+  %i.sy = select i1 %i.sw, i64 %i.ph, i64 %i.nu, !unpredictable !4 ; 6 uses
   store i64 %i.sy, ptr %i.bd, align 8, !alias.scope !488
   store i64 %i.sx, ptr %i.ai, align 8, !alias.scope !488
   %i.sz = icmp ult i64 %i.jl, %i.n
@@ -1592,8 +1592,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.to = sub i64 %i.tg, %i.tk
   %spec.select.i.i.i199.i = select i1 %i.tn, i64 %i.to, i64 %i.tm
   %i.tp = icmp slt i64 %spec.select.i.i.i199.i, 0 ; 2 uses
-  %i.tq = select i1 %i.tp, i64 %i.qa, i64 %i.jl   ; 6 uses
-  %i.tr = select i1 %i.tp, i64 %i.jl, i64 %i.qa
+  %i.tq = select i1 %i.tp, i64 %i.qa, i64 %i.jl, !unpredictable !4 ; 6 uses
+  %i.tr = select i1 %i.tp, i64 %i.jl, i64 %i.qa, !unpredictable !4
   store i64 %i.tr, ptr %.sroa.02.0, align 8, !alias.scope !488
   store i64 %i.tq, ptr %i.ah, align 8, !alias.scope !488
   %i.ts = icmp ult i64 %i.pz, %i.n
@@ -1629,8 +1629,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.uh = sub i64 %i.tz, %i.ud
   %spec.select.i.i.i205.i = select i1 %i.ug, i64 %i.uh, i64 %i.uf
   %i.ui = icmp slt i64 %spec.select.i.i.i205.i, 0 ; 2 uses
-  %i.uj = select i1 %i.ui, i64 %i.jk, i64 %i.pz   ; 6 uses
-  %i.uk = select i1 %i.ui, i64 %i.pz, i64 %i.jk   ; 6 uses
+  %i.uj = select i1 %i.ui, i64 %i.jk, i64 %i.pz, !unpredictable !4 ; 6 uses
+  %i.uk = select i1 %i.ui, i64 %i.pz, i64 %i.jk, !unpredictable !4 ; 6 uses
   store i64 %i.uk, ptr %i.bc, align 8, !alias.scope !488
   store i64 %i.uj, ptr %i.cs, align 8, !alias.scope !488
   %i.ul = icmp ult i64 %i.sy, %i.n
@@ -1666,8 +1666,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.va = sub i64 %i.us, %i.uw
   %spec.select.i.i.i211.i = select i1 %i.uz, i64 %i.va, i64 %i.uy
   %i.vb = icmp slt i64 %spec.select.i.i.i211.i, 0 ; 2 uses
-  %i.vc = select i1 %i.vb, i64 %i.sf, i64 %i.sy   ; 6 uses
-  %i.vd = select i1 %i.vb, i64 %i.sy, i64 %i.sf   ; 6 uses
+  %i.vc = select i1 %i.vb, i64 %i.sf, i64 %i.sy, !unpredictable !4 ; 6 uses
+  %i.vd = select i1 %i.vb, i64 %i.sy, i64 %i.sf, !unpredictable !4 ; 6 uses
   store i64 %i.vd, ptr %i.dn, align 8, !alias.scope !488
   store i64 %i.vc, ptr %i.bd, align 8, !alias.scope !488
   %i.ve = icmp ult i64 %i.qs, %i.n
@@ -1703,8 +1703,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.vt = sub i64 %i.vl, %i.vp
   %spec.select.i.i.i217.i = select i1 %i.vs, i64 %i.vt, i64 %i.vr
   %i.vu = icmp slt i64 %spec.select.i.i.i217.i, 0 ; 2 uses
-  %i.vv = select i1 %i.vu, i64 %i.rl, i64 %i.qs   ; 6 uses
-  %i.vw = select i1 %i.vu, i64 %i.qs, i64 %i.rl   ; 6 uses
+  %i.vv = select i1 %i.vu, i64 %i.rl, i64 %i.qs, !unpredictable !4 ; 6 uses
+  %i.vw = select i1 %i.vu, i64 %i.qs, i64 %i.rl, !unpredictable !4 ; 6 uses
   store i64 %i.vw, ptr %i.by, align 8, !alias.scope !488
   store i64 %i.vv, ptr %i.do, align 8, !alias.scope !488
   %i.vx = icmp ult i64 %i.se, %i.n
@@ -1740,8 +1740,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.wm = sub i64 %i.we, %i.wi
   %spec.select.i.i.i223.i = select i1 %i.wl, i64 %i.wm, i64 %i.wk
   %i.wn = icmp slt i64 %spec.select.i.i.i223.i, 0 ; 2 uses
-  %i.wo = select i1 %i.wn, i64 %i.sx, i64 %i.se
-  %i.wp = select i1 %i.wn, i64 %i.se, i64 %i.sx   ; 6 uses
+  %i.wo = select i1 %i.wn, i64 %i.sx, i64 %i.se, !unpredictable !4
+  %i.wp = select i1 %i.wn, i64 %i.se, i64 %i.sx, !unpredictable !4 ; 6 uses
   store i64 %i.wp, ptr %i.ai, align 8, !alias.scope !488
   store i64 %i.wo, ptr %i.ct, align 8, !alias.scope !488
   %i.wq = icmp ult i64 %i.qt, %i.n
@@ -1777,8 +1777,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.xf = sub i64 %i.wx, %i.xb
   %spec.select.i.i.i229.i = select i1 %i.xe, i64 %i.xf, i64 %i.xd
   %i.xg = icmp slt i64 %spec.select.i.i.i229.i, 0 ; 2 uses
-  %i.xh = select i1 %i.xg, i64 %i.tq, i64 %i.qt   ; 6 uses
-  %i.xi = select i1 %i.xg, i64 %i.qt, i64 %i.tq   ; 6 uses
+  %i.xh = select i1 %i.xg, i64 %i.tq, i64 %i.qt, !unpredictable !4 ; 6 uses
+  %i.xi = select i1 %i.xg, i64 %i.qt, i64 %i.tq, !unpredictable !4 ; 6 uses
   store i64 %i.xi, ptr %i.ah, align 8, !alias.scope !488
   store i64 %i.xh, ptr %i.bx, align 8, !alias.scope !488
   %i.xj = icmp ult i64 %i.rm, %i.n
@@ -1814,8 +1814,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.xy = sub i64 %i.xq, %i.xu
   %spec.select.i.i.i235.i = select i1 %i.xx, i64 %i.xy, i64 %i.xw
   %i.xz = icmp slt i64 %spec.select.i.i.i235.i, 0 ; 2 uses
-  %i.ya = select i1 %i.xz, i64 %i.uk, i64 %i.rm   ; 6 uses
-  %i.yb = select i1 %i.xz, i64 %i.rm, i64 %i.uk   ; 6 uses
+  %i.ya = select i1 %i.xz, i64 %i.uk, i64 %i.rm, !unpredictable !4 ; 6 uses
+  %i.yb = select i1 %i.xz, i64 %i.rm, i64 %i.uk, !unpredictable !4 ; 6 uses
   store i64 %i.yb, ptr %i.bc, align 8, !alias.scope !488
   store i64 %i.ya, ptr %i.fu, align 8, !alias.scope !488
   %i.yc = icmp ult i64 %i.vd, %i.n
@@ -1851,8 +1851,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.yr = sub i64 %i.yj, %i.yn
   %spec.select.i.i.i241.i = select i1 %i.yq, i64 %i.yr, i64 %i.yp
   %i.ys = icmp slt i64 %spec.select.i.i.i241.i, 0 ; 2 uses
-  %i.yt = select i1 %i.ys, i64 %i.uj, i64 %i.vd   ; 6 uses
-  %i.yu = select i1 %i.ys, i64 %i.vd, i64 %i.uj   ; 6 uses
+  %i.yt = select i1 %i.ys, i64 %i.uj, i64 %i.vd, !unpredictable !4 ; 6 uses
+  %i.yu = select i1 %i.ys, i64 %i.vd, i64 %i.uj, !unpredictable !4 ; 6 uses
   store i64 %i.yu, ptr %i.cs, align 8, !alias.scope !488
   store i64 %i.yt, ptr %i.dn, align 8, !alias.scope !488
   %i.yv = icmp ult i64 %i.wp, %i.n
@@ -1888,8 +1888,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.zk = sub i64 %i.zc, %i.zg
   %spec.select.i.i.i247.i = select i1 %i.zj, i64 %i.zk, i64 %i.zi
   %i.zl = icmp slt i64 %spec.select.i.i.i247.i, 0 ; 2 uses
-  %i.zm = select i1 %i.zl, i64 %i.vc, i64 %i.wp
-  %i.zn = select i1 %i.zl, i64 %i.wp, i64 %i.vc   ; 6 uses
+  %i.zm = select i1 %i.zl, i64 %i.vc, i64 %i.wp, !unpredictable !4
+  %i.zn = select i1 %i.zl, i64 %i.wp, i64 %i.vc, !unpredictable !4 ; 6 uses
   store i64 %i.zn, ptr %i.bd, align 8, !alias.scope !488
   store i64 %i.zm, ptr %i.ai, align 8, !alias.scope !488
   %i.zo = icmp ult i64 %i.yb, %i.n
@@ -1925,8 +1925,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aad = sub i64 %i.zv, %i.zz
   %spec.select.i.i.i253.i = select i1 %i.aac, i64 %i.aad, i64 %i.aab
   %i.aae = icmp slt i64 %spec.select.i.i.i253.i, 0 ; 2 uses
-  %i.aaf = select i1 %i.aae, i64 %i.xi, i64 %i.yb ; 6 uses
-  %i.aag = select i1 %i.aae, i64 %i.yb, i64 %i.xi
+  %i.aaf = select i1 %i.aae, i64 %i.xi, i64 %i.yb, !unpredictable !4 ; 6 uses
+  %i.aag = select i1 %i.aae, i64 %i.yb, i64 %i.xi, !unpredictable !4
   store i64 %i.aag, ptr %i.ah, align 8, !alias.scope !488
   store i64 %i.aaf, ptr %i.bc, align 8, !alias.scope !488
   %i.aah = icmp ult i64 %i.ya, %i.n
@@ -1962,8 +1962,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aaw = sub i64 %i.aao, %i.aas
   %spec.select.i.i.i259.i = select i1 %i.aav, i64 %i.aaw, i64 %i.aau
   %i.aax = icmp slt i64 %spec.select.i.i.i259.i, 0 ; 2 uses
-  %i.aay = select i1 %i.aax, i64 %i.xh, i64 %i.ya ; 6 uses
-  %i.aaz = select i1 %i.aax, i64 %i.ya, i64 %i.xh ; 6 uses
+  %i.aay = select i1 %i.aax, i64 %i.xh, i64 %i.ya, !unpredictable !4 ; 6 uses
+  %i.aaz = select i1 %i.aax, i64 %i.ya, i64 %i.xh, !unpredictable !4 ; 6 uses
   store i64 %i.aaz, ptr %i.bx, align 8, !alias.scope !488
   store i64 %i.aay, ptr %i.fu, align 8, !alias.scope !488
   %i.aba = icmp ult i64 %i.vw, %i.n
@@ -1999,8 +1999,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.abp = sub i64 %i.abh, %i.abl
   %spec.select.i.i.i265.i = select i1 %i.abo, i64 %i.abp, i64 %i.abn
   %i.abq = icmp slt i64 %spec.select.i.i.i265.i, 0 ; 2 uses
-  %i.abr = select i1 %i.abq, i64 %i.yu, i64 %i.vw ; 6 uses
-  %i.abs = select i1 %i.abq, i64 %i.vw, i64 %i.yu ; 6 uses
+  %i.abr = select i1 %i.abq, i64 %i.yu, i64 %i.vw, !unpredictable !4 ; 6 uses
+  %i.abs = select i1 %i.abq, i64 %i.vw, i64 %i.yu, !unpredictable !4 ; 6 uses
   store i64 %i.abs, ptr %i.cs, align 8, !alias.scope !488
   store i64 %i.abr, ptr %i.by, align 8, !alias.scope !488
   %i.abt = icmp ult i64 %i.vv, %i.n
@@ -2036,8 +2036,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aci = sub i64 %i.aca, %i.ace
   %spec.select.i.i.i271.i = select i1 %i.ach, i64 %i.aci, i64 %i.acg
   %i.acj = icmp slt i64 %spec.select.i.i.i271.i, 0 ; 2 uses
-  %i.ack = select i1 %i.acj, i64 %i.yt, i64 %i.vv ; 6 uses
-  %i.acl = select i1 %i.acj, i64 %i.vv, i64 %i.yt ; 6 uses
+  %i.ack = select i1 %i.acj, i64 %i.yt, i64 %i.vv, !unpredictable !4 ; 6 uses
+  %i.acl = select i1 %i.acj, i64 %i.vv, i64 %i.yt, !unpredictable !4 ; 6 uses
   store i64 %i.acl, ptr %i.dn, align 8, !alias.scope !488
   store i64 %i.ack, ptr %i.do, align 8, !alias.scope !488
   %i.acm = icmp ult i64 %i.aaz, %i.n
@@ -2073,8 +2073,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.adb = sub i64 %i.act, %i.acx
   %spec.select.i.i.i277.i = select i1 %i.ada, i64 %i.adb, i64 %i.acz
   %i.adc = icmp slt i64 %spec.select.i.i.i277.i, 0 ; 2 uses
-  %i.add = select i1 %i.adc, i64 %i.aaf, i64 %i.aaz ; 6 uses
-  %i.ade = select i1 %i.adc, i64 %i.aaz, i64 %i.aaf
+  %i.add = select i1 %i.adc, i64 %i.aaf, i64 %i.aaz, !unpredictable !4 ; 6 uses
+  %i.ade = select i1 %i.adc, i64 %i.aaz, i64 %i.aaf, !unpredictable !4
   store i64 %i.ade, ptr %i.bc, align 8, !alias.scope !488
   store i64 %i.add, ptr %i.bx, align 8, !alias.scope !488
   %i.adf = icmp ult i64 %i.abs, %i.n
@@ -2110,8 +2110,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.adu = sub i64 %i.adm, %i.adq
   %spec.select.i.i.i283.i = select i1 %i.adt, i64 %i.adu, i64 %i.ads
   %i.adv = icmp slt i64 %spec.select.i.i.i283.i, 0 ; 2 uses
-  %i.adw = select i1 %i.adv, i64 %i.aay, i64 %i.abs ; 6 uses
-  %i.adx = select i1 %i.adv, i64 %i.abs, i64 %i.aay ; 6 uses
+  %i.adw = select i1 %i.adv, i64 %i.aay, i64 %i.abs, !unpredictable !4 ; 6 uses
+  %i.adx = select i1 %i.adv, i64 %i.abs, i64 %i.aay, !unpredictable !4 ; 6 uses
   store i64 %i.adx, ptr %i.fu, align 8, !alias.scope !488
   store i64 %i.adw, ptr %i.cs, align 8, !alias.scope !488
   %i.ady = icmp ult i64 %i.abr, %i.n
@@ -2147,8 +2147,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aen = sub i64 %i.aef, %i.aej
   %spec.select.i.i.i289.i = select i1 %i.aem, i64 %i.aen, i64 %i.ael
   %i.aeo = icmp slt i64 %spec.select.i.i.i289.i, 0 ; 2 uses
-  %i.aep = select i1 %i.aeo, i64 %i.acl, i64 %i.abr
-  %i.aeq = select i1 %i.aeo, i64 %i.abr, i64 %i.acl ; 6 uses
+  %i.aep = select i1 %i.aeo, i64 %i.acl, i64 %i.abr, !unpredictable !4
+  %i.aeq = select i1 %i.aeo, i64 %i.abr, i64 %i.acl, !unpredictable !4 ; 6 uses
   store i64 %i.aeq, ptr %i.dn, align 8, !alias.scope !488
   store i64 %i.aep, ptr %i.by, align 8, !alias.scope !488
   %i.aer = icmp ult i64 %i.zn, %i.n
@@ -2184,8 +2184,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.afg = sub i64 %i.aey, %i.afc
   %spec.select.i.i.i295.i = select i1 %i.aff, i64 %i.afg, i64 %i.afe
   %i.afh = icmp slt i64 %spec.select.i.i.i295.i, 0 ; 2 uses
-  %i.afi = select i1 %i.afh, i64 %i.ack, i64 %i.zn
-  %i.afj = select i1 %i.afh, i64 %i.zn, i64 %i.ack
+  %i.afi = select i1 %i.afh, i64 %i.ack, i64 %i.zn, !unpredictable !4
+  %i.afj = select i1 %i.afh, i64 %i.zn, i64 %i.ack, !unpredictable !4
   store i64 %i.afj, ptr %i.do, align 8, !alias.scope !488
   store i64 %i.afi, ptr %i.bd, align 8, !alias.scope !488
   %i.afk = icmp ult i64 %i.adx, %i.n
@@ -2221,8 +2221,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.afz = sub i64 %i.afr, %i.afv
   %spec.select.i.i.i301.i = select i1 %i.afy, i64 %i.afz, i64 %i.afx
   %i.aga = icmp slt i64 %spec.select.i.i.i301.i, 0 ; 2 uses
-  %i.agb = select i1 %i.aga, i64 %i.add, i64 %i.adx
-  %i.agc = select i1 %i.aga, i64 %i.adx, i64 %i.add
+  %i.agb = select i1 %i.aga, i64 %i.add, i64 %i.adx, !unpredictable !4
+  %i.agc = select i1 %i.aga, i64 %i.adx, i64 %i.add, !unpredictable !4
   store i64 %i.agc, ptr %i.bx, align 8, !alias.scope !488
   store i64 %i.agb, ptr %i.fu, align 8, !alias.scope !488
   %i.agd = icmp ult i64 %i.aeq, %i.n
@@ -2258,8 +2258,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort14sort13_optimaljNCI
   %i.ags = sub i64 %i.agk, %i.ago
   %spec.select.i.i.i307.i = select i1 %i.agr, i64 %i.ags, i64 %i.agq
   %i.agt = icmp slt i64 %spec.select.i.i.i307.i, 0 ; 2 uses
-  %i.agu = select i1 %i.agt, i64 %i.adw, i64 %i.aeq
-  %i.agv = select i1 %i.agt, i64 %i.aeq, i64 %i.adw
+  %i.agu = select i1 %i.agt, i64 %i.adw, i64 %i.aeq, !unpredictable !4
+  %i.agv = select i1 %i.agt, i64 %i.aeq, i64 %i.adw, !unpredictable !4
   store i64 %i.agv, ptr %i.cs, align 8, !alias.scope !488
   store i64 %i.agu, ptr %i.dn, align 8, !alias.scope !488
   br label %bb.hk
@@ -2307,8 +2307,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ahq = sub i64 %i.ahi, %i.ahm
   %spec.select.i.i.i.i21 = select i1 %i.ahp, i64 %i.ahq, i64 %i.aho
   %i.ahr = icmp slt i64 %spec.select.i.i.i.i21, 0 ; 2 uses
-  %i.ahs = select i1 %i.ahr, i64 %.val2.i.i17, i64 %.val1.i.i16 ; 6 uses
-  %i.aht = select i1 %i.ahr, i64 %.val1.i.i16, i64 %.val2.i.i17 ; 6 uses
+  %i.ahs = select i1 %i.ahr, i64 %.val2.i.i17, i64 %.val1.i.i16, !unpredictable !4 ; 6 uses
+  %i.aht = select i1 %i.ahr, i64 %.val1.i.i16, i64 %.val2.i.i17, !unpredictable !4 ; 6 uses
   store i64 %i.aht, ptr %.sroa.02.0, align 8, !alias.scope !489
   store i64 %i.ahs, ptr %i.agw, align 8, !alias.scope !489
   %i.ahu = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 8 ; 6 uses
@@ -2348,8 +2348,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ail = sub i64 %i.aid, %i.aih
   %spec.select.i.i.i29.i = select i1 %i.aik, i64 %i.ail, i64 %i.aij
   %i.aim = icmp slt i64 %spec.select.i.i.i29.i, 0 ; 2 uses
-  %i.ain = select i1 %i.aim, i64 %.val2.i26.i, i64 %.val1.i25.i ; 6 uses
-  %i.aio = select i1 %i.aim, i64 %.val1.i25.i, i64 %.val2.i26.i ; 6 uses
+  %i.ain = select i1 %i.aim, i64 %.val2.i26.i, i64 %.val1.i25.i, !unpredictable !4 ; 6 uses
+  %i.aio = select i1 %i.aim, i64 %.val1.i25.i, i64 %.val2.i26.i, !unpredictable !4 ; 6 uses
   store i64 %i.aio, ptr %i.ahu, align 8, !alias.scope !489
   store i64 %i.ain, ptr %i.ahv, align 8, !alias.scope !489
   %i.aip = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 16 ; 7 uses
@@ -2389,8 +2389,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ajg = sub i64 %i.aiy, %i.ajc
   %spec.select.i.i.i35.i = select i1 %i.ajf, i64 %i.ajg, i64 %i.aje
   %i.ajh = icmp slt i64 %spec.select.i.i.i35.i, 0 ; 2 uses
-  %i.aji = select i1 %i.ajh, i64 %.val2.i32.i, i64 %.val1.i31.i ; 6 uses
-  %i.ajj = select i1 %i.ajh, i64 %.val1.i31.i, i64 %.val2.i32.i ; 6 uses
+  %i.aji = select i1 %i.ajh, i64 %.val2.i32.i, i64 %.val1.i31.i, !unpredictable !4 ; 6 uses
+  %i.ajj = select i1 %i.ajh, i64 %.val1.i31.i, i64 %.val2.i32.i, !unpredictable !4 ; 6 uses
   store i64 %i.ajj, ptr %i.aip, align 8, !alias.scope !489
   store i64 %i.aji, ptr %i.aiq, align 8, !alias.scope !489
   %i.ajk = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 32 ; 8 uses
@@ -2430,8 +2430,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.akb = sub i64 %i.ajt, %i.ajx
   %spec.select.i.i.i41.i = select i1 %i.aka, i64 %i.akb, i64 %i.ajz
   %i.akc = icmp slt i64 %spec.select.i.i.i41.i, 0 ; 2 uses
-  %i.akd = select i1 %i.akc, i64 %.val2.i38.i, i64 %.val1.i37.i ; 6 uses
-  %i.ake = select i1 %i.akc, i64 %.val1.i37.i, i64 %.val2.i38.i ; 6 uses
+  %i.akd = select i1 %i.akc, i64 %.val2.i38.i, i64 %.val1.i37.i, !unpredictable !4 ; 6 uses
+  %i.ake = select i1 %i.akc, i64 %.val1.i37.i, i64 %.val2.i38.i, !unpredictable !4 ; 6 uses
   store i64 %i.ake, ptr %i.ajk, align 8, !alias.scope !489
   store i64 %i.akd, ptr %i.ajl, align 8, !alias.scope !489
   %i.akf = icmp ult i64 %i.ain, %i.aha
@@ -2467,8 +2467,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aku = sub i64 %i.akm, %i.akq
   %spec.select.i.i.i47.i = select i1 %i.akt, i64 %i.aku, i64 %i.aks
   %i.akv = icmp slt i64 %spec.select.i.i.i47.i, 0 ; 2 uses
-  %i.akw = select i1 %i.akv, i64 %i.aht, i64 %i.ain ; 6 uses
-  %i.akx = select i1 %i.akv, i64 %i.ain, i64 %i.aht ; 6 uses
+  %i.akw = select i1 %i.akv, i64 %i.aht, i64 %i.ain, !unpredictable !4 ; 6 uses
+  %i.akx = select i1 %i.akv, i64 %i.ain, i64 %i.aht, !unpredictable !4 ; 6 uses
   store i64 %i.akx, ptr %.sroa.02.0, align 8, !alias.scope !489
   store i64 %i.akw, ptr %i.ahv, align 8, !alias.scope !489
   %i.aky = icmp ult i64 %i.ake, %i.aha
@@ -2504,8 +2504,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aln = sub i64 %i.alf, %i.alj
   %spec.select.i.i.i53.i = select i1 %i.alm, i64 %i.aln, i64 %i.all
   %i.alo = icmp slt i64 %spec.select.i.i.i53.i, 0 ; 2 uses
-  %i.alp = select i1 %i.alo, i64 %i.ajj, i64 %i.ake ; 6 uses
-  %i.alq = select i1 %i.alo, i64 %i.ake, i64 %i.ajj ; 6 uses
+  %i.alp = select i1 %i.alo, i64 %i.ajj, i64 %i.ake, !unpredictable !4 ; 6 uses
+  %i.alq = select i1 %i.alo, i64 %i.ake, i64 %i.ajj, !unpredictable !4 ; 6 uses
   store i64 %i.alq, ptr %i.aip, align 8, !alias.scope !489
   store i64 %i.alp, ptr %i.ajk, align 8, !alias.scope !489
   %i.alr = icmp ult i64 %i.akd, %i.aha
@@ -2541,8 +2541,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.amg = sub i64 %i.aly, %i.amc
   %spec.select.i.i.i59.i = select i1 %i.amf, i64 %i.amg, i64 %i.ame
   %i.amh = icmp slt i64 %spec.select.i.i.i59.i, 0 ; 2 uses
-  %i.ami = select i1 %i.amh, i64 %i.ahs, i64 %i.akd ; 6 uses
-  %i.amj = select i1 %i.amh, i64 %i.akd, i64 %i.ahs ; 6 uses
+  %i.ami = select i1 %i.amh, i64 %i.ahs, i64 %i.akd, !unpredictable !4 ; 6 uses
+  %i.amj = select i1 %i.amh, i64 %i.akd, i64 %i.ahs, !unpredictable !4 ; 6 uses
   store i64 %i.amj, ptr %i.agw, align 8, !alias.scope !489
   store i64 %i.ami, ptr %i.ajl, align 8, !alias.scope !489
   %i.amk = getelementptr inbounds nuw i8, ptr %.sroa.02.0, i64 48 ; 6 uses
@@ -2580,8 +2580,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ana = sub i64 %i.ams, %i.amw
   %spec.select.i.i.i65.i = select i1 %i.amz, i64 %i.ana, i64 %i.amy
   %i.anb = icmp slt i64 %spec.select.i.i.i65.i, 0 ; 2 uses
-  %i.anc = select i1 %i.anb, i64 %i.aji, i64 %.val1.i61.i ; 6 uses
-  %i.and = select i1 %i.anb, i64 %.val1.i61.i, i64 %i.aji ; 6 uses
+  %i.anc = select i1 %i.anb, i64 %i.aji, i64 %.val1.i61.i, !unpredictable !4 ; 6 uses
+  %i.and = select i1 %i.anb, i64 %.val1.i61.i, i64 %i.aji, !unpredictable !4 ; 6 uses
   store i64 %i.and, ptr %i.aiq, align 8, !alias.scope !489
   store i64 %i.anc, ptr %i.amk, align 8, !alias.scope !489
   %i.ane = icmp ult i64 %i.alq, %i.aha
@@ -2617,8 +2617,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ant = sub i64 %i.anl, %i.anp
   %spec.select.i.i.i71.i = select i1 %i.ans, i64 %i.ant, i64 %i.anr
   %i.anu = icmp slt i64 %spec.select.i.i.i71.i, 0 ; 2 uses
-  %i.anv = select i1 %i.anu, i64 %i.akx, i64 %i.alq ; 6 uses
-  %i.anw = select i1 %i.anu, i64 %i.alq, i64 %i.akx ; 6 uses
+  %i.anv = select i1 %i.anu, i64 %i.akx, i64 %i.alq, !unpredictable !4 ; 6 uses
+  %i.anw = select i1 %i.anu, i64 %i.alq, i64 %i.akx, !unpredictable !4 ; 6 uses
   store i64 %i.anw, ptr %.sroa.02.0, align 8, !alias.scope !489
   store i64 %i.anv, ptr %i.aip, align 8, !alias.scope !489
   %i.anx = icmp ult i64 %i.amj, %i.aha
@@ -2654,8 +2654,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aom = sub i64 %i.aoe, %i.aoi
   %spec.select.i.i.i77.i = select i1 %i.aol, i64 %i.aom, i64 %i.aok
   %i.aon = icmp slt i64 %spec.select.i.i.i77.i, 0 ; 2 uses
-  %i.aoo = select i1 %i.aon, i64 %i.aio, i64 %i.amj ; 6 uses
-  %i.aop = select i1 %i.aon, i64 %i.amj, i64 %i.aio ; 6 uses
+  %i.aoo = select i1 %i.aon, i64 %i.aio, i64 %i.amj, !unpredictable !4 ; 6 uses
+  %i.aop = select i1 %i.aon, i64 %i.amj, i64 %i.aio, !unpredictable !4 ; 6 uses
   store i64 %i.aop, ptr %i.ahu, align 8, !alias.scope !489
   store i64 %i.aoo, ptr %i.agw, align 8, !alias.scope !489
   %i.aoq = icmp ult i64 %i.and, %i.aha
@@ -2691,8 +2691,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.apf = sub i64 %i.aox, %i.apb
   %spec.select.i.i.i83.i = select i1 %i.ape, i64 %i.apf, i64 %i.apd
   %i.apg = icmp slt i64 %spec.select.i.i.i83.i, 0 ; 2 uses
-  %i.aph = select i1 %i.apg, i64 %i.alp, i64 %i.and ; 6 uses
-  %i.api = select i1 %i.apg, i64 %i.and, i64 %i.alp ; 6 uses
+  %i.aph = select i1 %i.apg, i64 %i.alp, i64 %i.and, !unpredictable !4 ; 6 uses
+  %i.api = select i1 %i.apg, i64 %i.and, i64 %i.alp, !unpredictable !4 ; 6 uses
   store i64 %i.api, ptr %i.ajk, align 8, !alias.scope !489
   store i64 %i.aph, ptr %i.aiq, align 8, !alias.scope !489
   %i.apj = icmp ult i64 %i.ami, %i.aha
@@ -2728,8 +2728,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.apy = sub i64 %i.apq, %i.apu
   %spec.select.i.i.i89.i = select i1 %i.apx, i64 %i.apy, i64 %i.apw
   %i.apz = icmp slt i64 %spec.select.i.i.i89.i, 0 ; 2 uses
-  %i.aqa = select i1 %i.apz, i64 %i.akw, i64 %i.ami ; 6 uses
-  %i.aqb = select i1 %i.apz, i64 %i.ami, i64 %i.akw ; 6 uses
+  %i.aqa = select i1 %i.apz, i64 %i.akw, i64 %i.ami, !unpredictable !4 ; 6 uses
+  %i.aqb = select i1 %i.apz, i64 %i.ami, i64 %i.akw, !unpredictable !4 ; 6 uses
   store i64 %i.aqb, ptr %i.ahv, align 8, !alias.scope !489
   store i64 %i.aqa, ptr %i.ajl, align 8, !alias.scope !489
   %i.aqc = icmp ult i64 %i.api, %i.aha
@@ -2765,8 +2765,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aqr = sub i64 %i.aqj, %i.aqn
   %spec.select.i.i.i95.i = select i1 %i.aqq, i64 %i.aqr, i64 %i.aqp
   %i.aqs = icmp slt i64 %spec.select.i.i.i95.i, 0 ; 2 uses
-  %i.aqt = select i1 %i.aqs, i64 %i.aop, i64 %i.api ; 6 uses
-  %i.aqu = select i1 %i.aqs, i64 %i.api, i64 %i.aop ; 6 uses
+  %i.aqt = select i1 %i.aqs, i64 %i.aop, i64 %i.api, !unpredictable !4 ; 6 uses
+  %i.aqu = select i1 %i.aqs, i64 %i.api, i64 %i.aop, !unpredictable !4 ; 6 uses
   store i64 %i.aqu, ptr %i.ahu, align 8, !alias.scope !489
   store i64 %i.aqt, ptr %i.ajk, align 8, !alias.scope !489
   %i.aqv = icmp ult i64 %i.anc, %i.aha
@@ -2802,8 +2802,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ark = sub i64 %i.arc, %i.arg
   %spec.select.i.i.i101.i = select i1 %i.arj, i64 %i.ark, i64 %i.ari
   %i.arl = icmp slt i64 %spec.select.i.i.i101.i, 0 ; 2 uses
-  %i.arm = select i1 %i.arl, i64 %i.aoo, i64 %i.anc ; 6 uses
-  %i.arn = select i1 %i.arl, i64 %i.anc, i64 %i.aoo ; 6 uses
+  %i.arm = select i1 %i.arl, i64 %i.aoo, i64 %i.anc, !unpredictable !4 ; 6 uses
+  %i.arn = select i1 %i.arl, i64 %i.anc, i64 %i.aoo, !unpredictable !4 ; 6 uses
   store i64 %i.arn, ptr %i.agw, align 8, !alias.scope !489
   store i64 %i.arm, ptr %i.amk, align 8, !alias.scope !489
   %i.aro = icmp ult i64 %i.aqb, %i.aha
@@ -2839,8 +2839,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.asd = sub i64 %i.arv, %i.arz
   %spec.select.i.i.i107.i = select i1 %i.asc, i64 %i.asd, i64 %i.asb
   %i.ase = icmp slt i64 %spec.select.i.i.i107.i, 0 ; 2 uses
-  %i.asf = select i1 %i.ase, i64 %i.aph, i64 %i.aqb ; 6 uses
-  %i.asg = select i1 %i.ase, i64 %i.aqb, i64 %i.aph ; 6 uses
+  %i.asf = select i1 %i.ase, i64 %i.aph, i64 %i.aqb, !unpredictable !4 ; 6 uses
+  %i.asg = select i1 %i.ase, i64 %i.aqb, i64 %i.aph, !unpredictable !4 ; 6 uses
   store i64 %i.asg, ptr %i.aiq, align 8, !alias.scope !489
   store i64 %i.asf, ptr %i.ahv, align 8, !alias.scope !489
   %i.ash = icmp ult i64 %i.aqu, %i.aha
@@ -2876,8 +2876,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.asw = sub i64 %i.aso, %i.ass
   %spec.select.i.i.i113.i = select i1 %i.asv, i64 %i.asw, i64 %i.asu
   %i.asx = icmp slt i64 %spec.select.i.i.i113.i, 0 ; 2 uses
-  %i.asy = select i1 %i.asx, i64 %i.anw, i64 %i.aqu ; 6 uses
-  %i.asz = select i1 %i.asx, i64 %i.aqu, i64 %i.anw
+  %i.asy = select i1 %i.asx, i64 %i.anw, i64 %i.aqu, !unpredictable !4 ; 6 uses
+  %i.asz = select i1 %i.asx, i64 %i.aqu, i64 %i.anw, !unpredictable !4
   store i64 %i.asz, ptr %.sroa.02.0, align 8, !alias.scope !489
   store i64 %i.asy, ptr %i.ahu, align 8, !alias.scope !489
   %i.ata = icmp ult i64 %i.aqt, %i.aha
@@ -2913,8 +2913,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.atp = sub i64 %i.ath, %i.atl
   %spec.select.i.i.i119.i = select i1 %i.ato, i64 %i.atp, i64 %i.atn
   %i.atq = icmp slt i64 %spec.select.i.i.i119.i, 0 ; 2 uses
-  %i.atr = select i1 %i.atq, i64 %i.anv, i64 %i.aqt ; 6 uses
-  %i.ats = select i1 %i.atq, i64 %i.aqt, i64 %i.anv ; 6 uses
+  %i.atr = select i1 %i.atq, i64 %i.anv, i64 %i.aqt, !unpredictable !4 ; 6 uses
+  %i.ats = select i1 %i.atq, i64 %i.aqt, i64 %i.anv, !unpredictable !4 ; 6 uses
   store i64 %i.ats, ptr %i.aip, align 8, !alias.scope !489
   store i64 %i.atr, ptr %i.ajk, align 8, !alias.scope !489
   %i.att = icmp ult i64 %i.asg, %i.aha
@@ -2950,8 +2950,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.aui = sub i64 %i.aua, %i.aue
   %spec.select.i.i.i125.i = select i1 %i.auh, i64 %i.aui, i64 %i.aug
   %i.auj = icmp slt i64 %spec.select.i.i.i125.i, 0 ; 2 uses
-  %i.auk = select i1 %i.auj, i64 %i.arn, i64 %i.asg ; 6 uses
-  %i.aul = select i1 %i.auj, i64 %i.asg, i64 %i.arn ; 6 uses
+  %i.auk = select i1 %i.auj, i64 %i.arn, i64 %i.asg, !unpredictable !4 ; 6 uses
+  %i.aul = select i1 %i.auj, i64 %i.asg, i64 %i.arn, !unpredictable !4 ; 6 uses
   store i64 %i.aul, ptr %i.agw, align 8, !alias.scope !489
   store i64 %i.auk, ptr %i.aiq, align 8, !alias.scope !489
   %i.aum = icmp ult i64 %i.aqa, %i.aha
@@ -2987,8 +2987,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.avb = sub i64 %i.aut, %i.aux
   %spec.select.i.i.i131.i = select i1 %i.ava, i64 %i.avb, i64 %i.auz
   %i.avc = icmp slt i64 %spec.select.i.i.i131.i, 0 ; 2 uses
-  %i.avd = select i1 %i.avc, i64 %i.arm, i64 %i.aqa
-  %i.ave = select i1 %i.avc, i64 %i.aqa, i64 %i.arm ; 6 uses
+  %i.avd = select i1 %i.avc, i64 %i.arm, i64 %i.aqa, !unpredictable !4
+  %i.ave = select i1 %i.avc, i64 %i.aqa, i64 %i.arm, !unpredictable !4 ; 6 uses
   store i64 %i.ave, ptr %i.amk, align 8, !alias.scope !489
   store i64 %i.avd, ptr %i.ajl, align 8, !alias.scope !489
   %i.avf = icmp ult i64 %i.aul, %i.aha
@@ -3024,8 +3024,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.avu = sub i64 %i.avm, %i.avq
   %spec.select.i.i.i137.i = select i1 %i.avt, i64 %i.avu, i64 %i.avs
   %i.avv = icmp slt i64 %spec.select.i.i.i137.i, 0 ; 2 uses
-  %i.avw = select i1 %i.avv, i64 %i.ats, i64 %i.aul ; 6 uses
-  %i.avx = select i1 %i.avv, i64 %i.aul, i64 %i.ats ; 6 uses
+  %i.avw = select i1 %i.avv, i64 %i.ats, i64 %i.aul, !unpredictable !4 ; 6 uses
+  %i.avx = select i1 %i.avv, i64 %i.aul, i64 %i.ats, !unpredictable !4 ; 6 uses
   store i64 %i.avx, ptr %i.aip, align 8, !alias.scope !489
   store i64 %i.avw, ptr %i.agw, align 8, !alias.scope !489
   %i.avy = icmp ult i64 %i.auk, %i.aha
@@ -3061,8 +3061,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.awn = sub i64 %i.awf, %i.awj
   %spec.select.i.i.i143.i = select i1 %i.awm, i64 %i.awn, i64 %i.awl
   %i.awo = icmp slt i64 %spec.select.i.i.i143.i, 0 ; 2 uses
-  %i.awp = select i1 %i.awo, i64 %i.atr, i64 %i.auk ; 6 uses
-  %i.awq = select i1 %i.awo, i64 %i.auk, i64 %i.atr ; 6 uses
+  %i.awp = select i1 %i.awo, i64 %i.atr, i64 %i.auk, !unpredictable !4 ; 6 uses
+  %i.awq = select i1 %i.awo, i64 %i.auk, i64 %i.atr, !unpredictable !4 ; 6 uses
   store i64 %i.awq, ptr %i.ajk, align 8, !alias.scope !489
   store i64 %i.awp, ptr %i.aiq, align 8, !alias.scope !489
   %i.awr = icmp ult i64 %i.asf, %i.aha
@@ -3098,8 +3098,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.axg = sub i64 %i.awy, %i.axc
   %spec.select.i.i.i149.i = select i1 %i.axf, i64 %i.axg, i64 %i.axe
   %i.axh = icmp slt i64 %spec.select.i.i.i149.i, 0 ; 2 uses
-  %i.axi = select i1 %i.axh, i64 %i.ave, i64 %i.asf
-  %i.axj = select i1 %i.axh, i64 %i.asf, i64 %i.ave ; 6 uses
+  %i.axi = select i1 %i.axh, i64 %i.ave, i64 %i.asf, !unpredictable !4
+  %i.axj = select i1 %i.axh, i64 %i.asf, i64 %i.ave, !unpredictable !4 ; 6 uses
   store i64 %i.axj, ptr %i.amk, align 8, !alias.scope !489
   store i64 %i.axi, ptr %i.ahv, align 8, !alias.scope !489
   %i.axk = icmp ult i64 %i.avx, %i.aha
@@ -3135,8 +3135,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.axz = sub i64 %i.axr, %i.axv
   %spec.select.i.i.i155.i = select i1 %i.axy, i64 %i.axz, i64 %i.axx
   %i.aya = icmp slt i64 %spec.select.i.i.i155.i, 0 ; 2 uses
-  %i.ayb = select i1 %i.aya, i64 %i.asy, i64 %i.avx
-  %i.ayc = select i1 %i.aya, i64 %i.avx, i64 %i.asy
+  %i.ayb = select i1 %i.aya, i64 %i.asy, i64 %i.avx, !unpredictable !4
+  %i.ayc = select i1 %i.aya, i64 %i.avx, i64 %i.asy, !unpredictable !4
   store i64 %i.ayc, ptr %i.ahu, align 8, !alias.scope !489
   store i64 %i.ayb, ptr %i.aip, align 8, !alias.scope !489
   %i.ayd = icmp ult i64 %i.awq, %i.aha
@@ -3172,8 +3172,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort12swap_if_lessjNCINv
   %i.ays = sub i64 %i.ayk, %i.ayo
   %spec.select.i.i.i161.i = select i1 %i.ayr, i64 %i.ays, i64 %i.ayq
   %i.ayt = icmp slt i64 %spec.select.i.i.i161.i, 0 ; 2 uses
-  %i.ayu = select i1 %i.ayt, i64 %i.avw, i64 %i.awq
-  %i.ayv = select i1 %i.ayt, i64 %i.awq, i64 %i.avw
+  %i.ayu = select i1 %i.ayt, i64 %i.avw, i64 %i.awq, !unpredictable !4
+  %i.ayv = select i1 %i.ayt, i64 %i.awq, i64 %i.avw, !unpredictable !4
   store i64 %i.ayv, ptr %i.agw, align 8, !alias.scope !489
   store i64 %i.ayu, ptr %i.ajk, align 8, !alias.scope !489
   %i.ayw = icmp ult i64 %i.axj, %i.aha
@@ -3209,8 +3209,8 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared9smallsort13sort9_optimaljNCIN
   %i.azl = sub i64 %i.azd, %i.azh
   %spec.select.i.i.i167.i = select i1 %i.azk, i64 %i.azl, i64 %i.azj
   %i.azm = icmp slt i64 %spec.select.i.i.i167.i, 0 ; 2 uses
-  %i.azn = select i1 %i.azm, i64 %i.awp, i64 %i.axj
-  %i.azo = select i1 %i.azm, i64 %i.axj, i64 %i.awp
+  %i.azn = select i1 %i.azm, i64 %i.awp, i64 %i.axj, !unpredictable !4
+  %i.azo = select i1 %i.azm, i64 %i.axj, i64 %i.awp, !unpredictable !4
   store i64 %i.azo, ptr %i.aiq, align 8, !alias.scope !489
   store i64 %i.azn, ptr %i.amk, align 8, !alias.scope !489
   br label %bb.hk
