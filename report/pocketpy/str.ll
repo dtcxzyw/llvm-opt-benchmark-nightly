@@ -204,7 +204,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.preheader, %bb.l
-  %.187 = phi i32 [ %.07188, %.preheader ], [ %i.al, %bb.l ] ; 13 uses
+  %.187 = phi i32 [ %.07188, %.preheader ], [ %i.al, %bb.l ] ; 12 uses
   %i.d = sext i32 %.187 to i64
   %i.e = getelementptr inbounds i8, ptr %1, i64 %i.d ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !13    ; 5 uses
@@ -292,26 +292,25 @@ bb.k:                                             ; preds = %bb.j
   br i1 %switch, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt3, %bb.j, %bb.i, %bb.k, %c11__u8_header.exit.jt2
-  %.0.i94 = phi i32 [ 2, %c11__u8_header.exit.jt2 ], [ 3, %c11__u8_header.exit.jt3 ], [ 3, %bb.j ], [ 2, %bb.i ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ 3, %bb.k ] ; 2 uses
-  %i.al = add nsw i32 %.0.i94, %.187              ; 3 uses
+  %.0.i94 = phi i32 [ 2, %c11__u8_header.exit.jt2 ], [ 3, %c11__u8_header.exit.jt3 ], [ 3, %bb.j ], [ 2, %bb.i ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ 3, %bb.k ]
+  %i.al = add nsw i32 %.0.i94, %.187              ; 4 uses
   %i.am = icmp slt i32 %i.al, %2
-  br i1 %i.am, label %bb.b, label %.thread
+  br i1 %i.am, label %bb.b, label %bb.s
 
-.thread:                                          ; preds = %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %bb.k, %bb.i, %bb.l
-  %.1.lcssa.ph = phi i32 [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %.187, %c11__u8_header.exit.jt6 ], [ %i.al, %bb.l ], [ %.187, %bb.i ], [ %.187, %bb.k ] ; 8 uses
-  %.274.ph = phi i32 [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i94, %bb.l ], [ 2, %bb.i ], [ 3, %bb.k ]
-  %i.an = icmp slt i32 %.1.lcssa.ph, %2
+.thread:                                          ; preds = %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %c11__u8_header.exit.jt6, %bb.k, %bb.i
+  %.274.ph = phi i32 [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ %.0.i.jt6, %c11__u8_header.exit.jt6 ], [ 2, %bb.i ], [ 3, %bb.k ]
+  %i.an = icmp slt i32 %.187, %2
   br i1 %i.an, label %bb.m, label %bb.s
 
 bb.m:                                             ; preds = %.thread
-  %i.ao = sext i32 %.1.lcssa.ph to i64
+  %i.ao = sext i32 %.187 to i64
   %i.ap = getelementptr inbounds i8, ptr %1, i64 %i.ao
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !13
   %i.ar = icmp eq i8 %i.aq, 13
   br i1 %i.ar, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  %i.as = add nsw i32 %.1.lcssa.ph, 1             ; 2 uses
+  %i.as = add nsw i32 %.187, 1                    ; 2 uses
   %i.at = icmp slt i32 %i.as, %2
   br i1 %i.at, label %bb.o, label %bb.q
 
@@ -323,21 +322,21 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ax, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.ay = add nsw i32 %.1.lcssa.ph, 2
+  %i.ay = add nsw i32 %.187, 2
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o, %bb.n, %bb.m
-  %i.az = add nsw i32 %.274.ph, %.1.lcssa.ph
+  %i.az = add nsw i32 %.274.ph, %.187
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.4 = phi i32 [ %i.ay, %bb.p ], [ %i.az, %bb.q ] ; 2 uses
-  %spec.select = select i1 %3, i32 %.4, i32 %.1.lcssa.ph
+  %spec.select = select i1 %3, i32 %.4, i32 %.187
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %.thread
-  %.075 = phi i32 [ %.1.lcssa.ph, %.thread ], [ %spec.select, %bb.r ]
-  %.5 = phi i32 [ %.1.lcssa.ph, %.thread ], [ %.4, %bb.r ] ; 2 uses
+bb.s:                                             ; preds = %bb.l, %bb.r, %.thread
+  %.075 = phi i32 [ %.187, %.thread ], [ %spec.select, %bb.r ], [ %i.al, %bb.l ]
+  %.5 = phi i32 [ %.187, %.thread ], [ %.4, %bb.r ], [ %i.al, %bb.l ] ; 2 uses
   %i.ba = sext i32 %.07188 to i64
   %i.bb = getelementptr inbounds i8, ptr %1, i64 %i.ba
   %i.bc = sub nsw i32 %.075, %.07188

@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !99 ; 3 uses
-  %i.bj = load ptr, ptr %i.be, align 8, !tbaa !80 ; 5 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !99 ; 2 uses
+  %i.bj = load ptr, ptr %i.be, align 8, !tbaa !80 ; 3 uses
   %i.bk = ptrtoint ptr %i.bi to i64               ; 3 uses
   %i.bl = ptrtoint ptr %i.bj to i64               ; 4 uses
-  %i.bm = sub i64 %i.bk, %i.bl                    ; 5 uses
+  %i.bm = sub i64 %i.bk, %i.bl                    ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !81
   %i.bp = ptrtoint ptr %i.bo to i64
@@ -257,7 +257,7 @@ bb.f:                                             ; preds = %.noexc530
 
 bb.g:                                             ; preds = %bb.c
   %i.ce = icmp eq ptr %i.bi, %i.bj
-  br i1 %i.ce, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit
+  br i1 %i.ce, label %_ZN12colvarmodule8matrix2dIdEC2Emm.exit, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit:   ; preds = %bb.g
   %i.cf = add i64 %i.bk, -8
@@ -265,16 +265,6 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit:   ; preds = %bb.g
   %i.ch = and i64 %i.cg, -8
   %i.ci = add i64 %i.ch, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.bj, i8 0, i64 %i.ci, i1 false), !tbaa !55
-  %39 = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bm
-  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i
-
-_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i:            ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit, %bb.g
-  %.0.i.i.i = phi ptr [ %i.bj, %bb.g ], [ %39, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit ] ; 2 uses
-  %.not.i.i = icmp eq ptr %i.bi, %.0.i.i.i
-  br i1 %.not.i.i, label %_ZN12colvarmodule8matrix2dIdEC2Emm.exit, label %_ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i
-
-_ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i
-  store ptr %.0.i.i.i, ptr %i.bh, align 8, !tbaa !99
   br label %_ZN12colvarmodule8matrix2dIdEC2Emm.exit
 
 bb.h:                                             ; preds = %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i, %bb.e, %bb.b
@@ -325,7 +315,7 @@ common.resume:                                    ; preds = %_ZNSt7__cxx1112basi
   %common.resume.op = phi { ptr, i32 } [ %i.cj, %_ZNSt6vectorIN12colvarmodule8matrix2dIdE3rowESaIS3_EED2Ev.exit.i ], [ %i.cj, %bb.k ], [ %.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit125 ], [ %.pn59, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit136 ], [ %.pn90.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit525 ], [ %.pn88, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit493 ], [ %.pn79.pn.pn.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit490 ], [ %.pn71.pn.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit463 ], [ %.pn63.pn.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit439 ], [ %.pn61, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit415 ], [ %.pn95, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit159 ], [ %i.nh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit165 ]
   resume { ptr, i32 } %common.resume.op
 
-_ZN12colvarmodule8matrix2dIdEC2Emm.exit:          ; preds = %_ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i, %bb.f, %.noexc530
+_ZN12colvarmodule8matrix2dIdEC2Emm.exit:          ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.i.loopexit, %bb.g, %bb.f, %.noexc530
   %i.dc = load ptr, ptr %i.bf, align 8, !tbaa !102 ; 4 uses
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !317 ; 4 uses
   %i.de = load double, ptr %i.az, align 8, !tbaa !55

@@ -205,27 +205,23 @@ define linkonce_odr hidden void @_ZN5glTF26BufferD2Ev(ptr noundef nonnull align 
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5glTF26BufferE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 6 uses
-  %.sroa.05.08 = load ptr, ptr %i.a, align 8      ; 3 uses
+  %.sroa.05.08 = load ptr, ptr %i.a, align 8      ; 2 uses
   %.not9 = icmp eq ptr %.sroa.05.08, %i.a
-  br i1 %.not9, label %._crit_edge, label %.lr.ph
+  br i1 %.not9, label %_ZNSt7__cxx1110_List_baseIPN5glTF26Buffer14SEncodedRegionESaIS4_EED2Ev.exit, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.k
-  %.pre = load ptr, ptr %i.a, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.05.08, %bb.a ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %1, %i.a
+._crit_edge:                                      ; preds = %bb.k
+  %.pre = load ptr, ptr %i.a, align 8             ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %i.a
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIPN5glTF26Buffer14SEncodedRegionESaIS4_EED2Ev.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %1, %._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.b = load ptr, ptr %.09.i.i, align 8          ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #32
   %.not.i.i = icmp eq ptr %i.b, %i.a
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseIPN5glTF26Buffer14SEncodedRegionESaIS4_EED2Ev.exit, label %.lr.ph.i.i, !llvm.loop !38
 
-_ZNSt7__cxx1110_List_baseIPN5glTF26Buffer14SEncodedRegionESaIS4_EED2Ev.exit: ; preds = %.lr.ph.i.i, %._crit_edge
+_ZNSt7__cxx1110_List_baseIPN5glTF26Buffer14SEncodedRegionESaIS4_EED2Ev.exit: ; preds = %.lr.ph.i.i, %bb.a, %._crit_edge
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.d = load ptr, ptr %i.c, align 8              ; 8 uses
   %.not.i.i4 = icmp eq ptr %i.d, null
@@ -316,7 +312,7 @@ _ZN5glTF26Buffer14SEncodedRegionD2Ev.exit:        ; preds = %bb.j, %_ZNKSt7__cxx
 bb.k:                                             ; preds = %_ZN5glTF26Buffer14SEncodedRegionD2Ev.exit, %.lr.ph
   %.sroa.05.0 = load ptr, ptr %.sroa.05.010, align 8 ; 2 uses
   %.not = icmp eq ptr %.sroa.05.0, %i.a
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 
 ; Function Attrs: mustprogress uwtable

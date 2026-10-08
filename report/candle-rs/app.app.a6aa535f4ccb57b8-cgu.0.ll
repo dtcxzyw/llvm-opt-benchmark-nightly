@@ -204,7 +204,7 @@ _RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueu
   %i.l = getelementptr inbounds nuw i8, ptr %.val, i64 40 ; 2 uses
   %.sroa.0.0.copyload.i.2.i.i.i.i.i = load i64, ptr %i.l, align 8, !alias.scope !860, !noalias !861 ; 3 uses
   store i64 0, ptr %i.l, align 8, !alias.scope !860, !noalias !861
-  %i.m = inttoptr i64 %.sroa.0.0.copyload.i.1.i.i.i.i.i to ptr ; 5 uses
+  %i.m = inttoptr i64 %.sroa.0.0.copyload.i.1.i.i.i.i.i to ptr ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !855
   %i.n = icmp ult i64 %.sroa.0.0.copyload.i.2.i.i.i.i.i, 164703072086692426
   tail call void @llvm.assume(i1 %i.n)
@@ -218,7 +218,7 @@ _RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueu
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %i.o, ptr %.sroa.6.0..sroa_idx, align 8
   %i.p = icmp eq i64 %.sroa.0.0.copyload.i.2.i.i.i.i.i, 0
-  br i1 %i.p, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph
+  br i1 %i.p, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph: ; preds = %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -232,9 +232,9 @@ bb.e:                                             ; preds = %bb.f
   br label %common.resume
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit
-  %.sroa.0.019 = phi i1 [ false, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph ], [ %spec.select, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit ] ; 2 uses
+  %.sroa.0.019 = phi i1 [ false, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph ], [ %spec.select, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit ] ; 3 uses
   %.sroa.4.8.1018 = phi ptr [ %i.m, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.lr.ph ], [ %i.r, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit ] ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.4.8.1018, i64 56 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.4.8.1018, i64 56 ; 6 uses
   %.sroa.011.0.copyload12 = load i64, ptr %.sroa.4.8.1018, align 8, !noalias !862 ; 2 uses
   %.not = icmp eq i64 %.sroa.011.0.copyload12, -1
   br i1 %.not, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread, label %bb.f
@@ -247,26 +247,24 @@ bb.f:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   %i.s = invoke noundef zeroext i1 @_RNvXNtCsemnSGAKhbl_26candle_wasm_example_llama23appNtB2_3AppNtNtNtCs9OLX912zl7o_3yew4html9component9Component6update(ptr noalias nofree noundef nonnull align 8 dereferenceable(120) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %i.b)
           to label %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit unwind label %bb.e
 
-_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit, %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit
-  %1 = phi ptr [ %i.m, %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit ], [ %i.r, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit ] ; 3 uses
-  %.sroa.0.0.lcssa = phi i1 [ false, %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit ], [ %.sroa.0.019, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit ] ; 2 uses
+_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit
   %i.t = ptrtoint ptr %i.o to i64
-  %i.u = ptrtoint ptr %1 to i64
+  %i.u = ptrtoint ptr %i.r to i64
   %i.v = sub nuw i64 %i.t, %i.u
   %i.w = udiv exact i64 %i.v, 56
-  %i.x = icmp eq ptr %i.o, %1
+  %i.x = icmp eq ptr %i.o, %i.r
   br i1 %i.x, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread, %.lr.ph.i.i.i
   %.sroa.0.07.i.i.i = phi i64 [ %i.z, %.lr.ph.i.i.i ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread ] ; 2 uses
-  %i.y = getelementptr inbounds nuw [56 x i8], ptr %1, i64 %.sroa.0.07.i.i.i
+  %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.r, i64 %.sroa.0.07.i.i.i
   %i.z = add nuw nsw i64 %.sroa.0.07.i.i.i, 1     ; 2 uses
   tail call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app(ptr noalias nofree noundef readonly align 8 dereferenceable(56) %i.y), !noalias !863
   %i.aa = icmp eq i64 %i.z, %i.w
   br i1 %i.aa, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i, label %.lr.ph.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i: ; preds = %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit, %.lr.ph.i.i.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread
-  %.sroa.0.0.lcssa29 = phi i1 [ %.sroa.0.0.lcssa, %.lr.ph.i.i.i ], [ %.sroa.0.0.lcssa, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread ], [ %spec.select, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit ]
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i: ; preds = %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit, %.lr.ph.i.i.i, %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread
+  %.sroa.0.020 = phi i1 [ %.sroa.0.019, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsej9Ent4Ed1A_3app.exit.thread ], [ %.sroa.0.019, %.lr.ph.i.i.i ], [ false, %_RNvMNtNtNtNtCs9OLX912zl7o_3yew4html9component5scope12feat_csr_ssrINtB2_8MsgQueueNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgE5drainCsej9Ent4Ed1A_3app.exit ], [ %spec.select, %_RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit ]
   %i.ab = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, 0
   br i1 %i.ab, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgEECsej9Ent4Ed1A_3app.exit, label %bb.g
 
@@ -277,7 +275,7 @@ bb.g:                                             ; preds = %_RINvNtCsf3Ta7LF998
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgEECsej9Ent4Ed1A_3app.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3MsgECsej9Ent4Ed1A_3app.exit.i.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  ret i1 %.sroa.0.0.lcssa29
+  ret i1 %.sroa.0.020
 
 _RNvXs_NtNtCs9OLX912zl7o_3yew4html9componentNtNtCsemnSGAKhbl_26candle_wasm_example_llama23app3AppNtB4_13BaseComponent6updateCsej9Ent4Ed1A_3app.exit: ; preds = %bb.f
   %spec.select = select i1 %i.s, i1 true, i1 %.sroa.0.019 ; 2 uses

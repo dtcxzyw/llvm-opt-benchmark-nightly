@@ -202,14 +202,14 @@ select.unfold.i:                                  ; preds = %select.unfold.i.bac
   br i1 %.not133.i, label %bb.k, label %.thread159.i
 
 bb.k:                                             ; preds = %select.unfold.i
-  %i.ad = load i32, ptr %i.a, align 8, !tbaa !14  ; 9 uses
+  %i.ad = load i32, ptr %i.a, align 8, !tbaa !14  ; 8 uses
   store i32 %i.ad, ptr %i.c, align 4, !tbaa !15
   %i.ae = icmp eq i32 %i.ad, %.pre202.i
-  br i1 %i.ae, label %bb.o, label %bb.l
+  br i1 %i.ae, label %.thread159.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.af = load ptr, ptr %0, align 8, !tbaa !17
-  %i.ag = sext i32 %i.ad to i64
+  %i.ag = sext i32 %i.ad to i64                   ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.af, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !19
   %.not134.i = icmp eq i8 %i.ai, 117
@@ -232,16 +232,15 @@ bb.n:                                             ; preds = %bb.m
   %i.am = icmp sgt i32 %i.al, -1
   br i1 %i.am, label %select.unfold.i.backedge, label %.thread155
 
-bb.o:                                             ; preds = %._crit_edge200.i, %bb.l, %bb.k
-  %1 = phi i32 [ %.pre.i, %._crit_edge200.i ], [ %.pre202.i, %bb.k ], [ %.pre202.i, %bb.l ] ; 2 uses
+bb.o:                                             ; preds = %._crit_edge200.i, %bb.l
+  %1 = phi i32 [ %.pre.i, %._crit_edge200.i ], [ %.pre202.i, %bb.l ] ; 2 uses
   store i32 %i.ad, ptr %i.a, align 8, !tbaa !14
   %i.an = icmp eq i32 %i.ad, %1
   br i1 %i.an, label %.thread159.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ao = load ptr, ptr %0, align 8, !tbaa !17
-  %2 = sext i32 %i.ad to i64
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %2
+  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %i.ag
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !19
   %.not136.i = icmp eq i8 %i.aq, 105
   br i1 %.not136.i, label %bb.q, label %.thread159.i
@@ -266,11 +265,11 @@ bb.r:                                             ; preds = %bb.q
 select.unfold.i.backedge:                         ; preds = %bb.r, %bb.n
   br label %select.unfold.i
 
-.thread159.i:                                     ; preds = %bb.p, %bb.o, %select.unfold.i, %..thread159_crit_edge.i
-  %3 = phi i32 [ %.pre201.i, %..thread159_crit_edge.i ], [ %.pre202.i, %select.unfold.i ], [ %i.ad, %bb.o ], [ %1, %bb.p ]
+.thread159.i:                                     ; preds = %bb.p, %bb.o, %bb.k, %select.unfold.i, %..thread159_crit_edge.i
+  %2 = phi i32 [ %.pre201.i, %..thread159_crit_edge.i ], [ %.pre202.i, %bb.k ], [ %.pre202.i, %select.unfold.i ], [ %i.ad, %bb.o ], [ %1, %bb.p ]
   store i32 %storemerge184.i.ph, ptr %i.a, align 8, !tbaa !14
   %i.av = load ptr, ptr %0, align 8, !tbaa !17
-  %i.aw = tail call i32 @skip_utf8(ptr noundef %i.av, i32 noundef %storemerge184.i.ph, i32 noundef %3, i32 noundef 1) #2 ; 2 uses
+  %i.aw = tail call i32 @skip_utf8(ptr noundef %i.av, i32 noundef %storemerge184.i.ph, i32 noundef %2, i32 noundef 1) #2 ; 2 uses
   %i.ax = icmp slt i32 %i.aw, 0
   br i1 %i.ax, label %bb.s, label %select.unfold.i.outer
 

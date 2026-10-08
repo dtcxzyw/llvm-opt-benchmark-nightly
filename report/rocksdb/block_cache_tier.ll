@@ -202,27 +202,23 @@ bb.a:
 
 _ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit:    ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 12 uses
-  %.sroa.08.012 = load ptr, ptr %i.b, align 8, !tbaa !192 ; 3 uses
+  %.sroa.08.012 = load ptr, ptr %i.b, align 8, !tbaa !192 ; 2 uses
   %i.c = icmp eq ptr %.sroa.08.012, %i.b
-  br i1 %i.c, label %._crit_edge, label %.lr.ph
+  br i1 %i.c, label %_ZNSt7__cxx114listIPN7rocksdb16CacheWriteBufferESaIS3_EE5clearEv.exit, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.d
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !192
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit
-  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.08.012, %_ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %1, %i.b
+._crit_edge:                                      ; preds = %bb.d
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !192 ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %i.b
   br i1 %.not8.i.i, label %_ZNSt7__cxx114listIPN7rocksdb16CacheWriteBufferESaIS3_EE5clearEv.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.d, %.lr.ph.i.i ], [ %1, %._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.d, %.lr.ph.i.i ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.d = load ptr, ptr %.09.i.i, align 8, !tbaa !192 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #20
   %.not.i.i = icmp eq ptr %i.d, %i.b
   br i1 %.not.i.i, label %_ZNSt7__cxx114listIPN7rocksdb16CacheWriteBufferESaIS3_EE5clearEv.exit, label %.lr.ph.i.i, !llvm.loop !9
 
-_ZNSt7__cxx114listIPN7rocksdb16CacheWriteBufferESaIS3_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %._crit_edge
+_ZNSt7__cxx114listIPN7rocksdb16CacheWriteBufferESaIS3_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %_ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit, %._crit_edge
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
   store ptr %i.b, ptr %i.e, align 8, !tbaa !234
   store ptr %i.b, ptr %i.b, align 8, !tbaa !192
@@ -273,7 +269,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c, %.lr.ph
   %.sroa.08.0 = load ptr, ptr %.sroa.08.013, align 8, !tbaa !192 ; 2 uses
   %i.r = icmp eq ptr %.sroa.08.0, %i.b
-  br i1 %i.r, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %i.r, label %._crit_edge, label %.lr.ph
 
 bb.e:                                             ; preds = %bb.a
   %i.s = landingpad { ptr, i32 }

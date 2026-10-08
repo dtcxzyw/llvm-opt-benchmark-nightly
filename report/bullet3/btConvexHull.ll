@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k, %_ZN20btAlign
   %i.cr = fmul float %i.by, %i.cp                 ; 4 uses
   %i.cs = load i32, ptr %4, align 4, !tbaa !41    ; 6 uses
   %.not = icmp eq i32 %i.cs, 0
-  br i1 %.not, label %.thread, label %.lr.ph.preheader
+  br i1 %.not, label %.thread.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %wide.trip.count = zext i32 %i.cs to i64
@@ -232,7 +232,7 @@ bb.m:                                             ; preds = %bb.k, %_ZN20btAlign
   br i1 %or.cond336, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %.lr.ph
-  %i.di = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.di = trunc nuw i64 %indvars.iv to i32        ; 3 uses
   %i.dj = insertelement <2 x float> poison, float %i.cr, i64 0
   %i.dk = insertelement <2 x float> %i.dj, float %i.cy, i64 1
   %i.dl = fsub <2 x float> %i.dk, %i.cg           ; 2 uses
@@ -259,13 +259,12 @@ bb.p:                                             ; preds = %.lr.ph
   %exitcond407.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond407.not, label %.thread.thread, label %.lr.ph, !llvm.loop !156
 
-.thread:                                          ; preds = %bb.m, %bb.o, %bb.n
-  %.0297375 = phi i32 [ %i.di, %bb.n ], [ %i.di, %bb.o ], [ 0, %bb.m ] ; 3 uses
-  %i.dx = icmp eq i32 %.0297375, %i.cs
+.thread:                                          ; preds = %bb.o, %bb.n
+  %i.dx = icmp eq i32 %i.cs, %i.di
   br i1 %i.dx, label %.thread.thread, label %bb.q
 
-.thread.thread:                                   ; preds = %bb.p, %.thread
-  %.0297375454 = phi i32 [ %.0297375, %.thread ], [ %i.cs, %bb.p ]
+.thread.thread:                                   ; preds = %bb.p, %bb.m, %.thread
+  %.0297375454 = phi i32 [ %i.di, %.thread ], [ 0, %bb.m ], [ %i.cs, %bb.p ]
   %i.dy = zext i32 %i.cs to i64
   %i.dz = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.dy ; 2 uses
   store <2 x float> %i.cq, ptr %i.dz, align 4, !tbaa !12
@@ -276,7 +275,7 @@ bb.p:                                             ; preds = %.lr.ph
   br label %bb.q
 
 bb.q:                                             ; preds = %.thread.thread, %.thread
-  %.0297375453 = phi i32 [ %.0297375454, %.thread.thread ], [ %.0297375, %.thread ]
+  %.0297375453 = phi i32 [ %.0297375454, %.thread.thread ], [ %i.di, %.thread ]
   %i.ec = load i32, ptr %i.b, align 4, !tbaa !62  ; 7 uses
   %i.ed = load i32, ptr %i.cd, align 8, !tbaa !63
   %i.ee = icmp eq i32 %i.ec, %i.ed

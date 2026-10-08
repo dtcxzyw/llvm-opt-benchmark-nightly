@@ -202,16 +202,12 @@ bb.c:                                             ; preds = %bb.a
   %i.t = load i32, ptr %i.a, align 4              ; 2 uses
   %i.u = icmp sgt i32 %i.t, %i.r
   %or.cond = select i1 %i.s, i1 true, i1 %i.u
-  br i1 %or.cond, label %4, label %bb.d
+  br i1 %or.cond, label %bb.d, label %bb.f
 
-4:                                                ; preds = %bb.c
-  %5 = call ptr @expert_add_info(ptr noundef %1, ptr noundef %i.m, ptr noundef nonnull @ei_1722_ntscf_invalid_data_length) ; 0 uses
-  %.pre = load i32, ptr %i.a, align 4
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.c, %4
-  %6 = phi i32 [ %i.t, %bb.c ], [ %.pre, %4 ]     ; 2 uses
-  %i.v = icmp sgt i32 %6, %i.r
+bb.d:                                             ; preds = %bb.c
+  %4 = call ptr @expert_add_info(ptr noundef %1, ptr noundef %i.m, ptr noundef nonnull @ei_1722_ntscf_invalid_data_length) ; 0 uses
+  %.pre = load i32, ptr %i.a, align 4             ; 2 uses
+  %i.v = icmp sgt i32 %.pre, %i.r
   br i1 %i.v, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -219,8 +215,8 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.w, ptr %i.a, align 4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.pr = phi i32 [ %i.w, %bb.e ], [ %6, %bb.d ]   ; 2 uses
+bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
+  %.pr = phi i32 [ %i.w, %bb.e ], [ %.pre, %bb.d ], [ %i.t, %bb.c ] ; 2 uses
   %.not61 = icmp eq i32 %.pr, 0
   br i1 %.not61, label %.thread, label %.lr.ph
 

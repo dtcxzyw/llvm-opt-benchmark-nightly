@@ -205,7 +205,7 @@ _ZN3sat6solver9mk_clauseERK7svectorINS_7literalEjENS_6statusE.exit: ; preds = %b
   store i32 -1, ptr %i.fz, align 4, !tbaa !48
   %i.ga = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.ga, align 8, !tbaa !49
-  %i.gb = call noundef ptr @_ZN3sat6solver9mk_clauseEjPNS_7literalENS_6statusE(ptr noundef nonnull align 8 dereferenceable(4264) %0, i32 noundef %.0.i.i34, ptr noundef %i.fv, ptr noundef nonnull align 8 dead_on_return %7) ; 9 uses
+  %i.gb = call noundef ptr @_ZN3sat6solver9mk_clauseEjPNS_7literalENS_6statusE(ptr noundef nonnull align 8 dereferenceable(4264) %0, i32 noundef %.0.i.i34, ptr noundef %i.fv, ptr noundef nonnull align 8 dead_on_return %7) ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 4336
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #18
@@ -608,7 +608,7 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit68:   ; preds = %_ZNK6vectorIN3sat7l
   br i1 %i.mb, label %.lr.ph.i70, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit68.thread
 
 .lr.ph.i70:                                       ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit68
-  %i.mc = getelementptr inbounds nuw i8, ptr %i.gb, i64 20
+  %i.mc = getelementptr inbounds nuw i8, ptr %i.gb, i64 20 ; 4 uses
   br label %bb.ax
 
 bb.ax:                                            ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit19.thread.i, %.lr.ph.i70
@@ -638,13 +638,12 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit23.i: ; preds = %_ZNK6vectorIN3sat7l
   br i1 %i.mj, label %bb.ay, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit68.thread
 
 bb.ay:                                            ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit23.i
-  %14 = getelementptr inbounds nuw i8, ptr %i.gb, i64 20 ; 3 uses
   %i.mk = zext i32 %.115.ph.i to i64
-  %i.ml = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %i.mk ; 2 uses
+  %i.ml = getelementptr inbounds nuw [4 x i8], ptr %i.mc, i64 %i.mk ; 2 uses
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.ml, align 4, !tbaa !18
-  %i.mm = load i32, ptr %14, align 4, !tbaa !18
+  %i.mm = load i32, ptr %i.mc, align 4, !tbaa !18
   store i32 %i.mm, ptr %i.ml, align 4, !tbaa !18
-  store i32 %.sroa.0.0.copyload.i.i, ptr %14, align 4, !tbaa !18
+  store i32 %.sroa.0.0.copyload.i.i, ptr %i.mc, align 4, !tbaa !18
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 1200
   %i.mo = getelementptr inbounds nuw i8, ptr %0, i64 2336
   %i.mp = load i8, ptr %i.mo, align 8, !tbaa !217, !range !40, !noundef !41
