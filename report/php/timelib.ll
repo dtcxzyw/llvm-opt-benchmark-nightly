@@ -201,7 +201,7 @@ bb.a:
   %i.c = tail call double @llvm.floor.f64(double %.012)
   %i.d = fptosi double %i.c to i32                ; 2 uses
   store i32 %i.d, ptr %1, align 4, !tbaa !24
-  %4 = sitofp i32 %i.d to double
+  %4 = uitofp nneg i32 %i.d to double
   %i.e = fsub double %.012, %4
   %i.f = fmul double %i.e, 3.600000e+03
   %i.g = tail call double @llvm.floor.f64(double %i.f)

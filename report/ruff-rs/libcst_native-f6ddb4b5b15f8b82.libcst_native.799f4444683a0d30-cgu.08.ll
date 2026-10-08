@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ck = icmp ugt i64 %i.al, %i.av               ; 3 uses
   %i.cl = select i1 %i.ck, ptr %i.ad, ptr %i.an, !unpredictable !4
   %i.cm = select i1 %i.ck, ptr %i.an, ptr %i.ad, !unpredictable !4
-  %i.cn = select i1 %i.ck, ptr %i.at, ptr %i.aj   ; 2 uses
+  %i.cn = select i1 %i.ck, ptr %i.at, ptr %i.aj, !unpredictable !4 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
   %i.cp = load i64, ptr %i.co, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %i.cl, i64 16, i1 false), !alias.scope !847
@@ -244,7 +244,7 @@ bb.g:                                             ; preds = %bb.e
   %i.di = icmp ugt i64 %i.bv, %i.cb               ; 3 uses
   %i.dj = select i1 %i.di, ptr %i.bg, ptr %i.am, !unpredictable !4
   %i.dk = select i1 %i.di, ptr %i.am, ptr %i.bg, !unpredictable !4
-  %i.dl = select i1 %i.di, ptr %i.bz, ptr %i.bt   ; 2 uses
+  %i.dl = select i1 %i.di, ptr %i.bz, ptr %i.bt, !unpredictable !4 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %i.dn = load i64, ptr %i.dm, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.am, ptr noundef nonnull align 8 dereferenceable(16) %i.dj, i64 16, i1 false), !alias.scope !847
@@ -264,7 +264,7 @@ bb.g:                                             ; preds = %bb.e
   %i.du = icmp ugt i64 %i.cv, %i.cp               ; 3 uses
   %i.dv = select i1 %i.du, ptr %i.t, ptr %i.ad, !unpredictable !4
   %i.dw = select i1 %i.du, ptr %i.ad, ptr %i.t, !unpredictable !4
-  %i.dx = select i1 %i.du, ptr %i.cn, ptr %i.ct   ; 2 uses
+  %i.dx = select i1 %i.du, ptr %i.cn, ptr %i.ct, !unpredictable !4 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   %i.dz = load i64, ptr %i.dy, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.dv, i64 16, i1 false), !alias.scope !847
@@ -282,7 +282,7 @@ bb.g:                                             ; preds = %bb.e
   %i.eg = icmp ugt i64 %i.dn, %i.db               ; 3 uses
   %i.eh = select i1 %i.eg, ptr %i.bg, ptr %i.cc, !unpredictable !4
   %i.ei = select i1 %i.eg, ptr %i.cc, ptr %i.bg, !unpredictable !4
-  %i.ej = select i1 %i.eg, ptr %i.cz, ptr %i.dl   ; 2 uses
+  %i.ej = select i1 %i.eg, ptr %i.cz, ptr %i.dl, !unpredictable !4 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   %i.el = load i64, ptr %i.ek, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cc, ptr noundef nonnull align 8 dereferenceable(16) %i.eh, i64 16, i1 false), !alias.scope !847
@@ -312,7 +312,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ey = icmp ugt i64 %i.ef, %i.dz               ; 3 uses
   %i.ez = select i1 %i.ey, ptr %i.j, ptr %i.t, !unpredictable !4
   %i.fa = select i1 %i.ey, ptr %i.t, ptr %i.j, !unpredictable !4
-  %i.fb = select i1 %i.ey, ptr %i.dx, ptr %i.ed
+  %i.fb = select i1 %i.ey, ptr %i.dx, ptr %i.ed, !unpredictable !4
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
   %i.fd = load i64, ptr %i.fc, align 8, !alias.scope !847, !noundef !4
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %i.ez, i64 16, i1 false), !alias.scope !847
@@ -354,7 +354,7 @@ bb.g:                                             ; preds = %bb.e
   %i.fw = icmp ugt i64 %i.ex, %i.el               ; 3 uses
   %i.fx = select i1 %i.fw, ptr %i.ax, ptr %i.bg, !unpredictable !4
   %i.fy = select i1 %i.fw, ptr %i.bg, ptr %i.ax, !unpredictable !4
-  %i.fz = select i1 %i.fw, ptr %i.ej, ptr %i.ev   ; 2 uses
+  %i.fz = select i1 %i.fw, ptr %i.ej, ptr %i.ev, !unpredictable !4 ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   %i.gb = load i64, ptr %i.ga, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %i.fx, i64 16, i1 false), !alias.scope !847
@@ -404,7 +404,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ha = icmp ugt i64 %i.fp, %i.fv               ; 3 uses
   %i.hb = select i1 %i.ha, ptr %i.bh, ptr %i.an, !unpredictable !4
   %i.hc = select i1 %i.ha, ptr %i.an, ptr %i.bh, !unpredictable !4
-  %i.hd = select i1 %i.ha, ptr %i.ft, ptr %i.fn   ; 2 uses
+  %i.hd = select i1 %i.ha, ptr %i.ft, ptr %i.fn, !unpredictable !4 ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
   %i.hf = load i64, ptr %i.he, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %i.hb, i64 16, i1 false), !alias.scope !847
@@ -413,7 +413,7 @@ bb.g:                                             ; preds = %bb.e
   %i.hg = icmp ugt i64 %i.gb, %i.gh               ; 3 uses
   %i.hh = select i1 %i.hg, ptr %i.ax, ptr %i.t, !unpredictable !4
   %i.hi = select i1 %i.hg, ptr %i.t, ptr %i.ax, !unpredictable !4
-  %i.hj = select i1 %i.hg, ptr %i.gf, ptr %i.fz
+  %i.hj = select i1 %i.hg, ptr %i.gf, ptr %i.fz, !unpredictable !4
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hi, i64 8
   %i.hl = load i64, ptr %i.hk, align 8, !alias.scope !847, !noundef !4
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %i.hh, i64 16, i1 false), !alias.scope !847
@@ -474,7 +474,7 @@ bb.g:                                             ; preds = %bb.e
   %i.iq = icmp ugt i64 %i.hx, %i.hr               ; 3 uses
   %i.ir = select i1 %i.iq, ptr %i.cc, ptr %i.am, !unpredictable !4
   %i.is = select i1 %i.iq, ptr %i.am, ptr %i.cc, !unpredictable !4
-  %i.it = select i1 %i.iq, ptr %i.hp, ptr %i.hv
+  %i.it = select i1 %i.iq, ptr %i.hp, ptr %i.hv, !unpredictable !4
   %i.iu = getelementptr inbounds nuw i8, ptr %i.is, i64 8
   %i.iv = load i64, ptr %i.iu, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.am, ptr noundef nonnull align 8 dereferenceable(16) %i.ir, i64 16, i1 false), !alias.scope !847
@@ -494,7 +494,7 @@ bb.g:                                             ; preds = %bb.e
   %i.jc = icmp ugt i64 %i.hf, %i.id               ; 3 uses
   %i.jd = select i1 %i.jc, ptr %i.bh, ptr %i.bg, !unpredictable !4
   %i.je = select i1 %i.jc, ptr %i.bg, ptr %i.bh, !unpredictable !4
-  %i.jf = select i1 %i.jc, ptr %i.ib, ptr %i.hd
+  %i.jf = select i1 %i.jc, ptr %i.ib, ptr %i.hd, !unpredictable !4
   %i.jg = getelementptr inbounds nuw i8, ptr %i.je, i64 8
   %i.jh = load i64, ptr %i.jg, align 8, !alias.scope !847, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %i.jd, i64 16, i1 false), !alias.scope !847
@@ -646,7 +646,7 @@ bb.h:                                             ; preds = %bb.f
   %i.mr = icmp ugt i64 %i.me, %i.la               ; 3 uses
   %i.ms = select i1 %i.mr, ptr %i.lw, ptr %i.ks, !unpredictable !4
   %i.mt = select i1 %i.mr, ptr %i.ks, ptr %i.lw, !unpredictable !4
-  %i.mu = select i1 %i.mr, ptr %i.ky, ptr %i.mc   ; 2 uses
+  %i.mu = select i1 %i.mr, ptr %i.ky, ptr %i.mc, !unpredictable !4 ; 2 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mt, i64 8
   %i.mw = load i64, ptr %i.mv, align 8, !alias.scope !848, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ks, ptr noundef nonnull align 8 dereferenceable(16) %i.ms, i64 16, i1 false), !alias.scope !848
@@ -699,7 +699,7 @@ bb.h:                                             ; preds = %bb.f
   %i.nx = icmp ugt i64 %i.mw, %i.mk               ; 3 uses
   %i.ny = select i1 %i.nx, ptr %i.lw, ptr %i.lc, !unpredictable !4
   %i.nz = select i1 %i.nx, ptr %i.lc, ptr %i.lw, !unpredictable !4
-  %i.oa = select i1 %i.nx, ptr %i.mi, ptr %i.mu   ; 2 uses
+  %i.oa = select i1 %i.nx, ptr %i.mi, ptr %i.mu, !unpredictable !4 ; 2 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nz, i64 8
   %i.oc = load i64, ptr %i.ob, align 8, !alias.scope !848, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lc, ptr noundef nonnull align 8 dereferenceable(16) %i.ny, i64 16, i1 false), !alias.scope !848
@@ -719,7 +719,7 @@ bb.h:                                             ; preds = %bb.f
   %i.oj = icmp ugt i64 %i.ne, %i.nq               ; 3 uses
   %i.ok = select i1 %i.oj, ptr %i.mx, ptr %i.ks, !unpredictable !4
   %i.ol = select i1 %i.oj, ptr %i.ks, ptr %i.mx, !unpredictable !4
-  %i.om = select i1 %i.oj, ptr %i.no, ptr %i.nc   ; 2 uses
+  %i.om = select i1 %i.oj, ptr %i.no, ptr %i.nc, !unpredictable !4 ; 2 uses
   %i.on = getelementptr inbounds nuw i8, ptr %i.ol, i64 8
   %i.oo = load i64, ptr %i.on, align 8, !alias.scope !848, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ks, ptr noundef nonnull align 8 dereferenceable(16) %i.ok, i64 16, i1 false), !alias.scope !848
@@ -749,7 +749,7 @@ bb.h:                                             ; preds = %bb.f
   %i.pb = icmp ugt i64 %i.oi, %i.nk               ; 3 uses
   %i.pc = select i1 %i.pb, ptr %i.lv, ptr %i.ll, !unpredictable !4
   %i.pd = select i1 %i.pb, ptr %i.ll, ptr %i.lv, !unpredictable !4
-  %i.pe = select i1 %i.pb, ptr %i.ni, ptr %i.og   ; 2 uses
+  %i.pe = select i1 %i.pb, ptr %i.ni, ptr %i.og, !unpredictable !4 ; 2 uses
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pd, i64 8
   %i.pg = load i64, ptr %i.pf, align 8, !alias.scope !848, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ll, ptr noundef nonnull align 8 dereferenceable(16) %i.pc, i64 16, i1 false), !alias.scope !848
@@ -769,7 +769,7 @@ bb.h:                                             ; preds = %bb.f
   %i.pn = icmp ugt i64 %i.oc, %i.oo               ; 3 uses
   %i.po = select i1 %i.pn, ptr %i.lw, ptr %i.mx, !unpredictable !4
   %i.pp = select i1 %i.pn, ptr %i.mx, ptr %i.lw, !unpredictable !4
-  %i.pq = select i1 %i.pn, ptr %i.om, ptr %i.oa
+  %i.pq = select i1 %i.pn, ptr %i.om, ptr %i.oa, !unpredictable !4
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pp, i64 8
   %i.ps = load i64, ptr %i.pr, align 8, !alias.scope !848, !noundef !4
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.mx, ptr noundef nonnull align 8 dereferenceable(16) %i.po, i64 16, i1 false), !alias.scope !848
@@ -789,7 +789,7 @@ bb.h:                                             ; preds = %bb.f
   %i.pz = icmp ugt i64 %i.pm, %i.pg               ; 3 uses
   %i.qa = select i1 %i.pz, ptr %i.lm, ptr %i.lv, !unpredictable !4
   %i.qb = select i1 %i.pz, ptr %i.lv, ptr %i.lm, !unpredictable !4
-  %i.qc = select i1 %i.pz, ptr %i.pe, ptr %i.pk
+  %i.qc = select i1 %i.pz, ptr %i.pe, ptr %i.pk, !unpredictable !4
   %i.qd = getelementptr inbounds nuw i8, ptr %i.qb, i64 8
   %i.qe = load i64, ptr %i.qd, align 8, !alias.scope !848, !noundef !4 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lv, ptr noundef nonnull align 8 dereferenceable(16) %i.qa, i64 16, i1 false), !alias.scope !848

@@ -205,7 +205,6 @@ _ZN6duckdb12NumericStats6GetMinIaEET_RKNS_14BaseStatisticsE.exit9.i: ; preds = %
   br i1 %or.cond.i.i.i, label %bb.p, label %.critedge
 
 bb.p:                                             ; preds = %_ZN6duckdb12NumericStats6GetMinIaEET_RKNS_14BaseStatisticsE.exit9.i
-  %39 = zext i16 %i.u to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #25
   invoke void @_ZN6duckdb12NumericStats3MaxERKNS_14BaseStatisticsE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %23, ptr noundef nonnull align 8 dereferenceable(128) %i.d)
           to label %.noexc47 unwind label %bb.l
@@ -251,20 +250,17 @@ _ZN6duckdb12NumericStats6GetMaxIaEET_RKNS_14BaseStatisticsE.exit10.i: ; preds = 
 
 bb.s:                                             ; preds = %_ZN6duckdb12NumericStats6GetMaxIaEET_RKNS_14BaseStatisticsE.exit10.i
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #25
-  %sext.i = shl i64 %39, 56
-  %40 = ashr exact i64 %sext.i, 56
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %26, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %40)
+  %39 = sext i16 %i.u to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %26, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %39)
           to label %.noexc49 unwind label %bb.l
 
 .noexc49:                                         ; preds = %bb.s
-  %41 = zext i16 %i.ac to i64
   %i.ae = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6duckdb5ValueaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %28, ptr noundef nonnull align 8 dereferenceable(64) %26) #25 ; 0 uses
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %26) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #25
-  %sext20.i = shl i64 %41, 56
-  %42 = ashr exact i64 %sext20.i, 56
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %27, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %42)
+  %40 = sext i16 %i.ac to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %27, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %40)
           to label %.noexc50 unwind label %bb.l
 
 .noexc50:                                         ; preds = %.noexc49
@@ -318,7 +314,6 @@ _ZN6duckdb12NumericStats6GetMinIsEET_RKNS_14BaseStatisticsE.exit9.i: ; preds = %
   br i1 %or.cond.i.i.i53, label %bb.w, label %.critedge
 
 bb.w:                                             ; preds = %_ZN6duckdb12NumericStats6GetMinIsEET_RKNS_14BaseStatisticsE.exit9.i
-  %43 = zext i32 %i.am to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
   invoke void @_ZN6duckdb12NumericStats3MaxERKNS_14BaseStatisticsE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %17, ptr noundef nonnull align 8 dereferenceable(128) %i.d)
           to label %.noexc62.a unwind label %bb.l
@@ -364,20 +359,17 @@ _ZN6duckdb12NumericStats6GetMaxIsEET_RKNS_14BaseStatisticsE.exit10.i: ; preds = 
 
 bb.z:                                             ; preds = %_ZN6duckdb12NumericStats6GetMaxIsEET_RKNS_14BaseStatisticsE.exit10.i
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #25
-  %sext.i56 = shl i64 %43, 48
-  %44 = ashr exact i64 %sext.i56, 48
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %20, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %44)
+  %41 = sext i32 %i.am to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %20, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %41)
           to label %.noexc64 unwind label %bb.l
 
 .noexc64:                                         ; preds = %bb.z
-  %45 = zext i32 %i.au to i64
   %i.aw = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6duckdb5ValueaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %28, ptr noundef nonnull align 8 dereferenceable(64) %20) #25 ; 0 uses
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %20) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #25
-  %sext20.i57 = shl i64 %45, 48
-  %46 = ashr exact i64 %sext20.i57, 48
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %46)
+  %42 = sext i32 %i.au to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %42)
           to label %.noexc65 unwind label %bb.l
 
 .noexc65:                                         ; preds = %.noexc64
@@ -780,7 +772,6 @@ _ZN6duckdb12NumericStats6GetMaxIaEET_RKNS_14BaseStatisticsE.exit.i: ; preds = %.
   br i1 %or.cond.i.i.i, label %bb.p, label %.critedge
 
 bb.p:                                             ; preds = %_ZN6duckdb12NumericStats6GetMaxIaEET_RKNS_14BaseStatisticsE.exit.i
-  %39 = zext i16 %i.u to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #25
   invoke void @_ZN6duckdb12NumericStats3MaxERKNS_14BaseStatisticsE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %23, ptr noundef nonnull align 8 dereferenceable(128) %i.d)
           to label %.noexc47 unwind label %bb.l
@@ -826,20 +817,17 @@ _ZN6duckdb12NumericStats6GetMinIaEET_RKNS_14BaseStatisticsE.exit10.i: ; preds = 
 
 bb.s:                                             ; preds = %_ZN6duckdb12NumericStats6GetMinIaEET_RKNS_14BaseStatisticsE.exit10.i
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #25
-  %sext.i = shl i64 %39, 56
-  %40 = ashr exact i64 %sext.i, 56
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %26, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %40)
+  %39 = sext i16 %i.u to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %26, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %39)
           to label %.noexc49 unwind label %bb.l
 
 .noexc49:                                         ; preds = %bb.s
-  %41 = zext i16 %i.ac to i64
   %i.ae = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6duckdb5ValueaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %28, ptr noundef nonnull align 8 dereferenceable(64) %26) #25 ; 0 uses
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %26) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #25
-  %sext20.i = shl i64 %41, 56
-  %42 = ashr exact i64 %sext20.i, 56
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %27, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %42)
+  %40 = sext i16 %i.ac to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %27, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %40)
           to label %.noexc50 unwind label %bb.l
 
 .noexc50:                                         ; preds = %.noexc49
@@ -893,7 +881,6 @@ _ZN6duckdb12NumericStats6GetMaxIsEET_RKNS_14BaseStatisticsE.exit.i: ; preds = %.
   br i1 %or.cond.i.i.i53, label %bb.w, label %.critedge
 
 bb.w:                                             ; preds = %_ZN6duckdb12NumericStats6GetMaxIsEET_RKNS_14BaseStatisticsE.exit.i
-  %43 = zext i32 %i.am to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
   invoke void @_ZN6duckdb12NumericStats3MaxERKNS_14BaseStatisticsE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %17, ptr noundef nonnull align 8 dereferenceable(128) %i.d)
           to label %.noexc62.a unwind label %bb.l
@@ -939,20 +926,17 @@ _ZN6duckdb12NumericStats6GetMinIsEET_RKNS_14BaseStatisticsE.exit10.i: ; preds = 
 
 bb.z:                                             ; preds = %_ZN6duckdb12NumericStats6GetMinIsEET_RKNS_14BaseStatisticsE.exit10.i
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #25
-  %sext.i56 = shl i64 %43, 48
-  %44 = ashr exact i64 %sext.i56, 48
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %20, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %44)
+  %41 = sext i32 %i.am to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %20, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %41)
           to label %.noexc64 unwind label %bb.l
 
 .noexc64:                                         ; preds = %bb.z
-  %45 = zext i32 %i.au to i64
   %i.aw = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6duckdb5ValueaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %28, ptr noundef nonnull align 8 dereferenceable(64) %20) #25 ; 0 uses
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %20) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #25
-  %sext20.i57 = shl i64 %45, 48
-  %46 = ashr exact i64 %sext20.i57, 48
-  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %46)
+  %42 = sext i32 %i.au to i64
+  invoke void @_ZN6duckdb5Value7NumericERKNS_11LogicalTypeEl(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %21, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %42)
           to label %.noexc65 unwind label %bb.l
 
 .noexc65:                                         ; preds = %.noexc64

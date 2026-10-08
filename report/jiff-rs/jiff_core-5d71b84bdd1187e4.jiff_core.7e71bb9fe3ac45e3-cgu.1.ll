@@ -204,10 +204,9 @@ bb.a:
   %.sroa.22.0.extract.trunc.i.i = zext nneg i32 %.sroa.22.0.extract.shift.i.i to i64
   %sext33.i = shl i64 %.sroa.22.0.extract.trunc.i.i, 56
   %i.j = ashr exact i64 %sext33.i, 16
-  %.sroa.2.0.extract.shift.i.i = lshr i32 %.sroa.2.0.copyload, 24
-  %.sroa.2.0.extract.trunc.i.i = zext nneg i32 %.sroa.2.0.extract.shift.i.i to i64
-  %sext34.i = shl nuw i64 %.sroa.2.0.extract.trunc.i.i, 56
-  %3 = ashr exact i64 %sext34.i, 24
+  %3 = ashr i32 %.sroa.2.0.copyload, 24
+  %4 = sext i32 %3 to i64
+  %sext34.i = shl nsw i64 %4, 32
   %i.k = shl i64 %.sroa.0.0.copyload, 24
   %i.l = ashr i64 %i.k, 32
   %i.m = and i64 %i.l, -16777216
@@ -220,8 +219,8 @@ bb.a:
   %i.t = or i64 %i.m, %sext.i
   %i.u = or i64 %i.t, %i.p
   %i.v = or i64 %i.u, %i.s
-  %i.w = or i64 %i.v, %i.j
-  %i.x = or i64 %i.w, %3
+  %i.w = or i64 %i.v, %sext34.i
+  %i.x = or i64 %i.w, %i.j
   store i64 %i.x, ptr %i.i, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.z = tail call { ptr, i64 } @_RNvXs1_NtCsaR3IayqLkK5_9jiff_core4utilINtB5_16MaybeStaticSliceNtNtNtB7_2tz4tzif8DateTimeENtNtNtCs3oUPovFnLWP_4core3ops5deref5Deref5derefB7_(ptr nonnull align 8 %i.y) #18 ; 2 uses
@@ -624,24 +623,23 @@ _RNvMs2_NtNtCsaR3IayqLkK5_9jiff_core2tz4tzifNtB5_9Timestamp21to_standard_timesta
   %.sroa.22.0.extract.trunc.i.i = zext nneg i32 %.sroa.22.0.extract.shift.i.i to i64
   %sext33.i = shl i64 %.sroa.22.0.extract.trunc.i.i, 56
   %i.l = ashr exact i64 %sext33.i, 16
-  %2 = or i64 %i.l, %sext.i
-  %.sroa.2.0.extract.shift.i.i = lshr i32 %.sroa.0.0.copyload.i.i, 24
-  %.sroa.2.0.extract.trunc.i.i = zext nneg i32 %.sroa.2.0.extract.shift.i.i to i64
-  %sext34.i = shl nuw i64 %.sroa.2.0.extract.trunc.i.i, 56
-  %i.m = ashr exact i64 %sext34.i, 24
-  %3 = or i64 %2, %i.m
-  %i.n = shl i64 %.sroa.0.0.copyload.i26.i, 24
-  %i.o = ashr i64 %i.n, 32
-  %i.p = and i64 %i.o, -16777216
-  %4 = or i64 %3, %i.p
-  %i.q = shl i64 %.sroa.0.0.copyload.i26.i, 16
-  %i.r = ashr i64 %i.q, 40
-  %i.s = and i64 %i.r, -65536
-  %i.t = or i64 %4, %i.s
-  %5 = shl i64 %.sroa.0.0.copyload.i26.i, 8
-  %6 = ashr i64 %5, 48
-  %7 = and i64 %6, -256
-  %i.u = or i64 %i.t, %7
+  %2 = ashr i32 %.sroa.0.0.copyload.i.i, 24
+  %3 = sext i32 %2 to i64
+  %4 = shl nsw i64 %3, 32
+  %sext34.i = shl i64 %.sroa.0.0.copyload.i26.i, 24
+  %i.m = ashr i64 %sext34.i, 32
+  %5 = and i64 %i.m, -16777216
+  %i.n = shl i64 %.sroa.0.0.copyload.i26.i, 16
+  %i.o = ashr i64 %i.n, 40
+  %i.p = and i64 %i.o, -65536
+  %i.q = shl i64 %.sroa.0.0.copyload.i26.i, 8
+  %i.r = ashr i64 %i.q, 48
+  %i.s = and i64 %i.r, -256
+  %i.t = or i64 %4, %sext.i
+  %6 = or i64 %i.t, %i.l
+  %7 = or i64 %6, %5
+  %8 = or i64 %7, %i.p
+  %i.u = or i64 %8, %i.s
   ret i64 %i.u
 }
 
@@ -712,24 +710,23 @@ bb.a:
   %.sroa.22.0.extract.trunc.i = zext nneg i32 %.sroa.22.0.extract.shift.i to i64
   %sext33 = shl i64 %.sroa.22.0.extract.trunc.i, 56
   %i.b = ashr exact i64 %sext33, 16
-  %1 = or i64 %i.b, %sext
-  %.sroa.2.0.extract.shift.i = lshr i32 %.sroa.0.0.copyload.i, 24
-  %.sroa.2.0.extract.trunc.i = zext nneg i32 %.sroa.2.0.extract.shift.i to i64
-  %sext34 = shl nuw i64 %.sroa.2.0.extract.trunc.i, 56
-  %i.c = ashr exact i64 %sext34, 24
-  %2 = or i64 %1, %i.c
-  %i.d = shl i64 %.sroa.0.0.copyload.i26, 24
-  %i.e = ashr i64 %i.d, 32
-  %i.f = and i64 %i.e, -16777216
-  %3 = or i64 %2, %i.f
-  %i.g = shl i64 %.sroa.0.0.copyload.i26, 16
-  %i.h = ashr i64 %i.g, 40
-  %i.i = and i64 %i.h, -65536
-  %i.j = or i64 %3, %i.i
-  %4 = shl i64 %.sroa.0.0.copyload.i26, 8
-  %5 = ashr i64 %4, 48
-  %6 = and i64 %5, -256
-  %i.k = or i64 %i.j, %6
+  %1 = ashr i32 %.sroa.0.0.copyload.i, 24
+  %2 = sext i32 %1 to i64
+  %3 = shl nsw i64 %2, 32
+  %sext34 = shl i64 %.sroa.0.0.copyload.i26, 24
+  %i.c = ashr i64 %sext34, 32
+  %4 = and i64 %i.c, -16777216
+  %i.d = shl i64 %.sroa.0.0.copyload.i26, 16
+  %i.e = ashr i64 %i.d, 40
+  %i.f = and i64 %i.e, -65536
+  %i.g = shl i64 %.sroa.0.0.copyload.i26, 8
+  %i.h = ashr i64 %i.g, 48
+  %i.i = and i64 %i.h, -256
+  %i.j = or i64 %3, %sext
+  %5 = or i64 %i.j, %i.b
+  %6 = or i64 %5, %4
+  %7 = or i64 %6, %i.f
+  %i.k = or i64 %7, %i.i
   ret i64 %i.k
 }
 
@@ -1132,10 +1129,9 @@ bb.a:
   %.sroa.22.0.extract.trunc.i.i = zext nneg i32 %.sroa.22.0.extract.shift.i.i to i64
   %sext33.i = shl i64 %.sroa.22.0.extract.trunc.i.i, 56
   %i.a = ashr exact i64 %sext33.i, 16
-  %.sroa.2.0.extract.shift.i.i = lshr i32 %.sroa.2.0.copyload, 24
-  %.sroa.2.0.extract.trunc.i.i = zext nneg i32 %.sroa.2.0.extract.shift.i.i to i64
-  %sext34.i = shl nuw i64 %.sroa.2.0.extract.trunc.i.i, 56
-  %1 = ashr exact i64 %sext34.i, 24
+  %1 = ashr i32 %.sroa.2.0.copyload, 24
+  %2 = sext i32 %1 to i64
+  %sext34.i = shl nsw i64 %2, 32
   %i.b = shl i64 %.sroa.0.0.copyload, 24
   %i.c = ashr i64 %i.b, 32
   %i.d = and i64 %i.c, -16777216
@@ -1148,8 +1144,8 @@ bb.a:
   %i.k = or i64 %i.d, %sext.i
   %i.l = or i64 %i.k, %i.g
   %i.m = or i64 %i.l, %i.j
-  %i.n = or i64 %i.m, %i.a
-  %i.o = or i64 %i.n, %1
+  %i.n = or i64 %i.m, %sext34.i
+  %i.o = or i64 %i.n, %i.a
   ret i64 %i.o
 }
 

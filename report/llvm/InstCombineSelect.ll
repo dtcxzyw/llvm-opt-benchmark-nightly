@@ -204,14 +204,12 @@ bb.bp:                                            ; preds = %bb.bo
   %i.ll = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %.0.i) #17
   %i.lm = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ln = load ptr, ptr %i.lm, align 8, !tbaa !251, !nonnull !97, !align !100
-  %i.lo = call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.ln, ptr noundef nonnull align 4 dereferenceable(29) %i.ll) #17 ; 2 uses
-  %.sroa.01162.0.extract.trunc = trunc i16 %i.lo to i8 ; 2 uses
-  %.sroa.61165.0.extract.shift = lshr i16 %i.lo, 8 ; 2 uses
+  %i.lo = call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.ln, ptr noundef nonnull align 4 dereferenceable(29) %i.ll) #17 ; 3 uses
+  %.sroa.01162.0.extract.trunc = trunc i16 %i.lo to i8
+  %.sroa.61165.0.extract.shift = lshr i16 %i.lo, 8
   %.sroa.61165.0.extract.trunc = trunc nuw i16 %.sroa.61165.0.extract.shift to i8
-  %84 = icmp eq i8 %.sroa.01162.0.extract.trunc, 0
-  %i.lp = icmp eq i16 %.sroa.61165.0.extract.shift, 0
-  %85 = and i1 %84, %i.lp                         ; 2 uses
-  %or.cond1378 = select i1 %i.li, i1 %85, i1 false
+  %i.lp = icmp eq i16 %i.lo, 0                    ; 2 uses
+  %or.cond1378 = select i1 %i.li, i1 %i.lp, i1 false
   br i1 %or.cond1378, label %bb.bq, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
 bb.bq:                                            ; preds = %bb.bp
@@ -262,7 +260,7 @@ _ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.bp
   br i1 %i.lk, label %bb.bv, label %.thread1222
 
 bb.bv:                                            ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread
-  br i1 %85, label %bb.bw, label %_ZNK4llvm12DenormalModeeqES0_.exit954.thread
+  br i1 %i.lp, label %bb.bw, label %_ZNK4llvm12DenormalModeeqES0_.exit954.thread
 
 bb.bw:                                            ; preds = %bb.bv
   %i.ml = select i1 %i.lc, i32 1, i32 2

@@ -204,7 +204,7 @@ _ZN10ReflowScan11lookupBlockEiii.exit.thread193:  ; preds = %bb.a, %_ZN10ReflowS
 _ZN10ReflowScan11lookupBlockEiii.exit101.thread199: ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit.thread193
   %i.am = srem i32 %i.a, 16
   %i.an = srem i32 %i.d, 16
-  br label %11
+  br label %_ZN8MapBlock14getNodeNoCheckEsss.exit
 
 bb.c:                                             ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit.thread193
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
@@ -247,33 +247,22 @@ _ZN10ReflowScan11lookupBlockEiii.exit101:         ; preds = %bb.c
   %i.bl = or i32 %i.bk, %i.aq
   store i32 %i.bl, ptr %i.ao, align 8, !tbaa !22
   %.not86 = icmp eq ptr %i.bj, null
-  br i1 %.not86, label %.thread, label %11
+  br i1 %.not86, label %.thread, label %_ZN8MapBlock14getNodeNoCheckEsss.exit
 
-11:                                               ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199, %_ZN10ReflowScan11lookupBlockEiii.exit101
-  %12 = phi i32 [ %i.an, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.f, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 3 uses
-  %13 = phi i32 [ %i.am, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.c, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 3 uses
-  %.0.i93202 = phi ptr [ %i.al, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.bj, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %.0.i93202, i64 16
-  %15 = load ptr, ptr %14, align 8, !tbaa !69
-  %16 = getelementptr inbounds nuw i8, ptr %.0.i93202, i64 36
-  %17 = load i8, ptr %16, align 4, !tbaa !70, !range !71, !noundef !72
-  %18 = trunc nuw i8 %17 to i1
-  br i1 %18, label %_ZN8MapBlock14getNodeNoCheckEsss.exit, label %19
-
-19:                                               ; preds = %11
-  %20 = zext i32 %12 to i64
-  %21 = zext i32 %13 to i64
-  %sext = shl i64 %20, 48
-  %22 = ashr exact i64 %sext, 40
-  %sext218 = shl i64 %21, 48
-  %23 = ashr exact i64 %sext218, 48
-  %24 = add nsw i64 %23, %22
-  %25 = and i64 %24, 4294967295
-  br label %_ZN8MapBlock14getNodeNoCheckEsss.exit
-
-_ZN8MapBlock14getNodeNoCheckEsss.exit:            ; preds = %11, %19
-  %26 = phi i64 [ %25, %19 ], [ 0, %11 ]
-  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %15, i64 %26
+_ZN8MapBlock14getNodeNoCheckEsss.exit:            ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199, %_ZN10ReflowScan11lookupBlockEiii.exit101
+  %11 = phi i32 [ %i.an, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.f, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 3 uses
+  %12 = phi i32 [ %i.am, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.c, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 3 uses
+  %.0.i93200 = phi ptr [ %i.al, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread199 ], [ %i.bj, %_ZN10ReflowScan11lookupBlockEiii.exit101 ] ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.0.i93200, i64 16
+  %14 = load ptr, ptr %13, align 8, !tbaa !69
+  %15 = getelementptr inbounds nuw i8, ptr %.0.i93200, i64 36
+  %16 = load i8, ptr %15, align 4, !tbaa !70, !range !71, !noundef !72
+  %17 = trunc nuw i8 %16 to i1
+  %.tr = shl nsw i32 %11, 8
+  %.narrow = add nsw i32 %.tr, %12
+  %18 = zext i32 %.narrow to i64
+  %19 = select i1 %17, i64 0, i64 %18
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %19
   %.sroa.0.0.copyload.i = load i32, ptr %i.bm, align 4
   %i.bn = and i32 %.sroa.0.0.copyload.i, 65535    ; 2 uses
   %i.bo = icmp eq i32 %i.bn, 127                  ; 2 uses
@@ -310,8 +299,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .thread:                                          ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit101.thread, %_ZN10ReflowScan11lookupBlockEiii.exit101, %bb.f
   %.079206 = phi i1 [ %i.bo, %bb.f ], [ true, %_ZN10ReflowScan11lookupBlockEiii.exit101 ], [ true, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread ]
-  %i.ci = phi i32 [ %13, %bb.f ], [ %i.c, %_ZN10ReflowScan11lookupBlockEiii.exit101 ], [ %i.at, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread ] ; 2 uses
-  %i.cj = phi i32 [ %12, %bb.f ], [ %i.f, %_ZN10ReflowScan11lookupBlockEiii.exit101 ], [ %i.au, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread ] ; 2 uses
+  %i.ci = phi i32 [ %12, %bb.f ], [ %i.c, %_ZN10ReflowScan11lookupBlockEiii.exit101 ], [ %i.at, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread ] ; 2 uses
+  %i.cj = phi i32 [ %11, %bb.f ], [ %i.f, %_ZN10ReflowScan11lookupBlockEiii.exit101 ], [ %i.au, %_ZN10ReflowScan11lookupBlockEiii.exit101.thread ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.0.i196, i64 65
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !143, !range !71, !noundef !72
   %i.cm = trunc nuw i8 %i.cl to i1
@@ -330,18 +319,15 @@ _ZN8MapBlock5isAirEv.exit:                        ; preds = %.thread, %bb.g
 bb.h:                                             ; preds = %_ZN8MapBlock5isAirEv.exit, %bb.f
   %.076209 = phi i1 [ false, %_ZN8MapBlock5isAirEv.exit ], [ true, %bb.f ]
   %.079207 = phi i1 [ %.079206, %_ZN8MapBlock5isAirEv.exit ], [ %i.bo, %bb.f ]
-  %i.cq = phi i32 [ %i.ci, %_ZN8MapBlock5isAirEv.exit ], [ %13, %bb.f ] ; 2 uses
-  %i.cr = phi i32 [ %i.cj, %_ZN8MapBlock5isAirEv.exit ], [ %12, %bb.f ] ; 2 uses
+  %i.cq = phi i32 [ %i.ci, %_ZN8MapBlock5isAirEv.exit ], [ %12, %bb.f ] ; 2 uses
+  %i.cr = phi i32 [ %i.cj, %_ZN8MapBlock5isAirEv.exit ], [ %11, %bb.f ] ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.i196, i64 16
   %i.ct = getelementptr inbounds nuw i8, ptr %.0.i196, i64 36
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %27 = zext i32 %i.cr to i64
-  %28 = zext i32 %i.cq to i64
-  %sext220 = shl i64 %27, 48
-  %29 = ashr exact i64 %sext220, 40
-  %sext221 = shl i64 %28, 48
-  %30 = ashr exact i64 %sext221, 48
-  %i.cv = add nsw i64 %29, %30
+  %20 = sext i32 %i.cr to i64
+  %sext221 = shl nsw i64 %20, 8
+  %21 = zext i32 %i.cq to i64
+  %i.cv = add nsw i64 %sext221, %21
   %i.cw = add nsw i32 %1, -1                      ; 2 uses
   %i.cx = add nsw i32 %1, 1                       ; 2 uses
   %i.cy = add nsw i32 %2, -1                      ; 2 uses
@@ -587,7 +573,7 @@ bb.ad:                                            ; preds = %_ZN8MapBlock5isAirE
   %i.gq = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.gp ; 2 uses
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !21 ; 2 uses
   %.not.i116 = icmp eq ptr %i.gr, null
-  br i1 %.not.i116, label %bb.ae, label %_ZN10ReflowScan11lookupBlockEiii.exit125.thread212
+  br i1 %.not.i116, label %bb.ae, label %_ZN8MapBlock14getNodeNoCheckEsss.exit127
 
 bb.ae:                                            ; preds = %bb.ad
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
@@ -625,32 +611,21 @@ _ZN10ReflowScan11lookupBlockEiii.exit125:         ; preds = %bb.ae
   %i.hn = or i32 %i.hm, %i.gu
   store i32 %i.hn, ptr %i.gs, align 8, !tbaa !22
   %.not87 = icmp eq ptr %i.hl, null
-  br i1 %.not87, label %_ZN10ReflowScan11lookupBlockEiii.exit.thread, label %_ZN10ReflowScan11lookupBlockEiii.exit125.thread212
+  br i1 %.not87, label %_ZN10ReflowScan11lookupBlockEiii.exit.thread, label %_ZN8MapBlock14getNodeNoCheckEsss.exit127
 
-_ZN10ReflowScan11lookupBlockEiii.exit125.thread212: ; preds = %bb.ad, %_ZN10ReflowScan11lookupBlockEiii.exit125
-  %.0.i117215 = phi ptr [ %i.hl, %_ZN10ReflowScan11lookupBlockEiii.exit125 ], [ %i.gr, %bb.ad ] ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %.0.i117215, i64 16
-  %32 = load ptr, ptr %31, align 8, !tbaa !69
-  %33 = getelementptr inbounds nuw i8, ptr %.0.i117215, i64 36
-  %34 = load i8, ptr %33, align 4, !tbaa !70, !range !71, !noundef !72
-  %35 = trunc nuw i8 %34 to i1
-  br i1 %35, label %_ZN8MapBlock14getNodeNoCheckEsss.exit127, label %36
-
-36:                                               ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit125.thread212
-  %37 = zext i32 %i.go to i64
-  %38 = zext i32 %i.gn to i64
-  %sext222 = shl i64 %37, 48
-  %39 = ashr exact i64 %sext222, 40
-  %sext223 = shl i64 %38, 48
-  %40 = ashr exact i64 %sext223, 48
-  %41 = add nsw i64 %40, 240
-  %42 = add nsw i64 %41, %39
-  %43 = and i64 %42, 4294967295
-  br label %_ZN8MapBlock14getNodeNoCheckEsss.exit127
-
-_ZN8MapBlock14getNodeNoCheckEsss.exit127:         ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit125.thread212, %36
-  %44 = phi i64 [ %43, %36 ], [ 0, %_ZN10ReflowScan11lookupBlockEiii.exit125.thread212 ]
-  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %32, i64 %44
+_ZN8MapBlock14getNodeNoCheckEsss.exit127:         ; preds = %bb.ad, %_ZN10ReflowScan11lookupBlockEiii.exit125
+  %.0.i117213 = phi ptr [ %i.hl, %_ZN10ReflowScan11lookupBlockEiii.exit125 ], [ %i.gr, %bb.ad ] ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %.0.i117213, i64 16
+  %23 = load ptr, ptr %22, align 8, !tbaa !69
+  %24 = getelementptr inbounds nuw i8, ptr %.0.i117213, i64 36
+  %25 = load i8, ptr %24, align 4, !tbaa !70, !range !71, !noundef !72
+  %26 = trunc nuw i8 %25 to i1
+  %.tr217 = shl nsw i32 %i.go, 8
+  %narrow = add nsw i32 %i.gn, 240
+  %.narrow218 = add nsw i32 %narrow, %.tr217
+  %27 = zext i32 %.narrow218 to i64
+  %28 = select i1 %26, i64 0, i64 %27
+  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %23, i64 %28
   %.sroa.0.0.copyload.i126 = load i32, ptr %i.ho, align 4
   %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !17 ; 2 uses
@@ -755,14 +730,11 @@ _ZN10ReflowScan11lookupBlockEiii.exit.thread20.i152: ; preds = %_ZN10ReflowScan1
   br i1 %i.jt, label %_ZN8MapBlock14getNodeNoCheckEsss.exit.i156, label %bb.al
 
 bb.al:                                            ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit.thread20.i152
-  %45 = zext i32 %i.go to i64
-  %46 = zext i32 %i.io to i64
-  %sext.i154 = shl i64 %45, 48
-  %47 = ashr exact i64 %sext.i154, 40
-  %sext26.i155 = shl i64 %46, 48
-  %48 = ashr exact i64 %sext26.i155, 48
-  %i.ju = add nsw i64 %48, 240
-  %i.jv = add nsw i64 %i.ju, %47
+  %29 = sext i32 %i.go to i64
+  %sext26.i155 = shl nsw i64 %29, 8
+  %30 = zext i32 %i.io to i64
+  %i.ju = add nuw nsw i64 %30, 240
+  %i.jv = add nsw i64 %i.ju, %sext26.i155
   %i.jw = and i64 %i.jv, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEsss.exit.i156
 
@@ -864,14 +836,11 @@ _ZN10ReflowScan11lookupBlockEiii.exit.thread20.i: ; preds = %_ZN10ReflowScan11lo
   br i1 %i.ma, label %_ZN8MapBlock14getNodeNoCheckEsss.exit.i, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit.thread20.i
-  %49 = zext i32 %i.go to i64
-  %50 = zext i32 %i.kv to i64
-  %sext.i = shl i64 %49, 48
-  %51 = ashr exact i64 %sext.i, 40
-  %sext26.i = shl i64 %50, 48
-  %52 = ashr exact i64 %sext26.i, 48
-  %i.mb = add nsw i64 %52, 240
-  %i.mc = add nsw i64 %i.mb, %51
+  %31 = sext i32 %i.go to i64
+  %sext26.i = shl nsw i64 %31, 8
+  %32 = zext i32 %i.kv to i64
+  %i.mb = add nuw nsw i64 %32, 240
+  %i.mc = add nsw i64 %i.mb, %sext26.i
   %i.md = and i64 %i.mc, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEsss.exit.i
 
@@ -1159,17 +1128,13 @@ _ZN10ReflowScan11lookupBlockEiii.exit.thread20:   ; preds = %bb.a, %_ZN10ReflowS
   br i1 %i.at, label %_ZN8MapBlock14getNodeNoCheckEsss.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN10ReflowScan11lookupBlockEiii.exit.thread20
-  %4 = zext i32 %i.i to i64
-  %5 = zext i32 %i.f to i64
+  %4 = sext i32 %i.i to i64
+  %sext25 = shl nsw i64 %4, 8
+  %5 = sext i32 %i.f to i64
+  %sext26 = shl nsw i64 %5, 4
   %6 = zext i32 %i.c to i64
-  %sext = shl i64 %4, 48
-  %7 = ashr exact i64 %sext, 40
-  %sext25 = shl i64 %5, 48
-  %8 = ashr exact i64 %sext25, 44
-  %sext26 = shl i64 %6, 48
-  %9 = ashr exact i64 %sext26, 48
-  %i.au = add nsw i64 %8, %9
-  %i.av = add nsw i64 %i.au, %7
+  %i.au = add nsw i64 %sext26, %6
+  %i.av = add nsw i64 %i.au, %sext25
   %i.aw = and i64 %i.av, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEsss.exit
 

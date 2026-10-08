@@ -205,7 +205,6 @@ bb.a:
   br i1 %i.b, label %bb.r, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.2.0.extract.shift = lshr i16 %4, 8       ; 2 uses
   %.sroa.0.0.extract.trunc = zext i16 %4 to i32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 46 ; 2 uses
   %sext = shl i32 %.sroa.0.0.extract.trunc, 24
@@ -270,7 +269,8 @@ bb.e:                                             ; preds = %bb.d
 fix_mv_precision.exit:                            ; preds = %bb.c, %bb.e, %bb.d
   %i.ar = phi <2 x i16> [ %i.ae, %bb.d ], [ %i.aq, %bb.e ], [ %i.al, %bb.c ] ; 8 uses
   %i.as = load i32, ptr %2, align 4, !tbaa !18    ; 10 uses
-  %i.at = icmp eq i16 %.sroa.2.0.extract.shift, 255
+  %7 = ashr i16 %4, 8                             ; 2 uses
+  %i.at = icmp eq i16 %7, -1
   br i1 %i.at, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %fix_mv_precision.exit
@@ -351,16 +351,13 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.r
 
 bb.l:                                             ; preds = %fix_mv_precision.exit
-  %.sroa.2.0.extract.trunc = zext nneg i16 %.sroa.2.0.extract.shift to i32
-  %sext53 = shl nuw i32 %.sroa.2.0.extract.trunc, 24
-  %7 = ashr exact i32 %sext53, 24
   %i.by = extractelement <2 x i16> %i.ar, i64 0
   %.sroa.10.0.insert.ext108 = zext i16 %i.by to i32
   %.sroa.10.0.insert.shift109 = shl nuw i32 %.sroa.10.0.insert.ext108, 16
   %i.bz = extractelement <2 x i16> %i.ar, i64 1
   %.sroa.095.0.insert.ext100 = zext i16 %i.bz to i32
   %.sroa.095.0.insert.insert102 = or disjoint i32 %.sroa.10.0.insert.shift109, %.sroa.095.0.insert.ext100 ; 2 uses
-  %i.ca = sext i32 %7 to i64
+  %i.ca = sext i16 %7 to i64
   %i.cb = getelementptr i8, ptr %i.c, i64 %i.ca
   %i.cc = getelementptr i8, ptr %i.cb, i64 -1
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !16
@@ -472,23 +469,20 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal fastcc void @add_compound_extended_candidate(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef nonnull captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef range(i32 0, 256) %3, i32 noundef range(i32 0, 256) %4, i16 %5, ptr nofree noundef readonly captures(none) %6) unnamed_addr #7 {
 bb.a:
   %.sroa.067.0.extract.trunc = zext i16 %5 to i32
-  %.sroa.2.0.extract.shift = lshr i16 %5, 8
-  %.sroa.2.0.extract.trunc = zext nneg i16 %.sroa.2.0.extract.shift to i32
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %sext = shl i32 %.sroa.067.0.extract.trunc, 24
   %i.d = ashr exact i32 %sext, 24                 ; 2 uses
-  %sext74 = shl nuw i32 %.sroa.2.0.extract.trunc, 24
-  %7 = ashr exact i32 %sext74, 24                 ; 2 uses
+  %7 = ashr i16 %5, 8                             ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %i.g = load i8, ptr %i.c, align 1, !tbaa !16    ; 6 uses
-  %8 = sext i8 %i.g to i32                        ; 2 uses
+  %i.g = load i8, ptr %i.c, align 1, !tbaa !16    ; 7 uses
   %i.h = icmp sgt i8 %i.g, 0
   br i1 %i.h, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
+  %8 = zext nneg i8 %i.g to i32
   %.sroa.04.0.copyload = load i16, ptr %2, align 4 ; 9 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 2
   %.sroa.14.0.copyload = load i16, ptr %.sroa.14.0..sroa_idx, align 2, !tbaa !16 ; 9 uses
@@ -537,7 +531,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.b
-  %i.ab = icmp eq i32 %7, %8
+  %9 = zext nneg i8 %i.g to i16
+  %i.ab = icmp eq i16 %7, %9
   br i1 %i.ab, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %bb.g
@@ -638,21 +633,22 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.m, %bb.p, %bb.o, %bb.k, %bb.j, %bb.e, %bb.f
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 9
-  %i.bs = load i8, ptr %i.br, align 1, !tbaa !16  ; 6 uses
-  %9 = sext i8 %i.bs to i32                       ; 2 uses
+  %i.bs = load i8, ptr %i.br, align 1, !tbaa !16  ; 7 uses
   %i.bt = icmp sgt i8 %i.bs, 0
   br i1 %i.bt, label %bb.r, label %.critedge
 
 bb.r:                                             ; preds = %bb.q
+  %10 = zext nneg i8 %i.bs to i32
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 4
   %.sroa.04.0.copyload.1 = load i16, ptr %i.bu, align 4 ; 9 uses
   %.sroa.14.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %2, i64 6
   %.sroa.14.0.copyload.1 = load i16, ptr %.sroa.14.0..sroa_idx.1, align 2, !tbaa !16 ; 9 uses
-  %i.bv = icmp eq i32 %i.d, %9
+  %i.bv = icmp eq i32 %i.d, %10
   br i1 %i.bv, label %bb.ac, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.bw = icmp eq i32 %7, %9
+  %11 = zext nneg i8 %i.bs to i16
+  %i.bw = icmp eq i16 %7, %11
   br i1 %i.bw, label %bb.y, label %bb.t
 
 bb.t:                                             ; preds = %bb.s

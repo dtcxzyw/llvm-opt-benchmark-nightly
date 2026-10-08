@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/lindera_dictionary-9374fd454a7f6d88.lindera_dictionary.b7b9bc016d0cfa7-cgu.13?download=true
-inline.NumInlined: 82
+inline.NumInlined: 83
 inline.NumDeleted: 21
 begin_hunk_0_@_ZN18lindera_dictionary10dictionary14UserDictionary12word_details17h1dcc0b0a3415f635E:bb.a
   %i.ax = extractvalue { ptr, i64 } %i.aw, 0      ; 2 uses
@@ -202,11 +202,9 @@ bb.c:                                             ; preds = %"_ZN4core5slice5ind
   unreachable
 
 _ZN9byteorder9ByteOrder8read_i1617h4e8ebc948f65b877E.exit: ; preds = %"_ZN4core5slice5index74_$LT$impl$u20$core..ops..index..Index$LT$I$GT$$u20$for$u20$$u5b$T$u5d$$GT$5index17h1e80377a7c416cb9E.exit.i.i"
-  %.sroa.22.0.extract.shift.i.i.i = lshr i24 %i.o, 8
-  %.sroa.22.0.extract.trunc.i.i.i = zext nneg i24 %.sroa.22.0.extract.shift.i.i.i to i32
-  %sext = shl nuw i32 %.sroa.22.0.extract.trunc.i.i.i, 16
-  %3 = ashr exact i32 %sext, 16
-  ret i32 %3
+  %3 = ashr i24 %i.o, 8
+  %4 = sext i24 %3 to i32
+  ret i32 %4
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -254,13 +252,11 @@ bb.e:                                             ; preds = %.noexc2
   unreachable
 
 bb.f:                                             ; preds = %.noexc2
-  %.sroa.22.0.extract.shift.i.i.i = lshr i24 %i.h, 8
-  %.sroa.22.0.extract.trunc.i.i.i = zext nneg i24 %.sroa.22.0.extract.shift.i.i.i to i32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
-  %sext = shl nuw i32 %.sroa.22.0.extract.trunc.i.i.i, 16
-  %2 = ashr exact i32 %sext, 16
+  %2 = ashr i24 %i.h, 8
+  %3 = sext i24 %2 to i32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 %2, ptr %i.j, align 8
+  store i32 %3, ptr %i.j, align 8
   ret void
 
 bb.g:                                             ; preds = %bb.b
@@ -663,15 +659,16 @@ bb.c:                                             ; preds = %.lr.ph
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden { i32, i32 } @"_ZN18lindera_dictionary7viterbi7Lattice20calculate_path_costs28_$u7b$$u7b$closure$u7d$$u7d$17h0b1a673db287288dE"(ptr nofree readonly align 8 captures(none) %0, i32 %1) unnamed_addr #0 {
+define hidden { i32, i32 } @"_ZN18lindera_dictionary7viterbi7Lattice20calculate_path_costs28_$u7b$$u7b$closure$u7d$$u7d$17h0b1a673db287288dE"(ptr nofree readonly align 8 captures(none) %0, i32 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
+  %2 = alloca [0 x i8], align 1
   %i.a = load ptr, ptr %0, align 8
   %i.b = zext i32 %1 to i64
   %i.c = tail call align 4 ptr @"_ZN81_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..index..Index$LT$I$GT$$GT$5index17hcada758cec5a4e7bE"(ptr align 8 %i.a, i64 %i.b, ptr nonnull align 8 @83) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.e = load i32, ptr %i.d, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load ptr, ptr %i.f, align 8
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   %i.i = load i16, ptr %i.h, align 4
   %i.j = zext i16 %i.i to i32
@@ -680,15 +677,44 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 10
   %i.n = load i16, ptr %i.m, align 2
   %i.o = zext i16 %i.n to i32
-  %2 = tail call i32 @_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE(ptr align 8 %i.g, i32 %i.j, i32 %i.o)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = load ptr, ptr %3, align 8                  ; 5 uses
-  %5 = load i64, ptr %4, align 8
-  %6 = trunc nuw i64 %5 to i1
-  br i1 %6, label %bb.b, label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  %4 = load i32, ptr %3, align 8
+  %5 = mul i32 %4, %i.j
+  %6 = add i32 %5, %i.o
+  %7 = zext i32 %6 to i64
+  %8 = tail call { ptr, i64 } @"_ZN74_$LT$lindera_dictionary..util..Data$u20$as$u20$core..ops..deref..Deref$GT$5deref17h99b697719bae2cb0E"(ptr align 8 %i.g) ; 2 uses
+  %9 = extractvalue { ptr, i64 } %8, 0
+  %10 = extractvalue { ptr, i64 } %8, 1
+  %11 = shl nuw nsw i64 %7, 1
+  %12 = add nuw nsw i64 %11, 4
+  %13 = tail call { ptr, i64 } @"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$5index17hcc235865ec8c2340E"(i64 %12, ptr align 1 %9, i64 %10, ptr nonnull align 8 @53) ; 2 uses
+  %14 = extractvalue { ptr, i64 } %13, 1          ; 2 uses
+  %.not.i.i.i.i.i.i = icmp ult i64 %14, 2
+  br i1 %.not.i.i.i.i.i.i, label %15, label %"_ZN4core5slice5index74_$LT$impl$u20$core..ops..index..Index$LT$I$GT$$u20$for$u20$$u5b$T$u5d$$GT$5index17h1e80377a7c416cb9E.exit.i.i.i"
 
-bb.b:                                             ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8
+15:                                               ; preds = %bb.a
+  tail call void @_ZN4core5slice5index16slice_index_fail17hfe436548ecebea33E(i64 0, i64 2, i64 %14, ptr nonnull align 8 @138) #25
+  unreachable
+
+"_ZN4core5slice5index74_$LT$impl$u20$core..ops..index..Index$LT$I$GT$$u20$for$u20$$u5b$T$u5d$$GT$5index17h1e80377a7c416cb9E.exit.i.i.i": ; preds = %bb.a
+  %16 = extractvalue { ptr, i64 } %13, 0
+  %17 = tail call i24 @"_ZN53_$LT$T$u20$as$u20$core..convert..TryInto$LT$U$GT$$GT$8try_into17hee1531a14f1c944fE"(ptr align 1 %16, i64 2) ; 2 uses
+  %18 = trunc i24 %17 to i1
+  br i1 %18, label %19, label %_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE.exit
+
+19:                                               ; preds = %"_ZN4core5slice5index74_$LT$impl$u20$core..ops..index..Index$LT$I$GT$$u20$for$u20$$u5b$T$u5d$$GT$5index17h1e80377a7c416cb9E.exit.i.i.i"
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr nonnull align 1 @131, i64 43, ptr nonnull align 1 %2, ptr nonnull align 8 @130, ptr nonnull align 8 @139) #25
+  unreachable
+
+_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE.exit: ; preds = %"_ZN4core5slice5index74_$LT$impl$u20$core..ops..index..Index$LT$I$GT$$u20$for$u20$$u5b$T$u5d$$GT$5index17h1e80377a7c416cb9E.exit.i.i.i"
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %21 = load ptr, ptr %20, align 8                ; 5 uses
+  %22 = load i64, ptr %21, align 8
+  %23 = trunc nuw i64 %22 to i1
+  br i1 %23, label %bb.b, label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
+
+bb.b:                                             ; preds = %_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE.exit
+  %i.p = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.r = load i32, ptr %i.q, align 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 28
@@ -707,7 +733,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.aa, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.ab = getelementptr inbounds nuw i8, ptr %21, i64 16
   %i.ac = load i64, ptr %i.ab, align 8            ; 2 uses
   %i.ad = icmp ult i64 %i.ac, %i.w
   br i1 %i.ad, label %bb.f, label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
@@ -715,7 +741,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.ae = trunc nuw nsw i64 %i.x to i32
   %i.af = sub nuw nsw i32 %i.v, %i.ae
-  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.ag = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.ah = load i32, ptr %i.ag, align 8
   %i.ai = mul i32 %i.ah, %i.af
   br label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
@@ -723,14 +749,16 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.d
   %i.aj = trunc nuw nsw i64 %i.ac to i32
   %i.ak = sub nuw nsw i32 %i.v, %i.aj
-  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %i.al = getelementptr inbounds nuw i8, ptr %21, i64 28
   %i.am = load i32, ptr %i.al, align 4
   %i.an = mul i32 %i.am, %i.ak
   br label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
 
-_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit: ; preds = %bb.a, %bb.b, %bb.d, %bb.e, %bb.f
-  %.sroa.0.0.i = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %i.ai, %bb.e ], [ %i.an, %bb.f ], [ 0, %bb.d ]
-  %i.ao = add i32 %2, %i.e
+_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit: ; preds = %_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE.exit, %bb.b, %bb.d, %bb.e, %bb.f
+  %.sroa.0.0.i = phi i32 [ 0, %_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE.exit ], [ 0, %bb.b ], [ %i.ai, %bb.e ], [ %i.an, %bb.f ], [ 0, %bb.d ]
+  %24 = ashr i24 %17, 8
+  %25 = sext i24 %24 to i32
+  %i.ao = add i32 %i.e, %25
   %i.ap = add i32 %i.ao, %.sroa.0.0.i
   %i.aq = insertvalue { i32, i32 } poison, i32 %i.ap, 0
   %i.ar = insertvalue { i32, i32 } %i.aq, i32 %1, 1

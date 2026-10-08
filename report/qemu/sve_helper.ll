@@ -205,19 +205,15 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load i16, ptr %i.l, align 2              ; 2 uses
   %i.n = getelementptr inbounds i8, ptr %2, i64 %.018
   %i.o = load i16, ptr %i.n, align 2
-  %5 = zext i16 %i.m to i32
-  %6 = lshr i16 %i.m, 8
-  %7 = zext nneg i16 %6 to i32
-  %i.p = zext i16 %i.o to i32
-  %sext.i = shl i32 %5, 24
+  %i.p = zext i16 %i.m to i32
+  %sext.i = shl i32 %i.p, 24
   %i.q = ashr exact i32 %sext.i, 24
-  %8 = add nsw i32 %i.q, %i.p
-  %sext5.i = shl nuw i32 %7, 24
-  %9 = ashr exact i32 %sext5.i, 24
-  %10 = add nsw i32 %8, %9
-  %11 = trunc i32 %10 to i16
+  %5 = ashr i16 %i.m, 8
+  %6 = trunc nsw i32 %i.q to i16
+  %7 = add i16 %5, %i.o
+  %8 = add i16 %7, %6
   %i.r = getelementptr inbounds i8, ptr %0, i64 %.018
-  store i16 %11, ptr %i.r, align 2
+  store i16 %8, ptr %i.r, align 2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -236,19 +232,15 @@ bb.f:                                             ; preds = %bb.e
   %i.w = load i16, ptr %i.v, align 2              ; 2 uses
   %i.x = getelementptr inbounds i8, ptr %2, i64 %i.s
   %i.y = load i16, ptr %i.x, align 2
-  %12 = zext i16 %i.w to i32
-  %13 = lshr i16 %i.w, 8
-  %14 = zext nneg i16 %13 to i32
-  %i.z = zext i16 %i.y to i32
-  %sext.i.1 = shl i32 %12, 24
+  %i.z = zext i16 %i.w to i32
+  %sext.i.1 = shl i32 %i.z, 24
   %i.aa = ashr exact i32 %sext.i.1, 24
-  %15 = add nsw i32 %i.aa, %i.z
-  %sext5.i.1 = shl nuw i32 %14, 24
-  %16 = ashr exact i32 %sext5.i.1, 24
-  %17 = add nsw i32 %15, %16
-  %18 = trunc i32 %17 to i16
+  %9 = ashr i16 %i.w, 8
+  %10 = trunc nsw i32 %i.aa to i16
+  %11 = add i16 %9, %i.y
+  %12 = add i16 %11, %10
   %i.ab = getelementptr inbounds i8, ptr %0, i64 %i.s
-  store i16 %18, ptr %i.ab, align 2
+  store i16 %12, ptr %i.ab, align 2
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -267,19 +259,15 @@ bb.i:                                             ; preds = %bb.h
   %i.ag = load i16, ptr %i.af, align 2            ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %2, i64 %i.ac
   %i.ai = load i16, ptr %i.ah, align 2
-  %19 = zext i16 %i.ag to i32
-  %20 = lshr i16 %i.ag, 8
-  %21 = zext nneg i16 %20 to i32
-  %i.aj = zext i16 %i.ai to i32
-  %sext.i.2 = shl i32 %19, 24
+  %i.aj = zext i16 %i.ag to i32
+  %sext.i.2 = shl i32 %i.aj, 24
   %i.ak = ashr exact i32 %sext.i.2, 24
-  %22 = add nsw i32 %i.ak, %i.aj
-  %sext5.i.2 = shl nuw i32 %21, 24
-  %23 = ashr exact i32 %sext5.i.2, 24
-  %24 = add nsw i32 %22, %23
-  %25 = trunc i32 %24 to i16
+  %13 = ashr i16 %i.ag, 8
+  %14 = trunc nsw i32 %i.ak to i16
+  %15 = add i16 %13, %i.ai
+  %16 = add i16 %15, %14
   %i.al = getelementptr inbounds i8, ptr %0, i64 %i.ac
-  store i16 %25, ptr %i.al, align 2
+  store i16 %16, ptr %i.al, align 2
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -298,19 +286,15 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = load i16, ptr %i.ap, align 2            ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %2, i64 %i.am
   %i.as = load i16, ptr %i.ar, align 2
-  %26 = zext i16 %i.aq to i32
-  %27 = lshr i16 %i.aq, 8
-  %28 = zext nneg i16 %27 to i32
-  %i.at = zext i16 %i.as to i32
-  %sext.i.3 = shl i32 %26, 24
+  %i.at = zext i16 %i.aq to i32
+  %sext.i.3 = shl i32 %i.at, 24
   %i.au = ashr exact i32 %sext.i.3, 24
-  %29 = add nsw i32 %i.au, %i.at
-  %sext5.i.3 = shl nuw i32 %28, 24
-  %30 = ashr exact i32 %sext5.i.3, 24
-  %31 = add nsw i32 %29, %30
-  %32 = trunc i32 %31 to i16
+  %17 = ashr i16 %i.aq, 8
+  %18 = trunc nsw i32 %i.au to i16
+  %19 = add i16 %17, %i.as
+  %20 = add i16 %19, %18
   %i.av = getelementptr inbounds i8, ptr %0, i64 %i.am
-  store i16 %32, ptr %i.av, align 2
+  store i16 %20, ptr %i.av, align 2
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -329,19 +313,15 @@ bb.o:                                             ; preds = %bb.n
   %i.ba = load i16, ptr %i.az, align 2            ; 2 uses
   %i.bb = getelementptr inbounds i8, ptr %2, i64 %i.aw
   %i.bc = load i16, ptr %i.bb, align 2
-  %33 = zext i16 %i.ba to i32
-  %34 = lshr i16 %i.ba, 8
-  %35 = zext nneg i16 %34 to i32
-  %i.bd = zext i16 %i.bc to i32
-  %sext.i.4 = shl i32 %33, 24
+  %i.bd = zext i16 %i.ba to i32
+  %sext.i.4 = shl i32 %i.bd, 24
   %i.be = ashr exact i32 %sext.i.4, 24
-  %36 = add nsw i32 %i.be, %i.bd
-  %sext5.i.4 = shl nuw i32 %35, 24
-  %37 = ashr exact i32 %sext5.i.4, 24
-  %38 = add nsw i32 %36, %37
-  %39 = trunc i32 %38 to i16
+  %21 = ashr i16 %i.ba, 8
+  %22 = trunc nsw i32 %i.be to i16
+  %23 = add i16 %21, %i.bc
+  %24 = add i16 %23, %22
   %i.bf = getelementptr inbounds i8, ptr %0, i64 %i.aw
-  store i16 %39, ptr %i.bf, align 2
+  store i16 %24, ptr %i.bf, align 2
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -360,19 +340,15 @@ bb.r:                                             ; preds = %bb.q
   %i.bk = load i16, ptr %i.bj, align 2            ; 2 uses
   %i.bl = getelementptr inbounds i8, ptr %2, i64 %i.bg
   %i.bm = load i16, ptr %i.bl, align 2
-  %40 = zext i16 %i.bk to i32
-  %41 = lshr i16 %i.bk, 8
-  %42 = zext nneg i16 %41 to i32
-  %i.bn = zext i16 %i.bm to i32
-  %sext.i.5 = shl i32 %40, 24
+  %i.bn = zext i16 %i.bk to i32
+  %sext.i.5 = shl i32 %i.bn, 24
   %i.bo = ashr exact i32 %sext.i.5, 24
-  %43 = add nsw i32 %i.bo, %i.bn
-  %sext5.i.5 = shl nuw i32 %42, 24
-  %44 = ashr exact i32 %sext5.i.5, 24
-  %45 = add nsw i32 %43, %44
-  %46 = trunc i32 %45 to i16
+  %25 = ashr i16 %i.bk, 8
+  %26 = trunc nsw i32 %i.bo to i16
+  %27 = add i16 %25, %i.bm
+  %28 = add i16 %27, %26
   %i.bp = getelementptr inbounds i8, ptr %0, i64 %i.bg
-  store i16 %46, ptr %i.bp, align 2
+  store i16 %28, ptr %i.bp, align 2
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -391,19 +367,15 @@ bb.u:                                             ; preds = %bb.t
   %i.bu = load i16, ptr %i.bt, align 2            ; 2 uses
   %i.bv = getelementptr inbounds i8, ptr %2, i64 %i.bq
   %i.bw = load i16, ptr %i.bv, align 2
-  %47 = zext i16 %i.bu to i32
-  %48 = lshr i16 %i.bu, 8
-  %49 = zext nneg i16 %48 to i32
-  %i.bx = zext i16 %i.bw to i32
-  %sext.i.6 = shl i32 %47, 24
+  %i.bx = zext i16 %i.bu to i32
+  %sext.i.6 = shl i32 %i.bx, 24
   %i.by = ashr exact i32 %sext.i.6, 24
-  %50 = add nsw i32 %i.by, %i.bx
-  %sext5.i.6 = shl nuw i32 %49, 24
-  %51 = ashr exact i32 %sext5.i.6, 24
-  %52 = add nsw i32 %50, %51
-  %53 = trunc i32 %52 to i16
+  %29 = ashr i16 %i.bu, 8
+  %30 = trunc nsw i32 %i.by to i16
+  %31 = add i16 %29, %i.bw
+  %32 = add i16 %31, %30
   %i.bz = getelementptr inbounds i8, ptr %0, i64 %i.bq
-  store i16 %53, ptr %i.bz, align 2
+  store i16 %32, ptr %i.bz, align 2
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
@@ -422,19 +394,15 @@ bb.x:                                             ; preds = %bb.w
   %i.ce = load i16, ptr %i.cd, align 2            ; 2 uses
   %i.cf = getelementptr inbounds i8, ptr %2, i64 %i.ca
   %i.cg = load i16, ptr %i.cf, align 2
-  %54 = zext i16 %i.ce to i32
-  %55 = lshr i16 %i.ce, 8
-  %56 = zext nneg i16 %55 to i32
-  %i.ch = zext i16 %i.cg to i32
-  %sext.i.7 = shl i32 %54, 24
+  %i.ch = zext i16 %i.ce to i32
+  %sext.i.7 = shl i32 %i.ch, 24
   %i.ci = ashr exact i32 %sext.i.7, 24
-  %57 = add nsw i32 %i.ci, %i.ch
-  %sext5.i.7 = shl nuw i32 %56, 24
-  %58 = ashr exact i32 %sext5.i.7, 24
-  %59 = add nsw i32 %57, %58
-  %60 = trunc i32 %59 to i16
+  %33 = ashr i16 %i.ce, 8
+  %34 = trunc nsw i32 %i.ci to i16
+  %35 = add i16 %33, %i.cg
+  %36 = add i16 %35, %34
   %i.cj = getelementptr inbounds i8, ptr %0, i64 %i.ca
-  store i16 %60, ptr %i.cj, align 2
+  store i16 %36, ptr %i.cj, align 2
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w

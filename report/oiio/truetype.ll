@@ -205,12 +205,11 @@ bb.ea:                                            ; preds = %bb.ao
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.eb:                                            ; preds = %bb.ao
-  %i.st = load i32, ptr %i.es, align 2            ; 3 uses
+  %i.st = load i32, ptr %i.es, align 2            ; 4 uses
   store i32 %i.st, ptr %i.az, align 2, !tbaa !120
   %i.su = trunc i32 %i.st to i16                  ; 2 uses
   %i.sv = icmp eq i16 %i.su, 16384                ; 2 uses
-  %i.sw = lshr i32 %i.st, 16                      ; 3 uses
-  %11 = zext nneg i32 %i.sw to i64
+  %i.sw = lshr i32 %i.st, 16                      ; 2 uses
   br i1 %i.sv, label %bb.ee, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
@@ -220,8 +219,8 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.ec
   %i.sy = sext i16 %i.su to i64                   ; 2 uses
   %i.sz = mul nsw i64 %i.sy, %i.sy
-  %sext.i435 = shl nuw i64 %11, 48
-  %12 = ashr exact i64 %sext.i435, 48             ; 2 uses
+  %11 = ashr i32 %i.st, 16
+  %12 = sext i32 %11 to i64                       ; 2 uses
   %i.ta = mul nsw i64 %12, %12
   %i.tb = add nuw nsw i64 %i.ta, %i.sz
   %i.tc = lshr i64 %i.tb, 14

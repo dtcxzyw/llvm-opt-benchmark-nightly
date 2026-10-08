@@ -202,8 +202,6 @@ bb.i:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 226
   %i.ae = load i16, ptr %i.ad, align 2
   %rev.i = call noundef i16 @llvm.bswap.i16(i16 %i.ae) ; 2 uses
-  %.sroa.4.0.extract.shift = lshr i16 %rev.i, 8
-  %.sroa.4.0.extract.trunc = zext nneg i16 %.sroa.4.0.extract.shift to i32
   %i.af = load i8, ptr @_check_hash.block_zero_hash, align 1, !range !12, !noundef !13
   %i.ag = trunc nuw i8 %i.af to i1
   %i.ah = load i32, ptr %i.b, align 4
@@ -224,10 +222,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aa, i64 2
   %i.ap = load i8, ptr %i.ao, align 1
-  %5 = sext i8 %i.ap to i32
-  %sext26 = shl nuw i32 %.sroa.4.0.extract.trunc, 24
-  %6 = ashr exact i32 %sext26, 24
-  %i.aq = icmp eq i32 %6, %5
+  %5 = ashr i16 %rev.i, 8
+  %6 = sext i8 %i.ap to i16
+  %i.aq = icmp eq i16 %5, %6
   br i1 %i.aq, label %bb.l, label %bb.t
 
 bb.l:                                             ; preds = %bb.k

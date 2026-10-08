@@ -205,10 +205,10 @@ bb.t:                                             ; preds = %bb.s
 
 iter.check:                                       ; preds = %bb.t
   %i.cs = extractelement <2 x i32> %i.co, i64 1   ; 2 uses
-  %i.ct = add nsw i32 %i.cs, 1
+  %i.ct = add nuw nsw i32 %i.cs, 1
   %i.cu = tail call i32 @llvm.smin.i32(i32 %i.ct, i32 %i.bi)
   %i.cv = extractelement <2 x i32> %i.co, i64 0   ; 3 uses
-  %i.cw = add nsw i32 %i.cv, 1
+  %i.cw = add nuw nsw i32 %i.cv, 1
   %. = tail call i32 @llvm.smin.i32(i32 %i.cw, i32 %i.bh) ; 2 uses
   %i.cx = load ptr, ptr %0, align 8               ; 5 uses
   %i.cy = mul nsw i32 %i.bg, %i.cs                ; 2 uses

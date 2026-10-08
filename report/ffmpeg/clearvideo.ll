@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ca = zext i32 %i.bz to i64
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %i.ca ; 2 uses
   %i.cc = load i16, ptr %i.cb, align 2, !tbaa !30
-  %11 = zext i16 %i.cc to i32
+  %11 = sext i16 %i.cc to i32
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 2
   %i.ce = load i16, ptr %i.cd, align 2, !tbaa !30
   %i.cf = sext i16 %i.ce to i32
@@ -223,11 +223,9 @@ get_vlc2.exit105:                                 ; preds = %bb.e, %bb.f
   br i1 %.not92, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %get_vlc2.exit105
-  %12 = lshr i32 %.167.i102, 8
   %i.cj = trunc i32 %.167.i102 to i8
   %i.ck = sext i8 %i.cj to i16
-  %13 = trunc i32 %12 to i8
-  %14 = sext i8 %13 to i16
+  %12 = lshr i32 %.167.i102, 8
   br label %bb.i
 
 bb.h:                                             ; preds = %get_vlc2.exit105
@@ -235,12 +233,12 @@ bb.h:                                             ; preds = %get_vlc2.exit105
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.cm
   %i.co = load i32, ptr %i.cn, align 1, !tbaa !30
-  %15 = add i32 %i.ch, 8
   %i.cp = tail call i32 @llvm.bswap.i32(i32 %i.co)
   %i.cq = and i32 %i.ch, 7
   %i.cr = shl i32 %i.cp, %i.cq
   %i.cs = ashr i32 %i.cr, 24
-  %i.ct = tail call i32 @llvm.umin.i32(i32 %i.aw, i32 %15) ; 4 uses
+  %13 = add i32 %i.ch, 8
+  %i.ct = tail call i32 @llvm.umin.i32(i32 %i.aw, i32 %13) ; 4 uses
   store i32 %i.ct, ptr %i.at, align 8, !tbaa !51
   %i.cu = trunc nsw i32 %i.cs to i16
   %i.cv = lshr i32 %i.ct, 3
@@ -254,16 +252,16 @@ bb.h:                                             ; preds = %get_vlc2.exit105
   %i.dd = add i32 %i.ct, 8
   %i.de = tail call i32 @llvm.umin.i32(i32 %i.aw, i32 %i.dd)
   store i32 %i.de, ptr %i.at, align 8, !tbaa !51
-  %16 = trunc nsw i32 %i.dc to i16
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.0.0 = phi i16 [ %i.ck, %bb.g ], [ %i.cu, %bb.h ] ; 2 uses
-  %.sroa.10.0 = phi i16 [ %14, %bb.g ], [ %16, %bb.h ] ; 2 uses
+  %.sroa.10.0.in = phi i32 [ %12, %bb.g ], [ %i.dc, %bb.h ] ; 2 uses
   %.not93 = icmp eq ptr %10, null
   br i1 %.not93, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
+  %.sroa.10.0 = trunc i32 %.sroa.10.0.in to i16
   %i.df = load <2 x i16>, ptr %10, align 2, !tbaa !53
   %i.dg = insertelement <2 x i16> poison, i16 %.sroa.0.0, i64 0
   %i.dh = insertelement <2 x i16> %i.dg, i16 %.sroa.10.0, i64 1
@@ -273,15 +271,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.dj = zext i16 %.sroa.0.0 to i32
-  %17 = zext i16 %.sroa.10.0 to i32
+  %sext108 = shl i32 %.sroa.10.0.in, 16
+  %14 = ashr exact i32 %sext108, 16
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.d
   %.sroa.0.1 = phi i32 [ %i.dj, %bb.k ], [ 0, %bb.d ]
-  %.sroa.10.1 = phi i32 [ %17, %bb.k ], [ 0, %bb.d ]
+  %.sroa.10.1 = phi i32 [ %14, %bb.k ], [ 0, %bb.d ]
   %i.dk = add i32 %.sroa.0.1, %9                  ; 2 uses
   %i.dl = lshr i32 %9, 16
-  %i.dm = add nuw nsw i32 %.sroa.10.1, %i.dl      ; 2 uses
+  %i.dm = add nsw i32 %.sroa.10.1, %i.dl          ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !65 ; 3 uses
   %.not94 = icmp eq ptr %i.do, null

@@ -202,19 +202,18 @@ bb.p:                                             ; preds = %bb.k
   %.sroa.0.0.extract.trunc.i = zext i48 %.sroa.0.0.copyload to i64
   %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.0.0.copyload, 16
   %.sroa.2.0.extract.trunc.i = zext nneg i48 %.sroa.2.0.extract.shift.i to i64
-  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.0.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i = zext nneg i48 %.sroa.3.0.extract.shift.i to i64
-  %sext.i = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %3 = ashr exact i64 %sext.i, 16
-  %4 = add nsw i64 %3, 140737488355328
+  %3 = ashr i48 %.sroa.0.0.copyload, 32
+  %narrow.i = add nsw i48 %3, 32768
+  %4 = zext nneg i48 %narrow.i to i64
+  %5 = shl nuw nsw i64 %4, 32
   %sext1.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
   %i.aj = ashr exact i64 %sext1.i.a, 32
   %i.ak = add nsw i64 %i.aj, 2147483648
   %sext2.i = shl i64 %.sroa.0.0.extract.trunc.i, 48
   %i.al = ashr exact i64 %sext2.i, 48
   %i.am = add nsw i64 %i.al, 32768
-  %i.an = or i64 %i.ak, %i.am
-  %i.ao = or i64 %i.an, %4
+  %i.an = or i64 %i.am, %5
+  %i.ao = or i64 %i.an, %i.ak
   %i.ap = uitofp nneg i64 %i.ao to double
   invoke void @lua_pushnumber(ptr noundef %i.x, double noundef %i.ap)
           to label %bb.q unwind label %bb.s

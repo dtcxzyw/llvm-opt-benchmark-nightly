@@ -205,6 +205,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.an
   %i.mg = ashr exact i32 %sext, 24
   %i.mh = tail call i32 @llvm.smax.i32(i32 %i.mg, i32 -32)
   %i.mi = tail call i32 @llvm.smin.i32(i32 %i.mh, i32 31) ; 3 uses
+  %3 = add nsw i32 %i.mi, 32
   %i.mj = icmp samesign ult i64 %indvars.iv147, 8
   br i1 %i.mj, label %bb.al, label %bb.am
 
@@ -226,9 +227,7 @@ bb.am:                                            ; preds = %bb.ak
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %3 = shl nsw i32 %i.mi, 20
-  %sext125 = add nsw i32 %3, 33554432
-  %i.ms = lshr i32 %sext125, 24
+  %i.ms = lshr i32 %3, 4
   %i.mt = trunc nuw nsw i64 %indvars.iv147 to i32
   %i.mu = lshr i32 %i.mt, 1
   %i.mv = and i32 %i.mu, 6

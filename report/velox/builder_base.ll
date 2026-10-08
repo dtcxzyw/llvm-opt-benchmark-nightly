@@ -205,7 +205,7 @@ bb.a:
   %79 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %80 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %81 = alloca %"class.arrow::Status", align 8    ; 8 uses
-  %.sroa.02.i.i.i.i.i.i406 = alloca %struct.anon.191, align 8 ; 7 uses
+  %.sroa.02.i.i.i.i.i.i405 = alloca %struct.anon.191, align 8 ; 7 uses
   %82 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %83 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %i.k = alloca i64, align 8                      ; 5 uses
@@ -608,9 +608,9 @@ _ZN5arrow6StatusD2Ev.exit39.preheader.i418:       ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.bai, label %_ZN5arrow6StatusD2Ev.exit39._crit_edge.i419, label %.lr.ph13.split.i424.preheader
 
 .lr.ph13.split.i424.preheader:                    ; preds = %.lr.ph13.i420
-  %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2301 = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i406, i64 4
-  %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i406, i64 4
-  %.sroa.02.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i406, i64 8
+  %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2301 = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i405, i64 4
+  %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i405, i64 4
+  %.sroa.02.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i405, i64 8
   br label %.lr.ph13.split.i424
 
 _ZN5arrow6StatusD2Ev.exit39._crit_edge.i419:      ; preds = %_ZN5arrow6StatusD2Ev.exit39.i432, %.lr.ph13.i420, %_ZN5arrow6StatusD2Ev.exit39.preheader.i418
@@ -671,15 +671,15 @@ bb.by:                                            ; preds = %.lr.ph10.i427
   br i1 %i.bbm, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i406)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i405)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2301, i8 0, i64 12, i1 false), !noalias !1379
-  store i32 %i.bbn, ptr %.sroa.02.i.i.i.i.i.i406, align 8, !tbaa !96, !noalias !1379
+  store i32 %i.bbn, ptr %.sroa.02.i.i.i.i.i.i405, align 8, !tbaa !96, !noalias !1379
   %sext.i.i.i.i.i446 = shl i64 %i.bay, 32
   %i.bbo = ashr exact i64 %sext.i.i.i.i.i446, 32
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.02.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.i406.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx, ptr align 1 %i.baw, i64 %i.bbo, i1 false), !noalias !1379
-  %.sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.0..sroa.02.i.i.0..sroa.02.i.0..sroa.02.i.0..sroa.02.0..sroa.02.0..sroa.02.0..sroa.02.0..fca.0.load.i.i.i.i.i.i447 = load i64, ptr %.sroa.02.i.i.i.i.i.i406, align 8, !noalias !1379
+  %.sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.i406.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.0..sroa.02.i.i.0..sroa.02.i.0..sroa.02.i.0..sroa.02.0..sroa.02.0..sroa.02.0..sroa.02.0..fca.0.load.i.i.i.i.i.i447 = load i64, ptr %.sroa.02.i.i.i.i.i.i405, align 8, !noalias !1379
   %.sroa.02.i.i.i.i.i.i406.8..sroa.02.i.i.i.i.i.i406.8..sroa.02.i.i.i.i.i.i406.8..sroa.02.i.i.i.i.i.8..sroa.02.i.i.i.i.i.8..sroa.02.i.i.i.i.8..sroa.02.i.i.i.i.8..sroa.02.i.i.i.8..sroa.02.i.i.i.8..sroa.02.i.i.8..sroa.02.i.i.8..sroa.02.i.8..sroa.02.i.8..sroa.02.8..sroa.02.8..sroa.02.8..sroa.02.8..fca.1.load.i.i.i.i.i.i448 = load i64, ptr %.sroa.02.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.i406.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx, align 8, !noalias !1379
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i406)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i405)
   br label %_ZN5arrow17BinaryViewBuilder12UnsafeAppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i442
 
 bb.ca:                                            ; preds = %bb.by
@@ -1082,7 +1082,7 @@ bb.a:
   %79 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %80 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %81 = alloca %"class.arrow::Status", align 8    ; 8 uses
-  %.sroa.02.i.i.i.i.i.i482 = alloca %struct.anon.191, align 8 ; 7 uses
+  %.sroa.02.i.i.i.i.i.i481 = alloca %struct.anon.191, align 8 ; 7 uses
   %82 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %83 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %i.k = alloca i64, align 8                      ; 5 uses
@@ -1485,9 +1485,9 @@ _ZN5arrow6StatusD2Ev.exit37.preheader.i496:       ; preds = %_ZN5arrow6StatusD2E
   %i.awf = getelementptr inbounds nuw i8, ptr %i.auo, i64 256 ; 3 uses
   %i.awg = getelementptr inbounds nuw i8, ptr %i.auo, i64 264 ; 2 uses
   %.val268.pre.i499 = load ptr, ptr %i.aum, align 8, !tbaa !105, !noalias !2672
-  %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2410 = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i482, i64 4
-  %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i482, i64 4
-  %.sroa.02.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i482, i64 8
+  %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2410 = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i481, i64 4
+  %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i481, i64 4
+  %.sroa.02.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.02.i.i.i.i.i.i481, i64 8
   br label %bb.cn
 
 _ZN5arrow6StatusD2Ev.exit37._crit_edge.i497:      ; preds = %_ZN5arrow6StatusD2Ev.exit37.i512, %_ZN5arrow6StatusD2Ev.exit37.preheader.i496
@@ -1550,15 +1550,15 @@ bb.co:                                            ; preds = %.lr.ph12.i505
   br i1 %i.axj, label %bb.cp, label %bb.cq
 
 bb.cp:                                            ; preds = %bb.co
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i482)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i481)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx2410, i8 0, i64 12, i1 false), !noalias !2672
-  store i32 %i.axk, ptr %.sroa.02.i.i.i.i.i.i482, align 8, !tbaa !96, !noalias !2672
+  store i32 %i.axk, ptr %.sroa.02.i.i.i.i.i.i481, align 8, !tbaa !96, !noalias !2672
   %sext.i.i.i.i.i527 = shl i64 %i.awv, 32
   %i.axl = ashr exact i64 %sext.i.i.i.i.i527, 32
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.02.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.i482.4.i.i.i.i.i.4.i.i.i.i.i.4.i.i.i.i.4.i.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4..sroa_idx, ptr align 1 %i.awt, i64 %i.axl, i1 false), !noalias !2672
-  %.sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.0..sroa.02.i.i.0..sroa.02.i.0..sroa.02.i.0..sroa.02.0..sroa.02.0..sroa.02.0..sroa.02.0..fca.0.load.i.i.i.i.i.i528 = load i64, ptr %.sroa.02.i.i.i.i.i.i482, align 8, !noalias !2672
+  %.sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.i482.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.i.0..sroa.02.i.i.0..sroa.02.i.i.0..sroa.02.i.0..sroa.02.i.0..sroa.02.0..sroa.02.0..sroa.02.0..sroa.02.0..fca.0.load.i.i.i.i.i.i528 = load i64, ptr %.sroa.02.i.i.i.i.i.i481, align 8, !noalias !2672
   %.sroa.02.i.i.i.i.i.i482.8..sroa.02.i.i.i.i.i.i482.8..sroa.02.i.i.i.i.i.i482.8..sroa.02.i.i.i.i.i.8..sroa.02.i.i.i.i.i.8..sroa.02.i.i.i.i.8..sroa.02.i.i.i.i.8..sroa.02.i.i.i.8..sroa.02.i.i.i.8..sroa.02.i.i.8..sroa.02.i.i.8..sroa.02.i.8..sroa.02.i.8..sroa.02.8..sroa.02.8..sroa.02.8..sroa.02.8..fca.1.load.i.i.i.i.i.i529 = load i64, ptr %.sroa.02.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.i482.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..fca.1.gep.sroa_idx, align 8, !noalias !2672
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i482)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.02.i.i.i.i.i.i481)
   br label %_ZN5arrow17BinaryViewBuilder12UnsafeAppendESt17basic_string_viewIcSt11char_traitsIcEE.exit.i523
 
 bb.cq:                                            ; preds = %bb.co

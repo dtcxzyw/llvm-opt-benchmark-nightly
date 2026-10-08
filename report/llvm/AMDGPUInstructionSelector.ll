@@ -204,40 +204,28 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN4llvm25AMDGPUInstructionSelector30setupGeneratedPerFunctionStateERNS_15MachineFunctionE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(1408) initializes((144, 168)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1065) %1) unnamed_addr #2 align 2 {
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %4 = load ptr, ptr %3, align 8, !tbaa !337, !noalias !725
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 144
-  %.sroa.0.0.copyload.i.i = load i40, ptr %5, align 8, !noalias !725 ; 5 uses
-  %6 = and i40 %.sroa.0.0.copyload.i.i, 4278190080
-  %7 = icmp eq i40 %6, 16777216
-  br i1 %7, label %_ZNK4llvm12DenormalModeneES0_.exit.i, label %_ZNK4llvm12DenormalModeneES0_.exit8.thread.i
-
-_ZNK4llvm12DenormalModeneES0_.exit.i:             ; preds = %2
-  %.sroa.417.0.extract.shift.mask.i = and i40 %.sroa.0.0.copyload.i.i, -4294967296
-  %.not.i = icmp eq i40 %.sroa.417.0.extract.shift.mask.i, 4294967296
-  %spec.select = select i1 %.not.i, i64 0, i64 8796093022208 ; 2 uses
-  %8 = ashr i40 %.sroa.0.0.copyload.i.i, 32
-  %9 = trunc nsw i40 %8 to i32
-  %.not20.i = icmp eq i32 %9, 1
-  br i1 %.not20.i, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread.i, label %_ZNK4llvm12DenormalModeneES0_.exit8.thread.i
-
-_ZNK4llvm12DenormalModeneES0_.exit8.thread.i:     ; preds = %_ZNK4llvm12DenormalModeneES0_.exit.i, %2
-  %10 = phi i64 [ %spec.select, %_ZNK4llvm12DenormalModeneES0_.exit.i ], [ 8796093022208, %2 ]
-  %11 = or disjoint i64 %10, 4398046511104
-  br label %_ZNK4llvm12DenormalModeeqES0_.exit.thread.i
-
-_ZNK4llvm12DenormalModeeqES0_.exit.thread.i:      ; preds = %_ZNK4llvm12DenormalModeneES0_.exit8.thread.i, %_ZNK4llvm12DenormalModeneES0_.exit.i
-  %.sroa.5.0 = phi i64 [ %spec.select, %_ZNK4llvm12DenormalModeneES0_.exit.i ], [ %11, %_ZNK4llvm12DenormalModeneES0_.exit8.thread.i ] ; 2 uses
-  %i.a = and i40 %.sroa.0.0.copyload.i.i, 16776960
-  %or.cond.i = icmp eq i40 %i.a, 65792
-  %spec.select4 = select i1 %or.cond.i, i64 281474976710656, i64 0
+_ZNK4llvm12DenormalModeeqES0_.exit.thread.i:
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %3 = load ptr, ptr %2, align 8, !tbaa !337, !noalias !725
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 144
+  %.sroa.0.0.copyload.i.i = load i40, ptr %4, align 8, !noalias !725 ; 4 uses
+  %i.a = and i40 %.sroa.0.0.copyload.i.i, 4278190080
+  %5 = icmp ne i40 %i.a, 16777216
+  %6 = ashr i40 %.sroa.0.0.copyload.i.i, 32
+  %7 = trunc nsw i40 %6 to i16
+  %8 = icmp ne i16 %7, 1
+  %.not3.i.i = select i1 %5, i1 true, i1 %8       ; 2 uses
+  %spec.select = select i1 %.not3.i.i, i64 13194139533312, i64 0
+  %spec.select4 = select i1 %.not3.i.i, i64 13331578486784, i64 137438953472
+  %9 = and i40 %.sroa.0.0.copyload.i.i, 16776960
+  %10 = icmp eq i40 %9, 65792
+  %.sroa.4.0 = select i1 %10, i64 281474976710656, i64 0
   %.sroa.0.0.extract.trunc.i = trunc i40 %.sroa.0.0.copyload.i.i to i1
-  %12 = or i64 %.sroa.5.0, 137438953472
-  %.sroa.5.2 = select i1 %.sroa.0.0.extract.trunc.i, i64 %.sroa.5.0, i64 %12
+  %.sroa.5.2 = select i1 %.sroa.0.0.extract.trunc.i, i64 %spec.select, i64 %spec.select4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i64 0, ptr %i.b, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store i64 %spec.select4, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i64 %.sroa.5.2, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !338
   ret void
@@ -253,37 +241,22 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !337
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %.sroa.0.0.copyload.i = load i40, ptr %i.c, align 8 ; 5 uses
+  %.sroa.0.0.copyload.i = load i40, ptr %i.c, align 8 ; 4 uses
   %i.d = and i40 %.sroa.0.0.copyload.i, 4278190080
-  %4 = icmp eq i40 %i.d, 16777216
-  br i1 %4, label %_ZNK4llvm12DenormalModeneES0_.exit, label %_ZNK4llvm12DenormalModeneES0_.exit8.thread
+  %4 = icmp ne i40 %i.d, 16777216
+  %5 = ashr i40 %.sroa.0.0.copyload.i, 32
+  %6 = trunc nsw i40 %5 to i16
+  %7 = icmp ne i16 %6, 1
+  %.not3.i = select i1 %4, i1 true, i1 %7
+  br i1 %.not3.i, label %_ZNK4llvm12DenormalModeneES0_.exit8.thread, label %bb.b
 
-_ZNK4llvm12DenormalModeneES0_.exit:               ; preds = %bb.a
-  %.sroa.417.0.extract.shift.mask = and i40 %.sroa.0.0.copyload.i, -4294967296
-  %.not = icmp eq i40 %.sroa.417.0.extract.shift.mask, 4294967296
-  br i1 %.not, label %_ZNK4llvm12DenormalModeneES0_.exit8, label %.thread18
-
-.thread18:                                        ; preds = %_ZNK4llvm12DenormalModeneES0_.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 8796093022208, ptr %5, align 8, !tbaa !203
-  br label %_ZNK4llvm12DenormalModeneES0_.exit8
-
-_ZNK4llvm12DenormalModeneES0_.exit8:              ; preds = %_ZNK4llvm12DenormalModeneES0_.exit, %.thread18
-  %6 = phi i64 [ 0, %_ZNK4llvm12DenormalModeneES0_.exit ], [ 8796093022208, %.thread18 ] ; 2 uses
-  %7 = ashr i40 %.sroa.0.0.copyload.i, 32
-  %8 = trunc nsw i40 %7 to i32
-  %.not20 = icmp eq i32 %8, 1
-  br i1 %.not20, label %bb.b, label %_ZNK4llvm12DenormalModeneES0_.exit8.thread
-
-_ZNK4llvm12DenormalModeneES0_.exit8.thread:       ; preds = %bb.a, %_ZNK4llvm12DenormalModeneES0_.exit8
-  %9 = phi i64 [ %6, %_ZNK4llvm12DenormalModeneES0_.exit8 ], [ 8796093022208, %bb.a ]
+_ZNK4llvm12DenormalModeneES0_.exit8.thread:       ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %10 = or i64 %9, 4398046511104                  ; 2 uses
-  store i64 %10, ptr %i.e, align 8, !tbaa !203
+  store i64 13194139533312, ptr %i.e, align 8, !tbaa !203
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNK4llvm12DenormalModeneES0_.exit8.thread, %_ZNK4llvm12DenormalModeneES0_.exit8
-  %i.f = phi i64 [ %10, %_ZNK4llvm12DenormalModeneES0_.exit8.thread ], [ %6, %_ZNK4llvm12DenormalModeneES0_.exit8 ]
+bb.b:                                             ; preds = %bb.a, %_ZNK4llvm12DenormalModeneES0_.exit8.thread
+  %i.f = phi i64 [ 137438953472, %bb.a ], [ 13331578486784, %_ZNK4llvm12DenormalModeneES0_.exit8.thread ]
   %i.g = and i40 %.sroa.0.0.copyload.i, 16776960
   %or.cond = icmp eq i40 %i.g, 65792
   br i1 %or.cond, label %bb.c, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
@@ -293,14 +266,13 @@ bb.c:                                             ; preds = %bb.b
   store i64 281474976710656, ptr %i.h, align 8, !tbaa !203
   br label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.b, %bb.c
+_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.c, %bb.b
   %.sroa.0.0.extract.trunc = trunc i40 %.sroa.0.0.copyload.i to i1
   br i1 %.sroa.0.0.extract.trunc, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %11 = or i64 %i.f, 137438953472
-  store i64 %11, ptr %i.i, align 8, !tbaa !203
+  store i64 %i.f, ptr %i.i, align 8, !tbaa !203
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNK4llvm12DenormalModeeqES0_.exit.thread

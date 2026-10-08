@@ -205,14 +205,22 @@ bb.b:                                             ; preds = %bb.a
 
 _ZL20processMemoryEffectsPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit: ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
-  %i.y = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %1) #22 ; 5 uses
-  %or.cond18.i = icmp eq i32 %i.y, 0
-  br i1 %or.cond18.i, label %_ZL20processDenormalFPEnvPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i
-
-_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i:     ; preds = %_ZL20processMemoryEffectsPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit
-  %.sroa.9.0.extract.shift.i = lshr i32 %i.y, 24
+  %i.y = call i32 @_ZNK4llvm8Function16getDenormalFPEnvEv(ptr noundef nonnull align 8 dereferenceable(140) %1) #22 ; 6 uses
+  %.sroa.5.0.extract.shift.i = lshr i32 %i.y, 8   ; 2 uses
   %.sroa.7.0.extract.shift.i = lshr i32 %i.y, 16
-  %.sroa.5.0.extract.shift.i = lshr i32 %i.y, 8
+  %.sroa.9.0.extract.shift.i = lshr i32 %i.y, 24  ; 2 uses
+  %44 = or i32 %.sroa.5.0.extract.shift.i, %i.y
+  %45 = and i32 %44, 255
+  %or.cond18.i = icmp eq i32 %45, 0
+  br i1 %or.cond18.i, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.i, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i
+
+_ZNK4llvm13DenormalFPEnveqES0_.exit.i:            ; preds = %_ZL20processMemoryEffectsPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit
+  %46 = and i32 %i.y, 16711680
+  %47 = or disjoint i32 %46, %.sroa.9.0.extract.shift.i
+  %48 = icmp eq i32 %47, 0
+  br i1 %48, label %_ZL20processDenormalFPEnvPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i
+
+_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i:     ; preds = %_ZNK4llvm13DenormalFPEnveqES0_.exit.i, %_ZL20processMemoryEffectsPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit
   %i.z = call noundef ptr @_ZNK4mlir9Attribute10getContextEv(ptr noundef nonnull align 8 dereferenceable(8) %i.o) #22
   %i.aa = add i32 %i.y, 1
   %i.ab = and i32 %i.aa, 255
@@ -251,7 +259,7 @@ _ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i:     ; preds = %_ZL20processMemoryE
   store ptr %i.aj, ptr %i.ap, align 8
   br label %_ZL20processDenormalFPEnvPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit
 
-_ZL20processDenormalFPEnvPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit: ; preds = %_ZL20processMemoryEffectsPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit, %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i
+_ZL20processDenormalFPEnvPN4llvm8FunctionEN4mlir4LLVM10LLVMFuncOpE.exit: ; preds = %_ZNK4llvm13DenormalFPEnveqES0_.exit.i, %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread.i
   %.sroa.037.0.copyload = load ptr, ptr %11, align 8 ; 3 uses
   %i.aq = getelementptr i8, ptr %1, i64 128       ; 5 uses
   %.val = load ptr, ptr %i.aq, align 8, !tbaa !453

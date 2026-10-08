@@ -202,29 +202,24 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local void @_ZNK4llvm13DenormalFPEnv5printERNS_11raw_ostreamEb(ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i1 noundef zeroext %2) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %.sroa.01.0.copyload = load i16, ptr %0, align 1 ; 7 uses
+  %.sroa.01.0.copyload = load i16, ptr %0, align 1 ; 8 uses
   %.sroa.0.0.extract.trunc.i = zext i16 %.sroa.01.0.copyload to i32
   %i.b = load i8, ptr %i.a, align 1, !tbaa !19
   %i.c = sext i8 %i.b to i32
   %sext.i = shl i32 %.sroa.0.0.extract.trunc.i, 24
   %i.d = ashr exact i32 %sext.i, 24
-  %i.e = icmp eq i32 %i.d, %i.c
-  %3 = trunc i16 %.sroa.01.0.copyload to i8       ; 3 uses
-  %4 = lshr i16 %.sroa.01.0.copyload, 8           ; 2 uses
-  br i1 %i.e, label %_ZNK4llvm12DenormalModeeqES0_.exit, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
+  %3 = icmp eq i32 %i.d, %i.c
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
+  %5 = load i8, ptr %4, align 1
+  %6 = ashr i16 %.sroa.01.0.copyload, 8
+  %7 = sext i8 %5 to i16
+  %i.e = icmp eq i16 %6, %7
+  %8 = select i1 %3, i1 %i.e, i1 false
+  %9 = trunc i16 %.sroa.01.0.copyload to i8       ; 2 uses
+  br i1 %8, label %bb.b, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.a
-  %.sroa.2.0.extract.trunc.i = zext nneg i16 %4 to i32
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %6 = load i8, ptr %5, align 1, !tbaa !20
-  %7 = sext i8 %6 to i32
-  %sext1.i = shl nuw i32 %.sroa.2.0.extract.trunc.i, 24
-  %8 = ashr exact i32 %sext1.i, 24
-  %9 = icmp eq i32 %8, %7
-  br i1 %9, label %bb.b, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
-
-bb.b:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit
-  %i.f = icmp ult i8 %3, 4
+bb.b:                                             ; preds = %bb.a
+  %i.f = icmp ult i8 %9, 4
   br i1 %i.f, label %switch.lookup, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.b
@@ -324,15 +319,13 @@ bb.j:                                             ; preds = %switch.lookup45
   store ptr %i.ar, ptr %i.v, align 8, !tbaa !14
   br label %_ZNK4llvm12DenormalMode5printERNS_11raw_ostreamEbb.exit
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.a, %_ZNK4llvm12DenormalModeeqES0_.exit
-  %10 = icmp ne i8 %3, 0
+_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %11 = icmp ne i16 %4, 0
-  %or.cond = or i1 %10, %11
-  br i1 %or.cond, label %_ZNK4llvm12DenormalModeneES0_.exit.thread, label %_ZN4llvm11raw_ostreamlsEPKc.exit
+  %.not3.i.not = icmp eq i16 %.sroa.01.0.copyload, 0
+  br i1 %.not3.i.not, label %_ZN4llvm11raw_ostreamlsEPKc.exit, label %_ZNK4llvm12DenormalModeneES0_.exit.thread
 
 _ZNK4llvm12DenormalModeneES0_.exit.thread:        ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread
-  %i.at = icmp ult i8 %3, 4
+  %i.at = icmp ult i8 %9, 4
   br i1 %i.at, label %switch.lookup51, label %.thread.i19
 
 .thread.i19:                                      ; preds = %_ZNK4llvm12DenormalModeneES0_.exit.thread
@@ -452,7 +445,7 @@ bb.t:                                             ; preds = %_ZNK4llvm12Denormal
   store ptr %i.co, ptr %i.cg, align 8, !tbaa !14
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit
 
-_ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.t, %bb.s
+_ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.t, %bb.s, %_ZNK4llvm12DenormalModeeqES0_.exit.thread
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !15
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 11 uses
@@ -510,8 +503,7 @@ _ZN4llvm11raw_ostreamlsENS_9StringRefE.exit.i29:  ; preds = %_ZN4llvm11raw_ostre
   br i1 %2, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit.i29
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.dn = load i8, ptr %12, align 1, !tbaa !20
+  %i.dn = load i8, ptr %4, align 1, !tbaa !20
   %i.do = load i8, ptr %i.a, align 1, !tbaa !19
   %.not.i35 = icmp eq i8 %i.dn, %i.do
   br i1 %.not.i35, label %_ZNK4llvm12DenormalMode5printERNS_11raw_ostreamEbb.exit, label %bb.z
@@ -533,8 +525,7 @@ bb.ab:                                            ; preds = %bb.z
   br label %_ZN4llvm11raw_ostreamlsEc.exit.i31
 
 _ZN4llvm11raw_ostreamlsEc.exit.i31:               ; preds = %bb.ab, %bb.aa
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.dt = load i8, ptr %13, align 1, !tbaa !20    ; 3 uses
+  %i.dt = load i8, ptr %4, align 1, !tbaa !20     ; 3 uses
   %i.du = icmp ult i8 %i.dt, 4
   br i1 %i.du, label %switch.lookup69, label %_ZNK4llvm12DenormalMode5printERNS_11raw_ostreamEbb.exit
 

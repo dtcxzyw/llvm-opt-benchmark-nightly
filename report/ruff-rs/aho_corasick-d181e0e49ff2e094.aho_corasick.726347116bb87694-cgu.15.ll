@@ -204,7 +204,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSNtNtNtCs9OSMwK5JXHk_12aho_corasick4util10pri
   %i.ch = icmp samesign ult i64 %i.cf, %i.by      ; 2 uses
   %i.ci = select i1 %i.ch, ptr %i.bt, ptr %i.br, !unpredictable !3
   %i.cj = select i1 %i.ch, ptr %i.br, ptr %i.bt, !unpredictable !3
-  %i.ck = select i1 %i.bc, i32 %.val7, i32 %.val8
+  %i.ck = select i1 %i.bc, i32 %.val7, i32 %.val8, !unpredictable !3
   store i32 %i.ck, ptr %1, align 4
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cm = load i32, ptr %i.ci, align 4

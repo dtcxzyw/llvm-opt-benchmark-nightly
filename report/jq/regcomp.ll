@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %4 = alloca %struct.MinMaxCharLen, align 4      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
-  %.sroa.0.i111.i = alloca %struct.BagNode, align 8 ; 4 uses
+  %.sroa.0.i109.i = alloca %struct.BagNode, align 8 ; 4 uses
   %.sroa.0.i107.i = alloca %struct.BagNode, align 8 ; 4 uses
   %.sroa.0.i.i = alloca %struct.BagNode, align 8  ; 4 uses
   %i.c = alloca [7 x i8], align 1                 ; 6 uses
@@ -608,10 +608,10 @@ bb.cn:                                            ; preds = %node_swap.exit110.i
   br label %unravel_case_fold_string.exit
 
 bb.co:                                            ; preds = %bb.ca
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i111.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.i111.i, ptr noundef nonnull align 8 dereferenceable(72) %.tr, i64 72, i1 false), !tbaa.struct !153
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i109.i)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.i109.i, ptr noundef nonnull align 8 dereferenceable(72) %.tr, i64 72, i1 false), !tbaa.struct !153
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.tr, ptr noundef nonnull align 8 dereferenceable(72) %.1131.i, i64 72, i1 false), !tbaa.struct !153
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.1131.i, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.i111.i, i64 72, i1 false), !tbaa.struct !153
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.1131.i, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.i109.i, i64 72, i1 false), !tbaa.struct !153
   %i.mq = load i32, ptr %.tr, align 8, !tbaa !27
   %i.mr = icmp eq i32 %i.mq, 0
   br i1 %i.mr, label %bb.cp, label %bb.cr
@@ -664,7 +664,7 @@ bb.ct:                                            ; preds = %bb.cs
   br label %node_swap.exit114.i
 
 node_swap.exit114.i:                              ; preds = %bb.ct, %bb.cs, %bb.cr
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i111.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i109.i)
   call void @onig_node_free(ptr noundef nonnull %.1131.i) #24
   br label %unravel_case_fold_string.exit
 

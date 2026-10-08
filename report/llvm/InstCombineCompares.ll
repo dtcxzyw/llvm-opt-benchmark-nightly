@@ -205,17 +205,12 @@ bb.l:                                             ; preds = %_ZN4llvm12PatternMa
 _ZNK4llvm4Type13getScalarTypeEv.exit:             ; preds = %_ZN4llvm12PatternMatch5matchINS_8ConstantENS0_14cstval_pred_tyINS0_14is_any_zero_fpENS_10ConstantFPELb1EEEEEbPT_RKT0_.exit, %bb.l
   %.0.i = phi ptr [ %i.au, %bb.l ], [ %i.ao, %_ZN4llvm12PatternMatch5matchINS_8ConstantENS0_14cstval_pred_tyINS0_14is_any_zero_fpENS_10ConstantFPELb1EEEEEbPT_RKT0_.exit ]
   %i.av = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %.0.i) #19
-  %i.aw = call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.am, ptr noundef nonnull align 4 dereferenceable(29) %i.av) #19 ; 2 uses
-  %7 = and i16 %i.aw, 255
-  %8 = icmp eq i16 %7, 0
-  br i1 %8, label %_ZNK4llvm12DenormalModeeqES0_.exit, label %.sink.split
-
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %_ZNK4llvm4Type13getScalarTypeEv.exit
-  %9 = icmp eq i16 %i.aw, 0
+  %i.aw = call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.am, ptr noundef nonnull align 4 dereferenceable(29) %i.av) #19
+  %7 = icmp eq i16 %i.aw, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
-  br i1 %9, label %bb.m, label %bb.o
+  br i1 %7, label %bb.m, label %bb.o
 
-bb.m:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit
+bb.m:                                             ; preds = %_ZNK4llvm4Type13getScalarTypeEv.exit
   %i.ax = call noundef ptr @_ZN4llvm12InstCombiner14replaceOperandERNS_11InstructionEjPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1240) %3, ptr noundef nonnull align 8 dereferenceable(72) %0, i32 noundef 0, ptr noundef %i.m) ; 0 uses
   %i.ay = call noundef ptr @_ZN4llvm12InstCombiner14replaceOperandERNS_11InstructionEjPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1240) %3, ptr noundef nonnull align 8 dereferenceable(72) %0, i32 noundef 1, ptr noundef %i.o) ; 0 uses
   %i.az = call noundef zeroext i1 @_ZNK4llvm11Instruction9hasNoInfsEv(ptr noundef nonnull align 8 dereferenceable(72) %1) #20
@@ -227,11 +222,11 @@ bb.n:                                             ; preds = %bb.m
   call void @_ZN4llvm11Instruction12setHasNoNaNsEb(ptr noundef nonnull align 8 dereferenceable(72) %0, i1 noundef zeroext true) #19
   br label %.critedge5
 
-.sink.split:                                      ; preds = %bb.i, %_ZNK4llvm12PatternMatch14cstval_pred_tyINS0_14is_any_zero_fpENS_10ConstantFPELb1EE10match_implINS_8ConstantEEEbPT_.exit.i.i, %.split.i.i, %_ZNK4llvm4Type13getScalarTypeEv.exit
+.sink.split:                                      ; preds = %.split.i.i, %_ZNK4llvm12PatternMatch14cstval_pred_tyINS0_14is_any_zero_fpENS_10ConstantFPELb1EE10match_implINS_8ConstantEEEbPT_.exit.i.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %bb.o
 
-bb.o:                                             ; preds = %.sink.split, %_ZNK4llvm12DenormalModeeqES0_.exit
+bb.o:                                             ; preds = %.sink.split, %_ZNK4llvm4Type13getScalarTypeEv.exit
   %i.bb = load i8, ptr %2, align 8, !tbaa !32
   %i.bc = icmp eq i8 %i.bb, 7
   br i1 %i.bc, label %bb.s, label %bb.p
@@ -634,8 +629,8 @@ bb.k:                                             ; preds = %.split, %_ZNK4llvm7
   %i.ao = tail call noundef ptr @_ZNK4llvm11Instruction11getFunctionEv(ptr noundef nonnull align 8 dereferenceable(72) %0) #19
   %i.ap = load ptr, ptr %i.ae, align 8, !tbaa !100
   %i.aq = tail call i16 @_ZNK4llvm8Function15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(140) %i.ao, ptr noundef nonnull align 4 dereferenceable(29) %i.ap) #19
-  %.sroa.3.0.extract.shift = lshr i16 %i.aq, 8
-  %i.ar = add nsw i16 %.sroa.3.0.extract.shift, -1
+  %2 = ashr i16 %i.aq, 8
+  %i.ar = add nsw i16 %2, -1
   %or.cond = icmp ult i16 %i.ar, 2
   br i1 %or.cond, label %bb.l, label %_ZN4llvm12PatternMatch5matchINS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS3_10match_bindIS2_EEEEEEEEEbPT_RKT0_.exit.thread
 

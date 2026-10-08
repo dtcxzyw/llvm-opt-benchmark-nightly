@@ -205,8 +205,6 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4632) %i.w, i8 0, i64 4632, i1 false)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.v, i64 1544
   %.sroa.01.0.extract.trunc = zext i16 %1 to i32
-  %.sroa.4.0.extract.shift = lshr i16 %1, 8
-  %.sroa.4.0.extract.trunc = zext nneg i16 %.sroa.4.0.extract.shift to i32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(3088) %i.v, i8 0, i64 3088, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1536) %i.u, i8 0, i64 1536, i1 false)
@@ -330,9 +328,9 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   %sext = shl i32 %.sroa.01.0.extract.trunc, 24
   %i.cp = ashr exact i32 %sext, 24                ; 2 uses
-  %sext44 = shl nuw i32 %.sroa.4.0.extract.trunc, 24 ; 2 uses
-  %7 = ashr exact i32 %sext44, 24
-  %i.cq = add nsw i32 %i.cp, %7
+  %7 = ashr i16 %1, 8
+  %8 = sext i16 %7 to i32                         ; 2 uses
+  %i.cq = add nsw i32 %i.cp, %8
   %i.cr = sub nsw i32 128, %i.cq
   %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ct = load ptr, ptr %i.cs, align 8
@@ -344,7 +342,7 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.8112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 80
   %.sroa.9114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %.sroa.11115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 104
-  %8 = ashr exact i32 %sext44, 20
+  %9 = shl nsw i32 %8, 4
   %i.cv = add i64 %i.ac, -1
   br label %bb.n
 
@@ -747,7 +745,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   %i.rw = load i32, ptr %i.rq, align 4, !noundef !4
   %i.rx = zext i8 %i.ru to i32
   %i.ry = mul i32 %i.rv, %i.cp
-  %i.rz = mul nsw i32 %8, %i.rx
+  %i.rz = mul nsw i32 %9, %i.rx
   %i.sa = mul i32 %i.rw, %i.cr
   %i.sb = add i32 %i.ry, 1024
   %i.sc = add i32 %i.sb, %i.rz
@@ -815,8 +813,6 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4632) %i.w, i8 0, i64 4632, i1 false)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.v, i64 1544
   %.sroa.01.0.extract.trunc = zext i16 %1 to i32
-  %.sroa.4.0.extract.shift = lshr i16 %1, 8
-  %.sroa.4.0.extract.trunc = zext nneg i16 %.sroa.4.0.extract.shift to i32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(3088) %i.v, i8 0, i64 3088, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1536) %i.u, i8 0, i64 1536, i1 false)
@@ -940,9 +936,9 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   %sext = shl i32 %.sroa.01.0.extract.trunc, 24
   %i.cp = ashr exact i32 %sext, 24                ; 2 uses
-  %sext44 = shl nuw i32 %.sroa.4.0.extract.trunc, 24 ; 2 uses
-  %7 = ashr exact i32 %sext44, 24
-  %i.cq = add nsw i32 %i.cp, %7
+  %7 = ashr i16 %1, 8
+  %8 = sext i16 %7 to i32                         ; 2 uses
+  %i.cq = add nsw i32 %i.cp, %8
   %i.cr = sub nsw i32 128, %i.cq
   %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ct = load ptr, ptr %i.cs, align 8
@@ -954,7 +950,7 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.8112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 80
   %.sroa.9114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %.sroa.11115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 104
-  %8 = ashr exact i32 %sext44, 20
+  %9 = shl nsw i32 %8, 4
   %i.cv = add i64 %i.ac, -1
   br label %bb.n
 
@@ -1357,7 +1353,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   %i.sa = load i32, ptr %i.ru, align 4, !noundef !4
   %i.sb = zext i16 %i.ry to i32
   %i.sc = mul i32 %i.rz, %i.cp
-  %i.sd = mul nsw i32 %8, %i.sb
+  %i.sd = mul nsw i32 %9, %i.sb
   %i.se = mul i32 %i.sa, %i.cr
   %i.sf = add i32 %i.sc, 1024
   %i.sg = add i32 %i.sf, %i.sd

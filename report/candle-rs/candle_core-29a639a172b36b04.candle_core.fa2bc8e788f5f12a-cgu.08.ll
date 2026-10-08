@@ -204,7 +204,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = fcmp olt double %.val.i.i32, %.val6.i.i33 ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -370,7 +370,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = fcmp olt double %.val.i.i32, %.val6.i.i33 ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -536,7 +536,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = fcmp olt float %.val.i.i32, %.val6.i.i33 ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -702,7 +702,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = fcmp olt float %.val.i.i32, %.val6.i.i33 ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -868,7 +868,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp ult i8 %.val.i.i32, %.val6.i.i33   ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1034,7 +1034,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp ult i8 %.val.i.i32, %.val6.i.i33   ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1200,7 +1200,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i32 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1366,7 +1366,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i32 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1532,7 +1532,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp ult i32 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1698,7 +1698,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp ult i32 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -1864,7 +1864,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i16 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -2030,7 +2030,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i16 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -2196,7 +2196,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i64 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4
@@ -2362,7 +2362,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSm7sort_byNCNCINvMNtCsltEA4u8Pgfu_11candle_c
   %i.ba = icmp slt i64 %.val.i.i32, %.val6.i.i33  ; 2 uses
   %i.bb = select i1 %i.ba, ptr %i.as, ptr %i.aq, !unpredictable !10
   %i.bc = select i1 %i.ba, ptr %i.aq, ptr %i.as, !unpredictable !10
-  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8
+  %i.bd = select i1 %i.ah, i32 %.val7, i32 %.val8, !unpredictable !10
   store i32 %i.bd, ptr %1, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load i32, ptr %i.bb, align 4

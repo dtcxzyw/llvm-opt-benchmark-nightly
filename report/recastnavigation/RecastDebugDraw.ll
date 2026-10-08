@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge96:                                    ; preds = %._crit_edge
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store <2 x float> %i.ck, ptr %i.a, align 8, !tbaa !35
   store float %i.ci, ptr %i.n, align 8, !tbaa !35
+  store <2 x float> %i.ck, ptr %i.a, align 8, !tbaa !35
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge96, %bb.b

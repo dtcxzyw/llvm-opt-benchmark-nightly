@@ -204,8 +204,6 @@ bb.e:                                             ; preds = %.noexc2
   %i.w = load ptr, ptr %i.c, align 8, !noalias !14228, !noundef !4
   %i.x = lshr i48 %i.t, 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !14228
-  %sum.shift.i = lshr i48 %i.t, 32
-  %.sroa.4.10.extract.trunc.i = zext nneg i48 %sum.shift.i to i64
   %i.y = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.z = ptrtoint ptr %i.w to i64
   %reass.sub = sub i64 %i.z, %i.y
@@ -215,9 +213,9 @@ bb.e:                                             ; preds = %.noexc2
   %i.ab = inttoptr i64 %i.aa to ptr
   %i.ac = and i48 %i.x, 65535
   %i.ad = zext nneg i48 %i.ac to i64
-  %sext = shl nuw i64 %.sroa.4.10.extract.trunc.i, 48
-  %2 = ashr exact i64 %sext, 48
-  %i.ae = invoke noundef i8 @_RINvNtNtCs5zeGauAcNNa_10wasmi_core6memory6access10store_wrapxsECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef nonnull %i.j, i64 noundef %i.l, i64 noundef %i.n, i64 noundef %i.ad, i64 noundef %2)
+  %2 = ashr i48 %i.t, 32
+  %3 = sext i48 %2 to i64
+  %i.ae = invoke noundef i8 @_RINvNtNtCs5zeGauAcNNa_10wasmi_core6memory6access10store_wrapxsECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef nonnull %i.j, i64 noundef %i.l, i64 noundef %i.n, i64 noundef %i.ad, i64 noundef %3)
           to label %bb.f unwind label %bb.d, !noalias !14229 ; 2 uses
 
 bb.f:                                             ; preds = %bb.e

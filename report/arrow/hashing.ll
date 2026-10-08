@@ -54,7 +54,7 @@ define weak_odr void @_ZN5arrow18TypedChunkLocationIiEC2Eii(ptr noundef nonnull 
 bb.a:
   store i32 %1, ptr %0, align 4, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %i.a, align 4, !tbaa !26
+  store i32 %2, ptr %i.a, align 4, !tbaa !25
   ret void
 }
 
@@ -78,7 +78,7 @@ define weak_odr void @_ZN5arrow18TypedChunkLocationIsEC2Ess(ptr noundef nonnull 
 bb.a:
   store i16 %1, ptr %0, align 2, !tbaa !11
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %2, ptr %i.a, align 2, !tbaa !27
+  store i16 %2, ptr %i.a, align 2, !tbaa !26
   ret void
 }
 
@@ -104,7 +104,7 @@ define weak_odr void @_ZN5arrow18TypedChunkLocationIaEC2Eaa(ptr noundef nonnull 
 bb.a:
   store i8 %1, ptr %0, align 1, !tbaa !13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %2, ptr %i.a, align 1, !tbaa !14
+  store i8 %2, ptr %i.a, align 1, !tbaa !27
   ret void
 }
 
@@ -116,29 +116,20 @@ bb.a:
   %i.b = sext i8 %i.a to i32
   %sext = shl i32 %.sroa.0.0.extract.trunc, 24
   %i.c = ashr exact i32 %sext, 24
-  %i.d = icmp eq i32 %i.c, %i.b
-  br i1 %i.d, label %2, label %8
-
-2:                                                ; preds = %bb.a
-  %.sroa.2.0.extract.shift = lshr i16 %1, 8
-  %.sroa.2.0.extract.trunc = zext nneg i16 %.sroa.2.0.extract.shift to i32
+  %2 = icmp eq i32 %i.c, %i.b
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %4 = load i8, ptr %3, align 1, !tbaa !14
-  %5 = sext i8 %4 to i32
-  %sext1 = shl nuw i32 %.sroa.2.0.extract.trunc, 24
-  %6 = ashr exact i32 %sext1, 24
-  %7 = icmp eq i32 %6, %5
-  br label %8
-
-8:                                                ; preds = %2, %bb.a
-  %9 = phi i1 [ false, %bb.a ], [ %7, %2 ]
-  ret i1 %9
+  %4 = load i8, ptr %3, align 1
+  %5 = ashr i16 %1, 8
+  %6 = sext i8 %4 to i16
+  %i.d = icmp eq i16 %5, %6
+  %7 = select i1 %2, i1 %i.d, i1 false
+  ret i1 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr void @_ZN5arrow18TypedChunkLocationIhEC2Ehh(ptr noundef nonnull align 1 dereferenceable(2) %0, i8 noundef zeroext %1, i8 noundef zeroext %2) unnamed_addr #0 comdat($_ZN5arrow18TypedChunkLocationIhEC5Ehh) align 2 {
 bb.a:
-  store i8 %1, ptr %0, align 1, !tbaa !16
+  store i8 %1, ptr %0, align 1, !tbaa !15
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %2, ptr %i.a, align 1, !tbaa !28
   ret void
@@ -147,7 +138,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr noundef zeroext i1 @_ZNK5arrow18TypedChunkLocationIhEeqES1_(ptr noundef nonnull align 1 dereferenceable(2) %0, i16 %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !tbaa !16
+  %i.a = load i8, ptr %0, align 1, !tbaa !15
   %i.b = trunc i16 %1 to i8
   %i.c = icmp eq i8 %i.a, %i.b
   %.sroa.2.0.extract.shift = lshr i16 %1, 8
@@ -162,7 +153,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr void @_ZN5arrow18TypedChunkLocationItEC2Ett(ptr noundef nonnull align 2 dereferenceable(4) %0, i16 noundef zeroext %1, i16 noundef zeroext %2) unnamed_addr #0 comdat($_ZN5arrow18TypedChunkLocationItEC5Ett) align 2 {
 bb.a:
-  store i16 %1, ptr %0, align 2, !tbaa !18
+  store i16 %1, ptr %0, align 2, !tbaa !17
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %2, ptr %i.a, align 2, !tbaa !29
   ret void
@@ -171,7 +162,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr noundef zeroext i1 @_ZNK5arrow18TypedChunkLocationItEeqES1_(ptr noundef nonnull align 2 dereferenceable(4) %0, i32 %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !18
+  %i.a = load i16, ptr %0, align 2, !tbaa !17
   %i.b = trunc i32 %1 to i16
   %i.c = icmp eq i16 %i.a, %i.b
   %.sroa.2.0.extract.shift = lshr i32 %1, 16
@@ -186,7 +177,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr void @_ZN5arrow18TypedChunkLocationIjEC2Ejj(ptr noundef nonnull align 4 dereferenceable(8) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 comdat($_ZN5arrow18TypedChunkLocationIjEC5Ejj) align 2 {
 bb.a:
-  store i32 %1, ptr %0, align 4, !tbaa !20
+  store i32 %1, ptr %0, align 4, !tbaa !19
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %2, ptr %i.a, align 4, !tbaa !30
   ret void
@@ -196,7 +187,7 @@ bb.a:
 define weak_odr noundef zeroext i1 @_ZNK5arrow18TypedChunkLocationIjEeqES1_(ptr noundef nonnull align 4 dereferenceable(8) %0, i64 %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %.sroa.0.0.extract.trunc = trunc i64 %1 to i32
-  %i.a = load i32, ptr %0, align 4, !tbaa !20
+  %i.a = load i32, ptr %0, align 4, !tbaa !19
   %i.b = icmp eq i32 %i.a, %.sroa.0.0.extract.trunc
   %.sroa.2.0.extract.shift = lshr i64 %1, 32
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
@@ -210,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr void @_ZN5arrow18TypedChunkLocationIlEC2Ell(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 comdat($_ZN5arrow18TypedChunkLocationIlEC5Ell) align 2 {
 bb.a:
-  store i64 %1, ptr %0, align 8, !tbaa !23
+  store i64 %1, ptr %0, align 8, !tbaa !22
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.a, align 8, !tbaa !31
   ret void
@@ -219,7 +210,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr noundef zeroext i1 @_ZNK5arrow18TypedChunkLocationIlEeqES1_(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !23
+  %i.a = load i64, ptr %0, align 8, !tbaa !22
   %i.b = icmp eq i64 %i.a, %1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8
@@ -231,7 +222,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr void @_ZN5arrow18TypedChunkLocationImEC2Emm(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 comdat($_ZN5arrow18TypedChunkLocationImEC5Emm) align 2 {
 bb.a:
-  store i64 %1, ptr %0, align 8, !tbaa !25
+  store i64 %1, ptr %0, align 8, !tbaa !24
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.a, align 8, !tbaa !32
   ret void
@@ -240,7 +231,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr noundef zeroext i1 @_ZNK5arrow18TypedChunkLocationImEeqES1_(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !25
+  %i.a = load i64, ptr %0, align 8, !tbaa !24
   %i.b = icmp eq i64 %i.a, %1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8
@@ -643,25 +634,25 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !11 = !{!10, !9, i64 0}
 !12 = !{!"_ZTSN5arrow18TypedChunkLocationIaEE", !4, i64 0, !4, i64 1}
 !13 = !{!12, !4, i64 0}
-!14 = !{!12, !4, i64 1}
-!15 = !{!"_ZTSN5arrow18TypedChunkLocationIhEE", !4, i64 0, !4, i64 1}
-!16 = !{!15, !4, i64 0}
-!17 = !{!"_ZTSN5arrow18TypedChunkLocationItEE", !9, i64 0, !9, i64 2}
-!18 = !{!17, !9, i64 0}
-!19 = !{!"_ZTSN5arrow18TypedChunkLocationIjEE", !5, i64 0, !5, i64 4}
-!20 = !{!19, !5, i64 0}
-!21 = !{!"long", !4, i64 0}
-!22 = !{!"_ZTSN5arrow18TypedChunkLocationIlEE", !21, i64 0, !21, i64 8}
-!23 = !{!22, !21, i64 0}
-!24 = !{!"_ZTSN5arrow18TypedChunkLocationImEE", !21, i64 0, !21, i64 8}
-!25 = !{!24, !21, i64 0}
-!26 = !{!7, !5, i64 4}
-!27 = !{!10, !9, i64 2}
-!28 = !{!15, !4, i64 1}
-!29 = !{!17, !9, i64 2}
-!30 = !{!19, !5, i64 4}
-!31 = !{!22, !21, i64 8}
-!32 = !{!24, !21, i64 8}
+!14 = !{!"_ZTSN5arrow18TypedChunkLocationIhEE", !4, i64 0, !4, i64 1}
+!15 = !{!14, !4, i64 0}
+!16 = !{!"_ZTSN5arrow18TypedChunkLocationItEE", !9, i64 0, !9, i64 2}
+!17 = !{!16, !9, i64 0}
+!18 = !{!"_ZTSN5arrow18TypedChunkLocationIjEE", !5, i64 0, !5, i64 4}
+!19 = !{!18, !5, i64 0}
+!20 = !{!"long", !4, i64 0}
+!21 = !{!"_ZTSN5arrow18TypedChunkLocationIlEE", !20, i64 0, !20, i64 8}
+!22 = !{!21, !20, i64 0}
+!23 = !{!"_ZTSN5arrow18TypedChunkLocationImEE", !20, i64 0, !20, i64 8}
+!24 = !{!23, !20, i64 0}
+!25 = !{!7, !5, i64 4}
+!26 = !{!10, !9, i64 2}
+!27 = !{!12, !4, i64 1}
+!28 = !{!14, !4, i64 1}
+!29 = !{!16, !9, i64 2}
+!30 = !{!18, !5, i64 4}
+!31 = !{!21, !20, i64 8}
+!32 = !{!23, !20, i64 8}
 !33 = distinct !{!33, !35}
 !34 = distinct !{!34, !35}
 !35 = !{!"llvm.loop.mustprogress"}

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AttributorAttributes?download=true
-inline.NumInlined: 25342
-inline.NumDeleted: 9928
+inline.NumInlined: 25341
+inline.NumDeleted: 9927
 loop-unroll.NumCompletelyUnrolled: 21
 loop-unroll.NumRuntimeUnrolled: 40
 loop-unroll.NumUnrolled: 61
@@ -204,6 +204,8 @@ $_ZN4llvm19DenormalFPMathState26indicateOptimisticFixpointEv = comdat any
 $_ZN4llvm19DenormalFPMathState27indicatePessimisticFixpointEv = comdat any
 
 $_ZN4llvm13AbstractStateD2Ev = comdat any
+
+$_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_ = comdat any
 
 $_ZN4llvm10Attributor16getOrCreateAAForINS_16AADenormalFPMathEEEPKT_NS_10IRPositionEPKNS_17AbstractAttributeENS_10DepClassTyEbb = comdat any
 
@@ -607,42 +609,42 @@ _ZNK4llvm10IRPosition21getAssociatedFunctionEv.exit: ; preds = %bb.d, %bb.e, %_Z
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 2, ptr %i.ac, align 4, !tbaa !190
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.sroa.06.0.copyload = load i16, ptr %i.ad, align 8, !tbaa !1603 ; 2 uses
+  %.sroa.06.0.copyload = load i16, ptr %i.ad, align 8, !tbaa !1603 ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 90
   %.sroa.05.0.copyload = load i16, ptr %i.ae, align 2, !tbaa !1603 ; 2 uses
-  %.sroa.03.0.extract.trunc.i = trunc i16 %.sroa.06.0.copyload to i8 ; 3 uses
-  %.sroa.34.0.extract.shift.i = lshr i16 %.sroa.06.0.copyload, 8 ; 3 uses
+  %.sroa.03.0.extract.trunc.i = trunc i16 %.sroa.06.0.copyload to i8 ; 2 uses
+  %.sroa.34.0.extract.shift.i = lshr i16 %.sroa.06.0.copyload, 8
   %.sroa.0.0.extract.trunc.i = trunc i16 %.sroa.05.0.copyload to i8 ; 2 uses
   %.sroa.3.0.extract.shift.i = lshr i16 %.sroa.05.0.copyload, 8 ; 2 uses
   %i.af = icmp eq i8 %.sroa.0.0.extract.trunc.i, -1
   %i.ag = select i1 %i.af, i8 %.sroa.03.0.extract.trunc.i, i8 %.sroa.0.0.extract.trunc.i ; 2 uses
   %i.ah = icmp eq i16 %.sroa.3.0.extract.shift.i, 255
   %.v.i = select i1 %i.ah, i16 %.sroa.34.0.extract.shift.i, i16 %.sroa.3.0.extract.shift.i ; 2 uses
-  %4 = icmp eq i8 %.sroa.03.0.extract.trunc.i, 0
-  %5 = icmp eq i16 %.sroa.34.0.extract.shift.i, 0
-  %or.cond = and i1 %4, %5
-  %6 = icmp eq i8 %i.ag, 0
-  %or.cond25 = select i1 %or.cond, i1 %6, i1 false
-  %i.ai = icmp eq i16 %.v.i, 0
-  %or.cond27 = select i1 %or.cond25, i1 %i.ai, i1 false
-  br i1 %or.cond27, label %_ZN4llvm23SmallVectorTemplateBaseINS_9Attribute8AttrKindELb1EE9push_backES2_.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
+  %4 = zext nneg i16 %.v.i to i32
+  %5 = sext i8 %.sroa.03.0.extract.trunc.i to i32
+  %i.ai = icmp eq i16 %.sroa.06.0.copyload, 0
+  br i1 %i.ai, label %_ZNK4llvm13DenormalFPEnveqES0_.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
 
-_ZN4llvm23SmallVectorTemplateBaseINS_9Attribute8AttrKindELb1EE9push_backES2_.exit: ; preds = %_ZNK4llvm10IRPosition21getAssociatedFunctionEv.exit
+_ZNK4llvm13DenormalFPEnveqES0_.exit:              ; preds = %_ZNK4llvm10IRPosition21getAssociatedFunctionEv.exit
+  %6 = icmp eq i8 %i.ag, 0
+  %7 = icmp eq i16 %.v.i, 0
+  %8 = select i1 %6, i1 %7, i1 false
+  br i1 %8, label %_ZN4llvm23SmallVectorTemplateBaseINS_9Attribute8AttrKindELb1EE9push_backES2_.exit, label %_ZNK4llvm13DenormalFPEnveqES0_.exit.thread
+
+_ZN4llvm23SmallVectorTemplateBaseINS_9Attribute8AttrKindELb1EE9push_backES2_.exit: ; preds = %_ZNK4llvm13DenormalFPEnveqES0_.exit
   store i32 96, ptr %i.aa, align 8
   store i32 1, ptr %i.ab, align 8, !tbaa !176
   br label %_ZN4llvm23SmallVectorTemplateBaseINS_9AttributeELb1EE9push_backES1_.exit
 
-_ZNK4llvm13DenormalFPEnveqES0_.exit.thread:       ; preds = %_ZNK4llvm10IRPosition21getAssociatedFunctionEv.exit
-  %7 = zext nneg i16 %.v.i to i32
-  %i.aj = sext i8 %.sroa.03.0.extract.trunc.i to i32
-  %.sroa.019.1.extract.trunc = zext nneg i16 %.sroa.34.0.extract.shift.i to i32
-  %sext.a = shl nuw i32 %.sroa.019.1.extract.trunc, 24
-  %8 = ashr exact i32 %sext.a, 22
-  %sext28 = shl nuw i32 %7, 24
+_ZNK4llvm13DenormalFPEnveqES0_.exit.thread:       ; preds = %_ZNK4llvm10IRPosition21getAssociatedFunctionEv.exit, %_ZNK4llvm13DenormalFPEnveqES0_.exit
+  %9 = ashr i16 %.sroa.06.0.copyload, 8
+  %i.aj = sext i16 %9 to i32
+  %sext.a = shl nsw i32 %i.aj, 2
+  %sext28 = shl nuw i32 %4, 24
   %i.ak = sext i8 %i.ag to i32
   %i.al = ashr exact i32 %sext28, 18
   %i.am = shl nsw i32 %i.ak, 4
-  %i.an = or i32 %8, %i.aj
+  %i.an = or i32 %sext.a, %5
   %i.ao = or i32 %i.an, %i.am
   %i.ap = or i32 %i.ao, %i.al
   %i.aq = zext i32 %i.ap to i64
@@ -941,7 +943,7 @@ _ZN4llvm16AbstractCallSiteC2EOS0_.exit:           ; preds = %bb.a, %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1606 ; 2 uses
   %i.m = call noundef ptr @_ZNK4llvm11Instruction11getFunctionEv(ptr noundef nonnull align 8 dereferenceable(72) %.val) #39, !inline_history !6385
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !6389, !nonnull !142, !align !356
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !6387, !nonnull !142, !align !356
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store ptr null, ptr %i.p, align 8, !tbaa !421
@@ -956,89 +958,20 @@ _ZN4llvm16AbstractCallSiteC2EOS0_.exit:           ; preds = %bb.a, %bb.b
   br i1 %.not.i, label %bb.c, label %_ZZN12_GLOBAL__N_124AADenormalFPMathFunction10updateImplERN4llvm10AttributorEENKUlNS1_16AbstractCallSiteEE_clES4_.exit
 
 bb.c:                                             ; preds = %_ZN4llvm16AbstractCallSiteC2EOS0_.exit
-  %i.s = load ptr, ptr %i.a, align 8, !tbaa !6390, !nonnull !142, !align !163
+  %i.s = load ptr, ptr %i.a, align 8, !tbaa !6388, !nonnull !142, !align !163
   %i.t = load i32, ptr %i.s, align 4, !tbaa !686
-  %4 = load ptr, ptr %i.r, align 8, !tbaa !134
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %i.v = load ptr, ptr %i.u, align 8
-  %5 = call noundef nonnull align 8 dereferenceable(13) ptr %i.v(ptr noundef nonnull align 8 dereferenceable(93) %i.r) #39, !inline_history !6385
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 88 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i = load i32, ptr %6, align 8 ; 5 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.w, align 8, !tbaa !1603, !noalias !6391 ; 3 uses
-  %.sroa.06.0.extract.trunc.i.i.i.i = trunc i32 %.sroa.0.0.copyload.i.i.i.i to i16 ; 2 uses
-  %.sroa.2.0.extract.shift.i.i.i.i = lshr i32 %.sroa.0.0.copyload.i.i.i.i, 16 ; 2 uses
-  %.sroa.2.0.extract.trunc.i.i.i.i = trunc nuw i32 %.sroa.2.0.extract.shift.i.i.i.i to i16 ; 2 uses
-  %7 = trunc i32 %.sroa.0.0.copyload.i.i.i to i16 ; 3 uses
-  %8 = lshr i32 %.sroa.0.0.copyload.i.i.i, 16     ; 2 uses
-  %9 = trunc nuw i32 %8 to i16                    ; 2 uses
-  %.sroa.01.0.extract.trunc.i.i.i.i.i = trunc i32 %.sroa.0.0.copyload.i.i.i to i8 ; 2 uses
-  %.sroa.22.0.extract.shift.i.i.i.i.i = lshr i16 %7, 8 ; 3 uses
-  %.sroa.0.0.extract.trunc.i.i.i.i.i = trunc i32 %.sroa.0.0.copyload.i.i.i.i to i8 ; 2 uses
-  %.sroa.2.0.extract.shift.i.i.i.i.i = lshr i16 %.sroa.06.0.extract.trunc.i.i.i.i, 8 ; 3 uses
-  %10 = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i.i.i, %.sroa.01.0.extract.trunc.i.i.i.i.i
-  %11 = icmp eq i8 %.sroa.01.0.extract.trunc.i.i.i.i.i, 3
-  %or.cond.i.i.i.i.i.i = or i1 %11, %10
-  %12 = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i.i.i, 3
-  %..i.i.i.i.i.i = select i1 %12, i16 %7, i16 255
-  %.0.i.i.i.i.i.i = select i1 %or.cond.i.i.i.i.i.i, i16 %.sroa.06.0.extract.trunc.i.i.i.i, i16 %..i.i.i.i.i.i
-  %13 = icmp eq i16 %.sroa.2.0.extract.shift.i.i.i.i.i, %.sroa.22.0.extract.shift.i.i.i.i.i
-  %14 = icmp eq i16 %.sroa.22.0.extract.shift.i.i.i.i.i, 3
-  %or.cond.i3.i.i.i.i.i = or i1 %14, %13
-  %15 = icmp eq i16 %.sroa.2.0.extract.shift.i.i.i.i.i, 3
-  %16 = select i1 %15, i16 %.sroa.22.0.extract.shift.i.i.i.i.i, i16 255
-  %.sroa.2.0.insert.ext.i.i.i.i.i = select i1 %or.cond.i3.i.i.i.i.i, i16 %.sroa.2.0.extract.shift.i.i.i.i.i, i16 %16
-  %.sroa.2.0.insert.shift.i.i.i.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i.i.i.i.i, 8
-  %.sroa.0.0.insert.ext.i.i.i.i.i = and i16 %.0.i.i.i.i.i.i, 255
-  %.sroa.0.0.insert.insert.i.i.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i.i ; 2 uses
-  %.sroa.01.0.extract.trunc.i8.i.i.i.i = trunc i32 %8 to i8 ; 2 uses
-  %.sroa.22.0.extract.shift.i9.i.i.i.i = lshr i16 %9, 8 ; 3 uses
-  %.sroa.0.0.extract.trunc.i10.i.i.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i.i.i to i8 ; 2 uses
-  %.sroa.2.0.extract.shift.i11.i.i.i.i = lshr i16 %.sroa.2.0.extract.trunc.i.i.i.i, 8 ; 3 uses
-  %17 = icmp eq i8 %.sroa.0.0.extract.trunc.i10.i.i.i.i, %.sroa.01.0.extract.trunc.i8.i.i.i.i
-  %18 = icmp eq i8 %.sroa.01.0.extract.trunc.i8.i.i.i.i, 3
-  %or.cond.i.i12.i.i.i.i = or i1 %18, %17
-  %19 = icmp eq i8 %.sroa.0.0.extract.trunc.i10.i.i.i.i, 3
-  %..i.i13.i.i.i.i = select i1 %19, i16 %9, i16 255
-  %.0.i.i14.i.i.i.i = select i1 %or.cond.i.i12.i.i.i.i, i16 %.sroa.2.0.extract.trunc.i.i.i.i, i16 %..i.i13.i.i.i.i
-  %20 = icmp eq i16 %.sroa.2.0.extract.shift.i11.i.i.i.i, %.sroa.22.0.extract.shift.i9.i.i.i.i
-  %21 = icmp eq i16 %.sroa.22.0.extract.shift.i9.i.i.i.i, 3
-  %or.cond.i3.i15.i.i.i.i = or i1 %21, %20
-  %22 = icmp eq i16 %.sroa.2.0.extract.shift.i11.i.i.i.i, 3
-  %23 = select i1 %22, i16 %.sroa.22.0.extract.shift.i9.i.i.i.i, i16 255
-  %.sroa.2.0.insert.ext.i16.i.i.i.i = select i1 %or.cond.i3.i15.i.i.i.i, i16 %.sroa.2.0.extract.shift.i11.i.i.i.i, i16 %23
-  %.sroa.2.0.insert.shift.i17.i.i.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i16.i.i.i.i, 8
-  %.sroa.0.0.insert.ext.i18.i.i.i.i = and i16 %.0.i.i14.i.i.i.i, 255
-  %.sroa.0.0.insert.insert.i19.i.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i17.i.i.i.i, %.sroa.0.0.insert.ext.i18.i.i.i.i
-  %.sroa.4.0.insert.ext.i.i.i.i = zext i16 %.sroa.0.0.insert.insert.i19.i.i.i.i to i32 ; 2 uses
-  %.sroa.4.0.insert.shift.i.i.i.i = shl nuw i32 %.sroa.4.0.insert.ext.i.i.i.i, 16 ; 2 uses
-  %.sroa.07.0.insert.ext.i.i.i.i = zext i16 %.sroa.0.0.insert.insert.i.i.i.i.i to i32
-  %.sroa.07.0.insert.insert.i.i.i.i = or disjoint i32 %.sroa.4.0.insert.shift.i.i.i.i, %.sroa.07.0.insert.ext.i.i.i.i
-  store i32 %.sroa.07.0.insert.insert.i.i.i.i, ptr %6, align 8, !tbaa !1603, !noalias !6391
-  %or.cond.i.i = icmp eq i16 %.sroa.0.0.insert.insert.i.i.i.i.i, %7
-  br i1 %or.cond.i.i, label %24, label %_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_.exit.i
-
-24:                                               ; preds = %bb.c
-  %25 = shl i32 %.sroa.0.0.copyload.i.i.i, 8
-  %26 = shl i32 %.sroa.4.0.insert.ext.i.i.i.i, 24
-  %.unshifted7.i.i = xor i32 %26, %25
-  %27 = icmp ult i32 %.unshifted7.i.i, 16777216
-  br i1 %27, label %28, label %_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_.exit.i
-
-28:                                               ; preds = %24
-  %.unshifted8.i.i = xor i32 %.sroa.4.0.insert.shift.i.i.i.i, %.sroa.0.0.copyload.i.i.i
-  %29 = icmp ult i32 %.unshifted8.i.i, 16777216
-  %30 = zext i1 %29 to i32
-  br label %_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_.exit.i
-
-_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_.exit.i: ; preds = %28, %24, %bb.c
-  %31 = phi i32 [ 0, %bb.c ], [ %30, %28 ], [ 0, %24 ]
-  %32 = call noundef i32 @_ZN4llvmorENS_12ChangeStatusES0_(i32 noundef %i.t, i32 noundef %31) #39, !inline_history !6385
-  %33 = load ptr, ptr %i.a, align 8, !tbaa !6390, !nonnull !142, !align !163
-  store i32 %32, ptr %33, align 4, !tbaa !686
+  %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 80
+  %i.v = load ptr, ptr %i.r, align 8, !tbaa !134
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 48
+  %4 = load ptr, ptr %i.w, align 8
+  %5 = call noundef nonnull align 8 dereferenceable(13) ptr %4(ptr noundef nonnull align 8 dereferenceable(93) %i.r) #39, !inline_history !6385
+  %6 = call noundef i32 @_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_(ptr noundef nonnull align 8 dereferenceable(13) %i.u, ptr noundef nonnull align 8 dereferenceable(13) %5), !inline_history !6385
+  %7 = call noundef i32 @_ZN4llvmorENS_12ChangeStatusES0_(i32 noundef %i.t, i32 noundef %6) #39, !inline_history !6385
+  %8 = load ptr, ptr %i.a, align 8, !tbaa !6388, !nonnull !142, !align !163
+  store i32 %7, ptr %8, align 4, !tbaa !686
   br label %_ZZN12_GLOBAL__N_124AADenormalFPMathFunction10updateImplERN4llvm10AttributorEENKUlNS1_16AbstractCallSiteEE_clES4_.exit
 
-_ZZN12_GLOBAL__N_124AADenormalFPMathFunction10updateImplERN4llvm10AttributorEENKUlNS1_16AbstractCallSiteEE_clES4_.exit: ; preds = %_ZN4llvm16AbstractCallSiteC2EOS0_.exit, %_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_.exit.i
+_ZZN12_GLOBAL__N_124AADenormalFPMathFunction10updateImplERN4llvm10AttributorEENKUlNS1_16AbstractCallSiteEE_clES4_.exit: ; preds = %_ZN4llvm16AbstractCallSiteC2EOS0_.exit, %bb.c
   %i.x = load ptr, ptr %i.c, align 8, !tbaa !132  ; 2 uses
   %i.y = icmp eq ptr %i.x, %i.d
   br i1 %i.y, label %_ZN4llvm16AbstractCallSiteD2Ev.exit, label %bb.d
@@ -1049,6 +982,90 @@ bb.d:                                             ; preds = %_ZZN12_GLOBAL__N_12
 
 _ZN4llvm16AbstractCallSiteD2Ev.exit:              ; preds = %_ZZN12_GLOBAL__N_124AADenormalFPMathFunction10updateImplERN4llvm10AttributorEENKUlNS1_16AbstractCallSiteEE_clES4_.exit, %bb.d
   ret i1 %.not.i
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr noundef i32 @_ZN4llvm27clampStateAndIndicateChangeINS_19DenormalFPMathStateEEENS_12ChangeStatusERT_RKS3_(ptr noundef nonnull align 8 dereferenceable(13) %0, ptr noundef nonnull align 8 dereferenceable(13) %1) local_unnamed_addr #3 comdat {
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load i32, ptr %3, align 8 ; 7 uses
+  %.sroa.4.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 8
+  %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.0.0.copyload.i.i = load i32, ptr %4, align 8, !tbaa !1603, !noalias !6391 ; 3 uses
+  %.sroa.06.0.extract.trunc.i.i = trunc i32 %.sroa.0.0.copyload.i.i to i16 ; 2 uses
+  %.sroa.2.0.extract.shift.i.i = lshr i32 %.sroa.0.0.copyload.i.i, 16 ; 2 uses
+  %.sroa.2.0.extract.trunc.i.i = trunc nuw i32 %.sroa.2.0.extract.shift.i.i to i16 ; 2 uses
+  %5 = trunc i32 %.sroa.0.0.copyload.i to i16     ; 2 uses
+  %6 = lshr i32 %.sroa.0.0.copyload.i, 16         ; 2 uses
+  %7 = trunc nuw i32 %6 to i16                    ; 2 uses
+  %.sroa.01.0.extract.trunc.i.i.i = trunc i32 %.sroa.0.0.copyload.i to i8 ; 2 uses
+  %.sroa.22.0.extract.shift.i.i.i = lshr i16 %5, 8 ; 3 uses
+  %.sroa.0.0.extract.trunc.i.i.i = trunc i32 %.sroa.0.0.copyload.i.i to i8 ; 2 uses
+  %.sroa.2.0.extract.shift.i.i.i = lshr i16 %.sroa.06.0.extract.trunc.i.i, 8 ; 3 uses
+  %8 = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i, %.sroa.01.0.extract.trunc.i.i.i
+  %9 = icmp eq i8 %.sroa.01.0.extract.trunc.i.i.i, 3
+  %or.cond.i.i.i.i = or i1 %9, %8
+  %10 = icmp eq i8 %.sroa.0.0.extract.trunc.i.i.i, 3
+  %..i.i.i.i = select i1 %10, i16 %5, i16 255
+  %.0.i.i.i.i = select i1 %or.cond.i.i.i.i, i16 %.sroa.06.0.extract.trunc.i.i, i16 %..i.i.i.i
+  %11 = icmp eq i16 %.sroa.2.0.extract.shift.i.i.i, %.sroa.22.0.extract.shift.i.i.i
+  %12 = icmp eq i16 %.sroa.22.0.extract.shift.i.i.i, 3
+  %or.cond.i3.i.i.i = or i1 %12, %11
+  %13 = icmp eq i16 %.sroa.2.0.extract.shift.i.i.i, 3
+  %14 = select i1 %13, i16 %.sroa.22.0.extract.shift.i.i.i, i16 255
+  %.sroa.2.0.insert.ext.i.i.i = select i1 %or.cond.i3.i.i.i, i16 %.sroa.2.0.extract.shift.i.i.i, i16 %14
+  %.sroa.2.0.insert.shift.i.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i.i.i, 8 ; 2 uses
+  %.sroa.0.0.insert.ext.i.i.i = and i16 %.0.i.i.i.i, 255
+  %.sroa.0.0.insert.insert.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
+  %.sroa.01.0.extract.trunc.i8.i.i = trunc i32 %6 to i8 ; 2 uses
+  %.sroa.22.0.extract.shift.i9.i.i = lshr i16 %7, 8 ; 3 uses
+  %.sroa.0.0.extract.trunc.i10.i.i = trunc i32 %.sroa.2.0.extract.shift.i.i to i8 ; 2 uses
+  %.sroa.2.0.extract.shift.i11.i.i = lshr i16 %.sroa.2.0.extract.trunc.i.i, 8 ; 3 uses
+  %15 = icmp eq i8 %.sroa.0.0.extract.trunc.i10.i.i, %.sroa.01.0.extract.trunc.i8.i.i
+  %16 = icmp eq i8 %.sroa.01.0.extract.trunc.i8.i.i, 3
+  %or.cond.i.i12.i.i = or i1 %16, %15
+  %17 = icmp eq i8 %.sroa.0.0.extract.trunc.i10.i.i, 3
+  %..i.i13.i.i = select i1 %17, i16 %7, i16 255
+  %.0.i.i14.i.i = select i1 %or.cond.i.i12.i.i, i16 %.sroa.2.0.extract.trunc.i.i, i16 %..i.i13.i.i
+  %18 = icmp eq i16 %.sroa.2.0.extract.shift.i11.i.i, %.sroa.22.0.extract.shift.i9.i.i
+  %19 = icmp eq i16 %.sroa.22.0.extract.shift.i9.i.i, 3
+  %or.cond.i3.i15.i.i = or i1 %19, %18
+  %20 = icmp eq i16 %.sroa.2.0.extract.shift.i11.i.i, 3
+  %21 = select i1 %20, i16 %.sroa.22.0.extract.shift.i9.i.i, i16 255
+  %.sroa.2.0.insert.ext.i16.i.i = select i1 %or.cond.i3.i15.i.i, i16 %.sroa.2.0.extract.shift.i11.i.i, i16 %21
+  %.sroa.2.0.insert.shift.i17.i.i = shl nuw i16 %.sroa.2.0.insert.ext.i16.i.i, 8 ; 2 uses
+  %.sroa.0.0.insert.ext.i18.i.i = and i16 %.0.i.i14.i.i, 255
+  %.sroa.0.0.insert.insert.i19.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i17.i.i, %.sroa.0.0.insert.ext.i18.i.i
+  %.sroa.4.0.insert.ext.i.i = zext i16 %.sroa.0.0.insert.insert.i19.i.i to i32 ; 2 uses
+  %.sroa.4.0.insert.shift.i.i = shl nuw i32 %.sroa.4.0.insert.ext.i.i, 16
+  %.sroa.07.0.insert.ext.i.i = zext i16 %.sroa.0.0.insert.insert.i.i.i to i32 ; 2 uses
+  %.sroa.07.0.insert.insert.i.i = or disjoint i32 %.sroa.4.0.insert.shift.i.i, %.sroa.07.0.insert.ext.i.i
+  store i32 %.sroa.07.0.insert.insert.i.i, ptr %3, align 8, !tbaa !1603, !noalias !6391
+  %.unshifted = xor i32 %.sroa.0.0.copyload.i, %.sroa.07.0.insert.ext.i.i
+  %.mask = and i32 %.unshifted, 255
+  %22 = icmp eq i32 %.mask, 0
+  %23 = ashr exact i16 %.sroa.2.0.insert.shift.i.i.i, 8
+  %24 = sext i8 %.sroa.4.0.extract.trunc to i16
+  %25 = icmp eq i16 %23, %24
+  %26 = select i1 %22, i1 %25, i1 false
+  br i1 %26, label %27, label %_ZNK4llvm19DenormalFPMathState13DenormalStateeqES1_.exit
+
+27:                                               ; preds = %2
+  %28 = shl i32 %.sroa.0.0.copyload.i, 8
+  %sext.i4.i = shl i32 %.sroa.4.0.insert.ext.i.i, 24
+  %.unshifted6 = xor i32 %sext.i4.i, %28
+  %29 = icmp ult i32 %.unshifted6, 16777216
+  %30 = ashr exact i16 %.sroa.2.0.insert.shift.i17.i.i, 8
+  %31 = ashr i32 %.sroa.0.0.copyload.i, 24
+  %32 = trunc nsw i32 %31 to i16
+  %33 = icmp eq i16 %30, %32
+  %34 = select i1 %29, i1 %33, i1 false
+  %35 = zext i1 %34 to i32
+  br label %_ZNK4llvm19DenormalFPMathState13DenormalStateeqES1_.exit
+
+_ZNK4llvm19DenormalFPMathState13DenormalStateeqES1_.exit: ; preds = %2, %27
+  %36 = phi i32 [ 0, %2 ], [ %35, %27 ]
+  ret i32 %36
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1454,11 +1471,11 @@ begin_hunk_2_@llvm.scmp.i32.i64
 !6384 = !{!614, !613, i64 0}
 !6385 = distinct !{null}
 !6386 = distinct !{null, null}
-!6387 = distinct !{!6387, i1 false, !"_ZN4llvm19DenormalFPMathStateeOERKS0_"}
-!6388 = distinct !{!6388, !6387, !"_ZN4llvm19DenormalFPMathStateeOERKS0_: argument 0"}
-!6389 = !{!1605, !467, i64 8}
-!6390 = !{!1605, !130, i64 0}
-!6391 = !{!6388}
+!6387 = !{!1605, !467, i64 8}
+!6388 = !{!1605, !130, i64 0}
+!6389 = distinct !{!6389, i1 false, !"_ZN4llvm19DenormalFPMathStateeOERKS0_"}
+!6390 = distinct !{!6390, !6389, !"_ZN4llvm19DenormalFPMathStateeOERKS0_: argument 0"}
+!6391 = !{!6390}
 !6392 = !{ptr @_ZN4llvm16AADenormalFPMath17createForPositionERKNS_10IRPositionERNS_10AttributorE}
 !6393 = !{!1607, !1607, i64 0}
 !6394 = distinct !{!6394, i1 false, !"_ZNK4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKcNS_10IRPositionEEPNS_17AbstractAttributeENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S8_EEEES6_S8_SA_SD_E6getRepEv"}

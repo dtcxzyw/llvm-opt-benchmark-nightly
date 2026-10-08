@@ -205,9 +205,8 @@ bb.ff:                                            ; preds = %bb.fe
 
 bb.fg:                                            ; preds = %bb.ff
   %i.ada = sext i32 %.05.lcssa.i.i172 to i64
-  %139 = shl nsw i64 %i.ada, 26
-  %i.adb = add nsw i64 %139, 4227858432
-  %i.adc = ashr i64 %i.adb, 29
+  %i.adb = add nsw i64 %i.ada, 63
+  %i.adc = ashr i64 %i.adb, 3
   %i.add = and i64 %i.adc, -8                     ; 2 uses
   %i.ade = getelementptr inbounds nuw i8, ptr %i.acz, i64 44
   %i.adf = load i8, ptr %i.ade, align 4, !tbaa !138, !noalias !807
