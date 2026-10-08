@@ -205,7 +205,7 @@ bb.a:
   %i.cv = bitcast <4 x i32> %i.cu to <2 x i64>
   %i.cw = or disjoint <2 x i64> %i.cv, splat (i64 4575657222473777152)
   store <2 x i64> %i.cw, ptr %i.cs, align 16, !tbaa !9, !alias.scope !69, !noalias !70
-  %i.cx = add i64 %i.ao, 16                       ; 2 uses
+  %i.cx = add nuw i64 %i.ao, 16                   ; 2 uses
   %i.cy = icmp ult i64 %i.cx, %i.c
   br i1 %i.cy, label %.preheader.us, label %..preheader55_crit_edge.us, !llvm.loop !53
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %._crit_edge.i, %.lr
   %i.ha = or disjoint <4 x i64> %i.gz, splat (i64 4575657222473777152)
   store <4 x i64> %i.ha, ptr %i.gw, align 32, !tbaa !9, !alias.scope !125, !noalias !128
   %i.hb = add nuw nsw i64 %.061.i, 8
-  %i.hc = add i64 %.160.i, 8                      ; 2 uses
+  %i.hc = add nuw i64 %.160.i, 8                  ; 2 uses
   %i.hd = icmp ult i64 %i.hc, %i.em
   br i1 %i.hd, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !93
 
@@ -738,7 +738,7 @@ bb.c:                                             ; preds = %._crit_edge.i15, %.
   %i.jw = or disjoint <4 x i64> %i.jv, splat (i64 4575657222473777152)
   store <4 x i64> %i.jw, ptr %i.js, align 32, !tbaa !9, !alias.scope !135, !noalias !138
   %i.jx = add nuw nsw i64 %.061.i18, 8
-  %i.jy = add i64 %.160.i19, 8                    ; 2 uses
+  %i.jy = add nuw i64 %.160.i19, 8                ; 2 uses
   %i.jz = icmp ult i64 %i.jy, %i.hi
   br i1 %i.jz, label %.lr.ph.i17, label %._crit_edge.i15, !llvm.loop !93
 
@@ -868,7 +868,7 @@ bb.d:                                             ; preds = %._crit_edge.i29, %.
   %i.ms = or disjoint <4 x i64> %i.mr, splat (i64 4575657222473777152)
   store <4 x i64> %i.ms, ptr %i.mo, align 32, !tbaa !9, !alias.scope !145, !noalias !148
   %i.mt = add nuw nsw i64 %.061.i32, 8
-  %i.mu = add i64 %.160.i33, 8                    ; 2 uses
+  %i.mu = add nuw i64 %.160.i33, 8                ; 2 uses
   %i.mv = icmp ult i64 %i.mu, %i.ke
   br i1 %i.mv, label %.lr.ph.i31, label %._crit_edge.i29, !llvm.loop !93
 
@@ -1226,7 +1226,7 @@ bb.a:
   %i.cv = bitcast <4 x i32> %i.cu to <2 x i64>
   %i.cw = or disjoint <2 x i64> %i.cv, splat (i64 4575657222473777152)
   store <2 x i64> %i.cw, ptr %i.cs, align 16, !tbaa !9, !alias.scope !199, !noalias !200
-  %i.cx = add i64 %i.ao, 16                       ; 2 uses
+  %i.cx = add nuw i64 %i.ao, 16                   ; 2 uses
   %i.cy = icmp ult i64 %i.cx, %i.c
   br i1 %i.cy, label %.preheader.us, label %..preheader55_crit_edge.us, !llvm.loop !171
 

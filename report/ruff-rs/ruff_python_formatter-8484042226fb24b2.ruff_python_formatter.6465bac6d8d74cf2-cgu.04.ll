@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 579
 inline.NumDeleted: 285
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvXsd_NtCs45bxiIjzMqg_5salsa8internedINtB5_5ValueNtCs56aZGHL6Dc6_7ruff_db10PythonFileENtNtB7_5table4Slot5memosCs8CpBcHC8tKo_21ruff_python_formatter
 define internal noundef nonnull ptr @_RNvXsd_NtCs45bxiIjzMqg_5salsa8internedINtB5_5ValueNtCs56aZGHL6Dc6_7ruff_db10PythonFileENtNtB7_5table4Slot5memosCs8CpBcHC8tKo_21ruff_python_formatter(ptr nofree noundef readnone captures(ret: address, provenance) %0, i64 range(i64 1, 0) %1) unnamed_addr #10 {
 bb.a:
@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1033)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1034, !noundef !3
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1034, !noundef !3 ; 5 uses
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i, label %bb.c
 
@@ -213,20 +213,83 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %0, align 8, !alias.scope !1034, !nonnull !3, !noundef !3 ; 2 uses
   %.val13.i.i.i = load <16 x i8>, ptr %i.g, align 16, !noalias !1035
   %i.h = icmp sgt <16 x i8> %.val13.i.i.i, splat (i8 -1)
-  %i.i = bitcast <16 x i1> %i.h to i16
-  %.not12.i.i.i.a = icmp eq i16 %i.i, 0
-  br i1 %.not12.i.i.i.a, label %.lr.ph.i.i.i.a, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i
+  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 3 uses
+  %i.i = bitcast <16 x i1> %i.h to i16            ; 3 uses
+  %xtraiter = and i64 %i.e, 1
+  %.not12.i.i.i.a = icmp eq i64 %xtraiter, 0
+  br i1 %.not12.i.i.i.a, label %.prol.loopexit, label %.prol.preheader
 
-.lr.ph.i.i.i.a:                                   ; preds = %bb.c, %.lr.ph.i.i.i.a
-  %.pn.i.i = phi ptr [ %1, %.lr.ph.i.i.i.a ], [ %i.g, %bb.c ]
-  %1 = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 16 ; 2 uses
-  %.val810.i.i.i = load <16 x i8>, ptr %1, align 16, !noalias !1036
-  %2 = icmp sgt <16 x i8> %.val810.i.i.i, splat (i8 -1)
-  %.cast.i.i.i.a = bitcast <16 x i1> %2 to i16
+.prol.preheader:                                  ; preds = %bb.c
+  %.not12.i.i.i.prol = icmp eq i16 %i.i, 0
+  br i1 %.not12.i.i.i.prol, label %.lr.ph.i.i.i.prol, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol
+
+.lr.ph.i.i.i.prol:                                ; preds = %.prol.preheader, %.lr.ph.i.i.i.prol
+  %2 = phi ptr [ %4, %.lr.ph.i.i.i.prol ], [ %1, %.prol.preheader ] ; 2 uses
+  %.val810.i.i.i.prol = load <16 x i8>, ptr %2, align 16, !noalias !1036
+  %3 = icmp sgt <16 x i8> %.val810.i.i.i.prol, splat (i8 -1)
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %.cast.i.i.i.prol = bitcast <16 x i1> %3 to i16 ; 2 uses
+  %.not.i.i.i.prol = icmp eq i16 %.cast.i.i.i.prol, 0
+  br i1 %.not.i.i.i.prol, label %.lr.ph.i.i.i.prol, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol
+
+_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol: ; preds = %.lr.ph.i.i.i.prol, %.prol.preheader
+  %.sroa.6.1.i.i.prol = phi ptr [ %1, %.prol.preheader ], [ %4, %.lr.ph.i.i.i.prol ]
+  %.lcssa.i.i.i.prol = phi i16 [ %i.i, %.prol.preheader ], [ %.cast.i.i.i.prol, %.lr.ph.i.i.i.prol ] ; 2 uses
+  %5 = add i16 %.lcssa.i.i.i.prol, -1
+  %6 = and i16 %5, %.lcssa.i.i.i.prol
+  %7 = add nsw i64 %i.e, -1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol, %bb.c
+  %.sroa.6.015.i.i.unr = phi ptr [ %1, %bb.c ], [ %.sroa.6.1.i.i.prol, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol ]
+  %.sroa.86.014.i.i.unr = phi i16 [ %i.i, %bb.c ], [ %6, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol ]
+  %.sroa.107.013.i.i.unr = phi i64 [ %i.e, %bb.c ], [ %7, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.prol ]
+  %8 = icmp eq i64 %i.e, 1
+  br i1 %8, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i, label %.new
+
+.new:                                             ; preds = %.prol.loopexit, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1
+  %.sroa.6.015.i.i = phi ptr [ %.sroa.6.1.i.i.1, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1 ], [ %.sroa.6.015.i.i.unr, %.prol.loopexit ] ; 2 uses
+  %.sroa.86.014.i.i = phi i16 [ %17, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1 ], [ %.sroa.86.014.i.i.unr, %.prol.loopexit ] ; 2 uses
+  %.sroa.107.013.i.i = phi i64 [ %18, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1 ], [ %.sroa.107.013.i.i.unr, %.prol.loopexit ]
+  %.not12.i.i.i = icmp eq i16 %.sroa.86.014.i.i, 0
+  br i1 %.not12.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.new, %.lr.ph.i.i.i
+  %9 = phi ptr [ %11, %.lr.ph.i.i.i ], [ %.sroa.6.015.i.i, %.new ] ; 2 uses
+  %.val810.i.i.i = load <16 x i8>, ptr %9, align 16, !noalias !1036
+  %10 = icmp sgt <16 x i8> %.val810.i.i.i, splat (i8 -1)
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
+  %.cast.i.i.i = bitcast <16 x i1> %10 to i16     ; 2 uses
+  %.not.i.i.i = icmp eq i16 %.cast.i.i.i, 0
+  br i1 %.not.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i
+
+_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i: ; preds = %.lr.ph.i.i.i, %.new
+  %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %.new ], [ %11, %.lr.ph.i.i.i ] ; 2 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.014.i.i, %.new ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
+  %12 = add i16 %.lcssa.i.i.i, -1
+  %13 = and i16 %12, %.lcssa.i.i.i                ; 2 uses
+  %.not12.i.i.i.1 = icmp eq i16 %13, 0
+  br i1 %.not12.i.i.i.1, label %.lr.ph.i.i.i.a, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1
+
+.lr.ph.i.i.i.a:                                   ; preds = %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i, %.lr.ph.i.i.i.a
+  %.pn.i.i = phi ptr [ %15, %.lr.ph.i.i.i.a ], [ %.sroa.6.1.i.i, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i ] ; 2 uses
+  %.val810.i.i.i.1 = load <16 x i8>, ptr %.pn.i.i, align 16, !noalias !1036
+  %14 = icmp sgt <16 x i8> %.val810.i.i.i.1, splat (i8 -1)
+  %15 = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 16 ; 2 uses
+  %.cast.i.i.i.a = bitcast <16 x i1> %14 to i16   ; 2 uses
   %.not.i.i.i.a = icmp eq i16 %.cast.i.i.i.a, 0
-  br i1 %.not.i.i.i.a, label %.lr.ph.i.i.i.a, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i
+  br i1 %.not.i.i.i.a, label %.lr.ph.i.i.i.a, label %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1
 
-_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i: ; preds = %.lr.ph.i.i.i.a, %bb.c, %bb.b
+_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1: ; preds = %.lr.ph.i.i.i.a, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i
+  %.sroa.6.1.i.i.1 = phi ptr [ %.sroa.6.1.i.i, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i ], [ %15, %.lr.ph.i.i.i.a ]
+  %.lcssa.i.i.i.1 = phi i16 [ %13, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i ], [ %.cast.i.i.i.a, %.lr.ph.i.i.i.a ] ; 2 uses
+  %16 = add i16 %.lcssa.i.i.i.1, -1
+  %17 = and i16 %16, %.lcssa.i.i.i.1
+  %18 = add i64 %.sroa.107.013.i.i, -2            ; 2 uses
+  %19 = icmp eq i64 %18, 0
+  br i1 %19, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i, label %.new
+
+_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtB1e_3map5EntryEEB1g_.exit.i: ; preds = %.prol.loopexit, %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCs8CpBcHC8tKo_21ruff_python_formatter8comments8node_key18NodeRefEqualityKeyNtNtBZ_3map5EntryEE9next_implKb0_EB11_.exit.i.i.1, %bb.b
   %i.j = shl i64 %i.b, 5                          ; 2 uses
   %i.k = add i64 %i.j, 32                         ; 2 uses
   %i.l = add i64 %i.b, 17

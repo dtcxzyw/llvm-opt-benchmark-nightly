@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.w, %_ZN3gmx9Hash
   %exitcond124.not = icmp eq i64 %indvars.iv.next121, %i.ey
   br i1 %exitcond124.not, label %._crit_edge104, label %bb.w, !llvm.loop !84
 
-.loopexit:                                        ; preds = %._crit_edge104, %.lr.ph107, %bb.v, %bb.u
+.loopexit:                                        ; preds = %._crit_edge104, %bb.v, %.lr.ph107, %bb.u
   %indvars.iv.next129 = add nuw nsw i64 %indvars.iv128, 1 ; 2 uses
   %.not87 = icmp eq i64 %indvars.iv.next129, 95
   br i1 %.not87, label %bb.t, label %bb.u

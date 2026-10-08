@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph125, %_ZL14_blur_verticalILm16ELb1EEvPfmmmS0_.exit
   %.031124 = phi i64 [ 0, %.lr.ph125 ], [ %i.ac, %_ZL14_blur_verticalILm16ELb1EEvPfmmmS0_.exit ] ; 5 uses
-  %i.ac = add i64 %.031124, 16                    ; 3 uses
+  %i.ac = add nuw i64 %.031124, 16                ; 3 uses
   %.not = icmp ugt i64 %i.ac, %2
   br i1 %.not, label %.preheader72, label %bb.c
 
@@ -608,7 +608,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph122, %_ZL14_blur_verticalILm16ELb0EEvPfmmmS0_.exit
   %.031121 = phi i64 [ 0, %.lr.ph122 ], [ %i.o, %_ZL14_blur_verticalILm16ELb0EEvPfmmmS0_.exit ] ; 5 uses
-  %i.o = add i64 %.031121, 16                     ; 3 uses
+  %i.o = add nuw i64 %.031121, 16                 ; 3 uses
   %.not = icmp ugt i64 %i.o, %2
   br i1 %.not, label %.preheader69, label %bb.c
 

@@ -1,0 +1,663 @@
+diff --git a/llvm/include/llvm/Analysis/LoopInfo.h b/llvm/include/llvm/Analysis/LoopInfo.h
+index 64caab77893e64..d046f30044a22d 100644
+--- a/llvm/include/llvm/Analysis/LoopInfo.h
++++ b/llvm/include/llvm/Analysis/LoopInfo.h
+@@ -693,6 +693,19 @@ LLVM_ABI bool isMustProgress(const Loop *L);
+ /// iterations.
+ LLVM_ABI bool isFinite(const Loop *L);
+ 
++/// Return true if every cycle in the loop nest rooted at \p L runs a finite
++/// number of iterations. This holds if either:
++/// - \p L is finite by assumption, which covers the whole nest (see
++///   ScalarEvolution::loopIsFiniteByAssumption); or
++/// - the nest has no irreducible cycle, and each loop in it is finite by
++///   assumption or has a computable constant max backedge-taken count.
++///
++/// Note: this does not guarantee that the nest finishes executing; a call in
++/// it may still never return. Callers that need that must check it
++/// themselves, e.g. with Instruction::willReturn().
++LLVM_ABI bool isLoopNestFinite(Loop *L, ScalarEvolution &SE,
++                               const LoopInfo &LI);
++
+ /// Return whether an MDNode might represent an access group.
+ ///
+ /// Access group metadata nodes have to be distinct and empty. Being
+diff --git a/llvm/lib/Analysis/LoopInfo.cpp b/llvm/lib/Analysis/LoopInfo.cpp
+index 613e9887f3c45f..411d5690de5aab 100644
+--- a/llvm/lib/Analysis/LoopInfo.cpp
++++ b/llvm/lib/Analysis/LoopInfo.cpp
+@@ -16,6 +16,7 @@
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/ADT/ScopeExit.h"
+ #include "llvm/ADT/SmallPtrSet.h"
++#include "llvm/Analysis/CFG.h"
+ #include "llvm/Analysis/IVDescriptors.h"
+ #include "llvm/Analysis/LoopIterator.h"
+ #include "llvm/Analysis/LoopNestAnalysis.h"
+@@ -1219,6 +1220,51 @@ bool llvm::isFinite(const Loop *L) {
+   return L->getHeader()->getParent()->willReturn();
+ }
+ 
++bool llvm::isLoopNestFinite(Loop *L, ScalarEvolution &SE, const LoopInfo &LI) {
++  // Unlike isFinite(), which only consults willreturn, a loop counts as finite
++  // here if it is either finite by assumption or has a bounded trip count.
++  //
++  // "Finite by assumption" means willreturn, or mustprogress with no side
++  // effects in SCEV's sense.
++  //
++  // The result only guarantees that no cycle takes its backedge forever; an
++  // instruction inside an iteration may still never return. Per LangRef, a
++  // mustprogress caller that calls a non-mustprogress function which never
++  // returns is well-defined, and SCEV's side-effect check does not reject
++  // such calls (e.g. a readnone call that is not willreturn).
++  //
++  // If L is finite by assumption, so is every cycle inside it. SCEV's
++  // side-effect scan covers every block of L, sub-loops included. So if a
++  // sub-loop or irreducible cycle spun forever, L would never terminate while
++  // having no side effects, which violates L's forward-progress guarantee and
++  // is UB.
++  if (SE.loopIsFiniteByAssumption(L))
++    return true;
++
++  // Otherwise finiteness has to be proven structurally, and an irreducible
++  // cycle has no Loop to hang a proof or an assumption on.
++  LoopBlocksRPO RPOT(L);
++  RPOT.perform(&LI);
++  if (containsIrreducibleCFG<const BasicBlock *>(RPOT, LI))
++    return false;
++
++  // Each loop in the nest is either assumed finite, which covers its sub-loops
++  // as above, or needs a computable constant max backedge-taken count.
++  if (isa<SCEVCouldNotCompute>(SE.getConstantMaxBackedgeTakenCount(L)))
++    return false;
++  SmallVector<Loop *, 8> WorkList(L->begin(), L->end());
++  while (!WorkList.empty()) {
++    Loop *Current = WorkList.pop_back_val();
++    if (SE.loopIsFiniteByAssumption(Current))
++      continue;
++    if (isa<SCEVCouldNotCompute>(SE.getConstantMaxBackedgeTakenCount(Current)))
++      return false;
++    WorkList.append(Current->begin(), Current->end());
++  }
++
++  return true;
++}
++
+ static const char *LLVMLoopMustProgress = "llvm.loop.mustprogress";
+ 
+ bool llvm::hasMustProgress(const Loop *L) {
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index f00064313a7c0f..11c6047dfa882e 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -7514,6 +7514,12 @@ ScalarEvolution::getLoopProperties(const Loop *L) {
+       if (isa<MemIntrinsic>(I) && !I->isVolatile())
+         return false;
+ 
++      // Droppable intrinsics (e.g. llvm.assume) only model a write to
++      // inaccessible memory to keep them in place; they have no observable
++      // effect and so do not count as forward progress.
++      if (I->isDroppable())
++        return false;
++
+       return I->mayWriteToMemory();
+     };
+ 
+diff --git a/llvm/lib/Transforms/Scalar/IndVarSimplify.cpp b/llvm/lib/Transforms/Scalar/IndVarSimplify.cpp
+index 4b1fb39ce9932d..d006795a064918 100644
+--- a/llvm/lib/Transforms/Scalar/IndVarSimplify.cpp
++++ b/llvm/lib/Transforms/Scalar/IndVarSimplify.cpp
+@@ -1950,6 +1950,13 @@ bool IndVarSimplify::predicateLoopExits(Loop *L, SCEVExpander &Rewriter) {
+   if (ExitingBlocks.empty())
+     return false;
+ 
++  // Bail unless every cycle in the nest is finite. Otherwise a sub-loop (or an
++  // irreducible cycle) that spins forever would be skipped by the predicated
++  // exit, silently dropping an observable infinite loop. Calls that may not
++  // return are rejected by the side-effect check below.
++  if (!isLoopNestFinite(L, *SE, *LI))
++    return false;
++
+   // At this point, ExitingBlocks consists of only those blocks which are
+   // predicatable.  Given that, we know we have at least one exit we can
+   // predicate if the loop is doesn't have side effects and doesn't have any
+diff --git a/llvm/lib/Transforms/Scalar/LoopDeletion.cpp b/llvm/lib/Transforms/Scalar/LoopDeletion.cpp
+index 6079e8de685195..96cc127b670783 100644
+--- a/llvm/lib/Transforms/Scalar/LoopDeletion.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopDeletion.cpp
+@@ -18,6 +18,7 @@
+ #include "llvm/ADT/Statistic.h"
+ #include "llvm/Analysis/CFG.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
++#include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/LoopIterator.h"
+ #include "llvm/Analysis/LoopPass.h"
+ #include "llvm/Analysis/MemorySSA.h"
+@@ -109,36 +110,9 @@ static bool isLoopDead(Loop *L, ScalarEvolution &SE,
+         }))
+       return false;
+ 
+-  // The loop or any of its sub-loops looping infinitely is legal. The loop can
+-  // only be considered dead if either
+-  // a. the function is mustprogress.
+-  // b. all (sub-)loops are mustprogress or have a known trip-count.
+-  if (L->getHeader()->getParent()->mustProgress())
+-    return true;
+-
+-  LoopBlocksRPO RPOT(L);
+-  RPOT.perform(&LI);
+-  // If the loop contains an irreducible cycle, it may loop infinitely.
+-  if (containsIrreducibleCFG<const BasicBlock *>(RPOT, LI))
+-    return false;
+-
+-  SmallVector<Loop *, 8> WorkList;
+-  WorkList.push_back(L);
+-  while (!WorkList.empty()) {
+-    Loop *Current = WorkList.pop_back_val();
+-    if (hasMustProgress(Current))
+-      continue;
+-
+-    const SCEV *S = SE.getConstantMaxBackedgeTakenCount(Current);
+-    if (isa<SCEVCouldNotCompute>(S)) {
+-      LLVM_DEBUG(
+-          dbgs() << "Could not compute SCEV MaxBackedgeTakenCount and was "
+-                    "not required to make progress.\n");
+-      return false;
+-    }
+-    WorkList.append(Current->begin(), Current->end());
+-  }
+-  return true;
++  // The loop can only be considered dead if every cycle in the nest is finite.
++  // Calls that may not return were rejected by the side-effect check above.
++  return isLoopNestFinite(L, SE, LI);
+ }
+ 
+ /// This function returns true if there is no viable path from the
+diff --git a/llvm/test/Analysis/ScalarEvolution/finite-loop-droppable.ll b/llvm/test/Analysis/ScalarEvolution/finite-loop-droppable.ll
+new file mode 100644
+index 00000000000000..2458366350aa6a
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/finite-loop-droppable.ll
+@@ -0,0 +1,121 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -disable-output "-passes=print<scalar-evolution>" -scalar-evolution-classify-expressions=0 2>&1 | FileCheck %s
++
++; The trip count of these unknown-stride loops can only be computed by
++; assuming that the loop is finite, i.e. that it is mustprogress and has no
++; side effects. Droppable intrinsics such as llvm.assume and llvm.pseudoprobe
++; only model a write to inaccessible memory to keep them in place, so they
++; must not count as side effects for that purpose.
++
++target datalayout = "e-m:e-p:32:32-f64:32:64-f80:32-n8:16:32-S128"
++
++define void @assume_in_loop(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
++; CHECK-LABEL: 'assume_in_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @assume_in_loop
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
++;
++entry:
++  br label %for.body
++
++for.body:
++  %i.05 = phi i32 [ %add, %for.body ], [ 0, %entry ]
++  %arrayidx = getelementptr inbounds i32, ptr %A, i32 %i.05
++  %0 = load i32, ptr %arrayidx, align 4
++  %nonneg = icmp sge i32 %0, 0
++  call void @llvm.assume(i1 %nonneg)
++  %add = add nsw i32 %i.05, %s
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %for.body, label %for.end
++
++for.end:
++  ret void
++}
++
++define void @pseudoprobe_in_loop(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
++; CHECK-LABEL: 'pseudoprobe_in_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @pseudoprobe_in_loop
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
++;
++entry:
++  br label %for.body
++
++for.body:
++  %i.05 = phi i32 [ %add, %for.body ], [ 0, %entry ]
++  call void @llvm.pseudoprobe(i64 1234, i64 1, i32 0, i64 -1)
++  %add = add nsw i32 %i.05, %s
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %for.body, label %for.end
++
++for.end:
++  ret void
++}
++
++; Without mustprogress there is no finiteness assumption to make.
++define void @assume_in_loop_no_mustprogress(ptr nocapture %A, i32 %n, i32 %s) {
++; CHECK-LABEL: 'assume_in_loop_no_mustprogress'
++; CHECK-NEXT:  Determining loop execution counts for: @assume_in_loop_no_mustprogress
++; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:   Predicates:
++; CHECK-NEXT:      Compare predicate: %s sgt) 0
++; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i32 -1
++; CHECK-NEXT:   Predicates:
++; CHECK-NEXT:      Compare predicate: %s sgt) 0
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (%n smax %s))))<nuw><nsw> + (-1 * %s) + (%n smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (%n smax %s))))
++; CHECK-NEXT:   Predicates:
++; CHECK-NEXT:      Compare predicate: %s sgt) 0
++;
++entry:
++  br label %for.body
++
++for.body:
++  %i.05 = phi i32 [ %add, %for.body ], [ 0, %entry ]
++  %arrayidx = getelementptr inbounds i32, ptr %A, i32 %i.05
++  %0 = load i32, ptr %arrayidx, align 4
++  %nonneg = icmp sge i32 %0, 0
++  call void @llvm.assume(i1 %nonneg)
++  %add = add nsw i32 %i.05, %s
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %for.body, label %for.end
++
++for.end:
++  ret void
++}
++
++; A volatile store is a real side effect, so the loop may legally be infinite
++; even with the assume.
++define void @assume_and_volatile_store_in_loop(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
++; CHECK-LABEL: 'assume_and_volatile_store_in_loop'
++; CHECK-NEXT:  Determining loop execution counts for: @assume_and_volatile_store_in_loop
++; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  br label %for.body
++
++for.body:
++  %i.05 = phi i32 [ %add, %for.body ], [ 0, %entry ]
++  %arrayidx = getelementptr inbounds i32, ptr %A, i32 %i.05
++  %0 = load i32, ptr %arrayidx, align 4
++  %nonneg = icmp sge i32 %0, 0
++  call void @llvm.assume(i1 %nonneg)
++  store volatile i32 %0, ptr %arrayidx, align 4
++  %add = add nsw i32 %i.05, %s
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %for.body, label %for.end
++
++for.end:
++  ret void
++}
++
++declare void @llvm.assume(i1)
++declare void @llvm.pseudoprobe(i64, i64, i32, i64)
+diff --git a/llvm/test/Transforms/IndVarSimplify/skip-predication-infinite-subloop.ll b/llvm/test/Transforms/IndVarSimplify/skip-predication-infinite-subloop.ll
+new file mode 100644
+index 00000000000000..ddd0ee372c9fe1
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/skip-predication-infinite-subloop.ll
+@@ -0,0 +1,249 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt < %s -passes=indvars -indvars-predicate-loops=1 -S | FileCheck %s
++
++; The inner loop's max BTC is unknown and it is not mustprogress, so the
++; helper bails and predication of the outer exit is skipped.
++define void @infinite_subloop_skips_predication() {
++; CHECK-LABEL: @infinite_subloop_skips_predication(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    br label [[INNER_HEADER:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       inner.header:
++; CHECK-NEXT:    [[INNER_COND:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[INNER_COND]], label [[INNER_HEADER]], label [[OUTER_LATCH]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    [[OUTER_COND:%.*]] = icmp eq i8 [[IV_NEXT]], -1
++; CHECK-NEXT:    br i1 [[OUTER_COND]], label [[EXIT:%.*]], label [[OUTER_HEADER]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  br label %inner.header
++
++exit:
++  ret void
++
++inner.header:
++  %inner.cond = icmp eq i8 %iv, 1
++  br i1 %inner.cond, label %inner.header, label %outer.latch
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header
++}
++
++; Tagging the side-effect-free inner loop !llvm.loop.mustprogress makes it
++; finite by assumption, so predication of the outer exit fires as usual.
++; (The metadata is the test input asserting termination; IndVarSimplify
++; trusts the tag without verification, so the inner loop's actual
++; non-termination when iv == 1 is irrelevant to the optimizer's choice.)
++define void @mustprogress_subloop_still_predicated() {
++; CHECK-LABEL: @mustprogress_subloop_still_predicated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    br label [[INNER_HEADER:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       inner.header:
++; CHECK-NEXT:    [[INNER_COND:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[INNER_COND]], label [[INNER_HEADER]], label [[OUTER_LATCH]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[OUTER_HEADER]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  br label %inner.header
++
++exit:
++  ret void
++
++inner.header:
++  %inner.cond = icmp eq i8 %iv, 1
++  br i1 %inner.cond, label %inner.header, label %outer.latch, !llvm.loop !0
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header
++}
++
++; The mustprogress function attribute makes the side-effect-free nest finite
++; by assumption, so an inner loop with an unknown max BTC no longer blocks
++; predication.
++define void @mustprogress_function_subloop_predicated() mustprogress {
++; CHECK-LABEL: @mustprogress_function_subloop_predicated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    br label [[INNER_HEADER:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       inner.header:
++; CHECK-NEXT:    [[INNER_COND:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[INNER_COND]], label [[INNER_HEADER]], label [[OUTER_LATCH]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[OUTER_HEADER]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  br label %inner.header
++
++exit:
++  ret void
++
++inner.header:
++  %inner.cond = icmp eq i8 %iv, 1
++  br i1 %inner.cond, label %inner.header, label %outer.latch
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header
++}
++
++; Likewise for willreturn.
++define void @willreturn_function_subloop_predicated() willreturn {
++; CHECK-LABEL: @willreturn_function_subloop_predicated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    br label [[INNER_HEADER:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       inner.header:
++; CHECK-NEXT:    [[INNER_COND:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[INNER_COND]], label [[INNER_HEADER]], label [[OUTER_LATCH]]
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[OUTER_HEADER]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  br label %inner.header
++
++exit:
++  ret void
++
++inner.header:
++  %inner.cond = icmp eq i8 %iv, 1
++  br i1 %inner.cond, label %inner.header, label %outer.latch
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header
++}
++
++; An irreducible cycle inside the outer loop may spin forever (when iv == 1),
++; so predication is skipped.
++define void @irreducible_cycle_skips_predication() {
++; CHECK-LABEL: @irreducible_cycle_skips_predication(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_A:%.*]], label [[IRR_B:%.*]]
++; CHECK:       irr.a:
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_B]], label [[OUTER_LATCH]]
++; CHECK:       irr.b:
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_A]], label [[OUTER_LATCH]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    [[OUTER_COND:%.*]] = icmp eq i8 [[IV_NEXT]], -1
++; CHECK-NEXT:    br i1 [[OUTER_COND]], label [[EXIT:%.*]], label [[OUTER_HEADER]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp eq i8 %iv, 1
++  br i1 %c, label %irr.a, label %irr.b
++
++irr.a:
++  br i1 %c, label %irr.b, label %outer.latch
++
++irr.b:
++  br i1 %c, label %irr.a, label %outer.latch
++
++exit:
++  ret void
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header
++}
++
++; With !llvm.loop.mustprogress on the side-effect-free outer loop, the whole
++; nest (including the irreducible cycle) is finite by assumption.
++define void @mustprogress_outer_irreducible_cycle_predicated() {
++; CHECK-LABEL: @mustprogress_outer_irreducible_cycle_predicated(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[OUTER_HEADER:%.*]]
++; CHECK:       outer.header:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i8 [[IV]], 1
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_A:%.*]], label [[IRR_B:%.*]]
++; CHECK:       irr.a:
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_B]], label [[OUTER_LATCH]]
++; CHECK:       irr.b:
++; CHECK-NEXT:    br i1 [[C]], label [[IRR_A]], label [[OUTER_LATCH]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++; CHECK:       outer.latch:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[OUTER_HEADER]], !llvm.loop [[LOOP2:![0-9]+]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp eq i8 %iv, 1
++  br i1 %c, label %irr.a, label %irr.b
++
++irr.a:
++  br i1 %c, label %irr.b, label %outer.latch
++
++irr.b:
++  br i1 %c, label %irr.a, label %outer.latch
++
++exit:
++  ret void
++
++outer.latch:
++  %iv.next = add nuw i8 %iv, 1
++  %outer.cond = icmp eq i8 %iv.next, -1
++  br i1 %outer.cond, label %exit, label %outer.header, !llvm.loop !2
++}
++
++!0 = distinct !{!0, !1}
++!1 = !{!"llvm.loop.mustprogress"}
++!2 = distinct !{!2, !1}
+diff --git a/llvm/test/Transforms/LoopDeletion/loop-nest-finite.ll b/llvm/test/Transforms/LoopDeletion/loop-nest-finite.ll
+new file mode 100644
+index 00000000000000..57704829ebfd09
+--- /dev/null
++++ b/llvm/test/Transforms/LoopDeletion/loop-nest-finite.ll
+@@ -0,0 +1,100 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=loop-deletion -S | FileCheck %s
++
++; Each loop below has a loop-invariant exit condition, so it either exits
++; immediately or spins forever and SCEV cannot compute a max backedge-taken
++; count. Whether it can be deleted depends on isLoopNestFinite's assumption
++; path.
++
++declare void @llvm.assume(i1)
++
++; No willreturn or mustprogress: the loop may be infinite and must stay.
++define void @unknown_tripcount_no_assumption(i32 %a, i32 %b) {
++; CHECK-LABEL: define void @unknown_tripcount_no_assumption(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[FOR_COND:.*]]
++; CHECK:       [[FOR_COND]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[FOR_BODY:.*]], label %[[FOR_END:.*]]
++; CHECK:       [[FOR_BODY]]:
++; CHECK-NEXT:    br label %[[FOR_COND]]
++; CHECK:       [[FOR_END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %for.cond
++for.cond:
++  %cmp = icmp slt i32 %a, %b
++  br i1 %cmp, label %for.body, label %for.end
++for.body:
++  br label %for.cond
++for.end:
++  ret void
++}
++
++; willreturn makes the loop finite by assumption, so it is deleted.
++define void @unknown_tripcount_willreturn(i32 %a, i32 %b) willreturn {
++; CHECK-LABEL: define void @unknown_tripcount_willreturn(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[FOR_END:.*]]
++; CHECK:       [[FOR_END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %for.cond
++for.cond:
++  %cmp = icmp slt i32 %a, %b
++  br i1 %cmp, label %for.body, label %for.end
++for.body:
++  br label %for.cond
++for.end:
++  ret void
++}
++
++; llvm.assume is droppable, so it does not count as a side effect: the
++; mustprogress function makes the loop finite by assumption and it is deleted.
++define void @unknown_tripcount_mustprogress_fn_assume(i32 %a, i32 %b) mustprogress {
++; CHECK-LABEL: define void @unknown_tripcount_mustprogress_fn_assume(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) #[[ATTR2:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[FOR_END:.*]]
++; CHECK:       [[FOR_END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %for.cond
++for.cond:
++  %cmp = icmp slt i32 %a, %b
++  br i1 %cmp, label %for.body, label %for.end
++for.body:
++  call void @llvm.assume(i1 %cmp)
++  br label %for.cond
++for.end:
++  ret void
++}
++
++; Same as above, but with the guarantee coming from loop metadata.
++define void @unknown_tripcount_mustprogress_md_assume(i32 %a, i32 %b) {
++; CHECK-LABEL: define void @unknown_tripcount_mustprogress_md_assume(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[FOR_COND:.*]]
++; CHECK:       [[FOR_COND]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %for.cond
++for.cond:
++  %cmp = icmp slt i32 %a, %b
++  br i1 %cmp, label %for.body, label %for.end
++for.body:
++  call void @llvm.assume(i1 %cmp)
++  br label %for.cond, !llvm.loop !0
++for.end:
++  ret void
++}
++
++!0 = distinct !{!0, !1}
++!1 = !{!"llvm.loop.mustprogress"}

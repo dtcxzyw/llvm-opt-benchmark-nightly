@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.idx29.i.i = shl i64 %.val9, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx29.i.i
   store <4 x float> %i.ac, ptr %i.ae, align 1, !tbaa !222, !alias.scope !2339, !noalias !2340
-  %i.af = add i64 %.010, 4                        ; 2 uses
+  %i.af = add nuw i64 %.010, 4                    ; 2 uses
   %i.ag = icmp ult i64 %i.af, %2
   br i1 %i.ag, label %bb.c, label %._crit_edge, !llvm.loop !2335
 }
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.idx33.i.i = shl i64 %.val9, 4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx33.i.i
   store <4 x float> %i.by, ptr %i.ca, align 1, !tbaa !222, !alias.scope !2414, !noalias !2415
-  %i.cb = add i64 %.010, 4                        ; 2 uses
+  %i.cb = add nuw i64 %.010, 4                    ; 2 uses
   %i.cc = icmp ult i64 %i.cb, %2
   br i1 %i.cc, label %bb.c, label %._crit_edge, !llvm.loop !2404
 }
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.idx33.i.i = shl i64 %.val9, 4
   %i.bs = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx33.i.i
   store <8 x float> %i.bq, ptr %i.bs, align 1, !tbaa !222, !alias.scope !2611, !noalias !2612
-  %i.bt = add i64 %.010, 8                        ; 2 uses
+  %i.bt = add nuw i64 %.010, 8                    ; 2 uses
   %i.bu = icmp ult i64 %i.bt, %2
   br i1 %i.bu, label %bb.c, label %._crit_edge, !llvm.loop !2601
 }
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.idx29.i.i = shl i64 %.val9, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx29.i.i
   store <4 x float> %i.ac, ptr %i.ae, align 1, !tbaa !222, !alias.scope !2769, !noalias !2768
-  %i.af = add i64 %.010, 4                        ; 2 uses
+  %i.af = add nuw i64 %.010, 4                    ; 2 uses
   %i.ag = icmp ult i64 %i.af, %2
   br i1 %i.ag, label %bb.c, label %._crit_edge, !llvm.loop !2758
 }
@@ -1817,7 +1817,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.idx33.i.i = shl i64 %.val9, 4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.q, i64 %.idx33.i.i
   store <4 x float> %i.by, ptr %i.ca, align 1, !tbaa !222, !alias.scope !2946, !noalias !2945
-  %i.cb = add i64 %.010, 4                        ; 2 uses
+  %i.cb = add nuw i64 %.010, 4                    ; 2 uses
   %i.cc = icmp ult i64 %i.cb, %2
   br i1 %i.cc, label %bb.c, label %._crit_edge, !llvm.loop !2928
 }
@@ -2220,7 +2220,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.idx13.i
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %.011
   store <4 x float> %i.cy, ptr %i.dc, align 1, !tbaa !222, !noalias !3716
-  %i.dd = add i64 %.011, 4                        ; 2 uses
+  %i.dd = add nuw i64 %.011, 4                    ; 2 uses
   %i.de = icmp ult i64 %i.dd, %2
   br i1 %i.de, label %bb.c, label %._crit_edge, !llvm.loop !3702
 }
@@ -2623,7 +2623,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 %.idx13.i
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %.011
   store <8 x float> %i.cv, ptr %i.cz, align 1, !tbaa !222, !noalias !4444
-  %i.da = add i64 %.011, 8                        ; 2 uses
+  %i.da = add nuw i64 %.011, 8                    ; 2 uses
   %i.db = icmp ult i64 %i.da, %2
   br i1 %i.db, label %bb.c, label %._crit_edge, !llvm.loop !4430
 }
@@ -3026,7 +3026,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.idx13.i
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %.011
   store <4 x float> %i.cy, ptr %i.dc, align 1, !tbaa !222, !alias.scope !5074, !noalias !5073
-  %i.dd = add i64 %.011, 4                        ; 2 uses
+  %i.dd = add nuw i64 %.011, 4                    ; 2 uses
   %i.de = icmp ult i64 %i.dd, %2
   br i1 %i.de, label %bb.c, label %._crit_edge, !llvm.loop !5055
 }
