@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.t, %bb.z
   store i8 1, ptr %2, align 1
   br label %__sk_nulls_add_node_rcu.exit
 
-bb.ab:                                            ; preds = %bb.m, %inet_ehash_lookup_by_sk.exit
+bb.ab:                                            ; preds = %inet_ehash_lookup_by_sk.exit, %bb.m
   %i.dw = getelementptr i8, ptr %0, i64 104       ; 3 uses
   %i.dx = load ptr, ptr %i.bi, align 8            ; 3 uses
   store volatile ptr %i.dx, ptr %i.dw, align 8
@@ -221,8 +221,8 @@ bb.ac:                                            ; preds = %bb.ab
   store volatile ptr %i.dw, ptr %i.ea, align 8
   br label %__sk_nulls_add_node_rcu.exit
 
-__sk_nulls_add_node_rcu.exit:                     ; preds = %bb.l, %hlist_nulls_replace_init_rcu.exit.i, %bb.i, %bb.ac, %bb.ab, %bb.aa
-  %.1 = phi i1 [ true, %bb.ac ], [ false, %bb.aa ], [ true, %bb.ab ], [ false, %bb.i ], [ true, %hlist_nulls_replace_init_rcu.exit.i ], [ true, %bb.l ]
+__sk_nulls_add_node_rcu.exit:                     ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.l, %hlist_nulls_replace_init_rcu.exit.i, %bb.i
+  %.1 = phi i1 [ false, %bb.aa ], [ true, %bb.l ], [ false, %bb.i ], [ true, %hlist_nulls_replace_init_rcu.exit.i ], [ true, %bb.ab ], [ true, %bb.ac ]
   tail call void @_raw_spin_unlock(ptr noundef %i.bn) #18
   ret i1 %.1
 }

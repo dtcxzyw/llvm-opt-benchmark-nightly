@@ -205,7 +205,7 @@ bb.bu:                                            ; preds = %bb.bt, %_ZN5ImGui21
   %.4350 = phi i32 [ %i.jq, %bb.bs ], [ %.0.i, %_ZN5ImGui21MultiSelectItemHeaderEjPbPi.exit ], [ %spec.select355, %bb.bt ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
-  %i.jw = call noundef zeroext i1 @_ZN5ImGui14ButtonBehaviorERK6ImRectjPbS3_i(ptr noundef nonnull align 4 dereferenceable(16) %8, i32 noundef %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef %.4350) ; 2 uses
+  %i.jw = call noundef zeroext i1 @_ZN5ImGui14ButtonBehaviorERK6ImRectjPbS3_i(ptr noundef nonnull align 4 dereferenceable(16) %8, i32 noundef %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef %.4350) ; 3 uses
   br i1 %.not295, label %bb.bv, label %bb.cj
 
 bb.bv:                                            ; preds = %bb.bu
@@ -275,7 +275,7 @@ bb.cg:                                            ; preds = %bb.bw
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.cf, %bb.bv, %bb.cg, %bb.ce
-  %.0276 = phi i1 [ %not., %bb.cg ], [ false, %bb.bv ], [ true, %bb.ce ], [ true, %bb.cf ] ; 2 uses
+  %.0276 = phi i1 [ %not., %bb.cg ], [ false, %bb.bv ], [ true, %bb.ce ], [ true, %bb.cf ] ; 3 uses
   %.2 = phi i8 [ %.315, %bb.cg ], [ 0, %bb.bv ], [ %.1275, %bb.ce ], [ %spec.select314, %bb.cf ] ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.e, i64 8076 ; 2 uses
   %i.kt = load i32, ptr %i.ks, align 4, !tbaa !224
@@ -327,14 +327,14 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %.thread370, %.thread372, %bb.bu
   %.0280.in = phi i1 [ %i.df, %bb.bu ], [ %i.ld, %.thread372 ], [ %i.df, %.thread370 ] ; 5 uses
-  %.1277 = phi i1 [ %i.jw, %bb.bu ], [ %.0276, %.thread372 ], [ %.0276, %.thread370 ] ; 2 uses
-  %.5 = phi i8 [ 1, %bb.bu ], [ 0, %.thread372 ], [ 1, %.thread370 ]
+  %.1277 = phi i1 [ %i.jw, %bb.bu ], [ %.0276, %.thread372 ], [ %.0276, %.thread370 ]
+  %11 = phi i1 [ %i.jw, %bb.bu ], [ false, %.thread372 ], [ %.0276, %.thread370 ]
   br i1 %i.gz, label %bb.ck, label %bb.cn
 
 bb.ck:                                            ; preds = %bb.cj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #36
-  %11 = select i1 %.1277, i8 %.5, i8 0
-  store i8 %11, ptr %i.d, align 1, !tbaa !233
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.d, align 1, !tbaa !233
   call void @_ZN5ImGui21MultiSelectItemFooterEjPbS0_(i32 noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d)
   br i1 %.1277, label %bb.cl, label %bb.cm
 

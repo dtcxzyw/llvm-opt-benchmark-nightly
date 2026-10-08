@@ -205,7 +205,7 @@ bb.dh:                                            ; preds = %.loopexit
           to label %.thread unwind label %bb.bi
 
 .thread:                                          ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit113, %._crit_edge.i.i.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit, %bb.aw, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit93, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit88, %bb.dh, %bb.bm
-  %.543 = phi i8 [ 1, %bb.dh ], [ 1, %._crit_edge.i.i.i ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit93 ], [ 1, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit88 ], [ 0, %bb.bm ], [ 1, %bb.aw ], [ 1, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit113 ]
+  %.543 = phi i1 [ true, %bb.dh ], [ true, %._crit_edge.i.i.i ], [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit93 ], [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit88 ], [ false, %bb.bm ], [ true, %bb.aw ], [ true, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit113 ]
   %i.pr = load ptr, ptr %8, align 8, !tbaa !44    ; 3 uses
   %i.ps = load i64, ptr %i.pr, align 8            ; 3 uses
   %i.pt = and i64 %i.ps, 1152920405095219200
@@ -243,8 +243,7 @@ bb.dl:                                            ; preds = %bb.cy, %bb.dg, %bb.
   br label %common.resume
 
 bb.dm:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit122, %._crit_edge
-  %.644 = phi i8 [ %.543, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit122 ], [ 0, %._crit_edge ] ; 2 uses
-  %15 = trunc nuw i8 %.644 to i1
+  %.644 = phi i1 [ %.543, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit122 ], [ false, %._crit_edge ] ; 2 uses
   %i.qb = load ptr, ptr %i.a, align 8, !tbaa !28  ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.qb, null
   br i1 %.not10.i.i.i.i, label %.critedge.i, label %.lr.ph.i.i.i.i
@@ -295,11 +294,12 @@ bb.do:                                            ; preds = %_ZNSt3mapIN4cvc58in
 _ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEEixERS7_.exit: ; preds = %bb.do, %.critedge.i
   %.sroa.06.0.i = phi ptr [ %i.qq, %.critedge.i ], [ %.19.i.i.i.i, %bb.do ]
   %i.qr = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 40
-  store i8 %.644, ptr %i.qr, align 1, !tbaa !59
+  %15 = zext i1 %.644 to i8
+  store i8 %15, ptr %i.qr, align 1, !tbaa !59
   br label %bb.dp
 
 bb.dp:                                            ; preds = %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEEixERS7_.exit
-  %.026 = phi i1 [ %15, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEEixERS7_.exit ], [ true, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit ]
+  %.026 = phi i1 [ %.644, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEEixERS7_.exit ], [ true, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit ]
   ret i1 %.026
 }
 

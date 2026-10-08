@@ -202,12 +202,12 @@ bb.k:                                             ; preds = %bb.j
   store i32 %i.al, ptr %i.af, align 4, !tbaa !269
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.j, %bb.k
   %i.am = phi i32 [ %i.al, %bb.k ], [ %i.ag, %bb.j ]
   %i.an = icmp eq i32 %i.am, 2
   br i1 %i.an, label %.thread, label %.thread27
 
-.thread:                                          ; preds = %bb.i, %_ZN12lldb_private7Process9GetTargetEv.exit, %bb.l
+.thread:                                          ; preds = %_ZN12lldb_private7Process9GetTargetEv.exit, %bb.i, %bb.l
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !26, !noalias !270, !nonnull !27, !noundef !27 ; 7 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 7 uses
   %i.aq = load atomic i32, ptr %i.ap monotonic, align 8, !noalias !270
@@ -302,8 +302,8 @@ bb.u:                                             ; preds = %bb.t
   tail call void @_ZN19SystemRuntimeMacOSXC1EPN12lldb_private7ProcessE(ptr noundef nonnull align 8 dereferenceable(658) %i.bs, ptr noundef nonnull %0) #19
   br label %.thread27
 
-.thread27:                                        ; preds = %_ZN12lldb_private7Process9GetTargetEv.exit24, %bb.l, %bb.t, %bb.u
-  %.012 = phi ptr [ %i.bs, %bb.u ], [ null, %bb.t ], [ null, %bb.l ], [ null, %_ZN12lldb_private7Process9GetTargetEv.exit24 ]
+.thread27:                                        ; preds = %bb.t, %_ZN12lldb_private7Process9GetTargetEv.exit24, %bb.l, %bb.u
+  %.012 = phi ptr [ %i.bs, %bb.u ], [ null, %bb.l ], [ null, %_ZN12lldb_private7Process9GetTargetEv.exit24 ], [ null, %bb.t ]
   ret ptr %.012
 }
 

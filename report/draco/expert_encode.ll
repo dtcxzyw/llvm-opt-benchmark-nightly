@@ -202,7 +202,7 @@ _ZNKSt14default_deleteIN5draco17PointCloudEncoderEEclEPS1_.exit.i116: ; preds = 
   call void %i.dr(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.0120.2) #18, !inline_history !115
   br label %_ZNSt10unique_ptrIN5draco17PointCloudEncoderESt14default_deleteIS1_EED2Ev.exit117
 
-_ZNSt10unique_ptrIN5draco17PointCloudEncoderESt14default_deleteIS1_EED2Ev.exit117: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79, %bb.f, %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109, %bb.k, %bb.q, %_ZNKSt14default_deleteIN5draco17PointCloudEncoderEEclEPS1_.exit.i116
+_ZNSt10unique_ptrIN5draco17PointCloudEncoderESt14default_deleteIS1_EED2Ev.exit117: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79, %bb.f, %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94, %bb.k, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109, %_ZNKSt14default_deleteIN5draco17PointCloudEncoderEEclEPS1_.exit.i116
   %.pn66157 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %_ZNKSt14default_deleteIN5draco17PointCloudEncoderEEclEPS1_.exit.i116 ], [ %i.cy, %bb.q ], [ %.pn60, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94 ], [ %.pn62, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109 ], [ %i.t, %bb.c ], [ %i.bs, %bb.k ], [ %i.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit79 ], [ %i.x, %bb.f ]
   resume { ptr, i32 } %.pn66157
 }

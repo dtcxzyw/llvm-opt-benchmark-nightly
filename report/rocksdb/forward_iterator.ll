@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.q
   %.pre = load ptr, ptr %i.bb, align 8, !tbaa !385
   br label %.thread
 
-.thread:                                          ; preds = %..thread_crit_edge, %bb.p, %bb.q
-  %i.co = phi ptr [ %.pre, %..thread_crit_edge ], [ %i.bc, %bb.p ], [ %i.bc, %bb.q ] ; 2 uses
+.thread:                                          ; preds = %..thread_crit_edge, %bb.q, %bb.p
+  %i.co = phi ptr [ %.pre, %..thread_crit_edge ], [ %i.bc, %bb.q ], [ %i.bc, %bb.p ] ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 3 uses
   %i.cq = load ptr, ptr %i.co, align 8, !tbaa !30
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 88

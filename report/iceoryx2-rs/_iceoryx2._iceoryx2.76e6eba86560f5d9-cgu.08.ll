@@ -202,7 +202,7 @@ bb.a:                                             ; preds = %.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1283
   %i.bi = getelementptr inbounds nuw i8, ptr %i.au, i64 64
   call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.bi) #18, !noalias !1284
-  br label %3
+  br label %.critedge.i
 
 bb.b:                                             ; preds = %.split
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1360) %i.aq, ptr noundef nonnull align 8 dereferenceable(1360) %i.ap, i64 1360, i1 false), !noalias !1283
@@ -469,7 +469,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1283
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !1283
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1283
-  br label %3
+  br label %.critedge.i
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1283
@@ -872,12 +872,6 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6serv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !1283
   br label %bb.ag
 
-2:                                                ; preds = %bb.n
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.ad) #18, !noalias !1284
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1283
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @129) #20, !noalias !1284
-  unreachable
-
 bb.ag:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service14ipc_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB26_18CustomHeaderMarkerB23_B2F_EECsacUAxWRcRNR_9__iceoryx2.exit.i, %bb.v
   %.sroa.019.0 = phi i8 [ 2, %bb.v ], [ 0, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service14ipc_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB26_18CustomHeaderMarkerB23_B2F_EECsacUAxWRcRNR_9__iceoryx2.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !1283
@@ -894,60 +888,66 @@ bb.ag:                                            ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1283
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i: ; preds = %7, %3, %bb.ag
-  %.sroa.019.1 = phi i8 [ %.sroa.019.2, %3 ], [ %.sroa.019.2, %7 ], [ %.sroa.019.0, %bb.ag ]
+2:                                                ; preds = %bb.n
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.ad) #18, !noalias !1284
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1283
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @129) #20, !noalias !1284
+  unreachable
+
+.critedge.i:                                      ; preds = %.thread.i, %bb.a
+  %.sroa.019.2 = phi i8 [ 3, %bb.a ], [ 1, %.thread.i ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.au, i64 112
+  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %3) #18, !noalias !1284
+  %4 = load i128, ptr %i.au, align 16, !range !23, !alias.scope !1317, !noalias !1284, !noundef !11
+  %5 = icmp eq i128 %4, 0
+  br i1 %5, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i, label %6
+
+6:                                                ; preds = %.critedge.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
+  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24port1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %7) #18, !noalias !1284
+  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
+
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i: ; preds = %6, %.critedge.i, %bb.ag
+  %.sroa.019.1 = phi i8 [ %.sroa.019.2, %.critedge.i ], [ %.sroa.019.2, %6 ], [ %.sroa.019.0, %bb.ag ]
   %i.jx = getelementptr inbounds nuw i8, ptr %i.au, i64 160 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !1317)
   call void @llvm.experimental.noalias.scope.decl(metadata !1318)
   call void @llvm.experimental.noalias.scope.decl(metadata !1319)
+  call void @llvm.experimental.noalias.scope.decl(metadata !1320)
   %i.jy = getelementptr inbounds nuw i8, ptr %i.au, i64 192
-  %i.jz = load ptr, ptr %i.jy, align 16, !alias.scope !1320, !noalias !1284, !align !12, !noundef !11 ; 2 uses
+  %i.jz = load ptr, ptr %i.jy, align 16, !alias.scope !1321, !noalias !1284, !align !12, !noundef !11 ; 2 uses
   %.not.i.i.i106.i = icmp eq ptr %i.jz, null
   br i1 %.not.i.i.i106.i, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
-  %i.ka = load ptr, ptr %i.jz, align 8, !noalias !1321, !nonnull !11, !noundef !11
+  %i.ka = load ptr, ptr %i.jz, align 8, !noalias !1322, !nonnull !11, !noundef !11
   call void %i.ka(ptr noundef nonnull align 16 dereferenceable(48) %i.jx) #18, !noalias !1284, !inline_history !1264
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1D_18CustomHeaderMarkerB1A_B2b_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread
 
 bb.ai:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
-  %.val.i.i.i107.i = load ptr, ptr %i.jx, align 16, !alias.scope !1320, !noalias !1284 ; 4 uses
+  %.val.i.i.i107.i = load ptr, ptr %i.jx, align 16, !alias.scope !1321, !noalias !1284 ; 4 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.au, i64 168
-  %.val1.i.i.i108.i = load ptr, ptr %i.kb, align 8, !alias.scope !1320, !noalias !1284, !nonnull !11, !align !12, !noundef !11 ; 3 uses
-  %i.kc = load ptr, ptr %.val1.i.i.i108.i, align 8, !invariant.load !11, !noalias !1321 ; 2 uses
+  %.val1.i.i.i108.i = load ptr, ptr %i.kb, align 8, !alias.scope !1321, !noalias !1284, !nonnull !11, !align !12, !noundef !11 ; 3 uses
+  %i.kc = load ptr, ptr %.val1.i.i.i108.i, align 8, !invariant.load !11, !noalias !1322 ; 2 uses
   %.not.i.i.i.i109.i = icmp eq ptr %i.kc, null
   br i1 %.not.i.i.i.i109.i, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i107.i) ]
-  call void %i.kc(ptr noundef nonnull %.val.i.i.i107.i) #19, !noalias !1321, !inline_history !1265
+  call void %i.kc(ptr noundef nonnull %.val.i.i.i107.i) #19, !noalias !1322, !inline_history !1265
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.kd = getelementptr inbounds nuw i8, ptr %.val1.i.i.i108.i, i64 8
-  %i.ke = load i64, ptr %i.kd, align 8, !range !13, !invariant.load !11, !noalias !1321 ; 2 uses
+  %i.ke = load i64, ptr %i.kd, align 8, !range !13, !invariant.load !11, !noalias !1322 ; 2 uses
   %i.kf = icmp eq i64 %i.ke, 0
   br i1 %i.kf, label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1D_18CustomHeaderMarkerB1A_B2b_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i110.i
 
 _RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i110.i: ; preds = %bb.ak
   %i.kg = getelementptr inbounds nuw i8, ptr %.val1.i.i.i108.i, i64 16
-  %i.kh = load i64, ptr %i.kg, align 8, !range !14, !invariant.load !11, !noalias !1321
+  %i.kh = load i64, ptr %i.kg, align 8, !range !14, !invariant.load !11, !noalias !1322
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i107.i) ]
-  call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i107.i, i64 noundef range(i64 0, -9223372036317904881) %i.ke, i64 noundef range(i64 1, 536870913) %i.kh) #18, !noalias !1321
+  call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i107.i, i64 noundef range(i64 0, -9223372036317904881) %i.ke, i64 noundef range(i64 1, 536870913) %i.kh) #18, !noalias !1322
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1D_18CustomHeaderMarkerB1A_B2b_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread
-
-3:                                                ; preds = %.thread.i, %bb.a
-  %.sroa.019.2 = phi i8 [ 3, %bb.a ], [ 1, %.thread.i ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.au, i64 112
-  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %4) #18, !noalias !1284
-  %5 = load i128, ptr %i.au, align 16, !range !23, !alias.scope !1322, !noalias !1284, !noundef !11
-  %6 = icmp eq i128 %5, 0
-  br i1 %6, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i, label %7
-
-7:                                                ; preds = %3
-  %8 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24port1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %8) #18, !noalias !1284
-  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
 
 _RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1D_18CustomHeaderMarkerB1A_B2b_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread: ; preds = %bb.ak, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i110.i, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
@@ -1194,7 +1194,7 @@ bb.a:                                             ; preds = %.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1377
   %i.bi = getelementptr inbounds nuw i8, ptr %i.au, i64 64
   call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.bi) #18, !noalias !1378
-  br label %3
+  br label %.critedge.i
 
 bb.b:                                             ; preds = %.split
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1072) %i.aq, ptr noundef nonnull align 8 dereferenceable(1072) %i.ap, i64 1072, i1 false), !noalias !1377
@@ -1597,13 +1597,7 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtCs7gufeB8TUC6_12iceoryx2_cal14stat
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !1377
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !1377
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1377
-  br label %3
-
-2:                                                ; preds = %bb.n
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service16local_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef align 8 dereferenceable(2712) %i.ad) #18, !noalias !1378
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1377
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @129) #20, !noalias !1378
-  unreachable
+  br label %.critedge.i
 
 bb.ah:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service16local_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB28_18CustomHeaderMarkerB25_B2H_EECsacUAxWRcRNR_9__iceoryx2.exit.i, %bb.w
   %.sroa.019.0 = phi i8 [ 2, %bb.w ], [ 0, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service16local_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB28_18CustomHeaderMarkerB25_B2H_EECsacUAxWRcRNR_9__iceoryx2.exit.i ]
@@ -1621,60 +1615,66 @@ bb.ah:                                            ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !1377
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i: ; preds = %7, %3, %bb.ah
-  %.sroa.019.1 = phi i8 [ %.sroa.019.2, %3 ], [ %.sroa.019.2, %7 ], [ %.sroa.019.0, %bb.ah ]
+2:                                                ; preds = %bb.n
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service16local_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef align 8 dereferenceable(2712) %i.ad) #18, !noalias !1378
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1377
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @129) #20, !noalias !1378
+  unreachable
+
+.critedge.i:                                      ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtCs7gufeB8TUC6_12iceoryx2_cal14static_storage13process_local7StorageECsacUAxWRcRNR_9__iceoryx2.exit.thread.i, %bb.a
+  %.sroa.019.2 = phi i8 [ 3, %bb.a ], [ 1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtCs7gufeB8TUC6_12iceoryx2_cal14static_storage13process_local7StorageECsacUAxWRcRNR_9__iceoryx2.exit.thread.i ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.au, i64 112
+  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %3) #18, !noalias !1378
+  %4 = load i128, ptr %i.au, align 16, !range !23, !alias.scope !1415, !noalias !1378, !noundef !11
+  %5 = icmp eq i128 %4, 0
+  br i1 %5, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i, label %6
+
+6:                                                ; preds = %.critedge.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
+  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24port1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %7) #18, !noalias !1378
+  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
+
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i: ; preds = %6, %.critedge.i, %bb.ah
+  %.sroa.019.1 = phi i8 [ %.sroa.019.2, %.critedge.i ], [ %.sroa.019.2, %6 ], [ %.sroa.019.0, %bb.ah ]
   %i.kb = getelementptr inbounds nuw i8, ptr %i.au, i64 160 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !1415)
   call void @llvm.experimental.noalias.scope.decl(metadata !1416)
   call void @llvm.experimental.noalias.scope.decl(metadata !1417)
+  call void @llvm.experimental.noalias.scope.decl(metadata !1418)
   %i.kc = getelementptr inbounds nuw i8, ptr %i.au, i64 192
-  %i.kd = load ptr, ptr %i.kc, align 16, !alias.scope !1418, !noalias !1378, !align !12, !noundef !11 ; 2 uses
+  %i.kd = load ptr, ptr %i.kc, align 16, !alias.scope !1419, !noalias !1378, !align !12, !noundef !11 ; 2 uses
   %.not.i.i.i108.i = icmp eq ptr %i.kd, null
   br i1 %.not.i.i.i108.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
-  %i.ke = load ptr, ptr %i.kd, align 8, !noalias !1419, !nonnull !11, !noundef !11
+  %i.ke = load ptr, ptr %i.kd, align 8, !noalias !1420, !nonnull !11, !noundef !11
   call void %i.ke(ptr noundef nonnull align 16 dereferenceable(48) %i.kb) #18, !noalias !1378, !inline_history !1358
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread
 
 bb.aj:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
-  %.val.i.i.i109.i = load ptr, ptr %i.kb, align 16, !alias.scope !1418, !noalias !1378 ; 4 uses
+  %.val.i.i.i109.i = load ptr, ptr %i.kb, align 16, !alias.scope !1419, !noalias !1378 ; 4 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %i.au, i64 168
-  %.val1.i.i.i110.i = load ptr, ptr %i.kf, align 8, !alias.scope !1418, !noalias !1378, !nonnull !11, !align !12, !noundef !11 ; 3 uses
-  %i.kg = load ptr, ptr %.val1.i.i.i110.i, align 8, !invariant.load !11, !noalias !1419 ; 2 uses
+  %.val1.i.i.i110.i = load ptr, ptr %i.kf, align 8, !alias.scope !1419, !noalias !1378, !nonnull !11, !align !12, !noundef !11 ; 3 uses
+  %i.kg = load ptr, ptr %.val1.i.i.i110.i, align 8, !invariant.load !11, !noalias !1420 ; 2 uses
   %.not.i.i.i.i111.i = icmp eq ptr %i.kg, null
   br i1 %.not.i.i.i.i111.i, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i109.i) ]
-  call void %i.kg(ptr noundef nonnull %.val.i.i.i109.i) #19, !noalias !1419, !inline_history !1359
+  call void %i.kg(ptr noundef nonnull %.val.i.i.i109.i) #19, !noalias !1420, !inline_history !1359
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.kh = getelementptr inbounds nuw i8, ptr %.val1.i.i.i110.i, i64 8
-  %i.ki = load i64, ptr %i.kh, align 8, !range !13, !invariant.load !11, !noalias !1419 ; 2 uses
+  %i.ki = load i64, ptr %i.kh, align 8, !range !13, !invariant.load !11, !noalias !1420 ; 2 uses
   %i.kj = icmp eq i64 %i.ki, 0
   br i1 %i.kj, label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i112.i
 
 _RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i112.i: ; preds = %bb.al
   %i.kk = getelementptr inbounds nuw i8, ptr %.val1.i.i.i110.i, i64 16
-  %i.kl = load i64, ptr %i.kk, align 8, !range !14, !invariant.load !11, !noalias !1419
+  %i.kl = load i64, ptr %i.kk, align 8, !range !14, !invariant.load !11, !noalias !1420
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i109.i) ]
-  call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i109.i, i64 noundef range(i64 0, -9223372036317904881) %i.ki, i64 noundef range(i64 1, 536870913) %i.kl) #18, !noalias !1419
+  call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i109.i, i64 noundef range(i64 0, -9223372036317904881) %i.ki, i64 noundef range(i64 1, 536870913) %i.kl) #18, !noalias !1420
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread
-
-3:                                                ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtCs7gufeB8TUC6_12iceoryx2_cal14static_storage13process_local7StorageECsacUAxWRcRNR_9__iceoryx2.exit.thread.i, %bb.a
-  %.sroa.019.2 = phi i8 [ 3, %bb.a ], [ 1, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtNtCs7gufeB8TUC6_12iceoryx2_cal14static_storage13process_local7StorageECsacUAxWRcRNR_9__iceoryx2.exit.thread.i ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.au, i64 112
-  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %4) #18, !noalias !1378
-  %5 = load i128, ptr %i.au, align 16, !range !23, !alias.scope !1420, !noalias !1378, !noundef !11
-  %6 = icmp eq i128 %5, 0
-  br i1 %6, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i, label %7
-
-7:                                                ; preds = %3
-  %8 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24port1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %8) #18, !noalias !1378
-  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2.exit.i
 
 _RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2.exit.thread: ; preds = %bb.al, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i112.i, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
@@ -2078,14 +2078,14 @@ begin_hunk_3_@llvm.memset.p0.i64
 !1271 = distinct !{!1271, !1270, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsbqH9stoieM8_5alloc4sync3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB2b_7service14ipc_threadsafe7ServiceEEEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
 !1272 = distinct !{!1272, i1 false, !"_RNvXsE_NtCsbqH9stoieM8_5alloc4syncINtB5_3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1I_7service14ipc_threadsafe7ServiceEEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
 !1273 = distinct !{!1273, !1272, !"_RNvXsE_NtCsbqH9stoieM8_5alloc4syncINtB5_3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1I_7service14ipc_threadsafe7ServiceEEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1274 = distinct !{!1274, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2"}
-!1275 = distinct !{!1275, !1274, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1276 = distinct !{!1276, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2"}
-!1277 = distinct !{!1277, !1276, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1278 = distinct !{!1278, i1 false, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
-!1279 = distinct !{!1279, !1278, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1280 = distinct !{!1280, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2"}
-!1281 = distinct !{!1281, !1280, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1274 = distinct !{!1274, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2"}
+!1275 = distinct !{!1275, !1274, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1276 = distinct !{!1276, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2"}
+!1277 = distinct !{!1277, !1276, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1278 = distinct !{!1278, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2"}
+!1279 = distinct !{!1279, !1278, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1280 = distinct !{!1280, i1 false, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
+!1281 = distinct !{!1281, !1280, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
 !1282 = !{!1236}
 !1283 = !{!1237, !1236}
 !1284 = !{!1237}
@@ -2121,12 +2121,12 @@ begin_hunk_3_@llvm.memset.p0.i64
 !1314 = !{!1273}
 !1315 = !{!1273, !1271, !1269, !1267}
 !1316 = !{!1273, !1271, !1269, !1267, !1237}
-!1317 = !{!1275}
+!1317 = !{!1275, !1236}
 !1318 = !{!1277}
 !1319 = !{!1279}
-!1320 = !{!1279, !1277, !1275, !1236}
-!1321 = !{!1279, !1277, !1275, !1237}
-!1322 = !{!1281, !1236}
+!1320 = !{!1281}
+!1321 = !{!1281, !1279, !1277, !1236}
+!1322 = !{!1281, !1279, !1277, !1237}
 !1323 = distinct !{!1323, i1 false, !"_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2"}
 !1324 = distinct !{!1324, !1323, !"_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2: argument 1"}
 !1325 = distinct !{!1325, !1323, !"_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceSNtNtBZ_7builder19CustomPayloadMarkerNtB1F_18CustomHeaderMarkerB1C_B2d_E3newCsacUAxWRcRNR_9__iceoryx2: argument 0"}
@@ -2172,14 +2172,14 @@ begin_hunk_3_@llvm.memset.p0.i64
 !1365 = distinct !{!1365, !1364, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsbqH9stoieM8_5alloc4sync3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB2b_7service16local_threadsafe7ServiceEEEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
 !1366 = distinct !{!1366, i1 false, !"_RNvXsE_NtCsbqH9stoieM8_5alloc4syncINtB5_3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1I_7service16local_threadsafe7ServiceEEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
 !1367 = distinct !{!1367, !1366, !"_RNvXsE_NtCsbqH9stoieM8_5alloc4syncINtB5_3ArcINtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutex11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1I_7service16local_threadsafe7ServiceEEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1368 = distinct !{!1368, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2"}
-!1369 = distinct !{!1369, !1368, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1370 = distinct !{!1370, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2"}
-!1371 = distinct !{!1371, !1370, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1372 = distinct !{!1372, i1 false, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
-!1373 = distinct !{!1373, !1372, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
-!1374 = distinct !{!1374, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2"}
-!1375 = distinct !{!1375, !1374, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1368 = distinct !{!1368, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2"}
+!1369 = distinct !{!1369, !1368, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1370 = distinct !{!1370, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2"}
+!1371 = distinct !{!1371, !1370, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server28PreallocatedResponseOverrideKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1372 = distinct !{!1372, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2"}
+!1373 = distinct !{!1373, !1372, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__11TinyClosureKj18_EECsacUAxWRcRNR_9__iceoryx2: argument 0"}
+!1374 = distinct !{!1374, i1 false, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2"}
+!1375 = distinct !{!1375, !1374, !"_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCsacUAxWRcRNR_9__iceoryx2: argument 0"}
 !1376 = !{!1324}
 !1377 = !{!1325, !1324}
 !1378 = !{!1325}
@@ -2219,12 +2219,12 @@ begin_hunk_3_@llvm.memset.p0.i64
 !1412 = !{!1367}
 !1413 = !{!1367, !1365, !1363, !1361}
 !1414 = !{!1367, !1365, !1363, !1361, !1325}
-!1415 = !{!1369}
+!1415 = !{!1369, !1324}
 !1416 = !{!1371}
 !1417 = !{!1373}
-!1418 = !{!1373, !1371, !1369, !1324}
-!1419 = !{!1373, !1371, !1369, !1325}
-!1420 = !{!1375, !1324}
+!1418 = !{!1375}
+!1419 = !{!1375, !1373, !1371, !1324}
+!1420 = !{!1375, !1373, !1371, !1325}
 !1421 = distinct !{!1421, i1 false, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsg6ZEkMtNi4J_8iceoryx24port8notifier10ConnectionNtNtNtB14_7service14ipc_threadsafe7ServiceEEECsacUAxWRcRNR_9__iceoryx2"}
 !1422 = distinct !{!1422, !1421, !"_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsg6ZEkMtNi4J_8iceoryx24port8notifier10ConnectionNtNtNtB14_7service14ipc_threadsafe7ServiceEEECsacUAxWRcRNR_9__iceoryx2: argument 0"}
 !1423 = distinct !{!1423, i1 false, !"_RNvMs3_NtNtCsg6ZEkMtNi4J_8iceoryx24port8notifierINtB5_19ListenerConnectionsNtNtNtB9_7service14ipc_threadsafe7ServiceE6createCsacUAxWRcRNR_9__iceoryx2"}

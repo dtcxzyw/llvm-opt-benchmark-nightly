@@ -202,7 +202,7 @@ _ZN4llvm15HexagonShufflerD2Ev.exit45:             ; preds = %_ZNSt6vectorISt4pai
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN4llvm6MCInstD2Ev.exit, %_ZN4llvm6MCInstD2Ev.exit.jt1, %.thread, %_ZN4llvm6MCInstD2Ev.exit._crit_edge.loopexit, %_ZN4llvm15HexagonShufflerD2Ev.exit45, %bb.d, %bb.c, %bb.a, %bb.b
+.loopexit:                                        ; preds = %_ZN4llvm6MCInstD2Ev.exit, %_ZN4llvm6MCInstD2Ev.exit.jt1, %.thread, %_ZN4llvm15HexagonShufflerD2Ev.exit45, %_ZN4llvm6MCInstD2Ev.exit._crit_edge.loopexit, %bb.d, %bb.c, %bb.a, %bb.b
   %.3 = phi i1 [ false, %bb.a ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ %i.cj, %_ZN4llvm15HexagonShufflerD2Ev.exit45 ], [ true, %_ZN4llvm6MCInstD2Ev.exit._crit_edge.loopexit ], [ true, %.thread ], [ false, %_ZN4llvm6MCInstD2Ev.exit.jt1 ], [ false, %_ZN4llvm6MCInstD2Ev.exit ]
   ret i1 %.3
 }

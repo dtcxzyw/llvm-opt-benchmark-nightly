@@ -205,9 +205,9 @@ define internal fastcc void @_RINvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pyco
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.h = load ptr, ptr %i.e, align 8, !nonnull !11 ; 3 uses
   %.promoted28 = load ptr, ptr %i.g, align 8      ; 4 uses
+  %3 = trunc nuw i64 %.promoted to i1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3090)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3091)
-  %3 = trunc nuw i64 %.promoted to i1
   br i1 %3, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_RNtNtCskLngH8kgpZI_15ruff_python_ast5token5TokenEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB22_8PeekableINtNtB24_3rev3RevINtNtNtB5_5slice4iter4IterBN_EEE4peek0ECsEhZmuQNqkz_11ruff_linter.exit.peel, label %bb.a
 
 bb.a:                                             ; preds = %.peel.begin

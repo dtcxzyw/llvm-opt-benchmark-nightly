@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %bb.ae
   store i32 0, ptr %i.ct, align 4
   br label %is_encrypted_handshake_message.exit
 
-bb.ag:                                            ; preds = %bb.aa, %bb.y, %bb.z, %bb.ae, %bb.ad
+bb.ag:                                            ; preds = %bb.aa, %bb.ae, %bb.ad, %bb.z, %bb.y
   %i.dd = zext i16 %11 to i32
   %i.de = getelementptr i8, ptr %1, i64 8
   %i.df = load ptr, ptr %i.de, align 8

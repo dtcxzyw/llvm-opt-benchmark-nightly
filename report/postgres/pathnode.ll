@@ -202,15 +202,15 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.be, %bb.bf
   br i1 %.2112160.shrunk, label %.thread, label %.critedge
 
-._crit_edge.loopexit:                             ; preds = %.thread, %bb.f
-  %.0108.lcssa.ph = phi i32 [ %.0108173, %bb.f ], [ %.1109200, %.thread ]
+._crit_edge.loopexit:                             ; preds = %bb.f, %.thread
+  %.0108.lcssa.ph = phi i32 [ %.1109200, %.thread ], [ %.0108173, %bb.f ]
   %.pre = load ptr, ptr %i.g, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
   %i.fm = phi ptr [ null, %bb.e ], [ %.pre, %._crit_edge.loopexit ]
   %.0108.lcssa = phi i32 [ 0, %bb.e ], [ %.0108.lcssa.ph, %._crit_edge.loopexit ]
-  %i.fn = tail call ptr @list_insert_nth(ptr noundef %i.fm, i32 noundef %.0108.lcssa, ptr noundef %1) #9
+  %i.fn = tail call ptr @list_insert_nth(ptr noundef %i.fm, i32 noundef %.0108.lcssa, ptr noundef nonnull %1) #9
   store ptr %i.fn, ptr %i.g, align 8
   br label %bb.bi
 
@@ -613,8 +613,8 @@ bb.ac:                                            ; preds = %bb.ab, %.thread107
   %.24570 = phi i1 [ %.24571, %bb.ab ], [ %.24571105109, %.thread107 ]
   br i1 %.24570, label %bb.d, label %.critedge
 
-._crit_edge.loopexit:                             ; preds = %bb.d, %bb.e
-  %.041.lcssa.ph = phi i32 [ %.04190, %bb.e ], [ %.142115, %bb.d ]
+._crit_edge.loopexit:                             ; preds = %bb.e, %bb.d
+  %.041.lcssa.ph = phi i32 [ %.142115, %bb.d ], [ %.04190, %bb.e ]
   %.pre96 = load ptr, ptr %i.b, align 8
   br label %._crit_edge
 

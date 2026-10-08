@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2488) %i.be, ptr noundef nonnull align 8 dereferenceable(2488) %i.bh, i64 2488, i1 false)
   %i.gi = load i64, ptr %i.be, align 8, !range !13, !noundef !4
   %i.gj = icmp eq i64 %i.gi, -1
-  br i1 %i.gj, label %2, label %bb.n, !prof !20
+  br i1 %i.gj, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a, label %bb.n, !prof !20
 
 .thread:                                          ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg)
@@ -605,18 +605,12 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6serv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.am
 
-bb.al:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit116
-  %.sink = phi ptr [ %3, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a ], [ %i.dl, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit116 ]
+bb.al:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit116
+  %.sink = phi ptr [ %2, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit ], [ %i.dl, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server17SharedServerStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit116 ]
   call void @_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6server1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %.sink) #20
   ret void
 
-2:                                                ; preds = %bb.m
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.be) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #23
-  unreachable
-
-bb.am:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service14ipc_threadsafe7ServicejujuEECskqqG2IB5b71_21iceoryx2_tests_common.exit, %bb.aa
+bb.am:                                            ; preds = %bb.aa, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6server6ServerNtNtNtBI_7service14ipc_threadsafe7ServicejujuEECskqqG2IB5b71_21iceoryx2_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
@@ -629,23 +623,29 @@ bb.am:                                            ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv)
-  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a
+  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a: ; preds = %bb.ao, %bb.an, %bb.am
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 160
-  br label %bb.al
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a: ; preds = %bb.m
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.be) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #23
+  unreachable
 
 bb.an:                                            ; preds = %.thread, %bb.b
   %i.lc = getelementptr inbounds nuw i8, ptr %1, i64 112
   call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24ports_1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.lc) #20
   %i.ld = load i128, ptr %1, align 16, !range !8, !alias.scope !767, !noundef !4
   %i.le = icmp eq i128 %i.ld, 0
-  br i1 %i.le, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a, label %bb.ao
+  br i1 %i.le, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.lf = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @_RNvXNvNtCsg6ZEkMtNi4J_8iceoryx24port1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.lf) #20
-  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit.a
+  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit
+
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %bb.am, %bb.ao, %bb.an
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 160
+  br label %bb.al
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -1048,16 +1048,10 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6clie
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.ai
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %bb.ak, %bb.aj, %bb.ai, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit139
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %bb.ai, %bb.ak, %bb.aj, %_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15mutex_protectedINtB2_5GuardINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1p_7service14ipc_threadsafe7ServiceEENtNtNtCs8Chj7Szqq0n_4core3ops5deref5Deref5derefCskqqG2IB5b71_21iceoryx2_tests_common.exit139
   ret void
 
-2:                                                ; preds = %bb.h
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.bj) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bj)
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @68) #23
-  unreachable
-
-bb.ai:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service14ipc_threadsafe7ServicejujuEECskqqG2IB5b71_21iceoryx2_tests_common.exit, %bb.x
+bb.ai:                                            ; preds = %bb.x, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service14ipc_threadsafe7ServicejujuEECskqqG2IB5b71_21iceoryx2_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.67)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1011)
@@ -1077,6 +1071,12 @@ bb.ai:                                            ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv)
   call void @_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6client1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.ct) #20
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECskqqG2IB5b71_21iceoryx2_tests_common.exit
+
+2:                                                ; preds = %bb.h
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.bj) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bj)
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @68) #23
+  unreachable
 
 bb.aj:                                            ; preds = %.thread, %bb.b
   %.sink = phi ptr [ %i.ct, %.thread ], [ %i.ch, %bb.b ]

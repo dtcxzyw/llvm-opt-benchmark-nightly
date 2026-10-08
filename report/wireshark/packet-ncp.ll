@@ -202,7 +202,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.is = call ptr @proto_tree_add_uint(ptr noundef %i.g, i32 noundef %i.ip, ptr noundef %0, i32 noundef %i.am, i32 noundef 1, i32 noundef %i.ir) ; 0 uses
   br label %bb.ba
 
-bb.az:                                            ; preds = %bb.z, %bb.ax, %bb.aw
+bb.az:                                            ; preds = %bb.aw, %bb.ax, %bb.z
   %i.it = load i32, ptr @hf_ncp_seq, align 4
   %i.iu = load i8, ptr getelementptr inbounds nuw (i8, ptr @header, i64 2), align 2
   %i.iv = zext i8 %i.iu to i32

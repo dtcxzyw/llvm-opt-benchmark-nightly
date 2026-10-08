@@ -205,15 +205,11 @@ bb.i:                                             ; preds = %bb.h
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 33
   %i.j = load i8, ptr %i.i, align 1, !range !4, !noundef !5
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %.split, label %.lr.ph.preheader
+  br i1 %i.k, label %3, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %.lr.ph
-
-.split:                                           ; preds = %bb.i
-  %3 = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.22) #11
-  br i1 %3, label %.lr.ph93, label %.thread73
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.critedge ] ; 5 uses
@@ -286,7 +282,11 @@ bb.m:                                             ; preds = %._crit_edge
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.lr.ph93, label %.lr.ph, !llvm.loop !19
 
-.lr.ph93:                                         ; preds = %.critedge, %.split
+3:                                                ; preds = %bb.i
+  %4 = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.22) #11
+  br i1 %4, label %.lr.ph93, label %.thread73
+
+.lr.ph93:                                         ; preds = %.critedge, %3
   %i.ad = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 148
   %i.af = load i8, ptr %i.ae, align 4, !range !4, !noundef !5
@@ -384,8 +384,8 @@ bb.x:                                             ; preds = %bb.w, %.lr.ph93.spl
   %exitcond114.not = icmp eq i64 %indvars.iv.next111, %wide.trip.count119
   br i1 %exitcond114.not, label %.thread73, label %.lr.ph93.split, !llvm.loop !20
 
-.thread73:                                        ; preds = %bb.x, %bb.s, %bb.m, %._crit_edge, %bb.h, %.split
-  %.375 = phi i1 [ false, %bb.h ], [ false, %bb.m ], [ false, %.split ], [ false, %._crit_edge ], [ true, %bb.s ], [ true, %bb.x ]
+.thread73:                                        ; preds = %bb.x, %bb.s, %bb.m, %._crit_edge, %bb.h, %3
+  %.375 = phi i1 [ false, %3 ], [ false, %bb.m ], [ false, %bb.h ], [ false, %._crit_edge ], [ true, %bb.s ], [ true, %bb.x ]
   %i.bf = load ptr, ptr %i.a, align 8             ; 2 uses
   tail call fastcc void @UpdateAudioStreamFormatsPhysical(ptr noundef %i.bf)
   tail call fastcc void @ReleaseAudioDevice(ptr noundef %i.bf)

@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !214
   %i.as = invoke i64 @_ZNK7nanogui6Widget17absolute_positionEv(ptr noundef nonnull align 8 dereferenceable(148) %i.ar)
-          to label %bb.k unwind label %bb.l       ; 2 uses
+          to label %bb.k unwind label %bb.m       ; 2 uses
 
 bb.k:                                             ; preds = %bb.j
   %.sroa.059.0.extract.trunc = trunc i64 %i.as to i32
@@ -240,32 +240,32 @@ bb.k:                                             ; preds = %bb.j
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 48
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = invoke noundef zeroext i1 %i.bj(ptr noundef nonnull align 8 dereferenceable(148) %i.ap, ptr noundef nonnull align 4 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5, i32 noundef %i.be, i32 noundef %i.bg)
-          to label %bb.o unwind label %bb.m
+          to label %bb.l unwind label %bb.n
 
-bb.l:                                             ; preds = %bb.j
-  %9 = landingpad { ptr, i32 }
-          cleanup
-          catch ptr @_ZTISt9exception
-  br label %bb.n
-
-bb.m:                                             ; preds = %bb.k
-  %i.bl = landingpad { ptr, i32 }
-          cleanup
-          catch ptr @_ZTISt9exception
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.m, %bb.l
-  %.pn = phi { ptr, i32 } [ %i.bl, %bb.m ], [ %9, %bb.l ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
-  br label %bb.y
-
-bb.o:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   br i1 %i.bk, label %bb.t, label %.thread
 
-.thread:                                          ; preds = %.critedge45, %bb.o
+bb.m:                                             ; preds = %bb.j
+  %i.bl = landingpad { ptr, i32 }
+          cleanup
+          catch ptr @_ZTISt9exception
+  br label %bb.o
+
+bb.n:                                             ; preds = %bb.k
+  %9 = landingpad { ptr, i32 }
+          cleanup
+          catch ptr @_ZTISt9exception
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #37
+  br label %bb.o
+
+bb.o:                                             ; preds = %bb.n, %bb.m
+  %.pn = phi { ptr, i32 } [ %9, %bb.n ], [ %i.bl, %bb.m ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
+  br label %bb.y
+
+.thread:                                          ; preds = %bb.l, %.critedge45
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #37
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.bn = load i32, ptr %3, align 8, !tbaa !40
@@ -310,9 +310,9 @@ bb.p:                                             ; preds = %.thread
           to label %bb.q unwind label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %10 = zext i1 %i.cm to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #37
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #37
+  %10 = zext i1 %i.cm to i8
   br label %bb.t
 
 bb.r:                                             ; preds = %.thread
@@ -330,8 +330,8 @@ bb.s:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #37
   br label %bb.y
 
-bb.t:                                             ; preds = %bb.q, %bb.o
-  %.135 = phi i8 [ 1, %bb.o ], [ %10, %bb.q ]
+bb.t:                                             ; preds = %bb.q, %bb.l
+  %.135 = phi i8 [ 1, %bb.l ], [ %10, %bb.q ]
   %i.cp = load ptr, ptr %i.o, align 16, !tbaa !168
   %.not41 = icmp eq ptr %i.cp, null
   br i1 %.not41, label %bb.x, label %bb.u
@@ -391,8 +391,8 @@ bb.x:                                             ; preds = %.critedge2, %.crite
   store i8 %i.dk, ptr %i.di, align 4, !tbaa !158
   br label %bb.aa
 
-bb.y:                                             ; preds = %bb.w, %bb.s, %bb.r, %bb.n, %bb.i
-  %.pn43 = phi { ptr, i32 } [ %i.dc, %bb.w ], [ %i.co, %bb.s ], [ %i.cn, %bb.r ], [ %.pn, %bb.n ], [ %i.af, %bb.i ] ; 3 uses
+bb.y:                                             ; preds = %bb.w, %bb.s, %bb.r, %bb.o, %bb.i
+  %.pn43 = phi { ptr, i32 } [ %i.dc, %bb.w ], [ %i.co, %bb.s ], [ %i.cn, %bb.r ], [ %.pn, %bb.o ], [ %i.af, %bb.i ] ; 3 uses
   %.1 = extractvalue { ptr, i32 } %.pn43, 1
   %i.dl = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #37
   %i.dm = icmp eq i32 %.1, %i.dl

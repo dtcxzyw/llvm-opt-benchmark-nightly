@@ -204,16 +204,10 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6clie
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   br label %bb.z
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit: ; preds = %bb.ab, %bb.aa, %bb.z, %bb.w
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit: ; preds = %bb.z, %bb.ab, %bb.aa, %bb.w
   ret void
 
-2:                                                ; preds = %bb.h
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.aj) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #20
-  unreachable
-
-bb.z:                                             ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service14ipc_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB26_18CustomHeaderMarkerB23_B2F_EECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit, %bb.s
+bb.z:                                             ; preds = %bb.s, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service14ipc_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB26_18CustomHeaderMarkerB23_B2F_EECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.67)
@@ -233,6 +227,12 @@ bb.z:                                             ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au)
   call void @_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6client1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.br) #18
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit
+
+2:                                                ; preds = %bb.h
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service14ipc_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef align 8 dereferenceable(2488) %i.aj) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #20
+  unreachable
 
 bb.aa:                                            ; preds = %.thread, %bb.b
   %.sink = phi ptr [ %i.br, %.thread ], [ %i.bg, %bb.b ]
@@ -636,16 +636,10 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6clie
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   br label %bb.aa
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit: ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.x
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit: ; preds = %bb.aa, %bb.ac, %bb.ab, %bb.x
   ret void
 
-2:                                                ; preds = %bb.h
-  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service16local_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef align 8 dereferenceable(2712) %i.aj) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #20
-  unreachable
-
-bb.aa:                                            ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service16local_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB28_18CustomHeaderMarkerB25_B2H_EECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit, %bb.t
+bb.aa:                                            ; preds = %bb.t, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client6ClientNtNtNtBI_7service16local_threadsafe7ServiceSNtNtB1s_7builder19CustomPayloadMarkerNtB28_18CustomHeaderMarkerB25_B2H_EECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.67)
@@ -665,6 +659,12 @@ bb.aa:                                            ; preds = %_RINvNtCs8Chj7Szqq0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au)
   call void @_RNvXNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory6client1__INtB2_11TinyClosureKj18_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef nonnull align 16 dereferenceable(48) %i.br) #18
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsg6ZEkMtNi4J_8iceoryx24port19BackpressureHandlerKj18_EEECs8mxkWwUnjF1_14iceoryx2_ffi_c.exit
+
+2:                                                ; preds = %bb.h
+  call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port7details12data_segment11DataSegmentNtNtNtB16_7service16local_threadsafe7ServiceENtNtCs7gufeB8TUC6_12iceoryx2_cal13shared_memory23SharedMemoryCreateErrorEECs8mxkWwUnjF1_14iceoryx2_ffi_c(ptr noalias nofree noundef align 8 dereferenceable(2712) %i.aj) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
+  call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #20
+  unreachable
 
 bb.ab:                                            ; preds = %.thread, %bb.b
   %.sink = phi ptr [ %i.br, %.thread ], [ %i.bg, %bb.b ]

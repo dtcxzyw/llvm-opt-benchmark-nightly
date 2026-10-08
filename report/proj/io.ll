@@ -206,18 +206,18 @@ bb.ct:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.cu:                                            ; preds = %bb.ct
   %i.se = invoke i32 @proj_context_get_use_proj4_init_rules(ptr noundef nonnull %i.rf, i32 noundef 0)
-          to label %bb.cw unwind label %bb.cv
+          to label %bb.cv unwind label %bb.cw
 
-bb.cv:                                            ; preds = %bb.cy, %bb.cu
-  %75 = landingpad { ptr, i32 }
+bb.cv:                                            ; preds = %bb.cu
+  %75 = icmp eq i32 %i.se, 1
+  br i1 %75, label %.thread1270, label %bb.cx
+
+bb.cw:                                            ; preds = %bb.cy, %bb.cu
+  %76 = landingpad { ptr, i32 }
           cleanup
   br label %bb.gy
 
-bb.cw:                                            ; preds = %bb.cu
-  %76 = icmp eq i32 %i.se, 1
-  br i1 %76, label %.thread1270, label %bb.cx
-
-bb.cx:                                            ; preds = %bb.cw
+bb.cx:                                            ; preds = %bb.cv
   %i.sf = call ptr @__cxa_allocate_exception(i64 40) #41 ; 4 uses
   invoke void @_ZN5osgeo4proj4util9ExceptionC2EPKc(ptr noundef nonnull align 8 dereferenceable(40) %i.sf, ptr noundef nonnull @.str.616)
           to label %bb.cy unwind label %bb.cz
@@ -225,7 +225,7 @@ bb.cx:                                            ; preds = %bb.cw
 bb.cy:                                            ; preds = %bb.cx
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5osgeo4proj2io16ParsingExceptionE, i64 16), ptr %i.sf, align 8, !tbaa !156
   invoke void @__cxa_throw(ptr nonnull %i.sf, ptr nonnull @_ZTIN5osgeo4proj2io16ParsingExceptionE, ptr nonnull @_ZN5osgeo4proj2io16ParsingExceptionD1Ev) #42
-          to label %bb.xn unwind label %bb.cv
+          to label %bb.xn unwind label %bb.cw
 
 bb.cz:                                            ; preds = %bb.cx
   %i.sg = landingpad { ptr, i32 }
@@ -233,7 +233,7 @@ bb.cz:                                            ; preds = %bb.cx
   call void @__cxa_free_exception(ptr nonnull %i.sf) #41
   br label %bb.gy
 
-.thread1270:                                      ; preds = %bb.ct, %bb.cw
+.thread1270:                                      ; preds = %bb.ct, %bb.cv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #41
   %i.sh = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 9 uses
@@ -636,8 +636,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit821: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #41
   br label %bb.gy
 
-bb.gy:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit821, %bb.cz, %bb.cv
-  %.pn486.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn486.pn.pn.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit821 ], [ %75, %bb.cv ], [ %i.sg, %bb.cz ]
+bb.gy:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit821, %bb.cz, %bb.cw
+  %.pn486.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn486.pn.pn.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit821 ], [ %76, %bb.cw ], [ %i.sg, %bb.cz ]
   store i32 %i.ry, ptr %i.rx, align 8, !tbaa !1389
   br label %bb.jb
 

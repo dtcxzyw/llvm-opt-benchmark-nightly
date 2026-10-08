@@ -204,7 +204,7 @@ bb.cd:                                            ; preds = %.loopexit.split-lp,
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.ce
 
-.thread251:                                       ; preds = %.noexc130, %bb.bd, %_ZN4NodeD2Ev.exit, %_ZNK10ColorStateeqERKS_.exit138, %bb.cc
+.thread251:                                       ; preds = %.noexc130, %bb.bd, %_ZNK10ColorStateeqERKS_.exit138, %_ZN4NodeD2Ev.exit, %bb.cc
   %i.ra = getelementptr inbounds nuw i8, ptr %.sroa.0228.0310, i64 32 ; 2 uses
   %.not256 = icmp eq ptr %i.ra, %i.jj
   br i1 %.not256, label %._crit_edge313.loopexit, label %bb.aw

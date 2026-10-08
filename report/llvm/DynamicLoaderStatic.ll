@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.br = icmp eq i32 %i.bq, 4
   br i1 %i.br, label %.thread36, label %.thread34
 
-.thread36:                                        ; preds = %bb.a, %bb.j, %bb.v
+.thread36:                                        ; preds = %bb.j, %bb.a, %bb.v
   %i.bs = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #15 ; 2 uses
   tail call void @_ZN19DynamicLoaderStaticC1EPN12lldb_private7ProcessE(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, ptr noundef %0) #14
   br label %.thread34

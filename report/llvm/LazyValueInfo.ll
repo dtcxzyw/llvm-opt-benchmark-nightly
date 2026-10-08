@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.jt = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 32
   %i.ju = load ptr, ptr %i.jt, align 8, !tbaa !138
   %i.jv = icmp eq ptr %i.ju, %i.io
-  br i1 %i.jv, label %.loopexit.loopexit.split.loop.exit395, label %bb.br
+  br i1 %i.jv, label %.loopexit.loopexit.split.loop.exit, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.jw = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 64
@@ -217,7 +217,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.jz = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 96
   %i.ka = load ptr, ptr %i.jz, align 8, !tbaa !138
   %i.kb = icmp eq ptr %i.ka, %i.io
-  br i1 %i.kb, label %.loopexit.loopexit.split.loop.exit, label %bb.bt
+  br i1 %i.kb, label %.loopexit.loopexit.split.loop.exit395, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.kc = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 128
@@ -263,24 +263,24 @@ bb.bw:                                            ; preds = %._crit_edge._crit_e
   %i.kn = icmp eq ptr %i.km, %i.io
   br i1 %i.kn, label %.loopexit, label %_ZN4llvm19ValueLatticeElementD2Ev.exit172
 
-.loopexit.loopexit.split.loop.exit:               ; preds = %bb.bs
-  %i.ko = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 96
+.loopexit.loopexit.split.loop.exit:               ; preds = %bb.bq
+  %i.ko = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 32
   br label %.loopexit
 
 .loopexit.loopexit.split.loop.exit393:            ; preds = %bb.br
   %i.kp = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 64
   br label %.loopexit
 
-.loopexit.loopexit.split.loop.exit395:            ; preds = %bb.bq
-  %i.kq = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 32
+.loopexit.loopexit.split.loop.exit395:            ; preds = %bb.bs
+  %i.kq = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 96
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.bp, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit393, %.loopexit.loopexit.split.loop.exit395, %._crit_edge._crit_edge52.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i, %bb.bu
+.loopexit:                                        ; preds = %bb.bp, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit393, %.loopexit.loopexit.split.loop.exit395, %bb.bu, %._crit_edge._crit_edge.i.i.i.i.i, %._crit_edge._crit_edge52.i.i.i.i.i
   %.028.i.i.i.i.i = phi ptr [ %.1.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i ], [ %.029.lcssa.i.i.i.i.i, %bb.bu ], [ %.2.i.i.i.i.i, %._crit_edge._crit_edge52.i.i.i.i.i ], [ %i.kq, %.loopexit.loopexit.split.loop.exit395 ], [ %i.kp, %.loopexit.loopexit.split.loop.exit393 ], [ %i.ko, %.loopexit.loopexit.split.loop.exit ], [ %.02946.i.i.i.i.i, %bb.bp ]
   %.not312 = icmp eq ptr %.028.i.i.i.i.i, %i.jo
   br i1 %.not312, label %_ZN4llvm19ValueLatticeElementD2Ev.exit172, label %bb.bx
 
-_ZN4llvm19ValueLatticeElementD2Ev.exit172:        ; preds = %bb.bl, %bb.bk, %._crit_edge._crit_edge52.i.i.i.i.i, %._crit_edge.i.i.i.i.i, %.loopexit
+_ZN4llvm19ValueLatticeElementD2Ev.exit172:        ; preds = %._crit_edge._crit_edge52.i.i.i.i.i, %._crit_edge.i.i.i.i.i, %bb.bk, %bb.bl, %.loopexit
   store i16 6, ptr %0, align 8
   %i.kr = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.kr, align 8, !tbaa !68

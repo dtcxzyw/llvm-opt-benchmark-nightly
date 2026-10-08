@@ -205,10 +205,10 @@ bb.nz:                                            ; preds = %bb.ny
   br label %.thread92.i.i
 
 .thread92.i.i:                                    ; preds = %bb.nz, %bb.ny, %bb.nx, %bb.nw, %bb.nu, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016, %bb.nt, %.thread.i.i, %bb.np
-  %.sroa.054.0.lcssa132.i.i = phi ptr [ %.sroa.054.0.lcssa.i.i, %bb.nx ], [ %.sroa.054.0.lcssa.i.i, %bb.nw ], [ %.sroa.054.0.lcssa.i.i, %bb.nz ], [ %.sroa.054.0.lcssa.i.i, %bb.ny ], [ %.sroa.054.0.lcssa.i.i, %bb.nu ], [ %.sroa.054.0.lcssa.i.i, %bb.nt ], [ null, %.thread.i.i ], [ %.sroa.054.0.lcssa.i.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ null, %bb.np ]
-  %.sroa.8.0.i.i = phi i32 [ %.sroa.8.0.copyload.i.i1033, %bb.nx ], [ 0, %bb.nw ], [ %i.boz, %bb.nz ], [ 0, %bb.ny ], [ 0, %bb.nu ], [ 0, %bb.nt ], [ 0, %.thread.i.i ], [ 0, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ 0, %bb.np ] ; 2 uses
-  %.sroa.040.0.i.i = phi ptr [ %i.bpd, %bb.nx ], [ null, %bb.nw ], [ %i.bow, %bb.nz ], [ null, %bb.ny ], [ null, %bb.nu ], [ null, %bb.nt ], [ null, %.thread.i.i ], [ null, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ null, %bb.np ] ; 3 uses
-  %.6.i.i = phi i1 [ true, %bb.nx ], [ false, %bb.nw ], [ true, %bb.nz ], [ false, %bb.ny ], [ false, %bb.nu ], [ false, %bb.nt ], [ false, %.thread.i.i ], [ false, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ false, %bb.np ] ; 2 uses
+  %.sroa.054.0.lcssa132.i.i = phi ptr [ %.sroa.054.0.lcssa.i.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ %.sroa.054.0.lcssa.i.i, %bb.nt ], [ null, %.thread.i.i ], [ %.sroa.054.0.lcssa.i.i, %bb.nx ], [ %.sroa.054.0.lcssa.i.i, %bb.nw ], [ %.sroa.054.0.lcssa.i.i, %bb.nz ], [ %.sroa.054.0.lcssa.i.i, %bb.ny ], [ %.sroa.054.0.lcssa.i.i, %bb.nu ], [ null, %bb.np ]
+  %.sroa.8.0.i.i = phi i32 [ 0, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ 0, %bb.nt ], [ 0, %.thread.i.i ], [ %.sroa.8.0.copyload.i.i1033, %bb.nx ], [ 0, %bb.nw ], [ %i.boz, %bb.nz ], [ 0, %bb.ny ], [ 0, %bb.nu ], [ 0, %bb.np ] ; 2 uses
+  %.sroa.040.0.i.i = phi ptr [ null, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ null, %bb.nt ], [ null, %.thread.i.i ], [ %i.bpd, %bb.nx ], [ null, %bb.nw ], [ %i.bow, %bb.nz ], [ null, %bb.ny ], [ null, %bb.nu ], [ null, %bb.np ] ; 3 uses
+  %.6.i.i = phi i1 [ false, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i.i1016 ], [ false, %bb.nt ], [ false, %.thread.i.i ], [ true, %bb.nx ], [ false, %bb.nw ], [ true, %bb.nz ], [ false, %bb.ny ], [ false, %bb.nu ], [ false, %bb.np ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
   %i.bpk = getelementptr inbounds nuw i8, ptr %.sroa.046.0.i.i, i64 48
   %i.bpl = load ptr, ptr %i.bpk, align 8, !tbaa !379

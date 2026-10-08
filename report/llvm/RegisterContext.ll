@@ -202,20 +202,20 @@ bb.f:                                             ; preds = %bb.e
   %.not26 = icmp eq i32 %i.o, %i.q
   br i1 %.not26, label %.thread22, label %.thread15.a
 
-.thread15.a:                                      ; preds = %bb.c, %bb.a, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i, %_ZNK12lldb_private6Thread10GetProcessEv.exit, %bb.e, %bb.f
-  %.sroa.5.081221 = phi ptr [ %i.e, %bb.f ], [ %i.e, %bb.e ], [ %i.e, %_ZNK12lldb_private6Thread10GetProcessEv.exit ], [ null, %bb.a ], [ %i.e, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ null, %bb.c ] ; 2 uses
-  %.01319 = phi i32 [ %i.o, %bb.f ], [ %i.o, %bb.e ], [ -1, %_ZNK12lldb_private6Thread10GetProcessEv.exit ], [ -1, %bb.a ], [ -1, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ -1, %bb.c ]
+.thread15.a:                                      ; preds = %bb.c, %bb.a, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i, %_ZNK12lldb_private6Thread10GetProcessEv.exit, %bb.f, %bb.e
+  %.014 = phi i32 [ %i.o, %bb.f ], [ %i.o, %bb.e ], [ -1, %_ZNK12lldb_private6Thread10GetProcessEv.exit ], [ -1, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ -1, %bb.a ], [ -1, %bb.c ]
+  %.sroa.5.0813 = phi ptr [ %i.e, %bb.f ], [ %i.e, %bb.e ], [ %i.e, %_ZNK12lldb_private6Thread10GetProcessEv.exit ], [ %i.e, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ null, %bb.a ], [ null, %bb.c ] ; 2 uses
   %i.r = load ptr, ptr %0, align 8, !tbaa !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %i.t = load ptr, ptr %i.s, align 8
   tail call void %i.t(ptr noundef nonnull align 8 dereferenceable(40) %0) #17
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %.01319, ptr %i.u, align 4, !tbaa !41
-  %.not.i.i = icmp eq ptr %.sroa.5.081221, null
+  store i32 %.014, ptr %i.u, align 4, !tbaa !41
+  %.not.i.i = icmp eq ptr %.sroa.5.0813, null
   br i1 %.not.i.i, label %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %.thread22
 
 .thread22:                                        ; preds = %bb.f, %.thread15.a
-  %.sroa.5.08122025 = phi ptr [ %.sroa.5.081221, %.thread15.a ], [ %i.e, %bb.f ] ; 7 uses
+  %.sroa.5.08122025 = phi ptr [ %.sroa.5.0813, %.thread15.a ], [ %i.e, %bb.f ] ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.5.08122025, i64 8 ; 4 uses
   %i.w = load atomic i64, ptr %i.v acquire, align 8 ; 2 uses
   %i.x = icmp eq i64 %i.w, 4294967297

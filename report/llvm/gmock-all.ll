@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.af = load i32, ptr @_ZN7testing33FLAGS_gmock_default_mock_behaviorE, align 4, !tbaa !170
   store i32 %i.af, ptr %i.b, align 4, !tbaa !170
   %i.ag = call fastcc noundef zeroext i1 @_ZN7testing8internalL19ParseGoogleMockFlagEPKcS2_Pi(ptr noundef %i.i, ptr noundef %i.b)
-  br i1 %i.ag, label %bb.j, label %.critedge41
+  br i1 %i.ag, label %bb.j, label %4
 
 bb.j:                                             ; preds = %bb.i
   %i.ah = load i32, ptr %i.b, align 4, !tbaa !170
@@ -212,7 +212,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   br label %.preheader
 
-.preheader:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %.thread, %bb.j
+4:                                                ; preds = %bb.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
+  %5 = add nsw i32 %.02546, 1
+  br label %bb.k
+
+.preheader:                                       ; preds = %bb.j, %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
   %i.ai = load i32, ptr %0, align 4, !tbaa !170   ; 4 uses
   %.not2843 = icmp eq i32 %.02546, %i.ai
   br i1 %.not2843, label %._crit_edge, label %.lr.ph.preheader
@@ -270,13 +275,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond = icmp eq i32 %i.ai, %lftr.wideiv
   br i1 %exitcond, label %._crit_edge, label %.lr.ph, !llvm.loop !422
 
-.critedge41:                                      ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
-  %4 = add nsw i32 %.02546, 1
-  br label %bb.k
-
-bb.k:                                             ; preds = %.critedge41, %._crit_edge
-  %.126 = phi i32 [ %.02546, %._crit_edge ], [ %4, %.critedge41 ] ; 2 uses
+bb.k:                                             ; preds = %4, %._crit_edge
+  %.126 = phi i32 [ %.02546, %._crit_edge ], [ %5, %4 ] ; 2 uses
   %i.az = load ptr, ptr %2, align 8, !tbaa !25    ; 2 uses
   %i.ba = icmp eq ptr %i.az, %i.f
   br i1 %i.ba, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
@@ -439,7 +439,7 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.al = load i32, ptr @_ZN7testing33FLAGS_gmock_default_mock_behaviorE, align 4, !tbaa !170
   store i32 %i.al, ptr %i.b, align 4, !tbaa !170
   %i.am = call fastcc noundef zeroext i1 @_ZN7testing8internalL19ParseGoogleMockFlagEPKcS2_Pi(ptr noundef %i.o, ptr noundef %i.b)
-  br i1 %i.am, label %bb.j, label %.critedge41
+  br i1 %i.am, label %bb.j, label %5
 
 bb.j:                                             ; preds = %bb.i
   %i.an = load i32, ptr %i.b, align 4, !tbaa !170
@@ -447,7 +447,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   br label %.preheader
 
-.preheader:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %.thread, %bb.j
+5:                                                ; preds = %bb.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
+  %6 = add nsw i32 %.02546, 1
+  br label %bb.k
+
+.preheader:                                       ; preds = %bb.j, %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
   %i.ao = load i32, ptr %0, align 4, !tbaa !170   ; 4 uses
   %.not2843 = icmp eq i32 %.02546, %i.ao
   br i1 %.not2843, label %._crit_edge, label %.lr.ph.preheader
@@ -505,13 +510,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond = icmp eq i32 %i.ao, %lftr.wideiv
   br i1 %exitcond, label %._crit_edge, label %.lr.ph, !llvm.loop !428
 
-.critedge41:                                      ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
-  %5 = add nsw i32 %.02546, 1
-  br label %bb.k
-
-bb.k:                                             ; preds = %.critedge41, %._crit_edge
-  %.126 = phi i32 [ %.02546, %._crit_edge ], [ %5, %.critedge41 ] ; 2 uses
+bb.k:                                             ; preds = %5, %._crit_edge
+  %.126 = phi i32 [ %.02546, %._crit_edge ], [ %6, %5 ] ; 2 uses
   %i.bf = load ptr, ptr %3, align 8, !tbaa !25    ; 2 uses
   %i.bg = icmp eq ptr %i.bf, %i.f
   br i1 %i.bg, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29

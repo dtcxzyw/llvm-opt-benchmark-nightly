@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
 
 _ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit: ; preds = %bb.s, %bb.t
   %i.bw = phi i8 [ %i.bt, %bb.s ], [ %.pre21, %bb.t ]
-  switch i8 %i.bw, label %bb.v [
+  switch i8 %i.bw, label %.thread18 [
     i8 14, label %bb.u
     i8 12, label %bb.u
     i8 13, label %bb.u
@@ -217,17 +217,17 @@ _ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit: ; pre
   ]
 
 bb.u:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit, %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit
-  br i1 %i.bu, label %.thread18, label %.thread
+  br i1 %i.bu, label %bb.v, label %.thread
 
-.thread18:                                        ; preds = %bb.u
+.thread18:                                        ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit
   %i.bx = tail call i32 @_ZN2v88internal10ParserBaseINS0_9PreParserEE37ParseAssignmentExpressionCoverGrammarEv(ptr noundef nonnull align 8 dereferenceable(270) %0) ; 0 uses
-  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE22PositionAfterSemicolonEv.exit
-
-bb.v:                                             ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE5CheckENS0_5Token5ValueE.exit
-  %i.by = tail call i32 @_ZN2v88internal10ParserBaseINS0_9PreParserEE37ParseAssignmentExpressionCoverGrammarEv(ptr noundef nonnull align 8 dereferenceable(270) %0) ; 0 uses
   br i1 %i.bu, label %_ZN2v88internal10ParserBaseINS0_9PreParserEE22PositionAfterSemicolonEv.exit, label %.thread
 
-_ZN2v88internal10ParserBaseINS0_9PreParserEE22PositionAfterSemicolonEv.exit: ; preds = %.thread18, %bb.v
+bb.v:                                             ; preds = %bb.u
+  %i.by = tail call i32 @_ZN2v88internal10ParserBaseINS0_9PreParserEE37ParseAssignmentExpressionCoverGrammarEv(ptr noundef nonnull align 8 dereferenceable(270) %0) ; 0 uses
+  br label %_ZN2v88internal10ParserBaseINS0_9PreParserEE22PositionAfterSemicolonEv.exit
+
+_ZN2v88internal10ParserBaseINS0_9PreParserEE22PositionAfterSemicolonEv.exit: ; preds = %bb.v, %.thread18
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.ca = load ptr, ptr %i.bz, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 20 ; 2 uses
@@ -257,7 +257,7 @@ bb.w:                                             ; preds = %_ZN2v88internal10Pa
   store i32 %i.ct, ptr %i.cr, align 4
   br label %.sink.split
 
-.thread:                                          ; preds = %bb.u, %_ZN2v88internal10ParserBaseINS0_9PreParserEE18CheckStackOverflowEv.exit, %bb.v
+.thread:                                          ; preds = %_ZN2v88internal10ParserBaseINS0_9PreParserEE18CheckStackOverflowEv.exit, %bb.u, %.thread18
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 24
   br label %.sink.split
 

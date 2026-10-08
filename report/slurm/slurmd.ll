@@ -202,27 +202,27 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.k = tail call i32 @access(ptr noundef nonnull %i.g, i32 noundef 2) #16
   %.not8 = icmp eq i32 %i.k, 0
-  br i1 %.not8, label %bb.g, label %bb.h
+  br i1 %.not8, label %bb.g, label %.thread13
 
 bb.g:                                             ; preds = %bb.f
   %i.l = tail call i32 @chdir(ptr noundef nonnull %i.g) #16
   %i.m = icmp slt i32 %i.l, 0
-  br i1 %i.m, label %bb.h, label %.thread13
+  br i1 %i.m, label %.thread13, label %bb.h
 
-.thread13:                                        ; preds = %bb.g
-  call void @slurm_xfree(ptr noundef nonnull %i.a) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  br label %.thread16
-
-bb.h:                                             ; preds = %bb.f, %bb.g
+.thread13:                                        ; preds = %bb.g, %bb.f
   %0 = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.283, ptr noundef nonnull %i.g) #16 ; 0 uses
   call void @slurm_xfree(ptr noundef nonnull %i.a) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %.pre = load ptr, ptr @conf, align 8
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.h
-  %i.n = phi ptr [ %i.b, %bb.a ], [ %i.b, %bb.b ], [ %.pre, %bb.h ]
+bb.h:                                             ; preds = %bb.g
+  call void @slurm_xfree(ptr noundef nonnull %i.a) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
+  br label %.thread16
+
+.thread:                                          ; preds = %bb.b, %bb.a, %.thread13
+  %i.n = phi ptr [ %i.b, %bb.b ], [ %i.b, %bb.a ], [ %.pre, %.thread13 ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 4360
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = call i32 @access(ptr noundef %i.p, i32 noundef 2) #16
@@ -264,8 +264,8 @@ bb.n:                                             ; preds = %bb.m
   call void (i32, ptr, ...) @log_var(i32 noundef 3, ptr noundef nonnull @.str.286) #16
   br label %.thread16
 
-.thread16:                                        ; preds = %bb.i, %.thread13, %bb.m, %bb.n, %bb.l
-  %.04 = phi i32 [ -1, %bb.l ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %.thread13 ], [ 0, %bb.i ]
+.thread16:                                        ; preds = %bb.h, %bb.m, %bb.n, %bb.i, %bb.l
+  %.04 = phi i32 [ -1, %bb.l ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.n ], [ 0, %bb.m ]
   ret i32 %.04
 }
 

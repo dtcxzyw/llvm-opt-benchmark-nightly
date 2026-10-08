@@ -204,11 +204,7 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   %i.o = load i32, ptr %i.n, align 8, !tbaa !31
   %i.p = add i32 %i.o, %i.m                       ; 2 uses
   %i.q = icmp ugt i32 %i.p, 23999
-  br i1 %i.q, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
-  store i32 %i.p, ptr %i.n, align 8, !tbaa !31
-  br label %bb.e
+  br i1 %i.q, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -223,8 +219,12 @@ bb.d:                                             ; preds = %bb.c
   store float %i.x, ptr %i.y, align 4, !tbaa !32
   br label %bb.e
 
-bb.e:                                             ; preds = %2, %bb.d, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
-  %.1 = phi i1 [ true, %bb.d ], [ false, %2 ], [ false, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ]
+.critedge:                                        ; preds = %bb.c
+  store i32 %i.p, ptr %i.n, align 8, !tbaa !31
+  br label %bb.e
+
+bb.e:                                             ; preds = %.critedge, %bb.d, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
+  %.1 = phi i1 [ true, %bb.d ], [ false, %.critedge ], [ false, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ]
   %i.z = fcmp nsz ogt double %i.g, f0x3690000000000000
   br i1 %i.z, label %bb.f, label %bb.g
 

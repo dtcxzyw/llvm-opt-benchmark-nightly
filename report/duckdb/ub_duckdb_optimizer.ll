@@ -205,6 +205,10 @@ bb.am:                                            ; preds = %.loopexit93, %.loop
   %.not127 = icmp eq ptr %.sroa.080.0126, null
   br i1 %.not127, label %.loopexit, label %.lr.ph131
 
+._crit_edge131.loopexit:                          ; preds = %.lr.ph131
+  %12 = trunc nuw i8 %i.gp to i1
+  br label %.loopexit
+
 .lr.ph131:                                        ; preds = %.critedge, %.lr.ph131
   %.sroa.080.0129 = phi ptr [ %.sroa.080.0, %.lr.ph131 ], [ %.sroa.080.0126, %.critedge ] ; 2 uses
   %.135128 = phi i8 [ %i.gp, %.lr.ph131 ], [ 0, %.critedge ]
@@ -214,14 +218,10 @@ bb.am:                                            ; preds = %.loopexit93, %.loop
   %i.gp = select i1 %i.gm, i8 1, i8 %i.go         ; 2 uses
   %.sroa.080.0 = load ptr, ptr %.sroa.080.0129, align 8, !tbaa !313 ; 2 uses
   %.not = icmp eq ptr %.sroa.080.0, null
-  br i1 %.not, label %.loopexit.loopexit, label %.lr.ph131
+  br i1 %.not, label %._crit_edge131.loopexit, label %.lr.ph131
 
-.loopexit.loopexit:                               ; preds = %.lr.ph131
-  %12 = trunc nuw i8 %i.gp to i1
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.critedge, %._crit_edge
-  %.236 = phi i1 [ true, %._crit_edge ], [ false, %.critedge ], [ %12, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %.critedge, %._crit_edge131.loopexit, %._crit_edge
+  %.236 = phi i1 [ true, %._crit_edge ], [ false, %.critedge ], [ %12, %._crit_edge131.loopexit ]
   ret i1 %.236
 }
 
@@ -624,11 +624,15 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf
   %i.fp = load ptr, ptr %9, align 8, !tbaa !219   ; 2 uses
   %.not.i.i.i116 = icmp eq ptr %i.fp, null
-  br i1 %.not.i.i.i116, label %10, label %bb.bh
+  br i1 %.not.i.i.i116, label %_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   call void @_ZdlPv(ptr noundef nonnull %i.fp) #34
-  br label %10
+  br label %_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119
+
+_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119: ; preds = %bb.bg, %bb.bh
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #33
+  br i1 %i.fo, label %.thread162, label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit
 
 bb.bi:                                            ; preds = %bb.be, %bb.bd, %bb.bc
   %i.fq = landingpad { ptr, i32 }
@@ -651,11 +655,7 @@ _ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119.a: ; preds = %bb.bk, %
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #33
   br label %bb.br
 
-10:                                               ; preds = %bb.bh, %bb.bg
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #33
-  br i1 %i.fo, label %.thread162, label %_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit
-
-.thread162:                                       ; preds = %bb.an, %bb.bb, %10
+.thread162:                                       ; preds = %bb.an, %bb.bb, %_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119
   %i.ft = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_15LogicalOperatorESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ao)
           to label %bb.bl unwind label %bb.bp
 
@@ -695,7 +695,7 @@ bb.bp:                                            ; preds = %bb.bm, %bb.bn, %bb.
           cleanup
   br label %bb.br
 
-_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit: ; preds = %bb.y, %bb.z, %bb.w, %10, %bb.bo, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i.i.i.i123, %.loopexit
+_ZNSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit: ; preds = %bb.y, %bb.z, %bb.w, %_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit119, %bb.bo, %_ZNKSt14default_deleteIN6duckdb15LogicalOperatorEEclEPS1_.exit.i.i.i.i.i123, %.loopexit
   %i.gg = load i64, ptr %i.af, align 8, !tbaa !305
   store i64 %i.gg, ptr %0, align 8, !tbaa !305
   store ptr null, ptr %i.af, align 8, !tbaa !305

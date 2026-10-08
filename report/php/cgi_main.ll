@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = trunc i64 %i.q to i32
   br label %.thread71
 
-.thread71:                                        ; preds = %bb.d, %bb.e
+.thread71:                                        ; preds = %bb.e, %bb.d
   %.040 = phi i32 [ %i.r, %bb.e ], [ %i.c, %bb.d ]
   %spec.store.select = call i32 @llvm.smin.i32(i32 %i.m, i32 1024)
   br label %bb.p
@@ -282,16 +282,16 @@ bb.o:                                             ; preds = %bb.m
   %i.as = call i32 (ptr, i64, ptr, ...) @ap_php_slprintf(ptr noundef nonnull %i.b, i64 noundef 1024, ptr noundef nonnull @.str.61, i32 noundef %i.ae) #27
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.n, %bb.o, %.thread82, %.thread71
-  %.23977 = phi i32 [ %spec.store.select, %.thread71 ], [ %i.z, %.thread82 ], [ %i.ar, %bb.n ], [ %i.as, %bb.o ]
-  %.24275 = phi i32 [ %.040, %.thread71 ], [ %i.ac, %.thread82 ], [ %i.c, %bb.n ], [ %i.c, %bb.o ]
-  %i.at = sext i32 %.23977 to i64
+bb.p:                                             ; preds = %.thread71, %.thread82, %bb.n, %bb.o
+  %.23977 = phi i32 [ %i.c, %bb.o ], [ %i.c, %bb.n ], [ %i.ac, %.thread82 ], [ %.040, %.thread71 ]
+  %.24275 = phi i32 [ %i.as, %bb.o ], [ %i.ar, %bb.n ], [ %i.z, %.thread82 ], [ %spec.store.select, %.thread71 ]
+  %i.at = sext i32 %.24275 to i64
   %i.au = call i64 @php_output_write_unbuffered(ptr noundef nonnull %i.b, i64 noundef %i.at) #27 ; 0 uses
   %i.av = call i64 @php_output_write_unbuffered(ptr noundef nonnull @.str.62, i64 noundef 2) #27 ; 0 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.j, %bb.p
-  %.24276 = phi i32 [ %.24275, %bb.p ], [ %i.c, %bb.j ]
+  %.24276 = phi i32 [ %.23977, %bb.p ], [ %i.c, %bb.j ]
   %.043 = phi i1 [ true, %bb.p ], [ false, %bb.j ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #27
   %i.aw = call ptr @zend_llist_get_first_ex(ptr noundef %0, ptr noundef nonnull %i.a) #27 ; 3 uses

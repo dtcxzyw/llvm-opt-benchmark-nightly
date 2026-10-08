@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %_ZNK12lldb_private1
   %i.dr = xor i1 %i.dq, true
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac, %.thread43, %.thread48, %bb.j, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit
+bb.ad:                                            ; preds = %.thread48, %bb.j, %.thread43, %bb.ac, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit
   %.0 = phi i1 [ false, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit ], [ true, %bb.j ], [ %i.dr, %.thread43 ], [ false, %bb.ac ], [ false, %.thread48 ]
   ret i1 %.0
 }

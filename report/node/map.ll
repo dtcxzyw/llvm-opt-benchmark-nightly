@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.u
 
 _ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit: ; preds = %bb.b, %bb.a, %bb.g
-  %i.an = phi i1 [ true, %bb.g ], [ false, %bb.a ], [ false, %bb.b ]
-  %.sroa.069.0115 = phi ptr [ %.0.i.i, %bb.g ], [ null, %bb.a ], [ null, %bb.b ]
+  %i.an = phi i1 [ true, %bb.g ], [ false, %bb.b ], [ false, %bb.a ]
+  %.sroa.069.0115 = phi ptr [ %.0.i.i, %bb.g ], [ null, %bb.b ], [ null, %bb.a ]
   %i.ao = tail call ptr @_ZN2v88internal3Map14CopyNormalizedEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_25PropertyNormalizationModeE(ptr noundef %0, ptr nonnull %1, i32 noundef %4) ; 6 uses
   %i.ap = icmp ult i8 %2, 42
   br i1 %i.ap, label %_ZN2v88internal3Map17set_elements_kindENS0_12ElementsKindE.exit, label %bb.j, !prof !11

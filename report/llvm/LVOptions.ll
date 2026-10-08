@@ -202,8 +202,8 @@ _ZN4llvmeqENS_9StringRefES0_.exit:                ; preds = %bb.e
   %.not = icmp eq ptr %i.w, %i.e
   br i1 %.not, label %.thread28, label %.lr.ph
 
-.thread28:                                        ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit, %.thread, %bb.d, %.split, %.split38, %bb.b, %bb.a
-  %.3 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %.split38 ], [ true, %.split ], [ false, %.thread ], [ true, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ true, %bb.d ]
+.thread28:                                        ; preds = %.thread, %_ZN4llvmeqENS_9StringRefES0_.exit, %bb.d, %.split, %.split38, %bb.b, %bb.a
+  %.3 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %.split38 ], [ true, %.split ], [ true, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ false, %.thread ], [ true, %bb.d ]
   ret i1 %.3
 }
 

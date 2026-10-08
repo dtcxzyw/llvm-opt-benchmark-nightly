@@ -205,7 +205,7 @@ _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit: ; preds
 
 ._crit_edge294:                                   ; preds = %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit, %._crit_edge
   %.3117.lcssa = phi i1 [ %.0114.lcssa, %._crit_edge ], [ %.5119265, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ]
-  br i1 %.3117.lcssa, label %25, label %bb.bi
+  br i1 %.3117.lcssa, label %.critedge, label %bb.bi
 
 bb.bi:                                            ; preds = %._crit_edge294
   %.val128 = load i8, ptr %i.ex, align 8, !tbaa !2105, !range !106, !noundef !107
@@ -229,11 +229,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.ol = call noundef ptr %i.ok(ptr noundef nonnull align 8 dereferenceable(8) %i.oh, ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.060.0) #26
   %i.om = call i64 @_ZN5clang4Sema15BuildReturnStmtENS_14SourceLocationEPNS_4ExprEb(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.060.0, ptr noundef %i.ol, i1 noundef zeroext false) #26 ; 2 uses
   %i.on = icmp eq i64 %i.om, 1
-  br i1 %i.on, label %25, label %bb.bl
-
-25:                                               ; preds = %._crit_edge294, %bb.bk
-  call void @_ZN5clang4Decl14setInvalidDeclEb(ptr noundef nonnull align 8 dereferenceable(33) %2, i1 noundef zeroext true) #26
-  br label %.thread266
+  br i1 %i.on, label %.critedge, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.oo = and i64 %i.om, -2
@@ -255,6 +251,10 @@ bb.bl:                                            ; preds = %bb.bk
   %.not127 = icmp eq ptr %i.oy, null
   br i1 %.not127, label %.thread266, label %bb.bm
 
+.critedge:                                        ; preds = %bb.bk, %._crit_edge294
+  call void @_ZN5clang4Decl14setInvalidDeclEb(ptr noundef nonnull align 8 dereferenceable(33) %2, i1 noundef zeroext true) #26
+  br label %.thread266
+
 bb.bm:                                            ; preds = %bb.bl
   %i.oz = load ptr, ptr %i.oy, align 8, !tbaa !1195
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oz, i64 112
@@ -262,7 +262,7 @@ bb.bm:                                            ; preds = %bb.bl
   call void %i.pb(ptr noundef nonnull align 8 dereferenceable(8) %i.oy, ptr noundef nonnull %2) #26
   br label %.thread266
 
-.thread266:                                       ; preds = %bb.am, %bb.bg, %bb.bl, %bb.bm, %25
+.thread266:                                       ; preds = %bb.am, %bb.bg, %bb.bl, %bb.bm, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
@@ -665,7 +665,7 @@ _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit: ; preds
 
 ._crit_edge275:                                   ; preds = %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit, %._crit_edge
   %.3114.lcssa = phi i1 [ %.0111.lcssa, %._crit_edge ], [ %.5116247, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ]
-  br i1 %.3114.lcssa, label %36, label %bb.dd
+  br i1 %.3114.lcssa, label %.critedge, label %bb.dd
 
 bb.dd:                                            ; preds = %._crit_edge275
   %.val124 = load i8, ptr %i.qr, align 8, !tbaa !2105, !range !106, !noundef !107
@@ -689,11 +689,7 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
   %i.zx = call noundef ptr %i.zw(ptr noundef nonnull align 8 dereferenceable(8) %i.zt, ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.058.0) #26
   %i.zy = call i64 @_ZN5clang4Sema15BuildReturnStmtENS_14SourceLocationEPNS_4ExprEb(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.058.0, ptr noundef %i.zx, i1 noundef zeroext false) #26 ; 2 uses
   %i.zz = icmp eq i64 %i.zy, 1
-  br i1 %i.zz, label %36, label %bb.dg
-
-36:                                               ; preds = %._crit_edge275, %bb.df
-  call void @_ZN5clang4Decl14setInvalidDeclEb(ptr noundef nonnull align 8 dereferenceable(33) %2, i1 noundef zeroext true) #26
-  br label %.thread248
+  br i1 %i.zz, label %.critedge, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
   %i.aaa = and i64 %i.zy, -2
@@ -715,6 +711,10 @@ bb.dg:                                            ; preds = %bb.df
   %.not123 = icmp eq ptr %i.aak, null
   br i1 %.not123, label %.thread248, label %bb.dh
 
+.critedge:                                        ; preds = %bb.df, %._crit_edge275
+  call void @_ZN5clang4Decl14setInvalidDeclEb(ptr noundef nonnull align 8 dereferenceable(33) %2, i1 noundef zeroext true) #26
+  br label %.thread248
+
 bb.dh:                                            ; preds = %bb.dg
   %i.aal = load ptr, ptr %i.aak, align 8, !tbaa !1195
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 112
@@ -722,7 +722,7 @@ bb.dh:                                            ; preds = %bb.dg
   call void %i.aan(ptr noundef nonnull align 8 dereferenceable(8) %i.aak, ptr noundef nonnull %2) #26
   br label %.thread248
 
-.thread248:                                       ; preds = %bb.ch, %bb.db, %bb.dg, %bb.dh, %36
+.thread248:                                       ; preds = %bb.ch, %bb.db, %bb.dg, %bb.dh, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #26

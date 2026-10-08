@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bo = tail call ptr @proto_tree_add_item(ptr noundef %3, i32 noundef %i.bn, ptr noundef %0, i32 noundef %1, i32 noundef %i.bl, i32 noundef 0) ; 0 uses
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.j, %bb.n, %bb.i, %bb.b, %bb.s, %bb.t, %get_CDR_ushort.exit, %bb.x, %bb.w, %bb.r, %bb.q, %.thread, %find_fn_in_list.exit, %get_mfn_from_fn.exit, %bb.l
+.critedge:                                        ; preds = %bb.j, %bb.i, %bb.n, %bb.b, %bb.s, %bb.t, %get_CDR_ushort.exit, %bb.x, %bb.w, %bb.r, %bb.q, %.thread, %find_fn_in_list.exit, %get_mfn_from_fn.exit, %bb.l
   ret void
 }
 

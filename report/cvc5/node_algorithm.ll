@@ -204,6 +204,15 @@ bb.y:                                             ; preds = %bb.x
   %i.ee = invoke noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.ed)
           to label %20 unwind label %bb.af
 
+20:                                               ; preds = %bb.y
+  %21 = icmp eq i32 %i.ee, 2
+  %22 = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
+  %23 = zext i1 %21 to i64
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %22, i64 %23
+  %25 = load ptr, ptr %24, align 8, !tbaa !44, !noalias !351
+  %26 = icmp eq ptr %i.dw, %25
+  br i1 %26, label %.thread149, label %.critedge
+
 bb.z:                                             ; preds = %bb.l, %bb.k, %bb.i
   %i.ef = landingpad { ptr, i32 }
           cleanup
@@ -455,16 +464,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #21
   br label %bb.cu
 
-20:                                               ; preds = %bb.y
-  %21 = icmp eq i32 %i.ee, 2
-  %22 = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
-  %23 = zext i1 %21 to i64
-  %24 = getelementptr inbounds nuw [8 x i8], ptr %22, i64 %23
-  %25 = load ptr, ptr %24, align 8, !tbaa !44, !noalias !351
-  %26 = icmp eq ptr %i.dw, %25
-  br i1 %26, label %.thread149, label %.critedge
-
-.thread149:                                       ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit66, %_ZNK4cvc58internal12NodeTemplateILb0EE9isClosureEv.exit, %20
+.thread149:                                       ; preds = %_ZNK4cvc58internal12NodeTemplateILb0EE9isClosureEv.exit, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit66, %20
   %i.gy = load ptr, ptr %14, align 8, !tbaa !31
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 8 ; 2 uses
   %i.ha = load i64, ptr %i.gz, align 8
@@ -807,7 +807,7 @@ bb.cb:                                            ; preds = %bb.bu
           cleanup
   br label %bb.cu
 
-.critedge:                                        ; preds = %bb.ah, %bb.ai, %bb.ag, %_ZSt8_DestroyIPSt4pairIN4cvc58internal12NodeTemplateILb0EEES4_ES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.br, %bb.bq, %bb.bp, %20, %bb.m, %bb.j
+.critedge:                                        ; preds = %bb.bp, %bb.bq, %bb.br, %_ZSt8_DestroyIPSt4pairIN4cvc58internal12NodeTemplateILb0EEES4_ES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.j, %bb.m, %20, %bb.ah, %bb.ai, %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #21
   %i.mh = load ptr, ptr %14, align 8, !tbaa !31, !noalias !356 ; 2 uses
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mh, i64 16

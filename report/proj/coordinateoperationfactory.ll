@@ -204,7 +204,7 @@ bb.ku:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ago) #31
   br label %.thread.a
 
-.thread.a:                                        ; preds = %bb.ku, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i572, %bb.kq, %_ZN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io19PROJStringFormatterESt14default_deleteIS6_EEED2Ev.exit
+.thread.a:                                        ; preds = %_ZN7dropbox6oxygen2nnISt10unique_ptrIN5osgeo4proj2io19PROJStringFormatterESt14default_deleteIS6_EEED2Ev.exit, %bb.kq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i572, %bb.ku
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #31
   br label %bb.la
 
@@ -241,7 +241,7 @@ bb.kz:                                            ; preds = %bb.kl
   %i.ahj = icmp ugt i64 %i.agc, 16
   br label %bb.la
 
-bb.la:                                            ; preds = %.thread.a, %bb.kz, %bb.ky
+bb.la:                                            ; preds = %bb.kz, %.thread.a, %bb.ky
   %.1279 = phi i1 [ true, %.thread.a ], [ false, %bb.ky ], [ %i.ahj, %bb.kz ]
   br i1 %.0277, label %.thread635, label %bb.lb
 

@@ -204,11 +204,11 @@ bb.bh:                                            ; preds = %bb.bf, %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %.thread294
 
-bb.bi:                                            ; preds = %bb.bh, %bb.bg
+bb.bi:                                            ; preds = %bb.bg, %bb.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %bb.ek
 
-.thread294:                                       ; preds = %.thread292, %_ZN7AstNode2isI11AstStmtExprS_EEbPKT0_.exit.thread, %.thread297
+.thread294:                                       ; preds = %.thread297, %.thread292, %_ZN7AstNode2isI11AstStmtExprS_EEbPKT0_.exit.thread
   %i.fe = load ptr, ptr %i.a, align 8, !tbaa !255 ; 3 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 32
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !244

@@ -202,9 +202,9 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bd
   store i32 %.1229.i, ptr %i.jy, align 8
   br label %.critedge.i.a
 
-.critedge.i.a:                                    ; preds = %bb.an, %bb.am, %bb.bj, %bb.bi, %bb.bb, %bb.ay, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.al, %bb.ai, %bb.ag, %bb.af
-  %.0219 = phi ptr [ %i.js, %bb.bj ], [ null, %bb.bi ], [ null, %bb.bb ], [ null, %bb.ar ], [ null, %bb.as ], [ null, %bb.at ], [ null, %bb.ay ], [ null, %bb.ap ], [ null, %bb.ao ], [ null, %bb.al ], [ null, %bb.ai ], [ null, %bb.ag ], [ null, %bb.af ], [ null, %bb.am ], [ null, %bb.an ]
-  %.3.i = phi i32 [ 1, %bb.bj ], [ 0, %bb.bi ], [ 5, %bb.bb ], [ 5, %bb.ar ], [ 5, %bb.as ], [ 5, %bb.at ], [ 5, %bb.ay ], [ 5, %bb.ap ], [ 0, %bb.ao ], [ 5, %bb.al ], [ 0, %bb.ai ], [ 5, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.am ], [ 0, %bb.an ]
+.critedge.i.a:                                    ; preds = %bb.bj, %bb.bi, %bb.bb, %bb.ay, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ai, %bb.ag, %bb.af
+  %.0219 = phi ptr [ %i.js, %bb.bj ], [ null, %bb.bi ], [ null, %bb.bb ], [ null, %bb.ar ], [ null, %bb.as ], [ null, %bb.at ], [ null, %bb.ay ], [ null, %bb.ap ], [ null, %bb.am ], [ null, %bb.ao ], [ null, %bb.an ], [ null, %bb.al ], [ null, %bb.ai ], [ null, %bb.ag ], [ null, %bb.af ]
+  %.3.i = phi i32 [ 1, %bb.bj ], [ 0, %bb.bi ], [ 5, %bb.bb ], [ 5, %bb.ar ], [ 5, %bb.as ], [ 5, %bb.at ], [ 5, %bb.ay ], [ 5, %bb.ap ], [ 0, %bb.am ], [ 0, %bb.ao ], [ 0, %bb.an ], [ 5, %bb.al ], [ 0, %bb.ai ], [ 5, %bb.ag ], [ 0, %bb.af ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #5

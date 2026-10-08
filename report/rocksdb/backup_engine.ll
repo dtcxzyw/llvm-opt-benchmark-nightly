@@ -205,7 +205,7 @@ bb.du:                                            ; preds = %bb.ds
           cleanup
   br label %bb.dy
 
-.thread826:                                       ; preds = %bb.dq, %bb.dr, %bb.ds
+.thread826:                                       ; preds = %bb.ds, %bb.dq, %bb.dr
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #36
   store ptr %5, ptr %11, align 8, !tbaa !1108
   %i.qd = invoke { ptr, i8 } @_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE16_M_insert_uniqueIRKmSF_NS1_10_AllocNodeISaINS1_10_Hash_nodeImLb0EEEEEEEESt4pairINS1_14_Node_iteratorImLb1ELb0EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %11)

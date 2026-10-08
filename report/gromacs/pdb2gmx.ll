@@ -205,11 +205,11 @@ bb.aej:                                           ; preds = %bb.aeg, %bb.aed, %b
   br i1 %or.cond97.i, label %_ZNRSt8optionalIiE5valueEv.exit.thread.i, label %bb.adw
 
 _ZNRSt8optionalIiE5valueEv.exit.thread.i:         ; preds = %bb.adl, %bb.aej
-  %.sroa.039.684.ph.i = phi i32 [ %.sroa.039.4.i, %bb.aej ], [ %.sroa.039.1.i, %bb.adl ]
-  %.sroa.021.682.ph.i = phi i32 [ %.sroa.021.4.i, %bb.aej ], [ %.sroa.021.1.i, %bb.adl ]
-  %i.ebk = sext i32 %.sroa.039.684.ph.i to i64
+  %.sroa.039.684.ph.i = phi i32 [ %.sroa.021.4.i, %bb.aej ], [ %.sroa.021.1.i, %bb.adl ]
+  %.sroa.021.682.ph.i = phi i32 [ %.sroa.039.4.i, %bb.aej ], [ %.sroa.039.1.i, %bb.adl ]
+  %i.ebk = sext i32 %.sroa.021.682.ph.i to i64
   %i.ebl = getelementptr inbounds [12 x i8], ptr %i.dxe, i64 %i.ebk ; 2 uses
-  %i.ebm = sext i32 %.sroa.021.682.ph.i to i64
+  %i.ebm = sext i32 %.sroa.039.684.ph.i to i64
   %i.ebn = getelementptr inbounds [12 x i8], ptr %i.dxe, i64 %i.ebm ; 2 uses
   %i.ebo = load <2 x float>, ptr %i.ebn, align 4, !tbaa !80
   %i.ebp = load <2 x float>, ptr %i.ebl, align 4, !tbaa !80

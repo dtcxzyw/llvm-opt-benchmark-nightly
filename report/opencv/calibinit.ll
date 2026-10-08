@@ -205,8 +205,8 @@ bb.fr:                                            ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %61) #37
   br label %bb.fz
 
-.thread279:                                       ; preds = %bb.fm, %bb.fn, %.thread, %bb.ct, %.thread272, %bb.fq
-  %i.vn = phi i1 [ false, %bb.ct ], [ true, %bb.fq ], [ false, %.thread272 ], [ false, %.thread ], [ false, %bb.fn ], [ false, %bb.fm ]
+.thread279:                                       ; preds = %bb.fn, %bb.fm, %.thread, %bb.ct, %.thread272, %bb.fq
+  %i.vn = phi i1 [ true, %bb.fq ], [ false, %.thread272 ], [ false, %.thread ], [ false, %bb.ct ], [ false, %bb.fm ], [ false, %bb.fn ]
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #37
   store i32 1124024357, ptr %63, align 8, !tbaa !104
   %i.vo = getelementptr inbounds nuw i8, ptr %63, i64 4

@@ -202,25 +202,25 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.i = tail call i32 @access(ptr noundef nonnull %i.e, i32 noundef 2) #18
   %.not6 = icmp eq i32 %i.i, 0
-  br i1 %.not6, label %bb.g, label %bb.h
+  br i1 %.not6, label %bb.g, label %.thread11
 
 bb.g:                                             ; preds = %bb.f
   %i.j = tail call i32 @chdir(ptr noundef nonnull %i.e) #18
   %i.k = icmp slt i32 %i.j, 0
-  br i1 %i.k, label %bb.h, label %.thread11
+  br i1 %i.k, label %.thread11, label %bb.h
 
-.thread11:                                        ; preds = %bb.g
-  call void @slurm_xfree(ptr noundef nonnull %i.a) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
-  br label %.thread14
-
-bb.h:                                             ; preds = %bb.f, %bb.g
+.thread11:                                        ; preds = %bb.g, %bb.f
   %0 = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.264, ptr noundef nonnull %i.e) #18 ; 0 uses
   call void @slurm_xfree(ptr noundef nonnull %i.a) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.h
+bb.h:                                             ; preds = %bb.g
+  call void @slurm_xfree(ptr noundef nonnull %i.a) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  br label %.thread14
+
+.thread:                                          ; preds = %bb.b, %bb.a, %.thread11
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 1432), align 8
   %i.m = call i32 @access(ptr noundef %i.l, i32 noundef 2) #18
   %.not7 = icmp eq i32 %i.m, 0
@@ -257,7 +257,7 @@ bb.n:                                             ; preds = %bb.m
   call void (i32, ptr, ...) @log_var(i32 noundef 3, ptr noundef nonnull @.str.267) #18
   br label %.thread14
 
-.thread14:                                        ; preds = %bb.i, %.thread11, %bb.l, %bb.n, %bb.m
+.thread14:                                        ; preds = %bb.h, %bb.i, %bb.l, %bb.n, %bb.m
   ret void
 }
 

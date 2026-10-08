@@ -204,13 +204,13 @@ _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.o
   br label %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer
 
 _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer: ; preds = %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge, %bb.bc
-  %.sroa.0253.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.sroa.0253.4342.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
-  %.sroa.0250.0.i.i.ph.ph = phi ptr [ null, %bb.bc ], [ %.sroa.0250.1313341.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
-  %.sroa.0242.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.sroa.0242.1315340.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ] ; 14 uses
+  %.sroa.0253.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.sroa.0240.4344.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
+  %.sroa.0250.0.i.i.ph.ph = phi ptr [ null, %bb.bc ], [ %.sroa.0250.1313.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
+  %.sroa.0242.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.6346.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ] ; 14 uses
   %.sroa.0241.0.i.i.ph.ph = phi ptr [ null, %bb.bc ], [ %.sroa.0241.5343.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
-  %.sroa.0240.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.sroa.0240.4344.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
+  %.sroa.0240.0.i.i.ph.ph = phi i64 [ 0, %bb.bc ], [ %.sroa.0253.4342.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
   %.sroa.0291.1.i.i.ph444.ph = phi ptr [ %.sroa.034.059.i, %bb.bc ], [ %.sroa.0291.1.i.i.ph444.ph.be, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
-  %.053.i.i.ph.ph = phi i1 [ undef, %bb.bc ], [ %.760345.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
+  %.053.i.i.ph.ph = phi i1 [ undef, %bb.bc ], [ %.760.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ]
   %.050.i.i.ph.ph = phi i64 [ undef, %bb.bc ], [ %i.vm, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.outer.backedge ] ; 3 uses
   %i.ko = add i64 %i.kn, %.050.i.i.ph.ph
   %.not76.i.i.peel = icmp eq i64 %.050.i.i.ph.ph, 0
@@ -613,28 +613,28 @@ bb.cr:                                            ; preds = %bb.cq
   br label %.thread331.i.i
 
 .thread348.i.i:                                   ; preds = %bb.cq, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i, %.thread319.i.i, %bb.bp
-  %.659358.i.i = phi i1 [ %spec.select82.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.457.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.457.i.i, %bb.cq ], [ %.053.i.i.ph, %bb.bp ], [ %.154441.i.i, %.thread319.i.i ] ; 2 uses
-  %.sroa.0240.3357.i.i = phi i64 [ %.sroa.0240.1440.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0240.2.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0240.2.i.i, %bb.cq ], [ %.sroa.0240.0.i.i.ph, %bb.bp ], [ %.sroa.0240.1440.i.i, %.thread319.i.i ] ; 4 uses
-  %.sroa.0241.4356.i.i = phi ptr [ %.sroa.0241.2439.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0241.3.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0241.3.i.i, %bb.cq ], [ %.sroa.0241.0.i.i.ph, %bb.bp ], [ %.sroa.0241.2439.i.i, %.thread319.i.i ] ; 3 uses
-  %.sroa.0253.3355.i.i = phi i64 [ %.sroa.0253.0.i.i.ph, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0253.2.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0253.2.i.i, %bb.cq ], [ %.sroa.0253.0.i.i.ph, %bb.bp ], [ %.sroa.0253.0.i.i.ph, %.thread319.i.i ] ; 3 uses
-  %i.rt = sub nsw i64 %.sroa.0240.3357.i.i, %.sroa.0242.0.i.i.ph.ph ; 2 uses
-  %i.ru = icmp eq i64 %.sroa.0240.3357.i.i, %.sroa.0242.0.i.i.ph.ph
+  %.sroa.0240.3357.i.i = phi i64 [ %.sroa.0253.2.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0253.2.i.i, %bb.cq ], [ %.sroa.0253.0.i.i.ph, %bb.bp ], [ %.sroa.0253.0.i.i.ph, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0253.0.i.i.ph, %.thread319.i.i ] ; 3 uses
+  %.sroa.0241.4356.i.i = phi ptr [ %.sroa.0241.3.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0241.3.i.i, %bb.cq ], [ %.sroa.0241.0.i.i.ph, %bb.bp ], [ %.sroa.0241.2439.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0241.2439.i.i, %.thread319.i.i ] ; 3 uses
+  %.sroa.0253.3355.i.i = phi i64 [ %.sroa.0240.2.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.sroa.0240.2.i.i, %bb.cq ], [ %.sroa.0240.0.i.i.ph, %bb.bp ], [ %.sroa.0240.1440.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.sroa.0240.1440.i.i, %.thread319.i.i ] ; 4 uses
+  %.760.ph.i.i = phi i1 [ %.457.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit151.i.i ], [ %.457.i.i, %bb.cq ], [ %.053.i.i.ph, %bb.bp ], [ %spec.select82.i.i, %_ZNK12_GLOBAL__N_116CGRecordLowering7getSizeEPN4llvm4TypeE.exit.i.i ], [ %.154441.i.i, %.thread319.i.i ] ; 2 uses
+  %i.rt = sub nsw i64 %.sroa.0253.3355.i.i, %.sroa.0242.0.i.i.ph.ph ; 2 uses
+  %i.ru = icmp eq i64 %.sroa.0253.3355.i.i, %.sroa.0242.0.i.i.ph.ph
   br i1 %i.ru, label %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.backedge, label %bb.cs
 
 _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.backedge: ; preds = %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i, %.thread348.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i
-  %.sroa.0253.0.i.i.ph.be = phi i64 [ %.sroa.0253.3355449454.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.sroa.0253.3355.i.i, %.thread348.i.i ], [ %.sroa.0253.3355449454.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
-  %.sroa.0240.0.i.i.ph.be = phi i64 [ %.sroa.0240.3357447458.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.sroa.0242.0.i.i.ph.ph, %.thread348.i.i ], [ %.sroa.0240.3357447458.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
+  %.sroa.0253.0.i.i.ph.be = phi i64 [ %.sroa.0240.3357447458.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.sroa.0240.3357.i.i, %.thread348.i.i ], [ %.sroa.0240.3357447458.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
+  %.sroa.0240.0.i.i.ph.be = phi i64 [ %.sroa.0253.3355449454.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.sroa.0242.0.i.i.ph.ph, %.thread348.i.i ], [ %.sroa.0253.3355449454.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
   %.sroa.0291.1.i.i.ph444.be = phi ptr [ %.sroa.0241.4356448456.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.sroa.0241.4356.i.i, %.thread348.i.i ], [ %.sroa.0241.4356448456.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ] ; 2 uses
-  %.053.i.i.ph.be = phi i1 [ %.659358446460.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.659358.i.i, %.thread348.i.i ], [ %.659358446460.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
+  %.053.i.i.ph.be = phi i1 [ %.760.ph436441.i.i, %_ZNSt6vectorIN12_GLOBAL__N_116CGRecordLowering10MemberInfoESaIS2_EE9push_backEOS2_.exit167.i.i ], [ %.760.ph.i.i, %.thread348.i.i ], [ %.760.ph436441.i.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i ]
   br label %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer
 
 bb.cs:                                            ; preds = %.thread348.i.i
-  br i1 %.659358.i.i, label %.thread.i.i, label %bb.cu
+  br i1 %.760.ph.i.i, label %.thread.i.i, label %bb.cu
 
 .thread.i.i:                                      ; preds = %.thread348.thread.i.i.peel, %bb.cs
-  %.sroa.0240.3357447459.i.i = phi i64 [ %.sroa.0240.3357.i.i, %bb.cs ], [ %i.ln, %.thread348.thread.i.i.peel ] ; 2 uses
+  %.sroa.0240.3357447459.i.i = phi i64 [ %.sroa.0240.3357.i.i, %bb.cs ], [ %.sroa.0253.0.i.i.ph, %.thread348.thread.i.i.peel ] ; 2 uses
   %.sroa.0241.4356448457.i.i = phi ptr [ %.sroa.0241.4356.i.i, %bb.cs ], [ %.sroa.0291.1.i.i.ph444, %.thread348.thread.i.i.peel ] ; 2 uses
-  %.sroa.0253.3355449455.i.i = phi i64 [ %.sroa.0253.3355.i.i, %bb.cs ], [ %.sroa.0253.0.i.i.ph, %.thread348.thread.i.i.peel ] ; 2 uses
+  %.sroa.0253.3355449455.i.i = phi i64 [ %.sroa.0253.3355.i.i, %bb.cs ], [ %i.ln, %.thread348.thread.i.i.peel ] ; 2 uses
   %i.rv = phi i64 [ %i.rt, %bb.cs ], [ %i.ll, %.thread348.thread.i.i.peel ] ; 2 uses
   %.val86.i.i = load ptr, ptr %0, align 8, !tbaa !603
   %.val87.i.i = load ptr, ptr %i.fy, align 8, !tbaa !604 ; 2 uses
@@ -683,10 +683,10 @@ bb.cu:                                            ; preds = %bb.cs
   br label %_ZNK12_GLOBAL__N_116CGRecordLowering16getByteArrayTypeEN5clang9CharUnitsE.exit.i.i23
 
 _ZNK12_GLOBAL__N_116CGRecordLowering16getByteArrayTypeEN5clang9CharUnitsE.exit.i.i23: ; preds = %bb.cu, %bb.ct, %.thread.i.i
-  %.659358446460.i.i = phi i1 [ false, %bb.cu ], [ true, %bb.ct ], [ true, %.thread.i.i ] ; 2 uses
   %.sroa.0240.3357447458.i.i = phi i64 [ %.sroa.0240.3357.i.i, %bb.cu ], [ %.sroa.0240.3357447459.i.i, %bb.ct ], [ %.sroa.0240.3357447459.i.i, %.thread.i.i ] ; 2 uses
   %.sroa.0241.4356448456.i.i = phi ptr [ %.sroa.0241.4356.i.i, %bb.cu ], [ %.sroa.0241.4356448457.i.i, %bb.ct ], [ %.sroa.0241.4356448457.i.i, %.thread.i.i ] ; 4 uses
   %.sroa.0253.3355449454.i.i = phi i64 [ %.sroa.0253.3355.i.i, %bb.cu ], [ %.sroa.0253.3355449455.i.i, %bb.ct ], [ %.sroa.0253.3355449455.i.i, %.thread.i.i ] ; 2 uses
+  %.760.ph436441.i.i = phi i1 [ false, %bb.cu ], [ true, %bb.ct ], [ true, %.thread.i.i ] ; 2 uses
   %.049.i.i = phi ptr [ %i.tb, %bb.cu ], [ %i.sg, %bb.ct ], [ %i.se, %.thread.i.i ] ; 2 uses
   %i.tc = load ptr, ptr %i.ga, align 8, !tbaa !797 ; 8 uses
   %i.td = load ptr, ptr %i.gb, align 8, !tbaa !619
@@ -891,16 +891,16 @@ _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit189.i.i: 
   br i1 %.not374.i.i, label %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit195.i.i.outer.backedge, label %.lr.ph393.i.i, !llvm.loop !751
 
 .thread331.i.i:                                   ; preds = %bb.bh, %bb.cr, %.loopexit531
-  %.6346.i.i = phi i64 [ %i.rs, %bb.cr ], [ 0, %.loopexit531 ], [ %.050.i.i.ph.ph, %bb.bh ]
-  %.760345.i.i = phi i1 [ %.457.i.i, %bb.cr ], [ %.053.i.i.lcssa, %.loopexit531 ], [ %.053.i.i.ph, %bb.bh ]
-  %.sroa.0240.4344.i.i = phi i64 [ %.sroa.0240.2.i.i, %bb.cr ], [ %.sroa.0240.0.i.i.lcssa, %.loopexit531 ], [ %.sroa.0240.0.i.i.ph, %bb.bh ]
+  %.6346.i.i = phi i64 [ %.sroa.0242.0.i.i.ph.ph, %bb.cr ], [ %i.mh, %.loopexit531 ], [ %.sroa.0242.0.i.i.ph.ph, %bb.bh ]
+  %.sroa.0250.1313.i.i = phi ptr [ %.sroa.0250.0.i.i.ph, %bb.cr ], [ %.sroa.0291.1.i.i.ph444, %.loopexit531 ], [ %.sroa.0250.0.i.i.ph, %bb.bh ]
+  %.sroa.0240.4344.i.i = phi i64 [ %.sroa.0253.2.i.i, %bb.cr ], [ %.sroa.0253.0.i.i.ph, %.loopexit531 ], [ %.sroa.0253.0.i.i.ph, %bb.bh ]
   %.sroa.0241.5343.i.i = phi ptr [ %.sroa.0241.3.i.i, %bb.cr ], [ %.sroa.0291.1.i.i.ph444, %.loopexit531 ], [ %.sroa.0241.0.i.i.ph, %bb.bh ]
-  %.sroa.0253.4342.i.i = phi i64 [ %.sroa.0253.2.i.i, %bb.cr ], [ %.sroa.0253.0.i.i.ph, %.loopexit531 ], [ %.sroa.0253.0.i.i.ph, %bb.bh ]
-  %.sroa.0250.1313341.i.i = phi ptr [ %.sroa.0250.0.i.i.ph, %bb.cr ], [ %.sroa.0291.1.i.i.ph444, %.loopexit531 ], [ %.sroa.0250.0.i.i.ph, %bb.bh ]
-  %.sroa.0242.1315340.i.i = phi i64 [ %.sroa.0242.0.i.i.ph.ph, %bb.cr ], [ %i.mh, %.loopexit531 ], [ %.sroa.0242.0.i.i.ph.ph, %bb.bh ]
+  %.sroa.0253.4342.i.i = phi i64 [ %.sroa.0240.2.i.i, %bb.cr ], [ %.sroa.0240.0.i.i.lcssa, %.loopexit531 ], [ %.sroa.0240.0.i.i.ph, %bb.bh ]
+  %.760.i.i = phi i1 [ %.457.i.i, %bb.cr ], [ %.053.i.i.lcssa, %.loopexit531 ], [ %.053.i.i.ph, %bb.bh ]
+  %.sroa.0242.1315340.i.i = phi i64 [ %i.rs, %bb.cr ], [ 0, %.loopexit531 ], [ %.050.i.i.ph.ph, %bb.bh ]
   %i.vk = call noundef i32 @_ZNK5clang9FieldDecl16getBitWidthValueEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0291.1.i.i.ph444) #20
   %i.vl = zext i32 %i.vk to i64
-  %i.vm = add i64 %.6346.i.i, %i.vl
+  %i.vm = add i64 %.sroa.0242.1315340.i.i, %i.vl
   %i.vn = getelementptr inbounds nuw i8, ptr %.sroa.0291.1.i.i.ph444, i64 8
   %.0.copyload.i.i.i.i.i.i190.i.i = load i64, ptr %i.vn, align 8
   %i.vo = and i64 %.0.copyload.i.i.i.i.i.i190.i.i, -8 ; 2 uses
