@@ -205,15 +205,18 @@ bb.a:
   br i1 %i.l, label %.lr.ph.i, label %rt_copy_in_to_out.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %6 = load <2 x i32>, ptr %5, align 4, !tbaa !13
-  %7 = load <2 x i32>, ptr %4, align 4, !tbaa !13
-  %8 = sub <2 x i32> %6, %7                       ; 2 uses
-  %9 = extractelement <2 x i32> %8, i64 0
-  %10 = sext i32 %9 to i64
-  %11 = extractelement <2 x i32> %8, i64 1
-  %i.m = sext i32 %11 to i64                      ; 5 uses
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %7 = load i32, ptr %6, align 4, !tbaa !246
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %9 = load i32, ptr %8, align 4, !tbaa !246
+  %10 = load i32, ptr %5, align 4, !tbaa !248
+  %11 = load i32, ptr %4, align 4, !tbaa !248
+  %12 = sub i32 %10, %11
+  %13 = sub i32 %9, %7
+  %14 = sext i32 %12 to i64
+  %i.m = sext i32 %13 to i64                      ; 5 uses
   %wide.trip.count.i = zext nneg i32 %i.k to i64  ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %2, i64 %10 ; 5 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %2, i64 %14 ; 5 uses
   %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
   %i.n = icmp ult i32 %i.k, 4
   br i1 %i.n, label %.epil.preheader, label %.lr.ph.i.new

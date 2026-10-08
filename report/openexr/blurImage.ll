@@ -44,17 +44,17 @@ bb.a:
   %.sroa.10 = alloca float, align 4               ; 10 uses
   %.sroa.17 = alloca float, align 4               ; 10 uses
   %7 = alloca %"class.Imath_3_2::Vec3", align 4   ; 6 uses
-  %8 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 5 uses
+  %8 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 6 uses
   %9 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 2 uses
   %10 = alloca %"class.Imath_3_2::Box", align 16  ; 7 uses
   %11 = alloca %"class.Imath_3_2::Box", align 16  ; 8 uses
   %12 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 7 uses
   %13 = alloca %"class.Imath_3_2::Vec3", align 4  ; 7 uses
-  %14 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 5 uses
+  %14 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 6 uses
   %15 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 2 uses
   %16 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 7 uses
   %17 = alloca %"class.Imath_3_2::Vec3", align 4  ; 7 uses
-  %18 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 5 uses
+  %18 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 6 uses
   %19 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 2 uses
   %20 = alloca %"class.Imath_3_2::Box", align 16  ; 7 uses
   br i1 %1, label %bb.b, label %bb.f
@@ -420,8 +420,9 @@ bb.ac:                                            ; preds = %bb.ab
 .preheader414:                                    ; preds = %bb.ac
   %i.dh = icmp sgt i32 %i.df, 0
   %i.di = add nsw i32 %i.df, -1                   ; 2 uses
-  %i.dj = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %i.dk = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %21 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.dk = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dg, i64 16 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   br label %bb.ah
@@ -589,7 +590,7 @@ bb.at:                                            ; preds = %.lr.ph482.us, %_ZN9
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   %i.fd = uitofp nneg i32 %.0174480.us to float
   store float %i.fd, ptr %6, align 8, !tbaa !67
-  store float %i.ez, ptr %i.dj, align 4, !tbaa !68
+  store float %i.ez, ptr %21, align 4, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.17)
@@ -600,7 +601,7 @@ bb.at:                                            ; preds = %.lr.ph482.us, %_ZN9
 bb.au:                                            ; preds = %bb.at
   call void @llvm.experimental.noalias.scope.decl(metadata !69)
   %i.fe = load float, ptr %7, align 4, !tbaa !71, !noalias !69 ; 6 uses
-  %i.ff = load <2 x float>, ptr %i.dk, align 4, !tbaa !72, !noalias !69 ; 7 uses
+  %i.ff = load <2 x float>, ptr %i.dj, align 4, !tbaa !72, !noalias !69 ; 7 uses
   %foldExtExtBinop = fmul <2 x float> %i.ff, %i.ff
   %i.fg = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.fh = call float @llvm.fmuladd.f32(float %i.fe, float %i.fe, float %i.fg)
@@ -707,17 +708,17 @@ bb.bc:                                            ; preds = %bb.az
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.ba
   %.0173.us = phi double [ %i.hg, %bb.bc ], [ %i.hf, %bb.bb ], [ %i.he, %bb.ba ] ; 2 uses
-  %21 = load ptr, ptr %i.dl, align 8, !tbaa !62
-  %22 = load i64, ptr %i.dm, align 8, !tbaa !77
-  %23 = load <2 x float>, ptr %8, align 8, !tbaa !72
-  %24 = fadd <2 x float> %23, splat (float 5.000000e-01) ; 2 uses
-  %25 = extractelement <2 x float> %24, i64 1
-  %26 = fptosi float %25 to i32
-  %27 = sext i32 %26 to i64
-  %28 = mul nsw i64 %22, %27
-  %29 = getelementptr inbounds [8 x i8], ptr %21, i64 %28
-  %30 = extractelement <2 x float> %24, i64 0
-  %i.hh = fptosi float %30 to i32
+  %22 = load float, ptr %i.dk, align 4, !tbaa !68
+  %23 = fadd float %22, 5.000000e-01
+  %24 = fptosi float %23 to i32
+  %25 = sext i32 %24 to i64
+  %26 = load ptr, ptr %i.dl, align 8, !tbaa !62
+  %27 = load i64, ptr %i.dm, align 8, !tbaa !77
+  %28 = mul nsw i64 %27, %25
+  %29 = getelementptr inbounds [8 x i8], ptr %26, i64 %28
+  %30 = load float, ptr %8, align 4, !tbaa !67
+  %31 = fadd float %30, 5.000000e-01
+  %i.hh = fptosi float %31 to i32
   %i.hi = sext i32 %i.hh to i64
   %i.hj = getelementptr inbounds [8 x i8], ptr %29, i64 %i.hi ; 5 uses
   %i.hk = fptrunc double %.0173.us to float       ; 4 uses
@@ -1120,15 +1121,17 @@ bb.er:                                            ; preds = %bb.eq
 
 .preheader413:                                    ; preds = %bb.er
   %i.xj = icmp sgt i32 %i.xg, 0
-  %i.xk = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %32 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.xk = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.xl = getelementptr inbounds nuw i8, ptr %i.xi, i64 16
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xi, i64 8
   %i.xn = icmp sgt i32 %i.xf, 0
-  %i.xo = getelementptr inbounds nuw i8, ptr %16, i64 4
-  %i.xp = getelementptr inbounds nuw i8, ptr %17, i64 4
-  %i.xq = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %i.xr = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.xs = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %33 = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %i.xo = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %i.xp = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %i.xq = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %i.xr = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %i.xs = getelementptr inbounds nuw i8, ptr %18, i64 4
   %i.xt = getelementptr inbounds nuw i8, ptr %i.xh, i64 16
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xh, i64 8
   br label %bb.ey
@@ -1257,7 +1260,7 @@ bb.fe:                                            ; preds = %.preheader412, %_ZN
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #9
   %i.yv = uitofp nneg i32 %.0169551 to float
   store float %i.yv, ptr %12, align 8, !tbaa !67
-  store float %i.ys, ptr %i.xk, align 4, !tbaa !68
+  store float %i.ys, ptr %32, align 4, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9
   invoke void @_ZN7Imf_3_47CubeMap9directionENS_11CubeMapFaceERKN9Imath_3_23BoxINS2_4Vec2IiEEEERKNS4_IfEE(ptr dead_on_unwind nonnull writable sret(%"class.Imath_3_2::Vec3") align 4 %13, i32 noundef %.0171556, ptr noundef nonnull align 4 dereferenceable(16) %11, ptr noundef nonnull align 4 dereferenceable(8) %12)
           to label %bb.ff unwind label %bb.ha
@@ -1270,19 +1273,19 @@ bb.ff:                                            ; preds = %bb.fe
           to label %bb.fg unwind label %bb.hb
 
 bb.fg:                                            ; preds = %bb.ff
-  %31 = load ptr, ptr %i.xl, align 8, !tbaa !62
-  %32 = load i64, ptr %i.xm, align 8, !tbaa !77
-  %33 = load <2 x float>, ptr %14, align 8, !tbaa !72
-  %34 = fadd <2 x float> %33, splat (float 5.000000e-01) ; 2 uses
-  %35 = extractelement <2 x float> %34, i64 1
+  %34 = load float, ptr %i.xk, align 4, !tbaa !68
+  %35 = fadd float %34, 5.000000e-01
   %36 = fptosi float %35 to i32
   %37 = sext i32 %36 to i64
-  %38 = mul nsw i64 %32, %37
-  %39 = getelementptr inbounds [8 x i8], ptr %31, i64 %38
-  %40 = extractelement <2 x float> %34, i64 0
-  %i.yx = fptosi float %40 to i32
+  %38 = load ptr, ptr %i.xl, align 8, !tbaa !62
+  %39 = load i64, ptr %i.xm, align 8, !tbaa !77
+  %40 = mul nsw i64 %39, %37
+  %41 = getelementptr inbounds [8 x i8], ptr %38, i64 %40
+  %42 = load float, ptr %14, align 4, !tbaa !67
+  %43 = fadd float %42, 5.000000e-01
+  %i.yx = fptosi float %43 to i32
   %i.yy = sext i32 %i.yx to i64
-  %i.yz = getelementptr inbounds [8 x i8], ptr %39, i64 %i.yy ; 4 uses
+  %i.yz = getelementptr inbounds [8 x i8], ptr %41, i64 %i.yy ; 4 uses
   br i1 %i.xn, label %.preheader411.us, label %.split545.us
 
 .preheader411.us:                                 ; preds = %bb.fg, %._crit_edge521.split.us.us
@@ -1305,7 +1308,7 @@ bb.fh:                                            ; preds = %bb.fl, %.preheader.
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #9
   %i.ze = uitofp nneg i32 %.0507.us.us to float
   store float %i.ze, ptr %16, align 8, !tbaa !67
-  store float %i.zc, ptr %i.xo, align 4, !tbaa !68
+  store float %i.zc, ptr %33, align 4, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #9
   invoke void @_ZN7Imf_3_47CubeMap9directionENS_11CubeMapFaceERKN9Imath_3_23BoxINS2_4Vec2IiEEEERKNS4_IfEE(ptr dead_on_unwind nonnull writable sret(%"class.Imath_3_2::Vec3") align 4 %17, i32 noundef %.0151541.us, ptr noundef nonnull align 4 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(8) %16)
           to label %bb.fi unwind label %.split.us527.split.us
@@ -1320,31 +1323,31 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.fi
   %i.zg = load float, ptr %17, align 4, !tbaa !71
   %i.zh = load float, ptr %13, align 4, !tbaa !71
-  %i.zi = load float, ptr %i.xp, align 4, !tbaa !75
-  %i.zj = load float, ptr %i.xq, align 4, !tbaa !75
+  %i.zi = load float, ptr %i.xo, align 4, !tbaa !75
+  %i.zj = load float, ptr %i.xp, align 4, !tbaa !75
   %i.zk = fmul float %i.zi, %i.zj
   %i.zl = call float @llvm.fmuladd.f32(float %i.zg, float %i.zh, float %i.zk)
-  %i.zm = load float, ptr %i.xr, align 4, !tbaa !76
-  %i.zn = load float, ptr %i.xs, align 4, !tbaa !76
+  %i.zm = load float, ptr %i.xq, align 4, !tbaa !76
+  %i.zn = load float, ptr %i.xr, align 4, !tbaa !76
   %i.zo = call noundef float @llvm.fmuladd.f32(float %i.zm, float %i.zn, float %i.zl) ; 2 uses
   %i.zp = fcmp ugt float %i.zo, 0.000000e+00
   br i1 %i.zp, label %bb.fk, label %bb.fl
 
 bb.fk:                                            ; preds = %bb.fj
   %i.zq = fpext float %i.zo to double             ; 2 uses
-  %41 = load ptr, ptr %i.xt, align 8, !tbaa !62
-  %42 = load i64, ptr %i.xu, align 8, !tbaa !77
-  %43 = load <2 x float>, ptr %18, align 8, !tbaa !72
-  %44 = fadd <2 x float> %43, splat (float 5.000000e-01) ; 2 uses
-  %45 = extractelement <2 x float> %44, i64 1
+  %44 = load float, ptr %i.xs, align 4, !tbaa !68
+  %45 = fadd float %44, 5.000000e-01
   %46 = fptosi float %45 to i32
   %47 = sext i32 %46 to i64
-  %48 = mul nsw i64 %42, %47
-  %49 = getelementptr inbounds [8 x i8], ptr %41, i64 %48
-  %50 = extractelement <2 x float> %44, i64 0
-  %i.zr = fptosi float %50 to i32
+  %48 = load ptr, ptr %i.xt, align 8, !tbaa !62
+  %49 = load i64, ptr %i.xu, align 8, !tbaa !77
+  %50 = mul nsw i64 %49, %47
+  %51 = getelementptr inbounds [8 x i8], ptr %48, i64 %50
+  %52 = load float, ptr %18, align 4, !tbaa !67
+  %53 = fadd float %52, 5.000000e-01
+  %i.zr = fptosi float %53 to i32
   %i.zs = sext i32 %i.zr to i64
-  %i.zt = getelementptr inbounds [8 x i8], ptr %49, i64 %i.zs ; 4 uses
+  %i.zt = getelementptr inbounds [8 x i8], ptr %51, i64 %i.zs ; 4 uses
   %i.zu = fadd double %.2167502.us.us, %i.zq
   %i.zv = load i16, ptr %i.zt, align 2, !tbaa !80
   %i.zw = load ptr, ptr @imath_half_to_float_table, align 8, !tbaa !64 ; 4 uses

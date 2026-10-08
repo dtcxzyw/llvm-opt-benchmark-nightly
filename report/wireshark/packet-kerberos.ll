@@ -204,8 +204,8 @@ bb.aj:                                            ; preds = %bb.ai
   br label %proto_item_set_generated.exit
 
 proto_item_set_generated.exit:                    ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.ag
-  %i.cj = getelementptr i8, ptr %i.at, i64 280
-  %i.ck = load i32, ptr %i.cj, align 8            ; 2 uses
+  %i.cj = getelementptr i8, ptr %i.at, i64 280    ; 2 uses
+  %i.ck = load i32, ptr %i.cj, align 8
   %.not92 = icmp eq i32 %i.ck, -1
   br i1 %.not92, label %bb.ap, label %bb.ak
 
@@ -214,7 +214,8 @@ bb.ak:                                            ; preds = %proto_item_set_gene
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
   %.0..0..0..0.37 = load volatile ptr, ptr %i.b, align 8
   %i.cl = load i32, ptr @hf_krb_response_to, align 4
-  %i.cm = call ptr @proto_tree_add_uint(ptr noundef %.0..0..0..0.37, i32 noundef %i.cl, ptr noundef %0, i32 noundef 0, i32 noundef 0, i32 noundef %i.ck) ; 2 uses
+  %15 = load i32, ptr %i.cj, align 8
+  %i.cm = call ptr @proto_tree_add_uint(ptr noundef %.0..0..0..0.37, i32 noundef %i.cl, ptr noundef %0, i32 noundef 0, i32 noundef 0, i32 noundef %15) ; 2 uses
   %.not.i97 = icmp eq ptr %i.cm, null
   br i1 %.not.i97, label %proto_item_set_generated.exit99, label %bb.al
 

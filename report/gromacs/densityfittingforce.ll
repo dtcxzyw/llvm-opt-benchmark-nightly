@@ -170,8 +170,9 @@ bb.a:
 
 .lr.ph114:                                        ; preds = %bb.b
   %i.m = extractvalue { ptr, ptr } %i.bl, 0
-  %i.n = sub i32 %i.bm, %i.bn
-  %6 = sub <2 x i32> %9, %10                      ; 2 uses
+  %6 = sub i32 %i.bm, %i.bn
+  %i.n = sub i32 %11, %12
+  %7 = sub i32 %8, %9
   %i.o = sitofp i32 %i.bz to double
   %i.p = fpext float %i.ce to double
   %i.q = fsub double %i.o, %i.p
@@ -185,17 +186,15 @@ bb.a:
   %factor.op.mul = mul i64 %i.v, %i.x
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %7 = extractelement <2 x i32> %6, i64 0
   %i.aa = sext i32 %7 to i64
-  %8 = extractelement <2 x i32> %6, i64 1
-  %i.ab = sext i32 %8 to i64
+  %i.ab = sext i32 %i.n to i64
   %i.ac = sext i32 %i.cm to i64
-  %i.ad = sext i32 %i.n to i64
+  %i.ad = sext i32 %6 to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.m, i64 %i.aa
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ah = load float, ptr %i.ag, align 8, !tbaa !54
@@ -234,8 +233,11 @@ bb.b:                                             ; preds = %bb.a
   %i.bk = extractvalue { ptr, ptr } %i.bi, 1
   call void @_ZN3gmx21OuterProductEvaluatorclENS_8ArrayRefIKfEES3_(ptr dead_on_unwind nonnull writable sret(%"class.gmx::basic_mdspan.10") align 8 %5, ptr noundef nonnull align 8 dereferenceable(64) %i.bc, ptr %i.bf, ptr %i.bg, ptr %i.bj, ptr %i.bk)
   %i.bl = call { ptr, ptr } @_ZN3gmx19GaussianOn1DLattice4viewEv(ptr noundef nonnull align 8 dereferenceable(8) %i.af)
-  %9 = load <2 x i32>, ptr %i.k, align 8, !tbaa !10
-  %10 = load <2 x i32>, ptr %3, align 8, !tbaa !10
+  %8 = load i32, ptr %i.k, align 8, !tbaa !10
+  %9 = load i32, ptr %3, align 8, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %11 = load i32, ptr %10, align 4, !tbaa !10
+  %12 = load i32, ptr %i.ae, align 4, !tbaa !10
   %i.bm = load i32, ptr %.sroa.228.0..sroa_idx, align 8, !tbaa !10
   %i.bn = load i32, ptr %i.i, align 8, !tbaa !10
   %i.bo = load <2 x double>, ptr %0, align 8, !tbaa !12 ; 2 uses

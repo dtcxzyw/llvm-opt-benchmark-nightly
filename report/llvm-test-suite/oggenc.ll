@@ -205,7 +205,7 @@ vorbis_window.exit62:                             ; preds = %vorbis_window.exit,
 
 .lr.ph:                                           ; preds = %vorbis_window.exit62
   %i.de = sext i32 %i.bq to i64
-  %i.df = shl nsw i64 %i.de, 2                    ; 2 uses
+  %i.df = shl nsw i64 %i.de, 2                    ; 5 uses
   %wide.trip.count = zext nneg i32 %i.bh to i64   ; 3 uses
   %min.iters.check = icmp ult i32 %i.bh, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -216,13 +216,18 @@ vector.ph:                                        ; preds = %.lr.ph
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %2 = alloca i8, i64 %i.df, align 16
+  %3 = alloca i8, i64 %i.df, align 16
+  %4 = insertelement <2 x ptr> poison, ptr %2, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %3, i64 1
+  %6 = alloca i8, i64 %i.df, align 16
   %i.dg = alloca i8, i64 %i.df, align 16
-  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.dg, i64 0
-  %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %6, i64 0
+  %7 = insertelement <2 x ptr> %broadcast.splatinsert, ptr %i.dg, i64 1
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %index ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
-  store <2 x ptr> %broadcast.splat, ptr %i.dh, align 16
-  store <2 x ptr> %broadcast.splat, ptr %i.di, align 16
+  store <2 x ptr> %5, ptr %i.dh, align 16
+  store <2 x ptr> %7, ptr %i.di, align 16
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.dj = icmp eq i64 %index.next, %n.vec
   br i1 %i.dj, label %middle.block, label %vector.body, !llvm.loop !322
@@ -625,7 +630,7 @@ vorbis_window.exit:                               ; preds = %vorbis_info_blocksi
 
 .lr.ph71:                                         ; preds = %vorbis_window.exit
   %i.ba = sext i32 %i.af to i64
-  %i.bb = shl nsw i64 %i.ba, 2                    ; 2 uses
+  %i.bb = shl nsw i64 %i.ba, 2                    ; 5 uses
   %wide.trip.count = zext nneg i32 %i.z to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.z, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -636,13 +641,18 @@ vector.ph:                                        ; preds = %.lr.ph71
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %3 = alloca i8, i64 %i.bb, align 16
+  %4 = alloca i8, i64 %i.bb, align 16
+  %5 = insertelement <2 x ptr> poison, ptr %3, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %4, i64 1
+  %7 = alloca i8, i64 %i.bb, align 16
   %i.bc = alloca i8, i64 %i.bb, align 16
-  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.bc, i64 0
-  %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %7, i64 0
+  %8 = insertelement <2 x ptr> %broadcast.splatinsert, ptr %i.bc, i64 1
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %index ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
-  store <2 x ptr> %broadcast.splat, ptr %i.bd, align 16
-  store <2 x ptr> %broadcast.splat, ptr %i.be, align 16
+  store <2 x ptr> %6, ptr %i.bd, align 16
+  store <2 x ptr> %8, ptr %i.be, align 16
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bf = icmp eq i64 %index.next, %n.vec
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !354
@@ -1045,7 +1055,7 @@ vorbis_window.exit:                               ; preds = %vorbis_info_blocksi
 
 .lr.ph71:                                         ; preds = %vorbis_window.exit
   %i.ba = sext i32 %i.af to i64
-  %i.bb = shl nsw i64 %i.ba, 2                    ; 2 uses
+  %i.bb = shl nsw i64 %i.ba, 2                    ; 5 uses
   %wide.trip.count = zext nneg i32 %i.z to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.z, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -1056,13 +1066,18 @@ vector.ph:                                        ; preds = %.lr.ph71
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %3 = alloca i8, i64 %i.bb, align 16
+  %4 = alloca i8, i64 %i.bb, align 16
+  %5 = insertelement <2 x ptr> poison, ptr %3, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %4, i64 1
+  %7 = alloca i8, i64 %i.bb, align 16
   %i.bc = alloca i8, i64 %i.bb, align 16
-  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.bc, i64 0
-  %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %7, i64 0
+  %8 = insertelement <2 x ptr> %broadcast.splatinsert, ptr %i.bc, i64 1
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %index ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
-  store <2 x ptr> %broadcast.splat, ptr %i.bd, align 16
-  store <2 x ptr> %broadcast.splat, ptr %i.be, align 16
+  store <2 x ptr> %6, ptr %i.bd, align 16
+  store <2 x ptr> %8, ptr %i.be, align 16
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bf = icmp eq i64 %index.next, %n.vec
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !374

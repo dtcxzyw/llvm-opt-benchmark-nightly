@@ -205,31 +205,39 @@ bb.j:                                             ; preds = %_ZN4pbrt14InvertBil
   %.sroa.01.4.vec.extract.i.i = extractelement <2 x float> %.sroa.01.0.i.i, i64 1
   %i.eu = fdiv float %.sroa.01.4.vec.extract.i.i, %i.et
   %.sroa.01.4.vec.insert.i.i = insertelement <2 x float> %.sroa.01.0.i.i, float %i.eu, i64 1
-  %.sroa.01.1.i.i = select i1 %i.es, <2 x float> %.sroa.01.4.vec.insert.i.i, <2 x float> %.sroa.01.0.i.i
+  %.sroa.01.1.i.i = select i1 %i.es, <2 x float> %.sroa.01.4.vec.insert.i.i, <2 x float> %.sroa.01.0.i.i ; 2 uses
+  %.sroa.0.0.vec.extract.i4.i = extractelement <2 x float> %.sroa.01.1.i.i, i64 0
+  %.sroa.0.4.vec.extract.i5.i = extractelement <2 x float> %.sroa.01.1.i.i, i64 1
   %i.ev = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !237 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 24
-  %i.ey = load i64, ptr %i.ex, align 8, !tbaa !230
+  %i.ey = load i64, ptr %i.ex, align 8, !tbaa !230 ; 2 uses
+  %2 = uitofp i64 %i.ey to float
+  %3 = fmul float %.sroa.0.0.vec.extract.i4.i, %2
+  %4 = fptosi float %3 to i32                     ; 2 uses
+  %5 = add i64 %i.ey, -1
+  %6 = icmp slt i32 %4, 0
+  %7 = sext i32 %4 to i64
+  %spec.select11.i.i = tail call i64 @llvm.umin.i64(i64 %5, i64 %7)
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ei, i64 72
-  %i.fa = load i64, ptr %i.ez, align 8, !tbaa !230
-  %2 = insertelement <2 x i64> poison, i64 %i.ey, i64 0
-  %3 = insertelement <2 x i64> %2, i64 %i.fa, i64 1 ; 2 uses
-  %4 = uitofp <2 x i64> %3 to <2 x float>
-  %5 = fmul <2 x float> %.sroa.01.1.i.i, %4
-  %6 = fptosi <2 x float> %5 to <2 x i32>         ; 2 uses
-  %7 = add <2 x i64> %3, splat (i64 -1)
-  %8 = sext <2 x i32> %6 to <2 x i64>
-  %9 = tail call <2 x i64> @llvm.umin.v2i64(<2 x i64> %7, <2 x i64> %8)
-  %10 = shl <2 x i64> %9, splat (i64 32)
-  %11 = ashr exact <2 x i64> %10, splat (i64 32)
-  %12 = icmp slt <2 x i32> %6, zeroinitializer
-  %13 = select <2 x i1> %12, <2 x i64> zeroinitializer, <2 x i64> %11 ; 2 uses
-  %14 = extractelement <2 x i64> %13, i64 1
-  %15 = getelementptr inbounds nuw [80 x i8], ptr %i.ew, i64 %14
-  %i.fb = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.fa = load i64, ptr %i.ez, align 8, !tbaa !230 ; 2 uses
+  %8 = uitofp i64 %i.fa to float
+  %9 = fmul float %.sroa.0.4.vec.extract.i5.i, %8
+  %10 = fptosi float %9 to i32                    ; 2 uses
+  %11 = add i64 %i.fa, -1
+  %12 = icmp slt i32 %10, 0
+  %13 = sext i32 %10 to i64
+  %spec.select11.i6.i = tail call i64 @llvm.umin.i64(i64 %11, i64 %13)
+  %14 = shl i64 %spec.select11.i6.i, 32
+  %15 = ashr exact i64 %14, 32
+  %16 = select i1 %12, i64 0, i64 %15
+  %17 = getelementptr inbounds nuw [80 x i8], ptr %i.ew, i64 %16
+  %18 = shl i64 %spec.select11.i.i, 32
+  %19 = ashr exact i64 %18, 32
+  %20 = select i1 %6, i64 0, i64 %19
+  %i.fb = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !231
-  %16 = extractelement <2 x i64> %13, i64 0
-  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %16
+  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %20
   %i.fe = load float, ptr %i.fd, align 4, !tbaa !28
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ei, i64 120
   %i.fg = load float, ptr %i.ff, align 8, !tbaa !233
@@ -630,9 +638,6 @@ declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v10f32.p0(<10 x float>, ptr captures(none), <10 x i1>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.umin.v2i64(<2 x i64>, <2 x i64>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>) #19

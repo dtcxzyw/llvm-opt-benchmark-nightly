@@ -205,28 +205,29 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEpLB8ne180100Ec.ex
           to label %bb.m unwind label %bb.w
 
 bb.m:                                             ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEpLB8ne180100Ec.exit
-  %i.ax = getelementptr inbounds nuw [56 x i8], ptr %i.av, i64 %indvars.iv ; 5 uses
+  %i.ax = getelementptr inbounds nuw [56 x i8], ptr %i.av, i64 %indvars.iv ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 160
   %i.az = load ptr, ptr %i.ay, align 16, !tbaa !64
-  %10 = load <2 x i32>, ptr %i.ax, align 4, !tbaa !74
-  %11 = sitofp <2 x i32> %10 to <2 x float>       ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 2 uses
-  %12 = load i8, ptr %i.ba, align 8
-  %13 = trunc i8 %12 to i1
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 32 ; 2 uses
-  %14 = load ptr, ptr %i.bb, align 8
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 17 ; 2 uses
-  %15 = select i1 %13, ptr %14, ptr %i.bc
-  %16 = extractelement <2 x float> %11, i64 0
-  %17 = extractelement <2 x float> %11, i64 1
-  %i.bd = invoke i32 @nvgTextGlyphPositions(ptr noundef %i.az, float noundef %16, float noundef %17, ptr noundef %15, ptr noundef null, ptr noundef nonnull %6, i32 noundef 1024)
+  %10 = load i32, ptr %i.ax, align 4, !tbaa !74
+  %11 = sitofp i32 %10 to float
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
+  %12 = load i32, ptr %i.ba, align 4, !tbaa !74
+  %13 = sitofp i32 %12 to float
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 2 uses
+  %14 = load i8, ptr %i.bb, align 8
+  %15 = trunc i8 %14 to i1
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 32 ; 2 uses
+  %16 = load ptr, ptr %i.bc, align 8
+  %17 = getelementptr inbounds nuw i8, ptr %i.ax, i64 17 ; 2 uses
+  %18 = select i1 %15, ptr %16, ptr %17
+  %i.bd = invoke i32 @nvgTextGlyphPositions(ptr noundef %i.az, float noundef %11, float noundef %13, ptr noundef %18, ptr noundef null, ptr noundef nonnull %6, i32 noundef 1024)
           to label %bb.n unwind label %bb.x
 
 bb.n:                                             ; preds = %bb.m
-  %i.be = load i8, ptr %i.ba, align 8             ; 2 uses
+  %i.be = load i8, ptr %i.bb, align 8             ; 2 uses
   %i.bf = trunc i8 %i.be to i1                    ; 2 uses
-  %i.bg = load ptr, ptr %i.bb, align 8
-  %i.bh = select i1 %i.bf, ptr %i.bg, ptr %i.bc   ; 2 uses
+  %i.bg = load ptr, ptr %i.bc, align 8
+  %i.bh = select i1 %i.bf, ptr %i.bg, ptr %17     ; 2 uses
   %i.bi = ptrtoaddr ptr %i.bh to i64              ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   %i.bk = load i64, ptr %i.bj, align 8

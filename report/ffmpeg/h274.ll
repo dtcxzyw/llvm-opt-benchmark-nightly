@@ -205,12 +205,15 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
 
 bb.g:                                             ; preds = %.preheader121.us, %.critedge.us
   %indvars.iv169 = phi i64 [ 0, %.preheader121.us ], [ %indvars.iv.next170, %.critedge.us ] ; 2 uses
-  %.1139.us = phi i32 [ %.0114142.us, %.preheader121.us ], [ %i.dc, %.critedge.us ] ; 5 uses
-  %4 = and i32 %.1139.us, 1
-  %5 = bitcast i32 %.1139.us to <2 x i16>
-  %6 = shufflevector <2 x i16> %5, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
-  %7 = urem <2 x i16> %6, <i16 52, i16 56>
-  %8 = and <2 x i16> %7, <i16 60, i16 56>         ; 2 uses
+  %.1139.us = phi i32 [ %.0114142.us, %.preheader121.us ], [ %i.dc, %.critedge.us ] ; 6 uses
+  %4 = lshr i32 %.1139.us, 16
+  %.lhs.trunc.us = trunc nuw i32 %4 to i16
+  %5 = urem i16 %.lhs.trunc.us, 52
+  %.lhs.trunc115.us = trunc i32 %.1139.us to i16
+  %6 = urem i16 %.lhs.trunc115.us, 56
+  %7 = and i32 %.1139.us, 1
+  %8 = and i16 %5, 60
+  %9 = and i16 %6, 56
   %i.cw = lshr i32 %.1139.us, 2
   %i.cx = lshr i32 %.1139.us, 30
   %i.cy = shl i32 %.1139.us, 1
@@ -218,11 +221,9 @@ bb.g:                                             ; preds = %.preheader121.us, %
   %i.da = and i32 %i.cz, 1
   %i.db = or disjoint i32 %i.da, %i.cy
   %i.dc = xor i32 %i.db, 1                        ; 2 uses
-  %.not50.i.us = icmp eq i32 %4, 0
-  %9 = extractelement <2 x i16> %8, i64 0
-  %i.dd = zext nneg i16 %9 to i64
-  %10 = extractelement <2 x i16> %8, i64 1
-  %i.de = zext nneg i16 %10 to i64
+  %.not50.i.us = icmp eq i32 %7, 0
+  %i.dd = zext nneg i16 %8 to i64
+  %i.de = zext nneg i16 %9 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.critedge2.us, %bb.g

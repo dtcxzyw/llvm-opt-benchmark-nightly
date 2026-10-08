@@ -205,9 +205,9 @@ bb.a:
   %i.i = alloca ptr, align 8                      ; 7 uses
   %6 = alloca %struct.dt_iop_roi_t, align 4       ; 8 uses
   %i.j = alloca [4 x float], align 16             ; 19 uses
-  %i.k = alloca [4 x float], align 16             ; 5 uses
+  %i.k = alloca [4 x float], align 16             ; 8 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !56   ; 15 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !56   ; 16 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 516 ; 3 uses
   %i.o = load i32, ptr %i.n, align 4, !tbaa !80   ; 16 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -335,7 +335,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bk = zext i32 %i.aa to i64
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr @highlights_clip_magics, i64 %i.bk
   %i.bm = load float, ptr %i.bl, align 4, !tbaa !12
-  %i.bn = fmul reassoc nsz arcp contract afn float %i.bm, %i.bj ; 11 uses
+  %i.bn = fmul reassoc nsz arcp contract afn float %i.bm, %i.bj ; 13 uses
   br i1 %i.ab, label %bb.r, label %bb.be
 
 bb.r:                                             ; preds = %bb.q
@@ -738,17 +738,21 @@ bb.el:                                            ; preds = %bb.be
 bb.em:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #33
   %i.zi = getelementptr inbounds nuw i8, ptr %i.m, i64 272
-  %i.zj = getelementptr inbounds nuw i8, ptr %i.m, i64 280
-  %i.zk = load float, ptr %i.zj, align 8, !tbaa !12 ; 2 uses
-  %7 = load <2 x float>, ptr %i.zi, align 16, !tbaa !12
-  %8 = fmul reassoc nsz arcp contract afn float %i.zk, %i.bn ; 10 uses
-  %9 = insertelement <4 x float> poison, float %i.bn, i64 0
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
-  %11 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.zk, i64 2
-  %12 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %13 = shufflevector <4 x float> %12, <4 x float> %11, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %14 = fmul reassoc nsz arcp contract afn <4 x float> %10, %13 ; 10 uses
-  store <4 x float> %14, ptr %i.k, align 16, !tbaa !12
+  %7 = load float, ptr %i.zi, align 16, !tbaa !12
+  %8 = fmul reassoc nsz arcp contract afn float %7, %i.bn ; 9 uses
+  store float %8, ptr %i.k, align 16, !tbaa !12
+  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %i.zj = getelementptr inbounds nuw i8, ptr %i.m, i64 276
+  %i.zk = load float, ptr %i.zj, align 4, !tbaa !12
+  %10 = fmul reassoc nsz arcp contract afn float %i.zk, %i.bn ; 4 uses
+  store float %10, ptr %9, align 4, !tbaa !12
+  %11 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 280
+  %13 = load float, ptr %12, align 8, !tbaa !12
+  %14 = fmul reassoc nsz arcp contract afn float %13, %i.bn ; 8 uses
+  store float %14, ptr %11, align 8, !tbaa !12
+  %15 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
+  store float %i.bn, ptr %15, align 4, !tbaa !12
   tail call void @llvm.experimental.noalias.scope.decl(metadata !421)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !422)
   %i.zl = load ptr, ptr %i.p, align 16, !tbaa !53, !noalias !423 ; 4 uses
@@ -869,9 +873,11 @@ bb.es:                                            ; preds = %bb.eq
   %broadcast.splat523 = shufflevector <8 x i32> %broadcast.splatinsert522, <8 x i32> poison, <8 x i32> zeroinitializer ; 9 uses
   %broadcast.splatinsert524 = insertelement <8 x i64> poison, i64 %i.abo, i64 0
   %broadcast.splat525 = shufflevector <8 x i64> %broadcast.splatinsert524, <8 x i64> poison, <8 x i32> zeroinitializer
-  %broadcast.splat527 = shufflevector <4 x float> %14, <4 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 5 uses
-  %broadcast.splat529 = shufflevector <4 x float> %14, <4 x float> poison, <8 x i32> zeroinitializer ; 7 uses
-  %broadcast.splatinsert530 = insertelement <8 x float> poison, float %8, i64 0
+  %broadcast.splatinsert526 = insertelement <8 x float> poison, float %10, i64 0
+  %broadcast.splat527 = shufflevector <8 x float> %broadcast.splatinsert526, <8 x float> poison, <8 x i32> zeroinitializer ; 5 uses
+  %broadcast.splatinsert528 = insertelement <8 x float> poison, float %8, i64 0
+  %broadcast.splat529 = shufflevector <8 x float> %broadcast.splatinsert528, <8 x float> poison, <8 x i32> zeroinitializer ; 7 uses
+  %broadcast.splatinsert530 = insertelement <8 x float> poison, float %14, i64 0
   %broadcast.splat531 = shufflevector <8 x float> %broadcast.splatinsert530, <8 x float> poison, <8 x i32> zeroinitializer ; 9 uses
   %broadcast.splatinsert532 = insertelement <8 x float> poison, float %i.zu, i64 0
   %broadcast.splat533 = shufflevector <8 x float> %broadcast.splatinsert532, <8 x float> poison, <8 x i32> zeroinitializer
@@ -881,13 +887,10 @@ bb.es:                                            ; preds = %bb.eq
   %i.abr = fdiv reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %broadcast.splat535
   %i.abs = fdiv reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %broadcast.splat537
   %cmp.n = icmp eq i64 %n.vec, %i.aab
-  %15 = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %16 = extractelement <4 x float> %14, i64 0
-  %17 = extractelement <4 x float> %14, i64 1
-  %18 = extractelement <4 x float> %14, i64 0     ; 3 uses
-  %19 = extractelement <4 x float> %14, i64 0
-  %20 = extractelement <4 x float> %14, i64 0
-  %21 = extractelement <4 x float> %14, i64 0
+  %16 = insertelement <4 x float> poison, float %10, i64 0
+  %17 = shufflevector <4 x float> %16, <4 x float> poison, <4 x i32> zeroinitializer
+  %18 = insertelement <4 x float> poison, float %14, i64 0
+  %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> zeroinitializer
   %i.abt = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.zu, i64 0
   %i.abu = shufflevector <2 x float> %i.zv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.abv = shufflevector <4 x float> %i.abt, <4 x float> %i.abu, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
@@ -1225,7 +1228,7 @@ bb.eu:                                            ; preds = %scalar.ph
   br i1 %i.alb, label %.thread.i.i, label %bb.ev
 
 .thread.i.i:                                      ; preds = %bb.eu
-  %i.alc = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %17
+  %i.alc = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %10
   %i.ald = zext i1 %i.alc to i32
   br label %bb.ew
 
@@ -1238,7 +1241,7 @@ bb.ev:                                            ; preds = %bb.eu
   %i.alj = insertelement <4 x float> %i.ali, float %i.ako, i64 1
   %i.alk = insertelement <4 x float> %i.alj, float %i.aks, i64 2
   %i.all = insertelement <4 x float> %i.alk, float %i.akq, i64 3
-  %i.alm = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.all, %15
+  %i.alm = fcmp reassoc nsz arcp contract afn ogt <4 x float> %i.all, %17
   %i.aln = freeze <4 x i1> %i.alm
   %i.alo = bitcast <4 x i1> %i.aln to i4
   %i.alp = icmp ne i4 %i.alo, 0
@@ -1247,7 +1250,7 @@ bb.ev:                                            ; preds = %bb.eu
   br i1 %i.alr, label %.thread224.i.i, label %bb.ew
 
 .thread224.i.i:                                   ; preds = %bb.ev
-  %i.als = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %16
+  %i.als = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %8
   %i.alt = zext i1 %i.als to i32
   %.pre255.i.i = or disjoint i64 %i.aju, %i.acl
   %.pre257.i.i = trunc nuw nsw i64 %.pre255.i.i to i32
@@ -1277,7 +1280,7 @@ bb.ex:                                            ; preds = %bb.ew
 bb.ey:                                            ; preds = %bb.ex
   %i.ame = fadd reassoc nsz arcp contract afn float %i.ako, %i.akm
   %i.amf = fmul reassoc nsz arcp contract afn float %i.ame, 5.000000e-01
-  %i.amg = fcmp reassoc nsz arcp contract afn ogt float %i.akm, %20
+  %i.amg = fcmp reassoc nsz arcp contract afn ogt float %i.akm, %8
   br label %bb.fc
 
 bb.ez:                                            ; preds = %bb.ex, %bb.ew
@@ -1303,7 +1306,7 @@ bb.fa:                                            ; preds = %bb.ez
 bb.fb:                                            ; preds = %bb.fa
   %i.amt = fadd reassoc nsz arcp contract afn float %i.aks, %i.akq
   %i.amu = fmul reassoc nsz arcp contract afn float %i.amt, 5.000000e-01
-  %i.amv = fcmp reassoc nsz arcp contract afn ogt float %i.akq, %19
+  %i.amv = fcmp reassoc nsz arcp contract afn ogt float %i.akq, %8
   br label %bb.fc
 
 ._crit_edge249.i.i:                               ; preds = %bb.ez, %bb.fa
@@ -1311,10 +1314,10 @@ bb.fb:                                            ; preds = %bb.fa
   %i.amx = fadd reassoc nsz arcp contract afn float %i.amw, %i.aky
   %i.amy = fadd reassoc nsz arcp contract afn float %i.amx, %i.ala
   %i.amz = fmul reassoc nsz arcp contract afn float %i.amy, 2.500000e-01
-  %i.ana = fcmp reassoc nsz arcp contract afn ogt float %i.akw, %18
-  %i.anb = fcmp reassoc nsz arcp contract afn ogt float %i.aku, %18
+  %i.ana = fcmp reassoc nsz arcp contract afn ogt float %i.akw, %8
+  %i.anb = fcmp reassoc nsz arcp contract afn ogt float %i.aku, %8
   %or.cond206.i.i = select i1 %i.ana, i1 true, i1 %i.anb
-  %i.anc = fcmp reassoc nsz arcp contract afn ogt float %i.ala, %18
+  %i.anc = fcmp reassoc nsz arcp contract afn ogt float %i.ala, %8
   %or.cond207.i.i = select i1 %or.cond206.i.i, i1 true, i1 %i.anc
   br label %bb.fc
 
@@ -1322,14 +1325,14 @@ bb.fc:                                            ; preds = %._crit_edge249.i.i,
   %.sink509 = phi float [ %i.aky, %._crit_edge249.i.i ], [ %i.aks, %bb.fb ], [ %i.ako, %bb.ey ]
   %or.cond207.i.i.sink = phi i1 [ %or.cond207.i.i, %._crit_edge249.i.i ], [ %i.amv, %bb.fb ], [ %i.amg, %bb.ey ]
   %.0188.i.i = phi nsz float [ %i.amz, %._crit_edge249.i.i ], [ %i.amu, %bb.fb ], [ %i.amf, %bb.ey ] ; 2 uses
-  %i.and = fcmp reassoc nsz arcp contract afn ogt float %.sink509, %21
+  %i.and = fcmp reassoc nsz arcp contract afn ogt float %.sink509, %8
   %narrow233.i.i = select i1 %or.cond207.i.i.sink, i1 true, i1 %i.and
   %.0182.i.i = zext i1 %narrow233.i.i to i32      ; 2 uses
   %i.ane = icmp eq i32 %i.ajy, 2
   br i1 %i.ane, label %bb.fd, label %bb.fe
 
 bb.fd:                                            ; preds = %bb.fc
-  %i.anf = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %8
+  %i.anf = fcmp reassoc nsz arcp contract afn ogt float %i.akb, %14
   %i.ang = zext i1 %i.anf to i32
   br label %bb.fk
 
@@ -1356,8 +1359,8 @@ bb.ff:                                            ; preds = %bb.fe
 bb.fg:                                            ; preds = %bb.ff
   %i.anp = fadd reassoc nsz arcp contract afn float %i.ako, %i.akm
   %i.anq = fmul reassoc nsz arcp contract afn float %i.anp, 5.000000e-01
-  %i.anr = fcmp reassoc nsz arcp contract afn ogt float %i.akm, %8
-  %i.ans = fcmp reassoc nsz arcp contract afn ogt float %i.ako, %8
+  %i.anr = fcmp reassoc nsz arcp contract afn ogt float %i.akm, %14
+  %i.ans = fcmp reassoc nsz arcp contract afn ogt float %i.ako, %14
   %narrow238.i.i = select i1 %i.anr, i1 true, i1 %i.ans
   %i.ant = zext i1 %narrow238.i.i to i32
   br label %bb.fk
@@ -1385,8 +1388,8 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.fi
   %i.aog = fadd reassoc nsz arcp contract afn float %i.aks, %i.akq
   %i.aoh = fmul reassoc nsz arcp contract afn float %i.aog, 5.000000e-01
-  %i.aoi = fcmp reassoc nsz arcp contract afn ogt float %i.akq, %8
-  %i.aoj = fcmp reassoc nsz arcp contract afn ogt float %i.aks, %8
+  %i.aoi = fcmp reassoc nsz arcp contract afn ogt float %i.akq, %14
+  %i.aoj = fcmp reassoc nsz arcp contract afn ogt float %i.aks, %14
   %narrow237.i.i = select i1 %i.aoi, i1 true, i1 %i.aoj
   %i.aok = zext i1 %narrow237.i.i to i32
   br label %bb.fk
@@ -1396,14 +1399,15 @@ bb.fj:                                            ; preds = %bb.fi
   %i.aom = fadd reassoc nsz arcp contract afn float %i.aol, %i.aky
   %i.aon = fadd reassoc nsz arcp contract afn float %i.aom, %i.ala
   %i.aoo = fmul reassoc nsz arcp contract afn float %i.aon, 2.500000e-01
-  %22 = fcmp reassoc nsz arcp contract afn ogt float %i.akw, %8
-  %23 = fcmp reassoc nsz arcp contract afn ogt float %i.aku, %8
-  %or.cond208.i.i = select i1 %22, i1 true, i1 %23
-  %24 = fcmp reassoc nsz arcp contract afn ogt float %i.ala, %8
-  %or.cond209.i.i = select i1 %or.cond208.i.i, i1 true, i1 %24
-  %25 = fcmp reassoc nsz arcp contract afn ogt float %i.aky, %8
-  %narrow236.i.i = select i1 %or.cond209.i.i, i1 true, i1 %25
-  %i.aop = zext i1 %narrow236.i.i to i32
+  %20 = insertelement <4 x float> poison, float %i.akw, i64 0
+  %21 = insertelement <4 x float> %20, float %i.ala, i64 1
+  %22 = insertelement <4 x float> %21, float %i.aku, i64 2
+  %23 = insertelement <4 x float> %22, float %i.aky, i64 3
+  %24 = fcmp reassoc nsz arcp contract afn ogt <4 x float> %23, %19
+  %25 = freeze <4 x i1> %24
+  %26 = bitcast <4 x i1> %25 to i4
+  %27 = icmp ne i4 %26, 0
+  %i.aop = zext i1 %27 to i32
   br label %bb.fk
 
 bb.fk:                                            ; preds = %._crit_edge251.i.i, %bb.fj, %bb.fg, %bb.fd, %bb.et

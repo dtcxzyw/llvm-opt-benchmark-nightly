@@ -202,7 +202,7 @@ declare ptr @strtok(ptr noundef, ptr noundef readonly captures(none)) local_unna
 define internal fastcc void @phpdbg_line_init(ptr noundef nonnull %0, ptr nofree noundef nonnull captures(none) %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca [1 x %struct.__jmp_buf_tag], align 16 ; 6 uses
-  %i.a = alloca ptr, align 8                      ; 4 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %3 = alloca %struct._phpdbg_param, align 8      ; 9 uses
   %i.b = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #26 ; 2 uses
   %i.c = load i32, ptr %1, align 8, !tbaa !223
@@ -331,7 +331,7 @@ bb.o:                                             ; preds = %bb.i
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %i.bf = call ptr @phpdbg_read_input(ptr noundef nonnull %0) #25 ; 4 uses
+  %i.bf = call ptr @phpdbg_read_input(ptr noundef nonnull %0) #25
   store ptr %i.bf, ptr %i.a, align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store i32 9, ptr %3, align 8, !tbaa !110
@@ -339,7 +339,8 @@ bb.p:                                             ; preds = %bb.o
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 72
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bg, i8 0, i64 80, i1 false)
   call void @phpdbg_activate_err_buf(i1 noundef zeroext true) #25
-  %i.bi = call i32 @phpdbg_do_parse(ptr noundef nonnull %3, ptr noundef %i.bf) #25
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !75
+  %i.bi = call i32 @phpdbg_do_parse(ptr noundef nonnull %3, ptr noundef %4) #25
   %i.bj = icmp slt i32 %i.bi, 1
   br i1 %i.bj, label %bb.q, label %bb.v
 
@@ -361,15 +362,16 @@ bb.s:                                             ; preds = %bb.r
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !171 ; 2 uses
   %.not51 = icmp eq ptr %i.bo, null
   %i.bp = load i32, ptr %1, align 8, !tbaa !223   ; 2 uses
+  %5 = load ptr, ptr %i.a, align 8, !tbaa !75     ; 2 uses
   %i.bq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 1544), align 8, !tbaa !172 ; 2 uses
   br i1 %.not51, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.br = call i32 (ptr, ...) @phpdbg_output_err_buf(ptr noundef nonnull @.str.184, ptr noundef nonnull %i.bo, i32 noundef %i.bp, ptr noundef %i.bf, ptr noundef %i.bq) #25 ; 0 uses
+  %i.br = call i32 (ptr, ...) @phpdbg_output_err_buf(ptr noundef nonnull @.str.184, ptr noundef nonnull %i.bo, i32 noundef %i.bp, ptr noundef %5, ptr noundef %i.bq) #25 ; 0 uses
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.s
-  %i.bs = call i32 (ptr, ...) @phpdbg_output_err_buf(ptr noundef nonnull @.str.185, i32 noundef %i.bp, ptr noundef %i.bf, ptr noundef %i.bq) #25 ; 0 uses
+  %i.bs = call i32 (ptr, ...) @phpdbg_output_err_buf(ptr noundef nonnull @.str.185, i32 noundef %i.bp, ptr noundef %5, ptr noundef %i.bq) #25 ; 0 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.q, %bb.t, %bb.u, %bb.r, %bb.p

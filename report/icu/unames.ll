@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not98, label %.loopexit, label %.preheader114
 
 .preheader114:                                    ; preds = %bb.e, %bb.f
+  %indvars.iv172 = phi i32 [ %indvars.iv.next173, %bb.f ], [ -1, %bb.e ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %bb.e ] ; 6 uses
   %.088138 = phi ptr [ %i.p, %bb.f ], [ %1, %bb.e ] ; 2 uses
   %i.o = load i8, ptr %.088138, align 1, !tbaa !25 ; 3 uses
@@ -221,6 +222,7 @@ bb.f:                                             ; preds = %.preheader114
   store i8 %i.s, ptr %i.t, align 1, !tbaa !25
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 120
+  %indvars.iv.next173 = add nsw i32 %indvars.iv172, 1
   br i1 %exitcond.not, label %.loopexit.sink.split, label %.preheader114, !llvm.loop !52
 
 bb.g:                                             ; preds = %.preheader114
@@ -238,8 +240,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.z, label %bb.i, label %.loopexit.sink.split
 
 bb.i:                                             ; preds = %bb.h
-  %i.aa = add nsw i32 %i.u, -1                    ; 6 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.aa = add nsw i32 %i.u, -1                    ; 5 uses
+  %i.ab = zext i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !25
   %i.ae = icmp eq i8 %i.ad, 62
@@ -247,10 +249,14 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.old7 = icmp ugt i32 %i.aa, 2
-  br i1 %.old7, label %.preheader, label %.critedge
+  br i1 %.old7, label %.preheader.preheader, label %.critedge
 
-.preheader:                                       ; preds = %bb.j, %.preheader
-  %indvars.iv173 = phi i64 [ %i.af, %.preheader ], [ %i.ab, %bb.j ]
+.preheader.preheader:                             ; preds = %bb.j
+  %4 = zext i32 %indvars.iv172 to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %.preheader
+  %indvars.iv173 = phi i64 [ %4, %.preheader.preheader ], [ %i.af, %.preheader ]
   %i.af = add nsw i64 %indvars.iv173, -1          ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !25
@@ -282,7 +288,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.critedge.thread
   store i8 0, ptr %i.am, align 1, !tbaa !25
   %i.as = add i32 %.281106, 1
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.aa, i32 %i.as)
+  %umax = tail call i32 @llvm.umax.i32(i32 %indvars.iv172, i32 %i.as)
   %.3266 = add i32 %.281106, 1                    ; 2 uses
   %i.at = icmp ult i32 %.3266, %i.aa
   br i1 %i.at, label %.lr.ph, label %._crit_edge
@@ -685,7 +691,7 @@ bb.ad:                                            ; preds = %.lr.ph.i208
   br i1 %.not17.i211, label %.sink.split.i213, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i208
-  %i.ee = add i32 %.01219.i209, 1
+  %i.ee = add nsw i32 %.01219.i209, 1
   %exitcond.not.i212 = icmp eq i32 %.01219.i209, %i.dy
   br i1 %exitcond.not.i212, label %.sink.split.i213, label %.lr.ph.i208, !llvm.loop !64
 
