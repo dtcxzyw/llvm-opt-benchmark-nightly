@@ -205,11 +205,10 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit87:          ; preds = %.noexc86, %_ZNSt6ve
   %i.cu = sub i64 %.0.i.i.i.i.i.i.i, %i.ct
   %i.cv = icmp eq i64 %i.cr, %i.cu
   %.not9.i.i.i.i.i.i = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr = freeze i1 %i.cv
   %i.cw = lshr i64 %i.co, 32
   %i.cx = trunc nuw i64 %i.cw to i32              ; 4 uses
   %i.cy = trunc i64 %i.co to i32                  ; 4 uses
-  br i1 %.fr, label %.lr.ph.split, label %.lr.ph.split.us
+  br i1 %i.cv, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.cz = add nsw i32 %.sroa.8.0..sroa_idx.promoted, -1
@@ -299,8 +298,7 @@ bb.aa:                                            ; preds = %bb.t, %bb.s
   %i.dx = sub i64 %.0.i.i.i.i.i.i.i, %i.dw
   %i.dy = icmp eq i64 %i.du, %i.dx
   %.not9.i.i.i.i.i.i88 = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr287 = freeze i1 %i.dy
-  br i1 %.fr287, label %.lr.ph283.split, label %.lr.ph283.split.us
+  br i1 %i.dy, label %.lr.ph283.split, label %.lr.ph283.split.us
 
 .lr.ph283.split.us:                               ; preds = %.lr.ph283
   %i.dz = add nsw i32 %.sroa.7.0..sroa_idx.promoted, 1
@@ -368,8 +366,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i.i.i.i8
   %i.er = sub i64 %.0.i.i.i.i.i.i.i, %i.eq
   %i.es = icmp eq i64 %i.eo, %i.er
   %.not9.i.i.i.i.i.i94 = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr294 = freeze i1 %i.es
-  br i1 %.fr294, label %.lr.ph288.split, label %.lr.ph288.split.us
+  br i1 %i.es, label %.lr.ph288.split, label %.lr.ph288.split.us
 
 .lr.ph288.split.us:                               ; preds = %.lr.ph288
   %i.et = add nsw i32 %.sroa.6.0..sroa_idx180.promoted, -1
@@ -437,8 +434,7 @@ bb.ag:                                            ; preds = %.lr.ph.i.i.i.i.i.i9
   %i.fn = sub i64 %.0.i.i.i.i.i.i.i, %i.fm
   %i.fo = icmp eq i64 %i.fk, %i.fn
   %.not9.i.i.i.i.i.i100 = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr306 = freeze i1 %i.fo
-  br i1 %.fr306, label %.lr.ph299.split, label %.lr.ph299.split.us
+  br i1 %i.fo, label %.lr.ph299.split, label %.lr.ph299.split.us
 
 .lr.ph299.split.us:                               ; preds = %.lr.ph299
   %i.fp = add nsw i32 %.promoted, 1
@@ -513,8 +509,7 @@ _ZStneIfSaIfEEbRKSt6vectorIT_T0_ES6_.exit105.thread216: ; preds = %.loopexit253,
   %i.gj = sub i64 %.0.i.i.i.i.i.i.i, %i.gi
   %i.gk = icmp eq i64 %i.gg, %i.gj
   %.not9.i.i.i.i.i.i106 = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr313 = freeze i1 %i.gk
-  br i1 %.fr313, label %.lr.ph307.split, label %.lr.ph307.split.us
+  br i1 %i.gk, label %.lr.ph307.split, label %.lr.ph307.split.us
 
 .lr.ph307.split.us:                               ; preds = %.lr.ph307
   %i.gl = add nsw i32 %.sroa.10.0..sroa_idx.promoted, -1
@@ -586,8 +581,7 @@ bb.am:                                            ; preds = %.lr.ph.i.i.i.i.i.i1
   %i.hg = sub i64 %.0.i.i.i.i.i.i.i, %i.hf
   %i.hh = icmp eq i64 %i.hd, %i.hg
   %.not9.i.i.i.i.i.i112 = icmp eq ptr %.sroa.0136.0, %.0.i.i.i.i.i.i.i83
-  %.fr318 = freeze i1 %i.hh
-  br i1 %.fr318, label %.lr.ph314.split, label %.lr.ph314.split.us
+  br i1 %i.hh, label %.lr.ph314.split, label %.lr.ph314.split.us
 
 .lr.ph314.split.us:                               ; preds = %.lr.ph314
   %i.hi = add nsw i32 %.sroa.9.0..sroa_idx.promoted, 1

@@ -204,20 +204,15 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.z = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %.0133227, i32 noundef %i.g) #14
   %i.aa = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) %i.z) #15
   %.not137 = icmp eq i32 %i.aa, 0
-  br i1 %.not137, label %bb.f, label %._crit_edge.loopexit
+  br i1 %.not137, label %bb.f, label %._crit_edge
 
 bb.f:                                             ; preds = %.lr.ph
   %i.ab = add i32 %.0133227, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %i.t
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !15
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.f
-  %.0133.lcssa.ph = phi i32 [ %i.t, %bb.f ], [ %.0133227, %.lr.ph ]
-  %1 = freeze i32 %.0133.lcssa.ph
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader174
-  %.0133.lcssa = phi i32 [ %.0134267, %.preheader174 ], [ %1, %._crit_edge.loopexit ] ; 5 uses
+._crit_edge:                                      ; preds = %bb.f, %.lr.ph, %.preheader174
+  %.0133.lcssa = phi i32 [ %.0134267, %.preheader174 ], [ %.0133227, %.lr.ph ], [ %i.t, %bb.f ] ; 5 uses
   %i.ac = sub i32 %.0133.lcssa, %.0134267         ; 4 uses
   %i.ad = sext i32 %i.ac to i64
   %i.ae = tail call ptr @pg_malloc0_mul(i64 noundef 1, i64 noundef %i.ad) #14 ; 2 uses

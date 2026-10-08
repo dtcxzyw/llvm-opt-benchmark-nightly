@@ -205,9 +205,8 @@ bb.aj:                                            ; preds = %bb.ah
   br label %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
 
 _RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit: ; preds = %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs4lawaffTVVK_9sqlparser3ast5IdentINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2A_s_0ECs14kWLkQVSKO_14deltalake_core.exit.i, %bb.g, %_RNvXsaG_NtCs4lawaffTVVK_9sqlparser3astNtB6_17DeclareAssignmentNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i, %bb.q, %bb.u, %bb.y, %bb.ac, %bb.ag, %bb.aj
-  %.sroa.0.0.i16 = phi i8 [ %i.aq, %bb.q ], [ %i.bc, %bb.y ], [ %i.z, %bb.g ], [ %i.aw, %bb.u ], [ %i.bq, %bb.aj ], [ %.sroa.0.0.i.i, %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs4lawaffTVVK_9sqlparser3ast5IdentINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2A_s_0ECs14kWLkQVSKO_14deltalake_core.exit.i ], [ %i.bi, %bb.ac ], [ %i.bo, %bb.ag ], [ %.sroa.0.0.i44.i, %_RNvXsaG_NtCs4lawaffTVVK_9sqlparser3astNtB6_17DeclareAssignmentNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i ]
-  %.sroa.0.0.i16.fr = freeze i8 %.sroa.0.0.i16    ; 2 uses
-  %i.br = icmp eq i8 %.sroa.0.0.i16.fr, 0
+  %.sroa.0.0.i16 = phi i8 [ %i.aq, %bb.q ], [ %i.bc, %bb.y ], [ %i.z, %bb.g ], [ %i.aw, %bb.u ], [ %i.bq, %bb.aj ], [ %.sroa.0.0.i.i, %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs4lawaffTVVK_9sqlparser3ast5IdentINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2A_s_0ECs14kWLkQVSKO_14deltalake_core.exit.i ], [ %i.bi, %bb.ac ], [ %i.bo, %bb.ag ], [ %.sroa.0.0.i44.i, %_RNvXsaG_NtCs4lawaffTVVK_9sqlparser3astNtB6_17DeclareAssignmentNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i ] ; 2 uses
+  %i.br = icmp eq i8 %.sroa.0.0.i16, 0
   br i1 %i.br, label %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread21, label %.thread
 
 _RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread21: ; preds = %bb.ai, %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
@@ -215,7 +214,7 @@ _RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 
 .thread:                                          ; preds = %bb.ah, %bb.e, %bb.d, %bb.i, %bb.h, %bb.o, %bb.n, %bb.s, %bb.w, %bb.aa, %bb.ae, %bb.ai, %bb.ad, %bb.z, %bb.v, %bb.r, %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit, %._crit_edge
-  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge ], [ 1, %bb.r ], [ 1, %bb.v ], [ 1, %bb.z ], [ 1, %bb.ad ], [ -1, %bb.ai ], [ -1, %bb.ae ], [ -1, %bb.aa ], [ -1, %bb.w ], [ -1, %bb.s ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.h ], [ -1, %bb.i ], [ 1, %bb.d ], [ -1, %bb.e ], [ 1, %bb.ah ], [ %.sroa.0.0.i16.fr, %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit ]
+  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge ], [ 1, %bb.r ], [ 1, %bb.v ], [ 1, %bb.z ], [ 1, %bb.ad ], [ -1, %bb.ai ], [ -1, %bb.ae ], [ -1, %bb.aa ], [ -1, %bb.w ], [ -1, %bb.s ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.h ], [ -1, %bb.i ], [ 1, %bb.d ], [ -1, %bb.e ], [ 1, %bb.ah ], [ %.sroa.0.0.i16, %_RNvXsb0_NtCs4lawaffTVVK_9sqlparser3astNtB6_7DeclareNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit ]
   ret i8 %.sroa.0.0
 }
 
@@ -618,9 +617,8 @@ bb.s:                                             ; preds = %bb.r
   br label %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
 
 _RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit: ; preds = %bb.r, %bb.s, %bb.e, %bb.f, %bb.g, %bb.h, %bb.m, %bb.p, %bb.c, %bb.q
-  %.sroa.0.0.i16 = phi i8 [ %i.m, %bb.c ], [ %i.v, %bb.g ], [ %i.aq, %bb.q ], [ %i.n, %bb.e ], [ %i.an, %bb.p ], [ %i.r, %bb.f ], [ %i.bd, %bb.s ], [ %i.at, %bb.r ], [ %i.al, %bb.m ], [ %i.ab, %bb.h ]
-  %.sroa.0.0.i16.fr = freeze i8 %.sroa.0.0.i16    ; 2 uses
-  %i.be = icmp eq i8 %.sroa.0.0.i16.fr, 0
+  %.sroa.0.0.i16 = phi i8 [ %i.m, %bb.c ], [ %i.v, %bb.g ], [ %i.aq, %bb.q ], [ %i.n, %bb.e ], [ %i.an, %bb.p ], [ %i.r, %bb.f ], [ %i.bd, %bb.s ], [ %i.at, %bb.r ], [ %i.al, %bb.m ], [ %i.ab, %bb.h ] ; 2 uses
+  %i.be = icmp eq i8 %.sroa.0.0.i16, 0
   br i1 %i.be, label %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread20, label %.thread
 
 _RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread20: ; preds = %bb.o, %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
@@ -628,7 +626,7 @@ _RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFy
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 
 .thread:                                          ; preds = %bb.k, %bb.j, %bb.o, %bb.n, %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit, %._crit_edge
-  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.j ], [ -1, %bb.k ], [ %.sroa.0.0.i16.fr, %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit ]
+  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.j ], [ -1, %bb.k ], [ %.sroa.0.0.i16, %_RNvXsfA_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15JsonTableColumnNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit ]
   ret i8 %.sroa.0.0
 }
 
@@ -724,15 +722,12 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.aj, label %bb.g, label %_RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i
 
 _RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i: ; preds = %.lr.ph, %bb.i, %._crit_edge, %bb.c, %.lr.ph26
-  %.sroa.0.0.i.i = phi i8 [ %i.ad, %._crit_edge ], [ %i.ai, %bb.i ], [ %i.o, %bb.c ], [ %i.i, %.lr.ph26 ], [ %i.ag, %.lr.ph ]
-  %.sroa.0.0.i.fr.i = freeze i8 %.sroa.0.0.i.i    ; 2 uses
-  %4 = icmp eq i8 %.sroa.0.0.i.fr.i, 0
-  %spec.select = select i1 %4, i8 3, i8 %.sroa.0.0.i.fr.i ; 2 uses
-  %.not14 = icmp eq i8 %spec.select, 3
+  %.sroa.0.0.i.i = phi i8 [ %i.ad, %._crit_edge ], [ %i.ai, %bb.i ], [ %i.o, %bb.c ], [ %i.i, %.lr.ph26 ], [ %i.ag, %.lr.ph ] ; 2 uses
+  %.not14 = icmp eq i8 %.sroa.0.0.i.i, 0
   br i1 %.not14, label %bb.b, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query15TableIndexHintsNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread
 
-_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query15TableIndexHintsNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.f, %bb.e, %_RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i, %._crit_edge27
-  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge27 ], [ 1, %bb.e ], [ -1, %bb.f ], [ %spec.select, %_RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i ]
+_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtCs4lawaffTVVK_9sqlparser3ast5query15TableIndexHintsNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.f, %_RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i, %bb.e, %._crit_edge27
+  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge27 ], [ 1, %bb.e ], [ %.sroa.0.0.i.i, %_RNvXs6U_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_15TableIndexHintsNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i ], [ -1, %bb.f ]
   ret i8 %.sroa.0.0
 }
 

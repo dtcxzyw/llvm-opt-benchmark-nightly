@@ -206,12 +206,10 @@ bb.bu:                                            ; preds = %bb.bg
   br label %.body.i.i.i.i.i.i.i
 
 .loopexit.i.i.loopexit.i.i.i.i.i.i.i.i:           ; preds = %"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h48c7c5313fe8492dE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i", %"_ZN109_$LT$std..collections..hash..map..IntoIter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17habf3714eabccac5bE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i"
-  %.lcssa129.i.i.i.i.i.i.i.i = phi i64 [ %i.fv, %"_ZN109_$LT$std..collections..hash..map..IntoIter$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17habf3714eabccac5bE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ 0, %"_ZN4core4iter8adapters3map12map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h48c7c5313fe8492dE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i" ]
   store i16 %i.fs, ptr %.sroa.10102.0..sroa_idx103.i, align 8, !alias.scope !38991, !noalias !38992
   br label %.loopexit.i.i.i.i.i.i.i.i.i.i
 
 .loopexit.i.i.i.i.i.i.i.i.i.i:                    ; preds = %.loopexit.i.i.loopexit.i.i.i.i.i.i.i.i, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h6451d6ce5281e3d8E.exit.i.i.i.i.i.i.i.i.i.i.i"
-  %4 = phi i64 [ %.lcssa129.i.i.i.i.i.i.i.i, %.loopexit.i.i.loopexit.i.i.i.i.i.i.i.i ], [ %i.fv, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h6451d6ce5281e3d8E.exit.i.i.i.i.i.i.i.i.i.i.i" ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.i.i.i.i.i.i.i.i.i.i.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !39030)
   call void @llvm.experimental.noalias.scope.decl(metadata !39031)
@@ -220,7 +218,7 @@ bb.bu:                                            ; preds = %bb.bg
   call void @llvm.experimental.noalias.scope.decl(metadata !39034)
   call void @llvm.experimental.noalias.scope.decl(metadata !39035)
   call void @llvm.experimental.noalias.scope.decl(metadata !39036)
-  %i.il = icmp eq i64 %4, 0
+  %i.il = icmp eq i64 %i.fv, 0
   br i1 %i.il, label %"_ZN9hashbrown3raw16RawIter$LT$T$GT$13drop_elements17hdc6b03df66df7f89E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:     ; preds = %.loopexit.i.i.i.i.i.i.i.i.i.i
@@ -231,7 +229,7 @@ bb.bu:                                            ; preds = %bb.bg
 
 bb.bv:                                            ; preds = %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.lcssa13.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %.promoted11.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.lcssa12.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ] ; 2 uses
-  %i.im = phi i64 [ %4, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.iz, %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ]
+  %i.im = phi i64 [ %i.fv, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.iz, %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ]
   %.lcssa69.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %.promoted7.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.lcssa68.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ] ; 2 uses
   %i.in = phi i16 [ %.promoted.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.iw, %"_ZN9hashbrown3raw21RawIterRange$LT$T$GT$9next_impl17had0f7d26de005a51E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !39040)

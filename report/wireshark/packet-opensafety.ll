@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
 .thread:                                          ; preds = %bb.m, %bb.p
   %.1137207 = phi i8 [ %.1137, %bb.p ], [ 2, %bb.m ] ; 2 uses
   %.0139206 = phi i32 [ %.0139, %bb.p ], [ 1, %bb.m ] ; 2 uses
-  %.0150205 = phi i16 [ %.0150, %bb.p ], [ %i.af, %bb.m ] ; 4 uses
+  %.0150205 = phi i16 [ %.0150, %bb.p ], [ %i.af, %bb.m ] ; 3 uses
   %.mask171 = and i32 %i.f, 248
   %i.ao = icmp eq i32 %.mask171, 232
   br i1 %i.ao, label %bb.q, label %bb.u
@@ -291,7 +291,6 @@ bb.aa:                                            ; preds = %bb.j, %bb.j, %bb.d,
   br i1 %i.bv, label %bb.b, label %.thread184, !llvm.loop !11
 
 bb.ab:                                            ; preds = %bb.u, %bb.x, %bb.t
-  %.1145.lcssa = phi i16 [ %.0150205, %bb.u ], [ 0, %bb.x ], [ %.0150205, %bb.t ]
   %.not186 = icmp eq ptr %6, null
   br i1 %.not186, label %bb.ac, label %.sink.split
 
@@ -305,7 +304,7 @@ bb.ab:                                            ; preds = %bb.u, %bb.x, %bb.t
   store i32 %i.by, ptr %i.bz, align 4
   %i.ca = getelementptr i8, ptr %6, i64 48
   %i.cb = getelementptr i8, ptr %6, i64 50
-  store i16 %.1145.lcssa, ptr %i.cb, align 2
+  store i16 %.0150205, ptr %i.cb, align 2
   store i8 %.1137207, ptr %i.ca, align 8
   %.not175 = icmp ne i8 %.1137207, -1
   %i.cc = getelementptr i8, ptr %6, i64 54

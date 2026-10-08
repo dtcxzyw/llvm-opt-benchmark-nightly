@@ -205,9 +205,9 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %.loopexit429
   %i.fb = icmp eq i64 %.2.i, 0
-  %or.cond4.i = select i1 %i.c, i1 true, i1 %i.fb
   %.not6626.i = icmp eq i8 %i.es, 0
-  %or.cond50.i = or i1 %.not6626.i, %or.cond4.i
+  %.not286 = or i1 %.not6626.i, %i.fb
+  %or.cond50.i = or i1 %i.c, %.not286
   br i1 %or.cond50.i, label %.thread9.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.bz, %bb.cc
@@ -610,12 +610,11 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond.i, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %.loopexit74
-  %3 = icmp eq i64 %.2.i, 0
-  %not..i = xor i1 %i.o, true
-  %or.cond4.i = or i1 %3, %not..i
-  %.not6626.i = icmp eq i8 %i.t, 0
-  %or.cond50.i = or i1 %.not6626.i, %or.cond4.i
-  br i1 %or.cond50.i, label %.thread9.i, label %.lr.ph.i
+  %3 = icmp ne i64 %.2.i, 0
+  %.not6626.i = icmp ne i8 %i.t, 0
+  %4 = and i1 %.not6626.i, %3
+  %or.cond50.not.i = and i1 %i.o, %4
+  br i1 %or.cond50.not.i, label %.lr.ph.i, label %.thread9.i
 
 .lr.ph.i:                                         ; preds = %bb.m, %bb.p
   %i.ab = phi i8 [ %i.aj, %bb.p ], [ %i.t, %bb.m ] ; 2 uses
@@ -996,12 +995,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %or.cond.i, label %.loopexit, label %bb.o
 
 bb.o:                                             ; preds = %.loopexit93
-  %3 = icmp eq i64 %.2.i, 0
-  %not..i = xor i1 %i.o, true
-  %or.cond4.i = or i1 %3, %not..i
-  %.not6626.i = icmp eq i8 %i.t, 0
-  %or.cond50.i = or i1 %.not6626.i, %or.cond4.i
-  br i1 %or.cond50.i, label %.thread9.i, label %.lr.ph.i
+  %3 = icmp ne i64 %.2.i, 0
+  %.not6626.i = icmp ne i8 %i.t, 0
+  %4 = and i1 %.not6626.i, %3
+  %or.cond50.not.i = and i1 %i.o, %4
+  br i1 %or.cond50.not.i, label %.lr.ph.i, label %.thread9.i
 
 .lr.ph.i:                                         ; preds = %bb.o, %bb.r
   %i.ab = phi i8 [ %i.aj, %bb.r ], [ %i.t, %bb.o ] ; 2 uses
@@ -1404,12 +1402,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %or.cond.i, label %.loopexit, label %bb.o
 
 bb.o:                                             ; preds = %.loopexit83
-  %3 = icmp eq i64 %.2.i, 0
-  %not..i = xor i1 %i.o, true
-  %or.cond4.i = or i1 %3, %not..i
-  %.not6626.i = icmp eq i8 %i.t, 0
-  %or.cond50.i = or i1 %.not6626.i, %or.cond4.i
-  br i1 %or.cond50.i, label %.thread9.i, label %.lr.ph.i
+  %3 = icmp ne i64 %.2.i, 0
+  %.not6626.i = icmp ne i8 %i.t, 0
+  %4 = and i1 %.not6626.i, %3
+  %or.cond50.not.i = and i1 %i.o, %4
+  br i1 %or.cond50.not.i, label %.lr.ph.i, label %.thread9.i
 
 .lr.ph.i:                                         ; preds = %bb.o, %bb.r
   %i.ab = phi i8 [ %i.aj, %bb.r ], [ %i.t, %bb.o ] ; 2 uses

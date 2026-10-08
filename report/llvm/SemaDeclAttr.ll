@@ -204,15 +204,15 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = or disjoint i64 %i.d, 6
   %i.f = tail call i64 @_ZNK5clang11DeclContext6lookupENS_15DeclarationNameE(ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 %i.e) #23
-  %i.g = icmp ugt i64 %i.f, 7                     ; 3 uses
-  %i.h = zext i1 %i.g to i8
+  %i.g = icmp ugt i64 %i.f, 7                     ; 2 uses
+  %i.h = zext i1 %i.g to i8                       ; 2 uses
   %.val31.val = load ptr, ptr %i.a, align 8, !tbaa !832
   %i.i = getelementptr inbounds nuw i8, ptr %.val31.val, i64 18512
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = or disjoint i64 %i.j, 6
   %i.l = tail call i64 @_ZNK5clang11DeclContext6lookupENS_15DeclarationNameE(ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 %i.k) #23
-  %i.m = icmp ugt i64 %i.l, 7                     ; 3 uses
-  %i.n = zext i1 %i.m to i8
+  %i.m = icmp ugt i64 %i.l, 7                     ; 2 uses
+  %i.n = zext i1 %i.m to i8                       ; 2 uses
   %or.cond = and i1 %i.g, %i.m
   br i1 %or.cond, label %bb.j, label %bb.b
 
@@ -230,15 +230,11 @@ bb.c:                                             ; preds = %bb.b
   %.not2954 = icmp eq ptr %i.t, %i.u
   br i1 %.not2954, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.i
-  %2 = trunc nuw i8 %.125 to i1
-  %3 = trunc nuw i8 %.1 to i1
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
-  %.024.lcssa = phi i1 [ %i.g, %bb.c ], [ %2, %._crit_edge.loopexit ]
-  %.023.lcssa = phi i1 [ %i.m, %bb.c ], [ %3, %._crit_edge.loopexit ]
-  %or.cond3 = select i1 %.024.lcssa, i1 %.023.lcssa, i1 false
+._crit_edge:                                      ; preds = %bb.i, %bb.c
+  %.024.lcssa = phi i8 [ %i.h, %bb.c ], [ %.125, %bb.i ]
+  %.023.lcssa = phi i8 [ %i.n, %bb.c ], [ %.1, %bb.i ]
+  %2 = and i8 %.023.lcssa, %.024.lcssa
+  %or.cond3.not = icmp ne i8 %2, 0
   br label %bb.j
 
 .lr.ph:                                           ; preds = %bb.c, %bb.i
@@ -345,10 +341,10 @@ bb.i:                                             ; preds = %_ZNK5clang16CXXBase
   %.1 = phi i8 [ 1, %bb.f ], [ %i.bw, %_ZNK5clang16CXXBaseSpecifier7getTypeEv.exit39 ] ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.057, i64 24 ; 2 uses
   %.not29 = icmp eq ptr %i.bx, %i.u
-  br i1 %.not29, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 bb.j:                                             ; preds = %bb.b, %._crit_edge, %bb.a
-  %.127 = phi i1 [ true, %bb.a ], [ %or.cond3, %._crit_edge ], [ false, %bb.b ]
+  %.127 = phi i1 [ true, %bb.a ], [ %or.cond3.not, %._crit_edge ], [ false, %bb.b ]
   ret i1 %.127
 }
 

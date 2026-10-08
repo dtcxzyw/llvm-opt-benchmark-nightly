@@ -205,9 +205,8 @@ bb.s:                                             ; preds = %._crit_edge.i.i25.i
   br label %bb.q
 
 "_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.sink.split.i": ; preds = %"_ZN4core3ptr50drop_in_place$LT$alloc..borrow..Cow$LT$str$GT$$GT$17h4174dd460f5ed00dE.exit.i", %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.i"
-  %.lcssa267.sink.i = phi i64 [ 0, %"_ZN4core3ptr50drop_in_place$LT$alloc..borrow..Cow$LT$str$GT$$GT$17h4174dd460f5ed00dE.exit.i" ], [ %i.dg, %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.i" ]
   store i16 %i.dd, ptr %i.ce, align 8, !alias.scope !2298, !noalias !2297
-  store i64 %.lcssa267.sink.i, ptr %i.cb, align 8, !alias.scope !2296, !noalias !2297
+  store i64 %i.dg, ptr %i.cb, align 8, !alias.scope !2296, !noalias !2297
   br label %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.i"
 
 "_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.i": ; preds = %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.sink.split.i", %bb.m
@@ -610,9 +609,8 @@ bb.cj:                                            ; preds = %._crit_edge.i.i25.i
   br label %bb.ch
 
 "_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.sink.split.i96": ; preds = %"_ZN4core3ptr50drop_in_place$LT$alloc..borrow..Cow$LT$str$GT$$GT$17h4174dd460f5ed00dE.exit.i95", %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.i58"
-  %.lcssa338.sink.i = phi i64 [ 0, %"_ZN4core3ptr50drop_in_place$LT$alloc..borrow..Cow$LT$str$GT$$GT$17h4174dd460f5ed00dE.exit.i95" ], [ %i.kl, %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.i58" ]
   store i16 %i.ki, ptr %i.je, align 8, !alias.scope !2359, !noalias !2358
-  store i64 %.lcssa338.sink.i, ptr %i.jb, align 8, !alias.scope !2357, !noalias !2358
+  store i64 %i.kl, ptr %i.jb, align 8, !alias.scope !2357, !noalias !2358
   br label %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.i97"
 
 "_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.i97": ; preds = %"_ZN99_$LT$hashbrown..raw..RawIntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hcd52ca46e5b79f1eE.exit.thread.sink.split.i96", %bb.cd

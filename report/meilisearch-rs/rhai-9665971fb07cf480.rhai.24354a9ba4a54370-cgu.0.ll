@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.e
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.j, %bb.i
-  %.sroa.4.0.i.ph.i = phi i64 [ %i.s, %bb.j ], [ %i.h, %bb.i ]
+  %.sroa.4.0.i.ph.i = phi i64 [ %i.s, %bb.j ], [ %i.h, %bb.i ] ; 2 uses
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #71, !noalias !4063
   %i.v = tail call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef range(i64 1, -9223372036854775807) 8) #71, !noalias !4063 ; 5 uses
   %i.w = icmp eq ptr %i.v, null
@@ -216,9 +216,8 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZN5alloc5alloc15exchange_malloc17hd05661b5acd38f93E.exit2: ; preds = %bb.m
-  %.sroa.4.0.i.ph.fr.i = freeze i64 %.sroa.4.0.i.ph.i ; 2 uses
-  %i.x = ashr i64 %i.e, %.sroa.4.0.i.ph.fr.i
-  %i.y = sub nuw nsw i64 64, %.sroa.4.0.i.ph.fr.i
+  %i.x = ashr i64 %i.e, %.sroa.4.0.i.ph.i
+  %i.y = sub nuw nsw i64 64, %.sroa.4.0.i.ph.i
   store i64 %i.x, ptr %i.v, align 8, !noalias !4063
   %i.z = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i64 %i.y, ptr %i.z, align 8, !noalias !4063
@@ -621,15 +620,14 @@ bb.i:                                             ; preds = %bb.b
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.g, %bb.h
-  %.sroa.4.0.i.ph = phi i64 [ %i.l, %bb.h ], [ %2, %bb.g ]
-  %.sroa.4.0.i.ph.fr = freeze i64 %.sroa.4.0.i.ph ; 3 uses
+  %.sroa.4.0.i.ph = phi i64 [ %i.l, %bb.h ], [ %2, %bb.g ] ; 3 uses
   %i.o = icmp slt i64 %3, 0
-  %i.p = add nuw i64 %.sroa.4.0.i.ph.fr, %3
+  %i.p = add nuw i64 %.sroa.4.0.i.ph, %3
   %i.q = icmp ugt i64 %i.p, 64
-  %i.r = sub nuw nsw i64 64, %.sroa.4.0.i.ph.fr
+  %i.r = sub nuw nsw i64 64, %.sroa.4.0.i.ph
   %spec.select = select i1 %i.q, i64 %i.r, i64 %3
   %.sroa.04.1 = select i1 %i.o, i64 0, i64 %spec.select
-  %i.s = ashr i64 %1, %.sroa.4.0.i.ph.fr
+  %i.s = ashr i64 %1, %.sroa.4.0.i.ph
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.s, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16

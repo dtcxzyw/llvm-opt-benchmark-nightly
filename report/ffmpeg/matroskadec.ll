@@ -205,14 +205,13 @@ bb.kj:                                            ; preds = %bb.kg, %bb.kf
   %.060.i.i.i = phi i32 [ %i.anj, %bb.kg ], [ %i.aly, %bb.kf ] ; 2 uses
   %.058.i.i.i = phi i32 [ %i.and, %bb.kg ], [ %i.aly, %bb.kf ] ; 2 uses
   %i.anm = or i32 %.062.i.i.i, %.064.i.i.i
-  %4 = icmp ne i32 %.060.i.i.i, 0
-  %i.ann = or i32 %i.anm, %.058.i.i.i
-  %5 = icmp ne i32 %i.ann, 0
-  %or.cond5.i.i248.i = select i1 %5, i1 true, i1 %4 ; 4 uses
-  %..i.i249.i = select i1 %or.cond5.i.i248.i, i32 2, i32 0
-  %.064..i.i.i = select i1 %or.cond5.i.i248.i, i32 %.064.i.i.i, i32 0
-  %.062..i.i.i = select i1 %or.cond5.i.i248.i, i32 %.062.i.i.i, i32 0
-  %.058..i.i.i = select i1 %or.cond5.i.i248.i, i32 %.058.i.i.i, i32 0
+  %i.ann = or i32 %i.anm, %.060.i.i.i
+  %4 = or i32 %i.ann, %.058.i.i.i
+  %or.cond5.not.i.i.i = icmp eq i32 %4, 0         ; 4 uses
+  %..i.i249.i = select i1 %or.cond5.not.i.i.i, i32 0, i32 2
+  %.064..i.i.i = select i1 %or.cond5.not.i.i.i, i32 0, i32 %.064.i.i.i
+  %.062..i.i.i = select i1 %or.cond5.not.i.i.i, i32 0, i32 %.062.i.i.i
+  %.058..i.i.i = select i1 %or.cond5.not.i.i.i, i32 0, i32 %.060.i.i.i
   br label %bb.kr
 
 bb.kk:                                            ; preds = %bb.jy
@@ -256,8 +255,8 @@ bb.kr:                                            ; preds = %.thread.i164.i.i, %
   %.167.i.i.i = phi i32 [ %..i.i249.i, %bb.kj ], [ 1, %.thread.i164.i.i ]
   %.165.i.i.i = phi i32 [ %.064..i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
   %.163.i.i.i = phi i32 [ %.062..i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
-  %.161.i.i.i = phi i32 [ %.060.i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
-  %.159.i.i.i = phi i32 [ %.058..i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
+  %.161.i.i.i = phi i32 [ %.058..i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
+  %.159.i.i.i = phi i32 [ %.058.i.i.i, %bb.kj ], [ 0, %.thread.i164.i.i ]
   %.1.i165.i.i = phi i32 [ 0, %bb.kj ], [ %i.anu, %.thread.i164.i.i ]
   %i.anw = call ptr @av_spherical_alloc(ptr noundef nonnull %i.b) #14 ; 11 uses
   store ptr %i.anw, ptr %i.a, align 8, !tbaa !333
