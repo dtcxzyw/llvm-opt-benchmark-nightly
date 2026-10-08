@@ -205,21 +205,21 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8              ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.d = load i64, ptr %i.c, align 8              ; 8 uses
+  %i.d = load i64, ptr %i.c, align 8              ; 7 uses
   br i1 %1, label %bb.d, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a, %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3842)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = icmp ult i64 %i.d, %i.b
-  br i1 %i.f, label %.lr.ph.i, label %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit
+  br i1 %i.f, label %.lr.ph.i, label %.critedge
 
 .lr.ph.i:                                         ; preds = %._crit_edge
   %i.g = load ptr, ptr %0, align 8, !alias.scope !3842, !nonnull !5, !noundef !5
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i
-  %i.h = phi i64 [ %i.d, %.lr.ph.i ], [ %i.m, %bb.c ] ; 3 uses
+  %i.h = phi i64 [ %i.d, %.lr.ph.i ], [ %i.m, %bb.c ] ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1, !noalias !3842, !noundef !5
   %i.k = add i8 %i.j, -48
@@ -232,9 +232,8 @@ bb.c:                                             ; preds = %bb.b
   %exitcond.not.i = icmp eq i64 %i.m, %i.b
   br i1 %exitcond.not.i, label %.critedge, label %bb.b
 
-_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit: ; preds = %bb.b, %._crit_edge
-  %2 = phi i64 [ %i.d, %._crit_edge ], [ %i.h, %bb.b ] ; 3 uses
-  %i.n = icmp ult i64 %2, %i.b
+_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit: ; preds = %bb.b
+  %i.n = icmp ult i64 %i.h, %i.b
   br i1 %i.n, label %bb.f, label %.critedge
 
 bb.d:                                             ; preds = %bb.a
@@ -250,13 +249,13 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit
   %i.s = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %2
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.h
   %i.u = load i8, ptr %i.t, align 1, !noundef !5
   %i.v = icmp eq i8 %i.u, 46
   br i1 %i.v, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
-  %i.w = add nuw i64 %2, 1                        ; 3 uses
+  %i.w = add nuw i64 %i.h, 1                      ; 3 uses
   store i64 %i.w, ptr %i.e, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3843)
   %i.x = icmp ult i64 %i.w, %i.b
@@ -276,8 +275,8 @@ bb.h:                                             ; preds = %.lr.ph.i22
   %exitcond.not.i23 = icmp eq i64 %i.ad, %i.b
   br i1 %exitcond.not.i23, label %.critedge, label %.lr.ph.i22
 
-.critedge:                                        ; preds = %bb.m, %bb.l, %bb.t, %bb.s, %.split.i, %.thread14.i, %bb.c, %bb.h, %.lr.ph.i22, %bb.j, %.thread36, %.split, %bb.g, %bb.i, %bb.p, %bb.k, %bb.f, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit
-  %.sroa.0.0 = phi i16 [ 7, %.thread36 ], [ 4, %bb.k ], [ 4, %bb.c ], [ 4, %bb.f ], [ 4, %bb.i ], [ 4, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit ], [ 7, %bb.p ], [ 8, %bb.g ], [ 7, %bb.j ], [ 7, %.split ], [ 8, %bb.h ], [ 6, %bb.t ], [ 8, %.lr.ph.i22 ], [ 6, %.thread14.i ], [ 6, %.split.i ], [ 6, %bb.s ], [ 5, %bb.l ], [ 5, %bb.m ]
+.critedge:                                        ; preds = %bb.m, %bb.l, %bb.t, %bb.s, %.split.i, %.thread14.i, %bb.c, %bb.h, %.lr.ph.i22, %._crit_edge, %bb.j, %.thread36, %.split, %bb.g, %bb.i, %bb.p, %bb.k, %bb.f, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit
+  %.sroa.0.0 = phi i16 [ 7, %.thread36 ], [ 4, %bb.k ], [ 6, %bb.t ], [ 4, %bb.f ], [ 4, %bb.i ], [ 4, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit ], [ 7, %bb.p ], [ 8, %bb.g ], [ 7, %bb.j ], [ 7, %.split ], [ 4, %._crit_edge ], [ 8, %bb.h ], [ 4, %bb.c ], [ 8, %.lr.ph.i22 ], [ 6, %.thread14.i ], [ 6, %.split.i ], [ 6, %bb.s ], [ 5, %bb.l ], [ 5, %bb.m ]
   ret i16 %.sroa.0.0
 
 _RNvXsg_NtNtCsf3Ta7LF998c_4core5slice3cmphNtB5_13SliceContains14slice_containsCscScJTt9VrQp_6fea_rs.exit: ; preds = %bb.d, %bb.e
@@ -680,7 +679,7 @@ bb.r:                                             ; preds = %.lr.ph.i45.i
   br i1 %exitcond.not.i46.i, label %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer4path.exit.i, label %.lr.ph.i45.i
 
 _RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer4path.exit.i: ; preds = %.critedge.i, %.critedge.i, %bb.o, %bb.r, %.lr.ph.i45.i, %bb.o, %bb.o, %bb.j, %.lr.ph.i, %bb.ah, %bb.aj, %.lr.ph.i22.i.i, %bb.u, %.lr.ph.i.i.i, %bb.h, %.lr.ph.i.i, %.lr.ph.i.i, %bb.be, %bb.bc, %bb.ai, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit.i.i, %bb.af, %bb.ae, %bb.ab, %bb.bh, %bb.z, %bb.w, %bb.t, %bb.q, %bb.p, %bb.i
-  %.sroa.018.1.ph.i = phi i16 [ %i.de, %bb.bh ], [ 10, %bb.i ], [ 3, %bb.p ], [ 2, %bb.q ], [ 8, %bb.ai ], [ 29, %bb.t ], [ 29, %bb.u ], [ 4, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit.i.i ], [ 16, %bb.af ], [ 28, %bb.z ], [ %i.bm, %bb.w ], [ 3, %bb.r ], [ 10, %bb.j ], [ %..i, %bb.be ], [ 1, %bb.bc ], [ 4, %bb.ah ], [ 8, %bb.aj ], [ 120, %bb.h ], [ 16, %bb.ae ], [ 16, %bb.ab ], [ 16, %.critedge.i ], [ 120, %.lr.ph.i.i ], [ 120, %.lr.ph.i.i ], [ 29, %.lr.ph.i.i.i ], [ 8, %.lr.ph.i22.i.i ], [ 10, %.lr.ph.i ], [ 11, %bb.o ], [ 11, %bb.o ], [ 3, %.lr.ph.i45.i ], [ 11, %bb.o ], [ 16, %.critedge.i ] ; 4 uses
+  %.sroa.018.1.ph.i = phi i16 [ %i.de, %bb.bh ], [ 10, %bb.i ], [ 3, %bb.p ], [ 2, %bb.q ], [ 4, %_RNvMs_NtNtCscScJTt9VrQp_6fea_rs5parse5lexerNtB4_5Lexer18eat_decimal_digits.exit.i.i ], [ 29, %bb.t ], [ 29, %bb.u ], [ 8, %bb.ai ], [ 16, %bb.af ], [ 28, %bb.z ], [ %i.bm, %bb.w ], [ 3, %bb.r ], [ 10, %bb.j ], [ %..i, %bb.be ], [ 1, %bb.bc ], [ 4, %bb.ah ], [ 8, %bb.aj ], [ 120, %bb.h ], [ 16, %bb.ae ], [ 16, %bb.ab ], [ 16, %.critedge.i ], [ 120, %.lr.ph.i.i ], [ 120, %.lr.ph.i.i ], [ 29, %.lr.ph.i.i.i ], [ 8, %.lr.ph.i22.i.i ], [ 10, %.lr.ph.i ], [ 11, %bb.o ], [ 11, %bb.o ], [ 3, %.lr.ph.i45.i ], [ 11, %bb.o ], [ 16, %.critedge.i ] ; 4 uses
   %.pr.i = load i8, ptr %i.p, align 8, !alias.scope !3905
   switch i8 %.pr.i, label %default.unreachable.i [
     i8 0, label %bb.bi

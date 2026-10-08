@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %.old6 = icmp sgt i32 %.0179, 0
-  br i1 %.old6, label %.preheader219.preheader, label %._crit_edge.thread
+  br i1 %.old6, label %.preheader219.preheader, label %._crit_edge259
 
 .preheader219.preheader:                          ; preds = %bb.j
   %i.k = zext nneg i32 %.0179 to i64
@@ -221,7 +221,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %or.cond7, label %.preheader219, label %.loopexit, !llvm.loop !22
 
 .loopexit:                                        ; preds = %.preheader219
-  %i.p = trunc nuw nsw i64 %indvars.iv.next to i32 ; 3 uses
+  %i.p = trunc nuw nsw i64 %indvars.iv.next to i32 ; 4 uses
   %i.q = icmp sgt i64 %indvars.iv, 1
   br i1 %i.q, label %.lr.ph, label %._crit_edge.thread
 
@@ -285,9 +285,8 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.ag = add nsw i32 %i.p, 1
   br label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %._crit_edge, %bb.j, %.loopexit
-  %.1171311313 = phi i32 [ %.0179, %bb.j ], [ %i.p, %._crit_edge ], [ %i.p, %.loopexit ] ; 3 uses
-  %6 = phi i32 [ 0, %bb.j ], [ %i.ag, %._crit_edge ], [ 0, %.loopexit ] ; 2 uses
+._crit_edge.thread:                               ; preds = %._crit_edge, %.loopexit
+  %6 = phi i32 [ 0, %.loopexit ], [ %i.ag, %._crit_edge ] ; 2 uses
   %i.ah = icmp slt i32 %6, %.0179
   br i1 %i.ah, label %.preheader.lr.ph, label %._crit_edge259
 
@@ -299,11 +298,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.aw
   %.0161258 = phi i32 [ 1000000000, %.preheader.lr.ph ], [ %.2163, %bb.aw ] ; 10 uses
-  %.0164257 = phi i32 [ %.1171311313, %.preheader.lr.ph ], [ %i.bl, %bb.aw ]
+  %.0164257 = phi i32 [ %i.p, %.preheader.lr.ph ], [ %i.bl, %bb.aw ]
   %.0168256 = phi i64 [ %i.aj, %.preheader.lr.ph ], [ %indvars.iv.next286, %bb.aw ]
   %.0173255 = phi i32 [ 72, %.preheader.lr.ph ], [ %i.by, %bb.aw ] ; 2 uses
   %.0174254 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.es, %bb.aw ] ; 3 uses
-  %.0176252 = phi i32 [ %.1171311313, %.preheader.lr.ph ], [ %i.cj, %bb.aw ] ; 6 uses
+  %.0176252 = phi i32 [ %i.p, %.preheader.lr.ph ], [ %i.cj, %bb.aw ] ; 6 uses
   %.0177251 = phi i32 [ 128, %.preheader.lr.ph ], [ %i.cd, %bb.aw ] ; 2 uses
   %i.ak = add nsw i32 %.0173255, 26
   br label %bb.r
@@ -618,8 +617,8 @@ bb.aw:                                            ; preds = %.thread.thread318, 
   %i.et = icmp sgt i32 %.0179, %i.bk
   br i1 %i.et, label %.preheader, label %._crit_edge259, !llvm.loop !26
 
-._crit_edge259:                                   ; preds = %bb.aw, %._crit_edge.thread
-  %.0176.lcssa = phi i32 [ %.1171311313, %._crit_edge.thread ], [ %i.cj, %bb.aw ]
+._crit_edge259:                                   ; preds = %bb.aw, %bb.j, %._crit_edge.thread
+  %.0176.lcssa = phi i32 [ %i.p, %._crit_edge.thread ], [ %.0179, %bb.j ], [ %i.cj, %bb.aw ]
   %i.eu = tail call i32 @u_terminateUChars_78(ptr noundef %2, i32 noundef %3, i32 noundef %.0176.lcssa, ptr noundef nonnull %5)
   br label %bb.ax
 

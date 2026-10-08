@@ -205,7 +205,11 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 _ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit: ; preds = %.noexc.i
   %.pre = load ptr, ptr %4, align 8, !tbaa !191   ; 4 uses
   %i.o = icmp eq ptr %.pre, %4
-  br i1 %i.o, label %5, label %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit
+  br i1 %i.o, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit
+
+.body:                                            ; preds = %.lr.ph.i.i.i, %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
+  resume { ptr, i32 } %i.l
 
 _ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit: ; preds = %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit
   call void @_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %.pre, ptr noundef nonnull align 8 dereferenceable(24) %4) #27
@@ -215,28 +219,19 @@ _ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit: ; preds 
   %i.s = add i64 %i.r, %i.p
   store i64 %i.s, ptr %i.q, align 8, !tbaa !350
   store i64 0, ptr %i.b, align 8, !tbaa !350
-  %.pre9 = load ptr, ptr %4, align 8, !tbaa !191
-  br label %5
-
-.body:                                            ; preds = %.lr.ph.i.i.i, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
-  resume { ptr, i32 } %i.l
-
-5:                                                ; preds = %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit
-  %6 = phi ptr [ %.pre9, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit ], [ %.pre, %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit ] ; 2 uses
-  %.sroa.06.0 = phi ptr [ %.pre, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit ], [ %1, %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %6, %4
+  %.pre9 = load ptr, ptr %4, align 8, !tbaa !191  ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre9, %4
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %.lr.ph.i.i7
 
-.lr.ph.i.i7:                                      ; preds = %5, %.lr.ph.i.i7
-  %.09.i.i = phi ptr [ %i.t, %.lr.ph.i.i7 ], [ %6, %5 ] ; 2 uses
+.lr.ph.i.i7:                                      ; preds = %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit, %.lr.ph.i.i7
+  %.09.i.i = phi ptr [ %i.t, %.lr.ph.i.i7 ], [ %.pre9, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit ] ; 2 uses
   %i.t = load ptr, ptr %.09.i.i, align 8, !tbaa !191 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #30
   %.not.i.i = icmp eq ptr %i.t, %4
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit, label %.lr.ph.i.i7, !llvm.loop !10
 
-_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit:       ; preds = %.lr.ph.i.i7, %bb.a, %5
-  %.sroa.06.019 = phi ptr [ %1, %bb.a ], [ %.sroa.06.0, %5 ], [ %.sroa.06.0, %.lr.ph.i.i7 ]
+_ZNSt7__cxx1110_List_baseIiSaIiEED2Ev.exit:       ; preds = %.lr.ph.i.i7, %bb.a, %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit
+  %.sroa.06.019 = phi ptr [ %1, %bb.a ], [ %.pre, %_ZNSt7__cxx114listIiSaIiEE6spliceESt20_List_const_iteratorIiERS2_.exit ], [ %1, %_ZNSt7__cxx114listIiSaIiEEC2ISt20_List_const_iteratorIiEvEET_S6_RKS1_.exit ], [ %.pre, %.lr.ph.i.i7 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   ret ptr %.sroa.06.019
 }

@@ -202,7 +202,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !43
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.b) ; 3 uses
   %.not = icmp eq i64 %.sroa.speculated, 0
-  br i1 %.not, label %.critedge, label %.lr.ph
+  br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = load ptr, ptr %1, align 8, !tbaa !50
@@ -210,7 +210,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.024 = phi i64 [ 0, %.lr.ph ], [ %i.l, %bb.c ] ; 4 uses
+  %.024 = phi i64 [ 0, %.lr.ph ], [ %i.l, %bb.c ] ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %.024
   %i.h = load i8, ptr %i.g, align 1, !tbaa !53
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %.024
@@ -223,32 +223,31 @@ bb.c:                                             ; preds = %bb.b
   %exitcond.not = icmp eq i64 %i.l, %.sroa.speculated
   br i1 %exitcond.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit, label %bb.b, !llvm.loop !163
 
-.critedge:                                        ; preds = %bb.b, %bb.a
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %.024, %bb.b ] ; 5 uses
-  %i.m = icmp eq i64 %.0.lcssa, %.sroa.speculated
+.critedge:                                        ; preds = %bb.b
+  %i.m = icmp eq i64 %.024, %.sroa.speculated
   br i1 %i.m, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
   %i.n = load ptr, ptr %1, align 8, !tbaa !50     ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.0.lcssa
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.024
   %i.p = load i8, ptr %i.o, align 1, !tbaa !53
   %i.q = load ptr, ptr %2, align 8, !tbaa !44
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.0.lcssa
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.024
   %i.s = load i8, ptr %i.r, align 1, !tbaa !53
   %i.t = icmp ugt i8 %i.p, %i.s
   %i.u = add i64 %i.b, -1
-  %i.v = icmp ult i64 %.0.lcssa, %i.u
+  %i.v = icmp ult i64 %.024, %i.u
   %or.cond = and i1 %i.v, %i.t
   br i1 %or.cond, label %.sink.split.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit
 
 .sink.split.i.i:                                  ; preds = %bb.d
-  %i.w = add nuw i64 %.0.lcssa, 1                 ; 2 uses
+  %i.w = add nuw i64 %.024, 1                     ; 2 uses
   store i64 %i.w, ptr %i.a, align 8, !tbaa !49
   %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.w
   store i8 0, ptr %i.x, align 1, !tbaa !53
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit: ; preds = %bb.c, %.sink.split.i.i, %bb.d, %.critedge
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit: ; preds = %bb.c, %bb.a, %.sink.split.i.i, %bb.d, %.critedge
   ret void
 }
 

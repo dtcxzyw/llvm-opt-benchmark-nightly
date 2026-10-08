@@ -203,7 +203,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.n:                                             ; preds = %.lr.ph655, %._crit_edge649
   %.0532653 = phi i32 [ 1, %.lr.ph655 ], [ %i.hu, %._crit_edge649 ] ; 2 uses
   %.0534652 = phi i32 [ %i.ed, %.lr.ph655 ], [ %.1535, %._crit_edge649 ] ; 17 uses
-  %.0540651 = phi i32 [ 1, %.lr.ph655 ], [ %.0546.lcssa, %._crit_edge649 ] ; 11 uses
+  %.0540651 = phi i32 [ 1, %.lr.ph655 ], [ %.1547, %._crit_edge649 ] ; 11 uses
   %reass.sub = sub i32 %.0534652, %.0540651
   %i.hv = add i32 %reass.sub, 1
   %i.hw = load i32, ptr %5, align 4, !tbaa !36    ; 2 uses
@@ -606,24 +606,23 @@ bb.ao:                                            ; preds = %bb.ai, %bb.ak, %bb.
   br i1 %exitcond684.not, label %.loopexit601, label %.lr.ph619, !llvm.loop !30
 
 .loopexit601:                                     ; preds = %bb.ao, %.lr.ph632.prol.loopexit, %bb.ae, %middle.block931, %._crit_edge629.thread, %.preheader603, %._crit_edge637
-  %.1535 = phi i32 [ %.0542.lcssa, %._crit_edge637 ], [ %.0534652, %middle.block931 ], [ %.0534652, %._crit_edge629.thread ], [ %.0534652, %.preheader603 ], [ %.0534652, %.lr.ph632.prol.loopexit ], [ %.0534652, %bb.ae ], [ %.3545, %bb.ao ] ; 10 uses
+  %.1535 = phi i32 [ %.0542.lcssa, %._crit_edge637 ], [ %.0534652, %middle.block931 ], [ %.0534652, %._crit_edge629.thread ], [ %.0534652, %.preheader603 ], [ %.0534652, %.lr.ph632.prol.loopexit ], [ %.0534652, %bb.ae ], [ %.3545, %bb.ao ] ; 11 uses
   %.not587639 = icmp sgt i32 %.0540651, %.1535
-  br i1 %.not587639, label %.preheader598, label %.lr.ph644.preheader
+  br i1 %.not587639, label %._crit_edge656, label %.lr.ph644.preheader
 
 .lr.ph644.preheader:                              ; preds = %.loopexit601
   %i.uc = sext i32 %.0540651 to i64
   %i.ud = add i32 %.1535, 1
   br label %.lr.ph644
 
-.preheader598:                                    ; preds = %bb.au, %.loopexit601
-  %.0546.lcssa = phi i32 [ %.0540651, %.loopexit601 ], [ %.1547, %bb.au ] ; 6 uses
-  %.not588646 = icmp sgt i32 %.0546.lcssa, %.1535
+.preheader598:                                    ; preds = %bb.au
+  %.not588646 = icmp sgt i32 %.1547, %.1535
   br i1 %.not588646, label %._crit_edge656, label %iter.check813
 
 iter.check813:                                    ; preds = %.preheader598
-  %i.ue = sext i32 %.0546.lcssa to i64            ; 5 uses
+  %i.ue = sext i32 %.1547 to i64                  ; 5 uses
   %i.uf = add i32 %.1535, 1
-  %i.ug = sub i32 %.1535, %.0546.lcssa            ; 3 uses
+  %i.ug = sub i32 %.1535, %.1547                  ; 3 uses
   %i.uh = zext i32 %i.ug to i64
   %i.ui = add nuw nsw i64 %i.uh, 1                ; 5 uses
   %min.iters.check794 = icmp ult i32 %i.ug, 3
@@ -829,7 +828,7 @@ bb.at:                                            ; preds = %bb.ar, %bb.as, %bb.
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.ap, %bb.at
-  %.1547 = phi i32 [ %i.xy, %bb.at ], [ %.0546640, %bb.ap ] ; 2 uses
+  %.1547 = phi i32 [ %i.xy, %bb.at ], [ %.0546640, %bb.ap ] ; 7 uses
   %indvars.iv.next707 = add nsw i64 %indvars.iv706, 1 ; 2 uses
   %lftr.wideiv709 = trunc i64 %indvars.iv.next707 to i32
   %exitcond710.not = icmp eq i32 %i.ud, %lftr.wideiv709
@@ -877,9 +876,9 @@ bb.au:                                            ; preds = %bb.ap, %bb.at
   %exitcond715.not.3 = icmp eq i32 %i.uf, %lftr.wideiv714.3
   br i1 %exitcond715.not.3, label %._crit_edge649, label %.lr.ph648, !llvm.loop !35
 
-._crit_edge656:                                   ; preds = %.preheader598, %._crit_edge649, %.loopexit607
-  %.1541 = phi i32 [ 1, %.loopexit607 ], [ %.0546.lcssa, %._crit_edge649 ], [ %.0546.lcssa, %.preheader598 ]
-  %.2536 = phi i32 [ %i.ed, %.loopexit607 ], [ %.1535, %._crit_edge649 ], [ %.1535, %.preheader598 ] ; 2 uses
+._crit_edge656:                                   ; preds = %.loopexit601, %.preheader598, %._crit_edge649, %.loopexit607
+  %.1541 = phi i32 [ 1, %.loopexit607 ], [ %.0540651, %.loopexit601 ], [ %.1547, %.preheader598 ], [ %.1547, %._crit_edge649 ]
+  %.2536 = phi i32 [ %i.ed, %.loopexit607 ], [ %.1535, %._crit_edge649 ], [ %.1535, %.preheader598 ], [ %.1535, %.loopexit601 ] ; 2 uses
   %reass.sub672 = sub i32 %.2536, %.1541
   %i.yt = add i32 %reass.sub672, 1
   %i.yu = tail call i32 @llvm.smax.i32(i32 %i.yt, i32 0)

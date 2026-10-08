@@ -204,9 +204,9 @@ bb.x:                                             ; preds = %bb.t, %bb.u, %bb.v
 .loopexit:                                        ; preds = %bb.x, %bb.s, %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   store i32 99999999, ptr %i.b, align 4
-  %i.bp = load ptr, ptr %2, align 8               ; 3 uses
+  %i.bp = load ptr, ptr %2, align 8               ; 2 uses
   %.not5.i.i.i = icmp eq ptr %i.bp, %2
-  br i1 %.not5.i.i.i, label %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit, label %.lr.ph.i.i.i
+  br i1 %.not5.i.i.i, label %.preheader, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.loopexit
   %i.bq = load float, ptr %i.m, align 4
@@ -215,7 +215,7 @@ bb.x:                                             ; preds = %bb.t, %bb.u, %bb.v
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i, %.lr.ph.i.i.i
-  %.sroa.03.06.i.i.i = phi ptr [ %i.bp, %.lr.ph.i.i.i ], [ %i.cf, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i ] ; 6 uses
+  %.sroa.03.06.i.i.i = phi ptr [ %i.bp, %.lr.ph.i.i.i ], [ %i.cf, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i ] ; 7 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i.i, i64 16
   %i.bu = load i32, ptr %i.bt, align 4
   %i.bv = icmp eq i32 %i.bu, %i.ay
@@ -240,16 +240,15 @@ _ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11Mappin
   br i1 %i.ce, label %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit, label %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i
 
 _ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i: ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.i.i.i, %bb.aa, %bb.z, %bb.y
-  %i.cf = load ptr, ptr %.sroa.03.06.i.i.i, align 8 ; 3 uses
+  %i.cf = load ptr, ptr %.sroa.03.06.i.i.i, align 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cf, %2
-  br i1 %.not.i.i.i, label %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit, label %bb.y, !llvm.loop !21
+  br i1 %.not.i.i.i, label %.preheader, label %bb.y, !llvm.loop !21
 
-_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit: ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.i.i.i, %.loopexit
-  %.sroa.03.0.lcssa.i.i.i = phi ptr [ %i.bp, %.loopexit ], [ %.sroa.03.06.i.i.i, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.i.i.i ], [ %i.cf, %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i ] ; 2 uses
-  %.not117 = icmp eq ptr %2, %.sroa.03.0.lcssa.i.i.i
+_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit: ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.i.i.i
+  %.not117 = icmp eq ptr %2, %.sroa.03.06.i.i.i
   br i1 %.not117, label %.preheader, label %bb.ar
 
-.preheader:                                       ; preds = %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit
+.preheader:                                       ; preds = %_ZN9__gnu_cxx5__ops16_Iter_equals_valIKN6Assimp23ComputeUVMappingProcess11MappingInfoEEclISt14_List_iteratorIS4_EEEbT_.exit.thread.i.i.i, %.loopexit, %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit
   %i.cg = load i32, ptr %i.q, align 8
   %.not132 = icmp eq i32 %i.cg, 0
   br i1 %.not132, label %._crit_edge, label %.lr.ph122.preheader
@@ -379,7 +378,7 @@ _Z18FindEmptyUVChannelP6aiMesh.exit.peel:         ; preds = %_ZN6Assimp23Compute
   br i1 %i.dr, label %.lr.ph122, label %._crit_edge.loopexit
 
 bb.ar:                                            ; preds = %_ZSt4findISt14_List_iteratorIN6Assimp23ComputeUVMappingProcess11MappingInfoEES3_ET_S5_S5_RKT0_.exit
-  %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.03.0.lcssa.i.i.i, i64 32
+  %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i.i, i64 32
   %i.dt = load i32, ptr %i.ds, align 4
   store i32 %i.dt, ptr %i.b, align 4
   br label %bb.bm

@@ -33,7 +33,7 @@ define noundef i32 @PMPI_Cancel(ptr nofree noundef readonly captures(address_is_
 bb.a:
   %i.a = load i8, ptr @ompi_mpi_param_check, align 1, !tbaa !9, !range !10, !noundef !11
   %i.b = trunc nuw i8 %i.a to i1
-  br i1 %i.b, label %bb.b, label %thread-pre-split
+  br i1 %i.b, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load volatile i32, ptr @ompi_instance_count, align 4, !tbaa !12
@@ -53,18 +53,15 @@ bb.e:                                             ; preds = %bb.d
   %i.h = icmp eq ptr %i.g, null
   %i.i = icmp eq ptr %i.g, @ompi_request_null
   %or.cond = or i1 %i.h, %i.i
-  br i1 %or.cond, label %ompi_request_cancel.exit.thread.sink.split, label %bb.f
+  br i1 %or.cond, label %ompi_request_cancel.exit.thread.sink.split, label %bb.g
 
-thread-pre-split:                                 ; preds = %bb.a
-  %.pr = load ptr, ptr %0, align 8, !tbaa !19
-  br label %bb.f
-
-bb.f:                                             ; preds = %thread-pre-split, %bb.e
-  %1 = phi ptr [ %.pr, %thread-pre-split ], [ %i.g, %bb.e ] ; 3 uses
-  %i.j = icmp eq ptr %1, @ompi_request_null
+bb.f:                                             ; preds = %bb.a
+  %.pr = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
+  %i.j = icmp eq ptr %.pr, @ompi_request_null
   br i1 %i.j, label %ompi_request_cancel.exit.thread, label %bb.g
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %1 = phi ptr [ %.pr, %bb.f ], [ %i.g, %bb.e ]   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !27   ; 2 uses
   %.not.i = icmp eq ptr %i.l, null
@@ -234,7 +231,7 @@ attributes #5 = { nounwind }
 !25 = !{!"ompi_status_public_t", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !24, i64 16}
 !26 = !{!"ompi_request_t", !23, i64 0, !5, i64 56, !25, i64 64, !14, i64 88, !5, i64 96, !8, i64 100, !5, i64 104, !14, i64 112, !14, i64 120, !14, i64 128, !14, i64 136, !14, i64 144, !4, i64 152}
 !27 = !{!26, !14, i64 128}
-!28 = !{!"branch_weights", !"expected", i32 2145766521, i32 1717127}
+!28 = !{!"branch_weights", !"expected", i32 2145766520, i32 1717128}
 !29 = distinct !{!29, !39}
 !30 = distinct !{!30, !39, !40}
 !31 = !{!"opal_mutex_t", !16, i64 0, !4, i64 16, !5, i64 56}

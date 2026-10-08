@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.b
   %.0.lcssa.i = phi i64 [ 9, %bb.b ], [ %i.r, %.lr.ph.i ] ; 2 uses
-  %i.u = sub nsw i64 10, %.0.lcssa.i              ; 5 uses
+  %i.u = sub nsw i64 10, %.0.lcssa.i              ; 4 uses
   %i.v = icmp ult i64 %2, %i.u
   br i1 %i.v, label %put_var_int.exit.thread, label %put_var_int.exit
 
@@ -213,7 +213,7 @@ put_var_int.exit.thread:                          ; preds = %._crit_edge.i
 put_var_int.exit:                                 ; preds = %._crit_edge.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0.lcssa.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %1, ptr nonnull align 1 %i.w, i64 %i.u, i1 false)
-  %i.x = trunc i64 %i.u to i32                    ; 2 uses
+  %i.x = trunc i64 %i.u to i32                    ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   %i.y = icmp slt i32 %i.x, 0
   br i1 %i.y, label %.thread, label %bb.c
@@ -224,11 +224,7 @@ bb.c:                                             ; preds = %put_var_int.exit
   %i.ab = sub i64 %2, %i.z
   %.pr = load i32, ptr %i.d, align 8, !tbaa !48
   %i.ac = icmp eq i32 %.pr, 0
-  br i1 %i.ac, label %4, label %.thread97
-
-4:                                                ; preds = %bb.c
-  %5 = trunc i64 %i.u to i32
-  br label %.thread
+  br i1 %i.ac, label %.thread, label %.thread97
 
 .thread97:                                        ; preds = %bb.a, %bb.c
   %.sroa.0.0101 = phi ptr [ %i.aa, %bb.c ], [ %1, %bb.a ] ; 2 uses
@@ -358,8 +354,8 @@ bb.f:                                             ; preds = %put_var_int.exit54
   %i.ch = trunc i64 %i.cg to i32
   br label %.thread
 
-.thread:                                          ; preds = %put_var_int.exit54, %put_var_int.exit54.thread, %put_var_int.exit45.thread, %put_var_int.exit.thread, %put_var_int.exit45, %put_var_int.exit, %._crit_edge, %4
-  %.2 = phi i32 [ %i.ch, %._crit_edge ], [ %5, %4 ], [ %i.x, %put_var_int.exit ], [ -11, %put_var_int.exit45.thread ], [ %i.av, %put_var_int.exit45 ], [ -11, %put_var_int.exit.thread ], [ -11, %put_var_int.exit54.thread ], [ %i.bw, %put_var_int.exit54 ]
+.thread:                                          ; preds = %put_var_int.exit54, %bb.c, %put_var_int.exit54.thread, %put_var_int.exit45.thread, %put_var_int.exit.thread, %put_var_int.exit45, %put_var_int.exit, %._crit_edge
+  %.2 = phi i32 [ %i.ch, %._crit_edge ], [ %i.x, %bb.c ], [ %i.x, %put_var_int.exit ], [ -11, %put_var_int.exit45.thread ], [ %i.av, %put_var_int.exit45 ], [ -11, %put_var_int.exit.thread ], [ -11, %put_var_int.exit54.thread ], [ %i.bw, %put_var_int.exit54 ]
   ret i32 %.2
 }
 

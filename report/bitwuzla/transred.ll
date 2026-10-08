@@ -202,12 +202,12 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 2208 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 2216
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !220 ; 7 uses
-  %i.cs = load ptr, ptr %i.cp, align 8, !tbaa !220 ; 4 uses
+  %i.cs = load ptr, ptr %i.cp, align 8, !tbaa !220 ; 3 uses
   %.not318386 = icmp eq ptr %i.cs, %i.cr
-  br i1 %.not318386, label %._crit_edge, label %.lr.ph
+  br i1 %.not318386, label %bb.ad, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.z, %bb.ac
-  %.sroa.0288.0387 = phi ptr [ %i.db, %bb.ac ], [ %i.cs, %bb.z ] ; 3 uses
+  %.sroa.0288.0387 = phi ptr [ %i.db, %bb.ac ], [ %i.cs, %bb.z ] ; 4 uses
   %i.ct = load ptr, ptr %.sroa.0288.0387, align 8, !tbaa !221 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %i.cv = load i32, ptr %i.cu, align 8            ; 3 uses
@@ -230,16 +230,15 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond313, label %._crit_edge, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.aa, %bb.ab
-  %i.db = getelementptr inbounds nuw i8, ptr %.sroa.0288.0387, i64 8 ; 3 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %.sroa.0288.0387, i64 8 ; 2 uses
   %.not318 = icmp eq ptr %i.db, %i.cr
-  br i1 %.not318, label %._crit_edge, label %.lr.ph, !llvm.loop !23
+  br i1 %.not318, label %bb.ad, label %.lr.ph, !llvm.loop !23
 
-._crit_edge:                                      ; preds = %bb.ac, %bb.ab, %bb.z
-  %.sroa.0288.0.lcssa = phi ptr [ %i.cs, %bb.z ], [ %.sroa.0288.0387, %bb.ab ], [ %i.db, %bb.ac ] ; 2 uses
-  %i.dc = icmp eq ptr %.sroa.0288.0.lcssa, %i.cr
+._crit_edge:                                      ; preds = %bb.ab
+  %i.dc = icmp eq ptr %.sroa.0288.0387, %i.cr
   br i1 %i.dc, label %bb.ad, label %._crit_edge394
 
-bb.ad:                                            ; preds = %._crit_edge
+bb.ad:                                            ; preds = %bb.ac, %bb.z, %._crit_edge
   %i.dd = load ptr, ptr %i.aj, align 8, !tbaa !203 ; 2 uses
   %.not185 = icmp eq ptr %i.dd, null
   br i1 %.not185, label %bb.af, label %bb.ae
@@ -279,7 +278,7 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph393
   br label %._crit_edge394
 
 ._crit_edge394:                                   ; preds = %bb.af, %._crit_edge394.loopexit, %._crit_edge
-  %.sroa.0288.2 = phi ptr [ %.sroa.0288.0.lcssa, %._crit_edge ], [ %.pre461, %._crit_edge394.loopexit ], [ %i.df, %bb.af ] ; 2 uses
+  %.sroa.0288.2 = phi ptr [ %.sroa.0288.0387, %._crit_edge ], [ %.pre461, %._crit_edge394.loopexit ], [ %i.df, %bb.af ] ; 2 uses
   tail call void @_ZN7CaDiCaL8Internal12sort_watchesEv(ptr noundef nonnull align 8 dereferenceable(7288) %0)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)

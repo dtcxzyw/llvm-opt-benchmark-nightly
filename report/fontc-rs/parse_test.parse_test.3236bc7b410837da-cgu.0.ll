@@ -202,7 +202,7 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_
   %i.ia = getelementptr inbounds nuw i8, ptr %i.gl, i64 %.idx.i ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !340
   store ptr %i.gl, ptr %i.l, align 8, !noalias !340
-  %.sroa.421.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 3 uses
+  %.sroa.421.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 4 uses
   store ptr %i.gl, ptr %.sroa.421.0..sroa_idx.i, align 8, !noalias !340
   %.sroa.522.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store i64 %i.hz, ptr %.sroa.522.0..sroa_idx.i, align 8, !noalias !340
@@ -221,7 +221,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4j
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit81.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.lr.ph.i
   %i.ie = phi ptr [ %i.gl, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.lr.ph.i ], [ %i.if, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit81.i ] ; 5 uses
-  %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 32 ; 7 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 32 ; 8 uses
   %.sroa.0169.0.copyload.i = load i64, ptr %i.ie, align 8, !noalias !356 ; 5 uses
   %.sroa.7171.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %.sroa.7171.sroa.0.0.copyload.i = load ptr, ptr %.sroa.7171.0..sroa_idx.i, align 8, !noalias !356 ; 4 uses
@@ -250,7 +250,7 @@ bb.cf:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   invoke void @_RNvNtNtCs5Xr050g3D4S_3std2io5stdio6__print(ptr noundef nonnull @6, ptr noundef nonnull %i.i)
           to label %bb.ck unwind label %bb.ci
 
-_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit81.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i
+_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i
   store ptr %i.if, ptr %.sroa.421.0..sroa_idx.i, align 8, !noalias !340
   %i.ih = ptrtoint ptr %i.ia to i64
   %i.ii = ptrtoint ptr %i.if to i64
@@ -278,7 +278,11 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCs5Xr050g3D4S_3std4path7PathBufbEEC
   %i.iq = icmp eq i64 %i.in, %i.ik
   br i1 %i.iq, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i, label %.lr.ph.i.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.loopexit231.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit81.i
+  store ptr %i.if, ptr %.sroa.421.0..sroa_idx.i, align 8, !noalias !340
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.loopexit231.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i
   %i.ir = icmp eq i64 %i.hz, 0
   br i1 %i.ir, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEEECs4jhN2sci4pa_10parse_test.exit.i, label %bb.ch
 
@@ -317,7 +321,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit81.i: ; preds = %bb.cl, %bb.ck
   %i.iw = icmp eq ptr %i.if, %i.ia
-  br i1 %i.iw, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i
+  br i1 %i.iw, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSTNtNtCs5Xr050g3D4S_3std4path7PathBufbEECs4jhN2sci4pa_10parse_test.exit.i.i.loopexit231.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i
 
 bb.cm:                                            ; preds = %.thread225.i, %bb.er, %bb.ep, %bb.eo, %.body109.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECs4jhN2sci4pa_10parse_test.exit128.i, %bb.bj, %.body.i
   %i.ix = landingpad { ptr, i32 }

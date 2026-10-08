@@ -205,41 +205,39 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 4 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.c, %i.d
-  br i1 %.not.i.i.i.i.i.i, label %bb.c, label %bb.b
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = sdiv exact i64 %i.g, 24
   %i.i = icmp ugt i64 %i.h, 384307168202282325
-  br i1 %i.i, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !128
+  br i1 %i.i, label %.noexc.i.i.i.i, label %bb.c, !prof !128
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #29
   unreachable
 
-_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %bb.b
-  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #31
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !283
-  %.pre37 = load ptr, ptr %i.b, align 8, !tbaa !283
-  br label %bb.c
-
-bb.c:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i, %bb.a
-  %5 = phi ptr [ %i.c, %bb.a ], [ %.pre37, %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i ] ; 4 uses
-  %6 = phi ptr [ %i.d, %bb.a ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i ] ; 7 uses
-  %7 = phi ptr [ null, %bb.a ], [ %4, %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i ] ; 8 uses
-  %.not7.i.i.i.i.i.i.i = icmp eq ptr %6, %5       ; 2 uses
+bb.c:                                             ; preds = %bb.b
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #31 ; 4 uses
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !283 ; 4 uses
+  %.pre37 = load ptr, ptr %i.b, align 8, !tbaa !283 ; 4 uses
+  %.not7.i.i.i.i.i.i.i = icmp eq ptr %.pre, %.pre37
   br i1 %.not7.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.c, %.lr.ph.i.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i ], [ %7, %bb.c ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i.i.i.i ], [ %6, %bb.c ] ; 2 uses
+  %.09.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i ], [ %4, %bb.c ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i.i.i.i ], [ %.pre, %bb.c ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.08.i.i.i.i.i.i.i, i64 24, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i, i64 24 ; 2 uses
-  %.not.i.i.i.i.i.i.i = icmp eq ptr %i.j, %5
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %i.j, %.pre37
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !10
 
-_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.c
-  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %7, %bb.c ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i ]
+_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.a, %bb.c
+  %.not7.i.i.i.i.i.i.i55 = phi i1 [ true, %bb.c ], [ true, %bb.a ], [ false, %.lr.ph.i.i.i.i.i.i.i ]
+  %5 = phi ptr [ %4, %bb.c ], [ null, %bb.a ], [ %4, %.lr.ph.i.i.i.i.i.i.i ] ; 6 uses
+  %6 = phi ptr [ %.pre, %bb.c ], [ %i.d, %bb.a ], [ %.pre, %.lr.ph.i.i.i.i.i.i.i ] ; 5 uses
+  %7 = phi ptr [ %.pre37, %bb.c ], [ %i.c, %bb.a ], [ %.pre37, %.lr.ph.i.i.i.i.i.i.i ] ; 2 uses
+  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %4, %bb.c ], [ null, %bb.a ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !tbaa !559, !range !130, !noundef !131
@@ -318,7 +316,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.au, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.av = ptrtoint ptr %5 to i64
+  %i.av = ptrtoint ptr %7 to i64
   %i.aw = ptrtoint ptr %6 to i64
   %i.ax = sub i64 %i.av, %i.aw                    ; 2 uses
   %i.ay = sdiv exact i64 %i.ax, 24
@@ -330,10 +328,10 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.bc = sext i32 %i.at to i64                   ; 2 uses
-  %.pre.i.i = ptrtoint ptr %5 to i64
+  %.pre.i.i = ptrtoint ptr %7 to i64
   %.pre2.i.i = ptrtoint ptr %6 to i64
   %.pre4.i.i = sub i64 %.pre.i.i, %.pre2.i.i      ; 2 uses
-  br i1 %.not7.i.i.i.i.i.i.i, label %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEE4sizeEv.exit.thread.i.i, label %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEE4sizeEv.exit.i.i
+  br i1 %.not7.i.i.i.i.i.i.i55, label %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEE4sizeEv.exit.thread.i.i, label %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEE4sizeEv.exit.i.i
 
 _ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEE4sizeEv.exit.i.i: ; preds = %bb.l
   %i.bd = sdiv exact i64 %.pre4.i.i, 24
@@ -447,11 +445,11 @@ bb.v:                                             ; preds = %_ZNSt7__cxx1114rege
 
 bb.w:                                             ; preds = %bb.v
   %i.cv = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i.i to i64
-  %i.cw = ptrtoint ptr %7 to i64
+  %i.cw = ptrtoint ptr %5 to i64
   %i.cx = sub i64 %i.cv, %i.cw                    ; 2 uses
   %i.cy = sdiv exact i64 %i.cx, 24
   %i.cz = icmp ult i64 %i.cy, 4
-  %i.da = getelementptr i8, ptr %7, i64 %i.cx
+  %i.da = getelementptr i8, ptr %5, i64 %i.cx
   %.v.i = select i1 %i.cz, i64 -72, i64 -24
   %i.db = getelementptr i8, ptr %i.da, i64 %.v.i  ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 16
@@ -525,11 +523,11 @@ bb.ab:                                            ; preds = %bb.x
   br label %bb.ae
 
 bb.ac:                                            ; preds = %_ZNKSt7__cxx1120regex_token_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEE16_M_current_matchEv.exit, %_ZNSt7__cxx1120regex_token_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit23, %_ZNKSt7__cxx1120regex_token_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEE16_M_current_matchEv.exit17, %_ZNSt7__cxx1120regex_token_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit
-  %.not.i.i.i.i24 = icmp eq ptr %7, null
+  %.not.i.i.i.i24 = icmp eq ptr %5, null
   br i1 %.not.i.i.i.i24, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit25, label %bb.ad
 
 bb.ad:                                            ; preds = %.thread, %bb.ac
-  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.g) #32
+  call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.g) #32
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit25
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit25: ; preds = %bb.ac, %bb.ad
@@ -537,11 +535,11 @@ _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_strin
 
 bb.ae:                                            ; preds = %bb.ab, %bb.n, %bb.h
   %.pn6.pn = phi { ptr, i32 } [ %i.af, %bb.h ], [ %i.bk, %bb.n ], [ %i.ea, %bb.ab ]
-  %.not.i.i.i.i26 = icmp eq ptr %7, null
+  %.not.i.i.i.i26 = icmp eq ptr %5, null
   br i1 %.not.i.i.i.i26, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit27, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.g) #32
+  call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.g) #32
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit27
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit27: ; preds = %bb.ae, %bb.af

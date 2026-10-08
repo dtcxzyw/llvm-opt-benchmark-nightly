@@ -205,46 +205,41 @@ bb.a:
   %i.g = ashr exact i64 %i.f, 4
   tail call void @_Z44validate_declaredNumElemsMatchesVectorLengthxxPKc(i64 noundef %2, i64 noundef %i.g, ptr noundef nonnull @__func__._Z26setInlineFullStateDiagMatr17FullStateDiagMatrxxSt6vectorISt7complexIdESaIS2_EE)
   tail call void @_Z34validate_fullStateDiagMatrNewElems17FullStateDiagMatrxxPKc(ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull @__func__._Z26setInlineFullStateDiagMatr17FullStateDiagMatrxxSt6vectorISt7complexIdESaIS2_EE)
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !29   ; 3 uses
-  %i.i = load ptr, ptr %3, align 8, !tbaa !22     ; 3 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !29   ; 2 uses
+  %i.i = load ptr, ptr %3, align 8, !tbaa !22     ; 2 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.h, %i.i
-  br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
+  br i1 %.not.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.m = icmp ugt i64 %i.l, 9223372036854775792
-  br i1 %i.m, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i, !prof !17
+  br i1 %i.m, label %.noexc.i.i, label %bb.c, !prof !17
 
 .noexc.i.i:                                       ; preds = %bb.b
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #17
   unreachable
 
-_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
-  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #18
-  %.pre = load ptr, ptr %3, align 8, !tbaa !25
-  %.pre20 = load ptr, ptr %i.a, align 8, !tbaa !25
-  br label %bb.c
-
-bb.c:                                             ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i, %bb.a
-  %5 = phi ptr [ %i.h, %bb.a ], [ %.pre20, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
-  %6 = phi ptr [ %i.i, %bb.a ], [ %.pre, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
-  %7 = phi ptr [ null, %bb.a ], [ %4, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 9 uses
-  %.not7.i.i.i.i.i = icmp eq ptr %6, %5
+bb.c:                                             ; preds = %bb.b
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #18 ; 4 uses
+  %.pre = load ptr, ptr %3, align 8, !tbaa !25    ; 2 uses
+  %.pre20 = load ptr, ptr %i.a, align 8, !tbaa !25 ; 2 uses
+  %.not7.i.i.i.i.i = icmp eq ptr %.pre, %.pre20
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.c, %.lr.ph.i.i.i.i.i
-  %.09.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i ], [ %7, %bb.c ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i.i ], [ %6, %bb.c ] ; 2 uses
+  %.09.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i ], [ %4, %bb.c ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i.i ], [ %.pre, %bb.c ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.04.08.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !31
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.n, %5
+  %.not.i.i.i.i.i = icmp eq ptr %i.n, %.pre20
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !1
 
-_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %bb.c
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %7, %bb.c ], [ %i.o, %.lr.ph.i.i.i.i.i ]
+_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %bb.a, %bb.c
+  %5 = phi ptr [ %4, %bb.c ], [ null, %bb.a ], [ %4, %.lr.ph.i.i.i.i.i ] ; 7 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %4, %bb.c ], [ null, %bb.a ], [ %i.o, %.lr.ph.i.i.i.i.i ]
   %.sroa.3.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.3.0.copyload27 = load ptr, ptr %.sroa.3.0..sroa_idx26, align 8
   %.sroa.4.0..sroa_idx28 = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -256,7 +251,7 @@ _ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %
   %.sroa.7.0..sroa_idx32 = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.sroa.7.0.copyload33 = load ptr, ptr %.sroa.7.0..sroa_idx32, align 8
   %i.p = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.q = ptrtoint ptr %7 to i64
+  %i.q = ptrtoint ptr %5 to i64
   %i.r = sub i64 %i.p, %i.q
   %i.s = ashr exact i64 %i.r, 4                   ; 2 uses
   invoke void @_Z21validate_matrixFields17FullStateDiagMatrPKc(ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %0, ptr noundef nonnull @__func__.setFullStateDiagMatr)
@@ -267,11 +262,11 @@ _ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %
           to label %.noexc5 unwind label %bb.f
 
 .noexc5:                                          ; preds = %.noexc
-  invoke void @_Z33validate_matrixNewElemsPtrNotNullPSt7complexIdEPKc(ptr noundef %7, ptr noundef nonnull @__func__.setFullStateDiagMatr)
+  invoke void @_Z33validate_matrixNewElemsPtrNotNullPSt7complexIdEPKc(ptr noundef %5, ptr noundef nonnull @__func__.setFullStateDiagMatr)
           to label %.noexc6 unwind label %bb.f
 
 .noexc6:                                          ; preds = %.noexc5
-  invoke void @_Z36localiser_fullstatediagmatr_setElems17FullStateDiagMatrxPSt7complexIdEx(ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %0, i64 noundef %1, ptr noundef %7, i64 noundef %i.s)
+  invoke void @_Z36localiser_fullstatediagmatr_setElems17FullStateDiagMatrxPSt7complexIdEx(ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %0, i64 noundef %1, ptr noundef %5, i64 noundef %i.s)
           to label %.noexc7 unwind label %bb.f
 
 .noexc7:                                          ; preds = %.noexc6
@@ -292,11 +287,11 @@ _ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %.noexc10
-  %.not.i.i.i = icmp eq ptr %7, null
+  %.not.i.i.i = icmp eq ptr %5, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.l) #19
+  tail call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.l) #19
   br label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit
 
 _ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit:      ; preds = %bb.d, %bb.e
@@ -305,11 +300,11 @@ _ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit:      ; preds = %bb.d, %bb.e
 bb.f:                                             ; preds = %.noexc10, %.noexc9, %.noexc8, %.noexc7, %.noexc6, %.noexc5, %.noexc, %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit
   %i.t = landingpad { ptr, i32 }
           cleanup
-  %.not.i.i.i12 = icmp eq ptr %7, null
+  %.not.i.i.i12 = icmp eq ptr %5, null
   br i1 %.not.i.i.i12, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit13, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.l) #19
+  tail call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %i.l) #19
   br label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit13
 
 _ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit13:    ; preds = %bb.f, %bb.g

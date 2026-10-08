@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
 .critedge:                                        ; preds = %bb.n, %bb.m
   %.1134.lcssa = phi ptr [ %i.bh, %bb.n ], [ %.1134156, %bb.m ] ; 7 uses
   %.not143157 = icmp ugt ptr %.1134.lcssa, %.0130161
-  br i1 %.not143157, label %.critedge144, label %.lr.ph
+  br i1 %.not143157, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge, %bb.o
   %.1131158 = phi ptr [ %i.bn, %bb.o ], [ %.0130161, %.critedge ] ; 5 uses
@@ -229,20 +229,22 @@ bb.o:                                             ; preds = %.lr.ph
   %i.br = getelementptr inbounds i8, ptr %.1131158, i64 -4
   br label %.critedge144
 
-.critedge144:                                     ; preds = %bb.o, %.critedge, %.critedge2
-  %.2135 = phi ptr [ %i.bq, %.critedge2 ], [ %.1134.lcssa, %.critedge ], [ %.1134.lcssa, %bb.o ] ; 3 uses
-  %.2132 = phi ptr [ %i.br, %.critedge2 ], [ %.0130161, %.critedge ], [ %i.bn, %bb.o ] ; 3 uses
+.critedge144:                                     ; preds = %bb.o, %.critedge2
+  %.2135 = phi ptr [ %i.bq, %.critedge2 ], [ %.1134.lcssa, %bb.o ] ; 3 uses
+  %.2132 = phi ptr [ %i.br, %.critedge2 ], [ %i.bn, %bb.o ] ; 3 uses
   %.not140 = icmp ugt ptr %.2135, %.2132
   br i1 %.not140, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !105
 
-._crit_edge.loopexit:                             ; preds = %.critedge144
+._crit_edge.loopexit:                             ; preds = %.critedge, %.critedge144
+  %.2132191 = phi ptr [ %.2132, %.critedge144 ], [ %.0130161, %.critedge ]
+  %.2135190 = phi ptr [ %.2135, %.critedge144 ], [ %.1134.lcssa, %.critedge ]
   %.pre = load float, ptr %i.u, align 4, !tbaa !45
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.l
   %i.bs = phi float [ %i.bb, %bb.l ], [ %.pre, %._crit_edge.loopexit ]
-  %.0133.lcssa = phi ptr [ %i.y, %bb.l ], [ %.2135, %._crit_edge.loopexit ] ; 7 uses
-  %.0130.lcssa = phi ptr [ %i.x, %bb.l ], [ %.2132, %._crit_edge.loopexit ] ; 2 uses
+  %.0133.lcssa = phi ptr [ %i.y, %bb.l ], [ %.2135190, %._crit_edge.loopexit ] ; 7 uses
+  %.0130.lcssa = phi ptr [ %i.x, %bb.l ], [ %.2132191, %._crit_edge.loopexit ] ; 2 uses
   %i.bt = load float, ptr %.0133.lcssa, align 4, !tbaa !45
   store float %i.bs, ptr %.0133.lcssa, align 4, !tbaa !45
   store float %i.bt, ptr %i.u, align 4, !tbaa !45

@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !55
   %i.o = getelementptr inbounds [2 x i8], ptr %i.n, i64 %i.i
-  %i.p = load i16, ptr %i.o, align 2, !tbaa !39   ; 4 uses
+  %i.p = load i16, ptr %i.o, align 2, !tbaa !39   ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 6 ; 4 uses
   %i.r = load i16, ptr %i.q, align 2, !tbaa !79   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 3 uses
   %i.t = load i16, ptr %i.s, align 4, !tbaa !78   ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 6 uses
-  %i.v = zext i16 %i.p to i32                     ; 2 uses
+  %i.v = zext i16 %i.p to i32                     ; 3 uses
   %sext = zext i16 %i.t to i64
   %i.w = icmp ugt i16 %i.r, %i.t
   br i1 %i.w, label %.lr.ph224, label %._crit_edge225
@@ -501,8 +501,7 @@ bb.x:                                             ; preds = %._crit_edge225
   br i1 %.not156, label %.thread166, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %2 = zext i16 %i.p to i32
-  %i.em = tail call i32 @ubidi_getPairedBracketType_78(i32 noundef %2)
+  %i.em = tail call i32 @ubidi_getPairedBracketType_78(i32 noundef %i.v)
   %i.en = icmp eq i32 %i.em, 1
   br i1 %i.en, label %bb.z, label %.thread166
 
@@ -527,7 +526,7 @@ bb.ac:                                            ; preds = %bb.z, %bb.ab, %bb.a
   %.not159 = icmp eq i8 %i.eq, 0
   br i1 %.not159, label %.thread171, label %.thread166
 
-.thread166:                                       ; preds = %._crit_edge225, %_ZL21bracketProcessClosingP11BracketDataii.exit, %_ZL21bracketProcessClosingP11BracketDataii.exit.thread, %bb.ac, %bb.y, %bb.x, %bb.a
+.thread166:                                       ; preds = %_ZL21bracketProcessClosingP11BracketDataii.exit.thread, %_ZL21bracketProcessClosingP11BracketDataii.exit, %._crit_edge225, %bb.ac, %bb.y, %bb.x, %bb.a
   %i.er = load ptr, ptr %0, align 8, !tbaa !74
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 120
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !57

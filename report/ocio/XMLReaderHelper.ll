@@ -202,10 +202,10 @@ bb.a:
   %i.a = alloca double, align 8                   ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not.i.not = icmp eq i64 %2, 0
-  br i1 %.not.i.not, label %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit, label %.preheader
+  br i1 %.not.i.not, label %._crit_edge, label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i
-  %.012.i = phi i64 [ %i.d, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ], [ 0, %bb.a ] ; 2 uses
+  %.012.i = phi i64 [ %i.d, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ], [ 0, %bb.a ] ; 3 uses
   %.0.i = phi ptr [ %i.c, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ], [ %1, %bb.a ] ; 2 uses
   %i.b = load i8, ptr %.0.i, align 1, !tbaa !27
   switch i8 %i.b, label %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit [
@@ -224,9 +224,8 @@ _ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i: ; preds = %.preheader,
   %exitcond.not.i = icmp eq i64 %i.d, %2
   br i1 %exitcond.not.i, label %._crit_edge, label %.preheader, !llvm.loop !127
 
-_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit: ; preds = %.preheader, %bb.a
-  %.1.i = phi i64 [ 0, %bb.a ], [ %.012.i, %.preheader ] ; 2 uses
-  %.not21 = icmp eq i64 %.1.i, %2
+_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit: ; preds = %.preheader
+  %.not21 = icmp eq i64 %.012.i, %2
   br i1 %.not21, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
@@ -237,7 +236,7 @@ _ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit: ; preds = %.preheader, %bb
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
   %i.g = phi ptr [ null, %.lr.ph ], [ %i.an, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 4 uses
   %i.h = phi ptr [ null, %.lr.ph ], [ %i.ao, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
-  %.022 = phi i64 [ %.1.i, %.lr.ph ], [ %.sink.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
+  %.022 = phi i64 [ %.012.i, %.lr.ph ], [ %.sink.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
   %i.i = phi ptr [ null, %.lr.ph ], [ %i.ap, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store double 0.000000e+00, ptr %i.a, align 8, !tbaa !82
@@ -415,8 +414,8 @@ bb.m:                                             ; preds = %.loopexit.split-lp,
   %.not.i.i.i14 = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i14, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.n
 
-._crit_edge:                                      ; preds = %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
-  %.lcssa = phi ptr [ null, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit ], [ %i.ap, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ], [ null, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ]
+._crit_edge:                                      ; preds = %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit, %bb.a, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
+  %.lcssa = phi ptr [ null, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit ], [ %i.ap, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ], [ null, %bb.a ], [ null, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ]
   store ptr %.lcssa, ptr %0, align 8
   ret void
 

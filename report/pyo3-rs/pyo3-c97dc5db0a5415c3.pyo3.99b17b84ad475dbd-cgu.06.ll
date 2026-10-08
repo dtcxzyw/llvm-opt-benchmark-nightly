@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %1, 0
-  br i1 %i.e, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, label %bb.c
+  br i1 %i.e, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i8, ptr %0, align 1, !alias.scope !56, !noundef !4
@@ -236,19 +236,19 @@ _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread41: ; preds =
   %or.cond.i = select i1 %i.m, i1 %i.n, i1 false
   br i1 %or.cond.i, label %.preheader.split.i, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread
 
-_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread: ; preds = %.preheader.split.i, %bb.c, %bb.b, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit
-  %.sroa.013.0 = phi i64 [ 1, %bb.c ], [ 2, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit ], [ 0, %bb.b ], [ %i.l, %.preheader.split.i ] ; 2 uses
-  %.sroa.0.0 = phi i64 [ 0, %bb.c ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit ], [ 0, %bb.b ], [ %i.l, %.preheader.split.i ] ; 2 uses
+_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread: ; preds = %.preheader.split.i, %bb.c, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit
+  %.sroa.013.0 = phi i64 [ 1, %bb.c ], [ 2, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit ], [ %i.l, %.preheader.split.i ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ 0, %bb.c ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit ], [ %i.l, %.preheader.split.i ] ; 2 uses
   %i.o = icmp ult i64 %.sroa.013.0, %1
   br i1 %i.o, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36
-  %.sroa.0.162 = phi i64 [ %.sroa.07.1.i28, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ], [ %.sroa.0.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ] ; 4 uses
-  %.sroa.013.161 = phi i64 [ %.sroa.0.1.i29, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ], [ %.sroa.013.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ] ; 3 uses
+  %.sroa.0.162 = phi i64 [ %i.al, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ], [ %.sroa.0.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ] ; 4 uses
+  %.sroa.013.161 = phi i64 [ %i.ak, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ], [ %.sroa.013.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ] ; 3 uses
   br label %bb.f
 
-.loopexit:                                        ; preds = %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, %bb.a
-  %.sroa.0.2 = phi i64 [ %1, %bb.a ], [ %.sroa.0.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ %.sroa.07.1.i28, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ]
+.loopexit:                                        ; preds = %bb.n, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36, %bb.b, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, %bb.a
+  %.sroa.0.2 = phi i64 [ %1, %bb.a ], [ %.sroa.0.0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ 0, %bb.b ], [ %.sroa.0.162, %bb.n ], [ %i.al, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36 ]
   ret i64 %.sroa.0.2
 
 bb.e:                                             ; preds = %bb.f, %bb.g
@@ -308,7 +308,7 @@ _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26: ; preds = %bb.l
   br i1 %i.ag, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26.thread, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26.thread47, !prof !59
 
 _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26.thread: ; preds = %bb.k, %bb.i, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26, %bb.h
-  %.sroa.013.2 = phi i64 [ %i.x, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26 ], [ %i.w, %bb.h ], [ %1, %bb.i ], [ %i.x, %bb.k ] ; 4 uses
+  %.sroa.013.2 = phi i64 [ %i.x, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26 ], [ %i.w, %bb.h ], [ %1, %bb.i ], [ %i.x, %bb.k ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %.not.i = icmp ult i64 %.sroa.013.2, %.sroa.0.162
   br i1 %.not.i, label %bb.m, label %bb.n, !prof !9
@@ -319,7 +319,7 @@ bb.m:                                             ; preds = %_RNvNtNtCsdc6yCHiM2
 
 bb.n:                                             ; preds = %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26.thread
   %.old1.i27 = icmp ult i64 %.sroa.013.2, %1
-  br i1 %.old1.i27, label %.preheader.split.i31.preheader, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36
+  br i1 %.old1.i27, label %.preheader.split.i31.preheader, label %.loopexit
 
 .preheader.split.i31.preheader:                   ; preds = %bb.n
   %exitcond.not.i3484 = icmp eq i64 %.sroa.0.162, %1
@@ -336,8 +336,8 @@ bb.n:                                             ; preds = %_RNvNtNtCsdc6yCHiM2
   %i.ai = load i8, ptr %i.ah, align 1, !alias.scope !60, !noundef !4 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.0.i3285
   store i8 %i.ai, ptr %i.aj, align 1, !alias.scope !60
-  %i.ak = add nuw nsw i64 %.sroa.0.0.i3386, 1     ; 3 uses
-  %i.al = add i64 %.sroa.07.0.i3285, 1            ; 3 uses
+  %i.ak = add nuw nsw i64 %.sroa.0.0.i3386, 1     ; 4 uses
+  %i.al = add i64 %.sroa.07.0.i3285, 1            ; 4 uses
   %i.am = icmp ne i8 %i.ai, 10
   %i.an = icmp ult i64 %i.ak, %1
   %or.cond.i35 = select i1 %i.am, i1 %i.an, i1 false
@@ -347,10 +347,8 @@ bb.n:                                             ; preds = %_RNvNtNtCsdc6yCHiM2
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %1, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20, !noalias !60
   unreachable
 
-_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36: ; preds = %.lr.ph87, %bb.n
-  %.sroa.07.1.i28 = phi i64 [ %.sroa.0.162, %bb.n ], [ %i.al, %.lr.ph87 ] ; 2 uses
-  %.sroa.0.1.i29 = phi i64 [ %.sroa.013.2, %bb.n ], [ %i.ak, %.lr.ph87 ] ; 2 uses
-  %i.ao = icmp ult i64 %.sroa.0.1.i29, %1
+_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent22copy_forward_until_eol.exit36: ; preds = %.lr.ph87
+  %i.ao = icmp ult i64 %i.ak, %1
   br i1 %i.ao, label %.preheader, label %.loopexit
 
 _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26.thread47: ; preds = %bb.l, %bb.k, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit26
@@ -450,7 +448,7 @@ bb.c:                                             ; preds = %bb.a
 define { i64, i64 } @_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent26get_minimum_leading_spaces(ptr noalias nofree noundef nonnull readonly captures(none) %0, i64 noundef range(i64 0, -9223372036854775808) %1) unnamed_addr #0 {
 bb.a:
   %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit, label %.lr.ph.i
+  br i1 %.not, label %.outer._crit_edge, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i
   %.sroa.0.017.i = phi i64 [ %.pre.i, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i ], [ 0, %bb.a ] ; 3 uses
@@ -480,8 +478,8 @@ _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i: ; preds =
   %exitcond.not.i = icmp eq i64 %.pre.i, %1
   br i1 %exitcond.not.i, label %.outer._crit_edge, label %.lr.ph.i
 
-_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit: ; preds = %.lr.ph.i, %bb.a, %.loopexit.split.loop.exit14.i
-  %.sroa.04.0.i = phi i64 [ 0, %bb.a ], [ %i.g, %.loopexit.split.loop.exit14.i ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
+_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit: ; preds = %.lr.ph.i, %.loopexit.split.loop.exit14.i
+  %.sroa.04.0.i = phi i64 [ %i.g, %.loopexit.split.loop.exit14.i ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
   %i.h = icmp ult i64 %.sroa.04.0.i, %1
   br i1 %i.h, label %.preheader.lr.ph, label %.outer._crit_edge
 
@@ -495,9 +493,9 @@ _RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit: ; preds =
   %.sroa.015.050 = phi i64 [ %.sroa.015.0.ph54, %.preheader.lr.ph ], [ %.sroa.5.0.i35, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ] ; 2 uses
   br label %bb.h
 
-.outer._crit_edge:                                ; preds = %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32, %bb.c, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit
-  %.sroa.5.0.ph.lcssa45 = phi i64 [ %.sroa.5.1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24 ], [ undef, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit ], [ %.sroa.5.0.ph55, %bb.c ], [ %.sroa.5.1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32 ], [ %.sroa.5.0.ph55, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ undef, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i ]
-  %.sroa.0.0.ph.lcssa44 = phi i64 [ 1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24 ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit ], [ %.sroa.0.0.ph56, %bb.c ], [ 1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32 ], [ %.sroa.0.0.ph56, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i ]
+.outer._crit_edge:                                ; preds = %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32, %bb.c, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24, %bb.a, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit
+  %.sroa.5.0.ph.lcssa45 = phi i64 [ undef, %bb.a ], [ undef, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit ], [ %.sroa.5.0.ph55, %bb.c ], [ %.sroa.5.1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32 ], [ %.sroa.5.1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24 ], [ %.sroa.5.0.ph55, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ undef, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i ]
+  %.sroa.0.0.ph.lcssa44 = phi i64 [ 0, %bb.a ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit ], [ %.sroa.0.0.ph56, %bb.c ], [ 1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent20advance_to_next_line.exit32 ], [ 1, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i24 ], [ %.sroa.0.0.ph56, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread ], [ 0, %_RNvNtNtCsdc6yCHiM2ZJ_4pyo35impl_8unindent11consume_eol.exit.thread.i ]
   %i.i = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.ph.lcssa44, 0
   %i.j = insertvalue { i64, i64 } %i.i, i64 %.sroa.5.0.ph.lcssa45, 1
   ret { i64, i64 } %i.j

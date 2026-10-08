@@ -135,10 +135,8 @@ sub_0:                                            ; preds = %bb.a, %_ZNSt7__cxx1
   %i.h = getelementptr inbounds [8 x i8], ptr %1, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !35   ; 9 uses
   %i.j = load i8, ptr %i.i, align 1               ; 2 uses
-  %18 = zext i8 %i.j to i32
-  %19 = sub nsw i32 45, %18                       ; 2 uses
-  %.not218 = icmp eq i8 %i.j, 45                  ; 2 uses
-  br i1 %.not218, label %sub_1, label %.tail201
+  %.not218 = icmp eq i8 %i.j, 45
+  br i1 %.not218, label %sub_1, label %.tail206.thread
 
 sub_1:                                            ; preds = %sub_0
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -175,20 +173,17 @@ sub_2204:                                         ; preds = %sub_1203
   %i.aa = sub nsw i32 0, %i.z
   br label %.tail201
 
-.tail201:                                         ; preds = %sub_0, %sub_1203, %sub_2204
-  %20 = phi i32 [ %i.aa, %sub_2204 ], [ %i.w, %sub_1203 ], [ %19, %sub_0 ]
-  %.not85 = icmp eq i32 %20, 0
-  br i1 %.not85, label %bb.e, label %sub_0207
+.tail201:                                         ; preds = %sub_1203, %sub_2204
+  %18 = phi i32 [ %i.aa, %sub_2204 ], [ %i.w, %sub_1203 ]
+  %.not85 = icmp eq i32 %18, 0
+  br i1 %.not85, label %bb.e, label %sub_1208
 
 bb.b:                                             ; preds = %bb.d, %bb.c
   %i.ab = landingpad { ptr, i32 }
           cleanup
   br label %bb.cr
 
-sub_0207:                                         ; preds = %.tail201
-  br i1 %.not218, label %sub_1208, label %.tail206.thread
-
-sub_1208:                                         ; preds = %sub_0207
+sub_1208:                                         ; preds = %.tail201
   %i.ac = getelementptr inbounds nuw i8, ptr %i.i, i64 1
   %i.ad = load i8, ptr %i.ac, align 1             ; 2 uses
   %i.ae = zext i8 %i.ad to i32
@@ -210,7 +205,9 @@ sub_2209:                                         ; preds = %sub_1208
   %or.cond = select i1 %.not119, i1 %i.al, i1 false
   br i1 %or.cond, label %bb.c, label %sub_1213
 
-.tail206.thread:                                  ; preds = %sub_0207
+.tail206.thread:                                  ; preds = %sub_0
+  %19 = zext i8 %i.j to i32
+  %20 = sub nsw i32 45, %19
   %i.am = icmp slt i32 %.069217, %i.f
   br label %.tail211
 
@@ -241,7 +238,7 @@ sub_2214:                                         ; preds = %sub_1213
 
 .tail211:                                         ; preds = %.tail206.thread, %sub_1213, %sub_2214
   %i.bc = phi i1 [ %i.am, %.tail206.thread ], [ %i.al, %sub_1213 ], [ %i.al, %sub_2214 ]
-  %i.bd = phi i32 [ %19, %.tail206.thread ], [ %i.ax, %sub_1213 ], [ %i.bb, %sub_2214 ]
+  %i.bd = phi i32 [ %20, %.tail206.thread ], [ %i.ax, %sub_1213 ], [ %i.bb, %sub_2214 ]
   %.not120 = icmp eq i32 %i.bd, 0
   %or.cond123 = select i1 %.not120, i1 %i.bc, i1 false
   br i1 %or.cond123, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
