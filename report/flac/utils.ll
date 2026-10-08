@@ -1,0 +1,450 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flac/original/utils?download=true
+inline.NumInlined: 9
+inline.NumDeleted: 3
+begin_hunk_0_@flac__utils_parse_cue_specification:bb.a
+  br i1 %or.cond.us.peel.i, label %local__parse_cue_.exit.thread, label %bb.j
+
+bb.j:                                             ; preds = %local__parse_cue_.exit
+  store i32 1, ptr %i.a, align 4, !tbaa !24
+  br label %local__parse_cue_.exit.thread
+
+local__parse_cue_.exit.thread:                    ; preds = %.lr.ph96.i, %.split60.us.i, %local__parse_cue_.exit.thread37, %bb.e, %bb.j, %local__parse_cue_.exit, %bb.c
+  %.022 = phi i32 [ 0, %local__parse_cue_.exit ], [ 0, %bb.c ], [ 1, %bb.j ], [ 1, %bb.e ], [ 0, %local__parse_cue_.exit.thread37 ], [ 0, %.split60.us.i ], [ 0, %.lr.ph96.i ]
+  ret i32 %.022
+}
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #4
+
+; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
+define internal fastcc range(i32 0, 2) i32 @local__parse_cue_(ptr nofree noundef nonnull readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3) unnamed_addr #16 {
+bb.a:
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
+  %.not = icmp eq ptr %1, null                    ; 2 uses
+  br i1 %.not, label %.split55.us, label %.split55
+
+.split55.us:                                      ; preds = %bb.a
+  %i.c = load i8, ptr %0, align 1, !tbaa !20      ; 4 uses
+  %.not41.us74 = icmp eq i8 %i.c, 0
+  br i1 %.not41.us74, label %.split83.us, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.split55.us
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
+  %i.e = add i8 %i.c, -48
+  %or.cond.us.peel = icmp ult i8 %i.e, 10
+  br i1 %or.cond.us.peel, label %bb.b, label %.split60.us
+
+bb.b:                                             ; preds = %.lr.ph.preheader
+  %i.f = zext nneg i8 %i.c to i32
+  %i.g = add nsw i32 %i.f, -48                    ; 2 uses
+  %i.h = load i8, ptr %i.d, align 1, !tbaa !20    ; 2 uses
+  %.not41.us.peel = icmp eq i8 %i.h, 0
+  br i1 %.not41.us.peel, label %.split83.us, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.b, %bb.c
+  %i.i = phi i8 [ %i.p, %bb.c ], [ %i.h, %bb.b ]  ; 3 uses
+  %.030.us76 = phi i32 [ %i.o, %bb.c ], [ %i.g, %bb.b ] ; 2 uses
+  %.034.us75 = phi ptr [ %i.j, %bb.c ], [ %i.d, %bb.b ]
+  %i.j = getelementptr inbounds nuw i8, ptr %.034.us75, i64 1 ; 3 uses
+  %i.k = add i8 %i.i, -48
+  %or.cond.us = icmp ult i8 %i.k, 10
+  br i1 %or.cond.us, label %bb.c, label %.split60.us
+
+bb.c:                                             ; preds = %.lr.ph
+  %i.l = zext nneg i8 %i.i to i32
+  %i.m = mul i32 %.030.us76, 10
+  %i.n = add i32 %i.m, -48
+  %i.o = add i32 %i.n, %i.l                       ; 2 uses
+  %i.p = load i8, ptr %i.j, align 1, !tbaa !20    ; 2 uses
+  %.not41.us = icmp eq i8 %i.p, 0
+  br i1 %.not41.us, label %.split83.us, label %.lr.ph, !llvm.loop !1
+
+.split55:                                         ; preds = %bb.a
+  %i.q = icmp ult ptr %0, %1
+  br i1 %i.q, label %thread-pre-split.preheader, label %.split81
+
+thread-pre-split.preheader:                       ; preds = %.split55
+  %i.r = sub i64 %i.b, %i.a
+  %scevgep = getelementptr i8, ptr %0, i64 %i.r   ; 2 uses
+  %.pr.peel = load i8, ptr %0, align 1, !tbaa !20 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
+  %i.t = add i8 %.pr.peel, -48
+  %or.cond.peel = icmp ult i8 %i.t, 10
+  br i1 %or.cond.peel, label %.split.peel, label %.split60.us
+
+.split.peel:                                      ; preds = %thread-pre-split.preheader
+  %i.u = zext nneg i8 %.pr.peel to i32
+  %i.v = add nsw i32 %i.u, -48                    ; 2 uses
+  %exitcond.peel.not = icmp eq ptr %i.s, %1
+  br i1 %exitcond.peel.not, label %.split81, label %thread-pre-split
+
+thread-pre-split:                                 ; preds = %.split.peel, %.split
+  %.03071 = phi i32 [ %i.ab, %.split ], [ %i.v, %.split.peel ] ; 2 uses
+  %.03470 = phi ptr [ %i.w, %.split ], [ %i.s, %.split.peel ] ; 2 uses
+  %.pr = load i8, ptr %.03470, align 1, !tbaa !20 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.03470, i64 1 ; 3 uses
+  %i.x = add i8 %.pr, -48
+  %or.cond = icmp ult i8 %i.x, 10
+  br i1 %or.cond, label %.split, label %.split60.us
+
+.split:                                           ; preds = %thread-pre-split
+  %i.y = zext nneg i8 %.pr to i32
+  %i.z = mul i32 %.03071, 10
+  %i.aa = add i32 %i.z, -48
+  %i.ab = add i32 %i.aa, %i.y                     ; 2 uses
+  %exitcond.not = icmp eq ptr %i.w, %1
+  br i1 %exitcond.not, label %.split81, label %thread-pre-split, !llvm.loop !30
+
+.split60.us:                                      ; preds = %thread-pre-split, %.lr.ph, %thread-pre-split.preheader, %.lr.ph.preheader
+  %.us-phi61 = phi i8 [ %i.i, %.lr.ph ], [ %i.c, %.lr.ph.preheader ], [ %.pr.peel, %thread-pre-split.preheader ], [ %.pr, %thread-pre-split ]
+  %.us-phi62 = phi ptr [ %i.j, %.lr.ph ], [ %i.d, %.lr.ph.preheader ], [ %i.s, %thread-pre-split.preheader ], [ %i.w, %thread-pre-split ] ; 3 uses
+  %.us-phi63 = phi i32 [ 1, %.lr.ph ], [ 0, %.lr.ph.preheader ], [ 0, %thread-pre-split.preheader ], [ 1, %thread-pre-split ] ; 2 uses
+  %.us-phi64 = phi i32 [ %.030.us76, %.lr.ph ], [ 0, %.lr.ph.preheader ], [ 0, %thread-pre-split.preheader ], [ %.03071, %thread-pre-split ] ; 3 uses
+  %i.ac = icmp eq i8 %.us-phi61, 46
+  br i1 %i.ac, label %.loopexit43, label %.loopexit
+
+.loopexit43:                                      ; preds = %.split60.us
+  br i1 %.not, label %.split81.us, label %.split81
+
+.split81.us:                                      ; preds = %.loopexit43
+  %.pr150 = load i8, ptr %.us-phi62, align 1, !tbaa !20 ; 2 uses
+  %.not42.us93 = icmp eq i8 %.pr150, 0
+  br i1 %.not42.us93, label %.split83.us, label %.lr.ph96
+
+.lr.ph96:                                         ; preds = %.split81.us, %bb.d
+  %i.ad = phi i8 [ %i.ak, %bb.d ], [ %.pr150, %.split81.us ] ; 2 uses
+  %.0.us95 = phi i32 [ %i.aj, %bb.d ], [ 0, %.split81.us ]
+  %.2.us94 = phi ptr [ %i.ag, %bb.d ], [ %.us-phi62, %.split81.us ]
+  %i.ae = add i8 %i.ad, -48
+  %or.cond5.us = icmp ult i8 %i.ae, 10
+  br i1 %or.cond5.us, label %bb.d, label %.loopexit
+
+bb.d:                                             ; preds = %.lr.ph96
+  %i.af = zext nneg i8 %i.ad to i32
+  %i.ag = getelementptr inbounds nuw i8, ptr %.2.us94, i64 1 ; 2 uses
+  %i.ah = mul i32 %.0.us95, 10
+  %i.ai = add i32 %i.ah, -48
+  %i.aj = add i32 %i.ai, %i.af                    ; 2 uses
+  %i.ak = load i8, ptr %i.ag, align 1, !tbaa !20  ; 2 uses
+  %.not42.us = icmp eq i8 %i.ak, 0
+  br i1 %.not42.us, label %.split83.us, label %.lr.ph96, !llvm.loop !2
+
+.split81:                                         ; preds = %.split, %.split55, %.split.peel, %.loopexit43
+  %.1149 = phi ptr [ %.us-phi62, %.loopexit43 ], [ %0, %.split55 ], [ %scevgep, %.split.peel ], [ %scevgep, %.split ] ; 2 uses
+  %.03049148 = phi i32 [ %.us-phi64, %.loopexit43 ], [ 0, %.split55 ], [ %i.v, %.split.peel ], [ %i.ab, %.split ] ; 2 uses
+  %i.al = phi i32 [ %.us-phi63, %.loopexit43 ], [ 0, %.split55 ], [ 1, %.split.peel ], [ 1, %.split ]
+  %i.am = icmp ult ptr %.1149, %1
+  br i1 %i.am, label %.lr.ph90, label %.split83.us
+
+.lr.ph90:                                         ; preds = %.split81, %.split40
+  %.089 = phi i32 [ %i.at, %.split40 ], [ 0, %.split81 ]
+  %.288 = phi ptr [ %i.aq, %.split40 ], [ %.1149, %.split81 ] ; 2 uses
+  %i.an = load i8, ptr %.288, align 1, !tbaa !20  ; 2 uses
+  %i.ao = add i8 %i.an, -48
+  %or.cond5 = icmp ult i8 %i.ao, 10
+  br i1 %or.cond5, label %.split40, label %.loopexit
+
+.split40:                                         ; preds = %.lr.ph90
+  %i.ap = zext nneg i8 %i.an to i32
+  %i.aq = getelementptr inbounds nuw i8, ptr %.288, i64 1 ; 2 uses
+  %i.ar = mul i32 %.089, 10
+  %i.as = add i32 %i.ar, -48
+  %i.at = add i32 %i.as, %i.ap                    ; 2 uses
+  %exitcond123.not = icmp eq ptr %i.aq, %1
+  br i1 %exitcond123.not, label %.split83.us, label %.lr.ph90, !llvm.loop !2
+
+.split83.us:                                      ; preds = %bb.c, %.split40, %bb.d, %bb.b, %.split55.us, %.split81, %.split81.us
+  %.03049137 = phi i32 [ %.us-phi64, %bb.d ], [ %.us-phi64, %.split81.us ], [ %.03049148, %.split81 ], [ %.03049148, %.split40 ], [ 0, %.split55.us ], [ %i.g, %bb.b ], [ %i.o, %bb.c ]
+  %.us-phi84 = phi i32 [ %.us-phi63, %bb.d ], [ 0, %.split81.us ], [ 0, %.split81 ], [ %i.al, %.split40 ], [ 0, %.split55.us ], [ 0, %bb.b ], [ 0, %bb.c ]
+  %.us-phi85 = phi i32 [ %i.aj, %bb.d ], [ 0, %.split81.us ], [ 0, %.split81 ], [ %i.at, %.split40 ], [ 0, %.split55.us ], [ 0, %bb.b ], [ 0, %bb.c ]
+  store i32 %.03049137, ptr %2, align 4, !tbaa !12
+  store i32 %.us-phi85, ptr %3, align 4, !tbaa !12
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph90, %.lr.ph96, %.split60.us, %.split83.us
+  %.033 = phi i32 [ 0, %.split60.us ], [ %.us-phi84, %.split83.us ], [ 0, %.lr.ph96 ], [ 0, %.lr.ph90 ]
+  ret i32 %.033
+}
+
+; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local void @flac__utils_canonicalize_cue_specification(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %3, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %4) local_unnamed_addr #17 {
+bb.a:
+  store i32 0, ptr %3, align 8, !tbaa !18
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 1, ptr %i.a, align 4, !tbaa !19
+  store i32 0, ptr %4, align 8, !tbaa !18
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 1, ptr %i.b, align 4, !tbaa !19
+  %i.c = load i32, ptr %0, align 4, !tbaa !25
+  %.not = icmp eq i32 %i.c, 0
+  br i1 %.not, label %local__find_closest_cue_.exit, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !35   ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !36
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 148
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !39   ; 2 uses
+  %i.j = icmp sgt i32 %i.i, 0
+  br i1 %i.j, label %.lr.ph, label %local__find_closest_cue_.exit
+
+.lr.ph:                                           ; preds = %bb.b
+  %i.k = zext nneg i32 %i.i to i64
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 152
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !40
+  br label %bb.c
+
+.loopexit.i:                                      ; preds = %bb.e, %.lr.ph66.split.i, %bb.c
+  %i.n = trunc nuw i64 %i.p to i32
+  %i.o = icmp sgt i32 %i.n, 0
+  br i1 %i.o, label %bb.c, label %local__find_closest_cue_.exit, !llvm.loop !31
+
+bb.c:                                             ; preds = %.lr.ph, %.loopexit.i
+  %.in = phi i64 [ %i.k, %.lr.ph ], [ %i.p, %.loopexit.i ]
+  %i.p = add nsw i64 %.in, -1                     ; 3 uses
+  %i.q = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.p ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 23
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !42    ; 2 uses
+  %i.t = zext i8 %i.s to i32
+  %.163.i = add nsw i32 %i.t, -1                  ; 2 uses
+  %.not69.i = icmp eq i8 %i.s, 0
+  br i1 %.not69.i, label %.loopexit.i, label %.lr.ph66.i
+
+.lr.ph66.i:                                       ; preds = %bb.c
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  %i.v = load i8, ptr %i.u, align 8, !tbaa !43
+  %i.w = zext i8 %i.v to i32                      ; 2 uses
+  %i.x = icmp ugt i32 %i.e, %i.w
+  %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 24 ; 2 uses
+  br i1 %i.x, label %.split67.loopexit70.i, label %.lr.ph66.split.i
+
+.lr.ph66.split.i:                                 ; preds = %.lr.ph66.i
+  %i.z = icmp eq i32 %i.e, %i.w
+  br i1 %i.z, label %.lr.ph66.split.split.i, label %.loopexit.i
+
+.lr.ph66.split.split.i:                           ; preds = %.lr.ph66.split.i
+  %i.aa = load ptr, ptr %i.y, align 8, !tbaa !44  ; 2 uses
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.e, %.lr.ph66.split.split.i
+  %.164.i = phi i32 [ %.163.i, %.lr.ph66.split.split.i ], [ %.1.i, %bb.e ] ; 3 uses
+  %i.ab = zext nneg i32 %.164.i to i64            ; 2 uses
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %i.ab
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
+  %i.ae = load i8, ptr %i.ad, align 8, !tbaa !46
+  %i.af = zext i8 %i.ae to i32
+  %.not53.i = icmp ult i32 %i.g, %i.af
+  br i1 %.not53.i, label %bb.e, label %.split67.i
+
+.split67.loopexit70.i:                            ; preds = %.lr.ph66.i
+  %.pre89.i = load ptr, ptr %i.y, align 8, !tbaa !44
+  %.pre90.i = zext nneg i32 %.163.i to i64
+  br label %.split67.i
+
+.split67.i:                                       ; preds = %bb.d, %.split67.loopexit70.i
+  %.pre-phi.i = phi i64 [ %.pre90.i, %.split67.loopexit70.i ], [ %i.ab, %bb.d ]
+  %i.ag = phi ptr [ %.pre89.i, %.split67.loopexit70.i ], [ %i.aa, %bb.d ]
+  %i.ah = load i64, ptr %i.q, align 8, !tbaa !47
+  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %.pre-phi.i
+  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !48
+  %i.ak = add i64 %i.aj, %i.ah
+  br label %local__find_closest_cue_.exit
+
+bb.e:                                             ; preds = %bb.d
+  %.1.i = add nsw i32 %.164.i, -1
+  %i.al = icmp sgt i32 %.164.i, 0
+  br i1 %i.al, label %bb.d, label %.loopexit.i, !llvm.loop !32
+
+local__find_closest_cue_.exit:                    ; preds = %.loopexit.i, %bb.a, %.split67.i, %bb.b
+  %.sink = phi i64 [ 0, %bb.a ], [ %i.ak, %.split67.i ], [ 0, %bb.b ], [ 0, %.loopexit.i ]
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 %.sink, ptr %i.am, align 8, !tbaa !20
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !24
+  %.not18 = icmp eq i32 %i.ao, 0
+  br i1 %.not18, label %local__find_closest_cue_.exit20, label %bb.f
+
+bb.f:                                             ; preds = %local__find_closest_cue_.exit
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.aq = load i32, ptr %i.ap, align 4, !tbaa !49 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.as = load i32, ptr %i.ar, align 4, !tbaa !50
+  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 148
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !39 ; 2 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.au, i32 0)
+  %wide.trip.count83.i = zext nneg i32 %smax.i to i64
+  %exitcond84.not.i34 = icmp slt i32 %i.au, 1
+  br i1 %exitcond84.not.i34, label %local__find_closest_cue_.exit20, label %.preheader.i.lr.ph
+
+.preheader.i.lr.ph:                               ; preds = %bb.f
+  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 152
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !40
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.lr.ph, %._crit_edge.split.i
+  %indvars.iv80.i35 = phi i64 [ 0, %.preheader.i.lr.ph ], [ %indvars.iv.next81.i, %._crit_edge.split.i ] ; 2 uses
+  %i.ax = getelementptr inbounds nuw [32 x i8], ptr %i.aw, i64 %indvars.iv80.i35 ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 23
+  %i.az = load i8, ptr %i.ay, align 1, !tbaa !42  ; 2 uses
+  %.not68.i = icmp eq i8 %i.az, 0
+  br i1 %.not68.i, label %._crit_edge.split.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  %i.bb = load i8, ptr %i.ba, align 8, !tbaa !43
+  %i.bc = zext i8 %i.bb to i32                    ; 2 uses
+  %i.bd = icmp ult i32 %i.aq, %i.bc
+  %i.be = getelementptr inbounds nuw i8, ptr %i.ax, i64 24 ; 2 uses
+  br i1 %i.bd, label %.split.loopexit72.i, label %.lr.ph.split.i
+
+.lr.ph.split.i:                                   ; preds = %.lr.ph.i
+  %i.bf = icmp eq i32 %i.aq, %i.bc
+  br i1 %i.bf, label %.lr.ph.split.split.i, label %._crit_edge.split.i
+
+.lr.ph.split.split.i:                             ; preds = %.lr.ph.split.i
+  %i.bg = load ptr, ptr %i.be, align 8, !tbaa !44 ; 2 uses
+  %wide.trip.count.i = zext i8 %i.az to i64
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.h, %.lr.ph.split.split.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.split.split.i ], [ %indvars.iv.next.i, %bb.h ] ; 3 uses
+  %i.bh = getelementptr inbounds nuw [16 x i8], ptr %i.bg, i64 %indvars.iv.i
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
+  %i.bj = load i8, ptr %i.bi, align 8, !tbaa !46
+  %i.bk = zext i8 %i.bj to i32
+  %.not54.i = icmp ugt i32 %i.as, %i.bk
+  br i1 %.not54.i, label %bb.h, label %.split.i
+
+.split.loopexit72.i:                              ; preds = %.lr.ph.i
+  %.pre.i = load ptr, ptr %i.be, align 8, !tbaa !44
+  br label %.split.i
+
+.split.i:                                         ; preds = %bb.g, %.split.loopexit72.i
+  %i.bl = phi ptr [ %.pre.i, %.split.loopexit72.i ], [ %i.bg, %bb.g ]
+  %.0.lcssa61.split.i = phi i64 [ 0, %.split.loopexit72.i ], [ %indvars.iv.i, %bb.g ]
+  %i.bm = load i64, ptr %i.ax, align 8, !tbaa !47
+  %i.bn = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %.0.lcssa61.split.i
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !48
+  %i.bp = add i64 %i.bo, %i.bm
+  br label %local__find_closest_cue_.exit20
+
+bb.h:                                             ; preds = %bb.g
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %exitcond.not.i, label %._crit_edge.split.i, label %bb.g, !llvm.loop !33
+
+._crit_edge.split.i:                              ; preds = %bb.h, %.lr.ph.split.i, %.preheader.i
+  %indvars.iv.next81.i = add nuw nsw i64 %indvars.iv80.i35, 1 ; 2 uses
+  %exitcond84.not.i = icmp eq i64 %indvars.iv.next81.i, %wide.trip.count83.i
+  br i1 %exitcond84.not.i, label %local__find_closest_cue_.exit20, label %.preheader.i, !llvm.loop !34
+
+local__find_closest_cue_.exit20:                  ; preds = %._crit_edge.split.i, %local__find_closest_cue_.exit, %.split.i, %bb.f
+  %.sink74 = phi i64 [ %2, %local__find_closest_cue_.exit ], [ %i.bp, %.split.i ], [ %2, %bb.f ], [ %2, %._crit_edge.split.i ]
+  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i64 %.sink74, ptr %i.bq, align 8, !tbaa !20
+  ret void
+}
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local range(i32 0, 2) i32 @flac__utils_set_channel_mask_tag(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+bb.a:
+  %i.a = alloca [128 x i8], align 16              ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
+  %i.b = load ptr, ptr @CHANNEL_MASK_TAG, align 8, !tbaa !22
+  %i.c = call i32 (ptr, i64, ptr, ...) @flac_snprintf(ptr noundef nonnull %i.a, i64 noundef 128, ptr noundef nonnull @.str.8, ptr noundef %i.b, i32 noundef %1) #20 ; 2 uses
+  %i.d = icmp ugt i32 %i.c, 127
+  br i1 %i.d, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = call i32 @FLAC__metadata_object_vorbiscomment_replace_comment(ptr noundef %0, i32 %i.c, ptr nonnull %i.a, i32 noundef 1, i32 noundef 1) #20
+  %.not = icmp ne i32 %i.e, 0
+  %. = zext i1 %.not to i32
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ %., %bb.b ], [ 0, %bb.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  ret i32 %.0
+}
+
+declare i32 @flac_snprintf(ptr noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #8
+
+declare i32 @FLAC__metadata_object_vorbiscomment_replace_comment(ptr noundef, i32, ptr, i32 noundef, i32 noundef) local_unnamed_addr #8
+
+; Function Attrs: nounwind sspstrong uwtable
+define dso_local range(i32 0, 2) i32 @flac__utils_get_channel_mask_tag(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 {
+bb.a:
+  %i.a = alloca i32, align 4                      ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
+  %i.b = load ptr, ptr @CHANNEL_MASK_TAG, align 8, !tbaa !22
+  %i.c = tail call i32 @FLAC__metadata_object_vorbiscomment_find_entry_from(ptr noundef %0, i32 noundef 0, ptr noundef %i.b) #20 ; 2 uses
+  %i.d = icmp slt i32 %i.c, 0
+  br i1 %i.d, label %bb.g, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !20
+  %i.g = zext nneg i32 %i.c to i64
+  %i.h = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %i.g ; 2 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !52
+  %i.j = zext i32 %i.i to i64
+  %i.k = load ptr, ptr @CHANNEL_MASK_TAG, align 8, !tbaa !22
+  %i.l = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.k) #21
+  %i.m = add i64 %i.l, 4
+  %i.n = icmp ugt i64 %i.m, %i.j
+  br i1 %i.n, label %bb.g, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !53
+  %i.q = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.p, i32 noundef 61) #21 ; 3 uses
+  %i.r = icmp eq ptr %i.q, null
+  br i1 %i.r, label %bb.g, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.s = tail call i32 @strncasecmp(ptr noundef nonnull %i.q, ptr noundef nonnull @.str.9, i64 noundef 3) #21
+  %.not = icmp eq i32 %i.s, 0
+  br i1 %.not, label %bb.e, label %bb.g
+
+bb.e:                                             ; preds = %bb.d
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 3
+  %i.u = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.t, ptr noundef nonnull @.str.10, ptr noundef nonnull %i.a) #20
+  %.not10 = icmp eq i32 %i.u, 1
+  br i1 %.not10, label %bb.f, label %bb.g
+
+bb.f:                                             ; preds = %bb.e
+  %i.v = load i32, ptr %i.a, align 4, !tbaa !12
+  store i32 %i.v, ptr %1, align 4, !tbaa !12
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.f
+  %.0 = phi i32 [ 1, %bb.f ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  ret i32 %.0
+}
+
+declare i32 @FLAC__metadata_object_vorbiscomment_find_entry_from(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #8
+
+; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(read)
+declare i32 @strncasecmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #18
+
+; Function Attrs: nounwind
+declare i32 @__isoc23_sscanf(ptr noundef, ptr noundef, ...) local_unnamed_addr #3
+
+declare i32 @__vfprintf_chk(ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #8
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strspn(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #4
+
+; Function Attrs: mustprogress nocallback nofree nounwind willreturn
+declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_unnamed_addr #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fabs.f64(double) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
+
+end_hunk_0
