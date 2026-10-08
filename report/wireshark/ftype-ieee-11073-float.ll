@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [136 x i8], align 16              ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.c = getelementptr i8, ptr %1, i64 8
-  %i.d = load i32, ptr %i.c, align 8              ; 7 uses
+  %i.d = load i32, ptr %i.c, align 8              ; 6 uses
   %i.e = add i32 %i.d, -8388606
   %or.cond = icmp ult i32 %i.e, 5
   br i1 %or.cond, label %switch.lookup, label %bb.b
@@ -217,8 +217,6 @@ switch.lookup:                                    ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %4 = lshr i32 %i.d, 24
-  %5 = zext nneg i32 %4 to i64
   %i.i = and i32 %i.d, 8388607
   %i.j = and i32 %i.d, 8388608
   %.not = icmp eq i32 %i.j, 0                     ; 2 uses
@@ -242,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.068 = phi i32 [ 1, %bb.e ], [ 0, %bb.d ]      ; 7 uses
   %i.o = call i32 (ptr, i64, i32, i64, ptr, ...) @__snprintf_chk(ptr noundef nonnull %i.a, i64 noundef 8, i32 noundef 2, i64 noundef 8, ptr noundef nonnull @.str.10, i32 noundef %.069) ; 3 uses
-  %i.p = ashr i32 %i.d, 24                        ; 7 uses
+  %i.p = ashr i32 %i.d, 24                        ; 8 uses
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.g, label %bb.h
 
@@ -270,14 +268,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ad = add nuw nsw i32 %.mask79, %.068         ; 3 uses
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %i.af = getelementptr i8, ptr %i.b, i64 %i.ae
-  %sext = shl nuw i64 %5, 56
-  %6 = ashr exact i64 %sext, 56
+  %4 = zext nneg i32 %i.p to i64
   %i.ag = sub nsw i64 136, %i.ae
   %i.ah = icmp samesign ugt i32 %i.ad, 136
   %i.ai = select i1 %i.ah, i64 0, i64 %i.ag       ; 2 uses
   %i.aj = icmp ne i64 %i.ai, -1
   call void @llvm.assume(i1 %i.aj)
-  %i.ak = call ptr @__memset_chk(ptr noundef %i.af, i32 noundef 48, i64 noundef range(i64 -128, 129) %6, i64 noundef %i.ai) #13 ; 0 uses
+  %i.ak = call ptr @__memset_chk(ptr noundef %i.af, i32 noundef 48, i64 noundef range(i64 -128, 129) %4, i64 noundef %i.ai) #13 ; 0 uses
   %i.al = add nuw nsw i32 %i.ad, %i.p
   br label %bb.o
 

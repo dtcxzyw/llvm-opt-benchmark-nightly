@@ -204,15 +204,14 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 -140737488355328, 140741783322623) i64 @helper_neon_widen_s16(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -140737488355328, 140737488355328) i64 @helper_neon_widen_s16(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = lshr i32 %0, 16
-  %2 = zext nneg i32 %1 to i64
-  %sext = shl nuw i64 %2, 48
+  %1 = ashr i32 %0, 16
+  %2 = sext i32 %1 to i64
   %sext3 = shl i32 %0, 16
   %i.a = ashr exact i32 %sext3, 16
   %i.b = zext i32 %i.a to i64
-  %3 = ashr exact i64 %sext, 16
+  %3 = shl nsw i64 %2, 32
   %i.c = or disjoint i64 %3, %i.b
   ret i64 %i.c
 }

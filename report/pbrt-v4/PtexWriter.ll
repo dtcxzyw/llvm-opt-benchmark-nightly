@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0.0.extract.trunc.mask = and i16 %1, 255 ; 2 uses
   %i.a = zext nneg i16 %.sroa.0.0.extract.trunc.mask to i32
   %i.b = shl nuw i32 1, %i.a
-  %i.c = zext nneg i16 %.sroa.5.0.extract.shift to i32 ; 2 uses
+  %i.c = zext nneg i16 %.sroa.5.0.extract.shift to i32
   %i.d = shl i32 %i.b, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.f = load i32, ptr %i.e, align 8, !tbaa !79
@@ -246,9 +246,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.extract.trunc = zext i16 %1 to i32
   %sext12 = shl i32 %.sroa.0.0.extract.trunc, 24
   %i.al = ashr exact i32 %sext12, 24              ; 2 uses
-  %sext11 = shl nuw i32 %i.c, 24
-  %2 = ashr exact i32 %sext11, 24                 ; 2 uses
-  %i.am = add nsw i32 %2, %i.al
+  %2 = ashr i16 %1, 8
+  %3 = sext i16 %2 to i32                         ; 2 uses
+  %i.am = add nsw i32 %i.al, %3
   %i.an = sub nsw i32 %i.am, %i.aj                ; 2 uses
   %i.ao = trunc nsw i32 %i.an to i16
   %.lhs.trunc = add nsw i16 %i.ao, 1
@@ -259,7 +259,7 @@ bb.b:                                             ; preds = %bb.a
   %sext = shl i32 %i.aq, 24
   %i.as = ashr exact i32 %sext, 24
   %i.at = sub nsw i32 %i.an, %i.as
-  %i.au = tail call noundef i32 @llvm.smin.i32(i32 %i.at, i32 %2)
+  %i.au = tail call noundef i32 @llvm.smin.i32(i32 %i.at, i32 %3)
   %i.av = trunc nsw i32 %i.au to i16
   %i.aw = and i16 %i.av, 255
   %.pre = and i16 %i.ar, 255
@@ -364,10 +364,8 @@ bb.a:
   %7 = alloca %"struct.Ptex::v2_4::Res", align 2  ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %.sroa.084.0.extract.trunc = zext i16 %4 to i32
-  %.sroa.3.0.extract.shift = lshr i16 %4, 8
-  %.sroa.3.0.extract.trunc = zext nneg i16 %.sroa.3.0.extract.shift to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
-  %i.c = tail call i16 @_ZN4Ptex4v2_414PtexWriterBase11calcTileResENS0_3ResE(ptr noundef nonnull align 8 dereferenceable(424) %0, i16 %4) ; 5 uses
+  %i.c = tail call i16 @_ZN4Ptex4v2_414PtexWriterBase11calcTileResENS0_3ResE(ptr noundef nonnull align 8 dereferenceable(424) %0, i16 %4) ; 6 uses
   store i16 %i.c, ptr %7, align 2
   %.sroa.0.0.extract.trunc.i = zext i16 %i.c to i32
   %sext86 = shl i32 %.sroa.084.0.extract.trunc, 24
@@ -376,17 +374,15 @@ bb.a:
   %i.e = ashr exact i32 %sext.i, 24
   %i.f = sub nsw i32 %i.d, %i.e                   ; 2 uses
   %i.g = shl nuw i32 1, %i.f
-  %.sroa.1.0.extract.shift.i = lshr i16 %i.c, 8   ; 2 uses
-  %.sroa.1.0.extract.trunc.i = zext nneg i16 %.sroa.1.0.extract.shift.i to i32
-  %sext = shl nuw i32 %.sroa.3.0.extract.trunc, 24
-  %8 = ashr exact i32 %sext, 24
-  %sext.i72 = shl nuw i32 %.sroa.1.0.extract.trunc.i, 24
-  %9 = ashr exact i32 %sext.i72, 24
-  %10 = sub nsw i32 %8, %9                        ; 2 uses
-  %11 = shl i32 %i.g, %10                         ; 4 uses
-  %12 = icmp eq i32 %11, 1
-  %i.h = zext nneg i16 %.sroa.1.0.extract.shift.i to i32 ; 2 uses
-  br i1 %12, label %bb.b, label %bb.c
+  %8 = ashr i16 %4, 8
+  %9 = ashr i16 %i.c, 8
+  %narrow = sub nsw i16 %8, %9
+  %10 = sext i16 %narrow to i32                   ; 2 uses
+  %sext.i72 = shl i32 %i.g, %10                   ; 4 uses
+  %11 = icmp eq i32 %sext.i72, 1
+  %12 = lshr i16 %i.c, 8
+  %i.h = zext nneg i16 %12 to i32                 ; 2 uses
+  br i1 %11, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4Ptex4v2_414PtexWriterBase14writeFaceBlockEP8_IO_FILEPKviNS0_3ResERNS0_14FaceDataHeaderE(ptr noundef nonnull align 8 dereferenceable(424) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i16 %4, ptr noundef nonnull align 1 dereferenceable(4) %5)
@@ -396,7 +392,7 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 5 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !67
   tail call void @rewind(ptr noundef %i.j)
-  %i.k = icmp slt i32 %11, 0
+  %i.k = icmp slt i32 %sext.i72, 0
   br i1 %i.k, label %.noexc, label %_ZNSt6vectorIN4Ptex4v2_414FaceDataHeaderESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
 
 .noexc:                                           ; preds = %bb.c
@@ -404,7 +400,7 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt6vectorIN4Ptex4v2_414FaceDataHeaderESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.c
-  %i.l = zext nneg i32 %11 to i64
+  %i.l = zext nneg i32 %sext.i72 to i64
   %i.m = shl nuw nsw i64 %i.l, 2                  ; 4 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #27 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.n, i8 0, i64 %i.m, i1 false), !tbaa !111
@@ -549,7 +545,7 @@ _ZN4Ptex4v2_414PtexWriterBase19writeConstFaceBlockEP8_IO_FILEPKvRNS0_14FaceDataH
   %.058.lcssa = phi i32 [ 0, %_ZNSt6vectorIN4Ptex4v2_414FaceDataHeaderESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   %i.bk = load ptr, ptr %i.i, align 8, !tbaa !67
-  %i.bl = shl i32 %11, 2
+  %i.bl = shl i32 %sext.i72, 2
   %i.bm = invoke noundef i32 @_ZN4Ptex4v2_414PtexWriterBase13writeZipBlockEP8_IO_FILEPKvib(ptr noundef nonnull align 8 dereferenceable(424) %0, ptr noundef %i.bk, ptr noundef nonnull %i.n, i32 noundef %i.bl, i1 noundef zeroext true)
           to label %bb.l unwind label %bb.p       ; 2 uses
 

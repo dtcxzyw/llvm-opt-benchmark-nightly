@@ -204,7 +204,7 @@ _ZN7voxalgo10LightQueue4pushEhN4core8vector3dIsEES3_P8MapBlockh.exit115: ; preds
   %i.w = getelementptr inbounds i8, ptr %i.s, i64 -24 ; 2 uses
   %.sroa.0145.0.copyload = load ptr, ptr %i.w, align 8, !tbaa !30 ; 16 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds i8, ptr %i.s, i64 -16
-  %.sroa.9.0.copyload = load i48, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !31 ; 8 uses
+  %.sroa.9.0.copyload = load i48, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !31 ; 7 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds i8, ptr %i.s, i64 -10
   %.sroa.14.0.copyload = load i48, ptr %.sroa.14.0..sroa_idx, align 2, !tbaa !31 ; 5 uses
   %.sroa.16.0..sroa_idx = getelementptr inbounds i8, ptr %i.s, i64 -4
@@ -215,39 +215,28 @@ _ZN7voxalgo10LightQueue4pushEhN4core8vector3dIsEES3_P8MapBlockh.exit115: ; preds
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0145.0.copyload, i64 36
   %i.aa = load i8, ptr %i.z, align 4, !tbaa !78, !range !79, !noundef !80
   %i.ab = trunc nuw i8 %i.aa to i1
-  br i1 %i.ab, label %.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge, label %bb.b
-
-.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge: ; preds = %.loopexit
-  %.pre217 = lshr i48 %.sroa.9.0.copyload, 16
-  %.pre218 = lshr i48 %.sroa.9.0.copyload, 32
-  %extract.t = trunc nuw i48 %.pre218 to i16
-  %extract.t258 = trunc i48 %.pre217 to i16
-  br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
+  %.pre211 = lshr i48 %.sroa.9.0.copyload, 16     ; 2 uses
+  br i1 %i.ab, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %.loopexit
-  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.9.0.copyload, 32 ; 2 uses
-  %.sroa.3.0.extract.trunc.i = zext nneg i48 %.sroa.3.0.extract.shift.i to i64
-  %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.9.0.copyload, 16 ; 2 uses
-  %.sroa.2.0.extract.trunc.i = zext nneg i48 %.sroa.2.0.extract.shift.i to i64
-  %.sroa.0.0.extract.trunc.i = zext i48 %.sroa.9.0.copyload to i64
-  %sext.i = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %6 = ashr exact i64 %sext.i, 40
-  %sext2.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
+  %.sroa.3.0.extract.trunc.i = zext nneg i48 %.pre211 to i64
+  %.sroa.2.0.extract.trunc.i = zext i48 %.sroa.9.0.copyload to i64
+  %6 = ashr i48 %.sroa.9.0.copyload, 32
+  %7 = sext i48 %6 to i64
+  %8 = shl nsw i64 %7, 8
+  %sext2.i.a = shl i64 %.sroa.3.0.extract.trunc.i, 48
   %i.ac = ashr exact i64 %sext2.i.a, 44
-  %sext3.i = shl i64 %.sroa.0.0.extract.trunc.i, 48
+  %sext3.i = shl i64 %.sroa.2.0.extract.trunc.i, 48
   %i.ad = ashr exact i64 %sext3.i, 48
-  %i.ae = add nsw i64 %i.ac, %i.ad
-  %i.af = add nsw i64 %i.ae, %6
+  %i.ae = add nsw i64 %8, %i.ad
+  %i.af = add nsw i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, 4294967295
-  %extract.t257 = trunc nuw i48 %.sroa.3.0.extract.shift.i to i16
-  %extract.t259 = trunc i48 %.sroa.2.0.extract.shift.i to i16
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
 
-_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge, %bb.b
-  %.pre218.sink.off0 = phi i16 [ %extract.t, %.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge ], [ %extract.t257, %bb.b ] ; 12 uses
-  %.pre217.sink.off0 = phi i16 [ %extract.t258, %.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge ], [ %extract.t259, %bb.b ] ; 12 uses
-  %7 = phi i64 [ 0, %.loopexit._ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit_crit_edge ], [ %i.ag, %bb.b ]
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %7
+_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %.loopexit, %bb.b
+  %9 = phi i64 [ %i.ag, %bb.b ], [ 0, %.loopexit ]
+  %extract.t = trunc i48 %.pre211 to i16          ; 12 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %9
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.ah, align 4
   %i.ai = and i32 %.sroa.0.0.copyload.i.i, 65535
   %i.aj = zext nneg i32 %i.ai to i64
@@ -257,16 +246,18 @@ _ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %.loopexit._ZN8
   %narrow = add nuw nsw i8 %i.al, 1
   %i.am = zext i8 %.sroa.16.0.copyload to i32
   %.sroa.9.0.extract.trunc = trunc i48 %.sroa.9.0.copyload to i16 ; 12 uses
+  %.sroa.9.4.extract.shift = lshr i48 %.sroa.9.0.copyload, 32
+  %.sroa.9.4.extract.trunc = trunc nuw i48 %.sroa.9.4.extract.shift to i16 ; 12 uses
   %i.an = icmp sgt i16 %.sroa.9.0.extract.trunc, 0
   %i.ao = add nsw i16 %.sroa.9.0.extract.trunc, -1
-  %i.ap = icmp sgt i16 %.pre217.sink.off0, 0
-  %i.aq = add nsw i16 %.pre217.sink.off0, -1
-  %i.ar = icmp sgt i16 %.pre218.sink.off0, 0
-  %i.as = add nsw i16 %.pre218.sink.off0, -1
-  %i.at = icmp slt i16 %.pre218.sink.off0, 15
-  %i.au = add nsw i16 %.pre218.sink.off0, 1
-  %i.av = icmp slt i16 %.pre217.sink.off0, 15
-  %i.aw = add nsw i16 %.pre217.sink.off0, 1
+  %i.ap = icmp sgt i16 %extract.t, 0
+  %i.aq = add nsw i16 %extract.t, -1
+  %i.ar = icmp sgt i16 %.sroa.9.4.extract.trunc, 0
+  %i.as = add nsw i16 %.sroa.9.4.extract.trunc, -1
+  %i.at = icmp slt i16 %.sroa.9.4.extract.trunc, 15
+  %i.au = add nsw i16 %.sroa.9.4.extract.trunc, 1
+  %i.av = icmp slt i16 %extract.t, 15
+  %i.aw = add nsw i16 %extract.t, 1
   %i.ax = icmp slt i16 %.sroa.9.0.extract.trunc, 15
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0145.0.copyload, i64 80 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0145.0.copyload, i64 66 ; 2 uses
@@ -336,8 +327,8 @@ _ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit: ; preds = %bb.k, 
   %.sroa.18.0 = phi i16 [ %.sroa.18.0.extract.trunc, %bb.j ], [ %.sroa.18.0.extract.trunc, %bb.f ], [ %.sroa.18.0.extract.trunc, %bb.g ], [ %i.bi, %bb.h ], [ %i.bh, %bb.i ], [ %.sroa.18.0.extract.trunc, %bb.k ] ; 2 uses
   %.sroa.12.0 = phi i16 [ %i.bg, %bb.j ], [ %.sroa.12.0.extract.trunc, %bb.f ], [ %i.bj, %bb.g ], [ %.sroa.12.0.extract.trunc, %bb.h ], [ %.sroa.12.0.extract.trunc, %bb.i ], [ %.sroa.12.0.extract.trunc, %bb.k ] ; 2 uses
   %.sroa.0.0 = phi i16 [ %.sroa.0.0.extract.trunc, %bb.j ], [ %i.bk, %bb.f ], [ %.sroa.0.0.extract.trunc, %bb.g ], [ %.sroa.0.0.extract.trunc, %bb.h ], [ %.sroa.0.0.extract.trunc, %bb.i ], [ %i.bf, %bb.k ] ; 2 uses
-  %.sroa.20.0 = phi i16 [ %.pre218.sink.off0, %bb.j ], [ %.pre218.sink.off0, %bb.f ], [ %.pre218.sink.off0, %bb.g ], [ 0, %bb.h ], [ 15, %bb.i ], [ %.pre218.sink.off0, %bb.k ]
-  %.sroa.13.0 = phi i16 [ 15, %bb.j ], [ %.pre217.sink.off0, %bb.f ], [ 0, %bb.g ], [ %.pre217.sink.off0, %bb.h ], [ %.pre217.sink.off0, %bb.i ], [ %.pre217.sink.off0, %bb.k ]
+  %.sroa.20.0 = phi i16 [ %.sroa.9.4.extract.trunc, %bb.j ], [ %.sroa.9.4.extract.trunc, %bb.f ], [ %.sroa.9.4.extract.trunc, %bb.g ], [ 0, %bb.h ], [ 15, %bb.i ], [ %.sroa.9.4.extract.trunc, %bb.k ]
+  %.sroa.13.0 = phi i16 [ 15, %bb.j ], [ %extract.t, %bb.f ], [ 0, %bb.g ], [ %extract.t, %bb.h ], [ %extract.t, %bb.i ], [ %extract.t, %bb.k ]
   %.sroa.0119.0 = phi i16 [ %.sroa.9.0.extract.trunc, %bb.j ], [ 0, %bb.f ], [ %.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.9.0.extract.trunc, %bb.h ], [ %.sroa.9.0.extract.trunc, %bb.i ], [ 15, %bb.k ]
   %.sroa.18.0.insert.ext211 = zext i16 %.sroa.18.0 to i48
   %.sroa.18.0.insert.shift212 = shl nuw i48 %.sroa.18.0.insert.ext211, 32
@@ -393,8 +384,8 @@ bb.q:                                             ; preds = %bb.k, %bb.j, %bb.i,
   %.sroa.12.1 = phi i16 [ %.sroa.12.0.extract.trunc, %bb.f ], [ %.sroa.12.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.sroa.12.0.extract.trunc, %bb.g ], [ %.sroa.12.0.extract.trunc, %bb.h ], [ %.sroa.12.0.extract.trunc, %bb.i ], [ %.sroa.12.0.extract.trunc, %bb.j ], [ %.sroa.12.0.extract.trunc, %bb.k ] ; 6 uses
   %.sroa.0.1 = phi i16 [ %.sroa.0.0.extract.trunc, %bb.f ], [ %.sroa.0.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.sroa.0.0.extract.trunc, %bb.g ], [ %.sroa.0.0.extract.trunc, %bb.h ], [ %.sroa.0.0.extract.trunc, %bb.i ], [ %.sroa.0.0.extract.trunc, %bb.j ], [ %.sroa.0.0.extract.trunc, %bb.k ] ; 6 uses
   %.sroa.0119.0175 = phi i16 [ %i.bd, %bb.f ], [ %.sroa.0119.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.9.0.extract.trunc, %bb.h ], [ %.sroa.9.0.extract.trunc, %bb.i ], [ %.sroa.9.0.extract.trunc, %bb.j ], [ %i.ao, %bb.k ] ; 3 uses
-  %.sroa.13.0173 = phi i16 [ %.pre217.sink.off0, %bb.f ], [ %.sroa.13.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %i.aw, %bb.g ], [ %.pre217.sink.off0, %bb.h ], [ %.pre217.sink.off0, %bb.i ], [ %i.aq, %bb.j ], [ %.pre217.sink.off0, %bb.k ] ; 3 uses
-  %.sroa.20.0171 = phi i16 [ %.pre218.sink.off0, %bb.f ], [ %.sroa.20.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.pre218.sink.off0, %bb.g ], [ %i.au, %bb.h ], [ %i.as, %bb.i ], [ %.pre218.sink.off0, %bb.j ], [ %.pre218.sink.off0, %bb.k ] ; 3 uses
+  %.sroa.13.0173 = phi i16 [ %extract.t, %bb.f ], [ %.sroa.13.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %i.aw, %bb.g ], [ %extract.t, %bb.h ], [ %extract.t, %bb.i ], [ %i.aq, %bb.j ], [ %extract.t, %bb.k ] ; 3 uses
+  %.sroa.20.0171 = phi i16 [ %.sroa.9.4.extract.trunc, %bb.f ], [ %.sroa.20.0, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.sroa.9.4.extract.trunc, %bb.g ], [ %i.au, %bb.h ], [ %i.as, %bb.i ], [ %.sroa.9.4.extract.trunc, %bb.j ], [ %.sroa.9.4.extract.trunc, %bb.k ] ; 3 uses
   %.067 = phi ptr [ %.sroa.0145.0.copyload, %bb.f ], [ %i.bp, %_ZN7voxalgo18step_rel_block_posEhRN4core8vector3dIsEES3_.exit ], [ %.sroa.0145.0.copyload, %bb.g ], [ %.sroa.0145.0.copyload, %bb.h ], [ %.sroa.0145.0.copyload, %bb.i ], [ %.sroa.0145.0.copyload, %bb.j ], [ %.sroa.0145.0.copyload, %bb.k ] ; 14 uses
   %.sroa.20.0.insert.ext140 = zext i16 %.sroa.20.0171 to i48
   %.sroa.20.0.insert.shift141 = shl nuw i48 %.sroa.20.0.insert.ext140, 32
@@ -411,15 +402,14 @@ bb.q:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br i1 %i.cj, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit90, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %.sroa.3.0.extract.trunc.i82 = zext i16 %.sroa.20.0171 to i64
   %.sroa.2.0.extract.trunc.i84 = zext i16 %.sroa.13.0173 to i64
-  %sext.i86 = shl nuw i64 %.sroa.3.0.extract.trunc.i82, 48
-  %8 = ashr exact i64 %sext.i86, 40
+  %10 = sext i16 %.sroa.20.0171 to i64
+  %11 = shl nsw i64 %10, 8
   %sext2.i87 = shl nuw i64 %.sroa.2.0.extract.trunc.i84, 48
   %i.ck = ashr exact i64 %sext2.i87, 44
   %i.cl = sext i16 %.sroa.0119.0175 to i64
-  %i.cm = add nsw i64 %i.ck, %i.cl
-  %i.cn = add nsw i64 %i.cm, %8
+  %i.cm = add nsw i64 %11, %i.cl
+  %i.cn = add nsw i64 %i.cm, %i.ck
   %i.co = and i64 %i.cn, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit90
 
@@ -463,16 +453,15 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit: ; preds = %bb.s
   %i.cz = and i32 %.sroa.0.0.copyload.i.i89, -16711681
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.shift, %i.cz
   %.sroa.2.0.extract.trunc.i95 = zext i16 %.sroa.13.0173 to i64
-  %.sroa.3.0.extract.trunc.i97 = zext i16 %.sroa.20.0171 to i64
   tail call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %.067)
   %i.da = load ptr, ptr %i.cf, align 8, !tbaa !77
-  %sext.i98 = shl nuw i64 %.sroa.3.0.extract.trunc.i97, 48
-  %9 = ashr exact i64 %sext.i98, 40
+  %12 = sext i16 %.sroa.20.0171 to i64
+  %13 = shl nsw i64 %12, 8
   %sext3.i99 = shl nuw i64 %.sroa.2.0.extract.trunc.i95, 48
   %i.db = ashr exact i64 %sext3.i99, 44
   %i.dc = sext i16 %.sroa.0119.0175 to i64
-  %i.dd = add nsw i64 %i.db, %i.dc
-  %i.de = add nsw i64 %i.dd, %9
+  %i.dd = add nsw i64 %13, %i.dc
+  %i.de = add nsw i64 %i.dd, %i.db
   %i.df = and i64 %i.de, 4294967295
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %i.df
   store i32 %.sroa.0.0.insert.insert, ptr %i.dg, align 4
@@ -875,15 +864,14 @@ bb.v:                                             ; preds = %bb.o, %bb.m, %bb.k,
   br i1 %i.cf, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.sroa.3.0.extract.trunc.i = zext i16 %.sroa.20.0104 to i64
   %.sroa.2.0.extract.trunc.i = zext i16 %.sroa.13.0106 to i64
-  %sext.i = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %8 = ashr exact i64 %sext.i, 40
+  %8 = sext i16 %.sroa.20.0104 to i64
+  %9 = shl nsw i64 %8, 8
   %sext2.i = shl nuw i64 %.sroa.2.0.extract.trunc.i, 48
   %i.cg = ashr exact i64 %sext2.i, 44
   %i.ch = sext i16 %.sroa.054.0108 to i64
-  %i.ci = add nsw i64 %i.cg, %i.ch
-  %i.cj = add nsw i64 %i.ci, %8
+  %i.ci = add nsw i64 %9, %i.ch
+  %i.cj = add nsw i64 %i.ci, %i.cg
   %i.ck = and i64 %i.cj, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
 
@@ -935,16 +923,15 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit: ; preds = %bb.z, %b
   %i.cx = and i32 %.sroa.0.0.copyload.i.i, -16711681
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.shift, %i.cx
   %.sroa.2.0.extract.trunc.i46 = zext i16 %.sroa.13.0106 to i64
-  %.sroa.3.0.extract.trunc.i48 = zext i16 %.sroa.20.0104 to i64
   call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %.036)
   %i.cy = load ptr, ptr %i.cb, align 8, !tbaa !77
-  %sext.i49 = shl nuw i64 %.sroa.3.0.extract.trunc.i48, 48
-  %9 = ashr exact i64 %sext.i49, 40
+  %10 = sext i16 %.sroa.20.0104 to i64
+  %11 = shl nsw i64 %10, 8
   %sext3.i50 = shl nuw i64 %.sroa.2.0.extract.trunc.i46, 48
   %i.cz = ashr exact i64 %sext3.i50, 44
   %i.da = sext i16 %.sroa.054.0108 to i64
-  %i.db = add nsw i64 %i.cz, %i.da
-  %i.dc = add nsw i64 %i.db, %9
+  %i.db = add nsw i64 %11, %i.da
+  %i.dc = add nsw i64 %i.db, %i.cz
   %i.dd = and i64 %i.dc, 4294967295
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %i.dd
   store i32 %.sroa.0.0.insert.insert, ptr %i.de, align 4
@@ -1253,9 +1240,9 @@ bb.e:                                             ; preds = %bb.d
   %i.am = shl i16 %i.a, 4
   %i.an = and i16 %i.am, 240
   %i.ao = and i48 %1, 15
-  %3 = zext nneg i16 %i.an to i48
-  %4 = or disjoint i48 %.sroa.3.0.extract.shift.i22, %i.ao
-  %i.ap = or disjoint i48 %4, %3
+  %3 = or disjoint i48 %.sroa.3.0.extract.shift.i22, %i.ao
+  %4 = zext nneg i16 %i.an to i48
+  %i.ap = or disjoint i48 %3, %4
   %i.aq = zext nneg i48 %i.ap to i64
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
 
@@ -1658,9 +1645,9 @@ bb.ag:                                            ; preds = %bb.af
   %i.fn = shl i16 %i.et, 4
   %i.fo = and i16 %i.fn, 240
   %i.fp = and i48 %.sroa.0442.0.insert.ext445, 15
-  %3 = zext nneg i16 %i.fo to i48
-  %4 = or disjoint i48 %.sroa.3.0.extract.shift.i22.i, %i.fp
-  %i.fq = or disjoint i48 %4, %3
+  %3 = or disjoint i48 %.sroa.3.0.extract.shift.i22.i, %i.fp
+  %4 = zext nneg i16 %i.fo to i48
+  %i.fq = or disjoint i48 %3, %4
   %i.fr = zext nneg i48 %i.fq to i64
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit.i
 
@@ -2063,19 +2050,18 @@ bb.br:                                            ; preds = %.lr.ph529, %_ZN8Map
   br i1 %i.si, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit299, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  %.sroa.3.0.extract.shift.i290 = lshr i48 %.sroa.010.0.copyload, 32
+  %.sroa.3.0.extract.shift.i290 = lshr i48 %.sroa.010.0.copyload, 16
   %.sroa.3.0.extract.trunc.i291 = zext nneg i48 %.sroa.3.0.extract.shift.i290 to i64
-  %.sroa.2.0.extract.shift.i292 = lshr i48 %.sroa.010.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i293 = zext nneg i48 %.sroa.2.0.extract.shift.i292 to i64
-  %.sroa.0.0.extract.trunc.i294 = zext i48 %.sroa.010.0.copyload to i64
-  %sext.i295 = shl nuw i64 %.sroa.3.0.extract.trunc.i291, 48
-  %5 = ashr exact i64 %sext.i295, 40
-  %sext2.i296 = shl i64 %.sroa.2.0.extract.trunc.i293, 48
+  %.sroa.2.0.extract.trunc.i293 = zext i48 %.sroa.010.0.copyload to i64
+  %5 = ashr i48 %.sroa.010.0.copyload, 32
+  %6 = sext i48 %5 to i64
+  %7 = shl nsw i64 %6, 8
+  %sext2.i296 = shl i64 %.sroa.3.0.extract.trunc.i291, 48
   %i.sj = ashr exact i64 %sext2.i296, 44
-  %sext3.i297 = shl i64 %.sroa.0.0.extract.trunc.i294, 48
+  %sext3.i297 = shl i64 %.sroa.2.0.extract.trunc.i293, 48
   %i.sk = ashr exact i64 %sext3.i297, 48
-  %i.sl = add nsw i64 %i.sj, %i.sk
-  %i.sm = add nsw i64 %i.sl, %5
+  %i.sl = add nsw i64 %7, %i.sk
+  %i.sm = add nsw i64 %i.sl, %i.sj
   %i.sn = and i64 %i.sm, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit299
 
@@ -2113,19 +2099,18 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit304: ; preds = %bb.bu
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.shift, %i.sx
   %.sroa.02.0.extract.trunc.i305 = zext i48 %.sroa.010.0.copyload to i64
   %.sroa.2.0.extract.shift.i306 = lshr i48 %.sroa.010.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i307 = zext nneg i48 %.sroa.2.0.extract.shift.i306 to i64
-  %.sroa.3.0.extract.shift.i308 = lshr i48 %.sroa.010.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i309 = zext nneg i48 %.sroa.3.0.extract.shift.i308 to i64
+  %.sroa.3.0.extract.trunc.i309 = zext nneg i48 %.sroa.2.0.extract.shift.i306 to i64
   call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %i.sc)
   %i.sy = load ptr, ptr %i.se, align 8, !tbaa !77
-  %sext.i310 = shl nuw i64 %.sroa.3.0.extract.trunc.i309, 48
-  %6 = ashr exact i64 %sext.i310, 40
-  %sext3.i311 = shl i64 %.sroa.2.0.extract.trunc.i307, 48
+  %8 = ashr i48 %.sroa.010.0.copyload, 32
+  %9 = sext i48 %8 to i64
+  %10 = shl nsw i64 %9, 8
+  %sext3.i311 = shl i64 %.sroa.3.0.extract.trunc.i309, 48
   %i.sz = ashr exact i64 %sext3.i311, 44
   %sext4.i312 = shl i64 %.sroa.02.0.extract.trunc.i305, 48
   %i.ta = ashr exact i64 %sext4.i312, 48
-  %i.tb = add nsw i64 %i.sz, %i.ta
-  %i.tc = add nsw i64 %i.tb, %6
+  %i.tb = add nsw i64 %10, %i.ta
+  %i.tc = add nsw i64 %i.tb, %i.sz
   %i.td = and i64 %i.tc, 4294967295
   %i.te = getelementptr inbounds nuw [4 x i8], ptr %i.sy, i64 %i.td
   store i32 %.sroa.0.0.insert.insert, ptr %i.te, align 4
@@ -2528,19 +2513,18 @@ bb.bc:                                            ; preds = %.lr.ph281, %_ZN8Map
   br i1 %i.lz, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 32
+  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 16
   %.sroa.3.0.extract.trunc.i = zext nneg i48 %.sroa.3.0.extract.shift.i to i64
-  %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i = zext nneg i48 %.sroa.2.0.extract.shift.i to i64
-  %.sroa.0.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
-  %sext.i = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %6 = ashr exact i64 %sext.i, 40
-  %sext2.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
+  %.sroa.2.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
+  %6 = ashr i48 %.sroa.04.0.copyload, 32
+  %7 = sext i48 %6 to i64
+  %8 = shl nsw i64 %7, 8
+  %sext2.i.a = shl i64 %.sroa.3.0.extract.trunc.i, 48
   %i.ma = ashr exact i64 %sext2.i.a, 44
-  %sext3.i.a = shl i64 %.sroa.0.0.extract.trunc.i, 48
+  %sext3.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
   %i.mb = ashr exact i64 %sext3.i.a, 48
-  %i.mc = add nsw i64 %i.ma, %i.mb
-  %i.md = add nsw i64 %i.mc, %6
+  %i.mc = add nsw i64 %8, %i.mb
+  %i.md = add nsw i64 %i.mc, %i.ma
   %i.me = and i64 %i.md, 4294967295
   br label %bb.be
 
@@ -2576,8 +2560,6 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit225: ; preds = %bb.bg
           to label %.noexc232 unwind label %bb.bm
 
 .noexc232:                                        ; preds = %_ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit225
-  %.sroa.3.0.extract.shift.i228 = lshr i48 %.sroa.04.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i229 = zext nneg i48 %.sroa.3.0.extract.shift.i228 to i64
   %.sroa.2.0.extract.shift.i226 = lshr i48 %.sroa.04.0.copyload, 16
   %.sroa.2.0.extract.trunc.i227 = zext nneg i48 %.sroa.2.0.extract.shift.i226 to i64
   %.sroa.02.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
@@ -2586,14 +2568,15 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit225: ; preds = %bb.bg
   %i.mo = and i32 %.sroa.0.0.copyload.i.i220, -16711681
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %i.mo
   %i.mp = load ptr, ptr %i.lv, align 8, !tbaa !77
-  %sext.i230 = shl nuw i64 %.sroa.3.0.extract.trunc.i229, 48
-  %7 = ashr exact i64 %sext.i230, 40
+  %9 = ashr i48 %.sroa.04.0.copyload, 32
+  %10 = sext i48 %9 to i64
+  %11 = shl nsw i64 %10, 8
   %sext3.i231 = shl i64 %.sroa.2.0.extract.trunc.i227, 48
   %i.mq = ashr exact i64 %sext3.i231, 44
   %sext4.i = shl i64 %.sroa.02.0.extract.trunc.i, 48
   %i.mr = ashr exact i64 %sext4.i, 48
-  %i.ms = add nsw i64 %i.mq, %i.mr
-  %i.mt = add nsw i64 %i.ms, %7
+  %i.ms = add nsw i64 %11, %i.mr
+  %i.mt = add nsw i64 %i.ms, %i.mq
   %i.mu = and i64 %i.mt, 4294967295
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %i.mp, i64 %i.mu
   store i32 %.sroa.0.0.insert.insert, ptr %i.mv, align 4
@@ -2935,11 +2918,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN7voxalg
   %.sroa.17.0.insert.shift178 = shl nuw i48 %.sroa.17.0.insert.ext177, 32
   %.sroa.0121.0.insert.ext134 = zext i16 %.sroa.028.0.copyload to i48
   %invariant.op211 = or disjoint i48 %.sroa.17.0.insert.shift178, %.sroa.0121.0.insert.ext134 ; 2 uses
-  %.sroa.3.0.extract.trunc.i = zext i16 %.sroa.4.0.copyload to i64
-  %sext.i.a = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %5 = ashr exact i64 %sext.i.a, 40
+  %5 = sext i16 %.sroa.4.0.copyload to i64
+  %sext.i.a = shl nsw i64 %5, 8
   %i.ab = sext i16 %.sroa.028.0.copyload to i64
-  %i.ac = add nsw i64 %5, %i.ab                   ; 2 uses
+  %i.ac = add nsw i64 %sext.i.a, %i.ab            ; 2 uses
   br i1 %i.aa, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit84
 
 _ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %bb.c, %bb.m
@@ -3342,19 +3324,18 @@ bb.p:                                             ; preds = %_ZN8MapBlock14setNo
   br i1 %i.dp, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit.1, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %.sroa.3.0.extract.shift.i.1 = lshr i48 %.sroa.04.0.copyload.1, 32
+  %.sroa.3.0.extract.shift.i.1 = lshr i48 %.sroa.04.0.copyload.1, 16
   %.sroa.3.0.extract.trunc.i.1 = zext nneg i48 %.sroa.3.0.extract.shift.i.1 to i64
-  %.sroa.2.0.extract.shift.i.1 = lshr i48 %.sroa.04.0.copyload.1, 16
-  %.sroa.2.0.extract.trunc.i.1 = zext nneg i48 %.sroa.2.0.extract.shift.i.1 to i64
-  %.sroa.0.0.extract.trunc.i.1 = zext i48 %.sroa.04.0.copyload.1 to i64
-  %sext.i.1 = shl nuw i64 %.sroa.3.0.extract.trunc.i.1, 48
-  %6 = ashr exact i64 %sext.i.1, 40
-  %sext2.i.1.a = shl i64 %.sroa.2.0.extract.trunc.i.1, 48
+  %.sroa.2.0.extract.trunc.i.1 = zext i48 %.sroa.04.0.copyload.1 to i64
+  %6 = ashr i48 %.sroa.04.0.copyload.1, 32
+  %7 = sext i48 %6 to i64
+  %8 = shl nsw i64 %7, 8
+  %sext2.i.1.a = shl i64 %.sroa.3.0.extract.trunc.i.1, 48
   %i.dq = ashr exact i64 %sext2.i.1.a, 44
-  %sext3.i.1.a = shl i64 %.sroa.0.0.extract.trunc.i.1, 48
+  %sext3.i.1.a = shl i64 %.sroa.2.0.extract.trunc.i.1, 48
   %i.dr = ashr exact i64 %sext3.i.1.a, 48
-  %i.ds = add nsw i64 %i.dq, %i.dr
-  %i.dt = add nsw i64 %i.ds, %6
+  %i.ds = add nsw i64 %8, %i.dr
+  %i.dt = add nsw i64 %i.ds, %i.dq
   %i.du = and i64 %i.dt, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit.1
 
@@ -3378,19 +3359,18 @@ _ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit.1: ; preds = %bb.q, %bb.p
   %.sroa.0.0.insert.insert.1 = or disjoint i32 %.sroa.5.0.insert.shift.1, %i.ec
   %.sroa.02.0.extract.trunc.i.1 = zext i48 %.sroa.04.0.copyload.1 to i64
   %.sroa.2.0.extract.shift.i82.1 = lshr i48 %.sroa.04.0.copyload.1, 16
-  %.sroa.2.0.extract.trunc.i83.1 = zext nneg i48 %.sroa.2.0.extract.shift.i82.1 to i64
-  %.sroa.3.0.extract.shift.i84.1 = lshr i48 %.sroa.04.0.copyload.1, 32
-  %.sroa.3.0.extract.trunc.i85.1 = zext nneg i48 %.sroa.3.0.extract.shift.i84.1 to i64
+  %.sroa.3.0.extract.trunc.i85.1 = zext nneg i48 %.sroa.2.0.extract.shift.i82.1 to i64
   tail call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %i.dj)
   %i.ed = load ptr, ptr %i.dl, align 8, !tbaa !77
-  %sext.i86.1 = shl nuw i64 %.sroa.3.0.extract.trunc.i85.1, 48
-  %7 = ashr exact i64 %sext.i86.1, 40
-  %sext3.i87.1 = shl i64 %.sroa.2.0.extract.trunc.i83.1, 48
+  %9 = ashr i48 %.sroa.04.0.copyload.1, 32
+  %10 = sext i48 %9 to i64
+  %11 = shl nsw i64 %10, 8
+  %sext3.i87.1 = shl i64 %.sroa.3.0.extract.trunc.i85.1, 48
   %i.ee = ashr exact i64 %sext3.i87.1, 44
   %sext4.i.1 = shl i64 %.sroa.02.0.extract.trunc.i.1, 48
   %i.ef = ashr exact i64 %sext4.i.1, 48
-  %i.eg = add nsw i64 %i.ee, %i.ef
-  %i.eh = add nsw i64 %i.eg, %7
+  %i.eg = add nsw i64 %11, %i.ef
+  %i.eh = add nsw i64 %i.eg, %i.ee
   %i.ei = and i64 %i.eh, 4294967295
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %i.ei
   store i32 %.sroa.0.0.insert.insert.1, ptr %i.ej, align 4
@@ -3478,19 +3458,18 @@ bb.x:                                             ; preds = %.lr.ph, %_ZN8MapBlo
   br i1 %i.fo, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 32
+  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 16
   %.sroa.3.0.extract.trunc.i = zext nneg i48 %.sroa.3.0.extract.shift.i to i64
-  %.sroa.2.0.extract.shift.i = lshr i48 %.sroa.04.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i = zext nneg i48 %.sroa.2.0.extract.shift.i to i64
-  %.sroa.0.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
-  %sext.i = shl nuw i64 %.sroa.3.0.extract.trunc.i, 48
-  %8 = ashr exact i64 %sext.i, 40
-  %sext2.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
+  %.sroa.2.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
+  %12 = ashr i48 %.sroa.04.0.copyload, 32
+  %13 = sext i48 %12 to i64
+  %14 = shl nsw i64 %13, 8
+  %sext2.i.a = shl i64 %.sroa.3.0.extract.trunc.i, 48
   %i.fp = ashr exact i64 %sext2.i.a, 44
-  %sext3.i.a = shl i64 %.sroa.0.0.extract.trunc.i, 48
+  %sext3.i.a = shl i64 %.sroa.2.0.extract.trunc.i, 48
   %i.fq = ashr exact i64 %sext3.i.a, 48
-  %i.fr = add nsw i64 %i.fp, %i.fq
-  %i.fs = add nsw i64 %i.fr, %8
+  %i.fr = add nsw i64 %14, %i.fq
+  %i.fs = add nsw i64 %i.fr, %i.fp
   %i.ft = and i64 %i.fs, 4294967295
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
 
@@ -3514,19 +3493,18 @@ _ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %bb.x, %bb.y
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.shift, %i.gb
   %.sroa.02.0.extract.trunc.i = zext i48 %.sroa.04.0.copyload to i64
   %.sroa.2.0.extract.shift.i82 = lshr i48 %.sroa.04.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i83 = zext nneg i48 %.sroa.2.0.extract.shift.i82 to i64
-  %.sroa.3.0.extract.shift.i84 = lshr i48 %.sroa.04.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i85 = zext nneg i48 %.sroa.3.0.extract.shift.i84 to i64
+  %.sroa.3.0.extract.trunc.i85 = zext nneg i48 %.sroa.2.0.extract.shift.i82 to i64
   tail call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %i.fi)
   %i.gc = load ptr, ptr %i.fk, align 8, !tbaa !77
-  %sext.i86 = shl nuw i64 %.sroa.3.0.extract.trunc.i85, 48
-  %9 = ashr exact i64 %sext.i86, 40
-  %sext3.i87 = shl i64 %.sroa.2.0.extract.trunc.i83, 48
+  %15 = ashr i48 %.sroa.04.0.copyload, 32
+  %16 = sext i48 %15 to i64
+  %17 = shl nsw i64 %16, 8
+  %sext3.i87 = shl i64 %.sroa.3.0.extract.trunc.i85, 48
   %i.gd = ashr exact i64 %sext3.i87, 44
   %sext4.i = shl i64 %.sroa.02.0.extract.trunc.i, 48
   %i.ge = ashr exact i64 %sext4.i, 48
-  %i.gf = add nsw i64 %i.gd, %i.ge
-  %i.gg = add nsw i64 %i.gf, %9
+  %i.gf = add nsw i64 %17, %i.ge
+  %i.gg = add nsw i64 %i.gf, %i.gd
   %i.gh = and i64 %i.gg, 4294967295
   %i.gi = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %i.gh
   store i32 %.sroa.0.0.insert.insert, ptr %i.gi, align 4
@@ -3929,9 +3907,8 @@ bb.ax:                                            ; preds = %bb.aw, %._crit_edge
 .lr.ph387:                                        ; preds = %.lr.ph392.split
   %.sroa.13.0.insert.ext297 = zext i16 %storemerge133390 to i48
   %.sroa.13.0.insert.shift298 = shl nuw i48 %.sroa.13.0.insert.ext297, 32
-  %.sroa.3.0.extract.trunc.i253 = zext i16 %storemerge133390 to i64
-  %sext.i254 = shl nuw i64 %.sroa.3.0.extract.trunc.i253, 48
-  %7 = ashr exact i64 %sext.i254, 40
+  %7 = sext i16 %storemerge133390 to i64
+  %sext.i254 = shl nsw i64 %7, 8
   %i.qo = add i16 %storemerge133390, %.sroa.6286.0.extract.trunc ; 3 uses
   %i.qp = sext i16 %i.qo to i32
   %i.qq = load i16, ptr %i.qf, align 2, !tbaa !133
@@ -3951,7 +3928,7 @@ bb.ax:                                            ; preds = %bb.aw, %._crit_edge
   %.sroa.0287.0.insert.ext289 = zext i16 %storemerge135385 to i48
   %invariant.op = or disjoint i48 %.sroa.13.0.insert.shift298, %.sroa.0287.0.insert.ext289
   %i.qw = sext i16 %storemerge135385 to i64
-  %i.qx = add nsw i64 %7, %i.qw
+  %i.qx = add nsw i64 %sext.i254, %i.qw
   %i.qy = add i16 %storemerge135385, %.sroa.0284.0.extract.trunc ; 3 uses
   %i.qz = sext i16 %i.qy to i32
   br label %bb.ay
@@ -4354,10 +4331,9 @@ bb.an:                                            ; preds = %.preheader, %._crit
   %.sroa.11.0.insert.ext206 = zext i16 %storemerge79249 to i48
   %.sroa.11.0.insert.shift207 = shl nuw i48 %.sroa.11.0.insert.ext206, 32
   %invariant.op = or disjoint i48 %.sroa.11.0.insert.shift207, %.sroa.0198.0.insert.ext199
-  %.sroa.3.0.extract.trunc.i187 = zext i16 %storemerge79249 to i64
-  %sext.i.a = shl nuw i64 %.sroa.3.0.extract.trunc.i187, 48
-  %11 = ashr exact i64 %sext.i.a, 40
-  %i.ng = add nsw i64 %11, %i.mz
+  %11 = sext i16 %storemerge79249 to i64
+  %sext.i.a = shl nsw i64 %11, 8
+  %i.ng = add nsw i64 %sext.i.a, %i.mz
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph247, %_ZN7voxalgo10LightQueue4pushEhN4core8vector3dIsEES3_P8MapBlockh.exit.1

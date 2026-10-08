@@ -204,22 +204,17 @@ _ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit: ; preds = %bb.a, %bb.
 
 bb.d:                                             ; preds = %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 144
-  %.sroa.0.0.copyload.i = load i40, ptr %i.t, align 8 ; 2 uses
-  %i.u = and i40 %.sroa.0.0.copyload.i, 65280
-  %i.v = icmp eq i40 %i.u, 256
-  br i1 %i.v, label %_ZNK4llvm12DenormalModeeqES0_.exit, label %.sink.split
-
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.d
-  %10 = and i40 %.sroa.0.0.copyload.i, 16711680
-  %11 = icmp eq i40 %10, 65536
+  %.sroa.0.0.copyload.i = load i40, ptr %i.t, align 8
+  %i.u = and i40 %.sroa.0.0.copyload.i, 16776960
+  %i.v = icmp eq i40 %i.u, 65792
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
-  br i1 %11, label %bb.r, label %bb.e
+  br i1 %i.v, label %bb.r, label %bb.e
 
-.sink.split:                                      ; preds = %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit, %bb.d
+.sink.split:                                      ; preds = %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %_ZNK4llvm12DenormalModeeqES0_.exit
+bb.e:                                             ; preds = %.sink.split, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   store i64 3458764518115508224, ptr %6, align 8
   %i.w = call noundef zeroext i1 @_ZNK4llvm3LLTeqERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %6)
@@ -229,21 +224,19 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 144
   %.sroa.0.0.copyload.i14 = load i40, ptr %i.x, align 8 ; 2 uses
   %i.y = and i40 %.sroa.0.0.copyload.i14, 4278190080
-  %i.z = icmp eq i40 %i.y, 16777216
-  br i1 %i.z, label %_ZNK4llvm12DenormalModeeqES0_.exit15, label %.sink.split29
-
-_ZNK4llvm12DenormalModeeqES0_.exit15:             ; preds = %bb.f
-  %12 = ashr i40 %.sroa.0.0.copyload.i14, 32
-  %13 = trunc nsw i40 %12 to i32
-  %14 = icmp eq i32 %13, 1
+  %10 = icmp eq i40 %i.y, 16777216
+  %11 = ashr i40 %.sroa.0.0.copyload.i14, 32
+  %12 = trunc nsw i40 %11 to i16
+  %i.z = icmp eq i16 %12, 1
+  %13 = select i1 %10, i1 %i.z, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
-  br i1 %14, label %bb.r, label %bb.g
+  br i1 %13, label %bb.r, label %bb.g
 
-.sink.split29:                                    ; preds = %bb.e, %bb.f
+.sink.split29:                                    ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
   br label %bb.g
 
-bb.g:                                             ; preds = %.sink.split29, %_ZNK4llvm12DenormalModeeqES0_.exit15
+bb.g:                                             ; preds = %.sink.split29, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !502
@@ -435,8 +428,8 @@ _ZN4llvm20GISelObserverWrapperD2Ev.exit:          ; preds = %_ZN4llvm11SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %bb.r
 
-bb.r:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit15, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZN4llvm20GISelObserverWrapperD2Ev.exit
-  %.0 = phi i1 [ %i.dw, %_ZN4llvm20GISelObserverWrapperD2Ev.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit15 ]
+bb.r:                                             ; preds = %bb.f, %bb.d, %_ZN4llvm20GISelObserverWrapperD2Ev.exit
+  %.0 = phi i1 [ %i.dw, %_ZN4llvm20GISelObserverWrapperD2Ev.exit ], [ true, %bb.d ], [ true, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   ret i1 %.0
 }
@@ -839,7 +832,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.5300.0.extract.shift = lshr i40 %.sroa.0.0.copyload.i, 8
   %.sroa.5300.0.extract.trunc = trunc i40 %.sroa.5300.0.extract.shift to i8 ; 2 uses
   %.sroa.7306.0.extract.shift = lshr i40 %.sroa.0.0.copyload.i, 16
-  %.sroa.7306.0.extract.trunc = trunc i40 %.sroa.7306.0.extract.shift to i8 ; 3 uses
+  %.sroa.7306.0.extract.trunc = trunc i40 %.sroa.7306.0.extract.shift to i8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.p = load i32, ptr %i.o, align 4, !tbaa !475  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #24
@@ -987,24 +980,18 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #24
   %i.by = extractvalue { ptr, ptr } %i.bx, 0      ; 3 uses
   %i.bz = extractvalue { ptr, ptr } %i.bx, 1      ; 3 uses
-  %i.ca = icmp eq i8 %.sroa.5300.0.extract.trunc, 0
-  br i1 %i.ca, label %_ZNK4llvm12DenormalModeeqES0_.exit, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
+  %42 = icmp eq i8 %.sroa.5300.0.extract.trunc, 0
+  %43 = icmp eq i8 %.sroa.7306.0.extract.trunc, 0
+  %44 = select i1 %42, i1 %43, i1 false           ; 2 uses
+  %45 = icmp eq i8 %.sroa.7306.0.extract.trunc, 3
+  %i.ca = icmp eq i8 %.sroa.5300.0.extract.trunc, 3
+  %46 = select i1 %45, i1 true, i1 %i.ca          ; 2 uses
+  br i1 %44, label %bb.f, label %bb.c
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.b
-  %42 = icmp eq i8 %.sroa.7306.0.extract.trunc, 3
-  %43 = icmp eq i8 %.sroa.5300.0.extract.trunc, 3
-  %44 = select i1 %42, i1 true, i1 %43
-  br i1 %44, label %bb.d, label %bb.e
-
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.b
-  %45 = icmp eq i8 %.sroa.7306.0.extract.trunc, 0
-  %46 = icmp eq i8 %.sroa.7306.0.extract.trunc, 3 ; 2 uses
-  br i1 %45, label %bb.f, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit
+bb.c:                                             ; preds = %bb.b
   br i1 %46, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.c
+bb.d:                                             ; preds = %bb.c
   %i.cb = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %2, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 1408), ptr nonnull @.str.36, i64 0) #24 ; 2 uses
   %i.cc = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder18buildInstrNoInsertEj(ptr noundef nonnull align 8 dereferenceable(96) %3, i32 noundef 5151) #24 ; 2 uses
   %i.cd = extractvalue { ptr, ptr } %i.cc, 0
@@ -1032,9 +1019,8 @@ bb.d:                                             ; preds = %_ZNK4llvm12Denormal
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #24
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.d, %bb.c
-  %47 = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ false, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
-  %.sroa.0229.0 = phi i32 [ %i.cb, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sroa.0229.0 = phi i32 [ %i.cb, %bb.d ], [ 0, %bb.c ]
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 46376
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !85, !nonnull !68, !align !86
   %i.cp = getelementptr i8, ptr %i.co, i64 496
@@ -1042,10 +1028,8 @@ bb.e:                                             ; preds = %_ZNK4llvm12Denormal
   call fastcc void @_ZL18toggleSPDenormModebRN4llvm16MachineIRBuilderERKNS_12GCNSubtargetENS_22SIModeRegisterDefaultsE(i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(96) %3, i32 %.val94, i40 %.sroa.0.0.copyload.i)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %_ZNK4llvm12DenormalModeeqES0_.exit
-  %48 = phi i1 [ %46, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %47, %bb.e ]
-  %49 = phi i1 [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ false, %bb.e ]
-  %.sroa.0229.1 = phi i32 [ 0, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %.sroa.0229.0, %bb.e ]
+bb.f:                                             ; preds = %bb.e, %bb.b
+  %.sroa.0229.1 = phi i32 [ 0, %bb.b ], [ %.sroa.0229.0, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #24
   store i64 3458764522412572672, ptr %23, align 8
   %.sroa.4219.0..sroa_idx = getelementptr inbounds nuw i8, ptr %23, i64 16
@@ -1219,10 +1203,10 @@ bb.f:                                             ; preds = %bb.e, %_ZNK4llvm12D
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   %i.ej = extractvalue { ptr, ptr } %i.ei, 1
-  br i1 %49, label %bb.j, label %bb.g
+  br i1 %44, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  br i1 %48, label %bb.h, label %bb.i
+  br i1 %46, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ek = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder18buildInstrNoInsertEj(ptr noundef nonnull align 8 dereferenceable(96) %3, i32 noundef 5343) #24 ; 2 uses

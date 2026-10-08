@@ -205,13 +205,11 @@ bb.g:                                             ; preds = %bb.h, %bb.e
   %i.ah = add i8 %i.ag, 37
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 35
   store i8 %i.ah, ptr %i.ai, align 1
-  %2 = lshr i16 %.sroa.01.0.copyload, 8
-  %3 = zext nneg i16 %2 to i32
-  %sext = shl nuw i32 %3, 24
-  %4 = ashr exact i32 %sext, 24
-  %5 = zext i32 %4 to i64
+  %2 = ashr i16 %.sroa.01.0.copyload, 8
+  %3 = sext i16 %2 to i64
+  %4 = and i64 %3, 4294967295
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %5, ptr %i.aj, align 8
+  store i64 %4, ptr %i.aj, align 8
   br label %bb.d
 
 bb.h:                                             ; preds = %bb.e
@@ -230,12 +228,10 @@ bb.i:                                             ; preds = %bb.j, %bb.f
   %i.as = add i8 %i.ar, 53
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 35
   store i8 %i.as, ptr %i.at, align 1
-  %6 = lshr i16 %.sroa.01.0.copyload, 8
-  %7 = zext nneg i16 %6 to i64
-  %sext2 = shl nuw i64 %7, 56
-  %8 = ashr exact i64 %sext2, 56
+  %5 = ashr i16 %.sroa.01.0.copyload, 8
+  %6 = sext i16 %5 to i64
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %8, ptr %i.au, align 8
+  store i64 %6, ptr %i.au, align 8
   br label %bb.d
 
 bb.j:                                             ; preds = %bb.f

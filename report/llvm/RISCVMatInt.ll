@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %or.cond162.not, label %.critedge51, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bl = trunc i64 %0 to i16                     ; 3 uses
+  %i.bl = trunc i64 %0 to i16                     ; 4 uses
   %sext = shl i32 %i.bh, 16
   %.unshifted = xor i32 %sext, %i.bh
   %i.bm = icmp ult i32 %.unshifted, 65536
@@ -212,13 +212,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bn = trunc i64 %0 to i8                      ; 2 uses
-  %3 = lshr i16 %i.bl, 8
-  %4 = zext nneg i16 %3 to i32
-  %sext43 = shl nuw i32 %4, 24
-  %5 = ashr exact i32 %sext43, 24                 ; 2 uses
-  %6 = sext i8 %i.bn to i32
-  %7 = icmp eq i32 %5, %6
-  br i1 %7, label %bb.r, label %bb.u
+  %sext43 = shl i16 %i.bl, 8
+  %.unshifted44 = xor i16 %sext43, %i.bl
+  %3 = icmp ult i16 %.unshifted44, 256
+  br i1 %3, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -238,7 +235,8 @@ bb.t:                                             ; preds = %bb.r
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.bs ; 2 uses
   store i32 15175, ptr %i.bu, align 4, !tbaa !17
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
-  store i32 %5, ptr %i.bv, align 4, !tbaa !18
+  %4 = sext i8 %i.bn to i32
+  store i32 %4, ptr %i.bv, align 4, !tbaa !18
   %i.bw = add nuw i32 %i.bp, 1
   store i32 %i.bw, ptr %i.bo, align 8, !tbaa !11
   br label %.critedge46

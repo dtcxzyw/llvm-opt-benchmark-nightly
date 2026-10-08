@@ -205,13 +205,11 @@ bb.ck:                                            ; preds = %cf2_getGlyphOutline
 
 bb.cl:                                            ; preds = %bb.ck
   %i.tm = add i32 %i.tj, 32768
-  %6 = lshr i32 %i.tm, 16
-  %7 = zext nneg i32 %6 to i64
-  %sext.i = shl nuw i64 %7, 48
-  %8 = ashr exact i64 %sext.i, 48
+  %6 = ashr i32 %i.tm, 16
+  %7 = sext i32 %6 to i64
   %i.tn = getelementptr inbounds nuw i8, ptr %.val84, i64 1072
   %i.to = load ptr, ptr %i.tn, align 8, !tbaa !256
-  store i64 %8, ptr %i.to, align 8, !tbaa !42
+  store i64 %7, ptr %i.to, align 8, !tbaa !42
   br label %cf2_setGlyphWidth.exit
 
 cf2_setGlyphWidth.exit:                           ; preds = %bb.q, %bb.p, %bb.r, %bb.cl, %bb.ck, %cf2_getGlyphOutline.exit.thread, %cf2_getGlyphOutline.exit

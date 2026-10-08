@@ -205,21 +205,19 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
-  %i.hr = load i32, ptr %i.am, align 8            ; 3 uses
+  %i.hr = load i32, ptr %i.am, align 8            ; 4 uses
   store i32 %i.hr, ptr %i.ah, align 4, !tbaa !128
   %i.hs = trunc i32 %i.hr to i16                  ; 2 uses
   %i.ht = sext i16 %i.hs to i64
-  %8 = lshr i32 %i.hr, 16                         ; 2 uses
-  %9 = zext nneg i32 %8 to i64
-  %sext.i = shl nuw i64 %9, 48
-  %10 = ashr exact i64 %sext.i, 48
+  %8 = ashr i32 %i.hr, 16
+  %9 = sext i32 %8 to i64
   %i.hu = load <2 x i16>, ptr %i.ap, align 4, !tbaa !128 ; 3 uses
   %i.hv = extractelement <2 x i16> %i.hu, i64 0   ; 2 uses
   %i.hw = sext i16 %i.hv to i64                   ; 2 uses
   %i.hx = mul nsw i64 %i.hw, %i.ht
   %i.hy = extractelement <2 x i16> %i.hu, i64 1   ; 2 uses
   %i.hz = sext i16 %i.hy to i64                   ; 2 uses
-  %i.ia = mul nsw i64 %10, %i.hz
+  %i.ia = mul nsw i64 %i.hz, %9
   %i.ib = add nsw i64 %i.hx, 8192
   %i.ic = add nsw i64 %i.ib, %i.ia
   %i.id = ashr i64 %i.ic, 14                      ; 4 uses
@@ -265,7 +263,8 @@ Compute_Funcs.exit.i:                             ; preds = %.critedge.i.i337, %
   store ptr %Direct_Move_Y.sink.i.i338, ptr %i.at, align 8, !tbaa !250
   store ptr %Direct_Move_Orig_Y.sink.i.i339, ptr %i.au, align 8, !tbaa !251
   %i.ip = icmp eq i16 %i.hs, 16384                ; 2 uses
-  %i.iq = icmp eq i32 %8, 16384                   ; 2 uses
+  %.mask.i = and i32 %i.hr, -65536
+  %i.iq = icmp eq i32 %.mask.i, 1073741824        ; 2 uses
   %Project_y.Project1245 = select i1 %i.iq, ptr @Project_y, ptr @Project
   %Project_y.Dual_Project1246 = select i1 %i.iq, ptr @Project_y, ptr @Dual_Project
   %Project.sink1236.a = select i1 %i.ip, ptr @Project_x, ptr %Project_y.Project1245
@@ -454,21 +453,19 @@ bb.ar:                                            ; preds = %bb.aq
 
 Normalize.exit.i:                                 ; preds = %bb.ar, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  %i.lp = load i32, ptr %i.am, align 8            ; 3 uses
+  %i.lp = load i32, ptr %i.am, align 8            ; 4 uses
   store i32 %i.lp, ptr %i.ah, align 4, !tbaa !128
   %i.lq = trunc i32 %i.lp to i16                  ; 2 uses
   %i.lr = sext i16 %i.lq to i64
-  %11 = lshr i32 %i.lp, 16                        ; 2 uses
-  %12 = zext nneg i32 %11 to i64
-  %sext1.i = shl nuw i64 %12, 48
-  %13 = ashr exact i64 %sext1.i, 48
+  %10 = ashr i32 %i.lp, 16
+  %11 = sext i32 %10 to i64
   %i.ls = load <2 x i16>, ptr %i.ap, align 4, !tbaa !128 ; 3 uses
   %i.lt = extractelement <2 x i16> %i.ls, i64 0   ; 2 uses
   %i.lu = sext i16 %i.lt to i64                   ; 2 uses
   %i.lv = mul nsw i64 %i.lu, %i.lr
   %i.lw = extractelement <2 x i16> %i.ls, i64 1   ; 2 uses
   %i.lx = sext i16 %i.lw to i64                   ; 2 uses
-  %i.ly = mul nsw i64 %13, %i.lx
+  %i.ly = mul nsw i64 %i.lx, %11
   %i.lz = add nsw i64 %i.lv, 8192
   %i.ma = add nsw i64 %i.lz, %i.ly
   %i.mb = ashr i64 %i.ma, 14                      ; 4 uses
@@ -514,7 +511,8 @@ Ins_SPVFS.exit:                                   ; preds = %.critedge.i.i358, %
   store ptr %Direct_Move_Y.sink.i.i359, ptr %i.at, align 8, !tbaa !250
   store ptr %Direct_Move_Orig_Y.sink.i.i360, ptr %i.au, align 8, !tbaa !251
   %i.mn = icmp eq i16 %i.lq, 16384                ; 2 uses
-  %i.mo = icmp eq i32 %11, 16384                  ; 2 uses
+  %.mask.i361 = and i32 %i.lp, -65536
+  %i.mo = icmp eq i32 %.mask.i361, 1073741824     ; 2 uses
   %Project_y.Project1249 = select i1 %i.mo, ptr @Project_y, ptr @Project
   %Project_y.Dual_Project1250 = select i1 %i.mo, ptr @Project_y, ptr @Dual_Project
   %Project_x.sink1238 = select i1 %i.mn, ptr @Project_x, ptr %Project_y.Project1249
@@ -650,16 +648,15 @@ bb.bh:                                            ; preds = %bb.f
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.bi:                                            ; preds = %bb.f
-  %i.ol = load i32, ptr %i.am, align 8            ; 5 uses
+  %i.ol = load i32, ptr %i.am, align 8            ; 6 uses
   store i32 %i.ol, ptr %i.ap, align 4, !tbaa !128
   %i.om = trunc i32 %i.ol to i16                  ; 3 uses
   %i.on = sext i16 %i.om to i64                   ; 3 uses
   %i.oo = mul nsw i64 %i.on, %i.on
-  %i.op = lshr i32 %i.ol, 16                      ; 3 uses
-  %14 = zext nneg i32 %i.op to i64
-  %sext4.i = shl nuw i64 %14, 48                  ; 2 uses
-  %15 = ashr exact i64 %sext4.i, 48               ; 2 uses
-  %i.oq = mul nsw i64 %15, %15
+  %i.op = lshr i32 %i.ol, 16                      ; 2 uses
+  %12 = ashr i32 %i.ol, 16
+  %13 = sext i32 %12 to i64                       ; 3 uses
+  %i.oq = mul nsw i64 %13, %13
   %i.or = add nuw nsw i64 %i.oo, 8192
   %i.os = add nuw nsw i64 %i.or, %i.oq            ; 3 uses
   %i.ot = lshr i64 %i.os, 14                      ; 2 uses
@@ -678,8 +675,8 @@ bb.bl:                                            ; preds = %bb.bj
   %i.ov = shl nsw i64 %i.on, 16
   %i.ow = sdiv i64 %i.ov, %i.ot
   store i64 %i.ow, ptr %i.ar, align 8, !tbaa !248
-  %16 = ashr exact i64 %sext4.i, 32
-  %i.ox = sdiv i64 %16, %i.ot
+  %14 = shl nsw i64 %13, 16
+  %i.ox = sdiv i64 %14, %i.ot
   store i64 %i.ox, ptr %i.as, align 8, !tbaa !249
   br label %bb.bo
 

@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.l
   %i.aq = and i40 %.val6.val, 4278190080
   %i.ar = icmp ne i40 %i.aq, 16777216
   %i.as = ashr i40 %.val6.val, 32
-  %5 = trunc nsw i40 %i.as to i32
-  %i.at = icmp ne i32 %5, 1
+  %5 = trunc nsw i40 %i.as to i16
+  %i.at = icmp ne i16 %5, 1
   %.not8 = select i1 %i.ar, i1 true, i1 %i.at
   br label %bb.o
 
@@ -252,8 +252,8 @@ bb.c:                                             ; preds = %bb.b
   %i.m = and i40 %.val6.val.i, 4278190080
   %i.n = icmp ne i40 %i.m, 16777216
   %i.o = ashr i40 %.val6.val.i, 32
-  %3 = trunc nsw i40 %i.o to i32
-  %i.p = icmp ne i32 %3, 1
+  %3 = trunc nsw i40 %i.o to i16
+  %i.p = icmp ne i16 %3, 1
   %.not8.i = select i1 %i.n, i1 true, i1 %i.p
   br label %_ZNK4llvm16SITargetLowering26isFMAFasterThanFMulAndFAddERKNS_15MachineFunctionENS_3EVTE.exit
 
@@ -347,8 +347,8 @@ bb.d:                                             ; preds = %bb.c
   %i.m = and i40 %.val4.val, 4278190080
   %i.n = icmp eq i40 %i.m, 16777216
   %i.o = ashr i40 %.val4.val, 32
-  %3 = trunc nsw i40 %i.o to i32
-  %i.p = icmp eq i32 %3, 1
+  %3 = trunc nsw i40 %i.o to i16
+  %i.p = icmp eq i16 %3, 1
   %i.q = select i1 %i.n, i1 %i.p, i1 false
   br label %bb.g
 
@@ -428,8 +428,8 @@ bb.f:                                             ; preds = %bb.e
   %i.v = and i40 %.val5.val, 4278190080
   %i.w = icmp eq i40 %i.v, 16777216
   %i.x = ashr i40 %.val5.val, 32
-  %3 = trunc nsw i40 %i.x to i32
-  %i.y = icmp eq i32 %3, 1
+  %3 = trunc nsw i40 %i.x to i16
+  %i.y = icmp eq i16 %3, 1
   %i.z = select i1 %i.w, i1 %i.y, i1 false
   br label %bb.g
 
@@ -832,39 +832,26 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !430
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 144 ; 3 uses
   %.sroa.0.0.copyload.i387 = load i40, ptr %i.ae, align 8 ; 2 uses
-  %.sroa.0231.1.extract.shift = lshr i40 %.sroa.0.0.copyload.i387, 8
-  %.sroa.0528.0.extract.trunc = trunc i40 %.sroa.0231.1.extract.shift to i8 ; 2 uses
-  %.sroa.5530.0.extract.shift675 = lshr i40 %.sroa.0.0.copyload.i387, 16
-  %.sroa.5530.0.extract.trunc = trunc i40 %.sroa.5530.0.extract.shift675 to i8 ; 3 uses
-  %i.af = icmp eq i8 %.sroa.0528.0.extract.trunc, 0
-  br i1 %i.af, label %_ZNK4llvm12DenormalModeeqES0_.exit, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
+  %.sroa.0231.1.extract.shift = lshr i40 %.sroa.0.0.copyload.i387, 8 ; 2 uses
+  %.sroa.0528.0.extract.trunc = trunc i40 %.sroa.0231.1.extract.shift to i8
+  %.sroa.5530.0.extract.shift675 = lshr i40 %.sroa.0.0.copyload.i387, 16 ; 2 uses
+  %.sroa.5530.0.extract.trunc = trunc i40 %.sroa.5530.0.extract.shift675 to i8
+  %62 = or i40 %.sroa.0231.1.extract.shift, %.sroa.5530.0.extract.shift675
+  %63 = and i40 %62, 255
+  %64 = icmp eq i40 %63, 0                        ; 2 uses
+  %65 = icmp eq i8 %.sroa.5530.0.extract.trunc, 3
+  %i.af = icmp eq i8 %.sroa.0528.0.extract.trunc, 3
+  %66 = or i1 %65, %i.af                          ; 2 uses
+  br i1 %64, label %bb.i, label %bb.c
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.b
-  %62 = icmp eq i8 %.sroa.5530.0.extract.trunc, 3
-  %63 = icmp eq i8 %.sroa.0528.0.extract.trunc, 3
-  %64 = or i1 %62, %63
-  %65 = call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_(ptr noundef nonnull align 8 dereferenceable(920) %3, i16 1, ptr null, i16 249, ptr null) #27 ; 2 uses
-  %66 = extractvalue { ptr, i32 } %65, 0          ; 2 uses
-  %67 = extractvalue { ptr, i32 } %65, 1          ; 2 uses
-  %68 = getelementptr inbounds nuw i8, ptr %3, i64 288 ; 2 uses
-  br i1 %64, label %bb.d, label %bb.e
-
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.b
-  %69 = icmp eq i8 %.sroa.5530.0.extract.trunc, 0
-  %70 = icmp eq i8 %.sroa.5530.0.extract.trunc, 3 ; 2 uses
-  br i1 %69, label %bb.i, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit
+bb.c:                                             ; preds = %bb.b
   %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_(ptr noundef nonnull align 8 dereferenceable(920) %3, i16 1, ptr null, i16 249, ptr null) #27 ; 2 uses
   %i.ah = extractvalue { ptr, i32 } %i.ag, 0      ; 2 uses
   %i.ai = extractvalue { ptr, i32 } %i.ag, 1      ; 2 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 288 ; 2 uses
-  br i1 %70, label %bb.d, label %bb.e
+  %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 288 ; 3 uses
+  br i1 %66, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.c
-  %71 = phi ptr [ %68, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ], [ %i.aj, %bb.c ] ; 2 uses
-  %72 = phi i32 [ %67, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ], [ %i.ai, %bb.c ]
-  %73 = phi ptr [ %66, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ], [ %i.ah, %bb.c ]
+bb.d:                                             ; preds = %bb.c
   %i.ak = call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_(ptr noundef nonnull align 8 dereferenceable(920) %3, i16 7, ptr null, i16 249, ptr null) #27 ; 2 uses
   %i.al = extractvalue { ptr, i32 } %i.ak, 0
   %i.am = extractvalue { ptr, i32 } %i.ak, 1
@@ -873,7 +860,7 @@ bb.d:                                             ; preds = %_ZNK4llvm12Denormal
   %.sroa.6243.0..sroa_idx = getelementptr inbounds nuw i8, ptr %46, i64 8
   store i32 %.fca.1.extract237, ptr %.sroa.6243.0..sroa_idx, align 8, !tbaa !233
   %i.an = getelementptr inbounds nuw i8, ptr %46, i64 16
-  store ptr %71, ptr %i.an, align 8, !tbaa !533
+  store ptr %i.aj, ptr %i.an, align 8, !tbaa !533
   %.sroa.7216.0..sroa_idx217 = getelementptr inbounds nuw i8, ptr %46, i64 24
   store i32 0, ptr %.sroa.7216.0..sroa_idx217, align 8, !tbaa !233
   store ptr %46, ptr %45, align 8, !tbaa !536
@@ -882,7 +869,7 @@ bb.d:                                             ; preds = %_ZNK4llvm12Denormal
   %i.ap = call noundef ptr @_ZN4llvm12SelectionDAG14getMachineNodeEjRKNS_5SDLocENS_8SDVTListENS_8ArrayRefINS_7SDValueEEE(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 5151, ptr noundef nonnull align 8 dereferenceable(12) %36, ptr %i.al, i32 %i.am, ptr noundef nonnull byval(%"class.llvm::ArrayRef.518") align 8 %45) #27 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %47) #27
-  store ptr %71, ptr %47, align 8
+  store ptr %i.aj, ptr %47, align 8
   %.sroa.2196.0..sroa_idx = getelementptr inbounds nuw i8, ptr %47, i64 8
   store i32 0, ptr %.sroa.2196.0..sroa_idx, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %47, i64 16
@@ -899,13 +886,10 @@ bb.d:                                             ; preds = %_ZNK4llvm12Denormal
   call void @llvm.lifetime.end.p0(ptr nonnull %47) #27
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %bb.d, %bb.c
-  %74 = phi i32 [ %72, %bb.d ], [ %i.ai, %bb.c ], [ %67, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ] ; 2 uses
-  %75 = phi ptr [ %73, %bb.d ], [ %i.ah, %bb.c ], [ %66, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ] ; 2 uses
-  %76 = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ false, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
-  %.sroa.0525.0 = phi ptr [ %i.ap, %bb.d ], [ null, %bb.c ], [ null, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ]
-  %.sroa.0213.0 = phi ptr [ %.fca.0.extract189, %bb.d ], [ %i.aj, %bb.c ], [ %68, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ] ; 2 uses
-  %.sroa.7216.0 = phi i32 [ %.fca.1.extract190, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ] ; 2 uses
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sroa.0525.0 = phi ptr [ %i.ap, %bb.d ], [ null, %bb.c ]
+  %.sroa.0213.0 = phi ptr [ %.fca.0.extract189, %bb.d ], [ %i.aj, %bb.c ] ; 2 uses
+  %.sroa.7216.0 = phi i32 [ %.fca.1.extract190, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 518448
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !67
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 496
@@ -936,7 +920,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr %.fca.0.extract180, ptr %49, align 8, !tbaa !533
   %.sroa.4185.0..sroa_idx = getelementptr inbounds nuw i8, ptr %49, i64 8
   store i32 %.fca.1.extract181, ptr %.sroa.4185.0..sroa_idx, align 8, !tbaa !233
-  %i.bg = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_8SDVTListENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 593, ptr noundef nonnull align 8 dereferenceable(12) %36, ptr %75, i32 %74, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %48, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %49) #27
+  %i.bg = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_8SDVTListENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 593, ptr noundef nonnull align 8 dereferenceable(12) %36, ptr %i.ah, i32 %i.ai, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %48, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %49) #27
   %.fca.0.extract173 = extractvalue { ptr, i32 } %i.bg, 0
   br label %bb.h
 
@@ -959,7 +943,7 @@ bb.g:                                             ; preds = %bb.e
   store ptr %51, ptr %50, align 8, !tbaa !536
   %i.bk = getelementptr inbounds nuw i8, ptr %50, i64 8
   store i64 3, ptr %i.bk, align 8, !tbaa !537
-  %i.bl = call noundef ptr @_ZN4llvm12SelectionDAG14getMachineNodeEjRKNS_5SDLocENS_8SDVTListENS_8ArrayRefINS_7SDValueEEE(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 5343, ptr noundef nonnull align 8 dereferenceable(12) %36, ptr %75, i32 %74, ptr noundef nonnull byval(%"class.llvm::ArrayRef.518") align 8 %50) #27
+  %i.bl = call noundef ptr @_ZN4llvm12SelectionDAG14getMachineNodeEjRKNS_5SDLocENS_8SDVTListENS_8ArrayRefINS_7SDValueEEE(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 5343, ptr noundef nonnull align 8 dereferenceable(12) %36, ptr %i.ah, i32 %i.ai, ptr noundef nonnull byval(%"class.llvm::ArrayRef.518") align 8 %50) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #27
   br label %bb.h
 
@@ -983,12 +967,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #27
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %_ZNK4llvm12DenormalModeeqES0_.exit
-  %77 = phi i1 [ %70, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %76, %bb.h ]
-  %78 = phi i1 [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ false, %bb.h ]
-  %.sroa.0525.1 = phi ptr [ null, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %.sroa.0525.0, %bb.h ]
-  %.sroa.0254.0 = phi ptr [ %.fca.0.extract249, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %.fca.0.extract154, %bb.h ] ; 9 uses
-  %.sroa.9259.0 = phi i32 [ %.fca.1.extract250, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ %.fca.1.extract155, %bb.h ] ; 6 uses
+bb.i:                                             ; preds = %bb.h, %bb.b
+  %.sroa.0525.1 = phi ptr [ null, %bb.b ], [ %.sroa.0525.0, %bb.h ]
+  %.sroa.0254.0 = phi ptr [ %.fca.0.extract249, %bb.b ], [ %.fca.0.extract154, %bb.h ] ; 9 uses
+  %.sroa.9259.0 = phi i32 [ %.fca.1.extract250, %bb.b ], [ %.fca.1.extract155, %bb.h ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30)
   call void @llvm.lifetime.start.p0(ptr nonnull %32)
   call void @llvm.lifetime.start.p0(ptr nonnull %33)
@@ -1387,10 +1369,10 @@ _ZL11getFPTernOpRN4llvm12SelectionDAGEjRKNS_5SDLocENS_3EVTENS_7SDValueES6_S6_S6_
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   %.fca.0.extract70 = extractvalue { ptr, i32 } %.pn.i407, 0 ; 5 uses
   %.fca.1.extract71 = extractvalue { ptr, i32 } %.pn.i407, 1
-  br i1 %78, label %_ZN4llvm12SelectionDAG7setRootENS_7SDValueE.exit, label %bb.v
+  br i1 %64, label %_ZN4llvm12SelectionDAG7setRootENS_7SDValueE.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZL11getFPTernOpRN4llvm12SelectionDAGEjRKNS_5SDLocENS_3EVTENS_7SDValueES6_S6_S6_NS_11SDNodeFlagsE.exit408
-  br i1 %77, label %.critedge, label %bb.w
+  br i1 %66, label %.critedge, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 518448
@@ -1793,8 +1775,8 @@ _ZNK4llvm12DenormalModeeqES0_.exit.thread.loopexit290: ; preds = %tailrecurse.pe
   %.9.ph291 = phi i1 [ true, %tailrecurse.peel.begin ], [ false, %_ZNK4llvm12DenormalModeeqES0_.exit.peel ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.g ], [ false, %bb.j ], [ true, %tailrecurse.peel ], [ false, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ false, %bb.p ], [ false, %bb.q ], [ false, %bb.r ], [ false, %bb.s ], [ false, %bb.u ], [ false, %bb.x ], [ false, %bb.aw ], [ false, %bb.av ], [ false, %bb.ax ], [ false, %bb.au ], [ false, %bb.an ], [ false, %bb.ar ], [ false, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %tailrecurse ]
   br label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
-_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %bb.ap, %bb.am, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %_ZNK4llvm12DenormalModeeqES0_.exit.thread.loopexit290, %.loopexit326, %bb.al, %bb.af, %.split, %bb.ad, %_ZNK4llvm7APFloat10isDenormalEv.exit, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.thread.a, %bb.az, %bb.ay, %.loopexit325, %bb.ak, %.loopexit
-  %.9 = phi i1 [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.split ], [ true, %.loopexit327 ], [ true, %bb.ak ], [ true, %.loopexit327 ], [ %i.gd, %.loopexit ], [ true, %.loopexit326 ], [ true, %.loopexit325 ], [ %i.jj, %bb.az ], [ true, %.loopexit327 ], [ true, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ true, %bb.ay ], [ false, %bb.ad ], [ true, %bb.a ], [ %i.gv, %bb.am ], [ %i.ey, %bb.af ], [ false, %.thread.a ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %bb.al ], [ %.9.ph291, %_ZNK4llvm12DenormalModeeqES0_.exit.thread.loopexit290 ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.hj, %bb.ap ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ]
+_ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %_ZNK4llvm12DenormalModeeqES0_.exit, %bb.ap, %bb.am, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %_ZNK4llvm12DenormalModeeqES0_.exit.thread.loopexit290, %.loopexit326, %bb.al, %.split, %bb.af, %bb.ad, %_ZNK4llvm7APFloat10isDenormalEv.exit, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.loopexit327, %.thread.a, %bb.az, %bb.ay, %.loopexit325, %bb.ak, %.loopexit
+  %.9 = phi i1 [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ %i.ey, %bb.af ], [ true, %.loopexit327 ], [ true, %bb.ak ], [ true, %.loopexit327 ], [ %i.gd, %.loopexit ], [ true, %bb.a ], [ true, %.loopexit325 ], [ %i.jj, %bb.az ], [ true, %.loopexit327 ], [ true, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ true, %bb.ay ], [ false, %bb.ad ], [ true, %.loopexit326 ], [ %i.gv, %bb.am ], [ true, %.split ], [ false, %.thread.a ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %.loopexit327 ], [ true, %bb.al ], [ %.9.ph291, %_ZNK4llvm12DenormalModeeqES0_.exit.thread.loopexit290 ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.hj, %bb.ap ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ], [ true, %_ZNK4llvm12DenormalModeeqES0_.exit.peel408 ]
   ret i1 %.9
 }
 
@@ -1860,8 +1842,8 @@ bb.e:                                             ; preds = %_ZNK4llvm3EVT13getS
   %i.t = and i40 %.val3.val, 4278190080
   %i.u = icmp ne i40 %i.t, 16777216
   %i.v = ashr i40 %.val3.val, 32
-  %5 = trunc nsw i40 %i.v to i32
-  %i.w = icmp ne i32 %5, 1
+  %5 = trunc nsw i40 %i.v to i16
+  %i.w = icmp ne i16 %5, 1
   %.not6 = select i1 %i.u, i1 true, i1 %i.w
   br label %_ZNK4llvm3EVT13getScalarTypeEv.exit.thread
 
@@ -2079,8 +2061,8 @@ bb.o:                                             ; preds = %bb.g, %bb.g
 bb.p:                                             ; preds = %bb.o, %bb.g
   br label %_ZNK4llvm12DenormalModeeqES0_.exit
 
-_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.n, %bb.m, %bb.e, %.split, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.i, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.f, %_ZNK4llvm7APFloat10isDenormalEv.exit, %bb.c, %bb.p, %bb.h
-  %.3 = phi i1 [ true, %bb.o ], [ true, %.split ], [ false, %bb.c ], [ true, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ false, %bb.p ], [ false, %bb.f ], [ %i.y, %bb.h ], [ true, %bb.g ], [ true, %bb.i ], [ %i.r, %bb.e ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.m ], [ %i.ay, %bb.n ]
+_ZNK4llvm12DenormalModeeqES0_.exit:               ; preds = %bb.n, %bb.m, %.split, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.i, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.f, %_ZNK4llvm7APFloat10isDenormalEv.exit, %bb.c, %bb.p, %bb.h, %bb.e
+  %.3 = phi i1 [ true, %bb.o ], [ %i.r, %bb.e ], [ false, %bb.c ], [ true, %_ZNK4llvm7APFloat10isDenormalEv.exit ], [ false, %bb.p ], [ false, %bb.f ], [ %i.y, %bb.h ], [ true, %bb.g ], [ true, %bb.i ], [ true, %.split ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %bb.g ], [ true, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.o ], [ true, %bb.m ], [ %i.ay, %bb.n ]
   %i.bg = load i8, ptr %i.g, align 8, !tbaa !956, !range !30, !noundef !31
   %i.bh = trunc nuw i8 %i.bg to i1
   store i8 0, ptr %i.g, align 8, !tbaa !956
@@ -2134,8 +2116,8 @@ bb.c:                                             ; preds = %bb.a, %bb.a
   %i.l = and i40 %.val3.val, 4278190080
   %i.m = icmp ne i40 %i.l, 16777216
   %i.n = ashr i40 %.val3.val, 32
-  %3 = trunc nsw i40 %i.n to i32
-  %i.o = icmp ne i32 %3, 1
+  %3 = trunc nsw i40 %i.n to i16
+  %i.o = icmp ne i16 %3, 1
   %.not5 = select i1 %i.m, i1 true, i1 %i.o
   br label %bb.d
 
@@ -2169,10 +2151,10 @@ bb.b:                                             ; preds = %.split, %_ZNK4llvm7
   %i.f = load ptr, ptr %5, align 8, !tbaa !213
   %i.g = tail call i16 @_ZNK4llvm15MachineFunction15getDenormalModeERKNS_12fltSemanticsE(ptr noundef nonnull align 8 dereferenceable(1065) %i.e, ptr noundef nonnull align 4 dereferenceable(29) %i.f) #27 ; 2 uses
   %.sroa.0.0.extract.trunc = zext i16 %i.g to i32
-  %.sroa.5.0.extract.shift = lshr i16 %i.g, 8     ; 2 uses
   %sext = shl i32 %.sroa.0.0.extract.trunc, 24    ; 2 uses
   %10 = icmp eq i32 %sext, 16777216
-  %i.h = icmp eq i16 %.sroa.5.0.extract.shift, 1
+  %11 = ashr i16 %i.g, 8                          ; 2 uses
+  %i.h = icmp eq i16 %11, 1
   %or.cond = and i1 %i.h, %10
   br i1 %or.cond, label %bb.c, label %_ZNK4llvm12DenormalModeeqES0_.exit.thread
 
@@ -2220,7 +2202,7 @@ _ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit: ; preds = %bb.f, %bb.g
 
 _ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %bb.b
   %i.r = icmp ne i32 %sext, 0
-  %i.s = icmp ne i16 %.sroa.5.0.extract.shift, 0
+  %i.s = icmp ne i16 %11, 0
   %or.cond74 = or i1 %i.s, %i.r
   br i1 %or.cond74, label %.thread, label %bb.h
 
@@ -2623,8 +2605,8 @@ bb.e:                                             ; preds = %bb.d
   %i.q = and i40 %.val13.val, 4278190080
   %i.r = icmp eq i40 %i.q, 16777216
   %i.s = ashr i40 %.val13.val, 32
-  %4 = trunc nsw i40 %i.s to i32
-  %i.t = icmp eq i32 %4, 1
+  %4 = trunc nsw i40 %i.s to i16
+  %i.t = icmp eq i16 %4, 1
   %i.u = select i1 %i.r, i1 %i.t, i1 false
   br i1 %i.u, label %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, label %.thread
 
@@ -3027,7 +3009,7 @@ _ZNK4llvm12DenormalModeeqES0_.exit.thread:        ; preds = %_ZNK4llvm4Type13get
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #27
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZNK4llvm4Type13getScalarTypeEv.exit, %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %_ZNK4llvm11Instruction11hasMetadataENS_9StringRefE.exit
+bb.c:                                             ; preds = %_ZNK4llvm12DenormalModeeqES0_.exit.thread, %_ZNK4llvm4Type13getScalarTypeEv.exit, %_ZNK4llvm11Instruction11hasMetadataENS_9StringRefE.exit
   %.1 = phi i1 [ true, %_ZNK4llvm11Instruction11hasMetadataENS_9StringRefE.exit ], [ %i.v, %_ZNK4llvm12DenormalModeeqES0_.exit.thread ], [ true, %_ZNK4llvm4Type13getScalarTypeEv.exit ]
   ret i1 %.1
 }

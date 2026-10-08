@@ -205,10 +205,9 @@ bb.cs:                                            ; preds = %bb.cr
   %.0.i3150.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.qc, i32 98303)
   %.0.i31.i.i.i.i = zext nneg i32 %.0.i3150.i.i.i.i to i64
   %i.qd = getelementptr inbounds nuw i8, ptr %i.py, i64 12
-  %i.qe = load i32, ptr %i.qd, align 4, !tbaa !68 ; 2 uses
+  %i.qe = load i32, ptr %i.qd, align 4, !tbaa !68 ; 3 uses
   %i.qf = call i32 @llvm.smax.i32(i32 %i.qe, i32 -32768)
   %i.qg = call i32 @llvm.smin.i32(i32 %i.qf, i32 32767)
-  %.0.i29.i.i.i.i = zext i32 %i.qg to i64
   %i.qh = icmp samesign ugt i32 %i.qa, 65535      ; 2 uses
   %i.qi = lshr i32 %i.qa, 16
   %spec.select.i.i.i.i.i.i = select i1 %i.qh, i32 %i.qi, i32 %i.qa ; 3 uses
@@ -328,9 +327,8 @@ round_two_signed.exit39.i.i.i.i:                  ; preds = %bb.cx, %bb.cw
   %i.sx = phi i64 [ %i.su, %bb.cw ], [ %i.sw, %bb.cx ]
   %.tr.i.i.i.i = trunc nsw i64 %i.sx to i16
   %i.sy = shl i16 %.tr.i.i.i.i, 6
-  %sext52.i.i.i.i = shl i64 %.0.i29.i.i.i.i, 48
-  %4 = ashr exact i64 %sext52.i.i.i.i, 48         ; 3 uses
-  %i.sz = icmp slt i64 %4, 0
+  %4 = zext i32 %i.qg to i64                      ; 2 uses
+  %i.sz = icmp slt i32 %i.qe, 0
   br i1 %i.sz, label %bb.cy, label %bb.cz
 
 bb.cy:                                            ; preds = %round_two_signed.exit39.i.i.i.i
@@ -346,7 +344,7 @@ bb.cz:                                            ; preds = %round_two_signed.ex
 
 round_two_signed.exit42.i.i.i.i:                  ; preds = %bb.cz, %bb.cy
   %i.tf = phi i64 [ %i.tc, %bb.cy ], [ %i.te, %bb.cz ]
-  %.tr23.i.i.i.i = trunc nsw i64 %i.tf to i16
+  %.tr23.i.i.i.i = trunc i64 %i.tf to i16
   %i.tg = shl i16 %.tr23.i.i.i.i, 6
   %sext53.i.i.i.i.a = shl i64 %.0.i27.i.i.i.i, 48
   %i.th = ashr exact i64 %sext53.i.i.i.i.a, 48    ; 3 uses

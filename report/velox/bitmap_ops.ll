@@ -205,41 +205,41 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i64 @_ZN5arrow8internal15CountAndSetBitsEPKhlS2_ll(ptr nofree noundef readonly captures(address_is_null) %0, i64 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %.not.i.i = icmp eq ptr %0, null
-  %_ZN5arrow4util8internalL14kNonNullFillerE..i.i = select i1 %.not.i.i, ptr @_ZN5arrow4util8internalL14kNonNullFillerE, ptr %0, !prof !17
+  %5 = srem i64 %1, 8                             ; 5 uses
   %i.a = sdiv i64 %1, 8
-  %5 = getelementptr inbounds i8, ptr %_ZN5arrow4util8internalL14kNonNullFillerE..i.i, i64 %i.a
-  %i.b = srem i64 %1, 8                           ; 5 uses
-  %.not.i7.i = icmp eq ptr %2, null
-  %_ZN5arrow4util8internalL14kNonNullFillerE..i8.i = select i1 %.not.i7.i, ptr @_ZN5arrow4util8internalL14kNonNullFillerE, ptr %2, !prof !17
+  %i.b = srem i64 %3, 8                           ; 5 uses
   %i.c = sdiv i64 %3, 8
-  %6 = getelementptr inbounds i8, ptr %_ZN5arrow4util8internalL14kNonNullFillerE..i8.i, i64 %i.c
-  %7 = srem i64 %3, 8                             ; 5 uses
-  %.not36.i = icmp eq i64 %i.b, 0
-  %i.d = sub nsw i64 128, %i.b
+  %.not36.i = icmp eq i64 %5, 0
+  %i.d = sub nsw i64 128, %5
   %spec.select.i = select i1 %.not36.i, i64 64, i64 %i.d
-  %.not37.i = icmp eq i64 %7, 0
-  %i.e = sub nsw i64 128, %7
+  %.not37.i = icmp eq i64 %i.b, 0
+  %i.e = sub nsw i64 128, %i.b
   %i.f = select i1 %.not37.i, i64 64, i64 %i.e
   %i.g = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.f)
-  %i.h = or i64 %7, %i.b
-  %brmerge.not.i.a = icmp eq i64 %i.h, 0
-  br label %bb.b
+  %i.h = or i64 %i.b, %5
+  %brmerge.not.i = icmp eq i64 %i.h, 0
+  %brmerge.not.i.a = icmp eq i64 %4, 0
+  br i1 %brmerge.not.i.a, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit, label %bb.b
 
-bb.b:                                             ; preds = %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit, %bb.a
-  %.sroa.17.0 = phi i64 [ %4, %bb.a ], [ %.sroa.17.1, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit ] ; 5 uses
-  %.sroa.9.0 = phi ptr [ %6, %bb.a ], [ %.sroa.9.1, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit ] ; 6 uses
-  %.sroa.0.0 = phi ptr [ %5, %bb.a ], [ %.sroa.0.1, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit ] ; 5 uses
-  %.07 = phi i64 [ 0, %bb.a ], [ %10, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit ] ; 2 uses
-  %.not.i = icmp eq i64 %.sroa.17.0, 0
-  br i1 %.not.i, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit.thread, label %bb.c
+bb.b:                                             ; preds = %bb.a
+  %.not.i7.i = icmp eq ptr %2, null
+  %_ZN5arrow4util8internalL14kNonNullFillerE..i8.i = select i1 %.not.i7.i, ptr @_ZN5arrow4util8internalL14kNonNullFillerE, ptr %2, !prof !17
+  %6 = getelementptr inbounds i8, ptr %_ZN5arrow4util8internalL14kNonNullFillerE..i8.i, i64 %i.c
+  %.not.i.i = icmp eq ptr %0, null
+  %_ZN5arrow4util8internalL14kNonNullFillerE..i.i = select i1 %.not.i.i, ptr @_ZN5arrow4util8internalL14kNonNullFillerE, ptr %0, !prof !17
+  %7 = getelementptr inbounds i8, ptr %_ZN5arrow4util8internalL14kNonNullFillerE..i.i, i64 %i.a
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.b
-  %i.i = icmp slt i64 %.sroa.17.0, %i.g
+bb.c:                                             ; preds = %bb.b, %.backedge
+  %.0721 = phi i64 [ 0, %bb.b ], [ %.07.be, %.backedge ] ; 2 uses
+  %.sroa.0.020 = phi ptr [ %7, %bb.b ], [ %.sroa.0.0.be, %.backedge ] ; 5 uses
+  %.sroa.9.019 = phi ptr [ %6, %bb.b ], [ %.sroa.9.0.be, %.backedge ] ; 6 uses
+  %.sroa.17.018 = phi i64 [ %4, %bb.b ], [ %.sroa.17.0.be, %.backedge ] ; 4 uses
+  %i.i = icmp slt i64 %.sroa.17.018, %i.g
   br i1 %i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.speculated31.i = tail call i64 @llvm.smin.i64(i64 %.sroa.17.0, i64 64) ; 3 uses
+  %.sroa.speculated31.i = tail call i64 @llvm.smin.i64(i64 %.sroa.17.018, i64 64) ; 3 uses
   %i.j = trunc i64 %.sroa.speculated31.i to i16
   %sext.i = shl i64 %.sroa.speculated31.i, 48
   %i.k = ashr exact i64 %sext.i, 48               ; 3 uses
@@ -247,33 +247,42 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
-  %8 = zext i16 %spec.select20.i to i64
+  %8 = sext i16 %spec.select20.i to i64
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.d
   %.016.lcssa.i = phi i64 [ 0, %bb.d ], [ %8, %._crit_edge.i.loopexit ]
   %i.m = sdiv i16 %i.j, 8
   %i.n = sext i16 %i.m to i64                     ; 2 uses
-  %i.o = getelementptr inbounds i8, ptr %.sroa.0.0, i64 %i.n
-  %i.p = getelementptr inbounds i8, ptr %.sroa.9.0, i64 %i.n
-  %i.q = sub nsw i64 %.sroa.17.0, %i.k
+  %i.o = getelementptr inbounds i8, ptr %.sroa.0.020, i64 %i.n
+  %i.p = getelementptr inbounds i8, ptr %.sroa.9.019, i64 %i.n
+  %i.q = sub nsw i64 %.sroa.17.018, %i.k
   %i.r = and i64 %.sroa.speculated31.i, 65535
   %i.s = icmp eq i64 %i.r, 0
-  br label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit
+  br i1 %i.s, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit, label %.backedge
+
+.backedge:                                        ; preds = %._crit_edge.i, %bb.h
+  %.sroa.17.0.be = phi i64 [ %i.as, %bb.h ], [ %i.q, %._crit_edge.i ] ; 2 uses
+  %.sroa.9.0.be = phi ptr [ %i.ar, %bb.h ], [ %i.p, %._crit_edge.i ]
+  %.sroa.0.0.be = phi ptr [ %i.aq, %bb.h ], [ %i.o, %._crit_edge.i ]
+  %.pn = phi i64 [ %i.ap, %bb.h ], [ %.016.lcssa.i, %._crit_edge.i ]
+  %.07.be = add nsw i64 %.pn, %.0721              ; 2 uses
+  %.not.i = icmp eq i64 %.sroa.17.0.be, 0
+  br i1 %.not.i, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit, label %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
   %.01540.i = phi i64 [ %i.ak, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
   %.01639.i = phi i16 [ %spec.select20.i, %.lr.ph.i ], [ 0, %bb.d ]
-  %i.t = add nsw i64 %.01540.i, %i.b              ; 2 uses
+  %i.t = add nsw i64 %.01540.i, %5                ; 2 uses
   %i.u = lshr i64 %i.t, 3
-  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.u
+  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.020, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !11
   %i.x = trunc i64 %i.t to i8
   %i.y = and i8 %i.x, 7
   %i.z = lshr i8 %i.w, %i.y
-  %i.aa = add nsw i64 %.01540.i, %7               ; 2 uses
+  %i.aa = add nsw i64 %.01540.i, %i.b             ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %i.ab
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.9.019, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !11
   %i.ae = trunc i64 %i.aa to i8
   %i.af = and i8 %i.ae, 7
@@ -287,46 +296,36 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not.i, label %._crit_edge.i.loopexit, label %.lr.ph.i, !llvm.loop !61
 
 bb.e:                                             ; preds = %bb.c
-  %.0.copyload.i.i.i = load i64, ptr %.sroa.0.0, align 1 ; 2 uses
-  br i1 %brmerge.not.i.a, label %bb.f, label %bb.g
+  %.0.copyload.i.i.i = load i64, ptr %.sroa.0.020, align 1 ; 2 uses
+  br i1 %brmerge.not.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %.0.copyload.i.i22.i = load i64, ptr %.sroa.9.0, align 1
+  %.0.copyload.i.i22.i = load i64, ptr %.sroa.9.019, align 1
   %i.al = and i64 %.0.copyload.i.i22.i, %.0.copyload.i.i.i
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.020, i64 8
   %.0.copyload.i.i24.i = load i64, ptr %i.am, align 1
-  %.0.i.i = tail call noundef i64 @llvm.fshr.i64(i64 %.0.copyload.i.i24.i, i64 %.0.copyload.i.i.i, i64 %i.b)
-  %.0.copyload.i.i25.i = load i64, ptr %.sroa.9.0, align 1
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 8
+  %.0.i.i = tail call noundef i64 @llvm.fshr.i64(i64 %.0.copyload.i.i24.i, i64 %.0.copyload.i.i.i, i64 %5)
+  %.0.copyload.i.i25.i = load i64, ptr %.sroa.9.019, align 1
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.9.019, i64 8
   %.0.copyload.i.i26.i = load i64, ptr %i.an, align 1
-  %.0.i27.i = tail call noundef i64 @llvm.fshr.i64(i64 %.0.copyload.i.i26.i, i64 %.0.copyload.i.i25.i, i64 %7)
+  %.0.i27.i = tail call noundef i64 @llvm.fshr.i64(i64 %.0.copyload.i.i26.i, i64 %.0.copyload.i.i25.i, i64 %i.b)
   %i.ao = and i64 %.0.i27.i, %.0.i.i
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.g
   %.sink.i = phi i64 [ %i.ao, %bb.g ], [ %i.al, %bb.f ]
   %i.ap = tail call noundef range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %.sink.i)
-  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
-  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 8
-  %i.as = add nsw i64 %.sroa.17.0, -64
-  br label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit
+  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.020, i64 8
+  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.9.019, i64 8
+  %i.as = add nsw i64 %.sroa.17.018, -64
+  br label %.backedge
 
-_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit: ; preds = %._crit_edge.i, %bb.h
-  %.sroa.17.1 = phi i64 [ %i.q, %._crit_edge.i ], [ %i.as, %bb.h ]
-  %.sroa.9.1 = phi ptr [ %i.p, %._crit_edge.i ], [ %i.ar, %bb.h ]
-  %.sroa.0.1 = phi ptr [ %i.o, %._crit_edge.i ], [ %i.aq, %bb.h ]
-  %.sroa.0.0.i = phi i1 [ %i.s, %._crit_edge.i ], [ false, %bb.h ]
-  %.sroa.4.0.i = phi i64 [ %.016.lcssa.i, %._crit_edge.i ], [ %i.ap, %bb.h ]
-  %sext = shl nuw i64 %.sroa.4.0.i, 48
-  %9 = ashr exact i64 %sext, 48
-  %10 = add nsw i64 %9, %.07
-  br i1 %.sroa.0.0.i, label %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit.thread, label %bb.b
-
-_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit.thread: ; preds = %bb.b, %_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit
-  ret i64 %.07
+_ZN5arrow8internal21BinaryBitBlockCounter8NextWordINS0_6detail11BitBlockAndEEENS0_13BitBlockCountEv.exit: ; preds = %.backedge, %._crit_edge.i, %bb.a
+  %.07.lcssa = phi i64 [ 0, %bb.a ], [ %.07.be, %.backedge ], [ %.0721, %._crit_edge.i ]
+  ret i64 %.07.lcssa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
