@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lodepng/original/lodepng?download=true
 inline.NumInlined: 891
 inline.NumDeleted: 194
-loop-unroll.NumCompletelyUnrolled: 36
-loop-unroll.NumRuntimeUnrolled: 86
+loop-unroll.NumCompletelyUnrolled: 37
+loop-unroll.NumRuntimeUnrolled: 85
 loop-unroll.NumUnrolled: 128
 begin_hunk_0_@_Z21lodepng_zlib_compressPPhPmPKhmPK23LodePNGCompressSettings:bb.a
 bb.b:                                             ; preds = %bb.a
@@ -205,37 +205,11 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph, %bb.a
-  %.021.lcssa = phi ptr [ %0, %bb.a ], [ %i.bj, %.lr.ph ] ; 3 uses
-  %.019.lcssa = phi i64 [ %1, %bb.a ], [ %i.bk, %.lr.ph ] ; 5 uses
-  %.0.lcssa = phi i32 [ -1, %bb.a ], [ %i.bi, %.lr.ph ] ; 4 uses
+  %.021.lcssa = phi ptr [ %0, %bb.a ], [ %i.bj, %.lr.ph ] ; 7 uses
+  %.019.lcssa = phi i64 [ %1, %bb.a ], [ %i.bk, %.lr.ph ] ; 7 uses
+  %.0.lcssa = phi i32 [ -1, %bb.a ], [ %i.bi, %.lr.ph ] ; 3 uses
   %.not28 = icmp eq i64 %.019.lcssa, 0
-  br i1 %.not28, label %._crit_edge, label %.lr.ph32.preheader
-
-.lr.ph32.preheader:                               ; preds = %.preheader
-  %xtraiter = and i64 %.019.lcssa, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph32.prol.loopexit, label %.lr.ph32.prol
-
-.lr.ph32.prol:                                    ; preds = %.lr.ph32.preheader
-  %2 = add nsw i64 %.019.lcssa, -1
-  %3 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 1
-  %4 = load i8, ptr %.021.lcssa, align 1, !tbaa !35
-  %.1.tr.prol = trunc i32 %.0.lcssa to i8
-  %.narrow.prol = xor i8 %4, %.1.tr.prol
-  %5 = zext i8 %.narrow.prol to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !29
-  %8 = lshr i32 %.0.lcssa, 8
-  %9 = xor i32 %7, %8                             ; 2 uses
-  br label %.lr.ph32.prol.loopexit
-
-.lr.ph32.prol.loopexit:                           ; preds = %.lr.ph32.prol, %.lr.ph32.preheader
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph32.preheader ], [ %9, %.lr.ph32.prol ]
-  %.131.unr = phi i32 [ %.0.lcssa, %.lr.ph32.preheader ], [ %9, %.lr.ph32.prol ]
-  %.12030.unr = phi i64 [ %.019.lcssa, %.lr.ph32.preheader ], [ %2, %.lr.ph32.prol ]
-  %.12229.unr = phi ptr [ %.021.lcssa, %.lr.ph32.preheader ], [ %3, %.lr.ph32.prol ]
-  %10 = icmp eq i64 %.019.lcssa, 1
-  br i1 %10, label %._crit_edge, label %.lr.ph32.a
+  br i1 %.not28, label %._crit_edge, label %.lr.ph32
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.025 = phi i32 [ %i.bi, %.lr.ph ], [ -1, %bb.a ] ; 4 uses
@@ -306,34 +280,97 @@ bb.a:
   %i.bl = icmp ugt i64 %i.bk, 7
   br i1 %i.bl, label %.lr.ph, label %.preheader, !llvm.loop !7
 
-.lr.ph32.a:                                       ; preds = %.lr.ph32.prol.loopexit, %.lr.ph32.a
-  %.131 = phi i32 [ %i.bs, %.lr.ph32.a ], [ %.131.unr, %.lr.ph32.prol.loopexit ] ; 2 uses
-  %.12030 = phi i64 [ %18, %.lr.ph32.a ], [ %.12030.unr, %.lr.ph32.prol.loopexit ]
-  %.12229 = phi ptr [ %i.bm, %.lr.ph32.a ], [ %.12229.unr, %.lr.ph32.prol.loopexit ] ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.12229, i64 1
-  %12 = load i8, ptr %.12229, align 1, !tbaa !35
-  %.1.tr = trunc i32 %.131 to i8
-  %.narrow = xor i8 %12, %.1.tr
-  %13 = zext i8 %.narrow to i64
-  %14 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %13
-  %15 = load i32, ptr %14, align 4, !tbaa !29
-  %16 = lshr i32 %.131, 8
-  %17 = xor i32 %15, %16                          ; 2 uses
-  %18 = add nsw i64 %.12030, -2                   ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %.12229, i64 2
-  %i.bn = load i8, ptr %11, align 1, !tbaa !35
-  %.1.tr.1.a = trunc i32 %17 to i8
+.lr.ph32:                                         ; preds = %.preheader
+  %2 = load i8, ptr %.021.lcssa, align 1, !tbaa !35
+  %.1.tr = trunc i32 %.0.lcssa to i8
+  %.narrow = xor i8 %2, %.1.tr
+  %3 = zext i8 %.narrow to i64
+  %4 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %3
+  %5 = load i32, ptr %4, align 4, !tbaa !29
+  %6 = lshr i32 %.0.lcssa, 8
+  %7 = xor i32 %5, %6                             ; 3 uses
+  %.not = icmp eq i64 %.019.lcssa, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph32.1
+
+.lr.ph32.1:                                       ; preds = %.lr.ph32
+  %8 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !35
+  %.1.tr.1 = trunc i32 %7 to i8
+  %.narrow.1 = xor i8 %9, %.1.tr.1
+  %10 = zext i8 %.narrow.1 to i64
+  %11 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %10
+  %12 = load i32, ptr %11, align 4, !tbaa !29
+  %13 = lshr i32 %7, 8
+  %14 = xor i32 %12, %13                          ; 3 uses
+  %.not.1 = icmp eq i64 %.019.lcssa, 2
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph32.2
+
+.lr.ph32.2:                                       ; preds = %.lr.ph32.1
+  %15 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 2
+  %16 = load i8, ptr %15, align 1, !tbaa !35
+  %.1.tr.2 = trunc i32 %14 to i8
+  %.narrow.2 = xor i8 %16, %.1.tr.2
+  %17 = zext i8 %.narrow.2 to i64
+  %18 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %17
+  %19 = load i32, ptr %18, align 4, !tbaa !29
+  %20 = lshr i32 %14, 8
+  %21 = xor i32 %19, %20                          ; 3 uses
+  %.not.2 = icmp eq i64 %.019.lcssa, 3
+  br i1 %.not.2, label %._crit_edge, label %.lr.ph32.3
+
+.lr.ph32.3:                                       ; preds = %.lr.ph32.2
+  %22 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 3
+  %23 = load i8, ptr %22, align 1, !tbaa !35
+  %.1.tr.3 = trunc i32 %21 to i8
+  %.narrow.3 = xor i8 %23, %.1.tr.3
+  %24 = zext i8 %.narrow.3 to i64
+  %25 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %24
+  %26 = load i32, ptr %25, align 4, !tbaa !29
+  %27 = lshr i32 %21, 8
+  %28 = xor i32 %26, %27                          ; 3 uses
+  %.not.3 = icmp eq i64 %.019.lcssa, 4
+  br i1 %.not.3, label %._crit_edge, label %.lr.ph32.4
+
+.lr.ph32.4:                                       ; preds = %.lr.ph32.3
+  %29 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 4
+  %30 = load i8, ptr %29, align 1, !tbaa !35
+  %.1.tr.4 = trunc i32 %28 to i8
+  %.narrow.4 = xor i8 %30, %.1.tr.4
+  %31 = zext i8 %.narrow.4 to i64
+  %32 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %31
+  %33 = load i32, ptr %32, align 4, !tbaa !29
+  %34 = lshr i32 %28, 8
+  %35 = xor i32 %33, %34                          ; 3 uses
+  %.not.4 = icmp eq i64 %.019.lcssa, 5
+  br i1 %.not.4, label %._crit_edge, label %.lr.ph32.a
+
+.lr.ph32.a:                                       ; preds = %.lr.ph32.4
+  %i.bm = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 5
+  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !35
+  %.1.tr.1.a = trunc i32 %35 to i8
   %.narrow.1.a = xor i8 %i.bn, %.1.tr.1.a
   %i.bo = zext i8 %.narrow.1.a to i64
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %i.bo
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !29
-  %i.br = lshr i32 %17, 8
-  %i.bs = xor i32 %i.bq, %i.br                    ; 2 uses
-  %.not.1.a = icmp eq i64 %18, 0
-  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph32.a, !llvm.loop !8
+  %i.br = lshr i32 %35, 8
+  %i.bs = xor i32 %i.bq, %i.br                    ; 3 uses
+  %.not.1.a = icmp eq i64 %.019.lcssa, 6
+  br i1 %.not.1.a, label %._crit_edge, label %.lr.ph32.6
 
-._crit_edge:                                      ; preds = %.lr.ph32.prol.loopexit, %.lr.ph32.a, %.preheader
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph32.prol.loopexit ], [ %i.bs, %.lr.ph32.a ]
+.lr.ph32.6:                                       ; preds = %.lr.ph32.a
+  %36 = getelementptr inbounds nuw i8, ptr %.021.lcssa, i64 6
+  %37 = load i8, ptr %36, align 1, !tbaa !35
+  %.1.tr.6 = trunc i32 %i.bs to i8
+  %.narrow.6 = xor i8 %37, %.1.tr.6
+  %38 = zext i8 %.narrow.6 to i64
+  %39 = getelementptr inbounds nuw [4 x i8], ptr @_ZL20lodepng_crc32_table0, i64 %38
+  %40 = load i32, ptr %39, align 4, !tbaa !29
+  %41 = lshr i32 %i.bs, 8
+  %42 = xor i32 %40, %41
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph32, %.lr.ph32.1, %.lr.ph32.2, %.lr.ph32.3, %.lr.ph32.4, %.lr.ph32.a, %.lr.ph32.6, %.preheader
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %7, %.lr.ph32 ], [ %14, %.lr.ph32.1 ], [ %21, %.lr.ph32.2 ], [ %28, %.lr.ph32.3 ], [ %35, %.lr.ph32.4 ], [ %i.bs, %.lr.ph32.a ], [ %42, %.lr.ph32.6 ]
   %i.bt = xor i32 %.1.lcssa, -1
   ret i32 %i.bt
 }
