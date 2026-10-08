@@ -201,7 +201,8 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !62   ; 2 uses
   %i.h = icmp sgt i32 %i.e, %i.g
   %i.i = sub nsw i32 %i.g, %3
-  %spec.select = select i1 %i.h, i32 %i.i, i32 %5 ; 2 uses
+  %spec.select = select i1 %i.h, i32 %i.i, i32 %5
+  %spec.select.fr = freeze i32 %spec.select       ; 2 uses
   %i.j = add nsw i32 %6, %4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.l = load i32, ptr %i.k, align 4, !tbaa !40   ; 2 uses
@@ -213,7 +214,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.p = sub nsw i32 0, %3                        ; 2 uses
-  %.not = icmp sgt i32 %spec.select, %i.p
+  %.not = icmp sgt i32 %spec.select.fr, %i.p
   br i1 %.not, label %bb.c, label %.thread139
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -225,9 +226,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph155:                                        ; preds = %bb.c
   %i.q = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.r = zext nneg i32 %.092 to i64
-  %i.s = sub nsw i32 %spec.select, %.085
-  %.fr163 = freeze i32 %i.s                       ; 8 uses
-  %i.t = icmp sgt i32 %.fr163, 0
+  %i.s = sub i32 %spec.select.fr, %.085           ; 8 uses
+  %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph155.split.us, label %.lr.ph155.split
 
 .lr.ph155.split.us:                               ; preds = %.lr.ph155, %..loopexit_crit_edge.us
@@ -293,8 +293,8 @@ bb.i:                                             ; preds = %bb.h
 
 .thread132.us:                                    ; preds = %bb.i
   %i.aw = add nsw i32 %i.av, %.081149.us
-  %.not110135.us = icmp slt i32 %i.aw, %.fr163
-  %i.ax = sub nsw i32 %.fr163, %.081149.us
+  %.not110135.us = icmp slt i32 %i.aw, %i.s
+  %i.ax = sub nsw i32 %i.s, %.081149.us
   %spec.select113136.us = select i1 %.not110135.us, i32 %i.av, i32 %i.ax
   br label %bb.l
 
@@ -308,15 +308,15 @@ bb.j:                                             ; preds = %bb.i
 .thread.us:                                       ; preds = %bb.j
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ba
   %i.bd = add nsw i32 %i.av, %.081149.us
-  %.not110127.us = icmp slt i32 %i.bd, %.fr163
-  %i.be = sub nsw i32 %.fr163, %.081149.us
+  %.not110127.us = icmp slt i32 %i.bd, %i.s
+  %i.be = sub nsw i32 %i.s, %.081149.us
   %spec.select113128.us = select i1 %.not110127.us, i32 %i.av, i32 %i.be
   br label %bb.n
 
 bb.k:                                             ; preds = %bb.h
   %i.bf = add nsw i32 %i.au, %.081149.us
-  %.not110.us = icmp slt i32 %i.bf, %.fr163
-  %i.bg = sub nsw i32 %.fr163, %.081149.us
+  %.not110.us = icmp slt i32 %i.bf, %i.s
+  %i.bg = sub nsw i32 %i.s, %.081149.us
   %spec.select113.us = select i1 %.not110.us, i32 %i.au, i32 %i.bg ; 2 uses
   br i1 %.not107.us, label %bb.n, label %bb.l
 
@@ -373,7 +373,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   %.3.us = phi ptr [ %.2124.us, %bb.p ], [ %i.bz, %bb.r ]
   %.2.us = phi i32 [ 0, %bb.p ], [ %i.by, %bb.r ]
   %.182.us = phi i32 [ %i.bt, %bb.p ], [ %.081149.us, %bb.r ] ; 2 uses
-  %i.ca = icmp slt i32 %.182.us, %.fr163
+  %i.ca = icmp slt i32 %.182.us, %i.s
   br i1 %i.ca, label %bb.f, label %..loopexit_crit_edge.us
 
 ..loopexit_crit_edge.us:                          ; preds = %bb.s, %bb.e

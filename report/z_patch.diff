@@ -1,0 +1,1509 @@
+diff --git a/llvm/include/llvm/Analysis/ConstraintSystem.h b/llvm/include/llvm/Analysis/ConstraintSystem.h
+index c14e0fbd8b9cfb..d685b6b830b6d6 100644
+--- a/llvm/include/llvm/Analysis/ConstraintSystem.h
++++ b/llvm/include/llvm/Analysis/ConstraintSystem.h
+@@ -172,6 +172,9 @@ class ConstraintSystem {
+     NumVariables -= N;
+   }
+ 
++  /// Returns the rows of the constraint system.
++  ArrayRef<RowTy> getRows() const { return Constraints; }
++
+   /// Returns the number of rows in the constraint system.
+   unsigned size() const { return Constraints.size(); }
+ 
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 7bbb2eb8e8313e..9bd1b011173702 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -2066,8 +2066,12 @@ static void computeKnownBitsFromOperator(const Operator *I,
+         // want to waste time spinning around in loops.
+         // TODO: See if we can base recursion limiter on number of incoming phi
+         // edges so we don't overly clamp analysis.
+-        computeKnownBits(IncValue, DemandedElts, Known2, RecQ,
+-                         MaxAnalysisRecursionDepth - 1);
++        unsigned IncDepth = MaxAnalysisRecursionDepth - 1;
++        if (auto *IncPhi = dyn_cast<PHINode>(IncValue);
++            IncPhi && IncPhi->getNumIncomingValues() == 1 &&
++            Depth + 1 < IncDepth)
++          --IncDepth;
++        computeKnownBits(IncValue, DemandedElts, Known2, RecQ, IncDepth);
+ 
+         // See if we can further use a conditional branch into the phi
+         // to help us determine the range of the value.
+@@ -6452,9 +6456,14 @@ void computeKnownFPClass(const Value *V, const APInt &DemandedElts,
+         // Recurse, but cap the recursion to two levels, because we don't want
+         // to waste time spinning around in loops. We need at least depth 2 to
+         // detect known sign bits.
++        unsigned IncDepth = PhiRecursionLimit;
++        if (auto *IncPhi = dyn_cast<PHINode>(IncValue);
++            IncPhi && IncPhi->getNumIncomingValues() == 1 &&
++            Depth + 1 < IncDepth)
++          --IncDepth;
+         computeKnownFPClass(IncValue, DemandedElts, InterestedClasses, KnownSrc,
+                             Q.getWithoutCondContext().getWithInstruction(CtxI),
+-                            PhiRecursionLimit);
++                            IncDepth);
+ 
+         if (First) {
+           Known = KnownSrc;
+@@ -8194,6 +8203,29 @@ bool llvm::impliesPoison(const Value *ValAssumedPoison, const Value *V) {
+ 
+ static bool programUndefinedIfUndefOrPoison(const Value *V, bool PoisonOnly);
+ 
++static bool terminatorRequiresWellDefined(const Value *V,
++                                          const Instruction *TI,
++                                          UndefPoisonKind Kind) {
++  Value *Cond = nullptr;
++  if (auto *BI = dyn_cast_or_null<CondBrInst>(TI))
++    Cond = BI->getCondition();
++  else if (auto *SI = dyn_cast_or_null<SwitchInst>(TI))
++    Cond = SI->getCondition();
++
++  if (!Cond)
++    return false;
++  if (Cond == V)
++    return true;
++  if (!includesUndef(Kind) && isa<Operator>(Cond)) {
++    // For poison, we can analyze further
++    auto *Opr = cast<Operator>(Cond);
++    return any_of(Opr->operands(), [V](const Use &U) {
++      return V == U && propagatesPoison(U);
++    });
++  }
++  return false;
++}
++
+ static bool isGuaranteedNotToBeUndefOrPoison(
+     const Value *V, AssumptionCache *AC, const Instruction *CtxI,
+     const DominatorTree *DT, unsigned Depth, UndefPoisonKind Kind) {
+@@ -8276,8 +8308,16 @@ static bool isGuaranteedNotToBeUndefOrPoison(
+           if (PN == PN->getIncomingValue(i))
+             continue;
+           auto *TI = PN->getIncomingBlock(i)->getTerminator();
++          UndefPoisonKind IncKind = Kind;
++          if (includesPoison(Kind) &&
++              terminatorRequiresWellDefined(PN->getIncomingValue(i), TI,
++                                            UndefPoisonKind::PoisonOnly)) {
++            if (!includesUndef(Kind))
++              continue;
++            IncKind = UndefPoisonKind::UndefOnly;
++          }
+           if (!isGuaranteedNotToBeUndefOrPoison(PN->getIncomingValue(i), AC, TI,
+-                                                DT, Depth + 1, Kind)) {
++                                                DT, Depth + 1, IncKind)) {
+             IsWellDefined = false;
+             break;
+           }
+@@ -8322,27 +8362,9 @@ static bool isGuaranteedNotToBeUndefOrPoison(
+   // if what we are checking for includes undef and the value is not an integer.
+   if (!includesUndef(Kind) || V->getType()->isIntegerTy())
+     while (Dominator) {
+-      auto *TI = Dominator->getBlock()->getTerminatorOrNull();
+-
+-      Value *Cond = nullptr;
+-      if (auto BI = dyn_cast_or_null<CondBrInst>(TI)) {
+-        Cond = BI->getCondition();
+-      } else if (auto SI = dyn_cast_or_null<SwitchInst>(TI)) {
+-        Cond = SI->getCondition();
+-      }
+-
+-      if (Cond) {
+-        if (Cond == V)
+-          return true;
+-        else if (!includesUndef(Kind) && isa<Operator>(Cond)) {
+-          // For poison, we can analyze further
+-          auto *Opr = cast<Operator>(Cond);
+-          if (any_of(Opr->operands(), [V](const Use &U) {
+-                return V == U && propagatesPoison(U);
+-              }))
+-            return true;
+-        }
+-      }
++      if (terminatorRequiresWellDefined(
++              V, Dominator->getBlock()->getTerminatorOrNull(), Kind))
++        return true;
+ 
+       Dominator = Dominator->getIDom();
+     }
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 0b32289bc54d21..d3a23bbab89e0c 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -420,6 +420,14 @@ class ConstraintInfo {
+   /// system implies it or because ValueTracking can prove it.
+   bool isKnownPositive(Value *V);
+ 
++  /// Returns true if a single row implies `Op + Slack <= W` (for an LE \p Pred)
++  /// or `W + Slack <= Op` (for a GE \p Pred), for a non-poison integer W no
++  /// wider than \p Op. As W is within the type limits of \p Op, this bounds
++  /// \p Op away from the limit by \p Slack, which the systems cannot derive as
++  /// they do not contain the type limits.
++  bool hasLimitWitness(CmpInst::Predicate Pred, Value *Op,
++                       const APInt &Slack) const;
++
+   void addFact(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack);
+ 
+@@ -535,18 +543,20 @@ static bool doesHoldInRange(ConstraintInfo &Info, Value *Op,
+                         : APInt::getMinValue(BitWidth);
+   APInt MaxVal = Signed ? APInt::getSignedMaxValue(BitWidth)
+                         : APInt::getMaxValue(BitWidth);
++  // Computed before Max is clamped below.
++  APInt UpperSlack = MaxVal - Max;
+   // Replace bound too large to be decomposed by the largest usable one.
+   if (!Signed && Max.uge(MaxConstraintValue))
+     Max = APInt(BitWidth, MaxConstraintValue - 1);
+ 
+   Type *Ty = Op->getType();
+-  if (Min != MinVal &&
+-      !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
+-                     ConstantInt::get(Ty, Min)))
++  auto GEPred = Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE;
++  auto LEPred = Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE;
++  if (Min != MinVal && !Info.doesHold(GEPred, Op, ConstantInt::get(Ty, Min)) &&
++      !Info.hasLimitWitness(GEPred, Op, Min - MinVal))
+     return false;
+-  if (Max != MaxVal &&
+-      !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
+-                     ConstantInt::get(Ty, Max)))
++  if (Max != MaxVal && !Info.doesHold(LEPred, Op, ConstantInt::get(Ty, Max)) &&
++      !Info.hasLimitWitness(LEPred, Op, UpperSlack))
+     return false;
+   return true;
+ }
+@@ -1036,6 +1046,43 @@ bool ConstraintInfo::isKnownPositive(Value *V) {
+          doesHold(CmpInst::ICMP_SGT, V, ConstantInt::get(V->getType(), 0));
+ }
+ 
++bool ConstraintInfo::hasLimitWitness(CmpInst::Predicate Pred, Value *Op,
++                                     const APInt &Slack) const {
++  if (Slack.ugt(MaxConstraintValue))
++    return false;
++  bool IsSigned = CmpInst::isSigned(Pred);
++  const auto &Value2Index = getValue2Index(IsSigned);
++  unsigned OpIdx = Value2Index.lookup(Op);
++  if (!OpIdx)
++    return false;
++
++  // Collect the indices of all W with a row `OpCoeff * (Op - W) <= C` with
++  // C <= -Slack. As Slack is positive, such rows have a constant entry.
++  int64_t OpCoeff = ICmpInst::isLE(Pred) ? 1 : -1;
++  int64_t MaxC = -int64_t(Slack.getZExtValue());
++  SmallVector<unsigned> WIndices;
++  for (ArrayRef<Entry> Row : getCS(IsSigned).getRows()) {
++    if (Row.size() != 3 || Row[0].Id != 0 || Row[0].Coefficient > MaxC)
++      continue;
++    Entry OpE = Row[1], WE = Row[2];
++    if (WE.Id == OpIdx)
++      std::swap(OpE, WE);
++    if (OpE.Id == OpIdx && OpE.Coefficient == OpCoeff &&
++        WE.Coefficient == -OpCoeff)
++      WIndices.push_back(WE.Id);
++  }
++  if (WIndices.empty())
++    return false;
++
++  return any_of(Value2Index, [&](const auto &KV) {
++    auto [W, Idx] = KV;
++    auto *WTy = dyn_cast<IntegerType>(W->getType());
++    // Some facts, e.g. `abs(X) >= X`, are added for a possibly poison W.
++    return WTy && WTy->getBitWidth() <= Slack.getBitWidth() &&
++           is_contained(WIndices, Idx) && isGuaranteedNotToBePoison(W);
++  });
++}
++
+ void ConstraintInfo::transferToOtherSystem(
+     CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+     unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack) {
+diff --git a/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll b/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
+index 99d23570f2d889..3942738de3c471 100644
+--- a/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
++++ b/llvm/test/Analysis/ScalarEvolution/unknown_phis.ll
+@@ -71,4 +71,103 @@ exit:
+ }
+ 
+ 
++define void @merge_lcssa_phi_of_nsw_iv(i32 %n, i1 %c0, i1 %c1) {
++; CHECK-LABEL: 'merge_lcssa_phi_of_nsw_iv'
++; CHECK-NEXT:  Classifying expressions for: @merge_lcssa_phi_of_nsw_iv
++; CHECK-NEXT:    %iv = phi i32 [ 0, %check ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + (1 smax %n))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw nsw i32 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,-2147483648) S: [1,-2147483648) Exits: (1 smax %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.lcssa = phi i32 [ %iv, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2147483647) S: [0,2147483647) --> (-1 + (1 smax %n))<nsw> U: [0,2147483647) S: [0,2147483647)
++; CHECK-NEXT:    %m = phi i32 [ 0, %entry ], [ 0, %check ], [ %iv.lcssa, %exit ]
++; CHECK-NEXT:    --> %m U: [0,-2147483648) S: [0,-2147483648)
++; CHECK-NEXT:  Determining loop execution counts for: @merge_lcssa_phi_of_nsw_iv
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br i1 %c0, label %merge, label %check
++
++check:
++  br i1 %c1, label %merge, label %loop
++
++loop:
++  %iv = phi i32 [ 0, %check ], [ %iv.next, %loop ]
++  %iv.next = add nuw nsw i32 %iv, 1
++  %ec = icmp slt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  %iv.lcssa = phi i32 [ %iv, %loop ]
++  br label %merge
++
++merge:
++  %m = phi i32 [ 0, %entry ], [ 0, %check ], [ %iv.lcssa, %exit ]
++  ret void
++}
++
++define void @merge_single_incoming_phi_edge_cond(ptr %q, i1 %c0) {
++; CHECK-LABEL: 'merge_single_incoming_phi_edge_cond'
++; CHECK-NEXT:  Classifying expressions for: @merge_single_incoming_phi_edge_cond
++; CHECK-NEXT:    %v = load i8, ptr %q, align 1
++; CHECK-NEXT:    --> %v U: full-set S: full-set
++; CHECK-NEXT:    %p1 = phi i8 [ %v, %e ]
++; CHECK-NEXT:    --> %v U: full-set S: full-set
++; CHECK-NEXT:    %p = phi i8 [ %p1, %l ], [ 0, %entry ]
++; CHECK-NEXT:    --> %p U: [0,16) S: [0,16)
++; CHECK-NEXT:  Determining loop execution counts for: @merge_single_incoming_phi_edge_cond
++;
++entry:
++  br i1 %c0, label %e, label %merge
++
++e:
++  %v = load i8, ptr %q
++  br label %l
++
++l:
++  %p1 = phi i8 [ %v, %e ]
++  %c = icmp ult i8 %p1, 16
++  br i1 %c, label %merge, label %other
++
++other:
++  ret void
++
++merge:
++  %p = phi i8 [ %p1, %l ], [ 0, %entry ]
++  ret void
++}
++
++define void @merge_single_incoming_phi_cycle_in_dead_code(i32 %a, i1 %c) {
++; CHECK-LABEL: 'merge_single_incoming_phi_cycle_in_dead_code'
++; CHECK-NEXT:  Classifying expressions for: @merge_single_incoming_phi_cycle_in_dead_code
++; CHECK-NEXT:    %p1 = phi i32 [ %p2, %dead2 ]
++; CHECK-NEXT:    --> poison U: full-set S: full-set
++; CHECK-NEXT:    %p2 = phi i32 [ %p1, %dead1 ]
++; CHECK-NEXT:    --> poison U: full-set S: full-set
++; CHECK-NEXT:    %m = phi i32 [ %p1, %dead1 ], [ 0, %entry ], [ %a, %other ]
++; CHECK-NEXT:    --> %m U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @merge_single_incoming_phi_cycle_in_dead_code
++;
++entry:
++  br i1 %c, label %exit, label %other
++
++other:
++  br label %exit
++
++dead1:
++  %p1 = phi i32 [ %p2, %dead2 ]
++  br i1 %c, label %dead2, label %exit
++
++dead2:
++  %p2 = phi i32 [ %p1, %dead1 ]
++  br label %dead1
++
++exit:
++  %m = phi i32 [ %p1, %dead1 ], [ 0, %entry ], [ %a, %other ]
++  ret void
++}
++
+ !0 = !{i32 0, i32 2147483647}
+diff --git a/llvm/test/Analysis/ValueTracking/known-fpclass.ll b/llvm/test/Analysis/ValueTracking/known-fpclass.ll
+index 02289fd2641cf1..676eb640ee83f5 100644
+--- a/llvm/test/Analysis/ValueTracking/known-fpclass.ll
++++ b/llvm/test/Analysis/ValueTracking/known-fpclass.ll
+@@ -54,3 +54,35 @@ define i1 @vector_reverse_fpclass_demanded_fail(<4 x double> %vec, double nofpcl
+   %cmp = fcmp oge double %ele, 0.0
+   ret i1 %cmp
+ }
++
++define i1 @merge_single_incoming_phi_cycle_in_dead_code(i1 %c) {
++; CHECK-LABEL: @merge_single_incoming_phi_cycle_in_dead_code(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[EXIT:%.*]]
++; CHECK:       dead1:
++; CHECK-NEXT:    [[P1:%.*]] = phi double [ [[P2:%.*]], [[DEAD2:%.*]] ]
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[DEAD2]], label [[EXIT]]
++; CHECK:       dead2:
++; CHECK-NEXT:    [[P2]] = phi double [ [[P1]], [[DEAD1:%.*]] ]
++; CHECK-NEXT:    br label [[DEAD1]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[M:%.*]] = phi double [ [[P1]], [[DEAD1]] ], [ 1.000000e+00, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[R:%.*]] = fcmp olt double [[M]], 0.000000e+00
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  br label %exit
++
++dead1:
++  %p1 = phi double [ %p2, %dead2 ]
++  br i1 %c, label %dead2, label %exit
++
++dead2:
++  %p2 = phi double [ %p1, %dead1 ]
++  br label %dead1
++
++exit:
++  %m = phi double [ %p1, %dead1 ], [ 1.0, %entry ]
++  %r = fcmp olt double %m, 0.0
++  ret i1 %r
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 9d60fc72704827..8744b6fcb29c20 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -257,7 +257,7 @@ define i1 @latch_counted_signed_header_check_removable(ptr %p, i64 %n) {
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_HEADER]], label %[[EXIT_0]]
+ ; CHECK:       [[EXIT_0]]:
+@@ -303,7 +303,7 @@ define i1 @latch_counted_signed_header_check_missing_precond(ptr %p, i64 %n) {
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_HEADER]], label %[[EXIT_0:.*]]
+ ; CHECK:       [[EXIT_0]]:
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+index 0f6bce64a7339d..a8fb53260f5f10 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+@@ -21,7 +21,7 @@ define void @postinc_symbolic_start_unsigned(i32 %start, i32 %n, i1 %c) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_2]])
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -71,7 +71,7 @@ define void @postinc_symbolic_start_signed(i32 %start, i32 %n, i1 %c) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_2]])
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -254,7 +254,7 @@ define void @phi_compare_symbolic_start_non_strict_precondition(i32 %start, i32
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i32 [[IV]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_0]])
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+@@ -553,7 +553,7 @@ define void @postinc_symbolic_start_header_is_latch(i32 %start, i32 %n) {
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+@@ -632,7 +632,7 @@ define void @postinc_symbolic_start_header_is_latch_exit_block(i32 %start, i32 %
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+diff --git a/llvm/test/Transforms/ConstraintElimination/minmax.ll b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+index ffcc7a8bcf7e60..937cc470490354 100644
+--- a/llvm/test/Transforms/ConstraintElimination/minmax.ll
++++ b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+@@ -584,7 +584,7 @@ define i32 @simplify_ult_smax_val_fail2(i32 %a, i32 %b) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[A]], [[B]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[A]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[A]], 1
+ ; CHECK-NEXT:    [[MAX:%.*]] = call i32 @llvm.smax.i32(i32 [[B]], i32 [[ADD]])
+ ; CHECK-NEXT:    ret i32 [[MAX]]
+ ; CHECK:       else:
+diff --git a/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll b/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
+index 757a949fbc2d71..54fefff7e01c68 100644
+--- a/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
+@@ -139,29 +139,24 @@ define i1 @test_add_nsw(i8 %start, i8 %low, i8 %high) {
+ ; CHECK-NEXT:    ret i1 [[RES_15]]
+ ; CHECK:       if.else:
+ ; CHECK-NEXT:    [[F_0:%.*]] = icmp ugt i8 [[START]], [[HIGH]]
+-; CHECK-NEXT:    [[START_1:%.*]] = add nuw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = add nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    [[F_1:%.*]] = icmp uge i8 [[START_1]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_0:%.*]] = xor i1 [[F_0]], [[F_1]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[RES_0]], false
+-; CHECK-NEXT:    [[SC_2:%.*]] = icmp sge i8 [[START_1]], [[HIGH]]
+-; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], [[SC_2]]
+-; CHECK-NEXT:    [[START_2:%.*]] = add nuw i8 [[START]], 2
++; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], false
++; CHECK-NEXT:    [[START_2:%.*]] = add nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    [[F_2:%.*]] = icmp uge i8 [[START_2]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_3:%.*]] = xor i1 [[RES_2]], [[F_2]]
+-; CHECK-NEXT:    [[SC_3:%.*]] = icmp sge i8 [[START_2]], [[HIGH]]
+-; CHECK-NEXT:    [[RES_4:%.*]] = xor i1 [[RES_3]], [[SC_3]]
+-; CHECK-NEXT:    [[SC_4:%.*]] = icmp sle i8 [[START_2]], [[START_1]]
+-; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_4]], [[SC_4]]
+-; CHECK-NEXT:    [[START_3:%.*]] = add nuw i8 [[START]], 3
++; CHECK-NEXT:    [[RES_4:%.*]] = xor i1 [[RES_3]], false
++; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_4]], false
++; CHECK-NEXT:    [[START_3:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[F_3:%.*]] = icmp uge i8 [[START_3]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_6:%.*]] = xor i1 [[RES_5]], [[F_3]]
+-; CHECK-NEXT:    [[SC_5:%.*]] = icmp sge i8 [[START_3]], [[START_1]]
+-; CHECK-NEXT:    [[RES_7:%.*]] = xor i1 [[RES_6]], [[SC_5]]
+-; CHECK-NEXT:    [[START_4:%.*]] = add nuw i8 [[START]], 4
++; CHECK-NEXT:    [[RES_7:%.*]] = xor i1 [[RES_6]], true
++; CHECK-NEXT:    [[START_4:%.*]] = add nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[UC_2:%.*]] = icmp uge i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_8:%.*]] = xor i1 [[RES_7]], [[UC_2]]
+-; CHECK-NEXT:    [[SC_6:%.*]] = icmp sge i8 [[START_4]], [[START_1]]
+-; CHECK-NEXT:    [[RES_9:%.*]] = xor i1 [[RES_8]], [[SC_6]]
++; CHECK-NEXT:    [[RES_9:%.*]] = xor i1 [[RES_8]], true
+ ; CHECK-NEXT:    [[SC_7:%.*]] = icmp sge i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_10:%.*]] = xor i1 [[RES_9]], [[SC_7]]
+ ; CHECK-NEXT:    ret i1 [[RES_10]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+index 2f6a8a3433e1fb..d43a146519d96b 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+@@ -391,7 +391,7 @@ define void @add_rec_decreasing_no_wrap_flags_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[U:%.*]] = icmp ule i8 [[K_0]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[U]])
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -431,7 +431,7 @@ define void @add_rec_decreasing_sub_step_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_DEC]] = sub i8 [[K_0]], 1
++; CHECK-NEXT:    [[K_DEC]] = sub nsw i8 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
+index 11fb48ff007f54..75085248618458 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
+@@ -18,10 +18,10 @@ define void @start_value_of_inner_add_rec_is_add_rec_condition_can_be_simplified
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[OUTER_LATCH]], label [[INNER_LATCH]]
+ ; CHECK:       inner.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_INC]] = add i32 [[K_0]], 1
++; CHECK-NEXT:    [[K_INC]] = add nuw i32 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -69,10 +69,10 @@ define void @start_value_of_inner_add_rec_is_add_rec_condition_cannot_be_simplif
+ ; CHECK:       inner.latch:
+ ; CHECK-NEXT:    [[CMP_NOT_I:%.*]] = icmp ult i32 [[K_0]], 3
+ ; CHECK-NEXT:    call void @use(i1 [[CMP_NOT_I]])
+-; CHECK-NEXT:    [[K_INC]] = add i32 [[K_0]], 1
++; CHECK-NEXT:    [[K_INC]] = add nuw i32 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -121,7 +121,7 @@ define void @inner_add_rec_decreasing(i32 noundef %len) {
+ ; CHECK-NEXT:    [[K_DEC]] = add i32 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+index ff27d0f8007dbb..94507e08f3fa44 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+@@ -11,7 +11,7 @@ define void @signed_iv_step_1(i64 %end) {
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ], [ -10, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+@@ -218,7 +218,7 @@ define void @signed_iv_step_minus1(i64 %end) {
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ], [ 10, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], -1
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+diff --git a/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll b/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll
+new file mode 100644
+index 00000000000000..11b74a32e53981
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll
+@@ -0,0 +1,382 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; Every non-poison value in a constraint system is in the range of its type,
++; but the systems do not contain those bounds. A bound `Op + Slack <= W` on some
++; other non-poison value W of the system therefore proves `Op <= SMAX - Slack`
++; (and the mirrored form proves `Op >= SMIN + Slack`) even though the solver
++; cannot derive it.
++
++declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64)
++declare { i8, i1 } @llvm.uadd.with.overflow.i8(i8, i8)
++declare void @llvm.assume(i1)
++declare void @use(i8)
++declare i32 @llvm.abs.i32(i32, i1)
++
++; A s< W (W a variable, hence W s<= SMAX) proves A + 1 does not overflow.
++define i1 @sadd_one_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sadd_one_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A s> W (W a variable, hence W s>= SMIN) proves A + (-1) does not overflow.
++define i1 @sadd_negone_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sadd_negone_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 -1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A non-strict bound A s<= W does not prove A + 1 is in range (A and W could
++; both be SMAX), so the overflow check must be kept.
++define i1 @neg_sadd_one_witness_sle(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_sadd_one_witness_sle(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sle i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 1)
++; CHECK-NEXT:    [[O:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    ret i1 [[O]]
++;
++  %pre = icmp sle i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A s< W only gives A s<= SMAX - 1, which does not cover an addend of 2.
++define i1 @neg_sadd_two_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_sadd_two_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 2)
++; CHECK-NEXT:    [[O:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    ret i1 [[O]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 2)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; The same reasoning strengthens the flags of a plain add.
++define i64 @add_one_nsw_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @add_one_nsw_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
++
++; Narrower types are affected in the same way: the limit itself is
++; representable, but the system still does not know that W is at most SMAX.
++define i32 @add_one_nsw_witness_slt_i32(i32 %a, i32 %w) {
++; CHECK-LABEL: define i32 @add_one_nsw_witness_slt_i32(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i32 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[A]], 1
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %pre = icmp slt i32 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i32 %a, 1
++  ret i32 %add
++}
++
++; A s> W proves A s>= SMIN + 1, so A - 1 does not wrap.
++define i64 @sub_one_nsw_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @sub_one_nsw_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[SUB]]
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %sub = sub i64 %a, 1
++  ret i64 %sub
++}
++
++; The unsigned system has the same gap: A u< W proves A u<= UMAX - 1.
++define i64 @add_one_nuw_witness_ult(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @add_one_nuw_witness_ult(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %pre = icmp ult i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
++
++; A witness bound with a larger gap discharges a larger addend: A + 4 s< W
++; gives A s<= SMAX - 5.
++define void @add_witness_slack_5(i8 %a, i8 %w) {
++; CHECK-LABEL: define void @add_witness_slack_5(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nsw i8 [[A]], 4
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[A]], 5
++; CHECK-NEXT:    call void @use(i8 [[ADD]])
++; CHECK-NEXT:    ret void
++;
++  %off = add nsw i8 %a, 4
++  %pre = icmp slt i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i8 %a, 5
++  call void @use(i8 %add)
++  ret void
++}
++
++; ... but not an addend beyond that gap.
++define void @neg_add_witness_slack_6(i8 %a, i8 %w) {
++; CHECK-LABEL: define void @neg_add_witness_slack_6(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nsw i8 [[A]], 4
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[A]], 6
++; CHECK-NEXT:    call void @use(i8 [[ADD]])
++; CHECK-NEXT:    ret void
++;
++  %off = add nsw i8 %a, 4
++  %pre = icmp slt i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i8 %a, 6
++  call void @use(i8 %add)
++  ret void
++}
++
++; A uadd.with.overflow with a larger addend, discharged by an unsigned witness.
++define i1 @uadd_witness_slack_3(i8 %a, i8 %w) {
++; CHECK-LABEL: define i1 @uadd_witness_slack_3(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nuw i8 [[A]], 2
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %off = add nuw i8 %a, 2
++  %pre = icmp ult i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 3)
++  %o = extractvalue { i8, i1 } %s, 1
++  ret i1 %o
++}
++
++; The motivating shape: a checked increment of an induction variable that is
++; strictly below a *variable* loop bound.
++define void @loop_checked_increment(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @loop_checked_increment(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[TMP0:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[IV]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    store i8 0, ptr [[P]], align 1
++; CHECK-NEXT:    [[TMP0]] = add nsw i64 [[IV]], 1
++; CHECK-NEXT:    br i1 false, label %[[TRAP:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    unreachable
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %cmp = icmp slt i64 %iv, %n
++  br i1 %cmp, label %loop.latch, label %exit
++
++loop.latch:
++  store i8 0, ptr %p
++  %ovf = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 1)
++  %iv.next = extractvalue { i64, i1 } %ovf, 0
++  %o = extractvalue { i64, i1 } %ovf, 1
++  br i1 %o, label %trap, label %loop.header
++
++trap:
++  unreachable
++
++exit:
++  ret void
++}
++
++; The same loop with a plain increment gets nsw.
++define void @loop_increment_nsw(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @loop_increment_nsw(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[IV]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    store i8 0, ptr [[P]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    br label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %cmp = icmp slt i64 %iv, %n
++  br i1 %cmp, label %loop.latch, label %exit
++
++loop.latch:
++  store i8 0, ptr %p
++  %iv.next = add i64 %iv, 1
++  br label %loop.header
++
++exit:
++  ret void
++}
++
++; A witness wider than A does not bound A by A's own limit: the fact is
++; A s< W over i64, and W may be SMAX32 + 1 while A is SMAX32.
++define i32 @neg_witness_wider_than_op(i32 %a, i64 %w) {
++; CHECK-LABEL: define i32 @neg_witness_wider_than_op(
++; CHECK-SAME: i32 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[SA:%.*]] = sext i32 [[A]] to i64
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[SA]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %sa = sext i32 %a to i64
++  %pre = icmp slt i64 %sa, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i32 %a, 1
++  ret i32 %add
++}
++
++; The same fact narrowed to A's type does prove the bound.
++define i64 @witness_narrower_than_op(i64 %a, i32 %w) {
++; CHECK-LABEL: define i64 @witness_narrower_than_op(
++; CHECK-SAME: i64 [[A:%.*]], i32 [[W:%.*]]) {
++; CHECK-NEXT:    [[SW:%.*]] = sext i32 [[W]] to i64
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[SW]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %sw = sext i32 %w to i64
++  %pre = icmp slt i64 %a, %sw
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
++
++; The fact abs(X) s>= X is added even if X may be poison. If %a is SMAX, %x and
++; %abs are poison, so %abs is not a witness for %a.
++define i32 @neg_witness_abs_may_be_poison(i32 %a) {
++; CHECK-LABEL: define i32 @neg_witness_abs_may_be_poison(
++; CHECK-SAME: i32 [[A:%.*]]) {
++; CHECK-NEXT:    [[X:%.*]] = add nsw i32 [[A]], 1
++; CHECK-NEXT:    [[ABS:%.*]] = call i32 @llvm.abs.i32(i32 [[X]], i1 false)
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %x = add nsw i32 %a, 1
++  %abs = call i32 @llvm.abs.i32(i32 %x, i1 false)
++  %add = add i32 %a, 1
++  ret i32 %add
++}
++
++; The fact %iv s<= %start is added even if %start may be poison. If %a is SMIN,
++; %start and %iv are poison, so %iv is not a witness for %a.
++define i32 @neg_witness_header_phi_may_be_poison(i32 %a, i1 %c) {
++; CHECK-LABEL: define i32 @neg_witness_header_phi_may_be_poison(
++; CHECK-SAME: i32 [[A:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START:%.*]] = add nsw i32 [[A]], -1
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[SUB:%.*]] = add i32 [[A]], -1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], -1
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %start = add nsw i32 %a, -1
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %sub = add i32 %a, -1
++  %iv.next = add nsw i32 %iv, -1
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret i32 %sub
++}
++
++; Same for the unsigned system: if %a is UMAX, %start and %iv are poison.
++define i32 @neg_witness_header_phi_may_be_poison_unsigned(i32 %a, i1 %c) {
++; CHECK-LABEL: define i32 @neg_witness_header_phi_may_be_poison_unsigned(
++; CHECK-SAME: i32 [[A:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[START:%.*]] = add nuw i32 [[A]], 1
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++entry:
++  %start = add nuw i32 %a, 1
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %add = add i32 %a, 1
++  %iv.next = add nuw i32 %iv, 1
++  br i1 %c, label %loop, label %exit
++
++exit:
++  ret i32 %add
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
+index d415845ee5a5d0..a267766658c701 100644
+--- a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
++++ b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
+@@ -161,7 +161,7 @@ define void @iv_may_signed_wrap_variable_trip_count(i8 %N) {
+ ; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ugt i8 [[IV]], 2
+ ; CHECK-NEXT:    call void @use(i1 [[C_0]])
+-; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i8 [[IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit.1:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/FunctionAttrs/noundef.ll b/llvm/test/Transforms/FunctionAttrs/noundef.ll
+index 202ac2257950c9..10640869e0f2e6 100644
+--- a/llvm/test/Transforms/FunctionAttrs/noundef.ll
++++ b/llvm/test/Transforms/FunctionAttrs/noundef.ll
+@@ -233,6 +233,37 @@ define nofpclass(nan) float @compute_not_nofpclass(float noundef nofpclass(nan)
+   ret float %y
+ }
+ 
++define nofpclass(ninf nsub nnorm nzero) double @merge_single_incoming_phi_fabs(double noundef %x, i1 noundef %c0) {
++; CHECK-LABEL: define noundef nofpclass(ninf nzero nsub nnorm) double @merge_single_incoming_phi_fabs(
++; CHECK-SAME: double noundef [[X:%.*]], i1 noundef [[C0:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C0]], label [[E:%.*]], label [[MERGE:%.*]]
++; CHECK:       e:
++; CHECK-NEXT:    [[V:%.*]] = call double @llvm.fabs.f64(double [[X]])
++; CHECK-NEXT:    br label [[L:%.*]]
++; CHECK:       l:
++; CHECK-NEXT:    [[P1:%.*]] = phi double [ [[V]], [[E]] ]
++; CHECK-NEXT:    br label [[MERGE]]
++; CHECK:       merge:
++; CHECK-NEXT:    [[P:%.*]] = phi double [ [[P1]], [[L]] ], [ 1.000000e+00, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    ret double [[P]]
++;
++entry:
++  br i1 %c0, label %e, label %merge
++
++e:
++  %v = call double @llvm.fabs.f64(double %x)
++  br label %l
++
++l:
++  %p1 = phi double [ %v, %e ]
++  br label %merge
++
++merge:
++  %p = phi double [ %p1, %l ], [ 1.0, %entry ]
++  ret double %p
++}
++
+ define nofpclass(nan) float @definitely_nofpclass(float noundef nofpclass(nan) %x) {
+ ; CHECK-LABEL: define noundef nofpclass(nan) float @definitely_nofpclass(
+ ; CHECK-SAME: float noundef returned nofpclass(nan) [[X:%.*]]) #[[ATTR0]] {
+diff --git a/llvm/test/Transforms/InstCombine/freeze-phi.ll b/llvm/test/Transforms/InstCombine/freeze-phi.ll
+index 7daff25747841b..2c8d67af8de42d 100644
+--- a/llvm/test/Transforms/InstCombine/freeze-phi.ll
++++ b/llvm/test/Transforms/InstCombine/freeze-phi.ll
+@@ -240,3 +240,154 @@ if.exit:
+   %ret.fr = freeze float %ret
+   ret float %ret.fr
+ }
++
++define i32 @incoming_used_by_incoming_block_branch(i32 noundef %x, i32 noundef %n) {
++; CHECK-LABEL: @incoming_used_by_incoming_block_branch(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[ADD]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[OTHER:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[ADD]], [[ENTRY:%.*]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    ret i32 [[P]]
++;
++entry:
++  %add = add nsw i32 %x, 1
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %exit, label %other
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i32 [ %add, %entry ], [ 0, %other ]
++  %p.fr = freeze i32 %p
++  ret i32 %p.fr
++}
++
++define i32 @incoming_used_by_incoming_block_branch_maybe_undef(i32 %x, i32 noundef %n) {
++; CHECK-LABEL: @incoming_used_by_incoming_block_branch_maybe_undef(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[AND]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[OTHER:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[AND]], [[ENTRY:%.*]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    [[P_FR:%.*]] = freeze i32 [[P]]
++; CHECK-NEXT:    ret i32 [[P_FR]]
++;
++entry:
++  %and = and i32 %x, 1
++  %cmp = icmp slt i32 %and, %n
++  br i1 %cmp, label %exit, label %other
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i32 [ %and, %entry ], [ 0, %other ]
++  %p.fr = freeze i32 %p
++  ret i32 %p.fr
++}
++
++define i32 @incoming_not_used_by_incoming_block_branch(i32 noundef %x, i32 noundef %n, i1 %c) {
++; CHECK-LABEL: @incoming_not_used_by_incoming_block_branch(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[X:%.*]], 1
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[OTHER:%.*]], label [[EXIT:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[ADD]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT]], label [[RET:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[ADD]], [[ENTRY:%.*]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    [[P_FR:%.*]] = freeze i32 [[P]]
++; CHECK-NEXT:    ret i32 [[P_FR]]
++; CHECK:       ret:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %add = add nsw i32 %x, 1
++  br i1 %c, label %other, label %exit
++
++other:
++  %cmp = icmp slt i32 %add, %n
++  br i1 %cmp, label %exit, label %ret
++
++exit:
++  %p = phi i32 [ %add, %entry ], [ 0, %other ]
++  %p.fr = freeze i32 %p
++  ret i32 %p.fr
++
++ret:
++  ret i32 0
++}
++
++define i32 @incoming_used_by_incoming_block_switch(i32 noundef %x) {
++; CHECK-LABEL: @incoming_used_by_incoming_block_switch(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[MUL:%.*]] = mul i32 [[ADD]], 3
++; CHECK-NEXT:    switch i32 [[MUL]], label [[OTHER:%.*]] [
++; CHECK-NEXT:      i32 3, label [[EXIT:%.*]]
++; CHECK-NEXT:      i32 5, label [[RET:%.*]]
++; CHECK-NEXT:    ]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[ADD]], [[ENTRY:%.*]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    ret i32 [[P]]
++; CHECK:       ret:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %add = add nsw i32 %x, 1
++  %mul = mul i32 %add, 3
++  switch i32 %mul, label %other [
++  i32 3, label %exit
++  i32 5, label %ret
++  ]
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i32 [ %add, %entry ], [ 0, %other ]
++  %p.fr = freeze i32 %p
++  ret i32 %p.fr
++
++ret:
++  ret i32 0
++}
++
++define i32 @incoming_used_by_incoming_block_branch_select_arm(i32 noundef %x, i32 noundef %y, i1 noundef %c) {
++; CHECK-LABEL: @incoming_used_by_incoming_block_branch_select_arm(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[X:%.*]], 1
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[C:%.*]], i32 [[ADD]], i32 [[Y:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[SEL]], 7
++; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[OTHER:%.*]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ [[ADD]], [[ENTRY:%.*]] ], [ 0, [[OTHER]] ]
++; CHECK-NEXT:    [[P_FR:%.*]] = freeze i32 [[P]]
++; CHECK-NEXT:    ret i32 [[P_FR]]
++;
++entry:
++  %add = add nsw i32 %x, 1
++  %sel = select i1 %c, i32 %add, i32 %y
++  %cmp = icmp eq i32 %sel, 7
++  br i1 %cmp, label %exit, label %other
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i32 [ %add, %entry ], [ 0, %other ]
++  %p.fr = freeze i32 %p
++  ret i32 %p.fr
++}
+diff --git a/llvm/test/Transforms/InstCombine/freeze.ll b/llvm/test/Transforms/InstCombine/freeze.ll
+index 5938c31393258c..4a481726578513 100644
+--- a/llvm/test/Transforms/InstCombine/freeze.ll
++++ b/llvm/test/Transforms/InstCombine/freeze.ll
+@@ -1526,7 +1526,7 @@ define void @fold_phi_invoke_noundef_start_value(i32 %n) personality ptr undef {
+ ; CHECK-NEXT:            to label %[[LOOP:.*]] unwind label %[[UNWIND:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ [[INIT]], %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[I_NEXT]] = add i32 [[I]], 1
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I]], 1
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP]], label %[[EXIT:.*]]
+ ; CHECK:       [[UNWIND]]:
+@@ -1555,6 +1555,43 @@ exit:
+   ret void
+ }
+ 
++define void @fold_phi_invoke_noundef_start_value_exit_cond_on_phi(i32 %n) personality ptr undef {
++; CHECK-LABEL: define void @fold_phi_invoke_noundef_start_value_exit_cond_on_phi(
++; CHECK-SAME: i32 [[N:%.*]]) personality ptr undef {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[INIT:%.*]] = invoke noundef i32 @get_i32()
++; CHECK-NEXT:            to label %[[LOOP:.*]] unwind label %[[UNWIND:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ [[INIT]], %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[I_NEXT]] = add i32 [[I]], 1
++; CHECK-NEXT:    [[COND:%.*]] = icmp eq i32 [[I]], [[N]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[UNWIND]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = landingpad i8
++; CHECK-NEXT:            cleanup
++; CHECK-NEXT:    unreachable
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %init = invoke noundef i32 @get_i32()
++  to label %loop unwind label %unwind
++
++loop:
++  %i = phi i32 [ %init, %entry ], [ %i.next, %loop ]
++  %i.fr = freeze i32 %i
++  %i.next = add nsw nuw i32 %i.fr, 1
++  %cond = icmp eq i32 %i, %n
++  br i1 %cond, label %loop, label %exit
++
++unwind:
++  landingpad i8 cleanup
++  unreachable
++
++exit:
++  ret void
++}
++
+ define ptr @freeze_load_noundef(ptr %ptr) {
+ ; CHECK-LABEL: define ptr @freeze_load_noundef(
+ ; CHECK-SAME: ptr [[PTR:%.*]]) {
+diff --git a/llvm/test/Transforms/InstCombine/select-and-or.ll b/llvm/test/Transforms/InstCombine/select-and-or.ll
+index ac1e3f05d6083c..6088a2c47174e9 100644
+--- a/llvm/test/Transforms/InstCombine/select-and-or.ll
++++ b/llvm/test/Transforms/InstCombine/select-and-or.ll
+@@ -1468,6 +1468,72 @@ define i8 @test_logical_commuted_and_ne_a_b(i1 %other_cond, i8 %a, i8 %b)  {
+ !0 = !{!"function_entry_count", i64 1000}
+ !1 = !{!"branch_weights", i32 2, i32 3}
+ !2 = !{!"branch_weights", i32 3, i32 2}
++
++define i1 @logical_and_phi_incoming_used_by_incoming_block_branch(i32 noundef %x, i32 noundef %y, i1 %b, i1 %c, i1 %d) {
++; CHECK-LABEL: @logical_and_phi_incoming_used_by_incoming_block_branch(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[V:%.*]] = icmp samesign ult i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    call void @use(i1 [[V]])
++; CHECK-NEXT:    br i1 [[B:%.*]], label [[BB:%.*]], label [[OTHER:%.*]]
++; CHECK:       bb:
++; CHECK-NEXT:    [[A:%.*]] = and i1 [[V]], [[D:%.*]]
++; CHECK-NEXT:    br i1 [[A]], label [[EXIT:%.*]], label [[OTHER]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i1 [ [[V]], [[BB]] ], [ false, [[OTHER]] ]
++; CHECK-NEXT:    [[S:%.*]] = and i1 [[C:%.*]], [[P]]
++; CHECK-NEXT:    ret i1 [[S]]
++;
++entry:
++  %v = icmp samesign ult i32 %x, %y
++  call void @use(i1 %v)
++  br i1 %b, label %bb, label %other
++
++bb:
++  %a = and i1 %v, %d
++  br i1 %a, label %exit, label %other
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i1 [ %v, %bb ], [ false, %other ]
++  %s = select i1 %c, i1 %p, i1 false
++  ret i1 %s
++}
++
++define i1 @logical_and_phi_incoming_not_used_by_incoming_block_branch(i32 noundef %x, i32 noundef %y, i1 %b, i1 %c, i1 %d) {
++; CHECK-LABEL: @logical_and_phi_incoming_not_used_by_incoming_block_branch(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[V:%.*]] = icmp samesign ult i32 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    call void @use(i1 [[V]])
++; CHECK-NEXT:    br i1 [[B:%.*]], label [[BB:%.*]], label [[OTHER:%.*]]
++; CHECK:       bb:
++; CHECK-NEXT:    br i1 [[D:%.*]], label [[EXIT:%.*]], label [[OTHER]]
++; CHECK:       other:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[P:%.*]] = phi i1 [ [[V]], [[BB]] ], [ false, [[OTHER]] ]
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C:%.*]], i1 [[P]], i1 false
++; CHECK-NEXT:    ret i1 [[S]]
++;
++entry:
++  %v = icmp samesign ult i32 %x, %y
++  call void @use(i1 %v)
++  br i1 %b, label %bb, label %other
++
++bb:
++  br i1 %d, label %exit, label %other
++
++other:
++  br label %exit
++
++exit:
++  %p = phi i1 [ %v, %bb ], [ false, %other ]
++  %s = select i1 %c, i1 %p, i1 false
++  ret i1 %s
++}
+ ;.
+ ; CHECK: attributes #[[ATTR0:[0-9]+]] = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+ ; CHECK: attributes #[[ATTR1:[0-9]+]] = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll b/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll
+new file mode 100644
+index 00000000000000..89e17f4769ae28
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/X86/cleanup-loop-after-early-exit.ll
+@@ -0,0 +1,98 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes="default<O3>" -S %s | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++; The cleanup loop counting down from the exit value of the first loop should
++; be widened to an i64 IV with a simple exit compare.
++define void @f(i32 %n, i1 %c0, i1 %c1, ptr %bh) {
++; CHECK-LABEL: @f(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C3:%.*]] = icmp sgt i32 [[N:%.*]], 0
++; CHECK-NEXT:    br i1 [[C3]], label [[BODY_LR_PH:%.*]], label [[EXIT:%.*]]
++; CHECK:       body.lr.ph:
++; CHECK-NEXT:    [[C0_FR:%.*]] = freeze i1 [[C0:%.*]]
++; CHECK-NEXT:    br i1 [[C0_FR]], label [[BODY_US:%.*]], label [[BODY_LR_PH_SPLIT:%.*]]
++; CHECK:       body.us:
++; CHECK-NEXT:    [[F_US:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       body.lr.ph.split:
++; CHECK-NEXT:    [[C1_FR:%.*]] = freeze i1 [[C1:%.*]]
++; CHECK-NEXT:    br i1 [[C1_FR]], label [[BODY_US5:%.*]], label [[BODY:%.*]]
++; CHECK:       body.us5:
++; CHECK-NEXT:    [[F_US7:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br i1 [[F_US7]], label [[EXIT]], label [[INNER:%.*]]
++; CHECK:       body:
++; CHECK-NEXT:    [[I4:%.*]] = phi i32 [ [[I_NEXT:%.*]], [[INNER_PREHEADER:%.*]] ], [ 0, [[BODY_LR_PH_SPLIT]] ]
++; CHECK-NEXT:    [[F:%.*]] = tail call i1 @fail()
++; CHECK-NEXT:    br i1 [[F]], label [[CLEANUP_PREHEADER:%.*]], label [[INNER_PREHEADER]]
++; CHECK:       inner.preheader:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I4]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[EXIT]], label [[BODY]]
++; CHECK:       cleanup.preheader:
++; CHECK-NEXT:    [[MORE11_NOT:%.*]] = icmp eq i32 [[I4]], 0
++; CHECK-NEXT:    br i1 [[MORE11_NOT]], label [[EXIT]], label [[CLEANUP_BODY_PREHEADER:%.*]]
++; CHECK:       cleanup.body.preheader:
++; CHECK-NEXT:    [[J10:%.*]] = add nsw i32 [[I4]], -1
++; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[J10]] to i64
++; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[I4]] to i64
++; CHECK-NEXT:    br label [[CLEANUP_BODY:%.*]]
++; CHECK:       inner:
++; CHECK-NEXT:    br label [[INNER]]
++; CHECK:       cleanup.body:
++; CHECK-NEXT:    [[INDVARS_IV17:%.*]] = phi i64 [ [[TMP1]], [[CLEANUP_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT18:%.*]], [[CLEANUP_BODY]] ]
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], [[CLEANUP_BODY_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], [[CLEANUP_BODY]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr [16 x i8], ptr [[BH:%.*]], i64 [[INDVARS_IV17]]
++; CHECK-NEXT:    store i32 0, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], -1
++; CHECK-NEXT:    [[MORE_NOT:%.*]] = icmp eq i64 [[INDVARS_IV]], 0
++; CHECK-NEXT:    [[INDVARS_IV_NEXT18]] = add nsw i64 [[INDVARS_IV17]], -1
++; CHECK-NEXT:    br i1 [[MORE_NOT]], label [[EXIT]], label [[CLEANUP_BODY]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %latch ]
++  %x = phi i32 [ %n, %entry ], [ %x.inner, %latch ]
++  %c = icmp slt i32 %i, %n
++  br i1 %c, label %body, label %exit
++
++body:
++  %f = call i1 @fail()
++  %bail = select i1 %f, i1 true, i1 %c0
++  br i1 %bail, label %cleanup, label %inner
++
++inner:
++  %x.inner = phi i32 [ %x.or, %inner.body ], [ 0, %body ]
++  br i1 %c1, label %inner.body, label %latch
++
++inner.body:
++  %x.or = or i32 %x, 1
++  br label %inner
++
++latch:
++  %i.next = add i32 %i, 1
++  br label %loop
++
++cleanup:
++  %j.in = phi i32 [ %j, %cleanup.body ], [ %i, %body ]
++  %j = add i32 %j.in, -1
++  %more = icmp sgt i32 %j, -1
++  br i1 %more, label %cleanup.body, label %exit
++
++cleanup.body:
++  %idx = zext i32 %j.in to i64
++  %gep = getelementptr [16 x i8], ptr %bh, i64 %idx
++  store i32 0, ptr %gep, align 4
++  br label %cleanup
++
++exit:
++  ret void
++}
++
++declare i1 @fail()
+diff --git a/llvm/test/Transforms/PhaseOrdering/freeze-loop-exit-phi-after-unswitch.ll b/llvm/test/Transforms/PhaseOrdering/freeze-loop-exit-phi-after-unswitch.ll
+new file mode 100644
+index 00000000000000..3adcecbb816663
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/freeze-loop-exit-phi-after-unswitch.ll
+@@ -0,0 +1,74 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes='default<O3>' -S %s | FileCheck %s
++
++; Search loop `for (i = 0; i < *n; i++) if (!match(i)) break;` followed by a
++; loop whose only condition is the loop-invariant `i > 0`, which gets unswitched
++; with a freeze. The freeze must not block folding `i > 0` on the exit edges:
++; the exiting value %i.next cannot be poison on the latch exit edge, as it feeds
++; the latch branch.
++
++define void @search_loop_exit_value_unswitched(ptr %n, ptr %p) {
++; CHECK-LABEL: @search_loop_exit_value_unswitched(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[BOUND1:%.*]] = load volatile i32, ptr [[N:%.*]], align 4
++; CHECK-NEXT:    [[IN2:%.*]] = icmp sgt i32 [[BOUND1]], 0
++; CHECK-NEXT:    br i1 [[IN2]], label [[BODY:%.*]], label [[WAIT_PREHEADER:%.*]]
++; CHECK:       body:
++; CHECK-NEXT:    [[I3:%.*]] = phi i32 [ [[I_NEXT:%.*]], [[LATCH:%.*]] ], [ 0, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    tail call void @use(i32 noundef [[I3]])
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr [[P:%.*]], align 4
++; CHECK-NEXT:    [[MATCH:%.*]] = icmp eq i32 [[V]], 0
++; CHECK-NEXT:    br i1 [[MATCH]], label [[LATCH]], label [[EXIT:%.*]]
++; CHECK:       latch:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I3]], 1
++; CHECK-NEXT:    [[BOUND:%.*]] = load volatile i32, ptr [[N]], align 4
++; CHECK-NEXT:    [[IN:%.*]] = icmp slt i32 [[I_NEXT]], [[BOUND]]
++; CHECK-NEXT:    br i1 [[IN]], label [[BODY]], label [[RET:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[DOTNOT:%.*]] = icmp eq i32 [[I3]], 0
++; CHECK-NEXT:    br i1 [[DOTNOT]], label [[WAIT_PREHEADER]], label [[RET]]
++; CHECK:       wait.preheader:
++; CHECK-NEXT:    store volatile i32 0, ptr [[P]], align 4
++; CHECK-NEXT:    unreachable
++; CHECK:       ret:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %entry ], [ %i.next, %latch ]
++  %bound = load volatile i32, ptr %n, align 4
++  %in = icmp slt i32 %i, %bound
++  br i1 %in, label %body, label %exit
++
++body:
++  call void @use(i32 noundef %i)
++  %v = load volatile i32, ptr %p, align 4
++  %match = icmp eq i32 %v, 0
++  br i1 %match, label %latch, label %exit
++
++latch:
++  %i.next = add i32 %i, 1
++  br label %loop
++
++exit:
++  br label %wait
++
++wait:
++  %again = phi i1 [ false, %exit ], [ true, %wait.latch ]
++  br i1 %again, label %fail, label %wait.latch
++
++fail:
++  store volatile i32 0, ptr %p, align 4
++  unreachable
++
++wait.latch:
++  %pos = icmp sgt i32 %i, 0
++  br i1 %pos, label %ret, label %wait
++
++ret:
++  ret void
++}
++
++declare void @use(i32)
+diff --git a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+index 7bba70a97b1bbd..0b95d2d89e2efe 100644
+--- a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
++++ b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+@@ -358,7 +358,7 @@ define void @monkey(ptr noundef %arr, i32 noundef %len) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[INC]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[FOR_BODY4_PREHEADER]], label %[[FOR_COND_CLEANUP]]
+ ; CHECK:       [[FOR_BODY4]]:
+-; CHECK-NEXT:    [[K_07:%.*]] = phi i32 [ [[DEC:%.*]], %[[FOR_BODY4]] ], [ [[I_09]], %[[FOR_BODY4_PREHEADER]] ]
++; CHECK-NEXT:    [[K_07:%.*]] = phi i32 [ [[I_09]], %[[FOR_BODY4_PREHEADER]] ], [ [[DEC:%.*]], %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[IDX_EXT_I:%.*]] = zext i32 [[K_07]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[ARR]], i64 [[IDX_EXT_I]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4

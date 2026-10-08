@@ -202,11 +202,9 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtN
 
 _RINvYNtNtNtCs9Jn0q30Ea0B_6object4read4wasm19WasmSectionIteratorNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvBZ_4find5checkNtB5_11WasmSectionNCNvXs1_B5_NtB5_8WasmFileNtNtB7_6traits6Object21section_by_name_bytes0E0INtNtNtB17_3ops12control_flow11ControlFlowB2p_EECs4phXRVW1pDQ_9dwarfdump.exit: ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtNtNtCs9Jn0q30Ea0B_6object4read4wasm11WasmSectionNCNvXs1_B1e_NtB1e_8WasmFileNtNtB1g_6traits6Object21section_by_name_bytes0E0Cs4phXRVW1pDQ_9dwarfdump.exit.i, %_RNCNvXs1_NtNtCs9Jn0q30Ea0B_6object4read4wasmNtB7_8WasmFileNtNtB9_6traits6Object21section_by_name_bytes0Cs4phXRVW1pDQ_9dwarfdump.exit.i.i, %bb.a
   %.lcssa.i = phi ptr [ %i.b, %bb.a ], [ %i.e, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtNtNtCs9Jn0q30Ea0B_6object4read4wasm11WasmSectionNCNvXs1_B1e_NtB1e_8WasmFileNtNtB1g_6traits6Object21section_by_name_bytes0E0Cs4phXRVW1pDQ_9dwarfdump.exit.i ], [ %i.g, %_RNCNvXs1_NtNtCs9Jn0q30Ea0B_6object4read4wasmNtB7_8WasmFileNtNtB9_6traits6Object21section_by_name_bytes0Cs4phXRVW1pDQ_9dwarfdump.exit.i.i ]
-  %.sroa.0.0.i = phi ptr [ null, %bb.a ], [ null, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtNtNtCs9Jn0q30Ea0B_6object4read4wasm11WasmSectionNCNvXs1_B1e_NtB1e_8WasmFileNtNtB1g_6traits6Object21section_by_name_bytes0E0Cs4phXRVW1pDQ_9dwarfdump.exit.i ], [ %0, %_RNCNvXs1_NtNtCs9Jn0q30Ea0B_6object4read4wasmNtB7_8WasmFileNtNtB9_6traits6Object21section_by_name_bytes0Cs4phXRVW1pDQ_9dwarfdump.exit.i.i ] ; 2 uses
+  %.sroa.0.0.i = phi ptr [ null, %bb.a ], [ null, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtNtNtCs9Jn0q30Ea0B_6object4read4wasm11WasmSectionNCNvXs1_B1e_NtB1e_8WasmFileNtNtB1g_6traits6Object21section_by_name_bytes0E0Cs4phXRVW1pDQ_9dwarfdump.exit.i ], [ %0, %_RNCNvXs1_NtNtCs9Jn0q30Ea0B_6object4read4wasmNtB7_8WasmFileNtNtB9_6traits6Object21section_by_name_bytes0Cs4phXRVW1pDQ_9dwarfdump.exit.i.i ]
   %i.q = insertvalue { ptr, ptr } poison, ptr %.sroa.0.0.i, 0
-  %.not = icmp eq ptr %.sroa.0.0.i, null
-  %spec.select = select i1 %.not, ptr undef, ptr %.lcssa.i
-  %i.r = insertvalue { ptr, ptr } %i.q, ptr %spec.select, 1
+  %i.r = insertvalue { ptr, ptr } %i.q, ptr %.lcssa.i, 1
   ret { ptr, ptr } %i.r
 }
 

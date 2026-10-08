@@ -202,10 +202,10 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   br i1 %.not, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %.thread.i
-  %or.cond = select i1 %.not74.i.not, i1 %.6.i, i1 false
+  %4 = and i1 %.6.i, %.not74.i.not
   %i.ap = and i32 %i.an, 1
   %.not9 = icmp eq i32 %i.ap, 0
-  %or.cond11 = or i1 %.not9, %or.cond
+  %or.cond11 = or i1 %.not9, %4
   br i1 %or.cond11, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

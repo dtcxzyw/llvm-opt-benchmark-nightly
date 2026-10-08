@@ -205,7 +205,7 @@ bb.fb:                                            ; preds = %_RINvMs2_Cs44SRMMtl
 bb.fc:                                            ; preds = %bb.fa
   %i.sw = icmp ne i64 %.sroa.0128.5.i.i, 3
   %i.sx = icmp eq i64 %.sroa.723.0.i.i, 1
-  %or.cond4.i.i = select i1 %i.sw, i1 true, i1 %i.sx
+  %or.cond4.i.i = or i1 %i.sx, %i.sw
   %i.sy = icmp eq i64 %.sroa.061.1.i.i, 0
   %or.cond5.i.i = or i1 %i.sy, %or.cond4.i.i
   br i1 %or.cond5.i.i, label %.critedge75.i.i, label %bb.ff
@@ -608,7 +608,7 @@ bb.mo:                                            ; preds = %_RINvMs2_Cs44SRMMtl
 bb.mp:                                            ; preds = %bb.mn
   %i.ait = icmp ne i64 %.sroa.0128.5.i.i236, 3
   %i.aiu = icmp eq i64 %.sroa.723.0.i.i160, 1
-  %or.cond4.i.i245 = select i1 %i.ait, i1 true, i1 %i.aiu
+  %or.cond4.i.i245 = or i1 %i.aiu, %i.ait
   %i.aiv = icmp eq i64 %.sroa.061.1.i.i159, 0
   %or.cond5.i.i246 = or i1 %i.aiv, %or.cond4.i.i245
   br i1 %or.cond5.i.i246, label %.critedge75.i.i241, label %bb.ms

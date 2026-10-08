@@ -204,8 +204,7 @@ bb.a:
   %i.n = call i64 @llvm.umax.i64(i64 %i.j, i64 %i.m)
   %i.o = xor i64 %.05573.us, -1
   %i.p = add i64 %i.n, %i.o
-  %6 = freeze i64 %i.p
-  %i.q = call i64 @llvm.umin.i64(i64 %6, i64 %i.i) ; 2 uses
+  %i.q = call i64 @llvm.umin.i64(i64 %i.p, i64 %i.i) ; 2 uses
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.q, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck

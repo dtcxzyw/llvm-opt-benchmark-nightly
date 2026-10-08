@@ -53,8 +53,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.p, label %.loopexit152, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.1138 = phi i64 [ %i.n, %bb.g ], [ %.0137, %bb.f ]
-  %.1138.fr = freeze i64 %.1138                   ; 13 uses
+  %.1138 = phi i64 [ %i.n, %bb.g ], [ %.0137, %bb.f ] ; 13 uses
   %i.q = icmp slt i64 %.0130, 0
   br i1 %i.q, label %bb.i, label %bb.j
 
@@ -71,30 +70,30 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.0136 = phi ptr [ %i.t, %bb.i ], [ %4, %bb.h ] ; 4 uses
   %.1134 = phi ptr [ %i.v, %bb.i ], [ %.0133, %bb.h ] ; 4 uses
   %.0131 = phi i64 [ %i.n, %bb.i ], [ %0, %bb.h ] ; 3 uses
-  %i.x = icmp sgt i64 %.0131, %.1138.fr
+  %i.x = icmp sgt i64 %.0131, %.1138
   br i1 %i.x, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.y = sub nsw i64 %.0131, %.1138.fr
-  %i.z = mul nsw i64 %.1138.fr, %2
+  %i.y = sub nsw i64 %.0131, %.1138
+  %i.z = mul nsw i64 %.1138, %2
   %i.aa = getelementptr inbounds [8 x i8], ptr %.0136, i64 %i.z
-  %i.ab = getelementptr inbounds [8 x i8], ptr %.1134, i64 %.1138.fr
-  %i.ac = tail call i32 @dgemm_kernel(i64 noundef %i.y, i64 noundef %.1138.fr, i64 noundef %2, double noundef %3, ptr noundef %i.aa, ptr noundef %.0135, ptr noundef %i.ab, i64 noundef %7) #5 ; 0 uses
-  %i.ad = icmp slt i64 %.1138.fr, 1
+  %i.ab = getelementptr inbounds [8 x i8], ptr %.1134, i64 %.1138
+  %i.ac = tail call i32 @dgemm_kernel(i64 noundef %i.y, i64 noundef %.1138, i64 noundef %2, double noundef %3, ptr noundef %i.aa, ptr noundef %.0135, ptr noundef %i.ab, i64 noundef %7) #5 ; 0 uses
+  %i.ad = icmp slt i64 %.1138, 1
   br i1 %i.ad, label %.loopexit152, label %.lr.ph
 
 bb.l:                                             ; preds = %bb.j
-  %i.ae = icmp sgt i64 %.1138.fr, 0
+  %i.ae = icmp sgt i64 %.1138, 0
   br i1 %i.ae, label %.lr.ph, label %.loopexit152
 
 .lr.ph:                                           ; preds = %bb.k, %bb.l
-  %.1132168 = phi i64 [ %.0131, %bb.l ], [ %.1138.fr, %bb.k ] ; 2 uses
+  %.1132168 = phi i64 [ %.0131, %bb.l ], [ %.1138, %bb.k ] ; 2 uses
   %.not = icmp eq i32 %9, 0
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
   %.0159.us = phi i64 [ %i.au, %.lr.ph.split.us ], [ 0, %.lr.ph ] ; 6 uses
-  %i.af = sub nuw nsw i64 %.1138.fr, %.0159.us
+  %i.af = sub nuw nsw i64 %.1138, %.0159.us
   %i.ag = tail call i64 @llvm.umin.i64(i64 %i.af, i64 32) ; 3 uses
   %sext147.us = shl i64 %.0159.us, 32
   %i.ah = ashr exact i64 %sext147.us, 32
@@ -112,13 +111,13 @@ bb.l:                                             ; preds = %bb.j
   %i.as = getelementptr [8 x i8], ptr %i.ar, i64 %i.aq
   %i.at = tail call i32 @dgemm_kernel(i64 noundef %i.aj, i64 noundef %i.ag, i64 noundef %2, double noundef %3, ptr noundef %i.an, ptr noundef %i.ap, ptr noundef %i.as, i64 noundef %7) #5 ; 0 uses
   %i.au = add nuw nsw i64 %.0159.us, 32           ; 2 uses
-  %i.av = icmp slt i64 %i.au, %.1138.fr
+  %i.av = icmp slt i64 %i.au, %.1138
   br i1 %i.av, label %.lr.ph.split.us, label %.loopexit152, !llvm.loop !8
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.loopexit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit ], [ %.1138.fr, %.lr.ph ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit ], [ %.1138, %.lr.ph ] ; 3 uses
   %.0159 = phi i64 [ %i.dh, %.loopexit ], [ 0, %.lr.ph ] ; 10 uses
-  %i.aw = sub nuw nsw i64 %.1138.fr, %.0159       ; 2 uses
+  %i.aw = sub nuw nsw i64 %.1138, %.0159          ; 2 uses
   %i.ax = call i64 @llvm.smin.i64(i64 %i.aw, i64 32) ; 18 uses
   %i.ay = call i32 @dgemm_beta(i64 noundef %i.ax, i64 noundef %i.ax, i64 noundef 0, double noundef 0.000000e+00, ptr noundef null, i64 noundef 0, ptr noundef null, i64 noundef 0, ptr noundef nonnull %i.a, i64 noundef %i.ax) #5 ; 0 uses
   %i.az = mul nsw i64 %.0159, %2                  ; 2 uses
@@ -246,7 +245,7 @@ bb.p:                                             ; preds = %bb.p, %.preheader.e
   %i.df = getelementptr [8 x i8], ptr %i.de, i64 %i.dd
   %i.dg = call i32 @dgemm_kernel(i64 noundef %i.cy, i64 noundef %i.ax, i64 noundef %2, double noundef %3, ptr noundef %i.dc, ptr noundef %i.bb, ptr noundef %i.df, i64 noundef %7) #5 ; 0 uses
   %i.dh = add nuw nsw i64 %.0159, 32              ; 2 uses
-  %i.di = icmp slt i64 %i.dh, %.1138.fr
+  %i.di = icmp slt i64 %i.dh, %.1138
   %indvars.iv.next = add i64 %indvars.iv, -32
   br i1 %i.di, label %.lr.ph.split, label %.loopexit152, !llvm.loop !8
 

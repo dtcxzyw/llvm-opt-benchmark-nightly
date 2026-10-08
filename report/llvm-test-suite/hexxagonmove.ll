@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.m = load i32, ptr %i.b, align 8, !tbaa !13
   %i.n = icmp sgt i32 %i.m, 0
   %i.o = icmp sgt i32 %3, -32000
-  %i.p = and i1 %i.n, %i.o
+  %i.p = and i1 %i.o, %i.n
   br i1 %i.p, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.k
@@ -231,7 +231,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next, %i.aa
   %i.ac = icmp slt i32 %.1, %3
-  %6 = select i1 %i.ab, i1 %i.ac, i1 false
+  %6 = and i1 %i.ac, %i.ab
   br i1 %6, label %bb.l, label %._crit_edge, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.k

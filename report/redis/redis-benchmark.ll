@@ -205,10 +205,10 @@ updateClusterSlotsConfiguration.exit:             ; preds = %bb.as, %._crit_edge
   br label %fetchClusterSlotsConfiguration.exit.thread
 
 .critedge:                                        ; preds = %._crit_edge.i, %bb.v, %bb.am, %bb.an, %bb.aa
-  %.080.i.ph.a = phi ptr [ null, %bb.v ], [ %i.cg, %bb.am ], [ %i.cg, %bb.an ], [ %i.cg, %bb.aa ], [ null, %._crit_edge.i ]
-  %.3.i.ph = phi ptr [ null, %bb.v ], [ %.073.lcssa.i, %bb.am ], [ %.073.lcssa.i, %bb.an ], [ %.073.lcssa.i, %bb.aa ], [ %.073.lcssa.i, %._crit_edge.i ]
-  call void @freeReplyObject(ptr noundef %.080.i.ph.a) #20
-  call void @redisFree(ptr noundef %.3.i.ph) #20
+  %.080.i.ph.a = phi ptr [ null, %bb.v ], [ %.073.lcssa.i, %bb.am ], [ %.073.lcssa.i, %bb.an ], [ %.073.lcssa.i, %bb.aa ], [ %.073.lcssa.i, %._crit_edge.i ]
+  %.3.i.ph = phi ptr [ null, %bb.v ], [ %i.cg, %bb.am ], [ %i.cg, %bb.an ], [ %i.cg, %bb.aa ], [ null, %._crit_edge.i ]
+  call void @freeReplyObject(ptr noundef %.3.i.ph) #20
+  call void @redisFree(ptr noundef %.080.i.ph.a) #20
   call void @dictRelease(ptr noundef %i.bl) #20
   store atomic i32 0, ptr getelementptr inbounds nuw (i8, ptr @config, i64 312) monotonic, align 8
   call void @exit(i32 noundef 1) #24

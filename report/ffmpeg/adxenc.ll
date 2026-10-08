@@ -204,10 +204,9 @@ scalar.ph:                                        ; preds = %vector.scevcheck, %
   %.lcssa = phi i32 [ %i.fb, %vector.body ], [ %i.fn, %scalar.ph ]
   %spec.select.i.lcssa = phi i32 [ %i.fa, %vector.body ], [ %spec.select.i.1, %scalar.ph ] ; 2 uses
   %.1.i.lcssa = phi i32 [ %i.ex, %vector.body ], [ %.1.i.1, %scalar.ph ] ; 2 uses
-  %4 = icmp eq i32 %spec.select.i.lcssa, 0
-  %i.fv = icmp eq i32 %.1.i.lcssa, 0
-  %or.cond.i = select i1 %4, i1 %i.fv, i1 false
-  br i1 %or.cond.i, label %bb.i, label %bb.j
+  %4 = or i32 %.1.i.lcssa, %spec.select.i.lcssa
+  %i.fv = icmp eq i32 %4, 0
+  br i1 %i.fv, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.loopexit
   store i32 %.lcssa, ptr %i.bc, align 4, !tbaa !45

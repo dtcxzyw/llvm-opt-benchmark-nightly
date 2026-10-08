@@ -204,7 +204,7 @@ select.unfold:                                    ; preds = %bb.t, %bb.y, %bb.r,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i32 @S2_security_space(i32 noundef %0, i32 noundef %1) unnamed_addr #0 {
+define internal fastcc noundef i32 @S2_security_space(i32 noundef %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = zext nneg i32 %1 to i64
   %i.b = icmp ult i32 %1, 136

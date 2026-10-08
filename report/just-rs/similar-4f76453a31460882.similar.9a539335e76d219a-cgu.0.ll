@@ -205,7 +205,7 @@ _RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapTjjEmE3
   %.sroa.0.0.i143.i.i.i.i = phi ptr [ %i.cbz, %_RINvMs_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutTjjEmNtB1i_14LeafOrInternalE11search_treeB1A_ECsdftwklc2oBO_7similar.exit.i.i.i.i.i196 ], [ null, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterTjjEEENtNtNtB8_6traits8iterator8Iterator4nextCsdftwklc2oBO_7similar.exit.i.i.i.i.i.i.i192._crit_edge ] ; 2 uses
   %.not94.i.i.i.i198 = icmp eq ptr %.sroa.0.0.i143.i.i.i.i, null
   %..i.i.i.i = select i1 %.not94.i.i.i.i198, ptr @13, ptr %.sroa.0.0.i143.i.i.i.i ; 2 uses
-  %i.ccd = add i64 %.sroa.016.0314.i.i.i.i, 1     ; 4 uses
+  %i.ccd = add nuw i64 %.sroa.016.0314.i.i.i.i, 1 ; 4 uses
   br label %.preheader.i147.i.i.i.i
 
 .preheader.i147.i.i.i.i:                          ; preds = %bb.om, %_RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapTjjEmE3getB18_ECsdftwklc2oBO_7similar.exit.i.i.i.i197

@@ -204,14 +204,13 @@ bb.y:                                             ; preds = %bb.j, %bb.o
 
 .loopexit297.loopexit:                            ; preds = %bb.y, %bb.o
   %.lcssa365 = phi i32 [ %i.m, %bb.y ], [ %i.az, %bb.o ]
-  %.lcssa362 = phi i32 [ 0, %bb.y ], [ %i.ba, %bb.o ]
   %.2.ph = phi i16 [ 0, %bb.y ], [ %i.bg, %bb.o ]
   %i.cw = trunc i32 %i.aw to i8
   br label %.loopexit297
 
 .loopexit297:                                     ; preds = %.loopexit297.loopexit, %bb.t, %bb.u, %bb.n
   %i.cx = phi i32 [ %i.ao, %bb.t ], [ %i.ao, %bb.u ], [ %i.az, %bb.n ], [ %.lcssa365, %.loopexit297.loopexit ]
-  %i.cy = phi i32 [ %i.at, %bb.t ], [ %i.at, %bb.u ], [ %i.ba, %bb.n ], [ %.lcssa362, %.loopexit297.loopexit ]
+  %i.cy = phi i32 [ %i.at, %bb.t ], [ %i.at, %bb.u ], [ %i.ba, %bb.n ], [ %i.ba, %.loopexit297.loopexit ]
   %.1209 = phi ptr [ %i.ch, %bb.t ], [ %i.cf, %bb.u ], [ %i.bk, %bb.n ], [ %i.s, %.loopexit297.loopexit ]
   %.3203 = phi ptr [ %.1201, %bb.t ], [ %i.ab, %bb.u ], [ %.0200, %bb.n ], [ %i.ab, %.loopexit297.loopexit ]
   %.1196 = phi i32 [ %i.ck, %bb.t ], [ 0, %bb.u ], [ %i.bm, %bb.n ], [ %i.z, %.loopexit297.loopexit ]
@@ -614,14 +613,13 @@ bb.y:                                             ; preds = %bb.j, %bb.o
 
 .loopexit297.loopexit:                            ; preds = %bb.y, %bb.o
   %.lcssa365 = phi i32 [ %i.m, %bb.y ], [ %i.ay, %bb.o ]
-  %.lcssa362 = phi i32 [ 0, %bb.y ], [ %i.az, %bb.o ]
   %.2.ph = phi i16 [ 0, %bb.y ], [ %i.ba, %bb.o ]
   %i.cl = trunc i32 %i.av to i8
   br label %.loopexit297
 
 .loopexit297:                                     ; preds = %.loopexit297.loopexit, %bb.t, %bb.u, %bb.n
   %i.cm = phi i32 [ %i.an, %bb.t ], [ %i.an, %bb.u ], [ %i.ay, %bb.n ], [ %.lcssa365, %.loopexit297.loopexit ]
-  %i.cn = phi i32 [ %i.as, %bb.t ], [ %i.as, %bb.u ], [ %i.az, %bb.n ], [ %.lcssa362, %.loopexit297.loopexit ]
+  %i.cn = phi i32 [ %i.as, %bb.t ], [ %i.as, %bb.u ], [ %i.az, %bb.n ], [ %i.az, %.loopexit297.loopexit ]
   %.1209 = phi ptr [ %i.bw, %bb.t ], [ %i.bu, %bb.u ], [ %i.be, %bb.n ], [ %i.s, %.loopexit297.loopexit ]
   %.3203 = phi ptr [ %.1201, %bb.t ], [ %i.ab, %bb.u ], [ %.0200, %bb.n ], [ %i.ab, %.loopexit297.loopexit ]
   %.1196 = phi i32 [ %i.bz, %bb.t ], [ 0, %bb.u ], [ %i.bg, %bb.n ], [ %i.z, %.loopexit297.loopexit ]

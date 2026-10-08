@@ -205,12 +205,12 @@ bb.wx:                                            ; preds = %bb.ww
   br i1 %.not2751, label %.critedge190, label %bb.wy
 
 bb.wy:                                            ; preds = %.thread3123
-  %i.ccg = load i16, ptr %i.bf, align 8, !tbaa !30 ; 4 uses
+  %i.ccg = load i16, ptr %i.bf, align 8, !tbaa !30 ; 3 uses
   %i.cch = icmp ugt i16 %i.ccg, 1
   br i1 %i.cch, label %bb.wz, label %.critedge190
 
 bb.wz:                                            ; preds = %bb.wy
-  %i.cci = zext i16 %i.ccg to i64
+  %i.cci = zext i16 %i.ccg to i64                 ; 2 uses
   %i.ccj = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.cck = load i32, ptr %i.ccj, align 8, !tbaa !95
   %i.ccl = load ptr, ptr %2, align 8, !tbaa !29   ; 7 uses
@@ -251,8 +251,7 @@ bb.xb:                                            ; preds = %bb.xa
   %i.cdl = getelementptr i8, ptr %i.ccm, i64 -28
   %i.cdm = load i32, ptr %i.cdl, align 4, !tbaa !15
   %spec.select29013298 = call i32 @llvm.umin.i32(i32 %i.cdk, i32 %i.cdm) ; 2 uses
-  %3 = zext i16 %i.ccg to i64
-  %i.cdn = add nsw i64 %3, -1                     ; 3 uses
+  %i.cdn = add nsw i64 %i.cci, -1                 ; 3 uses
   %xtraiter = and i64 %i.cdn, 1
   %i.cdo = icmp eq i16 %i.ccg, 2
   br i1 %i.cdo, label %.lr.ph3302.epil.preheader, label %.lr.ph3302.preheader.new
@@ -314,14 +313,11 @@ bb.xb:                                            ; preds = %bb.xa
   br label %._crit_edge3303
 
 ._crit_edge3303:                                  ; preds = %._crit_edge3303.unr-lcssa, %.lr.ph3302.epil.preheader
-  %spec.select2902.lcssa = phi i32 [ %spec.select2902.1, %._crit_edge3303.unr-lcssa ], [ %spec.select2902.epil, %.lr.ph3302.epil.preheader ] ; 5 uses
-  %spec.select2901.lcssa = phi i32 [ %spec.select2901.1, %._crit_edge3303.unr-lcssa ], [ %spec.select2901.epil, %.lr.ph3302.epil.preheader ] ; 4 uses
-  %4 = icmp eq i32 %spec.select2901.lcssa, 0
-  %5 = icmp eq i32 %spec.select2902.lcssa, 0
-  %6 = icmp ugt i32 %spec.select2901.lcssa, %spec.select2902.lcssa
-  %7 = or i1 %5, %6
-  %or.cond2903 = select i1 %4, i1 true, i1 %7
-  br i1 %or.cond2903, label %.critedge190, label %bb.xc
+  %spec.select2902.lcssa = phi i32 [ %spec.select2902.1, %._crit_edge3303.unr-lcssa ], [ %spec.select2902.epil, %.lr.ph3302.epil.preheader ] ; 4 uses
+  %spec.select2901.lcssa = phi i32 [ %spec.select2901.1, %._crit_edge3303.unr-lcssa ], [ %spec.select2901.epil, %.lr.ph3302.epil.preheader ] ; 3 uses
+  %3 = add i32 %spec.select2901.lcssa, -1
+  %.not3155 = icmp ult i32 %3, %spec.select2902.lcssa
+  br i1 %.not3155, label %bb.xc, label %.critedge190
 
 bb.xc:                                            ; preds = %._crit_edge3303
   %i.cem = zext i32 %spec.select2902.lcssa to i64 ; 3 uses

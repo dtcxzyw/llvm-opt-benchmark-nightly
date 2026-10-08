@@ -204,10 +204,9 @@ ftp_done_check_partial.exit:                      ; preds = %ftp_done_control_re
   %i.fj = load i8, ptr %i.fi, align 1
   %i.fk = and i8 %i.fj, -3
   store i8 %i.fk, ptr %i.fi, align 1
-  %3 = icmp ne i32 %1, 0
-  %i.fl = icmp ne i32 %.0.i70, 0
-  %or.cond3 = select i1 %3, i1 true, i1 %i.fl
-  %or.cond5 = or i1 %2, %or.cond3
+  %3 = or i32 %.0.i70, %1
+  %i.fl = icmp ne i32 %3, 0
+  %or.cond5 = or i1 %2, %i.fl
   br i1 %or.cond5, label %ftp_sendquote.exit.thread, label %bb.bi
 
 bb.bi:                                            ; preds = %ftp_done_check_partial.exit

@@ -205,9 +205,11 @@ bb.a:
   %.sroa.0.0.ph248 = phi ptr [ %.sroa.0.1, %.outer ], [ %0, %bb.a ] ; 2 uses
   %.sroa.20.0.ph247 = phi i64 [ %.sroa.20.1, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.032.0.ph246 = phi ptr [ %.sroa.032.1, %.outer ], [ %3, %bb.a ] ; 7 uses
-  %.sroa.036.0.ph245 = phi i1 [ %i.qj, %.outer ], [ true, %bb.a ] ; 2 uses
-  %.sroa.038.0.ph244 = phi i1 [ %i.qe, %.outer ], [ true, %bb.a ]
-  %or.cond = select i1 %.sroa.036.0.ph245, i1 %.sroa.038.0.ph244, i1 false ; 2 uses
+  %.sroa.036.0.ph245 = phi i8 [ %8, %.outer ], [ 1, %bb.a ] ; 2 uses
+  %.sroa.038.0.ph244 = phi i8 [ %7, %.outer ], [ 1, %bb.a ]
+  %5 = trunc nuw i8 %.sroa.036.0.ph245 to i1
+  %6 = and i8 %.sroa.036.0.ph245, %.sroa.038.0.ph244
+  %or.cond = icmp ne i8 %6, 0                     ; 2 uses
   %.not = icmp eq ptr %.sroa.032.0.ph246, null
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.032.0.ph246, i64 40
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.032.0.ph246, i64 32
@@ -233,7 +235,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.b
-  br i1 %.sroa.036.0.ph245, label %bb.f, label %bb.e, !prof !77
+  br i1 %5, label %bb.f, label %bb.e, !prof !77
 
 bb.e:                                             ; preds = %bb.d
   call fastcc void @_RINvNtNtCs1JJT1bG4y5L_5rayon5slice4sort14break_patternsNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tree17MetricClosureEdgeECskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef nonnull align 8 %.sroa.0.0240, i64 noundef %.sroa.20.0239)
@@ -636,10 +638,12 @@ _RNvMNtCslwFuT2d6ECx_4core5sliceSNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tre
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.0240.lcssa270, ptr noundef nonnull align 8 dereferenceable(48) %i.qf, i64 48, i1 false), !alias.scope !28533
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.qf, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  %7 = zext i1 %i.qe to i8
   %i.qg = sub nuw i64 %.sroa.20.0239.lcssa261, %i.qc ; 2 uses
   %i.qh = call i64 @llvm.umin.i64(i64 %i.qc, i64 %i.qg)
   %i.qi = lshr i64 %.sroa.20.0239.lcssa261, 3
   %i.qj = icmp uge i64 %i.qh, %i.qi
+  %8 = zext i1 %i.qj to i8
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qf, i64 48 ; 3 uses
   %i.ql = add nsw i64 %i.qg, -1                   ; 5 uses
   %i.qm = call i64 @llvm.umax.i64(i64 %i.qc, i64 %i.ql)
@@ -906,9 +910,11 @@ bb.a:
   %.sroa.0.0.ph246 = phi ptr [ %.sroa.0.1, %.outer ], [ %0, %bb.a ] ; 2 uses
   %.sroa.20.0.ph245 = phi i64 [ %.sroa.20.1, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.032.0.ph244 = phi ptr [ %.sroa.032.1, %.outer ], [ %3, %bb.a ] ; 7 uses
-  %.sroa.036.0.ph243 = phi i1 [ %i.qz, %.outer ], [ true, %bb.a ] ; 2 uses
-  %.sroa.038.0.ph242 = phi i1 [ %i.qu, %.outer ], [ true, %bb.a ]
-  %or.cond = select i1 %.sroa.036.0.ph243, i1 %.sroa.038.0.ph242, i1 false ; 2 uses
+  %.sroa.036.0.ph243 = phi i8 [ %8, %.outer ], [ 1, %bb.a ] ; 2 uses
+  %.sroa.038.0.ph242 = phi i8 [ %7, %.outer ], [ 1, %bb.a ]
+  %5 = trunc nuw i8 %.sroa.036.0.ph243 to i1
+  %6 = and i8 %.sroa.036.0.ph243, %.sroa.038.0.ph242
+  %or.cond = icmp ne i8 %6, 0                     ; 2 uses
   %.not = icmp eq ptr %.sroa.032.0.ph244, null
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.032.0.ph244, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.032.0.ph244, i64 40
@@ -934,7 +940,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.b
-  br i1 %.sroa.036.0.ph243, label %bb.f, label %bb.e, !prof !77
+  br i1 %5, label %bb.f, label %bb.e, !prof !77
 
 bb.e:                                             ; preds = %bb.d
   call fastcc void @_RINvNtNtCs1JJT1bG4y5L_5rayon5slice4sort14break_patternsNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tree17MetricClosureEdgeECskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef nonnull align 8 %.sroa.0.0238, i64 noundef %.sroa.20.0237)
@@ -1337,10 +1343,12 @@ _RNvMNtCslwFuT2d6ECx_4core5sliceSNtNtCsbNMRYq9Xj9a_14rustworkx_core12steiner_tre
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.0238.lcssa268, ptr noundef nonnull align 8 dereferenceable(48) %i.qv, i64 48, i1 false), !alias.scope !28874
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.qv, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  %7 = zext i1 %i.qu to i8
   %i.qw = sub nuw i64 %.sroa.20.0237.lcssa259, %i.qs ; 2 uses
   %i.qx = call i64 @llvm.umin.i64(i64 %i.qs, i64 %i.qw)
   %i.qy = lshr i64 %.sroa.20.0237.lcssa259, 3
   %i.qz = icmp uge i64 %i.qx, %i.qy
+  %8 = zext i1 %i.qz to i8
   %i.ra = getelementptr inbounds nuw i8, ptr %i.qv, i64 48 ; 3 uses
   %i.rb = add nsw i64 %i.qw, -1                   ; 5 uses
   %i.rc = call i64 @llvm.umax.i64(i64 %i.qs, i64 %i.rb)

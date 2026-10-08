@@ -205,7 +205,7 @@ _ZNK2OT7ArrayOfINS_15BitmapSizeTableENS_7NumTypeILb1EjLj4EEEEixEi.exit42.i: ; pr
   %i.ao = zext i8 %i.an to i32                    ; 4 uses
   %.not27.i = icmp ule i32 %spec.store.select.i, %i.ao
   %i.ap = icmp samesign ugt i32 %.02148.i, %i.ao
-  %or.cond.i = select i1 %.not27.i, i1 %i.ap, i1 false
+  %or.cond.i = and i1 %.not27.i, %i.ap
   br i1 %or.cond.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK2OT7ArrayOfINS_15BitmapSizeTableENS_7NumTypeILb1EjLj4EEEEixEi.exit42.i
@@ -608,7 +608,7 @@ _ZNK2OT4sbix10get_strikeEj.exit44:                ; preds = %.lr.ph, %bb.c
   %i.bi = zext i16 %i.bh to i32                   ; 4 uses
   %.not26 = icmp ule i32 %spec.store.select, %i.bi
   %i.bj = icmp samesign ugt i32 %.02047, %i.bi
-  %or.cond = select i1 %.not26, i1 %i.bj, i1 false
+  %or.cond = and i1 %.not26, %i.bj
   br i1 %or.cond, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZNK2OT4sbix10get_strikeEj.exit44
@@ -1011,7 +1011,7 @@ _ZNK2OT7ArrayOfINS_15BitmapSizeTableENS_7NumTypeILb1EjLj4EEEEixEi.exit42.i: ; pr
   %i.ao = zext i8 %i.an to i32                    ; 4 uses
   %.not27.i = icmp ule i32 %spec.store.select.i, %i.ao
   %i.ap = icmp samesign ugt i32 %.02148.i, %i.ao
-  %or.cond.i = select i1 %.not27.i, i1 %i.ap, i1 false
+  %or.cond.i = and i1 %.not27.i, %i.ap
   br i1 %or.cond.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK2OT7ArrayOfINS_15BitmapSizeTableENS_7NumTypeILb1EjLj4EEEEixEi.exit42.i

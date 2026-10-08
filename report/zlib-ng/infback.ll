@@ -203,11 +203,11 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.cu = load ptr, ptr %i.a, align 8, !tbaa !57
   %i.cv = zext i32 %i.ct to i64                   ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.2586, ptr align 1 %i.cu, i64 %i.cv, i1 false)
-  %i.cw = sub i32 %.6564, %i.ct                   ; 2 uses
+  %i.cw = sub nuw i32 %.6564, %i.ct               ; 2 uses
   %i.cx = load ptr, ptr %i.a, align 8, !tbaa !57
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cv
   store ptr %i.cy, ptr %i.a, align 8, !tbaa !57
-  %i.cz = sub i32 %.2552, %i.ct                   ; 2 uses
+  %i.cz = sub nuw i32 %.2552, %i.ct               ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.2586, i64 %i.cv ; 2 uses
   %i.db = load i32, ptr %i.ae, align 4, !tbaa !60
   %i.dc = sub i32 %i.db, %i.ct                    ; 3 uses

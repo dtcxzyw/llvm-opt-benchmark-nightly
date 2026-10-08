@@ -204,14 +204,14 @@ bb.s:                                             ; preds = %.critedge11
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !54 ; 2 uses
   %i.ea = icmp ne i32 %i.dz, 1
-  %5 = select i1 %.not183, i1 true, i1 %.not174.not
-  %or.cond13.not = or i1 %5, %i.ea
+  %5 = or i1 %.not174.not, %i.ea
+  %or.cond13.not = or i1 %5, %.not183
   br i1 %or.cond13.not, label %bb.t, label %.critedge.thread
 
 bb.t:                                             ; preds = %bb.s
   %i.eb = icmp eq i32 %i.dz, 2
-  %6 = select i1 %.not183, i1 %.not174.not, i1 false
-  %or.cond15 = and i1 %6, %i.eb
+  %6 = and i1 %.not174.not, %i.eb
+  %or.cond15 = and i1 %6, %.not183
   br i1 %or.cond15, label %.critedge.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t

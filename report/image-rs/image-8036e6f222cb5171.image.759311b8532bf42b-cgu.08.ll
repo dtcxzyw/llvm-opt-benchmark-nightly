@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.f, label %bb.b, label %.loopexit7.sink.split.i
 
 bb.b:                                             ; preds = %.loopexit.i, %.lr.ph.i
-  %.sroa.01.09.i = phi i64 [ %1, %.lr.ph.i ], [ %.sroa.01.0.i.i.i.i.i.i.i.i, %.loopexit.i ] ; 2 uses
+  %.sroa.01.09.i = phi i64 [ %1, %.lr.ph.i ], [ %.sroa.01.0.i.i.i.i.i.i.i.i, %.loopexit.i ] ; 3 uses
   %i.g = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.h, %.loopexit.i ]
   %i.h = add i64 %i.g, -1                         ; 6 uses
   %.val.i.i = load ptr, ptr %.val1, align 8, !noalias !2845, !nonnull !5, !noundef !5 ; 2 uses
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %.preheader.i.i
 
 .loopexit7.sink.split.i:                          ; preds = %_RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i, %.loopexit.i, %bb.d
   %.lcssa25.sink.i = phi i64 [ %i.h, %bb.d ], [ %i.h, %_RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i ], [ %i.d, %.loopexit.i ]
-  %.sroa.3.0.ph.i = phi i64 [ undef, %bb.d ], [ undef, %_RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i ], [ %.sroa.01.0.i.i.i.i.i.i.i.i, %.loopexit.i ]
+  %.sroa.3.0.ph.i = phi i64 [ %.sroa.01.09.i, %bb.d ], [ 0, %_RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i ], [ %.sroa.01.0.i.i.i.i.i.i.i.i, %.loopexit.i ]
   %.sroa.0.0.ph.i = phi i64 [ 1, %bb.d ], [ 1, %_RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i ], [ 0, %.loopexit.i ]
   store i64 %.lcssa25.sink.i, ptr %i.c, align 8, !alias.scope !2848
   br label %_RINvYINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfoldjNCINvNtNtBR_8adapters3map12map_try_foldjINtNtB1Z_3zip3ZipINtB1X_3MapIB4_hENCNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB3d_6images6bufferINtB40_11ImageBufferINtNtB3d_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E00EINtNtNtBR_7sources6repeat6RepeatjEEjINtNtB8_12control_flow11ControlFlowujENCB38_0NCINvNvMsg_NtB1Z_7flattenINtB7r_13FlattenCompatppE13iter_try_fold7flattenB2w_jB6x_INvNvXsi_B7r_B7F_NtNtBP_8iterator8Iterator10advance_by7advanceB2w_EE0E0B6x_EB3d_.exit

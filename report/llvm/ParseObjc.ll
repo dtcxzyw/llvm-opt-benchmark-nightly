@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN5clang24Balanced
 
 _ZN5clang24BalancedDelimiterTracker11consumeOpenEv.exit: ; preds = %_ZN5clang6Parser12ConsumeParenEv.exit88, %bb.c
   %i.aw = load i16, ptr %i.f, align 8, !tbaa !27  ; 2 uses
-  %i.ax = icmp ne i16 %i.aw, 22                   ; 3 uses
+  %i.ax = icmp ne i16 %i.aw, 22                   ; 4 uses
   br i1 %i.ax, label %bb.d, label %_ZN5clang6Parser12ConsumeParenEv.exit
 
 _ZN5clang6Parser12ConsumeParenEv.exit:            ; preds = %_ZN5clang24BalancedDelimiterTracker11consumeOpenEv.exit
@@ -361,7 +361,7 @@ _ZN5clang6Parser15TryConsumeTokenENS_3tok9TokenKindE.exit: ; preds = %.preheader
 
 _ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32: ; preds = %bb.o, %bb.n, %_ZN5clang6Parser15TryConsumeTokenENS_3tok9TokenKindE.exit
   %.1 = phi i32 [ %.021, %_ZN5clang6Parser15TryConsumeTokenENS_3tok9TokenKindE.exit ], [ %i.cw, %bb.n ], [ %i.cw, %bb.o ]
-  %i.df = add i32 %.1, 1                          ; 3 uses
+  %i.df = add i32 %.1, 1                          ; 4 uses
   %i.dg = load i16, ptr %i.f, align 8, !tbaa !27
   switch i16 %i.dg, label %bb.r [
     i16 23, label %.loopexit67
@@ -434,19 +434,19 @@ bb.u:                                             ; preds = %_ZN4llvm23SmallVect
 .thread:                                          ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   %i.ef = icmp ne i16 %.pre.pre, 23
-  br label %.loopexit67
+  %8 = or i1 %i.ax, %i.ef
+  br i1 %8, label %bb.ab, label %bb.w
 
 bb.v:                                             ; preds = %bb.u, %bb.u, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit36
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   br label %.preheader
 
-.loopexit67:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32, %.thread, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit
-  %.not85 = phi i1 [ false, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit ], [ %i.ef, %.thread ], [ false, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32 ]
-  %.2 = phi i32 [ 0, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit ], [ %i.df, %.thread ], [ %i.df, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32 ]
-  %brmerge = select i1 %i.ax, i1 true, i1 %.not85
-  br i1 %brmerge, label %bb.ab, label %bb.w
+.loopexit67:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit
+  %.2 = phi i32 [ 0, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit ], [ %i.df, %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang14IdentifierInfoELb1EE9push_backES4_.exit32 ] ; 2 uses
+  br i1 %i.ax, label %bb.ab, label %bb.w
 
-bb.w:                                             ; preds = %.loopexit67
+bb.w:                                             ; preds = %.thread, %.loopexit67
+  %.289 = phi i32 [ %i.df, %.thread ], [ %.2, %.loopexit67 ]
   %i.eg = load i16, ptr %i.aj, align 8, !tbaa !1094 ; 4 uses
   %.not.i37 = icmp eq i16 %i.eg, 0
   br i1 %.not.i37, label %_ZN5clang6Parser12ConsumeParenEv.exit58, label %bb.x
@@ -526,12 +526,13 @@ _ZN5clang6Parser12ConsumeParenEv.exit58:          ; preds = %bb.w, %.sink.split.
   call void @_ZN5clang12Preprocessor3LexERNS_5TokenE(ptr noundef nonnull align 8 dereferenceable(3344) %i.fe, ptr noundef nonnull align 8 dereferenceable(20) %i.a) #16
   br label %bb.ab
 
-bb.ab:                                            ; preds = %.loopexit67, %_ZN5clang6Parser12ConsumeParenEv.exit58
+bb.ab:                                            ; preds = %.thread, %.loopexit67, %_ZN5clang6Parser12ConsumeParenEv.exit58
+  %.290 = phi i32 [ %i.df, %.thread ], [ %.2, %.loopexit67 ], [ %.289, %_ZN5clang6Parser12ConsumeParenEv.exit58 ]
   %i.ff = call noundef zeroext i1 @_ZN5clang24BalancedDelimiterTracker12consumeCloseEv(ptr noundef nonnull align 8 dereferenceable(56) %5) ; 0 uses
   %i.fg = load ptr, ptr %i.d, align 8, !tbaa !140, !nonnull !61, !align !141
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 680
   %i.fi = load ptr, ptr %3, align 8, !tbaa !19
-  %i.fj = call i64 @_ZN5clang13SelectorTable11getSelectorEjPPKNS_14IdentifierInfoE(ptr noundef nonnull align 8 dereferenceable(8) %i.fh, i32 noundef %.2, ptr noundef nonnull %i.fi) #16
+  %i.fj = call i64 @_ZN5clang13SelectorTable11getSelectorEjPPKNS_14IdentifierInfoE(ptr noundef nonnull align 8 dereferenceable(8) %i.fh, i32 noundef %.290, ptr noundef nonnull %i.fi) #16
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !405, !nonnull !61, !align !141
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 808

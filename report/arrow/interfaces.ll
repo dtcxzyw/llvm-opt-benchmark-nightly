@@ -204,8 +204,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.n, %_ZN5arrow4util12ArrowLogBaselsIA87_cEERS1_RKT_.exit, %bb.d
-  %.113 = phi i32 [ 0, %bb.d ], [ %.0122, %_ZN5arrow4util12ArrowLogBaselsIA87_cEERS1_RKT_.exit ], [ %i.ah, %bb.n ]
-  %.113.fr = freeze i32 %.113                     ; 2 uses
+  %.113 = phi i32 [ 0, %bb.d ], [ %.0122, %_ZN5arrow4util12ArrowLogBaselsIA87_cEERS1_RKT_.exit ], [ %i.ah, %bb.n ] ; 2 uses
   %i.av = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
   %i.aw = icmp eq ptr %i.av, %i.e
   br i1 %i.aw, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -235,8 +234,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29: ; preds = %bb.
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %bb.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
-  %i.bd = icmp sgt i32 %.113.fr, 0
-  %spec.select = select i1 %i.bd, i32 %.113.fr, i32 8
+  %i.bd = icmp sgt i32 %.113, 0
+  %spec.select = select i1 %i.bd, i32 %.113, i32 8
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %.thread3

@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %bb.ax, %bb.aq, %bb.
   %.lcssa = phi ptr [ %i.pm, %bb.ai ], [ %i.tx, %bb.aq ], [ %i.wq, %bb.ax ]
   %i.pu = fcmp uge double %.040.lcssa, %i.lf
   %i.pv = fcmp olt double %.041.lcssa, %.040.lcssa
-  %or.cond = select i1 %i.pu, i1 true, i1 %i.pv
+  %or.cond = or i1 %i.pu, %i.pv
   %spec.select = select i1 %or.cond, ptr %.lcssa246, ptr %.lcssa
   br label %.loopexit223
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %.2 = select i1 %or.cond, double %i.cr, double %.133.2 ; 2 uses
   %i.cw = fcmp ogt double %i.ct, 0.000000e+00
   %i.cx = fcmp ogt double %i.ct, %.2
-  %or.cond39 = select i1 %i.cw, i1 %i.cx, i1 false
+  %or.cond39 = and i1 %i.cw, %i.cx
   %.3 = select i1 %or.cond39, double %i.ct, double %.2
   %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 24
   store double %.3, ptr %i.cy, align 8, !tbaa !56

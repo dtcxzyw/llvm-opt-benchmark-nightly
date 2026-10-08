@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   %i.az = load i16, ptr %i.x, align 4
   %i.ba = and i16 %i.az, 1536                     ; 2 uses
   %.not158 = icmp eq i16 %i.ba, 0
-  %or.cond180 = or i1 %.not158, %or.cond
+  %or.cond180 = or i1 %or.cond, %.not158
   br i1 %or.cond180, label %_shortcut_is_move.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l

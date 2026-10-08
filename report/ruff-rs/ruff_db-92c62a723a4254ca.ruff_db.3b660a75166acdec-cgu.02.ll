@@ -205,7 +205,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_3ops5range9RangeFromNtCshFWUtO
 
 .lr.ph250:                                        ; preds = %.loopexit132
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.0195.i, i64 632
-  %i.ag = icmp ult i64 %.sroa.096.0192.i, 12
+  %i.ag = icmp samesign ult i64 %.sroa.096.0192.i, 12
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.sroa.096.0192.i
   %i.ai = load ptr, ptr %i.ah, align 8, !nonnull !3, !noundef !3 ; 2 uses

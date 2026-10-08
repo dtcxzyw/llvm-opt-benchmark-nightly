@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit23
   %.sroa.01.031 = phi i64 [ %i.c, %.lr.ph ], [ %i.i, %.loopexit23 ]
-  %i.i = add i64 %.sroa.01.031, -1                ; 5 uses
+  %i.i = add i64 %.sroa.01.031, -1                ; 6 uses
   br i1 %i.h, label %.loopexit, label %.lr.ph53
 
 .loopexit:                                        ; preds = %.loopexit23, %bb.c, %bb.d, %bb.b, %bb.a
-  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %i.i, %bb.d ], [ undef, %.loopexit23 ], [ %i.i, %bb.c ]
+  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ %i.i, %.loopexit23 ]
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ 0, %bb.b ], [ 1, %bb.d ], [ 0, %.loopexit23 ], [ 1, %bb.c ]
   %i.j = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.k = insertvalue { i64, i64 } %i.j, i64 %.sroa.4.0, 1

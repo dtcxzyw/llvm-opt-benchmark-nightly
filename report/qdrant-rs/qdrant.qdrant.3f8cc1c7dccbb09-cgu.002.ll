@@ -204,7 +204,7 @@ bb.ha:                                            ; preds = %bb.gy
   %i.qu = load i8, ptr %i.qt, align 1, !range !40, !noundef !38
   %i.qv = trunc nuw i8 %i.qu to i1
   %.not = icmp eq i32 %i.qr, -1
-  %or.cond = select i1 %i.qv, i1 true, i1 %.not
+  %or.cond = or i1 %.not, %i.qv
   br i1 %or.cond, label %bb.hb, label %bb.hc
 
 bb.hb:                                            ; preds = %bb.hc, %bb.ha

@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %bb.be
   %i.zn = load i64, ptr %i.zm, align 8, !tbaa !247
   %i.zo = icmp eq i64 %i.zn, 0
   %i.zp = icmp ugt i64 %.sroa.27.0, 2
-  %or.cond = select i1 %i.zo, i1 %i.zp, i1 false
+  %or.cond = and i1 %i.zp, %i.zo
   br i1 %or.cond, label %bb.ck, label %_ZN2c43yml12_GLOBAL__N_119_is_doc_begin_tokenENS_15basic_substringIKcEE.exit.thread
 
 bb.ck:                                            ; preds = %bb.cj
@@ -354,7 +354,7 @@ bb.cr:                                            ; preds = %bb.be
   %i.acd = load i64, ptr %i.acc, align 8, !tbaa !247
   %i.ace = icmp eq i64 %i.acd, 0
   %i.acf = icmp ugt i64 %.sroa.27.0, 2
-  %or.cond1291 = select i1 %i.ace, i1 %i.acf, i1 false
+  %or.cond1291 = and i1 %i.acf, %i.ace
   br i1 %or.cond1291, label %bb.cs, label %_ZN2c43yml12_GLOBAL__N_117_is_doc_end_tokenENS_15basic_substringIKcEE.exit.thread
 
 bb.cs:                                            ; preds = %bb.cr

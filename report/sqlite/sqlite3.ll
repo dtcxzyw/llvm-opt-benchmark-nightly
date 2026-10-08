@@ -206,7 +206,7 @@ matchQuality.exit100:                             ; preds = %bb.aa, %bb.ab, %bb.
   %.471 = phi ptr [ %spec.select, %._crit_edge ], [ %spec.select90, %matchQuality.exit100 ], [ %.067.lcssa168174, %sqlite3StrICmp.exit.i ]
   %.4 = phi i32 [ %spec.select89, %._crit_edge ], [ %spec.select91, %matchQuality.exit100 ], [ 0, %sqlite3StrICmp.exit.i ]
   %i.df = icmp slt i32 %.4, 6
-  %or.cond = select i1 %.not82170, i1 %i.df, i1 false
+  %or.cond = and i1 %.not82170, %i.df
   br i1 %or.cond, label %.loopexit.thread, label %.loopexit.thread189
 
 .loopexit.thread:                                 ; preds = %._crit_edge.thread, %.loopexit
@@ -609,7 +609,7 @@ bb.bfi:                                           ; preds = %sqlite3VdbeMemSetNu
   %i.ivw = load ptr, ptr %i.ivv, align 8, !tbaa !948
   %i.ivx = icmp eq ptr %i.ivw, null
   %i.ivy = icmp ne i32 %.112, 3082                ; 2 uses
-  %or.cond50 = select i1 %i.ivx, i1 %i.ivy, i1 false
+  %or.cond50 = and i1 %i.ivy, %i.ivx
   br i1 %or.cond50, label %bb.bfj, label %bb.bfp
 
 bb.bfj:                                           ; preds = %bb.bfi
@@ -1012,7 +1012,7 @@ bb.ei:                                            ; preds = %bb.ee, %bb.ef, %bb.
 
 bb.ej:                                            ; preds = %bb.ei
   %i.ye = icmp ne i32 %.2737, 2                   ; 2 uses
-  %or.cond23 = select i1 %i.uh, i1 %i.ye, i1 false
+  %or.cond23 = and i1 %i.uh, %i.ye
   br i1 %or.cond23, label %bb.ek, label %bb.el
 
 bb.ek:                                            ; preds = %bb.ej
@@ -1415,7 +1415,7 @@ fts3DeleteSegdir.exit:                            ; preds = %sqlite3_bind_int64.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #58
   %i.lo = icmp eq i32 %i.ln, 0
   %i.lp = icmp ne ptr %.093181, null
-  %or.cond4 = and i1 %i.lo, %i.lp
+  %or.cond4 = and i1 %i.lp, %i.lo
   br i1 %or.cond4, label %bb.bu, label %.thread138
 
 bb.bt:                                            ; preds = %bb.bd
@@ -1818,7 +1818,7 @@ nodeReaderRelease.exit142.i:                      ; preds = %bb.dq, %bb.ek, %bb.
   %indvars.iv.next211.i = add nsw i64 %indvars.iv210.i, -1
   %i.xf = icmp sgt i64 %indvars.iv210.i, 0
   %i.xg = icmp eq i32 %.3164.i249, 0
-  %6 = select i1 %i.xf, i1 %i.xg, i1 false
+  %6 = and i1 %i.xf, %i.xg
   br i1 %6, label %bb.dq, label %.loopexit.i, !llvm.loop !6315
 
 .loopexit.i:                                      ; preds = %nodeReaderRelease.exit142.i, %bb.dl

@@ -204,7 +204,7 @@ commit_graph_generation_from_graph.exit193.i:     ; preds = %commit_graph_data_s
   %i.km = load i32, ptr %i.dz, align 4, !tbaa !95
   %i.kn = icmp eq i32 %i.km, 0
   %i.ko = icmp eq i64 %.0218.i, 1073741823
-  %or.cond.i34 = select i1 %i.kn, i1 %i.ko, i1 false
+  %or.cond.i34 = and i1 %i.ko, %i.kn
   br label %commit_graph_generation.exit.i
 
 .thread313.thread323.i:                           ; preds = %bb.bp
@@ -215,14 +215,14 @@ commit_graph_generation_from_graph.exit193.i:     ; preds = %commit_graph_data_s
   %i.kp = load i32, ptr %i.dz, align 4, !tbaa !95
   %i.kq = icmp eq i32 %i.kp, 0
   %i.kr = icmp eq i64 %.0218.i, 1073741823
-  %or.cond326.i = select i1 %i.kq, i1 %i.kr, i1 false
+  %or.cond326.i = and i1 %i.kr, %i.kq
   br label %commit_graph_generation.exit.i
 
 commit_graph_data_slab_peek.exit.i198.i:          ; preds = %.thread313.i
-  %5 = load i32, ptr %i.dz, align 4, !tbaa !95
-  %6 = icmp eq i32 %5, 0
-  %i.ks = icmp eq i64 %.0218.i, 1073741823
-  %or.cond.i = select i1 %6, i1 %i.ks, i1 false
+  %5 = icmp eq i64 %.0218.i, 1073741823
+  %6 = load i32, ptr %i.dz, align 4, !tbaa !95
+  %i.ks = icmp eq i32 %6, 0
+  %or.cond.i = and i1 %5, %i.ks
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kg, i64 8
   %i.ku = load i64, ptr %i.kt, align 8, !tbaa !60 ; 2 uses
   %.not6.i.i = icmp eq i64 %i.ku, 0

@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   %.018 = phi i32 [ %2, %bb.a ], [ %i.z, %._crit_edge ] ; 2 uses
   %.017 = phi i32 [ %1, %bb.a ], [ %i.g, %._crit_edge ] ; 3 uses
   %i.f = tail call i32 @llvm.umin.i32(i32 %.017, i32 65535) ; 5 uses
-  %i.g = sub i32 %.017, %i.f                      ; 2 uses
+  %i.g = sub nuw i32 %.017, %i.f                  ; 2 uses
   %i.h = icmp eq i32 %i.g, 0                      ; 2 uses
-  %4 = select i1 %3, i1 %i.h, i1 false
+  %4 = and i1 %3, %i.h
   %i.i = zext i1 %4 to i32
   tail call void @_ZN9NCompress8NDeflate8NEncoder6CCoder9WriteBitsEji(ptr noundef nonnull align 8 dereferenceable(39764) %0, i32 noundef %i.i, i32 noundef 1)
   tail call void @_ZN9NCompress8NDeflate8NEncoder6CCoder9WriteBitsEji(ptr noundef nonnull align 8 dereferenceable(39764) %0, i32 noundef 0, i32 noundef 2)

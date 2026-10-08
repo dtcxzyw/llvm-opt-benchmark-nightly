@@ -204,8 +204,9 @@ bb.a:
   br i1 %i.g, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %.0.copyload84 = load i32, ptr %2, align 1      ; 3 uses
-  %i.h = zext i32 %.0.copyload84 to i64           ; 9 uses
+  %.0.copyload84 = load i32, ptr %2, align 1
+  %.0.copyload84.fr = freeze i32 %.0.copyload84   ; 3 uses
+  %i.h = zext i32 %.0.copyload84.fr to i64        ; 9 uses
   %.not = icmp ult i64 %1, %i.h
   br i1 %.not, label %.thread, label %bb.c
 
@@ -234,7 +235,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.f
   %.val = load i16, ptr %i.j, align 1             ; 3 uses
-  %i.m = shl i32 %.0.copyload84, 1                ; 2 uses
+  %i.m = shl i32 %.0.copyload84.fr, 1             ; 2 uses
   %i.n = zext i32 %i.m to i64                     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n
   %.not213 = icmp eq i32 %i.m, 0
@@ -637,9 +638,9 @@ begin_hunk_1_@ZS_Huf16Avx2_decode:bb.a
   %i.ld = shl i32 %i.lc, %i.kz
   store i32 %i.ld, ptr %i.lb, align 4, !tbaa !12
   %i.le = getelementptr i8, ptr %.ptr175.fr, i64 288
-  %i.lf = shl i32 %.0.copyload84, 1               ; 2 uses
+  %i.lf = shl i32 %.0.copyload84.fr, 1            ; 2 uses
   %i.lg = zext i32 %i.lf to i64
-  %i.lh = getelementptr inbounds nuw i8, ptr %0, i64 %i.lg ; 2 uses
+  %i.lh = getelementptr i8, ptr %0, i64 %i.lg     ; 2 uses
   %.not212 = icmp eq i32 %i.lf, 0
   br i1 %.not212, label %._crit_edge, label %.preheader193.lr.ph
 
@@ -714,8 +715,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %.preh
   %i.ms = icmp ne <32 x i32> %.fr, splat (i32 32)
   %i.mt = bitcast <32 x i1> %i.ms to i32
   %i.mu = icmp eq i32 %i.mt, 0
-  %.fr299 = freeze i1 %i.mo
-  %op.rdx = and i1 %i.mu, %.fr299
+  %op.rdx = and i1 %i.mu, %i.mo
   %i.mv = and i1 %op.rdx, %i.mq
   %op.rdx297 = select i1 %i.mv, i1 %i.mp, i1 false
   %spec.select = select i1 %op.rdx297, i64 %i.h, i64 0
