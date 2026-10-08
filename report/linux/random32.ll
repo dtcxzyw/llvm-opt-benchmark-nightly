@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/random32?download=true
 inline.NumInlined: 17
 inline.NumDeleted: 2
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -120,8 +120,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %i.ak, label %bb.b, label %._crit_edge, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %.013.lcssa = phi ptr [ %1, %bb.a ], [ %i.ai, %bb.b ]
-  %.012.lcssa = phi i64 [ %2, %bb.a ], [ %i.aj, %bb.b ] ; 4 uses
+  %.013.lcssa = phi ptr [ %1, %bb.a ], [ %i.ai, %bb.b ] ; 3 uses
+  %.012.lcssa = phi i64 [ %2, %bb.a ], [ %i.aj, %bb.b ] ; 3 uses
   %.not = icmp eq i64 %.012.lcssa, 0
   br i1 %.not, label %.loopexit, label %.prol.preheader
 
@@ -162,59 +162,28 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i32 %i.bo, ptr %i.bh, align 4
   %i.bp = xor i32 %i.ay, %i.ar
   %i.bq = xor i32 %i.bp, %i.bg
-  %i.br = xor i32 %i.bq, %i.bo
-  br label %bb.c
+  %i.br = xor i32 %i.bq, %i.bo                    ; 3 uses
+  %3 = trunc i32 %i.br to i8
+  store i8 %3, ptr %.013.lcssa, align 1
+  %.not15 = icmp eq i64 %.012.lcssa, 1
+  br i1 %.not15, label %.loopexit, label %bb.c
 
-bb.c:                                             ; preds = %bb.c, %.prol.preheader
-  %.114.prol = phi ptr [ %.013.lcssa, %.prol.preheader ], [ %3, %bb.c ] ; 2 uses
-  %.1.prol = phi i64 [ %.012.lcssa, %.prol.preheader ], [ %4, %bb.c ]
-  %.0.prol = phi i32 [ %i.br, %.prol.preheader ], [ %5, %bb.c ] ; 2 uses
-  %prol.iter = phi i64 [ 0, %.prol.preheader ], [ %prol.iter.next, %bb.c ]
-  %i.bs = trunc i32 %.0.prol to i8
-  %3 = getelementptr i8, ptr %.114.prol, i64 1    ; 2 uses
-  store i8 %i.bs, ptr %.114.prol, align 1
-  %4 = add nsw i64 %.1.prol, -1                   ; 2 uses
-  %5 = lshr i32 %.0.prol, 8                       ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %.012.lcssa
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %bb.c, !llvm.loop !12
+bb.c:                                             ; preds = %.prol.preheader
+  %4 = lshr i32 %i.br, 8
+  %5 = getelementptr i8, ptr %.013.lcssa, i64 1
+  %i.bs = trunc i32 %4 to i8
+  store i8 %i.bs, ptr %5, align 1
+  %prol.iter.cmp.not = icmp eq i64 %.012.lcssa, 2
+  br i1 %prol.iter.cmp.not, label %.loopexit, label %.new
 
-.prol.loopexit:                                   ; preds = %bb.c
-  %6 = icmp ult i64 %.012.lcssa, 8
-  br i1 %6, label %.loopexit, label %.new
-
-.new:                                             ; preds = %.prol.loopexit, %.new
-  %.114 = phi ptr [ %18, %.new ], [ %3, %.prol.loopexit ] ; 9 uses
-  %.1 = phi i64 [ %19, %.new ], [ %4, %.prol.loopexit ]
-  %.0 = phi i32 [ 0, %.new ], [ %5, %.prol.loopexit ] ; 4 uses
-  %7 = trunc i32 %.0 to i8
-  %8 = getelementptr i8, ptr %.114, i64 1
-  store i8 %7, ptr %.114, align 1
-  %9 = lshr i32 %.0, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %.114, i64 2
-  store i8 %10, ptr %8, align 1
-  %i.bt = lshr i32 %.0, 16
-  %12 = trunc i32 %i.bt to i8
-  %i.bu = getelementptr i8, ptr %.114, i64 3
-  store i8 %12, ptr %11, align 1
-  %13 = lshr i32 %.0, 24
-  %i.bv = trunc nuw i32 %13 to i8
-  %14 = getelementptr i8, ptr %.114, i64 4
+.new:                                             ; preds = %bb.c
+  %i.bt = lshr i32 %i.br, 16
+  %i.bu = getelementptr i8, ptr %.013.lcssa, i64 2
+  %i.bv = trunc i32 %i.bt to i8
   store i8 %i.bv, ptr %i.bu, align 1
-  %15 = getelementptr i8, ptr %.114, i64 5
-  store i8 0, ptr %14, align 1
-  %16 = getelementptr i8, ptr %.114, i64 6
-  store i8 0, ptr %15, align 1
-  %17 = getelementptr i8, ptr %.114, i64 7
-  store i8 0, ptr %16, align 1
-  %18 = getelementptr i8, ptr %.114, i64 8
-  store i8 0, ptr %17, align 1
-  %19 = add nsw i64 %.1, -8                       ; 2 uses
-  %.not15.7 = icmp eq i64 %19, 0
-  br i1 %.not15.7, label %.loopexit, label %.new, !llvm.loop !13
+  br label %.loopexit
 
-.loopexit:                                        ; preds = %.prol.loopexit, %.new, %._crit_edge
+.loopexit:                                        ; preds = %.prol.preheader, %bb.c, %.new, %._crit_edge
   ret void
 }
 
@@ -243,7 +212,7 @@ bb.b:                                             ; preds = %bb.a, %bb.c
   br i1 %.not.i, label %find_next_bit.exit.thread, label %find_next_bit.exit
 
 find_next_bit.exit:                               ; preds = %bb.b
-  %i.j = call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.i) #6, !srcloc !16 ; 3 uses
+  %i.j = call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.i) #6, !srcloc !13 ; 3 uses
   %i.k = and i64 %i.j, 4294967232
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %bb.c, label %find_next_bit.exit.thread
@@ -255,7 +224,7 @@ bb.c:                                             ; preds = %find_next_bit.exit
   %i.p = add i64 %i.o, %i.b
   %i.q = inttoptr i64 %i.p to ptr                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false), !annotation !17
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false), !annotation !14
   call void @get_random_bytes(ptr noundef nonnull %i.a, i64 noundef 16) #8
   %i.r = load i32, ptr %i.a, align 16             ; 2 uses
   %i.s = icmp ult i32 %i.r, 2
@@ -517,7 +486,7 @@ bb.c:                                             ; preds = %find_next_bit.exit
   %i.jg = add nuw nsw i64 %i.j, 1
   %i.jh = and i64 %i.jg, 127                      ; 2 uses
   %i.ji = icmp samesign ugt i64 %i.jh, 63
-  br i1 %i.ji, label %find_next_bit.exit.thread, label %bb.b, !prof !18, !llvm.loop !15
+  br i1 %i.ji, label %find_next_bit.exit.thread, label %bb.b, !prof !15, !llvm.loop !12
 
 find_next_bit.exit.thread:                        ; preds = %bb.b, %bb.c, %find_next_bit.exit
   ret void
@@ -554,11 +523,8 @@ attributes #8 = { noredzone nounwind "no-builtin-wcslen" }
 !9 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = distinct !{!11, !10}
-!12 = distinct !{!12, !14}
-!13 = distinct !{!13, !10}
-!14 = !{!"llvm.loop.unroll.disable"}
-!15 = distinct !{!15, !10}
-!16 = !{i64 1310888}
-!17 = !{!"auto-init"}
-!18 = !{!"branch_weights", i32 1, i32 1999}
+!12 = distinct !{!12, !10}
+!13 = !{i64 1310888}
+!14 = !{!"auto-init"}
+!15 = !{!"branch_weights", i32 1, i32 1999}
 end_hunk_0

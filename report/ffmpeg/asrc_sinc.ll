@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ea, label %.lr.ph.i95, label %._crit_edge.i, !llvm.loop !55
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i95, %bb.i
-  %.0235.lcssa.i = phi i32 [ 32, %bb.i ], [ %i.dy, %.lr.ph.i95 ] ; 20 uses
+  %.0235.lcssa.i = phi i32 [ 32, %bb.i ], [ %i.dy, %.lr.ph.i95 ] ; 19 uses
   %i.eb = or disjoint i32 %.0235.lcssa.i, 2       ; 2 uses
   %i.ec = ashr exact i32 %.0235.lcssa.i, 1        ; 6 uses
   %i.ed = add nuw nsw i32 %i.ec, 1
@@ -462,16 +462,16 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph278.i
 
 .lr.ph282.preheader.i:                            ; preds = %._crit_edge279.i
   %i.ih = zext nneg i32 %.0235.lcssa.i to i64     ; 3 uses
-  %1 = call i64 @llvm.usub.sat.i64(i64 %i.ih, i64 4)
+  %1 = add nsw i64 %i.ih, -4                      ; 2 uses
   %i.ii = lshr exact i64 %1, 1
-  %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses
-  %min.iters.check248 = icmp ult i32 %.0235.lcssa.i, 5
+  %i.ij = add nuw i64 %i.ii, 1                    ; 3 uses
+  %min.iters.check248 = icmp eq i64 %1, 0
   br i1 %min.iters.check248, label %.lr.ph282.i.preheader, label %vector.ph249
 
 vector.ph249:                                     ; preds = %.lr.ph282.preheader.i
-  %n.vec250 = and i64 %i.ij, 2147483646           ; 3 uses
-  %i.ik = shl nuw nsw i64 %n.vec250, 1
-  %i.il = or disjoint i64 %i.ik, 2
+  %n.vec250 = and i64 %i.ij, -2                   ; 2 uses
+  %i.ik = shl i64 %i.ij, 1
+  %i.il = or i64 %i.ik, 2
   br label %vector.body251
 
 vector.body251:                                   ; preds = %vector.body251, %vector.ph249
@@ -872,9 +872,6 @@ declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { <2 x float>, <2 x float> } @llvm.sincos.v2f32(<2 x float>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.exp.v4f32(<4 x float>) #4
