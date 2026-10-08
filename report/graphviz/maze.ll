@@ -67,14 +67,14 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !28 ; 5 uses
   %i.ac = icmp sgt i32 %i.ab, 0
-  br i1 %i.ac, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.ac, label %.lr.ph.preheader, label %._crit_edge43
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %i.ab to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %updateWt.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %updateWt.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %updateWt.exit ] ; 5 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !29 ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 12
@@ -90,7 +90,7 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 60
   %i.aq = load i8, ptr %i.ap, align 4, !tbaa !18, !range !19, !noundef !20
   %.not33 = icmp eq i8 %i.ak, %i.aq
-  br i1 %.not33, label %._crit_edge.loopexit, label %bb.b
+  br i1 %.not33, label %._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 3 uses
@@ -113,21 +113,16 @@ updateWt.exit:                                    ; preds = %bb.b, %bb.c
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge43, label %.lr.ph, !llvm.loop !44
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
+._crit_edge:                                      ; preds = %.lr.ph
   %3 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %3, %._crit_edge.loopexit ] ; 2 uses
-  %4 = icmp slt i32 %.0.lcssa, %i.ab
+  %4 = icmp sgt i32 %i.ab, %3
   br i1 %4, label %.lr.ph42, label %._crit_edge43
 
 .lr.ph42:                                         ; preds = %._crit_edge
-  %5 = zext i32 %.0.lcssa to i64                  ; 2 uses
   br i1 %.not.not, label %.lr.ph42.split, label %.lr.ph42.split.us
 
 .lr.ph42.split.us:                                ; preds = %.lr.ph42, %updateWt.exit34.us
-  %indvars.iv46 = phi i64 [ %indvars.iv.next47, %updateWt.exit34.us ], [ %5, %.lr.ph42 ] ; 2 uses
+  %indvars.iv46 = phi i64 [ %indvars.iv.next47, %updateWt.exit34.us ], [ %indvars.iv, %.lr.ph42 ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv46
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !29 ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 12
@@ -160,7 +155,7 @@ updateWt.exit34.us:                               ; preds = %bb.d, %.lr.ph42.spl
   br i1 %i.bq, label %.lr.ph42.split.us, label %._crit_edge43, !llvm.loop !45
 
 .lr.ph42.split:                                   ; preds = %.lr.ph42, %updateWt.exit34
-  %indvars.iv49 = phi i64 [ %indvars.iv.next50, %updateWt.exit34 ], [ %5, %.lr.ph42 ] ; 2 uses
+  %indvars.iv49 = phi i64 [ %indvars.iv.next50, %updateWt.exit34 ], [ %indvars.iv, %.lr.ph42 ] ; 2 uses
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv49
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !29 ; 5 uses
   %i.bt = icmp eq ptr %i.bs, %2
@@ -196,7 +191,7 @@ updateWt.exit34:                                  ; preds = %bb.f, %bb.e, %.lr.p
   %i.ck = icmp sgt i32 %i.ab, %i.cj
   br i1 %i.ck, label %.lr.ph42.split, label %._crit_edge43, !llvm.loop !45
 
-._crit_edge43:                                    ; preds = %updateWt.exit, %updateWt.exit34.us, %updateWt.exit34, %._crit_edge
+._crit_edge43:                                    ; preds = %updateWt.exit, %updateWt.exit34.us, %updateWt.exit34, %bb.a, %._crit_edge
   ret void
 }
 

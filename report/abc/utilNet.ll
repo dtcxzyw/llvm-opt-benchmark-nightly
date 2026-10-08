@@ -205,12 +205,11 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i34.
   %.pre119.i.a = trunc nuw nsw i64 %indvars.iv114.i to i32 ; 2 uses
   br label %.lr.ph177.i.i
 
-.loopexit.i38.i:                                  ; preds = %Tn_GenAndOrGate.exit.i.i, %.lr.ph177.i.i
-  %10 = phi i32 [ %i.alk, %.lr.ph177.i.i ], [ %i.aqm, %Tn_GenAndOrGate.exit.i.i ] ; 2 uses
-  %i.alg = icmp slt i32 %i.all, %10
+.loopexit.i38.i:                                  ; preds = %Tn_GenAndOrGate.exit.i.i
+  %i.alg = icmp slt i32 %i.all, %i.aqm
   br i1 %i.alg, label %.lr.ph177.i.i, label %.preheader168.i.loopexit.i, !llvm.loop !96
 
-.preheader168.i.loopexit.i:                       ; preds = %.loopexit.i38.i
+.preheader168.i.loopexit.i:                       ; preds = %.lr.ph177.i.i, %.loopexit.i38.i
   %.pre117.i = load i32, ptr %i.r, align 4, !tbaa !133
   br label %.preheader168.i.i
 
@@ -224,11 +223,11 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i34.
   br label %.lr.ph201.i.i
 
 .lr.ph177.i.i:                                    ; preds = %.loopexit.i38.i, %.lr.ph177.i.preheader.i
-  %i.alk = phi i32 [ %10, %.loopexit.i38.i ], [ %i.ale, %.lr.ph177.i.preheader.i ] ; 3 uses
+  %i.alk = phi i32 [ %i.aqm, %.loopexit.i38.i ], [ %i.ale, %.lr.ph177.i.preheader.i ] ; 2 uses
   %.0123175.i.i = phi i32 [ %i.all, %.loopexit.i38.i ], [ 0, %.lr.ph177.i.preheader.i ] ; 4 uses
   %i.all = add nuw nsw i32 %.0123175.i.i, 1       ; 4 uses
   %i.alm = icmp slt i32 %i.all, %i.alk
-  br i1 %i.alm, label %.lr.ph174.i.i, label %.loopexit.i38.i
+  br i1 %i.alm, label %.lr.ph174.i.i, label %.preheader168.i.loopexit.i
 
 .lr.ph174.i.i:                                    ; preds = %.lr.ph177.i.i, %Tn_GenAndOrGate.exit.i.i
   %.val.i150219.i.i = phi i32 [ %i.aqm, %Tn_GenAndOrGate.exit.i.i ], [ %i.alk, %.lr.ph177.i.i ]
@@ -551,7 +550,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
 Tn_GenAndOrGate.exit.i.i:                         ; preds = %bb.bo, %.preheader.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   %i.aql = add nuw nsw i32 %.0124172.i.i, 1       ; 2 uses
-  %i.aqm = load i32, ptr %i.u, align 8, !tbaa !134 ; 3 uses
+  %i.aqm = load i32, ptr %i.u, align 8, !tbaa !134 ; 4 uses
   %i.aqn = icmp slt i32 %i.aql, %i.aqm
   br i1 %i.aqn, label %.lr.ph174.i.i, label %.loopexit.i38.i, !llvm.loop !103
 

@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.c, align 8              ; 5 uses
-  %i.h = load i8, ptr %i.g, align 1               ; 3 uses
+  %i.h = load i8, ptr %i.g, align 1               ; 2 uses
   %.not.i = icmp eq i8 %i.h, 0
   br i1 %.not.i, label %name_is_illegal.exit.thread, label %name_is_illegal.exit
 
@@ -215,18 +215,13 @@ name_is_illegal.exit:                             ; preds = %bb.b
 
 sub_0:                                            ; preds = %name_is_illegal.exit
   %.not37 = icmp eq i8 %i.h, 46
-  br i1 %.not37, label %.tail, label %.tail.thread
+  br i1 %.not37, label %.tail, label %bb.c
 
 .tail:                                            ; preds = %sub_0
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   %i.k = load i8, ptr %i.j, align 1
   %.not = icmp eq i8 %i.k, 0
   br i1 %.not, label %name_is_illegal.exit.thread, label %sub_135
-
-.tail.thread:                                     ; preds = %sub_0
-  %3 = zext i8 %i.h to i32
-  %4 = sub nsw i32 46, %3
-  br label %.tail33
 
 sub_135:                                          ; preds = %.tail
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 1
@@ -243,12 +238,12 @@ sub_2:                                            ; preds = %sub_135
   %i.s = sub nsw i32 0, %i.r
   br label %.tail33
 
-.tail33:                                          ; preds = %.tail.thread, %sub_135, %sub_2
-  %5 = phi i32 [ %4, %.tail.thread ], [ %i.o, %sub_135 ], [ %i.s, %sub_2 ]
-  %.not26 = icmp eq i32 %5, 0
+.tail33:                                          ; preds = %sub_135, %sub_2
+  %3 = phi i32 [ %i.s, %sub_2 ], [ %i.o, %sub_135 ]
+  %.not26 = icmp eq i32 %3, 0
   br i1 %.not26, label %name_is_illegal.exit.thread, label %bb.c
 
-bb.c:                                             ; preds = %.tail33
+bb.c:                                             ; preds = %sub_0, %.tail33
   %i.t = load i32, ptr %i.b, align 4              ; 2 uses
   %i.u = and i32 %i.t, -513
   %.not27 = icmp eq i32 %i.u, 0

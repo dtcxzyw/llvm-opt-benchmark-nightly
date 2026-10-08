@@ -204,16 +204,16 @@ bb.c:                                             ; preds = %bb.a
   %.012.lcssa.i.sroa.gep88.i = getelementptr inbounds nuw i8, ptr %i.a, i64 5 ; 2 uses
   %.012.lcssa.i.sroa.gep89.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9 ; 2 uses
   %.012.lcssa.i.sroa.gep90.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.e = add i64 %1, -6                           ; 4 uses
+  %i.e = add i64 %1, -6                           ; 3 uses
   %i.f = icmp sgt i64 %i.e, 0
-  br i1 %i.f, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.f, label %.lr.ph.i, label %.loopexit
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.054107.i = phi i64 [ %i.i, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.g = getelementptr i8, ptr %0, i64 %.054107.i
   %i.h = load i8, ptr %i.g, align 1, !tbaa !19
   switch i8 %i.h, label %.loopexit [
-    i8 35, label %._crit_edge.i
+    i8 35, label %.lr.ph114.i
     i8 32, label %bb.d
     i8 9, label %bb.d
     i8 12, label %bb.d
@@ -224,13 +224,8 @@ bb.d:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.i, %i.e
   br i1 %exitcond.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !40
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.c
-  %.054.lcssa.i = phi i64 [ 0, %bb.c ], [ %.054107.i, %.lr.ph.i ] ; 2 uses
-  %4 = icmp slt i64 %.054.lcssa.i, %i.e
-  br i1 %4, label %.lr.ph114.i, label %.loopexit
-
-.lr.ph114.i:                                      ; preds = %._crit_edge.i, %.thread99.i
-  %.155112.i = phi i64 [ %i.fm, %.thread99.i ], [ %.054.lcssa.i, %._crit_edge.i ] ; 2 uses
+.lr.ph114.i:                                      ; preds = %.lr.ph.i, %.thread99.i
+  %.155112.i = phi i64 [ %i.fm, %.thread99.i ], [ %.054107.i, %.lr.ph.i ] ; 2 uses
   %i.j = getelementptr i8, ptr %0, i64 %.155112.i ; 3 uses
   %i.k = load i32, ptr %i.j, align 1
   %i.l = xor i32 %i.k, 1768189795
@@ -629,7 +624,7 @@ _PyTokenizer_new_string.exit78.i:                 ; preds = %bb.an
   %exitcond117.not.i = icmp eq i64 %i.fm, %i.e
   br i1 %exitcond117.not.i, label %.loopexit, label %.lr.ph114.i, !llvm.loop !42
 
-.loopexit:                                        ; preds = %bb.d, %.lr.ph.i, %.thread99.i, %._crit_edge.i
+.loopexit:                                        ; preds = %bb.d, %.lr.ph.i, %.thread99.i, %bb.c
   %i.fn = icmp sgt i64 %1, 0
   br i1 %i.fn, label %.lr.ph, label %get_coding_spec.exit
 

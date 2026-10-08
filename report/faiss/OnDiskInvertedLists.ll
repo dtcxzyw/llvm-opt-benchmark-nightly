@@ -204,7 +204,11 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 _ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit: ; preds = %.noexc.i
   %.pre = load ptr, ptr %4, align 8, !tbaa !64    ; 4 uses
   %i.m = icmp eq ptr %.pre, %4
-  br i1 %i.m, label %5, label %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit
+  br i1 %i.m, label %_ZNSt7__cxx1110_List_baseIN5faiss19OnDiskInvertedLists4SlotESaIS3_EED2Ev.exit, label %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit
+
+.body:                                            ; preds = %.lr.ph.i.i.i, %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
+  resume { ptr, i32 } %i.j
 
 _ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit: ; preds = %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit
   call void @_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %.pre, ptr noundef nonnull align 8 dereferenceable(24) %4) #19
@@ -214,28 +218,19 @@ _ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_c
   %i.q = add i64 %i.p, %i.n
   store i64 %i.q, ptr %i.o, align 8, !tbaa !72
   store i64 0, ptr %i.b, align 8, !tbaa !72
-  %.pre9 = load ptr, ptr %4, align 8, !tbaa !64
-  br label %5
-
-.body:                                            ; preds = %.lr.ph.i.i.i, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
-  resume { ptr, i32 } %i.j
-
-5:                                                ; preds = %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit
-  %6 = phi ptr [ %.pre9, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit ], [ %.pre, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit ] ; 2 uses
-  %.sroa.06.0 = phi ptr [ %.pre, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit ], [ %1, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %6, %4
+  %.pre9 = load ptr, ptr %4, align 8, !tbaa !64   ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre9, %4
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIN5faiss19OnDiskInvertedLists4SlotESaIS3_EED2Ev.exit, label %.lr.ph.i.i7
 
-.lr.ph.i.i7:                                      ; preds = %5, %.lr.ph.i.i7
-  %.09.i.i = phi ptr [ %i.r, %.lr.ph.i.i7 ], [ %6, %5 ] ; 2 uses
+.lr.ph.i.i7:                                      ; preds = %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit, %.lr.ph.i.i7
+  %.09.i.i = phi ptr [ %i.r, %.lr.ph.i.i7 ], [ %.pre9, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit ] ; 2 uses
   %i.r = load ptr, ptr %.09.i.i, align 8, !tbaa !64 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 32) #28
   %.not.i.i = icmp eq ptr %i.r, %4
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseIN5faiss19OnDiskInvertedLists4SlotESaIS3_EED2Ev.exit, label %.lr.ph.i.i7, !llvm.loop !1
 
-_ZNSt7__cxx1110_List_baseIN5faiss19OnDiskInvertedLists4SlotESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i7, %bb.a, %5
-  %.sroa.06.019 = phi ptr [ %1, %bb.a ], [ %.sroa.06.0, %5 ], [ %.sroa.06.0, %.lr.ph.i.i7 ]
+_ZNSt7__cxx1110_List_baseIN5faiss19OnDiskInvertedLists4SlotESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i7, %bb.a, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit
+  %.sroa.06.019 = phi ptr [ %1, %bb.a ], [ %.pre, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EE6spliceESt20_List_const_iteratorIS3_ERS5_.exit ], [ %1, %_ZNSt7__cxx114listIN5faiss19OnDiskInvertedLists4SlotESaIS3_EEC2IN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_S4_EEEvEET_SD_RKS4_.exit ], [ %.pre, %.lr.ph.i.i7 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   ret ptr %.sroa.06.019
 }

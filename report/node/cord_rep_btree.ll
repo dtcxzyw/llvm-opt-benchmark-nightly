@@ -205,11 +205,10 @@ _ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105: ; preds = %.lr.ph.i97,
   %.082.lcssa = phi i32 [ %i.f, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.ac, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 2 uses
   %.081.lcssa = phi ptr [ %0, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %.084180308, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 3 uses
   %i.aw = phi ptr [ %.084176, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %.084, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 5 uses
-  %.lcssa155 = phi i64 [ %i.u, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.av, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 2 uses
-  %i.ax = phi i64 [ %i.t, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.au, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 3 uses
+  %.lcssa155 = phi i64 [ %i.u, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.av, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ]
+  %i.ax = phi i64 [ %i.t, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.au, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105 ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.081.lcssa, i64 16 ; 2 uses
-  %3 = icmp ugt i64 %.lcssa155, %i.ax
-  br i1 %3, label %.lr.ph.i109, label %_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit.thread
+  br label %.lr.ph.i109
 
 .lr.ph.i109:                                      ; preds = %._crit_edge, %.lr.ph.i109
   %i.az = phi i64 [ %i.be, %.lr.ph.i109 ], [ %i.ax, %._crit_edge ]
@@ -227,7 +226,7 @@ _ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit: ; pred
   %i.bg = icmp ugt i64 %i.ba, %.sroa.044.0.lcssa
   br i1 %i.bg, label %bb.k, label %_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit.thread
 
-_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit.thread: ; preds = %._crit_edge, %_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit
+_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit.thread: ; preds = %_ZNK4absl13cord_internal12CordRepBtree11IndexBeforeENS1_8PositionEm.exit
   tail call void @__assert_fail(ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.1, i32 noundef 919, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl13cord_internal12CordRepBtree7SubTreeEmm) #14
   unreachable
 

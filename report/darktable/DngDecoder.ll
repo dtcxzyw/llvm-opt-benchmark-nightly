@@ -204,13 +204,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !163  ; 5 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !163  ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.sroa.01.0.copyload = load ptr, ptr %1, align 8, !tbaa !277 ; 11 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !143 ; 4 uses
+  %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !143 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
-  br i1 %i.g, label %_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit, label %.lr.ph.i.i
+  br i1 %i.g, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.i.i
   %.05.i.i = phi i64 [ %i.i, %.lr.ph.i.i ], [ 0, %bb.b ]
@@ -265,24 +265,21 @@ bb.d:                                             ; preds = %_ZSt9__advanceISt23
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  %.sroa.011.1.i = phi ptr [ %i.y, %bb.d ], [ %.sroa.011.014.i, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEElEvRT_T0_St26bidirectional_iterator_tag.exit.i ] ; 2 uses
+  %.sroa.011.1.i = phi ptr [ %i.y, %bb.d ], [ %.sroa.011.014.i, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEElEvRT_T0_St26bidirectional_iterator_tag.exit.i ] ; 5 uses
   %.1.i = phi i64 [ %i.aa, %bb.d ], [ %i.n, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEElEvRT_T0_St26bidirectional_iterator_tag.exit.i ] ; 2 uses
   %i.ab = icmp sgt i64 %.1.i, 0
   br i1 %i.ab, label %bb.c, label %_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit, !llvm.loop !499
 
-_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit: ; preds = %bb.e, %bb.b
-  %.sroa.011.0.lcssa.i = phi ptr [ %i.e, %bb.b ], [ %.sroa.011.1.i, %bb.e ] ; 4 uses
-  %i.ac = icmp eq ptr %.sroa.011.0.lcssa.i, %i.f
+_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit: ; preds = %bb.e
+  %i.ac = icmp eq ptr %.sroa.011.1.i, %i.f
   br i1 %i.ac, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit
-  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.011.0.lcssa.i, i64 32 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.011.1.i, i64 32 ; 3 uses
   %i.ae = icmp eq ptr %1, %i.ad
   br i1 %i.ae, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %2 = icmp sgt i32 %.sroa.2.0.copyload, -1
-  tail call void @llvm.assume(i1 %2)
   %i.af = load ptr, ptr %i.ad, align 8, !tbaa !166 ; 4 uses
   %i.ag = icmp eq ptr %.sroa.01.0.copyload, %i.af
   br i1 %i.ag, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit
@@ -304,18 +301,16 @@ _ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit: ; preds = %bb.g
   br i1 %.0.i.i, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %.critedge
 
 .critedge:                                        ; preds = %_ZSt15partition_pointISt23_Rb_tree_const_iteratorIN8rawspeed6BufferEEZNKS1_11NORangesSetIS2_E44rangeIsOverlappingExistingElementOfSortedSetERKS2_EUlS7_E_ET_S9_S9_T0_.exit, %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit
-  %i.ar = icmp eq ptr %.sroa.011.0.lcssa.i, %i.e
+  %i.ar = icmp eq ptr %.sroa.011.1.i, %i.e
   br i1 %i.ar, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %.lr.ph.i8.preheader
 
 .lr.ph.i8.preheader:                              ; preds = %.critedge
-  %i.as = tail call noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.011.0.lcssa.i) #27
+  %i.as = tail call noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.011.1.i) #27
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 32 ; 3 uses
   %i.au = icmp eq ptr %1, %i.at
   br i1 %i.au, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i8.preheader
-  %3 = icmp sgt i32 %.sroa.2.0.copyload, -1
-  tail call void @llvm.assume(i1 %3)
   %i.av = load ptr, ptr %i.at, align 8, !tbaa !166 ; 4 uses
   %i.aw = icmp eq ptr %.sroa.01.0.copyload, %i.av
   br i1 %i.aw, label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14, label %bb.i
@@ -336,8 +331,8 @@ bb.i:                                             ; preds = %bb.h
   %.0.i.i12 = select i1 %i.bd, i1 %i.bg, i1 false
   br label %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14
 
-_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14: ; preds = %bb.g, %bb.f, %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit, %.critedge, %.lr.ph.i8.preheader, %bb.h, %bb.i, %bb.a
-  %.1 = phi i1 [ false, %bb.a ], [ true, %bb.h ], [ true, %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit ], [ false, %.critedge ], [ %.0.i.i12, %bb.i ], [ true, %.lr.ph.i8.preheader ], [ true, %bb.f ], [ true, %bb.g ]
+_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit14: ; preds = %bb.g, %bb.f, %bb.b, %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit, %.critedge, %.lr.ph.i8.preheader, %bb.h, %bb.i, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ true, %bb.h ], [ true, %_ZN8rawspeed13RangesOverlapINS_6BufferEEEbRKT_S4_.exit ], [ false, %.critedge ], [ false, %bb.b ], [ %.0.i.i12, %bb.i ], [ true, %.lr.ph.i8.preheader ], [ true, %bb.f ], [ true, %bb.g ]
   ret i1 %.1
 }
 

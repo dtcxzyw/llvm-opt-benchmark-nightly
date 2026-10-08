@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 256
   %i.o = load i32, ptr %i.n, align 8, !tbaa !29   ; 3 uses
   %.not146 = icmp eq i32 %i.o, 0
-  br i1 %.not146, label %._crit_edge, label %.lr.ph
+  br i1 %.not146, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 264
@@ -214,35 +214,30 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 7 uses
   %i.r = getelementptr inbounds nuw [72 x i8], ptr %i.q, i64 %indvars.iv
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 48
   %i.t = load i64, ptr %i.s, align 8, !tbaa !52   ; 2 uses
   %.not = icmp ne i64 %i.t, -1
   %i.u = icmp eq i64 %i.t, %1
   %or.cond = and i1 %.not, %i.u
-  br i1 %or.cond, label %._crit_edge.loopexit, label %bb.f
+  br i1 %or.cond, label %._crit_edge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.thread, label %bb.e, !llvm.loop !115
 
-._crit_edge.loopexit:                             ; preds = %bb.e
+._crit_edge:                                      ; preds = %bb.e
   %8 = trunc nuw i64 %indvars.iv to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
-  %.094.lcssa = phi i32 [ 0, %bb.d ], [ %8, %._crit_edge.loopexit ] ; 2 uses
-  %i.v = icmp eq i32 %.094.lcssa, %i.o
+  %i.v = icmp eq i32 %i.o, %8
   br i1 %i.v, label %._crit_edge.thread, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge
   store ptr %0, ptr %6, align 8, !tbaa !71
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 264 ; 4 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !31
-  %9 = zext i32 %.094.lcssa to i64                ; 4 uses
-  %i.y = getelementptr inbounds nuw [72 x i8], ptr %i.x, i64 %9
+  %i.y = getelementptr inbounds nuw [72 x i8], ptr %i.x, i64 %indvars.iv
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.y, ptr %i.z, align 8, !tbaa !72
   %i.aa = call ptr @H5AC_protect(ptr noundef %0, ptr noundef nonnull @H5AC_SOHM_LIST, i64 noundef %1, ptr noundef nonnull %6, i32 noundef 128) #11 ; 3 uses
@@ -257,7 +252,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 bb.h:                                             ; preds = %bb.g
   %i.af = load ptr, ptr %i.w, align 8, !tbaa !31
-  %i.ag = getelementptr inbounds nuw [72 x i8], ptr %i.af, i64 %9
+  %i.ag = getelementptr inbounds nuw [72 x i8], ptr %i.af, i64 %indvars.iv
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 56
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !48 ; 2 uses
   %.not110 = icmp eq i64 %i.ai, -1
@@ -272,7 +267,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.097 = phi ptr [ %i.aj, %bb.i ], [ null, %bb.h ] ; 2 uses
   %i.al = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.72, i32 noundef %3, ptr noundef nonnull @.str.53) #11 ; 0 uses
   %i.am = load ptr, ptr %i.w, align 8, !tbaa !31
-  %i.an = getelementptr inbounds nuw [72 x i8], ptr %i.am, i64 %9
+  %i.an = getelementptr inbounds nuw [72 x i8], ptr %i.am, i64 %indvars.iv
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !37
   %.not147 = icmp eq i64 %i.ap, 0
@@ -342,7 +337,7 @@ bb.o:                                             ; preds = %bb.l, %bb.n, %bb.m
   %i.cf = add i32 %.195142, 1                     ; 2 uses
   %i.cg = zext i32 %i.cf to i64                   ; 2 uses
   %i.ch = load ptr, ptr %i.w, align 8, !tbaa !31
-  %i.ci = getelementptr inbounds nuw [72 x i8], ptr %i.ch, i64 %9
+  %i.ci = getelementptr inbounds nuw [72 x i8], ptr %i.ch, i64 %indvars.iv
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 32
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !37
   %i.cl = icmp ugt i64 %i.ck, %i.cg
@@ -381,7 +376,7 @@ bb.s:                                             ; preds = %.thread121
   %i.cy = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.4, ptr noundef nonnull @__func__.H5SM_list_debug, i32 noundef 2632, i64 noundef %i.cw, i64 noundef %i.cx, ptr noundef nonnull @.str.45) #11 ; 0 uses
   br label %.thread132
 
-._crit_edge.thread:                               ; preds = %bb.f, %._crit_edge
+._crit_edge.thread:                               ; preds = %bb.f, %bb.d, %._crit_edge
   %i.cz = load i64, ptr @H5E_SOHM_g, align 8, !tbaa !12
   %i.da = load i64, ptr @H5E_BADVALUE_g, align 8, !tbaa !12
   %i.db = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.4, ptr noundef nonnull @__func__.H5SM_list_debug, i32 noundef 2585, i64 noundef %i.cz, i64 noundef %i.da, ptr noundef nonnull @.str.70) #11 ; 0 uses

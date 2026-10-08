@@ -204,19 +204,18 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !50   ; 11 uses
   %i.t = icmp ugt i64 %i.s, 9
+  %.pre267 = load ptr, ptr %1, align 8, !tbaa !49 ; 5 uses
   br i1 %i.t, label %.lr.ph, label %thread-pre-split.thread.thread
 
 thread-pre-split.thread.thread:                   ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !47
-  %27 = load ptr, ptr %1, align 8, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #31
   store i64 %i.s, ptr %i.e, align 8, !tbaa !51
   br label %._crit_edge.i.i
 
 .lr.ph:                                           ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
-  %28 = load ptr, ptr %1, align 8, !tbaa !49, !noalias !167
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 17
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 18
@@ -231,16 +230,15 @@ thread-pre-split.thread.thread:                   ; preds = %bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.e, %.lr.ph
   %i.ag = phi i64 [ 9, %.lr.ph ], [ %i.be, %bb.e ]
-  %.048258 = phi i64 [ 0, %.lr.ph ], [ %i.bd, %bb.e ] ; 8 uses
+  %.048258 = phi i64 [ 0, %.lr.ph ], [ %i.bd, %bb.e ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
-  call void @llvm.experimental.noalias.scope.decl(metadata !167)
   %i.ah = sub nuw i64 %i.s, %.048258              ; 3 uses
   %switch = icmp ult i64 %i.ah, 2
   br i1 %switch, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
   %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ah, i64 9) ; 3 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %28, i64 %.048258
+  %i.ai = getelementptr inbounds nuw i8, ptr %.pre267, i64 %.048258
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.v, ptr align 1 %i.ai, i64 %spec.select.i.i.i, i1 false)
   store i64 %spec.select.i.i.i, ptr %i.w, align 8, !tbaa !50, !alias.scope !167
   %i.aj = getelementptr inbounds nuw i8, ptr %i.v, i64 %spec.select.i.i.i
@@ -341,7 +339,6 @@ thread-pre-split:                                 ; preds = %_ZNSt7__cxx1112basi
 thread-pre-split.thread:                          ; preds = %bb.e, %thread-pre-split
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.bf, ptr %0, align 8, !tbaa !47
-  %29 = load ptr, ptr %1, align 8, !tbaa !49      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #31
   store i64 %i.s, ptr %i.e, align 8, !tbaa !51
   %i.bg = icmp ugt i64 %i.s, 15
@@ -358,7 +355,6 @@ thread-pre-split.thread:                          ; preds = %bb.e, %thread-pre-s
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %thread-pre-split.thread.thread, %.noexc75, %thread-pre-split.thread
-  %30 = phi ptr [ %29, %.noexc75 ], [ %29, %thread-pre-split.thread ], [ %27, %thread-pre-split.thread.thread ] ; 2 uses
   %i.bj = phi ptr [ %i.bh, %.noexc75 ], [ %i.bf, %thread-pre-split.thread ], [ %i.u, %thread-pre-split.thread.thread ] ; 2 uses
   switch i64 %i.s, label %bb.g [
     i64 1, label %bb.f
@@ -366,12 +362,12 @@ thread-pre-split.thread:                          ; preds = %bb.e, %thread-pre-s
   ]
 
 bb.f:                                             ; preds = %._crit_edge.i.i
-  %i.bk = load i8, ptr %30, align 1, !tbaa !52
+  %i.bk = load i8, ptr %.pre267, align 1, !tbaa !52
   store i8 %i.bk, ptr %i.bj, align 1, !tbaa !52
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 bb.g:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr align 1 %30, i64 %i.s, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr align 1 %.pre267, i64 %i.s, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %._crit_edge.i.i, %bb.f, %bb.g
@@ -399,7 +395,6 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !168)
   %i.br = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
   store ptr %i.br, ptr %7, align 8, !tbaa !47, !alias.scope !168
-  %31 = load ptr, ptr %1, align 8, !tbaa !49, !noalias !168 ; 2 uses
   %spec.select.i.i.i77 = call noundef i64 @llvm.umin.i64(i64 %i.bq, i64 %i.s) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #31, !noalias !168
   store i64 %spec.select.i.i.i77, ptr %i.d, align 8, !tbaa !51, !noalias !168
@@ -424,12 +419,12 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i
-  %i.bw = load i8, ptr %31, align 1, !tbaa !52
+  %i.bw = load i8, ptr %.pre267, align 1, !tbaa !52
   store i8 %i.bw, ptr %i.bv, align 1, !tbaa !52
   br label %bb.m
 
 bb.l:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bv, ptr align 1 %31, i64 %spec.select.i.i.i77, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bv, ptr align 1 %.pre267, i64 %spec.select.i.i.i77, i1 false)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %._crit_edge.i.i.i
@@ -528,16 +523,15 @@ bb.s:                                             ; preds = %.noexc10.i.i
   br label %bb.df
 
 bb.t:                                             ; preds = %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83
-  %.048257379383 = phi i64 [ 0, %bb.i ], [ %.048258, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83 ] ; 4 uses
   %i.cu = phi i64 [ %i.s, %bb.i ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31
   call void @llvm.experimental.noalias.scope.decl(metadata !169)
-  %i.cv = icmp ugt i64 %.048257379383, %i.cu
+  %i.cv = icmp ugt i64 %.048258, %i.cu
   br i1 %i.cv, label %bb.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i84
 
 bb.u:                                             ; preds = %bb.t
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.45, i64 noundef %.048257379383, i64 noundef %i.cu) #35
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.45, i64 noundef %.048258, i64 noundef %i.cu) #35
           to label %.noexc88 unwind label %bb.ag
 
 .noexc88:                                         ; preds = %bb.u
@@ -547,8 +541,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i84:
   %i.cw = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   store ptr %i.cw, ptr %9, align 8, !tbaa !47, !alias.scope !169
   %i.cx = load ptr, ptr %1, align 8, !tbaa !49, !noalias !169
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.048257379383 ; 2 uses
-  %i.cz = sub nuw i64 %i.cu, %.048257379383       ; 4 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.048258 ; 2 uses
+  %i.cz = sub nuw i64 %i.cu, %.048258             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #31, !noalias !169
   store i64 %i.cz, ptr %i.c, align 8, !tbaa !51, !noalias !169
   %i.da = icmp ugt i64 %i.cz, 15

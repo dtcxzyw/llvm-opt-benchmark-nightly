@@ -202,14 +202,14 @@ _RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecINtNtCs8Chj7Szqq0n_4core6result6Resu
 
 ._crit_edge66:                                    ; preds = %._crit_edge66.loopexit, %._crit_edge
   %i.cb = phi i64 [ %.pre85, %._crit_edge66.loopexit ], [ %i.br, %._crit_edge ] ; 3 uses
-  %i.cc = phi ptr [ %.pre84, %._crit_edge66.loopexit ], [ %i.bp, %._crit_edge ] ; 4 uses
+  %i.cc = phi ptr [ %.pre84, %._crit_edge66.loopexit ], [ %i.bp, %._crit_edge ] ; 3 uses
   %i.cd = load i64, ptr %i.aj, align 8, !range !9, !noundef !5
   %i.ce = icmp ult i64 %i.cb, 32940614417338486
   call void @llvm.assume(i1 %i.ce)
   %.idx70 = mul nuw nsw i64 %i.cb, 280
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cc, i64 %.idx70 ; 3 uses
   %i.cg = icmp eq i64 %i.cb, 0
-  br i1 %i.cg, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.lr.ph
+  br i1 %i.cg, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.lr.ph
 
 _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.lr.ph: ; preds = %._crit_edge66
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 4
@@ -219,7 +219,7 @@ _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_1
 
 _RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.lr.ph, %bb.n
   %.sroa.4.067 = phi ptr [ %i.cc, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.lr.ph ], [ %i.ci, %bb.n ] ; 4 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.4.067, i64 280 ; 4 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.4.067, i64 280 ; 5 uses
   %.sroa.5.0..sroa.4.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.067, i64 4
   %.sroa.5.0.copyload56 = load i8, ptr %.sroa.5.0..sroa.4.8..sroa_idx, align 4, !noalias !441 ; 2 uses
   %.not = icmp eq i8 %.sroa.5.0.copyload56, 2
@@ -245,25 +245,24 @@ bb.g:                                             ; preds = %_RNvXs4_NtNtCsbqH9s
   %spec.select.i = select i1 %.not.i, i1 %i.cj, i1 false
   br i1 %spec.select.i, label %bb.n, label %bb.m, !prof !11
 
-_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit, %bb.n, %._crit_edge66
-  %.sroa.4.161 = phi ptr [ %i.cc, %._crit_edge66 ], [ %i.ci, %bb.n ], [ %i.ci, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit ] ; 3 uses
+_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread: ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
   %i.ck = ptrtoint ptr %i.cf to i64
-  %i.cl = ptrtoint ptr %.sroa.4.161 to i64
+  %i.cl = ptrtoint ptr %i.ci to i64
   %i.cm = sub nuw i64 %i.ck, %i.cl
   %i.cn = udiv exact i64 %i.cm, 280
-  %i.co = icmp eq ptr %i.cf, %.sroa.4.161
+  %i.co = icmp eq ptr %i.cf, %i.ci
   br i1 %i.co, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread, %.lr.ph.i.i.i
   %.sroa.0.03.i.i.i = phi i64 [ %i.cq, %.lr.ph.i.i.i ], [ 0, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread ] ; 2 uses
-  %i.cp = getelementptr inbounds nuw [280 x i8], ptr %.sroa.4.161, i64 %.sroa.0.03.i.i.i ; 2 uses
+  %i.cp = getelementptr inbounds nuw [280 x i8], ptr %i.ci, i64 %.sroa.0.03.i.i.i ; 2 uses
   %i.cq = add nuw nsw i64 %.sroa.0.03.i.i.i, 1    ; 2 uses
   call void @_RNvXs1_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socketNtB5_18UnixDatagramSenderNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %i.cp) #11, !noalias !442
   call void @_RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix15file_descriptorNtB5_14FileDescriptorNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %i.cp) #11, !noalias !442
   %i.cr = icmp eq i64 %i.cq, %i.cn
   br i1 %i.cr, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit, label %.lr.ph.i.i.i
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit: ; preds = %.lr.ph.i.i.i, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit: ; preds = %bb.n, %.lr.ph.i.i.i, %._crit_edge66, %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !442
   store i64 %i.cd, ptr %i.a, align 8, !noalias !442
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -449,7 +448,7 @@ bb.n:                                             ; preds = %bb.g
   call void @_RNvXs0_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix15file_descriptorNtB5_14FileDescriptorNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %i.y) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   %i.ec = icmp eq ptr %i.ci, %i.cf
-  br i1 %i.ec, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit.thread, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
+  br i1 %i.ec, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderEECsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit, label %_RNvXs4_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix20unix_datagram_socket18UnixDatagramSenderENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable

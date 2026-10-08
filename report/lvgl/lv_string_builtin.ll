@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %.critedge, %bb.a
 define noundef ptr @lv_strncpy(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %.not19 = icmp eq i64 %2, 0
-  br i1 %.not19, label %.critedge, label %.lr.ph
+  br i1 %.not19, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.014 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ]   ; 4 uses
+  %.014 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ]   ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.014
   %i.b = load i8, ptr %i.a, align 1, !tbaa !10    ; 2 uses
   %.not = icmp eq i8 %i.b, 0
@@ -220,18 +220,17 @@ bb.b:                                             ; preds = %.lr.ph
   %exitcond.not = icmp eq i64 %i.d, %2
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
 
-.critedge:                                        ; preds = %.lr.ph, %bb.a
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %.014, %.lr.ph ] ; 3 uses
-  %i.e = icmp ult i64 %.0.lcssa, %2
+.critedge:                                        ; preds = %.lr.ph
+  %i.e = icmp ult i64 %.014, %2
   br i1 %i.e, label %.lr.ph18.preheader, label %._crit_edge
 
 .lr.ph18.preheader:                               ; preds = %.critedge
-  %scevgep = getelementptr i8, ptr %0, i64 %.0.lcssa
-  %i.f = sub nuw i64 %2, %.0.lcssa
+  %scevgep = getelementptr i8, ptr %0, i64 %.014
+  %i.f = sub nuw i64 %2, %.014
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.f, i1 false), !tbaa !10
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph18.preheader, %.critedge
+._crit_edge:                                      ; preds = %bb.b, %bb.a, %.lr.ph18.preheader, %.critedge
   ret ptr %0
 }
 

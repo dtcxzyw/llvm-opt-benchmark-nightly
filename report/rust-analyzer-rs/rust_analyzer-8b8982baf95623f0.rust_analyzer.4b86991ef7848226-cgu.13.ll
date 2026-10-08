@@ -204,24 +204,20 @@ bb.a:
   %i.l = alloca [16 x i8], align 4                ; 4 uses
   %i.m = alloca [24 x i8], align 8                ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !noundef !4 ; 3 uses
+  %i.o = load i64, ptr %i.n, align 8, !noundef !4 ; 2 uses
   %i.p = icmp ult i64 %i.o, 288230376151711744
   tail call void @llvm.assume(i1 %i.p)
   %.not = icmp ugt i64 %i.o, %1
-  br i1 %.not, label %bb.c, label %bb.b
+  br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.q = add i64 %1, 1
   invoke void @_RINvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics27WorkspaceFlycheckDiagnosticE11resize_withNvYBF_NtNtCshzWfHUSfYae_4core7default7Default7defaultEBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.q)
-          to label %._crit_edge220 unwind label %bb.e
+          to label %bb.c unwind label %bb.e
 
-._crit_edge220:                                   ; preds = %bb.b
-  %.pre = load i64, ptr %i.n, align 8
-  br label %bb.c
-
-bb.c:                                             ; preds = %._crit_edge220, %bb.a
-  %7 = phi i64 [ %.pre, %._crit_edge220 ], [ %i.o, %bb.a ] ; 2 uses
-  %i.r = icmp ult i64 %1, %7
+bb.c:                                             ; preds = %bb.b
+  %.pre = load i64, ptr %i.n, align 8             ; 2 uses
+  %i.r = icmp ult i64 %1, %.pre
   br i1 %i.r, label %bb.f, label %bb.g
 
 bb.d:                                             ; preds = %bb.bc, %bb.e
@@ -239,7 +235,7 @@ bb.e:                                             ; preds = %bb.m, %bb.j, %bb.ck
           cleanup
   br label %bb.d
 
-bb.f:                                             ; preds = %bb.c
+bb.f:                                             ; preds = %bb.a, %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !nonnull !4, !noundef !4
   %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.v, i64 %1
@@ -249,7 +245,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %.not10, label %bb.n, label %bb.i
 
 bb.g:                                             ; preds = %bb.c
-  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %1, i64 noundef %7, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #39
+  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %1, i64 noundef %.pre, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #39
           to label %bb.h unwind label %bb.e
 
 bb.h:                                             ; preds = %bb.bl, %bb.g

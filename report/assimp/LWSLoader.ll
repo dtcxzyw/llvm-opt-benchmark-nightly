@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %_ZN6Assimp9strtoul1
   br label %bb.s
 
 .preheader587:                                    ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit376.thread
-  %.sroa.0535.0740 = load ptr, ptr %8, align 8    ; 3 uses
+  %.sroa.0535.0740 = load ptr, ptr %8, align 8    ; 2 uses
   %.not578741 = icmp eq ptr %.sroa.0535.0740, %8
-  br i1 %.not578741, label %.preheader, label %.preheader586
+  br i1 %.not578741, label %._crit_edge.thread, label %.preheader586
 
 bb.s:                                             ; preds = %.lr.ph734, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit376.thread
   %i.ht = phi ptr [ %i.bp, %.lr.ph734 ], [ %i.aeo, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit376.thread ] ; 4 uses
@@ -610,7 +610,7 @@ bb.ij:                                            ; preds = %_ZNSt7__cxx1112basi
 .loopexit:                                        ; preds = %_ZNK6Assimp3LWS8NodeDesceqEj.exit.thread, %.preheader586
   %.sroa.0535.0 = load ptr, ptr %.sroa.0535.0742, align 8 ; 2 uses
   %.not578 = icmp eq ptr %.sroa.0535.0, %8
-  br i1 %.not578, label %.preheader.loopexit755, label %.preheader586, !llvm.loop !90
+  br i1 %.not578, label %.preheader, label %.preheader586, !llvm.loop !90
 
 .preheader586:                                    ; preds = %.preheader587, %.loopexit
   %.sroa.0535.0742 = phi ptr [ %.sroa.0535.0, %.loopexit ], [ %.sroa.0535.0740, %.preheader587 ] ; 6 uses
@@ -625,13 +625,9 @@ bb.ij:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.aes = getelementptr inbounds nuw i8, ptr %.sroa.0535.0742, i64 168 ; 2 uses
   br label %bb.ik
 
-.preheader.loopexit755:                           ; preds = %.loopexit
-  %.sroa.0523.0743.pre = load ptr, ptr %8, align 8
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit755, %.preheader587
-  %.sroa.0523.0743 = phi ptr [ %.sroa.0523.0743.pre, %.preheader.loopexit755 ], [ %.sroa.0535.0740, %.preheader587 ] ; 2 uses
-  %.not579744 = icmp eq ptr %.sroa.0523.0743, %8
+.preheader:                                       ; preds = %.loopexit
+  %.sroa.0523.0743.pre = load ptr, ptr %8, align 8 ; 2 uses
+  %.not579744 = icmp eq ptr %.sroa.0523.0743.pre, %8
   br i1 %.not579744, label %._crit_edge.thread, label %.lr.ph747
 
 bb.ik:                                            ; preds = %.lr.ph739, %_ZNK6Assimp3LWS8NodeDesceqEj.exit.thread
@@ -704,7 +700,7 @@ _ZNK6Assimp3LWS8NodeDesceqEj.exit.thread:         ; preds = %bb.il, %bb.ik, %_ZN
   br i1 %.not135, label %._crit_edge.thread, label %bb.iw
 
 .lr.ph747:                                        ; preds = %.preheader, %.lr.ph747
-  %.sroa.0523.0746 = phi ptr [ %.sroa.0523.0, %.lr.ph747 ], [ %.sroa.0523.0743, %.preheader ] ; 2 uses
+  %.sroa.0523.0746 = phi ptr [ %.sroa.0523.0, %.lr.ph747 ], [ %.sroa.0523.0743.pre, %.preheader ] ; 2 uses
   %.0114745 = phi i32 [ %spec.select, %.lr.ph747 ], [ 0, %.preheader ]
   %i.afm = getelementptr inbounds nuw i8, ptr %.sroa.0523.0746, i64 176
   %i.afn = load ptr, ptr %i.afm, align 8
@@ -715,7 +711,7 @@ _ZNK6Assimp3LWS8NodeDesceqEj.exit.thread:         ; preds = %bb.il, %bb.ik, %_ZN
   %.not579 = icmp eq ptr %.sroa.0523.0, %8
   br i1 %.not579, label %._crit_edge, label %.lr.ph747, !llvm.loop !92
 
-._crit_edge.thread:                               ; preds = %.preheader, %._crit_edge
+._crit_edge.thread:                               ; preds = %.preheader587, %.preheader, %._crit_edge
   %i.afp = call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
   invoke void @_ZN17DeadlyImportErrorC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.afp, ptr noundef nonnull @.str.78)
           to label %bb.it unwind label %bb.iu

@@ -205,16 +205,14 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN5boost9iterators18transform_iteratorINS6_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcS4_EENS6_11use_defaultESI_EEEEvT_SK_St18input_iterator_tag(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr %1, ptr %2, ptr %3, ptr %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not63 = icmp eq ptr %1, %3
-  br i1 %.not63, label %.preheader, label %.lr.ph
+  br i1 %.not63, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN5boost9iterators18transform_iteratorINS6_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcS4_EENS6_11use_defaultESI_EEEEvT_SK_St18input_iterator_tagEN6_GuardD2Ev.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.b
 
-.preheader:                                       ; preds = %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit, %bb.a
-  %.sroa.032.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.p, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit ] ; 2 uses
-  %.013.lcssa = phi i64 [ 0, %bb.a ], [ %i.n, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit ] ; 2 uses
-  %.not56 = icmp eq ptr %.sroa.032.0.lcssa, %3
+.preheader:                                       ; preds = %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit
+  %.not56 = icmp eq ptr %i.p, %3
   br i1 %.not56, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN5boost9iterators18transform_iteratorINS6_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcS4_EENS6_11use_defaultESI_EEEEvT_SK_St18input_iterator_tagEN6_GuardD2Ev.exit, label %.lr.ph61
 
 .lr.ph61:                                         ; preds = %.preheader
@@ -243,19 +241,19 @@ _ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9a
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call noundef signext i8 %i.l(ptr noundef nonnull align 8 dereferenceable(570) %i.i, i8 noundef signext %i.c), !inline_history !433
-  %i.n = add nuw nsw i64 %.01354, 1               ; 2 uses
+  %i.n = add nuw nsw i64 %.01354, 1               ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01354
   store i8 %i.m, ptr %i.o, align 1, !tbaa !65
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.032.053, i64 1 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.032.053, i64 1 ; 4 uses
   %i.q = icmp ne ptr %i.p, %3
   %i.r = icmp samesign ult i64 %.01354, 14
   %i.s = select i1 %i.q, i1 %i.r, i1 false
   br i1 %i.s, label %bb.b, label %.preheader, !llvm.loop !434
 
 bb.d:                                             ; preds = %.lr.ph61, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20
-  %.159 = phi i64 [ %.013.lcssa, %.lr.ph61 ], [ %i.au, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 8 uses
+  %.159 = phi i64 [ %i.n, %.lr.ph61 ], [ %i.au, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 8 uses
   %.058 = phi i64 [ 15, %.lr.ph61 ], [ %.139, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 2 uses
-  %.sroa.032.157 = phi ptr [ %.sroa.032.0.lcssa, %.lr.ph61 ], [ %i.av, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 2 uses
+  %.sroa.032.157 = phi ptr [ %i.p, %.lr.ph61 ], [ %i.av, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 2 uses
   %i.t = icmp eq i64 %.159, %.058
   br i1 %i.t, label %bb.e, label %._crit_edge
 
@@ -387,8 +385,8 @@ _ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9a
           cleanup
   br label %bb.n
 
-_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN5boost9iterators18transform_iteratorINS6_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcS4_EENS6_11use_defaultESI_EEEEvT_SK_St18input_iterator_tagEN6_GuardD2Ev.exit: ; preds = %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20, %.preheader
-  %.1.lcssa = phi i64 [ %.013.lcssa, %.preheader ], [ %i.au, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 2 uses
+_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN5boost9iterators18transform_iteratorINS6_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcS4_EENS6_11use_defaultESI_EEEEvT_SK_St18input_iterator_tagEN6_GuardD2Ev.exit: ; preds = %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20, %bb.a, %.preheader
+  %.1.lcssa = phi i64 [ %i.n, %.preheader ], [ 0, %bb.a ], [ %i.au, %_ZNK5boost9iterators6detail20iterator_facade_baseINS0_18transform_iteratorINS_9algorithm6detail9to_upperFIcEEN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS_11use_defaultESJ_EEcNS0_27random_access_traversal_tagEclLb0ELb0EEdeEv.exit20 ] ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.1.lcssa, ptr %i.aw, align 8, !tbaa !96
   %i.ax = load ptr, ptr %0, align 8, !tbaa !106

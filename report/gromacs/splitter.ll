@@ -204,9 +204,9 @@ bb.cl:                                            ; preds = %bb.ch, %_ZNSt10file
   %i.nh = add i32 %.046.lcssa.i, -2
   br label %.preheader184.i
 
-.preheader184.i:                                  ; preds = %.preheader184.i.preheader, %._crit_edge232.i
-  %.058234.i = phi i32 [ %spec.select.pre-phi.i, %._crit_edge232.i ], [ 0, %.preheader184.i.preheader ] ; 7 uses
-  %storemerge79228.i = add nsw i32 %.058234.i, 1  ; 2 uses
+.preheader184.i:                                  ; preds = %.preheader184.i.preheader, %._crit_edge232.loopexit.i
+  %.058234.i = phi i32 [ %.pre326.i, %._crit_edge232.loopexit.i ], [ 0, %.preheader184.i.preheader ] ; 7 uses
+  %storemerge79228.i = add nsw i32 %.058234.i, 1
   %i.ni = icmp slt i32 %storemerge79228.i, %.046.lcssa.i
   br i1 %i.ni, label %.lr.ph231.preheader.i, label %._crit_edge232.i
 
@@ -312,13 +312,12 @@ bb.cp:                                            ; preds = %bb.co, %.lr.ph231.i
 
 ._crit_edge232.loopexit.i:                        ; preds = %bb.cp, %.lr.ph231.i.prol.loopexit
   %.2.i68.lcssa = phi i32 [ %.2.i68.lcssa.unr, %.lr.ph231.i.prol.loopexit ], [ %.2.i68.1, %bb.cp ]
-  %.pre326.i = add nsw i32 %.2.i68.lcssa, 1
-  br label %._crit_edge232.i
+  %.pre326.i = add nsw i32 %.2.i68.lcssa, 1       ; 2 uses
+  %12 = icmp slt i32 %.pre326.i, %.046.lcssa.i
+  br i1 %12, label %.preheader184.i, label %._crit_edge232.i, !llvm.loop !51
 
 ._crit_edge232.i:                                 ; preds = %._crit_edge232.loopexit.i, %.preheader184.i
-  %spec.select.pre-phi.i = phi i32 [ %.pre326.i, %._crit_edge232.loopexit.i ], [ %storemerge79228.i, %.preheader184.i ] ; 2 uses
-  %12 = icmp slt i32 %spec.select.pre-phi.i, %.046.lcssa.i
-  br i1 %12, label %.preheader184.i, label %.preheader182.i, !llvm.loop !51
+  br label %.preheader182.i
 
 .preheader182.i:                                  ; preds = %._crit_edge232.i, %.critedge.i
   %indvars.iv304.i = phi i32 [ %indvars.iv.next305.i, %.critedge.i ], [ -1, %._crit_edge232.i ] ; 2 uses

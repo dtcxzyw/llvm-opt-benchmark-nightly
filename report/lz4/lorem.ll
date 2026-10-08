@@ -204,9 +204,9 @@ generateFirstSentence.exit:                       ; preds = %bb.bb, %bb.be, %wri
   br label %bb.bg
 
 bb.bg:                                            ; preds = %generateParagraph.exit, %generateFirstSentence.exit
-  %i.kw = phi i64 [ %11, %generateParagraph.exit ], [ %g_nbChars.promoted, %generateFirstSentence.exit ] ; 2 uses
+  %i.kw = phi i64 [ %7, %generateParagraph.exit ], [ %g_nbChars.promoted, %generateFirstSentence.exit ] ; 2 uses
   %.lcssa.i.i.lcssa26 = phi i32 [ %.lcssa.i.i, %generateParagraph.exit ], [ %2, %generateFirstSentence.exit ]
-  %i.kx = phi i64 [ %12, %generateParagraph.exit ], [ %g_nbChars.promoted, %generateFirstSentence.exit ] ; 4 uses
+  %i.kx = phi i64 [ %8, %generateParagraph.exit ], [ %g_nbChars.promoted, %generateFirstSentence.exit ] ; 4 uses
   %i.ky = icmp ult i64 %i.kx, %1
   br i1 %i.ky, label %bb.bh, label %bb.cj
 
@@ -609,34 +609,28 @@ generateSentence.exit.i:                          ; preds = %bb.bz, %bb.cd, %bb.
 
 ._crit_edge.i16:                                  ; preds = %generateSentence.exit.i
   %i.uf = icmp ult i64 %i.uc, %1
-  br i1 %i.uf, label %5, label %bb.ch
+  br i1 %i.uf, label %bb.ch, label %generateParagraph.exit
 
-5:                                                ; preds = %._crit_edge.i16
-  %6 = add nuw i64 %i.uc, 1                       ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %i.uc
-  store i8 10, ptr %7, align 1, !tbaa !25
-  br label %bb.ch
-
-bb.ch:                                            ; preds = %5, %._crit_edge.i16
-  %8 = phi i64 [ %6, %5 ], [ %i.ua, %._crit_edge.i16 ]
-  %9 = phi i64 [ %6, %5 ], [ %i.ub, %._crit_edge.i16 ]
-  %10 = phi i64 [ %6, %5 ], [ %i.uc, %._crit_edge.i16 ] ; 3 uses
-  %i.ug = icmp ult i64 %10, %1
+bb.ch:                                            ; preds = %._crit_edge.i16
+  %5 = add nuw i64 %i.uc, 1                       ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %i.uc
+  store i8 10, ptr %6, align 1, !tbaa !25
+  %i.ug = icmp ult i64 %5, %1
   br i1 %i.ug, label %bb.ci, label %generateParagraph.exit
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.uh = add nuw i64 %10, 1                      ; 2 uses
-  %i.ui = getelementptr inbounds nuw i8, ptr %0, i64 %10
+  %i.uh = add nuw i64 %i.uc, 2                    ; 2 uses
+  %i.ui = getelementptr inbounds nuw i8, ptr %0, i64 %5
   store i8 10, ptr %i.ui, align 1, !tbaa !25
   br label %generateParagraph.exit
 
-generateParagraph.exit:                           ; preds = %bb.ch, %bb.ci
-  %11 = phi i64 [ %8, %bb.ch ], [ %i.uh, %bb.ci ] ; 2 uses
-  %12 = phi i64 [ %9, %bb.ch ], [ %i.uh, %bb.ci ]
+generateParagraph.exit:                           ; preds = %._crit_edge.i16, %bb.ch, %bb.ci
+  %7 = phi i64 [ %i.ua, %._crit_edge.i16 ], [ %5, %bb.ch ], [ %i.uh, %bb.ci ] ; 2 uses
+  %8 = phi i64 [ %i.ub, %._crit_edge.i16 ], [ %5, %bb.ch ], [ %i.uh, %bb.ci ]
   br i1 %.not6, label %bb.cj, label %bb.bg
 
 bb.cj:                                            ; preds = %generateParagraph.exit, %bb.bg
-  %i.uj = phi i64 [ %11, %generateParagraph.exit ], [ %i.kw, %bb.bg ]
+  %i.uj = phi i64 [ %7, %generateParagraph.exit ], [ %i.kw, %bb.bg ]
   ret i64 %i.uj
 }
 

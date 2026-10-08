@@ -202,9 +202,9 @@ _ZNK4llvm17DbgVariableRecord12location_opsEv.exit: ; preds = %.critedge.i
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j, %.lr.ph.i.preheader.i.i.i
-  %.sroa.01.0.copyload.i.i6.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i, %bb.j ], [ %.sroa.026.047, %.lr.ph.i.preheader.i.i.i ] ; 8 uses
+  %.sroa.01.0.copyload.i.i6.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i, %bb.j ], [ %.sroa.026.047, %.lr.ph.i.preheader.i.i.i ] ; 7 uses
   %i.ad = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, 4
-  %i.ae = icmp ne i64 %i.ad, 0                    ; 2 uses
+  %i.ae = icmp ne i64 %i.ad, 0                    ; 3 uses
   br i1 %i.ae, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i
@@ -298,11 +298,9 @@ _ZL13getAsMetadataPN4llvm5ValueE.exit:            ; preds = %bb.q, %bb.r
   br i1 %.not52, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZL13getAsMetadataPN4llvm5ValueE.exit
-  %5 = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, 4
-  %6 = icmp eq i64 %5, 0
   %i.bn = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, -5
   %i.bo = inttoptr i64 %i.bn to ptr
-  br i1 %6, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.ae, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.bp = inttoptr i64 %.sroa.01.0.copyload.i.i6.i.i.i.i to ptr
@@ -386,7 +384,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit
   %.not.us = icmp eq i64 %storemerge.i.us, %.sroa.8.046
   br i1 %.not.us, label %._crit_edge, label %bb.s
 
-._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us, %_ZL13getAsMetadataPN4llvm5ValueE.exit
+._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit.us, %_ZN4llvm23SmallVectorTemplateBaseIPNS_15ValueAsMetadataELb1EE9push_backES2_.exit, %_ZL13getAsMetadataPN4llvm5ValueE.exit
   %i.cy = load ptr, ptr %i.m, align 8, !tbaa !45, !nonnull !55, !noundef !55 ; 3 uses
   %i.cz = load i8, ptr %i.cy, align 4, !tbaa !84  ; 2 uses
   %.not13.i = icmp eq i8 %i.cz, 4

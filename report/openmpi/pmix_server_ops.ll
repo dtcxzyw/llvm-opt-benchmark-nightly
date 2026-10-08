@@ -204,17 +204,13 @@ pmix_obj_run_destructors.exit625:                 ; preds = %.lr.ph.i687, %.lr.p
   %.2 = phi ptr [ null, %bb.l ], [ %.1464, %._crit_edge ], [ %.1464, %.lr.ph.i737 ], [ %.1464, %.lr.ph.i622 ], [ %.1464, %pmix_obj_run_destructors.exit625.sink.split ], [ %.1464, %.lr.ph.i672 ], [ null, %.preheader956 ], [ %.1464, %.lr.ph.i652 ], [ %.1464, %.lr.ph.i627 ], [ %.1464, %bb.az ], [ %.1464, %.loopexit954 ], [ %.1464, %pmix_obj_run_destructors.exit650 ], [ %.1464, %pmix_obj_run_destructors.exit670 ], [ %.1464, %pmix_obj_run_destructors.exit685 ], [ %.1464, %.loopexit953 ], [ %.1464, %.lr.ph.i687 ]
   %i.yp = getelementptr inbounds nuw i8, ptr %i.h, i64 1200 ; 4 uses
   %i.yq = getelementptr inbounds nuw i8, ptr %i.h, i64 1320 ; 2 uses
-  %.14781049 = load ptr, ptr %i.yq, align 8, !tbaa !106 ; 3 uses
+  %.14781049 = load ptr, ptr %i.yq, align 8, !tbaa !106 ; 2 uses
   %.not5511050 = icmp eq ptr %.14781049, %i.yp
-  br i1 %.not5511050, label %.preheader933, label %.lr.ph1052
+  br i1 %.not5511050, label %pmix_obj_new_tma.exit747, label %.lr.ph1052
 
-.preheader933.loopexit:                           ; preds = %.loopexit939
-  %.24791062.pre = load ptr, ptr %i.yq, align 8, !tbaa !106
-  br label %.preheader933
-
-.preheader933:                                    ; preds = %.preheader933.loopexit, %pmix_obj_run_destructors.exit625
-  %.24791062 = phi ptr [ %.24791062.pre, %.preheader933.loopexit ], [ %.14781049, %pmix_obj_run_destructors.exit625 ] ; 2 uses
-  %.not5521063 = icmp eq ptr %.24791062, %i.yp
+.preheader933:                                    ; preds = %.loopexit939
+  %.24791062.pre = load ptr, ptr %i.yq, align 8, !tbaa !106 ; 2 uses
+  %.not5521063 = icmp eq ptr %.24791062.pre, %i.yp
   br i1 %.not5521063, label %pmix_obj_new_tma.exit747, label %.lr.ph1065
 
 .lr.ph1065:                                       ; preds = %.preheader933
@@ -290,10 +286,10 @@ bb.db:                                            ; preds = %.lr.ph1048
   %i.aac = getelementptr inbounds nuw i8, ptr %.14781051, i64 120
   %.1478 = load ptr, ptr %i.aac, align 8, !tbaa !106 ; 2 uses
   %.not551 = icmp eq ptr %.1478, %i.yp
-  br i1 %.not551, label %.preheader933.loopexit, label %.lr.ph1052, !llvm.loop !464
+  br i1 %.not551, label %.preheader933, label %.lr.ph1052, !llvm.loop !464
 
 bb.dc:                                            ; preds = %.lr.ph1065, %bb.hx
-  %.24791064 = phi ptr [ %.24791062, %.lr.ph1065 ], [ %.2479, %bb.hx ] ; 15 uses
+  %.24791064 = phi ptr [ %.24791062.pre, %.lr.ph1065 ], [ %.2479, %bb.hx ] ; 15 uses
   %i.aad = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_buffer_t_class, i64 56), align 8, !tbaa !34
   %i.aae = call noalias noundef ptr @malloc(i64 noundef %i.aad) #19 ; 61 uses
   %i.aaf = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !35
@@ -696,7 +692,7 @@ bb.hx:                                            ; preds = %bb.hs, %bb.hr, %bb.
   %.not552 = icmp eq ptr %.2479, %i.yp
   br i1 %.not552, label %pmix_obj_new_tma.exit747, label %bb.dc, !llvm.loop !467
 
-pmix_obj_new_tma.exit747:                         ; preds = %bb.hx, %bb.de, %.preheader933, %pmix_obj_update.exit604, %bb.ez, %bb.ey, %pmix_obj_update.exit605, %bb.eo, %bb.en, %pmix_obj_update.exit606, %bb.ec, %bb.eb, %pmix_obj_update.exit607, %bb.dp, %bb.do
+pmix_obj_new_tma.exit747:                         ; preds = %bb.hx, %bb.de, %pmix_obj_run_destructors.exit625, %.preheader933, %pmix_obj_update.exit604, %bb.ez, %bb.ey, %pmix_obj_update.exit605, %bb.eo, %bb.en, %pmix_obj_update.exit606, %bb.ec, %bb.eb, %pmix_obj_update.exit607, %bb.dp, %bb.do
   %i.axa = getelementptr inbounds nuw i8, ptr %i.h, i64 120
   %i.axb = load ptr, ptr %i.axa, align 8, !tbaa !106 ; 2 uses
   %i.axc = getelementptr inbounds nuw i8, ptr %i.h, i64 128

@@ -202,14 +202,13 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i
 
 _ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i: ; preds = %bb.f, %bb.e
-  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.f ], [ %.val.i, %bb.e ] ; 4 uses
+  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.f ], [ %.val.i, %bb.e ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %.not42.i = icmp eq ptr %.sroa.0.0.i.i, %i.p
-  br i1 %.not42.i, label %._crit_edge.i, label %.lr.ph.i54
+  br i1 %.not42.i, label %bb.q, label %.lr.ph.i54
 
-._crit_edge.i:                                    ; preds = %bb.p, %_ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i
-  %.sroa.031.0.lcssa.i = phi ptr [ %.sroa.0.0.i.i, %_ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i ], [ %.sroa.031.1.i, %bb.p ] ; 3 uses
-  %i.q = icmp eq ptr %.sroa.031.0.lcssa.i, %i.p
+._crit_edge.i:                                    ; preds = %bb.p
+  %i.q = icmp eq ptr %.sroa.031.1.i, %i.p
   br i1 %i.q, label %bb.q, label %bb.aq
 
 .lr.ph.i54:                                       ; preds = %_ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i, %bb.p
@@ -297,12 +296,12 @@ _ZN4cvc58internal8RationalD2Ev.exit20.i:          ; preds = %_ZN4cvc58internal8R
   br label %common.resume
 
 bb.p:                                             ; preds = %_ZN4cvc58internal8RationalD2Ev.exit18.i, %.lr.ph.i54
-  %.sroa.031.1.i = phi ptr [ %.sroa.031.044.i, %.lr.ph.i54 ], [ %spec.select.i, %_ZN4cvc58internal8RationalD2Ev.exit18.i ] ; 2 uses
+  %.sroa.031.1.i = phi ptr [ %.sroa.031.044.i, %.lr.ph.i54 ], [ %spec.select.i, %_ZN4cvc58internal8RationalD2Ev.exit18.i ] ; 4 uses
   %i.ah = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.027.043.i) #14, !noalias !58 ; 2 uses
   %.not.i55 = icmp eq ptr %i.ah, %i.p
   br i1 %.not.i55, label %._crit_edge.i, label %.lr.ph.i54, !llvm.loop !54
 
-bb.q:                                             ; preds = %._crit_edge.i
+bb.q:                                             ; preds = %._crit_edge.i, %_ZN4cvc58internal6theory5arith8rewriter12_GLOBAL__N_110getLTermItERSt3mapINS0_12NodeTemplateILb1EEENS0_19RealAlgebraicNumberENS3_18LeafNodeComparatorESaISt4pairIKS7_S8_EEE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15, !noalias !58
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15, !noalias !58
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15, !noalias !58
@@ -535,9 +534,9 @@ _ZN4cvc58internal7IntegerD2Ev.exit24.i:           ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %._crit_edge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #15, !noalias !58
-  %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.031.0.lcssa.i, i64 32
+  %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.031.1.i, i64 32
   call void @_ZNSt4pairIKN4cvc58internal12NodeTemplateILb1EEENS1_19RealAlgebraicNumberEEC2ERKS6_(ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef nonnull align 8 dereferenceable(40) %i.cr), !noalias !58
-  call void @_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb1EEESt4pairIKS3_NS1_19RealAlgebraicNumberEESt10_Select1stIS7_ENS1_6theory5arith8rewriter18LeafNodeComparatorESaIS7_EE12_M_erase_auxESt23_Rb_tree_const_iteratorIS7_E(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr %.sroa.031.0.lcssa.i), !noalias !58
+  call void @_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb1EEESt4pairIKS3_NS1_19RealAlgebraicNumberEESt10_Select1stIS7_ENS1_6theory5arith8rewriter18LeafNodeComparatorESaIS7_EE12_M_erase_auxESt23_Rb_tree_const_iteratorIS7_E(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr %.sroa.031.1.i), !noalias !58
   invoke void @_ZNSt4pairIN4cvc58internal12NodeTemplateILb1EEENS1_19RealAlgebraicNumberEEC2IKS3_S4_TnNSt9enable_ifIXaaclsr6_PCCFPIT_T0_EE22_MoveConstructiblePairIS9_SA_EEclsr6_PCCFPIS9_SA_EE30_ImplicitlyMoveConvertiblePairIS9_SA_EEEbE4typeELb1EEEOS_IS9_SA_E(ptr noundef nonnull align 8 dereferenceable(40) %11, ptr noundef nonnull align 8 dereferenceable(40) %9)
           to label %bb.ar unwind label %bb.aw
 

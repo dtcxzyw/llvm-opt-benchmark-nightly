@@ -202,10 +202,10 @@ bb.as:                                            ; preds = %_ZN4llvh11raw_ostre
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit155
 
 _ZN4llvh11raw_ostreamlsEPKc.exit155:              ; preds = %bb.ar, %bb.as
-  %i.tr = load ptr, ptr %0, align 8, !tbaa !98    ; 5 uses
+  %i.tr = load ptr, ptr %0, align 8, !tbaa !98    ; 4 uses
   %i.ts = load ptr, ptr %i.sy, align 8, !tbaa !98 ; 3 uses
   %.not312 = icmp eq ptr %i.tr, %i.ts
-  br i1 %.not312, label %bb.ay, label %bb.at
+  br i1 %.not312, label %._crit_edge323, label %bb.at
 
 bb.at:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit155
   %i.tt = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() #18 ; 4 uses
@@ -245,26 +245,22 @@ _ZN4llvh11raw_ostreamlsEPKc.exit158:              ; preds = %bb.au, %bb.av
 
 bb.aw:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit158
   %i.uo = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %i.uf, ptr noundef nonnull @.str.1, i64 noundef 2) #18 ; 0 uses
-  br label %_ZN4llvh11raw_ostreamlsEPKc.exit161
+  br label %bb.ay
 
 bb.ax:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit158
   store i16 10042, ptr %i.uj, align 1
   %i.up = load ptr, ptr %i.ui, align 8, !tbaa !91
   %i.uq = getelementptr inbounds nuw i8, ptr %i.up, i64 2
   store ptr %i.uq, ptr %i.ui, align 8, !tbaa !91
-  br label %_ZN4llvh11raw_ostreamlsEPKc.exit161
-
-_ZN4llvh11raw_ostreamlsEPKc.exit161:              ; preds = %bb.aw, %bb.ax
-  %37 = getelementptr inbounds nuw i8, ptr %i.tr, i64 32
   br label %bb.ay
 
-bb.ay:                                            ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit161, %_ZN4llvh11raw_ostreamlsEPKc.exit155
-  %.sroa.0186.0 = phi ptr [ %37, %_ZN4llvh11raw_ostreamlsEPKc.exit161 ], [ %i.tr, %_ZN4llvh11raw_ostreamlsEPKc.exit155 ] ; 2 uses
-  %.not313320 = icmp eq ptr %.sroa.0186.0, %i.ts
+bb.ay:                                            ; preds = %bb.ax, %bb.aw
+  %37 = getelementptr inbounds nuw i8, ptr %i.tr, i64 32 ; 2 uses
+  %.not313320 = icmp eq ptr %37, %i.ts
   br i1 %.not313320, label %._crit_edge323, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ay, %_ZN4llvh11raw_ostreamlsEPKc.exit167
-  %.sroa.0186.1321 = phi ptr [ %i.vs, %_ZN4llvh11raw_ostreamlsEPKc.exit167 ], [ %.sroa.0186.0, %bb.ay ] ; 3 uses
+  %.sroa.0186.1321 = phi ptr [ %i.vs, %_ZN4llvh11raw_ostreamlsEPKc.exit167 ], [ %37, %bb.ay ] ; 3 uses
   %i.ur = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() #18 ; 4 uses
   %i.us = getelementptr inbounds nuw i8, ptr %i.ur, i64 16
   %i.ut = load ptr, ptr %i.us, align 8, !tbaa !90
@@ -319,7 +315,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit167:              ; preds = %bb.bb, %bb.bc
   %.not313 = icmp eq ptr %i.vs, %i.ts
   br i1 %.not313, label %._crit_edge323, label %.lr.ph, !llvm.loop !263
 
-._crit_edge323:                                   ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit167, %bb.ay
+._crit_edge323:                                   ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit167, %_ZN4llvh11raw_ostreamlsEPKc.exit155, %bb.ay
   %i.vt = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() #18 ; 3 uses
   %i.vu = getelementptr inbounds nuw i8, ptr %i.vt, i64 24 ; 2 uses
   %i.vv = load ptr, ptr %i.vu, align 8, !tbaa !91 ; 3 uses

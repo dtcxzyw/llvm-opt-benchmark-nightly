@@ -204,10 +204,10 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ag
   %i.r = lshr i64 %i.p, 1                         ; 3 uses
   %.not71 = icmp eq i64 %i.r, 0
-  br i1 %.not71, label %._crit_edge, label %.lr.ph
+  br i1 %.not71, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ai, %bb.aj
-  %.068 = phi i64 [ %i.v, %bb.aj ], [ 0, %bb.ai ] ; 3 uses
+  %.068 = phi i64 [ %i.v, %bb.aj ], [ 0, %bb.ai ] ; 4 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %.068
   %i.t = load i16, ptr %i.s, align 2, !tbaa !21
   %i.u = icmp eq i16 %i.t, 0
@@ -218,17 +218,16 @@ bb.aj:                                            ; preds = %.lr.ph
   %exitcond.not = icmp eq i64 %i.v, %i.r
   br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.ai
-  %.0.lcssa = phi i64 [ 0, %bb.ai ], [ %.068, %.lr.ph ] ; 2 uses
-  %i.w = icmp eq i64 %.0.lcssa, %i.r
+._crit_edge:                                      ; preds = %.lr.ph
+  %i.w = icmp eq i64 %.068, %i.r
   br i1 %i.w, label %._crit_edge.thread, label %bb.ak
 
-._crit_edge.thread:                               ; preds = %bb.aj, %._crit_edge
+._crit_edge.thread:                               ; preds = %bb.aj, %bb.ai, %._crit_edge
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.48) #21
   br label %bb.aq
 
 bb.ak:                                            ; preds = %._crit_edge
-  %i.x = shl nuw i64 %.0.lcssa, 1
+  %i.x = shl nuw i64 %.068, 1
   %i.y = add i64 %i.x, 2                          ; 2 uses
   %i.z = sub i64 %i.p, %i.y
   %i.aa = icmp ult i64 %i.z, 72

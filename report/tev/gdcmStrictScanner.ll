@@ -202,10 +202,10 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %.018.i.i = phi ptr [ %i.h, %bb.w ], [ %.017.i.i, %bb.x ]
   %i.bq = getelementptr inbounds nuw i8, ptr %.018.i.i, i64 %i.bf
   store i8 0, ptr %i.bq, align 1, !tbaa !34
-  %i.br = load ptr, ptr %0, align 8, !tbaa !32    ; 3 uses
+  %i.br = load ptr, ptr %0, align 8, !tbaa !32    ; 2 uses
   %i.bs = load ptr, ptr %i.i, align 8, !tbaa !33  ; 8 uses
   %.not14.i.i = icmp eq ptr %i.br, %i.bs
-  br i1 %.not14.i.i, label %.loopexit, label %.lr.ph.i.i
+  br i1 %.not14.i.i, label %.loopexit.thread, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.y
   %i.bt = load i8, ptr %3, align 8                ; 2 uses
@@ -219,7 +219,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.thread9.i.i, %.lr.ph.i.i
-  %.015.i.i = phi ptr [ %i.br, %.lr.ph.i.i ], [ %i.cp, %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.thread9.i.i ] ; 8 uses
+  %.015.i.i = phi ptr [ %i.br, %.lr.ph.i.i ], [ %i.cp, %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.thread9.i.i ] ; 6 uses
   %i.cb = load i8, ptr %.015.i.i, align 8         ; 2 uses
   %i.cc = trunc i8 %i.cb to i1                    ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.015.i.i, i64 8
@@ -265,12 +265,11 @@ _ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsI
   %.not.i.i32 = icmp eq ptr %i.cp, %i.bs
   br i1 %.not.i.i32, label %.loopexit.thread, label %bb.z, !llvm.loop !174
 
-.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.i.i, %.preheader.i.i.i, %bb.ab, %bb.y
-  %.013.i.i = phi ptr [ %.015.i.i, %bb.ab ], [ %i.br, %bb.y ], [ %.015.i.i, %.preheader.i.i.i ], [ %.015.i.i, %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.i.i ]
-  %i.cq = icmp eq ptr %.013.i.i, %i.bs
+.loopexit:                                        ; preds = %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.i.i, %.preheader.i.i.i, %bb.ab
+  %i.cq = icmp eq ptr %.015.i.i, %i.bs
   br i1 %i.cq, label %.loopexit.thread, label %bb.aj
 
-.loopexit.thread:                                 ; preds = %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.thread9.i.i, %.loopexit
+.loopexit.thread:                                 ; preds = %_ZNSt3__1eqB8ne180100INS_9allocatorIcEEEEbRKNS_12basic_stringIcNS_11char_traitsIcEET_EES9_.exit.thread9.i.i, %bb.y, %.loopexit
   %i.cr = load ptr, ptr %i.j, align 8, !tbaa !35
   %i.cs = icmp ult ptr %i.bs, %i.cr
   br i1 %i.cs, label %bb.ac, label %bb.ag

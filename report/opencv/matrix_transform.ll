@@ -205,20 +205,19 @@ bb.br:                                            ; preds = %.preheader149.split
 
 ._crit_edge.i:                                    ; preds = %.split.us.i
   %.not.i347 = icmp eq i32 %i.x, 1
-  br i1 %.not.i347, label %.preheader143.i, label %.preheader148.preheader.i
+  br i1 %.not.i347, label %.preheader142.preheader.i, label %.preheader148.preheader.i
 
 .preheader148.preheader.i:                        ; preds = %._crit_edge.i
   %i.kd = add i64 %i.w, 4294967294
   %i.ke = and i64 %i.kd, 4294967295
   br label %bb.bs
 
-.preheader143.i:                                  ; preds = %.loopexit145.i, %._crit_edge.i
-  %.0125.lcssa.i = phi i32 [ 0, %._crit_edge.i ], [ %.1126.i, %.loopexit145.i ] ; 2 uses
-  %.not164.not.i = icmp slt i32 %.0125.lcssa.i, %i.x
+.preheader143.i:                                  ; preds = %.loopexit145.i
+  %.not164.not.i = icmp slt i32 %.1126.i, %i.x
   br i1 %.not164.not.i, label %.preheader142.preheader.i, label %.preheader141.i
 
-.preheader142.preheader.i:                        ; preds = %_ZN2cv10AutoBufferImLm136EEC2Em.exit, %.split.us.peel.i, %.preheader143.i
-  %.0125.lcssa.i471 = phi i32 [ %.0125.lcssa.i, %.preheader143.i ], [ 0, %.split.us.peel.i ], [ %i.ho, %_ZN2cv10AutoBufferImLm136EEC2Em.exit ]
+.preheader142.preheader.i:                        ; preds = %_ZN2cv10AutoBufferImLm136EEC2Em.exit, %._crit_edge.i, %.split.us.peel.i, %.preheader143.i
+  %.0125.lcssa.i471 = phi i32 [ %.1126.i, %.preheader143.i ], [ 0, %.split.us.peel.i ], [ %i.ho, %_ZN2cv10AutoBufferImLm136EEC2Em.exit ], [ 0, %._crit_edge.i ]
   %i.kf = add nsw i64 %i.ay, -1
   %i.kg = sext i32 %.0125.lcssa.i471 to i64
   br label %.preheader142.i
@@ -304,7 +303,7 @@ bb.bx:                                            ; preds = %bb.bw
   br label %.loopexit145.i
 
 .loopexit145.i:                                   ; preds = %.preheader146.i, %bb.bx, %.preheader144.i
-  %.1126.i = phi i32 [ %i.lq, %bb.bx ], [ %.0125161.i, %.preheader144.i ], [ %i.lq, %.preheader146.i ] ; 2 uses
+  %.1126.i = phi i32 [ %i.lq, %bb.bx ], [ %.0125161.i, %.preheader144.i ], [ %i.lq, %.preheader146.i ] ; 3 uses
   %indvars.iv.next190.i = add nsw i64 %indvars.iv189.i, -1
   %i.mb = icmp sgt i64 %indvars.iv189.i, 0
   br i1 %i.mb, label %bb.bs, label %.preheader143.i, !llvm.loop !162

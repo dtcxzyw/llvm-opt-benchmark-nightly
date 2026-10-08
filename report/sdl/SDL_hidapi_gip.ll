@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 8              ; 2 uses
+  %i.l = load i32, ptr %i.k, align 8              ; 3 uses
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %.lr.ph71, label %._crit_edge
 
@@ -214,7 +214,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph71, %.loopexit68
-  %5 = phi i32 [ %i.l, %.lr.ph71 ], [ %6, %.loopexit68 ] ; 3 uses
   %.070 = phi i32 [ 0, %.lr.ph71 ], [ %.2, %.loopexit68 ] ; 5 uses
   %i.o = sdiv i32 %.070, 8
   %i.p = add nsw i32 %i.o, 3
@@ -227,7 +226,7 @@ bb.e:                                             ; preds = %.lr.ph71, %.loopexi
   br i1 %.not67, label %bb.f, label %.preheader
 
 .preheader:                                       ; preds = %bb.e
-  %i.v = icmp slt i32 %.070, %5
+  %i.v = icmp slt i32 %.070, %i.l
   br i1 %i.v, label %.lr.ph, label %.loopexit68
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
@@ -245,22 +244,21 @@ bb.e:                                             ; preds = %.lr.ph71, %.loopexi
   %i.ag = and i32 %i.af, %i.ae
   %i.ah = icmp ne i32 %i.ag, 0
   tail call void @SDL_SendJoystickButton(i64 noundef %2, ptr noundef nonnull %1, i8 noundef zeroext %i.y, i1 noundef zeroext %i.ah) #10
-  %i.ai = add nsw i32 %.169, 1                    ; 3 uses
-  %i.aj = load i32, ptr %i.k, align 8             ; 2 uses
+  %i.ai = add nsw i32 %.169, 1                    ; 2 uses
+  %i.aj = load i32, ptr %i.k, align 8
   %i.ak = icmp slt i32 %i.ai, %i.aj
-  br i1 %i.ak, label %.lr.ph, label %.loopexit68, !llvm.loop !19
+  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !19
 
 bb.f:                                             ; preds = %bb.e
   %i.al = add nsw i32 %.070, 8
   br label %.loopexit68
 
-.loopexit68:                                      ; preds = %.lr.ph, %.preheader, %bb.f
-  %6 = phi i32 [ %5, %bb.f ], [ %5, %.preheader ], [ %i.aj, %.lr.ph ] ; 2 uses
-  %.2 = phi i32 [ %i.al, %bb.f ], [ %.070, %.preheader ], [ %i.ai, %.lr.ph ] ; 2 uses
-  %i.am = icmp slt i32 %.2, %6
+.loopexit68:                                      ; preds = %.preheader, %bb.f
+  %.2 = phi i32 [ %i.al, %bb.f ], [ %.070, %.preheader ] ; 2 uses
+  %i.am = icmp slt i32 %.2, %i.l
   br i1 %i.am, label %bb.e, label %._crit_edge, !llvm.loop !20
 
-._crit_edge:                                      ; preds = %.loopexit68, %bb.d
+._crit_edge:                                      ; preds = %.loopexit68, %.lr.ph, %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 11
   %i.ao = load i16, ptr %i.an, align 1
   tail call void @SDL_SendJoystickAxis(i64 noundef %2, ptr noundef nonnull %1, i8 noundef zeroext 0, i16 noundef signext %i.ao) #10
