@@ -205,10 +205,10 @@ _RNvXs3_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.ab = icmp samesign ult i128 %i.aa, %i.x
   %.sroa.09.1.peel.i.i = tail call i128 @llvm.umin.i128(i128 %i.aa, i128 %i.x) ; 2 uses
   %.sroa.08.1.peel.i.i = zext i1 %i.ab to i8
-  %4 = zext i64 %.sroa.530.0.copyload.i to i128
   %narrow.i.i = add nuw nsw i64 %i.u, 4
-  %i.ac = zext nneg i64 %narrow.i.i to i128
-  %i.ad = mul nuw nsw i128 %4, %i.ac              ; 2 uses
+  %4 = zext nneg i64 %narrow.i.i to i128
+  %i.ac = zext i64 %.sroa.530.0.copyload.i to i128
+  %i.ad = mul nuw nsw i128 %i.ac, %4              ; 2 uses
   %i.ae = icmp samesign ult i128 %i.ad, %.sroa.09.1.peel.i.i
   %.sroa.09.1.i.i = tail call i128 @llvm.umin.i128(i128 %i.ad, i128 %.sroa.09.1.peel.i.i)
   %.sroa.08.1.i.i = select i1 %i.ae, i8 2, i8 %.sroa.08.1.peel.i.i

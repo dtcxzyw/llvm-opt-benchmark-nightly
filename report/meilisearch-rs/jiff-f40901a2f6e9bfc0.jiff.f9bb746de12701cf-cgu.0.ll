@@ -205,6 +205,7 @@ begin_hunk_0
 @2021 = private unnamed_addr constant [53 x i8] c"an integer number of microseconds from the Unix epoch", align 1
 @2022 = private unnamed_addr constant [53 x i8] c"an integer number of milliseconds from the Unix epoch", align 1
 @2023 = private unnamed_addr constant [27 x i8] c"an unsigned duration string", align 1
+@switch.table._ZN4jiff4util5round9Increment12for_maximums17h8e6bbde7f468b181E = private unnamed_addr constant [6 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24], align 8
 @"switch.table._ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h01dd0fa585a46afeE" = private unnamed_addr constant [8 x i8] c"\02\0B\0E\16\14\0F\0F\11", align 8
 @"switch.table._ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h01dd0fa585a46afeE.609" = private unnamed_addr constant [8 x ptr] [ptr @1119, ptr @1120, ptr @1121, ptr @1122, ptr @1123, ptr @1124, ptr @1125, ptr @1126], align 8
 @"switch.table._ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h100e54c43c1f49eeE" = private unnamed_addr constant [9 x i8] c"\0C\0F\0E\0C\10\18\0B\12\11", align 8
@@ -244,28 +245,28 @@ begin_hunk_0
 @switch.table._ZN4jiff4span5Nudge18relative_invariant17hf5816d3597116f74E.633 = private unnamed_addr constant [7 x i32] [i32 0, i32 0, i32 0, i32 1, i32 60, i32 3600, i32 86400], align 8
 @switch.table._ZN4jiff4span9SpanTotal5total17h175a92fa97d17efcE.641 = private unnamed_addr constant [8 x i64] [i64 0, i64 0, i64 0, i64 1000000000, i64 60000000000, i64 3600000000000, i64 86400000000000, i64 604800000000000], align 8
 @switch.table._ZN4jiff4span9SpanTotal5total17h175a92fa97d17efcE.643 = private unnamed_addr constant [6 x i64] [i64 0, i64 0, i64 0, i64 1000000000, i64 60000000000, i64 3600000000000], align 8
+@switch.table._ZN4jiff4util5round9Increment10for_limits17h85c6ade5a369d533E = private unnamed_addr constant [12 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60, i64 2], align 8
 @switch.table._ZN4jiff5civil8datetime13DateTimeRound5round17ha18a1310279c63e0E = private unnamed_addr constant [8 x i32] [i32 1, i32 1000, i32 1000000, i32 0, i32 0, i32 0, i32 0, i32 0], align 8
 @switch.table._ZN4jiff5civil8datetime13DateTimeRound5round17ha18a1310279c63e0E.645 = private unnamed_addr constant [8 x i32] [i32 0, i32 0, i32 0, i32 1, i32 60, i32 3600, i32 86400, i32 604800], align 8
 @switch.table._ZN4jiff5zoned5Zoned12memory_usage17h23ac1346e53ad5faE = private unnamed_addr constant [6 x i16] [i16 0, i16 0, i16 0, i16 0, i16 368, i16 104], align 8
-@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE = private unnamed_addr constant [12 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60, i64 2], align 8
-@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646 = private unnamed_addr constant [6 x i32] [i32 1, i32 1000, i32 1000000, i32 0, i32 0, i32 0], align 8
-@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.647 = private unnamed_addr constant [6 x i16] [i16 0, i16 0, i16 0, i16 1, i16 60, i16 3600], align 8
-@"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.648" = private unnamed_addr constant [10 x ptr] [ptr @457, ptr @456, ptr @455, ptr @454, ptr @453, ptr @452, ptr @451, ptr @450, ptr @449, ptr @448], align 8
+@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE = private unnamed_addr constant [6 x i32] [i32 1, i32 1000, i32 1000000, i32 0, i32 0, i32 0], align 8
+@switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646 = private unnamed_addr constant [6 x i16] [i16 0, i16 0, i16 0, i16 1, i16 60, i16 3600], align 8
+@"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.647" = private unnamed_addr constant [10 x ptr] [ptr @457, ptr @456, ptr @455, ptr @454, ptr @453, ptr @452, ptr @451, ptr @450, ptr @449, ptr @448], align 8
 @"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E" = private unnamed_addr constant [10 x ptr] [ptr @2, ptr @3, ptr @4, ptr @5, ptr @6, ptr @7, ptr @8, ptr @9, ptr @10, ptr @11], align 8
-@"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E.649" = private unnamed_addr constant [10 x i8] c"\02\03\02\01\01\01\01\01\02\01", align 8
+@"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E.648" = private unnamed_addr constant [10 x i8] c"\02\03\02\01\01\01\01\01\02\01", align 8
 @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE" = private unnamed_addr constant [7 x i8] c"\06\07\09\08\06\08\06", align 8
-@"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.657" = private unnamed_addr constant [7 x ptr] [ptr @223, ptr @224, ptr @225, ptr @226, ptr @227, ptr @228, ptr @222], align 8
+@"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.656" = private unnamed_addr constant [7 x ptr] [ptr @223, ptr @224, ptr @225, ptr @226, ptr @227, ptr @228, ptr @222], align 8
 @"switch.table._ZN66_$LT$jiff..shared..tzif..CountKind$u20$as$u20$core..fmt..Debug$GT$3fmt17he7f21575998fd81fE" = private unnamed_addr constant [6 x i8] c"\02\03\04\04\04\04", align 8
-@"switch.table._ZN66_$LT$jiff..shared..tzif..CountKind$u20$as$u20$core..fmt..Debug$GT$3fmt17he7f21575998fd81fE.658" = private unnamed_addr constant [6 x ptr] [ptr @848, ptr @849, ptr @850, ptr @851, ptr @852, ptr @853], align 8
+@"switch.table._ZN66_$LT$jiff..shared..tzif..CountKind$u20$as$u20$core..fmt..Debug$GT$3fmt17he7f21575998fd81fE.657" = private unnamed_addr constant [6 x ptr] [ptr @848, ptr @849, ptr @850, ptr @851, ptr @852, ptr @853], align 8
 @"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE" = private unnamed_addr constant [3 x i8] c"\09\11\0D", align 8
-@"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.681" = private unnamed_addr constant [3 x ptr] [ptr @993, ptr @994, ptr @995], align 8
-@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704" = private unnamed_addr constant [10 x ptr] [ptr @615, ptr @614, ptr @613, ptr @612, ptr @611, ptr @610, ptr @609, ptr @608, ptr @607, ptr @606], align 8
-@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705" = private unnamed_addr constant [10 x i8] c"\0B\0C\0C\07\07\05\04\05\06\05", align 8
-@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.708" = private unnamed_addr constant [11 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60], align 8
+@"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.680" = private unnamed_addr constant [3 x ptr] [ptr @993, ptr @994, ptr @995], align 8
+@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703" = private unnamed_addr constant [10 x ptr] [ptr @615, ptr @614, ptr @613, ptr @612, ptr @611, ptr @610, ptr @609, ptr @608, ptr @607, ptr @606], align 8
+@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704" = private unnamed_addr constant [10 x i8] c"\0B\0C\0C\07\07\05\04\05\06\05", align 8
+@"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.707" = private unnamed_addr constant [11 x i64] [i64 86400000000000, i64 86400000000, i64 86400000, i64 86400, i64 1440, i64 24, i64 1000, i64 1000, i64 1000, i64 60, i64 60], align 8
 @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E" = private unnamed_addr constant [10 x ptr] [ptr @777, ptr @776, ptr @775, ptr @774, ptr @773, ptr @772, ptr @771, ptr @770, ptr @769, ptr @768], align 8
-@"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710" = private unnamed_addr constant [10 x i8] c"\0A\0B\0B\06\06\04\03\04\05\04", align 8
+@"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709" = private unnamed_addr constant [10 x i8] c"\0A\0B\0B\06\06\04\03\04\05\04", align 8
 @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E" = private unnamed_addr constant [8 x i8] c"\07\0C\10\18\16\10\10\13", align 8
-@"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713" = private unnamed_addr constant [8 x ptr] [ptr @1458, ptr @1459, ptr @1460, ptr @1461, ptr @1462, ptr @1463, ptr @1464, ptr @1465], align 8
+@"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712" = private unnamed_addr constant [8 x ptr] [ptr @1458, ptr @1459, ptr @1460, ptr @1461, ptr @1462, ptr @1463, ptr @1464, ptr @1465], align 8
 
 ; Function Attrs: nonlazybind uwtable
 define noundef zeroext i1 @"_ZN101_$LT$jiff..fmt..serde..duration..friendly..compact..CompactDuration$u20$as$u20$core..fmt..Display$GT$3fmt17h16622291ccdfe47fE"(ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -668,11 +669,11 @@ switch.lookup:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
   %i.b = load i8, ptr %i.a, align 1, !range !30, !alias.scope !343, !noalias !344, !noundef !11 ; 2 uses
   %i.c = zext nneg i8 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.c
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.c
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %i.b to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.648", i64 %i.d
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.647", i64 %i.d
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.e = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext), !noalias !343
   ret i1 %i.e
@@ -1075,7 +1076,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %switch.tableidx to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.657", i64 %i.d
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.656", i64 %i.d
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.e = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext), !noalias !550
   ret i1 %i.e
@@ -1478,11 +1479,11 @@ switch.lookup:                                    ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 9
   %i.m = load i8, ptr %i.l, align 1, !range !28, !noundef !11
   %i.n = zext nneg i8 %i.c to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646, i64 %i.n
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.n
   %switch.load = load i32, ptr %switch.gep, align 4
   %switch.ext = zext i32 %switch.load to i64
   %i.o = zext nneg i8 %i.c to i64
-  %switch.gep11 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.647, i64 %i.o
+  %switch.gep11 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646, i64 %i.o
   %switch.load12 = load i16, ptr %switch.gep11, align 2
   %switch.ext13 = zext i16 %switch.load12 to i64
   %i.p = mul nuw nsw i64 %.sroa.6.0.extract.shift.i.i, %switch.ext ; 2 uses
@@ -1885,7 +1886,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.0.0.i.i858 = phi i8 [ %i.ld, %bb.aa ], [ %i.me, %bb.ac ]
   %switch.tableidx = add nsw i8 %.sroa.0.0.i.i858, -1 ; 2 uses
   %i.mj = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.657", i64 %i.mj
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.656", i64 %i.mj
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.mk = zext nneg i8 %switch.tableidx to i64
   %switch.gep3178 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE", i64 %i.mk
@@ -2288,7 +2289,7 @@ bb.af:                                            ; preds = %switch.lookup153, %
 
 switch.lookup153:                                 ; preds = %bb.n
   %i.dl = zext nneg i8 %i.l to i64
-  %switch.gep154 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646, i64 %i.dl
+  %switch.gep154 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.dl
   %switch.load155 = load i32, ptr %switch.gep154, align 4
   %i.dm = zext nneg i8 %i.l to i64
   %switch.gep156 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff4span9SpanTotal5total17h175a92fa97d17efcE.643, i64 %i.dm
@@ -2691,7 +2692,7 @@ bb.e:                                             ; preds = %bb.c
 
 switch.lookup:                                    ; preds = %bb.c
   %i.l = zext nneg i8 %i.f to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.l
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff4util5round9Increment10for_limits17h85c6ade5a369d533E, i64 %i.l
   %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
   %i.m = icmp slt i64 %2, %switch.load
   br i1 %i.m, label %bb.f, label %bb.g
@@ -3094,9 +3095,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = zext nneg i8 %i.c to i64
+  %i.g = zext nneg i8 %i.c to i64                 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr @333, i64 %i.g
-  %i.i = load i8, ptr %i.h, align 1, !range !32, !noalias !11731, !noundef !11 ; 2 uses
+  %i.i = load i8, ptr %i.h, align 1, !range !32, !noalias !11731, !noundef !11
   %i.j = add i64 %i.d, -1000000001
   %or.cond.i.i.i = icmp ult i64 %i.j, -1000000000
   %i.k = shl nuw nsw i64 %i.d, 32
@@ -3110,9 +3111,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.i
 
 switch.lookup.a:                                  ; preds = %bb.c
-  %4 = zext nneg i8 %i.i to i64
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %4
-  %switch.load.a = load i64, ptr %switch.gep.a, align 8 ; 2 uses
+  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4jiff4util5round9Increment12for_maximums17h8e6bbde7f468b181E, i64 %i.g
+  %switch.load.a = load i64, ptr %switch.gep.a, align 8, !noalias !11731 ; 2 uses
   %.not.i.i = icmp sgt i64 %i.d, %switch.load.a
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
@@ -3151,11 +3151,11 @@ switch.lookup10:                                  ; preds = %bb.h
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 9
   %i.u = load i8, ptr %i.t, align 1, !range !28, !noundef !11
   %i.v = zext nneg i8 %i.c to i64
-  %switch.gep11 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646, i64 %i.v
+  %switch.gep11 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE, i64 %i.v
   %switch.load12 = load i32, ptr %switch.gep11, align 4
   %switch.ext = zext i32 %switch.load12 to i64
   %i.w = zext nneg i8 %i.c to i64
-  %switch.gep13 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.647, i64 %i.w
+  %switch.gep13 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN4jiff9timestamp14TimestampRound5round17hfd5119684f5b84aaE.646, i64 %i.w
   %switch.load14 = load i16, ptr %switch.gep13, align 2
   %switch.ext15 = zext i16 %switch.load14 to i64
   %i.x = mul nuw nsw i64 %.sroa.618.0.extract.shift.i.i, %switch.ext ; 2 uses
@@ -3558,11 +3558,11 @@ define internal noundef zeroext i1 @"_ZN53_$LT$jiff..span..Unit$u20$as$u20$core.
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !30, !noundef !11 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.b
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.648", i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN53_$LT$jiff..span..Unit$u20$as$u20$core..fmt..Debug$GT$3fmt17h213add3c726e3375E.647", i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -3881,7 +3881,7 @@ switch.lookup:                                    ; preds = %.split66, %_ZN4jiff
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E", i64 %i.p
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.q = zext nneg i8 %switch.offset.i to i64
-  %switch.gep79 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E.649", i64 %i.q
+  %switch.gep79 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN56_$LT$jiff..span..UnitSet$u20$as$u20$core..fmt..Debug$GT$3fmt17h2c259dc90c6827c2E.648", i64 %i.q
   %switch.load80 = load i8, ptr %switch.gep79, align 1
   %switch.ext = zext i8 %switch.load80 to i64
   store ptr %switch.load, ptr %i.b, align 8
@@ -4284,7 +4284,7 @@ switch.lookup:                                    ; preds = %bb.f
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.aa = zext nneg i8 %i.y to i64
-  %switch.gep13 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.681", i64 %i.aa
+  %switch.gep13 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.680", i64 %i.aa
   %switch.load14 = load ptr, ptr %switch.gep13, align 8
   %i.ab = tail call noundef zeroext i1 @"_ZN42_$LT$str$u20$as$u20$core..fmt..Display$GT$3fmt17hc26b542d45893745E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load14, i64 noundef %switch.ext, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !12101
   br i1 %i.ab, label %"_ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.exit", label %bb.g
@@ -4687,10 +4687,10 @@ switch.lookup:                                    ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.o = zext nneg i8 %i.m to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.o
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.o
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.p = zext nneg i8 %i.m to i64
-  %switch.gep45 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.p
+  %switch.gep45 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.p
   %switch.load46 = load i8, ptr %switch.gep45, align 1
   %switch.ext = zext i8 %switch.load46 to i64
   store ptr %switch.load, ptr %i.h, align 8
@@ -4731,10 +4731,10 @@ switch.lookup47:                                  ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.w = zext nneg i8 %i.u to i64
-  %switch.gep48 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.w
+  %switch.gep48 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.w
   %switch.load49 = load ptr, ptr %switch.gep48, align 8
   %i.x = zext nneg i8 %i.u to i64
-  %switch.gep50 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.x
+  %switch.gep50 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.x
   %switch.load51 = load i8, ptr %switch.gep50, align 1
   %switch.ext52 = zext i8 %switch.load51 to i64
   store ptr %switch.load49, ptr %i.f, align 8
@@ -4767,10 +4767,10 @@ switch.lookup53:                                  ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ac = zext nneg i8 %i.aa to i64
-  %switch.gep54 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.ac
+  %switch.gep54 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.ac
   %switch.load55 = load ptr, ptr %switch.gep54, align 8
   %i.ad = zext nneg i8 %i.aa to i64
-  %switch.gep56 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.ad
+  %switch.gep56 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.ad
   %switch.load57 = load i8, ptr %switch.gep56, align 1
   %switch.ext58 = zext i8 %switch.load57 to i64
   store ptr %switch.load55, ptr %i.d, align 8
@@ -5173,7 +5173,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.p
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.q = zext nneg i8 %i.d to i64
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.q
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.q
   %switch.load7 = load i8, ptr %switch.gep6, align 1
   %switch.ext = zext i8 %switch.load7 to i64
   store ptr %switch.load, ptr %i.b, align 8
@@ -5576,7 +5576,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.657", i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..civil..weekday..Weekday$u20$as$u20$core..fmt..Debug$GT$3fmt17h59cf32bd568f684eE.656", i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -5719,7 +5719,7 @@ switch.lookup:
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..shared..tzif..CountKind$u20$as$u20$core..fmt..Debug$GT$3fmt17he7f21575998fd81fE.658", i64 %i.c
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN66_$LT$jiff..shared..tzif..CountKind$u20$as$u20$core..fmt..Debug$GT$3fmt17he7f21575998fd81fE.657", i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.d = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
@@ -6122,10 +6122,10 @@ switch.lookup:                                    ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ai = zext nneg i8 %i.ag to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.ai
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.ai
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.aj = zext nneg i8 %i.ag to i64
-  %switch.gep166 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.aj
+  %switch.gep166 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.aj
   %switch.load167 = load i8, ptr %switch.gep166, align 1
   %switch.ext = zext i8 %switch.load167 to i64
   store ptr %switch.load, ptr %i.aa, align 8
@@ -6166,7 +6166,7 @@ switch.lookup168:                                 ; preds = %bb.a
   %switch.gep169 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.aq
   %switch.load170 = load ptr, ptr %switch.gep169, align 8
   %i.ar = zext nneg i8 %i.ao to i64
-  %switch.gep171 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.ar
+  %switch.gep171 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.ar
   %switch.load172 = load i8, ptr %switch.gep171, align 1
   %switch.ext173 = zext i8 %switch.load172 to i64
   store ptr %switch.load170, ptr %i.y, align 8
@@ -6212,10 +6212,10 @@ switch.lookup174:                                 ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   %i.az = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.ba = zext nneg i8 %i.ay to i64
-  %switch.gep175 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.ba
+  %switch.gep175 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.ba
   %switch.load176 = load ptr, ptr %switch.gep175, align 8
   %i.bb = zext nneg i8 %i.ay to i64
-  %switch.gep177 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.bb
+  %switch.gep177 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.bb
   %switch.load178 = load i8, ptr %switch.gep177, align 1
   %switch.ext179 = zext i8 %switch.load178 to i64
   store ptr %switch.load176, ptr %i.w, align 8
@@ -6249,10 +6249,10 @@ switch.lookup180:                                 ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.bg = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.bh = zext nneg i8 %i.bf to i64
-  %switch.gep181 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.bh
+  %switch.gep181 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.bh
   %switch.load182 = load ptr, ptr %switch.gep181, align 8
   %i.bi = zext nneg i8 %i.bf to i64
-  %switch.gep183 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.bi
+  %switch.gep183 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.bi
   %switch.load184 = load i8, ptr %switch.gep183, align 1
   %switch.ext185 = zext i8 %switch.load184 to i64
   store ptr %switch.load182, ptr %i.u, align 8
@@ -6293,7 +6293,7 @@ switch.lookup186:                                 ; preds = %bb.a
   %switch.gep187 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.bp
   %switch.load188 = load ptr, ptr %switch.gep187, align 8
   %i.bq = zext nneg i8 %i.bn to i64
-  %switch.gep189 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bq
+  %switch.gep189 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bq
   %switch.load190 = load i8, ptr %switch.gep189, align 1
   %switch.ext191 = zext i8 %switch.load190 to i64
   store ptr %switch.load188, ptr %i.s, align 8
@@ -6329,7 +6329,7 @@ switch.lookup192:                                 ; preds = %bb.a
   %switch.gep193 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.bw
   %switch.load194 = load ptr, ptr %switch.gep193, align 8
   %i.bx = zext nneg i8 %i.ac to i64
-  %switch.gep195 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bx
+  %switch.gep195 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bx
   %switch.load196 = load i8, ptr %switch.gep195, align 1
   %switch.ext197 = zext i8 %switch.load196 to i64
   store ptr %switch.load194, ptr %i.r, align 8
@@ -6339,7 +6339,7 @@ switch.lookup192:                                 ; preds = %bb.a
   %switch.gep217 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.by
   %switch.load218 = load ptr, ptr %switch.gep217, align 8
   %i.bz = zext nneg i8 %i.bu to i64
-  %switch.gep219 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bz
+  %switch.gep219 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bz
   %switch.load220 = load i8, ptr %switch.gep219, align 1
   %switch.ext221 = zext i8 %switch.load220 to i64
   store ptr %switch.load218, ptr %i.q, align 8
@@ -6383,7 +6383,7 @@ switch.lookup198:                                 ; preds = %bb.a
   %switch.gep199 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.ch
   %switch.load200 = load ptr, ptr %switch.gep199, align 8
   %i.ci = zext nneg i8 %i.cf to i64
-  %switch.gep201 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.ci
+  %switch.gep201 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.ci
   %switch.load202 = load i8, ptr %switch.gep201, align 1
   %switch.ext203 = zext i8 %switch.load202 to i64
   store ptr %switch.load200, ptr %i.n, align 8
@@ -6420,7 +6420,7 @@ switch.lookup204:                                 ; preds = %bb.a
   %switch.gep205 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.co
   %switch.load206 = load ptr, ptr %switch.gep205, align 8
   %i.cp = zext nneg i8 %i.cm to i64
-  %switch.gep207 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.cp
+  %switch.gep207 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.cp
   %switch.load208 = load i8, ptr %switch.gep207, align 1
   %switch.ext209 = zext i8 %switch.load208 to i64
   store ptr %switch.load206, ptr %i.l, align 8
@@ -6454,10 +6454,10 @@ switch.lookup210:                                 ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.cu = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.cv = zext nneg i8 %i.ct to i64
-  %switch.gep211 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cv
+  %switch.gep211 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.cv
   %switch.load212 = load ptr, ptr %switch.gep211, align 8
   %i.cw = zext nneg i8 %i.ct to i64
-  %switch.gep213 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.cw
+  %switch.gep213 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cw
   %switch.load214 = load i8, ptr %switch.gep213, align 1
   %switch.ext215 = zext i8 %switch.load214 to i64
   store ptr %switch.load212, ptr %i.j, align 8
@@ -6710,7 +6710,7 @@ switch.lookup:                                    ; preds = %bb.j
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.p = zext nneg i8 %i.n to i64
-  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.p
+  %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.p
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
   %i.q = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext), !noalias !12396
   br i1 %i.q, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.k
@@ -6840,7 +6840,7 @@ switch.lookup4:                                   ; preds = %bb.af
   %switch.load6 = load i8, ptr %switch.gep5, align 1
   %switch.ext7 = zext i8 %switch.load6 to i64
   %i.az = zext nneg i8 %i.aw to i64
-  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.az
+  %switch.gep8 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.az
   %switch.load9 = load ptr, ptr %switch.gep8, align 8
   %i.ba = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load9, i64 noundef %switch.ext7), !noalias !12404
   br i1 %i.ba, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.ag
@@ -6920,7 +6920,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %i.b to i64
-  %switch.gep3 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.681", i64 %i.d
+  %switch.gep3 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN69_$LT$jiff..error..CrateFeatureError$u20$as$u20$core..fmt..Display$GT$3fmt17h07025367d06b83cfE.680", i64 %i.d
   %switch.load4 = load ptr, ptr %switch.gep3, align 8
   %i.e = tail call noundef zeroext i1 @"_ZN42_$LT$str$u20$as$u20$core..fmt..Display$GT$3fmt17hc26b542d45893745E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load4, i64 noundef %switch.ext, ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
   br i1 %i.e, label %bb.c, label %bb.b
@@ -7323,7 +7323,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %i.b to i64
-  %switch.gep3 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.d
+  %switch.gep3 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.d
   %switch.load4 = load ptr, ptr %switch.gep3, align 8
   %i.e = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load4, i64 noundef %switch.ext)
   br i1 %i.e, label %bb.c, label %bb.b
@@ -7726,7 +7726,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.aq
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.ar = zext nneg i8 %i.ao to i64
-  %switch.gep228 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.ar
+  %switch.gep228 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.ar
   %switch.load229 = load i8, ptr %switch.gep228, align 1
   %switch.ext = zext i8 %switch.load229 to i64
   store ptr %switch.load, ptr %i.ak, align 8
@@ -7761,7 +7761,7 @@ switch.lookup230:                                 ; preds = %bb.a
   %switch.gep231 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.av
   %switch.load232 = load ptr, ptr %switch.gep231, align 8
   %i.aw = zext nneg i8 %i.ao to i64
-  %switch.gep233 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.aw
+  %switch.gep233 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.aw
   %switch.load234 = load i8, ptr %switch.gep233, align 1
   %switch.ext235 = zext i8 %switch.load234 to i64
   store ptr %switch.load232, ptr %i.ai, align 8
@@ -7796,7 +7796,7 @@ switch.lookup236:                                 ; preds = %bb.a
   %switch.gep237 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.ba
   %switch.load238 = load ptr, ptr %switch.gep237, align 8
   %i.bb = zext nneg i8 %i.ao to i64
-  %switch.gep239 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bb
+  %switch.gep239 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bb
   %switch.load240 = load i8, ptr %switch.gep239, align 1
   %switch.ext241 = zext i8 %switch.load240 to i64
   store ptr %switch.load238, ptr %i.ag, align 8
@@ -7838,7 +7838,7 @@ switch.lookup242:                                 ; preds = %bb.a
   %switch.gep243 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.bk
   %switch.load244 = load ptr, ptr %switch.gep243, align 8
   %i.bl = zext nneg i8 %i.bi to i64
-  %switch.gep245 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bl
+  %switch.gep245 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bl
   %switch.load246 = load i8, ptr %switch.gep245, align 1
   %switch.ext247 = zext i8 %switch.load246 to i64
   store ptr %switch.load244, ptr %i.aa, align 8
@@ -7848,7 +7848,7 @@ switch.lookup242:                                 ; preds = %bb.a
   %switch.gep297 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.bm
   %switch.load298 = load ptr, ptr %switch.gep297, align 8
   %i.bn = zext nneg i8 %i.ao to i64
-  %switch.gep299 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bn
+  %switch.gep299 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bn
   %switch.load300 = load i8, ptr %switch.gep299, align 1
   %switch.ext301 = zext i8 %switch.load300 to i64
   store ptr %switch.load298, ptr %i.z, align 8
@@ -7890,7 +7890,7 @@ switch.lookup248:                                 ; preds = %bb.a
   %switch.gep249 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.bt
   %switch.load250 = load ptr, ptr %switch.gep249, align 8
   %i.bu = zext nneg i8 %i.ao to i64
-  %switch.gep251 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bu
+  %switch.gep251 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bu
   %switch.load252 = load i8, ptr %switch.gep251, align 1
   %switch.ext253 = zext i8 %switch.load252 to i64
   store ptr %switch.load250, ptr %i.w, align 8
@@ -7925,7 +7925,7 @@ switch.lookup254:                                 ; preds = %bb.a
   %switch.gep255 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.by
   %switch.load256 = load ptr, ptr %switch.gep255, align 8
   %i.bz = zext nneg i8 %i.ao to i64
-  %switch.gep257 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.bz
+  %switch.gep257 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.bz
   %switch.load258 = load i8, ptr %switch.gep257, align 1
   %switch.ext259 = zext i8 %switch.load258 to i64
   store ptr %switch.load256, ptr %i.u, align 8
@@ -7960,7 +7960,7 @@ switch.lookup260:                                 ; preds = %bb.a
   %switch.gep261 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.cd
   %switch.load262 = load ptr, ptr %switch.gep261, align 8
   %i.ce = zext nneg i8 %i.ao to i64
-  %switch.gep263 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.ce
+  %switch.gep263 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.ce
   %switch.load264 = load i8, ptr %switch.gep263, align 1
   %switch.ext265 = zext i8 %switch.load264 to i64
   store ptr %switch.load262, ptr %i.s, align 8
@@ -7992,10 +7992,10 @@ switch.lookup266:                                 ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   %i.ch = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.ci = zext nneg i8 %i.ao to i64
-  %switch.gep267 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.ci
+  %switch.gep267 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.ci
   %switch.load268 = load ptr, ptr %switch.gep267, align 8
   %i.cj = zext nneg i8 %i.ao to i64
-  %switch.gep269 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.cj
+  %switch.gep269 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cj
   %switch.load270 = load i8, ptr %switch.gep269, align 1
   %switch.ext271 = zext i8 %switch.load270 to i64
   store ptr %switch.load268, ptr %i.q, align 8
@@ -8027,10 +8027,10 @@ switch.lookup272:                                 ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   %i.cm = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.cn = zext nneg i8 %i.ao to i64
-  %switch.gep273 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cn
+  %switch.gep273 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.cn
   %switch.load274 = load ptr, ptr %switch.gep273, align 8
   %i.co = zext nneg i8 %i.ao to i64
-  %switch.gep275 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.co
+  %switch.gep275 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.co
   %switch.load276 = load i8, ptr %switch.gep275, align 1
   %switch.ext277 = zext i8 %switch.load276 to i64
   store ptr %switch.load274, ptr %i.o, align 8
@@ -8065,7 +8065,7 @@ switch.lookup278:                                 ; preds = %bb.a
   %switch.gep279 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.cs
   %switch.load280 = load ptr, ptr %switch.gep279, align 8
   %i.ct = zext nneg i8 %i.ao to i64
-  %switch.gep281 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.ct
+  %switch.gep281 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.ct
   %switch.load282 = load i8, ptr %switch.gep281, align 1
   %switch.ext283 = zext i8 %switch.load282 to i64
   store ptr %switch.load280, ptr %i.m, align 8
@@ -8101,10 +8101,10 @@ switch.lookup284:                                 ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.cx = zext nneg i8 %i.bg to i64
-  %switch.gep285 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cx
+  %switch.gep285 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.cx
   %switch.load286 = load ptr, ptr %switch.gep285, align 8
   %i.cy = zext nneg i8 %i.bg to i64
-  %switch.gep287 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.cy
+  %switch.gep287 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.cy
   %switch.load288 = load i8, ptr %switch.gep287, align 1
   %switch.ext289 = zext i8 %switch.load288 to i64
   store ptr %switch.load286, ptr %i.ae, align 8
@@ -8135,17 +8135,17 @@ switch.lookup290:                                 ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad)
   %i.db = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.dc = zext nneg i8 %i.bg to i64
-  %switch.gep291 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.dc
+  %switch.gep291 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.703", i64 %i.dc
   %switch.load292 = load ptr, ptr %switch.gep291, align 8
   %i.dd = zext nneg i8 %i.bg to i64
-  %switch.gep293 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.705", i64 %i.dd
+  %switch.gep293 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.704", i64 %i.dd
   %switch.load294 = load i8, ptr %switch.gep293, align 1
   %switch.ext295 = zext i8 %switch.load294 to i64
   store ptr %switch.load292, ptr %i.ad, align 8
   store i64 %switch.ext295, ptr %i.db, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
   %i.de = zext nneg i8 %i.ao to i64
-  %switch.gep303 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.708", i64 %i.de
+  %switch.gep303 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN73_$LT$jiff..error..unit..UnitConfigError$u20$as$u20$core..fmt..Display$GT$3fmt17h7bda9c48ae20e2fbE.707", i64 %i.de
   %switch.load304 = load i64, ptr %switch.gep303, align 8
   store i64 %switch.load304, ptr %i.ac, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
@@ -8338,7 +8338,7 @@ switch.lookup:                                    ; preds = %bb.f
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.j = zext nneg i8 %i.a to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.j
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.j
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.k = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext), !noalias !12668
   br i1 %i.k, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.g
@@ -8523,7 +8523,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E", i64 %i.j
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.k = zext nneg i8 %i.d to i64
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.710", i64 %i.k
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @"switch.table._ZN74_$LT$jiff..error..signed_duration..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h39fac8b7aae1e105E.709", i64 %i.k
   %switch.load7 = load i8, ptr %switch.gep6, align 1
   %switch.ext = zext i8 %switch.load7 to i64
   store ptr %switch.load, ptr %i.b, align 8
@@ -8926,7 +8926,7 @@ switch.lookup:                                    ; preds = %bb.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.j = zext nneg i8 %i.h to i64
-  %switch.gep13 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.j
+  %switch.gep13 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.j
   %switch.load14 = load ptr, ptr %switch.gep13, align 8
   %i.k = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load14, i64 noundef %switch.ext), !noalias !12840
   br i1 %i.k, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.c
@@ -9329,7 +9329,7 @@ switch.lookup:                                    ; preds = %bb.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.d = zext nneg i8 %i.a to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.d
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.d
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.e = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext), !noalias !13120
   br i1 %i.e, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.c
@@ -9732,7 +9732,7 @@ switch.lookup:                                    ; preds = %bb.h
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.k = zext nneg i8 %i.a to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.713", i64 %i.k
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN82_$LT$jiff..shared..tzif..TimeZoneDesignatorError$u20$as$u20$core..fmt..Display$GT$3fmt17h5206d8ee92082022E.712", i64 %i.k
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %i.l = tail call noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext), !noalias !13179
   br i1 %i.l, label %"_ZN71_$LT$jiff..shared..tzif..SplitAtError$u20$as$u20$core..fmt..Display$GT$3fmt17haa6f888ecaafd6d3E.exit", label %bb.i

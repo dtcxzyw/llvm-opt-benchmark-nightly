@@ -204,8 +204,8 @@ $_ZTVSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2
 @_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = linkonce_odr constant [16 x i8] zeroinitializer, comdat, align 8
 @_ZTVSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2_S3_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2_S3_EEESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2_S3_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2_S3_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceISt3mapISt4pairImmES1_ImjESt4lessIS2_ESaIS1_IKS2_S3_EEESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @.str.4 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@switch.table._ZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEb = private unnamed_addr constant [13 x ptr] [ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.1, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.2, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3], align 8
 @switch.table._ZNK4llvm13R600InstrInfo11isLegalUpToERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERKS1_INS0_11BankSwizzleESaISA_EERKS5_SA_ = private unnamed_addr constant [4 x ptr] [ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.1, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.2, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3], align 8
-@switch.table._ZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEb = private unnamed_addr constant [3 x ptr] [ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.1, ptr @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.2], align 8
 @switch.table._ZNK4llvm13R600InstrInfo22reverseBranchConditionERNS_15SmallVectorImplINS_14MachineOperandEEE = private unnamed_addr constant [8 x i16] [i16 562, i16 563, i16 poison, i16 poison, i16 poison, i16 poison, i16 556, i16 557], align 8
 @switch.table._ZNK4llvm13R600InstrInfo18buildIndirectWriteEPNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEjjjj = private unnamed_addr constant [4 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm26R600MCRegisterClassStorageE, i64 192), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm26R600MCRegisterClassStorageE, i64 1344), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm26R600MCRegisterClassStorageE, i64 1408), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm26R600MCRegisterClassStorageE, i64 1280)], align 8
 
@@ -608,9 +608,9 @@ _ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit: ; preds = %_ZNSt6ve
   br i1 %i.dl, label %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit, label %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split
 
 _ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split: ; preds = %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit, %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit47
-  %.0.idx77 = phi i64 [ %.0.add, %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit47 ], [ 0, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit ] ; 2 uses
+  %.0.idx77 = phi i64 [ %.0.add, %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit47 ], [ 0, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit ] ; 3 uses
   %.0.ptr = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEbE8TransSwz, i64 %.0.idx77
-  %i.du = load i32, ptr %.0.ptr, align 4, !tbaa !367 ; 7 uses
+  %i.du = load i32, ptr %.0.ptr, align 4, !tbaa !367 ; 5 uses
   br i1 %i.dr, label %.loopexit.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split
@@ -622,25 +622,16 @@ _ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split: ; preds = %_Z
   ]
 
 .lr.ph.split.split.split.us.i.preheader:          ; preds = %.lr.ph.i
-  %.not = icmp eq i32 %i.du, 3
-  %8 = zext nneg i32 %i.du to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEb, i64 %8
-  br label %.lr.ph.split.split.split.us.i
-
-.lr.ph.split.split.split.us.i:                    ; preds = %.lr.ph.split.split.split.us.i.preheader, %bb.m
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.m ], [ 0, %.lr.ph.split.split.split.us.i.preheader ] ; 3 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %indvars.iv.i
-  br i1 %.not, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i, label %switch.lookup
-
-switch.lookup:                                    ; preds = %.lr.ph.split.split.split.us.i
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEb, i64 %.0.idx77
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i
 
-_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i: ; preds = %.lr.ph.split.split.split.us.i, %switch.lookup
-  %__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3.sink.i.us10.i = phi ptr [ %switch.load, %switch.lookup ], [ @__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3, %.lr.ph.split.split.split.us.i ]
-  %i.dv = getelementptr inbounds nuw [4 x i8], ptr %__const._ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.Cycles.3.sink.i.us10.i, i64 %indvars.iv.i
+_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i: ; preds = %.lr.ph.split.split.split.us.i.preheader, %bb.m
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.m ], [ 0, %.lr.ph.split.split.split.us.i.preheader ] ; 3 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %indvars.iv.i
+  %i.dv = getelementptr inbounds nuw [4 x i8], ptr %switch.load, i64 %indvars.iv.i
   %.0.i.us11.i = load i32, ptr %i.dv, align 4, !tbaa !29
-  %i.dw = load i32, ptr %9, align 4, !tbaa !355
+  %i.dw = load i32, ptr %8, align 4, !tbaa !355
   %i.dx = icmp slt i32 %i.dw, 0
   %i.dy = icmp ne i32 %.0.i.us11.i, 0
   %or.cond50.not.i = select i1 %i.dx, i1 true, i1 %i.dy
@@ -649,7 +640,7 @@ _ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i: ; preds = %
 bb.m:                                             ; preds = %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count114.i
-  br i1 %exitcond.not.i, label %.loopexit.preheader, label %.lr.ph.split.split.split.us.i, !llvm.loop !605
+  br i1 %exitcond.not.i, label %.loopexit.preheader, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i, !llvm.loop !605
 
 .lr.ph.split.split.split.i:                       ; preds = %.lr.ph.i
   switch i32 %i.du, label %default.unreachable [
