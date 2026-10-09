@@ -205,28 +205,36 @@ _ZL21GetTreeLinesFlagsNamei.exit174:              ; preds = %_ZL10HelpMarkerPKc.
   store <2 x float> zeroinitializer, ptr %3, align 8, !tbaa !50
   %i.eb = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull @.str.2015, i1 noundef zeroext %i.ea, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %3) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
-  br i1 %i.eb, label %bb.al, label %_ZL21GetTreeLinesFlagsNamei.exit174.1
+  br i1 %i.eb, label %bb.al, label %.preheader.switch.lookup.1_crit_edge
+
+.preheader.switch.lookup.1_crit_edge:             ; preds = %_ZL21GetTreeLinesFlagsNamei.exit174
+  %.pre = load i32, ptr %i.dt, align 4, !tbaa !368
+  %15 = icmp eq i32 %.pre, 524288
+  br label %_ZL21GetTreeLinesFlagsNamei.exit174.1
 
 bb.al:                                            ; preds = %_ZL21GetTreeLinesFlagsNamei.exit174
   store i32 262144, ptr %i.dt, align 4, !tbaa !368
   br label %_ZL21GetTreeLinesFlagsNamei.exit174.1
 
-_ZL21GetTreeLinesFlagsNamei.exit174.1:            ; preds = %bb.al, %_ZL21GetTreeLinesFlagsNamei.exit174
-  %15 = load i32, ptr %i.dt, align 4, !tbaa !368
-  %16 = icmp eq i32 %15, 524288
+_ZL21GetTreeLinesFlagsNamei.exit174.1:            ; preds = %.preheader.switch.lookup.1_crit_edge, %bb.al
+  %16 = phi i1 [ %15, %.preheader.switch.lookup.1_crit_edge ], [ false, %bb.al ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   store <2 x float> zeroinitializer, ptr %3, align 8, !tbaa !50
   %i.ec = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull @.str.2016, i1 noundef zeroext %16, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %3) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
-  br i1 %i.ec, label %bb.am, label %_ZL21GetTreeLinesFlagsNamei.exit174.2
+  br i1 %i.ec, label %bb.am, label %switch.lookup.1.switch.lookup.2_crit_edge
+
+switch.lookup.1.switch.lookup.2_crit_edge:        ; preds = %_ZL21GetTreeLinesFlagsNamei.exit174.1
+  %.pre195 = load i32, ptr %i.dt, align 4, !tbaa !368
+  %17 = icmp eq i32 %.pre195, 1048576
+  br label %_ZL21GetTreeLinesFlagsNamei.exit174.2
 
 bb.am:                                            ; preds = %_ZL21GetTreeLinesFlagsNamei.exit174.1
   store i32 524288, ptr %i.dt, align 4, !tbaa !368
   br label %_ZL21GetTreeLinesFlagsNamei.exit174.2
 
-_ZL21GetTreeLinesFlagsNamei.exit174.2:            ; preds = %bb.am, %_ZL21GetTreeLinesFlagsNamei.exit174.1
-  %17 = load i32, ptr %i.dt, align 4, !tbaa !368
-  %18 = icmp eq i32 %17, 1048576
+_ZL21GetTreeLinesFlagsNamei.exit174.2:            ; preds = %switch.lookup.1.switch.lookup.2_crit_edge, %bb.am
+  %18 = phi i1 [ %17, %switch.lookup.1.switch.lookup.2_crit_edge ], [ false, %bb.am ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   store <2 x float> zeroinitializer, ptr %3, align 8, !tbaa !50
   %i.ed = call noundef zeroext i1 @_ZN5ImGui10SelectableEPKcbiRK6ImVec2(ptr noundef nonnull @.str.2017, i1 noundef zeroext %18, i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(8) %3) #26
