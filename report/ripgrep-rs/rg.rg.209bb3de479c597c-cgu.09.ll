@@ -202,14 +202,14 @@ bb.a:
   ret void, !dbg !2986
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvNtCs2NzvFoTxuAy_2rg8messages11set_errored() unnamed_addr #4 !dbg !2987 {
 bb.a:
   store atomic i8 1, ptr @_RNvNtCs2NzvFoTxuAy_2rg8messages7ERRORED.0 monotonic, align 1, !dbg !2991
   ret void, !dbg !2992
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvNtCs2NzvFoTxuAy_2rg8messages12set_messages(i1 noundef zeroext %0) unnamed_addr #4 !dbg !2993 {
 bb.a:
   %i.a = zext i1 %0 to i8, !dbg !2997
@@ -217,7 +217,7 @@ bb.a:
   ret void, !dbg !2999
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvNtCs2NzvFoTxuAy_2rg8messages15ignore_messages() unnamed_addr #4 !dbg !3000 {
 bb.a:
   %i.a = load atomic i8, ptr @_RNvNtCs2NzvFoTxuAy_2rg8messages15IGNORE_MESSAGES.0 monotonic, align 1, !dbg !3004
@@ -225,7 +225,7 @@ bb.a:
   ret i1 %i.b, !dbg !3006
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_RNvNtCs2NzvFoTxuAy_2rg8messages19set_ignore_messages(i1 noundef zeroext %0) unnamed_addr #4 !dbg !3007 {
 bb.a:
   %i.a = zext i1 %0 to i8, !dbg !3011
@@ -233,7 +233,7 @@ bb.a:
   ret void, !dbg !3013
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvNtCs2NzvFoTxuAy_2rg8messages7errored() unnamed_addr #4 !dbg !3014 {
 bb.a:
   %i.a = load atomic i8, ptr @_RNvNtCs2NzvFoTxuAy_2rg8messages7ERRORED.0 monotonic, align 1, !dbg !3018
@@ -241,7 +241,7 @@ bb.a:
   ret i1 %i.b, !dbg !3020
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvNtCs2NzvFoTxuAy_2rg8messages8messages() unnamed_addr #4 !dbg !3021 {
 bb.a:
   %i.a = load atomic i8, ptr @_RNvNtCs2NzvFoTxuAy_2rg8messages8MESSAGES.0 monotonic, align 1, !dbg !3025
@@ -644,7 +644,7 @@ attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #4 = { mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #5 = { cold inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
