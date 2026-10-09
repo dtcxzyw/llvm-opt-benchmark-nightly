@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !24   ; 4 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !24   ; 3 uses
   %i.d = and i32 %i.c, 2
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -222,15 +222,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.i, label %check_ca.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = and i32 %i.c, 1
-  %.not6.i = icmp eq i32 %i.j, 0
-  %1 = lshr i32 %i.c, 4
-  %.lobit.i = and i32 %1, 1
-  %2 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.j = and i32 %i.c, 17
+  %.not6.i = icmp eq i32 %i.j, 17
+  %1 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.e, %bb.d, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %2, %bb.e ], [ 1, %bb.d ]
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %1, %bb.e ], [ 1, %bb.d ]
   ret i32 %.0
 }
 
@@ -462,7 +460,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 define internal range(i32 0, 2) i32 @check_purpose_ssl_client(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 5 uses
   %i.c = and i32 %i.b, 4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -496,11 +494,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.l, label %check_ca.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = and i32 %i.b, 1
-  %.not6.i = icmp eq i32 %i.m, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i = and i32 %3, 1
-  %4 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.m = and i32 %i.b, 17
+  %.not6.i = icmp eq i32 %i.m, 17
+  %3 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 bb.h:                                             ; preds = %bb.c
@@ -529,7 +525,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.g, %bb.f, %bb.e, %bb.k, %bb.i, %bb.b, %bb.l
-  %.0 = phi i32 [ 0, %bb.k ], [ 1, %bb.l ], [ 0, %bb.i ], [ 0, %bb.b ], [ 0, %bb.e ], [ %4, %bb.g ], [ 1, %bb.f ]
+  %.0 = phi i32 [ 0, %bb.k ], [ 1, %bb.l ], [ 0, %bb.i ], [ 0, %bb.b ], [ 0, %bb.e ], [ %3, %bb.g ], [ 1, %bb.f ]
   ret i32 %.0
 }
 
@@ -537,7 +533,7 @@ check_ca.exit:                                    ; preds = %bb.g, %bb.f, %bb.e,
 define internal range(i32 0, 2) i32 @check_purpose_ssl_server(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
   %i.c = and i32 %i.b, 4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -571,11 +567,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.l, label %check_ca.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = and i32 %i.b, 1
-  %.not6.i = icmp eq i32 %i.m, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i = and i32 %3, 1
-  %4 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.m = and i32 %i.b, 17
+  %.not6.i = icmp eq i32 %i.m, 17
+  %3 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 bb.h:                                             ; preds = %bb.c
@@ -606,7 +600,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.g, %bb.f, %bb.e, %bb.k, %bb.i, %bb.b, %bb.l
-  %.0 = phi i32 [ 0, %bb.k ], [ 1, %bb.l ], [ 0, %bb.i ], [ 0, %bb.b ], [ 0, %bb.e ], [ %4, %bb.g ], [ 1, %bb.f ]
+  %.0 = phi i32 [ 0, %bb.k ], [ 1, %bb.l ], [ 0, %bb.i ], [ 0, %bb.b ], [ 0, %bb.e ], [ %3, %bb.g ], [ 1, %bb.f ]
   ret i32 %.0
 }
 
@@ -614,7 +608,7 @@ check_ca.exit:                                    ; preds = %bb.g, %bb.f, %bb.e,
 define internal range(i32 0, 2) i32 @check_purpose_ns_ssl_server(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
   %i.c = and i32 %i.b, 4
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -648,11 +642,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.l, label %check_purpose_ssl_server.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = and i32 %i.b, 1
-  %.not6.i.i = icmp eq i32 %i.m, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i.i = and i32 %3, 1
-  %4 = select i1 %.not6.i.i, i32 0, i32 %.lobit.i.i
+  %i.m = and i32 %i.b, 17
+  %.not6.i.i = icmp eq i32 %i.m, 17
+  %3 = zext i1 %.not6.i.i to i32
   br label %check_purpose_ssl_server.exit.thread
 
 bb.h:                                             ; preds = %bb.c
@@ -690,7 +682,7 @@ check_purpose_ssl_server.exit.thread14:           ; preds = %bb.j, %check_purpos
   br label %check_purpose_ssl_server.exit.thread
 
 check_purpose_ssl_server.exit.thread:             ; preds = %bb.g, %bb.f, %bb.e, %bb.b, %bb.i, %bb.k, %check_purpose_ssl_server.exit, %check_purpose_ssl_server.exit.thread14
-  %.0 = phi i32 [ 0, %bb.k ], [ 1, %check_purpose_ssl_server.exit.thread14 ], [ 0, %check_purpose_ssl_server.exit ], [ 1, %bb.f ], [ %4, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.i ]
+  %.0 = phi i32 [ 0, %bb.k ], [ 1, %check_purpose_ssl_server.exit.thread14 ], [ 0, %check_purpose_ssl_server.exit ], [ 1, %bb.f ], [ %3, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.i ]
   ret i32 %.0
 }
 
@@ -698,7 +690,7 @@ check_purpose_ssl_server.exit.thread:             ; preds = %bb.g, %bb.f, %bb.e,
 define internal range(i32 0, 2) i32 @check_purpose_smime_sign(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
   %i.c = and i32 %i.b, 4
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -744,11 +736,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.q, label %purpose_smime.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.r = and i32 %i.b, 1
-  %.not6.i.i = icmp eq i32 %i.r, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i.i = and i32 %3, 1
-  %4 = select i1 %.not6.i.i, i32 0, i32 %.lobit.i.i
+  %i.r = and i32 %i.b, 17
+  %.not6.i.i = icmp eq i32 %i.r, 17
+  %3 = zext i1 %.not6.i.i to i32
   br label %purpose_smime.exit.thread
 
 bb.j:                                             ; preds = %bb.c
@@ -777,7 +767,7 @@ bb.l:                                             ; preds = %bb.k, %purpose_smim
   br label %purpose_smime.exit.thread
 
 purpose_smime.exit.thread:                        ; preds = %bb.i, %bb.h, %bb.g, %bb.e, %bb.b, %bb.k, %purpose_smime.exit, %bb.l
-  %.0 = phi i32 [ 0, %purpose_smime.exit ], [ 1, %bb.l ], [ 0, %bb.k ], [ 1, %bb.h ], [ %4, %bb.i ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ]
+  %.0 = phi i32 [ 0, %purpose_smime.exit ], [ 1, %bb.l ], [ 0, %bb.k ], [ 1, %bb.h ], [ %3, %bb.i ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -785,7 +775,7 @@ purpose_smime.exit.thread:                        ; preds = %bb.i, %bb.h, %bb.g,
 define internal range(i32 0, 2) i32 @check_purpose_smime_encrypt(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
   %i.c = and i32 %i.b, 4
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -831,11 +821,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.q, label %purpose_smime.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.r = and i32 %i.b, 1
-  %.not6.i.i = icmp eq i32 %i.r, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i.i = and i32 %3, 1
-  %4 = select i1 %.not6.i.i, i32 0, i32 %.lobit.i.i
+  %i.r = and i32 %i.b, 17
+  %.not6.i.i = icmp eq i32 %i.r, 17
+  %3 = zext i1 %.not6.i.i to i32
   br label %purpose_smime.exit.thread
 
 bb.j:                                             ; preds = %bb.c
@@ -864,7 +852,7 @@ bb.l:                                             ; preds = %bb.k, %purpose_smim
   br label %purpose_smime.exit.thread
 
 purpose_smime.exit.thread:                        ; preds = %bb.i, %bb.h, %bb.g, %bb.e, %bb.b, %bb.k, %purpose_smime.exit, %bb.l
-  %.0 = phi i32 [ 0, %purpose_smime.exit ], [ 1, %bb.l ], [ 0, %bb.k ], [ 1, %bb.h ], [ %4, %bb.i ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ]
+  %.0 = phi i32 [ 0, %purpose_smime.exit ], [ 1, %bb.l ], [ 0, %bb.k ], [ 1, %bb.h ], [ %3, %bb.i ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -873,7 +861,7 @@ define internal range(i32 0, 2) i32 @check_purpose_crl_sign(ptr nofree readnone 
 bb.a:
   %.not = icmp eq i32 %2, 0
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 3 uses
   %i.c = and i32 %i.b, 2
   %.not4 = icmp eq i32 %i.c, 0                    ; 2 uses
   br i1 %.not, label %bb.f, label %bb.b
@@ -894,11 +882,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %check_ca.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = and i32 %i.b, 1
-  %.not6.i = icmp eq i32 %i.i, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i = and i32 %3, 1
-  %4 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.i = and i32 %i.b, 17
+  %.not6.i = icmp eq i32 %i.i, 17
+  %3 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -915,7 +901,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.e, %bb.d, %bb.c, %bb.g, %bb.h
-  %.0 = phi i32 [ 0, %bb.g ], [ 1, %bb.h ], [ 0, %bb.c ], [ %4, %bb.e ], [ 1, %bb.d ]
+  %.0 = phi i32 [ 0, %bb.g ], [ 1, %bb.h ], [ 0, %bb.c ], [ %3, %bb.e ], [ 1, %bb.d ]
   ret i32 %.0
 }
 
@@ -933,7 +919,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 3 uses
   %i.c = and i32 %i.b, 2
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -951,15 +937,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %check_ca.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = and i32 %i.b, 1
-  %.not6.i = icmp eq i32 %i.i, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i = and i32 %3, 1
-  %4 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.i = and i32 %i.b, 17
+  %.not6.i = icmp eq i32 %i.i, 17
+  %3 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.e, %bb.d, %bb.c, %bb.a
-  %.0 = phi i32 [ 1, %bb.a ], [ 0, %bb.c ], [ %4, %bb.e ], [ 1, %bb.d ]
+  %.0 = phi i32 [ 1, %bb.a ], [ 0, %bb.c ], [ %3, %bb.e ], [ 1, %bb.d ]
   ret i32 %.0
 }
 
@@ -968,7 +952,7 @@ define internal range(i32 0, 2) i32 @check_purpose_timestamp_sign(ptr nofree rea
 bb.a:
   %.not = icmp eq i32 %2, 0
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 5 uses
   %i.c = and i32 %i.b, 2
   %.not15 = icmp eq i32 %i.c, 0                   ; 2 uses
   br i1 %.not, label %bb.f, label %bb.b
@@ -989,11 +973,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %check_ca.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = and i32 %i.b, 1
-  %.not6.i = icmp eq i32 %i.i, 0
-  %3 = lshr i32 %i.b, 4
-  %.lobit.i = and i32 %3, 1
-  %4 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.i = and i32 %i.b, 17
+  %.not6.i = icmp eq i32 %i.i, 17
+  %3 = zext i1 %.not6.i to i32
   br label %check_ca.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -1037,7 +1019,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %check_ca.exit
 
 check_ca.exit:                                    ; preds = %bb.e, %bb.d, %bb.c, %bb.l, %bb.k, %bb.h, %bb.i, %bb.g
-  %.2 = phi i32 [ 0, %bb.k ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.i ], [ 1, %bb.l ], [ 0, %bb.c ], [ %4, %bb.e ], [ 1, %bb.d ]
+  %.2 = phi i32 [ 0, %bb.k ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.i ], [ 1, %bb.l ], [ 0, %bb.c ], [ %3, %bb.e ], [ 1, %bb.d ]
   ret i32 %.2
 }
 

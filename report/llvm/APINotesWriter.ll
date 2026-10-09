@@ -205,10 +205,12 @@ _ZN5clang9api_notes12_GLOBAL__N_116emitVersionTupleERN4llvm11raw_ostreamERKNS2_1
   %i.gk = getelementptr inbounds nuw i8, ptr %.017.i.i.i.i, i64 16
   call fastcc void @_ZN5clang9api_notes12_GLOBAL__N_116emitVariableInfoERN4llvm11raw_ostreamERKNS0_12VariableInfoE(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull readonly align 8 dereferenceable(113) %i.gk)
   %i.gl = getelementptr inbounds nuw i8, ptr %.017.i.i.i.i, i64 128
-  %i.gm = load i8, ptr %i.gl, align 8             ; 2 uses
+  %i.gm = load i8, ptr %i.gl, align 8             ; 3 uses
   %i.gn = and i8 %i.gm, 1
   %.not.i.i.i.i.i.i.i = icmp eq i8 %i.gn, 0
-  %.lobit.i.i.i.i.i.i.i = and i8 %i.gm, 2
+  %.sroa.0.0.extract.trunc2.i.i.i.i.i.i = shl i8 %i.gm, 1
+  %.mask.i.i.i.i.i.i = and i8 %i.gm, 2
+  %.lobit.i.i.i.i.i.i.i = and i8 %.mask.i.i.i.i.i.i, %.sroa.0.0.extract.trunc2.i.i.i.i.i.i
   %i.go = or disjoint i8 %.lobit.i.i.i.i.i.i.i, 1
   %.0.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i8 0, i8 %i.go ; 2 uses
   %i.gp = load ptr, ptr %i.cc, align 8, !tbaa !131 ; 3 uses
@@ -611,13 +613,15 @@ _ZN5clang9api_notes12_GLOBAL__N_116emitVersionTupleERN4llvm11raw_ostreamERKNS2_1
   %i.iy = add i8 %i.ix, 4
   %.0.i.i.i.i.i = select i1 %.not.i.i.i59.i.i, i8 0, i8 %i.iy
   %i.iz = getelementptr inbounds nuw i8, ptr %.017.i.i.i.i, i64 208 ; 3 uses
-  %i.ja = load i8, ptr %i.iz, align 8             ; 2 uses
+  %i.ja = load i8, ptr %i.iz, align 8             ; 3 uses
   %i.jb = and i8 %i.ja, 1
   %.not.i.i.i.i60.i.i = icmp eq i8 %i.jb, 0
-  %.lobit.i.i.i.i.i.i = and i8 %i.ja, 2
+  %.sroa.03.0.extract.trunc34.i.i.i.i.i = shl i8 %i.ja, 1
+  %.mask.i.i.i.i.i = and i8 %i.ja, 2
+  %.lobit.i.i.i.i.i.i = and i8 %.mask.i.i.i.i.i, %.sroa.03.0.extract.trunc34.i.i.i.i.i
   %i.jc = or disjoint i8 %.lobit.i.i.i.i.i.i, 1
   %i.jd = select i1 %.not.i.i.i.i60.i.i, i8 0, i8 %i.jc
-  %.1.i.i.i61.i.i = or disjoint i8 %.0.i.i.i.i.i, %i.jd
+  %.1.i.i.i61.i.i = or disjoint i8 %i.jd, %.0.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   store i8 %.1.i.i.i61.i.i, ptr %i.y, align 1, !tbaa !142
   %i.je = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef nonnull %i.y, i64 noundef 1) #17 ; 0 uses
@@ -1020,11 +1024,12 @@ bb.a:
   %spec.select = shl nuw i8 %i.g, 7
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.i = load i8, ptr %i.h, align 8               ; 6 uses
-  %.not.i = trunc i8 %i.i to i1
+  %3 = and i8 %i.i, 1
+  %.not.i = icmp eq i8 %3, 0
   %i.j = and i8 %i.i, 3
   %i.k = icmp eq i8 %i.j, 3
   %spec.select18.v = select i1 %i.k, i8 96, i8 32
-  %spec.select18 = select i1 %.not.i, i8 %spec.select18.v, i8 0
+  %spec.select18 = select i1 %.not.i, i8 0, i8 %spec.select18.v
   %.1 = or disjoint i8 %spec.select18, %spec.select
   %i.l = and i8 %i.i, 4
   %.not.i20.not = icmp eq i8 %i.l, 0
